@@ -1,3 +1,4 @@
+import Combine
 import MEGASwift
 import MEGASwiftUI
 import SwiftUI
@@ -7,7 +8,8 @@ public class SearchResultsViewModel: ObservableObject {
     @Published var chipsItems: [ChipViewModel] = []
     @Published var bottomInset: CGFloat = 0.0
     @Published var emptyViewModel: ContentUnavailableView_iOS16ViewModel?
-    
+    @Published var isLoadingPlaceholderShown = false
+
     // this is needed to be able to construct new query after receiving new query string from SearchBar
     private var currentQuery: SearchQuery = .initial
     
@@ -26,24 +28,35 @@ public class SearchResultsViewModel: ObservableObject {
     // query string or selected chips while previous search is being
     // executed
     private var searchingTask: Task<Void, any Error>?
+
+    // this flag is used to indicate whether the data has been loaded for every triggered search
+    @Atomic var areNewSearchResultsLoaded = false
     
     // data source for the results (result list, chips)
     private let resultsProvider: any SearchResultsProviding
     
     private let config: SearchConfig
-    
+
+    // delay after we should display loading placeholder, in seconds
+    private let showLoadingPlaceholderDelay: Double
+
     public init(
         resultsProvider: any SearchResultsProviding,
         bridge: SearchBridge,
-        config: SearchConfig
+        config: SearchConfig,
+        showLoadingPlaceholderDelay: Double = 1
     ) {
         self.resultsProvider = resultsProvider
         self.bridge = bridge
         self.config = config
+        self.showLoadingPlaceholderDelay = showLoadingPlaceholderDelay
         
         self.bridge.queryChanged = { [weak self] query  in
             let _self = self
-            Task { await _self?.queryChanged(to: query) }
+            Task {
+                await _self?.showLoadingPlaceholderIfNeeded()
+                await _self?.queryChanged(to: query)
+            }
         }
         
         self.bridge.queryCleaned = { [weak self] in
@@ -75,6 +88,7 @@ public class SearchResultsViewModel: ObservableObject {
         // do an initial search that lists contents of the directory
         // This is using a different method in the SDK
         // hence an enum is needed to reliably tell the difference
+        await showLoadingPlaceholderIfNeeded()
         await queryChanged(to: .initial)
     }
     
@@ -86,6 +100,7 @@ public class SearchResultsViewModel: ObservableObject {
     func queryCleaned() async {
         // clearing query in the search bar
         // this should reset just query string but keep chips etc
+        await showLoadingPlaceholderIfNeeded()
         await queryChanged(to: "")
     }
     
@@ -105,13 +120,23 @@ public class SearchResultsViewModel: ObservableObject {
     func queryChanged(to query: String) async {
         await queryChanged(to: .userSupplied(Self.makeQueryUsing(string: query, current: currentQuery)))
     }
+
+    // After the user triggered new search query, if the results don't come in more than 1 second
+    // we should display the shimmer placeholder while the search results loading finishes
+    // If the search results are already loaded -> areNewSearchResultsLoaded = true, we shouldn't display shimmer loading
+    func showLoadingPlaceholderIfNeeded() async {
+        Task {
+            try await Task.sleep(nanoseconds: UInt64(showLoadingPlaceholderDelay*1_000_000_000))
+            guard !areNewSearchResultsLoaded else { return }
+            await updateLoadingPlaceholderVisibility(true)
+        }
+    }
     
     private func queryChanged(to query: SearchQuery) async {
-        
         cancelSearchTask()
         // we need to store query to know what chips are selected
         currentQuery = query
-        
+
         searchingTask = Task {
             await performSearch(using: query)
         }
@@ -120,7 +145,8 @@ public class SearchResultsViewModel: ObservableObject {
     }
     
     private func performSearch(using query: SearchQuery) async {
-        
+        updateSearchResultsLoaded(false)
+
         if Task.isCancelled { return }
         
         var results: SearchResultsEntity?
@@ -134,8 +160,10 @@ public class SearchResultsViewModel: ObservableObject {
         guard let results else { return }
         
         if Task.isCancelled { return }
-        
+
         await consume(results, query: query)
+        updateSearchResultsLoaded(true)
+        await updateLoadingPlaceholderVisibility(false)
     }
     
     @MainActor
@@ -188,6 +216,7 @@ public class SearchResultsViewModel: ObservableObject {
         let query = Self.makeQueryAfter(tappedChip: chip, currentQuery: currentQuery)
         // updating chips here as well to make selection visible before results are returned
         updateChipsFrom(appliedChips: query.chips)
+        await showLoadingPlaceholderIfNeeded()
         await queryChanged(to: query)
     }
     
@@ -206,6 +235,17 @@ public class SearchResultsViewModel: ObservableObject {
                     await self?.tapped(chip)
                 }
             )
+        }
+    }
+
+    @MainActor
+    private func updateLoadingPlaceholderVisibility(_ shown: Bool) {
+        isLoadingPlaceholderShown = shown
+    }
+
+    private func updateSearchResultsLoaded(_ loaded: Bool) {
+        $areNewSearchResultsLoaded.mutate { currentValue in
+            currentValue = loaded
         }
     }
     
