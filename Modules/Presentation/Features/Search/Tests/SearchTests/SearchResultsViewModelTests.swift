@@ -31,7 +31,8 @@ final class SearchResultsViewModelTests: XCTestCase {
             sut = SearchResultsViewModel(
                 resultsProvider: resultsProvider,
                 bridge: bridge,
-                config: .testConfig
+                config: .testConfig,
+                showLoadingPlaceholderDelay: 0.1
             )
             selection = {
                 self.selectedResults.append($0)
@@ -223,6 +224,22 @@ final class SearchResultsViewModelTests: XCTestCase {
         let expectedContent = SearchConfig.EmptyViewAssets.testAssets
         XCTAssertEqual(contentUnavailableVM.image, expectedContent.image)
         XCTAssertEqual(contentUnavailableVM.title, expectedContent.title)
+    }
+
+    func testOnProlonguedLoading_shouldDisplayShimmerLoadingView() async {
+        let harness = Harness(self).withSingleResultPrepared()
+
+        XCTAssertFalse(harness.sut.isLoadingPlaceholderShown)
+        await harness.sut.showLoadingPlaceholderIfNeeded()
+
+        let delayExpectation = XCTestExpectation()
+        delayExpectation.isInverted = true
+
+        await fulfillment(of: [delayExpectation], timeout: 0.2)
+        XCTAssertTrue(harness.sut.isLoadingPlaceholderShown)
+
+        await harness.sut.queryChanged(to: "query")
+        XCTAssertFalse(harness.sut.isLoadingPlaceholderShown)
     }
 }
 

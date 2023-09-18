@@ -43,12 +43,13 @@ struct SearchResultRowView: View {
     private var titleAndDescription: some View {
         VStack(alignment: .leading, spacing: .zero) {
             Text(viewModel.title)
+                .font(.subheadline)
+                .fontWeight(.medium)
                 .lineLimit(1)
-                .font(.system(size: 15, weight: .medium))
                 .foregroundColor(.primary)
             Text(viewModel.subtitle)
+                .font(.caption)
                 .lineLimit(1)
-                .font(.system(size: 12, weight: .regular))
                 .foregroundColor(.primary)
         }
     }
