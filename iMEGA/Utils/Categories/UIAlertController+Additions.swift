@@ -41,15 +41,6 @@ extension UIAlertController {
             preferredStyle: .alert
         )
         
-        alert.addAction(
-            UIAlertAction(
-                title: secondaryActionTitle,
-                style: .default
-            ) { _ in
-                secondaryAction()
-            }
-        )
-        
         let preferredAction = UIAlertAction(
             title: preferredActionTitle,
             style: .default
@@ -60,6 +51,22 @@ extension UIAlertController {
         alert.addAction(preferredAction)
         
         alert.preferredAction = preferredAction
+        
+        alert.addAction(
+            UIAlertAction(
+                title: secondaryActionTitle,
+                style: .default
+            ) { _ in
+                secondaryAction()
+            }
+        )
+        
+        alert.addAction(
+            UIAlertAction(
+                title: Strings.Localizable.notNow,
+                style: .cancel
+            )
+        )
         
         if forceDarkMode {
             alert.overrideUserInterfaceStyle = .dark

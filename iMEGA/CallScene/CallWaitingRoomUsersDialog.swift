@@ -112,10 +112,10 @@ final class CallWaitingRoomUsersDialog {
             .replacingOccurrences(of: "[MeetingName]", with: chatName)
         let callWaitingRoomDialogViewController = UIAlertController.createAlert(forceDarkMode: isCallUIVisible,
                                                                                  message: message,
-                                                                                 preferredActionTitle: Strings.Localizable.Chat.Call.WaitingRoom.Alert.Button.seeWaitingRoom,
-                                                                                 secondaryActionTitle: Strings.Localizable.Chat.Call.WaitingRoom.Alert.Button.admitAll,
-                                                                                 preferredAction: seeWaitingRoomAction,
-                                                                                 secondaryAction: admitAllAction)
+                                                                                 preferredActionTitle: Strings.Localizable.Chat.Call.WaitingRoom.Alert.Button.admitAll,
+                                                                                 secondaryActionTitle: Strings.Localizable.Chat.Call.WaitingRoom.Alert.Button.seeWaitingRoom,
+                                                                                 preferredAction: admitAllAction,
+                                                                                 secondaryAction: seeWaitingRoomAction)
         
         self.callWaitingRoomDialogViewController = callWaitingRoomDialogViewController
         show(callWaitingRoomDialogViewController)
