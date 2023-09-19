@@ -378,6 +378,7 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 3.0;
 
 - (void)updateContentView:(CGFloat)height {
     self.tableView.contentInset = UIEdgeInsetsMake(0, 0, height, 0);
+    self.didUpdateMiniPlayerHeight(height);
 }
 
 #pragma mark - RecentsPreferenceProtocol
