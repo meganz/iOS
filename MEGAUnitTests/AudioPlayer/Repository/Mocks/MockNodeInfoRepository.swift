@@ -69,10 +69,10 @@ struct MockNodeInfoRepository: NodeInfoRepositoryProtocol {
         }
     }
     
-    func publicNode(fromFileLink: String, completion: @escaping ((MEGANode?) -> Void)) {
+    func publicNode(fromFileLink: String) async -> MEGANode? {
         switch result {
-        case .failure: return completion(nil)
-        case .success: return completion(MEGANode())
+        case .failure: return nil
+        case .success: return MEGANode()
         }
     }
     

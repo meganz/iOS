@@ -8,7 +8,7 @@ protocol NodeInfoUseCaseProtocol {
     func childrenInfo(fromParentHandle: HandleEntity) -> [AudioPlayerItem]?
     func folderChildrenInfo(fromParentHandle: HandleEntity) -> [AudioPlayerItem]?
     func info(fromNode: MEGANode) -> AudioPlayerItem?
-    func publicNode(fromFileLink: String, completion: @escaping ((MEGANode?) -> Void))
+    func publicNode(fromFileLink: String) async -> MEGANode?
     func loginToFolder(link: String)
     func folderLinkLogout()
 }
@@ -44,8 +44,8 @@ final class NodeInfoUseCase: NodeInfoUseCaseProtocol {
         nodeInfoRepository.info(fromNodes: [fromNode])?.first
     }
     
-    func publicNode(fromFileLink: String, completion: @escaping ((MEGANode?) -> Void)) {
-        nodeInfoRepository.publicNode(fromFileLink: fromFileLink, completion: completion)
+    func publicNode(fromFileLink: String) async -> MEGANode? {
+        await nodeInfoRepository.publicNode(fromFileLink: fromFileLink)
     }
     
     func loginToFolder(link: String) {

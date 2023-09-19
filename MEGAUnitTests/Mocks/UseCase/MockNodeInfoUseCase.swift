@@ -29,8 +29,8 @@ final class MockNodeInfoUseCase: NodeInfoUseCaseProtocol {
         nil
     }
     
-    func publicNode(fromFileLink: String, completion: @escaping ((MEGANode?) -> Void)) {
-        
+    func publicNode(fromFileLink: String) async -> MEGANode? {
+        nil
     }
     
     func loginToFolder(link: String) {

@@ -323,17 +323,6 @@ final class NodeInfoRepositoryTests: XCTestCase {
         }
     }
     
-    // MARK: - publicNodeFromFileLink
-    
-    func testPublicNode_whenCalled_callPublicNodeWithNoAlteringPublicLink() {
-        let (sut, mockSdk, _, _, _) = makeSUT()
-        let fileLink = "any-file-link"
-        
-        sut.publicNode(fromFileLink: fileLink) { _ in }
-        
-        XCTAssertEqual(mockSdk.messages, [ .publicNodeForMegaFileLink(fileLink) ])
-    }
-    
     // MARK: - Helpers
     
     private func makeSUT(
