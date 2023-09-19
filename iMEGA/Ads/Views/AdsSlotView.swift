@@ -3,11 +3,11 @@ import SwiftUI
 
 struct AdsSlotView<T: View>: View {
     @StateObject var viewModel: AdsSlotViewModel
-    var contentView: () -> T
+    var contentView: T
     
     var body: some View {
         VStack(spacing: 0) {
-            contentView()
+            contentView
             
             if viewModel.displayAds {
                 AdsWebView(url: viewModel.adsUrl, adsTapAction: {

@@ -109,7 +109,7 @@ extension NotificationsTableViewController {
     }
     
     @objc func openChatRoom(forUserAlert alert: MEGAUserAlert) {
-        guard let mainTabBarController = UIApplication.shared.keyWindow?.rootViewController as? MainTabBarController else {
+        guard let mainTabBarController = UIApplication.mainTabBarRootViewController() as? MainTabBarController else {
             return
         }
         

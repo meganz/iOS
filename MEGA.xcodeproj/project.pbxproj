@@ -1551,6 +1551,11 @@
 		B52E231D28A0D66F0018C3C3 /* FeatureFlagUseCase+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52E231C28A0D66F0018C3C3 /* FeatureFlagUseCase+Additions.swift */; };
 		B53B02BE2A96135200550A69 /* MEGAPurchase+PromotedPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53B02BD2A96135200550A69 /* MEGAPurchase+PromotedPlan.swift */; };
 		B541CD302A6AAF53004B4CCC /* PlanSelectionSnackBarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B541CD2F2A6AAF53004B4CCC /* PlanSelectionSnackBarType.swift */; };
+		B5430FCE2AB97629003F8C34 /* UIApplication+TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A8CA002AB96442001F9B83 /* UIApplication+TabBar.swift */; };
+		B5430FD02AB978FB003F8C34 /* AdsSlotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EA095D2AA1D289001171C2 /* AdsSlotView.swift */; };
+		B5430FD22AB97905003F8C34 /* AdsSlotViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EA09602AA1D38D001171C2 /* AdsSlotViewModel.swift */; };
+		B5430FD32AB9793E003F8C34 /* AdsWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51DDFA22AA896E4009BDF3B /* AdsWebView.swift */; };
+		B5430FD52AB9796A003F8C34 /* MainTabBarWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51DDFAA2AA8A74F009BDF3B /* MainTabBarWrapper.swift */; };
 		B547025228B8AFB6005F7F71 /* MEGAPhotoBrowserViewController+LiveText.swift in Sources */ = {isa = PBXBuildFile; fileRef = B547025128B8AFB6005F7F71 /* MEGAPhotoBrowserViewController+LiveText.swift */; };
 		B547C0E629FB716C0008BEF2 /* SortOrderType+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B547C0E529FB716C0008BEF2 /* SortOrderType+Mapper.swift */; };
 		B5488B732A8DBB8600A069DF /* CustomModalAlertViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5488B722A8DBB8600A069DF /* CustomModalAlertViewController+Additions.swift */; };
@@ -1596,6 +1601,7 @@
 		B5967A0829403AE500AD4E61 /* VerifyCredentialsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5967A0729403AE500AD4E61 /* VerifyCredentialsViewController+Additions.swift */; };
 		B596D12B2977DC34002C5094 /* NodeInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B596D1292977DC33002C5094 /* NodeInfoViewModel.swift */; };
 		B596D15C2979280A002C5094 /* CloudDriveViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B596D15B2979280A002C5094 /* CloudDriveViewModel.swift */; };
+		B5A8CA012AB96442001F9B83 /* UIApplication+TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A8CA002AB96442001F9B83 /* UIApplication+TabBar.swift */; };
 		B5AD33C529D136A600707496 /* UpgradeAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AD33C429D136A500707496 /* UpgradeAccountViewModel.swift */; };
 		B5B0E30627F1BCA700DB6146 /* WarningViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B0E30527F1BCA700DB6146 /* WarningViewModelTests.swift */; };
 		B5BEB0FE2907C5F5006A442D /* CameraUploadsTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BEB0FD2907C5F5006A442D /* CameraUploadsTableViewController+Additions.swift */; };
@@ -4161,6 +4167,7 @@
 		B5967A0729403AE500AD4E61 /* VerifyCredentialsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VerifyCredentialsViewController+Additions.swift"; sourceTree = "<group>"; };
 		B596D1292977DC33002C5094 /* NodeInfoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeInfoViewModel.swift; sourceTree = "<group>"; };
 		B596D15B2979280A002C5094 /* CloudDriveViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveViewModel.swift; sourceTree = "<group>"; };
+		B5A8CA002AB96442001F9B83 /* UIApplication+TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+TabBar.swift"; sourceTree = "<group>"; };
 		B5AD33C429D136A500707496 /* UpgradeAccountViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeAccountViewModel.swift; sourceTree = "<group>"; };
 		B5B0E30527F1BCA700DB6146 /* WarningViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningViewModelTests.swift; sourceTree = "<group>"; };
 		B5BEB0FD2907C5F5006A442D /* CameraUploadsTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraUploadsTableViewController+Additions.swift"; sourceTree = "<group>"; };
@@ -5224,8 +5231,6 @@
 			isa = PBXGroup;
 			children = (
 				0D7E5FA52634E1E700C5CB2A /* DownloadFileRepository.swift */,
-				83A49E7C270476A300FD0D85 /* TransferInventoryRepository.swift */,
-				0D0B538B262558BB00E9BB16 /* UploadFileRepository.swift */,
 				5D2AF57E24F4A711000B2F29 /* UploadPhotoAssetsRepository.swift */,
 			);
 			path = Transfer;
@@ -6629,6 +6634,7 @@
 				5B0343D825822867005307A6 /* UIApplication+Additions.swift */,
 				A815FCE81FE2AD080075AC29 /* UIApplication+MNZCategory.h */,
 				A815FCE91FE2AD080075AC29 /* UIApplication+MNZCategory.m */,
+				B5A8CA002AB96442001F9B83 /* UIApplication+TabBar.swift */,
 				83B906B9249A29CA0088F15C /* UIButton+Additions.swift */,
 				77F43DD72034637300AE4F42 /* UICollectionView+MNZCategory.h */,
 				77F43DD82034637300AE4F42 /* UICollectionView+MNZCategory.m */,
@@ -14596,6 +14602,7 @@
 				5B0343D925822867005307A6 /* UIApplication+Additions.swift in Sources */,
 				A815FCEA1FE2AD080075AC29 /* UIApplication+MNZCategory.m in Sources */,
 				9495DBBD2A40C08300FA22EE /* UIApplication+PermissionModal.swift in Sources */,
+				B5A8CA012AB96442001F9B83 /* UIApplication+TabBar.swift in Sources */,
 				83B906BB249A29CA0088F15C /* UIButton+Additions.swift in Sources */,
 				77F43DD92034637300AE4F42 /* UICollectionView+MNZCategory.m in Sources */,
 				5BC3D060242A36240048123A /* UIColor+Additions.swift in Sources */,
@@ -14805,6 +14812,9 @@
 				C46157C12538A8EE00F3970D /* ActionSheetSwitchCell.swift in Sources */,
 				8340CAF8284E48F8007C3B39 /* ActionsView.swift in Sources */,
 				8340CAFB284E4F0C007C3B39 /* ActionViewModel.swift in Sources */,
+				B5430FD02AB978FB003F8C34 /* AdsSlotView.swift in Sources */,
+				B5430FD22AB97905003F8C34 /* AdsSlotViewModel.swift in Sources */,
+				B5430FD32AB9793E003F8C34 /* AdsWebView.swift in Sources */,
 				5BE689BC2419189700462134 /* AppearancePreference+CoreDataClass.swift in Sources */,
 				5BE689B92419189300462134 /* AppearancePreference+CoreDataProperties.swift in Sources */,
 				B60C7B2E2A29CCDB00AAA21F /* AppEnvironmentConfigurator.swift in Sources */,
@@ -14853,6 +14863,7 @@
 				943F8B271EF283BD00AFD89F /* LaunchViewController.m in Sources */,
 				941135591F01006A00D33428 /* LTHKeychainUtils.m in Sources */,
 				9411355A1F01006A00D33428 /* LTHPasscodeViewController.m in Sources */,
+				B5430FD52AB9796A003F8C34 /* MainTabBarWrapper.swift in Sources */,
 				7764AAB4246EE62900134C88 /* MegaAvatarView.swift in Sources */,
 				77892EA120E503580020A533 /* MEGACD.xcdatamodeld in Sources */,
 				77F95CF320E3E60A00F42D9C /* MEGAChatAttachNodeRequestDelegate.m in Sources */,
@@ -14980,6 +14991,7 @@
 				83B906BF249A29EF0088F15C /* UIActivityIndicatorView+Additions.swift in Sources */,
 				0D2E4BDE26241C8900F4804A /* UIAlertController+Additions.swift in Sources */,
 				B6F5EAB225CBC30C0038AC0B /* UIApplication+MNZCategory.m in Sources */,
+				B5430FCE2AB97629003F8C34 /* UIApplication+TabBar.swift in Sources */,
 				83B906BD249A29EB0088F15C /* UIButton+Additions.swift in Sources */,
 				5BC3D062242A45BA0048123A /* UIColor+Additions.swift in Sources */,
 				94892CA01EFBF16A00AEAC25 /* UIColor+MNZCategory.m in Sources */,

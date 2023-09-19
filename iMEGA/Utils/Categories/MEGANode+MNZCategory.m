@@ -43,7 +43,10 @@
 }
 
 - (void)navigateToParentAndPresent {
-    MainTabBarController *mainTBC = (MainTabBarController *) UIApplication.sharedApplication.delegate.window.rootViewController;
+    if (!UIApplication.mainTabBarRootViewController) {
+        return;
+    }
+    MainTabBarController *mainTBC = (MainTabBarController *)UIApplication.mainTabBarRootViewController;
     
     if ([MEGASdk.shared accessLevelForNode:self] != MEGAShareTypeAccessOwner) { // Node from inshare
         mainTBC.selectedIndex = TabTypeSharedItems;
