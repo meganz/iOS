@@ -269,7 +269,7 @@
             NSArray *componentsArray = [lastMessageString componentsSeparatedByString:@"\x01"];
             if (componentsArray.count == 1) {
                 NSString *attachedFileString = LocalizedString(@"attachedFile", @"A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %@ as it will be replaced at runtime with the name of the attached file.");
-                lastMessageString = [attachedFileString stringByReplacingOccurrencesOfString:@"%s" withString:lastMessageString];
+                lastMessageString = [attachedFileString stringByReplacingOccurrencesOfString:@"%@" withString:lastMessageString];
             } else {
                 lastMessageString = LocalizedString(@"attachedXFiles", @"A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files.");
                 lastMessageString = [lastMessageString stringByReplacingOccurrencesOfString:@"%s" withString:[NSString stringWithFormat:@"%tu", componentsArray.count]];
