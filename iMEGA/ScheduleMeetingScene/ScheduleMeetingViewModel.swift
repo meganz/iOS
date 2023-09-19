@@ -184,7 +184,7 @@ final class ScheduleMeetingViewModel: ObservableObject {
     }
     
     func cancelDidTap() {
-        guard hasUpdatedDetails() else {
+        guard !areDetailsUnchanged() else {
             Task { await dismiss() }
             return
         }
@@ -242,7 +242,7 @@ final class ScheduleMeetingViewModel: ObservableObject {
     }
     
     func updateRightBarButtonState() {
-        isRightBarButtonEnabled = hasUpdatedDetails()
+        isRightBarButtonEnabled = !areDetailsUnchanged()
         && !meetingNameTooLong
         && !meetingDescriptionTooLong
         && !trimmedMeetingName.isEmpty
@@ -324,29 +324,76 @@ final class ScheduleMeetingViewModel: ObservableObject {
         dateFormatter.localisedString(from: date) + " " + timeFormatter.localisedString(from: date)
     }
     
-    private func hasUpdatedDetails() -> Bool {
-        guard (trimmedMeetingName == viewConfiguration.meetingName
-               || !viewConfiguration.shouldAllowEditingMeetingName)
-                && startDate == viewConfiguration.startDate
-                && endDate == viewConfiguration.endDate
-                && (rules == viewConfiguration.rules
-                    || !viewConfiguration.shouldAllowEditingRecurrenceOption)
-                && (meetingLinkEnabled == viewConfiguration.meetingLinkEnabled
-                    || !viewConfiguration.shouldAllowEditingMeetingLink)
-                && (participantHandleList.count == viewConfiguration.participantHandleList.count
-                    || !viewConfiguration.shouldAllowEditingParticipants)
-                && (calendarInviteEnabled == viewConfiguration.calendarInviteEnabled
-                    || !viewConfiguration.shouldAllowEditingCalendarInvite)
-                && (waitingRoomEnabled == viewConfiguration.waitingRoomEnabled
-                    || !viewConfiguration.shouldAllowEditingWaitingRoom)
-                && (allowNonHostsToAddParticipantsEnabled == viewConfiguration.allowNonHostsToAddParticipantsEnabled
-                    || !viewConfiguration.shouldAllowEditingAllowNonHostsToAddParticipants)
-                && (trimmedMeetingDescription == viewConfiguration.meetingDescription
-                    || !viewConfiguration.shouldAllowEditingMeetingDescription) else {
-            return true
-        }
-        
-        return false
+    private func isMeetingDescriptionUnchanged() -> Bool {
+        trimmedMeetingDescription == viewConfiguration.meetingDescription
+        || !viewConfiguration.shouldAllowEditingMeetingDescription
+    }
+    
+    private func isAllowNonHostsToAddParticipantsOptionUnchanged() -> Bool {
+        allowNonHostsToAddParticipantsEnabled == viewConfiguration.allowNonHostsToAddParticipantsEnabled
+        || !viewConfiguration.shouldAllowEditingAllowNonHostsToAddParticipants
+    }
+    
+    private func isWaitingRoomOptionUnchanged() -> Bool {
+        waitingRoomEnabled == viewConfiguration.waitingRoomEnabled
+        || !viewConfiguration.shouldAllowEditingWaitingRoom
+    }
+    
+    private func isCalendarInviteOptionUnchanged() -> Bool {
+        calendarInviteEnabled == viewConfiguration.calendarInviteEnabled
+        || !viewConfiguration.shouldAllowEditingCalendarInvite
+    }
+    
+    private func isParticipantListUnchanged() -> Bool {
+        participantHandleList.count == viewConfiguration.participantHandleList.count
+        || !viewConfiguration.shouldAllowEditingParticipants
+    }
+    
+    private func isMeetingLinkOptionUnchanged() -> Bool {
+        meetingLinkEnabled == viewConfiguration.meetingLinkEnabled
+        || !viewConfiguration.shouldAllowEditingMeetingLink
+    }
+    
+    private func areRulesUnchanged() -> Bool {
+        rules == viewConfiguration.rules
+        || !viewConfiguration.shouldAllowEditingRecurrenceOption
+    }
+    
+    private func isEndDateUnchanged() -> Bool {
+        endDate == viewConfiguration.endDate
+    }
+    
+    private func isStartDateUnchanged() -> Bool {
+        startDate == viewConfiguration.startDate
+    }
+    
+    private func isMeetingNameUnchanged() -> Bool {
+        trimmedMeetingName == viewConfiguration.meetingName
+        || !viewConfiguration.shouldAllowEditingMeetingName
+    }
+    
+    private func isMeetingTimeUnchanged() -> Bool {
+        isStartDateUnchanged()
+        && isEndDateUnchanged()
+        && areRulesUnchanged()
+    }
+    
+    private func isMeetingAttributesUnchanged() -> Bool {
+        isMeetingLinkOptionUnchanged()
+        && isParticipantListUnchanged()
+        && isCalendarInviteOptionUnchanged()
+        && isWaitingRoomOptionUnchanged()
+        && isAllowNonHostsToAddParticipantsOptionUnchanged()
+    }
+    
+    private func isMeetingNameOrDescriptionUnchanged() -> Bool {
+        isMeetingNameUnchanged() && isMeetingDescriptionUnchanged()
+    }
+    
+    private func areDetailsUnchanged() -> Bool {
+        isMeetingNameOrDescriptionUnchanged()
+        && isMeetingTimeUnchanged()
+        && isMeetingAttributesUnchanged()
     }
     
     private func startDateUpdated(previouslySelectedDate: Date) {
