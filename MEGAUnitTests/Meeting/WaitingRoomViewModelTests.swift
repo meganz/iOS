@@ -328,11 +328,29 @@ final class WaitingRoomViewModelTests: XCTestCase {
         }
     }
     
-    func testGoToCallUI_onHostAllowToJoin_shouldOpenCallUI() {
+    func testGoToCallUI_onHostAllowToJoinAndChangeTypeIsWaitingRoomAllow_shouldOpenCallUI() {
         let scheduledMeeting = ScheduledMeetingEntity(chatId: 100)
         let router = MockWaitingRoomViewRouter()
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity())
-        let callEntity = CallEntity(status: .waitingRoom, chatId: 100, waitingRoomStatus: .allowed)
+        let callEntity = CallEntity(chatId: 100, changeType: .waitingRoomAllow)
+        let callUpdateSubject = PassthroughSubject<CallEntity, Never>()
+        let callUseCase = MockCallUseCase(callUpdateSubject: callUpdateSubject)
+        let sut = WaitingRoomViewModel(scheduledMeeting: scheduledMeeting, router: router, chatRoomUseCase: chatRoomUseCase, callUseCase: callUseCase)
+        
+        XCTAssertEqual(sut.viewState, .waitForHostToLetIn)
+        
+        callUpdateSubject.send(callEntity)
+        
+        evaluate {
+            router.openCallUI_calledTimes == 1
+        }
+    }
+    
+    func testGoToCallUI_onHostAllowToJoinAndCallStatusIsInProgress_shouldOpenCallUI() {
+        let scheduledMeeting = ScheduledMeetingEntity(chatId: 100)
+        let router = MockWaitingRoomViewRouter()
+        let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity())
+        let callEntity = CallEntity(status: .inProgress, chatId: 100, changeType: .status)
         let callUpdateSubject = PassthroughSubject<CallEntity, Never>()
         let callUseCase = MockCallUseCase(callUpdateSubject: callUpdateSubject)
         let sut = WaitingRoomViewModel(scheduledMeeting: scheduledMeeting, router: router, chatRoomUseCase: chatRoomUseCase, callUseCase: callUseCase)

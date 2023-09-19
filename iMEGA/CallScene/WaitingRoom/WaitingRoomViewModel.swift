@@ -273,11 +273,11 @@ final class WaitingRoomViewModel: ObservableObject {
                 guard let self,
                       call.chatId == chatId,
                       viewState != .guestJoin && viewState != .guestJoining else { return }
-                if call.waitingRoomStatus == .allowed {
+                if call.changeType == .waitingRoomAllow || (call.changeType == .status && call.status == .inProgress) {
                     goToCallUI(for: call)
-                } else if call.waitingRoomStatus == .notAllowed && call.termCodeType == .kicked {
+                } else if call.termCodeType == .kicked {
                     showHostDenyAlert()
-                } else if call.waitingRoomStatus == .notAllowed && call.termCodeType == .waitingRoomTimeout {
+                } else if call.termCodeType == .waitingRoomTimeout {
                     showHostDidNotRespondAlert()
                 } else {
                     updateCallStatus()
