@@ -135,6 +135,19 @@ final class ScheduleMeetingCreationCustomOptionsViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel.interval, 10)
     }
     
+    func testUpdateInterval_whenFrequencyIsDailyAndIntervalIsOne_weekDayListShouldIncludeAllWeekdays() throws {
+        let viewModel = makeViewModel(withFrequency: .daily)
+        viewModel.update(interval: 1)
+        let weekDayList = try XCTUnwrap(viewModel.rules.weekDayList)
+        XCTAssertTrue(weekDayList == Array(1...7))
+    }
+
+    func testUpdateInterval_whenFrequencyIsDailyAndIntervalIsNotOne_weekDayListShouldBeNil() {
+        let viewModel = makeViewModel(withFrequency: .daily)
+        viewModel.update(interval: 2)
+        XCTAssertNil(viewModel.rules.weekDayList)
+    }
+    
     func testUpdateFrequency_shouldMatch() {
         let viewModel = makeViewModel(withFrequency: .daily)
         viewModel.update(frequency: .monthly)

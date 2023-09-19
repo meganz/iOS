@@ -76,6 +76,9 @@ final class ScheduleMeetingCreationCustomOptionsViewModel: ObservableObject {
     
     func update(interval: Int) {
         rules.interval = interval
+        if rules.frequency == .daily {
+            rules.weekDayList = interval == 1 ? Array(1...7) : nil
+        }
         monthlyOptionsViewModel?.update(interval: interval)
         weeklyOptionsViewModel?.update(interval: interval)
     }
