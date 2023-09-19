@@ -309,6 +309,9 @@ final class HomeViewController: UIViewController {
     private func addContentViewController() {
         addChild(contentViewController)
         slidePanelView.addRecentsViewController(contentViewController)
+        contentViewController.didUpdateMiniPlayerHeight = { [weak self] value in
+            self?.searchResultsBridge.update(bottomInset: value)
+        }
         contentViewController.didMove(toParent: self)
     }
     
