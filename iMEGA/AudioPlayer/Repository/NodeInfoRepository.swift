@@ -1,5 +1,6 @@
 import Foundation
 import MEGADomain
+import MEGASwift
 
 protocol NodeInfoRepositoryProtocol {
     func path(fromHandle: HandleEntity) -> URL?
@@ -10,7 +11,7 @@ protocol NodeInfoRepositoryProtocol {
     func node(fromHandle: HandleEntity) -> MEGANode?
     func folderNode(fromHandle: HandleEntity) -> MEGANode?
     func folderAuthNode(fromNode: MEGANode) -> MEGANode?
-    func publicNode(fromFileLink: String, completion: @escaping ((MEGANode?) -> Void))
+    func publicNode(fromFileLink: String) async -> MEGANode?
     func loginToFolder(link: String)
     func folderLinkLogout()
 }
@@ -111,13 +112,17 @@ final class NodeInfoRepository: NodeInfoRepositoryProtocol {
         folderPlayableChildren(of: parent).flatMap(authInfo)
     }
     
-    func publicNode(fromFileLink: String, completion: @escaping ((MEGANode?) -> Void)) {
+    func publicNode(fromFileLink: String) async -> MEGANode? {
+        await withAsyncValue { publicNode(fromFileLink: fromFileLink, completion: $0) }
+    }
+    
+    private func publicNode(fromFileLink: String, completion: @escaping (Result<MEGANode?, Never>) -> Void) {
         sdk.publicNode(forMegaFileLink: fromFileLink, delegate: MEGAGetPublicNodeRequestDelegate(completion: { (request, error) in
             guard let error = error, error.type == .apiOk  else {
-                completion(nil)
+                completion(.success(nil))
                 return
             }
-            completion(request?.publicNode)
+            completion(.success(request?.publicNode))
         }))
     }
     

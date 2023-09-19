@@ -45,17 +45,10 @@ final class NodeInfoUseCaseTests: XCTestCase {
         XCTAssertNil(nodeInfoFailureRepository.info(fromNodes: [MEGANode()]))
     }
     
-    func testGetPublicNodeFromFileLink() {
-        let expectations = expectation(description: "for async calls")
-        
-        nodeInfoSuccessRepository.publicNode(fromFileLink: "") { [weak self] node in
-            XCTAssertNotNil(node)
-            self?.nodeInfoFailureRepository.publicNode(fromFileLink: "") { node in
-                XCTAssertNil(node)
-                expectations.fulfill()
-            }
-        }
-        
-        wait(for: [expectations], timeout: 0.2)
+    func testGetPublicNodeFromFileLink() async {
+        let successNode = await nodeInfoSuccessRepository.publicNode(fromFileLink: "")
+        XCTAssertNotNil(successNode)
+        let failureNode = await nodeInfoFailureRepository.publicNode(fromFileLink: "")
+        XCTAssertNil(failureNode)
     }
 }
