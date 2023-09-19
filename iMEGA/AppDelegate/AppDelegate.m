@@ -405,7 +405,7 @@
     if ([MEGAReachabilityManager isReachable]) {
         if ([userActivity.activityType isEqualToString:CSSearchableItemActionType]) {
             MEGALinkManager.nodeToPresentBase64Handle = userActivity.userInfo[@"kCSSearchableItemActivityIdentifier"];
-            if ([self.window.rootViewController isKindOfClass:[MainTabBarController class]] && ![LTHPasscodeViewController doesPasscodeExist]) {
+            if ([self isAdsMainTabBarRootView] && ![LTHPasscodeViewController doesPasscodeExist]) {
                 [MEGALinkManager presentNode];
             }
         } else if ([userActivity.activityType isEqualToString:@"INStartCallIntent"]) {
@@ -645,7 +645,7 @@
         if (![self isAdsMainTabBarRootView]) {
             _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
             
-            UIViewController *mainController = [self adsMainTabBarViewController: _mainTBC];
+            UIViewController *mainController = [self adsMainTabBarController: _mainTBC];
             [self.window setRootViewController:mainController];
             
             if ([LTHPasscodeViewController doesPasscodeExist]) {

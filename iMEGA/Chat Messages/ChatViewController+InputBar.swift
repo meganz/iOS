@@ -69,16 +69,18 @@ extension ChatViewController {
             dismissKeyboardIfRequired()
         }
         
-        if let tabBarController = UIApplication.shared.keyWindow?.rootViewController as? UITabBarController,
-           !tabBarController.tabBar.isHidden {
-            tabBarController.tabBar.isHidden = true
-            
-            tabBarController.present(viewController, animated: animated) {
-                tabBarController.tabBar.isHidden = false
+        if let mainTabBarController = UIApplication.mainTabBarRootViewController() {
+            if !mainTabBarController.tabBar.isHidden {
+                mainTabBarController.tabBar.isHidden = true
+                
+                mainTabBarController.present(viewController, animated: animated) {
+                    mainTabBarController.tabBar.isHidden = false
+                }
+                
+                return
             }
-        } else {
-            present(viewController, animated: animated)
         }
+        present(viewController, animated: animated)
     }
     
     func replaceCurrentViewController(withViewController viewController: UIViewController,

@@ -1,5 +1,11 @@
 #import "UIApplication+MNZCategory.h"
 
+#ifdef MNZ_SHARE_EXTENSION
+#import "MEGAShare-Swift.h"
+#else
+#import "MEGA-Swift.h"
+#endif
+
 @implementation UIApplication (MNZCategory)
 
 + (UIViewController *)mnz_presentingViewController {
@@ -34,6 +40,10 @@
         }
         
         return selectedViewController;
+    }
+    
+    if (UIApplication.mainTabBarVisibleController) {
+        return UIApplication.mainTabBarVisibleController;
     }
     
     return rootViewController;

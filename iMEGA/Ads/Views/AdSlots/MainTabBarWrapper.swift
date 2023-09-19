@@ -2,15 +2,15 @@ import SwiftUI
 
 struct MainTabBarWrapper: UIViewControllerRepresentable {
     
-    private var mainTabBar: MainTabBarController
+    private(set) var mainTabBar: UITabBarController
     
-    init(mainTabBar: MainTabBarController) {
+    init(mainTabBar: UITabBarController) {
         self.mainTabBar = mainTabBar
     }
     
-    func makeUIViewController(context: Context) -> MainTabBarController {
+    func makeUIViewController(context: Context) -> UITabBarController {
         mainTabBar
     }
     
-    func updateUIViewController(_ uiViewController: MainTabBarController, context: Context) {}
+    func updateUIViewController(_ uiViewController: UITabBarController, context: Context) {}
 }
