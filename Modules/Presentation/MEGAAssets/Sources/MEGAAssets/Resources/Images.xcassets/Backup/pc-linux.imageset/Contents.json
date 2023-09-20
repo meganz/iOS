@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "mobile.pdf",
+      "filename" : "pc-linux.pdf",
       "idiom" : "universal"
     },
     {
@@ -11,7 +11,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "mobile 1.pdf",
+      "filename" : "pc-linux 1.pdf",
       "idiom" : "universal"
     }
   ],

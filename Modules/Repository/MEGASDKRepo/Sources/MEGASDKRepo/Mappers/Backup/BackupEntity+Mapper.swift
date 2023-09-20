@@ -19,6 +19,7 @@ fileprivate extension BackupEntity {
         self.init(id: Int(backupInfo.id),
                   name: backupInfo.name ?? "",
                   deviceId: backupInfo.deviceId ?? "",
+                  userAgent: backupInfo.userAgent ?? "",
                   rootHandle: backupInfo.root,
                   lastHandleSync: backupInfo.lastSync,
                   type: backupInfo.type.toBackupTypeEntity(),
