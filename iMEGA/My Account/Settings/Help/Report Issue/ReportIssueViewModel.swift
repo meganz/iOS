@@ -37,10 +37,10 @@ final class ReportIssueViewModel: ObservableObject {
     var isSendLogFileToggleOn = true
     
     init(router: some ReportIssueViewRouting,
-         uploadFileUseCase: any UploadFileUseCaseProtocol,
-         supportUseCase: any SupportUseCaseProtocol,
-         monitorUseCase: any NetworkMonitorUseCaseProtocol,
-         accountUseCase: any AccountUseCaseProtocol,
+         uploadFileUseCase: some UploadFileUseCaseProtocol,
+         supportUseCase: some SupportUseCaseProtocol,
+         monitorUseCase: some NetworkMonitorUseCaseProtocol,
+         accountUseCase: some AccountUseCaseProtocol,
          areLogsEnabled: Bool = false,
          sourceUrl: URL?
     ) {
@@ -51,9 +51,6 @@ final class ReportIssueViewModel: ObservableObject {
         self.supportUseCase = supportUseCase
         self.monitorUseCase = monitorUseCase
         self.accountUseCase = accountUseCase
-        self.monitorUseCase.networkPathChanged(completion: { [weak self] (isConnected) in
-            self?.isConnected = isConnected
-        })
     }
     
     private func uploadLogFileIfNeeded() {
@@ -165,6 +162,13 @@ final class ReportIssueViewModel: ObservableObject {
                                              secondaryButtonAction: cancelUploadReport)
         case .none:
             return ReportIssueAlertDataModel()
+        }
+    }
+    
+    @MainActor
+    func monitorNetworkChanges() async {
+        for await isConnected in monitorUseCase.connectionChangedStream {
+            self.isConnected = isConnected
         }
     }
 }

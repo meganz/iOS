@@ -141,9 +141,11 @@ final class HomeViewController: UIViewController {
         
         startConversationViewModel?.dispatch(.viewDidLoad)
         startConversationViewModel?.invokeCommand = { [weak self] command in
-            switch command {
-            case .networkAvailablityUpdate(let networkAvailable):
-                self?.startConversationItem.isEnabled = networkAvailable
+            asyncOnMain {
+                switch command {
+                case .networkAvailablityUpdate(let networkAvailable):
+                    self?.startConversationItem.isEnabled = networkAvailable
+                }
             }
         }
         

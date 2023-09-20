@@ -726,7 +726,9 @@ final class ChatRoomsListViewModel: ObservableObject {
     private func monitorNetworkChanges() {
         networkMonitorUseCase.networkPathChanged { [weak self] isConnectedToNetwork in
             guard let self else { return }
-            self.isConnectedToNetwork = isConnectedToNetwork
+            Task { @MainActor in
+                self.isConnectedToNetwork = isConnectedToNetwork
+            }
         }
     }
     
