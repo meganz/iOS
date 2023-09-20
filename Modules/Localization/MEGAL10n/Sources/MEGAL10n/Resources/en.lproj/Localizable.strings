@@ -1291,9 +1291,9 @@
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="Send message";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"="Verify credentials";
+"verifyCredentials"="Approve credentials";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
-"verify"="Mark as verified";
+"verify"="Approve";
 /* Button title */
 "verified"="Verified";
 /* A button title to delete the history of a chat. */
@@ -1416,12 +1416,12 @@
 "resend"="Resend";
 /* Error message displayed when trying to invite a contact who is already added. */
 "alreadyAContact"="%s is already a contact.";
-/* A summary message when a user sent a contact's details through the chat. Please keep %@ as it will be replaced at runtime with the name of the contact that was sent. */
-"sentContact"="Sent contact: %@";
+/* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
+"sentContact"="Sent contact: %s";
 /* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
 "sentXContacts"="Sent %s contacts.";
-/* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %@ as it will be replaced at runtime with the name of the attached file. */
-"attachedFile"="Attached: %@";
+/* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
+"attachedFile"="Attached: %s";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="Attached %s files.";
 /* Label in a button that allows to jump to the latest item */
@@ -2000,8 +2000,6 @@
 "recents.emptyState.activityHidden.button"="Show activity";
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="Modified by %@";
-/* Title for a recent action bucket with multiple files. %@ will be replaced by the filename of the first file in the bucket. %ld will be replaced by the total number of other files in the bucket. */
-"home.recent.multipleFileTitle"="“%@” and %ld more";
 /* Label that indicates who uploaded a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.createdByLabel"="Created by %@";
 /* Message shown when the user has not recent activity in their account. */
@@ -2708,7 +2706,7 @@
 "account.upgrade.alreadyHaveASubscription.message"="You have previously subscribed to a Pro plan with Google Play or AppGallery. Please manually cancel your subscription with them inside Google Play or the Huawei AppGallery on your device and then retry.";
 /* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
 "account.upgrade.alreadyHaveACancellableSubscription.message"="Do you want to cancel your current subscription and continue with the purchase?";
-/* Error message shown when a user tries to purchase plan that is not available with their current plan */
+/* This message will be shown if the user is not allowed to purchase a plan because of their current plan.  For example, the user have a Business or Pro Flexi account, they should not be able to purchase a Pro plan. We will show this to the user when they try to purchase one. */
 "account.upgrade.notAvailableWithCurrentPlan.message"="Not available with your current plan";
 /* Dialog title shown before deleting an account with active subscription */
 "account.delete.subscription.title"="Active subscription";
@@ -3173,7 +3171,7 @@
 /* Chat Meetings tab - Section header title for the chat listing screen */
 "chat.listing.sectionHeader.pastMeetings.title"="Past meetings";
 /* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
-"general.menuAction.verifyContact.title"="Verify %@";
+"general.menuAction.verifyContact.title"="Approve %@";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
 "sharedItems.contactVerification.section.verifyContact.owner.message"="We protect your data with zero-knowledge encryption. To ensure extra security, we ask you to verify the contacts you share information with before they can access the shared folders.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
@@ -3181,7 +3179,7 @@
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
 "sharedItems.contactVerification.section.verifyContact.receiver.message"="We protect your data with zero-knowledge encryption. To ensure extra security, we ask you to verify the contacts you receive information from before you can access the shared folders.";
 /* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
-"sharedItems.contactVerification.section.verifyContact.bannerMessage"="To access the shared folder, the person who shared it with you should verify you, too.";
+"sharedItems.contactVerification.section.verifyContact.bannerMessage"="To access the shared folder, the person who shared it with you should approve you, too.";
 /* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
 "sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ is shared by a contact you haven’t verified. To ensure extra security, we recommend that you verify their credentials in Contacts by tapping on ⓘ next to the contact you want to verify.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
@@ -3315,7 +3313,7 @@
 /* Text description for a meeting showing that is a monthly recurring meeting */
 "meetings.scheduled.recurring.monthly"="monthly";
 /* On Outgoing Shared Items Tab. Title of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="Cannot verify contact";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="Cannot approve contact";
 /* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
 "sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="You can’t verify %@ as they’re not in your contact list. Wait for them to accept your invitation first.";
 /* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
@@ -3445,14 +3443,14 @@
 /* Show in Backups section action title */
 "device.center.show.in.backups.action.title"="Show in Backups";
 /* Device Center rename device action title */
-"device.center.rename.device.title"="Device Name";
+"device.center.rename.device.title"="Device name";
 /* Device Center rename device action duplicated name message */
-"device.center.rename.device.duplicated.name"="A device with this name already appears";
+"device.center.rename.device.duplicated.name"="A device with this name already exists";
 /* Device Center rename device action enter a different name message */
 "device.center.rename.device.different.name"="Enter a different name";
-/* Device Center camera upload status enabled*/
+/* Device Center camera upload status enabled */
 "device.center.camera.uploads.action.status.enabled"="Enabled";
-/* Device Center camera upload status disabled*/
+/* Device Center camera upload status disabled */
 "device.center.camera.uploads.action.status.disabled"="Disabled";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="End recurrence";
@@ -3705,7 +3703,7 @@
 /* Meeting waiting room alert title of Host didn’t respond */
 "meetings.waitingRoom.alert.hostDidNotRespond"="Host didn’t respond";
 /* Meeting waiting room alert message of There is no response to your request to join the meeting */
-"meetings.waitingRoom.alert.thereIsNoResponseToYourResquestToJoinTheMeeting"="There is no response to your request to join the meeting. You'll be removed from the waiting room. Try joining again later.";
+"meetings.waitingRoom.alert.thereIsNoResponseToYourResquestToJoinTheMeeting"="There is no response to your request to join the meeting. You’ll be removed from the waiting room. Try joining again later.";
 /* Meeting waiting room alert action of ok got it */
 "meetings.waitingRoom.alert.okGotIt"="OK, got it";
 /* Call waiting room alert message text to notify host that someone is waiting to join */
@@ -3726,21 +3724,21 @@
 "chat.call.waitingRoom.alert.button.cancel"="Cancel";
 /* Context menu action seen from native files application when selecting a file that's also present on MEGA */
 "fileProviderExtension.action.open"="Open in MEGA";
-/* Filter name for searching on the home screen*/
-"home.search.filter.docs" = "Documents";
-/* Filter name for searching on the home screen*/
-"home.search.filter.images" = "Images";
-/* Filter name for searching on the home screen*/
-"home.search.filter.audio" = "Audio";
-/* Filter name for searching on the home screen*/
-"home.search.filter.video" = "Video";
+/* Filter name for searching on the home screen */
+"home.search.filter.docs"="Documents";
+/* Filter name for searching on the home screen */
+"home.search.filter.images"="Images";
+/* Filter name for searching on the home screen */
+"home.search.filter.audio"="Audio";
+/* Filter name for searching on the home screen */
+"home.search.filter.video"="Video";
 /* Empty screen copy when no filter is selected on the home screen search */
-"home.search.empty.no-chip-selected" = "No results";
+"home.search.empty.no-chip-selected"="No results";
 /* Empty screen copy when Images filter is selected on the home screen search */
-"home.search.empty.no-images" = "No images";
+"home.search.empty.no-images"="No images";
 /* Empty screen copy when Documents is selected on the home screen search */
-"home.search.empty.no-documents" = "No documents";
+"home.search.empty.no-documents"="No documents";
 /* Empty screen copy when Audio filter is selected on the home screen search */
-"home.search.empty.no-audio" = "No audio files";
+"home.search.empty.no-audio"="No audio files";
 /* Empty screen copy when Video filter is selected on the home screen search */
-"home.search.empty.no-videos" = "No video files";
+"home.search.empty.no-videos"="No video files";

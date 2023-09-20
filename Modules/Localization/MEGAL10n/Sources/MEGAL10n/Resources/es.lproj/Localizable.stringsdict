@@ -2821,7 +2821,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>La reunión se celebrará todos los [weekDayName]de cada semana.</string>
+        <string>La reunión se celebrará todos los [weekDayName] de cada semana.</string>
         <key>many</key>
         <string>La reunión se celebrará todos los [weekDayName] de cada %d de semanas.</string>
         <key>other</key>
@@ -2839,7 +2839,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>La reunión se celebrará los [weekDayNames] y los[lastWeekDayName] de cada semana.</string>
+        <string>La reunión se celebrará los [weekDayNames] y los [lastWeekDayName] de cada semana.</string>
         <key>many</key>
         <string>La reunión se celebrará los [weekDayNames] y los [lastWeekDayName]cada %d semanas.</string>
         <key>other</key>
@@ -2879,7 +2879,7 @@
         <key>many</key>
         <string>La reunión se celebrará el día [ordinalDays]y el día [ordinalLastDay]cada %d meses.</string>
         <key>other</key>
-        <string>La reunión se celebrará el día [ordinalDays] y el día [ordinalLastDay]cada %d meses.</string>
+        <string>La reunión se celebrará el día [ordinalDays] y el día [ordinalLastDay] cada %d meses.</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.singleDayCardinal.footerNote</key>
@@ -3055,9 +3055,47 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Download started</string>
+        <string>Descarga iniciada</string>
+        <key>many</key>
+        <string>Se han iniciado %d de descargas</string>
         <key>other</key>
-        <string>%d downloads started</string>
+        <string>Se han iniciado %d descargas</string>
+      </dict>
+    </dict>
+    <key>chat.call.waitingRoom.alert.outsideCallUI.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[UserName] está esperando para unirse a “[MeetingName]“</string>
+        <key>many</key>
+        <string>%d participantes están esperando para unirse a “[MeetingName]”.</string>
+        <key>other</key>
+        <string>%d participantes están esperando para unirse a “[MeetingName]”.</string>
+      </dict>
+    </dict>
+    <key>chat.call.waitingRoom.alert.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[UserName] está esperando para unirse a la llamada</string>
+        <key>many</key>
+        <string>%d de participantes están esperando para unirse a la llamada</string>
+        <key>other</key>
+        <string>%d participantes están esperando para unirse a la llamada</string>
       </dict>
     </dict>
     <key>general.format.itemsSelected</key>
@@ -3071,9 +3109,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d item selected</string>
+        <string>%d elemento seleccionado.</string>
+        <key>many</key>
+        <string>%d de elementos seleccionados</string>
         <key>other</key>
-        <string>%d items selected</string>
+        <string>%d elementos seleccionados</string>
       </dict>
     </dict>
   </dict>

@@ -1596,10 +1596,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>كل %d يوم اعتباراً من [B][StartDate] حتى [UntilDate][/B] من [B][StartTime] إلى [EndTime][/B]</string>
         <key>one</key>
-        <string>Every day effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>كل يوم اعتباراً من [B][StartDate] حتى [UntilDate][/B] من [B][StartTime] إلى [EndTime][/B]</string>
+        <key>two</key>
+        <string>كل %d يومين اعتباراً من [B][StartDate] حتى [UntilDate][/B] من [B][StartTime] إلى [EndTime][/B]</string>
+        <key>few</key>
+        <string>كل %d أيام اعتباراً من [B][StartDate] حتى [UntilDate][/B] من [B][StartTime] إلى [EndTime][/B]</string>
+        <key>many</key>
+        <string>كل %d يوماً اعتباراً من [B][StartDate] حتى [UntilDate][/B] من [B][StartTime] إلى [EndTime][/B]</string>
         <key>other</key>
-        <string>Every %d days effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>كل %d يوم اعتباراً من [B][StartDate] حتى [UntilDate][/B] من [B][StartTime] إلى [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.daily.forever</key>
@@ -1612,10 +1620,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>كل %d يوم اعتباراً من [B][StartDate][/B] من [B][StartTime] إلى [EndTime][/B]</string>
         <key>one</key>
-        <string>Every day effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>كل يوم اعتباراً من [B][StartDate][/B] من [B][StartTime] إلى [EndTime][/B]</string>
+        <key>two</key>
+        <string>كل %d يومين اعتباراً من [B][StartDate][/B] من [B][StartTime] إلى [EndTime][/B]</string>
+        <key>few</key>
+        <string>كل %d أيام اعتباراً من [B][StartDate][/B] من [B][StartTime] إلى [EndTime][/B]</string>
+        <key>many</key>
+        <string>كل %d يوماً اعتباراً من [B][StartDate][/B] من [B][StartTime] إلى [EndTime][/B]</string>
         <key>other</key>
-        <string>Every %d days effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>كل %d يوم اعتباراً من [B][StartDate][/B] من [B][StartTime] إلى [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.until</key>
@@ -3836,10 +3852,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>سيتكرر الاجتماع كل %d شهر في اليوم[cardinalDay] من الشهر.</string>
         <key>one</key>
-        <string>Meeting will occur every month on day [cardinalDay].</string>
+        <string>سيتكرر الاجتماع كل شهر في اليوم [cardinalDay] من الشهر.</string>
+        <key>two</key>
+        <string>سيتكرر الاجتماع كل %d شهرين في اليوم [cardinalDay] من الشهر.</string>
+        <key>few</key>
+        <string>سيتكرر الاجتماع كل %d أشهر في اليوم [cardinalDay] من الشهر.</string>
+        <key>many</key>
+        <string>سيتكرر الاجتماع كل %d شهراً في اليوم [cardinalDay] من الشهر.</string>
         <key>other</key>
-        <string>Meeting will occur every %d months on day [cardinalDay].</string>
+        <string>سيتكرر الاجتماع كل %d شهر في اليوم [cardinalDay] من الشهر.</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.multipleDaysCardinal.footerNote</key>
@@ -3852,10 +3876,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>سيتكرر الاجتماع كل %d شهر في اليوم [cardinalDays] و اليوم [cardinalLastDay] من الشهر.</string>
         <key>one</key>
-        <string>Meeting will occur every month on day [cardinalDays] and day [cardinalLastDay].</string>
+        <string>سيتكرر الاجتماع كل شهر في اليوم [cardinalDays] و اليوم [cardinalLastDay] من الشهر.</string>
+        <key>two</key>
+        <string>سيتكرر الاجتماع كل %d شهرين في اليوم [cardinalDays] و اليوم [cardinalLastDay] من الشهر.</string>
+        <key>few</key>
+        <string>سيتكرر الاجتماع كل %d أشهر في اليوم [cardinalDays] و اليوم [cardinalLastDay] من الشهر.</string>
+        <key>many</key>
+        <string>سيتكرر الاجتماع كل %d شهراً في اليوم [cardinalDays] و اليوم [cardinalLastDay] من الشهر.</string>
         <key>other</key>
-        <string>Meeting will occur every %d months on day [cardinalDays] and day [cardinalLastDay].</string>
+        <string>سيتكرر الاجتماع كل %d شهر في اليوم [cardinalDays] و اليوم [cardinalLastDay] من الشهر.</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.weekNumberAndWeekDay.footerNote</key>
@@ -3940,10 +3972,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>كل %d شهر في في اليوم [cardinalNumber] من الشهر</string>
         <key>one</key>
-        <string>Every month on day [cardinalNumber]</string>
+        <string>كل شهر في في اليوم [cardinalNumber] من الشهر</string>
+        <key>two</key>
+        <string>كل %d شهرين في في اليوم [cardinalNumber] من الشهر</string>
+        <key>few</key>
+        <string>كل %d أشهر في في اليوم [cardinalNumber] من الشهر</string>
+        <key>many</key>
+        <string>كل %d شهراً في في اليوم [cardinalNumber] من الشهر</string>
         <key>other</key>
-        <string>Every %d months on day [cardinalNumber]</string>
+        <string>كل %d شهر في اليوم [cardinalNumber] من الشهر</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.weekNumberAndWeekDay.selectedFrequency</key>
@@ -4004,10 +4044,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>تم حفظ %d ملف في السواقة السحابية.</string>
         <key>one</key>
-        <string>%d file saved to Cloud drive</string>
+        <string>تم حفظ %d ملف في السواقة السحابية.</string>
+        <key>two</key>
+        <string>تم حفظ %d ملفين في السواقة السحابية.</string>
+        <key>few</key>
+        <string>تم حفظ %d ملفات في السواقة السحابية.</string>
+        <key>many</key>
+        <string>تم حفظ %d ملف في السواقة السحابية.</string>
         <key>other</key>
-        <string>%d files saved to Cloud drive</string>
+        <string>تم حفظ %d ملف في السواقة السحابية.</string>
       </dict>
     </dict>
     <key>general.saveToPhotos.started</key>
@@ -4020,10 +4068,66 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d عملية تنزيل تم البدء بها</string>
         <key>one</key>
-        <string>Download started</string>
+        <string>بدء عملية التنزيل</string>
+        <key>two</key>
+        <string> %d عمليتا تنزيل تم البدء بهما</string>
+        <key>few</key>
+        <string> %d عمليات تنزيل تم البدء بهم</string>
+        <key>many</key>
+        <string>%d عملية تنزيل تم البدء بها</string>
         <key>other</key>
-        <string>%d downloads started</string>
+        <string>%d عملية تنزيل تم البدء بها</string>
+      </dict>
+    </dict>
+    <key>chat.call.waitingRoom.alert.outsideCallUI.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>%d مشارك ينتظرون الانضمام إلى “[MeetingName]“</string>
+        <key>one</key>
+        <string>[UserName] ينتظر الانضمام إلى “[MeetingName]“</string>
+        <key>two</key>
+        <string>%d مشاركان ينتظران الانضمام إلى “[MeetingName]“</string>
+        <key>few</key>
+        <string>%d مشاركون ينتظرون الانضمام إلى “[MeetingName]“</string>
+        <key>many</key>
+        <string>%d مشاركاً ينتظرون الانضمام إلى “[MeetingName]“</string>
+        <key>other</key>
+        <string>%d مشارك ينتظرون الانضمام إلى “[MeetingName]“</string>
+      </dict>
+    </dict>
+    <key>chat.call.waitingRoom.alert.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>%d مشارك ينتظرون للانضمام إلى المكالمة</string>
+        <key>one</key>
+        <string>[UserName] ينتظر للانضمام إلى المكالمة</string>
+        <key>two</key>
+        <string>%d مشاركان ينتظران للانضمام إلى المكالمة</string>
+        <key>few</key>
+        <string>%d مشاركون ينتظرون للانضمام إلى المكالمة</string>
+        <key>many</key>
+        <string>%d مشاركاً ينتظرون للانضمام إلى المكالمة</string>
+        <key>other</key>
+        <string>%d مشارك ينتظرون للانضمام إلى المكالمة</string>
       </dict>
     </dict>
     <key>general.format.itemsSelected</key>
@@ -4036,10 +4140,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d عنصر محدد</string>
         <key>one</key>
-        <string>%d item selected</string>
+        <string>%d عنصر محدد</string>
+        <key>two</key>
+        <string>%d عنصرين محددين</string>
+        <key>few</key>
+        <string>%d عناصر محدد</string>
+        <key>many</key>
+        <string>%d عنصراً محدد</string>
         <key>other</key>
-        <string>%d items selected</string>
+        <string>%d عنصر محدد</string>
       </dict>
     </dict>
   </dict>
