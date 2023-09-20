@@ -1,16 +1,23 @@
+import Foundation
 import MEGADomain
 import Network
 
 public final class NetworkMonitorRepository: NetworkMonitorRepositoryProtocol {
     private let monitor: NWPathMonitor
     private let queue: DispatchQueue
-    private var pathStatus: NWPath.Status
+    private let (connectionChangedSourceStream, connectionContinuation) = AsyncStream
+        .makeStream(of: Bool.self, bufferingPolicy: .bufferingNewest(1))
+    private var networkPathChangedHandler: ((Bool) -> Void)?
     
-    public init(monitor: NWPathMonitor = NWPathMonitor(), queue: DispatchQueue = DispatchQueue(label: "NetworkMonitor")) {
+    public var connectionChangedStream: AsyncStream<Bool> {
+        connectionChangedSourceStream
+    }
+    
+    public init(monitor: NWPathMonitor = NWPathMonitor(),
+                queue: DispatchQueue = DispatchQueue(label: "NetworkMonitor")) {
         self.monitor = monitor
         self.queue = queue
-        pathStatus = monitor.currentPath.status
-        monitor.start(queue: queue)
+        startMonitoring()
     }
     
     deinit {
@@ -18,20 +25,20 @@ public final class NetworkMonitorRepository: NetworkMonitorRepositoryProtocol {
     }
     
     public func networkPathChanged(completion: @escaping (Bool) -> Void) {
-        if pathStatus == .unsatisfied && monitor.currentPath.status == .satisfied {
-            pathStatus = monitor.currentPath.status
-        }
-        monitor.pathUpdateHandler = { [weak self] path in
-            if self?.pathStatus != path.status {
-                self?.pathStatus = path.status
-                DispatchQueue.main.async {
-                    completion(path.status == .satisfied)
-                }
-            }
-        }
+        networkPathChangedHandler = completion
     }
     
     public func isConnected() -> Bool {
         monitor.currentPath.status == .satisfied
+    }
+    
+    private func startMonitoring() {
+        monitor.pathUpdateHandler = { [weak self] in
+            guard let self else { return }
+            let isConnected = $0.status == .satisfied
+            connectionContinuation.yield(isConnected)
+            networkPathChangedHandler?(isConnected)
+        }
+        monitor.start(queue: queue)
     }
 }
