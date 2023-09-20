@@ -10116,7 +10116,6 @@
 				B6FDEF7A2A204E8300276DD6 /* DataSource */,
 				B6FDEF782A204E7700276DD6 /* Domain */,
 				B6FDEF772A204E6700276DD6 /* Infrastracture */,
-				BFD818C42A9D462500C30B71 /* Localization */,
 				B6FDEF7C2A204E9600276DD6 /* Presentation */,
 				B6FDEF792A204E7D00276DD6 /* Repository */,
 				B6FDEF7B2A204E9000276DD6 /* UI */,
@@ -11235,6 +11234,7 @@
 			children = (
 				A861B8332907F5DB00AB06D4 /* Features */,
 				6DD7B2342A7761BD007EBB20 /* MEGAAssets */,
+				BF61494F2A9FF30000AB051A /* MEGAL10n */,
 				946ACCC1299C099900E6C0F5 /* MEGAPresentation */,
 			);
 			path = Presentation;
@@ -11717,14 +11717,6 @@
 				BFC060F528A0C2FE00BA2AD7 /* participantsAddingViewFactoryTests.swift */,
 			);
 			path = Utils;
-			sourceTree = "<group>";
-		};
-		BFD818C42A9D462500C30B71 /* Localization */ = {
-			isa = PBXGroup;
-			children = (
-				BF61494F2A9FF30000AB051A /* MEGAL10n */,
-			);
-			path = Localization;
 			sourceTree = "<group>";
 		};
 		BFE556F427E183B40028EF1F /* SDK */ = {
