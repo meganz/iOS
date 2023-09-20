@@ -1416,12 +1416,12 @@
 "resend"="Erneut senden";
 /* Error message displayed when trying to invite a contact who is already added. */
 "alreadyAContact"="%s ist bereits Ihr Kontakt.";
-/* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
-"sentContact"="Kontakt %s versandt";
+/* A summary message when a user sent a contact's details through the chat. Please keep %@ as it will be replaced at runtime with the name of the contact that was sent. */
+"sentContact"="Kontakt %@ versandt";
 /* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
 "sentXContacts"="%s Kontakte versandt.";
-/* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
-"attachedFile"="Angehängt: %s";
+/* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %@ as it will be replaced at runtime with the name of the attached file. */
+"attachedFile"="Angehängt: %@";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="%s Dateien angehängt.";
 /* Label in a button that allows to jump to the latest item */
