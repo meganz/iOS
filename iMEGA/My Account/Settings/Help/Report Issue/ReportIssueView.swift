@@ -29,6 +29,10 @@ struct ReportIssueView: View {
                 .background(Color(.secondarySystemBackground))
                 .blur(radius: viewModel.isUploadingLog ? 1 : 0)
                 .allowsHitTesting(viewModel.isUploadingLog ? false : true)
+                .taskForiOS14 {
+                    await viewModel.monitorNetworkChanges()
+                }
+                
                 if viewModel.shouldShowUploadLogFileView {
                     UploadLogFileView(title: Strings.Localizable.Help.ReportIssue.uploadingLogFile,
                                       progress: viewModel.progress) {
