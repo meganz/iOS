@@ -25,7 +25,8 @@ extension MyAccountHallViewController {
             searchAssets:
                 makeSearchAssets(),
             backupStatuses: backupStatusesList(),
-            deviceCenterActions: deviceCenterActionList()
+            deviceCenterActions: deviceCenterActionList(),
+            deviceIconNames: deviceIconNamesList()
         )
     }
     
@@ -191,6 +192,18 @@ extension MyAccountHallViewController {
                     )
                 ]
             )
+        ]
+    }
+    
+    private func deviceIconNamesList() -> [BackupDeviceTypeEntity: String] {
+        [
+            .android: Asset.Images.Backup.android.name,
+            .iphone: Asset.Images.Backup.ios.name,
+            .linux: Asset.Images.Backup.pcLinux.name,
+            .mac: Asset.Images.Backup.pcMac.name,
+            .win: Asset.Images.Backup.pcWindows.name,
+            .defaultMobile: Asset.Images.Backup.mobile.name,
+            .defaultPc: Asset.Images.Backup.pc.name
         ]
     }
     

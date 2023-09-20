@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGARepo
 
 @objc final class NodeAssetsManager: NSObject {
     @objc static var shared = NodeAssetsManager()
@@ -59,25 +60,18 @@ import MEGADomain
         guard node.deviceId != nil, let nodeName = node.name, !nodeName.isEmpty else { return commonFolderImage(for: node) }
         let nodeNameLowerCased = nodeName.lowercased()
         
-        if nodeNameLowerCased.matches(regex: BackupDeviceType.win.rawValue) {
-            return Asset.Images.Backup.win.image
-        } else if nodeNameLowerCased.matches(regex: BackupDeviceType.linux.rawValue) {
-            return Asset.Images.Backup.linux.image
-        } else if nodeNameLowerCased.matches(regex: BackupDeviceType.mac.rawValue) {
-            return Asset.Images.Backup.mac.image
-        } else if nodeNameLowerCased.matches(regex: BackupDeviceType.drive.rawValue) {
+        if nodeNameLowerCased.matches(regex: BackupDeviceTypeEntity.win.toRegexString()) {
+            return Asset.Images.Backup.pcWindows.image
+        } else if nodeNameLowerCased.matches(regex: BackupDeviceTypeEntity.linux.toRegexString()) {
+            return Asset.Images.Backup.pcLinux.image
+        } else if nodeNameLowerCased.matches(regex: BackupDeviceTypeEntity.mac.toRegexString()) {
+            return Asset.Images.Backup.pcMac.image
+        } else if nodeNameLowerCased.matches(regex: BackupDeviceTypeEntity.drive.toRegexString()) {
             return Asset.Images.Backup.drive.image
         } else {
             return Asset.Images.Backup.pc.image
         }
     }
-}
-
-enum BackupDeviceType: String {
-    case win = "win|desktop"
-    case linux = "linux|debian|ubuntu|centos"
-    case mac = "mac"
-    case drive = "ext|drive"
 }
 
 enum FileExtensionType: String {

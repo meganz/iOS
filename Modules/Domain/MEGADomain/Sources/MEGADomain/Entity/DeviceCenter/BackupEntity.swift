@@ -5,6 +5,7 @@ public struct BackupEntity: Sendable, Identifiable {
     public let id: Int
     public let name: String
     public let deviceId: String
+    public let userAgent: String
     
     // MARK: - Handles
     public let rootHandle: HandleEntity
@@ -33,6 +34,7 @@ public struct BackupEntity: Sendable, Identifiable {
         id: Int,
         name: String,
         deviceId: String,
+        userAgent: String,
         rootHandle: HandleEntity,
         lastHandleSync: HandleEntity,
         type: BackupTypeEntity,
@@ -50,6 +52,7 @@ public struct BackupEntity: Sendable, Identifiable {
         self.id = id
         self.name = name
         self.deviceId = deviceId
+        self.userAgent = userAgent
         self.rootHandle = rootHandle
         self.lastHandleSync = lastHandleSync
         self.type = type
