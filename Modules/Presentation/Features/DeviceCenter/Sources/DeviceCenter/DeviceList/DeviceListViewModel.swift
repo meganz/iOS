@@ -1,5 +1,7 @@
 import Combine
 import MEGADomain
+import MEGARepo
+import MEGASwift
 import SwiftUI
 
 public final class DeviceListViewModel: ObservableObject {
@@ -15,6 +17,7 @@ public final class DeviceListViewModel: ObservableObject {
     private var searchTextPublisher = PassthroughSubject<String, Never>()
     private var searchCancellable: AnyCancellable?
     private var currentDeviceId: String?
+    private let deviceIconNames: [BackupDeviceTypeEntity: String]
     private var sortedBackupStatuses: [BackupStatusEntity: BackupStatus] {
         Dictionary(uniqueKeysWithValues: backupStatuses.map { ($0.status, $0) })
     }
@@ -49,7 +52,8 @@ public final class DeviceListViewModel: ObservableObject {
         emptyStateAssets: EmptyStateAssets,
         searchAssets: SearchAssets,
         backupStatuses: [BackupStatus],
-        deviceCenterActions: [DeviceCenterAction]
+        deviceCenterActions: [DeviceCenterAction],
+        deviceIconNames: [BackupDeviceTypeEntity: String]
     ) {
         self.devicesUpdatePublisher = devicesUpdatePublisher
         self.refreshDevicesPublisher = refreshDevicesPublisher
@@ -62,6 +66,7 @@ public final class DeviceListViewModel: ObservableObject {
         self.searchAssets = searchAssets
         self.backupStatuses = backupStatuses
         self.deviceCenterActions = deviceCenterActions
+        self.deviceIconNames = deviceIconNames
         self.isSearchActive = false
         self.searchText = ""
         self.currentDeviceUUID = UIDevice.current.identifierForVendor?.uuidString ?? ""
@@ -139,11 +144,29 @@ public final class DeviceListViewModel: ObservableObject {
         guard let deviceStatus = device.status, let backupStatus = sortedBackupStatuses[deviceStatus] else {
             return nil
         }
+        let userAgent = device.backups?.first?.userAgent
         return ItemAssets(
-            iconName: device.isMobileDevice() ? "mobile" : "pc",
+            iconName: deviceIconName(userAgent: userAgent, isMobile: device.isMobileDevice() || device.id == currentDeviceUUID),
             status: backupStatus,
             defaultName: deviceListAssets.deviceDefaultName
         )
+    }
+    
+    func deviceIconName(userAgent: String?, isMobile: Bool) -> String {
+        let defaultIcon = isMobile ? BackupDeviceTypeEntity.defaultMobile : BackupDeviceTypeEntity.defaultPc
+        let defaultIconName = deviceIconNames[defaultIcon] ?? ""
+
+        guard let userAgent = userAgent else { return defaultIconName }
+        
+        if let bestMatch = deviceIconNames
+            .compactMap({ (key, value) -> (iconName: String, priority: Int)? in
+                guard userAgent.lowercased().matches(regex: key.toRegexString()) else { return nil }
+                return (iconName: value, priority: key.priority())
+            }).max(by: { $0.priority < $1.priority }) {
+                return bestMatch.iconName
+            }
+
+        return defaultIconName
     }
     
     private func setupDevicesUpdateSubscription() {

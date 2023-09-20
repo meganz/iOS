@@ -6,6 +6,7 @@ public final class MockBackupInfo: MEGABackupInfo {
     private let identifier: Int
     private let backupName: String
     private let deviceIdentifier: String
+    private let currentUserAgent: String
     
     // MARK: - Handles
     private let rootHandle: MEGAHandle
@@ -28,10 +29,11 @@ public final class MockBackupInfo: MEGABackupInfo {
     private let ts: Date
     private let activityTs: Date
     
-    public init(identifier: Int = 0, backupName: String = "", deviceIdentifier: String = "", rootHandle: MEGAHandle = .invalidHandle, lastHandleSync: MEGAHandle = .invalidHandle, backupType: MEGABackupType = .invalid, localFolderName: String = "", extraInfo: String = "", syncState: MEGASyncState = .unknown, backupSubstate: MEGABackupSubstate = .noSyncError, heartbeatStatus: MEGABackupHeartbeatStatus = .unknown, backupProgress: Int = 0, backupUploads: Int = 0, backupDownloads: Int = 0, timestamp: Date = Date(), activityTimestamp: Date = Date()) {
+    public init(identifier: Int = 0, backupName: String = "", deviceIdentifier: String = "", currentUserAgent: String = "", rootHandle: MEGAHandle = .invalidHandle, lastHandleSync: MEGAHandle = .invalidHandle, backupType: MEGABackupType = .invalid, localFolderName: String = "", extraInfo: String = "", syncState: MEGASyncState = .unknown, backupSubstate: MEGABackupSubstate = .noSyncError, heartbeatStatus: MEGABackupHeartbeatStatus = .unknown, backupProgress: Int = 0, backupUploads: Int = 0, backupDownloads: Int = 0, timestamp: Date = Date(), activityTimestamp: Date = Date()) {
         self.identifier = identifier
         self.backupName = backupName
         self.deviceIdentifier = deviceIdentifier
+        self.currentUserAgent = currentUserAgent
         self.rootHandle = rootHandle
         self.lastHandleSync = lastHandleSync
         self.backupType = backupType
@@ -50,6 +52,7 @@ public final class MockBackupInfo: MEGABackupInfo {
     public override var id: UInt { UInt(identifier) }
     public override var name: String? { backupName }
     public override var deviceId: String? { deviceIdentifier }
+    public override var userAgent: String? { currentUserAgent }
     public override var root: UInt64 { rootHandle }
     public override var lastSync: UInt64 { lastHandleSync }
     public override var type: MEGABackupType { backupType }
