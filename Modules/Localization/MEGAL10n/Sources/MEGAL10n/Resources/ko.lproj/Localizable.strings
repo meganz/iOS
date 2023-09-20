@@ -603,9 +603,9 @@
 /* Filter UI remember preferences option */
 "cameraUploads.timeline.filter.rememberPreferences"="설정 기억하기";
 /* Video Uploads title */
-"cameraUploads.videoUploads.title"="비디오 업로드";
+"cameraUploads.videoUploads.title"="동영상 업로드";
 /* Message shown when camera upload paused because of no WiFi. Singular. */
-"Upload paused because of no WiFi, 1 file pending"="Wi-Fi 연결이 없어서 업로드가 일시정지되었습니다, 파일 1개 보류중";
+"Upload paused because of no WiFi, 1 file pending"="Wi-Fi 연결이 없어서 업로드가 일시정지 되었습니다, 파일 1개 보류 중";
 /* Message shown when camera upload paused because of no WiFi. Plural. */
 "Upload paused because of no WiFi, %lu files pending"="WiFi 연결이 없어서 업로드가 일시정지되었습니다, 파일 %lu개 보류중";
 /* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
@@ -1295,7 +1295,7 @@
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
 "verify"="확인";
 /* Button title */
-"verified"="승인됨";
+"verified"="확인됨";
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="대화 기록 삭제";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
@@ -1314,8 +1314,6 @@
 "My credentials"="내 자격 증명";
 /* Button to reset the password */
 "reset"="재설정";
-/* Button title */
-"approve"="확인";
 /* start a chat/conversation */
 "startConversation"="대화 시작";
 /* Label title for a group chat */
@@ -1418,12 +1416,12 @@
 "resend"="재발송";
 /* Error message displayed when trying to invite a contact who is already added. */
 "alreadyAContact"="%s님은 이미 연락처에 있습니다.";
-/* A summary message when a user sent a contact's details through the chat. Please keep %@ as it will be replaced at runtime with the name of the contact that was sent. */
-"sentContact"="연락처 보냄: %@";
+/* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
+"sentContact"="연락처 보냄: %s";
 /* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
 "sentXContacts"="%s개의 연락처 보냄.";
-/* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %@ as it will be replaced at runtime with the name of the attached file. */
-"attachedFile"="첨부됨: %@";
+/* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
+"attachedFile"="첨부됨: %s";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="%s개의 파일 첨부함.";
 /* Label in a button that allows to jump to the latest item */
@@ -2002,8 +2000,6 @@
 "recents.emptyState.activityHidden.button"="활동 보기";
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="%@님이 수정";
-/* Title for a recent action bucket with multiple files. %@ will be replaced by the filename of the first file in the bucket. %ld will be replaced by the total number of other files in the bucket. */
-"home.recent.multipleFileTitle"="";
 /* Label that indicates who uploaded a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.createdByLabel"="%@님이 생성";
 /* Message shown when the user has not recent activity in their account. */
@@ -2710,7 +2706,7 @@
 "account.upgrade.alreadyHaveASubscription.message"="이전에 Google Play 또는 AppGallery를 통하여 구독을 하였습니다. 기기에서 Google Play 또는 Huawei AppGallery 안에서 구독을 수동으로 취소한 후 다시 시도하세요.";
 /* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
 "account.upgrade.alreadyHaveACancellableSubscription.message"="현재 구독을 취소하고 결제를 진행하시겠습니까?";
-/* Error message shown when a user tries to purchase plan that is not available with their current plan */
+/* This message will be shown if the user is not allowed to purchase a plan because of their current plan.  For example, the user have a Business or Pro Flexi account, they should not be able to purchase a Pro plan. We will show this to the user when they try to purchase one. */
 "account.upgrade.notAvailableWithCurrentPlan.message"="현재 요금제에서는 이용이 불가합니다";
 /* Dialog title shown before deleting an account with active subscription */
 "account.delete.subscription.title"="활성 구독";
@@ -3177,19 +3173,19 @@
 /* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
 "general.menuAction.verifyContact.title"="%@ 님 확인";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
-"sharedItems.contactVerification.section.verifyContact.owner.message"="우리는 당신의 데이터를 영지식 암호화로 보호합니다. 추가적인 보안을 보장하기 위해, 당신의 연락처가 공유된 폴더에 접근할 수 있게 되기 전에 연락처를 확인할 것을 요청합니다.";
+"sharedItems.contactVerification.section.verifyContact.owner.message"="우리는 당신의 데이터를 영지식 암호화로 보호합니다. 추가적인 보안을 보장하기 위해, 당신의 연락처가 공유된 폴더에 접근할 수 있게 되기 전에 연락처를 인증할 것을 요청합니다.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
-"sharedItems.contactVerification.section.myCredentials.message"="연락처를 확인하려면, 위에 보이는 자격 증명이 연락처의 계정 자격 증명과 일치하는지 확인하세요. 연락처에게 자격 증명을 공유해달라고 요청하세요.";
+"sharedItems.contactVerification.section.myCredentials.message"="연락처를 인증하려면, 위에 보이는 자격 증명이 연락처의 계정 자격 증명과 일치하는지 확인하세요. 연락처에게 자격 증명을 공유해달라고 요청하세요.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
-"sharedItems.contactVerification.section.verifyContact.receiver.message"="우리는 당신의 데이터를 영지식 암호화로 보호합니다. 추가적인 보안을 보장하기 위해, 당신의 연락처가 공유된 폴더에 접근할 수 있게 되기 전에 연락처를 확인할 것을 요청합니다.";
+"sharedItems.contactVerification.section.verifyContact.receiver.message"="우리는 당신의 데이터를 영지식 암호화로 보호합니다. 추가적인 보안을 보장하기 위해, 당신의 연락처가 공유된 폴더에 접근할 수 있게 되기 전에 연락처를 인증할 것을 요청합니다.";
 /* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
 "sharedItems.contactVerification.section.verifyContact.bannerMessage"="공유된 폴더에 접근하려면, 당신에게 공유해준 사람도 당신을 승인해야 합니다.";
 /* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
-"sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@은/는 당신이 확인하지 않은 연락처에 의해 공유되었습니다. 추가적인 보안을 적용하려면, 연락처에서 그들의 자격 증명을 확인할 것을 권장합니다. 확인하려는 연락처 옆의 ⓘ를 탭하세요.";
+"sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ is shared by a contact you haven’t verified. To ensure extra security, we recommend that you verify their credentials in Contacts by tapping on ⓘ next to the contact you want to verify.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="당신의 자격 증명";
 /* Title of the header label in contact verification screen. */
-"verifyCredentials.headerMessage"="우리는 당신이 MEGA에 저장, 공유, 수신하는 모든 정보가 안전하도록 영지식 암호화로 당신의 데이터를 보호합니다. 추가적인 보안을 적용하려면, 우리는 당신이 정보를 공유하거나 데이터를 받는 연락처를 확인할 것을 요청합니다.";
+"verifyCredentials.headerMessage"="우리는 당신이 MEGA에 저장, 공유, 수신하는 모든 정보가 안전하도록 영지식 암호화로 당신의 데이터를 보호합니다. 추가적인 보안을 적용하려면, 우리는 당신이 정보를 공유하거나 데이터를 받는 연락처를 인증할 것을 요청합니다.";
 /* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
 "sharedItems.tab.incoming.undecryptedFolderName"="[복호화 되지 않은 폴더]";
 /* On Outgoing Shared Items Tab. Text that shows the receiver's name of the shared folder. %@ will be replaced with the receiver's name. */
@@ -3319,7 +3315,7 @@
 /* On Outgoing Shared Items Tab. Title of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
 "sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="연락처를 확인할 수 없습니다";
 /* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="당신의 연락처 목록에 %@ 님이 없기 때문에 확인할 수 없습니다. 그들이 초대를 수락할 때까지 기다리세요.";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="당신의 연락처 목록에 %@님이 없기 때문에 인증할 수 없습니다. 그들이 초대를 수락할 때까지 기다리세요.";
 /* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
 "picker.disable.passcode.title"="MEGA 암호 비활성화";
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
@@ -3445,7 +3441,17 @@
 /* Show in Cloud Drive section action title */
 "device.center.show.in.cloud.drive.action.title"="클라우드 드라이브에서 보기";
 /* Show in Backups section action title */
-"device.center.show.in.backups.action.title"="Show in Backups";
+"device.center.show.in.backups.action.title"="백업에서 보기";
+/* Device Center rename device action title */
+"device.center.rename.device.title"="장치 이름";
+/* Device Center rename device action duplicated name message */
+"device.center.rename.device.duplicated.name"="이 이름을 가진 장치가 이미 존재합니다";
+/* Device Center rename device action enter a different name message */
+"device.center.rename.device.different.name"="다른 이름을 입력하세요";
+/* Device Center camera upload status enabled */
+"device.center.camera.uploads.action.status.enabled"="활성화됨";
+/* Device Center camera upload status disabled */
+"device.center.camera.uploads.action.status.disabled"="해제됨";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="되풀이 종료";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3645,7 +3651,7 @@
 /* Album failed to save to cloud drive alert message */
 "albumLink.alert.message.albumFailedToSaveToCloudDrive"="“%@”을/를 클라우드 드라이브에 저장할 수 없습니다. 나중에 다시 시도하고 문제가 계속 되면, 링크를 공유해준 사람에게 연락하세요.";
 /* Text displayed on banner we show when sharing folder with unverified contacts */
-"shareFolder.contactsNotVerified"="정보를 공유하는 연락처 중 일부가 당신에 의해 확인되지 않았습니다. 추가적인 보안을 적용하려면, 연락처에서 확인하려는 연락처 옆의 ⓘ를 탭하여 그들의 자격 증명을 확인할 것을 권장합니다.";
+"shareFolder.contactsNotVerified"="정보를 공유하는 연락처 중 일부가 당신에 의해 인증되지 않았습니다. 추가적인 보안을 적용하려면, 연락처에서 인증하려는 연락처 옆의 ⓘ를 탭하여 그들의 자격 증명을 인증할 것을 권장합니다.";
 /* Rename public album alert title */
 "albumLink.alert.renameAlbum.title"="사진첩 이름 바꾸기";
 /* Rename public album alert message */
@@ -3693,30 +3699,46 @@
 /* Meeting waiting room alert title of Host didn’t let you in */
 "meetings.waitingRoom.alert.hostDidNotLetYouIn"="주최자가 당신을 들어오게 하지 않았습니다";
 /* Meeting waiting room alert message of You'll be removed from the waiting room */
-"meetings.waitingRoom.alert.youWillBeRemovedFromTheWaitingRoom"="You’ll be removed from the waiting room.";
+"meetings.waitingRoom.alert.youWillBeRemovedFromTheWaitingRoom"="당신은 대기실에서 제거됩니다.";
+/* Meeting waiting room alert title of Host didn’t respond */
+"meetings.waitingRoom.alert.hostDidNotRespond"="주최자가 응답하지 않았습니다";
+/* Meeting waiting room alert message of There is no response to your request to join the meeting */
+"meetings.waitingRoom.alert.thereIsNoResponseToYourResquestToJoinTheMeeting"="회의에 참여하려는 당신의 요청에 응답이 없었습니다. 당신은 대기실에서 제거될 것입니다. 나중에 다시 참여해보세요.";
 /* Meeting waiting room alert action of ok got it */
 "meetings.waitingRoom.alert.okGotIt"="알겠습니다";
 /* Call waiting room alert message text to notify host that someone is waiting to join */
-"chat.call.waitingRoom.alert.message.one"="%@ is waiting to join the call";
+"chat.call.waitingRoom.alert.message.one"="%@ 님이 통화에 참여하려고 대기 중입니다";
 /* Call waiting room alert button to deny access */
 "chat.call.waitingRoom.alert.button.deny"="거부";
 /* Call waiting room alert button to admit access */
 "chat.call.waitingRoom.alert.button.admit"="허용";
-/* Call waiting room alert message text to notify host that several participants are waiting to join */
-"chat.call.waitingRoom.alert.message.several"="";
 /* Call waiting room alert button to open waiting room UI */
-"chat.call.waitingRoom.alert.button.seeWaitingRoom"="See waiting room";
+"chat.call.waitingRoom.alert.button.seeWaitingRoom"="기실 보기";
 /* Call waiting room alert button to allow access to everyone */
 "chat.call.waitingRoom.alert.button.admitAll"="모두 허용";
 /* Call waiting room alert message text to confirm deny access from host */
-"chat.call.waitingRoom.alert.message.denyAcces"="Deny %@ entry?";
+"chat.call.waitingRoom.alert.message.denyAccess"="%@ 님의 입장을 거부할까요?";
 /* Call waiting room alert button to deny access */
-"chat.call.waitingRoom.alert.button.confirmDeny"="Deny entry";
+"chat.call.waitingRoom.alert.button.confirmDeny"="입장 거부";
 /* Call waiting room alert button to allow access */
 "chat.call.waitingRoom.alert.button.cancel"="취소";
-/* Call waiting room alert message text to notify host that someone is waiting to join a call (call UI is not visible) */
-"chat.call.waitingRoom.alert.outsideCallUI.message.one"="%@ is waiting to join “%@”";
-/* Call waiting room alert message text to notify host that several participants are waiting to join a call (call UI is not visible) */
-"chat.call.waitingRoom.alert.outsideCallUI.message.several"="";
 /* Context menu action seen from native files application when selecting a file that's also present on MEGA */
-"fileProviderExtension.action.open"="Open in MEGA";
+"fileProviderExtension.action.open"="MEGA에서 열기";
+/* Filter name for searching on the home screen */
+"home.search.filter.docs"="문서";
+/* Filter name for searching on the home screen */
+"home.search.filter.images"="이미지";
+/* Filter name for searching on the home screen */
+"home.search.filter.audio"="음성";
+/* Filter name for searching on the home screen */
+"home.search.filter.video"="동영상";
+/* Empty screen copy when no filter is selected on the home screen search */
+"home.search.empty.no-chip-selected"="결과 없음";
+/* Empty screen copy when Images filter is selected on the home screen search */
+"home.search.empty.no-images"="이미지 없음";
+/* Empty screen copy when Documents is selected on the home screen search */
+"home.search.empty.no-documents"="문서 없음";
+/* Empty screen copy when Audio filter is selected on the home screen search */
+"home.search.empty.no-audio"="오디오 파일 없음";
+/* Empty screen copy when Video filter is selected on the home screen search */
+"home.search.empty.no-videos"="동영상 파일 없음";

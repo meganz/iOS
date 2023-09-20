@@ -1295,7 +1295,7 @@
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
 "verify"="อนุมัติ";
 /* Button title */
-"verified"="อนุมัติแล้ว";
+"verified"="ตรวจสอบแล้ว";
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="ล้างประวัติการแชท";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
@@ -1314,8 +1314,6 @@
 "My credentials"="ข้อมูลประจำตัวของฉัน";
 /* Button to reset the password */
 "reset"="รีเซ็ต";
-/* Button title */
-"approve"="อนุมัติ";
 /* start a chat/conversation */
 "startConversation"="เริ่มการสนทนา";
 /* Label title for a group chat */
@@ -1418,12 +1416,12 @@
 "resend"="ส่งใหม่";
 /* Error message displayed when trying to invite a contact who is already added. */
 "alreadyAContact"="%s มีอยู่แล้วในผู้ติดต่อ";
-/* A summary message when a user sent a contact's details through the chat. Please keep %@ as it will be replaced at runtime with the name of the contact that was sent. */
-"sentContact"="ส่งไปยังผู้ติดต่อ: %@";
+/* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
+"sentContact"="ส่งไปยังผู้ติดต่อ: %s";
 /* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
 "sentXContacts"="ส่งแล้ว %s ผู้ติดต่อ";
-/* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %@ as it will be replaced at runtime with the name of the attached file. */
-"attachedFile"="ที่แนบมา: %@";
+/* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
+"attachedFile"="ที่แนบมา: %s";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="ที่แนบมา %s ไฟล์";
 /* Label in a button that allows to jump to the latest item */
@@ -2002,8 +2000,6 @@
 "recents.emptyState.activityHidden.button"="แสดงกิจกรรม";
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="ปรับเปลี่ยนโดย %@";
-/* Title for a recent action bucket with multiple files. %@ will be replaced by the filename of the first file in the bucket. %ld will be replaced by the total number of other files in the bucket. */
-"home.recent.multipleFileTitle"="";
 /* Label that indicates who uploaded a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.createdByLabel"="สร้างโดย %@";
 /* Message shown when the user has not recent activity in their account. */
@@ -2710,20 +2706,20 @@
 "account.upgrade.alreadyHaveASubscription.message"="คุณเคยสมัครแผน Pro ด้วย Google Play หรือ AppGallery กรุณายกเลิกการสมัครใช้งานด้วยตนเองได้ที่ Google Play หรือ Huawei AppGallery บนอุปกรณ์ของคุณก่อน แล้วลองอีกครั้ง";
 /* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
 "account.upgrade.alreadyHaveACancellableSubscription.message"="คุณแน่ใจหรือไม่ว่าต้องการยกเลิกการสมัครใช้งานปัจจุบันและดำเนินการซื้อต่อ";
-/* Error message shown when a user tries to purchase plan that is not available with their current plan */
+/* This message will be shown if the user is not allowed to purchase a plan because of their current plan.  For example, the user have a Business or Pro Flexi account, they should not be able to purchase a Pro plan. We will show this to the user when they try to purchase one. */
 "account.upgrade.notAvailableWithCurrentPlan.message"="ใช้ไม่ได้กับแผนปัจจุบันของคุณ";
 /* Dialog title shown before deleting an account with active subscription */
 "account.delete.subscription.title"="มีการสมัครใช้งานอยู่";
 /* Dialog message shown before deleting an account with active iTunes subscription */
-"account.delete.subscription.itunes"="คุณมีการสมัครใช้งาน MEGA กับ Apple คุณต้องยกเลิกที่การสมัครใช้งานด้วยตนเอง เนื่องจาก MEGA ไม่สามารถยกเลิกให้คุณได้ เยี่ยมชมศูนย์ช่วยเหลือของเราเพื่อศึกษาข้อมูลเพิ่มเติม";
+"account.delete.subscription.itunes"="คุณมีการสมัครใช้งาน MEGA กับ Apple อยู่ คุณต้องยกเลิกที่การสมัครใช้งานด้วยตนเอง เนื่องจาก MEGA ไม่สามารถยกเลิกให้คุณได้ เยี่ยมชมศูนย์ช่วยเหลือของเราเพื่อศึกษาข้อมูลเพิ่มเติม";
 /* Dialog button title which triggers the action to visit AppStore Subscriptions */
 "account.delete.subscription.itunes.manage"="จัดการการสมัครใช้งาน";
 /* Dialog message shown before deleting an account with active Google play subscription */
-"account.delete.subscription.googlePlay"="คุณมีการสมัครใช้งาน MEGA กับ Google คุณต้องยกเลิกที่ Google Play เนื่องจาก MEGA ไม่สามารถยกเลิกให้คุณได้ เยี่ยมชมศูนย์ช่วยเหลือของเราเพื่อศึกษาข้อมูลเพิ่มเติม";
+"account.delete.subscription.googlePlay"="คุณมีการสมัครใช้งาน MEGA กับ Google อยู่ คุณต้องยกเลิกที่ Google Play เนื่องจาก MEGA ไม่สามารถยกเลิกให้คุณได้ เยี่ยมชมศูนย์ช่วยเหลือของเราเพื่อศึกษาข้อมูลเพิ่มเติม";
 /* Dialog button title which triggers the action to visit Google play */
 "account.delete.subscription.googlePlay.visit"="เยี่ยมชม Google Play";
 /* Dialog message shown before deleting an account with active Huawei AppGallery subscription */
-"account.delete.subscription.huaweiAppGallery"="คุณมีการสมัครใช้งาน MEGA กับ Huawei คุณต้องยกเลิกที่ Huawei AppGallery ด้วยตนเอง เนื่องจาก MEGA ไม่สามารถยกเลิกให้คุณได้ เยี่ยมชมศูนย์ช่วยเหลือของเราเพื่อศึกษาข้อมูลเพิ่มเติม";
+"account.delete.subscription.huaweiAppGallery"="คุณมีการสมัครใช้งาน MEGA กับ Huawei อยู่ คุณต้องยกเลิกที่ Huawei AppGallery ด้วยตนเอง เนื่องจาก MEGA ไม่สามารถยกเลิกให้คุณได้ เยี่ยมชมศูนย์ช่วยเหลือของเราเพื่อศึกษาข้อมูลเพิ่มเติม";
 /* Dialog button title which triggers the action to visit Huawei app gallery */
 "account.delete.subscription.huaweiAppGallery.visit"="เยี่ยมชม AppGallery";
 /* Dialog message shown before deleting an account with active webclient subscription */
@@ -3177,19 +3173,19 @@
 /* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
 "general.menuAction.verifyContact.title"="อนุมัติ %@";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
-"sharedItems.contactVerification.section.verifyContact.owner.message"="เราปกป้องข้อมูลของคุณด้วยการเข้ารหัสแบบวิธีซีโร่-นอว์เลจ และเพื่อความปลอดภัยมากยิ่งขึ้น เราขอให้คุณอนุมัติผู้ติดต่อที่คุณแชร์ข้อมูลด้วยก่อนจึงจะสามารถเข้าถึงโฟลเดอร์ที่แชร์ได้";
+"sharedItems.contactVerification.section.verifyContact.owner.message"="เราปกป้องข้อมูลของคุณด้วยกระบวนการเข้ารหัส zero-knowledge และเพื่อความปลอดภัยมากยิ่งขึ้น เราขอให้คุณตรวจสอบผู้ติดต่อที่คุณแชร์ข้อมูลอยู่ด้วยนั้น ก่อนที่จะให้สิทธิ์ในการเข้าถึงโฟลเดอร์ที่แชร์ได้";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
-"sharedItems.contactVerification.section.myCredentials.message"="เพื่ออนุมัติผู้ติดต่อของคุณ กรุณาตรวจสอบว่าข้อมูลประจำตัวที่คุณเห็นด้านบนตรงกับข้อมูลประจำบัญชีของพวกเขา คุณสามารถขอให้พวกเขาแชร์ข้อมูลประจำบัญชีกับคุณได้";
+"sharedItems.contactVerification.section.myCredentials.message"="ในการตรวจสอบผู้ติดต่อของคุณ ตรวจสอบให้แน่ใจว่าข้อมูลประจำตัวที่แสดงด้านบนตรงกับข้อมูลประจำตัวของคุณ คุณสามารถขอให้ผู้ติดต่อของคุณให้ข้อมูลประจำตัวแก่คุณได้";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
-"sharedItems.contactVerification.section.verifyContact.receiver.message"="เราปกป้องข้อมูลของคุณด้วยการเข้ารหัสแบบวิธีซีโร่-นอว์เลจ และเพื่อความปลอดภัยมากยิ่งขึ้น เราขอให้คุณอนุมัติผู้ติดต่อที่คุณแชร์ข้อมูลด้วยก่อนจึงจะสามารถเข้าถึงโฟลเดอร์ที่แชร์ได้";
+"sharedItems.contactVerification.section.verifyContact.receiver.message"="เราปกป้องข้อมูลของคุณด้วยกระบวนการเข้ารหัส zero-knowledge และเพื่อความปลอดภัยมากยิ่งขึ้น เราขอให้คุณตรวจสอบผู้ติดต่อที่คุณได้รับข้อมูลอยู่ด้วยนั้น ก่อนที่จะให้สิทธิ์ในการเข้าถึงโฟลเดอร์ที่แชร์ได้";
 /* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
 "sharedItems.contactVerification.section.verifyContact.bannerMessage"="";
 /* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
-"sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ ถูกแชร์โดยผู้ติดต่อที่คุณยังไม่ได้รับการอนุมัติ เพื่อความปลอดภัยมากยิ่งขึ้น เราขอแนะนำให้คุณอนุมัติข้อมูลประจำตัวของพวกเขาในรายชื่อติดต่อ โดยแตะที่ ⓘ ถัดจากรายชื่อติดต่อที่คุณต้องการอนุมัติ";
+"sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ is shared by a contact you haven’t verified. To ensure extra security, we recommend that you verify their credentials in Contacts by tapping on ⓘ next to the contact you want to verify.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="ข้อมูลประจำตัวของคุณ";
 /* Title of the header label in contact verification screen. */
-"verifyCredentials.headerMessage"="เราใช้การเข้ารหัสแบบวิธีซีโร่-นอว์เลจเพื่อรักษาความปลอดภัยข้อมูลทั้งหมดที่คุณจัดเก็บ แชร์ และรับบน MEGA และเพื่อเป็นการเพิ่มความปลอดภัยให้ดียิ่งขึ้น เราขอให้คุณอนุมัติผู้ติดต่อที่คุณแชร์ข้อมูลหรือรับข้อมูลด้วย";
+"verifyCredentials.headerMessage"="เราใช้การเข้ารหัสแบบวิธีซีโร่-นอว์เลจเพื่อรักษาความปลอดภัยข้อมูลทั้งหมดที่คุณจัดเก็บ แชร์ และรับบน MEGA และเพื่อเป็นการเพิ่มความปลอดภัยให้ดียิ่งขึ้น เราขอให้คุณตรวจสอบผู้ติดต่อที่คุณแชร์ข้อมูลหรือรับข้อมูลด้วย";
 /* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
 "sharedItems.tab.incoming.undecryptedFolderName"="[โฟลเดอร์ที่ไม่ได้ถอดรหัส]";
 /* On Outgoing Shared Items Tab. Text that shows the receiver's name of the shared folder. %@ will be replaced with the receiver's name. */
@@ -3319,7 +3315,7 @@
 /* On Outgoing Shared Items Tab. Title of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
 "sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="อนุมัติผู้ติดต่อไม่ได้";
 /* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="คุณไม่สามารถอนุมัติ %@ ได้เนื่องจากไม่ได้อยู่ในรายชื่อผู้ติดต่อของคุณ รอให้พวกเขาตอบรับคำเชิญของคุณก่อน";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="คุณไม่สามารถตรวจสอบ %@ ได้เนื่องจากไม่ได้อยู่ในรายชื่อผู้ติดต่อของคุณ รอให้พวกเขาตอบรับคำเชิญของคุณก่อน";
 /* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
 "picker.disable.passcode.title"="ปิดใช้งานรหัส";
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
@@ -3446,6 +3442,16 @@
 "device.center.show.in.cloud.drive.action.title"="แสดงในคลาวด์ไดร์ฟ";
 /* Show in Backups section action title */
 "device.center.show.in.backups.action.title"="แสดงในสำรองข้อมูล";
+/* Device Center rename device action title */
+"device.center.rename.device.title"="ชื่ออุปกรณ์";
+/* Device Center rename device action duplicated name message */
+"device.center.rename.device.duplicated.name"="มีอุปกรณ์ชื่อนี้อยู่แล้ว";
+/* Device Center rename device action enter a different name message */
+"device.center.rename.device.different.name"="กรอกชื่ออื่น";
+/* Device Center camera upload status enabled */
+"device.center.camera.uploads.action.status.enabled"="เปิดใช้งาน";
+/* Device Center camera upload status disabled */
+"device.center.camera.uploads.action.status.disabled"="ปิดใช้งาน";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="สิ้นสุดการทำประจำ";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3645,7 +3651,7 @@
 /* Album failed to save to cloud drive alert message */
 "albumLink.alert.message.albumFailedToSaveToCloudDrive"="ไม่สามารถบันทึก “%@” ลงในคลาวด์ไดร์ฟได้ กรุณาลองอีกครั้งในภายหลัง แต่หากยังประสบปัญหาอยู่ ให้ติดต่อบุคคลที่แชร์ลิงก์กับคุณ";
 /* Text displayed on banner we show when sharing folder with unverified contacts */
-"shareFolder.contactsNotVerified"="ผู้ติดต่อบางรายที่คุณแชร์ข้อมูลด้วยยังไม่ได้รับการอนุมัติจากคุณ เพื่อความปลอดภัยมากยิ่งขึ้น เราขอแนะนำให้คุณอนุมัติข้อมูลประจำตัวของพวกเขาในรายชื่อติดต่อ โดยแตะที่ ⓘ ถัดจากรายชื่อติดต่อที่คุณต้องการอนุมัติ";
+"shareFolder.contactsNotVerified"="Some of the contacts you’re sharing information with haven’t been verified by you. To ensure extra security, we recommend that you verify their credentials in Contacts by tapping on ⓘ next to the contact you want to verify.";
 /* Rename public album alert title */
 "albumLink.alert.renameAlbum.title"="เปลี่ยนชื่ออัลบั้ม";
 /* Rename public album alert message */
@@ -3693,7 +3699,11 @@
 /* Meeting waiting room alert title of Host didn’t let you in */
 "meetings.waitingRoom.alert.hostDidNotLetYouIn"="ผู้จัดการประชุมไม่อนุญาตให้คุณเข้า";
 /* Meeting waiting room alert message of You'll be removed from the waiting room */
-"meetings.waitingRoom.alert.youWillBeRemovedFromTheWaitingRoom"="You’ll be removed from the waiting room.";
+"meetings.waitingRoom.alert.youWillBeRemovedFromTheWaitingRoom"="คุณจะถูกนำออกจากห้องนั่งรอ";
+/* Meeting waiting room alert title of Host didn’t respond */
+"meetings.waitingRoom.alert.hostDidNotRespond"="ผู้จัดการประชุมไม่ตอบสนอง";
+/* Meeting waiting room alert message of There is no response to your request to join the meeting */
+"meetings.waitingRoom.alert.thereIsNoResponseToYourResquestToJoinTheMeeting"="ไม่มีการตอบสนองต่อคำขอของคุณในการเข้าร่วมการประชุม คุณจะถูกนำออกจากห้องนั่งรอ ลองเข้าร่วมใหม่ในภายหลัง";
 /* Meeting waiting room alert action of ok got it */
 "meetings.waitingRoom.alert.okGotIt"="โอเค เข้าใจแล้ว";
 /* Call waiting room alert message text to notify host that someone is waiting to join */
@@ -3702,21 +3712,33 @@
 "chat.call.waitingRoom.alert.button.deny"="ปฏิเสธ";
 /* Call waiting room alert button to admit access */
 "chat.call.waitingRoom.alert.button.admit"="ยอมรับ";
-/* Call waiting room alert message text to notify host that several participants are waiting to join */
-"chat.call.waitingRoom.alert.message.several"="";
 /* Call waiting room alert button to open waiting room UI */
 "chat.call.waitingRoom.alert.button.seeWaitingRoom"="ดูห้องนั่งรอ";
 /* Call waiting room alert button to allow access to everyone */
 "chat.call.waitingRoom.alert.button.admitAll"="ยอมรับทั้งหมด";
 /* Call waiting room alert message text to confirm deny access from host */
-"chat.call.waitingRoom.alert.message.denyAcces"="ปฏิเสธการเข้าร่วมสายของ %@ หรือไม่";
+"chat.call.waitingRoom.alert.message.denyAccess"="ปฏิเสธการเข้าร่วมสายของ %@ หรือไม่";
 /* Call waiting room alert button to deny access */
 "chat.call.waitingRoom.alert.button.confirmDeny"="ปฏิเสธเข้าร่วมสาย";
 /* Call waiting room alert button to allow access */
 "chat.call.waitingRoom.alert.button.cancel"="ยกเลิก";
-/* Call waiting room alert message text to notify host that someone is waiting to join a call (call UI is not visible) */
-"chat.call.waitingRoom.alert.outsideCallUI.message.one"="%@ กำลังรอเข้าร่วมสาย “%@”";
-/* Call waiting room alert message text to notify host that several participants are waiting to join a call (call UI is not visible) */
-"chat.call.waitingRoom.alert.outsideCallUI.message.several"="";
 /* Context menu action seen from native files application when selecting a file that's also present on MEGA */
 "fileProviderExtension.action.open"="เปิดใน MEGA";
+/* Filter name for searching on the home screen */
+"home.search.filter.docs"="เอกสาร";
+/* Filter name for searching on the home screen */
+"home.search.filter.images"="รูปภาพ";
+/* Filter name for searching on the home screen */
+"home.search.filter.audio"="เสียง";
+/* Filter name for searching on the home screen */
+"home.search.filter.video"="วิดีโอ";
+/* Empty screen copy when no filter is selected on the home screen search */
+"home.search.empty.no-chip-selected"="ไม่พบรายการค้นหา";
+/* Empty screen copy when Images filter is selected on the home screen search */
+"home.search.empty.no-images"="ไม่มีรูปภาพ";
+/* Empty screen copy when Documents is selected on the home screen search */
+"home.search.empty.no-documents"="ไม่มีไฟล์เอกสาร";
+/* Empty screen copy when Audio filter is selected on the home screen search */
+"home.search.empty.no-audio"="ไม่มีไฟล์เสียง";
+/* Empty screen copy when Video filter is selected on the home screen search */
+"home.search.empty.no-videos"="ไม่มีไฟล์วิดีโอ";

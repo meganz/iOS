@@ -2382,7 +2382,7 @@
         <string>%d phiên tải xuống đã được bắt đầu</string>
       </dict>
     </dict>
-    <key>general.format.itemsSelected</key>
+    <key>chat.call.waitingRoom.alert.outsideCallUI.message</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
       <string>%#@count@</string>
@@ -2393,9 +2393,37 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d item selected</string>
+        <string>[UserName] is waiting to join “[MeetingName]“</string>
         <key>other</key>
-        <string>%d items selected</string>
+        <string>%d participants are waiting to join “[MeetingName]“</string>
+      </dict>
+    </dict>
+    <key>chat.call.waitingRoom.alert.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d người đang chờ để tham gia cuộc gọi</string>
+      </dict>
+    </dict>
+    <key>general.format.itemsSelected</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d mục đã được chọn</string>
       </dict>
     </dict>
   </dict>

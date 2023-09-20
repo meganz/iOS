@@ -1295,7 +1295,7 @@
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
 "verify"="Validar";
 /* Button title */
-"verified"="Validadas";
+"verified"="Verificado";
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="Deletar o histórico do chat";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
@@ -1314,8 +1314,6 @@
 "My credentials"="Minhas credenciais";
 /* Button to reset the password */
 "reset"="Resetar";
-/* Button title */
-"approve"="Validar";
 /* start a chat/conversation */
 "startConversation"="Iniciar chat";
 /* Label title for a group chat */
@@ -1418,12 +1416,12 @@
 "resend"="Reenviar";
 /* Error message displayed when trying to invite a contact who is already added. */
 "alreadyAContact"="%s já é um contato.";
-/* A summary message when a user sent a contact's details through the chat. Please keep %@ as it will be replaced at runtime with the name of the contact that was sent. */
-"sentContact"="Contato enviado: %@";
+/* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
+"sentContact"="Contato enviado: %s";
 /* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
 "sentXContacts"="Enviados %s contatos.";
-/* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %@ as it will be replaced at runtime with the name of the attached file. */
-"attachedFile"="Anexou: %@";
+/* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
+"attachedFile"="Anexou: %s";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="Anexou %s arquivos.";
 /* Label in a button that allows to jump to the latest item */
@@ -2002,8 +2000,6 @@
 "recents.emptyState.activityHidden.button"="Mostrar atividade";
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="Alterado por %@";
-/* Title for a recent action bucket with multiple files. %@ will be replaced by the filename of the first file in the bucket. %ld will be replaced by the total number of other files in the bucket. */
-"home.recent.multipleFileTitle"="";
 /* Label that indicates who uploaded a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.createdByLabel"="Criado por %@";
 /* Message shown when the user has not recent activity in their account. */
@@ -2710,7 +2706,7 @@
 "account.upgrade.alreadyHaveASubscription.message"="Você já tem uma assinatura de um plano Pro por meio da Google Play Store ou da AppGallery. Por favor, cancele a sua assinatura diretamente na Google Play Store ou na Huawei AppGallery no seu dispositivo, e então tente novamente fazer a nova compra.";
 /* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
 "account.upgrade.alreadyHaveACancellableSubscription.message"="Você quer cancelar a sua assinatura atual e continuar com a nova compra?";
-/* Error message shown when a user tries to purchase plan that is not available with their current plan */
+/* This message will be shown if the user is not allowed to purchase a plan because of their current plan.  For example, the user have a Business or Pro Flexi account, they should not be able to purchase a Pro plan. We will show this to the user when they try to purchase one. */
 "account.upgrade.notAvailableWithCurrentPlan.message"="Não compatível com o seu plano atual";
 /* Dialog title shown before deleting an account with active subscription */
 "account.delete.subscription.title"="Assinatura Ativa";
@@ -3177,19 +3173,19 @@
 /* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
 "general.menuAction.verifyContact.title"="Validar %@";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
-"sharedItems.contactVerification.section.verifyContact.owner.message"="Protegemos os seus dados com criptografia de conhecimento zero. Para garantir uma segurança adicional, pedimos que você valide os contatos com os quais compartilha informações antes que eles possam acessar as pastas compartilhadas.";
+"sharedItems.contactVerification.section.verifyContact.owner.message"="Protegemos os seus dados com criptografia de conhecimento zero. Para garantir uma segurança adicional, pedimos que você verifique os contatos com os quais compartilha informações antes que eles possam acessar as pastas compartilhadas.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
-"sharedItems.contactVerification.section.myCredentials.message"="Para validar o seu contato, confirme que as credenciais que você vê acima correspondem às credenciais da conta dele. Você pode pedir que eles compartilhem as credenciais com você.";
+"sharedItems.contactVerification.section.myCredentials.message"="Para verificar o seu contato, confirme que as credenciais que você vê acima correspondem às credenciais da conta dele. Você pode pedir que eles compartilhem as credenciais com você.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
-"sharedItems.contactVerification.section.verifyContact.receiver.message"="Protegemos os seus dados com criptografia de conhecimento zero. Para garantir uma segurança adicional, pedimos que você valide os contatos dos quais você recebe informações antes de poder acessar as pastas compartilhadas.";
+"sharedItems.contactVerification.section.verifyContact.receiver.message"="Protegemos os seus dados com criptografia de conhecimento zero. Para garantir uma segurança adicional, pedimos que você verifique os contatos dos quais você recebe informações antes de poder acessar as pastas compartilhadas.";
 /* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
 "sharedItems.contactVerification.section.verifyContact.bannerMessage"="Para acessar a pasta compartilhada, a pessoa que a compartilhou com você também deve validar as suas credenciais.";
 /* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
-"sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ foi compartilhado por um contato que você não validou. Como medida de segurança, recomendamos que você valide as credenciais dos mesmos em Contatos, tocando no ícone ⓘ ao lado do contato que quiser validar.";
+"sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ is shared by a contact you haven’t verified. To ensure extra security, we recommend that you verify their credentials in Contacts by tapping on ⓘ next to the contact you want to verify.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="Suas credenciais";
 /* Title of the header label in contact verification screen. */
-"verifyCredentials.headerMessage"="Protegemos os seus dados com criptografia de conhecimento zero para que todas as informações que você armazene, compartilhe e receba no MEGA estejam seguras. Para garantir segurança extra, pedimos que você valide os contatos com os quais você compartilha informações ou dos quais recebe dados.";
+"verifyCredentials.headerMessage"="Protegemos os seus dados com criptografia de conhecimento zero para que todas as informações que você armazene, compartilhe e receba no MEGA estejam seguras. Para garantir segurança extra, pedimos que você verifique os contatos com os quais você compartilha informações ou dos quais recebe dados.";
 /* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
 "sharedItems.tab.incoming.undecryptedFolderName"="[Pasta não decodificada]";
 /* On Outgoing Shared Items Tab. Text that shows the receiver's name of the shared folder. %@ will be replaced with the receiver's name. */
@@ -3319,7 +3315,7 @@
 /* On Outgoing Shared Items Tab. Title of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
 "sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="Não foi possível validar o contato";
 /* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="Você não pode validar %@ porque ele(a) não está na sua lista de contatos. Espere até ele(a) aceitar o seu convite.";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="Você não pode verificar %@ porque ele não está na sua lista de contatos. Espere que ele aceite o seu convite.";
 /* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
 "picker.disable.passcode.title"="Desativar o código de acesso do MEGA";
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
@@ -3446,6 +3442,16 @@
 "device.center.show.in.cloud.drive.action.title"="Mostrar na Nuvem de arquivos";
 /* Show in Backups section action title */
 "device.center.show.in.backups.action.title"="Mostrar nos Backups";
+/* Device Center rename device action title */
+"device.center.rename.device.title"="Nome do dispositivo";
+/* Device Center rename device action duplicated name message */
+"device.center.rename.device.duplicated.name"="Um dispositivo com esse nome já existe";
+/* Device Center rename device action enter a different name message */
+"device.center.rename.device.different.name"="Digite um nome diferente";
+/* Device Center camera upload status enabled */
+"device.center.camera.uploads.action.status.enabled"="Ativo";
+/* Device Center camera upload status disabled */
+"device.center.camera.uploads.action.status.disabled"="Desativada";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="Deixar de repetir";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3645,7 +3651,7 @@
 /* Album failed to save to cloud drive alert message */
 "albumLink.alert.message.albumFailedToSaveToCloudDrive"="Não foi possível salvar “%@” na sua Nuvem de arquivos. Tente novamente mais tarde e, se o problema persistir, entre em contato com a pessoa que compartilhou o link com você.";
 /* Text displayed on banner we show when sharing folder with unverified contacts */
-"shareFolder.contactsNotVerified"="Você não validou alguns dos contatos com os quais você está compartilhando informações. Como medida de segurança, recomendamos que você valide as credenciais dos mesmos em Contatos, tocando no ícone ⓘ ao lado do contato que quiser validar.";
+"shareFolder.contactsNotVerified"="Você não verificou alguns dos contatos com os quais você está compartilhando informações. Como medida de segurança, recomendamos que você verifique as credenciais dos mesmos em Contatos tocando no ícone ⓘ ao lado do contato que quiser verificar.";
 /* Rename public album alert title */
 "albumLink.alert.renameAlbum.title"="Renomear álbum";
 /* Rename public album alert message */
@@ -3693,7 +3699,11 @@
 /* Meeting waiting room alert title of Host didn’t let you in */
 "meetings.waitingRoom.alert.hostDidNotLetYouIn"="O anfitrião não deixou você entrar";
 /* Meeting waiting room alert message of You'll be removed from the waiting room */
-"meetings.waitingRoom.alert.youWillBeRemovedFromTheWaitingRoom"="Você será removido da sala de espera";
+"meetings.waitingRoom.alert.youWillBeRemovedFromTheWaitingRoom"="Você será removido da sala de espera.";
+/* Meeting waiting room alert title of Host didn’t respond */
+"meetings.waitingRoom.alert.hostDidNotRespond"="O anfitrião não respondeu";
+/* Meeting waiting room alert message of There is no response to your request to join the meeting */
+"meetings.waitingRoom.alert.thereIsNoResponseToYourResquestToJoinTheMeeting"="Não há resposta à sua solicitação de acesso à reunião. Você será removido da sala de espera. Tente entrar novamente mais tarde.";
 /* Meeting waiting room alert action of ok got it */
 "meetings.waitingRoom.alert.okGotIt"="Entendi";
 /* Call waiting room alert message text to notify host that someone is waiting to join */
@@ -3702,21 +3712,33 @@
 "chat.call.waitingRoom.alert.button.deny"="Rejeitar";
 /* Call waiting room alert button to admit access */
 "chat.call.waitingRoom.alert.button.admit"="Aceitar";
-/* Call waiting room alert message text to notify host that several participants are waiting to join */
-"chat.call.waitingRoom.alert.message.several"="";
 /* Call waiting room alert button to open waiting room UI */
 "chat.call.waitingRoom.alert.button.seeWaitingRoom"="Ver sala de espera";
 /* Call waiting room alert button to allow access to everyone */
 "chat.call.waitingRoom.alert.button.admitAll"="Aceitar a todos";
 /* Call waiting room alert message text to confirm deny access from host */
-"chat.call.waitingRoom.alert.message.denyAcces"="Não permitir o acesso de %@?";
+"chat.call.waitingRoom.alert.message.denyAccess"="Não permitir o acesso de %@?";
 /* Call waiting room alert button to deny access */
 "chat.call.waitingRoom.alert.button.confirmDeny"="Não permitir o acesso";
 /* Call waiting room alert button to allow access */
 "chat.call.waitingRoom.alert.button.cancel"="Cancelar";
-/* Call waiting room alert message text to notify host that someone is waiting to join a call (call UI is not visible) */
-"chat.call.waitingRoom.alert.outsideCallUI.message.one"="%@ está esperando para entrar em “%@”";
-/* Call waiting room alert message text to notify host that several participants are waiting to join a call (call UI is not visible) */
-"chat.call.waitingRoom.alert.outsideCallUI.message.several"="";
 /* Context menu action seen from native files application when selecting a file that's also present on MEGA */
 "fileProviderExtension.action.open"="Abrir no MEGA";
+/* Filter name for searching on the home screen */
+"home.search.filter.docs"="Documentos";
+/* Filter name for searching on the home screen */
+"home.search.filter.images"="Imagens";
+/* Filter name for searching on the home screen */
+"home.search.filter.audio"="Áudio";
+/* Filter name for searching on the home screen */
+"home.search.filter.video"="Vídeo";
+/* Empty screen copy when no filter is selected on the home screen search */
+"home.search.empty.no-chip-selected"="Não há resultados";
+/* Empty screen copy when Images filter is selected on the home screen search */
+"home.search.empty.no-images"="Não há imagens";
+/* Empty screen copy when Documents is selected on the home screen search */
+"home.search.empty.no-documents"="Não há documentos";
+/* Empty screen copy when Audio filter is selected on the home screen search */
+"home.search.empty.no-audio"="Não há arquivos de áudio";
+/* Empty screen copy when Video filter is selected on the home screen search */
+"home.search.empty.no-videos"="Não há arquivos de vídeo";

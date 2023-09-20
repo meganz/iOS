@@ -3402,6 +3402,46 @@
         <string>Rozpoczęto %d pobierania</string>
       </dict>
     </dict>
+    <key>chat.call.waitingRoom.alert.outsideCallUI.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[UserName] oczekuje na dołączenie do &quot;[MeetingName]&quot;.</string>
+        <key>few</key>
+        <string>%d uczestników oczekuje na dołączenie do &quot;[MeetingName]&quot;.</string>
+        <key>many</key>
+        <string>%d uczestników oczekuje na dołączenie do &quot;[MeetingName]&quot;.</string>
+        <key>other</key>
+        <string>%d uczestników oczekuje na dołączenie do &quot;[MeetingName]&quot;.</string>
+      </dict>
+    </dict>
+    <key>chat.call.waitingRoom.alert.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[UserName] oczekuje na dołączenie do połączenia</string>
+        <key>few</key>
+        <string>%d uczestników oczekuje na dołączenie do połączenia</string>
+        <key>many</key>
+        <string>%d uczestników oczekuje na dołączenie do połączenia</string>
+        <key>other</key>
+        <string>%d uczestników oczekuje na dołączenie do połączenia</string>
+      </dict>
+    </dict>
     <key>general.format.itemsSelected</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -3413,9 +3453,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d item selected</string>
+        <string>Wybrano %d element</string>
+        <key>few</key>
+        <string>Wybrano %d elementów</string>
+        <key>many</key>
+        <string>Wybrano %d elementów</string>
         <key>other</key>
-        <string>%d items selected</string>
+        <string>Wybrano %d elementów</string>
       </dict>
     </dict>
   </dict>

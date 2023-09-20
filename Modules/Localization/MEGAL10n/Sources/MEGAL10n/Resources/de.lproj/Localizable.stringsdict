@@ -2722,6 +2722,38 @@
         <string>%d Downloads gestartet</string>
       </dict>
     </dict>
+    <key>chat.call.waitingRoom.alert.outsideCallUI.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[UserName] wartet darauf, an „[MeetingName]“ teilzunehmen</string>
+        <key>other</key>
+        <string>%d Teilnehmer warten darauf, „[MeetingName]“ beizutreten</string>
+      </dict>
+    </dict>
+    <key>chat.call.waitingRoom.alert.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[UserName] wartet darauf, der Konferenz beizutreten</string>
+        <key>other</key>
+        <string>%d Teilnehmer warten darauf, der Konferenz beizutreten</string>
+      </dict>
+    </dict>
     <key>general.format.itemsSelected</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -2733,9 +2765,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d item selected</string>
+        <string>%d Element ausgewählt</string>
         <key>other</key>
-        <string>%d items selected</string>
+        <string>%d Elemente ausgewählt</string>
       </dict>
     </dict>
   </dict>

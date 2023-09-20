@@ -1201,9 +1201,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Every day effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Ogni giorno a partire dal [B][StartDate] fino al [UntilDate][/B] dalle [B][StartTime] alle [EndTime][/B]</string>
+        <key>many</key>
+        <string>Ogni %d di giorni a partire dal [B][StartDate] fino al [UntilDate][/B] dalle [B][StartTime] alle [EndTime][/B]</string>
         <key>other</key>
-        <string>Every %d days effective [B][StartDate] until [UntilDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Ogni %d giorni a partire dal [B][StartDate] fino al [UntilDate][/B] dalle [B][StartTime] alle [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.daily.forever</key>
@@ -1217,9 +1219,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Every day effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Ogni giorno a partire dal [B][StartDate][/B] dalle [B][StartTime] alle [EndTime][/B]</string>
+        <key>many</key>
+        <string>Ogni %d di giorni a partire dal [B][StartDate][/B] dalle [B][StartTime] alle [EndTime][/B]</string>
         <key>other</key>
-        <string>Every %d days effective [B][StartDate][/B] from [B][StartTime] to [EndTime][/B]</string>
+        <string>Ogni %d giorni a partire dal [B][StartDate][/B] dalle [B][StartTime] alle [EndTime][/B]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.recurring.weekly.oneDay.until</key>
@@ -2889,9 +2893,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Meeting will occur every month on day [cardinalDay].</string>
+        <string>Il meeting avrà luogo ogni mese nel giorno [cardinalDay].</string>
+        <key>many</key>
+        <string>Il meeting avrà luogo ogni %d di mesi nel giorno [cardinalDay].</string>
         <key>other</key>
-        <string>Meeting will occur every %d months on day [cardinalDay].</string>
+        <string>Il meeting avrà luogo ogni %d mesi nel giorno [cardinalDay].</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.multipleDaysCardinal.footerNote</key>
@@ -2905,9 +2911,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Meeting will occur every month on day [cardinalDays] and day [cardinalLastDay].</string>
+        <string>Il meeting avrà luogo ogni mese nei giorni [cardinalDays] e [cardinalLastDay].</string>
+        <key>many</key>
+        <string>Il meeting avrà luogo ogni %d di mesi nei giorni [cardinalDays] e [cardinalLastDay].</string>
         <key>other</key>
-        <string>Meeting will occur every %d months on day [cardinalDays] and day [cardinalLastDay].</string>
+        <string>Il meeting avrà luogo ogni %d mesi nei giorni [cardinalDays] e [cardinalLastDay].</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.weekNumberAndWeekDay.footerNote</key>
@@ -2975,9 +2983,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Every month on day [cardinalNumber]</string>
+        <string>Ogni mese nel giorno [cardinalNumber]</string>
+        <key>many</key>
+        <string>Ogni %d di mesi nel giorno [cardinalNumber]</string>
         <key>other</key>
-        <string>Every %d months on day [cardinalNumber]</string>
+        <string>Ogni %d mesi nel giorno [cardinalNumber]</string>
       </dict>
     </dict>
     <key>meetings.scheduled.create.monthly.weekNumberAndWeekDay.selectedFrequency</key>
@@ -3027,9 +3037,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d file saved to Cloud drive</string>
+        <string>%d file salvato nel Cloud Drive</string>
+        <key>many</key>
+        <string>%d file salvati nel Cloud Drive</string>
         <key>other</key>
-        <string>%d files saved to Cloud drive</string>
+        <string>%d file salvati nel Cloud Drive</string>
       </dict>
     </dict>
     <key>general.saveToPhotos.started</key>
@@ -3043,9 +3055,47 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Download started</string>
+        <string>Download iniziato</string>
+        <key>many</key>
+        <string>%d download iniziati</string>
         <key>other</key>
-        <string>%d downloads started</string>
+        <string>%d download iniziati</string>
+      </dict>
+    </dict>
+    <key>chat.call.waitingRoom.alert.outsideCallUI.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[UserName] è in attesa di unirsi a “[MeetingName]“</string>
+        <key>many</key>
+        <string>%d partecipanti sono in attesa di unirsi a “[MeetingName]“</string>
+        <key>other</key>
+        <string>%d partecipanti sono in attesa di unirsi a “[MeetingName]“</string>
+      </dict>
+    </dict>
+    <key>chat.call.waitingRoom.alert.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[UserName] è in attesa di unirsi alla chiamata</string>
+        <key>many</key>
+        <string>%d partecipanti sono in attesa di unirsi alla chiamata</string>
+        <key>other</key>
+        <string>%d partecipanti sono in attesa di unirsi alla chiamata</string>
       </dict>
     </dict>
     <key>general.format.itemsSelected</key>
@@ -3059,9 +3109,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d item selected</string>
+        <string>%d oggetto selezionato</string>
+        <key>many</key>
+        <string>%d oggetti selezionati</string>
         <key>other</key>
-        <string>%d items selected</string>
+        <string>%d oggetti selezionati</string>
       </dict>
     </dict>
   </dict>

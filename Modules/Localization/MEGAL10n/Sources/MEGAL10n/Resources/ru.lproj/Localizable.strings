@@ -569,9 +569,9 @@
 /* Used in create album popup system album name validation */
 "cameraUploads.albums.create.alert.albumNameNotAllowed"="Недопустимое название альбома";
 /* Used in create album popup album name validation */
-"cameraUploads.albums.create.alert.enterDifferentName"="Введите другое название";
+"cameraUploads.albums.create.alert.enterDifferentName"="Введите другое название.";
 /* Used in create album popup album name validation */
-"cameraUploads.albums.create.alert.enterNewName"="Введите новое название";
+"cameraUploads.albums.create.alert.enterNewName"="Введите новое название.";
 /* Used in add content album view. */
 "cameraUploads.albums.create.addItemsTo"="Добавление элементов в «%@»";
 /* Used in empty album view. */
@@ -1295,7 +1295,7 @@
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
 "verify"="Подтвердить";
 /* Button title */
-"verified"="Подтверждены";
+"verified"="Проверен";
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="Очистить историю";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
@@ -1314,10 +1314,8 @@
 "My credentials"="Мои учётные данные";
 /* Button to reset the password */
 "reset"="Сбросить";
-/* Button title */
-"approve"="Подтвердить";
 /* start a chat/conversation */
-"startConversation"="Начать Разговор";
+"startConversation"="Начать разговор";
 /* Label title for a group chat */
 "groupChat"="Групповой чат";
 /* The title of a menu button which allows users to rename a group chat. */
@@ -1331,7 +1329,7 @@
 /* A button label. The button allows the user to unmute a conversation. */
 "unmute"="Включить звук";
 /* A button label. The button allows the user to mark a conversation as read. */
-"Mark as Read"="Пометить как прочитанное";
+"Mark as Read"="Отметить как прочитанное";
 /* A button label. The button allows the user to get more info of the current context. */
 "info"="Информация";
 /* A button label. The button allows the user to close the conversation. */
@@ -1339,7 +1337,7 @@
 /* Alert text that explains what means confirming the action 'Leave' */
 "youWillNoLongerHaveAccessToThisConversation"="У вас больше не будет доступа к этому разговору";
 /* Button title that allows the user to leave a group chat. */
-"leaveGroup"="Покинуть Группу";
+"leaveGroup"="Выйти из группы";
 /* Label to describe the section where you can see the participants of a group chat */
 "participants"="Участники";
 /* The Moderator permission level in chat. With moderator permissions a participant can manage the chat. */
@@ -1418,12 +1416,12 @@
 "resend"="Выслать повторно";
 /* Error message displayed when trying to invite a contact who is already added. */
 "alreadyAContact"="%s уже в списке контактов.";
-/* A summary message when a user sent a contact's details through the chat. Please keep %@ as it will be replaced at runtime with the name of the contact that was sent. */
-"sentContact"="Отправлено контакту: %@";
+/* A summary message when a user sent a contact's details through the chat. Please keep %s as it will be replaced at runtime with the name of the contact that was sent. */
+"sentContact"="Отправлено контакту: %s";
 /* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
 "sentXContacts"="Отправлены контакты (%s).";
-/* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %@ as it will be replaced at runtime with the name of the attached file. */
-"attachedFile"="Прикреплено: %@";
+/* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %s as it will be replaced at runtime with the name of the attached file. */
+"attachedFile"="Прикреплено: %s";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="Прикреплено файлов: %s.";
 /* Label in a button that allows to jump to the latest item */
@@ -1803,7 +1801,7 @@
 /* Message shown in a chat room when there is an active call */
 "There is an active call. Tap to join."="Есть активный звонок. Нажмите, чтобы присоединиться.";
 /* Message shown in a chat room for a one on one call */
-"Tap to return to call"="Коснитесь, чтобы вернуться";
+"Tap to return to call"="Вернуться к звонку";
 /* A button label which allows the users save images/videos in the Photos app. */
 "Save to Photos"="Сохранять в «Фото»";
 /* Text shown when starting the process to save a photo or video to Photos app */
@@ -2002,8 +2000,6 @@
 "recents.emptyState.activityHidden.button"="Показать действия";
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="Изменено пользователем %@";
-/* Title for a recent action bucket with multiple files. %@ will be replaced by the filename of the first file in the bucket. %ld will be replaced by the total number of other files in the bucket. */
-"home.recent.multipleFileTitle"="";
 /* Label that indicates who uploaded a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.createdByLabel"="Создано пользователем %@";
 /* Message shown when the user has not recent activity in their account. */
@@ -2710,7 +2706,7 @@
 "account.upgrade.alreadyHaveASubscription.message"="Вы ранее подписались на план Pro в Google Play или AppGallery. Пожалуйста, вручную отмените подписку в Google Play или Huawei AppGallery на вашем устройстве, а затем повторите попытку.";
 /* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
 "account.upgrade.alreadyHaveACancellableSubscription.message"="Хотите отменить текущую подписку и продолжить покупку?";
-/* Error message shown when a user tries to purchase plan that is not available with their current plan */
+/* This message will be shown if the user is not allowed to purchase a plan because of their current plan.  For example, the user have a Business or Pro Flexi account, they should not be able to purchase a Pro plan. We will show this to the user when they try to purchase one. */
 "account.upgrade.notAvailableWithCurrentPlan.message"="Недоступно в текущем плане";
 /* Dialog title shown before deleting an account with active subscription */
 "account.delete.subscription.title"="Активная подписка";
@@ -3177,19 +3173,19 @@
 /* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
 "general.menuAction.verifyContact.title"="Подтвердить %@";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
-"sharedItems.contactVerification.section.verifyContact.owner.message"="Мы защищаем ваши данные с помощью шифрования с нулевым разглашением. Чтобы обеспечить дополнительную безопасность, мы просим вас одобрить контакты, с которыми вы делитесь информацией, прежде чем они смогут получить доступ к общим папкам.";
+"sharedItems.contactVerification.section.verifyContact.owner.message"="Мы защищаем ваши данные с помощью шифрования с нулевым разглашением. Чтобы обеспечить дополнительную безопасность, мы просим вас подтвердить контакты, с которыми вы делитесь информацией, прежде чем они смогут получить доступ к общим папкам.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
-"sharedItems.contactVerification.section.myCredentials.message"="Чтобы одобрить контакт, убедитесь, что учётные данные, которые вы видите выше, соответствуют его учётным данным. Вы можете попросить его поделиться с вами своими учётными данными.";
+"sharedItems.contactVerification.section.myCredentials.message"="Чтобы подтвердить контакт, убедитесь, что учётные данные, которые вы видите выше, соответствуют его учётным данным. Вы можете попросить его поделиться с вами своими учётными данными.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
-"sharedItems.contactVerification.section.verifyContact.receiver.message"="Мы защищаем ваши данные с помощью шифрования с нулевым разглашением. Чтобы обеспечить дополнительную безопасность, мы просим вас одобрить контакты, от которых вы получаете информацию, прежде чем вы сможете получить доступ к общим папкам.";
+"sharedItems.contactVerification.section.verifyContact.receiver.message"="Мы защищаем ваши данные с помощью шифрования с нулевым разглашением. Чтобы обеспечить дополнительную безопасность, мы просим вас подтвердить контакты, от которых вы получаете информацию, прежде чем вы сможете получить доступ к общим папкам.";
 /* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
 "sharedItems.contactVerification.section.verifyContact.bannerMessage"="Чтобы общая папка стала доступной, человек, который поделился ей с вами, также должен одобрить вас.";
 /* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
-"sharedItems.contactVerification.contactNotVerifiedBannerMessage"="Папкой «%@» поделился контакт, которого вы не одобрили. Чтобы обеспечить дополнительную безопасность, мы рекомендуем вам одобрить иго учетные данные в «Контактах». Нажмите на ⓘ рядом с контактом, который хотите одобрить.";
+"sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ is shared by a contact you haven’t verified. To ensure extra security, we recommend that you verify their credentials in Contacts by tapping on ⓘ next to the contact you want to verify.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="Ваши учётные данные";
 /* Title of the header label in contact verification screen. */
-"verifyCredentials.headerMessage"="Мы защищаем ваши данные с помощью шифрования с нулевым разглашением, поэтому вся информация, которую вы храните, делитесь и получаете в MEGA, находится в безопасности. Чтобы обеспечить дополнительную безопасность, мы просим вас одобрить контакты, с которыми вы делитесь информацией или от которых получаете данные.";
+"verifyCredentials.headerMessage"="Мы защищаем ваши данные с помощью шифрования с нулевым разглашением, поэтому вся информация, которую вы храните, делитесь и получаете в MEGA, находится в безопасности. Чтобы обеспечить дополнительную безопасность, мы просим вас подтвердить контакты, с которыми вы делитесь информацией или от которых получаете данные.";
 /* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
 "sharedItems.tab.incoming.undecryptedFolderName"="[Нерасшифрованная папка]";
 /* On Outgoing Shared Items Tab. Text that shows the receiver's name of the shared folder. %@ will be replaced with the receiver's name. */
@@ -3229,7 +3225,7 @@
 /* Button title to join an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.joinMeeting"="Войти";
 /* Message shown in a chat room for a call in progress displaying the duration of the call */
-"chat.callInProgress.tapToReturnToCall"="Коснитесь для возврата к вызову %@";
+"chat.callInProgress.tapToReturnToCall"="Вернуться к звонку %@";
 /* In App notification for meetings */
 "inapp.notifications.meetings.header"="Встречи";
 /* In app notification description for one off new meeting invitation */
@@ -3319,7 +3315,7 @@
 /* On Outgoing Shared Items Tab. Title of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
 "sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="Не удаётся одобрить контакт";
 /* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="Вы не можете одобрить %@, так как его нет в вашем списке контактов. Подождите, пока он сначала примет приглашение.";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="Вы не можете подтвердить %@, так как его нет в вашем списке контактов. Подождите, пока он сначала примет приглашение.";
 /* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
 "picker.disable.passcode.title"="Отключите код доступа MEGA";
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
@@ -3445,7 +3441,17 @@
 /* Show in Cloud Drive section action title */
 "device.center.show.in.cloud.drive.action.title"="Показать в облачном диске";
 /* Show in Backups section action title */
-"device.center.show.in.backups.action.title"="Show in Backups";
+"device.center.show.in.backups.action.title"="Показать в «Резервных копиях»";
+/* Device Center rename device action title */
+"device.center.rename.device.title"="Название устройства";
+/* Device Center rename device action duplicated name message */
+"device.center.rename.device.duplicated.name"="Устройство с таким названием уже существует.";
+/* Device Center rename device action enter a different name message */
+"device.center.rename.device.different.name"="Введите другое название";
+/* Device Center camera upload status enabled */
+"device.center.camera.uploads.action.status.enabled"="Включено";
+/* Device Center camera upload status disabled */
+"device.center.camera.uploads.action.status.disabled"="Отключено";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="Заканчивается";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3645,7 +3651,7 @@
 /* Album failed to save to cloud drive alert message */
 "albumLink.alert.message.albumFailedToSaveToCloudDrive"="«%@» не удаётся сохранить на Облачном диске. Повторите попытку позже. Если проблема не исчезнет, обратитесь к человеку, который поделился с вами ссылкой.";
 /* Text displayed on banner we show when sharing folder with unverified contacts */
-"shareFolder.contactsNotVerified"="Некоторые контакты, с которыми вы делитесь информацией, не были вами одобрены. Чтобы обеспечить дополнительную безопасность, мы рекомендуем вам одобрить их учетные данные в «Контактах». Нажмите на ⓘ рядом с контактом, который хотите одобрить.";
+"shareFolder.contactsNotVerified"="Некоторые контакты, с которыми вы делитесь информацией, не были вами подтверждены. Чтобы обеспечить дополнительную безопасность, мы рекомендуем вам подтвердить их учетные данные в «Контактах». Нажмите на ⓘ рядом с контактом, который хотите подтвердить.";
 /* Rename public album alert title */
 "albumLink.alert.renameAlbum.title"="Переименование альбома";
 /* Rename public album alert message */
@@ -3693,7 +3699,11 @@
 /* Meeting waiting room alert title of Host didn’t let you in */
 "meetings.waitingRoom.alert.hostDidNotLetYouIn"="Организатор не пустил вас";
 /* Meeting waiting room alert message of You'll be removed from the waiting room */
-"meetings.waitingRoom.alert.youWillBeRemovedFromTheWaitingRoom"="You’ll be removed from the waiting room.";
+"meetings.waitingRoom.alert.youWillBeRemovedFromTheWaitingRoom"="Вы будете удалены из комнаты ожидания.";
+/* Meeting waiting room alert title of Host didn’t respond */
+"meetings.waitingRoom.alert.hostDidNotRespond"="Организатор не ответил";
+/* Meeting waiting room alert message of There is no response to your request to join the meeting */
+"meetings.waitingRoom.alert.thereIsNoResponseToYourResquestToJoinTheMeeting"="Нет ответа на ваш запрос присоединиться к встрече. Вы будете удалены из комнаты ожидания. Попробуйте присоединиться позже.";
 /* Meeting waiting room alert action of ok got it */
 "meetings.waitingRoom.alert.okGotIt"="Понятно";
 /* Call waiting room alert message text to notify host that someone is waiting to join */
@@ -3702,21 +3712,33 @@
 "chat.call.waitingRoom.alert.button.deny"="Отказать";
 /* Call waiting room alert button to admit access */
 "chat.call.waitingRoom.alert.button.admit"="Пустить";
-/* Call waiting room alert message text to notify host that several participants are waiting to join */
-"chat.call.waitingRoom.alert.message.several"="";
 /* Call waiting room alert button to open waiting room UI */
 "chat.call.waitingRoom.alert.button.seeWaitingRoom"="Посмотреть комнату ожидания";
 /* Call waiting room alert button to allow access to everyone */
 "chat.call.waitingRoom.alert.button.admitAll"="Пустить всех";
 /* Call waiting room alert message text to confirm deny access from host */
-"chat.call.waitingRoom.alert.message.denyAcces"="Не пускать %@?";
+"chat.call.waitingRoom.alert.message.denyAccess"="Не пускать %@?";
 /* Call waiting room alert button to deny access */
 "chat.call.waitingRoom.alert.button.confirmDeny"="Не пускать";
 /* Call waiting room alert button to allow access */
 "chat.call.waitingRoom.alert.button.cancel"="Отмена";
-/* Call waiting room alert message text to notify host that someone is waiting to join a call (call UI is not visible) */
-"chat.call.waitingRoom.alert.outsideCallUI.message.one"="%@ ждёт подключения к звонку «%@»";
-/* Call waiting room alert message text to notify host that several participants are waiting to join a call (call UI is not visible) */
-"chat.call.waitingRoom.alert.outsideCallUI.message.several"="";
 /* Context menu action seen from native files application when selecting a file that's also present on MEGA */
 "fileProviderExtension.action.open"="Открыть в MEGA";
+/* Filter name for searching on the home screen */
+"home.search.filter.docs"="Документы";
+/* Filter name for searching on the home screen */
+"home.search.filter.images"="Изображения";
+/* Filter name for searching on the home screen */
+"home.search.filter.audio"="Аудио";
+/* Filter name for searching on the home screen */
+"home.search.filter.video"="Видео";
+/* Empty screen copy when no filter is selected on the home screen search */
+"home.search.empty.no-chip-selected"="Нет результатов";
+/* Empty screen copy when Images filter is selected on the home screen search */
+"home.search.empty.no-images"="Нет изображений";
+/* Empty screen copy when Documents is selected on the home screen search */
+"home.search.empty.no-documents"="Нет документов";
+/* Empty screen copy when Audio filter is selected on the home screen search */
+"home.search.empty.no-audio"="Нет аудиофайлов";
+/* Empty screen copy when Video filter is selected on the home screen search */
+"home.search.empty.no-videos"="Нет видеофайлов";

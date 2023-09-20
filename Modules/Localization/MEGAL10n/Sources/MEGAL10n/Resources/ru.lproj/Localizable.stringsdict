@@ -3402,6 +3402,46 @@
         <string>Запущено %d скачивания</string>
       </dict>
     </dict>
+    <key>chat.call.waitingRoom.alert.outsideCallUI.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[UserName] ждёт подключения к «[MeetingName]»</string>
+        <key>few</key>
+        <string>%d участника ждут подключения к «[MeetingName]»</string>
+        <key>many</key>
+        <string>%d участников ждут подключения к «[MeetingName]»</string>
+        <key>other</key>
+        <string>%d участника ждут подключения к «[MeetingName]»</string>
+      </dict>
+    </dict>
+    <key>chat.call.waitingRoom.alert.message</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>[UserName] ждёт подключения к звонку</string>
+        <key>few</key>
+        <string>%d участника ждут подключения к звонку</string>
+        <key>many</key>
+        <string>%d участников ждут подключения к звонку</string>
+        <key>other</key>
+        <string>%d участника ждут подключения к звонку</string>
+      </dict>
+    </dict>
     <key>general.format.itemsSelected</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -3413,9 +3453,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d item selected</string>
+        <string>%d элемент выбран</string>
+        <key>few</key>
+        <string>%d элемента выбрано</string>
+        <key>many</key>
+        <string>%d элементов выбрано</string>
         <key>other</key>
-        <string>%d items selected</string>
+        <string>%d элемента выбрано</string>
       </dict>
     </dict>
   </dict>
