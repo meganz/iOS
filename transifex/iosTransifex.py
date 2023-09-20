@@ -41,7 +41,7 @@ if not gitlab_token:
     sys.exit(1)
 
 BASE_URL = "https://rest.api.transifex.com"
-GITLAB_URL = "https://code.developers.mega.co.nz/api/v4/projects/193/repository/files/Modules%2FLocalization%2FMEGAL10n%2FSources%2FMEGAL10n%2FResources%2FBase.lproj%2F$file/raw?ref=develop"
+GITLAB_URL = "https://code.developers.mega.co.nz/api/v4/projects/193/repository/files/Modules%2FPresentation%2FMEGAL10n%2FSources%2FMEGAL10n%2FResources%2FBase.lproj%2F$file/raw?ref=develop"
 PROJECT_ID = "o:meganz-1:p:ios-35"
 STORES_IOS_ID = "o:meganz-1:p:stores:r:app_store_ios"
 HEADER = {
@@ -58,7 +58,7 @@ DOWNLOAD_FOLDER = os.getcwd() + "/download/"
 git_path = os.getcwd()
 if "/transifex" in git_path:
     git_path = git_path + "/.."
-PROD_FOLDER = git_path + "/Modules/Localization/MEGAL10n/Sources/MEGAL10n/Resources/"
+PROD_FOLDER = git_path + "/Modules/Presentation/MEGAL10n/Sources/MEGAL10n/Resources/"
 if not os.path.isdir(PROD_FOLDER):
     os.makedirs(PROD_FOLDER)
 if not os.path.isdir(DOWNLOAD_FOLDER):
