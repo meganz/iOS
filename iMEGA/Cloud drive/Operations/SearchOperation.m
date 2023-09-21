@@ -12,18 +12,20 @@
 @property (strong, nonatomic) MEGACancelToken *cancelToken;
 @property (assign, nonatomic) MEGASortOrderType sortOrderType;
 @property (assign, nonatomic) MEGANodeFormatType nodeFormatType;
+@property (strong, nonatomic) MEGASdk *sdk;
 @property (copy, nonatomic) void (^completion)(NSArray <MEGANode *> *nodesFound, BOOL isCancelled);
 
 @end
 
 @implementation SearchOperation
 
-- (instancetype)initWithParentNode:(MEGANode *)parentNode text:(NSString *)text cancelToken:(MEGACancelToken *)cancelToken completion:(void (^)(NSArray  <MEGANode *> *_Nullable, BOOL))completion {
+- (instancetype)initWithParentNode:(MEGANode *)parentNode text:(NSString *)text cancelToken:(MEGACancelToken *)cancelToken sdk:(MEGASdk *)sdk completion:(void (^)(NSArray  <MEGANode *> *_Nullable, BOOL))completion {
     return [self initWithParentNode:parentNode
                                text:text
                         cancelToken:cancelToken
                       sortOrderType:[Helper sortTypeFor:parentNode]
                      nodeFormatType:MEGANodeFormatTypeUnknown
+                                sdk: sdk
                          completion:completion];
 }
 
@@ -32,6 +34,7 @@
                        cancelToken:(MEGACancelToken *)cancelToken
                      sortOrderType:(MEGASortOrderType)sortOrderType
                     nodeFormatType:(MEGANodeFormatType)nodeFormatType
+                               sdk:(MEGASdk *)sdk
                         completion:(void (^)(NSArray<MEGANode *> * _Nullable, BOOL))completion {
     self = super.init;
     if (self) {
@@ -41,6 +44,7 @@
         _cancelToken = cancelToken;
         _sortOrderType = sortOrderType;
         _nodeFormatType = nodeFormatType;
+        _sdk = sdk;
     }
     return self;
 }
@@ -61,13 +65,13 @@
 #else
     MEGALogInfo(@"[Search] starts");
 #endif
-    MEGANodeList *nodeListFound = [MEGASdkManager.sharedMEGASdk nodeListSearchForNode:self.parentNode
-                                                                         searchString:self.text
-                                                                          cancelToken:self.cancelToken
-                                                                            recursive:YES
-                                                                            orderType:self.sortOrderType
-                                                                       nodeFormatType:self.nodeFormatType
-                                                                     folderTargetType:MEGAFolderTargetTypeAll];
+    MEGANodeList *nodeListFound = [self.sdk nodeListSearchForNode:self.parentNode
+                                                     searchString:self.text
+                                                      cancelToken:self.cancelToken
+                                                        recursive:YES
+                                                        orderType:self.sortOrderType
+                                                   nodeFormatType:self.nodeFormatType
+                                                 folderTargetType:MEGAFolderTargetTypeAll];
 #ifdef DEBUG
     MEGALogInfo(@"[Search] \"%@\" finishes", self.text);
 #else
