@@ -43,7 +43,8 @@ extension NodeSearchRepository {
                     text: searchText,
                     cancelToken: cancelToken,
                     sortOrderType: .creationAsc,
-                    nodeFormatType: nodeFormat ?? MEGANodeFormatType.unknown
+                    nodeFormatType: nodeFormat ?? MEGANodeFormatType.unknown,
+                    sdk: sdk
                 ) { (foundNodes, _) -> Void in
                     guard let foundNodes = foundNodes else {
                         completionAction([])

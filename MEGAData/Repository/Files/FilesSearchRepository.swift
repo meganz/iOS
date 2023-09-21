@@ -121,6 +121,7 @@ final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtocol, @unc
                                               cancelToken: supportCancel ? cancelToken : MEGACancelToken(),
                                               sortOrderType: sortOrderType.toMEGASortOrderType(),
                                               nodeFormatType: formatType.toMEGANodeFormatType(),
+                                              sdk: sdk,
                                               completion: completion)
         searchOperationQueue.addOperation(searchOperation)
     }

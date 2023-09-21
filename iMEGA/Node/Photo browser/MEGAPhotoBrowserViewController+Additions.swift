@@ -265,7 +265,7 @@ extension MEGAPhotoBrowserViewController {
         switch displayMode {
         case .nodeInsideFolderLink:
             sdk = .sharedFolderLink
-            nodeProvider = DefaultMEGANodeProvider(sdk: sdk)
+            nodeProvider = FolderLinkMEGANodeProvider(sdk: sdk)
         case .albumLink:
             sdk = .shared
             nodeProvider = PublicAlbumNodeProvider.shared

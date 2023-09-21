@@ -7,6 +7,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)initWithParentNode:(MEGANode *)node
                               text:(NSString *)text
                        cancelToken:(MEGACancelToken *)cancelToken
+                               sdk:(MEGASdk *)sdk
                         completion:(void (^)(NSArray <MEGANode *> *_Nullable nodesFound, BOOL isCancelled))completion;
 
 - (instancetype)initWithParentNode:(MEGANode *)parentNode
@@ -14,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
                        cancelToken:(MEGACancelToken *)cancelToken
                      sortOrderType:(MEGASortOrderType)sortOrderType
                     nodeFormatType:(MEGANodeFormatType)nodeFormatType
+                               sdk:(MEGASdk *)sdk
                         completion:(void (^)(NSArray <MEGANode *> *_Nullable nodesFound, BOOL isCancelled))completion;
 
 @end
