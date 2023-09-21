@@ -1,3 +1,4 @@
+@testable import MEGA
 import XCTest
 
 @MainActor
@@ -21,6 +22,54 @@ final class MEGAAVViewControllerTests: XCTestCase {
         sut.viewDidDisappear(anyBool())
         
         XCTAssertNil(sut.player, "Expect player nil, got non nil instead: player instance: \(String(describing: sut.player))")
+    }
+    
+    // MARK: - Loading Indicator
+    
+    func testWillStartPlayer_whenInvoked_startsLoading() throws {
+        let sut = try makeSUT()
+        
+        sut.willStartPlayer()
+        
+        XCTAssertTrue(sut.activityIndicator.isAnimating, "Expect true, got false instead.")
+    }
+    
+    func testPlayerDidStall_whenInvoked_stopsLoading() throws {
+        let sut = try makeSUT()
+        
+        sut.playerDidStall()
+        
+        XCTAssertTrue(sut.activityIndicator.isAnimating, "Expect true, got false instead.")
+    }
+    
+    func testDidChangePlayerItemStatus_whenAttemptStopLoading_stopsLoading() throws {
+        let sut = try makeSUT()
+        
+        let samples: [AVPlayerItem.Status] = [.unknown, .readyToPlay, .failed]
+        samples.enumerated().forEach { (index, status) in
+            sut.didChangePlayerItemStatus(status)
+            
+            XCTAssertEqual(sut.activityIndicator.isAnimating, false, "Expect to false, failed instead at index: \(index) with status: \(status)")
+        }
+    }
+    
+    func testPlayerDidChangeTimeControlStatus_waitingRate_startsLoading() throws {
+        let sut = try makeSUT()
+        
+        sut.playerDidChangeTimeControlStatus(.waitingToPlayAtSpecifiedRate)
+        
+        XCTAssertTrue(sut.activityIndicator.isAnimating, "Expect true, got false instead.")
+    }
+    
+    func testPlayerDidChangeTimeControlStatus_whenAttemptStopLoading_startsLoading() throws {
+        let sut = try makeSUT()
+        
+        let samples: [AVPlayer.TimeControlStatus] = [.paused, .playing]
+        samples.enumerated().forEach { (index, status) in
+            sut.playerDidChangeTimeControlStatus(status)
+            
+            XCTAssertEqual(sut.activityIndicator.isAnimating, false, "Expect to false, failed instead at index: \(index) with status: \(status)")
+        }
     }
     
     // MARK: - Helpers
