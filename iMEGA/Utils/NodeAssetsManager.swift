@@ -14,35 +14,35 @@ import MEGARepo
             }
 #if MAIN_APP_TARGET
             if CameraUploadNodeAccess.shared.isTargetNode(for: node) {
-                return Asset.Images.Filetypes.folderCamera.image
+                return Asset.Images.Filetypes.filetypeFolderCamera.image
             } else if BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo).isBackupDeviceFolder(node.toNodeEntity()) {
                 return backupDeviceIcon(for: node)
             }
 #endif
             return commonFolderImage(for: node)
         case .incoming:
-            return node.isFolder() ? commonFolderImage(for: node) : Asset.Images.Filetypes.generic.image
+            return node.isFolder() ? commonFolderImage(for: node) : UIImage(resource: .filetypeGeneric)
         default:
-            return Asset.Images.Filetypes.generic.image
+            return UIImage(resource: .filetypeGeneric)
         }
     }
     
     @objc func image(for extension: String) -> UIImage {
-        imageAsset(for: `extension`).image
+        UIImage(resource: imageResource(for: `extension`))
     }
     
-    @objc func imageName(for extension: String) -> String {
-        imageAsset(for: `extension`).name
+    func image(for extension: String) -> MEGAFileTypeResource {
+        imageResource(for: `extension`)
     }
     
-    private func imageAsset(for extension: String) -> ImageAsset {
+    private func imageResource(for extension: String) -> MEGAFileTypeResource {
         let ext = `extension`.lowercased()
         
         if ext.matches(regex: FileExtensionType.jpg.rawValue) {
-            return Asset.Images.Filetypes.image
+            return .filetypeImages
         } else {
-            let fileTypeImageName = FileTypes().fileType(forFileExtension: ext)
-            return ImageAsset(name: fileTypeImageName)
+            let fileTypeImageResource = FileTypes().fileTypeResource(forFileExtension: ext)
+            return fileTypeImageResource
         }
     }
     
@@ -52,7 +52,7 @@ import MEGARepo
         } else if node.isOutShare() {
             return Asset.Images.Filetypes.folderOutgoing.image
         } else {
-            return Asset.Images.Filetypes.folder.image
+            return UIImage(resource: .filetypeFolder)
         }
     }
     

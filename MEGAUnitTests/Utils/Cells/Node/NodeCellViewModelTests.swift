@@ -198,7 +198,7 @@ final class NodeCellViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .manageThumbnail,
              expectedCommands: [.hideVideoIndicator(true),
-                                .setIcon("folder")])
+                                .setIcon(.filetypeFolder)])
     }
     
     func testAction_manageThumbnail_isFile_noThumbnail() {
@@ -217,7 +217,7 @@ final class NodeCellViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .manageThumbnail,
              expectedCommands: [.hideVideoIndicator(true),
-                                .setIcon("generic")])
+                                .setIcon(.filetypeGeneric)])
     }
     
     func testAction_manageThumbnail_isFile_hasThumbnail() throws {

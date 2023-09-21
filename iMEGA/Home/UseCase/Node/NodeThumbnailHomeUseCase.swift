@@ -118,8 +118,8 @@ struct NodeThumbnailHomeUseCase: NodeThumbnailHomeUseCaseProtocol {
         _ nodeName: String,
         completion: @escaping (UIImage?) -> Void
     ) {
-        let fileTypeImageName = FileTypes().fileType(forFileExtension: nodeName.pathExtension)
-        completion(UIImage(named: fileTypeImageName))
+        let fileTypeImageResource = FileTypes().fileTypeResource(forFileExtension: nodeName.pathExtension)
+        completion(UIImage(resource: fileTypeImageResource))
     }
 
     private func defaultFolderImage(forNode node: NodeEntity) -> UIImage? {
