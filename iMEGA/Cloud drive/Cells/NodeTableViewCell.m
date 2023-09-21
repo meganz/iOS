@@ -32,6 +32,7 @@
     [super awakeFromNib];
     
     self.cancelButtonTrailingConstraint.constant =  ([[UIDevice currentDevice] iPadDevice] || [[UIDevice currentDevice] iPhonePlus]) ? 10 : 6;
+    [self configureMoreButtonUI];
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
@@ -218,6 +219,7 @@
 }
 
 - (void)updateWithTrait:(UITraitCollection *)currentTraitCollection {
+    [self configureMoreButtonUI];
     self.infoLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     if (self.cellFlavor != NodeTableViewCellFlavorRecentAction) {
         return;
