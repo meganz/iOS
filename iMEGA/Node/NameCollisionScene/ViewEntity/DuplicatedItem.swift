@@ -6,7 +6,7 @@ struct DuplicatedItem {
     var isFile: Bool
     var size: String
     var date: String
-    var itemPlaceholder: String
+    var imagePlaceholder: MEGAFileTypeResource
     var collisionFileSize: String?
     var collisionFileDate: String?
     var collisionNodeHandle: HandleEntity?

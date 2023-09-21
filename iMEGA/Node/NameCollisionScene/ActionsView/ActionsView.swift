@@ -52,7 +52,7 @@ struct ActionView: View {
                         }
                     }
                     if viewModel.showItemView {
-                        ItemView(name: viewModel.itemName, size: viewModel.actionItem.size, date: viewModel.actionItem.date, imageUrl: viewModel.actionItem.imageUrl, imagePlaceholder: viewModel.actionItem.itemPlaceholder)
+                        ItemView(name: viewModel.itemName, size: viewModel.actionItem.size, date: viewModel.actionItem.date, imageUrl: viewModel.actionItem.imageUrl, imagePlaceholder: viewModel.actionItem.imagePlaceholder)
                             .frame(maxWidth: .infinity)
                     }
                 }

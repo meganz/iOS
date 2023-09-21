@@ -52,9 +52,9 @@ final class FavouritesQuickAccessWidgetViewModel: ViewModelType {
     
     private func imageForPatExtension(_ pathExtension: String) -> Image {
         if pathExtension != "" {
-            return Image(FileTypes().allTypes[pathExtension] ?? Asset.Images.Filetypes.generic.name)
+            return Image(FileTypes().fileTypeImageResources[pathExtension] ?? .filetypeGeneric)
         } else {
-            return Image(Asset.Images.Filetypes.folder.name)
+            return Image(.filetypeFolder)
         }
     }
     

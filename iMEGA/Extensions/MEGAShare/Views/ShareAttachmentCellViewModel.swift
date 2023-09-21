@@ -3,7 +3,7 @@ import MEGADomain
 import MEGASwift
 
 final class ShareAttachmentCellViewModel: ObservableObject {
-    private(set) var fileIconName: String = ""
+    private(set) var fileIcon: MEGAFileTypeResource = .filetypeGeneric
     private(set) var fileExtension: FileExtension = ""
     private let index: Int
     @Published var fileName = ""
@@ -17,12 +17,12 @@ final class ShareAttachmentCellViewModel: ObservableObject {
         let name = attachment.name ?? ""
         
         if attachment.type == .URL {
-            fileIconName = NodeAssetsManager.shared.imageName(for: "html")
+            fileIcon = .filetypeWebData
             fileName = name
             fileExtension = ""
         } else {
             let extensionOfFile = name.pathExtension
-            fileIconName = NodeAssetsManager.shared.imageName(for: extensionOfFile)
+            fileIcon = NodeAssetsManager.shared.image(for: extensionOfFile)
             fileExtension = extensionOfFile.isNotEmpty ? ".\(extensionOfFile)" : ""
             fileName = NSURL(fileURLWithPath: name).deletingPathExtension?.lastPathComponent ?? ""
         }
