@@ -125,7 +125,6 @@
     {
       "parallelizable" : true,
       "skippedTests" : [
-        "MEGAavatarLoadingUseCaseTests\/testSuccessLoadRemoteAvatarImage()",
         "MeetingFloatingPanelViewModelTests\/testAction_allowNonHostToAddParticipantsValueChanged_isOpenInviteDisabled()",
         "MeetingFloatingPanelViewModelTests\/testAction_allowNonHostToAddParticipantsValueChanged_isOpenInviteEnabled()",
         "MeetingFloatingPanelViewModelTests\/testAction_onViewReady_VideoCallWithBackCamera()",
