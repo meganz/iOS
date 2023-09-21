@@ -6,12 +6,11 @@ extension AppDelegate {
     @objc func isAdsMainTabBarRootView() -> Bool {
         window.isKind(of: UIHostingController<AdsSlotView<MainTabBarWrapper>>.self)
     }
-    
+
     @objc func adsMainTabBarController(_ tabBar: MainTabBarController) -> UIViewController {
-        let adsSlot = AdsSlotEntity.files
         let viewModel = AdsSlotViewModel(adsUseCase: AdsUseCase(repository: AdsRepository.newRepo),
                                          accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
-                                         adsSlot: adsSlot)
+                                         adsSlotChangeStream: AdsSlotChangeStream(adsSlotViewController: tabBar))
         let adsSlotView = AdsSlotView(viewModel: viewModel,
                                       contentView: MainTabBarWrapper(mainTabBar: tabBar))
         return UIHostingController(rootView: adsSlotView)

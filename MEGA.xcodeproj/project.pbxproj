@@ -1552,11 +1552,14 @@
 		B5430FD22AB97905003F8C34 /* AdsSlotViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EA09602AA1D38D001171C2 /* AdsSlotViewModel.swift */; };
 		B5430FD32AB9793E003F8C34 /* AdsWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51DDFA22AA896E4009BDF3B /* AdsWebView.swift */; };
 		B5430FD52AB9796A003F8C34 /* MainTabBarWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51DDFAA2AA8A74F009BDF3B /* MainTabBarWrapper.swift */; };
+		B544E5DB2AB4610C006EB65C /* MainTabBarController+Ads.swift in Sources */ = {isa = PBXBuildFile; fileRef = B544E5DA2AB4610C006EB65C /* MainTabBarController+Ads.swift */; };
 		B547025228B8AFB6005F7F71 /* MEGAPhotoBrowserViewController+LiveText.swift in Sources */ = {isa = PBXBuildFile; fileRef = B547025128B8AFB6005F7F71 /* MEGAPhotoBrowserViewController+LiveText.swift */; };
 		B547C0E629FB716C0008BEF2 /* SortOrderType+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B547C0E529FB716C0008BEF2 /* SortOrderType+Mapper.swift */; };
 		B5488B732A8DBB8600A069DF /* CustomModalAlertViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5488B722A8DBB8600A069DF /* CustomModalAlertViewController+Additions.swift */; };
 		B5488B742A8DBB8600A069DF /* CustomModalAlertViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5488B722A8DBB8600A069DF /* CustomModalAlertViewController+Additions.swift */; };
 		B5488B7A2A8DBFAD00A069DF /* CountdownTimerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5488B792A8DBFAD00A069DF /* CountdownTimerTests.swift */; };
+		B5565D3A2ABAE64E006BA80F /* AdsSlotChangeStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5578ABA2AB1B2180067082A /* AdsSlotChangeStream.swift */; };
+		B5578ABB2AB1B2180067082A /* AdsSlotChangeStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5578ABA2AB1B2180067082A /* AdsSlotChangeStream.swift */; };
 		B558B1E42A551F3E006FB3A4 /* UpgradeAccountPlanAlertType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B558B1E32A551F3E006FB3A4 /* UpgradeAccountPlanAlertType.swift */; };
 		B55C1A8829825E4B006A0205 /* NodeTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55C1A8729825E4B006A0205 /* NodeTableViewCell+Additions.swift */; };
 		B55C1A8A298260DB006A0205 /* NodeTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55C1A8729825E4B006A0205 /* NodeTableViewCell+Additions.swift */; };
@@ -1597,6 +1600,7 @@
 		B5967A0829403AE500AD4E61 /* VerifyCredentialsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5967A0729403AE500AD4E61 /* VerifyCredentialsViewController+Additions.swift */; };
 		B596D12B2977DC34002C5094 /* NodeInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B596D1292977DC33002C5094 /* NodeInfoViewModel.swift */; };
 		B596D15C2979280A002C5094 /* CloudDriveViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B596D15B2979280A002C5094 /* CloudDriveViewModel.swift */; };
+		B59700622AB2EEAC00F18769 /* MockAdsSlotPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59700612AB2EEAC00F18769 /* MockAdsSlotPublisher.swift */; };
 		B5A8CA012AB96442001F9B83 /* UIApplication+TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A8CA002AB96442001F9B83 /* UIApplication+TabBar.swift */; };
 		B5AD33C529D136A600707496 /* UpgradeAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AD33C429D136A500707496 /* UpgradeAccountViewModel.swift */; };
 		B5B0E30627F1BCA700DB6146 /* WarningViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B0E30527F1BCA700DB6146 /* WarningViewModelTests.swift */; };
@@ -4122,10 +4126,12 @@
 		B52E231C28A0D66F0018C3C3 /* FeatureFlagUseCase+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeatureFlagUseCase+Additions.swift"; sourceTree = "<group>"; };
 		B53B02BD2A96135200550A69 /* MEGAPurchase+PromotedPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPurchase+PromotedPlan.swift"; sourceTree = "<group>"; };
 		B541CD2F2A6AAF53004B4CCC /* PlanSelectionSnackBarType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanSelectionSnackBarType.swift; sourceTree = "<group>"; };
+		B544E5DA2AB4610C006EB65C /* MainTabBarController+Ads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabBarController+Ads.swift"; sourceTree = "<group>"; };
 		B547025128B8AFB6005F7F71 /* MEGAPhotoBrowserViewController+LiveText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPhotoBrowserViewController+LiveText.swift"; sourceTree = "<group>"; };
 		B547C0E529FB716C0008BEF2 /* SortOrderType+Mapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SortOrderType+Mapper.swift"; sourceTree = "<group>"; };
 		B5488B722A8DBB8600A069DF /* CustomModalAlertViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+Additions.swift"; sourceTree = "<group>"; };
 		B5488B792A8DBFAD00A069DF /* CountdownTimerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownTimerTests.swift; sourceTree = "<group>"; };
+		B5578ABA2AB1B2180067082A /* AdsSlotChangeStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsSlotChangeStream.swift; sourceTree = "<group>"; };
 		B558B1E32A551F3E006FB3A4 /* UpgradeAccountPlanAlertType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeAccountPlanAlertType.swift; sourceTree = "<group>"; };
 		B55C1A8729825E4B006A0205 /* NodeTableViewCell+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeTableViewCell+Additions.swift"; sourceTree = "<group>"; };
 		B55C1B7029890C91006A0205 /* MainTabBarController+SharedItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabBarController+SharedItems.swift"; sourceTree = "<group>"; };
@@ -4161,6 +4167,7 @@
 		B5967A0729403AE500AD4E61 /* VerifyCredentialsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VerifyCredentialsViewController+Additions.swift"; sourceTree = "<group>"; };
 		B596D1292977DC33002C5094 /* NodeInfoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeInfoViewModel.swift; sourceTree = "<group>"; };
 		B596D15B2979280A002C5094 /* CloudDriveViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveViewModel.swift; sourceTree = "<group>"; };
+		B59700612AB2EEAC00F18769 /* MockAdsSlotPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAdsSlotPublisher.swift; sourceTree = "<group>"; };
 		B5A8CA002AB96442001F9B83 /* UIApplication+TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+TabBar.swift"; sourceTree = "<group>"; };
 		B5AD33C429D136A500707496 /* UpgradeAccountViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeAccountViewModel.swift; sourceTree = "<group>"; };
 		B5B0E30527F1BCA700DB6146 /* WarningViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningViewModelTests.swift; sourceTree = "<group>"; };
@@ -6261,6 +6268,7 @@
 				4152267A1A692ECC00EC7BB6 /* LoginViewController.m */,
 				E8E1D2D41AFA860E00A9BD5B /* Main.storyboard */,
 				948425D72A94EF020024FF1F /* MainTabBarController+Additions.swift */,
+				B544E5DA2AB4610C006EB65C /* MainTabBarController+Ads.swift */,
 				C451AB9525A4CDB700A5484B /* MainTabBarController+AudioPlayer.swift */,
 				B6D995F7222CA42000A98BEF /* MainTabBarController+CameraUpload.h */,
 				B6D995F8222CA42000A98BEF /* MainTabBarController+CameraUpload.m */,
@@ -7472,6 +7480,7 @@
 				C47E7BDA25D1550200DB6FF5 /* AudioPlayerItem.swift */,
 				5D33D671250DBA0B00D74666 /* CGSize.swift */,
 				B58050C02A823A6100D377D1 /* MockABTestProvider.swift */,
+				B59700612AB2EEAC00F18769 /* MockAdsSlotPublisher.swift */,
 				B5E411AA28AB740F00D05719 /* MockFeatureFlagProvider.swift */,
 				32D167A92942DA59008C5ED6 /* MockSlideShowDataSource.swift */,
 				25ED56692A98699E0063864F /* MockTransferWidgetResponder.swift */,
@@ -9898,6 +9907,7 @@
 		B51DDFA92AA8A636009BDF3B /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				B5578ABA2AB1B2180067082A /* AdsSlotChangeStream.swift */,
 				B5EA09602AA1D38D001171C2 /* AdsSlotViewModel.swift */,
 			);
 			path = ViewModel;
@@ -13135,6 +13145,7 @@
 				BF7EBD4A245293530015255F /* AddToChatMenuViewController.swift in Sources */,
 				BF6DF366245797CC00D612D0 /* AddToChatViewAnimator.swift in Sources */,
 				BF7EBD2E244E916F0015255F /* AddToChatViewController.swift in Sources */,
+				B5578ABB2AB1B2180067082A /* AdsSlotChangeStream.swift in Sources */,
 				B5EA095E2AA1D289001171C2 /* AdsSlotView.swift in Sources */,
 				B5EA09612AA1D38D001171C2 /* AdsSlotViewModel.swift in Sources */,
 				B51DDFA32AA896E4009BDF3B /* AdsWebView.swift in Sources */,
@@ -13765,6 +13776,7 @@
 				83F79CBB2AA7372C00D2DE64 /* MainTabBarCallsRouter.swift in Sources */,
 				83663F602AA63869000A1115 /* MainTabBarCallsViewModel.swift in Sources */,
 				948425DB2A94F34F0024FF1F /* MainTabBarController+Additions.swift in Sources */,
+				B544E5DB2AB4610C006EB65C /* MainTabBarController+Ads.swift in Sources */,
 				C451AB9625A4CDB700A5484B /* MainTabBarController+AudioPlayer.swift in Sources */,
 				B6D995F9222CA42000A98BEF /* MainTabBarController+CameraUpload.m in Sources */,
 				836A783428E34E5B00B6849F /* MainTabBarController+Chat.swift in Sources */,
@@ -14786,6 +14798,7 @@
 				C46157C12538A8EE00F3970D /* ActionSheetSwitchCell.swift in Sources */,
 				8340CAF8284E48F8007C3B39 /* ActionsView.swift in Sources */,
 				8340CAFB284E4F0C007C3B39 /* ActionViewModel.swift in Sources */,
+				B5565D3A2ABAE64E006BA80F /* AdsSlotChangeStream.swift in Sources */,
 				B5430FD02AB978FB003F8C34 /* AdsSlotView.swift in Sources */,
 				B5430FD22AB97905003F8C34 /* AdsSlotViewModel.swift in Sources */,
 				B5430FD32AB9793E003F8C34 /* AdsWebView.swift in Sources */,
@@ -15139,6 +15152,7 @@
 				C45A2E2325D2E05100915A83 /* MiniPlayerViewModelTests.swift in Sources */,
 				5D52C74A250C4F4100286A43 /* mock-function.swift in Sources */,
 				B58050C12A823A6100D377D1 /* MockABTestProvider.swift in Sources */,
+				B59700622AB2EEAC00F18769 /* MockAdsSlotPublisher.swift in Sources */,
 				BFBB888B28B8421B00E8B482 /* MockAnalyticsEventUseCase.swift in Sources */,
 				160CEA832A5BB98E0051541F /* MockAnalyticsTracker.swift in Sources */,
 				C47E7C4025D1AC3400DB6FF5 /* MockAudioPlayerHandler.swift in Sources */,
