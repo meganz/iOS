@@ -3443,69 +3443,69 @@
 /* Device Center backup error: Unknown error */
 "device.center.backup.error.type.unknownError"="Unknown error";
 /* Device Center backup error: Unsupported filesystem */
-"device.center.backup.error.type.unsupportedFilesystem"="MEGA can’t sync or backup this folder because the filesystem on your device is not supported";
+"device.center.backup.error.type.unsupportedFilesystem"="MEGA can't sync or backup this folder because the filesystem on your device is not supported";
 /* Device Center backup error: Invalid remote node */
 "device.center.backup.error.type.invalidRemoteNode"="Remote node is not valid";
 /* Device Center backup error: Sync setup issue with individual file */
-"device.center.backup.error.type.syncSetupIndividualFile"="Can’t set up this sync as it’s an individual file. To set up a sync, you need to set it up from a folder";
+"device.center.backup.error.type.syncSetupIndividualFile"="Can't set up this sync as it's an individual file. To set up a sync, you need to set it up from a folder";
 /* Device Center backup error: Initial scan failed */
 "device.center.backup.error.type.initialScanFailed"="Initial scan failed. To re-enable, go to Preferences or Settings in the desktop app, select the Sync or Backup tab, and check the relevant folder";
 /* Device Center backup error: Local drive folder not found */
-"device.center.backup.error.type.localDriveFolderNotFound"="Folder in your local drive can’t be located";
+"device.center.backup.error.type.localDriveFolderNotFound"="Folder in your local drive can't be located";
 /* Device Center backup error: Local drive folder not found */
-"device.center.backup.error.type.localDriveFolderNotFoundAlt"="Folder in local drive can’t be located";
+"device.center.backup.error.type.localDriveFolderNotFoundAlt"="Folder in local drive can't be located";
 /* Device Center backup error: MEGA folder not found or inaccessible */
-"device.center.backup.error.type.megaFolderNotFoundOrInaccessible"="Folder in MEGA can’t be located as it’s been moved or deleted, or you might not have access";
+"device.center.backup.error.type.megaFolderNotFoundOrInaccessible"="Folder in MEGA can't be located as it's been moved or deleted, or you might not have access";
 /* Device Center backup error: Storage quota reached */
 "device.center.backup.error.type.storageQuotaReached"="Storage quota has reached the limit";
 /* Device Center backup error: Plan expired */
 "device.center.backup.error.type.planExpired"="Your plan has expired";
 /* Device Center backup error: Shared folder quota reached */
-"device.center.backup.error.type.sharedFolderQuotaReached"="Folder can’t be synced as user who shared this folder has reached their storage quota";
+"device.center.backup.error.type.sharedFolderQuotaReached"="Folder can't be synced as user who shared this folder has reached their storage quota";
 /* Device Center backup error: MEGA folder moved */
-"device.center.backup.error.type.megaFolderMoved"="Folder in MEGA can’t be located as it’s been moved";
+"device.center.backup.error.type.megaFolderMoved"="Folder in MEGA can't be located as it's been moved";
 /* Device Center backup error: Insufficient access to shared folder */
-"device.center.backup.error.type.insufficientAccessSharedFolder"="Folder can’t be synced as it’s a shared folder without full access";
+"device.center.backup.error.type.insufficientAccessSharedFolder"="Folder can't be synced as it's a shared folder without full access";
 /* Device Center backup error: Filesystem fingerprint mismatch */
 "device.center.backup.error.type.filesystemFingerprintMismatch"="Filesystem fingerprint does not match the one stored for the synchronization";
 /* Device Center backup error: Folder sync disabled */
-"device.center.backup.error.type.folderSyncDisabled"="Files in this folder can’t be synced or backed up. To re-enable, go to Preferences or Settings in the desktop app, select the Sync or Backup tab, and check the relevant folder";
+"device.center.backup.error.type.folderSyncDisabled"="Files in this folder can't be synced or backed up. To re-enable, go to Preferences or Settings in the desktop app, select the Sync or Backup tab, and check the relevant folder";
 /* Device Center backup error: Nested sync folders */
-"device.center.backup.error.type.nestedSyncFolders"="Folder can’t be synced as it already contains synced folders";
+"device.center.backup.error.type.nestedSyncFolders"="Folder can't be synced as it already contains synced folders";
 /* Device Center backup error: Active sync above path */
 "device.center.backup.error.type.activeSyncAbovePath"="Active sync above path";
 /* Device Center backup error: MEGA folder in rubbish bin */
-"device.center.backup.error.type.megaFolderInRubbishBin"="Folder can’t be synced or backed up as MEGA folder is in the Rubbish bin";
+"device.center.backup.error.type.megaFolderInRubbishBin"="Folder can't be synced or backed up as MEGA folder is in the Rubbish bin";
 /* Device Center backup error: Item in rubbish */
 "device.center.backup.error.type.itemInRubbish"="The item attempted to be added is in rubbish";
 /* Device Center backup error: Unsupported filesystem - VirtualBox folders */
-"device.center.backup.error.type.unsupportedFilesystemVirtualBox"="MEGA can’t sync or backup VirtualBox folders as this is an unsupported filesystem";
+"device.center.backup.error.type.unsupportedFilesystemVirtualBox"="MEGA can't sync or backup VirtualBox folders as this is an unsupported filesystem";
 /* Device Center backup error: Folder inside synced folder */
-"device.center.backup.error.type.folderInsideSyncedFolder"="Folder can’t be synced as it’s inside a synced folder";
+"device.center.backup.error.type.folderInsideSyncedFolder"="Folder can't be synced as it's inside a synced folder";
 /* Device Center backup error: Account blocked */
 "device.center.backup.error.type.accountBlocked"="Account has been blocked";
 /* Device Center backup error: Sync or backup problem */
 "device.center.backup.error.type.syncOrBackupProblem"="Problem syncing or backing up this folder. Check again later. If issue continues, contact Support";
 /* Device Center backup error: Account reloaded with missed updates */
-"device.center.backup.error.type.accountReloadedMissedUpdates"="Account reloaded. Any missed updates to your backups or syncs haven’t been applied";
+"device.center.backup.error.type.accountReloadedMissedUpdates"="Account reloaded. Any missed updates to your backups or syncs haven't been applied";
 /* Device Center backup error: Sync or backup stopped */
-"device.center.backup.error.type.syncOrBackupStopped"="Sync or backup has been stopped as you’ve logged out or closed the session. To re-enable, go to Preferences or Settings in the desktop app, select the Sync or Backup tab, and check the relevant folder";
+"device.center.backup.error.type.syncOrBackupStopped"="Sync or backup has been stopped as you've logged out or closed the session. To re-enable, go to Preferences or Settings in the desktop app, select the Sync or Backup tab, and check the relevant folder";
 /* Device Center backup error: MEGA folder changed */
 "device.center.backup.error.type.megaFolderChanged"="Problem syncing or backing up this folder because of changes to the MEGA folder. Stop the backup and try setting it up again in the desktop app, or contact Support";
 /* Device Center backup error: External drive folder not found */
-"device.center.backup.error.type.externalDriveFolderNotFound"="Folder in external drive can’t be located";
+"device.center.backup.error.type.externalDriveFolderNotFound"="Folder in external drive can't be located";
 /* Device Center backup error: Sync or backup problem */
 "device.center.backup.error.type.syncOrBackupProblemAlt"="Problem syncing or backing up this folder. Delete and try setting it up again in the desktop app, or contact Support";
 /* Device Center backup error: Sync node conflict */
-"device.center.backup.error.type.syncNodeConflict"="There’s already a synced node at the same path";
+"device.center.backup.error.type.syncNodeConflict"="There's already a synced node at the same path";
 /* Device Center backup error: Renaming failed */
 "device.center.backup.error.type.renamingFailed"="Renaming failed";
 /* Device Center backup error: Sync creation failed */
-"device.center.backup.error.type.syncCreationFailed"="Couldn’t create a sync. Ignore the file";
+"device.center.backup.error.type.syncCreationFailed"="Couldn't create a sync. Ignore the file";
 /* Device Center backup error: Sync configs unreadable from disk */
-"device.center.backup.error.type.syncConfigsUnreadable"="Couldn’t read sync configs from disk";
+"device.center.backup.error.type.syncConfigsUnreadable"="Couldn't read sync configs from disk";
 /* Device Center backup error: Unknown sync drive path */
-"device.center.backup.error.type.unknownSyncDrivePath"="Sync’s drive path is unknown";
+"device.center.backup.error.type.unknownSyncDrivePath"="Sync's drive path is unknown";
 /* Device Center backup error: Invalid scan interval */
 "device.center.backup.error.type.invalidScanInterval"="Invalid scan interval";
 /* Device Center backup error: Filesystem notification subsystem error */
@@ -3513,7 +3513,7 @@
 /* Device Center backup error: Unable to add filesystem watch */
 "device.center.backup.error.type.unableToAddFilesystemWatch"="Unable to add a filesystem watch";
 /* Device Center backup error: Sync root's FSID retrieval failure */
-"device.center.backup.error.type.syncRootFsidRetrievalFailure"="Unable to retrieve a sync root’s FSID";
+"device.center.backup.error.type.syncRootFsidRetrievalFailure"="Unable to retrieve a sync root's FSID";
 /* Device Center backup error: State cache database inaccessible */
 "device.center.backup.error.type.stateCacheDatabaseInaccessible"="Unable to open state cache database";
 /* Device Center backup error: Insufficient space for download */
@@ -3521,11 +3521,11 @@
 /* Device Center backup error: No access to persistent storage */
 "device.center.backup.error.type.noAccessToPersistentStorage"="No access to persistent storage";
 /* Device Center backup error: Sync root's FSID change */
-"device.center.backup.error.type.syncRootFsidChange"="The sync root’s FSID has changed to a different folder. We can’t identify the old sync db as the name depends on it";
+"device.center.backup.error.type.syncRootFsidChange"="The sync root's FSID has changed to a different folder. We can't identify the old sync db as the name depends on it";
 /* Device Center backup error: FSID change on MAC device */
 "device.center.backup.error.type.fsidChangeOnMac"="In particular on MAC device, the FSID of a file in an exFAT drive can and does change spontaneously and frequently";
 /* Device Center backup error: Unable to get filesystem's ID */
-"device.center.backup.error.type.unableToGetFilesystemsId"="We can’t get filesystem’s ID";
+"device.center.backup.error.type.unableToGetFilesystemsId"="We can't get filesystem's ID";
 /* Show in Cloud Drive section action title */
 "device.center.show.in.cloud.drive.action.title"="Show in Cloud drive";
 /* Show in Backups section action title */
