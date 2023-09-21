@@ -133,7 +133,6 @@
 		2412B5352A414EC7000EB46E /* MEGANode+initAudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2412B5342A414EC7000EB46E /* MEGANode+initAudioPlayer.swift */; };
 		24189DCE2AA705C70071F160 /* MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24189DCD2AA705C70071F160 /* MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift */; };
 		2435921E2A4ABBC100B0C57E /* DocScannerSaveSettingTableViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2435921D2A4ABBC100B0C57E /* DocScannerSaveSettingTableViewControllerTests.swift */; };
-		243A1AE02A77B8B500ECFC5B /* MEGAAVViewControllerLoadingDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243A1ADF2A77B8B500ECFC5B /* MEGAAVViewControllerLoadingDecorator.swift */; };
 		243ABB4D2AB0422A00FF4A56 /* CancellableTransferRouterFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243ABB4C2AB0422A00FF4A56 /* CancellableTransferRouterFactoryTests.swift */; };
 		243E92062AB2DC53007ADD15 /* CancellableTransferType+CustomStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243E92052AB2DC53007ADD15 /* CancellableTransferType+CustomStringConvertible.swift */; };
 		243F74912A42D8380050D5E4 /* OfflineViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243F74902A42D8380050D5E4 /* OfflineViewController+Additions.swift */; };
@@ -155,8 +154,6 @@
 		24A6ADD92A81EBDA0035C7B0 /* AudioPlayerAllAudioAsPlaylistShiftStrategyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A6ADD82A81EBDA0035C7B0 /* AudioPlayerAllAudioAsPlaylistShiftStrategyTests.swift */; };
 		24A6ADDC2A8222CE0035C7B0 /* AudioPlayerPlaylistShiftStrategyTestSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A6ADDB2A8222CE0035C7B0 /* AudioPlayerPlaylistShiftStrategyTestSpecs.swift */; };
 		24A6ADE32A8224890035C7B0 /* AudioPlayerPlaylistShiftStrategyProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A6ADE22A8224890035C7B0 /* AudioPlayerPlaylistShiftStrategyProtocol.swift */; };
-		24A6ADE82A822A720035C7B0 /* MEGAAVViewControllerLoadingDecoratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24A6ADE72A822A720035C7B0 /* MEGAAVViewControllerLoadingDecoratorTests.swift */; };
-		24AB98302A78B84A006E101C /* MEGAAVViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AB982F2A78B84A006E101C /* MEGAAVViewControllerDelegate.swift */; };
 		24AD308D2AA9AB0B004D4BF4 /* AssetCreationRequestLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AD308C2AA9AB0B004D4BF4 /* AssetCreationRequestLocationManager.swift */; };
 		24AD30932AA9EF77004D4BF4 /* AssetCreationRequestLocationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AD30922AA9EF77004D4BF4 /* AssetCreationRequestLocationManagerTests.swift */; };
 		24B261C22AB16A06006F23BE /* CancellableTransferFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B261C12AB16A06006F23BE /* CancellableTransferFactoryTests.swift */; };
@@ -2635,7 +2632,6 @@
 		2412B5342A414EC7000EB46E /* MEGANode+initAudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANode+initAudioPlayer.swift"; sourceTree = "<group>"; };
 		24189DCD2AA705C70071F160 /* MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift"; sourceTree = "<group>"; };
 		2435921D2A4ABBC100B0C57E /* DocScannerSaveSettingTableViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocScannerSaveSettingTableViewControllerTests.swift; sourceTree = "<group>"; };
-		243A1ADF2A77B8B500ECFC5B /* MEGAAVViewControllerLoadingDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAAVViewControllerLoadingDecorator.swift; sourceTree = "<group>"; };
 		243ABB4C2AB0422A00FF4A56 /* CancellableTransferRouterFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancellableTransferRouterFactoryTests.swift; sourceTree = "<group>"; };
 		243E92052AB2DC53007ADD15 /* CancellableTransferType+CustomStringConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CancellableTransferType+CustomStringConvertible.swift"; sourceTree = "<group>"; };
 		243F74902A42D8380050D5E4 /* OfflineViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OfflineViewController+Additions.swift"; sourceTree = "<group>"; };
@@ -2657,8 +2653,6 @@
 		24A6ADD82A81EBDA0035C7B0 /* AudioPlayerAllAudioAsPlaylistShiftStrategyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerAllAudioAsPlaylistShiftStrategyTests.swift; sourceTree = "<group>"; };
 		24A6ADDB2A8222CE0035C7B0 /* AudioPlayerPlaylistShiftStrategyTestSpecs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerPlaylistShiftStrategyTestSpecs.swift; sourceTree = "<group>"; };
 		24A6ADE22A8224890035C7B0 /* AudioPlayerPlaylistShiftStrategyProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerPlaylistShiftStrategyProtocol.swift; sourceTree = "<group>"; };
-		24A6ADE72A822A720035C7B0 /* MEGAAVViewControllerLoadingDecoratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAAVViewControllerLoadingDecoratorTests.swift; sourceTree = "<group>"; };
-		24AB982F2A78B84A006E101C /* MEGAAVViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAAVViewControllerDelegate.swift; sourceTree = "<group>"; };
 		24AD308C2AA9AB0B004D4BF4 /* AssetCreationRequestLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetCreationRequestLocationManager.swift; sourceTree = "<group>"; };
 		24AD30922AA9EF77004D4BF4 /* AssetCreationRequestLocationManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetCreationRequestLocationManagerTests.swift; sourceTree = "<group>"; };
 		24B261C12AB16A06006F23BE /* CancellableTransferFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancellableTransferFactoryTests.swift; sourceTree = "<group>"; };
@@ -5709,7 +5703,6 @@
 			isa = PBXGroup;
 			children = (
 				24AD30922AA9EF77004D4BF4 /* AssetCreationRequestLocationManagerTests.swift */,
-				24A6ADE72A822A720035C7B0 /* MEGAAVViewControllerLoadingDecoratorTests.swift */,
 				248A031A2A79026800F183A2 /* MEGAAVViewControllerTests.swift */,
 			);
 			path = "Shared Controls";
@@ -10447,8 +10440,6 @@
 				25E2717E2A40099800DDB678 /* MEGAAVViewController+Combine.swift */,
 				410AD3BF1C883AA900BF939E /* MEGAAVViewController.h */,
 				410AD3C01C883AA900BF939E /* MEGAAVViewController.m */,
-				24AB982F2A78B84A006E101C /* MEGAAVViewControllerDelegate.swift */,
-				243A1ADF2A77B8B500ECFC5B /* MEGAAVViewControllerLoadingDecorator.swift */,
 				5B28D1351F0FB9590062998C /* MEGAImagePickerController.h */,
 				5B28D1361F0FB9590062998C /* MEGAImagePickerController.m */,
 				C45390D62565BB840026F215 /* MEGASelectedButton.swift */,
@@ -13843,8 +13834,6 @@
 				7764AAB3246EE18E00134C88 /* MegaAvatarView.swift in Sources */,
 				25E2717F2A40099800DDB678 /* MEGAAVViewController+Combine.swift in Sources */,
 				410AD3C11C883AA900BF939E /* MEGAAVViewController.m in Sources */,
-				24AB98302A78B84A006E101C /* MEGAAVViewControllerDelegate.swift in Sources */,
-				243A1AE02A77B8B500ECFC5B /* MEGAAVViewControllerLoadingDecorator.swift in Sources */,
 				B6A4A11421A256B0007E7EEC /* MEGABackgroundTaskOperation.m in Sources */,
 				5DAC09D324CFC5B9001B6476 /* MEGABannerView.swift in Sources */,
 				C463CCD526A5E03C00577271 /* MEGAButton.swift in Sources */,
@@ -15138,7 +15127,6 @@
 				BF8895D42630F810002A18CA /* MeetingParticpiantInfoViewModelTests.swift in Sources */,
 				5DFC8DC524ECF37800DDA006 /* MEGAavatarGeneratingUseCaseTests.swift in Sources */,
 				5D667EF024ED03340092474D /* MEGAavatarLoadingUseCaseTests.swift in Sources */,
-				24A6ADE82A822A720035C7B0 /* MEGAAVViewControllerLoadingDecoratorTests.swift in Sources */,
 				248A031B2A79026800F183A2 /* MEGAAVViewControllerTests.swift in Sources */,
 				0E847F852A68E27D00AFE051 /* MEGALinkManager+AdditionsTests.swift in Sources */,
 				BFE556FC27E183B40028EF1F /* MEGANode+Additions_Tests.swift in Sources */,

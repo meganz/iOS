@@ -43,14 +43,14 @@ extension MEGAAVViewController {
     }
 
     @objc func movieStalledCallback() {
-        avViewControllerDelegate?.playerDidStall?()
+        playerDidStall()
     }
     
     @objc func bindPlayerTimeControlStatus() -> NSMutableSet {
         var subscriptions = Set<AnyCancellable>()
         
         player?.publisher(for: \.timeControlStatus)
-            .sink { [weak self] in self?.avViewControllerDelegate?.playerDidChangeTimeControlStatus?($0) }
+            .sink { [weak self] in self?.playerDidChangeTimeControlStatus($0) }
             .store(in: &subscriptions)
         
         return NSMutableSet(set: subscriptions)
@@ -66,7 +66,7 @@ extension MEGAAVViewController {
                 case .readyToPlay: player?.play()
                 default: break
                 }
-                avViewControllerDelegate?.didChangePlayerItemStatus?(status)
+                didChangePlayerItemStatus(status)
             }
             .store(in: &subscriptions)
         
@@ -94,5 +94,62 @@ extension MEGAAVViewController {
         player?.pause()
         player?.currentItem?.cancelPendingSeeks()
         player?.currentItem?.asset.cancelLoading()
+    }
+    
+    // MARK: - Loading Indicator
+    
+    @objc func configureActivityIndicator() {
+        activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.color = .white
+        activityIndicator.hidesWhenStopped = true
+        
+        addLoadingViewAsVideoPlayerSubview(activityIndicator)
+    }
+    
+    private func addLoadingViewAsVideoPlayerSubview(_ activityIndicator: UIActivityIndicatorView) {
+        guard let contentOverlayView else { return }
+        
+        contentOverlayView.addSubview(activityIndicator)
+        contentOverlayView.bringSubviewToFront(activityIndicator)
+        
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: contentOverlayView.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: contentOverlayView.centerYAnchor)
+        ])
+    }
+    
+    @objc func willStartPlayer() {
+        startLoading()
+    }
+    
+    @objc func didChangePlayerItemStatus(_ status: AVPlayerItem.Status) {
+        switch status {
+        case .unknown, .readyToPlay, .failed:
+            stopLoading()
+        default:
+            break
+        }
+    }
+    
+    @objc func playerDidStall() {
+        startLoading()
+    }
+    
+    @objc func playerDidChangeTimeControlStatus(_ status: AVPlayer.TimeControlStatus) {
+        switch status {
+        case .waitingToPlayAtSpecifiedRate:
+            startLoading()
+        default:
+            stopLoading()
+        }
+    }
+    
+    private func startLoading() {
+        activityIndicator.startAnimating()
+    }
+    
+    private func stopLoading() {
+        activityIndicator.stopAnimating()
     }
 }
