@@ -10,6 +10,7 @@ final class WaitingRoomViewRouter: NSObject, WaitingRoomViewRouting {
     private let scheduledMeeting: ScheduledMeetingEntity
     private weak var baseViewController: UIViewController?
     private let chatLink: String?
+    private let requestUserHandle: HandleEntity
 
     private var permissionRouter: PermissionAlertRouter {
         .makeRouter(deviceHandler: DevicePermissionsHandler.makeHandler())
@@ -17,10 +18,12 @@ final class WaitingRoomViewRouter: NSObject, WaitingRoomViewRouting {
 
     init(presenter: UIViewController?,
          scheduledMeeting: ScheduledMeetingEntity,
-         chatLink: String? = nil) {
+         chatLink: String? = nil,
+         requestUserHandle: HandleEntity = 0) {
         self.presenter = presenter
         self.scheduledMeeting = scheduledMeeting
         self.chatLink = chatLink
+        self.requestUserHandle = requestUserHandle
     }
     
     // MARK: - Public
@@ -51,7 +54,8 @@ final class WaitingRoomViewRouter: NSObject, WaitingRoomViewRouting {
             captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
             audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: audioSessionRepository),
             permissionHandler: DevicePermissionsHandler.makeHandler(),
-            chatLink: chatLink
+            chatLink: chatLink,
+            requestUserHandle: requestUserHandle
         )
         let viewController = WaitingRoomViewController(viewModel: viewModel)
         baseViewController = viewController

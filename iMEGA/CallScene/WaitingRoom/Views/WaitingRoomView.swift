@@ -80,7 +80,7 @@ struct WaitingRoomView: View {
                     .opacity(viewModel.viewState == .waitForHostToLetIn ? 1 : 0)
                 
                 ProgressView()
-                    .opacity(viewModel.viewState == .guestJoining ? 1 : 0)
+                    .opacity(viewModel.isJoining ? 1 : 0)
                 
                 WaitingRoomJoinPanelView(
                     tapJoinAction: viewModel.tapJoinAction,

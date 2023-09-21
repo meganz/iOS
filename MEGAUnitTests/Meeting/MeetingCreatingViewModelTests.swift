@@ -32,7 +32,9 @@ final class MeetingCreatingViewModelTests: XCTestCase {
     func testAction_onViewReady_joinMeeting() {
         let router = MockMeetingCreateRouter()
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
-        let useCase = MockMeetingCreatingUseCase(userName: "Test Name", chatCallCompletion: .success(chatRoom))
+        let useCase = MockMeetingCreatingUseCase(userName: "Test Name", 
+                                                 chatCallCompletion: .success(chatRoom),
+                                                 checkChatLinkCompletion: .success(chatRoom))
         let audioSession = MockAudioSessionUseCase()
         
         let viewModel = MeetingCreatingViewModel(router: router,

@@ -42,6 +42,5 @@ public final class WaitingRoomRepository: WaitingRoomRepositoryProtocol {
                 chatSdk.autojoinPublicChat(chatId, delegate: delegate)
             }
         }
-
     }
 }
