@@ -2,12 +2,17 @@ import Foundation
 import MEGADomain
 
 struct NodeSearchRepository {
+    
+    struct Parameter {
+        let searchText: String
+        let nodeFormat: MEGANodeFormatType
+        let sortOrder: MEGASortOrderType?
+        let rootNodeHandle: HandleEntity?
+        let completion: ([NodeEntity]) -> Void
+    }
 
     var search: (
-        _ filename: String,
-        _ nodeFormat: MEGANodeFormatType,
-        _ rootNodeHandle: HandleEntity?,
-        _ completion: (@escaping ([NodeEntity]) -> Void)
+        _ parameters: Parameter
     ) -> () -> Void
 
     var cancel: (() -> Void) -> Void
@@ -23,16 +28,16 @@ extension NodeSearchRepository {
         searchQueue.qualityOfService = .userInteractive
         
         return Self(
-            search: { (searchText: String, nodeFormat: MEGANodeFormatType?, nodeHandle: HandleEntity?, completionAction: (@escaping ([NodeEntity]) -> Void)) -> () -> Void in
+            search: { (parameter: NodeSearchRepository.Parameter) -> () -> Void in
                 let searchRootNode: MEGANode?
-                if let handle = nodeHandle {
+                if let handle = parameter.rootNodeHandle {
                     searchRootNode = sdk.node(forHandle: handle)
                 } else {
                     searchRootNode = sdk.rootNode
                 }
 
                 guard let rootNode = searchRootNode else {
-                    completionAction([])
+                    parameter.completion([])
                     return {}
                 }
 
@@ -40,18 +45,18 @@ extension NodeSearchRepository {
 
                 let searchOperation = SearchOperation(
                     parentNode: rootNode,
-                    text: searchText,
+                    text: parameter.searchText,
                     cancelToken: cancelToken,
-                    sortOrderType: .creationAsc,
-                    nodeFormatType: nodeFormat ?? MEGANodeFormatType.unknown,
+                    sortOrderType: parameter.sortOrder ?? .creationAsc,
+                    nodeFormatType: parameter.nodeFormat,
                     sdk: sdk
                 ) { (foundNodes, _) -> Void in
                     guard let foundNodes = foundNodes else {
-                        completionAction([])
+                        parameter.completion([])
                         return
                     }
                     let sdkNodes = foundNodes.toNodeEntities()
-                    completionAction(sdkNodes)
+                    parameter.completion(sdkNodes)
                 }
 
                 searchQueue.addOperation(searchOperation)

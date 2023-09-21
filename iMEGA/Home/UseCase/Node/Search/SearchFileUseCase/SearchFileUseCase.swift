@@ -5,6 +5,15 @@ import MEGAFoundation
 enum SearchFileRootPath {
     case root
     case specific(HandleEntity)
+    
+    var rootHandle: HandleEntity? {
+        switch self {
+        case .root:
+            nil
+        case .specific(let searchRootHandle):
+            searchRootHandle
+        }
+    }
 }
 
 protocol SearchFileUseCaseProtocol {
@@ -12,6 +21,7 @@ protocol SearchFileUseCaseProtocol {
     func searchFiles(
         withName name: String,
         nodeFormat: MEGANodeFormatType?,
+        sortOrder: MEGASortOrderType?,
         searchPath: SearchFileRootPath,
         completion: @escaping ([NodeEntity]) -> Void
     )
@@ -48,6 +58,7 @@ final class SearchFileUseCase: SearchFileUseCaseProtocol {
     func searchFiles(
         withName fileName: String,
         nodeFormat: MEGANodeFormatType?,
+        sortOrder: MEGASortOrderType?,
         searchPath: SearchFileRootPath,
         completion: @escaping ([NodeEntity]) -> Void
     ) {
@@ -57,6 +68,7 @@ final class SearchFileUseCase: SearchFileUseCaseProtocol {
             self.startSearchingFiles(
                 withName: fileName,
                 nodeFormat: nodeFormat ?? .unknown,
+                sortOrder: sortOrder,
                 searchPath: searchPath,
                 completion: completion
             )
@@ -66,16 +78,21 @@ final class SearchFileUseCase: SearchFileUseCaseProtocol {
     private func startSearchingFiles(
         withName fileName: String,
         nodeFormat: MEGANodeFormatType,
+        sortOrder: MEGASortOrderType?,
         searchPath: SearchFileRootPath,
         completion: @escaping ([NodeEntity]) -> Void
     ) {
         cancelAction?()
-        switch searchPath {
-        case .root:
-            return cancelAction = nodeSearchClient.search(fileName, nodeFormat, nil, completion)
-        case .specific(let searchRootHandle):
-            return cancelAction = nodeSearchClient.search(fileName, nodeFormat, searchRootHandle, completion)
-        }
+        
+        let searchParameters = NodeSearchRepository.Parameter(
+            searchText: fileName,
+            nodeFormat: nodeFormat,
+            sortOrder: sortOrder,
+            rootNodeHandle: searchPath.rootHandle,
+            completion: completion
+        )
+        
+        cancelAction = nodeSearchClient.search(searchParameters)
     }
 
     // MARK: - SearchFileUseCaseProtocol

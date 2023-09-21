@@ -65,6 +65,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
             searchFileUseCase.searchFiles(
                 withName: queryRequest.query,
                 nodeFormat: nodeFormatFrom(chip: queryRequest.chips.first),
+                sortOrder: .defaultAsc,
                 searchPath: .root,
                 completion: { result in
                     completion(
