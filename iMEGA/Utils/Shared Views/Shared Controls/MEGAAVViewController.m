@@ -75,6 +75,8 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
     } movieStalled:^{
         [self movieStalledCallback];
     }];
+    
+    [self configureActivityIndicator];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -173,7 +175,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
         return;
     }
     
-    [self.avViewControllerDelegate willStartPlayer];
+    [self willStartPlayer];
 
     AVAsset *asset = [AVAsset assetWithURL:self.fileUrl];
     AVPlayerItem *playerItem = [AVPlayerItem playerItemWithAsset:asset];
