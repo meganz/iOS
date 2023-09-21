@@ -11,7 +11,7 @@ struct AdsSlotView<T: View>: View {
             
             if viewModel.displayAds {
                 AdsWebView(url: viewModel.adsUrl, adsTapAction: {
-                    viewModel.fetchNewAds()
+                    Task { await viewModel.loadAds() }
                 })
                 .background(Color.clear)
                 .padding(.vertical, 15)
@@ -20,8 +20,7 @@ struct AdsSlotView<T: View>: View {
             }
         }
         .taskForiOS14 {
-            await viewModel.setUpAdSlot()
-            await viewModel.loadAds()
+            await viewModel.monitorAdsSlotChanges()
         }
         .ignoresSafeArea()
     }

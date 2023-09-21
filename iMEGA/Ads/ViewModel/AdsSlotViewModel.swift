@@ -1,3 +1,4 @@
+import Combine
 import MEGADomain
 import MEGAPresentation
 import MEGASwift
@@ -8,32 +9,38 @@ final class AdsSlotViewModel: ObservableObject {
     private var accountUseCase: any AccountUseCaseProtocol
     private var featureFlagProvider: any FeatureFlagProviderProtocol
     private var adsSlot: AdsSlotEntity?
-    private(set) var shouldShowAds: Bool = false
+    private var adsSlotChangeStream: any AdsSlotChangeStreamProtocol
     
     @Published var adsUrl: URL?
     @Published var displayAds: Bool = false
     
-    var fetchNewAdsTask: Task<Void, Never>?
-    
     init(adsUseCase: some AdsUseCaseProtocol,
          accountUseCase: some AccountUseCaseProtocol,
-         adsSlot: AdsSlotEntity?,
+         adsSlotChangeStream: some AdsSlotChangeStreamProtocol,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
         self.adsUseCase = adsUseCase
         self.accountUseCase = accountUseCase
-        self.adsSlot = adsSlot
+        self.adsSlotChangeStream = adsSlotChangeStream
         self.featureFlagProvider = featureFlagProvider
     }
-    
-    deinit {
-        fetchNewAdsTask?.cancel()
-        fetchNewAdsTask = nil
+
+    func monitorAdsSlotChanges() async {
+        guard let adsSlotStream = adsSlotChangeStream.adsSlotStream else { return }
+        
+        for await newAdsSlot in adsSlotStream {
+            guard adsSlot != newAdsSlot else { return }
+            
+            adsSlot = newAdsSlot
+            await loadAds()
+        }
     }
     
+    // MARK: Feature Flag
     var isFeatureFlagForInAppAdsEnabled: Bool {
         featureFlagProvider.isFeatureFlagEnabled(for: .inAppAds)
     }
     
+    // MARK: Account details
     func fetchAccountDetails() async -> AccountDetailsEntity? {
         if let details = accountUseCase.currentAccountDetails {
             return details
@@ -47,19 +54,11 @@ final class AdsSlotViewModel: ObservableObject {
         }
     }
     
-    func fetchNewAds() {
-        fetchNewAdsTask = Task {
-            await loadAds()
-        }
-    }
-    
-    func setUpAdSlot() async {
-        guard let accountDetails = await fetchAccountDetails() else { return }
-        
-        shouldShowAds = accountDetails.proLevel == .free && isFeatureFlagForInAppAdsEnabled
-    }
-    
+    // MARK: Ads
     func loadAds() async {
+        guard let accountDetails = await fetchAccountDetails() else { return }
+        let shouldShowAds = accountDetails.proLevel == .free && isFeatureFlagForInAppAdsEnabled
+        
         guard let adsSlot, shouldShowAds else {
             await setAdsUrl(nil)
             return
