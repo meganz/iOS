@@ -50,7 +50,7 @@ final class NameCollisionViewModel: ObservableObject {
         self.collisions = collisions
         self.collisionType = collisionType
         self.isFolderLink = isFolderLink
-        self.duplicatedItem = DuplicatedItem(name: "", isFile: false, size: "", date: "", itemPlaceholder: Asset.Images.Photos.photoCardPlaceholder.name)
+        self.duplicatedItem = DuplicatedItem(name: "", isFile: false, size: "", date: "", imagePlaceholder: .photoCardPlaceholder)
         fileVersionsUseCase.isFileVersionsEnabled(completion: { [weak self] result in
             switch result {
             case .success(let enabled):
@@ -103,15 +103,15 @@ final class NameCollisionViewModel: ObservableObject {
         var actions = [NameCollisionAction]()
         if duplicatedItem.isFile {
             if isVersioningEnabled && collisionType == .upload {
-                actions.append(NameCollisionAction(actionType: .update, name: duplicatedItem.name, size: duplicatedItem.size, date: duplicatedItem.date, isFile: duplicatedItem.isFile, imageUrl: thumbnailUrl, itemPlaceholder: duplicatedItem.itemPlaceholder))
+                actions.append(NameCollisionAction(actionType: .update, name: duplicatedItem.name, size: duplicatedItem.size, date: duplicatedItem.date, isFile: duplicatedItem.isFile, imageUrl: thumbnailUrl, imagePlaceholder: duplicatedItem.imagePlaceholder))
             } else {
-                actions.append(NameCollisionAction(actionType: .replace, name: duplicatedItem.name, size: duplicatedItem.size, date: duplicatedItem.date, isFile: duplicatedItem.isFile, imageUrl: thumbnailUrl, itemPlaceholder: duplicatedItem.itemPlaceholder))
+                actions.append(NameCollisionAction(actionType: .replace, name: duplicatedItem.name, size: duplicatedItem.size, date: duplicatedItem.date, isFile: duplicatedItem.isFile, imageUrl: thumbnailUrl, imagePlaceholder: duplicatedItem.imagePlaceholder))
             }
-            actions.append(NameCollisionAction(actionType: .rename, name: duplicatedItem.rename, isFile: duplicatedItem.isFile, imageUrl: thumbnailUrl, itemPlaceholder: duplicatedItem.itemPlaceholder))
-            actions.append(NameCollisionAction(actionType: .cancel, name: duplicatedItem.name, size: duplicatedItem.collisionFileSize, date: duplicatedItem.collisionFileDate, isFile: duplicatedItem.isFile, imageUrl: thumbnailCollisionUrl, itemPlaceholder: duplicatedItem.itemPlaceholder))
+            actions.append(NameCollisionAction(actionType: .rename, name: duplicatedItem.rename, isFile: duplicatedItem.isFile, imageUrl: thumbnailUrl, imagePlaceholder: duplicatedItem.imagePlaceholder))
+            actions.append(NameCollisionAction(actionType: .cancel, name: duplicatedItem.name, size: duplicatedItem.collisionFileSize, date: duplicatedItem.collisionFileDate, isFile: duplicatedItem.isFile, imageUrl: thumbnailCollisionUrl, imagePlaceholder: duplicatedItem.imagePlaceholder))
         } else {
-            actions.append(NameCollisionAction(actionType: .merge, isFile: duplicatedItem.isFile, itemPlaceholder: duplicatedItem.itemPlaceholder))
-            actions.append(NameCollisionAction(actionType: .cancel, isFile: duplicatedItem.isFile, itemPlaceholder: duplicatedItem.itemPlaceholder))
+            actions.append(NameCollisionAction(actionType: .merge, isFile: duplicatedItem.isFile, imagePlaceholder: duplicatedItem.imagePlaceholder))
+            actions.append(NameCollisionAction(actionType: .cancel, isFile: duplicatedItem.isFile, imagePlaceholder: duplicatedItem.imagePlaceholder))
         }
         return actions
     }
@@ -290,7 +290,7 @@ final class NameCollisionViewModel: ObservableObject {
             isFile: collision.isFile,
             size: nameCollisionUseCase.sizeForFile(at: url),
             date: nameCollisionUseCase.creationDateForFile(at: url),
-            itemPlaceholder: collision.isFile ? FileTypes().fileType(forFileName: collision.name) : "folder",
+            imagePlaceholder: collision.isFile ? FileTypes().fileTypeResource(forFileName: collision.name) : .filetypeFolder,
             collisionFileSize: nameCollisionUseCase.sizeForNode(handle: collisionNodeHandle),
             collisionFileDate: nameCollisionUseCase.creationDateForNode(handle: collisionNodeHandle),
             collisionNodeHandle: collisionNodeHandle)
@@ -307,7 +307,7 @@ final class NameCollisionViewModel: ObservableObject {
             isFile: collision.isFile,
             size: nameCollisionUseCase.sizeForNode(handle: nodeHandle),
             date: nameCollisionUseCase.creationDateForNode(handle: collisionNodeHandle),
-            itemPlaceholder: collision.isFile ? FileTypes().fileType(forFileName: collision.name) : "folder",
+            imagePlaceholder: collision.isFile ? FileTypes().fileTypeResource(forFileName: collision.name) : .filetypeFolder,
             collisionFileSize: nameCollisionUseCase.sizeForNode(handle: collisionNodeHandle),
             collisionFileDate: nameCollisionUseCase.creationDateForNode(handle: collisionNodeHandle),
             collisionNodeHandle: collisionNodeHandle)

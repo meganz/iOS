@@ -20,7 +20,7 @@ final class NodeCellViewModel: ViewModelType {
         case hideLabel(Bool)
         case setLabel(String)
         case setThumbnail(String)
-        case setIcon(String)
+        case setIcon(MEGAFileTypeResource)
         case setVersions(Bool)
         case setDownloaded(Bool)
     }
@@ -125,41 +125,39 @@ final class NodeCellViewModel: ViewModelType {
     private func iconForNode() {
         if nodeModel.isFolder {
             if nodeModel.name == Strings.Localizable.cameraUploadsLabel {
-                let cameraUploadsFolderImageName = "folder_camera"
-                self.invokeCommand?(.setIcon(cameraUploadsFolderImageName))
+                self.invokeCommand?(.setIcon(.filetypeFolderCamera))
             } else if nodeModel.name == Strings.Localizable.myChatFiles {
                 accountUseCase.getMyChatFilesFolder { [weak self] in
                     switch $0 {
                     case .success(let myChatFilesNodeEntity):
                         if self?.nodeModel.handle == myChatFilesNodeEntity.handle {
-                            let myChatFilesFolderImageName = "folder_chat"
-                            self?.invokeCommand?(.setIcon(myChatFilesFolderImageName))
+                            self?.invokeCommand?(.setIcon(.folderChat))
                         } else {
-                            let folderImageName = self?.folderImageName(for: self!.nodeModel)
+                            let folderImageName = self?.folderImage(for: self!.nodeModel)
                             self?.invokeCommand?(.setIcon(folderImageName!))
                         }
                         
                     case .failure:
-                        let folderImageName = self?.folderImageName(for: self!.nodeModel)
+                        let folderImageName = self?.folderImage(for: self!.nodeModel)
                         self?.invokeCommand?(.setIcon(folderImageName!))
                     }
                 }
             } else {
-                self.invokeCommand?(.setIcon(folderImageName(for: nodeModel)))
+                self.invokeCommand?(.setIcon(folderImage(for: nodeModel)))
             }
         } else if nodeModel.isFile {
-            let imageName = FileTypes().fileType(forFileName: nodeModel.name)
-            self.invokeCommand?(.setIcon(imageName))
+            let image = FileTypes().fileTypeResource(forFileName: nodeModel.name)
+            self.invokeCommand?(.setIcon(image))
         }
     }
     
-    private func folderImageName(for nodeModel: NodeEntity) -> String {
+    private func folderImage(for nodeModel: NodeEntity) -> MEGAFileTypeResource {
         if nodeModel.isInShare {
-            return "folder_incoming"
+            return .folderIncoming
         } else if nodeModel.isOutShare {
-            return "folder_outgoing"
+            return .folderOutgoing
         } else {
-            return Asset.Images.Filetypes.folder.name
+            return .filetypeFolder
         }
     }
 }

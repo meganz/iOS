@@ -53,8 +53,8 @@ class PhotoCellViewModel: ObservableObject {
         if let container = thumbnailUseCase.cachedThumbnailContainer(for: photo, type: type) {
             thumbnailContainer = container
         } else {
-            let placeholderFileType = FileTypes().fileType(forFileName: photo.name)
-            let placeholder = ImageContainer(image: Image(placeholderFileType), type: .placeholder)
+            let placeholderFileTypeResource = FileTypes().fileTypeResource(forFileName: photo.name)
+            let placeholder = ImageContainer(image: Image(placeholderFileTypeResource), type: .placeholder)
             thumbnailContainer = placeholder
         }
         configZoomState(with: viewModel.$zoomState)

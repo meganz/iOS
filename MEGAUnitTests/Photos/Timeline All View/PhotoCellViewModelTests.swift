@@ -40,7 +40,7 @@ final class PhotoCellViewModelTests: XCTestCase {
                                      viewModel: allViewModel,
                                      thumbnailUseCase: MockThumbnailUseCase())
         
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image(FileTypes().fileType(forFileName: "0.jpg")), type: .placeholder)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image(FileTypes().fileTypeResource(forFileName: "0.jpg")), type: .placeholder)))
         XCTAssertEqual(sut.duration, "00:00")
         XCTAssertEqual(sut.isVideo, false)
         XCTAssertEqual(sut.currentZoomScaleFactor, .three)
@@ -184,7 +184,7 @@ final class PhotoCellViewModelTests: XCTestCase {
             thumbnailUseCase: MockThumbnailUseCase()
         )
         
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("image"), type: .placeholder)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image(.filetypeImages), type: .placeholder)))
         
         let exp = expectation(description: "thumbnail should not be changed")
         exp.isInverted = true
@@ -219,7 +219,7 @@ final class PhotoCellViewModelTests: XCTestCase {
         
         let task = Task { await sut.startLoadingThumbnail() }
 
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("image"), type: .placeholder)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image(.filetypeImages), type: .placeholder)))
         
         let exp = expectation(description: "thumbnail is changed")
         sut.$thumbnailContainer
@@ -256,7 +256,7 @@ final class PhotoCellViewModelTests: XCTestCase {
 
         let task = Task { await sut.startLoadingThumbnail() }
 
-        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image("image"), type: .placeholder)))
+        XCTAssertTrue(sut.thumbnailContainer.isEqual(ImageContainer(image: Image(.filetypeImages), type: .placeholder)))
         
         let exp = expectation(description: "thumbnail is changed")
         exp.expectedFulfillmentCount = 2

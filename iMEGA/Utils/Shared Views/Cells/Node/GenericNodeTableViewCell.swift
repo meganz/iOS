@@ -54,7 +54,7 @@ final class GenericNodeTableViewCell: UITableViewCell {
             thumbnailImageView.image = thumbnailImage
             
         case .setIcon(let iconName):
-            let iconImage = UIImage(named: iconName)!
+            let iconImage = UIImage(resource: iconName)
             thumbnailImageView.image = iconImage
             
         case .setVersions(let hasVersions):
