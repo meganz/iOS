@@ -274,6 +274,30 @@ final class WaitingRoomViewModelTests: XCTestCase {
         }
     }
     
+    func testCheckChatLink_whenUserPrivilegeIsRemovedAndJoinChatCallSuccess_shoudBecomeWaitForHostToStart() {
+        let callUseCase = MockCallUseCase(call: nil, answerCallCompletion: .success(CallEntity()))
+        let meetingUseCase = MockMeetingCreatingUseCase(checkChatLinkCompletion: .success(ChatRoomEntity(ownPrivilege: .removed)))
+        let sut = WaitingRoomViewModel(callUseCase: callUseCase,
+                                       meetingUseCase: meetingUseCase,
+                                       chatLink: "Test chatLink")
+        
+        evaluate {
+            sut.viewState == .waitForHostToStart
+        }
+    }
+    
+    func testCheckChatLink_whenUserPrivilegeIsReadOnlyAndJoinChatCallSuccess_shoudBecomeWaitForHostToStart() {
+        let callUseCase = MockCallUseCase(call: nil, answerCallCompletion: .success(CallEntity()))
+        let meetingUseCase = MockMeetingCreatingUseCase(checkChatLinkCompletion: .success(ChatRoomEntity(ownPrivilege: .readOnly)))
+        let sut = WaitingRoomViewModel(callUseCase: callUseCase,
+                                       meetingUseCase: meetingUseCase,
+                                       chatLink: "Test chatLink")
+        
+        evaluate {
+            sut.viewState == .waitForHostToStart
+        }
+    }
+    
     // MARK: - Router related tests
     
     func testLeaveButton_didTapLeaveButton_shouldPresentLeaveAlert() {
