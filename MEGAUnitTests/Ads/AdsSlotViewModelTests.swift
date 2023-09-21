@@ -1,3 +1,4 @@
+import Combine
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
@@ -6,8 +7,14 @@ import MEGASDKRepoMock
 import XCTest
 
 final class AdsSlotViewModelTests: XCTestCase {
+    var subscriptions = Set<AnyCancellable>()
     
-    // MARK: Feature flag
+    override func tearDown() {
+        subscriptions.removeAll()
+        super.tearDown()
+    }
+    
+    // MARK: - Feature flag
     func testIsFeatureFlagForInAppAdsEnabled_inAppAdsEnabled_shouldBeEnabled() {
         let sut = makeSUT(featureFlags: [.inAppAds: true])
         XCTAssertTrue(sut.isFeatureFlagForInAppAdsEnabled)
@@ -18,79 +25,7 @@ final class AdsSlotViewModelTests: XCTestCase {
         XCTAssertFalse(sut.isFeatureFlagForInAppAdsEnabled)
     }
     
-    // MARK: Setup ad slot
-    func testSetUpAdSlot_featureFlagEnabled_withFreeAccount_shouldShowAdsTrue() async {
-        let sut = makeSUT(featureFlags: [.inAppAds: true],
-                          currentAccountDetails: AccountDetailsEntity(proLevel: .free))
-        
-        await sut.setUpAdSlot()
-        XCTAssertTrue(sut.shouldShowAds)
-    }
-    
-    func testSetUpAdSlot_featureFlagDisabled_withFreeAccount_shouldShowAdsFalse() async {
-        let sut = makeSUT(featureFlags: [.inAppAds: false],
-                          currentAccountDetails: AccountDetailsEntity(proLevel: .free))
-        
-        await sut.setUpAdSlot()
-        XCTAssertFalse(sut.shouldShowAds)
-    }
-    
-    func testSetUpAdSlot_featureFlagEnabled_withSubscriptionAccount_shouldShowAdsFalse() async {
-        let sut = makeSUT(featureFlags: [.inAppAds: false],
-                          currentAccountDetails: accountDetailWithRandomPlan)
-        
-        await sut.setUpAdSlot()
-        XCTAssertFalse(sut.shouldShowAds)
-    }
-    
-    func testLoadAds_featureFlagEnabled_withFreeAccount_shouldHaveAds() async {
-        let adsSlot = AdsSlotEntity.files
-        let expectedAdsURL = "https://testAd/newLink"
-        let sut = makeSUT(adsSlot: adsSlot,
-                          adsList: [adsSlot.rawValue: expectedAdsURL],
-                          featureFlags: [.inAppAds: true],
-                          currentAccountDetails: AccountDetailsEntity(proLevel: .free))
-        
-        await sut.setUpAdSlot()
-        await sut.loadAds()
-        
-        XCTAssertTrue(sut.displayAds)
-        XCTAssertNotNil(sut.adsUrl)
-        XCTAssertEqual(sut.adsUrl?.absoluteString, expectedAdsURL)
-    }
-    
-    // MARK: Load ads
-    func testLoadAds_featureFlagDisabled_withFreeAccount_shouldNotHaveAds() async {
-        let adsSlot = AdsSlotEntity.files
-        let expectedAdsURL = "https://testAd/newLink"
-        let sut = makeSUT(adsSlot: adsSlot,
-                          adsList: [adsSlot.rawValue: expectedAdsURL],
-                          featureFlags: [.inAppAds: false],
-                          currentAccountDetails: AccountDetailsEntity(proLevel: .free))
-        
-        await sut.setUpAdSlot()
-        await sut.loadAds()
-        
-        XCTAssertFalse(sut.displayAds)
-        XCTAssertNil(sut.adsUrl)
-    }
-    
-    func testLoadAds_featureFlagEnabled_withSubscriptionAccount_shouldNotHaveAds() async {
-        let adsSlot = AdsSlotEntity.files
-        let expectedAdsURL = "https://testAd/newLink"
-        let sut = makeSUT(adsSlot: adsSlot,
-                          adsList: [adsSlot.rawValue: expectedAdsURL],
-                          featureFlags: [.inAppAds: false],
-                          currentAccountDetails: accountDetailWithRandomPlan)
-        
-        await sut.setUpAdSlot()
-        await sut.loadAds()
-        
-        XCTAssertFalse(sut.displayAds)
-        XCTAssertNil(sut.adsUrl)
-    }
-    
-    // MARK: Fetch new ads
+    // MARK: - Account details
     func testFetchAccountDetails_withCurrentAccountDetails_shouldReturnAccountDetails() async {
         let expectedAccountDetail = AccountDetailsEntity.random
         
@@ -118,61 +53,85 @@ final class AdsSlotViewModelTests: XCTestCase {
         
         XCTAssertNil(accountDetails)
     }
-    
-    func testFetchNewAds_featureFlagEnabled_withFreeAccount_shouldHaveNewUrlAndDisplayAds() async {
-        let adsSlot = AdsSlotEntity.files
-        let expectedAdsURL = "https://testAd/newLink"
+
+    // MARK: - Ads slot
+    func testLoadAdsForAdsSlot_featureFlagEnabled_withFreeAccount_shouldHaveNewUrlAndDisplayAds() async {
+        let expectedAdsSlot = randomAdsSlot
+        let expectedAdsUrl = adsList[expectedAdsSlot.rawValue]
+        let stream = makeMockAdsSlotChangeStream(adsSlots: [expectedAdsSlot])
         
-        let sut = makeSUT(adsSlot: adsSlot,
-                          adsList: [adsSlot.rawValue: expectedAdsURL],
+        let sut = makeSUT(adsSlotChangeStream: stream,
+                          adsList: adsList,
                           featureFlags: [.inAppAds: true],
-                          currentAccountDetails: AccountDetailsEntity(proLevel: .free)
-        )
-        sut.adsUrl = URL(string: "https://testAd/oldLink")
+                          currentAccountDetails: AccountDetailsEntity(proLevel: .free))
         
-        await sut.setUpAdSlot()
-        sut.fetchNewAds()
-        await sut.fetchNewAdsTask?.value
+        await sut.monitorAdsSlotChanges()
         
         XCTAssertNotNil(sut.adsUrl)
-        XCTAssertEqual(sut.adsUrl?.absoluteString, expectedAdsURL)
+        XCTAssertEqual(sut.adsUrl?.absoluteString, expectedAdsUrl)
         XCTAssertTrue(sut.displayAds)
     }
     
-    func testFetchNewAds_featureFlagEnabled_withSubscriptionAccount_shouldHaveNilUrlAndDontDisplayAds() async {
-        let adsSlot = AdsSlotEntity.files
-        let sut = makeSUT(adsSlot: adsSlot,
-                          adsList: [adsSlot.rawValue: "https://testAd/newLink"],
+    func testLoadAdsForAdsSlot_featureFlagEnabled_withSubscriptionAccount_shouldHaveNilUrlAndDontDisplayAds() async {
+        let stream = makeMockAdsSlotChangeStream(adsSlots: [randomAdsSlot])
+        let sut = makeSUT(adsSlotChangeStream: stream,
+                          adsList: adsList,
                           featureFlags: [.inAppAds: true],
                           currentAccountDetails: accountDetailWithRandomPlan)
         
-        await sut.setUpAdSlot()
-        sut.fetchNewAds()
-        await sut.fetchNewAdsTask?.value
+        await sut.monitorAdsSlotChanges()
         
         XCTAssertNil(sut.adsUrl)
         XCTAssertFalse(sut.displayAds)
     }
     
-    func testFetchNewAds_featureFlagDisabled_withFreeAccount_shouldHaveNilUrlAndDontDisplayAds() async {
-        let adsSlot = AdsSlotEntity.files
-        let sut = makeSUT(adsSlot: adsSlot,
-                          adsList: [adsSlot.rawValue: "https://testAd/newLink"],
+    func testLoadAdsForAdsSlot_featureFlagDisabled_withFreeAccount_shouldHaveNilUrlAndDontDisplayAds() async {
+        let stream = makeMockAdsSlotChangeStream(adsSlots: [randomAdsSlot])
+        let sut = makeSUT(adsSlotChangeStream: stream,
+                          adsList: adsList,
                           featureFlags: [.inAppAds: false],
-                          currentAccountDetails: AccountDetailsEntity(proLevel: .free)
-        )
+                          currentAccountDetails: AccountDetailsEntity(proLevel: .free))
         
-        await sut.setUpAdSlot()
-        sut.fetchNewAds()
-        await sut.fetchNewAdsTask?.value
+        await sut.monitorAdsSlotChanges()
         
         XCTAssertNil(sut.adsUrl)
         XCTAssertFalse(sut.displayAds)
+    }
+    
+    func testLoadAdsForAdsSlot_noAds_shouldHaveNilUrlAndDontDisplayAds() async {
+        let stream = makeMockAdsSlotChangeStream(adsSlots: [nil])
+        let sut = makeSUT(adsSlotChangeStream: stream,
+                          adsList: adsList,
+                          currentAccountDetails: AccountDetailsEntity(proLevel: .free))
+        
+        await sut.monitorAdsSlotChanges()
+        
+        XCTAssertNil(sut.adsUrl)
+        XCTAssertFalse(sut.displayAds)
+    }
+    
+    func testLoadAdsForAdsSlotList_shouldMatchAdsUrl() async {
+        var adsSlots: [AdsSlotEntity] = [.files, .home, .photos, .sharedLink]
+        let stream = makeMockAdsSlotChangeStream(adsSlots: adsSlots)
+        let ads = adsList
+        let sut = makeSUT(adsSlotChangeStream: stream,
+                          adsList: ads,
+                          currentAccountDetails: AccountDetailsEntity(proLevel: .free))
+    
+        sut.$adsUrl
+            .dropFirst()
+            .sink { url in
+                let adsSlot = adsSlots.removeFirst()
+                XCTAssertEqual(url?.absoluteString, ads[adsSlot.rawValue])
+            }
+            .store(in: &subscriptions)
+        
+        await sut.monitorAdsSlotChanges()
     }
 
     // MARK: Helper
     private func makeSUT(
-        adsSlot: AdsSlotEntity? = nil,
+        adsSlotChangeStream: any AdsSlotChangeStreamProtocol = MockAdsSlotChangeStream(),
         adsList: [String: String] = [:],
         featureFlags: [FeatureFlagKey: Bool] = [FeatureFlagKey.inAppAds: true],
         currentAccountDetails: AccountDetailsEntity? = nil,
@@ -187,14 +146,33 @@ final class AdsSlotViewModelTests: XCTestCase {
         
         let sut = AdsSlotViewModel(adsUseCase: adsUseCase,
                                    accountUseCase: accountUseCase,
-                                   adsSlot: adsSlot,
+                                   adsSlotChangeStream: adsSlotChangeStream,
                                    featureFlagProvider: featureFlagProvider)
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
     }
     
+    private func makeMockAdsSlotChangeStream(adsSlots: [AdsSlotEntity?]) -> MockAdsSlotChangeStream {
+        let adsSlotStream = AsyncStream<AdsSlotEntity?> { continuation in
+            adsSlots.forEach { adsSlot in
+                continuation.yield(adsSlot)
+            }
+            continuation.finish()
+        }
+        return MockAdsSlotChangeStream(adsSlotStream: adsSlotStream)
+    }
+    
     private var accountDetailWithRandomPlan: AccountDetailsEntity {
         let plans: [AccountTypeEntity] = [.lite, .proI, .proII, .proIII, .proFlexi, .business]
         return AccountDetailsEntity(proLevel: plans.randomElement() ?? .proI)
+    }
+    
+    private var adsList = [AdsSlotEntity.files.rawValue: "https://testAd/newLink-files",
+                           AdsSlotEntity.photos.rawValue: "https://testAd/newLink-photos",
+                           AdsSlotEntity.home.rawValue: "https://testAd/newLink-home",
+                           AdsSlotEntity.sharedLink.rawValue: "https://testAd/newLink-sharedLink"]
+    
+    private var randomAdsSlot: AdsSlotEntity {
+        [.files, .home, .photos, .sharedLink].randomElement() ?? .files
     }
 }
