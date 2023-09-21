@@ -27,4 +27,8 @@ extension NodeTableViewCell {
         let parentNodeName = parentNode?.name ?? ""
         infoLabel.text = "\(parentNodeName) ・"
     }
+    
+    @objc func configureMoreButtonUI() {
+        moreButton.tintColor = .mnz_grayBBBBBB()
+    }
 }
