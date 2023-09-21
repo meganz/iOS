@@ -29,7 +29,7 @@ struct NameCollisionView: View {
                     HeaderView(viewModel: HeaderViewModel(isFile: viewModel.duplicatedItem.isFile, name: viewModel.duplicatedItem.name))
                     
                     if !viewModel.duplicatedItem.isFile {
-                        ItemView(name: viewModel.duplicatedItem.name, size: viewModel.duplicatedItem.collisionFileSize, date: viewModel.duplicatedItem.collisionFileDate, imageUrl: viewModel.thumbnailCollisionUrl, imagePlaceholder: viewModel.duplicatedItem.itemPlaceholder)
+                        ItemView(name: viewModel.duplicatedItem.name, size: viewModel.duplicatedItem.collisionFileSize, date: viewModel.duplicatedItem.collisionFileDate, imageUrl: viewModel.thumbnailCollisionUrl, imagePlaceholder: viewModel.duplicatedItem.imagePlaceholder)
                             .padding()
                     }
                     ActionsView(duplicatedItem: viewModel.duplicatedItem, imageUrl: viewModel.thumbnailUrl, collisionImageUrl: viewModel.thumbnailCollisionUrl, actions: viewModel.actionsForCurrentDuplicatedItem()) { action in

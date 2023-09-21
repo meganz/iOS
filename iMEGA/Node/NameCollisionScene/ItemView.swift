@@ -7,7 +7,7 @@ struct ItemView: View {
     var size: String?
     var date: String?
     var imageUrl: URL?
-    var imagePlaceholder: String
+    var imagePlaceholder: MEGAFileTypeResource
     
     var body: some View {
         HStack(alignment: .center, spacing: 12) {
