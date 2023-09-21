@@ -66,7 +66,8 @@ extension MyAccountHallViewController: UITableViewDelegate {
             navigationController?.pushViewController(achievementsVC, animated: true)
             
         case MyAccountMegaSection.transfers.rawValue:
-            let transferVC = UIStoryboard(name: "Transfers", bundle: nil).instantiateViewController(withIdentifier: "TransfersWidgetViewControllerID")
+            let transferVC = TransfersWidgetViewController.sharedTransfer()
+            transferVC.navigationItem.leftBarButtonItem = nil
             navigationController?.pushViewController(transferVC, animated: true)
             
         case MyAccountMegaSection.deviceCenter.rawValue:
