@@ -46,7 +46,7 @@ class MEGAavatarLoadingUseCaseTests: XCTestCase {
             avatarFileSystemClient: .foundNil,
             accountUseCase: MockAccountUseCase(),
             thumbnailRepo: MockThumbnailRepository(),
-            handleUseCase: MockMEGAHandleUseCase()
+            handleUseCase: MockMEGAHandleUseCase(base64Handle: "")
         )
         
         let expectations = expectation(description: "for async load image")
