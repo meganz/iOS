@@ -828,12 +828,12 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     }]];
 }
 
-+ (void)openMeetingWithRequest:(MEGAChatRequest * _Nonnull)request  chatLinkURL:(NSURL * _Nonnull)chatLinkUrl {
++ (void)openMeetingWithRequest:(MEGAChatRequest * _Nonnull)request chatLinkURL:(NSURL * _Nonnull)chatLinkUrl {
     if ([self shouldOpenWaitingRoomWithRequest:request]) {
         [SVProgressHUD dismiss];
-        [self openWaitingRoomFor:request.chatHandle chatLink:chatLinkUrl.absoluteString];
+        [self openWaitingRoomFor:request.chatHandle chatLink:chatLinkUrl.absoluteString requestUserHandle:request.userHandle];
     } else if ([self hasActiveMeetingFor:request]) {
-        [self createMeetingAndShow:request.chatHandle userhandle:request.userHandle publicChatLink:chatLinkUrl];
+        [self createMeetingAndShow:request.chatHandle userHandle:request.userHandle publicChatLink:chatLinkUrl];
         [SVProgressHUD dismiss];
     } else {
         //  meeting ended
@@ -868,13 +868,13 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     }
 }
 
-+ (void)createMeetingAndShow:(uint64_t)chatId userhandle:(uint64_t)userHandle publicChatLink:(NSURL *)publicChatLink {
++ (void)createMeetingAndShow:(uint64_t)chatId userHandle:(uint64_t)userHandle publicChatLink:(NSURL *)publicChatLink {
     
     UIViewController *rootViewController = UIApplication.mnz_keyWindow.rootViewController;
     MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatId];
     if (chatRoom == nil) {
         return;
-    } else if (MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
+    } else if (MEGAChatSdk.shared.mnz_existsActiveCall) {
         [MeetingAlreadyExistsAlert showWithPresenter:rootViewController];
         return;
     }

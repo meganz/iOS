@@ -186,12 +186,20 @@ extension MEGALinkManager {
         return !isModerator && isWaitingRoomEnabled
     }
     
-    @objc class func openWaitingRoom(for chatId: ChatIdEntity, chatLink: String) {
+    @objc class func openWaitingRoom(for chatId: ChatIdEntity, chatLink: String, requestUserHandle: HandleEntity) {
         guard let scheduledMeeting = MEGAChatSdk.shared.scheduledMeetings(byChat: chatId).first?.toScheduledMeetingEntity() else { return }
+
+        let rootViewController = UIApplication.mnz_visibleViewController()
+        guard !MEGAChatSdk.shared.mnz_existsActiveCall else {
+            MeetingAlreadyExistsAlert.show(presenter: rootViewController)
+            return
+        }
+        
         WaitingRoomViewRouter(
-            presenter: UIApplication.mnz_visibleViewController(),
+            presenter: rootViewController,
             scheduledMeeting: scheduledMeeting,
-            chatLink: chatLink
+            chatLink: chatLink,
+            requestUserHandle: requestUserHandle
         ).start()
     }
 }
