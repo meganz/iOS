@@ -73,7 +73,12 @@ extension HomeSearchResultViewModel: HomeAccountSearchResultViewModelInputs {
         let trimmedSearchText = text.trimmingCharacters(in: .whitespacesAndNewlines)
 
         searchingInProgressCount += 1
-        searchFileUseCase.searchFiles(withName: trimmedSearchText, nodeFormat: .unknown, searchPath: .root) { [weak self] sdkNodes in
+        searchFileUseCase.searchFiles(
+            withName: trimmedSearchText,
+            nodeFormat: .unknown,
+            sortOrder: nil,
+            searchPath: .root
+        ) { [weak self] sdkNodes in
             guard let self = self else { return }
 
             self.searchFileHistoryUseCase.saveSearchHistoryEntry(
