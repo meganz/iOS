@@ -86,4 +86,14 @@ class HomeSearchProviderTests: XCTestCase {
         let response = try await harness.sut.search(queryRequest: .userSupplied(.query("")))
         XCTAssertEqual(response.results.map(\.id), [6, 7, 8])
     }
+    
+    func testSearch_whenUsedForUserQuery_usesDefaultAscSortOrder() async throws {
+        let root = NodeEntity(handle: 1)
+        let children = [NodeEntity(handle: 2)]
+        
+        let harness = Harness(self, rootNode: root, childrenNodes: children)
+        
+        _ = try await harness.sut.search(queryRequest: .userSupplied(.query("any search string")))
+        XCTAssertEqual(harness.searchFile.passedInSortOrders, [.defaultAsc])
+    }
 }

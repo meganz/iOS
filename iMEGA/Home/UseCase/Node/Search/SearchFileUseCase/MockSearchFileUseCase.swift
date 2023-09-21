@@ -15,11 +15,15 @@ final class MockSearchFileUseCase: SearchFileUseCaseProtocol {
     func searchFiles(
         withName name: String,
         nodeFormat: MEGANodeFormatType?,
+        sortOrder: MEGASortOrderType?,
         searchPath: SearchFileRootPath,
         completion: @escaping ([NodeEntity]) -> Void
     ) {
+        passedInSortOrders.append(sortOrder)
         completion(nodes.filter { $0.name.contains(name) })
     }
+    
+    var passedInSortOrders: [MEGASortOrderType?] = []
 
     func cancelCurrentSearch() {}
 }
