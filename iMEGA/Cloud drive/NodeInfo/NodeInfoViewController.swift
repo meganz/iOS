@@ -273,7 +273,12 @@ class NodeInfoViewController: UIViewController {
             self?.shareNode(withLevel: .accessUnknown, forUser: user, atIndexPath: indexPath)
         })
         
-        let permissionsActionSheet = ActionSheetViewController(actions: actions, headerTitle: isBackupNode ? nil : Strings.Localizable.permissions, dismissCompletion: nil, sender: cell.permissionsImageView)
+        let permissionsActionSheet = ActionSheetViewController(
+            actions: actions,
+            headerTitle: isBackupNode ? nil : Strings.Localizable.permissions,
+            dismissCompletion: nil,
+            sender: cell.permissionsImageView
+        )
         
         present(permissionsActionSheet, animated: true, completion: nil)
     }
