@@ -28,6 +28,7 @@ extension WaitingRoomViewModel {
                 videoAuthorized: true
             ),
         chatLink: String? = nil,
+        requestUserHandle: HandleEntity = 0,
         isTesting: Bool = true
     ) {
         self.init(
@@ -47,7 +48,8 @@ extension WaitingRoomViewModel {
             captureDeviceUseCase: captureDeviceUseCase,
             audioSessionUseCase: audioSessionUseCase,
             permissionHandler: permissionHandler,
-            chatLink: chatLink
+            chatLink: chatLink,
+            requestUserHandle: requestUserHandle
         )
     }
 }

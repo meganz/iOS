@@ -6,17 +6,21 @@ final class MockMeetingCreatingUseCase: MeetingCreatingUseCaseProtocol {
     var chatCallCompletion: Result<ChatRoomEntity, CallErrorEntity>
     var createEphemeralAccountCompletion: Result<Void, MEGASDKErrorType>
     var joinCallCompletion: Result<ChatRoomEntity, CallErrorEntity>
+    var checkChatLinkCompletion: Result<ChatRoomEntity, CallErrorEntity>
     
     var createChatLink_calledTimes = 0
     
     init(userName: String = "Test Name",
          chatCallCompletion: Result<ChatRoomEntity, CallErrorEntity> = .failure(.generic),
          createEphemeralAccountCompletion: Result<Void, MEGASDKErrorType> = .failure(.unexpected),
-         joinCallCompletion: Result<ChatRoomEntity, CallErrorEntity> = .failure(.generic)) {
+         joinCallCompletion: Result<ChatRoomEntity, CallErrorEntity> = .failure(.generic),
+         checkChatLinkCompletion: Result<ChatRoomEntity, CallErrorEntity> = .failure(.generic)
+    ) {
         self.userName = userName
         self.chatCallCompletion = chatCallCompletion
         self.createEphemeralAccountCompletion = createEphemeralAccountCompletion
         self.joinCallCompletion = joinCallCompletion
+        self.checkChatLinkCompletion = checkChatLinkCompletion
     }
     
     func startCall(_ startCall: StartCallEntity, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {
@@ -36,7 +40,7 @@ final class MockMeetingCreatingUseCase: MeetingCreatingUseCaseProtocol {
     }
     
     func checkChatLink(link: String, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {
-        completion(chatCallCompletion)
+        completion(checkChatLinkCompletion)
     }
     
     func createEphemeralAccountAndJoinChat(firstName: String, lastName: String, link: String, completion: @escaping (Result<Void, MEGASDKErrorType>) -> Void, karereInitCompletion: @escaping () -> Void) {

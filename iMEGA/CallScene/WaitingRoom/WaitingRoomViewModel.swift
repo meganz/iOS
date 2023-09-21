@@ -34,17 +34,18 @@ final class WaitingRoomViewModel: ObservableObject {
     private let audioSessionUseCase: any AudioSessionUseCaseProtocol
     private let permissionHandler: any DevicePermissionsHandling
     private let chatLink: String?
+    private let requestUserHandle: HandleEntity
     
     var meetingTitle: String { scheduledMeeting.title }
     
     enum WaitingRoomViewState {
         case guestJoin
         case guestJoining
+        case userJoining
         case waitForHostToStart
         case waitForHostToLetIn
     }
     @Published private(set) var viewState: WaitingRoomViewState = .waitForHostToLetIn
-    
     @Published private(set) var userAvatar: UIImage?
     @Published private(set) var videoImage: UIImage?
     @Published var isVideoEnabled = false
@@ -69,6 +70,9 @@ final class WaitingRoomViewModel: ObservableObject {
         default:
             return ""
         }
+    }
+    var isJoining: Bool {
+        viewState == .guestJoining || viewState == .userJoining
     }
     
     private(set) var isLandscape: Bool = false
@@ -99,7 +103,8 @@ final class WaitingRoomViewModel: ObservableObject {
          captureDeviceUseCase: some CaptureDeviceUseCaseProtocol,
          audioSessionUseCase: some AudioSessionUseCaseProtocol,
          permissionHandler: some DevicePermissionsHandling,
-         chatLink: String? = nil) {
+         chatLink: String? = nil,
+         requestUserHandle: HandleEntity = 0) {
         self.scheduledMeeting = scheduledMeeting
         self.router = router
         self.chatUseCase = chatUseCase
@@ -117,6 +122,7 @@ final class WaitingRoomViewModel: ObservableObject {
         self.audioSessionUseCase = audioSessionUseCase
         self.permissionHandler = permissionHandler
         self.chatLink = chatLink
+        self.requestUserHandle = requestUserHandle
         initializeState()
         initSubscriptions()
         fetchInitialValues()
@@ -230,7 +236,7 @@ final class WaitingRoomViewModel: ObservableObject {
         switch viewState {
         case .guestJoin:
             return 142.0
-        case .guestJoining:
+        case .guestJoining, .userJoining:
             return isLandscape ? 38.0 : 100.0
         case .waitForHostToStart, .waitForHostToLetIn:
             return isLandscape ? 8.0 : 100.0
@@ -246,7 +252,12 @@ final class WaitingRoomViewModel: ObservableObject {
             viewState = .waitForHostToLetIn
             answerCall()
         } else {
-            viewState = .waitForHostToStart
+            if let chatLink {
+                viewState = .userJoining
+                checkChatLink(chatLink)
+            } else {
+                viewState = .waitForHostToStart
+            }
         }
     }
     
@@ -272,7 +283,7 @@ final class WaitingRoomViewModel: ObservableObject {
             .sink { [weak self] call in
                 guard let self,
                       call.chatId == chatId,
-                      viewState != .guestJoin && viewState != .guestJoining else { return }
+                      viewState != .guestJoin && !isJoining else { return }
                 if call.changeType == .waitingRoomAllow || (call.changeType == .status && call.status == .inProgress) {
                     goToCallUI(for: call)
                 } else if call.termCodeType == .kicked {
@@ -398,11 +409,6 @@ final class WaitingRoomViewModel: ObservableObject {
         }
     }
     
-    private func goToCallUI(for call: CallEntity) {
-        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatId) else { return }
-        router.openCallUI(for: call, in: chatRoom, isSpeakerEnabled: isSpeakerEnabled)
-    }
-    
     private func showHostDenyAlert() {
         showRespondAlert(router.showHostDenyAlert)
     }
@@ -474,11 +480,29 @@ final class WaitingRoomViewModel: ObservableObject {
         }
     }
     
+    private func checkChatLink(_ chatLink: String) {
+        meetingUseCase.checkChatLink(link: chatLink) { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success(let chatRoom):
+                if chatRoom.ownPrivilege == .removed || chatRoom.ownPrivilege == .readOnly {
+                    joinChatCall()
+                } else {
+                    viewState = .waitForHostToStart
+                }
+            case .failure:
+                dismiss()
+            }
+        }
+    }
+    
     private func joinChatCall() {
         Task { @MainActor in
             do {
-                _ = try await waitingRoomUseCase.joinChat(forChatId: chatId, userHandle: chatUseCase.myUserHandle())
-                fetchUserAvatar()
+                _ = try await waitingRoomUseCase.joinChat(forChatId: chatId, userHandle: requestUserHandle)
+                if accountUseCase.isGuest {
+                    fetchUserAvatar()
+                }
                 // There is a delay for a call to update its status after joining a meeting
                 // We can't check whether the meeting is started or not immediately after joining a meeting
                 // So the wait is used here to wait for the call's update
@@ -489,6 +513,11 @@ final class WaitingRoomViewModel: ObservableObject {
                 dismiss()
             }
         }
+    }
+    
+    private func goToCallUI(for call: CallEntity) {
+        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatId) else { return }
+        router.openCallUI(for: call, in: chatRoom, isSpeakerEnabled: isSpeakerEnabled)
     }
 }
 
