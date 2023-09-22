@@ -6,6 +6,7 @@ import SwiftUI
 public final class BackupListViewModel: ObservableObject {
     private let selectedDeviceId: String
     private let deviceCenterUseCase: any DeviceCenterUseCaseProtocol
+    private let nodeUseCase: any NodeUseCaseProtocol
     private let router: any BackupListRouting
     private let deviceCenterBridge: DeviceCenterBridge
     private let backupListAssets: BackupListAssets
@@ -48,6 +49,7 @@ public final class BackupListViewModel: ObservableObject {
         devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>,
         updateInterval: UInt64,
         deviceCenterUseCase: any DeviceCenterUseCaseProtocol,
+        nodeUseCase: any NodeUseCaseProtocol,
         router: any BackupListRouting,
         deviceCenterBridge: DeviceCenterBridge,
         backups: [BackupEntity],
@@ -62,6 +64,7 @@ public final class BackupListViewModel: ObservableObject {
         self.devicesUpdatePublisher = devicesUpdatePublisher
         self.updateInterval = updateInterval
         self.deviceCenterUseCase = deviceCenterUseCase
+        self.nodeUseCase = nodeUseCase
         self.router = router
         self.deviceCenterBridge = deviceCenterBridge
         self.backups = backups
@@ -142,6 +145,7 @@ public final class BackupListViewModel: ObservableObject {
                    let availableActions = actionsForBackup(backup) {
                     return DeviceCenterItemViewModel(
                         deviceCenterUseCase: deviceCenterUseCase,
+                        nodeUseCase: nodeUseCase,
                         deviceCenterBridge: deviceCenterBridge,
                         itemType: .backup(backup),
                         assets: assets,
@@ -188,7 +192,7 @@ public final class BackupListViewModel: ObservableObject {
             $0.type == .cameraUpload || $0.type == .mediaUpload
         }
         
-        var actionTypes: [DeviceCenterActionType] = [.rename, .info]
+        var actionTypes: [DeviceCenterActionType] = [.rename]
 
         if selectedDeviceId == currentDeviceUUID || (selectedDeviceId == currentDeviceId && isMobileDevice) {
             actionTypes.append(.cameraUploads)
@@ -221,6 +225,11 @@ public final class BackupListViewModel: ObservableObject {
                     }
             }
             deviceCenterBridge.renameActionTapped(renameEntity)
+        case .info:
+            guard let nodeHandle = backups.first?.rootHandle,
+                  let nodeEntity = nodeUseCase.parentForHandle(nodeHandle) else { return }
+            
+            deviceCenterBridge.infoActionTapped(nodeEntity)
         default: break
         }
     }

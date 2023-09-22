@@ -218,7 +218,7 @@ public final class DeviceListViewModel: ObservableObject {
         }
         
         if device.id != currentDeviceUUID {
-            actionTypes.append(contentsOf: [.info, .rename])
+            actionTypes.append(.rename)
         }
         
         return actionTypes.compactMap { type in
