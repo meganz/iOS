@@ -1,7 +1,7 @@
 import MEGADomain
 
 public struct MockAccountUseCase: AccountUseCaseProtocol {
-    private let totalNodesCountVariable: UInt
+    private let totalNodesCountVariable: UInt64
     private let getMyChatFilesFolderResult: (Result<NodeEntity, AccountErrorEntity>)
     private let accountDetailsResult: (Result<AccountDetailsEntity, AccountDetailsErrorEntity>)
     private let isUpgradeSecuritySuccess: Bool
@@ -16,7 +16,7 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
                 isGuest: Bool = false,
                 isLoggedIn: Bool = true,
                 contacts: [UserEntity] = [],
-                totalNodesCountVariable: UInt = 0,
+                totalNodesCountVariable: UInt64 = 0,
                 getMyChatFilesFolderResult: Result<NodeEntity, AccountErrorEntity> = .failure(.nodeNotFound),
                 currentAccountDetails: AccountDetailsEntity? = nil,
                 accountDetailsResult: Result<AccountDetailsEntity, AccountDetailsErrorEntity> = .failure(.generic),
@@ -58,7 +58,7 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
         _bandwidthOverquotaDelay
     }
     
-    public func totalNodesCount() -> UInt {
+    public func totalNodesCount() -> UInt64 {
         totalNodesCountVariable
     }
     
