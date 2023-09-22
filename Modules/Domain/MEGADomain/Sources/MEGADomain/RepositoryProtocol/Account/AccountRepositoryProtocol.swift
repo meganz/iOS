@@ -8,7 +8,7 @@ public protocol AccountRepositoryProtocol: RepositoryProtocol {
     var bandwidthOverquotaDelay: Int64 { get }
     func isLoggedIn() -> Bool
     func contacts() -> [UserEntity]
-    func totalNodesCount() -> UInt
+    func totalNodesCount() -> UInt64
     func getMyChatFilesFolder(completion: @escaping (Result<NodeEntity, AccountErrorEntity>) -> Void)
     func upgradeSecurity() async throws -> Bool
     func incomingContactsRequestsCount() -> Int
