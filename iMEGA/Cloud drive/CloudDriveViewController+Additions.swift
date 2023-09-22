@@ -13,7 +13,8 @@ extension CloudDriveViewController {
     }
     
     @objc func createCloudDriveViewModel() -> CloudDriveViewModel {
-        CloudDriveViewModel(shareUseCase: ShareUseCase(repo: ShareRepository.newRepo))
+        CloudDriveViewModel(parentNode: parentNode,
+                            shareUseCase: ShareUseCase(repo: ShareRepository.newRepo))
     }
     
     private func updatedParentNodeIfBelongs(_ nodeList: MEGANodeList) -> MEGANode? {
@@ -365,7 +366,29 @@ extension CloudDriveViewController {
                 setEditMode(false)
             case .reloadNavigationBarItems:
                 setNavigationBarButtons()
+            case .updateSortedData:
+                sortTypeHasChanged()
             }
+        }
+    }
+    
+    func sortTypeHasChanged() {
+        
+        nodesSortTypeHasChanged()
+        
+        switch currentViewModePreference {
+        case .perFolder, .list, .thumbnail:
+            break
+        case .mediaDiscovery:
+            // Need to update sort type, as feature manages its own dataset
+            let sortOrder = viewModel.sortOrder(for: .mediaDiscovery)
+            mdViewController?.update(sortOrder: sortOrder)
+        }
+        
+        if displayMode == .backup {
+            setBackupNavigationBarButtons()
+        } else {
+            setNavigationBarButtons()
         }
     }
 }

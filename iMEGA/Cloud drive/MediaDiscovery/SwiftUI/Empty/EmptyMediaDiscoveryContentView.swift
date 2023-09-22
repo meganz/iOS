@@ -59,14 +59,6 @@ private extension EmptyMediaDiscoveryContentMenuAction {
             return Strings.Localizable.choosePhotoVideo
         case .capturePhotoVideo:
             return Strings.Localizable.capturePhotoVideo
-        case .importFromFiles:
-            return Strings.Localizable.CloudDrive.Upload.importFromFiles
-        case .scanDocument:
-            return Strings.Localizable.scanDocument
-        case .newFolder:
-            return Strings.Localizable.newFolder
-        case .newTextFile:
-            return Strings.Localizable.newTextFile
         }
     }
     
@@ -76,14 +68,6 @@ private extension EmptyMediaDiscoveryContentMenuAction {
             return Asset.Images.NodeActions.saveToPhotos.swiftUIImage
         case .capturePhotoVideo:
             return Asset.Images.ActionSheetIcons.capture.swiftUIImage
-        case .importFromFiles:
-            return Asset.Images.InfoActions.import.swiftUIImage
-        case .scanDocument:
-            return Asset.Images.ActionSheetIcons.scanDocument.swiftUIImage
-        case .newFolder:
-            return Asset.Images.ActionSheetIcons.newFolder.swiftUIImage
-        case .newTextFile:
-            return Asset.Images.NodeActions.textfile.swiftUIImage
         }
     }
 }

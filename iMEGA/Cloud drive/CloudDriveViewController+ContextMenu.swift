@@ -22,7 +22,7 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
             return CMConfigEntity(menuType: .menu(type: .display),
                                   viewMode: currentViewModePreference.toViewModePreferenceEntity(),
                                   accessLevel: parentAccessLevel.toShareAccessLevel(),
-                                  sortType: SortOrderType(megaSortOrderType: Helper.sortType(for: parentNode)).megaSortOrderType.toSortOrderEntity(),
+                                  sortType: viewModel.sortOrder(for: currentViewModePreference).megaSortOrderType.toSortOrderEntity(),
                                   isAFolder: parentNode.type != .root,
                                   isRubbishBinFolder: displayMode == .rubbishBin,
                                   isViewInFolder: isFromViewInFolder,
@@ -36,7 +36,9 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
     }
     
     func uploadAddMenuConfiguration() -> CMConfigEntity? {
-        CMConfigEntity(menuType: .menu(type: .uploadAdd))
+        CMConfigEntity(
+            menuType: .menu(type: .uploadAdd),
+            viewMode: currentViewModePreference.toViewModePreferenceEntity())
     }
     
     @objc func configureContextMenuManagerIfNeeded() {
@@ -224,13 +226,7 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
     }
     
     func sortMenu(didSelect sortType: SortOrderType) {
-        Helper.save(sortType.megaSortOrderType, for: parentNode)
-        nodesSortTypeHasChanged()
-        if displayMode == .backup {
-            setBackupNavigationBarButtons()
-        } else {
-            setNavigationBarButtons()
-        }
+        viewModel.dispatch(.updateSortType(sortType))
     }
     
     func rubbishBinMenu(didSelect action: RubbishBinActionEntity) {

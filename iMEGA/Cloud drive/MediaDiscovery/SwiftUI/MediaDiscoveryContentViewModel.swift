@@ -43,6 +43,7 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
     }
         
     private let parentNode: NodeEntity
+    private var sortOrder: SortOrderType
     private let analyticsUseCase: any MediaDiscoveryAnalyticsUseCaseProtocol
     private let mediaDiscoveryUseCase: any MediaDiscoveryUseCaseProtocol
     private lazy var pageStayTimeTracker = PageStayTimeTracker()
@@ -51,6 +52,7 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
     
     init(contentMode: PhotoLibraryContentMode,
          parentNode: NodeEntity,
+         sortOrder: SortOrderType,
          delegate: (some MediaDiscoveryContentDelegate)?,
          analyticsUseCase: some MediaDiscoveryAnalyticsUseCaseProtocol,
          mediaDiscoveryUseCase: some MediaDiscoveryUseCaseProtocol) {
@@ -62,6 +64,7 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
         self.delegate = delegate
         self.analyticsUseCase = analyticsUseCase
         self.mediaDiscoveryUseCase = mediaDiscoveryUseCase
+        self.sortOrder = sortOrder
         
         subscribeToSelectionChanges()
         subscribeToNodeChanges()
@@ -74,11 +77,23 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
             try Task.checkCancellation()
             let nodes = try await mediaDiscoveryUseCase.nodes(forParent: parentNode)
             try Task.checkCancellation()
-            photoLibraryContentViewModel.library = nodes.toPhotoLibrary(withSortType: .newest)
+            photoLibraryContentViewModel.library = await sortIntoPhotoLibrary(nodes: nodes, sortOrder: sortOrder)
+            try Task.checkCancellation()
             viewState = nodes.isEmpty ? .empty : .normal
         } catch {
             MEGALogError("Error loading nodes: \(error.localizedDescription)")
         }
+    }
+    
+    @MainActor
+    func update(sortOrder updatedSortOrder: SortOrderType) async {
+        guard updatedSortOrder != sortOrder else {
+            return
+        }
+        
+        self.sortOrder = updatedSortOrder
+        let nodes = photoLibraryContentViewModel.library.allPhotos
+        photoLibraryContentViewModel.library = await sortIntoPhotoLibrary(nodes: nodes, sortOrder: sortOrder)
     }
     
     func onViewAppear() {
@@ -97,6 +112,10 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
     
     func tapped(menuAction: EmptyMediaDiscoveryContentMenuAction) {
         delegate?.mediaDiscoverEmptyTapped(menuAction: menuAction)
+    }
+    
+    private func sortIntoPhotoLibrary(nodes: [NodeEntity], sortOrder: SortOrderType) async -> PhotoLibrary {
+        nodes.toPhotoLibrary(withSortType: sortOrder)
     }
     
     private func startTracking() {
