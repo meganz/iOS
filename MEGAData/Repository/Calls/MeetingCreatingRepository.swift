@@ -73,6 +73,7 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
             speakRequest: startCall.speakRequest,
             waitingRoom: startCall.waitingRoom,
             openInvite: startCall.allowNonHostToAddParticipants,
+            queueType: .main,
             delegate: delegate
         )
     }
