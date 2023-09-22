@@ -146,6 +146,7 @@ final class HomeScreenFactory: NSObject {
         // MEGA app level delegates. Using simple closures to pass data back and forth
         let searchBridge = SearchBridge(
             selection: { result in
+                bridge.hideKeyboard()
                 router.didTapNode(result.id)
             },
             context: { result, button in
