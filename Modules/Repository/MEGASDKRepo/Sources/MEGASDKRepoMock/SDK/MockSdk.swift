@@ -152,7 +152,7 @@ public final class MockSdk: MEGASdk {
     
     public override var myEmail: String? { email }
     
-    public override var totalNodes: UInt { UInt(nodes.count) }
+    public override var totalNodes: UInt64 { UInt64(nodes.count) }
     
     public override var bandwidthOverquotaDelay: Int64 { _bandwidthOverquotaDelay }
 

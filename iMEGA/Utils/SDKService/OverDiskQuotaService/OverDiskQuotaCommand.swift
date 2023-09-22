@@ -110,27 +110,27 @@ private final class OverDiskQuotaQueryTask {
         _ api: MEGASdk,
         _ completion: @escaping (Result<any OverDiskQuotaInfomationProtocol, OverDiskQuotaService.DataObtainingError>) -> Void
     ) {
-        api.getUserData(with: MEGAGenericRequestDelegate(completion: { [weak self] (_, error) in
-            guard let self = self else {
+        api.getUserData(with: RequestDelegate { [weak self] result in
+            guard let self else {
                 assertionFailure("OverDiskQuotaQueryTask instance is unexpected released.")
                 completion(.failure(.unexpectedlyCancellation))
                 return
             }
 
-            guard error.type == .apiOk else {
+            if case .failure = result {
                 completion(.failure(.unableToFetchUserData))
                 return
             }
 
-            switch self.updatedUserData(with: api) {
+            switch updatedUserData(with: api) {
             case .failure(let error):
-                self.errors.insert(error)
+                errors.insert(error)
                 completion(.failure(error))
             case .success(let userData):
-                self.userDataStore = userData
-                self.start(with: api, completion: completion)
+                userDataStore = userData
+                start(with: api, completion: completion)
             }
-        }))
+        })
     }
 
     // MARK: - Fetch MEGA Plans
@@ -190,7 +190,7 @@ private struct OverDiskQuotaUserData {
     typealias Email = String
     typealias Deadline = Date
     typealias WarningDates = [Date]
-    typealias FileCount = UInt
+    typealias FileCount = UInt64
 
     var email: Email
     var deadline: Deadline

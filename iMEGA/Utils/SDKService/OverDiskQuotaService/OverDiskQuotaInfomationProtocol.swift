@@ -4,7 +4,7 @@ import Foundation
     typealias Email = String
     typealias Deadline = Date
     typealias WarningDates = [Date]
-    typealias FileCount = UInt
+    typealias FileCount = UInt64
     typealias Storage = NSNumber
     typealias AvailablePlanName = String
 

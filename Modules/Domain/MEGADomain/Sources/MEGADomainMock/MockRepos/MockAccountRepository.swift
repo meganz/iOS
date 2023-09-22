@@ -2,7 +2,7 @@ import Combine
 import MEGADomain
 
 public final class MockAccountRepository: AccountRepositoryProtocol {
-    private let nodesCount: UInt
+    private let nodesCount: UInt64
     private let getMyChatFilesFolderResult: (Result<NodeEntity, AccountErrorEntity>)
     private let accountDetailsResult: (Result<AccountDetailsEntity, AccountDetailsErrorEntity>)
     private let _currentAccountDetails: AccountDetailsEntity?
@@ -29,7 +29,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol {
                 isLoggedIn: Bool = true,
                 isMasterBusinessAccount: Bool = false,
                 contacts: [UserEntity] = [],
-                nodesCount: UInt = 0,
+                nodesCount: UInt64 = 0,
                 contactsRequestsCount: Int = 0,
                 unseenUserAlertsCount: UInt = 0,
                 getMyChatFilesFolderResult: Result<NodeEntity, AccountErrorEntity> = .failure(.nodeNotFound),
@@ -86,7 +86,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol {
         MockAccountRepository()
     }
     
-    public func totalNodesCount() -> UInt { nodesCount }
+    public func totalNodesCount() -> UInt64 { nodesCount }
     
     public func getMyChatFilesFolder(completion: @escaping (Result<NodeEntity, AccountErrorEntity>) -> Void) {
         completion(getMyChatFilesFolderResult)
