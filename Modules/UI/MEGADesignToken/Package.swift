@@ -3,15 +3,15 @@
 import PackageDescription
 
 let package = Package(
-    name: "MEGADesignSystem",
+    name: "MEGADesignToken",
     platforms: [
         .iOS(.v14),
         .macOS(.v12)
     ],
     products: [
         .library(
-            name: "MEGADesignSystem",
-            targets: ["MEGADesignSystem"]
+            name: "MEGADesignToken",
+            targets: ["MEGADesignToken"]
         ),
         .plugin(
             name: "TokenCodegen",
@@ -23,7 +23,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "MEGADesignSystem",
+            name: "MEGADesignToken",
             plugins: ["TokenCodegen"]
         ),
         .plugin(
@@ -40,9 +40,9 @@ let package = Package(
             path: "Sources/Executables/TokenCodegenGenerator"
         ),
         .testTarget(
-            name: "MEGADesignSystemTests",
+            name: "MEGADesignTokenTests",
             dependencies: [
-                "MEGADesignSystem",
+                "MEGADesignToken",
                 "TokenCodegenGenerator",
                 .product(name: "SwiftSyntax", package: "swift-syntax"),
                 .product(name: "SwiftSyntaxBuilder", package: "swift-syntax")

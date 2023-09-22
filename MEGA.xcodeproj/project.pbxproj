@@ -3801,7 +3801,7 @@
 		946544852A4446D50038D8FC /* PermissionAlertRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionAlertRouterTests.swift; sourceTree = "<group>"; };
 		9467F575299F9E6600A24D4A /* UserAttributeEntityMappingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAttributeEntityMappingTests.swift; sourceTree = "<group>"; };
 		946ACCC1299C099900E6C0F5 /* MEGAPresentation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAPresentation; sourceTree = "<group>"; };
-		946AE1162AB497DA00B05AB8 /* MEGADesignSystem */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGADesignSystem; sourceTree = "<group>"; };
+		946AE1162AB497DA00B05AB8 /* MEGADesignToken */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGADesignToken; sourceTree = "<group>"; };
 		946E783429C0F79800BB3FE6 /* SharedItemsSearchOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItemsSearchOperation.swift; sourceTree = "<group>"; };
 		9470003829B77BCF00827E04 /* ActionWarningViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionWarningViewRouter.swift; sourceTree = "<group>"; };
 		94712EEF2A9C8E4800B5F2C9 /* HomeSearchResultsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSearchResultsProvider.swift; sourceTree = "<group>"; };
@@ -11215,7 +11215,7 @@
 		B6FDEF7B2A204E9000276DD6 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				946AE1162AB497DA00B05AB8 /* MEGADesignSystem */,
+				946AE1162AB497DA00B05AB8 /* MEGADesignToken */,
 				B639953F2898CE9100EA88F1 /* MEGASwiftUI */,
 				B6826B662898F43900B2B8D0 /* MEGAUI */,
 				B65D17CB2899E07200D5AD33 /* MEGAUIKit */,
