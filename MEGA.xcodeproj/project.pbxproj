@@ -1582,6 +1582,8 @@
 		B582965A27C5DF50004DD7A5 /* TransferInventoryUseCaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B582965927C5DF50004DD7A5 /* TransferInventoryUseCaseHelper.swift */; };
 		B582966A27C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B582966927C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift */; };
 		B58431A62AA8BC2B0081BB30 /* AdsSlotViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58431A52AA8BC2B0081BB30 /* AdsSlotViewModelTests.swift */; };
+		B58A94872ABC394200B56622 /* AdsWebViewCoordinatorViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58A94862ABC394200B56622 /* AdsWebViewCoordinatorViewModelTests.swift */; };
+		B58A94892ABC3D3F00B56622 /* MockWKNavigationAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58A94882ABC3D3F00B56622 /* MockWKNavigationAction.swift */; };
 		B58F7BFD298A8ABF0046F0FA /* ShareViewController+SecureFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58F7BFB298A88750046F0FA /* ShareViewController+SecureFlag.swift */; };
 		B5902A812872F38200B450E9 /* MEGANodeList+SortOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5902A802872F38100B450E9 /* MEGANodeList+SortOrder.swift */; };
 		B5925B79279115FA00170CD6 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5925B78279115FA00170CD6 /* Colors.xcassets */; };
@@ -1602,6 +1604,8 @@
 		B5A8CA012AB96442001F9B83 /* UIApplication+TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A8CA002AB96442001F9B83 /* UIApplication+TabBar.swift */; };
 		B5AD33C529D136A600707496 /* UpgradeAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AD33C429D136A500707496 /* UpgradeAccountViewModel.swift */; };
 		B5B0E30627F1BCA700DB6146 /* WarningViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B0E30527F1BCA700DB6146 /* WarningViewModelTests.swift */; };
+		B5BD8C7B2ABC249400AC9447 /* AdsWebViewCoordinatorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BD8C7A2ABC249400AC9447 /* AdsWebViewCoordinatorViewModel.swift */; };
+		B5BD8C7C2ABC249400AC9447 /* AdsWebViewCoordinatorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BD8C7A2ABC249400AC9447 /* AdsWebViewCoordinatorViewModel.swift */; };
 		B5BEB0FE2907C5F5006A442D /* CameraUploadsTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BEB0FD2907C5F5006A442D /* CameraUploadsTableViewController+Additions.swift */; };
 		B5C3ABAF2A71232B008C3708 /* UsageViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C3ABAE2A71232B008C3708 /* UsageViewControllerTests.swift */; };
 		B5C5228C27EAC0080060EC3E /* PhotosBannerViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C5228B27EAC0080060EC3E /* PhotosBannerViewProvider.swift */; };
@@ -4151,6 +4155,8 @@
 		B582965927C5DF50004DD7A5 /* TransferInventoryUseCaseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferInventoryUseCaseHelper.swift; sourceTree = "<group>"; };
 		B582966927C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CreateAccountViewController+Additions.swift"; sourceTree = "<group>"; };
 		B58431A52AA8BC2B0081BB30 /* AdsSlotViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsSlotViewModelTests.swift; sourceTree = "<group>"; };
+		B58A94862ABC394200B56622 /* AdsWebViewCoordinatorViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsWebViewCoordinatorViewModelTests.swift; sourceTree = "<group>"; };
+		B58A94882ABC3D3F00B56622 /* MockWKNavigationAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockWKNavigationAction.swift; sourceTree = "<group>"; };
 		B58F7BFB298A88750046F0FA /* ShareViewController+SecureFlag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShareViewController+SecureFlag.swift"; sourceTree = "<group>"; };
 		B5902A802872F38100B450E9 /* MEGANodeList+SortOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANodeList+SortOrder.swift"; sourceTree = "<group>"; };
 		B5925B78279115FA00170CD6 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
@@ -4167,6 +4173,7 @@
 		B5A8CA002AB96442001F9B83 /* UIApplication+TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+TabBar.swift"; sourceTree = "<group>"; };
 		B5AD33C429D136A500707496 /* UpgradeAccountViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeAccountViewModel.swift; sourceTree = "<group>"; };
 		B5B0E30527F1BCA700DB6146 /* WarningViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarningViewModelTests.swift; sourceTree = "<group>"; };
+		B5BD8C7A2ABC249400AC9447 /* AdsWebViewCoordinatorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsWebViewCoordinatorViewModel.swift; sourceTree = "<group>"; };
 		B5BEB0FD2907C5F5006A442D /* CameraUploadsTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraUploadsTableViewController+Additions.swift"; sourceTree = "<group>"; };
 		B5C3ABAE2A71232B008C3708 /* UsageViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageViewControllerTests.swift; sourceTree = "<group>"; };
 		B5C5228B27EAC0080060EC3E /* PhotosBannerViewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosBannerViewProvider.swift; sourceTree = "<group>"; };
@@ -7480,6 +7487,7 @@
 				B5E411AA28AB740F00D05719 /* MockFeatureFlagProvider.swift */,
 				32D167A92942DA59008C5ED6 /* MockSlideShowDataSource.swift */,
 				25ED56692A98699E0063864F /* MockTransferWidgetResponder.swift */,
+				B58A94882ABC3D3F00B56622 /* MockWKNavigationAction.swift */,
 				5D33D673250DBA3900D74666 /* StoreUser.swift */,
 				5D33D675250DBAAB00D74666 /* StoreUserClient.swift */,
 			);
@@ -9904,6 +9912,7 @@
 			children = (
 				B5578ABA2AB1B2180067082A /* AdsSlotChangeStream.swift */,
 				B5EA09602AA1D38D001171C2 /* AdsSlotViewModel.swift */,
+				B5BD8C7A2ABC249400AC9447 /* AdsWebViewCoordinatorViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -9964,6 +9973,7 @@
 			isa = PBXGroup;
 			children = (
 				B58431A52AA8BC2B0081BB30 /* AdsSlotViewModelTests.swift */,
+				B58A94862ABC394200B56622 /* AdsWebViewCoordinatorViewModelTests.swift */,
 			);
 			path = Ads;
 			sourceTree = "<group>";
@@ -13142,6 +13152,7 @@
 				B5EA095E2AA1D289001171C2 /* AdsSlotView.swift in Sources */,
 				B5EA09612AA1D38D001171C2 /* AdsSlotViewModel.swift in Sources */,
 				B51DDFA32AA896E4009BDF3B /* AdsWebView.swift in Sources */,
+				B5BD8C7B2ABC249400AC9447 /* AdsWebViewCoordinatorViewModel.swift in Sources */,
 				246A311F2A45709200BF8DDB /* AdvancedTableViewController+Additions.swift in Sources */,
 				E87C98361CC4CC1000E2B9E6 /* AdvancedTableViewController.m in Sources */,
 				9D3563C628B54BB300CB3365 /* AdvancedViewRouter.swift in Sources */,
@@ -13183,7 +13194,7 @@
 				32F9E684283490A40002132D /* AlbumToolbarProvider.swift in Sources */,
 				0EA150D729B810D2005C6486 /* AlbumType.swift in Sources */,
 				943649D82A4D81B0006CE8B8 /* AlertModel+DevicePermissions.swift in Sources */,
-                832DEFEA2AB46199004573D5 /* AllowNonHostToInviteTableViewCell.swift in Sources */,            
+				832DEFEA2AB46199004573D5 /* AllowNonHostToInviteTableViewCell.swift in Sources */,
 				B5E719B8290B716A0076FEA3 /* AppDelegate+Account.swift in Sources */,
 				BF69E5172374F3720031913D /* AppDelegate+Additions.swift in Sources */,
 				B511CE6E2AA745E800445877 /* AppDelegate+Ads.swift in Sources */,
@@ -14792,6 +14803,7 @@
 				B5430FD02AB978FB003F8C34 /* AdsSlotView.swift in Sources */,
 				B5430FD22AB97905003F8C34 /* AdsSlotViewModel.swift in Sources */,
 				B5430FD32AB9793E003F8C34 /* AdsWebView.swift in Sources */,
+				B5BD8C7C2ABC249400AC9447 /* AdsWebViewCoordinatorViewModel.swift in Sources */,
 				5BE689BC2419189700462134 /* AppearancePreference+CoreDataClass.swift in Sources */,
 				5BE689B92419189300462134 /* AppearancePreference+CoreDataProperties.swift in Sources */,
 				B60C7B2E2A29CCDB00AAA21F /* AppEnvironmentConfigurator.swift in Sources */,
@@ -15031,6 +15043,7 @@
 				BFFB134F2908EF3100A6B2CA /* ActiveCallViewModelTests.swift in Sources */,
 				B63AEB142511F73C000B8517 /* AddPhoneNumberViewModelTests.swift in Sources */,
 				B58431A62AA8BC2B0081BB30 /* AdsSlotViewModelTests.swift in Sources */,
+				B58A94872ABC394200B56622 /* AdsWebViewCoordinatorViewModelTests.swift in Sources */,
 				244F0A6E2A457ED0007DC61B /* AdvancedTableViewControllerTests.swift in Sources */,
 				246013122A459166007EF5ED /* AdvancedViewRouterTests.swift in Sources */,
 				3299F056291A20370071FB77 /* AlbumCellViewModelTests.swift in Sources */,
@@ -15183,6 +15196,7 @@
 				25ED566A2A98699E0063864F /* MockTransferWidgetResponder.swift in Sources */,
 				0D0B54622627A92D00E9BB16 /* MockUploadFileUseCase.swift in Sources */,
 				BF8895CA2630F4B3002A18CA /* MockUserImageUseCase.swift in Sources */,
+				B58A94892ABC3D3F00B56622 /* MockWKNavigationAction.swift in Sources */,
 				8361D9F2283E7B4E0001FAC1 /* NameCollisionViewModelTests.swift in Sources */,
 				94CC921829F0106000FA149A /* NodeAccessEntity+Mapper_Tests.swift in Sources */,
 				837B9C0B24781B1600D409B4 /* NodeActionBuilderTests.swift in Sources */,

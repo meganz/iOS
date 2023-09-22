@@ -10,7 +10,9 @@ struct AdsSlotView<T: View>: View {
             contentView
             
             if viewModel.displayAds {
-                AdsWebView(url: viewModel.adsUrl, adsTapAction: {
+                AdsWebView(url: viewModel.adsUrl,
+                           coordinatorViewModel: AdsWebViewCoordinatorViewModel(),
+                           adsTapAction: {
                     Task { await viewModel.loadAds() }
                 })
                 .background(Color.clear)
