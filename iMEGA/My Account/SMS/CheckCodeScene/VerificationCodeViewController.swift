@@ -156,25 +156,43 @@ final class VerificationCodeViewController: UIViewController, ViewType {
 // MARK: - UITextFieldDelegate
 
 extension VerificationCodeViewController: UITextFieldDelegate {
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard string.mnz_isDecimalNumber else {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString newText: String) -> Bool {
+        guard newText.mnz_isDecimalNumber else {
             return false
         }
 
-        if string.count >= verificationCodeCount {
-            distributeCodeString(string)
+        if newText.count >= verificationCodeCount {
+            distributeCodeString(newText)
             didEditingChangeInTextField(textField)
             return false
         }
+        
+        let shouldDeleteCurrentTextFieldText = textField.text?.isNotEmpty == true
+        if newText.isEmpty && shouldDeleteCurrentTextFieldText {
+            makeCurrentCodeFieldBecomeFirstResponder(for: textField)
+            return true
+        }
 
-        if string.isNotEmpty {
-            textField.text = String(string[string.startIndex])
+        if newText.isNotEmpty {
+            if !shouldDeleteCurrentTextFieldText {
+                textField.text = String(newText[newText.startIndex])
+            } else {
+                guard let currentIndex = verificationCodeFields.firstIndex(of: textField) else { return false }
+                attemptFillNextTextField(at: currentIndex + 1, replacementString: newText)
+            }
             makeNextCodeFieldBecomeFirstResponder(for: textField)
             didEditingChangeInTextField(textField)
             return false
         }
 
         return  true
+    }
+    
+    private func attemptFillNextTextField(at nextIndex: Int, replacementString string: String) {
+        if nextIndex <= verificationCodeCount {
+            let nextTextField = verificationCodeFields[safe: nextIndex]
+            nextTextField?.text = String(string[string.startIndex])
+        }
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -196,6 +214,11 @@ extension VerificationCodeViewController: UITextFieldDelegate {
     private func makePreviousCodeFieldBecomeFirstResponder(for textField: UITextField) {
         guard let currentIndex = verificationCodeFields.firstIndex(of: textField), currentIndex > 0 else { return }
         verificationCodeFields[currentIndex - 1].becomeFirstResponder()
+    }
+    
+    private func makeCurrentCodeFieldBecomeFirstResponder(for textField: UITextField) {
+        guard let currentIndex = verificationCodeFields.firstIndex(of: textField), currentIndex > 0 else { return }
+        verificationCodeFields[currentIndex].becomeFirstResponder()
     }
 }
 
