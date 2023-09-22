@@ -17,17 +17,20 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
     private let updateInterval: UInt64
     private let deviceCenterAssets: DeviceCenterAssets
     private let deviceCenterUseCase: any DeviceCenterUseCaseProtocol
+    private let nodeUseCase: any NodeUseCaseProtocol
     
     public init(
         navigationController: UINavigationController?,
         deviceCenterBridge: DeviceCenterBridge,
         deviceCenterUseCase: any DeviceCenterUseCaseProtocol,
+        nodeUseCase: any NodeUseCaseProtocol,
         deviceCenterAssets: DeviceCenterAssets
     ) {
         self.navigationController = navigationController
         self.deviceCenterBridge = deviceCenterBridge
         self.deviceCenterAssets = deviceCenterAssets
         self.deviceCenterUseCase = deviceCenterUseCase
+        self.nodeUseCase = nodeUseCase
         
         devicesUpdatePublisher = PassthroughSubject<[DeviceEntity], Never>()
         refreshDevicesPublisher = PassthroughSubject<Void, Never>()
@@ -74,6 +77,7 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
             updateInterval: updateInterval,
             backups: backups,
             deviceCenterUseCase: deviceCenterUseCase,
+            nodeUseCase: nodeUseCase,
             navigationController: navigationController,
             deviceCenterBridge: deviceCenterBridge,
             backupListAssets: deviceCenterAssets.backupListAssets,

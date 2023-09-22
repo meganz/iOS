@@ -18,6 +18,7 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
     private let updateInterval: UInt64
     private let backups: [BackupEntity]
     private let deviceCenterUseCase: any DeviceCenterUseCaseProtocol
+    private let nodeUseCase: any NodeUseCaseProtocol
     private let backupListAssets: BackupListAssets
     private let emptyStateAssets: EmptyStateAssets
     private let searchAssets: SearchAssets
@@ -31,6 +32,7 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
         updateInterval: UInt64,
         backups: [BackupEntity],
         deviceCenterUseCase: any DeviceCenterUseCaseProtocol,
+        nodeUseCase: any NodeUseCaseProtocol,
         navigationController: UINavigationController?,
         deviceCenterBridge: DeviceCenterBridge,
         backupListAssets: BackupListAssets,
@@ -45,6 +47,7 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
         self.updateInterval = updateInterval
         self.backups = backups
         self.deviceCenterUseCase = deviceCenterUseCase
+        self.nodeUseCase = nodeUseCase
         self.navigationController = navigationController
         self.deviceCenterBridge = deviceCenterBridge
         self.backupListAssets = backupListAssets
@@ -61,6 +64,7 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
             devicesUpdatePublisher: devicesUpdatePublisher,
             updateInterval: updateInterval,
             deviceCenterUseCase: deviceCenterUseCase,
+            nodeUseCase: nodeUseCase,
             router: self,
             deviceCenterBridge: deviceCenterBridge,
             backups: backups,

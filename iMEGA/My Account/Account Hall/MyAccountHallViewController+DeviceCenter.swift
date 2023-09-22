@@ -9,7 +9,16 @@ extension MyAccountHallViewController {
         DeviceListViewRouter(
             navigationController: navigationController,
             deviceCenterBridge: makeDeviceCenterBridge(),
-            deviceCenterUseCase: DeviceCenterUseCase(deviceCenterRepository: DeviceCenterRepository.newRepo),
+            deviceCenterUseCase:
+                DeviceCenterUseCase(
+                    deviceCenterRepository:
+                        DeviceCenterRepository.newRepo
+                ),
+            nodeUseCase:
+                NodeUseCase(
+                    nodeDataRepository: NodeDataRepository.newRepo,
+                    nodeValidationRepository: NodeValidationRepository.newRepo
+                ),
             deviceCenterAssets: makeDeviceListAssetData()
         ).start()
     }
@@ -211,23 +220,21 @@ extension MyAccountHallViewController {
         let bridge = DeviceCenterBridge()
         
         bridge.cameraUploadActionTapped = { [weak self] cameraUploadStatusChanged in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                guard let navigationController = self?.findTopNavigationController() else { return }
-        
-                CameraUploadsSettingsViewRouter(presenter: navigationController, closure: {
-                    cameraUploadStatusChanged()
-                }).start()
-            }
+            guard let navigationController = self?.findTopNavigationController() else { return }
+    
+            CameraUploadsSettingsViewRouter(presenter: navigationController, closure: {
+                cameraUploadStatusChanged()
+            }).start()
         }
 
-        bridge.infoActionTapped = { _ in
-            // Will be added in future tickets
+        bridge.infoActionTapped = { [weak self] node in
+            self?.showNodeInfo(for: node)
         }
         
-        bridge.renameActionTapped = { [weak self] renameEntity in
-            guard let self else { return }
+        bridge.renameActionTapped = { renameEntity in
+            guard let presenter = UIApplication.mainTabBarRootViewController() else { return }
             RenameRouter(
-                presenter: self,
+                presenter: presenter,
                 type: .device(
                     renameEntity: renameEntity
                 ),
@@ -253,32 +260,29 @@ extension MyAccountHallViewController {
         return bridge
     }
     
-    private func findPresentedViewController() -> UIViewController? {
-        guard var topController = UIApplication.shared.keyWindow?.rootViewController else { return nil }
-        
-        while let presentedViewController = topController.presentedViewController {
-            topController = presentedViewController
-        }
-        
-        return topController
-    }
-    
     private func findTopNavigationController() -> UINavigationController? {
-        guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController else {
+        guard let tabBarController = UIApplication.mainTabBarRootViewController(),
+              let selectedNavController = tabBarController.selectedViewController as? UINavigationController else {
             return nil
         }
-
-        if let hostingController = rootViewController as? UIHostingController<AdsSlotView<MainTabBarWrapper>> {
-            for child in hostingController.children {
-                if let tabBarController = child as? MainTabBarController,
-                   let selectedNavController = tabBarController.selectedViewController as? UINavigationController {
-                    return selectedNavController
-                }
-            }
-        } else if let tabBarController = rootViewController as? MainTabBarController,
-                  let selectedNavController = tabBarController.selectedViewController as? UINavigationController {
-            return selectedNavController
+        
+        return selectedNavController
+    }
+    
+    private func showNodeInfo(for node: NodeEntity?) {
+        guard let node = node?.toMEGANode(in: MEGASdk.shared),
+              let presenter = findTopNavigationController() else { return }
+        
+        let nodeInfoViewModel = NodeInfoViewModel(
+            withNode: node,
+            shareUseCase: ShareUseCase(repo: ShareRepository.newRepo),
+            shouldDisplayContactVerificationInfo: MEGASdk.shared.isContactVerificationWarningEnabled
+        )
+        
+        let nodeInfoNavigation = NodeInfoViewController.instantiate(withViewModel: nodeInfoViewModel, delegate: nil)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            presenter.present(nodeInfoNavigation, animated: true, completion: nil)
         }
-        return nil
     }
 }
