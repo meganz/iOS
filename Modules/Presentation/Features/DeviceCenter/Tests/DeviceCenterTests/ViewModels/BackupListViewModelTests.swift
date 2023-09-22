@@ -242,7 +242,7 @@ final class BackupListViewModelTests: XCTestCase {
         
         let actions = viewModel.actionsForDevice()
         
-        let expectedActions: [DeviceCenterActionType] = [.rename, .info, .cameraUploads, .sort]
+        let expectedActions: [DeviceCenterActionType] = [.rename, .cameraUploads, .sort]
         let actionsType = actions.compactMap {$0.type}
         XCTAssertEqual(actionsType, expectedActions, "Actions for the current device are incorrect")
     }
@@ -269,7 +269,7 @@ final class BackupListViewModelTests: XCTestCase {
         
         let actions = viewModel.actionsForDevice()
         
-        let expectedActions: [DeviceCenterActionType] = [.rename, .info, .sort]
+        let expectedActions: [DeviceCenterActionType] = [.rename, .sort]
         let actionsType = actions.compactMap {$0.type}
         XCTAssertEqual(actionsType, expectedActions, "Actions for the current device are incorrect")
     }
@@ -389,6 +389,7 @@ final class BackupListViewModelTests: XCTestCase {
             devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>(),
             updateInterval: updateInterval,
             deviceCenterUseCase: deviceCenterUseCase,
+            nodeUseCase: MockNodeDataUseCase(),
             router: MockBackupListViewRouter(),
             deviceCenterBridge: DeviceCenterBridge(),
             backups: backups,

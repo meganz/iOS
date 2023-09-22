@@ -42,6 +42,7 @@ final class BackupListsViewRouterTests: XCTestCase {
             updateInterval: 1,
             backups: [],
             deviceCenterUseCase: MockDeviceCenterUseCase(),
+            nodeUseCase: MockNodeDataUseCase(),
             navigationController: mockPresenter,
             deviceCenterBridge: DeviceCenterBridge(),
             backupListAssets:

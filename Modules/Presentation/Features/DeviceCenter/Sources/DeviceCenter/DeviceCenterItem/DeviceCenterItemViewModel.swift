@@ -6,6 +6,7 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
     private let router: (any DeviceListRouting)?
     private let refreshDevicesPublisher: PassthroughSubject<Void, Never>?
     private let deviceCenterUseCase: DeviceCenterUseCaseProtocol
+    private let nodeUseCase: (any NodeUseCaseProtocol)?
     private let deviceCenterBridge: DeviceCenterBridge
     private var itemType: DeviceCenterItemType
     var assets: ItemAssets
@@ -22,6 +23,7 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
     init(router: (any DeviceListRouting)? = nil,
          refreshDevicesPublisher: PassthroughSubject<Void, Never>? = nil,
          deviceCenterUseCase: DeviceCenterUseCaseProtocol,
+         nodeUseCase: (any NodeUseCaseProtocol)? = nil,
          deviceCenterBridge: DeviceCenterBridge,
          itemType: DeviceCenterItemType,
          assets: ItemAssets,
@@ -29,6 +31,7 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
         self.router = router
         self.refreshDevicesPublisher = refreshDevicesPublisher
         self.deviceCenterUseCase = deviceCenterUseCase
+        self.nodeUseCase = nodeUseCase
         self.deviceCenterBridge = deviceCenterBridge
         self.itemType = itemType
         self.assets = assets
@@ -75,6 +78,11 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
         }
     }
     
+    private func nodeForEntityType() -> NodeEntity? {
+        guard case .backup(let backupEntity) = itemType else { return nil }
+        return nodeUseCase?.nodeForHandle(backupEntity.rootHandle)
+    }
+    
     func showDetail() {
         guard let router else { return }
         if case let .device(device) = itemType {
@@ -88,17 +96,20 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
         case .backup:
             switch type {
             case .cameraUploads:
-                deviceCenterBridge.cameraUploadActionTapped({ [weak self] in
+                deviceCenterBridge.cameraUploadActionTapped { [weak self] in
                     self?.refreshDevicesPublisher?.send()
-                })
+                }
+            case .info:
+                guard let node = nodeForEntityType() else { return }
+                deviceCenterBridge.infoActionTapped(node)
             default: break
             }
         case .device(let device):
             switch type {
             case .cameraUploads:
-                deviceCenterBridge.cameraUploadActionTapped({ [weak self] in
+                deviceCenterBridge.cameraUploadActionTapped { [weak self] in
                     self?.refreshDevicesPublisher?.send()
-                })
+                }
             case .rename:
                 let deviceNames = await deviceCenterUseCase.fetchDeviceNames()
                 let renameEntity = RenameActionEntity(

@@ -65,6 +65,7 @@ final class DeviceListViewRouterTests: XCTestCase {
             navigationController: mockPresenter,
             deviceCenterBridge: DeviceCenterBridge(),
             deviceCenterUseCase: deviceCenterUseCase,
+            nodeUseCase: MockNodeDataUseCase(),
             deviceCenterAssets: deviceListAssets
         )
         
