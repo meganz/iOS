@@ -5,8 +5,8 @@ import SwiftUI
  
 extension CloudDriveViewController: MediaDiscoveryContentDelegate {
         
-    var mdViewController: MediaDiscoveryContentController? {
-        get { mdHostedController as? MediaDiscoveryContentController }
+    var mdViewController: MediaDiscoveryContentViewController? {
+        get { mdHostedController as? MediaDiscoveryContentViewController }
         set { mdHostedController = newValue }
     }
     
@@ -33,11 +33,12 @@ extension CloudDriveViewController: MediaDiscoveryContentDelegate {
         let viewModel = MediaDiscoveryContentViewModel(
             contentMode: .mediaDiscovery,
             parentNode: parentNodeEntity,
+            sortOrder: viewModel.sortOrder(for: .mediaDiscovery),
             delegate: self,
             analyticsUseCase: analyticsUseCase,
             mediaDiscoveryUseCase: mediaDiscoveryUseCase)
         
-        let viewController = MediaDiscoveryContentController(viewModel: viewModel)
+        let viewController = MediaDiscoveryContentViewController(viewModel: viewModel)
         
         addChild(viewController)
         containerStackView.addArrangedSubview(viewController.view)
@@ -77,14 +78,6 @@ extension CloudDriveViewController: MediaDiscoveryContentDelegate {
             showImagePickerFor(sourceType: .photoLibrary)
         case .capturePhotoVideo:
             showMediaCapture()
-        case .importFromFiles:
-            showDocumentImporter()
-        case .scanDocument:
-            presentScanDocument()
-        case .newFolder:
-            createNewFolderAction()
-        case .newTextFile:
-            createTextFileAlert()
         }
     }
 }
