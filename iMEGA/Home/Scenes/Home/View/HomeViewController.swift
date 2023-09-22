@@ -113,7 +113,6 @@ final class HomeViewController: UIViewController {
         super.viewDidAppear(animated)
         if homeQuickActionSearch {
             homeQuickActionSearch = false
-            activateSearch()
         }
         AudioPlayerManager.shared.addDelegate(self)
         TransfersWidgetViewController.sharedTransfer().progressView?.showWidgetIfNeeded()
@@ -194,6 +193,10 @@ final class HomeViewController: UIViewController {
             }
         }
         bannerViewModel?.inputs.viewIsReady()
+        
+        searchResultsBridge.hideKeyboardTrampoline = { [weak self] in
+            self?.hideKeyboard()
+        }
     }
 
     private func toggleBannerCollectionView(isOn: Bool) {
@@ -367,6 +370,10 @@ final class HomeViewController: UIViewController {
     
     @objc func activateSearch() {
         _ = searchBarView?.becomeFirstResponder()
+    }
+    
+    func hideKeyboard() {
+        _ = searchBarView?.resignFirstResponder()
     }
 }
 

@@ -123,6 +123,10 @@ final class MEGASearchBarView: UIView, NibOwnerLoadable {
     override func becomeFirstResponder() -> Bool {
         return searchField.becomeFirstResponder()
     }
+    
+    override func resignFirstResponder() -> Bool {
+        return searchField.resignFirstResponder()
+    }
 }
 
 // MARK: - TraitEnvironmentAware
