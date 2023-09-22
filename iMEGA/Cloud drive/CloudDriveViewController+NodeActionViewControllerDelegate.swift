@@ -108,6 +108,10 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
             NSURL(string: MEGADisputeURL)?.mnz_presentSafariViewController()
         default: break
         }
+        
+        if viewModel.editModeActive {
+            toggledEditMode()
+        }
     }
         
     func download(_ nodes: [MEGANode]) {
