@@ -45,7 +45,7 @@ private func generateTopLevelEnum(from data: ColorData) -> EnumDeclSyntax {
     }
 
     return EnumDeclSyntax(
-        name: .identifier("MEGADesignSystemColors", leadingTrivia: .space, trailingTrivia: .space),
+        name: .identifier("MEGADesignTokenColors", leadingTrivia: .space, trailingTrivia: .space),
         memberBlockBuilder: memberBlockBuilder,
         trailingTrivia: .newline
     )

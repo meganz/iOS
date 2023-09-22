@@ -18,7 +18,7 @@ struct TokenCodegenPlugin: BuildToolPlugin {
 
         let executablePath = try context.tool(named: "TokenCodegenGenerator").path
 
-        let output = context.pluginWorkDirectory.appending(["MEGADesignSystemColors.swift"])
+        let output = context.pluginWorkDirectory.appending(["MEGADesignTokenColors.swift"])
 
         return [
             .buildCommand(
