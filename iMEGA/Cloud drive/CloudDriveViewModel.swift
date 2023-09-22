@@ -1,9 +1,11 @@
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
+import MEGASDKRepo
 
 enum CloudDriveAction: ActionType {
     case updateEditModeActive(Bool)
+    case updateSortType(SortOrderType)
 }
 
 @objc final class CloudDriveViewModel: NSObject, ViewModelType {
@@ -12,6 +14,7 @@ enum CloudDriveAction: ActionType {
         case enterSelectionMode
         case exitSelectionMode
         case reloadNavigationBarItems
+        case updateSortedData
     }
     
     var invokeCommand: ((Command) -> Void)?
@@ -25,8 +28,10 @@ enum CloudDriveAction: ActionType {
     
     private let router = SharedItemsViewRouter()
     private let shareUseCase: (any ShareUseCaseProtocol)?
+    private let parentNode: MEGANode?
     
-    init(shareUseCase: any ShareUseCaseProtocol) {
+    init(parentNode: MEGANode?, shareUseCase: any ShareUseCaseProtocol) {
+        self.parentNode = parentNode
         self.shareUseCase = shareUseCase
     }
     
@@ -59,6 +64,23 @@ enum CloudDriveAction: ActionType {
         switch action {
         case .updateEditModeActive(let isActive):
             update(editModeActive: isActive)
+        case .updateSortType(let sortType):
+            update(sortType: sortType)
+        }
+    }
+    
+    private func update(sortType: SortOrderType) {
+        Helper.save(sortType.megaSortOrderType, for: parentNode)
+        invokeCommand?(.updateSortedData)
+    }
+    
+    func sortOrder(for viewMode: ViewModePreference) -> SortOrderType {
+        let sortType = SortOrderType(megaSortOrderType: Helper.sortType(for: parentNode))
+        switch viewMode {
+        case .perFolder, .list, .thumbnail:
+            return sortType
+        case .mediaDiscovery:
+            return [.newest, .oldest].notContains(sortType) ? .newest : sortType
         }
     }
     
