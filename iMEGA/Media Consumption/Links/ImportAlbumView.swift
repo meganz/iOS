@@ -33,7 +33,13 @@ struct ImportAlbumView: View, DismissibleContentView {
             VStack(spacing: 0) {
                 navigationBar
                 
-                content()
+                if viewModel.isConnectedToNetworkUntilContentLoaded {
+                    content()
+                } else {
+                    EmptyAlbumView(image: Asset.Images.EmptyStates.noInternetEmptyState.image,
+                                   title: Strings.Localizable.noInternetConnection)
+                    .frame(maxHeight: .infinity, alignment: .center)
+                }
                 
                 bottomToolbar
                     .overlay(
@@ -41,6 +47,9 @@ struct ImportAlbumView: View, DismissibleContentView {
                             snackBar(toolbarGeometry: geometry)
                         },
                         alignment: .top)
+            }
+            .taskForiOS14 {
+                await viewModel.monitorNetworkConnection()
             }
         }
         .onAppear {
@@ -61,8 +70,9 @@ struct ImportAlbumView: View, DismissibleContentView {
     private func content() -> some View {
         ZStack {
             if viewModel.shouldShowEmptyAlbumView {
-                EmptyAlbumView()
-                    .frame(maxHeight: .infinity, alignment: .center)
+                EmptyAlbumView(image: Asset.Images.Home.allPhotosEmptyState.image,
+                               title: Strings.Localizable.CameraUploads.Albums.Empty.title)
+                .frame(maxHeight: .infinity, alignment: .center)
             } else {
                 PhotoLibraryContentView(
                     viewModel: viewModel.photoLibraryContentViewModel,

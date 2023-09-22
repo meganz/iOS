@@ -59,8 +59,8 @@ final class ImportAlbumViewModel: ObservableObject {
     @Published private(set) var isToolbarButtonsDisabled = true
     @Published private(set) var showLoading = false
     @Published private(set) var snackBarViewModel: SnackBarViewModel?
-    
     @Published private(set) var isShareLinkButtonDisabled = true
+    @Published private(set) var isConnectedToNetworkUntilContentLoaded = true
     
     private var albumLink: String {
         (publicLinkWithDecryptionKey ?? publicLink).absoluteString
@@ -232,6 +232,21 @@ final class ImportAlbumViewModel: ObservableObject {
         showImportAlbumLocation.toggle()
     }
     
+    @MainActor
+    func monitorNetworkConnection() async {
+        for await isConnected in monitorUseCase.connectionChangedStream {
+            guard [AlbumPublicLinkStatus.loaded, .invalid].notContains(publicLinkStatus) else {
+                break
+            }
+            isConnectedToNetworkUntilContentLoaded = isConnected
+            if !isConnected && showLoading {
+                showLoading.toggle()
+            }
+        }
+    }
+    
+    // MARK: Private
+    
     private func isAlbumNameInConflict(_ name: String) async -> Bool {
         let reservedNames = await albumNameUseCase.reservedAlbumNames()
         reservedAlbumNames = reservedNames
@@ -249,6 +264,8 @@ final class ImportAlbumViewModel: ObservableObject {
             photoLibraryContentViewModel.library = photos.toPhotoLibrary(withSortType: .newest)
             publicLinkStatus = .loaded
             tracker.trackAnalyticsEvent(with: ImportAlbumContentLoadedEvent())
+        } catch is CancellationError {
+            MEGALogError("[Import Album] loadPublicAlbumContents cancelled")
         } catch {
             setLinkToInvalid()
             MEGALogError("[Import Album] Error retrieving public album. Error: \(error)")
