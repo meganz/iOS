@@ -113,6 +113,16 @@ final class ImportAlbumViewModelTests: XCTestCase {
         tracker.assertTrackAnalyticsEventCalled(with: [AlbumImportScreenEvent()])
     }
     
+    func testLoadPublicAlbum_onTaskCancellationError_shouldNotSetStatusToInvalid() async throws {
+        let sut = makeImportAlbumViewModel(
+            publicLink: try validFullAlbumLink,
+            publicAlbumUseCase: MockPublicAlbumUseCase(publicAlbumResult: .failure(CancellationError())))
+        
+        await sut.loadPublicAlbum()
+        
+        XCTAssertTrue(sut.publicLinkStatus != .invalid)
+    }
+    
     func testLoadWithNewDecryptionKey_validKeyEntered_shouldSetAlbumNameLoadAlbumContentsAndPreserveOrignalURL() async throws {
         let link = try requireDecryptionKeyAlbumLink
         let albumName = "New album (5)"
@@ -670,6 +680,70 @@ final class ImportAlbumViewModelTests: XCTestCase {
         XCTAssertEqual(publicAlbumUseCase.stopAlbumLinkPreviewCalled, 1)
     }
     
+    func testMonitorNetworkConnection_onConnectionChanges_updatesCorrectly() async throws {
+        var results = [false, true, false, true]
+        let connectionStream = makeConnectionMonitorStream(statuses: results)
+        let monitorUseCase = MockNetworkMonitorUseCase(connectionChangedStream: connectionStream)
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
+                                           monitorUseCase: monitorUseCase)
+        
+        sut.$isConnectedToNetworkUntilContentLoaded
+            .dropFirst()
+            .sink {
+                XCTAssertEqual($0, results.removeFirst())
+            }
+            .store(in: &subscriptions)
+        
+        await sut.monitorNetworkConnection()
+    }
+    
+    func testMonitorNetworkConnection_onAlbumLoaded_shouldNotUpdateConnection() async throws {
+        let connectionStream = makeConnectionMonitorStream(statuses: [false, true, false])
+        let monitorUseCase = MockNetworkMonitorUseCase(connectionChangedStream: connectionStream)
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
+                                           monitorUseCase: monitorUseCase)
+        
+        sut.$isConnectedToNetworkUntilContentLoaded
+            .dropFirst()
+            .sink { _ in
+                XCTFail("Should not have updated")
+            }
+            .store(in: &subscriptions)
+        
+        await sut.loadPublicAlbum()
+        await sut.monitorNetworkConnection()
+    }
+    
+    func testMonitorNetworkConnection_onAlbumInvalidAlbum_shouldNotUpdateConnection() async throws {
+        let connectionStream = makeConnectionMonitorStream(statuses: [false, true, false])
+        let publicAlbumUseCase = MockPublicAlbumUseCase(publicAlbumResult: .failure(GenericErrorEntity()))
+        let monitorUseCase = MockNetworkMonitorUseCase(connectionChangedStream: connectionStream)
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
+                                           publicAlbumUseCase: publicAlbumUseCase,
+                                           monitorUseCase: monitorUseCase)
+        
+        sut.$isConnectedToNetworkUntilContentLoaded
+            .dropFirst()
+            .sink { _ in
+                XCTFail("Should not have updated")
+            }
+            .store(in: &subscriptions)
+        
+        await sut.loadPublicAlbum()
+        await sut.monitorNetworkConnection()
+    }
+    
+    func testMonitorNetworkConnection_onConnectionChangeWhileInProgress_shouldNotShowLoadingIndicator() async throws {
+        let connectionStream = makeConnectionMonitorStream(statuses: [false])
+        let monitorUseCase = MockNetworkMonitorUseCase(connectionChangedStream: connectionStream)
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
+                                           monitorUseCase: monitorUseCase)
+        sut.publicLinkStatus = .inProgress
+        
+        await sut.monitorNetworkConnection()
+        XCTAssertFalse(sut.showLoading)
+    }
+    
     // MARK: - Private
     
     private func makeImportAlbumViewModel(publicLink: URL,
@@ -728,5 +802,14 @@ final class ImportAlbumViewModelTests: XCTestCase {
     private func makePublicAlbumUseCase(handle: HandleEntity = 1, name: String = "valid album name", nodes: [NodeEntity] = []) -> some PublicAlbumUseCaseProtocol {
         let sharedAlbumEntity = makeSharedAlbumEntity(set: SetEntity(handle: 1, name: name))
         return MockPublicAlbumUseCase(publicAlbumResult: .success(sharedAlbumEntity), nodes: nodes)
+    }
+    
+    private func makeConnectionMonitorStream(statuses: [Bool]) -> AsyncStream<Bool> {
+        AsyncStream { continuation in
+            statuses.forEach {
+                continuation.yield($0)
+            }
+            continuation.finish()
+        }
     }
 }
