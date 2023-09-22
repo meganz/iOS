@@ -299,6 +299,8 @@ public final class ContextMenuBuilder {
             uploadAddActions.append(contentsOf: [choosePhotoVideo, newTextFile, scanDocument, capturePhotoVideo, importFromFiles])
         } else if isDocumentExplorer {
             uploadAddActions.append(contentsOf: [newTextFile, scanDocument, importFromFiles])
+        } else if viewMode == .mediaDiscovery {
+            uploadAddActions.append(contentsOf: [choosePhotoVideo, capturePhotoVideo])
         } else {
             uploadAddActions.append(contentsOf: [choosePhotoVideo, capturePhotoVideo, importFromFiles, scanDocument, newFolder, newTextFile])
         }
@@ -347,7 +349,7 @@ public final class ContextMenuBuilder {
         } else {
             var sortMenuActions = [sortNameAscending, sortNameDescending]
                     
-            if isCameraUploadExplorer || isAlbum {
+            if isCameraUploadExplorer || isAlbum || viewMode == .mediaDiscovery {
                 sortMenuActions = [sortNewest, sortOldest]
             } else if !isSharedItems {
                 sortMenuActions.append(contentsOf: [sortLargest, sortSmallest, sortNewest, sortOldest])

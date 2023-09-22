@@ -1,7 +1,7 @@
 import MEGAL10n
 import SwiftUI
 
-class MediaDiscoveryContentController: UIHostingController<MediaDiscoveryContentView> {
+class MediaDiscoveryContentViewController: UIHostingController<MediaDiscoveryContentView> {
     
     private let viewModel: MediaDiscoveryContentViewModel
     
@@ -22,5 +22,9 @@ class MediaDiscoveryContentController: UIHostingController<MediaDiscoveryContent
     
     func toggleAllSelected() {
         viewModel.toggleAllSelected()
+    }
+    
+    func update(sortOrder: SortOrderType) {
+        Task { await viewModel.update(sortOrder: sortOrder) }
     }
 }

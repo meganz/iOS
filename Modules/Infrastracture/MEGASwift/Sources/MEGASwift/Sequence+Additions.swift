@@ -3,3 +3,7 @@ public extension Sequence {
         try !contains(where: predicate)
     }
 }
+
+public extension Sequence where Element: Equatable {
+    @inlinable func notContains(_ element: Self.Element) -> Bool { !contains(element) }
+}

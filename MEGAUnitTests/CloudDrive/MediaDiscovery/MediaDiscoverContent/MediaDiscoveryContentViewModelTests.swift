@@ -243,12 +243,103 @@ class MediaDiscoveryContentViewModelTests: XCTestCase {
                 XCTAssertEqual(delegate.mediaDiscoveryEmptyTappedTapped, action)
             }
     }
+    
+    func testLoadPhotos_whenSortOrderEqualsNewest_shouldSetNodesInOrderOfNewest() async {
+        let loadedNodes = [
+            NodeEntity(name: "test10.png", handle: 10, modificationTime: Date(timeIntervalSinceNow: 10)),
+            NodeEntity(name: "test9.png", handle: 9, modificationTime: Date(timeIntervalSinceNow: 9)),
+            NodeEntity(name: "test11.png", handle: 11, modificationTime: Date(timeIntervalSinceNow: 11)),
+            NodeEntity(name: "test6.png", handle: 6, modificationTime: Date(timeIntervalSinceNow: 6)),
+            NodeEntity(name: "test7.png", handle: 7, modificationTime: Date(timeIntervalSinceNow: 7))
+        ]
+        let mediaDiscoveryUseCase = MockMediaDiscoveryUseCase(nodes: loadedNodes)
+        let sut = makeSUT(
+            sortOrder: .newest,
+            mediaDiscoveryUseCase: mediaDiscoveryUseCase)
+        
+        await sut.loadPhotos()
+        
+        let nodesOrderedByNewest = [
+            NodeEntity(name: "test11.png", handle: 11, modificationTime: Date(timeIntervalSinceNow: 11)),
+            NodeEntity(name: "test10.png", handle: 10, modificationTime: Date(timeIntervalSinceNow: 10)),
+            NodeEntity(name: "test9.png", handle: 9, modificationTime: Date(timeIntervalSinceNow: 9)),
+            NodeEntity(name: "test7.png", handle: 7, modificationTime: Date(timeIntervalSinceNow: 7)),
+            NodeEntity(name: "test6.png", handle: 6, modificationTime: Date(timeIntervalSinceNow: 6))
+        ]
+        
+        XCTAssertEqual(sut.photoLibraryContentViewModel.library.allPhotos, nodesOrderedByNewest)
+    }
+    
+    func testLoadPhotos_whenSortOrderEqualsOldest_shouldSetNodesInOrderOfOldest() async {
+        let loadedNodes = [
+            NodeEntity(name: "test10.png", handle: 10, modificationTime: Date(timeIntervalSinceNow: 10)),
+            NodeEntity(name: "test9.png", handle: 9, modificationTime: Date(timeIntervalSinceNow: 9)),
+            NodeEntity(name: "test11.png", handle: 11, modificationTime: Date(timeIntervalSinceNow: 11)),
+            NodeEntity(name: "test6.png", handle: 6, modificationTime: Date(timeIntervalSinceNow: 6)),
+            NodeEntity(name: "test7.png", handle: 7, modificationTime: Date(timeIntervalSinceNow: 7))
+        ]
+        let mediaDiscoveryUseCase = MockMediaDiscoveryUseCase(nodes: loadedNodes)
+        let sut = makeSUT(
+            sortOrder: .oldest,
+            mediaDiscoveryUseCase: mediaDiscoveryUseCase)
+        
+        await sut.loadPhotos()
+        
+        let nodesOrderedByOldest = [
+            NodeEntity(name: "test6.png", handle: 6, modificationTime: Date(timeIntervalSinceNow: 6)),
+            NodeEntity(name: "test7.png", handle: 7, modificationTime: Date(timeIntervalSinceNow: 7)),
+            NodeEntity(name: "test9.png", handle: 9, modificationTime: Date(timeIntervalSinceNow: 9)),
+            NodeEntity(name: "test10.png", handle: 10, modificationTime: Date(timeIntervalSinceNow: 10)),
+            NodeEntity(name: "test11.png", handle: 11, modificationTime: Date(timeIntervalSinceNow: 11))
+        ]
+        
+        XCTAssertEqual(sut.photoLibraryContentViewModel.library.allPhotos, nodesOrderedByOldest)
+    }
+    
+    func testUpdateSortOrder_existingOrderEqualsNewestAndUpdatesToOldest_shouldReturnNodesinOrderOfOldest() async {
+        let loadedNodes = [
+            NodeEntity(name: "test10.png", handle: 10, modificationTime: Date(timeIntervalSinceNow: 10)),
+            NodeEntity(name: "test9.png", handle: 9, modificationTime: Date(timeIntervalSinceNow: 9)),
+            NodeEntity(name: "test11.png", handle: 11, modificationTime: Date(timeIntervalSinceNow: 11)),
+            NodeEntity(name: "test6.png", handle: 6, modificationTime: Date(timeIntervalSinceNow: 6)),
+            NodeEntity(name: "test7.png", handle: 7, modificationTime: Date(timeIntervalSinceNow: 7))
+        ]
+        let mediaDiscoveryUseCase = MockMediaDiscoveryUseCase(nodes: loadedNodes)
+        let sut = makeSUT(
+            sortOrder: .newest,
+            mediaDiscoveryUseCase: mediaDiscoveryUseCase)
+        
+        await sut.loadPhotos()
+        
+        let nodesOrderedByNewest = [
+            NodeEntity(name: "test11.png", handle: 11, modificationTime: Date(timeIntervalSinceNow: 11)),
+            NodeEntity(name: "test10.png", handle: 10, modificationTime: Date(timeIntervalSinceNow: 10)),
+            NodeEntity(name: "test9.png", handle: 9, modificationTime: Date(timeIntervalSinceNow: 9)),
+            NodeEntity(name: "test7.png", handle: 7, modificationTime: Date(timeIntervalSinceNow: 7)),
+            NodeEntity(name: "test6.png", handle: 6, modificationTime: Date(timeIntervalSinceNow: 6))
+        ]
+        
+        XCTAssertEqual(sut.photoLibraryContentViewModel.library.allPhotos, nodesOrderedByNewest)
+        
+        await sut.update(sortOrder: .oldest)
+        
+        let nodesOrderedByOldest = [
+            NodeEntity(name: "test6.png", handle: 6, modificationTime: Date(timeIntervalSinceNow: 6)),
+            NodeEntity(name: "test7.png", handle: 7, modificationTime: Date(timeIntervalSinceNow: 7)),
+            NodeEntity(name: "test9.png", handle: 9, modificationTime: Date(timeIntervalSinceNow: 9)),
+            NodeEntity(name: "test10.png", handle: 10, modificationTime: Date(timeIntervalSinceNow: 10)),
+            NodeEntity(name: "test11.png", handle: 11, modificationTime: Date(timeIntervalSinceNow: 11))
+        ]
+        
+        XCTAssertEqual(sut.photoLibraryContentViewModel.library.allPhotos, nodesOrderedByOldest)
+    }
 }
 
 extension MediaDiscoveryContentViewModelTests {
     
     private func makeSUT(
         parentNode: NodeEntity = NodeEntity(),
+        sortOrder: SortOrderType = .newest,
         delegate: some MediaDiscoveryContentDelegate = MockMediaDiscoveryContentDelegate(),
         analyticsUseCase: some MediaDiscoveryAnalyticsUseCaseProtocol = MockMediaDiscoveryAnalyticsUseCase(),
         mediaDiscoveryUseCase: some MediaDiscoveryUseCaseProtocol = MockMediaDiscoveryUseCase(),
@@ -257,6 +348,7 @@ extension MediaDiscoveryContentViewModelTests {
             let viewModel = MediaDiscoveryContentViewModel(
                 contentMode: .mediaDiscovery,
                 parentNode: parentNode,
+                sortOrder: sortOrder,
                 delegate: delegate,
                 analyticsUseCase: analyticsUseCase,
                 mediaDiscoveryUseCase: mediaDiscoveryUseCase)
