@@ -1,6 +1,7 @@
 import MEGADomain
 import MEGAL10n
 import MEGASDKRepo
+import MEGASwift
 
 extension AlbumContentViewController {
     func contextMenuManagerConfiguration() -> ContextMenuManager {
@@ -36,6 +37,9 @@ extension AlbumContentViewController {
             }
             if viewModel.canAddPhotosToAlbum {
                 rightBarButtonItems.append(addToAlbumBarButtonItem)
+            }
+            guard navigationItem.rightBarButtonItems !~ rightBarButtonItems else {
+                return
             }
             navigationItem.rightBarButtonItems = rightBarButtonItems
         }
