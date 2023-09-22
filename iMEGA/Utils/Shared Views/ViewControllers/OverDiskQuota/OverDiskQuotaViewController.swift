@@ -228,7 +228,7 @@ final class OverDiskQuotaViewController: UIViewController {
         typealias Email = String
         typealias Deadline = Date
         typealias WarningDates = [Date]
-        typealias FileCount = UInt
+        typealias FileCount = UInt64
         typealias Storage = Measurement<UnitDataStorage>
         typealias SuggestedMEGAPlan = String
 

@@ -6,7 +6,7 @@ public protocol AccountUseCaseProtocol {
     var bandwidthOverquotaDelay: Int64 { get }
     func isLoggedIn() -> Bool
     func contacts() -> [UserEntity]
-    func totalNodesCount() -> UInt
+    func totalNodesCount() -> UInt64
     func getMyChatFilesFolder(completion: @escaping (Result<NodeEntity, AccountErrorEntity>) -> Void)
     func upgradeSecurity() async throws -> Bool
     var currentAccountDetails: AccountDetailsEntity? { get }
@@ -46,7 +46,7 @@ public struct AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseProtoc
         repository.contacts()
     }
     
-    public func totalNodesCount() -> UInt {
+    public func totalNodesCount() -> UInt64 {
         return repository.totalNodesCount()
     }
     

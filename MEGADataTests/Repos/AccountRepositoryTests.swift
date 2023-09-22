@@ -144,7 +144,7 @@ final class AccountRepositoryTests: XCTestCase {
                 nodes: Array(repeating: MockNode(handle: .invalidHandle), count: expectedCount)
             ))
             
-            XCTAssertEqual(sut.totalNodesCount(), UInt(expectedCount), line: line)
+            XCTAssertEqual(sut.totalNodesCount(), UInt64(expectedCount), line: line)
         }
         
         assert(whenNodesCount: 0)

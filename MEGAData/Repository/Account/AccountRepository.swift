@@ -96,7 +96,7 @@ final class AccountRepository: NSObject, AccountRepositoryProtocol {
         }
     }
     
-    func totalNodesCount() -> UInt {
+    func totalNodesCount() -> UInt64 {
         sdk.totalNodes
     }
     
