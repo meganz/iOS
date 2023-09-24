@@ -721,7 +721,7 @@
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="ترفيعات الكاميرا";
 /* Banner message on Camera Uploads that warns user that they have limited access to photos */
-"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ ميغا MEGA لديها إذن وصول محدود إلى مكتبة الصور الخاصة بك ولا يمكنها القيام بالنسخ الاحتياطي لجميع صورك. انقر لتغيير الأذونات.";
+"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA has limited access to your photo library and cannot backup all of your media. Tap to change permissions.";
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="تطبيق الصور";
 /* Photo view is empty */
@@ -1207,7 +1207,7 @@
 /* Title of a warning recommending upgrade to Pro */
 "Upgrade to Pro"="قم بترقية حسابك إلى برو Pro";
 /* A description of MEGA features available only with a Pro plan. */
-"Access Pro only features like setting password protection and expiry dates for public files."="Access Pro only features like setting password protection and expiry dates for public links.";
+"Access Pro only features like setting password protection and expiry dates for public files."="ميزات محصورة لاشتراك برو Pro مثل إعداد حماية كلمة المرور وتواريخ انتهاء الصلاحية للروابط العامة.";
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="تمكين وضع اكتشاف الأخطاء";
 /* Alert message shown when the DEBUG mode is enabled */
@@ -1295,7 +1295,7 @@
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
 "verify"="موافق";
 /* Button title */
-"verified"="تمت الموافقة";
+"verified"="تم التحقق";
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="امسح سجل المحادثة";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
@@ -1314,8 +1314,6 @@
 "My credentials"="بيانات الاعتماد الخاصة بي";
 /* Button to reset the password */
 "reset"="إعادة تعيين";
-/* Button title */
-"approve"="موافق";
 /* start a chat/conversation */
 "startConversation"="ابدأ محادثة";
 /* Label title for a group chat */
@@ -1419,11 +1417,11 @@
 /* Error message displayed when trying to invite a contact who is already added. */
 "alreadyAContact"="%s موجود كجهة اتصال بالفعل.";
 /* A summary message when a user sent a contact's details through the chat. Please keep %@ as it will be replaced at runtime with the name of the contact that was sent. */
-"sentContact"="جهة الاتصال المرسلة: %@";
+"sentContact"="Sent contact: %@";
 /* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
 "sentXContacts"="أرسل %s جهة اتصال.";
 /* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %@ as it will be replaced at runtime with the name of the attached file. */
-"attachedFile"="أرفق: %@";
+"attachedFile"="Attached: %@";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="أرفق %s ملف.";
 /* Label in a button that allows to jump to the latest item */
@@ -1849,7 +1847,7 @@
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
 "Error. No more video are allowed in this group call."="لا يمكنك القيام بمكالمة الفيديو لأن هذه المكالمة بلغت الحد الأقصى لعدد المشاركين الذين يستخدمون الفيديو.";
 /* Error shown when trying to start a call in a group with more peers than allowed */
-"Unable to start a call because the participants limit was exceeded."="Unable to start the call due to the participant limit having been exceeded.";
+"Unable to start a call because the participants limit was exceeded."="غير قادر على بدء المكالمة بسبب تجاوز حد المشاركين.";
 /* Label shown while joining a public chat */
 "Joining..."="جاري الانضمام…";
 /* Label shown while leaving a public chat */
@@ -1937,7 +1935,7 @@
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
 "This action can not be completed as it would take you over your current storage limit"="لا يمكن إكمال هذا الإجراء لأنه سيتجاوز حد التخزين الحالي";
 /* uploads over storage quota warning dialog title */
-"Your upload(s) cannot proceed because your account is full"="Your upload cannot proceed because your Cloud storage is full";
+"Your upload(s) cannot proceed because your account is full"="لا يمكن متابعة الترفيع لأن مساحة التخزين السحابية الخاصة بك ممتلئة";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
 "Allow your contacts to see the last time you were active on MEGA."="اسمح لجهات الاتصال الخاصة بك برؤية آخر مرة كنت فيها نشطًا على ميغا MEGA.";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
@@ -2003,7 +2001,7 @@
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="تم التعديل من قبل %@";
 /* Title for a recent action bucket with multiple files. %@ will be replaced by the filename of the first file in the bucket. %ld will be replaced by the total number of other files in the bucket. */
-"home.recent.multipleFileTitle"="";
+"home.recent.multipleFileTitle"="“%@” and %ld more";
 /* Label that indicates who uploaded a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.createdByLabel"="انشأ من قبل %@";
 /* Message shown when the user has not recent activity in their account. */
@@ -2585,11 +2583,11 @@
 /* Over Disk Quota paywall not final detail message. */
 "dialog.storage.paywall.notFinal.detail"="<paragraph>للأسف، لم تتخذ أي إجراء خلال<b>%@</b> منذ أن قمنا بإرسال رسائل البريد الإلكتروني الخاصة بنا إلى <b>%@</b> بتاريخ<b>%@</b>. أنت لا تزال تستخدم <b>%@</b>من مساحة التخزين، والتي تتجاوز الحد المجاني الخاص بك. يرجى الاطلاع على رسائل البريد الإلكتروني التي أرسلناها لك للحصول على مزيد من المعلومات حول ما عليك القيام به.</paragraph>";
 /* Over Disk Quota paywall final detail message. */
-"dialog.storage.paywall.final.detail"="<paragraph>Your data will be deleted tomorrow if your account has not been upgraded.</paragraph>";
+"dialog.storage.paywall.final.detail"="<paragraph>سيتم حذف بياناتك غدًا إذا لم تتم ترقية حسابك.</paragraph>";
 /* Over Disk Quota paywall, not final warning label. */
-"dialog.storage.paywall.notFinal.warning"="<body>Upgrade within <warn>%@</warn> to avoid your data getting deleted.</body>";
+"dialog.storage.paywall.notFinal.warning"="<body>قم بالترقية في غضون<warn>%@</warn> لتجنب حذف البيانات الخاصة بك.</body>";
 /* Over Disk Quota paywall, final warning label. */
-"dialog.storage.paywall.final.warning"="<body><warn>Upgrade today if you wish to keep your data.</warn></body>";
+"dialog.storage.paywall.final.warning"="<body><warn>قم بالترقية اليوم إذا كنت ترغب في الاحتفاظ ببياناتك.</warn></body>";
 /* Button title to see the available bonus */
 "general.button.getBonus"="احصل على علاوة";
 /* Backup setup warning title */
@@ -2599,7 +2597,7 @@
 /* Change the default backup location warning title. %@ is a folder */
 "dialog.backup.folder.location.warning.title"="نقل “%@”";
 /* Change the default backup location warning message */
-"dialog.root.backup.folder.location.warning.message"="You are changing a default backup folder location. This may affect your ability to find your backup folder. Please remember where it is located so that you can find it in the future.";
+"dialog.root.backup.folder.location.warning.message"="أنت تقوم بتغيير موقع مجلد النسخ الاحتياطي الافتراضي. قد يؤثر ذلك على قدرتك على العثور على مجلد النسخ الاحتياطي. يرجى تذكر مكانه حتى تتمكن من العثور عليه في المستقبل. ";
 /* Change the default backup location warning message */
 "dialog.backup.folder.location.warning.message"="يؤدي نقل هذا المجلد إلى تغيير وجهة النسخ الاحتياطي. سيتم إيقاف النسخ الاحتياطي للأمان. هل هذا ما تريد أن تفعله؟ يمكن إعادة تمكين النسخ الاحتياطية باستخدام تطبيق ميغا للحاسوب المكتبي MEGA Desktop App.";
 /* Delete the default backup folder warning title. %@ is a folder */
@@ -2643,7 +2641,7 @@
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
 "meetings.alert.end"="اجتماع منتهي";
 /* Meeting ended Alert button -- View Meeting Chat history. */
-"meetings.alert.meetingchat"="View chat history";
+"meetings.alert.meetingchat"="عرض سجل المحادثة";
 /* Shown description when an invalid/inexisting/not-available-anymore meeting link is opened. */
 "meetings.alert.end.description"="الاجتماع الذي تحاول الانضمام إليه قد انتهى بالفعل. لا يزال بإمكانك عرض سجل المحادثة الخاصة بالاجتماع.";
 /* Contacts selection screen header: Invite contacts to meetings */
@@ -2710,8 +2708,8 @@
 "account.upgrade.alreadyHaveASubscription.message"="لقد سبق لك الاشتراك في باقة برو Pro باستخدام غوغل بلاي Google Play أو اب غاليري AppGallery. يرجى إلغاء اشتراكك يدويًا داخل غوغل بلاي Google Play أو هواوي اب غاليري Huawei AppGallery على جهازك ثم إعادة المحاولة.";
 /* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
 "account.upgrade.alreadyHaveACancellableSubscription.message"="هل تريد إلغاء اشتراكك الحالي ومتابعة الشراء؟";
-/* Error message shown when a user tries to purchase plan that is not available with their current plan */
-"account.upgrade.notAvailableWithCurrentPlan.message"="Not available with your current plan";
+/* This message will be shown if the user is not allowed to purchase a plan because of their current plan.  For example, the user have a Business or Pro Flexi account, they should not be able to purchase a Pro plan. We will show this to the user when they try to purchase one. */
+"account.upgrade.notAvailableWithCurrentPlan.message"="غير متوفر مع باقتك الحالية";
 /* Dialog title shown before deleting an account with active subscription */
 "account.delete.subscription.title"="اشتراك مفعل";
 /* Dialog message shown before deleting an account with active iTunes subscription */
@@ -3153,9 +3151,9 @@
 /* Start conversation: Schedule meeting context menu */
 "meetings.startConversation.contextMenu.scheduleMeeting"="جدول اجتماع";
 /* Error message when trying to login and the account is blocked due to copyright violation */
-"account.suspension.message.copyright"="Your MEGA account has been suspended due to repeated allegations of copyright infringements. This means you cannot access your account or data within it.\n\nCheck your email for more information on how to file a counter-notice.";
+"account.suspension.message.copyright"="تم تعليق حساب ميغا MEGA الخاص بك بسبب الادعاءات المتكررة بانتهاكات حقوق النشر. هذا يعني أنه لا يمكنك الوصول إلى حسابك أو البيانات الموجودة فيه.\n\nتحقق من بريدنا الإلكتروني للحصول على مزيد من المعلومات حول كيفية تقديم إشعار مضاد.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
-"account.suspension.message.nonCopyright"="Your account was terminated due to a breach of MEGA’s Terms of Service.\n\nYou will not be able to regain access to your stored data or be authorised to register a new MEGA account.";
+"account.suspension.message.nonCopyright"="تم إنهاء حسابك بسبب خرق لشروط خدمة ميغا MEGA.\n\n لن تتمكن من استعادة الوصول إلى بياناتك المخزنة أو لن يُسمح لك بتسجيل حساب ميغا MEGA جديد.";
 /* Text shown in extensions to notify users that they have to open the application first */
 "extensions.OpenApp.Message"="افتح ميغا MEGA و قم بتسجيل الدخول للمتابعة";
 /* Account Storage title label of used storage size */
@@ -3175,21 +3173,21 @@
 /* Chat Meetings tab - Section header title for the chat listing screen */
 "chat.listing.sectionHeader.pastMeetings.title"="الاجتماعات السابقة";
 /* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
-"general.menuAction.verifyContact.title"="Verify %@";
+"general.menuAction.verifyContact.title"="تحقق من %@";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
-"sharedItems.contactVerification.section.verifyContact.owner.message"="We protect your data with zero-knowledge encryption. To ensure extra security, we ask you to verify the contacts you share information with before they can access the shared folders.";
+"sharedItems.contactVerification.section.verifyContact.owner.message"="نحن نحمي بياناتك عن طريق تشفير المعرفة الصفرية. لضمان أمان إضافي نطلب منك التحقق من جهات الاتصال التي تشارك المعلومات معها قبل أن يتمكنوا من الوصول إلى المجلدات المشاركة.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
-"sharedItems.contactVerification.section.myCredentials.message"="للموافقة على جهة الاتصال الخاصة بك، تأكد من أن بيانات الاعتماد التي تراها أعلاه تطابق بيانات اعتماد حسابهم. يمكنك أن تطلب منهم مشاركة بيانات اعتمادهم معك.";
+"sharedItems.contactVerification.section.myCredentials.message"="للتحقق من جهة الاتصال الخاصة بك، تأكد من أن بيانات الاعتماد التي تراها أعلاه تطابق بيانات اعتماد حسابهم. يمكنك أن تطلب منهم مشاركة بيانات اعتمادهم معك.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
-"sharedItems.contactVerification.section.verifyContact.receiver.message"="We protect your data with zero-knowledge encryption. To ensure extra security, we ask you to verify the contacts you receive information from before you can access the shared folders.";
+"sharedItems.contactVerification.section.verifyContact.receiver.message"="نحن نحمي بياناتك عن طريق تشفير المعرفة الصفرية. لضمان أمان إضافي نطلب منك التحقق من جهات الاتصال التي تستقبل المعلومات منها قبل أن تتمكن من الوصول إلى المجلدات المشاركة.";
 /* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
-"sharedItems.contactVerification.section.verifyContact.bannerMessage"="للوصول إلى المجلد المشارك يجب أن يوافق عليك أيضًا الشخص الذي شاركه معك.";
+"sharedItems.contactVerification.section.verifyContact.bannerMessage"="To access the shared folder, the person who shared it with you should verify you, too.";
 /* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
 "sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ is shared by a contact you haven’t verified. To ensure extra security, we recommend that you verify their credentials in Contacts by tapping on ⓘ next to the contact you want to verify.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="بيانات الاعتماد الخاصة بك";
 /* Title of the header label in contact verification screen. */
-"verifyCredentials.headerMessage"="نحن نحمي بياناتك بتشفير المعرفة الصفرية بحيث تكون جميع المعلومات التي تقوم بتخزينها ومشاركتها وتلقيها على ميغا MEGA آمنة. لضمان أمان إضافي نطلب منك الموافقة على جهات الاتصال التي تشارك المعلومات معها أو تتلقى البيانات منها.";
+"verifyCredentials.headerMessage"="نحن نحمي بياناتك بتشفير المعرفة الصفرية بحيث تكون جميع المعلومات التي تقوم بتخزينها ومشاركتها وتلقيها على ميغا MEGA آمنة. لضمان أمان إضافي نطلب منك التحقق من جهات الاتصال التي تشارك المعلومات معها أو تتلقى البيانات منها.";
 /* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
 "sharedItems.tab.incoming.undecryptedFolderName"="[مجلد غير مشفر]";
 /* On Outgoing Shared Items Tab. Text that shows the receiver's name of the shared folder. %@ will be replaced with the receiver's name. */
@@ -3235,15 +3233,15 @@
 /* In app notification description for one off new meeting invitation */
 "inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email] قام بدعوتك[/B] إلي اجتماع مجدول بتاريخ:";
 /* In app notification description for scheduled meeting when multiple fields updated for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the meeting to";
+"inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] قام بتحديث[/B] الاجتماع إلى";
 /* In app notification description for scheduled meeting description field update */
 "inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description"="[B][Email] قام بتحديث[/B] وصف الاجتماع";
 /* In app notification description for one off cancelled meeting */
-"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email] cancelled[/B] the meeting scheduled for";
+"inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email] قام بإلغاء[/B] الاجتماع المجدول بتاريخ";
 /* In app notification description representing the day was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email] updated[/B] the meeting date to";
+"inapp.notifications.scheduledMeetings.oneOff.dayChanged.description"="[B][Email] قام بتحديث[/B] تاريخ الاجتماع إلى";
 /* In app notification description representing the time was changed for one off meeting */
-"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email] updated[/B] the meeting time to";
+"inapp.notifications.scheduledMeetings.oneOff.timeChanged.description"="[B][Email] قام بتحديث[/B] وقت الاجتماع إلى";
 /* In app notification description for scheduled meeting title update. */
 "inapp.notifications.scheduledMeetings.titleUpdate.description"="[B][Email] قام بتحديث[/B] اسم الاجتماع من”[PreviousTitle]“ إلى [B]”[UpdatedTitle]“[/B]";
 /* In app notification description for cancelled recurring meeting */
@@ -3251,13 +3249,13 @@
 /* In app notification description for recurring new meeting invitation. */
 "inapp.notifications.scheduledMeetings.recurring.new.description"="[B][Email][/B] قام بدعوتك لي اجتماع متكرر مجدول بتاريخ:";
 /* In app notification description for multiple fields update in recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] updated[/B] the meeting to";
+"inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email] قام بتحديث[/B] الاجتماع إلى";
 /* In app notification description for description Field update in recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.descriptionFieldUpdate.description"="[B][Email] قام بتحديث[/B] وصف الاجتماع المتكرر";
 /* In app notification description when date field is updated for recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] updated[/B] the recurring meeting date to";
+"inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email] قام بتحديث[/B] تاريخ الاجتماع المتكرر إلى";
 /* In app notification description when time field is updated for recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email] updated[/B] the recurring meeting time to";
+"inapp.notifications.scheduledMeetings.recurring.timeChanged.description"="[B][Email] قام بتحديث[/B] وقت الاجتماع المتكرر إلى";
 /* Button title to show list of occurrences of an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.occurrences"="التكرارات";
 /* Label to indicate the daily recurrence of an scheduled meeting */
@@ -3271,9 +3269,9 @@
 /* One off meeting date and time description, for a daily recurring meeting without ending date - Wed, 6 Jul 2022 from 09:00 to 10:00 */
 "meetings.scheduled.oneOff"="[B][WeekDay]،[StartDate][/B] من [B][StartTime] إلى [EndTime][/B]";
 /* In app notification description when an occurence is cancelled in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] cancelled[/B] the occurrence scheduled for";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceCancelled.description"="[B][Email] قام بإلغاء[/B] التكرار المجدول بتاريخ";
 /* In app notification description when an occurence is updated in a recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] updated[/B] an occurrence to";
+"inapp.notifications.scheduledMeetings.recurring.occurrenceUpdated.description"="[B][Email] قام بتحديث[/B] التكرار إلى";
 /* Upgrade security alert screen title. For cryptographic security upgrade which will be shown only once per account. */
 "account.upgradeSecurity.title"="ترقية أمان الحساب";
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
@@ -3317,9 +3315,9 @@
 /* Text description for a meeting showing that is a monthly recurring meeting */
 "meetings.scheduled.recurring.monthly"="شهرياً";
 /* On Outgoing Shared Items Tab. Title of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="لا يمكن الموافقة على جهة الاتصال";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="لا يمكن التحقق من جهة الاتصال";
 /* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="You can’t verify %@ as they’re not in your contact list. Wait for them to accept your invitation first.";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="لا يمكنك التحقق من %@ لأنه ليس في قائمة جهات الاتصال الخاصة بك. انتظر حتى يقبل دعوتك أولاً.";
 /* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
 "picker.disable.passcode.title"="تعطيل رمز مرور ميغا MEGA";
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
@@ -3441,11 +3439,107 @@
 /* Device Center backup blocked status */
 "device.center.backup.blocked.status.message"="محظور";
 /* Default device name in case the device name cannot be obtained */
-"device.center.default.device.title"="Unknown device";
+"device.center.default.device.title"="جهاز غير معروف";
+/* Device Center backup error: Unknown error */
+"device.center.backup.error.type.unknownError"="خطأ غير معروف";
+/* Device Center backup error: Unsupported filesystem */
+"device.center.backup.error.type.unsupportedFilesystem"="";
+/* Device Center backup error: Invalid remote node */
+"device.center.backup.error.type.invalidRemoteNode"="";
+/* Device Center backup error: Sync setup issue with individual file */
+"device.center.backup.error.type.syncSetupIndividualFile"="";
+/* Device Center backup error: Initial scan failed */
+"device.center.backup.error.type.initialScanFailed"="";
+/* Device Center backup error: Local drive folder not found */
+"device.center.backup.error.type.localDriveFolderNotFound"="";
+/* Device Center backup error: Local drive folder not found */
+"device.center.backup.error.type.localDriveFolderNotFoundAlt"="";
+/* Device Center backup error: MEGA folder not found or inaccessible */
+"device.center.backup.error.type.megaFolderNotFoundOrInaccessible"="";
+/* Device Center backup error: Storage quota reached */
+"device.center.backup.error.type.storageQuotaReached"="";
+/* Device Center backup error: Plan expired */
+"device.center.backup.error.type.planExpired"="";
+/* Device Center backup error: Shared folder quota reached */
+"device.center.backup.error.type.sharedFolderQuotaReached"="";
+/* Device Center backup error: MEGA folder moved */
+"device.center.backup.error.type.megaFolderMoved"="";
+/* Device Center backup error: Insufficient access to shared folder */
+"device.center.backup.error.type.insufficientAccessSharedFolder"="";
+/* Device Center backup error: Filesystem fingerprint mismatch */
+"device.center.backup.error.type.filesystemFingerprintMismatch"="";
+/* Device Center backup error: Folder sync disabled */
+"device.center.backup.error.type.folderSyncDisabled"="";
+/* Device Center backup error: Nested sync folders */
+"device.center.backup.error.type.nestedSyncFolders"="";
+/* Device Center backup error: Active sync above path */
+"device.center.backup.error.type.activeSyncAbovePath"="";
+/* Device Center backup error: MEGA folder in rubbish bin */
+"device.center.backup.error.type.megaFolderInRubbishBin"="";
+/* Device Center backup error: Item in rubbish */
+"device.center.backup.error.type.itemInRubbish"="";
+/* Device Center backup error: Unsupported filesystem - VirtualBox folders */
+"device.center.backup.error.type.unsupportedFilesystemVirtualBox"="";
+/* Device Center backup error: Folder inside synced folder */
+"device.center.backup.error.type.folderInsideSyncedFolder"="";
+/* Device Center backup error: Account blocked */
+"device.center.backup.error.type.accountBlocked"="";
+/* Device Center backup error: Sync or backup problem */
+"device.center.backup.error.type.syncOrBackupProblem"="";
+/* Device Center backup error: Account reloaded with missed updates */
+"device.center.backup.error.type.accountReloadedMissedUpdates"="";
+/* Device Center backup error: Sync or backup stopped */
+"device.center.backup.error.type.syncOrBackupStopped"="";
+/* Device Center backup error: MEGA folder changed */
+"device.center.backup.error.type.megaFolderChanged"="";
+/* Device Center backup error: External drive folder not found */
+"device.center.backup.error.type.externalDriveFolderNotFound"="";
+/* Device Center backup error: Sync or backup problem */
+"device.center.backup.error.type.syncOrBackupProblemAlt"="";
+/* Device Center backup error: Sync node conflict */
+"device.center.backup.error.type.syncNodeConflict"="";
+/* Device Center backup error: Renaming failed */
+"device.center.backup.error.type.renamingFailed"="";
+/* Device Center backup error: Sync creation failed */
+"device.center.backup.error.type.syncCreationFailed"="";
+/* Device Center backup error: Sync configs unreadable from disk */
+"device.center.backup.error.type.syncConfigsUnreadable"="";
+/* Device Center backup error: Unknown sync drive path */
+"device.center.backup.error.type.unknownSyncDrivePath"="";
+/* Device Center backup error: Invalid scan interval */
+"device.center.backup.error.type.invalidScanInterval"="";
+/* Device Center backup error: Filesystem notification subsystem error */
+"device.center.backup.error.type.filesystemNotificationSubsystemError"="";
+/* Device Center backup error: Unable to add filesystem watch */
+"device.center.backup.error.type.unableToAddFilesystemWatch"="";
+/* Device Center backup error: Sync root's FSID retrieval failure */
+"device.center.backup.error.type.syncRootFsidRetrievalFailure"="";
+/* Device Center backup error: State cache database inaccessible */
+"device.center.backup.error.type.stateCacheDatabaseInaccessible"="";
+/* Device Center backup error: Insufficient space for download */
+"device.center.backup.error.type.insufficientSpaceForDownload"="";
+/* Device Center backup error: No access to persistent storage */
+"device.center.backup.error.type.noAccessToPersistentStorage"="";
+/* Device Center backup error: Sync root's FSID change */
+"device.center.backup.error.type.syncRootFsidChange"="";
+/* Device Center backup error: FSID change on MAC device */
+"device.center.backup.error.type.fsidChangeOnMac"="";
+/* Device Center backup error: Unable to get filesystem's ID */
+"device.center.backup.error.type.unableToGetFilesystemsId"="";
 /* Show in Cloud Drive section action title */
 "device.center.show.in.cloud.drive.action.title"="عرض في السواقة السحابية";
 /* Show in Backups section action title */
-"device.center.show.in.backups.action.title"="Show in Backups";
+"device.center.show.in.backups.action.title"="إظهار في النسخ الاحتياطية ";
+/* Device Center rename device action title */
+"device.center.rename.device.title"="اسم الجهاز";
+/* Device Center rename device action duplicated name message */
+"device.center.rename.device.duplicated.name"="يوجد جهاز بهذا الاسم بالفعل";
+/* Device Center rename device action enter a different name message */
+"device.center.rename.device.different.name"="أدخل اسمًا مختلفًا.";
+/* Device Center camera upload status enabled */
+"device.center.camera.uploads.action.status.enabled"="تمكين";
+/* Device Center camera upload status disabled */
+"device.center.camera.uploads.action.status.disabled"="تعطيل";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="إنهاء التكرار";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3621,35 +3715,35 @@
 /* Recurring meeting tip view message bold text */
 "meetings.scheduleMeeting.recurringMeetingTip.occurrences"="التكرارات";
 /* Change SFU server alert title. */
-"settings.about.sfu.changeAlert.title"="Change SFU server";
+"settings.about.sfu.changeAlert.title"="قم بتغيير مخدم SFU";
 /* Change SFU server alert message. */
-"settings.about.sfu.changeAlert.message"="Default is -1";
+"settings.about.sfu.changeAlert.message"="الافتراضي هو -1";
 /* Change SFU server alert test field placeholder. */
-"settings.about.sfu.changeAlert.placeholder"="Enter SFU ID";
+"settings.about.sfu.changeAlert.placeholder"="أدخل معرف SFU";
 /* Change SFU server alert cancel button. */
 "settings.about.sfu.changeAlert.cancelButton"="إلغاء";
 /* Change SFU server alert change button. */
 "settings.about.sfu.changeAlert.changeButton"="تغيير";
 /* Back button menu item title visible when navigating back to 1:1 chat  . */
-"chat.backButton.oneToOne.menu"="Chat with %@";
+"chat.backButton.oneToOne.menu"="محادثة مع %@";
 /* Schedule meeting waiting room setting title */
 "meetings.scheduleMeeting.waitingRoom"="غرفة الانتظار";
 /* Schedule meeting waiting room setting description */
 "meetings.scheduleMeeting.waitingRoom.description"="يمكن فقط للمستخدمين المعترف بهم من قبل المضيف الانضمام إلى الاجتماع.";
 /* Schedule meeting waiting room warning banner title */
-"meetings.scheduleMeeting.waitingRoomWarningBanner.title"="Participants added by non-hosts during calls won’t be sent to the waiting room.";
+"meetings.scheduleMeeting.waitingRoomWarningBanner.title"="لن يتم إرسال المشاركين الذين أضافهم غير المضيفين أثناء المكالمات إلى غرفة الانتظار.";
 /* Schedule meeting waiting room warning banner learn more */
 "meetings.scheduleMeeting.waitingRoomWarningBanner.learnMore"="أعرف أكثر";
 /* Album saved to cloud drive alert message */
-"albumLink.alert.message.albumSavedToCloudDrive"="“%@” saved to Cloud drive";
+"albumLink.alert.message.albumSavedToCloudDrive"="تم حفظ ”%@“ في السواقة السحابية.";
 /* Album failed to save to cloud drive alert message */
-"albumLink.alert.message.albumFailedToSaveToCloudDrive"="“%@” can’t be saved to Cloud drive. Try again later and if the problem continues, contact the person who shared the link with you.";
+"albumLink.alert.message.albumFailedToSaveToCloudDrive"="لا يمكن حفظ ”%@“ في السواقة السحابية. حاول مرة أخرى لاحقًا وإذا استمرت المشكلة اتصل بالشخص الذي شارك الرابط معك.";
 /* Text displayed on banner we show when sharing folder with unverified contacts */
 "shareFolder.contactsNotVerified"="Some of the contacts you’re sharing information with haven’t been verified by you. To ensure extra security, we recommend that you verify their credentials in Contacts by tapping on ⓘ next to the contact you want to verify.";
 /* Rename public album alert title */
 "albumLink.alert.renameAlbum.title"="إعادة تسمية الألبوم";
 /* Rename public album alert message */
-"albumLink.alert.renameAlbum.message"="An album named “%@” already exists in your Albums. Enter a new name for the album you’re saving.";
+"albumLink.alert.renameAlbum.message"="يوجد بالفعل ألبوم باسم ”%@“ في ألبوماتك. أدخل اسمًا جديدًا للألبوم الذي تقوم بحفظه.";
 /* Button title of the dialog for transfer quota error that will direct to upgrade plan */
 "transferQuotaError.button.upgrade"="الترقية";
 /* Button title of the dialog for transfer quota error that will dismiss dialog */
@@ -3657,21 +3751,21 @@
 /* Button title of the dialog for transfer quota error to buy new plan */
 "transferQuotaError.button.buyNewPlan"="شراء باقة جديدة";
 /* Footer message of the dialog for transfer quota error. [A] will be replaced by the usage quota percent. [B] will be replaced by the max transfer quota in TB. For example: 100% of 16 TB used */
-"transferQuotaError.footerMessage.quotaUsage"="[A]%% of [B] TB used";
+"transferQuotaError.footerMessage.quotaUsage"="[A]%% من [B] تيرابايت مُستخدم";
 /* Title of the dialog for transfer quota error with limited available trasfer quota */
-"transferQuotaError.downloadLimitedQuota.title"="حصة نقل متوفرة بشكل محدود";
+"transferQuotaError.downloadLimitedQuota.title"="حجم تراسل المعطيات متوفر بشكل محدود";
 /* Message text of the dialog for transfer quota error with limited available trasfer quota for free accounts */
-"transferQuotaError.downloadLimitedQuota.freeAccount.message"="Downloading may be interrupted as you’ve used most of your transfer quota for this IP address. To get more quota, upgrade to a Pro plan or wait for %@ until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.";
+"transferQuotaError.downloadLimitedQuota.freeAccount.message"="قد يتم توقيف التنزيل لأنك استخدمت معظم حجم تراسل المعطيات للعنوان الشبكي IP هذا. للحصول على حجم أكبر قم بالترقية إلى باقة برو Pro أو انتظر %@ حتى توفر المزيد من الحجم المجاني على العنوان الشبكي IP الخاص بك. [A]اعرف المزيد[/A]حول حجم تراسل المعطيات";
 /* Message text of the dialog for transfer quota error with limited available trasfer quota for pro accounts */
 "transferQuotaError.downloadLimitedQuota.proAccount.message"="قد يتم توقيف التنزيل لأنك استخدمت معظم حجم تراسل معطيات الخاص بك على هذا الحساب. للحصول على حجم أكبر قم بشراء باقة جديدة أو إذا كان لديك اشتراك متكرر مع ميغا MEGA ، يمكنك الانتظار حتى يتم تجديد باقتك.";
 /* Title of the dialog for transfer quota error with exceeded quota */
 "transferQuotaError.downloadExceededQuota.title"="تم تجاوز حجم تراسل المعطيات المتاح";
 /* Message text of the dialog for transfer quota error with exceeded download trasfer quota for free accounts */
-"transferQuotaError.downloadExceededQuota.freeAccount.message"="You can’t continue downloading as you don’t have any transfer quota left for this IP address. To get more quota, upgrade to a Pro plan or wait for %@ until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.";
+"transferQuotaError.downloadExceededQuota.freeAccount.message"="لا يمكنك متابعة التنزيل نظرًا لأنه لم يتبق لديك أي حجم تراسل معطيات للعنوان الشبكي IP هذا. للحصول على حجم أكبر قم بالترقية إلى باقة برو Pro أو انتظر %@ حتى توفر المزيد من الحجم المجاني على العنوان الشبكي IP الخاص بك. [A]اعرف المزيد[/A] حول حجم تراسل المعطيات.";
 /* Message text of the dialog for transfer quota error with exceeded download trasfer quota for pro accounts */
 "transferQuotaError.downloadExceededQuota.proAccount.message"="لا يمكنك متابعة التنزيل نظرًا لعدم وجود أي حجم تراسل معطيات متبقي في هذا الحساب. للحصول على حجم أكبر قم بشراء باقة جديدة أو إذا كان لديك اشتراك متكرر مع ميغا MEGA يمكنك الانتظار حتى يتم تجديد باقتك.";
 /* Message text of the dialog for transfer quota error with exceeded streaming trasfer quota for free accounts */
-"transferQuotaError.streamingExceededQuota.freeAccount.message"="Your media stopped playing as you don’t have any transfer quota left for this IP address. To get more quota, upgrade to a Pro plan or wait for %@ until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.";
+"transferQuotaError.streamingExceededQuota.freeAccount.message"="توقف تشغيل الوسائط نظرًا لأنه لم يتبق لديك أي حجم تراسل معطيات للعنوان الشبكي IP هذا. للحصول على حجم أكبر قم بالترقية إلى باقة برو Pro أو انتظر %@ حتى توفر المزيد من الحجم المجاني على العنوان الشبكي IP الخاص بك. [A]اعرف المزيد[/A] حول حجم تراسل المعطيات.";
 /* Message text of the dialog for transfer quota error with exceeded download trasfer quota for pro accounts */
 "transferQuotaError.streamingExceededQuota.proAccount.message"="توقف تشغيل الوسائط الخاصة بك لأنه ليس لديك أي حجم تراسل معطيات متبقي في هذا الحساب. للحصول على حجم أكبر قم بشراء باقة جديدة أما إذا كان لديك اشتراك متكرر مع ميغا MEGA يمكنك الانتظار حتى يتم تجديد باقتك.";
 /* Meeting waiting room leave button */
@@ -3693,30 +3787,46 @@
 /* Meeting waiting room alert title of Host didn’t let you in */
 "meetings.waitingRoom.alert.hostDidNotLetYouIn"="المضيف لم يسمح لك بالدخول";
 /* Meeting waiting room alert message of You'll be removed from the waiting room */
-"meetings.waitingRoom.alert.youWillBeRemovedFromTheWaitingRoom"="You’ll be removed from the waiting room.";
+"meetings.waitingRoom.alert.youWillBeRemovedFromTheWaitingRoom"="سيتم إخراجك من غرفة الانتظار";
+/* Meeting waiting room alert title of Host didn’t respond */
+"meetings.waitingRoom.alert.hostDidNotRespond"="لم يستجب المضيف";
+/* Meeting waiting room alert message of There is no response to your request to join the meeting */
+"meetings.waitingRoom.alert.thereIsNoResponseToYourResquestToJoinTheMeeting"="لا يوجد رد على طلبك للانضمام إلى الاجتماع. سيتم إخراجك من غرفة الانتظار. حاول الانضمام مرة أخرى في وقت لاحق.";
 /* Meeting waiting room alert action of ok got it */
 "meetings.waitingRoom.alert.okGotIt"="حسنًا، فهمت ذلك";
 /* Call waiting room alert message text to notify host that someone is waiting to join */
-"chat.call.waitingRoom.alert.message.one"="%@ is waiting to join the call";
+"chat.call.waitingRoom.alert.message.one"="%@ ينتظر الانضمام إلى المكالمة";
 /* Call waiting room alert button to deny access */
 "chat.call.waitingRoom.alert.button.deny"="رفض";
 /* Call waiting room alert button to admit access */
 "chat.call.waitingRoom.alert.button.admit"="اسمح";
-/* Call waiting room alert message text to notify host that several participants are waiting to join */
-"chat.call.waitingRoom.alert.message.several"="";
 /* Call waiting room alert button to open waiting room UI */
-"chat.call.waitingRoom.alert.button.seeWaitingRoom"="See waiting room";
+"chat.call.waitingRoom.alert.button.seeWaitingRoom"="انظر إلى غرفة الانتظار";
 /* Call waiting room alert button to allow access to everyone */
 "chat.call.waitingRoom.alert.button.admitAll"="اسمح للكل";
 /* Call waiting room alert message text to confirm deny access from host */
-"chat.call.waitingRoom.alert.message.denyAcces"="Deny %@ entry?";
+"chat.call.waitingRoom.alert.message.denyAccess"="رفض دخول %@؟";
 /* Call waiting room alert button to deny access */
-"chat.call.waitingRoom.alert.button.confirmDeny"="Deny entry";
+"chat.call.waitingRoom.alert.button.confirmDeny"="رفض الدخول";
 /* Call waiting room alert button to allow access */
 "chat.call.waitingRoom.alert.button.cancel"="إلغاء";
-/* Call waiting room alert message text to notify host that someone is waiting to join a call (call UI is not visible) */
-"chat.call.waitingRoom.alert.outsideCallUI.message.one"="%@ is waiting to join “%@”";
-/* Call waiting room alert message text to notify host that several participants are waiting to join a call (call UI is not visible) */
-"chat.call.waitingRoom.alert.outsideCallUI.message.several"="";
 /* Context menu action seen from native files application when selecting a file that's also present on MEGA */
-"fileProviderExtension.action.open"="Open in MEGA";
+"fileProviderExtension.action.open"="فتح في ميغا MEGA";
+/* Filter name for searching on the home screen */
+"home.search.filter.docs"="مستندات";
+/* Filter name for searching on the home screen */
+"home.search.filter.images"="صور";
+/* Filter name for searching on the home screen */
+"home.search.filter.audio"="صوتي";
+/* Filter name for searching on the home screen */
+"home.search.filter.video"="فيديو";
+/* Empty screen copy when no filter is selected on the home screen search */
+"home.search.empty.no-chip-selected"="لا يوجد نتائج";
+/* Empty screen copy when Images filter is selected on the home screen search */
+"home.search.empty.no-images"="لا يوجد صور";
+/* Empty screen copy when Documents is selected on the home screen search */
+"home.search.empty.no-documents"="لا توجد مستندات";
+/* Empty screen copy when Audio filter is selected on the home screen search */
+"home.search.empty.no-audio"="لا توجد ملفات صوتية";
+/* Empty screen copy when Video filter is selected on the home screen search */
+"home.search.empty.no-videos"="لا توجد ملفات فيديو";

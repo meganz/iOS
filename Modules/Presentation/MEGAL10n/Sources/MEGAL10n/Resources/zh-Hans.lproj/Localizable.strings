@@ -721,7 +721,7 @@
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="相机上传";
 /* Banner message on Camera Uploads that warns user that they have limited access to photos */
-"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA对您的照片的访问受限，无法备份您的所有照片。点击以更改权限。";
+"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA has limited access to your photo library and cannot backup all of your media. Tap to change permissions.";
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="照片";
 /* Photo view is empty */
@@ -1295,7 +1295,7 @@
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
 "verify"="允许";
 /* Button title */
-"verified"="已允许";
+"verified"="已验证";
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="清空聊天记录";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
@@ -1314,8 +1314,6 @@
 "My credentials"="我的凭证";
 /* Button to reset the password */
 "reset"="重置";
-/* Button title */
-"approve"="允许";
 /* start a chat/conversation */
 "startConversation"="开始聊天";
 /* Label title for a group chat */
@@ -1419,11 +1417,11 @@
 /* Error message displayed when trying to invite a contact who is already added. */
 "alreadyAContact"="%s已经是您的联系人。";
 /* A summary message when a user sent a contact's details through the chat. Please keep %@ as it will be replaced at runtime with the name of the contact that was sent. */
-"sentContact"="已发送联系人：%@";
+"sentContact"="Sent contact: %@";
 /* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
 "sentXContacts"="已发送%s位联系人。";
 /* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %@ as it will be replaced at runtime with the name of the attached file. */
-"attachedFile"="附上文件：%@";
+"attachedFile"="Attached: %@";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="已附上%s个文件。";
 /* Label in a button that allows to jump to the latest item */
@@ -2003,7 +2001,7 @@
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="由%@修改";
 /* Title for a recent action bucket with multiple files. %@ will be replaced by the filename of the first file in the bucket. %ld will be replaced by the total number of other files in the bucket. */
-"home.recent.multipleFileTitle"="";
+"home.recent.multipleFileTitle"="“%@” and %ld more";
 /* Label that indicates who uploaded a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.createdByLabel"="由%@创建";
 /* Message shown when the user has not recent activity in their account. */
@@ -2710,7 +2708,7 @@
 "account.upgrade.alreadyHaveASubscription.message"="您之前已通过Google Play或华为应用商店订阅了Pro会员方案。请在您设备上的Google Play或华为应用商店中手动取消您的订阅后进行重试。";
 /* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
 "account.upgrade.alreadyHaveACancellableSubscription.message"="您想要取消当前订阅并继续购买吗？";
-/* Error message shown when a user tries to purchase plan that is not available with their current plan */
+/* This message will be shown if the user is not allowed to purchase a plan because of their current plan.  For example, the user have a Business or Pro Flexi account, they should not be able to purchase a Pro plan. We will show this to the user when they try to purchase one. */
 "account.upgrade.notAvailableWithCurrentPlan.message"="不适用于您当前的会员方案";
 /* Dialog title shown before deleting an account with active subscription */
 "account.delete.subscription.title"="当前的订阅";
@@ -3179,17 +3177,17 @@
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
 "sharedItems.contactVerification.section.verifyContact.owner.message"="我们采用零知识加密保护您的数据。为了进一步确保安全性，我们要求您对与您共享信息的联系人进行验证，然后他们才能访问共享文件夹。";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
-"sharedItems.contactVerification.section.myCredentials.message"="要验证您的联系人，请确保您在上面看到的凭证与他们的帐户凭证相符。您可以要求他们与您共享他们的凭据。";
+"sharedItems.contactVerification.section.myCredentials.message"="为了验证您的联系人，请确保您在上面看到的凭证与他们的账户凭证相符。您可以要求他们与您分享他们的凭证。";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
 "sharedItems.contactVerification.section.verifyContact.receiver.message"="我们采用零知识加密保护您的数据。为了进一步确保安全性，我们要求您在访问共享文件夹之前您你接收信息的联系人进行验证。";
 /* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
-"sharedItems.contactVerification.section.verifyContact.bannerMessage"="";
+"sharedItems.contactVerification.section.verifyContact.bannerMessage"="To access the shared folder, the person who shared it with you should verify you, too.";
 /* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
 "sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@是由您尚未验证的联系人共享。为确保额外的安全性，我们建议您通过点击要验证的联系人旁边的ⓘ来验证其在联系人中的凭证。";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="您的凭证";
 /* Title of the header label in contact verification screen. */
-"verifyCredentials.headerMessage"="我们使用零知识加密来保护您的数据，因此您在MEGA上存储、共享和接收的所有信息都是安全的。为了确保额外的安全性，我们要求您验证与您共享信息，或从中接收数据的联系人。";
+"verifyCredentials.headerMessage"="我们采用零知识加密技术来保护您的数据，因此您在MEGA上存储、共享和接收的所有信息都是安全的。为了确保额外的安全，我们要求您验证与您共享信息或接收数据的联系人。";
 /* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
 "sharedItems.tab.incoming.undecryptedFolderName"="[未解密的文件夹]";
 /* On Outgoing Shared Items Tab. Text that shows the receiver's name of the shared folder. %@ will be replaced with the receiver's name. */
@@ -3319,7 +3317,7 @@
 /* On Outgoing Shared Items Tab. Title of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
 "sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="无法验证联系人";
 /* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="您无法验证%@，因为他们不在您的联系人列表中。请先等待他们接受您的邀请。";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="您无法验证%@因为他们不在您的联系人列表中。请先等到他们接受您的邀请。";
 /* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
 "picker.disable.passcode.title"="禁用密码";
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
@@ -3442,10 +3440,106 @@
 "device.center.backup.blocked.status.message"="已锁定";
 /* Default device name in case the device name cannot be obtained */
 "device.center.default.device.title"="未知设备";
+/* Device Center backup error: Unknown error */
+"device.center.backup.error.type.unknownError"="未知错误";
+/* Device Center backup error: Unsupported filesystem */
+"device.center.backup.error.type.unsupportedFilesystem"="";
+/* Device Center backup error: Invalid remote node */
+"device.center.backup.error.type.invalidRemoteNode"="";
+/* Device Center backup error: Sync setup issue with individual file */
+"device.center.backup.error.type.syncSetupIndividualFile"="";
+/* Device Center backup error: Initial scan failed */
+"device.center.backup.error.type.initialScanFailed"="";
+/* Device Center backup error: Local drive folder not found */
+"device.center.backup.error.type.localDriveFolderNotFound"="";
+/* Device Center backup error: Local drive folder not found */
+"device.center.backup.error.type.localDriveFolderNotFoundAlt"="";
+/* Device Center backup error: MEGA folder not found or inaccessible */
+"device.center.backup.error.type.megaFolderNotFoundOrInaccessible"="";
+/* Device Center backup error: Storage quota reached */
+"device.center.backup.error.type.storageQuotaReached"="";
+/* Device Center backup error: Plan expired */
+"device.center.backup.error.type.planExpired"="";
+/* Device Center backup error: Shared folder quota reached */
+"device.center.backup.error.type.sharedFolderQuotaReached"="";
+/* Device Center backup error: MEGA folder moved */
+"device.center.backup.error.type.megaFolderMoved"="";
+/* Device Center backup error: Insufficient access to shared folder */
+"device.center.backup.error.type.insufficientAccessSharedFolder"="";
+/* Device Center backup error: Filesystem fingerprint mismatch */
+"device.center.backup.error.type.filesystemFingerprintMismatch"="";
+/* Device Center backup error: Folder sync disabled */
+"device.center.backup.error.type.folderSyncDisabled"="";
+/* Device Center backup error: Nested sync folders */
+"device.center.backup.error.type.nestedSyncFolders"="";
+/* Device Center backup error: Active sync above path */
+"device.center.backup.error.type.activeSyncAbovePath"="";
+/* Device Center backup error: MEGA folder in rubbish bin */
+"device.center.backup.error.type.megaFolderInRubbishBin"="";
+/* Device Center backup error: Item in rubbish */
+"device.center.backup.error.type.itemInRubbish"="";
+/* Device Center backup error: Unsupported filesystem - VirtualBox folders */
+"device.center.backup.error.type.unsupportedFilesystemVirtualBox"="";
+/* Device Center backup error: Folder inside synced folder */
+"device.center.backup.error.type.folderInsideSyncedFolder"="";
+/* Device Center backup error: Account blocked */
+"device.center.backup.error.type.accountBlocked"="";
+/* Device Center backup error: Sync or backup problem */
+"device.center.backup.error.type.syncOrBackupProblem"="";
+/* Device Center backup error: Account reloaded with missed updates */
+"device.center.backup.error.type.accountReloadedMissedUpdates"="";
+/* Device Center backup error: Sync or backup stopped */
+"device.center.backup.error.type.syncOrBackupStopped"="";
+/* Device Center backup error: MEGA folder changed */
+"device.center.backup.error.type.megaFolderChanged"="";
+/* Device Center backup error: External drive folder not found */
+"device.center.backup.error.type.externalDriveFolderNotFound"="";
+/* Device Center backup error: Sync or backup problem */
+"device.center.backup.error.type.syncOrBackupProblemAlt"="";
+/* Device Center backup error: Sync node conflict */
+"device.center.backup.error.type.syncNodeConflict"="";
+/* Device Center backup error: Renaming failed */
+"device.center.backup.error.type.renamingFailed"="";
+/* Device Center backup error: Sync creation failed */
+"device.center.backup.error.type.syncCreationFailed"="";
+/* Device Center backup error: Sync configs unreadable from disk */
+"device.center.backup.error.type.syncConfigsUnreadable"="";
+/* Device Center backup error: Unknown sync drive path */
+"device.center.backup.error.type.unknownSyncDrivePath"="";
+/* Device Center backup error: Invalid scan interval */
+"device.center.backup.error.type.invalidScanInterval"="";
+/* Device Center backup error: Filesystem notification subsystem error */
+"device.center.backup.error.type.filesystemNotificationSubsystemError"="";
+/* Device Center backup error: Unable to add filesystem watch */
+"device.center.backup.error.type.unableToAddFilesystemWatch"="";
+/* Device Center backup error: Sync root's FSID retrieval failure */
+"device.center.backup.error.type.syncRootFsidRetrievalFailure"="";
+/* Device Center backup error: State cache database inaccessible */
+"device.center.backup.error.type.stateCacheDatabaseInaccessible"="";
+/* Device Center backup error: Insufficient space for download */
+"device.center.backup.error.type.insufficientSpaceForDownload"="";
+/* Device Center backup error: No access to persistent storage */
+"device.center.backup.error.type.noAccessToPersistentStorage"="";
+/* Device Center backup error: Sync root's FSID change */
+"device.center.backup.error.type.syncRootFsidChange"="";
+/* Device Center backup error: FSID change on MAC device */
+"device.center.backup.error.type.fsidChangeOnMac"="";
+/* Device Center backup error: Unable to get filesystem's ID */
+"device.center.backup.error.type.unableToGetFilesystemsId"="";
 /* Show in Cloud Drive section action title */
 "device.center.show.in.cloud.drive.action.title"="在云盘中显示";
 /* Show in Backups section action title */
-"device.center.show.in.backups.action.title"="Show in Backups";
+"device.center.show.in.backups.action.title"="在备份中显示";
+/* Device Center rename device action title */
+"device.center.rename.device.title"="设备名称";
+/* Device Center rename device action duplicated name message */
+"device.center.rename.device.duplicated.name"="已存在有该名称的设备。";
+/* Device Center rename device action enter a different name message */
+"device.center.rename.device.different.name"="输入一个不同的名称";
+/* Device Center camera upload status enabled */
+"device.center.camera.uploads.action.status.enabled"="已开启";
+/* Device Center camera upload status disabled */
+"device.center.camera.uploads.action.status.disabled"="已禁用";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="结束重复";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3645,7 +3739,7 @@
 /* Album failed to save to cloud drive alert message */
 "albumLink.alert.message.albumFailedToSaveToCloudDrive"="“%@”无法保存到云盘。请稍后重试，如果问题仍然存在，请联系与您共享链接的人。";
 /* Text displayed on banner we show when sharing folder with unverified contacts */
-"shareFolder.contactsNotVerified"="某些您与之共享信息的联系人尚未经过您的验证。为确保额外的安全性，我们建议您点击待验证的联系人旁边的ⓘ来验证其在联系人中的凭据。";
+"shareFolder.contactsNotVerified"="某些您与之共享信息的联系人尚未经过您的验证。为确保额外的安全性，我们建议您点按待验证的联系人旁边的ⓘ来验证其在联系人中的凭据。";
 /* Rename public album alert title */
 "albumLink.alert.renameAlbum.title"="重命名相册";
 /* Rename public album alert message */
@@ -3693,7 +3787,11 @@
 /* Meeting waiting room alert title of Host didn’t let you in */
 "meetings.waitingRoom.alert.hostDidNotLetYouIn"="主持人尚未请您进入";
 /* Meeting waiting room alert message of You'll be removed from the waiting room */
-"meetings.waitingRoom.alert.youWillBeRemovedFromTheWaitingRoom"="You’ll be removed from the waiting room.";
+"meetings.waitingRoom.alert.youWillBeRemovedFromTheWaitingRoom"="您将被从等候室中移除。";
+/* Meeting waiting room alert title of Host didn’t respond */
+"meetings.waitingRoom.alert.hostDidNotRespond"="主持人无响应";
+/* Meeting waiting room alert message of There is no response to your request to join the meeting */
+"meetings.waitingRoom.alert.thereIsNoResponseToYourResquestToJoinTheMeeting"="您加入会议的请求未得到响应。您将被从等候室移除。请稍后再试加入。";
 /* Meeting waiting room alert action of ok got it */
 "meetings.waitingRoom.alert.okGotIt"="好的，明白了";
 /* Call waiting room alert message text to notify host that someone is waiting to join */
@@ -3702,21 +3800,33 @@
 "chat.call.waitingRoom.alert.button.deny"="拒绝";
 /* Call waiting room alert button to admit access */
 "chat.call.waitingRoom.alert.button.admit"="允许";
-/* Call waiting room alert message text to notify host that several participants are waiting to join */
-"chat.call.waitingRoom.alert.message.several"="";
 /* Call waiting room alert button to open waiting room UI */
 "chat.call.waitingRoom.alert.button.seeWaitingRoom"="查看等候室";
 /* Call waiting room alert button to allow access to everyone */
 "chat.call.waitingRoom.alert.button.admitAll"="允许所有请求";
 /* Call waiting room alert message text to confirm deny access from host */
-"chat.call.waitingRoom.alert.message.denyAcces"="是否拒绝%@加入？";
+"chat.call.waitingRoom.alert.message.denyAccess"="是否拒绝%@加入？";
 /* Call waiting room alert button to deny access */
 "chat.call.waitingRoom.alert.button.confirmDeny"="拒绝加入";
 /* Call waiting room alert button to allow access */
 "chat.call.waitingRoom.alert.button.cancel"="取消";
-/* Call waiting room alert message text to notify host that someone is waiting to join a call (call UI is not visible) */
-"chat.call.waitingRoom.alert.outsideCallUI.message.one"="%@正在等待加入“%@”";
-/* Call waiting room alert message text to notify host that several participants are waiting to join a call (call UI is not visible) */
-"chat.call.waitingRoom.alert.outsideCallUI.message.several"="";
 /* Context menu action seen from native files application when selecting a file that's also present on MEGA */
 "fileProviderExtension.action.open"="在MEGA中打开";
+/* Filter name for searching on the home screen */
+"home.search.filter.docs"="文档";
+/* Filter name for searching on the home screen */
+"home.search.filter.images"="图片";
+/* Filter name for searching on the home screen */
+"home.search.filter.audio"="语音";
+/* Filter name for searching on the home screen */
+"home.search.filter.video"="视频";
+/* Empty screen copy when no filter is selected on the home screen search */
+"home.search.empty.no-chip-selected"="没有符合搜索的项目";
+/* Empty screen copy when Images filter is selected on the home screen search */
+"home.search.empty.no-images"="无图片";
+/* Empty screen copy when Documents is selected on the home screen search */
+"home.search.empty.no-documents"="无文档";
+/* Empty screen copy when Audio filter is selected on the home screen search */
+"home.search.empty.no-audio"="无音频文件";
+/* Empty screen copy when Video filter is selected on the home screen search */
+"home.search.empty.no-videos"="无视频文件";

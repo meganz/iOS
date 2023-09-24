@@ -721,7 +721,7 @@
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="Đăng Tải Camêra";
 /* Banner message on Camera Uploads that warns user that they have limited access to photos */
-"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA bị giới hạn quyền truy cập vào thư viện ảnh và không thể sao lưu dự phòng tất cả hình ảnh của bạn. Chạm để thay đổi quyền hạn.";
+"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA has limited access to your photo library and cannot backup all of your media. Tap to change permissions.";
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="Ảnh";
 /* Photo view is empty */
@@ -1295,7 +1295,7 @@
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
 "verify"="Chấp nhận";
 /* Button title */
-"verified"="Đã chấp nhận";
+"verified"="Đã xác thực";
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="Dọn lịch sử chát";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
@@ -1314,8 +1314,6 @@
 "My credentials"="Chứng thực của tôi";
 /* Button to reset the password */
 "reset"="Đặt lại";
-/* Button title */
-"approve"="Chấp nhận";
 /* start a chat/conversation */
 "startConversation"="Bắt đầu cuộc trò chuyện";
 /* Label title for a group chat */
@@ -1419,11 +1417,11 @@
 /* Error message displayed when trying to invite a contact who is already added. */
 "alreadyAContact"="Tên %s đã có mặt trong sổ liên lạc.";
 /* A summary message when a user sent a contact's details through the chat. Please keep %@ as it will be replaced at runtime with the name of the contact that was sent. */
-"sentContact"="Tên liên lạc được gửi: %@";
+"sentContact"="Sent contact: %@";
 /* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
 "sentXContacts"="Gửi đến %s tên liên lạc.";
 /* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %@ as it will be replaced at runtime with the name of the attached file. */
-"attachedFile"="Gửi kèm: %@";
+"attachedFile"="Attached: %@";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="Gửi kèm %s tệp tin.";
 /* Label in a button that allows to jump to the latest item */
@@ -2003,7 +2001,7 @@
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="Chỉnh sửa bởi %@";
 /* Title for a recent action bucket with multiple files. %@ will be replaced by the filename of the first file in the bucket. %ld will be replaced by the total number of other files in the bucket. */
-"home.recent.multipleFileTitle"="";
+"home.recent.multipleFileTitle"="“%@” and %ld more";
 /* Label that indicates who uploaded a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.createdByLabel"="Đã tạo bởi %@";
 /* Message shown when the user has not recent activity in their account. */
@@ -2710,7 +2708,7 @@
 "account.upgrade.alreadyHaveASubscription.message"="Quý khách đã mua hạng Pro thông qua CH Google Play hoặc AppGallery từ trước. Xin vui lòng hủy thủ công dịch vụ với bên Google Play hoặc Huawei AppGallery trên thiết bị của mình rồi quay lại đây để tiếp tục việc mua.";
 /* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
 "account.upgrade.alreadyHaveACancellableSubscription.message"="Quý khách có muốn hủy gói đăng ký dịch vụ hiện tại để mua gói mới không?";
-/* Error message shown when a user tries to purchase plan that is not available with their current plan */
+/* This message will be shown if the user is not allowed to purchase a plan because of their current plan.  For example, the user have a Business or Pro Flexi account, they should not be able to purchase a Pro plan. We will show this to the user when they try to purchase one. */
 "account.upgrade.notAvailableWithCurrentPlan.message"="Không có sẵn cho gói hiện tại của bạn";
 /* Dialog title shown before deleting an account with active subscription */
 "account.delete.subscription.title"="Gói Đăng Ký Dịch Vụ Còn Hoạt Động";
@@ -3175,21 +3173,21 @@
 /* Chat Meetings tab - Section header title for the chat listing screen */
 "chat.listing.sectionHeader.pastMeetings.title"="Các cuộc họp trước đây";
 /* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
-"general.menuAction.verifyContact.title"="Chấp nhận %@";
+"general.menuAction.verifyContact.title"="Xác thực %@";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
-"sharedItems.contactVerification.section.verifyContact.owner.message"="Chúng tôi bảo vệ dữ liệu của bạn bằng thuật toán mã hóa vô kiến thức. Để đảm bảo an toàn hơn, chúng tôi yêu cầu bạn chấp nhận các tên liên lạc mà bạn chia sẻ thông tin trước khi họ được cấp quyền truy cập vào các thư mục chia sẻ.";
+"sharedItems.contactVerification.section.verifyContact.owner.message"="Chúng tôi bảo vệ dữ liệu của bạn bằng thuật toán mã hóa vô kiến thức. Để đảm bảo an toàn hơn, chúng tôi yêu cầu bạn xác thực các tên liên lạc mà bạn chia sẻ thông tin trước khi họ được cấp quyền truy cập vào các thư mục chia sẻ.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
-"sharedItems.contactVerification.section.myCredentials.message"="Để chấp nhận tên liên lạc, đảm bảo rằng chứng chỉ bạn thấy dưới đây trùng khớp với chứng chỉ tài khoản của họ. Bạn có thể hỏi người đó chia sẻ chứng chỉ cho bạn.";
+"sharedItems.contactVerification.section.myCredentials.message"="Để xác thực tên liên lạc, đảm bảo rằng chứng thực bạn thấy dưới đây trùng khớp với chứng thực tài khoản của họ. Bạn có thể hỏi người đó chia sẻ chứng thực cho bạn.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
-"sharedItems.contactVerification.section.verifyContact.receiver.message"="Chúng tôi bảo vệ dữ liệu của bạn bằng thuật toán mã hóa vô kiến thức. Để đảm bảo an toàn hơn, chúng tôi yêu cầu bạn chấp nhận các tên liên lạc mà bạn có nhận thông tin trước khi bạn truy cập vào các thư mục chia sẻ.";
+"sharedItems.contactVerification.section.verifyContact.receiver.message"="Chúng tôi bảo vệ dữ liệu của bạn bằng thuật toán mã hóa vô kiến thức. Để đảm bảo an toàn hơn, chúng tôi yêu cầu bạn xác thực các tên liên lạc mà bạn có nhận thông tin trước khi bạn truy cập vào các thư mục chia sẻ.";
 /* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
-"sharedItems.contactVerification.section.verifyContact.bannerMessage"="";
+"sharedItems.contactVerification.section.verifyContact.bannerMessage"="To access the shared folder, the person who shared it with you should verify you, too.";
 /* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
-"sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ là mục được chia sẻ từ một tên liên lạc chưa được bạn chấp nhận. Để đảm bảo an toàn hơn, chúng tôi khuyên bạn nên chấp nhận chứng chỉ đăng nhập của họ trong Sổ Liên Lạc bằng cách nhấn vào ⓘ bên cạnh tên liên lạc bạn muốn chấp nhận.";
+"sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ is shared by a contact you haven’t verified. To ensure extra security, we recommend that you verify their credentials in Contacts by tapping on ⓘ next to the contact you want to verify.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="Chứng thực của bạn";
 /* Title of the header label in contact verification screen. */
-"verifyCredentials.headerMessage"="Chúng tôi bảo vệ dữ liệu của bạn bằng mô hình mã hóa vô kiến thức nên tất cả thông tin bạn lưu trữ, chia sẻ và nhận được trên MEGA đều bảo vệ an toàn. Để đảm bảo tính bảo mật cao hơn, chúng tôi có yêu cầu bạn chấp nhận các tên liên lạc mà bạn có chia sẻ thông tin hoặc nhận dữ liệu từ họ.";
+"verifyCredentials.headerMessage"="Chúng tôi bảo vệ dữ liệu của bạn bằng mô hình mã hóa vô kiến thức nên tất cả thông tin bạn lưu trữ, chia sẻ và nhận được trên MEGA đều bảo vệ an toàn. Để đảm bảo tính bảo mật cao hơn, chúng tôi có yêu cầu bạn xác thực các tên liên lạc mà bạn có chia sẻ thông tin hoặc nhận dữ liệu từ họ.";
 /* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
 "sharedItems.tab.incoming.undecryptedFolderName"="[thư mục chưa giải mã]";
 /* On Outgoing Shared Items Tab. Text that shows the receiver's name of the shared folder. %@ will be replaced with the receiver's name. */
@@ -3317,9 +3315,9 @@
 /* Text description for a meeting showing that is a monthly recurring meeting */
 "meetings.scheduled.recurring.monthly"="hằng tháng";
 /* On Outgoing Shared Items Tab. Title of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="Không thể chấp nhận tên liên lạc";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="Không thể xác thực tên liên lạc";
 /* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="Bạn không thể chấp nhận %@ vì họ không có trong sổ liên lạc của bạn. Hãy chờ đến khi họ chấp nhận lời mời của bạn trước.";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="Bạn không thể xác thực %@ vì họ không có trong sổ liên lạc của bạn. Hãy chờ đến khi họ chấp nhận lời mời của bạn trước.";
 /* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
 "picker.disable.passcode.title"="Tắt mật mã MEGA";
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
@@ -3442,10 +3440,106 @@
 "device.center.backup.blocked.status.message"="Bị chặn";
 /* Default device name in case the device name cannot be obtained */
 "device.center.default.device.title"="Không rõ thiết bị";
+/* Device Center backup error: Unknown error */
+"device.center.backup.error.type.unknownError"="Lỗi không xác định được";
+/* Device Center backup error: Unsupported filesystem */
+"device.center.backup.error.type.unsupportedFilesystem"="";
+/* Device Center backup error: Invalid remote node */
+"device.center.backup.error.type.invalidRemoteNode"="";
+/* Device Center backup error: Sync setup issue with individual file */
+"device.center.backup.error.type.syncSetupIndividualFile"="";
+/* Device Center backup error: Initial scan failed */
+"device.center.backup.error.type.initialScanFailed"="";
+/* Device Center backup error: Local drive folder not found */
+"device.center.backup.error.type.localDriveFolderNotFound"="";
+/* Device Center backup error: Local drive folder not found */
+"device.center.backup.error.type.localDriveFolderNotFoundAlt"="";
+/* Device Center backup error: MEGA folder not found or inaccessible */
+"device.center.backup.error.type.megaFolderNotFoundOrInaccessible"="";
+/* Device Center backup error: Storage quota reached */
+"device.center.backup.error.type.storageQuotaReached"="";
+/* Device Center backup error: Plan expired */
+"device.center.backup.error.type.planExpired"="";
+/* Device Center backup error: Shared folder quota reached */
+"device.center.backup.error.type.sharedFolderQuotaReached"="";
+/* Device Center backup error: MEGA folder moved */
+"device.center.backup.error.type.megaFolderMoved"="";
+/* Device Center backup error: Insufficient access to shared folder */
+"device.center.backup.error.type.insufficientAccessSharedFolder"="";
+/* Device Center backup error: Filesystem fingerprint mismatch */
+"device.center.backup.error.type.filesystemFingerprintMismatch"="";
+/* Device Center backup error: Folder sync disabled */
+"device.center.backup.error.type.folderSyncDisabled"="";
+/* Device Center backup error: Nested sync folders */
+"device.center.backup.error.type.nestedSyncFolders"="";
+/* Device Center backup error: Active sync above path */
+"device.center.backup.error.type.activeSyncAbovePath"="";
+/* Device Center backup error: MEGA folder in rubbish bin */
+"device.center.backup.error.type.megaFolderInRubbishBin"="";
+/* Device Center backup error: Item in rubbish */
+"device.center.backup.error.type.itemInRubbish"="";
+/* Device Center backup error: Unsupported filesystem - VirtualBox folders */
+"device.center.backup.error.type.unsupportedFilesystemVirtualBox"="";
+/* Device Center backup error: Folder inside synced folder */
+"device.center.backup.error.type.folderInsideSyncedFolder"="";
+/* Device Center backup error: Account blocked */
+"device.center.backup.error.type.accountBlocked"="";
+/* Device Center backup error: Sync or backup problem */
+"device.center.backup.error.type.syncOrBackupProblem"="";
+/* Device Center backup error: Account reloaded with missed updates */
+"device.center.backup.error.type.accountReloadedMissedUpdates"="";
+/* Device Center backup error: Sync or backup stopped */
+"device.center.backup.error.type.syncOrBackupStopped"="";
+/* Device Center backup error: MEGA folder changed */
+"device.center.backup.error.type.megaFolderChanged"="";
+/* Device Center backup error: External drive folder not found */
+"device.center.backup.error.type.externalDriveFolderNotFound"="";
+/* Device Center backup error: Sync or backup problem */
+"device.center.backup.error.type.syncOrBackupProblemAlt"="";
+/* Device Center backup error: Sync node conflict */
+"device.center.backup.error.type.syncNodeConflict"="";
+/* Device Center backup error: Renaming failed */
+"device.center.backup.error.type.renamingFailed"="";
+/* Device Center backup error: Sync creation failed */
+"device.center.backup.error.type.syncCreationFailed"="";
+/* Device Center backup error: Sync configs unreadable from disk */
+"device.center.backup.error.type.syncConfigsUnreadable"="";
+/* Device Center backup error: Unknown sync drive path */
+"device.center.backup.error.type.unknownSyncDrivePath"="";
+/* Device Center backup error: Invalid scan interval */
+"device.center.backup.error.type.invalidScanInterval"="";
+/* Device Center backup error: Filesystem notification subsystem error */
+"device.center.backup.error.type.filesystemNotificationSubsystemError"="";
+/* Device Center backup error: Unable to add filesystem watch */
+"device.center.backup.error.type.unableToAddFilesystemWatch"="";
+/* Device Center backup error: Sync root's FSID retrieval failure */
+"device.center.backup.error.type.syncRootFsidRetrievalFailure"="";
+/* Device Center backup error: State cache database inaccessible */
+"device.center.backup.error.type.stateCacheDatabaseInaccessible"="";
+/* Device Center backup error: Insufficient space for download */
+"device.center.backup.error.type.insufficientSpaceForDownload"="";
+/* Device Center backup error: No access to persistent storage */
+"device.center.backup.error.type.noAccessToPersistentStorage"="";
+/* Device Center backup error: Sync root's FSID change */
+"device.center.backup.error.type.syncRootFsidChange"="";
+/* Device Center backup error: FSID change on MAC device */
+"device.center.backup.error.type.fsidChangeOnMac"="";
+/* Device Center backup error: Unable to get filesystem's ID */
+"device.center.backup.error.type.unableToGetFilesystemsId"="";
 /* Show in Cloud Drive section action title */
 "device.center.show.in.cloud.drive.action.title"="Hiện vị trí trong Ổ Mây";
 /* Show in Backups section action title */
-"device.center.show.in.backups.action.title"="Show in Backups";
+"device.center.show.in.backups.action.title"="Hiện trong Sao lưu dự phòng";
+/* Device Center rename device action title */
+"device.center.rename.device.title"="Device name";
+/* Device Center rename device action duplicated name message */
+"device.center.rename.device.duplicated.name"="A device with this name already exists";
+/* Device Center rename device action enter a different name message */
+"device.center.rename.device.different.name"="Enter a different name";
+/* Device Center camera upload status enabled */
+"device.center.camera.uploads.action.status.enabled"="Được kích hoạt";
+/* Device Center camera upload status disabled */
+"device.center.camera.uploads.action.status.disabled"="Đã vô hiệu";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="Ngừng tái diễn";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3645,7 +3739,7 @@
 /* Album failed to save to cloud drive alert message */
 "albumLink.alert.message.albumFailedToSaveToCloudDrive"="Không thể lưu “%@” vào Ổ Mây. Hãy thử lại sau và nếu sự cố vẫn tiếp diễn, hãy liên hệ với người đã chia sẻ đường liên kết cho bạn.";
 /* Text displayed on banner we show when sharing folder with unverified contacts */
-"shareFolder.contactsNotVerified"="Một số tên liên lạc mà bạn đang chia sẻ thông tin chưa được bạn đã chấp nhận. Để đảm bảo an toàn hơn, chúng tôi khuyên bạn nên chấp nhận chứng chỉ đăng nhập của họ trong Sổ Liên Lạc bằng cách vào dấu ⓘ bên cạnh tên liên lạc bạn muốn chấp nhận.";
+"shareFolder.contactsNotVerified"="Một số tên liên lạc mà bạn đang chia sẻ thông tin chưa được bạn đã xác thực. Để đảm bảo an toàn hơn, chúng tôi khuyên bạn nên xác thực chứng chỉ đăng nhập của họ trong Sổ Liên Lạc bằng cách vào dấu ⓘ bên cạnh tên liên lạc bạn muốn xác thực.";
 /* Rename public album alert title */
 "albumLink.alert.renameAlbum.title"="Đổi tên album";
 /* Rename public album alert message */
@@ -3694,6 +3788,10 @@
 "meetings.waitingRoom.alert.hostDidNotLetYouIn"="Người chủ trì đã không cho bạn vào";
 /* Meeting waiting room alert message of You'll be removed from the waiting room */
 "meetings.waitingRoom.alert.youWillBeRemovedFromTheWaitingRoom"="You’ll be removed from the waiting room.";
+/* Meeting waiting room alert title of Host didn’t respond */
+"meetings.waitingRoom.alert.hostDidNotRespond"="Người chủ trì không có trả lời";
+/* Meeting waiting room alert message of There is no response to your request to join the meeting */
+"meetings.waitingRoom.alert.thereIsNoResponseToYourResquestToJoinTheMeeting"="Không có phản hồi cho yêu cầu của bạn để tham gia cuộc họp. Bạn sẽ bị loại ra khỏi phòng chờ. Hãy thử tham gia lại sau.";
 /* Meeting waiting room alert action of ok got it */
 "meetings.waitingRoom.alert.okGotIt"="OK, hiểu rồi";
 /* Call waiting room alert message text to notify host that someone is waiting to join */
@@ -3702,21 +3800,33 @@
 "chat.call.waitingRoom.alert.button.deny"="Từ chối";
 /* Call waiting room alert button to admit access */
 "chat.call.waitingRoom.alert.button.admit"="Chấp nhận";
-/* Call waiting room alert message text to notify host that several participants are waiting to join */
-"chat.call.waitingRoom.alert.message.several"="";
 /* Call waiting room alert button to open waiting room UI */
 "chat.call.waitingRoom.alert.button.seeWaitingRoom"="Xem phòng chờ";
 /* Call waiting room alert button to allow access to everyone */
 "chat.call.waitingRoom.alert.button.admitAll"="Chấp nhận tất cả";
 /* Call waiting room alert message text to confirm deny access from host */
-"chat.call.waitingRoom.alert.message.denyAcces"="Từ chối %@ tham gia?";
+"chat.call.waitingRoom.alert.message.denyAccess"="Từ chối %@ tham gia?";
 /* Call waiting room alert button to deny access */
 "chat.call.waitingRoom.alert.button.confirmDeny"="Từ chối tham gia";
 /* Call waiting room alert button to allow access */
 "chat.call.waitingRoom.alert.button.cancel"="Hủy";
-/* Call waiting room alert message text to notify host that someone is waiting to join a call (call UI is not visible) */
-"chat.call.waitingRoom.alert.outsideCallUI.message.one"="%@ đang chờ để tham gia “%@”";
-/* Call waiting room alert message text to notify host that several participants are waiting to join a call (call UI is not visible) */
-"chat.call.waitingRoom.alert.outsideCallUI.message.several"="";
 /* Context menu action seen from native files application when selecting a file that's also present on MEGA */
 "fileProviderExtension.action.open"="Mở trong MEGA";
+/* Filter name for searching on the home screen */
+"home.search.filter.docs"="Tệp Tài Liệu";
+/* Filter name for searching on the home screen */
+"home.search.filter.images"="Hình";
+/* Filter name for searching on the home screen */
+"home.search.filter.audio"="Gọi Thoại";
+/* Filter name for searching on the home screen */
+"home.search.filter.video"="Gọi Video";
+/* Empty screen copy when no filter is selected on the home screen search */
+"home.search.empty.no-chip-selected"="Không có kết quả";
+/* Empty screen copy when Images filter is selected on the home screen search */
+"home.search.empty.no-images"="No images";
+/* Empty screen copy when Documents is selected on the home screen search */
+"home.search.empty.no-documents"="No documents";
+/* Empty screen copy when Audio filter is selected on the home screen search */
+"home.search.empty.no-audio"="No audio files";
+/* Empty screen copy when Video filter is selected on the home screen search */
+"home.search.empty.no-videos"="No video files";

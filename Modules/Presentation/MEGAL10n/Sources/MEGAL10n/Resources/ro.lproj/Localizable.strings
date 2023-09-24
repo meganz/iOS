@@ -335,7 +335,7 @@
 /* Menu option from the `Add` section that allows the user to create a new text file and upload it directly to MEGA. */
 "new_text_file"="Fișier text nou";
 /* Hint text shown on the new text file alert. */
-"file_name"="File name";
+"file_name"="Numele fisierului";
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Folder nou";
 /* Menu option from the `Add` section that displays all media files under current folder */
@@ -721,7 +721,7 @@
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="Încărcări cameră";
 /* Banner message on Camera Uploads that warns user that they have limited access to photos */
-"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA are acces limitat la biblioteca foto și nu poate face backup tuturor fotografiilor tale. Atinge pentru a modifica permisiunile.";
+"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA are acces limitat la biblioteca dvs. foto și nu poate face backup pentru toate fișierele dvs. media. Atingeți pentru a modifica permisiunile.";
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="Fotografii";
 /* Photo view is empty */
@@ -1295,7 +1295,7 @@
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
 "verify"="Aprobă";
 /* Button title */
-"verified"="Aprobate";
+"verified"="Verificat";
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="Șterge istoricul chatului";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
@@ -1314,8 +1314,6 @@
 "My credentials"="Acreditările mele";
 /* Button to reset the password */
 "reset"="Resetează";
-/* Button title */
-"approve"="Aprobă";
 /* start a chat/conversation */
 "startConversation"="Începe o conversație";
 /* Label title for a group chat */
@@ -1419,7 +1417,7 @@
 /* Error message displayed when trying to invite a contact who is already added. */
 "alreadyAContact"="%s este deja un contact.";
 /* A summary message when a user sent a contact's details through the chat. Please keep %@ as it will be replaced at runtime with the name of the contact that was sent. */
-"sentContact"="Trimite contactul: %@";
+"sentContact"="A trimis un contact: %@";
 /* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
 "sentXContacts"="%s contacte trimise.";
 /* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %@ as it will be replaced at runtime with the name of the attached file. */
@@ -2003,7 +2001,7 @@
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="Modificat de %@";
 /* Title for a recent action bucket with multiple files. %@ will be replaced by the filename of the first file in the bucket. %ld will be replaced by the total number of other files in the bucket. */
-"home.recent.multipleFileTitle"="";
+"home.recent.multipleFileTitle"="„%@” și alți „%ld”";
 /* Label that indicates who uploaded a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.createdByLabel"="Create de %@";
 /* Message shown when the user has not recent activity in their account. */
@@ -2710,7 +2708,7 @@
 "account.upgrade.alreadyHaveASubscription.message"="V-ați abonat anterior la un plan Pro cu Google Play sau AppGallery. Vă rugăm să anulați manual abonamentul cu acestea în Google Play sau Huawei AppGallery de pe dispozitiv și apoi încercați din nou.";
 /* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
 "account.upgrade.alreadyHaveACancellableSubscription.message"="Doriți să anulați abonamentul curent și să continuați cu achiziția?";
-/* Error message shown when a user tries to purchase plan that is not available with their current plan */
+/* This message will be shown if the user is not allowed to purchase a plan because of their current plan.  For example, the user have a Business or Pro Flexi account, they should not be able to purchase a Pro plan. We will show this to the user when they try to purchase one. */
 "account.upgrade.notAvailableWithCurrentPlan.message"="Nu este disponibil cu planul dvs. actual";
 /* Dialog title shown before deleting an account with active subscription */
 "account.delete.subscription.title"="Abonament activ";
@@ -3175,21 +3173,21 @@
 /* Chat Meetings tab - Section header title for the chat listing screen */
 "chat.listing.sectionHeader.pastMeetings.title"="Întâlniri din trecut";
 /* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
-"general.menuAction.verifyContact.title"="Aprobați %@";
+"general.menuAction.verifyContact.title"="Verifică %@";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
-"sharedItems.contactVerification.section.verifyContact.owner.message"="Vă protejăm datele cu criptare tip zero cunoștințe. Pentru a asigura un plus de securitate, vă rugăm să aprobați contactele cu care partajați informații înainte de a putea accesa folderele partajate.";
+"sharedItems.contactVerification.section.verifyContact.owner.message"="Vă protejăm datele cu criptare tip zero cunoștințe. Pentru a asigura un plus de securitate, vă rugăm să confirmați contactele cu care partajați informații înainte de a putea accesa folderele partajate.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
-"sharedItems.contactVerification.section.myCredentials.message"="Pentru a vă aproba contactul, asigurați-vă că acreditările pe care le vedeți mai sus corespund cu acreditările contului lor. Le puteți cere să vă împărtășească acreditările.";
+"sharedItems.contactVerification.section.myCredentials.message"="Pentru a vă confirma contactul, asigurați-vă că acreditările pe care le vedeți mai sus corespund cu acreditările contului lor. Le puteți cere să vă împărtășească acreditările.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
-"sharedItems.contactVerification.section.verifyContact.receiver.message"="Vă protejăm datele cu criptare tip zero cunoștințe. Pentru a asigura un plus de securitate, vă rugăm să aprobați contactele de la care primiți informații înainte de a putea accesa folderele partajate.";
+"sharedItems.contactVerification.section.verifyContact.receiver.message"="Vă protejăm datele cu criptare tip zero cunoștințe. Pentru a asigura un plus de securitate, vă rugăm să confirmați contactele de la care primiți informații înainte de a putea accesa folderele partajate.";
 /* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
-"sharedItems.contactVerification.section.verifyContact.bannerMessage"="Pentru a accesa folderul partajat, persoana care l-a partajat cu tine ar trebui să te aprobe și pe tine.";
+"sharedItems.contactVerification.section.verifyContact.bannerMessage"="Pentru a accesa folderul partajat, persoana care l-a partajat cu dvs. ar trebui să vă confirme și dvs.";
 /* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
-"sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ este partajat de un contact pe care nu l-ați aprobat. Pentru a asigura un plus de securitate, vă recomandăm să aprobați acreditările lor în Contacte apăsând pe ⓘ lângă contactul pe care doriți să îl aprobați.";
+"sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ este partajat de un contact pe care nu l-ați confirmat. Pentru a asigura un plus de securitate, vă recomandăm să confirmați acreditările lor în Contacte apăsând pe ⓘ lângă contactul pe care doriți să îl confirmați.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="Acreditările tale";
 /* Title of the header label in contact verification screen. */
-"verifyCredentials.headerMessage"="Vă protejăm datele cu criptare tip zero, astfel încât toate informațiile pe care le stocați, partajați și primiți pe MEGA să fie sigure. Pentru a asigura un plus de securitate, vă rugăm să aprobați contactele cu care partajați informații sau de la care primiți date.";
+"verifyCredentials.headerMessage"="Vă protejăm datele cu criptare tip zero, astfel încât toate informațiile pe care le stocați, partajați și primiți pe MEGA să fie sigure. Pentru a asigura un plus de securitate, vă rugăm să confirmați contactele cu care partajați informații sau de la care primiți date.";
 /* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
 "sharedItems.tab.incoming.undecryptedFolderName"="[folder nedecriptat]";
 /* On Outgoing Shared Items Tab. Text that shows the receiver's name of the shared folder. %@ will be replaced with the receiver's name. */
@@ -3317,9 +3315,9 @@
 /* Text description for a meeting showing that is a monthly recurring meeting */
 "meetings.scheduled.recurring.monthly"="lunar";
 /* On Outgoing Shared Items Tab. Title of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="Nu se poate aproba contactul";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="Nu se poate verifica contactul";
 /* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="Nu poți aproba pe %@ deoarece nu se află în lista de contacte. Așteaptă ca această persoană să îți accepte mai întâi invitația.";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="Nu poți verifica pe %@ deoarece nu se află în lista de contacte. Așteaptă ca această persoană să îți accepte mai întâi invitația.";
 /* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
 "picker.disable.passcode.title"="Dezactivează codul de acces MEGA";
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
@@ -3351,9 +3349,9 @@
 /* Schedule meeting description field placeholder */
 "meetings.scheduleMeeting.description"="Adaugă o descriere";
 /* Schedule meeting name error */
-"meetings.scheduleMeeting.meetingName.lenghtError"="Introdu până la 30 de caractere";
+"meetings.scheduleMeeting.meetingName.lenghtError"="Introduceți până la 30 de caractere";
 /* Schedule meeting description error */
-"meetings.scheduleMeeting.description.lenghtError"="Introdu până la 3.000 de caractere";
+"meetings.scheduleMeeting.description.lenghtError"="Introduceți până la 3.000 de caractere";
 /* Schedule meeting cancel button */
 "meetings.scheduleMeeting.cancel"="Anulează";
 /* Schedule meeting create button */
@@ -3442,10 +3440,106 @@
 "device.center.backup.blocked.status.message"="Blocat";
 /* Default device name in case the device name cannot be obtained */
 "device.center.default.device.title"="Dispozitiv necunoscut";
+/* Device Center backup error: Unknown error */
+"device.center.backup.error.type.unknownError"="Eroare necunoscută";
+/* Device Center backup error: Unsupported filesystem */
+"device.center.backup.error.type.unsupportedFilesystem"="";
+/* Device Center backup error: Invalid remote node */
+"device.center.backup.error.type.invalidRemoteNode"="";
+/* Device Center backup error: Sync setup issue with individual file */
+"device.center.backup.error.type.syncSetupIndividualFile"="";
+/* Device Center backup error: Initial scan failed */
+"device.center.backup.error.type.initialScanFailed"="";
+/* Device Center backup error: Local drive folder not found */
+"device.center.backup.error.type.localDriveFolderNotFound"="";
+/* Device Center backup error: Local drive folder not found */
+"device.center.backup.error.type.localDriveFolderNotFoundAlt"="";
+/* Device Center backup error: MEGA folder not found or inaccessible */
+"device.center.backup.error.type.megaFolderNotFoundOrInaccessible"="";
+/* Device Center backup error: Storage quota reached */
+"device.center.backup.error.type.storageQuotaReached"="";
+/* Device Center backup error: Plan expired */
+"device.center.backup.error.type.planExpired"="";
+/* Device Center backup error: Shared folder quota reached */
+"device.center.backup.error.type.sharedFolderQuotaReached"="";
+/* Device Center backup error: MEGA folder moved */
+"device.center.backup.error.type.megaFolderMoved"="";
+/* Device Center backup error: Insufficient access to shared folder */
+"device.center.backup.error.type.insufficientAccessSharedFolder"="";
+/* Device Center backup error: Filesystem fingerprint mismatch */
+"device.center.backup.error.type.filesystemFingerprintMismatch"="";
+/* Device Center backup error: Folder sync disabled */
+"device.center.backup.error.type.folderSyncDisabled"="";
+/* Device Center backup error: Nested sync folders */
+"device.center.backup.error.type.nestedSyncFolders"="";
+/* Device Center backup error: Active sync above path */
+"device.center.backup.error.type.activeSyncAbovePath"="";
+/* Device Center backup error: MEGA folder in rubbish bin */
+"device.center.backup.error.type.megaFolderInRubbishBin"="";
+/* Device Center backup error: Item in rubbish */
+"device.center.backup.error.type.itemInRubbish"="";
+/* Device Center backup error: Unsupported filesystem - VirtualBox folders */
+"device.center.backup.error.type.unsupportedFilesystemVirtualBox"="";
+/* Device Center backup error: Folder inside synced folder */
+"device.center.backup.error.type.folderInsideSyncedFolder"="";
+/* Device Center backup error: Account blocked */
+"device.center.backup.error.type.accountBlocked"="";
+/* Device Center backup error: Sync or backup problem */
+"device.center.backup.error.type.syncOrBackupProblem"="";
+/* Device Center backup error: Account reloaded with missed updates */
+"device.center.backup.error.type.accountReloadedMissedUpdates"="";
+/* Device Center backup error: Sync or backup stopped */
+"device.center.backup.error.type.syncOrBackupStopped"="";
+/* Device Center backup error: MEGA folder changed */
+"device.center.backup.error.type.megaFolderChanged"="";
+/* Device Center backup error: External drive folder not found */
+"device.center.backup.error.type.externalDriveFolderNotFound"="";
+/* Device Center backup error: Sync or backup problem */
+"device.center.backup.error.type.syncOrBackupProblemAlt"="";
+/* Device Center backup error: Sync node conflict */
+"device.center.backup.error.type.syncNodeConflict"="";
+/* Device Center backup error: Renaming failed */
+"device.center.backup.error.type.renamingFailed"="";
+/* Device Center backup error: Sync creation failed */
+"device.center.backup.error.type.syncCreationFailed"="";
+/* Device Center backup error: Sync configs unreadable from disk */
+"device.center.backup.error.type.syncConfigsUnreadable"="";
+/* Device Center backup error: Unknown sync drive path */
+"device.center.backup.error.type.unknownSyncDrivePath"="";
+/* Device Center backup error: Invalid scan interval */
+"device.center.backup.error.type.invalidScanInterval"="";
+/* Device Center backup error: Filesystem notification subsystem error */
+"device.center.backup.error.type.filesystemNotificationSubsystemError"="";
+/* Device Center backup error: Unable to add filesystem watch */
+"device.center.backup.error.type.unableToAddFilesystemWatch"="";
+/* Device Center backup error: Sync root's FSID retrieval failure */
+"device.center.backup.error.type.syncRootFsidRetrievalFailure"="";
+/* Device Center backup error: State cache database inaccessible */
+"device.center.backup.error.type.stateCacheDatabaseInaccessible"="";
+/* Device Center backup error: Insufficient space for download */
+"device.center.backup.error.type.insufficientSpaceForDownload"="";
+/* Device Center backup error: No access to persistent storage */
+"device.center.backup.error.type.noAccessToPersistentStorage"="";
+/* Device Center backup error: Sync root's FSID change */
+"device.center.backup.error.type.syncRootFsidChange"="";
+/* Device Center backup error: FSID change on MAC device */
+"device.center.backup.error.type.fsidChangeOnMac"="";
+/* Device Center backup error: Unable to get filesystem's ID */
+"device.center.backup.error.type.unableToGetFilesystemsId"="";
 /* Show in Cloud Drive section action title */
 "device.center.show.in.cloud.drive.action.title"="Afișează în Unitatea cloud";
 /* Show in Backups section action title */
 "device.center.show.in.backups.action.title"="Afișează în Backups";
+/* Device Center rename device action title */
+"device.center.rename.device.title"="Numele dispozitivului";
+/* Device Center rename device action duplicated name message */
+"device.center.rename.device.duplicated.name"="Un dispozitiv cu acest nume există deja";
+/* Device Center rename device action enter a different name message */
+"device.center.rename.device.different.name"="Introduceți un alt nume";
+/* Device Center camera upload status enabled */
+"device.center.camera.uploads.action.status.enabled"="Activată";
+/* Device Center camera upload status disabled */
+"device.center.camera.uploads.action.status.disabled"="Dezactivat";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="Încheiați recurența";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3521,7 +3615,7 @@
 /* On Upgrade Account Plan screen. Account Plan picker option for yearly term. */
 "upgradeAccountPlan.header.planTermPicker.yearly"="Anual";
 /* On Upgrade Account Plan screen. Displayed header title text with percent of savings with yearly billing. */
-"upgradeAccountPlan.header.title.saveYearlyBilling"="Economisește până la 16 %% cu facturarea anuală";
+"upgradeAccountPlan.header.title.saveYearlyBilling"="Economisiți până la 16 %% cu facturare anuală";
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Caracteristicile planurilor Pro";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
@@ -3645,7 +3739,7 @@
 /* Album failed to save to cloud drive alert message */
 "albumLink.alert.message.albumFailedToSaveToCloudDrive"="„%@” nu poate fi salvat pe Unitatea cloud. Încercați din nou mai târziu și dacă problema continuă, contactați persoana care a partajat linkul cu dvs.";
 /* Text displayed on banner we show when sharing folder with unverified contacts */
-"shareFolder.contactsNotVerified"="Unele contacte cu care partajați informații nu au fost aprobate de dvs. Pentru a asigura un plus de securitate, vă recomandăm să aprobați acreditările lor în Contacte apăsând pe ⓘ lângă contactul pe care doriți să îl aprobați.";
+"shareFolder.contactsNotVerified"="Unele contacte cu care partajați informații nu au fost confirmate de dvs. Pentru a asigura un plus de securitate, vă recomandăm să confirmați acreditările lor în Contacte apăsând pe ⓘ lângă contactul pe care doriți să îl confirmați.";
 /* Rename public album alert title */
 "albumLink.alert.renameAlbum.title"="Redenumește albumul";
 /* Rename public album alert message */
@@ -3693,7 +3787,11 @@
 /* Meeting waiting room alert title of Host didn’t let you in */
 "meetings.waitingRoom.alert.hostDidNotLetYouIn"="Gazda nu v-a lăsat să intre";
 /* Meeting waiting room alert message of You'll be removed from the waiting room */
-"meetings.waitingRoom.alert.youWillBeRemovedFromTheWaitingRoom"="Veți părăsi sala de așteptare";
+"meetings.waitingRoom.alert.youWillBeRemovedFromTheWaitingRoom"="Veți părăsi sala de așteptare.";
+/* Meeting waiting room alert title of Host didn’t respond */
+"meetings.waitingRoom.alert.hostDidNotRespond"="Gazda nu a răspuns";
+/* Meeting waiting room alert message of There is no response to your request to join the meeting */
+"meetings.waitingRoom.alert.thereIsNoResponseToYourResquestToJoinTheMeeting"="Nu există niciun răspuns la solicitarea dvs. de a vă alătura întâlnirii. Vei fi scos din sala de așteptare. Încercați să vă alăturați din nou mai târziu.";
 /* Meeting waiting room alert action of ok got it */
 "meetings.waitingRoom.alert.okGotIt"="OK, am înțeles";
 /* Call waiting room alert message text to notify host that someone is waiting to join */
@@ -3702,21 +3800,33 @@
 "chat.call.waitingRoom.alert.button.deny"="Refuză";
 /* Call waiting room alert button to admit access */
 "chat.call.waitingRoom.alert.button.admit"="Admite";
-/* Call waiting room alert message text to notify host that several participants are waiting to join */
-"chat.call.waitingRoom.alert.message.several"="";
 /* Call waiting room alert button to open waiting room UI */
 "chat.call.waitingRoom.alert.button.seeWaitingRoom"="Vezi sala de așteptare";
 /* Call waiting room alert button to allow access to everyone */
 "chat.call.waitingRoom.alert.button.admitAll"="Admite toate";
 /* Call waiting room alert message text to confirm deny access from host */
-"chat.call.waitingRoom.alert.message.denyAcces"="Să-i refuzi intrarea %@?";
+"chat.call.waitingRoom.alert.message.denyAccess"="Să-i refuzi intrarea %@?";
 /* Call waiting room alert button to deny access */
 "chat.call.waitingRoom.alert.button.confirmDeny"="Refuzați intrarea";
 /* Call waiting room alert button to allow access */
 "chat.call.waitingRoom.alert.button.cancel"="Anulează";
-/* Call waiting room alert message text to notify host that someone is waiting to join a call (call UI is not visible) */
-"chat.call.waitingRoom.alert.outsideCallUI.message.one"="%@ așteaptă să se alăture la „%@”";
-/* Call waiting room alert message text to notify host that several participants are waiting to join a call (call UI is not visible) */
-"chat.call.waitingRoom.alert.outsideCallUI.message.several"="";
 /* Context menu action seen from native files application when selecting a file that's also present on MEGA */
 "fileProviderExtension.action.open"="Deschide în MEGA";
+/* Filter name for searching on the home screen */
+"home.search.filter.docs"="Documente";
+/* Filter name for searching on the home screen */
+"home.search.filter.images"="Imagini";
+/* Filter name for searching on the home screen */
+"home.search.filter.audio"="Audio";
+/* Filter name for searching on the home screen */
+"home.search.filter.video"="Video";
+/* Empty screen copy when no filter is selected on the home screen search */
+"home.search.empty.no-chip-selected"="Niciun rezultat";
+/* Empty screen copy when Images filter is selected on the home screen search */
+"home.search.empty.no-images"="Nicio imagine";
+/* Empty screen copy when Documents is selected on the home screen search */
+"home.search.empty.no-documents"="Nicio document";
+/* Empty screen copy when Audio filter is selected on the home screen search */
+"home.search.empty.no-audio"="Nicio fișier audio";
+/* Empty screen copy when Video filter is selected on the home screen search */
+"home.search.empty.no-videos"="Nicio fișier video";
