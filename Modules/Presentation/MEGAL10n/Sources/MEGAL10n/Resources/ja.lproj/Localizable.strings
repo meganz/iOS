@@ -721,7 +721,7 @@
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="カメラアップロード";
 /* Banner message on Camera Uploads that warns user that they have limited access to photos */
-"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGAはフォトライブラリへのアクセスに制限があり、すべての写真をバックアップすることはできません。タップすると、権限が変更されます。";
+"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGAはフォトライブラリへのアクセスに制限があり、すべてのメディアをバックアップすることはできません。タップすると、権限が変更されます。";
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="写真";
 /* Photo view is empty */
@@ -1295,7 +1295,7 @@
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
 "verify"="承認";
 /* Button title */
-"verified"="承認済み";
+"verified"="検証済み";
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="チャット履歴をクリア";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
@@ -1314,8 +1314,6 @@
 "My credentials"="私の認証情報";
 /* Button to reset the password */
 "reset"="リセット";
-/* Button title */
-"approve"="承認";
 /* start a chat/conversation */
 "startConversation"="チャットを開始";
 /* Label title for a group chat */
@@ -1419,11 +1417,11 @@
 /* Error message displayed when trying to invite a contact who is already added. */
 "alreadyAContact"="%sさんはすでに連絡先に入っています。";
 /* A summary message when a user sent a contact's details through the chat. Please keep %@ as it will be replaced at runtime with the name of the contact that was sent. */
-"sentContact"="連絡先を送信：%@";
+"sentContact"="連絡先を送信しました：%@";
 /* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
 "sentXContacts"="%s人の連絡先を送信しました。";
 /* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %@ as it will be replaced at runtime with the name of the attached file. */
-"attachedFile"="添付：%@";
+"attachedFile"="添付されました：%@";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="%s個のファイルを添付しました。";
 /* Label in a button that allows to jump to the latest item */
@@ -2003,7 +2001,7 @@
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="%@さんが変更しました";
 /* Title for a recent action bucket with multiple files. %@ will be replaced by the filename of the first file in the bucket. %ld will be replaced by the total number of other files in the bucket. */
-"home.recent.multipleFileTitle"="";
+"home.recent.multipleFileTitle"="「%@」とその他%ld個";
 /* Label that indicates who uploaded a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.createdByLabel"="%@さんが作成しました";
 /* Message shown when the user has not recent activity in their account. */
@@ -2710,7 +2708,7 @@
 "account.upgrade.alreadyHaveASubscription.message"="以前にGoogle PlayまたはAppGalleryでProプランにご加入されたことがございます。お使いの端末のGoogle PlayまたはHuawei AppGallery内で、手動でサブスクリプションをキャンセルしてから再試行してください。";
 /* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
 "account.upgrade.alreadyHaveACancellableSubscription.message"="現在のサブスクリプションをキャンセルして、ご購入を継続されますか？";
-/* Error message shown when a user tries to purchase plan that is not available with their current plan */
+/* This message will be shown if the user is not allowed to purchase a plan because of their current plan.  For example, the user have a Business or Pro Flexi account, they should not be able to purchase a Pro plan. We will show this to the user when they try to purchase one. */
 "account.upgrade.notAvailableWithCurrentPlan.message"="お客様の現在のプランではご利用いただけません";
 /* Dialog title shown before deleting an account with active subscription */
 "account.delete.subscription.title"="アクティブサブスクリプション";
@@ -3175,21 +3173,21 @@
 /* Chat Meetings tab - Section header title for the chat listing screen */
 "chat.listing.sectionHeader.pastMeetings.title"="過去のミーティング";
 /* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
-"general.menuAction.verifyContact.title"="%@さんを承認する";
+"general.menuAction.verifyContact.title"="%@さんを認証する";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
-"sharedItems.contactVerification.section.verifyContact.owner.message"="当社はゼロ知識暗号化でデータを保護します。セキュリティを強化するため、連絡先が共有フォルダにアクセスする前に、情報を共有する連絡先を承認するようお願いしています。";
+"sharedItems.contactVerification.section.verifyContact.owner.message"="当社はゼロ知識暗号化でデータを保護します。セキュリティを強化するため、連絡先が共有フォルダにアクセスする前に、情報を共有する連絡先を認証するようお願いしています。";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
-"sharedItems.contactVerification.section.myCredentials.message"="連絡先を承認するには、上記の認証情報がアカウントの認証情報と一致していることを確認してください。連絡先に認証情報を共有するように依頼できます。";
+"sharedItems.contactVerification.section.myCredentials.message"="連絡先を認証するには、上記の認証情報がアカウントの認証情報と一致していることを確認してください。連絡先に認証情報を共有するように依頼できます。";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
-"sharedItems.contactVerification.section.verifyContact.receiver.message"="当社はゼロ知識暗号化でデータを保護します。セキュリティを強化するため、あなたが共有フォルダにアクセスする前に、あなたが情報を受け取る連絡先を承認するようお願いいたします。";
+"sharedItems.contactVerification.section.verifyContact.receiver.message"="当社はゼロ知識暗号化でデータを保護します。セキュリティを強化するため、あなたが共有フォルダにアクセスする前に、あなたが情報を受け取る連絡先を認証するようお願いしています。";
 /* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
 "sharedItems.contactVerification.section.verifyContact.bannerMessage"="共有フォルダにアクセスするには、あなたと共有した人もあなたを承認する必要があります。";
 /* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
-"sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@は、あなたが承認していない連絡先によって共有されています。セキュリティをさらに強化するために、承認する連絡先の横にあるⓘをタップして、連絡先で認証情報を承認することをお勧めします。";
+"sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@は、あなたが認証していない連絡先によって共有されています。セキュリティをさらに強化するために、認証する連絡先の横にあるⓘをタップして、連絡先で認証情報を認証することをお勧めします。";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="あなたの認証情報";
 /* Title of the header label in contact verification screen. */
-"verifyCredentials.headerMessage"="当社はゼロ知識暗号化でデータを保護するため、MEGAで保存、共有、受信する情報はすべて安全です。さらなるセキュリティを確保するために、情報を共有する連絡先、またはデータを受信する連絡先を承認するようお願いいたします。";
+"verifyCredentials.headerMessage"="当社はゼロ知識暗号化でデータを保護するため、MEGAで保存、共有、受信する情報はすべて安全です。さらなるセキュリティを確保するために、情報を共有する連絡先、またはデータを受信する連絡先を認証するようお願いいたします。";
 /* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
 "sharedItems.tab.incoming.undecryptedFolderName"="[ 未復号フォルダ ]";
 /* On Outgoing Shared Items Tab. Text that shows the receiver's name of the shared folder. %@ will be replaced with the receiver's name. */
@@ -3317,9 +3315,9 @@
 /* Text description for a meeting showing that is a monthly recurring meeting */
 "meetings.scheduled.recurring.monthly"="毎月";
 /* On Outgoing Shared Items Tab. Title of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="連絡先を承認できません";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.title"="連絡先を認証できません";
 /* On Outgoing Shared Items Tab. Message of the modal shown when trying to verify pending outshare where receiver is not in contacts yet. */
-"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="連絡先リストにないため、%@を承認できません。相手側が最初にあなたの招待を受け入れるのを待ちます。";
+"sharedItems.tab.outgoing.modal.cannotVerifyContact.message"="連絡先リストにないため、%@を認証できません。相手側が最初にあなたの招待を受け入れるのを待ちます。";
 /* Title shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled */
 "picker.disable.passcode.title"="MEGAパスコードを無効にする";
 /* Description shown in Files app when users open MEGA and passcode is enabled. Files app can't be used with passcode enabled, it shows the users how to disable the passcode */
@@ -3442,10 +3440,106 @@
 "device.center.backup.blocked.status.message"="ブロックされています";
 /* Default device name in case the device name cannot be obtained */
 "device.center.default.device.title"="端末が不明です";
+/* Device Center backup error: Unknown error */
+"device.center.backup.error.type.unknownError"="不明なエラー";
+/* Device Center backup error: Unsupported filesystem */
+"device.center.backup.error.type.unsupportedFilesystem"="";
+/* Device Center backup error: Invalid remote node */
+"device.center.backup.error.type.invalidRemoteNode"="";
+/* Device Center backup error: Sync setup issue with individual file */
+"device.center.backup.error.type.syncSetupIndividualFile"="";
+/* Device Center backup error: Initial scan failed */
+"device.center.backup.error.type.initialScanFailed"="";
+/* Device Center backup error: Local drive folder not found */
+"device.center.backup.error.type.localDriveFolderNotFound"="";
+/* Device Center backup error: Local drive folder not found */
+"device.center.backup.error.type.localDriveFolderNotFoundAlt"="";
+/* Device Center backup error: MEGA folder not found or inaccessible */
+"device.center.backup.error.type.megaFolderNotFoundOrInaccessible"="";
+/* Device Center backup error: Storage quota reached */
+"device.center.backup.error.type.storageQuotaReached"="";
+/* Device Center backup error: Plan expired */
+"device.center.backup.error.type.planExpired"="";
+/* Device Center backup error: Shared folder quota reached */
+"device.center.backup.error.type.sharedFolderQuotaReached"="";
+/* Device Center backup error: MEGA folder moved */
+"device.center.backup.error.type.megaFolderMoved"="";
+/* Device Center backup error: Insufficient access to shared folder */
+"device.center.backup.error.type.insufficientAccessSharedFolder"="";
+/* Device Center backup error: Filesystem fingerprint mismatch */
+"device.center.backup.error.type.filesystemFingerprintMismatch"="";
+/* Device Center backup error: Folder sync disabled */
+"device.center.backup.error.type.folderSyncDisabled"="";
+/* Device Center backup error: Nested sync folders */
+"device.center.backup.error.type.nestedSyncFolders"="";
+/* Device Center backup error: Active sync above path */
+"device.center.backup.error.type.activeSyncAbovePath"="";
+/* Device Center backup error: MEGA folder in rubbish bin */
+"device.center.backup.error.type.megaFolderInRubbishBin"="";
+/* Device Center backup error: Item in rubbish */
+"device.center.backup.error.type.itemInRubbish"="";
+/* Device Center backup error: Unsupported filesystem - VirtualBox folders */
+"device.center.backup.error.type.unsupportedFilesystemVirtualBox"="";
+/* Device Center backup error: Folder inside synced folder */
+"device.center.backup.error.type.folderInsideSyncedFolder"="";
+/* Device Center backup error: Account blocked */
+"device.center.backup.error.type.accountBlocked"="";
+/* Device Center backup error: Sync or backup problem */
+"device.center.backup.error.type.syncOrBackupProblem"="";
+/* Device Center backup error: Account reloaded with missed updates */
+"device.center.backup.error.type.accountReloadedMissedUpdates"="";
+/* Device Center backup error: Sync or backup stopped */
+"device.center.backup.error.type.syncOrBackupStopped"="";
+/* Device Center backup error: MEGA folder changed */
+"device.center.backup.error.type.megaFolderChanged"="";
+/* Device Center backup error: External drive folder not found */
+"device.center.backup.error.type.externalDriveFolderNotFound"="";
+/* Device Center backup error: Sync or backup problem */
+"device.center.backup.error.type.syncOrBackupProblemAlt"="";
+/* Device Center backup error: Sync node conflict */
+"device.center.backup.error.type.syncNodeConflict"="";
+/* Device Center backup error: Renaming failed */
+"device.center.backup.error.type.renamingFailed"="";
+/* Device Center backup error: Sync creation failed */
+"device.center.backup.error.type.syncCreationFailed"="";
+/* Device Center backup error: Sync configs unreadable from disk */
+"device.center.backup.error.type.syncConfigsUnreadable"="";
+/* Device Center backup error: Unknown sync drive path */
+"device.center.backup.error.type.unknownSyncDrivePath"="";
+/* Device Center backup error: Invalid scan interval */
+"device.center.backup.error.type.invalidScanInterval"="";
+/* Device Center backup error: Filesystem notification subsystem error */
+"device.center.backup.error.type.filesystemNotificationSubsystemError"="";
+/* Device Center backup error: Unable to add filesystem watch */
+"device.center.backup.error.type.unableToAddFilesystemWatch"="";
+/* Device Center backup error: Sync root's FSID retrieval failure */
+"device.center.backup.error.type.syncRootFsidRetrievalFailure"="";
+/* Device Center backup error: State cache database inaccessible */
+"device.center.backup.error.type.stateCacheDatabaseInaccessible"="";
+/* Device Center backup error: Insufficient space for download */
+"device.center.backup.error.type.insufficientSpaceForDownload"="";
+/* Device Center backup error: No access to persistent storage */
+"device.center.backup.error.type.noAccessToPersistentStorage"="";
+/* Device Center backup error: Sync root's FSID change */
+"device.center.backup.error.type.syncRootFsidChange"="";
+/* Device Center backup error: FSID change on MAC device */
+"device.center.backup.error.type.fsidChangeOnMac"="";
+/* Device Center backup error: Unable to get filesystem's ID */
+"device.center.backup.error.type.unableToGetFilesystemsId"="";
 /* Show in Cloud Drive section action title */
 "device.center.show.in.cloud.drive.action.title"="クラウドドライブに表示";
 /* Show in Backups section action title */
 "device.center.show.in.backups.action.title"="バックアップに表示";
+/* Device Center rename device action title */
+"device.center.rename.device.title"="デバイス名";
+/* Device Center rename device action duplicated name message */
+"device.center.rename.device.duplicated.name"="この名前のデバイスはすでに存在します";
+/* Device Center rename device action enter a different name message */
+"device.center.rename.device.different.name"="別の名前を入力してください";
+/* Device Center camera upload status enabled */
+"device.center.camera.uploads.action.status.enabled"="有効になっています";
+/* Device Center camera upload status disabled */
+"device.center.camera.uploads.action.status.disabled"="無効になっています";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="定期開催を終了する";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3645,7 +3739,7 @@
 /* Album failed to save to cloud drive alert message */
 "albumLink.alert.message.albumFailedToSaveToCloudDrive"="「%@」はクラウドドライブに保存できません。後でもう一度試して、問題が解決しない場合は、リンクを共有した人に連絡してください。";
 /* Text displayed on banner we show when sharing folder with unverified contacts */
-"shareFolder.contactsNotVerified"="情報を共有している連絡先の一部は、あなたによって承認されていません。セキュリティをさらに強化するために、承認する連絡先の横にあるⓘをタップして、連絡先で連絡先の認証情報を承認することをお勧めします。";
+"shareFolder.contactsNotVerified"="情報を共有している連絡先の一部は、あなたによって認証されていません。セキュリティをさらに強化するために、認証する連絡先の横にあるⓘをタップして、連絡先で連絡先の認証情報を認証することをお勧めします。";
 /* Rename public album alert title */
 "albumLink.alert.renameAlbum.title"="アルバムの名前を変更";
 /* Rename public album alert message */
@@ -3693,7 +3787,11 @@
 /* Meeting waiting room alert title of Host didn’t let you in */
 "meetings.waitingRoom.alert.hostDidNotLetYouIn"="主催者があなたを参加させませんでした";
 /* Meeting waiting room alert message of You'll be removed from the waiting room */
-"meetings.waitingRoom.alert.youWillBeRemovedFromTheWaitingRoom"="待合室から退出させられます";
+"meetings.waitingRoom.alert.youWillBeRemovedFromTheWaitingRoom"="待合室から退出させられます。";
+/* Meeting waiting room alert title of Host didn’t respond */
+"meetings.waitingRoom.alert.hostDidNotRespond"="主催者が応答しませんでした";
+/* Meeting waiting room alert message of There is no response to your request to join the meeting */
+"meetings.waitingRoom.alert.thereIsNoResponseToYourResquestToJoinTheMeeting"="ミーティングへの参加リクエストに対する応答がありません。そのため、待合室から退出させられます。後でもう一度参加してみてください。";
 /* Meeting waiting room alert action of ok got it */
 "meetings.waitingRoom.alert.okGotIt"="はい、わかりました。";
 /* Call waiting room alert message text to notify host that someone is waiting to join */
@@ -3702,21 +3800,33 @@
 "chat.call.waitingRoom.alert.button.deny"="拒否する";
 /* Call waiting room alert button to admit access */
 "chat.call.waitingRoom.alert.button.admit"="受け入れる";
-/* Call waiting room alert message text to notify host that several participants are waiting to join */
-"chat.call.waitingRoom.alert.message.several"="";
 /* Call waiting room alert button to open waiting room UI */
 "chat.call.waitingRoom.alert.button.seeWaitingRoom"="待合室を見る";
 /* Call waiting room alert button to allow access to everyone */
 "chat.call.waitingRoom.alert.button.admitAll"="すべて受け入れる";
 /* Call waiting room alert message text to confirm deny access from host */
-"chat.call.waitingRoom.alert.message.denyAcces"="%@さんの入室を拒否しますか？";
+"chat.call.waitingRoom.alert.message.denyAccess"="%@さんの入室を拒否しますか？";
 /* Call waiting room alert button to deny access */
 "chat.call.waitingRoom.alert.button.confirmDeny"="入室を拒否";
 /* Call waiting room alert button to allow access */
 "chat.call.waitingRoom.alert.button.cancel"="キャンセル";
-/* Call waiting room alert message text to notify host that someone is waiting to join a call (call UI is not visible) */
-"chat.call.waitingRoom.alert.outsideCallUI.message.one"="%@さんが「%@」への参加を待っています";
-/* Call waiting room alert message text to notify host that several participants are waiting to join a call (call UI is not visible) */
-"chat.call.waitingRoom.alert.outsideCallUI.message.several"="";
 /* Context menu action seen from native files application when selecting a file that's also present on MEGA */
 "fileProviderExtension.action.open"="MEGAで開く";
+/* Filter name for searching on the home screen */
+"home.search.filter.docs"="ドキュメント";
+/* Filter name for searching on the home screen */
+"home.search.filter.images"="画像";
+/* Filter name for searching on the home screen */
+"home.search.filter.audio"="音声";
+/* Filter name for searching on the home screen */
+"home.search.filter.video"="ビデオ";
+/* Empty screen copy when no filter is selected on the home screen search */
+"home.search.empty.no-chip-selected"="結果なし";
+/* Empty screen copy when Images filter is selected on the home screen search */
+"home.search.empty.no-images"="画像がありません";
+/* Empty screen copy when Documents is selected on the home screen search */
+"home.search.empty.no-documents"="ドキュメントがありません";
+/* Empty screen copy when Audio filter is selected on the home screen search */
+"home.search.empty.no-audio"="音声ファイルがありません";
+/* Empty screen copy when Video filter is selected on the home screen search */
+"home.search.empty.no-videos"="動画ファイルがありません";
