@@ -31,11 +31,11 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     // MARK: - Internal properties
     private let viewModel: MeetingParticipantsLayoutViewModel
     private var titleView: CallTitleView
-    lazy private var layoutModeBarButton = UIBarButtonItem(image: Asset.Images.Chat.speakerView.image,
+    lazy private var layoutModeBarButton = UIBarButtonItem(image: UIImage(resource: .speakerView),
                                                style: .plain,
                                                target: self,
                                                action: #selector(MeetingParticipantsLayoutViewController.didTapLayoutModeButton))
-    lazy private var optionsMenuButton = UIBarButtonItem(image: Asset.Images.Generic.moreGrid.image,
+    lazy private var optionsMenuButton = UIBarButtonItem(image: UIImage(resource: .moreGrid),
                                                      style: .plain,
                                                      target: self,
                                                      action: #selector(MeetingParticipantsLayoutViewController.didTapOptionsButton))
@@ -259,9 +259,9 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     private func configureLayout(mode: ParticipantsLayoutMode, participantsCount: Int) {
         switch mode {
         case .grid:
-            layoutModeBarButton.image = Asset.Images.Chat.speakerView.image
+            layoutModeBarButton.image = UIImage(resource: .speakerView)
         case .speaker:
-            layoutModeBarButton.image = Asset.Images.Meetings.galleryView.image
+            layoutModeBarButton.image = UIImage(resource: .galleryView)
         }
         speakerViews.forEach { $0.isHidden = mode == .grid || participantsCount == 0 }
         pageControl.isHidden = mode == .speaker || participantsCount <= 6

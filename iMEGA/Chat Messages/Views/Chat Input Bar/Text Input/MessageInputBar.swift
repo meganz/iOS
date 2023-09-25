@@ -271,13 +271,13 @@ class MessageInputBar: UIView {
     private func configureEditField() {
         guard let editMessage = editMessage else {
             editViewHeightConstraint.constant = 0
-            sendButton.setImage(Asset.Images.Chat.InputToolbar.sendButton.image, for: .normal)
+            sendButton.setImage(UIImage(resource: .sendButton), for: .normal)
             sendButton.isEnabled = true
             return
         }
         calculateEditViewHeight()
         editMessageLabel.text = editMessage.message.content
-        sendButton.setImage(Asset.Images.Chat.confirmEdit.image, for: .normal)
+        sendButton.setImage(UIImage(resource: .confirmEdit), for: .normal)
         sendButton.isEnabled = !(editMessage.message.content?.isEmpty ?? true)
     }
     
@@ -358,7 +358,7 @@ class MessageInputBar: UIView {
         
         calculateTopEditViewSpacing()
         messageTextViewBottomConstraint.constant = messageTextViewBottomConstraintDefaultValue
-        expandCollapseButton.setImage(Asset.Images.Chat.InputToolbar.expand.image, for: .normal)
+        expandCollapseButton.setImage(UIImage(resource: .expand), for: .normal)
     }
     
     private func expandAnimationStart(completionHandler: ((Bool) -> Void)?) {
@@ -394,7 +394,7 @@ class MessageInputBar: UIView {
             calculateTopEditViewSpacing()
         }
         messageTextView.expandedHeight = expandedHeight
-        expandCollapseButton.setImage(Asset.Images.Chat.InputToolbar.collapse.image, for: .normal)
+        expandCollapseButton.setImage(UIImage(resource: .collapse), for: .normal)
     }
     
     private func keyboardShowNotification() -> any NSObjectProtocol {
