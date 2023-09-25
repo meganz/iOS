@@ -1,7 +1,8 @@
 import MEGADomain
+import MEGASdk
 
 extension NodeFormatEntity {
-    func toMEGANodeFormatType() -> MEGANodeFormatType {
+    public func toMEGANodeFormatType() -> MEGANodeFormatType {
         switch self {
         case .audio: return .audio
         case .document: return .document
