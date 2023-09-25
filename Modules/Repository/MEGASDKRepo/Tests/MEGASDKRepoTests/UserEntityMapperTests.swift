@@ -1,5 +1,5 @@
-@testable import MEGA
 import MEGADomain
+import MEGASdk
 import MEGASDKRepoMock
 import XCTest
 
@@ -28,7 +28,7 @@ final class UserEntityMapperTests: XCTestCase {
             case .blocked:
                 XCTAssertEqual(entity, .blocked)
             @unknown default:
-                XCTFail("Please map the new MEGAUserVisibility to UserEntity.VisibilityEntity")
+                XCTFail("Please map the new \(type(of: MEGAUserVisibility.self)) to \(type(of: UserEntity.self)).\(type(of: UserEntity.VisibilityEntity.self))")
             }
         }
     }
