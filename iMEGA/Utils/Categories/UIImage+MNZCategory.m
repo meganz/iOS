@@ -239,7 +239,7 @@
 }
 
 + (UIImage *)mnz_folderImage {
-    return [UIImage imageNamed:@"folder"];
+    return [UIImage imageNamed:@"filetype_folder"];
 }
 
 + (UIImage *)mnz_incomingFolderImage {
