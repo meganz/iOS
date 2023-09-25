@@ -65,7 +65,7 @@ final class MeetingSpeakerQuickActionView: MeetingQuickActionView {
         self.init()
         self.circularView = circularView
         self.iconImageView = iconImageView
-        self.iconImageView.image = Asset.Images.Meetings.speakerMeetingAction.image
+        self.iconImageView.image = UIImage(resource: .speakerMeetingAction)
         self.iconImageView.contentMode = .scaleAspectFit
         self.nameLabel = nameLabel
         self.button = button
@@ -74,14 +74,14 @@ final class MeetingSpeakerQuickActionView: MeetingQuickActionView {
     func selectedAudioPortUpdated(_ selectedAudioPort: AudioPort, isBluetoothRouteAvailable: Bool) {
         switch selectedAudioPort {
         case .builtInReceiver, .headphones, .builtInSpeaker:
-            iconImageView.image = Asset.Images.Meetings.speakerMeetingAction.image
+            iconImageView.image = UIImage(resource: .speakerMeetingAction)
             isSelected = !(selectedAudioPort == .builtInReceiver)
         default:
             if isBluetoothRouteAvailable {
-                iconImageView.image = Asset.Images.Meetings.audioSourceMeetingAction.image
+                iconImageView.image = UIImage(resource: .audioSourceMeetingAction)
                 isSelected = true
             } else {
-                iconImageView.image = Asset.Images.Meetings.speakerMeetingAction.image
+                iconImageView.image = UIImage(resource: .speakerMeetingAction)
                 isSelected = false
             }
         }

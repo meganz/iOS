@@ -190,7 +190,7 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
         let navigationController = MEGANavigationController(rootViewController: inviteContactsViewController)
         
         let backBarButton = UIBarButtonItem(
-            image: Asset.Images.Chat.backArrow.image,
+            image: UIImage(resource: .backArrow),
             style: .plain,
             target: self,
             action: #selector(self.dismissInviteContactsScreen)

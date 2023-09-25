@@ -67,7 +67,7 @@ struct MeetingOptionsMenuViewModel: ViewModelType {
                             Strings.Localizable.Meetings.Action.rename :
                             Strings.Localizable.renameGroup,
                           detail: nil,
-                          image: Asset.Images.Generic.rename.image,
+                          image: UIImage(resource: .rename),
                           style: .default) {
             dispatch(.renameAction)
         }
@@ -78,7 +78,7 @@ struct MeetingOptionsMenuViewModel: ViewModelType {
                             Strings.Localizable.Meetings.Action.shareLink :
                             Strings.Localizable.getChatLink,
                           detail: nil,
-                          image: Asset.Images.NodeActions.share.image,
+                          image: UIImage(resource: .share),
                           style: .default) {
             dispatch(.shareLinkAction)
         }

@@ -65,7 +65,7 @@ final class MeetingFloatingPanelViewController: UIViewController {
         backgroundView.backgroundColor = Colors.General.Black._2c2c2e.color
         backgroundView.layer.cornerRadius = Constants.backgroundViewCornerRadius
         dragIndicatorView.layer.cornerRadius = Constants.dragIndicatorCornerRadius
-        endQuickActionView.icon = Asset.Images.Meetings.hangCallMeetingAction.image
+        endQuickActionView.icon = UIImage(resource: .hangCallMeetingAction)
         endQuickActionView.name = Strings.Localizable.leave
         shareLinkLabel.text = Strings.Localizable.Meetings.Panel.shareLink
         participantsTableView.register(MeetingParticipantTableViewCell.nib, forCellReuseIdentifier: MeetingParticipantTableViewCell.reuseIdentifier)

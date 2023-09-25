@@ -1,10 +1,11 @@
 import Foundation
 import MEGAL10n
+import MEGASwift
 
 class TapAndHoldMessageView: UIView {
     
     // MARK: - Properties
-
+    
     @IBOutlet weak var label: UILabel!
     private var timer: Timer!
     
@@ -16,7 +17,7 @@ class TapAndHoldMessageView: UIView {
     }
     
     // MARK: - Actions
-
+    
     @IBAction func didTapClose(_ button: UIButton) {
         timer.invalidate()
         close()
@@ -28,7 +29,7 @@ class TapAndHoldMessageView: UIView {
     }
     
     // MARK: - Interface methods
-
+    
     func add(toView view: UIView, bottom: CGFloat) {
         alpha = 0.0
         view.addSubview(self)
@@ -63,18 +64,14 @@ class TapAndHoldMessageView: UIView {
     }
     
     private func setLabelText() {
-        guard let voiceImageAttributedString = NSAttributedString.mnz_attributedString(fromImageNamed: Asset.Images.Chat.voiceTip.name,
-                                                                                       fontCapHeight: label.font.capHeight) else {
-                                                                                        MEGALogDebug("could not create voice image attributed string")
-                                                                                        return
-        }
-        
+        let voiceImageAttributedString = NSAttributedString.attributedString(fromImage: UIImage(resource: .voiceTip),
+                                                                             fontCapHeight: label.font.capHeight)
         let separatorText = "%@"
         let tapAndHoldText = Strings.Localizable.tapAndHoldToRecordReleaseToSend(separatorText)
         let tapAndHoldTextComponents = tapAndHoldText.components(separatedBy: separatorText)
         
         guard let tapAndHoldFirstPartString = tapAndHoldTextComponents.first,
-            let tapAndHoldLastPartString = tapAndHoldTextComponents.last else {
+              let tapAndHoldLastPartString = tapAndHoldTextComponents.last else {
             MEGALogDebug("could not extract first and last part of tap and hold string")
             return
         }

@@ -11,21 +11,21 @@ final class AudioPlayerFileToolbarConfigurator {
     )
     
     lazy var importItem = UIBarButtonItem(
-        image: Asset.Images.InfoActions.import.image,
+        image: UIImage(resource: .import),
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))
     )
     
     lazy var sendToContactItem = UIBarButtonItem(
-        image: Asset.Images.NodeActions.sendToChat.image,
+        image: UIImage(resource: .sendToChat),
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))
     )
     
     lazy var shareItem = UIBarButtonItem(
-        image: Asset.Images.NodeActions.share.image,
+        image: UIImage(resource: .share),
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))

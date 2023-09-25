@@ -122,7 +122,7 @@ class AddToChatCameraCollectionCell: UICollectionViewCell {
     }
     
     private func updateCameraIconImageView() {
-        cameraIconImageView.image = (traitCollection.userInterfaceStyle == .dark) ? #imageLiteral(resourceName: "cameraIconWhite") : (permissionHandler.isVideoPermissionAuthorized ? Asset.Images.Chat.cameraIconWhite.image : Asset.Images.Chat.cameraIcon.image)
+        cameraIconImageView.image = (traitCollection.userInterfaceStyle == .dark) ? #imageLiteral(resourceName: "cameraIconWhite") : (permissionHandler.isVideoPermissionAuthorized ? Asset.Images.Chat.cameraIconWhite.image : UIImage(resource: .cameraIcon))
     }
     
     private func updateAppearance() {
