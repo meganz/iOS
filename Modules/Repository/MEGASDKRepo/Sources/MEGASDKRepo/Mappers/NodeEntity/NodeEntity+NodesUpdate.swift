@@ -1,7 +1,8 @@
 import MEGADomain
+import MEGASdk
 
 extension NodeEntity {
-    func shouldProcessOnNodesUpdate(withChildNodes childNodes: [MEGANode], updatedNodes: [MEGANode]) -> Bool {
+    public func shouldProcessOnNodesUpdate(withChildNodes childNodes: [MEGANode], updatedNodes: [MEGANode]) -> Bool {
         let updatedNodes = updatedNodes.toNodeEntities()
         guard !updatedNodes.contains(where: { $0.parentHandle == self.handle }) else { return true }
         
@@ -22,7 +23,7 @@ extension NodeEntity {
         return false
     }
     
-    func shouldProcessOnNodeEntitiesUpdate(withChildNodes childNodes: [NodeEntity], updatedNodes: [NodeEntity]) -> Bool {
+    public func shouldProcessOnNodeEntitiesUpdate(withChildNodes childNodes: [NodeEntity], updatedNodes: [NodeEntity]) -> Bool {
         guard !updatedNodes.contains(where: { $0.parentHandle == self.handle }) else { return true }
         
         let childNodes = Set(childNodes.compactMap({ $0.base64Handle }))

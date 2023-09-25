@@ -1,4 +1,3 @@
-@testable import MEGA
 @testable import MEGADomain
 import XCTest
 

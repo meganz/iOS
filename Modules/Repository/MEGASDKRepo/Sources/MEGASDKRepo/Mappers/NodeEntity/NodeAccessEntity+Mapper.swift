@@ -1,11 +1,12 @@
 import MEGADomain
+import MEGASdk
 
 extension NodeAccessTypeEntity {
-    init?(shareAccess: MEGAShareType) {
+    public init?(shareAccess: MEGAShareType) {
         self.init(rawValue: shareAccess.rawValue)
     }
     
-    func toShareAccessLevel() -> ShareAccessLevelEntity {
+    public func toShareAccessLevel() -> ShareAccessLevelEntity {
         switch self {
         case .read:
             return .read
