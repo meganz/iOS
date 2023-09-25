@@ -7,14 +7,14 @@ struct WaitingRoomControlsView: View {
     
     var body: some View {
         HStack(spacing: 32) {
-            WaitingRoomControl(iconOff: Asset.Images.Chat.Calls.cameraOff.name,
-                               iconOn: Asset.Images.Chat.Calls.cameraOn.name,
+            WaitingRoomControl(iconOff: .cameraOff,
+                               iconOn: .cameraOff,
                                enabled: $isVideoEnabled)
-            WaitingRoomControl(iconOff: Asset.Images.Chat.Calls.micOn.name,
-                               iconOn: Asset.Images.Chat.Calls.micOff.name,
+            WaitingRoomControl(iconOff: .micOn,
+                               iconOn: .micOff,
                                enabled: $isMicrophoneMuted)
-            WaitingRoomControl(iconOff: Asset.Images.Chat.Calls.speakerOff.name,
-                               iconOn: Asset.Images.Chat.Calls.speakerOn.name,
+            WaitingRoomControl(iconOff: .speakerOff,
+                               iconOn: .speakerOn,
                                enabled: $isSpeakerEnabled)
         }
         .padding()
@@ -22,8 +22,8 @@ struct WaitingRoomControlsView: View {
 }
 
 struct WaitingRoomControl: View {
-    let iconOff: String
-    let iconOn: String
+    let iconOff: ImageResource
+    let iconOn: ImageResource
     @Binding var enabled: Bool
     
     var body: some View {

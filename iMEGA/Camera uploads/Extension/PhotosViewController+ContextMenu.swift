@@ -24,12 +24,12 @@ extension PhotosViewController {
     }
     
     @objc func makeFilterActiveBarButton() -> UIBarButtonItem {
-        UIBarButtonItem(image: Asset.Images.ActionSheetIcons.filterActive.image.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(onFilter))
+        UIBarButtonItem(image: UIImage(resource: .filterActive).withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(onFilter))
     }
     
     @objc func makeContextMenuBarButton() -> UIBarButtonItem? {
         guard let config = contextMenuConfiguration(), let menu = contextMenuManager?.contextMenu(with: config) else { return nil }
-        return UIBarButtonItem(image: Asset.Images.NavigationBar.moreNavigationBar.image, menu: menu)
+        return UIBarButtonItem(image: UIImage(resource: .moreNavigationBar), menu: menu)
     }
     
     @objc func setupNavigationBarButtons() {
@@ -67,7 +67,7 @@ extension PhotosViewController {
     }
     
     @objc func makeEditBarButton() -> UIBarButtonItem {
-        UIBarButtonItem(image: Asset.Images.NavigationBar.selectAll.image, style: .plain, target: self, action: #selector(toggleEditing))
+        UIBarButtonItem(image: UIImage(resource: .selectAll), style: .plain, target: self, action: #selector(toggleEditing))
     }
     
     @objc func toggleEditing() {

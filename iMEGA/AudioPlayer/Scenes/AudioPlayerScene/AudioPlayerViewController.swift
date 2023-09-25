@@ -99,7 +99,7 @@ final class AudioPlayerViewController: UIViewController {
         currentTimeLabel.text = currentTime
         remainingTimeLabel.text = remainingTime
         timeSliderView.setValue(percentage, animated: false)
-        playPauseButton.setImage(isPlaying ? Asset.Images.AudioPlayer.pause.image : Asset.Images.AudioPlayer.play.image, for: .normal)
+        playPauseButton.setImage(UIImage(resource: isPlaying ? .pause : .play), for: .normal)
         
         if timeSliderView.value == 1.0 {
             timeSliderView.cancelTracking(with: nil)
@@ -117,7 +117,7 @@ final class AudioPlayerViewController: UIViewController {
         if let thumbnailImage = thumbnail {
             imageView.image = thumbnailImage
         } else {
-            imageView.image = Asset.Images.AudioPlayer.defaultArtwork.image
+            imageView.image = UIImage(resource: .defaultArtwork)
         }
         
         if let nodeSize = nodeSize {
@@ -128,9 +128,9 @@ final class AudioPlayerViewController: UIViewController {
     private func updateRepeat(_ status: RepeatMode) {
         switch status {
         case .none, .loop:
-            repeatButton.setImage(Asset.Images.AudioPlayer.repeatAudio.image, for: .normal)
+            repeatButton.setImage(UIImage(resource: .repeatAudio), for: .normal)
         case .repeatOne:
-            repeatButton.setImage(Asset.Images.AudioPlayer.repeatOneAudio.image, for: .normal)
+            repeatButton.setImage(UIImage(resource: .repeatOneAudio), for: .normal)
         }
         updateRepeatButtonAppearance(status: status)
     }
@@ -138,13 +138,13 @@ final class AudioPlayerViewController: UIViewController {
     private func updateSpeed(_ mode: SpeedMode) {
         switch mode {
         case .normal:
-            playbackSpeedButton.setImage(Asset.Images.AudioPlayer.SpeedMode.normal.image, for: .normal)
+            playbackSpeedButton.setImage(UIImage(resource: .normal), for: .normal)
         case .oneAndAHalf:
-            playbackSpeedButton.setImage(Asset.Images.AudioPlayer.SpeedMode.oneAndAHalf.image, for: .normal)
+            playbackSpeedButton.setImage(UIImage(resource: .oneAndAHalf), for: .normal)
         case .double:
-            playbackSpeedButton.setImage(Asset.Images.AudioPlayer.SpeedMode.double.image, for: .normal)
+            playbackSpeedButton.setImage(UIImage(resource: .double), for: .normal)
         case .half:
-            playbackSpeedButton.setImage(Asset.Images.AudioPlayer.SpeedMode.half.image, for: .normal)
+            playbackSpeedButton.setImage(UIImage(resource: .half), for: .normal)
         }
     }
     
@@ -164,7 +164,7 @@ final class AudioPlayerViewController: UIViewController {
     
     private func updateShuffleButtonAppearance(status: Bool) {
         shuffleButton.tintColor = status ? Colors.General.Green._00A382.color : traitCollection.userInterfaceStyle == .dark ? .white : .black
-        shuffleButton.setImage(Asset.Images.AudioPlayer.shuffleAudio.image, for: .normal)
+        shuffleButton.setImage(UIImage(resource: .shuffleAudio), for: .normal)
     }
     
     private func refreshStateOfLoadingView(_ enabled: Bool) {
@@ -190,7 +190,7 @@ final class AudioPlayerViewController: UIViewController {
     
     private func configureNavigationBar(title: String, subtitle: String) {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: Strings.Localizable.close, style: .done, target: self, action: #selector(closeButtonAction))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.moreNavigationBar.image, style: .plain, target: self, action: #selector(moreButtonAction(_:)))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(resource: .moreNavigationBar), style: .plain, target: self, action: #selector(moreButtonAction(_:)))
         
         let titleView = CustomTitleView.instanceFromNib
         titleView.titleLabel.text = title
@@ -451,9 +451,9 @@ final class AudioPlayerViewController: UIViewController {
         case .enableUserInteraction(let enabled):
             userInteraction(enabled: enabled)
         case .didPausePlayback:
-            playPauseButton.setImage(Asset.Images.AudioPlayer.pause.image, for: .normal)
+            playPauseButton.setImage(UIImage(resource: .pause), for: .normal)
         case .didResumePlayback:
-            playPauseButton.setImage(Asset.Images.AudioPlayer.play.image, for: .normal)
+            playPauseButton.setImage(UIImage(resource: .play), for: .normal)
         case .shuffleAction(let enabled):
             shuffleButton.isEnabled = enabled
             shuffleButton.tintColor = enabled ? .black : UIColor.black.withAlphaComponent(0.25)
