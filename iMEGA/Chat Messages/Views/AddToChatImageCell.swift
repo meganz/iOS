@@ -25,11 +25,11 @@ class AddToChatImageCell: UICollectionViewCell {
         didSet {
             if cellType == .media {
                 foregoundLabel.text = Strings.Localizable.send
-                let sendImage = Asset.Images.Chat.sendChatDisabled.image.withRenderingMode(.alwaysTemplate)
+                let sendImage = UIImage(resource: .sendChatDisabled).withRenderingMode(.alwaysTemplate)
                 foregroundImageView.image = sendImage
             } else {
                 foregoundLabel.text = Strings.Localizable.more
-                let moreImage = Asset.Images.Generic.moreGrid.image.withRenderingMode(.alwaysTemplate)
+                let moreImage = UIImage(resource: .moreGrid).withRenderingMode(.alwaysTemplate)
                 foregroundImageView.image = moreImage
                 selectionBackgroundView.isHidden = true
                 foregroundView.isHidden = false

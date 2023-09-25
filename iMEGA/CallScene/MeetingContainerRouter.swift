@@ -133,7 +133,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
         guard CustomModalAlertViewController.isAlreadyPresented == false else { return }
         
         let customModalAlertViewController = CustomModalAlertViewController()
-        customModalAlertViewController.image = Asset.Images.Chat.chatLinkCreation.image
+        customModalAlertViewController.image = UIImage(resource: .chatLinkCreation)
         customModalAlertViewController.viewTitle = chatRoom.title
         customModalAlertViewController.firstButtonTitle = Strings.Localizable.close
         customModalAlertViewController.link = chatRoom.chatType == .meeting ? Strings.Localizable.Meetings.Sharelink.error : Strings.Localizable.noChatLinkAvailable

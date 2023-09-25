@@ -35,15 +35,15 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnvironmen
     
     var leftBarButton: UIBarButtonItem?
     lazy var isAlbumShareLinkEnabled = featureFlagProvider.isFeatureFlagEnabled(for: .albumShareLink)
-    lazy var shareLinkBarButton = UIBarButtonItem(image: Asset.Images.Generic.link.image,
+    lazy var shareLinkBarButton = UIBarButtonItem(image: UIImage(resource: .link),
                                                style: .plain,
                                                target: self,
                                                action: #selector(shareLinksButtonPressed))
-    lazy var removeLinksBarButton = UIBarButtonItem(image: Asset.Images.NodeActions.removeLink.image,
+    lazy var removeLinksBarButton = UIBarButtonItem(image: UIImage(resource: .removeLink),
                                                             style: .plain,
                                                             target: self,
                                                             action: #selector(removeLinksButtonPressed))
-    lazy var deleteBarButton = UIBarButtonItem(image: Asset.Images.NodeActions.rubbishBin.image,
+    lazy var deleteBarButton = UIBarButtonItem(image: UIImage(resource: .rubbishBin),
                                                         style: .plain,
                                                         target: self,
                                                         action: #selector(deleteAlbumButtonPressed))

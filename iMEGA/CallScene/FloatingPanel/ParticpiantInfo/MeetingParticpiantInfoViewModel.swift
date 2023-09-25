@@ -140,7 +140,7 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
     private func infoAction() -> ActionSheetAction {
         ActionSheetAction(title: Strings.Localizable.info,
                           detail: nil,
-                          image: Asset.Images.Meetings.infoMeetings.image,
+                          image: UIImage(resource: .infoMeetings),
                           style: .default) {
             dispatch(.showInfo)
         }
@@ -149,7 +149,7 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
     private func sendMessageAction() -> ActionSheetAction {
         ActionSheetAction(title: Strings.Localizable.sendMessage,
                           detail: nil,
-                          image: Asset.Images.Meetings.sendMessageMeetings.image,
+                          image: UIImage(resource: .sendMessageMeetings),
                           style: .default) {
             dispatch(.sendMessage)
         }
@@ -158,7 +158,7 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
     private func makeModeratorAction() -> ActionSheetAction {
         ActionSheetAction(title: Strings.Localizable.Meetings.Participant.makeModerator,
                           detail: nil,
-                          image: Asset.Images.Meetings.moderatorMeetings.image,
+                          image: UIImage(resource: .moderatorMeetings),
                           style: .default) {
             dispatch(.makeModerator)
         }
@@ -167,7 +167,7 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
     private func removeModeratorAction() -> ActionSheetAction {
         ActionSheetAction(title: Strings.Localizable.Meetings.Participant.removeModerator,
                           detail: nil,
-                          image: Asset.Images.Meetings.removeModerator.image,
+                          image: UIImage(resource: .removeModerator),
                           style: .default) {
             dispatch(.removeModerator)
         }
@@ -176,7 +176,7 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
     private func removeContactAction() -> ActionSheetAction {
         ActionSheetAction(title: Strings.Localizable.removeParticipant,
                           detail: nil,
-                          image: Asset.Images.NodeActions.delete.image,
+                          image: UIImage(resource: .delete),
                           style: .destructive) {
             dispatch(.removeParticipant)
         }
@@ -185,7 +185,7 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
     private func displayInMainViewAction() -> ActionSheetAction {
         ActionSheetAction(title: Strings.Localizable.Meetings.DisplayInMainView.title,
                           detail: nil,
-                          image: Asset.Images.Chat.speakerView.image,
+                          image: UIImage(resource: .speakerView),
                           style: .default) {
             dispatch(.displayInMainView)
         }

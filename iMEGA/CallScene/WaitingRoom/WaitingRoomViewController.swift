@@ -8,7 +8,7 @@ final class WaitingRoomViewController: UIViewController {
                                                                     target: self,
                                                                     action: #selector(leaveButtonItemTapped))
     
-    lazy var infoBarButtonItem: UIBarButtonItem = UIBarButtonItem(image: Asset.Images.Meetings.infoMeetings.image,
+    lazy var infoBarButtonItem: UIBarButtonItem = UIBarButtonItem(image: UIImage(resource: .infoMeetings),
                                                                   style: .plain,
                                                                   target: self,
                                                                   action: #selector(infoButtonItemTapped))

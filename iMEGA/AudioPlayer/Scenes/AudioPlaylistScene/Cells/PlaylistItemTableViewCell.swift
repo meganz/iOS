@@ -30,7 +30,7 @@ final class PlaylistItemTableViewCell: UITableViewCell {
                 if FileManager.default.fileExists(atPath: thumbnailFilePath) {
                     thumbnailImageView.image = UIImage(contentsOfFile: thumbnailFilePath)
                 } else {
-                    MEGASdkManager.sharedMEGASdk().getThumbnailNode(node, destinationFilePath: thumbnailFilePath, delegate: MEGAGenericRequestDelegate { [weak self] request, error in
+                    MEGASdk.shared.getThumbnailNode(node, destinationFilePath: thumbnailFilePath, delegate: MEGAGenericRequestDelegate { [weak self] request, error in
                         if request.nodeHandle == node.handle && error.type == .apiOk {
                             self?.thumbnailImageView.image = UIImage(contentsOfFile: request.file)
                         }
@@ -41,7 +41,7 @@ final class PlaylistItemTableViewCell: UITableViewCell {
             }
             
         } else {
-            thumbnailImageView.image = Asset.Images.AudioPlayer.defaultArtwork.image
+            thumbnailImageView.image = UIImage(resource: .defaultArtwork)
         }
         
         thumbnailImageView.layer.cornerRadius = 8.0

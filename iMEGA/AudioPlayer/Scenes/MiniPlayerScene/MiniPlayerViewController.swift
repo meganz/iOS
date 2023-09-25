@@ -77,13 +77,13 @@ final class MiniPlayerViewController: UIViewController {
     // MARK: - Private functions
     private func updatePlayback(_ percentage: Float, _ isPlaying: Bool) {
         progressBarView.setProgress(progress: CGFloat(percentage), animated: false)
-        playPauseButtonImageView.image = isPlaying ? Asset.Images.AudioPlayer.MiniPlayer.miniplayerPause.image : Asset.Images.AudioPlayer.MiniPlayer.miniplayerPlay.image
+        playPauseButtonImageView.image = UIImage(resource: isPlaying ? .miniplayerPause : .miniplayerPlay)
     }
     
     private func updatePlaybackTracks(_ currentItem: AudioPlayerItem, queue: [AudioPlayerItem]?, loopMode: Bool) {
         miniPlayerSource = MiniPlayerDataSource(currentTrack: currentItem, queue: queue, loopMode: loopMode)
         miniPlayerDelegate = MiniPlayerDelegate(delegate: self, loopMode: loopMode, itemsNumber: queue?.count ?? 0)
-        imageView.image = Asset.Images.AudioPlayer.defaultArtwork.image
+        imageView.image = UIImage(resource: .defaultArtwork)
         
         collectionView.reloadData()
         collectionView.performBatchUpdates(nil) { _ in
@@ -113,7 +113,7 @@ final class MiniPlayerViewController: UIViewController {
         if let thumbnailImage = thumbnail {
             imageView.image = thumbnailImage
         } else {
-            imageView.image = Asset.Images.AudioPlayer.defaultArtwork.image
+            imageView.image = UIImage(resource: .defaultArtwork)
         }
     }
     
