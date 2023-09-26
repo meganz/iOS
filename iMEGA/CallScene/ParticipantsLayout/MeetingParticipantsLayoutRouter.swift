@@ -32,20 +32,20 @@ final class MeetingParticipantsLayoutRouter: NSObject, MeetingParticipantsLayout
         guard let containerViewModel = containerViewModel else { return UIViewController() }
         
         let userImageUseCase = UserImageUseCase(
-            userImageRepo: UserImageRepository(sdk: MEGASdkManager.sharedMEGASdk()),
+            userImageRepo: UserImageRepository(sdk: .sharedSdk),
             userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()),
             thumbnailRepo: ThumbnailRepository.newRepo,
             fileSystemRepo: FileSystemRepository.newRepo
         )
-        let analyticsEventUseCase = AnalyticsEventUseCase(repository: AnalyticsRepository(sdk: MEGASdkManager.sharedMEGASdk()))
+        let analyticsEventUseCase = AnalyticsEventUseCase(repository: AnalyticsRepository(sdk: .sharedSdk))
 
         let vm = MeetingParticipantsLayoutViewModel(
             router: self,
             containerViewModel: containerViewModel,
-            callUseCase: CallUseCase(repository: CallRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk(), callActionManager: CallActionManager.shared)),
+            callUseCase: CallUseCase(repository: CallRepository(chatSdk: .sharedChatSdk, callActionManager: CallActionManager.shared)),
             captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
-            localVideoUseCase: CallLocalVideoUseCase(repository: CallLocalVideoRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk())),
-            remoteVideoUseCase: CallRemoteVideoUseCase(repository: CallRemoteVideoRepository(chatSdk: MEGASdkManager.sharedMEGAChatSdk())),
+            localVideoUseCase: CallLocalVideoUseCase(repository: CallLocalVideoRepository(chatSdk: .sharedChatSdk)),
+            remoteVideoUseCase: CallRemoteVideoUseCase(repository: CallRemoteVideoRepository(chatSdk: .sharedChatSdk)),
             chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo),
             chatRoomUserUseCase: ChatRoomUserUseCase(
                 chatRoomRepo: ChatRoomUserRepository.newRepo,
@@ -83,5 +83,9 @@ final class MeetingParticipantsLayoutRouter: NSObject, MeetingParticipantsLayout
     
     func pinParticipantAsSpeaker(_ participant: CallParticipantEntity) {
         viewModel?.dispatch(.pinParticipantAsSpeaker(participant))
+    }
+    
+    func showNavigation() {
+        viewModel?.dispatch(.showNavigation)
     }
 }

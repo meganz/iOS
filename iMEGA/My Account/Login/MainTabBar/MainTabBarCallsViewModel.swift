@@ -9,6 +9,7 @@ protocol MainTabBarCallsRouting: AnyObject {
     func dismissWaitingRoomDialog(animated: Bool)
     func showConfirmDenyAction(for username: String, isCallUIVisible: Bool, confirmDenyAction: @escaping () -> Void, cancelDenyAction: @escaping () -> Void)
     func showParticipantsJoinedTheCall(message: String)
+    func showWaitingRoomListFor(call: CallEntity, in chatRoom: ChatRoomEntity)
 }
 
 enum MainTabBarCallsAction: ActionType { }
@@ -18,7 +19,9 @@ enum MainTabBarCallsAction: ActionType { }
     enum Command: CommandType, Equatable {
         case showActiveCallIcon
         case hideActiveCallIcon
+        case navigateToChatTab
     }
+    
     var invokeCommand: ((Command) -> Void)?
 
     private let tonePlayer = TonePlayer()
@@ -154,8 +157,14 @@ enum MainTabBarCallsAction: ActionType { }
             if !isCallUIVisible {
                 showParticipantsJoinedMessage(for: userHandles, in: chatRoom)
             }
-        } seeWaitingRoomAction: {
-            // Waiting Room UI will be implemented in next tickets
+        } seeWaitingRoomAction: { [weak self] in
+            guard let self else { return}
+            invokeCommand?(.navigateToChatTab)
+            if isCallUIVisible {
+                NotificationCenter.default.post(name: .seeWaitingRoomListEvent, object: nil)
+            } else {
+                router.showWaitingRoomListFor(call: call, in: chatRoom)
+            }
         }
         tonePlayer.play(tone: .waitingRoomEvent)
     }

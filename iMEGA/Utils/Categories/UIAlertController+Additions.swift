@@ -33,6 +33,7 @@ extension UIAlertController {
                            message: String,
                            preferredActionTitle: String,
                            secondaryActionTitle: String,
+                           showNotNowAction: Bool = true,
                            preferredAction: @escaping () -> Void,
                            secondaryAction: @escaping () -> Void) -> UIAlertController {
         let alert = UIAlertController(
@@ -61,12 +62,14 @@ extension UIAlertController {
             }
         )
         
-        alert.addAction(
-            UIAlertAction(
-                title: Strings.Localizable.notNow,
-                style: .cancel
+        if showNotNowAction {
+            alert.addAction(
+                UIAlertAction(
+                    title: Strings.Localizable.notNow,
+                    style: .cancel
+                )
             )
-        )
+        }
         
         if forceDarkMode {
             alert.overrideUserInterfaceStyle = .dark

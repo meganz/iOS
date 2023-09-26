@@ -23,6 +23,7 @@ extension MeetingFloatingPanelViewModel {
         accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
         chatRoomUseCase: some ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
         megaHandleUseCase: some MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
+        selectWaitingRoomList: Bool = false,
         isTesting: Bool = true
     ) {
         self.init(
@@ -38,7 +39,8 @@ extension MeetingFloatingPanelViewModel {
             localVideoUseCase: localVideoUseCase,
             accountUseCase: accountUseCase,
             chatRoomUseCase: chatRoomUseCase,
-            megaHandleUseCase: megaHandleUseCase
+            megaHandleUseCase: megaHandleUseCase,
+            selectWaitingRoomList: selectWaitingRoomList
         )
     }
 }

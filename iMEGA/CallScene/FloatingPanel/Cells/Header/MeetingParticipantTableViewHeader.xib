@@ -15,7 +15,7 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="82"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="acY-ue-LhX">
+                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="acY-ue-LhX">
                     <rect key="frame" x="16" y="0.0" width="398" height="48"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M65-jV-Vfk">
@@ -24,19 +24,23 @@
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xAp-1k-Ld7">
-                            <rect key="frame" x="326.66666666666669" y="0.0" width="71.333333333333314" height="48"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xAp-1k-Ld7">
+                            <rect key="frame" x="42.333333333333343" y="0.0" width="355.66666666666663" height="48"/>
                             <color key="tintColor" name="00C29A"/>
                             <state key="normal" title="Button"/>
                             <buttonConfiguration key="configuration" style="plain" title="Button">
                                 <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="15"/>
                             </buttonConfiguration>
+                            <connections>
+                                <action selector="actionButtonTapped:" destination="CGc-cN-RAy" eventType="touchUpInside" id="fh8-p3-ZOj"/>
+                            </connections>
                         </button>
                     </subviews>
                 </stackView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="W9p-sS-H6u"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="acY-ue-LhX" secondAttribute="trailing" id="6tE-7H-dXR"/>
                 <constraint firstItem="acY-ue-LhX" firstAttribute="top" secondItem="CGc-cN-RAy" secondAttribute="top" id="7qU-LC-pXf"/>

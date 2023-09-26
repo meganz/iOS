@@ -1,4 +1,27 @@
+import MEGAL10n
+
 final class MeetingParticipantTableViewHeader: UITableViewHeaderFooterView {
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var actionButton: UIButton!
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var actionButton: UIButton!
+    
+    var actionButtonTappedHandler: (() -> Void)?
+    
+    func configure(for selectedTab: ParticipantsListTab, participantsCount: Int) {
+        switch selectedTab {
+        case .inCall:
+            titleLabel.text = Strings.Localizable.Meetings.Panel.participantsCount(participantsCount)
+            actionButton.isHidden = true
+        case .notInCall:
+            titleLabel.text = Strings.Localizable.Meetings.Panel.participantsNotInCallCount(participantsCount)
+            actionButton.isHidden = true
+        case .waitingRoom:
+            titleLabel.text = Strings.Localizable.Meetings.Panel.participantsInWaitingRoomCount(participantsCount)
+            actionButton.titleLabel?.text = Strings.Localizable.Chat.Call.WaitingRoom.Alert.Button.admitAll
+            actionButton.isHidden = participantsCount > 0 ? false : true
+        }
+    }
+    
+    @IBAction func actionButtonTapped(_ sender: UIButton) {
+        actionButtonTappedHandler?()
+    }
 }

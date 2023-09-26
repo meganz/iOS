@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="ParticipantInWaitingRoomTableViewCell" customModule="MEGA" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yZN-69-FGr">
+                        <rect key="frame" x="60" y="43" width="260" height="1"/>
+                        <color key="backgroundColor" red="0.3294117647" green="0.3294117647" blue="0.34509803919999998" alpha="0.64673771130000002" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="1" id="EUv-xy-Xx4"/>
+                            <constraint firstAttribute="height" constant="1" id="i34-9x-On3"/>
+                        </constraints>
+                    </view>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-contacts" translatesAutoresizingMaskIntoConstraints="NO" id="9cB-FW-q71">
+                        <rect key="frame" x="12" y="2" width="40" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="8zg-RC-RB3"/>
+                            <constraint firstAttribute="width" constant="40" id="N67-gn-X1c"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="20"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </imageView>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="oPu-LD-KcH">
+                        <rect key="frame" x="61" y="13" width="171" height="18"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yy5-cG-SSJ">
+                                <rect key="frame" x="0.0" y="0.0" width="41" height="18"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                    </stackView>
+                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="NHq-au-el8">
+                        <rect key="frame" x="240" y="8" width="68" height="28"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MJk-G6-jiY">
+                                <rect key="frame" x="0.0" y="0.0" width="28" height="28"/>
+                                <state key="normal" image="waiting_room_deny"/>
+                                <state key="selected" image="userMutedMeetings"/>
+                                <connections>
+                                    <action selector="denyButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="EEh-m1-7gu"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gh2-KO-WzT">
+                                <rect key="frame" x="40" y="0.0" width="28" height="28"/>
+                                <state key="normal" image="waiting_room_admit"/>
+                                <state key="selected" image="videoOff"/>
+                                <connections>
+                                    <action selector="admitButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="73t-Bi-goW"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                    </stackView>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <constraints>
+                    <constraint firstItem="9cB-FW-q71" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="0g3-AK-Gqw"/>
+                    <constraint firstItem="NHq-au-el8" firstAttribute="leading" secondItem="oPu-LD-KcH" secondAttribute="trailing" constant="8" id="3Hw-yk-V2a"/>
+                    <constraint firstAttribute="trailing" secondItem="yZN-69-FGr" secondAttribute="trailing" id="78z-kZ-Co3"/>
+                    <constraint firstItem="oPu-LD-KcH" firstAttribute="leading" secondItem="9cB-FW-q71" secondAttribute="trailing" constant="9" id="HC8-LY-G1q"/>
+                    <constraint firstItem="yZN-69-FGr" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="60" id="JOA-Gq-lTG"/>
+                    <constraint firstItem="NHq-au-el8" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Obm-Oj-Ayd"/>
+                    <constraint firstAttribute="trailing" secondItem="NHq-au-el8" secondAttribute="trailing" constant="12" id="T9r-5d-O7Y"/>
+                    <constraint firstAttribute="bottom" secondItem="yZN-69-FGr" secondAttribute="bottom" id="VZg-ga-Rzf"/>
+                    <constraint firstItem="9cB-FW-q71" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="f1L-YY-ZfR"/>
+                    <constraint firstItem="oPu-LD-KcH" firstAttribute="centerY" secondItem="9cB-FW-q71" secondAttribute="centerY" id="v5G-xI-HYf"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="avatarImageView" destination="9cB-FW-q71" id="H6H-zi-iFD"/>
+                <outlet property="nameLabel" destination="yy5-cG-SSJ" id="hFd-OD-PYt"/>
+            </connections>
+            <point key="canvasLocation" x="131" y="-32"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="icon-contacts" width="24" height="24"/>
+        <image name="userMutedMeetings" width="24" height="24"/>
+        <image name="videoOff" width="24" height="24"/>
+        <image name="waiting_room_admit" width="28" height="28"/>
+        <image name="waiting_room_deny" width="28" height="28"/>
+    </resources>
+</document>

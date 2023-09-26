@@ -94,6 +94,7 @@ final class CallWaitingRoomUsersDialog {
                                                                                   message: Strings.Localizable.Chat.Call.WaitingRoom.Alert.Message.denyAccess(named),
                                                                                   preferredActionTitle: Strings.Localizable.Chat.Call.WaitingRoom.Alert.Button.confirmDeny,
                                                                                   secondaryActionTitle: Strings.Localizable.Chat.Call.WaitingRoom.Alert.Button.cancel,
+                                                                                 showNotNowAction: false,
                                                                                   preferredAction: confirmAction,
                                                                                   secondaryAction: cancelAction)
         

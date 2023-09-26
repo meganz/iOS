@@ -27,6 +27,7 @@ enum CallViewAction: ActionType {
     case startCallEndCountDownTimer
     case endCallEndCountDownTimer
     case didEndDisplayLastPeerLeftStatusMessage
+    case showNavigation
 }
 
 enum ParticipantsLayoutMode {
@@ -506,6 +507,8 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             if chatRoom.chatType == .group || chatRoom.chatType == .meeting {
                 containerViewModel?.dispatch(.showEndCallDialogIfNeeded)
             }
+        case .showNavigation:
+            invokeCommand?(.switchMenusVisibility)
         }
     }
     
