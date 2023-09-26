@@ -1,20 +1,32 @@
 import Foundation
 
-struct ColorInfo: Codable {
+protocol Token: Decodable {
+    var properties: TokenProperties { get }
+    init(properties: TokenProperties)
+}
+
+extension Token {
+    init(from decoder: Decoder) throws {
+        let properties = try TokenProperties(from: decoder)
+        self.init(properties: properties)
+    }
+}
+
+struct TokenProperties: Decodable {
     let type: String
     let value: String
-
-    var rgba: RGBA? {
-        if value.starts(with: "#") {
-            return parseHex(value)
-        } else {
-            return parseRGBA(value)
-        }
-    }
 
     enum CodingKeys: String, CodingKey {
         case type = "$type"
         case value = "$value"
+    }
+}
+
+struct ColorInfo: Token {
+    let properties: TokenProperties
+
+    var rgba: RGBA? {
+        properties.value.starts(with: "#") ? parseHex(properties.value) : parseRGBA(properties.value)
     }
 }
 
