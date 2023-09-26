@@ -42,6 +42,114 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
     }
     
+    func testAction_onViewAppear_selectWaitingRoomList() {
+        let viewModel = MeetingFloatingPanelViewModel(selectWaitingRoomList: true)
+        test(viewModel: viewModel,
+             action: .onViewAppear,
+             expectedCommands: [
+                .transitionToLongForm
+             ])
+    }
+    
+    func testAction_selectParticipantsInCall_isOneToOneCall_reloadViewDataForOneToOne() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .oneToOne)
+
+        let viewModel = MeetingFloatingPanelViewModel(chatRoom: chatRoom)
+        test(viewModel: viewModel,
+             action: .selectParticipantsList(selectedTab: .inCall),
+             expectedCommands: [
+                .reloadViewData(participantsListView: ParticipantsListView(sections: [.hostControls, .invite, .participants], hostControlsRows: [], inviteSectionRow: [], selectedTab: .inCall, participants: [], existsWaitingRoom: false))
+             ])
+    }
+    
+    func testAction_selectParticipantsInCall_isGroupCallAndModerator_reloadViewDataForGroupCallModerator() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .group, isOpenInviteEnabled: false)
+
+        let viewModel = MeetingFloatingPanelViewModel(chatRoom: chatRoom)
+        test(viewModel: viewModel,
+             action: .selectParticipantsList(selectedTab: .inCall),
+             expectedCommands: [
+                .reloadViewData(participantsListView: ParticipantsListView(sections: [.hostControls, .invite, .participants], hostControlsRows: [.allowNonHostToInvite], inviteSectionRow: [.invite], selectedTab: .inCall, participants: [], existsWaitingRoom: false))
+             ])
+    }
+    
+    func testAction_selectParticipantsInCall_isGroupCallAndNoModerator_reloadViewDataForGroupCallNoModerator() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .group, isOpenInviteEnabled: false)
+
+        let viewModel = MeetingFloatingPanelViewModel(chatRoom: chatRoom)
+        test(viewModel: viewModel,
+             action: .selectParticipantsList(selectedTab: .inCall),
+             expectedCommands: [
+                .reloadViewData(participantsListView: ParticipantsListView(sections: [.invite, .participants], hostControlsRows: [], inviteSectionRow: [], selectedTab: .inCall, participants: [], existsWaitingRoom: false))
+             ])
+    }
+    
+    func testAction_selectParticipantsInCall_isGroupCallAndOpenInvite_reloadViewDataForGroupCallEnabledOpenInvite() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .group, isOpenInviteEnabled: true)
+
+        let viewModel = MeetingFloatingPanelViewModel(chatRoom: chatRoom)
+        test(viewModel: viewModel,
+             action: .selectParticipantsList(selectedTab: .inCall),
+             expectedCommands: [
+                .reloadViewData(participantsListView: ParticipantsListView(sections: [.invite, .participants], hostControlsRows: [], inviteSectionRow: [.invite], selectedTab: .inCall, participants: [], existsWaitingRoom: false))
+             ])
+    }
+    
+    func testAction_selectParticipantsNotInCall_isGroupCallAndModerator_reloadViewDataForGroupCallModerator() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .group, isOpenInviteEnabled: false)
+
+        let viewModel = MeetingFloatingPanelViewModel(chatRoom: chatRoom)
+        test(viewModel: viewModel,
+             action: .selectParticipantsList(selectedTab: .notInCall),
+             expectedCommands: [
+                .reloadViewData(participantsListView: ParticipantsListView(sections: [.hostControls, .invite, .participants], hostControlsRows: [.listSelector], inviteSectionRow: [], selectedTab: .notInCall, participants: [], existsWaitingRoom: false))
+             ])
+    }
+    
+    func testAction_selectParticipantsNotInCall_isGroupCallAndModerator_reloadViewDataForGroupCallNoModerator() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .group, isOpenInviteEnabled: false)
+
+        let viewModel = MeetingFloatingPanelViewModel(chatRoom: chatRoom)
+        test(viewModel: viewModel,
+             action: .selectParticipantsList(selectedTab: .notInCall),
+             expectedCommands: [
+                .reloadViewData(participantsListView: ParticipantsListView(sections: [.invite, .participants], hostControlsRows: [.listSelector], inviteSectionRow: [], selectedTab: .notInCall, participants: [], existsWaitingRoom: false))
+             ])
+    }
+    
+    func testAction_selectParticipantsNotInCall_isGroupCallAndOpenInvite_reloadViewDataForGroupCallEnabledOpenInvite() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .group, isOpenInviteEnabled: true)
+
+        let viewModel = MeetingFloatingPanelViewModel(chatRoom: chatRoom)
+        test(viewModel: viewModel,
+             action: .selectParticipantsList(selectedTab: .notInCall),
+             expectedCommands: [
+                .reloadViewData(participantsListView: ParticipantsListView(sections: [.invite, .participants], hostControlsRows: [.listSelector], inviteSectionRow: [], selectedTab: .notInCall, participants: [], existsWaitingRoom: false))
+             ])
+    }
+    
+    func testAction_selectParticipantsInWaitingRoom_isMeetingAndModerator_reloadViewDataForMeetingModerator() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
+
+        let viewModel = MeetingFloatingPanelViewModel(chatRoom: chatRoom)
+        test(viewModel: viewModel,
+             action: .selectParticipantsList(selectedTab: .waitingRoom),
+             expectedCommands: [
+                .reloadViewData(participantsListView: ParticipantsListView(sections: [.hostControls, .invite, .participants], hostControlsRows: [.listSelector], inviteSectionRow: [], selectedTab: .waitingRoom, participants: [], existsWaitingRoom: false))
+             ])
+    }
+    
+    func testAction_selectParticipantsInWaitingRoom_isMeetingAndNonModerator_reloadViewDataForMeetingNoModerator() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
+
+        let viewModel = MeetingFloatingPanelViewModel(chatRoom: chatRoom)
+        test(viewModel: viewModel,
+             action: .selectParticipantsList(selectedTab: .waitingRoom),
+             expectedCommands: [
+                .reloadViewData(participantsListView: ParticipantsListView(sections: [.invite, .participants], hostControlsRows: [.listSelector], inviteSectionRow: [], selectedTab: .waitingRoom, participants: [], existsWaitingRoom: false))
+             ])
+    }
+    
     func testAction_onViewReady_isMyselfModerator_isOneToOneMeeting() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator)
         let callUseCase = MockCallUseCase(call: CallEntity())
@@ -63,7 +171,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
              expectedCommands: [
                 .configView(canInviteParticipants: true, isOneToOneMeeting: true, isVideoEnabled: false, cameraPosition: nil, allowNonHostToAddParticipantsEnabled: false, isMyselfAModerator: true),
                 .updatedAudioPortSelection(audioPort: audioSessionUseCase.currentSelectedAudioPort, bluetoothAudioRouteAvailable: audioSessionUseCase.isBluetoothAudioRouteAvailable),
-                .reloadViewData(participantsListView: ParticipantsListView(sections: [.hostControls, .invite, .participants], hostControlsRows: [.allowNonHostToInvite], inviteSectionRow: [], selectedTab: .inCall, participants: [], existsWaitingRoom: false)),
+                .reloadViewData(participantsListView: ParticipantsListView(sections: [.hostControls, .invite, .participants], hostControlsRows: [], inviteSectionRow: [], selectedTab: .inCall, participants: [], existsWaitingRoom: false)),
                 .microphoneMuted(muted: true)
              ])
         XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
