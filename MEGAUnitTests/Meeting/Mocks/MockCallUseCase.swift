@@ -104,6 +104,15 @@ final class MockCallUseCase: CallUseCaseProtocol {
         }
     }
     
+    func startMeetingInWaitingRoomChatNoRinging(for scheduledMeeting: MEGADomain.ScheduledMeetingEntity, enableVideo: Bool, enableAudio: Bool) async throws -> MEGADomain.CallEntity {
+        switch callCompletion {
+        case .success(let callEntity):
+            return callEntity
+        case .failure(let failure):
+            throw failure
+        }
+    }
+    
     func joinCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
         completion(callCompletion)
     }

@@ -32,6 +32,7 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
         isCallActive: Bool = false,
         isCallInProgress: Bool = false,
         isActiveWaitingRoom: Bool = false,
+        activeCallEntity: CallEntity? = nil,
         statusChangePublisher: PassthroughSubject<(HandleEntity, ChatStatusEntity), Never> = PassthroughSubject<(HandleEntity, ChatStatusEntity), Never>(),
         chatListItemUpdatePublisher: PassthroughSubject<[ChatListItemEntity], Never> =  PassthroughSubject<[ChatListItemEntity], Never>(),
         chatCallStatusUpdatePublisher: PassthroughSubject<CallEntity, Never> = PassthroughSubject<CallEntity, Never>(),
@@ -48,6 +49,7 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
         self.isCallActive = isCallActive
         self.isCallInProgress = isCallInProgress
         self.isActiveWaitingRoom = isActiveWaitingRoom
+        self.activeCallEntity = activeCallEntity
         self.statusChangePublisher = statusChangePublisher
         self.chatListItemUpdatePublisher = chatListItemUpdatePublisher
         self.chatCallStatusUpdatePublisher = chatCallStatusUpdatePublisher

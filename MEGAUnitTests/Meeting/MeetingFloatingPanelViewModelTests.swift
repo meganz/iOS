@@ -890,7 +890,7 @@ final class MockMeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     
     func inviteParticipants(
         withParticipantsAddingViewFactory participantsAddingViewFactory: ParticipantsAddingViewFactory,
-        excludeParticpantsId: Set<HandleEntity>,
+        excludeParticipantsId: Set<HandleEntity>,
         selectedUsersHandler: @escaping (([HandleEntity]) -> Void)
     ) {
         inviteParticpants_calledTimes += 1

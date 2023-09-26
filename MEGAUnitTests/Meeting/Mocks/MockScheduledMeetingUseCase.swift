@@ -8,7 +8,7 @@ final class MockScheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol {
     var upcomingOccurrences: [ChatIdEntity: ScheduledMeetingOccurrenceEntity]
     var scheduleMeetingError: ScheduleMeetingErrorEntity?
     var meetingProxy: ScheduleMeetingProxyEntity?
-    var ocurrencesShouldBeReloadSubject = PassthroughSubject<Bool, Never>()
+    var occurrencesShouldBeReloadSubject = PassthroughSubject<Bool, Never>()
 
     init(
         scheduledMeetingsList: [ScheduledMeetingEntity] = [],
@@ -74,7 +74,7 @@ final class MockScheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol {
         return ScheduledMeetingEntity()
     }
     
-    func ocurrencesShouldBeReloadListener(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<Bool, Never> {
-        ocurrencesShouldBeReloadSubject.eraseToAnyPublisher()
+    func occurrencesShouldBeReloadListener(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<Bool, Never> {
+        occurrencesShouldBeReloadSubject.eraseToAnyPublisher()
     }
 }

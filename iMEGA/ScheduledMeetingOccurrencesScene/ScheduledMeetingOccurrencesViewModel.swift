@@ -310,7 +310,7 @@ final class ScheduledMeetingOccurrencesViewModel: ObservableObject {
 
     private func listenToOccurrencesUpdate() {
         guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId) else { return }
-        scheduledMeetingUseCase.ocurrencesShouldBeReloadListener(forChatRoom: chatRoom)
+        scheduledMeetingUseCase.occurrencesShouldBeReloadListener(forChatRoom: chatRoom)
             .sink { [weak self] shouldReload in
                 guard let self else {
                     return

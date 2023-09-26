@@ -5,14 +5,20 @@ import MEGAPresentation
 
 enum ChatContentAction: ActionType {
     case startOrJoinCallCleanUp
-    case updateCallNavigationBarButtons(_ disableCalling: Bool, _ isVoiceRecordingInProgress: Bool,
-                                        _ reachable: Bool, _ activeCall: Bool)
-    case startMeetingNoRinging(_ videoCall: Bool, _ disableCalling: Bool, _ isVoiceRecordingInProgress: Bool,
-                               _ reachable: Bool, _ activeCall: Bool)
-    case startOutGoingCall(_ isVideoEnabled: Bool, _ disableCalling: Bool, _ isVoiceRecordingInProgress: Bool,
-                           _ reachable: Bool, _ activeCall: Bool)
+    case updateCallNavigationBarButtons(_ disableCalling: Bool, 
+                                        _ isVoiceRecordingInProgress: Bool,
+                                        _ reachable: Bool)
+    case startMeetingNoRinging(_ videoCall: Bool,
+                               _ disableCalling: Bool,
+                               _ isVoiceRecordingInProgress: Bool,
+                               _ reachable: Bool)
+    case startOutGoingCall(_ isVideoEnabled: Bool,
+                           _ disableCalling: Bool,
+                           _ isVoiceRecordingInProgress: Bool,
+                           _ reachable: Bool)
     case updateContent
     case updateCall(_ call: CallEntity?)
+    case updateChatRoom(_ chatRoom: ChatRoomEntity)
 }
 
 final class ChatContentViewModel: ViewModelType {
@@ -28,6 +34,7 @@ final class ChatContentViewModel: ViewModelType {
         case showCallEndTimerIfNeeded(_ call: CallEntity)
         case startMeetingNoRinging(_ videoCall: Bool, _ scheduledMeeting: ScheduledMeetingEntity)
         case startMeetingInWaitingRoomChat(_ videoCall: Bool, _ scheduledMeeting: ScheduledMeetingEntity)
+        case startMeetingInWaitingRoomChatNoRinging(_ videoCall: Bool, _ scheduledMeeting: ScheduledMeetingEntity)
         case hideStartOrJoinCallButton(_ hide: Bool)
     }
     
@@ -40,9 +47,9 @@ final class ChatContentViewModel: ViewModelType {
     
     lazy var isWaitingRoomFeatureEnabled = featureFlagProvider.isFeatureFlagEnabled(for: .waitingRoom)
     
+    private var chatRoom: ChatRoomEntity
     private let chatUseCase: any ChatUseCaseProtocol
     private let scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol
-    private let chatRoom: ChatRoomEntity
     private let featureFlagProvider: any FeatureFlagProviderProtocol
 
     init(chatRoom: ChatRoomEntity,
@@ -62,23 +69,34 @@ final class ChatContentViewModel: ViewModelType {
         switch action {
         case .startOrJoinCallCleanUp:
             onUpdateStartOrJoinCallButtons()
-        case .updateCallNavigationBarButtons(let disableCalling, let isVoiceRecordingInProgress,
-                                             let reachable, let activeCall):
-            onUpdateNavigationBarButtonItems(disableCalling, isVoiceRecordingInProgress, reachable, activeCall)
-        case .startMeetingNoRinging(let videoCall, let disableCalling, let isVoiceRecordingInProgress,
-                                    let reachable, let activeCall):
+        case .updateCallNavigationBarButtons(let disableCalling, 
+                                             let isVoiceRecordingInProgress,
+                                             let reachable):
+            onUpdateNavigationBarButtonItems(disableCalling, isVoiceRecordingInProgress, reachable)
+        case .startMeetingNoRinging(let videoCall, 
+                                    let disableCalling,
+                                    let isVoiceRecordingInProgress,
+                                    let reachable):
             if chatRoom.isWaitingRoomEnabled {
-                startMeetingInWaitingRoomChat(videoCall, disableCalling, isVoiceRecordingInProgress, reachable, activeCall)
+                startMeetingInWaitingRoomChatNoRinging(videoCall, disableCalling, isVoiceRecordingInProgress, reachable)
             } else {
-                startMeetingNoRinging(videoCall, disableCalling, isVoiceRecordingInProgress, reachable, activeCall)
+                startMeetingNoRinging(videoCall, disableCalling, isVoiceRecordingInProgress, reachable)
             }
-        case .startOutGoingCall(let isVideoEnabled, let disableCalling, let isVoiceRecordingInProgress,
-                                let reachable, let activeCall):
-            startOutGoingCall(isVideoEnabled, disableCalling, isVoiceRecordingInProgress, reachable, activeCall)
+        case .startOutGoingCall(let isVideoEnabled, 
+                                let disableCalling,
+                                let isVoiceRecordingInProgress,
+                                let reachable):
+            if chatRoom.isWaitingRoomEnabled {
+                startMeetingInWaitingRoomChat(isVideoEnabled, disableCalling, isVoiceRecordingInProgress, reachable)
+            } else {
+                startOutGoingCall(isVideoEnabled, disableCalling, isVoiceRecordingInProgress, reachable)
+            }
         case .updateContent:
             updateContentIfNeeded()
         case .updateCall(let call):
             onChatCallUpdate(for: call)
+        case .updateChatRoom(let chatRoom):
+            self.chatRoom = chatRoom
         }
     }
     
@@ -117,15 +135,39 @@ final class ChatContentViewModel: ViewModelType {
     private func startMeetingNoRinging(_ videoCall: Bool,
                                        _ disableCalling: Bool,
                                        _ isVoiceRecordingInProgress: Bool,
-                                       _ reachable: Bool,
-                                       _ activeCall: Bool) {
+                                       _ reachable: Bool) {
         Task {
-            let shouldEnable = await shouldEnableAudioVideoButtons(disableCalling, isVoiceRecordingInProgress,
-                                                                   reachable, activeCall)
+            let shouldEnable = await shouldEnableAudioVideoButtons(disableCalling, isVoiceRecordingInProgress, reachable)
             let scheduledMeetings = await scheduledMeetingUseCase.scheduledMeetings(by: chatRoom.chatId)
-            
             if shouldEnable && scheduledMeetings.isNotEmpty {
                 await startMeetingNoRinging(videoCall, scheduledMeetings[0])
+            }
+        }
+    }
+    
+    private func startOutGoingCall(_ videoEnabled: Bool,
+                                   _ disableCalling: Bool,
+                                   _ isVoiceRecordingInProgress: Bool,
+                                   _ reachable: Bool) {
+        Task {
+            let shouldEnable = await shouldEnableAudioVideoButtons(disableCalling, isVoiceRecordingInProgress, reachable)
+            if shouldEnable {
+                await startOutGoingCall(videoEnabled)
+            }
+        }
+    }
+    
+    private func startMeetingInWaitingRoomChatNoRinging(
+        _ videoCall: Bool,
+        _ disableCalling: Bool,
+        _ isVoiceRecordingInProgress: Bool,
+        _ reachable: Bool
+    ) {
+        Task {
+            let shouldEnable = await shouldEnableAudioVideoButtons(disableCalling, isVoiceRecordingInProgress, reachable)
+            let scheduledMeetings = await scheduledMeetingUseCase.scheduledMeetings(by: chatRoom.chatId)
+            if shouldEnable, let scheduledMeeting = scheduledMeetings.first {
+                await startMeetingInWaitingRoomChatNoRinging(videoCall, scheduledMeeting)
             }
         }
     }
@@ -134,33 +176,13 @@ final class ChatContentViewModel: ViewModelType {
         _ videoCall: Bool,
         _ disableCalling: Bool,
         _ isVoiceRecordingInProgress: Bool,
-        _ reachable: Bool,
-        _ activeCall: Bool
+        _ reachable: Bool
     ) {
         Task {
-            let shouldEnable = await shouldEnableAudioVideoButtons(disableCalling, isVoiceRecordingInProgress,
-                                                                   reachable, activeCall)
+            let shouldEnable = await shouldEnableAudioVideoButtons(disableCalling, isVoiceRecordingInProgress, reachable)
             let scheduledMeetings = await scheduledMeetingUseCase.scheduledMeetings(by: chatRoom.chatId)
-            
-            if shouldEnable && scheduledMeetings.isNotEmpty {
-                await startMeetingInWaitingRoomChat(videoCall, scheduledMeetings[0])
-            }
-        }
-    }
-    
-    private func startOutGoingCall(_ videoEnabled: Bool,
-                                   _ disableCalling: Bool,
-                                   _ isVoiceRecordingInProgress: Bool,
-                                   _ reachable: Bool,
-                                   _ activeCall: Bool) {
-        Task {
-            let shouldEnable = await shouldEnableAudioVideoButtons(disableCalling,
-                                                                   isVoiceRecordingInProgress,
-                                                                   reachable,
-                                                                   activeCall)
-            
-            if shouldEnable {
-                await startOutGoingCall(videoEnabled)
+            if shouldEnable, let scheduledMeeting = scheduledMeetings.first {
+                await startMeetingInWaitingRoomChat(videoCall, scheduledMeeting)
             }
         }
     }
@@ -174,27 +196,24 @@ final class ChatContentViewModel: ViewModelType {
     
     private func onUpdateNavigationBarButtonItems(_ disableCalling: Bool,
                                                   _ isVoiceRecordingInProgress: Bool,
-                                                  _ reachable: Bool,
-                                                  _ activeCall: Bool) {
+                                                  _ reachable: Bool) {
         Task {
-            let shouldEnable = await shouldEnableAudioVideoButtons(disableCalling, isVoiceRecordingInProgress,
-                                                                   reachable, activeCall)
-            
+            let shouldEnable = await shouldEnableAudioVideoButtons(disableCalling, isVoiceRecordingInProgress, reachable)
             await enableNavigationBarButtonItems(shouldEnable)
         }
     }
     
     private func shouldEnableAudioVideoButtons(_ disableCalling: Bool,
                                                _ isVoiceRecordingInProgress: Bool,
-                                               _ reachable: Bool,
-                                               _ activeCall: Bool) async -> Bool {
+                                               _ reachable: Bool) async -> Bool {
         let connectionStatus = await chatUseCase.chatConnectionStatus(for: chatRoom.chatId)
         let call = await chatUseCase.chatCall(for: chatRoom.chatId)
-        let ownPrivilegeSmallerThanStandard = chatRoom.ownPrivilege == .unknown ||
-        chatRoom.ownPrivilege == .removed ||
-        chatRoom.ownPrivilege == .readOnly
+        let privilege = chatRoom.ownPrivilege
+        let ownPrivilegeSmallerThanStandard = [.unknown, .removed, .readOnly].contains(privilege)
+        let existsActiveCall = chatUseCase.existsActiveCall()
+        let isWaitingRoomNonHost = chatRoom.isWaitingRoomEnabled && privilege != .moderator
         let shouldEnable = !(disableCalling || ownPrivilegeSmallerThanStandard || connectionStatus != .online ||
-                             !reachable || activeCall || call != nil || isVoiceRecordingInProgress)
+                             !reachable || existsActiveCall || call != nil || isVoiceRecordingInProgress || isWaitingRoomNonHost)
         
         return shouldEnable
     }
@@ -210,13 +229,18 @@ final class ChatContentViewModel: ViewModelType {
     }
     
     @MainActor
-    private func startMeetingInWaitingRoomChat(_ videoCall: Bool, _ scheduledMeeting: ScheduledMeetingEntity) {
-        invokeCommand?(.startMeetingInWaitingRoomChat(videoCall, scheduledMeeting))
+    private func startOutGoingCall(_ enableVideo: Bool) {
+        invokeCommand?(.startOutGoingCall(enableVideo))
     }
     
     @MainActor
-    private func startOutGoingCall(_ enableVideo: Bool) {
-        invokeCommand?(.startOutGoingCall(enableVideo))
+    private func startMeetingInWaitingRoomChatNoRinging(_ videoCall: Bool, _ scheduledMeeting: ScheduledMeetingEntity) {
+        invokeCommand?(.startMeetingInWaitingRoomChatNoRinging(videoCall, scheduledMeeting))
+    }
+    
+    @MainActor
+    private func startMeetingInWaitingRoomChat(_ videoCall: Bool, _ scheduledMeeting: ScheduledMeetingEntity) {
+        invokeCommand?(.startMeetingInWaitingRoomChat(videoCall, scheduledMeeting))
     }
     
     @MainActor

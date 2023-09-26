@@ -233,10 +233,10 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
                         
         router.inviteParticipants(
             withParticipantsAddingViewFactory: participantsAddingViewFactory,
-            excludeParticpantsId: Set(excludedHandles)
+            excludeParticipantsId: Set(excludedHandles)
         ) { [weak self] userHandles in
-            guard let self = self, let call = self.call else { return }
-            self.recentlyAddedHandles.append(contentsOf: userHandles)
+            guard let self, let call else { return }
+            recentlyAddedHandles.append(contentsOf: userHandles)
             userHandles.forEach { self.callUseCase.addPeer(toCall: call, peerId: $0) }
         }
     }

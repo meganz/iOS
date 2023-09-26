@@ -402,18 +402,19 @@ extension AppDelegate {
             FeatureFlagProvider.disableFeatureFlags = false
         #endif
     }
-        
+    
+    @MainActor
     private func startCallWithNoRinging(forChatRoom chatRoom: MEGAChatRoom) async throws {
         let audioSessionUC = AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession(), callActionManager: CallActionManager.shared))
         audioSessionUC.configureCallAudioSession()
         audioSessionUC.enableLoudSpeaker()
         
-        let scheduledMeetingUseCase = ScheduledMeetingUseCase(repository: ScheduledMeetingRepository(chatSDK: .shared))
-        let callUseCase = CallUseCase(repository: CallRepository(chatSdk: .shared, callActionManager: CallActionManager.shared))
+        let scheduledMeetingUseCase = ScheduledMeetingUseCase(repository: ScheduledMeetingRepository.newRepo)
+        let callUseCase = CallUseCase(repository: CallRepository.newRepo)
 
         if let scheduleMeeting = scheduledMeetingUseCase.scheduledMeetingsByChat(chatId: chatRoom.chatId).first {
             let callEntity = chatRoom.isWaitingRoomEnabled ?
-            try await callUseCase.startMeetingInWaitingRoomChat(for: scheduleMeeting, enableVideo: false, enableAudio: true) :
+            try await callUseCase.startMeetingInWaitingRoomChatNoRinging(for: scheduleMeeting, enableVideo: false, enableAudio: true) :
             try await callUseCase.startCallNoRinging(for: scheduleMeeting, enableVideo: false, enableAudio: true)
             join(call: callEntity, chatRoom: chatRoom.toChatRoomEntity())
         } else {

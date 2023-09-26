@@ -39,9 +39,9 @@ final class WaitingRoomViewModel: ObservableObject {
     var meetingTitle: String { scheduledMeeting.title }
     
     enum WaitingRoomViewState {
-        case guestJoin
-        case guestJoining
-        case userJoining
+        case guestUserSetup
+        case guestUserJoining
+        case loggedInUserJoining
         case waitForHostToStart
         case waitForHostToLetIn
     }
@@ -72,7 +72,7 @@ final class WaitingRoomViewModel: ObservableObject {
         }
     }
     var isJoining: Bool {
-        viewState == .guestJoining || viewState == .userJoining
+        viewState == .guestUserJoining || viewState == .loggedInUserJoining
     }
     
     private(set) var isLandscape: Bool = false
@@ -218,8 +218,8 @@ final class WaitingRoomViewModel: ObservableObject {
     }
     
     func tapJoinAction(firstName: String, lastName: String) {
-        guard viewState == .guestJoin else { return }
-        viewState = .guestJoining
+        guard viewState == .guestUserSetup else { return }
+        viewState = .guestUserJoining
         createEphemeralAccountAndJoinChat(firstName: firstName, lastName: lastName)
     }
     
@@ -234,9 +234,9 @@ final class WaitingRoomViewModel: ObservableObject {
     
     func calculateBottomPanelHeight() -> CGFloat {
         switch viewState {
-        case .guestJoin:
+        case .guestUserSetup:
             return 142.0
-        case .guestJoining, .userJoining:
+        case .guestUserJoining, .loggedInUserJoining:
             return isLandscape ? 38.0 : 100.0
         case .waitForHostToStart, .waitForHostToLetIn:
             return isLandscape ? 8.0 : 100.0
@@ -247,13 +247,13 @@ final class WaitingRoomViewModel: ObservableObject {
     
     private func initializeState() {
         if accountUseCase.isGuest {
-            viewState = .guestJoin
+            viewState = .guestUserSetup
         } else if isMeetingStart {
             viewState = .waitForHostToLetIn
             answerCall()
         } else {
             if let chatLink {
-                viewState = .userJoining
+                viewState = .loggedInUserJoining
                 checkChatLink(chatLink)
             } else {
                 viewState = .waitForHostToStart
@@ -283,7 +283,7 @@ final class WaitingRoomViewModel: ObservableObject {
             .sink { [weak self] call in
                 guard let self,
                       call.chatId == chatId,
-                      viewState != .guestJoin && !isJoining else { return }
+                      viewState != .guestUserSetup && !isJoining else { return }
                 if call.changeType == .waitingRoomAllow || (call.changeType == .status && call.status == .inProgress) {
                     goToCallUI(for: call)
                 } else if call.termCodeType == .kicked {
@@ -469,7 +469,7 @@ final class WaitingRoomViewModel: ObservableObject {
             case .success:
                 joinChatCall()
             case .failure:
-                viewState = .guestJoin
+                viewState = .guestUserSetup
             }
         } karereInitCompletion: { [weak self] in
             guard let self else { return }
