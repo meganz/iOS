@@ -17,8 +17,10 @@ struct EmptyAlbumView: View {
     }
 }
 
-#Preview {
-    EmptyAlbumView(image: UIImage(systemName: "folder") ?? UIImage(),
-                   title: "Title to show for empty state")
-    .previewLayout(.sizeThatFits)
+struct EmptyAlbumView_Previews: PreviewProvider {
+    static var previews: some View {
+        EmptyAlbumView(image: UIImage(systemName: "folder") ?? UIImage(),
+                       title: "Title to show for empty state")
+        .previewLayout(.sizeThatFits)
+    }
 }
