@@ -1,3 +1,4 @@
+import MEGASwift
 import MEGASwiftUI
 import SwiftUI
 
@@ -108,8 +109,9 @@ struct SearchResultsViewPreviews: PreviewProvider {
                 rowAssets: .init(
                     contextImage: .init(systemName: "ellipsis")!
                 )
-            )
-            
+            ),
+            keyboardVisibilityHandler: MockKeyboardVisibilityHandler()
+
         )
         var body: some View {
             SearchResultsView(
