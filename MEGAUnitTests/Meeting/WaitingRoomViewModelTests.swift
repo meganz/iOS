@@ -26,7 +26,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
     func testViewState_onLoadWaitingRoomAndIsGuest_shouldBeGuestJoinState() {
         let accountUseCase = MockAccountUseCase(isGuest: true)
         let sut = WaitingRoomViewModel(accountUseCase: accountUseCase)
-        XCTAssertEqual(sut.viewState, .guestJoin)
+        XCTAssertEqual(sut.viewState, .guestUserSetup)
     }
     
     func testViewState_onLoadWaitingRoomAndIsNotGuestAndMeetingNotStart_shouldBeWaitForHostToStartState() {
@@ -180,7 +180,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
                                        accountUseCase: accountUseCase,
                                        chatLink: "Test chatLink")
         
-        XCTAssertEqual(sut.viewState, .guestJoin)
+        XCTAssertEqual(sut.viewState, .guestUserSetup)
         
         sut.tapJoinAction(firstName: "First", lastName: "Last")
         
@@ -198,7 +198,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
                                        accountUseCase: accountUseCase,
                                        chatLink: "Test chatLink")
         
-        XCTAssertEqual(sut.viewState, .guestJoin)
+        XCTAssertEqual(sut.viewState, .guestUserSetup)
         
         sut.tapJoinAction(firstName: "First", lastName: "Last")
         
@@ -220,7 +220,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
                                        accountUseCase: accountUseCase,
                                        chatLink: "Test chatLink")
         
-        XCTAssertEqual(sut.viewState, .guestJoin)
+        XCTAssertEqual(sut.viewState, .guestUserSetup)
         
         sut.tapJoinAction(firstName: "First", lastName: "Last")
         
@@ -265,7 +265,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
                                        userImageUseCase: userImageUseCase,
                                        chatLink: "Test chatLink")
         
-        XCTAssertEqual(sut.viewState, .guestJoin)
+        XCTAssertEqual(sut.viewState, .guestUserSetup)
         
         sut.tapJoinAction(firstName: "First", lastName: "Last")
         

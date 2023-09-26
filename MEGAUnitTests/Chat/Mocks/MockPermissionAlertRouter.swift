@@ -1,11 +1,21 @@
 @testable import MEGA
 
 final class MockPermissionAlertRouter: PermissionAlertRouting {
+    
+    let isAudioPermissionGranted: Bool
+    var presentModalNotificationsPermissionPromptCallCount = 0
+    
+    init(isAudioPermissionGranted: Bool = true) {
+        self.isAudioPermissionGranted = isAudioPermissionGranted
+    }
+    
     func audioPermission(
         modal: Bool,
         incomingCall: Bool,
         completion: @escaping (Bool) -> Void
-    ) {}
+    ) {
+        completion(isAudioPermissionGranted)
+    }
     
     func alertAudioPermission(incomingCall: Bool) {}
     
@@ -13,7 +23,6 @@ final class MockPermissionAlertRouter: PermissionAlertRouting {
     
     func alertPhotosPermission() {}
     
-    var presentModalNotificationsPermissionPromptCallCount = 0
     func presentModalNotificationsPermissionPrompt() {
         presentModalNotificationsPermissionPromptCallCount += 1
     }

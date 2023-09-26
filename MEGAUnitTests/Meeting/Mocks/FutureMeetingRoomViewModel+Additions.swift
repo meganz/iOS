@@ -1,6 +1,7 @@
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
+import MEGAPresentation
 
 extension FutureMeetingRoomViewModel {
     convenience init(
@@ -17,6 +18,7 @@ extension FutureMeetingRoomViewModel {
         scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol = MockScheduledMeetingUseCase(),
         megaHandleUseCase: some MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
         permissionAlertRouter: some PermissionAlertRouting = MockPermissionAlertRouter(),
+        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         chatNotificationControl: ChatNotificationControl = ChatNotificationControl(delegate: MockPushNotificationControl()),
         isTesting: Bool = true
     ) {
@@ -34,6 +36,7 @@ extension FutureMeetingRoomViewModel {
             scheduledMeetingUseCase: scheduledMeetingUseCase,
             megaHandleUseCase: megaHandleUseCase,
             permissionAlertRouter: permissionAlertRouter,
+            featureFlagProvider: featureFlagProvider,
             chatNotificationControl: chatNotificationControl
         )
     }

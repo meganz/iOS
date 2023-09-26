@@ -12,6 +12,7 @@ protocol CallUseCaseProtocol {
     func startCallNoRinging(for scheduledMeeting: ScheduledMeetingEntity, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void)
     func startCallNoRinging(for scheduledMeeting: ScheduledMeetingEntity, enableVideo: Bool, enableAudio: Bool) async throws -> CallEntity
     func startMeetingInWaitingRoomChat(for scheduledMeeting: ScheduledMeetingEntity, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void)
+    func startMeetingInWaitingRoomChatNoRinging(for scheduledMeeting: ScheduledMeetingEntity, enableVideo: Bool, enableAudio: Bool) async throws -> CallEntity
     func startMeetingInWaitingRoomChat(for scheduledMeeting: ScheduledMeetingEntity, enableVideo: Bool, enableAudio: Bool) async throws -> CallEntity
     func joinCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void)
     func createActiveSessions()
@@ -65,6 +66,7 @@ extension CallCallbacksUseCaseProtocol {
     func chatTitleChanged(chatRoom: ChatRoomEntity) { }
     func networkQualityChanged(_ quality: NetworkQuality) { }
     func outgoingRingingStopReceived() { }
+    func waitingRoomUsersAllow(with handles: [HandleEntity]) { }
 }
 
 final class CallUseCase<T: CallRepositoryProtocol>: NSObject, CallUseCaseProtocol {
@@ -120,6 +122,10 @@ final class CallUseCase<T: CallRepositoryProtocol>: NSObject, CallUseCaseProtoco
     
     func startMeetingInWaitingRoomChat(for scheduledMeeting: ScheduledMeetingEntity, enableVideo: Bool, enableAudio: Bool) async throws -> CallEntity {
         try await repository.startMeetingInWaitingRoomChat(for: scheduledMeeting, enableVideo: enableVideo, enableAudio: enableAudio)
+    }
+    
+    func startMeetingInWaitingRoomChatNoRinging(for scheduledMeeting: ScheduledMeetingEntity, enableVideo: Bool, enableAudio: Bool) async throws -> CallEntity {
+        try await repository.startMeetingInWaitingRoomChatNoRinging(for: scheduledMeeting, enableVideo: enableVideo, enableAudio: enableAudio)
     }
     
     func joinCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
@@ -247,5 +253,9 @@ extension CallUseCase: CallCallbacksRepositoryProtocol {
     
     func waitingRoomUsersLeave(with handles: [HandleEntity]) {
         callbacksDelegate?.waitingRoomUsersLeave(with: handles)
+    }
+    
+    func waitingRoomUsersAllow(with handles: [HandleEntity]) {
+        callbacksDelegate?.waitingRoomUsersAllow(with: handles)
     }
 }

@@ -81,7 +81,7 @@ import MEGADomain
         }
     }
     
-    func  startMeetingInWaitingRoomChat(chatId: ChatIdEntity, scheduledId: UInt64, enableVideo: Bool, enableAudio: Bool, delegate: MEGAChatStartCallRequestDelegate) {
+    func startMeetingInWaitingRoomChat(chatId: ChatIdEntity, enableVideo: Bool, enableAudio: Bool, delegate: MEGAChatStartCallRequestDelegate) {
         self.chatOnlineListener = ChatOnlineListener(
             chatId: chatId,
             sdk: chatSdk
@@ -101,8 +101,29 @@ import MEGADomain
             }
             guard let startCallRequestDelegate else { return }
             chatSdk.setChatVideoInDevices("Front Camera")
-            
-            chatSdk.startMeeting(inWaitingRoomChat: chatId, scheduledId: scheduledId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: startCallRequestDelegate)
+            chatSdk.startMeeting(inWaitingRoomChat: chatId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: startCallRequestDelegate)
+        }
+    }
+    
+    func startMeetingInWaitingRoomChatNoRinging(chatId: ChatIdEntity, scheduledId: UInt64, enableVideo: Bool, enableAudio: Bool, delegate: MEGAChatStartCallRequestDelegate) {
+        self.chatOnlineListener = ChatOnlineListener(
+            chatId: chatId,
+            sdk: chatSdk
+        ) { [weak self] chatId in
+            guard let self else { return }
+            chatOnlineListener = nil
+            configureAudioSessionForStartCall(chatId: chatId)
+            startCallRequestDelegate = MEGAChatStartCallRequestDelegate { [weak self] error in
+                guard let self else { return }
+                if error.type == .MEGAChatErrorTypeOk {
+                    notifyStartCallToCallKit(chatId: chatId)
+                    MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.sharedRepo).start(chatId: chatId)
+                }
+                delegate.completion(error)
+            }
+            guard let startCallRequestDelegate else { return }
+            chatSdk.setChatVideoInDevices("Front Camera")
+            chatSdk.startMeeting(inWaitingRoomChatNoRinging: chatId, scheduledId: scheduledId, enableVideo: enableAudio, enableAudio: enableAudio, delegate: startCallRequestDelegate)
         }
     }
     
