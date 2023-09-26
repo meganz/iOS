@@ -71,7 +71,10 @@ public final class CallParticipantEntity {
 
 extension CallParticipantEntity: Equatable {
     public static func == (lhs: CallParticipantEntity, rhs: CallParticipantEntity) -> Bool {
-        lhs.participantId == rhs.participantId && lhs.clientId == rhs.clientId
+        guard lhs.clientId != .invalid && rhs.clientId != .invalid else {
+            return lhs.participantId == rhs.participantId
+        }
+        return lhs.participantId == rhs.participantId && lhs.clientId == rhs.clientId
     }
 }
 

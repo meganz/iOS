@@ -1,11 +1,13 @@
+import MEGAChatSdk
 import MEGADomain
+import MEGASdk
 
 extension CallParticipantEntity {
     convenience init(
         session: ChatSessionEntity,
         chatId: HandleEntity,
-        sdk: MEGASdk = MEGASdkManager.sharedMEGASdk(),
-        chatSDK: MEGAChatSdk = MEGASdkManager.sharedMEGAChatSdk()
+        sdk: MEGASdk = .sharedSdk,
+        chatSDK: MEGAChatSdk = .sharedChatSdk
     ) {
         var isModerator = false
         var isInContactList = false
@@ -34,10 +36,65 @@ extension CallParticipantEntity {
                   isSpeakerPinned: false)
     }
     
+    convenience init(
+        chatId: ChatIdEntity,
+        userHandle: HandleEntity,
+        peerPrivilege: ChatRoomPrivilegeEntity,
+        sdk: MEGASdk = .sharedSdk
+    ) {
+        var isInContactList = false
+        
+        let contact = sdk.visibleContacts().first(where: { $0.handle == userHandle })
+        isInContactList = (contact != nil)
+        
+        self.init(chatId: chatId,
+                  participantId: userHandle,
+                  clientId: .invalid,
+                  email: contact?.email,
+                  isModerator: peerPrivilege == .moderator,
+                  isInContactList: isInContactList,
+                  video: .unknown,
+                  audio: .unknown,
+                  isVideoHiRes: false,
+                  isVideoLowRes: false,
+                  canReceiveVideoHiRes: false,
+                  canReceiveVideoLowRes: false,
+                  name: nil,
+                  sessionRecoverable: false,
+                  isSpeakerPinned: false)
+    }
+    
+    convenience init(
+        chatId: HandleEntity,
+        userHandle: HandleEntity,
+        sdk: MEGASdk = .sharedSdk
+    ) {
+        var isInContactList = false
+        
+        let contact = sdk.visibleContacts().first(where: { $0.handle == userHandle })
+        isInContactList = (contact != nil)
+        
+        self.init(chatId: chatId,
+                  participantId: userHandle,
+                  clientId: .invalid,
+                  email: contact?.email,
+                  isModerator: false,
+                  isInContactList: isInContactList,
+                  video: .unknown,
+                  audio: .unknown,
+                  isVideoHiRes: false,
+                  isVideoLowRes: false,
+                  canReceiveVideoHiRes: false,
+                  canReceiveVideoLowRes: false,
+                  name: nil,
+                  sessionRecoverable: false,
+                  isSpeakerPinned: false)
+    }
+    
     static func myself(
         chatId: HandleEntity,
-        sdk: MEGASdk = MEGASdkManager.sharedMEGASdk(),
-        chatSDK: MEGAChatSdk = MEGASdkManager.sharedMEGAChatSdk()
+        sdk: MEGASdk = .sharedSdk,
+        chatSDK: MEGAChatSdk = .sharedChatSdk
     ) -> CallParticipantEntity? {
         guard let user = sdk.myUser,
               let email = sdk.myEmail,

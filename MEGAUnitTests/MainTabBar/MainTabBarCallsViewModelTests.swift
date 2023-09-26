@@ -145,7 +145,8 @@ final class MockMainTabBarCallsRouter: MainTabBarCallsRouting {
     var dismissWaitingRoomDialog_calledTimes = 0
     var showConfirmDenyAction_calledTimes = 0
     var showParticipantsJoinedTheCall_calledTimes = 0
-
+    var showWaitingRoomListFor_calledTimes = 0
+    
     func showOneUserWaitingRoomDialog(for username: String, chatName: String, isCallUIVisible: Bool, admitAction: @escaping () -> Void, denyAction: @escaping () -> Void) {
         showOneUserWaitingRoomDialog_calledTimes += 1
     }
@@ -164,5 +165,9 @@ final class MockMainTabBarCallsRouter: MainTabBarCallsRouting {
     
     func showParticipantsJoinedTheCall(message: String) {
         showParticipantsJoinedTheCall_calledTimes += 1
+    }
+    
+    func showWaitingRoomListFor(call: CallEntity, in chatRoom: ChatRoomEntity) {
+        showWaitingRoomListFor_calledTimes += 1
     }
 }

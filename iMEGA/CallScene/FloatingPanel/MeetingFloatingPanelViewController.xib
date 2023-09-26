@@ -46,9 +46,10 @@
                                 <constraint firstAttribute="width" constant="36" id="m77-Iv-IlW"/>
                             </constraints>
                         </view>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="60" estimatedRowHeight="60" sectionHeaderHeight="18" estimatedSectionHeaderHeight="24" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="486-lX-0t8">
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="60" estimatedRowHeight="60" sectionHeaderHeight="24" estimatedSectionHeaderHeight="24" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="486-lX-0t8">
                             <rect key="frame" x="0.0" y="29" width="375" height="449"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <color key="separatorColor" red="0.32941176470588235" green="0.32941176470588235" blue="0.34509803921568627" alpha="0.64673771131907076" colorSpace="custom" customColorSpace="sRGB"/>
                             <view key="tableHeaderView" contentMode="scaleToFill" id="sZ5-cL-XpW" customClass="UITableViewHeaderFooterView">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="96"/>

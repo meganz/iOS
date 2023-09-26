@@ -296,7 +296,7 @@ final class MockMeetingContainerRouter: MeetingContainerRouting {
     var removeEndDialog_calledTimes = 0
     var showJoinMegaScreen_calledTimes = 0
     var showHangOrEndCallDialog_calledTimes = 0
-
+    var selectWaitingRoomList_calledTimes = 0
     func showMeetingUI(containerViewModel: MeetingContainerViewModel) {
         showMeetingUI_calledTimes += 1
     }
@@ -360,5 +360,9 @@ final class MockMeetingContainerRouter: MeetingContainerRouting {
     
     func showHangOrEndCallDialog(containerViewModel: MeetingContainerViewModel) {
         showHangOrEndCallDialog_calledTimes += 1
+    }
+    
+    func selectWaitingRoomList(containerViewModel: MeetingContainerViewModel) {
+        selectWaitingRoomList_calledTimes += 1
     }
 }

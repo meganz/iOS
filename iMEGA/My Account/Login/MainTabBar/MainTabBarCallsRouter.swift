@@ -1,3 +1,5 @@
+import MEGADomain
+
 final class MainTabBarCallsRouter: MainTabBarCallsRouting {
     
     private lazy var callWaitingRoomDialog = CallWaitingRoomUsersDialog()
@@ -39,5 +41,15 @@ final class MainTabBarCallsRouter: MainTabBarCallsRouting {
     
     func showParticipantsJoinedTheCall(message: String) {
         SVProgressHUD.showSuccess(withStatus: message)
+    }
+    
+    func showWaitingRoomListFor(call: CallEntity, in chatRoom: ChatRoomEntity) {
+        let isSpeakerEnabled = AVAudioSession.sharedInstance().isOutputEqualToPortType(.builtInSpeaker)
+        MeetingContainerRouter(presenter: baseViewController,
+                               chatRoom: chatRoom,
+                               call: call,
+                               isSpeakerEnabled: isSpeakerEnabled,
+                               selectWaitingRoomList: true)
+        .start()
     }
 }

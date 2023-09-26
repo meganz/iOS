@@ -39,8 +39,8 @@ final class MeetingFloatingPanelViewController: UIViewController {
     private let chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
     private var isAllowNonHostToAddParticipantsEnabled = false
-    private var shouldHideHostControls = false
-
+    private var callParticipantsListView: ParticipantsListView?
+    
     init(viewModel: MeetingFloatingPanelViewModel,
          userImageUseCase: some UserImageUseCaseProtocol,
          accountUseCase: any AccountUseCaseProtocol,
@@ -68,11 +68,9 @@ final class MeetingFloatingPanelViewController: UIViewController {
         endQuickActionView.icon = UIImage(resource: .hangCallMeetingAction)
         endQuickActionView.name = Strings.Localizable.leave
         shareLinkLabel.text = Strings.Localizable.Meetings.Panel.shareLink
-        participantsTableView.register(MeetingParticipantTableViewCell.nib, forCellReuseIdentifier: MeetingParticipantTableViewCell.reuseIdentifier)
-        participantsTableView.register(MeetingInviteParticipantTableViewCell.nib, forCellReuseIdentifier: MeetingInviteParticipantTableViewCell.reuseIdentifier)
-        participantsTableView.register(AllowNonHostToInviteTableViewCell.nib, forCellReuseIdentifier: AllowNonHostToInviteTableViewCell.reuseIdentifier)
-        participantsTableView.register(MeetingParticipantTableViewHeader.nib, forHeaderFooterViewReuseIdentifier: MeetingParticipantTableViewHeader.reuseIdentifier)
 
+        registerTableViewCells()
+        
         flipQuickActionView.disabled = true
         
         let quickActionProperties = MeetingQuickActionView.Properties(
@@ -94,6 +92,11 @@ final class MeetingFloatingPanelViewController: UIViewController {
             self?.executeCommand($0)
         }
         viewModel.dispatch(.onViewReady)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        viewModel.dispatch(.onViewAppear)
     }
     
     override func viewDidLayoutSubviews() {
@@ -153,17 +156,24 @@ final class MeetingFloatingPanelViewController: UIViewController {
             }
             cameraQuickActionView.isSelected = on
             flipQuickActionView.disabled = !on
-        case .reloadParticpantsList(let participants):
+        case .reloadParticipantsList(let participants):
             callParticipants = participants
-            participantsTableView?.reloadData()
+            participantsTableView?.reloadSections([1, 2], with: .automatic)
         case .updatedAudioPortSelection(let audioPort, let bluetoothAudioRouteAvailable):
             selectedAudioPortUpdated(audioPort, isBluetoothRouteAvailable: bluetoothAudioRouteAvailable)
         case .transitionToShortForm:
             panModalSetNeedsLayoutUpdate()
             panModalTransition(to: .shortForm)
+        case .transitionToLongForm:
+            panModalSetNeedsLayoutUpdate()
+            panModalTransition(to: .longForm)
         case .updateAllowNonHostToAddParticipants(let enabled):
             isAllowNonHostToAddParticipantsEnabled = enabled
             participantsTableView.reloadSections([0], with: .automatic)
+        case .reloadViewData(let participantListView):
+            callParticipantsListView = participantListView
+            callParticipants = participantListView.participants
+            participantsTableView.reloadData()
         }
     }
     
@@ -228,76 +238,78 @@ final class MeetingFloatingPanelViewController: UIViewController {
         }
         
         isAllowNonHostToAddParticipantsEnabled = allowNonHostToAddParticipantsEnabled
-        shouldHideHostControls = isOneToOneMeeting || !isMyselfAModerator
     }
 }
 
 extension MeetingFloatingPanelViewController: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        2
+        guard let callParticipantsListView else { return 0 }
+        return callParticipantsListView.sections.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case 0:
-            return shouldHideHostControls ? 0 : 1
-        case 1:
-            return callParticipants.count + 1
-        default:
-            return 0
+        guard let callParticipantsListView else { return 0 }
+        switch callParticipantsListView.sections[section] {
+        case .hostControls:
+            return callParticipantsListView.hostControlsRows.count
+        case .invite:
+            return callParticipantsListView.inviteSectionRow.count
+        case .participants:
+            return callParticipants.count
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch indexPath.section {
-        case 0:
-            switch indexPath.row {
-            case 0:
-                guard let cell = tableView.dequeueReusableCell(withIdentifier: AllowNonHostToInviteTableViewCell.reuseIdentifier, for: indexPath) as? AllowNonHostToInviteTableViewCell else { return UITableViewCell() }
-                cell.allowNonHostSwitchEnabled(isAllowNonHostToAddParticipantsEnabled)
-                cell.switchToggleHandler = { [weak self] allowNonHostToAddParticipantsSwitch in
-                    self?.viewModel.dispatch(.allowNonHostToAddParticipants(enabled: allowNonHostToAddParticipantsSwitch.isOn))
+        guard let callParticipantsListView else { return UITableViewCell() }
+        switch callParticipantsListView.sections[indexPath.section] {
+        case .hostControls:
+            switch callParticipantsListView.hostControlsRows[indexPath.row] {
+            case .allowNonHostToInvite:
+                    guard let cell = tableView.dequeueReusableCell(withIdentifier: AllowNonHostToInviteTableViewCell.reuseIdentifier, for: indexPath) as? AllowNonHostToInviteTableViewCell else { return UITableViewCell() }
+                    cell.allowNonHostSwitchEnabled(isAllowNonHostToAddParticipantsEnabled)
+                    cell.switchToggleHandler = { [weak self] allowNonHostToAddParticipantsSwitch in
+                        self?.viewModel.dispatch(.allowNonHostToAddParticipants(enabled: allowNonHostToAddParticipantsSwitch.isOn))
+                    }
+                    return cell
+            case .listSelector:
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: ParticipantsListSelectorTableViewCell.reuseIdentifier, for: indexPath) as? ParticipantsListSelectorTableViewCell else { return UITableViewCell() }
+                cell.segmentedControl.selectedSegmentIndex = callParticipantsListView.selectedTab.rawValue
+                if !callParticipantsListView.existsWaitingRoom {
+                    cell.segmentedControl.removeSegment(at: 2, animated: false)
                 }
-                return cell
-            default:
-                return UITableViewCell()
-            }
-        case 1:
-            switch indexPath.row {
-            case 0:
-                guard let cell = tableView.dequeueReusableCell(withIdentifier: MeetingInviteParticipantTableViewCell.reuseIdentifier, for: indexPath) as? MeetingInviteParticipantTableViewCell else { return UITableViewCell() }
-                cell.cellTappedHandler = { [weak self] in
-                    self?.viewModel.dispatch(.inviteParticipants)
-                }
-                return cell
-            default:
-                guard let cell = tableView.dequeueReusableCell(withIdentifier: MeetingParticipantTableViewCell.reuseIdentifier, for: indexPath) as? MeetingParticipantTableViewCell else { return UITableViewCell() }
-                cell.viewModel = MeetingParticipantViewModel(
-                    participant: callParticipants[indexPath.row - 1],
-                    userImageUseCase: userImageUseCase,
-                    accountUseCase: accountUseCase,
-                    chatRoomUseCase: chatRoomUseCase,
-                    chatRoomUserUseCase: chatRoomUserUseCase,
-                    megaHandleUseCase: megaHandleUseCase
-                ) { [weak self] participant, button in
-                    guard let self = self else { return }
-                    self.viewModel.dispatch(.onContextMenuTap(presenter: self, sender: button, participant: participant))
+                cell.segmentedControlChangeHandler = { [weak self] selectedTab in
+                    self?.viewModel.dispatch(.selectParticipantsList(selectedTab: selectedTab))
                 }
                 return cell
             }
-            
-        default:
-            return UITableViewCell()
+        case .invite:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: MeetingInviteParticipantTableViewCell.reuseIdentifier, for: indexPath) as? MeetingInviteParticipantTableViewCell else { return UITableViewCell() }
+            cell.cellTappedHandler = { [weak self] in
+                self?.viewModel.dispatch(.inviteParticipants)
+            }
+            return cell
+        case .participants:
+            switch callParticipantsListView.selectedTab {
+            case .inCall:
+                return participantInCallCell(at: indexPath)
+            case .notInCall:
+                return participantNotInCallCell(at: indexPath)
+            case .waitingRoom:
+                return participantInWaitingRoomCell(at: indexPath)
+            }
         }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        switch section {
-        case 1:
+        guard let callParticipantsListView else { return nil }
+        switch callParticipantsListView.sections[section] {
+        case .invite:
             guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: MeetingParticipantTableViewHeader.reuseIdentifier) as? MeetingParticipantTableViewHeader else { return UIView(frame: .zero) }
-            header.titleLabel.text = Strings.Localizable.Meetings.Panel.participantsCount(callParticipants.count)
-            header.actionButton.isHidden = true
+            header.configure(for: callParticipantsListView.selectedTab, participantsCount: callParticipants.count)
+            header.actionButtonTappedHandler = { [weak self] in
+                self?.viewModel.dispatch(.onAdmitAllParticipantsTap)
+            }
             return header
         default:
             return nil
@@ -305,12 +317,64 @@ extension MeetingFloatingPanelViewController: UITableViewDataSource, UITableView
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        switch section {
-        case 1:
+        guard let callParticipantsListView else { return 0 }
+        switch callParticipantsListView.sections[section] {
+        case .invite:
             return 24
         default:
             return 0
         }
+    }
+    
+    private func registerTableViewCells() {
+        participantsTableView.register(MeetingParticipantTableViewCell.nib, forCellReuseIdentifier: MeetingParticipantTableViewCell.reuseIdentifier)
+        participantsTableView.register(MeetingInviteParticipantTableViewCell.nib, forCellReuseIdentifier: MeetingInviteParticipantTableViewCell.reuseIdentifier)
+        participantsTableView.register(AllowNonHostToInviteTableViewCell.nib, forCellReuseIdentifier: AllowNonHostToInviteTableViewCell.reuseIdentifier)
+        participantsTableView.register(ParticipantsListSelectorTableViewCell.nib, forCellReuseIdentifier: ParticipantsListSelectorTableViewCell.reuseIdentifier)
+        participantsTableView.register(ParticipantNotInCallTableViewCell.nib, forCellReuseIdentifier: ParticipantNotInCallTableViewCell.reuseIdentifier)
+        participantsTableView.register(ParticipantInWaitingRoomTableViewCell.nib, forCellReuseIdentifier: ParticipantInWaitingRoomTableViewCell.reuseIdentifier)
+        participantsTableView.register(MeetingParticipantTableViewHeader.nib, forHeaderFooterViewReuseIdentifier: MeetingParticipantTableViewHeader.reuseIdentifier)
+    }
+    
+    private func participantInCallCell(at indexPath: IndexPath) -> MeetingParticipantTableViewCell {
+        guard let cell = participantsTableView.dequeueReusableCell(withIdentifier: MeetingParticipantTableViewCell.reuseIdentifier, for: indexPath) as? MeetingParticipantTableViewCell else { return MeetingParticipantTableViewCell() }
+        cell.viewModel = MeetingParticipantViewModel(
+            participant: callParticipants[indexPath.row],
+            userImageUseCase: userImageUseCase,
+            accountUseCase: accountUseCase,
+            chatRoomUseCase: chatRoomUseCase,
+            chatRoomUserUseCase: chatRoomUserUseCase,
+            megaHandleUseCase: megaHandleUseCase
+        ) { [weak self] participant, button in
+            guard let self else { return }
+            viewModel.dispatch(.onContextMenuTap(presenter: self, sender: button, participant: participant))
+        }
+        return cell
+    }
+    
+    private func participantNotInCallCell(at indexPath: IndexPath) -> ParticipantNotInCallTableViewCell {
+        guard let cell = participantsTableView.dequeueReusableCell(withIdentifier: ParticipantNotInCallTableViewCell.reuseIdentifier, for: indexPath) as? ParticipantNotInCallTableViewCell else { return ParticipantNotInCallTableViewCell() }
+        cell.viewModel = MeetingParticipantViewModel(
+            participant: callParticipants[indexPath.row],
+            userImageUseCase: userImageUseCase,
+            accountUseCase: accountUseCase,
+            chatRoomUseCase: chatRoomUseCase,
+            chatRoomUserUseCase: chatRoomUserUseCase,
+            megaHandleUseCase: megaHandleUseCase
+        ) { _, _ in }
+        return cell
+    }
+    
+    private func participantInWaitingRoomCell(at indexPath: IndexPath) -> ParticipantInWaitingRoomTableViewCell {
+        guard let cell = participantsTableView.dequeueReusableCell(withIdentifier: ParticipantInWaitingRoomTableViewCell.reuseIdentifier, for: indexPath) as? ParticipantInWaitingRoomTableViewCell else { return ParticipantInWaitingRoomTableViewCell() }
+        cell.viewModel = ParticipantInWaitingRoomViewModel(
+            participant: callParticipants[indexPath.row],
+            userImageUseCase: userImageUseCase, chatRoomUseCase: chatRoomUseCase, chatRoomUserUseCase: chatRoomUserUseCase, megaHandleUseCase: megaHandleUseCase, admitButtonTappedHandler: { [weak self] participant in
+                self?.viewModel.dispatch(.onAdmitParticipantTap(participant: participant))
+            }, denyButtonMenuTappedHandler: { [weak self] participant in
+                self?.viewModel.dispatch(.onDenyParticipantTap(participant: participant))
+            })
+        return cell
     }
 }
 

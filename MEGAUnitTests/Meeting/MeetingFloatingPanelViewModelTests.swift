@@ -35,7 +35,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
              action: .onViewReady,
              expectedCommands: [
                 .configView(canInviteParticipants: true, isOneToOneMeeting: false, isVideoEnabled: false, cameraPosition: nil, allowNonHostToAddParticipantsEnabled: false, isMyselfAModerator: true),
-                .reloadParticpantsList(participants: []),
+                .reloadParticipantsList(participants: []),
                 .updatedAudioPortSelection(audioPort: audioSessionUseCase.currentSelectedAudioPort, bluetoothAudioRouteAvailable: audioSessionUseCase.isBluetoothAudioRouteAvailable),
                 .microphoneMuted(muted: true)
              ])
@@ -62,8 +62,8 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
              action: .onViewReady,
              expectedCommands: [
                 .configView(canInviteParticipants: true, isOneToOneMeeting: true, isVideoEnabled: false, cameraPosition: nil, allowNonHostToAddParticipantsEnabled: false, isMyselfAModerator: true),
-                .reloadParticpantsList(participants: []),
                 .updatedAudioPortSelection(audioPort: audioSessionUseCase.currentSelectedAudioPort, bluetoothAudioRouteAvailable: audioSessionUseCase.isBluetoothAudioRouteAvailable),
+                .reloadViewData(participantsListView: ParticipantsListView(sections: [.hostControls, .invite, .participants], hostControlsRows: [.allowNonHostToInvite], inviteSectionRow: [], selectedTab: .inCall, participants: [], existsWaitingRoom: false)),
                 .microphoneMuted(muted: true)
              ])
         XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
@@ -92,7 +92,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
              action: .onViewReady,
              expectedCommands: [
                 .configView(canInviteParticipants: true, isOneToOneMeeting: false, isVideoEnabled: true, cameraPosition: .front, allowNonHostToAddParticipantsEnabled: false, isMyselfAModerator: true),
-                .reloadParticpantsList(participants: []),
+                .reloadViewData(participantsListView: ParticipantsListView(sections: [.hostControls, .invite, .participants], hostControlsRows: [.allowNonHostToInvite], inviteSectionRow: [], selectedTab: .inCall, participants: [], existsWaitingRoom: false)),
                 .updatedAudioPortSelection(audioPort: audioSessionUseCase.currentSelectedAudioPort, bluetoothAudioRouteAvailable: audioSessionUseCase.isBluetoothAudioRouteAvailable),
                 .microphoneMuted(muted: true)
              ])
@@ -124,7 +124,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
              action: .onViewReady,
              expectedCommands: [
                 .configView(canInviteParticipants: true, isOneToOneMeeting: false, isVideoEnabled: true, cameraPosition: .back, allowNonHostToAddParticipantsEnabled: false, isMyselfAModerator: true),
-                .reloadParticpantsList(participants: []),
+                .reloadParticipantsList(participants: []),
                 .updatedAudioPortSelection(audioPort: audioSessionUseCase.currentSelectedAudioPort, bluetoothAudioRouteAvailable: audioSessionUseCase.isBluetoothAudioRouteAvailable),
                 .microphoneMuted(muted: true)
              ])
@@ -151,7 +151,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
              action: .onViewReady,
              expectedCommands: [
                 .configView(canInviteParticipants: false, isOneToOneMeeting: false, isVideoEnabled: false, cameraPosition: nil, allowNonHostToAddParticipantsEnabled: false, isMyselfAModerator: false),
-                .reloadParticpantsList(participants: []),
+                .reloadParticipantsList(participants: []),
                 .updatedAudioPortSelection(audioPort: audioSessionUseCase.currentSelectedAudioPort, bluetoothAudioRouteAvailable: audioSessionUseCase.isBluetoothAudioRouteAvailable),
                 .microphoneMuted(muted: true)
              ])
@@ -178,8 +178,8 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
              action: .onViewReady,
              expectedCommands: [
                 .configView(canInviteParticipants: false, isOneToOneMeeting: false, isVideoEnabled: false, cameraPosition: nil, allowNonHostToAddParticipantsEnabled: false, isMyselfAModerator: false),
-                .reloadParticpantsList(participants: []),
                 .updatedAudioPortSelection(audioPort: audioSessionUseCase.currentSelectedAudioPort, bluetoothAudioRouteAvailable: audioSessionUseCase.isBluetoothAudioRouteAvailable),
+                .reloadViewData(participantsListView: ParticipantsListView(sections: [.invite, .participants], hostControlsRows: [], inviteSectionRow: [], selectedTab: .inCall, participants: [], existsWaitingRoom: false)),
                 .microphoneMuted(muted: true)
              ])
         XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
@@ -205,7 +205,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
              action: .onViewReady,
              expectedCommands: [
                 .configView(canInviteParticipants: true, isOneToOneMeeting: false, isVideoEnabled: false, cameraPosition: nil, allowNonHostToAddParticipantsEnabled: true, isMyselfAModerator: false),
-                .reloadParticpantsList(participants: []),
+                .reloadParticipantsList(participants: []),
                 .updatedAudioPortSelection(audioPort: audioSessionUseCase.currentSelectedAudioPort, bluetoothAudioRouteAvailable: audioSessionUseCase.isBluetoothAudioRouteAvailable),
                 .microphoneMuted(muted: true)
              ])
@@ -363,7 +363,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         ])
         let viewModel = MeetingFloatingPanelViewModel(router: router, accountUseCase: accountUseCase, chatRoomUseCase: MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity()))
         test(viewModel: viewModel, action: .inviteParticipants, expectedCommands: [])
-        XCTAssert(router.inviteParticpants_calledTimes == 1)
+        XCTAssert(router.inviteParticipants_calledTimes == 1)
     }
     
     func testAction_inviteParticipants_showAllContactsAlreadyAddedAlert() {
@@ -394,7 +394,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         ])
         let viewModel = MeetingFloatingPanelViewModel(router: router, accountUseCase: accountUseCase)
         test(viewModel: viewModel, action: .inviteParticipants, expectedCommands: [])
-        XCTAssert(router.inviteParticpants_calledTimes == 0)
+        XCTAssert(router.inviteParticipants_calledTimes == 0)
     }
     
     func testAction_inviteParticipants_singleContactVisible() {
@@ -404,7 +404,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         ])
         let viewModel = MeetingFloatingPanelViewModel(router: router, accountUseCase: accountUseCase, chatRoomUseCase: MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity()))
         test(viewModel: viewModel, action: .inviteParticipants, expectedCommands: [])
-        XCTAssert(router.inviteParticpants_calledTimes == 1)
+        XCTAssert(router.inviteParticipants_calledTimes == 1)
     }
     
     func testAction_inviteParticipants_singleAddedContactAndABlockedContact() {
@@ -432,9 +432,9 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
             chatRoomUseCase: chatRoomUseCase
         )
         viewModel.dispatch(.inviteParticipants)
-        XCTAssert(router.inviteParticpants_calledTimes == 1)
+        XCTAssert(router.inviteParticipants_calledTimes == 1)
         viewModel.dispatch(.inviteParticipants)
-        XCTAssert(router.inviteParticpants_calledTimes == 1)
+        XCTAssert(router.inviteParticipants_calledTimes == 1)
     }
     
     func testAction_contextMenuTap() {
@@ -758,7 +758,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .makeModerator(participant: particpant),
              expectedCommands: [
-                .reloadParticpantsList(participants: [])
+                .reloadParticipantsList(participants: [])
              ]
         )
     }
@@ -870,11 +870,12 @@ final class MockMeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     var audioPermissionError_calledTimes = 0
     var dismiss_calledTimes = 0
     var shareLink_calledTimes = 0
-    var inviteParticpants_calledTimes = 0
+    var inviteParticipants_calledTimes = 0
     var showContextMenu_calledTimes = 0
     var showAllContactsAlreadyAddedAlert_CalledTimes = 0
     var showNoAvailableContactsAlert_CalledTimes = 0
     var invitedParticipantHandles: [HandleEntity]?
+    var showConfirmDenyAction_calledTimes = 0
 
     var viewModel: MeetingFloatingPanelViewModel? {
         return nil
@@ -893,7 +894,7 @@ final class MockMeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
         excludeParticipantsId: Set<HandleEntity>,
         selectedUsersHandler: @escaping (([HandleEntity]) -> Void)
     ) {
-        inviteParticpants_calledTimes += 1
+        inviteParticipants_calledTimes += 1
         if let invitedParticipantHandles = invitedParticipantHandles {
             selectedUsersHandler(invitedParticipantHandles)
         }
@@ -926,4 +927,8 @@ final class MockMeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     func didDisplayParticipantInMainView(_ participant: CallParticipantEntity) {}
     
     func didSwitchToGridView() {}
+    
+    func showConfirmDenyAction(for username: String, isCallUIVisible: Bool, confirmDenyAction: @escaping () -> Void, cancelDenyAction: @escaping () -> Void) {
+        showConfirmDenyAction_calledTimes += 1
+    }
 }

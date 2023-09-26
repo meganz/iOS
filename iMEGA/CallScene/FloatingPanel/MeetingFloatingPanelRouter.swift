@@ -24,6 +24,7 @@ protocol MeetingFloatingPanelRouting: AnyObject, Routing {
     func showAudioPermissionError()
     func didDisplayParticipantInMainView(_ participant: CallParticipantEntity)
     func didSwitchToGridView()
+    func showConfirmDenyAction(for username: String, isCallUIVisible: Bool, confirmDenyAction: @escaping () -> Void, cancelDenyAction: @escaping () -> Void)
 }
 
 extension MeetingFloatingPanelRouting {
@@ -38,22 +39,26 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     private weak var containerViewModel: MeetingContainerViewModel?
     private let chatRoom: ChatRoomEntity
     private let isSpeakerEnabled: Bool
+    private var selectWaitingRoomList: Bool
     private(set) weak var viewModel: MeetingFloatingPanelViewModel?
     private var inviteToMegaNavigationController: MEGANavigationController?
     private let permissionHandler: any DevicePermissionsHandling
-    
+    private lazy var callWaitingRoomDialog = CallWaitingRoomUsersDialog()
+
     init(
         presenter: UINavigationController,
         containerViewModel: MeetingContainerViewModel,
         chatRoom: ChatRoomEntity,
         isSpeakerEnabled: Bool,
-        permissionHandler: some DevicePermissionsHandling
+        permissionHandler: some DevicePermissionsHandling,
+        selectWaitingRoomList: Bool
     ) {
         self.presenter = presenter
         self.containerViewModel = containerViewModel
         self.chatRoom = chatRoom
         self.isSpeakerEnabled = isSpeakerEnabled
         self.permissionHandler = permissionHandler
+        self.selectWaitingRoomList = selectWaitingRoomList
     }
     
     func build() -> UIViewController {
@@ -77,7 +82,8 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
             localVideoUseCase: CallLocalVideoUseCase(repository: CallLocalVideoRepository(chatSdk: .shared)),
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             chatRoomUseCase: chatRoomUseCase,
-            megaHandleUseCase: megaHandleUseCase
+            megaHandleUseCase: megaHandleUseCase,
+            selectWaitingRoomList: selectWaitingRoomList
         )
         
         let userImageUseCase = UserImageUseCase(
@@ -205,5 +211,11 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     @objc private func dismissInviteContactsScreen() {
         self.inviteToMegaNavigationController?.dismiss(animated: true)
         self.inviteToMegaNavigationController = nil
+    }
+    
+    func showConfirmDenyAction(for username: String, isCallUIVisible: Bool, confirmDenyAction: @escaping () -> Void, cancelDenyAction: @escaping () -> Void) {
+        guard let presenter = baseViewController?.presenterViewController() else { return }
+
+        callWaitingRoomDialog.showAlertForConfirmDeny(isCallUIVisible: isCallUIVisible, named: username, presenterViewController: presenter, confirmAction: confirmDenyAction, cancelAction: cancelDenyAction)
     }
 }
