@@ -251,6 +251,14 @@
         "identifier" : "SearchTests",
         "name" : "SearchTests"
       }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Modules\/Presentation\/Features\/Accounts",
+        "identifier" : "AccountsTests",
+        "name" : "AccountsTests"
+      }
     }
   ],
   "version" : 1

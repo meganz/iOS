@@ -4149,6 +4149,7 @@
 		B56717632A1F16A200CFF55A /* UpgradeAccountPlanViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeAccountPlanViewModelTests.swift; sourceTree = "<group>"; };
 		B567EF8927EAF7640014B26C /* PhotosViewController+Banner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewController+Banner.swift"; sourceTree = "<group>"; };
 		B569F9C1295319E400C9AE40 /* CustomModalAlertViewController+UpgradeSecurity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+UpgradeSecurity.swift"; sourceTree = "<group>"; };
+		B56FD4D42AC2D42D00055006 /* Accounts */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Accounts; sourceTree = "<group>"; };
 		B571B21B2A8CC3BC00B8F112 /* CountdownTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownTimer.swift; sourceTree = "<group>"; };
 		B57496E82A45B4BC00292A27 /* UpgradeAccountPlanViewModel_createAccountPlanViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeAccountPlanViewModel_createAccountPlanViewModelTests.swift; sourceTree = "<group>"; };
 		B5762F7E29E67F6800CFA884 /* ShareViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShareViewController+Additions.swift"; sourceTree = "<group>"; };
@@ -9631,6 +9632,7 @@
 		A861B8332907F5DB00AB06D4 /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				B56FD4D42AC2D42D00055006 /* Accounts */,
 				94F568C12A56E7A6005CE9F2 /* DeviceCenter */,
 				945928F22AA23B1A0037694C /* Search */,
 				94F568BD2A56E412005CE9F2 /* Settings */,
