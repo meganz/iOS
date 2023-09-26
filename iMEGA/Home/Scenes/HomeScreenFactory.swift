@@ -156,7 +156,7 @@ final class HomeScreenFactory: NSObject {
             }
         )
         
-        bridge.didInputTextTrampoline = { [weak searchBridge]text in
+        bridge.didInputTextTrampoline = { [weak searchBridge] text in
             searchBridge?.queryChanged(text)
         }
         
