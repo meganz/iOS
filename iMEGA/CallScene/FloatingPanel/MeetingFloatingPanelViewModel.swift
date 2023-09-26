@@ -494,7 +494,6 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             loadParticipantsInCall()
         case .notInCall:
             loadParticipantsNotInCall()
-            invokeCommand?(.reloadParticipantsList(participants: callParticipantsNotInCall))
         case .waitingRoom:
             loadParticipantsInWaitingRoom()
         }
@@ -566,7 +565,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         if chatRoom.chatType != .oneToOne && isWaitingRoomEnabled {
             hostControls.append(.listSelector)
         }
-        if isMyselfAModerator {
+        if isMyselfAModerator && chatRoom.chatType != .oneToOne {
             hostControls.append(.allowNonHostToInvite)
         }
         
