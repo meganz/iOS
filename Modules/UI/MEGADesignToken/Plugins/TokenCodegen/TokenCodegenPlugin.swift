@@ -10,11 +10,7 @@ struct TokenCodegenPlugin: BuildToolPlugin {
             file.path.string.contains("/Resources")
         }
 
-        // We're only doing this for core colors now
-        guard let colorsInput = inputFiles.first(where: { $0.path.string.contains("core") })?.path else {
-            Diagnostics.warning("No core.json found for core colors under /Resources, return")
-            return []
-        }
+        let inputPaths = inputFiles.map(\.path)
 
         let executablePath = try context.tool(named: "TokenCodegenGenerator").path
 
@@ -24,8 +20,8 @@ struct TokenCodegenPlugin: BuildToolPlugin {
             .buildCommand(
                 displayName: "Generating Color design tokens",
                 executable: executablePath,
-                arguments: [colorsInput, output],
-                inputFiles: [colorsInput],
+                arguments: [inputPaths, output],
+                inputFiles: inputPaths,
                 outputFiles: [output]
             )
         ]
