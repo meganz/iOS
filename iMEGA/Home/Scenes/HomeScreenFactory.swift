@@ -3,6 +3,7 @@ import MEGADomain
 import MEGAL10n
 import MEGAPermissions
 import MEGASDKRepo
+import MEGASwift
 import Search
 import SwiftUI
 
@@ -178,7 +179,8 @@ final class HomeScreenFactory: NSObject {
                 nodeRepository: makeNodeRepo()
             ),
             bridge: searchBridge,
-            config: .searchConfig
+            config: .searchConfig,
+            keyboardVisibilityHandler: KeyboardVisibiltyHandler(notificationCenter: .default)
         )
         return UIHostingController(rootView: SearchResultsView(viewModel: vm))
     }
