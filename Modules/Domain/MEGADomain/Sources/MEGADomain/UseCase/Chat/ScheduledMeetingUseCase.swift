@@ -15,7 +15,7 @@ public protocol ScheduledMeetingUseCaseProtocol {
         _ occurrence: ScheduledMeetingOccurrenceEntity,
         meeting: ScheduledMeetingEntity
     ) async throws -> ScheduledMeetingEntity
-    func ocurrencesShouldBeReloadListener(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<Bool, Never>
+    func occurrencesShouldBeReloadListener(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<Bool, Never>
 }
 
 public struct ScheduledMeetingUseCase<T: ScheduledMeetingRepositoryProtocol>: ScheduledMeetingUseCaseProtocol {
@@ -77,7 +77,7 @@ public struct ScheduledMeetingUseCase<T: ScheduledMeetingRepositoryProtocol>: Sc
         try await repository.updateOccurrence(occurrence, meeting: meeting)
     }
     
-    public func ocurrencesShouldBeReloadListener(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<Bool, Never> {
+    public func occurrencesShouldBeReloadListener(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<Bool, Never> {
         repository.ocurrencesShouldBeReloadListener(forChatRoom: chatRoom)
     }
 }

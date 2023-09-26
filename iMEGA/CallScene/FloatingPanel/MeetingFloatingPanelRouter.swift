@@ -10,7 +10,7 @@ protocol MeetingFloatingPanelRouting: AnyObject, Routing {
     func dismiss(animated: Bool)
     func inviteParticipants(
         withParticipantsAddingViewFactory participantsAddingViewFactory: ParticipantsAddingViewFactory,
-        excludeParticpantsId: Set<HandleEntity>,
+        excludeParticipantsId: Set<HandleEntity>,
         selectedUsersHandler: @escaping (([HandleEntity]) -> Void)
     )
     func showAllContactsAlreadyAddedAlert(withParticipantsAddingViewFactory participantsAddingViewFactory: ParticipantsAddingViewFactory)
@@ -112,12 +112,12 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     
     func inviteParticipants(
         withParticipantsAddingViewFactory participantsAddingViewFactory: ParticipantsAddingViewFactory,
-        excludeParticpantsId: Set<HandleEntity>,
+        excludeParticipantsId: Set<HandleEntity>,
         selectedUsersHandler: @escaping (([HandleEntity]) -> Void)
     ) {
         guard let contactsNavigationController = participantsAddingViewFactory.addContactsViewController(
             withContactsMode: .inviteParticipants,
-            additionallyExcludedParticipantsId: excludeParticpantsId,
+            additionallyExcludedParticipantsId: excludeParticipantsId,
             selectedUsersHandler: selectedUsersHandler
         ) else { return }
         

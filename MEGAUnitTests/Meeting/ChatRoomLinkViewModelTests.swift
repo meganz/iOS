@@ -141,7 +141,7 @@ final class MockMeetingInfoRouter: MeetingInfoRouting {
         showParticipantDetails_calledTimes += 1
     }
     
-    func inviteParticipants(withParticipantsAddingViewFactory participantsAddingViewFactory: MEGA.ParticipantsAddingViewFactory, excludeParticpantsId: Set<MEGADomain.HandleEntity>, selectedUsersHandler: @escaping (([MEGADomain.HandleEntity]) -> Void)) {
+    func inviteParticipants(withParticipantsAddingViewFactory participantsAddingViewFactory: MEGA.ParticipantsAddingViewFactory, excludeParticipantsId: Set<MEGADomain.HandleEntity>, selectedUsersHandler: @escaping (([MEGADomain.HandleEntity]) -> Void)) {
         inviteParticipants_calledTimes += 1
     }
     

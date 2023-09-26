@@ -625,7 +625,8 @@ final class ChatRoomsListViewModel: ObservableObject {
             megaHandleUseCase: megaHandleUseCase,
             callUseCase: CallUseCase(repository: CallRepository(chatSdk: .shared, callActionManager: CallActionManager.shared)),
             audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession(), callActionManager: CallActionManager.shared)), scheduledMeetingUseCase: scheduledMeetingUseCase,
-            chatNotificationControl: chatNotificationControl, permissionHandler: permissionHandler
+            chatNotificationControl: chatNotificationControl,
+            permissionRouter: permissionAlertRouter
         )
     }
     

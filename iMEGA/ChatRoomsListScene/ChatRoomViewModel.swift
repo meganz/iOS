@@ -9,6 +9,7 @@ import MEGAUI
 
 final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTimeReporting {
     let chatListItem: ChatListItemEntity
+    private let router: any ChatRoomsListRouting
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol
     private let chatUseCase: any ChatUseCaseProtocol
@@ -16,9 +17,9 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
     private let callUseCase: any CallUseCaseProtocol
     private let audioSessionUseCase: any AudioSessionUseCaseProtocol
     private let scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol
-    
-    private let router: any ChatRoomsListRouting
     private var chatNotificationControl: ChatNotificationControl
+    private let permissionRouter: any PermissionAlertRouting
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let notificationCenter: NotificationCenter
     
     private(set) var description: String?
@@ -39,6 +40,11 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
     private var searchString = ""
     
     private var isInfoLoaded = false
+    
+    private var isWaitingRoomEnabled: Bool {
+        featureFlagProvider.isFeatureFlagEnabled(for: .waitingRoom)
+    }
+    
     let chatRoomAvatarViewModel: ChatRoomAvatarViewModel?
     
     let shouldShowUnreadCount: Bool
@@ -47,21 +53,21 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
     var callDurationTotal: TimeInterval?
     var callDurationCapturedTime: TimeInterval?
     var timerSubscription: AnyCancellable?
-    let permissionHandler: any DevicePermissionsHandling
 
     init(chatListItem: ChatListItemEntity,
          router: some ChatRoomsListRouting,
-         chatRoomUseCase: any ChatRoomUseCaseProtocol,
-         chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol,
-         userImageUseCase: any UserImageUseCaseProtocol,
-         chatUseCase: any ChatUseCaseProtocol,
-         accountUseCase: any AccountUseCaseProtocol,
-         megaHandleUseCase: any MEGAHandleUseCaseProtocol,
-         callUseCase: any CallUseCaseProtocol,
-         audioSessionUseCase: any AudioSessionUseCaseProtocol,
-         scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol,
+         chatRoomUseCase: some ChatRoomUseCaseProtocol,
+         chatRoomUserUseCase: some ChatRoomUserUseCaseProtocol,
+         userImageUseCase: some UserImageUseCaseProtocol,
+         chatUseCase: some ChatUseCaseProtocol,
+         accountUseCase: some AccountUseCaseProtocol,
+         megaHandleUseCase: some MEGAHandleUseCaseProtocol,
+         callUseCase: some CallUseCaseProtocol,
+         audioSessionUseCase: some AudioSessionUseCaseProtocol,
+         scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol,
          chatNotificationControl: ChatNotificationControl,
-         permissionHandler: some DevicePermissionsHandling,
+         permissionRouter: some PermissionAlertRouting,
+         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
          notificationCenter: NotificationCenter = .default) {
         self.chatListItem = chatListItem
         self.router = router
@@ -73,7 +79,8 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
         self.audioSessionUseCase = audioSessionUseCase
         self.scheduledMeetingUseCase = scheduledMeetingUseCase
         self.chatNotificationControl = chatNotificationControl
-        self.permissionHandler = permissionHandler
+        self.permissionRouter = permissionRouter
+        self.featureFlagProvider = featureFlagProvider
         self.notificationCenter = notificationCenter
         self.isMuted = chatNotificationControl.isChatDNDEnabled(chatId: chatListItem.chatId)
         self.shouldShowUnreadCount = chatListItem.unreadCount != 0
@@ -721,11 +728,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
         description = message
     }
     
-    var permissionRouter: PermissionAlertRouter {
-        .makeRouter(deviceHandler: permissionHandler)
-    }
-    
-    private func startOrJoinMeetingTapped() {
+    func startOrJoinMeetingTapped() {
         permissionRouter.audioPermission(modal: true, incomingCall: false) {[weak self] granted in
             guard let self else { return }
             guard granted else {
@@ -733,8 +736,12 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
                 return
             }
             
-            if chatRoomUseCase.shouldOpenWaitingRoom(forChatId: chatListItem.chatId)
-                && DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .waitingRoom) {
+            guard !chatUseCase.existsActiveCall() else {
+                router.presentMeetingAlreadyExists()
+                return
+            }
+            
+            if chatRoomUseCase.shouldOpenWaitingRoom(forChatId: chatListItem.chatId) && isWaitingRoomEnabled {
                 openWaitingRoom()
             } else {
                 startOrJoinCall()
@@ -747,7 +754,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
         router.presentWaitingRoom(for: scheduledMeeting)
     }
     
-    private func startOrJoinCall() {
+    func startOrJoinCall() {
         guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatListItem.chatId) else {
             MEGALogError("Not able to fetch chat room for start or join call")
             return
@@ -758,7 +765,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
         } else {
             if let scheduledMeeting = scheduledMeetingUseCase.scheduledMeetingsByChat(chatId: chatListItem.chatId).first {
                 if chatRoom.isWaitingRoomEnabled {
-                    startMeetingInWaitingRoomChat(for: scheduledMeeting, in: chatRoom)
+                    startMeetingInWaitingRoomChatNoRinging(for: scheduledMeeting, in: chatRoom)
                 } else {
                     startMeetingCallNoRinging(for: scheduledMeeting, in: chatRoom)
                 }
@@ -802,20 +809,16 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
         }
     }
     
-    private func startMeetingInWaitingRoomChat(for scheduledMeeting: ScheduledMeetingEntity, in chatRoom: ChatRoomEntity) {
-        callUseCase.startMeetingInWaitingRoomChat(for: scheduledMeeting, enableVideo: false, enableAudio: true) { [weak self] result in
-            guard let self else { return }
-            switch result {
-            case .success(let call):
+    private func startMeetingInWaitingRoomChatNoRinging(for scheduledMeeting: ScheduledMeetingEntity, in chatRoom: ChatRoomEntity) {
+        Task { @MainActor in
+            do {
+                let call = try await callUseCase.startMeetingInWaitingRoomChatNoRinging(for: scheduledMeeting, enableVideo: false, enableAudio: true)
                 prepareAndShowCallUI(for: call, in: chatRoom)
-            case .failure(let error):
-                switch error {
-                case .tooManyParticipants:
-                    router.showErrorMessage(Strings.Localizable.Error.noMoreParticipantsAreAllowedInThisGroupCall)
-                default:
-                    router.showErrorMessage(Strings.Localizable.somethingWentWrong)
-                    MEGALogError("Not able to start scheduled meeting call")
-                }
+            } catch CallErrorEntity.tooManyParticipants {
+                router.showErrorMessage(Strings.Localizable.Error.noMoreParticipantsAreAllowedInThisGroupCall)
+            } catch {
+                router.showErrorMessage(Strings.Localizable.somethingWentWrong)
+                MEGALogError("Not able to start scheduled meeting call")
             }
         }
     }

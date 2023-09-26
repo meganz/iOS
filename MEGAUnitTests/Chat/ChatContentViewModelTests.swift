@@ -22,7 +22,7 @@ final class ChatContentViewModelTests: XCTestCase {
         let scheduledMeetingUseCase = MockScheduledMeetingUseCase()
         let sut = ChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase, scheduledMeetingUseCase: scheduledMeetingUseCase)
         
-        test(viewModel: sut, action: ChatContentAction.updateCallNavigationBarButtons(false, false, true, false),
+        test(viewModel: sut, action: ChatContentAction.updateCallNavigationBarButtons(false, false, true),
              expectedCommands: [ChatContentViewModel.Command.enableAudioVideoButtons(false)])
     }
     
@@ -33,7 +33,7 @@ final class ChatContentViewModelTests: XCTestCase {
         let scheduledMeetingUseCase = MockScheduledMeetingUseCase(scheduledMeetingsList: [ScheduledMeetingEntity()])
         let sut = ChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase, scheduledMeetingUseCase: scheduledMeetingUseCase)
         
-        test(viewModel: sut, action: ChatContentAction.startMeetingNoRinging(false, false, false, true, false),
+        test(viewModel: sut, action: ChatContentAction.startMeetingNoRinging(false, false, false, true),
              expectedCommands: [ChatContentViewModel.Command.startMeetingNoRinging(false, ScheduledMeetingEntity())])
     }
     
@@ -44,7 +44,7 @@ final class ChatContentViewModelTests: XCTestCase {
         let scheduledMeetingUseCase = MockScheduledMeetingUseCase()
         let sut = ChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase, scheduledMeetingUseCase: scheduledMeetingUseCase)
         
-        test(viewModel: sut, action: ChatContentAction.startOutGoingCall(false, false, false, true, false),
+        test(viewModel: sut, action: ChatContentAction.startOutGoingCall(false, false, false, true),
              expectedCommands: [ChatContentViewModel.Command.startOutGoingCall(false)])
     }
     
@@ -154,5 +154,129 @@ final class ChatContentViewModelTests: XCTestCase {
              expectedCommands: [ChatContentViewModel.Command.configNavigationBar,
                                 ChatContentViewModel.Command.showTapToReturnToCall(Strings.Localizable.reconnecting)
                                ])
+    }
+    
+    func testUpdateCallNavigationBarButtons_forWaitingRoomNonHost_shouldNotEnableAudioVideoButtons() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .standard, isWaitingRoomEnabled: true)
+        let chatUseCase = MockChatUseCase(currentChatConnectionStatus: .online)
+        let sut = ChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase)
+        
+        test(
+            viewModel: sut,
+            action: ChatContentAction.updateCallNavigationBarButtons(false, false, true),
+            expectedCommands: [
+                ChatContentViewModel.Command.enableAudioVideoButtons(false)
+            ]
+        )
+    }
+    
+    func testUpdateCallNavigationBarButtons_forWaitingRoomHost_shouldEnableAudioVideoButtons() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, isWaitingRoomEnabled: true)
+        let chatUseCase = MockChatUseCase(currentChatConnectionStatus: .online)
+        let sut = ChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase)
+        
+        test(
+            viewModel: sut,
+            action: ChatContentAction.updateCallNavigationBarButtons(false, false, true),
+            expectedCommands: [
+                ChatContentViewModel.Command.enableAudioVideoButtons(true)
+            ]
+        )
+    }
+    
+    func testUpdateCallNavigationBarButtons_onPrivilegeChangeFromModeratorToStandard_shouldNotEnableAudioVideoButtons() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, isWaitingRoomEnabled: true)
+        let chatUseCase = MockChatUseCase(currentChatConnectionStatus: .online)
+        let sut = ChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase)
+        
+        let newChatRoom = ChatRoomEntity(ownPrivilege: .standard, isWaitingRoomEnabled: true)
+        test(
+            viewModel: sut,
+            actions: [
+                ChatContentAction.updateChatRoom(newChatRoom),
+                ChatContentAction.updateCallNavigationBarButtons(false, false, true)
+            ],
+            expectedCommands: [
+                ChatContentViewModel.Command.enableAudioVideoButtons(false)
+            ]
+        )
+    }
+    
+    func testUpdateCallNavigationBarButtons_onPrivilegeChangeFromStandardToModerator_shouldEnableAudioVideoButtons() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .standard, isWaitingRoomEnabled: true)
+        let chatUseCase = MockChatUseCase(currentChatConnectionStatus: .online)
+        let sut = ChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase)
+        
+        let newChatRoom = ChatRoomEntity(ownPrivilege: .moderator, isWaitingRoomEnabled: true)
+        test(
+            viewModel: sut,
+            actions: [
+                ChatContentAction.updateChatRoom(newChatRoom),
+                ChatContentAction.updateCallNavigationBarButtons(false, false, true)
+            ],
+            expectedCommands: [
+                ChatContentViewModel.Command.enableAudioVideoButtons(true)
+            ]
+        )
+    }
+    
+    func testStartOutGoingCall_onWaitingRoomEnabled_shouldCallStartMeetingInWaitingRoomChat() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, isWaitingRoomEnabled: true)
+        let chatUseCase = MockChatUseCase(currentChatConnectionStatus: .online)
+        let scheduledMeetingUseCase = MockScheduledMeetingUseCase(scheduledMeetingsList: [ScheduledMeetingEntity()])
+        let sut = ChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase, scheduledMeetingUseCase: scheduledMeetingUseCase)
+        
+        test(
+            viewModel: sut,
+            action: ChatContentAction.startOutGoingCall(true, false, false, true),
+            expectedCommands: [
+                ChatContentViewModel.Command.startMeetingInWaitingRoomChat(true, ScheduledMeetingEntity())
+            ]
+        )
+    }
+    
+    func testStartOutGoingCall_onWaitingRoomNotEnabled_shouldCallStartMeetingInWaitingRoomChat() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, isWaitingRoomEnabled: false)
+        let chatUseCase = MockChatUseCase(currentChatConnectionStatus: .online)
+        let scheduledMeetingUseCase = MockScheduledMeetingUseCase(scheduledMeetingsList: [ScheduledMeetingEntity()])
+        let sut = ChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase, scheduledMeetingUseCase: scheduledMeetingUseCase)
+        
+        test(
+            viewModel: sut,
+            action: ChatContentAction.startOutGoingCall(true, false, false, true),
+            expectedCommands: [
+                ChatContentViewModel.Command.startOutGoingCall(true)
+            ]
+        )
+    }
+    
+    func testStartMeetingNoRinging_onWaitingRoomEnabled_shouldCallStartMeetingInWaitingRoomChatNoRinging() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, isWaitingRoomEnabled: true)
+        let chatUseCase = MockChatUseCase(currentChatConnectionStatus: .online)
+        let scheduledMeetingUseCase = MockScheduledMeetingUseCase(scheduledMeetingsList: [ScheduledMeetingEntity()])
+        let sut = ChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase, scheduledMeetingUseCase: scheduledMeetingUseCase)
+        
+        test(
+            viewModel: sut,
+            action: ChatContentAction.startMeetingNoRinging(true, false, false, true),
+            expectedCommands: [
+                ChatContentViewModel.Command.startMeetingInWaitingRoomChatNoRinging(true, ScheduledMeetingEntity())
+            ]
+        )
+    }
+    
+    func testStartMeetingNoRinging_onWaitingRoomNotEnabled_shouldCallStartMeetingNoRinging() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, isWaitingRoomEnabled: false)
+        let chatUseCase = MockChatUseCase(currentChatConnectionStatus: .online)
+        let scheduledMeetingUseCase = MockScheduledMeetingUseCase(scheduledMeetingsList: [ScheduledMeetingEntity()])
+        let sut = ChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase, scheduledMeetingUseCase: scheduledMeetingUseCase)
+        
+        test(
+            viewModel: sut,
+            action: ChatContentAction.startMeetingNoRinging(true, false, false, true),
+            expectedCommands: [
+                ChatContentViewModel.Command.startMeetingNoRinging(true, ScheduledMeetingEntity())
+            ]
+        )
     }
 }

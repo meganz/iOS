@@ -9,7 +9,7 @@ extension ScheduleMeetingViewModel {
         viewConfiguration: some ScheduleMeetingViewConfigurable = MockScheduleMeetingViewConfiguration(),
         accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
         preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(),
-        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
+        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         isTesting: Bool = true
     ) {
         self.init(

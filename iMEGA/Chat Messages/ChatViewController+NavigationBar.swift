@@ -32,10 +32,8 @@ extension ChatViewController {
         navigationItem.rightBarButtonItems = rightBarButtons
         
         let reachable = MEGAReachabilityManager.isReachable()
-        let existsActiveCall = MEGAChatSdk.shared.mnz_existsActiveCall
         
-        chatContentViewModel.dispatch(.updateCallNavigationBarButtons(shouldDisableAudioVideoCalling,
-                                                                      isVoiceRecordingInProgress, reachable, existsActiveCall))
+        chatContentViewModel.dispatch(.updateCallNavigationBarButtons(shouldDisableAudioVideoCalling, isVoiceRecordingInProgress, reachable))
     }
     
     private func addRightBarButtons() {

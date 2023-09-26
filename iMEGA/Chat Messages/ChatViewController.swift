@@ -197,9 +197,11 @@ class ChatViewController: MessagesViewController {
     
     @objc init(chatRoom: MEGAChatRoom) {
         self.chatRoom = chatRoom
-        chatContentViewModel = ChatContentViewModel(chatRoom: chatRoom.toChatRoomEntity(),
-                                                    chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
-                                                    scheduledMeetingUseCase: ScheduledMeetingUseCase(repository: ScheduledMeetingRepository.newRepo))
+        chatContentViewModel = ChatContentViewModel(
+            chatRoom: chatRoom.toChatRoomEntity(),
+            chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
+            scheduledMeetingUseCase: ScheduledMeetingUseCase(repository: ScheduledMeetingRepository.newRepo)
+        )
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -237,8 +239,7 @@ class ChatViewController: MessagesViewController {
         
         chatContentViewModel.invokeCommand = { [weak self] command in
             guard let self else { return }
-            
-            excuteCommand(command)
+            executeCommand(command)
         }
         setMenuCapableBackButtonWith(
             menuTitle: Self.backButtonMenuTitle(
@@ -268,6 +269,7 @@ class ChatViewController: MessagesViewController {
     
     @objc func update(chatRoom: MEGAChatRoom) {
         self.chatRoom = chatRoom
+        updateChatRoom(chatRoom.toChatRoomEntity())
         update()
     }
     
@@ -782,7 +784,7 @@ class ChatViewController: MessagesViewController {
     
     // MARK: - Private methods
     
-    private func excuteCommand(_ command: ChatContentViewModel.Command) {
+    private func executeCommand(_ command: ChatContentViewModel.Command) {
         switch command {
         case .initTimerForCall(let call):
             initTimerForCall(call)
@@ -802,10 +804,12 @@ class ChatViewController: MessagesViewController {
             shouldEnableAudioVideoButtons(enable)
         case .startMeetingNoRinging(let videoCall, let scheduledMeeting):
             startMeetingNoRinging(videoCall: videoCall, scheduledMeeting: scheduledMeeting)
-        case .startMeetingInWaitingRoomChat(let videoCall, let scheduledMeeting):
-            startMeetingInWaitingRoomChat(videoCall: videoCall, scheduledMeeting: scheduledMeeting)
         case .startOutGoingCall(let videoEnable):
             startOutGoingCall(isVideoEnabled: videoEnable)
+        case .startMeetingInWaitingRoomChat(let videoCall, let scheduledMeeting):
+            startMeetingInWaitingRoomChat(videoCall: videoCall, scheduledMeeting: scheduledMeeting)
+        case .startMeetingInWaitingRoomChatNoRinging(let videoCall, let scheduledMeeting):
+            startMeetingInWaitingRoomChatNoRinging(videoCall: videoCall, scheduledMeeting: scheduledMeeting)
         }
     }
     
@@ -936,7 +940,6 @@ class ChatViewController: MessagesViewController {
         if let layout = messagesCollectionView.collectionViewLayout as? MessagesCollectionViewFlowLayout {
             layout.setMessageOutgoingAvatarSize(.zero)
             layout.setMessageOutgoingMessageTopLabelAlignment(LabelAlignment(textAlignment: .right, textInsets: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 12)))
-            
         }
     }
     
@@ -1106,6 +1109,10 @@ class ChatViewController: MessagesViewController {
         })
     }
     
+    private func updateChatRoom(_ chatRoom: ChatRoomEntity) {
+        chatContentViewModel.dispatch(.updateChatRoom(chatRoom))
+    }
+    
     // MARK: - Bar Button actions
     
     var permissionRouter: PermissionAlertRouter {
@@ -1164,21 +1171,6 @@ class ChatViewController: MessagesViewController {
         }
     }
     
-    private func startMeetingInWaitingRoomChat(videoCall: Bool, scheduledMeeting: ScheduledMeetingEntity) {
-        prepareAudioForCall()
-        callUseCase.startMeetingInWaitingRoomChat(for: scheduledMeeting, enableVideo: videoCall, enableAudio: true) { [weak self] result in
-            guard let self else { return }
-            updateNavigationBarButtonsBeforeStartCall()
-            switch result {
-            case .success:
-                startMeetingUI(isVideoEnabled: videoCall,
-                               isSpeakerEnabled: chatRoom.isMeeting || videoCall)
-            case .failure:
-                MEGALogDebug("Cannot start no ringing call for scheduled meeting")
-            }
-        }
-    }
-    
     private func startOutGoingCall(isVideoEnabled: Bool) {
         prepareAudioForCall()
         callUseCase.startCall(for: chatRoom.chatId, enableVideo: isVideoEnabled, enableAudio: !chatRoom.isMeeting) { [weak self] result in
@@ -1190,6 +1182,33 @@ class ChatViewController: MessagesViewController {
                                isSpeakerEnabled: false)
             case .failure:
                 MEGALogDebug("Cannot start outgoing call")
+            }
+        }
+    }
+    
+    private func startMeetingInWaitingRoomChat(videoCall: Bool, scheduledMeeting: ScheduledMeetingEntity) {
+        prepareAudioForCall()
+        callUseCase.startMeetingInWaitingRoomChat(for: scheduledMeeting, enableVideo: videoCall, enableAudio: true) { [weak self] result in
+            guard let self else { return }
+            updateNavigationBarButtonsBeforeStartCall()
+            switch result {
+            case .success:
+                startMeetingUI(isVideoEnabled: videoCall, isSpeakerEnabled: chatRoom.isMeeting || videoCall)
+            case .failure:
+                MEGALogDebug("Cannot start no ringing call for scheduled meeting")
+            }
+        }
+    }
+    
+    private func startMeetingInWaitingRoomChatNoRinging(videoCall: Bool, scheduledMeeting: ScheduledMeetingEntity) {
+        prepareAudioForCall()
+        Task { @MainActor in
+            do {
+                _ = try await callUseCase.startMeetingInWaitingRoomChatNoRinging(for: scheduledMeeting, enableVideo: videoCall, enableAudio: true)
+                updateNavigationBarButtonsBeforeStartCall()
+                startMeetingUI(isVideoEnabled: videoCall, isSpeakerEnabled: chatRoom.isMeeting || videoCall)
+            } catch {
+                MEGALogDebug("Cannot start no ringing call for scheduled meeting")
             }
         }
     }
@@ -1258,14 +1277,13 @@ class ChatViewController: MessagesViewController {
     func openCallViewWithVideo(videoCall: Bool, shouldRing: Bool = true) {
         guard let call = MEGAChatSdk.shared.chatCall(forChatId: chatRoom.chatId) else {
             let reachable = MEGAReachabilityManager.isReachable()
-            let existsActiveCall = MEGAChatSdk.shared.mnz_existsActiveCall
  
             if chatContentViewModel.shouldOpenWaitingRoom() {
                 openWaitingRoom()
             } else if chatRoom.isMeeting && !shouldRing {
-                chatContentViewModel.dispatch(.startMeetingNoRinging(videoCall, shouldDisableAudioVideoCalling, isVoiceRecordingInProgress, reachable, existsActiveCall))
+                chatContentViewModel.dispatch(.startMeetingNoRinging(videoCall, shouldDisableAudioVideoCalling, isVoiceRecordingInProgress, reachable))
             } else {
-                chatContentViewModel.dispatch(.startOutGoingCall(videoCall, shouldDisableAudioVideoCalling, isVoiceRecordingInProgress, reachable, existsActiveCall))
+                chatContentViewModel.dispatch(.startOutGoingCall(videoCall, shouldDisableAudioVideoCalling, isVoiceRecordingInProgress, reachable))
             }
             
             return

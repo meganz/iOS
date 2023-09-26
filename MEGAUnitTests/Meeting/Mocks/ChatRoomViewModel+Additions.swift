@@ -3,6 +3,7 @@ import MEGADomain
 import MEGADomainMock
 import MEGAPermissions
 import MEGAPermissionsMock
+import MEGAPresentation
 
 extension ChatRoomViewModel {
     convenience init(
@@ -18,7 +19,8 @@ extension ChatRoomViewModel {
         audioSessionUseCase: some AudioSessionUseCaseProtocol = MockAudioSessionUseCase(),
         scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol = MockScheduledMeetingUseCase(),
         chatNotificationControl: ChatNotificationControl = ChatNotificationControl(delegate: MockPushNotificationControl()),
-        permissionHandler: some DevicePermissionsHandling = MockDevicePermissionHandler(),
+        permissionRouter: some PermissionAlertRouting = MockPermissionAlertRouter(),
+        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         notificationCenter: NotificationCenter = .default,
         isTesting: Bool = true
     ) {
@@ -35,7 +37,8 @@ extension ChatRoomViewModel {
             audioSessionUseCase: audioSessionUseCase,
             scheduledMeetingUseCase: scheduledMeetingUseCase,
             chatNotificationControl: chatNotificationControl,
-            permissionHandler: permissionHandler,
+            permissionRouter: permissionRouter,
+            featureFlagProvider: featureFlagProvider,
             notificationCenter: notificationCenter
         )
     }

@@ -84,8 +84,8 @@ struct WaitingRoomView: View {
                 
                 WaitingRoomJoinPanelView(
                     tapJoinAction: viewModel.tapJoinAction,
-                    appearFocused: viewModel.viewState == .guestJoin)
-                .opacity(viewModel.viewState == .guestJoin ? 1 : 0)
+                    appearFocused: viewModel.viewState == .guestUserSetup)
+                .opacity(viewModel.viewState == .guestUserSetup ? 1 : 0)
             }
             .frame(height: viewModel.calculateBottomPanelHeight())
         }

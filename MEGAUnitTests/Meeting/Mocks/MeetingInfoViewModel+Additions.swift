@@ -15,7 +15,7 @@ extension MeetingInfoViewModel {
         chatLinkUseCase: some ChatLinkUseCaseProtocol = MockChatLinkUseCase(),
         megaHandleUseCase: some MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
         preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(),
-        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
+        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         isTesting: Bool = true
     ) {
         self.init(
