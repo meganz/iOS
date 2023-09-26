@@ -15,7 +15,7 @@ protocol MeetingInfoRouting {
     func showParticipantDetails(email: String, userHandle: HandleEntity, chatRoom: ChatRoomEntity)
     func inviteParticipants(
         withParticipantsAddingViewFactory participantsAddingViewFactory: ParticipantsAddingViewFactory,
-        excludeParticpantsId: Set<HandleEntity>,
+        excludeParticipantsId: Set<HandleEntity>,
         selectedUsersHandler: @escaping (([HandleEntity]) -> Void)
     )
     func showAllContactsAlreadyAddedAlert(withParticipantsAddingViewFactory participantsAddingViewFactory: ParticipantsAddingViewFactory)

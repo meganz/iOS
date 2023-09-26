@@ -106,7 +106,7 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
         
         router.inviteParticipants(
             withParticipantsAddingViewFactory: participantsAddingViewFactory,
-            excludeParticpantsId: []
+            excludeParticipantsId: []
         ) { [weak self] userHandles in
             guard let self else { return }
             userHandles.forEach { self.chatRoomUseCase.invite(toChat: self.chatRoom, userId: $0) }

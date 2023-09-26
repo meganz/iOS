@@ -179,6 +179,51 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
         XCTAssertTrue(router.showErrorMessage_calledTimes == 1)
     }
     
+    func testStartOrJoinCall_isModeratorAndWaitingRoomEnabledAndCallNotActive_shouldStartCall() {
+        chatUseCase.isCallActive = false
+        callUseCase.callCompletion = .success(callUseCase.call ?? CallEntity())
+        let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .moderator))
+
+        let sut = FutureMeetingRoomViewModel(router: router, chatRoomUseCase: chatRoomUseCase, chatUseCase: chatUseCase, callUseCase: callUseCase)
+
+        sut.startOrJoinCall()
+        
+        XCTAssertTrue(router.openCallView_calledTimes == 1)
+    }
+    
+    func testStartOrJoinCall_isModeratorAndWaitingRoomEnabledAndCallActive_shouldJoinCall() {
+        chatUseCase.isCallActive = true
+        callUseCase.callCompletion = .success(callUseCase.call ?? CallEntity())
+        let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .moderator))
+
+        let sut = FutureMeetingRoomViewModel(router: router, chatRoomUseCase: chatRoomUseCase, chatUseCase: chatUseCase, callUseCase: callUseCase)
+
+        sut.startOrJoinCall()
+        
+        XCTAssertTrue(router.openCallView_calledTimes == 1)
+    }
+    
+    func testStartOrJoinMeetingTapped_onExistsActiveCall_shouldPresentMeetingAlreadyExists() {
+        let router = MockChatRoomsListRouter()
+        let chatUseCase = MockChatUseCase(isExistingActiveCall: true)
+        let sut = FutureMeetingRoomViewModel(router: router, chatUseCase: chatUseCase)
+        
+        sut.startOrJoinMeetingTapped()
+        
+        XCTAssertTrue(router.presentMeetingAlreadyExists_calledTimes == 1)
+    }
+    
+    func testStartOrJoinMeetingTapped_onNoActiveCallAndShouldOpenWaitRoom_shouldPresentWaitingRoom() {
+        let router = MockChatRoomsListRouter()
+        let chatRoomUseCase = MockChatRoomUseCase(shouldOpenWaitRoom: true)
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.waitingRoom: true])
+        let sut = FutureMeetingRoomViewModel(router: router, chatRoomUseCase: chatRoomUseCase, featureFlagProvider: featureFlagProvider)
+        
+        sut.startOrJoinMeetingTapped()
+        
+        XCTAssertTrue(router.presentWaitingRoom_calledTimes == 1)
+    }
+    
     func testTime_forOneOffMeeting_shouldMatch() throws {
         let dateSet = try randomDateSet()
         let scheduledMeeting = ScheduledMeetingEntity(startDate: dateSet.startDate, endDate: dateSet.endDate)

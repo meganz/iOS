@@ -123,12 +123,12 @@ final class MeetingInfoRouter: NSObject, MeetingInfoRouting {
     
     func inviteParticipants(
         withParticipantsAddingViewFactory participantsAddingViewFactory: ParticipantsAddingViewFactory,
-        excludeParticpantsId: Set<HandleEntity>,
+        excludeParticipantsId: Set<HandleEntity>,
         selectedUsersHandler: @escaping (([HandleEntity]) -> Void)
     ) {
         guard let contactsNavigationController = participantsAddingViewFactory.addContactsViewController(
             withContactsMode: .inviteParticipants,
-            additionallyExcludedParticipantsId: excludeParticpantsId,
+            additionallyExcludedParticipantsId: excludeParticipantsId,
             selectedUsersHandler: selectedUsersHandler
         ) else { return }
         
