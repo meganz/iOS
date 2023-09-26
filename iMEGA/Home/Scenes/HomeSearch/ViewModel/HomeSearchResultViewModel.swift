@@ -70,11 +70,9 @@ extension HomeSearchResultViewModel: HomeAccountSearchResultViewModelInputs {
     }
 
     func didInputText(text: String) {
-        let trimmedSearchText = text.trimmingCharacters(in: .whitespacesAndNewlines)
-
         searchingInProgressCount += 1
         searchFileUseCase.searchFiles(
-            withName: trimmedSearchText,
+            withName: text,
             nodeFormat: .unknown,
             sortOrder: nil,
             searchPath: .root
@@ -82,7 +80,7 @@ extension HomeSearchResultViewModel: HomeAccountSearchResultViewModelInputs {
             guard let self = self else { return }
 
             self.searchFileHistoryUseCase.saveSearchHistoryEntry(
-                SearchFileHistoryEntryDomain(text: trimmedSearchText,
+                SearchFileHistoryEntryDomain(text: text,
                                              timeWhenSearchOccur: Date()
                 )
             )
