@@ -84,7 +84,7 @@ struct MeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRouting {
     }
     
     func removeModeratorPrivilage() {
-        meetingFloatingPanelModel?.dispatch(.removeModeratorPrivilage(forParticipant: participant))
+        meetingFloatingPanelModel?.dispatch(.removeModeratorPrivilege(forParticipant: participant))
     }
     
     func removeParticipant() {

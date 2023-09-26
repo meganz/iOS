@@ -5,6 +5,7 @@ import MEGAPresentation
 
 enum MeetingFloatingPanelAction: ActionType {
     case onViewReady
+    case onViewAppear
     case hangCall(presenter: UIViewController, sender: UIButton)
     case shareLink(presenter: UIViewController, sender: UIButton)
     case inviteParticipants
@@ -15,12 +16,16 @@ enum MeetingFloatingPanelAction: ActionType {
     case enableLoudSpeaker
     case disableLoudSpeaker
     case makeModerator(participant: CallParticipantEntity)
-    case removeModeratorPrivilage(forParticipant: CallParticipantEntity)
+    case removeModeratorPrivilege(forParticipant: CallParticipantEntity)
     case removeParticipant(participant: CallParticipantEntity)
     case displayParticipantInMainView(_ participant: CallParticipantEntity)
     case didDisplayParticipantInMainView(_ participant: CallParticipantEntity)
     case didSwitchToGridView
     case allowNonHostToAddParticipants(enabled: Bool)
+    case selectParticipantsList(selectedTab: ParticipantsListTab)
+    case onAdmitParticipantTap(participant: CallParticipantEntity)
+    case onDenyParticipantTap(participant: CallParticipantEntity)
+    case onAdmitAllParticipantsTap
 }
 
 final class MeetingFloatingPanelViewModel: ViewModelType {
@@ -35,10 +40,12 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         case microphoneMuted(muted: Bool)
         case updatedCameraPosition(position: CameraPositionEntity)
         case cameraTurnedOn(on: Bool)
-        case reloadParticpantsList(participants: [CallParticipantEntity])
+        case reloadParticipantsList(participants: [CallParticipantEntity])
         case updatedAudioPortSelection(audioPort: AudioPort, bluetoothAudioRouteAvailable: Bool)
         case transitionToShortForm
+        case transitionToLongForm
         case updateAllowNonHostToAddParticipants(enabled: Bool)
+        case reloadViewData(participantsListView: ParticipantsListView)
     }
     
     private let router: any MeetingFloatingPanelRouting
@@ -58,8 +65,11 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     private let accountUseCase: any AccountUseCaseProtocol
     private var chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
+    private let featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     private weak var containerViewModel: MeetingContainerViewModel?
     private var callParticipants = [CallParticipantEntity]()
+    private var callParticipantsNotInCall = [CallParticipantEntity]()
+    private var callParticipantsInWaitingRoom = [CallParticipantEntity]()
     private var updateAllowNonHostToAddParticipantsTask: Task<Void, Never>?
     private var isSpeakerEnabled: Bool {
         didSet {
@@ -79,6 +89,13 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         (isMyselfAModerator || chatRoom.isOpenInviteEnabled) && !accountUseCase.isGuest
     }
     
+    private var selectedParticipantsListTab: ParticipantsListTab
+    
+    @PreferenceWrapper(key: .isCallUIVisible, defaultValue: false, useCase: PreferenceUseCase.default)
+    var isCallUIVisible: Bool
+    private lazy var isWaitingRoomEnabled = featureFlagProvider.isFeatureFlagEnabled(for: .waitingRoom)
+    private var selectWaitingRoomList: Bool
+
     var invokeCommand: ((Command) -> Void)?
 
     init(router: some MeetingFloatingPanelRouting,
@@ -93,7 +110,9 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
          localVideoUseCase: some CallLocalVideoUseCaseProtocol,
          accountUseCase: some AccountUseCaseProtocol,
          chatRoomUseCase: some ChatRoomUseCaseProtocol,
-         megaHandleUseCase: some MEGAHandleUseCaseProtocol) {
+         megaHandleUseCase: some MEGAHandleUseCaseProtocol,
+         selectWaitingRoomList: Bool
+    ) {
         self.router = router
         self.containerViewModel = containerViewModel
         self.chatRoom = chatRoom
@@ -107,6 +126,8 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         self.accountUseCase = accountUseCase
         self.chatRoomUseCase = chatRoomUseCase
         self.megaHandleUseCase = megaHandleUseCase
+        self.selectWaitingRoomList = selectWaitingRoomList
+        self.selectedParticipantsListTab = selectWaitingRoomList ? .waitingRoom : .inCall
     }
     
     deinit {
@@ -127,10 +148,8 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
                     self.sessionRouteChanged(routeChangedReason: routeChangedReason)
                 }
             }
-            populateParticipants()
             callUseCase.startListeningForCallInChat(chatRoom.chatId, callbacksDelegate: self)
             configView()
-            invokeCommand?(.reloadParticpantsList(participants: callParticipants))
             if let call = call, call.hasLocalVideo {
                 checkForVideoPermission {
                     self.turnCamera(on: true) {
@@ -150,6 +169,13 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             addChatRoomParticipantsChangedListener()
             requestPrivilegeChange(forChatRoom: chatRoom)
             requestAllowNonHostToAddParticipantsValueChange(forChatRoom: chatRoom)
+            prepareParticipantsTableViewData()
+            subscribeToSeeWaitingRoomListNotification()
+        case .onViewAppear:
+            if selectWaitingRoomList {
+                selectWaitingRoomList = false
+                invokeCommand?(.transitionToLongForm)
+            }
         case .hangCall(let presenter, let sender):
             manageHangCall(presenter, sender)
         case .shareLink(let presenter, let sender):
@@ -188,29 +214,37 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             guard let call = call else { return }
             participant.isModerator = true
             callUseCase.makePeerAModerator(inCall: call, peerId: participant.participantId)
-            invokeCommand?(.reloadParticpantsList(participants: callParticipants))
-        case .removeModeratorPrivilage(let participant):
+            invokeCommand?(.reloadParticipantsList(participants: callParticipants))
+        case .removeModeratorPrivilege(let participant):
             guard let call = call else { return }
             participant.isModerator = false
             callUseCase.removePeerAsModerator(inCall: call, peerId: participant.participantId)
-            invokeCommand?(.reloadParticpantsList(participants: callParticipants))
+            invokeCommand?(.reloadParticipantsList(participants: callParticipants))
         case .removeParticipant(let participant):
             guard let call = call, let index = callParticipants.firstIndex(of: participant) else { return }
             callParticipants.remove(at: index)
             callUseCase.removePeer(fromCall: call, peerId: participant.participantId)
-            invokeCommand?(.reloadParticpantsList(participants: callParticipants))
+            invokeCommand?(.reloadParticipantsList(participants: callParticipants))
         case .displayParticipantInMainView(let participant):
             containerViewModel?.dispatch(.displayParticipantInMainView(participant))
             invokeCommand?(.transitionToShortForm)
         case .didDisplayParticipantInMainView(let participant):
             callParticipants.forEach { $0.isSpeakerPinned = $0 == participant }
-            invokeCommand?(.reloadParticpantsList(participants: callParticipants))
+            invokeCommand?(.reloadParticipantsList(participants: callParticipants))
         case .didSwitchToGridView:
             callParticipants.forEach { $0.isSpeakerPinned = false }
-            invokeCommand?(.reloadParticpantsList(participants: callParticipants))
+            invokeCommand?(.reloadParticipantsList(participants: callParticipants))
         case .allowNonHostToAddParticipants(let enabled):
             updateAllowNonHostToAddParticipantsTask?.cancel()
             updateAllowNonHostToAddParticipantsTask = createAllowNonHostToAddParticipants(enabled: enabled, chatRoom: chatRoom)
+        case .selectParticipantsList(let selectedTab):
+            selectParticipantsListTab(selectedTab)
+        case .onAdmitParticipantTap(let participant):
+            admitParticipant(participant)
+        case .onDenyParticipantTap(let participant):
+            denyParticipant(participant)
+        case .onAdmitAllParticipantsTap:
+            admitAllParticipants()
         }
     }
     
@@ -375,21 +409,6 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         }
     }
     
-    private func populateParticipants() {
-        guard let call = call else {
-            MEGALogError("Failed to fetch call to populate participants")
-            return
-        }
-        if let myself = CallParticipantEntity.myself(chatId: chatRoom.chatId) {
-            myself.video = call.hasLocalVideo ? .on : .off
-            callParticipants.append(myself)
-        }
-        let participants = call.clientSessions.compactMap({CallParticipantEntity(session: $0, chatId: chatRoom.chatId)})
-        if !participants.isEmpty {
-            callParticipants.append(contentsOf: participants)
-        }
-    }
-    
     private func manageHangCall(_ presenter: UIViewController, _ sender: UIButton) {
         if let call = call {
             if let callId = megaHandleUseCase.base64Handle(forUserHandle: call.callId),
@@ -441,7 +460,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         callParticipants.filter({ $0.participantId == handle }).forEach { participant in
             participant.isModerator = chatRoomUseCase.peerPrivilege(forUserHandle: participant.participantId, chatRoom: chatRoom) == .moderator
         }
-        invokeCommand?(.reloadParticpantsList(participants: callParticipants))
+        invokeCommand?(.reloadParticipantsList(participants: callParticipants))
     }
     
     private func createAllowNonHostToAddParticipants(enabled: Bool, chatRoom: ChatRoomEntity) -> Task<Void, Never> {
@@ -467,12 +486,229 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     private func updateAllowNonHostToAddParticipants(enabled: Bool) {
         invokeCommand?(.updateAllowNonHostToAddParticipants(enabled: enabled))
     }
+    
+    private func selectParticipantsListTab(_ selectedTab: ParticipantsListTab) {
+        selectedParticipantsListTab = selectedTab
+        switch selectedTab {
+        case .inCall:
+            loadParticipantsInCall()
+        case .notInCall:
+            loadParticipantsNotInCall()
+            invokeCommand?(.reloadParticipantsList(participants: callParticipantsNotInCall))
+        case .waitingRoom:
+            loadParticipantsInWaitingRoom()
+        }
+    }
+    
+    private func subscribeToSeeWaitingRoomListNotification() {
+        NotificationCenter
+            .default
+            .publisher(for: .seeWaitingRoomListEvent)
+            .sink { [weak self] _ in
+                guard let self else { return }
+                selectParticipantsListTab(.waitingRoom)
+                invokeCommand?(.transitionToLongForm)
+            }
+            .store(in: &subscriptions)
+    }
+    
+    // MARK: - Waiting room
+    
+    private func admitAllParticipants() {
+        guard let call else { return }
+        let waitingRoomParticipantHandles = callParticipantsInWaitingRoom.compactMap { $0.participantId }
+        callUseCase.allowUsersJoinCall(call, users: waitingRoomParticipantHandles)
+    }
+
+    private func admitParticipant(_ participant: CallParticipantEntity) {
+        guard let call else { return }
+        callUseCase.allowUsersJoinCall(call, users: [participant.participantId])
+    }
+    
+    private func denyParticipant(_ participant: CallParticipantEntity) {
+        router.showConfirmDenyAction(for: participant.name ?? "", isCallUIVisible: isCallUIVisible) { [weak self] in
+            guard let self, let call = call else { return }
+            callUseCase.kickUsersFromCall(call, users: [participant.participantId])
+        } cancelDenyAction: { }
+    }
+    
+    private func configureWaitingRoomListener(forCall call: CallEntity) {
+        callUseCase.callWaitingRoomUsersUpdate(forCall: call)
+            .debounce(for: 1, scheduler: DispatchQueue.main)
+            .sink { [weak self] call in
+                self?.manageWaitingRoom(for: call)
+            }
+            .store(in: &subscriptions)
+    }
+    
+    private func manageWaitingRoom(for call: CallEntity) {
+        populateParticipantsInWaitingRoom(forCall: call)
+        populateParticipantsNotInCall()
+        
+        if selectedParticipantsListTab == .waitingRoom {
+            loadParticipantsInWaitingRoom()
+        } else if selectedParticipantsListTab == .notInCall {
+            loadParticipantsNotInCall()
+        }
+    }
+    
+    // MARK: - Load data
+
+    private func loadParticipantsInCall() {
+        var sections: [FloatingPanelTableViewSection] = []
+        if isMyselfAModerator {
+            sections.append(.hostControls)
+        }
+        sections.append(.invite)
+        sections.append(.participants)
+        
+        var hostControls: [HostControlsSectionRow] = []
+        if chatRoom.chatType != .oneToOne && isWaitingRoomEnabled {
+            hostControls.append(.listSelector)
+        }
+        if isMyselfAModerator {
+            hostControls.append(.allowNonHostToInvite)
+        }
+        
+        var invite: [InviteSectionRow] = []
+        if (isMyselfAModerator || chatRoom.isOpenInviteEnabled) && chatRoom.chatType != .oneToOne {
+            invite.append(.invite)
+        }
+        
+        let participantsListView = ParticipantsListView(
+            sections: sections,
+            hostControlsRows: hostControls,
+            inviteSectionRow: invite,
+            selectedTab: .inCall,
+            participants: callParticipants,
+            existsWaitingRoom: chatRoom.isWaitingRoomEnabled && isMyselfAModerator)
+        
+        invokeCommand?(.reloadViewData(participantsListView: participantsListView))
+    }
+    
+    private func loadParticipantsInWaitingRoom() {
+        var sections: [FloatingPanelTableViewSection] = []
+        if isMyselfAModerator {
+            sections.append(.hostControls)
+        }
+        sections.append(.invite)
+        sections.append(.participants)
+        
+        var hostControls: [HostControlsSectionRow] = []
+        if chatRoom.chatType != .oneToOne {
+            hostControls.append(.listSelector)
+        }
+        
+        let participantsListView = ParticipantsListView(
+            sections: sections,
+            hostControlsRows: hostControls,
+            inviteSectionRow: [],
+            selectedTab: .waitingRoom,
+            participants: callParticipantsInWaitingRoom,
+            existsWaitingRoom: chatRoom.isWaitingRoomEnabled && isMyselfAModerator)
+        
+        invokeCommand?(.reloadViewData(participantsListView: participantsListView))
+    }
+    
+    private func loadParticipantsNotInCall() {
+        var sections: [FloatingPanelTableViewSection] = []
+        if isMyselfAModerator {
+            sections.append(.hostControls)
+        }
+        sections.append(.invite)
+        sections.append(.participants)
+        
+        var hostControls: [HostControlsSectionRow] = []
+        if chatRoom.chatType != .oneToOne {
+            hostControls.append(.listSelector)
+        }
+        
+        let participantsListView = ParticipantsListView(
+            sections: sections,
+            hostControlsRows: hostControls,
+            inviteSectionRow: [],
+            selectedTab: .notInCall,
+            participants: callParticipantsNotInCall,
+            existsWaitingRoom: chatRoom.isWaitingRoomEnabled && isMyselfAModerator)
+        
+        invokeCommand?(.reloadViewData(participantsListView: participantsListView))
+    }
+    
+    private func reloadParticipantsIfNeeded() {
+        switch selectedParticipantsListTab {
+        case .inCall:
+            invokeCommand?(.reloadParticipantsList(participants: callParticipants))
+        case .notInCall:
+            invokeCommand?(.reloadParticipantsList(participants: callParticipantsNotInCall))
+        case .waitingRoom:
+            invokeCommand?(.reloadParticipantsList(participants: callParticipantsInWaitingRoom))
+        }
+    }
+    
+    private func prepareParticipantsTableViewData() {
+        populateParticipantsInCall()
+        if let call = call, chatRoom.isWaitingRoomEnabled && isMyselfAModerator {
+            configureWaitingRoomListener(forCall: call)
+            populateParticipantsInWaitingRoom(forCall: call)
+        }
+        populateParticipantsNotInCall()
+        if selectWaitingRoomList {
+            loadParticipantsInWaitingRoom()
+        } else {
+            loadParticipantsInCall()
+        }
+    }
+    
+    private func populateParticipantsInCall() {
+        guard let call = call else {
+            MEGALogError("Failed to fetch call to populate participants")
+            return
+        }
+        if let myself = CallParticipantEntity.myself(chatId: chatRoom.chatId) {
+            myself.video = call.hasLocalVideo ? .on : .off
+            callParticipants.append(myself)
+        }
+        let participants = call.clientSessions.compactMap({CallParticipantEntity(session: $0, chatId: chatRoom.chatId)})
+        if !participants.isEmpty {
+            callParticipants.append(contentsOf: participants)
+        }
+    }
+    
+    private func populateParticipantsInWaitingRoom(forCall call: CallEntity) {
+        guard let waitingRoomHandles = call.waitingRoom?.sessionClientIds else { return }
+        
+        let waitingRoomNonModeratorHandles = waitingRoomHandles.filter { chatRoomUseCase.peerPrivilege(forUserHandle: $0, chatRoom: chatRoom).isUserInWaitingRoom }
+        
+        let callParticipantsInWaitingRoomHandles = callParticipantsInWaitingRoom.map { $0.participantId }
+
+        guard waitingRoomNonModeratorHandles != callParticipantsInWaitingRoomHandles else { return }
+        
+        callParticipantsInWaitingRoom = waitingRoomNonModeratorHandles.compactMap {
+            CallParticipantEntity(chatId: chatRoom.chatId, userHandle: $0)
+        }
+    }
+    
+    private func populateParticipantsNotInCall() {
+        callParticipantsNotInCall = chatRoom.peers.compactMap {
+            CallParticipantEntity(chatId: chatRoom.chatId, userHandle: $0.handle, peerPrivilege: $0.privilege)
+        }
+        
+        callParticipants.forEach { callPartipant in
+            callParticipantsNotInCall.remove(object: callPartipant)
+        }
+        
+        callParticipantsInWaitingRoom.forEach { callParticipantInWaitingRoom in
+            callParticipantsNotInCall.remove(object: callParticipantInWaitingRoom)
+        }
+    }
+    
 }
 
 extension MeetingFloatingPanelViewModel: CallCallbacksUseCaseProtocol {
     func participantJoined(participant: CallParticipantEntity) {
         callParticipants.append(participant)
-        invokeCommand?(.reloadParticpantsList(participants: callParticipants))
+        populateParticipantsNotInCall()
+        reloadParticipantsIfNeeded()
     }
     
     func participantLeft(participant: CallParticipantEntity) {
@@ -480,14 +716,15 @@ extension MeetingFloatingPanelViewModel: CallCallbacksUseCaseProtocol {
             containerViewModel?.dispatch(.dismissCall(completion: nil))
         } else if let index = callParticipants.firstIndex(of: participant) {
             callParticipants.remove(at: index)
-            invokeCommand?(.reloadParticpantsList(participants: callParticipants))
+            populateParticipantsNotInCall()
+            reloadParticipantsIfNeeded()
         }
     }
     
     func updateParticipant(_ participant: CallParticipantEntity) {
         if let index = callParticipants.firstIndex(of: participant) {
             callParticipants[index] = participant
-            invokeCommand?(.reloadParticpantsList(participants: callParticipants))
+            reloadParticipantsIfNeeded()
         }
     }
         
@@ -496,7 +733,7 @@ extension MeetingFloatingPanelViewModel: CallCallbacksUseCaseProtocol {
         guard let participant = callParticipants.first else { return }
         participant.isModerator = privilege == .moderator
         configView()
-        invokeCommand?(.reloadParticpantsList(participants: callParticipants))
+        reloadParticipantsIfNeeded()
     }
     
     func configView() {
@@ -510,13 +747,5 @@ extension MeetingFloatingPanelViewModel: CallCallbacksUseCaseProtocol {
     
     func localAvFlagsUpdated(video: Bool, audio: Bool) {
         invokeCommand?(.microphoneMuted(muted: !audio))
-    }
-    
-    func waitingRoomUsersEntered(with handles: [HandleEntity]) {
-        // Next ticket: Present the waiting room users in meeting floating panel
-    }
-    
-    func waitingRoomUsersLeave(with handles: [HandleEntity]) {
-        // Next ticket: Present the waiting room users in meeting floating panel
     }
 }

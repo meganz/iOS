@@ -48,6 +48,7 @@ final class MeetingContainerViewModel: ViewModelType {
     private var muteMicSubscription: AnyCancellable?
     private var muteUnmuteFailedNotificationsSubscription: AnyCancellable?
     private var callWaitingRoomUsersUpdateSubscription: AnyCancellable?
+    private var seeWaitingRoomListEventSubscription: AnyCancellable?
 
     private var call: CallEntity? {
         callUseCase.call(for: chatRoom.chatId)
@@ -86,6 +87,7 @@ final class MeetingContainerViewModel: ViewModelType {
         }
         
         listenToMuteUnmuteFailedNotifications()
+        subscribeToSeeWaitingRoomListNotification()
     }
     
     var invokeCommand: ((Command) -> Void)?
@@ -302,6 +304,16 @@ final class MeetingContainerViewModel: ViewModelType {
                 
                 MEGALogError("mute unmute callkit action failure\n failure to set it as muted: \(muted)\n retrying it again with muted: \(!call.hasLocalAudio)")
                 callCoordinatorUseCase.muteUnmuteCall(call, muted: !call.hasLocalAudio)
+            }
+    }
+    
+    private func subscribeToSeeWaitingRoomListNotification() {
+        seeWaitingRoomListEventSubscription = NotificationCenter
+            .default
+            .publisher(for: .seeWaitingRoomListEvent)
+            .sink { [weak self] _ in
+                guard let self else { return }
+                router.selectWaitingRoomList(containerViewModel: self)
             }
     }
     
