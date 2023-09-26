@@ -60,6 +60,8 @@ extension MainTabBarController {
             phoneBadgeImageView.isHidden = unreadMessages > 0
         case .hideActiveCallIcon:
             phoneBadgeImageView.isHidden = true
+        case .navigateToChatTab:
+            selectedIndex = TabType.chat.rawValue
         }
     }
 }

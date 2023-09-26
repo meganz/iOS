@@ -25,6 +25,7 @@ protocol MeetingContainerRouting: AnyObject, Routing {
     func removeEndCallDialog(completion: (() -> Void)?)
     func showJoinMegaScreen()
     func showHangOrEndCallDialog(containerViewModel: MeetingContainerViewModel)
+    func selectWaitingRoomList(containerViewModel: MeetingContainerViewModel)
 }
 
 final class MeetingContainerRouter: MeetingContainerRouting {
@@ -32,6 +33,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     private let chatRoom: ChatRoomEntity
     private let call: CallEntity
     private var isSpeakerEnabled: Bool
+    private var selectWaitingRoomList: Bool
     private weak var baseViewController: UINavigationController?
     private weak var floatingPanelRouter: (any MeetingFloatingPanelRouting)?
     private weak var meetingParticipantsRouter: MeetingParticipantsLayoutRouter?
@@ -56,11 +58,14 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     init(presenter: UIViewController,
          chatRoom: ChatRoomEntity,
          call: CallEntity,
-         isSpeakerEnabled: Bool) {
+         isSpeakerEnabled: Bool,
+         selectWaitingRoomList: Bool = false
+    ) {
         self.presenter = presenter
         self.chatRoom = chatRoom
         self.call = call
         self.isSpeakerEnabled = isSpeakerEnabled
+        self.selectWaitingRoomList = selectWaitingRoomList
         
         if let callId = MEGASdk.base64Handle(forUserHandle: call.callId) {
             MEGALogDebug("Adding notifications for the call \(callId)")
@@ -150,6 +155,15 @@ final class MeetingContainerRouter: MeetingContainerRouting {
             self.floatingPanelRouter = nil
         } else {
             showFloatingPanel(containerViewModel: containerViewModel)
+        }
+    }
+    
+    func selectWaitingRoomList(containerViewModel: MeetingContainerViewModel) {
+        guard floatingPanelRouter != nil else {
+            selectWaitingRoomList = true
+            showFloatingPanel(containerViewModel: containerViewModel)
+            meetingParticipantsRouter?.showNavigation()
+            return
         }
     }
     
@@ -288,8 +302,10 @@ final class MeetingContainerRouter: MeetingContainerRouting {
             containerViewModel: containerViewModel,
             chatRoom: chatRoom,
             isSpeakerEnabled: isSpeakerEnabled,
-            permissionHandler: DevicePermissionsHandler.makeHandler()
+            permissionHandler: DevicePermissionsHandler.makeHandler(),
+            selectWaitingRoomList: selectWaitingRoomList
         )
+        selectWaitingRoomList = false
         floatingPanelRouter.start()
         self.floatingPanelRouter = floatingPanelRouter
     }

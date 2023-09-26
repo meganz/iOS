@@ -13,10 +13,18 @@
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="MeetingInviteParticipantTableViewCell" customModule="MEGA" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="356" height="60"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="356" height="60"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WRp-jS-qxL">
+                        <rect key="frame" x="60" y="59" width="296" height="1"/>
+                        <viewLayoutGuide key="safeArea" id="FKR-kg-abo"/>
+                        <color key="backgroundColor" red="0.3294117647" green="0.3294117647" blue="0.34509803919999998" alpha="0.64673771130000002" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="3Dg-AV-eQn"/>
+                        </constraints>
+                    </view>
                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="3wx-6k-F5v">
                         <rect key="frame" x="12" y="10" width="189" height="40"/>
                         <subviews>
@@ -45,7 +53,10 @@
                 <constraints>
                     <constraint firstItem="3wx-6k-F5v" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Abc-Hm-huy"/>
                     <constraint firstAttribute="trailing" secondItem="3wx-6k-F5v" secondAttribute="trailing" constant="16" id="PuY-R2-pxb"/>
+                    <constraint firstAttribute="trailing" secondItem="WRp-jS-qxL" secondAttribute="trailing" id="QjI-6r-xPw"/>
                     <constraint firstItem="3wx-6k-F5v" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="RKE-EE-lFx"/>
+                    <constraint firstAttribute="bottom" secondItem="WRp-jS-qxL" secondAttribute="bottom" id="hk2-S7-hwI"/>
+                    <constraint firstItem="WRp-jS-qxL" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="60" id="uhN-G8-vmg"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
