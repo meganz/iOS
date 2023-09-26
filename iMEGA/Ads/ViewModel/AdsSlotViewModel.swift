@@ -6,20 +6,17 @@ import SwiftUI
 
 final class AdsSlotViewModel: ObservableObject {
     private var adsUseCase: any AdsUseCaseProtocol
-    private var accountUseCase: any AccountUseCaseProtocol
     private var featureFlagProvider: any FeatureFlagProviderProtocol
-    private var adsSlot: AdsSlotEntity?
     private var adsSlotChangeStream: any AdsSlotChangeStreamProtocol
+    private var adsSlot: AdsSlotEntity?
     
     @Published var adsUrl: URL?
     @Published var displayAds: Bool = false
     
     init(adsUseCase: some AdsUseCaseProtocol,
-         accountUseCase: some AccountUseCaseProtocol,
          adsSlotChangeStream: some AdsSlotChangeStreamProtocol,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
         self.adsUseCase = adsUseCase
-        self.accountUseCase = accountUseCase
         self.adsSlotChangeStream = adsSlotChangeStream
         self.featureFlagProvider = featureFlagProvider
     }
@@ -40,26 +37,9 @@ final class AdsSlotViewModel: ObservableObject {
         featureFlagProvider.isFeatureFlagEnabled(for: .inAppAds)
     }
     
-    // MARK: Account details
-    func fetchAccountDetails() async -> AccountDetailsEntity? {
-        if let details = accountUseCase.currentAccountDetails {
-            return details
-        } else {
-            do {
-                return try await accountUseCase.refreshCurrentAccountDetails()
-            } catch {
-                MEGALogError("[Ads] Can't fetch account details with error \(error.localizedDescription)")
-                return nil
-            }
-        }
-    }
-    
     // MARK: Ads
     func loadAds() async {
-        guard let accountDetails = await fetchAccountDetails() else { return }
-        let shouldShowAds = accountDetails.proLevel == .free && isFeatureFlagForInAppAdsEnabled
-        
-        guard let adsSlot, shouldShowAds else {
+        guard let adsSlot, isFeatureFlagForInAppAdsEnabled else {
             await setAdsUrl(nil)
             return
         }
