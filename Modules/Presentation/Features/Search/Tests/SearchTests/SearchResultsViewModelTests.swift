@@ -1,3 +1,4 @@
+@testable import MEGASwift
 @testable import Search
 import SearchMock
 import SwiftUI
@@ -32,7 +33,8 @@ final class SearchResultsViewModelTests: XCTestCase {
                 resultsProvider: resultsProvider,
                 bridge: bridge,
                 config: .testConfig,
-                showLoadingPlaceholderDelay: 0.1
+                showLoadingPlaceholderDelay: 0.1,
+                keyboardVisibilityHandler: MockKeyboardVisibilityHandler()
             )
             selection = {
                 self.selectedResults.append($0)
