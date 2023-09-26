@@ -825,6 +825,7 @@
 		832F19F02091BD980067679E /* MOMediaDestination+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 832F19EA2091BA970067679E /* MOMediaDestination+CoreDataClass.m */; };
 		833003A424DAFF6F00053B23 /* NodeInfoDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833003A324DAFF6F00053B23 /* NodeInfoDetailTableViewCell.swift */; };
 		833003A624DAFF7F00053B23 /* NodeInfoActionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833003A524DAFF7F00053B23 /* NodeInfoActionTableViewCell.swift */; };
+		833041912AC2F7EA00DDE70A /* ParticipantInWaitingRoomViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 833041902AC2F7EA00DDE70A /* ParticipantInWaitingRoomViewModelTests.swift */; };
 		8330A99328882E12003E80DB /* CallsSettingsViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8330A99228882E12003E80DB /* CallsSettingsViewRouter.swift */; };
 		8330A99728882E4A003E80DB /* CallsSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8330A99628882E4A003E80DB /* CallsSettingsView.swift */; };
 		8330A99A28882E78003E80DB /* CallsSettingsSoundNotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8330A99928882E78003E80DB /* CallsSettingsSoundNotificationsView.swift */; };
@@ -3411,6 +3412,7 @@
 		832F19EA2091BA970067679E /* MOMediaDestination+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MOMediaDestination+CoreDataClass.m"; sourceTree = "<group>"; };
 		833003A324DAFF6F00053B23 /* NodeInfoDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoDetailTableViewCell.swift; sourceTree = "<group>"; };
 		833003A524DAFF7F00053B23 /* NodeInfoActionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoActionTableViewCell.swift; sourceTree = "<group>"; };
+		833041902AC2F7EA00DDE70A /* ParticipantInWaitingRoomViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantInWaitingRoomViewModelTests.swift; sourceTree = "<group>"; };
 		8330A99228882E12003E80DB /* CallsSettingsViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallsSettingsViewRouter.swift; sourceTree = "<group>"; };
 		8330A99628882E4A003E80DB /* CallsSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallsSettingsView.swift; sourceTree = "<group>"; };
 		8330A99928882E78003E80DB /* CallsSettingsSoundNotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallsSettingsSoundNotificationsView.swift; sourceTree = "<group>"; };
@@ -11810,6 +11812,7 @@
 				8394EB802643DBD10064F741 /* MeetingParticipantsLayoutViewModelTests.swift */,
 				BFF0EE092630E2D300FAEFF9 /* MeetingParticipantViewModelTests.swift */,
 				BF8895D32630F810002A18CA /* MeetingParticpiantInfoViewModelTests.swift */,
+				833041902AC2F7EA00DDE70A /* ParticipantInWaitingRoomViewModelTests.swift */,
 				BF418B7D2A43DE14004C5A5D /* ScheduledMeetingDateBuilderTests.swift */,
 				83522FC92A4B0A2600266D1F /* ScheduledMeetingOccurrencesViewModelTests.swift */,
 				BFB8897A2A13600400FC456A /* ScheduledMeetingRulesEntityTests.swift */,
@@ -15246,6 +15249,7 @@
 				C45A2E4A25D2F81800915A83 /* OfflineFileInfoUseCaseTests.swift in Sources */,
 				160711542A558DED00970A19 /* PagerTabViewModelTests.swift in Sources */,
 				12B1E58328751FD100D23A58 /* PageStayTimeTrackerTests.swift in Sources */,
+				833041912AC2F7EA00DDE70A /* ParticipantInWaitingRoomViewModelTests.swift in Sources */,
 				BFC060F628A0C2FE00BA2AD7 /* participantsAddingViewFactoryTests.swift in Sources */,
 				25D840712A9EE9330026D288 /* PermissionAlertModelTests.swift in Sources */,
 				946544862A4446D50038D8FC /* PermissionAlertRouterTests.swift in Sources */,
