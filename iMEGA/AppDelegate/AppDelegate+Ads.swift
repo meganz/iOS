@@ -9,7 +9,6 @@ extension AppDelegate {
 
     @objc func adsMainTabBarController(_ tabBar: MainTabBarController) -> UIViewController {
         let viewModel = AdsSlotViewModel(adsUseCase: AdsUseCase(repository: AdsRepository.newRepo),
-                                         accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
                                          adsSlotChangeStream: AdsSlotChangeStream(adsSlotViewController: tabBar))
         let adsSlotView = AdsSlotView(viewModel: viewModel,
                                       contentView: MainTabBarWrapper(mainTabBar: tabBar))
