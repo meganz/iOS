@@ -20,7 +20,10 @@ public class SearchResultsViewModel: ObservableObject {
     
     // do not load when coming back from the pushed vc
     private var initialLoadDone = false
-    
+
+    private var miniPlayerBottomInset: CGFloat = 0.0
+    private var subscriptions = Set<AnyCancellable>()
+
     // communication back and forth to the parent and searchbar
     public let bridge: SearchBridge
     
@@ -34,23 +37,27 @@ public class SearchResultsViewModel: ObservableObject {
     
     // data source for the results (result list, chips)
     private let resultsProvider: any SearchResultsProviding
-    
+
     private let config: SearchConfig
 
     // delay after we should display loading placeholder, in seconds
     private let showLoadingPlaceholderDelay: Double
 
+    private let keyboardVisibilityHandler: any KeyboardVisibiltyHandling
+
     public init(
         resultsProvider: any SearchResultsProviding,
         bridge: SearchBridge,
         config: SearchConfig,
-        showLoadingPlaceholderDelay: Double = 1
+        showLoadingPlaceholderDelay: Double = 1,
+        keyboardVisibilityHandler: any KeyboardVisibiltyHandling
     ) {
         self.resultsProvider = resultsProvider
         self.bridge = bridge
         self.config = config
         self.showLoadingPlaceholderDelay = showLoadingPlaceholderDelay
-        
+        self.keyboardVisibilityHandler = keyboardVisibilityHandler
+
         self.bridge.queryChanged = { [weak self] query  in
             let _self = self
             Task {
@@ -70,10 +77,13 @@ public class SearchResultsViewModel: ObservableObject {
         }
         
         self.bridge.updateBottomInset = { [weak self] inset in
+            self?.miniPlayerBottomInset = inset
             self?.bottomInset = inset
         }
+
+        setupKeyboardVisibilityHandling()
     }
-    
+
     /// meant called to be called in the SwiftUI View's .task modifier
     /// which means task is called on the appearance and cancelled on disappearance
     @MainActor
@@ -237,7 +247,7 @@ public class SearchResultsViewModel: ObservableObject {
             )
         }
     }
-
+    
     @MainActor
     private func updateLoadingPlaceholderVisibility(_ shown: Bool) {
         isLoadingPlaceholderShown = shown
@@ -248,7 +258,19 @@ public class SearchResultsViewModel: ObservableObject {
             currentValue = loaded
         }
     }
-    
+
+    // when keyboard is shown we shouldn't add any additional bottom inset
+    // when keyboard is hidden bottom inset should be equal to miniPlayerBottomInset
+    // if mini player is displayed, miniPlayerBottomInset is equal miniplayer.height,
+    // otherwise, it is equal to 0
+    private func setupKeyboardVisibilityHandling() {
+        keyboardVisibilityHandler.keyboardPublisher
+            .sink(receiveValue: { isShown in
+                self.bridge.updateBottomInset(isShown ? 0 : self.miniPlayerBottomInset)
+            })
+            .store(in: &subscriptions)
+    }
+
     // create new query by deselecting previously selected chips
     // and selected new one
     static func makeQueryAfter(

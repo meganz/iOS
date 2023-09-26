@@ -1,3 +1,4 @@
+import MEGASwift
 import Search
 import SearchMock
 import SwiftUI
@@ -22,7 +23,8 @@ struct ContentView: View {
         @StateObject var viewModel = SearchResultsViewModel(
             resultsProvider: NonProductionTestResultsProvider(),
             bridge: .init(selection: { _ in }, context: { _, _ in }),
-            config: .testConfig
+            config: .testConfig,
+            keyboardVisibilityHandler: KeyboardVisibiltyHandler(notificationCenter: .default)
         )
         var body: some View {
             SearchResultsView(
