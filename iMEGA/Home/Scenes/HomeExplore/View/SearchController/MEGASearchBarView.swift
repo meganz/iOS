@@ -82,6 +82,7 @@ final class MEGASearchBarView: UIView, NibOwnerLoadable {
         func initialise(searchField: UITextField) {
             searchField.setLeftImage(Asset.Images.Home.searchBarIcon.image)
             searchField.placeholder = HomeLocalisation.searchYourFiles.rawValue
+            searchField.returnKeyType = .search
             searchField.delegate = self
         }
 
@@ -166,6 +167,14 @@ extension MEGASearchBarView: UITextFieldDelegate {
             editingDelegate?.didClearText()
         }
         return shouldClearText
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        if let text = textField.text {
+            editingDelegate?.didInputText(text)
+        }
+        return true
     }
 
     func textField(
