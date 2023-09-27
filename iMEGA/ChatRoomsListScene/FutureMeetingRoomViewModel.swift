@@ -375,24 +375,6 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
         }
     }
     
-    private func startMeetingInWaitingRoomChat(in chatRoom: ChatRoomEntity) {
-        callUseCase.startMeetingInWaitingRoomChat(for: scheduledMeeting, enableVideo: false, enableAudio: true) { [weak self] result in
-            guard let self else { return }
-            switch result {
-            case .success(let call):
-                prepareAndShowCallUI(for: call, in: chatRoom)
-            case .failure(let error):
-                switch error {
-                case .tooManyParticipants:
-                    router.showErrorMessage(Strings.Localizable.Error.noMoreParticipantsAreAllowedInThisGroupCall)
-                default:
-                    router.showErrorMessage(Strings.Localizable.somethingWentWrong)
-                    MEGALogError("Not able to start scheduled meeting call")
-                }
-            }
-        }
-    }
-    
     private func startMeetingInWaitingRoomChatNoRinging(in chatRoom: ChatRoomEntity) {
         Task { @MainActor in
             do {
