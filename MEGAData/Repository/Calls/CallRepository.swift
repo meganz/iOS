@@ -105,14 +105,15 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
         callActionManager.startCall(chatId: chatId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: delegate)
     }
     
+    @MainActor
     func startCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool) async throws -> CallEntity {
-        try await withAsyncThrowingValue { completion in
+        try await withCheckedThrowingContinuation { continuation in
             startCall(for: chatId, enableVideo: enableVideo, enableAudio: enableAudio) { result in
                 switch result {
                 case .success(let callEntity):
-                    completion(.success(callEntity))
+                    continuation.resume(returning: callEntity)
                 case .failure(let error):
-                    completion(.failure(error))
+                    continuation.resume(throwing: error)
                 }
             }
         }
@@ -124,55 +125,39 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
         callActionManager.startCallNoRinging(chatId: scheduledMeeting.chatId, scheduledId: scheduledMeeting.scheduledId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: delegate)
     }
     
+    @MainActor
     func startCallNoRinging(for scheduledMeeting: ScheduledMeetingEntity, enableVideo: Bool, enableAudio: Bool) async throws -> CallEntity {
-        try await withAsyncThrowingValue { completion in
+        try await withCheckedThrowingContinuation { continuation in
             startCallNoRinging(for: scheduledMeeting, enableVideo: enableVideo, enableAudio: enableAudio) { result in
                 switch result {
                 case .success(let callEntity):
-                    completion(.success(callEntity))
+                    continuation.resume(returning: callEntity)
                 case .failure(let error):
-                    completion(.failure(error))
+                    continuation.resume(throwing: error)
                 }
             }
         }
-    }
-    
-    func startMeetingInWaitingRoomChat(for scheduledMeeting: ScheduledMeetingEntity, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
-        let delegate = createStartMeetingRequestDelegate(for: scheduledMeeting.chatId, completion: completion)
-        callActionManager.startMeetingInWaitingRoomChat(chatId: scheduledMeeting.chatId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: delegate)
     }
     
     func startMeetingInWaitingRoomChat(for scheduledMeeting: ScheduledMeetingEntity, enableVideo: Bool, enableAudio: Bool) async throws -> CallEntity {
-        try await withAsyncThrowingValue { completion in
-            startMeetingInWaitingRoomChat(for: scheduledMeeting, enableVideo: enableVideo, enableAudio: enableAudio) { result in
-                switch result {
-                case .success(let callEntity):
-                    completion(.success(callEntity))
-                case .failure(let error):
-                    completion(.failure(error))
-                }
-            }
-        }
+        let call = try await callActionManager.startMeetingInWaitingRoomChat(
+            chatId: scheduledMeeting.chatId,
+            enableVideo: enableVideo,
+            enableAudio: enableAudio
+        )
+        updateCall(call)
+        return call
     }
     
     func startMeetingInWaitingRoomChatNoRinging(for scheduledMeeting: ScheduledMeetingEntity, enableVideo: Bool, enableAudio: Bool) async throws -> CallEntity {
-        try await withAsyncThrowingValue { completion in
-            let delegate = createStartMeetingRequestDelegate(for: scheduledMeeting.chatId) { result in
-                switch result {
-                case .success(let callEntity):
-                    completion(.success(callEntity))
-                case .failure(let error):
-                    completion(.failure(error))
-                }
-            }
-            callActionManager.startMeetingInWaitingRoomChatNoRinging(
-                chatId: scheduledMeeting.chatId,
-                scheduledId: scheduledMeeting.scheduledId,
-                enableVideo: enableVideo,
-                enableAudio: enableAudio,
-                delegate: delegate
-            )
-        }
+        let call = try await callActionManager.startMeetingInWaitingRoomChatNoRinging(
+            chatId: scheduledMeeting.chatId,
+            scheduledId: scheduledMeeting.scheduledId,
+            enableVideo: enableVideo,
+            enableAudio: enableAudio
+        )
+        updateCall(call)
+        return call
     }
     
     func joinCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
@@ -291,6 +276,11 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
                 }
             }
         }
+    }
+    
+    private func updateCall(_ call: CallEntity) {
+        self.call = call
+        self.callId = call.callId
     }
 }
 
