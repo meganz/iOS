@@ -193,7 +193,7 @@
                                                 identifier:nil
                                                    handler:^(__kindof UIAction * _Nonnull action) {
             if(!self.isEditing) {
-                [self.cloudDrive toggledEditMode];
+                [self.cloudDrive toggleWithEditModeActive:YES];
             }
             
             [self collectionView:collectionView didSelectItemAtIndexPath:indexPath];
