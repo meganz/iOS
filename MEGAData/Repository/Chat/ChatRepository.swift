@@ -6,7 +6,7 @@ import Combine
 public final class ChatRepository: ChatRepositoryProtocol {
     
     public static var newRepo: ChatRepository {
-        ChatRepository(sdk: MEGASdk.shared, chatSDK: MEGAChatSdk.shared)
+        ChatRepository(sdk: .shared, chatSDK: .shared)
     }
     
     private let sdk: MEGASdk
@@ -14,36 +14,36 @@ public final class ChatRepository: ChatRepositoryProtocol {
     
     private lazy var chatStatusUpdateListener: ChatStatusUpdateListener = { [unowned self] in
         let chatStatusUpdateListener = ChatStatusUpdateListener(sdk: chatSDK)
-        chatStatusUpdateListener.addListener()
-        removeChatStatusUpdateListener = chatStatusUpdateListener.removeListener
+        chatStatusUpdateListener.addListenerAsync()
+        removeChatStatusUpdateListener = chatStatusUpdateListener.removeListenerAsync
         return chatStatusUpdateListener
     }()
     
     private lazy var chatListItemUpdateListener: ChatListItemUpdateListener = { [unowned self] in
         let chatListItemUpdateListener = ChatListItemUpdateListener(sdk: chatSDK)
-        chatListItemUpdateListener.addListener()
-        removeChatListItemUpdateListener = chatListItemUpdateListener.removeListener
+        chatListItemUpdateListener.addListenerAsync()
+        removeChatListItemUpdateListener = chatListItemUpdateListener.removeListenerAsync
         return chatListItemUpdateListener
     }()
     
     private lazy var chatCallUpdateListener: ChatCallUpdateListener = { [unowned self] in
         let chatCallUpdateListener = ChatCallUpdateListener(sdk: chatSDK)
-        chatCallUpdateListener.addListener()
-        removeChatCallUpdateListener = chatCallUpdateListener.removeListener
+        chatCallUpdateListener.addListenerAsync()
+        removeChatCallUpdateListener = chatCallUpdateListener.removeListenerAsync
         return chatCallUpdateListener
     }()
     
     private lazy var chatConnectionUpdateListener: ChatConnectionUpdateListener = { [unowned self] in
         let chatConnectionUpdateListener = ChatConnectionUpdateListener(sdk: chatSDK)
-        chatConnectionUpdateListener.addListener()
-        removeChatConnectionUpdateListener = chatConnectionUpdateListener.removeListener
+        chatConnectionUpdateListener.addListenerAsync()
+        removeChatConnectionUpdateListener = chatConnectionUpdateListener.removeListenerAsync
         return chatConnectionUpdateListener
     }()
 
     private lazy var chatRequestListener: ChatRequestListener = { [unowned self] in
         let chatRequestListener = ChatRequestListener(sdk: chatSDK)
-        chatRequestListener.addListener()
-        removeChatRequestListener = chatRequestListener.removeListener
+        chatRequestListener.addListenerAsync()
+        removeChatRequestListener = chatRequestListener.removeListenerAsync
         return chatRequestListener
     }()
 
@@ -196,12 +196,14 @@ private class ChatListener: NSObject, MEGAChatDelegate {
         super.init()
     }
     
-    func addListener() {
-        sdk.add(self, queueType: .globalBackground)
+    func addListenerAsync() {
+        Task {
+            sdk.add(self, queueType: .globalBackground)
+        }
     }
     
-    func removeListener() {
-        sdk.remove(self)
+    func removeListenerAsync() {
+        sdk.removeMEGAChatDelegateAsync(self)
     }
 }
 
@@ -259,12 +261,14 @@ private final class ChatCallUpdateListener: NSObject, MEGAChatCallDelegate {
         super.init()
     }
     
-    func addListener() {
-        sdk.add(self)
+    func addListenerAsync() {
+        Task {
+            sdk.add(self)
+        }
     }
     
-    func removeListener() {
-        sdk.remove(self)
+    func removeListenerAsync() {
+        sdk.removeMEGACallDelegateAsync(self)
     }
     
     func onChatCallUpdate(_ api: MEGAChatSdk, call: MEGAChatCall) {
@@ -287,12 +291,14 @@ private final class ChatRequestListener: NSObject, MEGAChatRequestDelegate {
         super.init()
     }
     
-    func addListener() {
-        sdk.add(self, queueType: .globalBackground)
+    func addListenerAsync() {
+        Task {
+            sdk.add(self, queueType: .globalBackground)
+        }
     }
     
-    func removeListener() {
-        sdk.remove(self)
+    func removeListenerAsync() {
+        sdk.removeMEGAChatRequestDelegateAsync(self)
     }
 
     func onChatRequestFinish(_ api: MEGAChatSdk, request: MEGAChatRequest, error: MEGAChatError) {
