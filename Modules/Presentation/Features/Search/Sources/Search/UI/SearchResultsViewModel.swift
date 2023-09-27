@@ -228,6 +228,7 @@ public class SearchResultsViewModel: ObservableObject {
         updateChipsFrom(appliedChips: query.chips)
         await showLoadingPlaceholderIfNeeded()
         await queryChanged(to: query)
+        bridge.chip(tapped: chip, isSelected: query.chips.contains(chip))
     }
     
     private func updateChipsFrom(

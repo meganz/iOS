@@ -1,5 +1,9 @@
 import Foundation
+import MEGAAnalyticsiOS
 import MEGADomain
+import MEGAL10n
+import MEGAPresentation
+import MEGASDKRepo
 
 protocol HomeAccountSearchResultViewModelInputs {
 
@@ -43,17 +47,23 @@ final class HomeSearchResultViewModel {
     private let searchFileUseCase: any SearchFileUseCaseProtocol
     private let searchFileHistoryUseCase: any SearchFileHistoryUseCaseProtocol
     private let nodeDetailUseCase: any NodeDetailUseCaseProtocol
-
+    private let tracker: any AnalyticsTracking
+    private let sdk: MEGASdk
+    
     init(
         searchFileUseCase: some SearchFileUseCaseProtocol,
         searchFileHistoryUseCase: some SearchFileHistoryUseCaseProtocol,
         nodeDetailUseCase: some NodeDetailUseCaseProtocol,
-        router: HomeSearchResultRouter
+        router: HomeSearchResultRouter,
+        tracker: some AnalyticsTracking,
+        sdk: MEGASdk
     ) {
         self.searchFileUseCase = searchFileUseCase
         self.searchFileHistoryUseCase = searchFileHistoryUseCase
         self.nodeDetailUseCase = nodeDetailUseCase
         self.router = router
+        self.tracker = tracker
+        self.sdk = sdk
     }
 }
 
@@ -107,6 +117,7 @@ extension HomeSearchResultViewModel: HomeAccountSearchResultViewModelInputs {
         }
 
         let moreAction: (HandleEntity, UIButton) -> Void = { _, button in
+            self.tracker.trackAnalyticsEvent(with: SearchResultOverflowMenuItemEvent())
             self.router.didTapMoreAction(on: file.handle, button: button)
         }
 
@@ -136,6 +147,13 @@ extension HomeSearchResultViewModel: HomeAccountSearchResultViewModelInputs {
 
     func didSelectNode(_ nodeHandle: HandleEntity) {
         router.didTapNode(nodeHandle)
+        if let node = sdk.node(forHandle: nodeHandle) {
+            let event = SearchItemSelectedEvent(
+                searchItemType: node.isFolder() ? .folder : .file
+            )
+            tracker.trackAnalyticsEvent(with: event)
+        }
+        
     }
 
     // MARK: - Hint Search

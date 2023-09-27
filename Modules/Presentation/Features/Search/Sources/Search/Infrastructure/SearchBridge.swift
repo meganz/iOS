@@ -7,14 +7,21 @@ import UIKit
 public class SearchBridge {
     public init(
         selection: @escaping (SearchResult) -> Void,
-        context: @escaping (SearchResult, UIButton) -> Void
+        context: @escaping (SearchResult, UIButton) -> Void,
+        chipTapped: @escaping (SearchChipEntity, Bool) -> Void
     ) {
         self.selection = selection
         self.context = context
+        self.chipTapped = chipTapped
     }
     
-    var selection: (SearchResult) -> Void
-    var context: (SearchResult, UIButton) -> Void
+    let selection: (SearchResult) -> Void
+    let context: (SearchResult, UIButton) -> Void
+    private let chipTapped: (SearchChipEntity, Bool) -> Void
+    
+    func chip(tapped chip: SearchChipEntity, isSelected: Bool) {
+        chipTapped(chip, isSelected)
+    }
     
     public var queryChanged: (String) -> Void = { _ in }
     public var queryCleaned: () -> Void = { }
