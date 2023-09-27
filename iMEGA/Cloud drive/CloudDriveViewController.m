@@ -202,10 +202,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     
     if (self.cdTableView.tableView.isEditing || self.cdCollectionView.collectionView.allowsMultipleSelection) {
         self.selectedNodesArray = nil;
-        
-        if(self.isEditing) {
-            [self toggledEditMode];
-        }
+        [self toggleWithEditModeActive:NO];
     }
     
     if (self.shouldRemovePlayerDelegate) {
@@ -830,7 +827,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     
     [removeAlertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"Button title to cancel something") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         MEGARemoveRequestDelegate *removeRequestDelegate = [MEGARemoveRequestDelegate.alloc initWithMode:DisplayModeRubbishBin files:numFilesAction folders:numFoldersAction completion:^{
-            [self toggledEditMode];
+            [self toggleWithEditModeActive:NO];
         }];
         for (MEGANode *node in self.selectedNodesArray) {
             [MEGASdkManager.sharedMEGASdk removeNode:node delegate:removeRequestDelegate];
@@ -979,13 +976,13 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     if (self.selectedNodesArray != nil) {
         [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:self.selectedNodesArray presenter:self isFolderLink:NO];
     }
-    [self toggledEditMode];
+    [self toggleWithEditModeActive:NO];
 }
 
 - (IBAction)shareLinkAction:(UIBarButtonItem *)sender {
     [self presentGetLinkFor:self.selectedNodesArray];
     
-    [self toggledEditMode];
+    [self toggleWithEditModeActive:NO];
 }
 
 - (IBAction)moveAction:(UIBarButtonItem *)sender {
@@ -1001,7 +998,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         [node mnz_restore];
     }
     
-    [self toggledEditMode];
+    [self toggleWithEditModeActive:NO];
 }
 
 #pragma mark - UISearchBarDelegate
@@ -1142,7 +1139,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 - (void)nodeEditCompleted:(BOOL)complete {
     
     if(complete) {
-        [self toggledEditMode];
+        [self toggleWithEditModeActive:NO];
     }
 }
 

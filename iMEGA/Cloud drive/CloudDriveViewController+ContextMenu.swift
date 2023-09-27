@@ -105,7 +105,7 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
     func displayMenu(didSelect action: DisplayActionEntity, needToRefreshMenu: Bool) {
         switch action {
         case .select:
-            toggledEditMode()
+            toggle(editModeActive: true)
         case .thumbnailView:
             changeModeToThumbnail()
         case .listView:

@@ -4,7 +4,7 @@ import MEGAPresentation
 import MEGASDKRepo
 
 enum CloudDriveAction: ActionType {
-    case toggleEditMode
+    case updateEditModeActive(Bool)
     case updateSortType(SortOrderType)
 }
 
@@ -62,8 +62,8 @@ enum CloudDriveAction: ActionType {
     
     func dispatch(_ action: CloudDriveAction) {
         switch action {
-        case .toggleEditMode:
-            toggledEditMode()
+        case .updateEditModeActive(let isActive):
+            update(editModeActive: isActive)
         case .updateSortType(let sortType):
             update(sortType: sortType)
         }
@@ -85,8 +85,11 @@ enum CloudDriveAction: ActionType {
     }
     
     // MARK: Edit Mode
-    private func toggledEditMode() {
-        editModeActive.toggle()
+    private func update(editModeActive: Bool) {
+        guard self.editModeActive != editModeActive else {
+            return
+        }
+        self.editModeActive = editModeActive
         invokeCommand?(editModeActive ? .enterSelectionMode : .exitSelectionMode)
     }
 }

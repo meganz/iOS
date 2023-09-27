@@ -47,12 +47,12 @@ extension CloudDriveViewController {
         present(navigationController, animated: true)
     }
     
-    @objc func toggledEditMode() {
-        viewModel.dispatch(.toggleEditMode)
+    @objc func toggle(editModeActive: Bool) {
+        viewModel.dispatch(.updateEditModeActive(editModeActive))
     }
     
     @IBAction func editTapped(_ sender: UIBarButtonItem) {
-        toggledEditMode()
+        toggle(editModeActive: false)
     }
     
     @objc func showShareFolderForNodes(_ nodes: [MEGANode]) {
