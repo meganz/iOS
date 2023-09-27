@@ -267,7 +267,7 @@ public class SearchResultsViewModel: ObservableObject {
     private func setupKeyboardVisibilityHandling() {
         keyboardVisibilityHandler.keyboardPublisher
             .sink(receiveValue: { isShown in
-                self.bridge.updateBottomInset(isShown ? 0 : self.miniPlayerBottomInset)
+                self.bottomInset = isShown ? 0 : self.miniPlayerBottomInset
             })
             .store(in: &subscriptions)
     }
