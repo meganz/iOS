@@ -3,7 +3,7 @@ import MEGAL10n
 import MEGAPresentation
 
 enum CloudDriveAction: ActionType {
-    case toggleEditMode
+    case updateEditModeActive(Bool)
 }
 
 @objc final class CloudDriveViewModel: NSObject, ViewModelType {
@@ -57,14 +57,17 @@ enum CloudDriveAction: ActionType {
     
     func dispatch(_ action: CloudDriveAction) {
         switch action {
-        case .toggleEditMode:
-            toggledEditMode()
+        case .updateEditModeActive(let isActive):
+            update(editModeActive: isActive)
         }
     }
     
     // MARK: Edit Mode
-    private func toggledEditMode() {
-        editModeActive.toggle()
+    private func update(editModeActive: Bool) {
+        guard self.editModeActive != editModeActive else {
+            return
+        }
+        self.editModeActive = editModeActive
         invokeCommand?(editModeActive ? .enterSelectionMode : .exitSelectionMode)
     }
 }

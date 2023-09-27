@@ -63,7 +63,7 @@ extension CloudDriveViewController {
         
         let delegate = MEGAMoveRequestDelegate(toMoveToTheRubbishBinWithFiles: selectedNodes.contentCounts().fileCount,
                                                folders: selectedNodes.contentCounts().folderCount) { [weak self] in
-            self?.toggledEditMode()
+            self?.toggle(editModeActive: false)
         }
         
         for node in selectedNodes {

@@ -293,7 +293,7 @@ contextMenuConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath
                                                    handler:^(__kindof UIAction * _Nonnull action) {
             
             if(!self.isEditing) {
-                [self.cloudDrive toggledEditMode];
+                [self.cloudDrive toggleWithEditModeActive:YES];
             }
             [self tableView:tableView didSelectRowAtIndexPath:indexPath];
             [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
