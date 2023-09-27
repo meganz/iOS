@@ -679,7 +679,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         callUseCase.chatRoom = chatRoom
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
-        let chatRoomUseCase = MockChatRoomUseCase()
+        let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoom)
         let chatRoomUserUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("test"), userDisplayNamesForPeersResult: .success([(handle: 100, name: "test")]))
         let expectation = expectation(description: "Awaiting publisher")
         let userUseCase = MockUserImageUseCase(result: .success(UIImage()), createAvatarCompletion: { handle in
@@ -699,6 +699,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
             userImageUseCase: userUseCase,
             chatRoom: chatRoom,
+            megaHandleUseCase: MockMEGAHandleUseCase(base64Handle: "base64Handle"),
             call: call
         )
         viewModel.participantJoined(participant: CallParticipantEntity(participantId: 100))
@@ -713,7 +714,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         callUseCase.chatRoom = chatRoom
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
-        let chatRoomUseCase = MockChatRoomUseCase()
+        let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoom)
         let chatRoomuserUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("test"), userDisplayNamesForPeersResult: .success([(handle: 100, name: "test")]))
         let expectation = expectation(description: "Awaiting publisher")
         let userUseCase = MockUserImageUseCase(result: .success(UIImage()), downloadAvatarCompletion: { handle in
@@ -733,6 +734,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
             userImageUseCase: userUseCase,
             chatRoom: chatRoom,
+            megaHandleUseCase: MockMEGAHandleUseCase(base64Handle: "base64Handle"),
             call: call
         )
         viewModel.participantJoined(participant: CallParticipantEntity(participantId: 100))
