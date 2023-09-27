@@ -2,27 +2,47 @@ import Foundation
 import MEGADomain
 import MEGASDKRepo
 
-class NodeActionViewControllerGenericDelegate:
-    NodeActionViewControllerDelegate {
+class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate {
+    
     private weak var viewController: UIViewController?
     private(set) var isNodeFromFolderLink: Bool
     private(set) var messageId: HandleEntity?
     private(set) var chatId: HandleEntity?
+    private let nodeActionListener: (MegaNodeActionType?) -> Void
     
-    private let saveMediaToPhotosUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdk.shared), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+    private let saveMediaToPhotosUseCase = SaveMediaToPhotosUseCase(
+        downloadFileRepository: DownloadFileRepository(
+            sdk: MEGASdk.shared
+        ),
+        fileCacheRepository: FileCacheRepository.newRepo,
+        nodeRepository: NodeRepository.newRepo
+    )
 
-    init(viewController: UIViewController, isNodeFromFolderLink: Bool = false, messageId: HandleEntity? = nil, chatId: HandleEntity? = nil) {
+    init(
+        viewController: UIViewController,
+        isNodeFromFolderLink: Bool = false,
+        messageId: HandleEntity? = nil,
+        chatId: HandleEntity? = nil,
+        nodeActionListener: @escaping (MegaNodeActionType?) -> Void = { _ in }
+    ) {
         self.viewController = viewController
         self.isNodeFromFolderLink = isNodeFromFolderLink
         self.messageId = messageId
         self.chatId = chatId
+        self.nodeActionListener = nodeActionListener
     }
     
     deinit {
         print("deinit NodeActionViewControllerGenericDelegate")
     }
     
-    func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, for node: MEGANode, from sender: Any) {
+    func nodeAction(
+        _ nodeAction: NodeActionViewController,
+        didSelect action: MegaNodeActionType,
+        for node: MEGANode,
+        from sender: Any
+    ) {
+        nodeActionListener(action)
         guard let viewController = viewController else { return }
         switch action {
         case .editTextFile:
