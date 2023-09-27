@@ -22,7 +22,17 @@ struct ContentView: View {
         @State var text: String = ""
         @StateObject var viewModel = SearchResultsViewModel(
             resultsProvider: NonProductionTestResultsProvider(),
-            bridge: .init(selection: { _ in }, context: { _, _ in }),
+            bridge: .init(
+                selection: {
+                    print("Item selected \($0)")
+                },
+                context: { result, _ in
+                    print("Context menu \(result)")
+                },
+                chipTapped: {
+                    print("Chip tapped \($0), \($1)")
+                }
+            ),
             config: .testConfig,
             keyboardVisibilityHandler: KeyboardVisibiltyHandler(notificationCenter: .default)
         )

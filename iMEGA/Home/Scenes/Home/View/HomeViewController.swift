@@ -637,6 +637,7 @@ extension HomeViewController: TraitEnvironmentAware {
 extension HomeViewController: MEGASearchBarViewDelegate {
 
     func didStartSearchSessionOnSearchController(_ searchController: MEGASearchBarView) {
+        homeViewModel?.didStartSearchSession()
         navigationController?.setNavigationBarHidden(true, animated: true)
 
         guard searchResultContainerView == nil else { return }

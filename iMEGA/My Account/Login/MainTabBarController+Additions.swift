@@ -12,7 +12,8 @@ extension MainTabBarController {
     @objc func makeHomeViewController() -> UIViewController {
         HomeScreenFactory().createHomeScreen(
             from: self,
-            newHomeSearchResultsEnabled: shouldUseNewHomeSearchResults
+            newHomeSearchResultsEnabled: shouldUseNewHomeSearchResults,
+            tracker: DIContainer.tracker
         )
     }
     

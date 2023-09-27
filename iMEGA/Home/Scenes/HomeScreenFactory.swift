@@ -1,7 +1,9 @@
-import Foundation  
+import Foundation
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
+import MEGAPresentation
 import MEGASDKRepo
 import MEGASwift
 import Search
@@ -15,7 +17,8 @@ final class HomeScreenFactory: NSObject {
     
     func createHomeScreen(
         from tabBarController: MainTabBarController,
-        newHomeSearchResultsEnabled: Bool
+        newHomeSearchResultsEnabled: Bool,
+        tracker: some AnalyticsTracking
     ) -> UIViewController {
         let homeViewController = HomeViewController()
         let navigationController = MEGANavigationController(rootViewController: homeViewController)
@@ -91,7 +94,8 @@ final class HomeScreenFactory: NSObject {
         let searchResultViewController = makeSearchResultViewController(
             with: navigationController,
             bridge: bridge,
-            newHomeSearchResultsEnabled: newHomeSearchResultsEnabled
+            newHomeSearchResultsEnabled: newHomeSearchResultsEnabled,
+            tracker: tracker
         )
         
         homeViewController.searchResultViewController = searchResultViewController
@@ -102,7 +106,8 @@ final class HomeScreenFactory: NSObject {
         )
         homeViewController.router = router
         homeViewController.homeViewModel = HomeViewModel(
-            shareUseCase: ShareUseCase(repo: ShareRepository.newRepo)
+            shareUseCase: ShareUseCase(repo: ShareRepository.newRepo),
+            tracker: tracker
         )
         
         return navigationController
@@ -115,44 +120,76 @@ final class HomeScreenFactory: NSObject {
     private func makeSearchResultViewController(
         with navigationController: UINavigationController,
         bridge: SearchResultsBridge,
-        newHomeSearchResultsEnabled: Bool
+        newHomeSearchResultsEnabled: Bool,
+        tracker: some AnalyticsTracking
     ) -> UIViewController {
         
         if newHomeSearchResultsEnabled {
             return makeNewSearchResultsViewController(
                 with: navigationController,
-                bridge: bridge
+                bridge: bridge,
+                tracker: tracker
             )
         } else {
             return makeLegacySearchResultsViewController(
                 with: navigationController,
-                bridge: bridge
+                bridge: bridge,
+                tracker: tracker
             )
+        }
+    }
+    
+    private func nodeActionListener(_ tracker: any AnalyticsTracking) -> (MegaNodeActionType?) -> Void {
+        { action in
+            switch action {
+            case .saveToPhotos:
+                tracker.trackAnalyticsEvent(with: SearchResultSaveToDeviceMenuItemEvent())
+            case .manageLink, .shareLink:
+                tracker.trackAnalyticsEvent(with: SearchResultShareMenuItemEvent())
+            default:
+                {}() // we do not track other events here yet
+            }
         }
     }
     
     private func makeNewSearchResultsViewController(
         with navigationController: UINavigationController,
-        bridge: SearchResultsBridge
+        bridge: SearchResultsBridge,
+        tracker: some AnalyticsTracking
     ) -> UIViewController {
         
         let router = HomeSearchResultRouter(
             navigationController: navigationController,
             nodeActionViewControllerDelegate: NodeActionViewControllerGenericDelegate(
-                viewController: navigationController
+                viewController: navigationController,
+                nodeActionListener: nodeActionListener(tracker)
             )
         )
         
         // this bridge is needed to do a searchBar <-> searchResults -> homeScreen communication without coupling this to
         // MEGA app level delegates. Using simple closures to pass data back and forth
         let searchBridge = SearchBridge(
-            selection: { result in
+            selection: { [weak sdk] result in
                 bridge.hideKeyboard()
                 router.didTapNode(result.id)
+                // map from result id to a node to check if this is folder or a file
+                if let node = sdk?.node(forHandle: result.id) {
+                    let event = SearchItemSelectedEvent(
+                        searchItemType: node.isFolder() ? .folder : .file
+                    )
+                    tracker.trackAnalyticsEvent(with: event)
+                }
             },
             context: { result, button in
+                let event = SearchResultOverflowMenuItemEvent()
+                tracker.trackAnalyticsEvent(with: event)
+                
                 // button reference is required to position popover on the iPad correctly
                 router.didTapMoreAction(on: result.id, button: button)
+                
+            },
+            chipTapped: { chip, selected in
+                tracker.trackChip(tapped: chip, selected: selected)
             }
         )
         
@@ -207,7 +244,8 @@ final class HomeScreenFactory: NSObject {
     
     private func makeLegacySearchResultsViewController(
         with navigationController: UINavigationController,
-        bridge: SearchResultsBridge
+        bridge: SearchResultsBridge,
+        tracker: some AnalyticsTracking
     ) -> UIViewController {
         let searchResultViewModel = HomeSearchResultViewModel(
             searchFileUseCase: makeSearchFileUseCase(),
@@ -218,9 +256,12 @@ final class HomeScreenFactory: NSObject {
             router: HomeSearchResultRouter(
                 navigationController: navigationController,
                 nodeActionViewControllerDelegate: NodeActionViewControllerGenericDelegate(
-                    viewController: navigationController
+                    viewController: navigationController,
+                    nodeActionListener: nodeActionListener(tracker)
                 )
-            )
+            ),
+            tracker: tracker,
+            sdk: sdk
         )
         
         let homeSearchResultViewController = HomeSearchResultViewController()

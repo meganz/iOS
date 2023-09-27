@@ -18,6 +18,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         let bridge: SearchBridge
         var selectedResults: [SearchResult] = []
         var contextTriggeredResults: [SearchResult] = []
+        var chipTaps: [(SearchChipEntity, Bool)] = []
         weak var testcase: XCTestCase?
         
         init(_ testcase: XCTestCase) {
@@ -25,9 +26,11 @@ final class SearchResultsViewModelTests: XCTestCase {
             resultsProvider = MockSearchResultsProviding()
             var selection: (SearchResult) -> Void = { _ in }
             var context: (SearchResult, UIButton) -> Void = { _, _ in }
+            var chipTapped: (SearchChipEntity, Bool) -> Void = { _, _ in }
             bridge = SearchBridge(
                 selection: { selection($0) },
-                context: { context($0, $1) }
+                context: { context($0, $1) },
+                chipTapped: { chipTapped($0, $1) }
             )
             sut = SearchResultsViewModel(
                 resultsProvider: resultsProvider,
@@ -41,6 +44,9 @@ final class SearchResultsViewModelTests: XCTestCase {
             }
             context = { result, _ in
                 self.contextTriggeredResults.append(result)
+            }
+            chipTapped = { chip, isSelected in
+                self.chipTaps.append((chip, isSelected))
             }
         }
         
