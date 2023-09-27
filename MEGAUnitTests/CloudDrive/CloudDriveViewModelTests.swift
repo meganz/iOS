@@ -61,9 +61,11 @@ class CloudDriveViewModelTests: XCTestCase {
     }
         
     func makeSUT(
+        parentNode: MEGANode = MockNode(handle: 1),
         shareUseCase: some ShareUseCaseProtocol = MockShareUseCase()) -> CloudDriveViewModel {
-        
         CloudDriveViewModel(
-            shareUseCase: shareUseCase)
+            parentNode: parentNode,
+            shareUseCase: shareUseCase
+        )
     }
 }
