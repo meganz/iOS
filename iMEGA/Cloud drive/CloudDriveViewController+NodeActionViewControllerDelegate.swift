@@ -6,7 +6,7 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
         switch action {
         case .download:
             download(nodes)
-            toggledEditMode()
+            toggle(editModeActive: false)
         case .copy:
             showBrowserNavigation(for: nodes, action: .copy)
         case .move:
@@ -17,20 +17,20 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
         case .exportFile:
             let entityNodes = nodes.toNodeEntities()
             ExportFileRouter(presenter: self, sender: sender).export(nodes: entityNodes)
-            toggledEditMode()
+            toggle(editModeActive: false)
         case .shareFolder:
             viewModel.openShareFolderDialog(forNodes: nodes)
         case .shareLink, .manageLink:
             presentGetLink(for: nodes)
-            toggledEditMode()
+            toggle(editModeActive: false)
         case .sendToChat:
             showSendToChat(nodes)
-            toggledEditMode()
+            toggle(editModeActive: false)
         case .removeLink:
             ActionWarningViewRouter(presenter: self, nodes: nodes.toNodeEntities(), actionType: .removeLink, onActionStart: {
                 SVProgressHUD.show()
             }, onActionFinish: { [weak self] result in
-                self?.toggledEditMode()
+                self?.toggle(editModeActive: false)
                 self?.showRemoveLinkResultMessage(result)
             }).start()
         case .saveToPhotos:
@@ -109,9 +109,7 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
         default: break
         }
         
-        if viewModel.editModeActive {
-            toggledEditMode()
-        }
+        toggle(editModeActive: false)
     }
         
     func download(_ nodes: [MEGANode]) {
