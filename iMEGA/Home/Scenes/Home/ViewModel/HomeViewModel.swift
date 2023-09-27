@@ -1,10 +1,21 @@
+import Foundation
+import MEGAAnalyticsiOS
 import MEGADomain
+import MEGAL10n
+import MEGAPresentation
+import MEGASDKRepo
 
 @objc final class HomeViewModel: NSObject {
-    private let shareUseCase: any ShareUseCaseProtocol
     
-    init(shareUseCase: any ShareUseCaseProtocol) {
+    private let shareUseCase: any ShareUseCaseProtocol
+    private let tracker: any AnalyticsTracking
+    
+    init(
+        shareUseCase: any ShareUseCaseProtocol,
+        tracker: some AnalyticsTracking
+    ) {
         self.shareUseCase = shareUseCase
+        self.tracker = tracker
     }
     
     @MainActor
@@ -17,5 +28,9 @@ import MEGADomain
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
         }
+    }
+    
+    func didStartSearchSession() {
+        tracker.trackAnalyticsEvent(with: HomeScreenSearchMenuToolbarEvent())
     }
 }

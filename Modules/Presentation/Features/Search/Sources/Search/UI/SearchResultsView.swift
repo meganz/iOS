@@ -91,7 +91,11 @@ struct SearchResultsViewPreviews: PreviewProvider {
         @State var text: String = ""
         @StateObject var viewModel = SearchResultsViewModel(
             resultsProvider: NonProductionTestResultsProvider(),
-            bridge: .init(selection: { _ in }, context: {_, _ in }),
+            bridge: .init(
+                selection: { _ in },
+                context: {_, _ in },
+                chipTapped: { _, _ in }
+            ),
             config: .init(
                 chipAssets: .init(
                     selectedForeground: .white,
