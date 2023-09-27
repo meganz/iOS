@@ -5,6 +5,7 @@ struct MainTabBarWrapper: UIViewControllerRepresentable {
     private(set) var mainTabBar: UITabBarController
     
     init(mainTabBar: UITabBarController) {
+        _ = mainTabBar.view
         self.mainTabBar = mainTabBar
     }
     

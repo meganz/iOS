@@ -250,12 +250,16 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
     }
     
     @objc func presentUploadOptions() {
-        configureContextMenuManagerIfNeeded()
         
-        guard let config = uploadAddMenuConfiguration(),
-              let actions = contextMenuManager?.actionSheetActions(with: config) else { return }
-        
-        let actionSheetVC = ActionSheetViewController(actions: actions, headerTitle: nil, dismissCompletion: nil, sender: nil)
-        present(actionSheetVC, animated: true)
+        DispatchQueue.main.async {
+            self.configureContextMenuManagerIfNeeded()
+            
+            guard let config = self.uploadAddMenuConfiguration(),
+                  let actions = self.contextMenuManager?.actionSheetActions(with: config) else { return }
+            
+            let actionSheetVC = ActionSheetViewController(actions: actions, headerTitle: nil, dismissCompletion: nil, sender: nil)
+            self.present(actionSheetVC, animated: true)
+        }
+
     }
 }
