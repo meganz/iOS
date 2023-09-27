@@ -1188,14 +1188,13 @@ class ChatViewController: MessagesViewController {
     
     private func startMeetingInWaitingRoomChat(videoCall: Bool, scheduledMeeting: ScheduledMeetingEntity) {
         prepareAudioForCall()
-        callUseCase.startMeetingInWaitingRoomChat(for: scheduledMeeting, enableVideo: videoCall, enableAudio: true) { [weak self] result in
-            guard let self else { return }
-            updateNavigationBarButtonsBeforeStartCall()
-            switch result {
-            case .success:
+        Task { @MainActor in
+            do {
+                _ = try await callUseCase.startMeetingInWaitingRoomChat(for: scheduledMeeting, enableVideo: videoCall, enableAudio: true)
+                updateNavigationBarButtonsBeforeStartCall()
                 startMeetingUI(isVideoEnabled: videoCall, isSpeakerEnabled: chatRoom.isMeeting || videoCall)
-            case .failure:
-                MEGALogDebug("Cannot start no ringing call for scheduled meeting")
+            } catch {
+                updateNavigationBarButtonsBeforeStartCall()
             }
         }
     }
@@ -1208,7 +1207,7 @@ class ChatViewController: MessagesViewController {
                 updateNavigationBarButtonsBeforeStartCall()
                 startMeetingUI(isVideoEnabled: videoCall, isSpeakerEnabled: chatRoom.isMeeting || videoCall)
             } catch {
-                MEGALogDebug("Cannot start no ringing call for scheduled meeting")
+                updateNavigationBarButtonsBeforeStartCall()
             }
         }
     }
