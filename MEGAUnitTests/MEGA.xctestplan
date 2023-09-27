@@ -131,10 +131,7 @@
         "MeetingFloatingPanelViewModelTests\/testAction_onViewReady_VideoCallWithFrontCamera()",
         "MeetingFloatingPanelViewModelTests\/testAction_onViewReady_isMyselfModerator_isGroupMeeting()",
         "MeetingFloatingPanelViewModelTests\/testAction_onViewReady_isMyselfParticipant_allowNonHostToAddParticipantsEnabled()",
-        "MeetingFloatingPanelViewModelTests\/testAction_onViewReady_isMyselfParticipant_isGroupMeeting()",
-        "MeetingParticipantsLayoutViewModelTests\/testAction_onViewReady()",
-        "MeetingParticipantsLayoutViewModelTests\/testAction_participantAdded_createAvatar()",
-        "MeetingParticipantsLayoutViewModelTests\/testAction_participantAdded_downloadAvatar()"
+        "MeetingFloatingPanelViewModelTests\/testAction_onViewReady_isMyselfParticipant_isGroupMeeting()"
       ],
       "target" : {
         "containerPath" : "container:MEGA.xcodeproj",
