@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="B1s-m2-ahE">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="B1s-m2-ahE">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -421,6 +421,7 @@
                                             <outlet property="labelView" destination="i1X-kv-ydJ" id="tSf-4X-UNw"/>
                                             <outlet property="linkImageView" destination="oKa-L0-uvm" id="wf4-Kt-H5z"/>
                                             <outlet property="linkView" destination="3op-yU-yRi" id="db8-1F-rPj"/>
+                                            <outlet property="moreButton" destination="MnT-ok-C8h" id="nw1-nC-Xgl"/>
                                             <outlet property="nameLabel" destination="0jD-dQ-lBE" id="Ls5-W6-IsO"/>
                                             <outlet property="thumbnailImageView" destination="6Hy-X9-BJi" id="h35-xc-L7R"/>
                                             <outlet property="versionedImageView" destination="0bt-5e-eOG" id="RJc-17-aDV"/>
