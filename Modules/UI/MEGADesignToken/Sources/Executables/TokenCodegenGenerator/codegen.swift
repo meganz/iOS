@@ -4,6 +4,29 @@ import SwiftSyntaxBuilder
 struct CodegenInput {
     let dark: SemanticInput
     let light: SemanticInput
+    let spacing: NumberInput
+    let radius: NumberInput
+}
+
+enum NumberInput {
+    case radius(NumberData)
+    case spacing(NumberData)
+
+    var data: NumberData {
+        switch self {
+        case .radius(let data), .spacing(let data):
+            return data
+        }
+    }
+
+    var identifier: String {
+        switch self {
+        case .radius:
+            return "MEGADesignTokenRadius"
+        case .spacing:
+            return "MEGADesignTokenSpacing"
+        }
+    }
 }
 
 enum SemanticInput {
@@ -30,10 +53,11 @@ enum SemanticInput {
 enum CodegenError: Error {
     case codeHasWarnings
     case codeHasErrors
+    case inputIsWrong(reason: String)
 }
 
-func generateCode(from input: CodegenInput) throws -> String {
-    let code = generateSourceFileSyntax(from: input)
+func generateCode(with input: CodegenInput) throws -> String {
+    let code = try generateSourceFileSyntax(from: input)
 
     guard !code.hasWarning else {
         throw CodegenError.codeHasWarnings
@@ -46,11 +70,13 @@ func generateCode(from input: CodegenInput) throws -> String {
     return code.description
 }
 
-private func generateSourceFileSyntax(from input: CodegenInput) -> SourceFileSyntax {
-    SourceFileSyntax {
+private func generateSourceFileSyntax(from input: CodegenInput) throws -> SourceFileSyntax {
+    try SourceFileSyntax {
         generateImport()
-        generateTopLevelEnum(with: input.dark)
-        generateTopLevelEnum(with: input.light)
+        try generateSemanticTopLevelEnum(with: input.dark)
+        try generateSemanticTopLevelEnum(with: input.light)
+        generateNumberTopLevelEnum(with: input.spacing)
+        generateNumberTopLevelEnum(with: input.radius)
     }
 }
 
@@ -62,11 +88,29 @@ private func generateImport() -> ImportDeclSyntax {
     return ImportDeclSyntax(importKeyword: .keyword(.import), path: importPath)
 }
 
-private func generateTopLevelEnum(with input: SemanticInput) -> EnumDeclSyntax {
+private func generateSemanticTopLevelEnum(with input: SemanticInput) throws -> EnumDeclSyntax {
+    let memberBlockBuilder = {
+        try MemberBlockItemListSyntax {
+            for (enumName, category) in input.data {
+                try generateSemanticEnum(for: enumName, category: category)
+            }
+        }
+    }
+
+    return try EnumDeclSyntax(
+        leadingTrivia: .newline,
+        modifiers: [.init(name: .keyword(.public, trailingTrivia: .space))],
+        name: .identifier(input.identifier, leadingTrivia: .space, trailingTrivia: .space),
+        memberBlockBuilder: memberBlockBuilder,
+        trailingTrivia: .newline
+    )
+}
+
+private func generateNumberTopLevelEnum(with input: NumberInput) -> EnumDeclSyntax {
     let memberBlockBuilder = {
         MemberBlockItemListSyntax {
-            for (enumName, category) in input.data {
-                generateEnum(for: enumName, category: category)
+            for (name, info) in input.data {
+                generateNumberVariable(for: name, info: info)
             }
         }
     }
@@ -80,17 +124,10 @@ private func generateTopLevelEnum(with input: SemanticInput) -> EnumDeclSyntax {
     )
 }
 
-private func generateEnum(for name: String, category: ColorCategory) -> EnumDeclSyntax {
-    let memberBlock = MemberBlockSyntax {
-        switch category {
-        case .leaf(let colorInfoDict):
-            for colorName in colorInfoDict.keys {
-                generateVariable(for: colorName, with: colorInfoDict[colorName]!)
-            }
-        case .node(let subCategories):
-            for (subEnumName, subCategory) in subCategories {
-                generateEnum(for: subEnumName, category: subCategory)
-            }
+private func generateSemanticEnum(for name: String, category: [String: ColorInfo]) throws -> EnumDeclSyntax {
+    let memberBlock = try MemberBlockSyntax {
+        for (name, info) in category {
+            try generateSemanticVariable(for: name, with: info)
         }
     }
 
@@ -102,13 +139,24 @@ private func generateEnum(for name: String, category: ColorCategory) -> EnumDecl
     )
 }
 
-private func generateVariable(for name: String, with info: ColorInfo) -> DeclSyntax {
+private func generateNumberVariable(for name: String, info: NumberInfo) -> DeclSyntax {
+    let variableName = name.sanitizeNumberVariableName()
+
+    return DeclSyntax(
+    """
+    \n
+    public static let \(raw: variableName) = CGFloat(\(raw: info.value))
+    \n
+    """
+    )
+}
+
+private func generateSemanticVariable(for name: String, with info: ColorInfo) throws -> DeclSyntax {
     guard let rbga = info.rgba else {
-        print("Codegen: unable to parse Color(\(name))")
-        return DeclSyntax("")
+        throw CodegenError.inputIsWrong(reason: "Codegen: unable to parse Color(\(name))")
     }
 
-    let variableName = sanitizeVariableName(name)
+    let variableName = name.sanitizeSemanticVariableName()
 
     return DeclSyntax(
     """
@@ -117,11 +165,4 @@ private func generateVariable(for name: String, with info: ColorInfo) -> DeclSyn
     \n
     """
     )
-}
-
-private func sanitizeVariableName(_ name: String) -> String {
-    name
-        .deletingPrefix("--color-")
-        .replacingOccurrences(of: "-", with: " ")
-        .toCamelCase()
 }

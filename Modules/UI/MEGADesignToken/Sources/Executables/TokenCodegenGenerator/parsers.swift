@@ -14,7 +14,7 @@ struct ParseInputPayload {
 ///
 /// The function expects the input string to be formatted as a pseudo-array containing paths like so:
 /// "[Path/To/Semantic tokens.Light.tokens.json, Path/To/Semantic tokens.Dark.tokens.json, Path/To/core.json]"
-/// 
+///
 /// - Parameter input: The input string formatted as a pseudo-array.
 /// - Returns: A `ParseInputPayload` object containing the parsed and validated paths.
 /// - Throws: A `ParseInputError` if the number of arguments is incorrect or if any of the paths does not contain the expected file name.
@@ -31,14 +31,14 @@ func parseInput(_ input: String) throws -> ParseInputPayload {
         throw ParseInputError.wrongArguments
     }
 
-    let inputMap: [ExpectedInput: String] = parsed.reduce(into: [:]) { acc, input in
+    let inputMap: [ExpectedInput: String] = parsed.reduce(into: [:]) { result, input in
         switch input {
         case input where input.contains(ExpectedInput.core.rawValue):
-            acc[.core] = input
+            result[.core] = input
         case input where input.contains(ExpectedInput.semanticDark.rawValue):
-            acc[.semanticDark] = input
+            result[.semanticDark] = input
         case input where input.contains(ExpectedInput.semanticLight.rawValue):
-            acc[.semanticLight] = input
+            result[.semanticLight] = input
         default:
             break
         }
@@ -65,8 +65,8 @@ func parseInput(_ input: String) throws -> ParseInputPayload {
 ///  - Returns: A struct representing normalized rbga values of type `RGBA` or `nil` if the string can't be parsed.
 func parseRGBA(_ rgbaString: String) -> RGBA? {
     guard let range = rgbaString.range(of: "^rgba\\((.*)\\)$", options: .regularExpression) else {
-          return nil
-      }
+        return nil
+    }
 
     let sanitizedRgbaString = rgbaString[range]
         .replacingOccurrences(of: "rgba(", with: "")
@@ -125,79 +125,125 @@ private let decoder = JSONDecoder()
 /// Parses a given JSON dictionary to a flat structure containing color information.
 ///
 /// - Parameters:
-///   - colorsInformation: A dictionary with a string key and `Any` matching the expected JSON structure.
-///     The JSON should resemble a nested key-value pair where the value can be either another dictionary (representing a category)
+///   - colorsInformation: A dictionary with a string key and `Any` matching the expected `JSON` structure.
+///     The JSON should resemble a nested key-value pair where the value can be either another dictionary,
 ///     or a dictionary containing color information (`ColorInfo`).
+///
+///     Example for the expected `JSON` structure - **NOTE**: It can be indefinitely nested.
+///     ```
+/// {
+///     "Black opacity": {
+///         "090": {
+///             "$type": "color",
+///             "$value": "rgba(0, 0, 0, 0.9000)"
+///         }
+///      },
+///     "Secondary": {
+///         "Orange": {
+///             "100": {
+///                 "$type": "color",
+///                 "$value": "#ffead5"
+///             }
+///         }
+///     }
+/// }
+///```
 ///   - path: The current nested path as a string, used for recursion. Defaults to an empty string.
 ///
 /// - Returns: A dictionary of type `[String: ColorInfo]` containing the flattened color information.
-func extractFlatColorData(from colorsInformation: [String: Any], path: String = "") -> [String: ColorInfo] {
+/// 
+/// - Complexity: Let n be the total number of keys in the input JSON object, including all nested keys - O(n)
+func extractFlatColorData(from jsonObject: [String: Any], path: String = "") throws -> [String: ColorInfo] {
     var flatMap: [String: ColorInfo] = [:]
 
-    for (key, value) in colorsInformation {
-        let fullPath = path.isEmpty ? key : "\(path).\(key)"
+    for (key, value) in jsonObject {
+        let fullPath = (path.isEmpty ? key : "\(path).\(key)").lowercased()
+
         if let innerDict = value as? [String: Any],
            innerDict["$type"] as? String != nil,
            innerDict["$value"] as? String != nil {
-            do {
-                let jsonData = try JSONSerialization.data(withJSONObject: value, options: [])
-                let colorInfo = try decoder.decode(ColorInfo.self, from: jsonData)
-                flatMap[fullPath] = colorInfo
-            } catch {
-                print("Error: couldn't decode ColorInfo for \(key) with Error(\(String(describing: error)))")
-            }
+
+            let jsonData = try JSONSerialization.data(withJSONObject: value, options: [])
+            let colorInfo = try decoder.decode(ColorInfo.self, from: jsonData)
+            flatMap[fullPath] = colorInfo
+
         } else if let innerDict = value as? [String: Any] {
-            let nestedMap = extractFlatColorData(from: innerDict, path: fullPath)
-            flatMap.merge(nestedMap) { (_, new) in new }
+            let nestedMap = try extractFlatColorData(from: innerDict, path: fullPath)
+            flatMap.merge(nestedMap) { _, new in new }
         }
     }
 
     return flatMap
 }
 
-/// Parses a given JSON dictionary to a nested structure containing color information.
+enum ExtractColorDataError: Error {
+    case inputIsWrong(reason: String)
+}
+
+/// Parses a given JSON dictionary to a nested structure containing semantic color information.
 ///
 /// - Parameters:
-///   - colorsInformation: A dictionary with a string key and `Any` matching the expected JSON structure.
-///   - flatMap: The flat `[String: ColorInfo]` map used for O(1) lookups.
+///   - jsonObject: A dictionary with a string key and `Any` matching the expected JSON structure.
+///  
+///     Example for the expected `JSON` structure - **NOTE**: It can be only be nested one level.
+///     ```
+/// {
+///     "Focus": {
+///         "--color-focus": {
+///             "$type": "color",
+///             "$value": "{Colors.Secondary.Indigo.700}"
+///         }
+///     },
+///     "Indicator": {
+///         "--color-indicator-magenta": {
+///             "$type": "color",
+///             "$value": "{Colors.Secondary.Magenta.300}"
+///         },
+///         "--color-indicator-yellow": {
+///             "$type": "color",
+///             "$value": "{Colors.Warning.400}"
+///         }
+///     }
+/// }
+///```
+///   - flatMap: The flat `[String: ColorInfo]` map used for O(1) lookups, containing core color information.
 ///
 /// - Returns: A `ColorData` dictionary that contains the hierarchical structure of color categories and their corresponding color information.
-func extractColorData(from colorsInformation: [String: Any], using flatMap: [String: ColorInfo]) -> ColorData {
-    colorsInformation.reduce(into: [:]) { (result, entry) in
-        let (key, value) = entry
-        guard let valueDict = value as? [String: Any] else { return }
-        result[key] = extractCategory(from: valueDict, using: flatMap)
-    }
-}
+///
+/// - Complexity: O(m) (for categories) + O(n) (for semantic keys) = O(m+n)
+func extractColorData(from jsonObject: [String: Any], using flatMap: [String: ColorInfo]) throws -> ColorData {
+    let jsonData = try JSONSerialization.data(withJSONObject: jsonObject, options: [])
+    var colorData = try decoder.decode(ColorData.self, from: jsonData)
 
-private func extractCategory(from dict: [String: Any], using flatMap: [String: ColorInfo]) -> ColorCategory {
-    var isLeaf = true
-    var infoDict: ColorInfoDict = [:]
-    var categoryDict: [String: ColorCategory] = [:]
-
-    for (key, value) in dict {
-        if let innerDict = value as? [String: Any],
-           let valueType = innerDict["$type"] as? String,
-           let valueRef = innerDict["$value"] as? String {
-            let sanitizedValueRef = sanitizeValueRef(valueRef)
-
+    for (categoryKey, var categoryValue) in colorData {
+        for (semanticKey, var semanticInfo) in categoryValue {
+            let sanitizedValue = semanticInfo.value.sanitizeSemanticJSONKey()
             // O(1) lookup
-            if let colorInfo = flatMap[sanitizedValueRef], valueType == "color" {
-                infoDict[key] = colorInfo
+            if let coreColorInfo = flatMap[sanitizedValue] {
+                semanticInfo.value = coreColorInfo.value
+                categoryValue[semanticKey] = semanticInfo
             } else {
-                print("Error: couldn't lookup ColorInfo for \(key)")
+                throw ExtractColorDataError.inputIsWrong(reason: "Error: couldn't lookup ColorInfo for \(semanticKey) with value \(semanticInfo.value)")
             }
-        } else if let innerDict = value as? [String: Any] {
-            isLeaf = false
-            categoryDict[key] = extractCategory(from: innerDict, using: flatMap)
         }
+        colorData[categoryKey] = categoryValue
     }
 
-    return isLeaf ? .leaf(infoDict) : .node(categoryDict)
+    return colorData
 }
 
-private func sanitizeValueRef(_ valueRef: String) -> String {
-    valueRef
-        .replacingOccurrences(of: "[\\{\\}]", with: "", options: .regularExpression, range: nil)
-        .deletingPrefix("Colors.")
+/// Parses a given JSON dictionary to a `NumberData` structure containing number information.
+///
+/// - Parameters:
+///   - jsonObject: A dictionary with a string key and `Any` matching the expected JSON structure.
+///     The JSON should contain number information that `NumberData` can decode.
+///
+/// - Throws:
+///   - JSONSerialization errors: If the JSON object is not serializable.
+///   - Decoding errors: If the JSON data can't be decoded into a `NumberData` object.
+///
+/// - Returns: A `NumberData` object containing the parsed number information.
+func extractNumberInfo(from jsonObject: [String: Any]) throws -> NumberData {
+    let jsonData = try JSONSerialization.data(withJSONObject: jsonObject, options: [])
+    return try decoder.decode(NumberData.self, from: jsonData)
 }
