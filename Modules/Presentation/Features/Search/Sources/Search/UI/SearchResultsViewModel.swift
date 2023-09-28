@@ -205,6 +205,7 @@ public class SearchResultsViewModel: ObservableObject {
         
         emptyViewModel = Self.makeEmptyView(
             whenListItems: listItems.isEmpty,
+            textQuery: query.query,
             appliedChips: results.appliedChips,
             config: config
         )
@@ -212,20 +213,23 @@ public class SearchResultsViewModel: ObservableObject {
     
     private static func makeEmptyView(
         whenListItems empty: Bool,
+        textQuery: String,
         appliedChips: [SearchChipEntity],
         config: SearchConfig
     ) -> ContentUnavailableView_iOS16ViewModel? {
         guard empty else { return nil }
         
-        // this assumes only one chip at most can be applied at any given time
-        let content = config.emptyViewAssetFactory(appliedChips.first)
+        // we show contextual, chip-related empty screen only when there
+        // is not text query
+        if textQuery.isEmpty {
+            // this assumes only one chip at most can be applied at any given time
+            return config.emptyViewAssetFactory(appliedChips.first).emptyViewModel
+        }
         
-        return .init(
-            image: content.image,
-            title: content.title,
-            font: Font.callout.bold(),
-            color: content.foregroundColor
-        )
+        // when there is non-empty text query (and no results of course) ,
+        // [independently if there is any chip selected
+        // we show generic 'no results' empty screen
+        return config.emptyViewAssetFactory(nil).emptyViewModel
     }
     
     @MainActor
@@ -314,6 +318,17 @@ public class SearchResultsViewModel: ObservableObject {
             sorting: .automatic,
             mode: .home,
             chips: current.chips
+        )
+    }
+}
+
+fileprivate extension SearchConfig.EmptyViewAssets {
+    var emptyViewModel: ContentUnavailableView_iOS16ViewModel {
+        .init(
+            image: image,
+            title: title,
+            font: Font.callout.bold(),
+            color: foregroundColor
         )
     }
 }
