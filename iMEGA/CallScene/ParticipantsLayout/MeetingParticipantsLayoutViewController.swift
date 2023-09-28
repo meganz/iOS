@@ -355,7 +355,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     private func configureNavigationBar(_ title: String, _ subtitle: String) {
         titleView.configure(title: title, subtitle: subtitle)
         if !(isUserAGuest ?? false) {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(image: Asset.Images.Chat.backArrow.image, style: .plain, target: self, action: #selector(self.didTapBackButton))
+            navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(resource: .backArrow), style: .plain, target: self, action: #selector(self.didTapBackButton))
         }
         navigationItem.rightBarButtonItems = [optionsMenuButton,
                                               layoutModeBarButton]

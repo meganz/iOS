@@ -31,8 +31,8 @@ final class ActiveCallViewModel: ObservableObject {
         self.activeCallUseCase = activeCallUseCase
         self.chatRoomUseCase = chatRoomUseCase
         self.isReconnecting = call.status == .connecting
-        self.muted = call.hasLocalAudio ? nil : UIImage(asset: Asset.Images.Chat.Calls.userMutedBanner)
-        self.video = call.hasLocalVideo ? UIImage(asset: Asset.Images.Chat.Calls.callSlotsBanner) : nil
+        self.muted = call.hasLocalAudio ? nil : UIImage(resource: .userMutedBanner)
+        self.video = call.hasLocalVideo ? UIImage(resource: .callSlotsBanner) : nil
         
         initSubscriptions()
     }
@@ -43,8 +43,8 @@ final class ActiveCallViewModel: ObservableObject {
             .sink { [weak self] call in
                 guard let self else { return }
                 self.call = call
-                self.muted = call.hasLocalAudio ? nil : UIImage(asset: Asset.Images.Chat.Calls.userMutedBanner)
-                self.video = call.hasLocalVideo ? UIImage(asset: Asset.Images.Chat.Calls.callSlotsBanner) : nil
+                self.muted = call.hasLocalAudio ? nil : UIImage(resource: .userMutedBanner)
+                self.video = call.hasLocalVideo ? UIImage(resource: .callSlotsBanner) : nil
             }
             .store(in: &subscriptions)
         

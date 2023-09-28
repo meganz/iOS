@@ -48,8 +48,8 @@ extension ExplorerCardConfiguration {
     static func favouritesExplorerCardConfiguration(forTraitCollection traitCollection: UITraitCollection) -> ExplorerCardConfiguration {
         let title = Strings.Localizable.Home.Favourites.title
         let image = Asset.Images.Home.explorerCardFavourites.image
-        let borderColors = [Colors.SharedViews.Explorer.Gradient.red.color,
-                            Colors.SharedViews.Explorer.Gradient.pink.color]
+        let borderColors = [UIColor.gradientRed,
+                            UIColor.gradientPink]
         
         return ExplorerCardConfiguration(title: title,
                                          iconForegroundImage: image,

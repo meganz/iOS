@@ -231,7 +231,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         guard chatUseCase.archivedChatListCount() > 0 else { return nil }
         
         return ChatRoomsTopRowViewState(
-            image: Asset.Images.Chat.archiveChat.image,
+            image: UIImage(resource: .archiveChat),
             description: Strings.Localizable.archivedChats,
             rightDetail: "\(chatUseCase.archivedChatListCount())") { [weak self] in
                 self?.router.showArchivedChatRooms()
@@ -242,7 +242,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         ChatRoomsEmptyViewState(
             contactsOnMega: nil,
             archivedChats: nil,
-            centerImageAsset: Asset.Images.EmptyStates.searchEmptyState,
+            centerImageResource: .searchEmptyState,
             centerTitle: Strings.Localizable.noResults,
             centerDescription: nil,
             bottomButtonTitle: nil,
@@ -255,7 +255,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         ChatRoomsEmptyViewState(
             contactsOnMega: chatViewMode == .chats ? contactsOnMegaViewState : nil,
             archivedChats: archiveChatsViewState(),
-            centerImageAsset: Asset.Images.EmptyStates.noInternetEmptyState,
+            centerImageResource: .noInternetEmptyState,
             centerTitle: chatViewMode == .chats ? Strings.Localizable.Chat.Chats.EmptyState.title : Strings.Localizable.Chat.Meetings.EmptyState.title,
             centerDescription: chatViewMode == .chats ? Strings.Localizable.Chat.Chats.EmptyState.description : Strings.Localizable.Chat.Meetings.EmptyState.description,
             bottomButtonTitle: nil,
@@ -268,7 +268,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         ChatRoomsEmptyViewState(
             contactsOnMega: chatViewMode == .chats ? contactsOnMegaViewState : nil,
             archivedChats: archiveChatsViewState(),
-            centerImageAsset: chatViewMode == .chats ? Asset.Images.EmptyStates.chatEmptyState : Asset.Images.EmptyStates.meetingEmptyState,
+            centerImageResource: chatViewMode == .chats ? .chatEmptyState : .meetingEmptyState,
             centerTitle: chatViewMode == .chats ? Strings.Localizable.Chat.Chats.EmptyState.title : Strings.Localizable.Chat.Meetings.EmptyState.title,
             centerDescription: chatViewMode == .chats ? Strings.Localizable.Chat.Chats.EmptyState.description : Strings.Localizable.Chat.Meetings.EmptyState.description,
             bottomButtonTitle: chatViewMode == .chats ? Strings.Localizable.Chat.Chats.EmptyState.Button.title : Strings.Localizable.Chat.Meetings.EmptyState.Button.title,
@@ -403,7 +403,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     @MainActor
     private func createContactsOnMegaViewState(withDescription description: String) {
         contactsOnMegaViewState = ChatRoomsTopRowViewState(
-            image: Asset.Images.Chat.inviteToChat.image,
+            image: UIImage.inviteToChat,
             description: description) { [weak self] in
                 self?.topRowViewTapped()
             }
@@ -675,7 +675,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     private func startMeetingMenu() -> ChatRoomsEmptyBottomButtonMenu {
         ChatRoomsEmptyBottomButtonMenu(
             name: Strings.Localizable.Meetings.StartConversation.ContextMenu.startMeeting,
-            image: Asset.Images.Meetings.startMeeting
+            image: .startMeeting
         ) { [weak self] in
             guard let self else { return }
             self.router.presentCreateMeeting()
@@ -685,7 +685,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     private func joinMeetingMenu() -> ChatRoomsEmptyBottomButtonMenu {
         ChatRoomsEmptyBottomButtonMenu(
             name: Strings.Localizable.Meetings.StartConversation.ContextMenu.joinMeeting,
-            image: Asset.Images.Meetings.joinAMeeting
+            image: .joinAMeeting
         ) { [weak self] in
             guard let self else { return }
             self.router.presentEnterMeeting()
@@ -695,7 +695,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     private func scheduleMeetingMenu() -> ChatRoomsEmptyBottomButtonMenu {
         ChatRoomsEmptyBottomButtonMenu(
             name: Strings.Localizable.Meetings.StartConversation.ContextMenu.scheduleMeeting,
-            image: Asset.Images.Meetings.scheduleMeeting
+            image: .scheduleMeeting
         ) { [weak self] in
             guard let self else { return }
             self.router.presentScheduleMeeting()

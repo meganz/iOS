@@ -80,7 +80,7 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
             if let contextMenuManager,
                let updatedUploadAddMenu = contextMenuManager.contextMenu(with: menuConfig),
                !UIMenu.match(lhs: uploadAddBarButtonItem.menu, rhs: updatedUploadAddMenu) {
-                uploadAddBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.add.image,
+                uploadAddBarButtonItem = UIBarButtonItem(image: UIImage.navigationbarAdd,
                                                          menu: updatedUploadAddMenu)
                 uploadAddBarButtonItemUpdated = true
             }

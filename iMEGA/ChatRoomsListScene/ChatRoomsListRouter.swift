@@ -32,7 +32,7 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         )
         let viewController = ChatRoomsListViewController(viewModel: viewModel)
         let navigation = MEGANavigationController(rootViewController: viewController)
-        navigation.tabBarItem = UITabBarItem(title: nil, image: Asset.Images.TabBarIcons.chatIcon.image, tag: 2)
+        navigation.tabBarItem = UITabBarItem(title: nil, image: UIImage(resource: .chatIcon), tag: 2)
         navigationController = navigation
         viewModel.configureMyAvatarManager()
         chatRoomsListViewController = viewController
@@ -139,7 +139,7 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
                 title: Strings.Localizable.markAsRead,
                 detail: nil,
                 accessoryView: nil,
-                image: Asset.Images.Chat.ContextualMenu.markUnreadMenu.image,
+                image: UIImage(resource: .markUnreadMenu),
                 style: .default) {
                     markAsReadAction()
                 }
@@ -149,7 +149,7 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
             title: dndEnabled ?  Strings.Localizable.unmute : Strings.Localizable.mute,
             detail: nil,
             accessoryView: nil,
-            image: Asset.Images.Chat.ContextualMenu.mutedChatMenu.image,
+            image: UIImage(resource: .mutedChatMenu),
             style: .default) {
                 dndAction()
             }
@@ -158,7 +158,7 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
             title: Strings.Localizable.info,
             detail: nil,
             accessoryView: nil,
-            image: Asset.Images.Generic.info.image,
+            image: UIImage(resource: .info),
             style: .default) {
                 infoAction()
             }
@@ -167,7 +167,7 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
             title: Strings.Localizable.archiveChat,
             detail: nil,
             accessoryView: nil,
-            image: Asset.Images.Chat.archiveChat.image,
+            image: UIImage(resource: .archiveChat),
             style: .default) {
                 archiveAction()
             }

@@ -2,7 +2,7 @@ struct ChatRoomsEmptyViewState {
     let contactsOnMega: ChatRoomsTopRowViewState?
     let archivedChats: ChatRoomsTopRowViewState?
     
-    let centerImageAsset: ImageAsset
+    let centerImageResource: ImageResource
     let centerTitle: String
     let centerDescription: String?
 
@@ -14,7 +14,7 @@ struct ChatRoomsEmptyViewState {
 
 struct ChatRoomsEmptyBottomButtonMenu {
     let name: String
-    let image: ImageAsset
+    let image: ImageResource
     let action: () -> Void
 }
 

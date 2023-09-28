@@ -19,7 +19,7 @@ final class AlbumContentViewController: UIViewController, ViewType, TraitEnviron
         action: #selector(editButtonPressed(_:))
     )
     lazy var addToAlbumBarButtonItem = UIBarButtonItem(
-        image: Asset.Images.NavigationBar.add.image,
+        image: UIImage.navigationbarAdd,
         style: .plain,
         target: self,
         action: #selector(addToAlbumButtonPressed(_:))
