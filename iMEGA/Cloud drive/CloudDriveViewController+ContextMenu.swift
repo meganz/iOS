@@ -255,7 +255,7 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
     
     @objc func presentUploadOptions() {
         
-        DispatchQueue.main.async {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
             self.configureContextMenuManagerIfNeeded()
             
             guard let config = self.uploadAddMenuConfiguration(),
