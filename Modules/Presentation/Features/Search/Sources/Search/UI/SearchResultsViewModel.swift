@@ -114,6 +114,12 @@ public class SearchResultsViewModel: ObservableObject {
         await queryChanged(to: "")
     }
     
+    func scrolled() {
+        if searchingTask == nil {
+            bridge.resignKeyboard()
+        }
+    }
+    
     @MainActor
     func searchCancelled() async {
         // cancel button on the search bar was tapped
@@ -152,6 +158,7 @@ public class SearchResultsViewModel: ObservableObject {
         }
         
         try? await searchingTask?.value
+        searchingTask = nil
     }
     
     private func performSearch(using query: SearchQuery) async {

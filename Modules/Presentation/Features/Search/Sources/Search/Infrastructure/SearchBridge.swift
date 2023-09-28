@@ -5,19 +5,23 @@ import Foundation
 import UIKit
 
 public class SearchBridge {
+
+    let selection: (SearchResult) -> Void
+    let context: (SearchResult, UIButton) -> Void
+    let resignKeyboard: () -> Void
+    private let chipTapped: (SearchChipEntity, Bool) -> Void
+    
     public init(
         selection: @escaping (SearchResult) -> Void,
         context: @escaping (SearchResult, UIButton) -> Void,
+        resignKeyboard: @escaping () -> Void,
         chipTapped: @escaping (SearchChipEntity, Bool) -> Void
     ) {
         self.selection = selection
         self.context = context
         self.chipTapped = chipTapped
+        self.resignKeyboard = resignKeyboard
     }
-    
-    let selection: (SearchResult) -> Void
-    let context: (SearchResult, UIButton) -> Void
-    private let chipTapped: (SearchChipEntity, Bool) -> Void
     
     func chip(tapped chip: SearchChipEntity, isSelected: Bool) {
         chipTapped(chip, isSelected)

@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "93FF4DB9-D210-4B6F-96F6-101D5E68843D",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "SearchTests",
+        "name" : "SearchTests"
+      }
+    }
+  ],
+  "version" : 1
+}
