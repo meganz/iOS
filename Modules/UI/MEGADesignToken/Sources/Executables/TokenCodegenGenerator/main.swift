@@ -19,13 +19,21 @@ do {
 
     let (coreURL, semanticDarkURL, semanticLightURL) = (parsedInput.core, parsedInput.semanticDark, parsedInput.semanticLight)
 
-    let coreColorMap = try generateCoreColorMap(with: coreURL)
+    let coreJSONObject = try extractJSON(from: coreURL)
+
+    let coreColorMap = try generateCoreColorMap(with: coreJSONObject)
+
+    let spacingInput = try generateSpacingInput(with: coreJSONObject)
+
+    let radiusInput = try generateRadiusInput(with: coreJSONObject)
 
     let semanticDarkInput = try generateSemanticInput(with: semanticDarkURL, using: coreColorMap, isDark: true)
 
     let semanticLightInput = try generateSemanticInput(with: semanticLightURL, using: coreColorMap, isDark: false)
 
-    let generatedCode = try generateCode(from: .init(dark: semanticDarkInput, light: semanticLightInput))
+    let codegenInput: CodegenInput = .init(dark: semanticDarkInput, light: semanticLightInput, spacing: spacingInput, radius: radiusInput)
+
+    let generatedCode = try generateCode(with: codegenInput)
 
     let outputURL = URL(fileURLWithPath: output)
 
@@ -69,20 +77,45 @@ private func extractJSON(from url: URL) throws -> [String: Any] {
     return jsonObject
 }
 
-private func generateCoreColorMap(with url: URL) throws -> [String: ColorInfo] {
-    let coreJSONObject = try extractJSON(from: url)
+enum CoreTokensKey: String {
+    case colors = "Colors"
+    case spacing = "Spacing"
+    case radius = "Radius"
+}
 
-    guard let coreColorsInformation = coreJSONObject["Colors"] as? [String: Any] else {
-        print("Error: couldn't find 'Colors' key in \(ExpectedInput.core.rawValue) input")
+private func extractCoreTokensJSONObject(from coreJSONObject: [String: Any], with key: CoreTokensKey) throws -> [String: Any] {
+    guard let coreTokenJSONObject = coreJSONObject[key.rawValue] as? [String: Any] else {
+        print("Error: couldn't find '\(key.rawValue)' key in \(ExpectedInput.core.rawValue) input")
         abort(.badInputJSON)
     }
 
-    return extractFlatColorData(from: coreColorsInformation)
+    return coreTokenJSONObject
+}
+
+private func generateCoreColorMap(with coreJSONObject: [String: Any]) throws -> [String: ColorInfo] {
+    let coreColorsJSONObject = try extractCoreTokensJSONObject(from: coreJSONObject, with: .colors)
+    let data = try extractFlatColorData(from: coreColorsJSONObject)
+
+    return data
 }
 
 private func generateSemanticInput(with url: URL, using map: [String: ColorInfo], isDark: Bool) throws -> SemanticInput {
     let jsonObject = try extractJSON(from: url)
-    let data = extractColorData(from: jsonObject, using: map)
+    let data = try extractColorData(from: jsonObject, using: map)
 
     return isDark ? .dark(data) : .light(data)
+}
+
+private func generateSpacingInput(with coreJSONObject: [String: Any]) throws -> NumberInput {
+    let spacingJSONObject = try extractCoreTokensJSONObject(from: coreJSONObject, with: .spacing)
+    let data = try extractNumberInfo(from: spacingJSONObject)
+
+    return .spacing(data)
+}
+
+private func generateRadiusInput(with coreJSONObject: [String: Any]) throws -> NumberInput {
+    let radiusJSONObject = try extractCoreTokensJSONObject(from: coreJSONObject, with: .radius)
+    let data = try extractNumberInfo(from: radiusJSONObject)
+
+    return .radius(data)
 }

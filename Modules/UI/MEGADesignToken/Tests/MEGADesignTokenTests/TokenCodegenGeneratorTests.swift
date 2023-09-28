@@ -2,6 +2,8 @@ import XCTest
 @testable import TokenCodegenGenerator
 
 final class TokenCodegenGeneratorTests: XCTestCase {
+    // MARK: - Parser methods tests
+
     func testParseInput_whenGivenValidInput_returnsParseInputPayload() throws {
         let input = "[Path/To/Semantic tokens.Light.tokens.json, Path/To/Semantic tokens.Dark.tokens.json, Path/To/core.json]"
         let parsed = try parseInput(input)
@@ -100,11 +102,11 @@ final class TokenCodegenGeneratorTests: XCTestCase {
             ]
         ]
 
-        let colorData = extractFlatColorData(from: json)
+        let colorData = try extractFlatColorData(from: json)
 
         XCTAssertEqual(colorData.keys.count, 1)
-        XCTAssertEqual(colorData["Black opacity.090"]?.properties.type, "color")
-        XCTAssertEqual(colorData["Black opacity.090"]?.properties.value, "rgba(0, 0, 0, 0.9000)")
+        XCTAssertEqual(colorData["black opacity.090"]?.type, "color")
+        XCTAssertEqual(colorData["black opacity.090"]?.value, "rgba(0, 0, 0, 0.9000)")
     }
 
     func testExtractFlatColorData_whenNestedNodes_parsesCorrectly() throws {
@@ -119,82 +121,115 @@ final class TokenCodegenGeneratorTests: XCTestCase {
             ]
         ]
 
-        let colorData = extractFlatColorData(from: json)
+        let colorData = try extractFlatColorData(from: json)
 
         XCTAssertEqual(colorData.keys.count, 1)
-        XCTAssertEqual(colorData["Secondary.Orange.100"]?.properties.type, "color")
-        XCTAssertEqual(colorData["Secondary.Orange.100"]?.properties.value, "#ffead5")
+        XCTAssertEqual(colorData["secondary.orange.100"]?.type, "color")
+        XCTAssertEqual(colorData["secondary.orange.100"]?.value, "#ffead5")
     }
 
     func testExtractFlatColorData_whenInvalidJSON_doesNotParse() throws {
         let json: [String: Any] = [
             "Black opacity": "This should be a dictionary, not a string."
         ]
-        let colorData = extractFlatColorData(from: json)
+        let colorData = try extractFlatColorData(from: json)
         XCTAssertEqual(colorData.keys.count, 0)
     }
 
-    func testExtractColorData_whenLeafNodes_parsesCorrectly() throws {
-        let json: [String: Any] = [
-            "Focus": [
-                "--color-focus": [
+    func testExtractColorData_whenValidInput_returnsCorrectColorData() throws {
+        let jsonObject: [String: Any] = [
+            "Text": [
+                "--color-text-inverse": [
                     "$type": "color",
-                    "$value": "{Colors.Secondary.Indigo.700}"
+                    "$value": "{Secondary.Indigo.700}"
+                ]
+            ],
+            "Icon": [
+                "--color-icon-disable": [
+                    "$type": "color",
+                    "$value": "{Secondary.Blue.400}"
                 ]
             ]
         ]
         let flatMap = makeColorsFlatMap()
 
-        let colorData = extractColorData(from: json, using: flatMap)
-        XCTAssertEqual(colorData.keys.count, 1)
+        let colorData = try extractColorData(from: jsonObject, using: flatMap)
 
-        guard case let .leaf(colorInfoDict)? = colorData["Focus"] else {
-            XCTFail("Failed to extract leaf nodes correctly")
-            return
-        }
-
-        XCTAssertEqual(colorInfoDict["--color-focus"]?.properties.type, "color")
-        XCTAssertEqual(colorInfoDict["--color-focus"]?.properties.value, "#4B0082")
+        XCTAssertEqual(colorData["Text"]?["--color-text-inverse"]?.value, "#4B0082")
+        XCTAssertEqual(colorData["Icon"]?["--color-icon-disable"]?.value, "#0000FF")
     }
 
-    func testExtractColorData_whenNestedNodes_parsesCorrectly() throws {
-        let json: [String: Any] = [
-            "Indicator": [
-                "NestedCategory": [
-                    "--color-indicator-yellow": [
-                        "$type": "color",
-                        "$value": "{Colors.Warning.400}"
-                    ]
+    func testExtractColorData_whenInvalidInput_throwsError() throws {
+        let jsonObject: [String: Any] = [
+            "Text": [
+                "--color-text-inverse": [
+                    "$type": "color",
+                    "$value": "{NonExistentColor}"
                 ]
             ]
         ]
         let flatMap = makeColorsFlatMap()
 
-        let colorData = extractColorData(from: json, using: flatMap)
-        XCTAssertEqual(colorData.keys.count, 1)
-
-        guard case let .node(category)? = colorData["Indicator"] else {
-            XCTFail("Failed to extract nested nodes correctly")
-            return
+        XCTAssertThrowsError(try extractColorData(from: jsonObject, using: flatMap)) { error in
+            if let extractError = error as? ExtractColorDataError {
+                switch extractError {
+                case .inputIsWrong(let reason):
+                    XCTAssertEqual(reason, "Error: couldn't lookup ColorInfo for --color-text-inverse with value {NonExistentColor}")
+                }
+            } else {
+                XCTFail("Expected `ExtractColorDataError.inputIsWrong` but got \(error)")
+            }
         }
-
-        guard case let .leaf(colorInfoDict)? = category["NestedCategory"] else {
-            XCTFail("Failed to extract nested nodes correctly")
-            return
-        }
-
-        XCTAssertEqual(colorInfoDict["--color-indicator-yellow"]?.properties.type, "color")
-        XCTAssertEqual(colorInfoDict["--color-indicator-yellow"]?.properties.value, "#FFD700")
     }
 
-    func testExtractColorData_whenInvalidJSON_doesNotParse() throws {
-        let json: [String: Any] = [
-            "Focus": "This should be a dictionary, not a string."
-        ]
-        let flatMap = makeColorsFlatMap()
+    // MARK: - String Extensions tests
 
-        let colorData = extractColorData(from: json, using: flatMap)
-        XCTAssertEqual(colorData.keys.count, 0)
+    func testToCGFloat_withValidString_returnsCGFloat() {
+        XCTAssertEqual("1.23".toCGFloat(), CGFloat(1.23))
+    }
+
+    func testToCGFloat_withInvalidString_returnsNil() {
+        XCTAssertNil("abc".toCGFloat())
+    }
+
+    func testToPascalCase_convertsString() {
+        XCTAssertEqual("hello world".toPascalCase(), "HelloWorld")
+    }
+
+    func testToCamelCase_convertsString() {
+        XCTAssertEqual("Hello World".toCamelCase(), "helloWorld")
+    }
+
+    func testDeletingPrefix_removesPrefix() {
+        XCTAssertEqual("HelloWorld".deletingPrefix("Hello"), "World")
+    }
+
+    func testDeletingPrefix_withNonMatchingPrefix_returnsSameString() {
+        XCTAssertEqual("HelloWorld".deletingPrefix("Foo"), "HelloWorld")
+    }
+
+    func testIsNumeric_withNumericString_returnsTrue() {
+        XCTAssertTrue("12345".isNumeric())
+    }
+
+    func testIsNumeric_withNonNumericString_returnsFalse() {
+        XCTAssertFalse("abc".isNumeric())
+    }
+
+    func testSanitizeSemanticJSONKey_removesExtraneousInformation() {
+        XCTAssertEqual("{Colors.Secondary.Indigo.700}".sanitizeSemanticJSONKey(), "secondary.indigo.700")
+    }
+
+    func testSanitizeSemanticVariableName_removesExtraneousInformation() {
+        XCTAssertEqual("--color-foo-bar".sanitizeSemanticVariableName(), "fooBar")
+    }
+
+    func testSanitizeNumberVariableName_withNumericString_prependsUnderscore() {
+        XCTAssertEqual("123".sanitizeNumberVariableName(), "_123")
+    }
+
+    func testSanitizeNumberVariableName_withNonNumericString_removesExtraneousInformation() {
+        XCTAssertEqual("--border-radius-foo-bar".sanitizeNumberVariableName(), "fooBar")
     }
 }
 
@@ -203,14 +238,14 @@ final class TokenCodegenGeneratorTests: XCTestCase {
 private extension TokenCodegenGeneratorTests {
     func makeColorsFlatMap() -> [String: ColorInfo] {
         [
-            "Secondary.Indigo.700": ColorInfo(properties: .init(type: "color", value: "#4B0082")),
-            "Secondary.Magenta.300": ColorInfo(properties: .init(type: "color", value: "#FF00FF")),
-            "Warning.400": ColorInfo(properties: .init(type: "color", value: "#FFD700")),
-            "Secondary.Orange.300": ColorInfo(properties: .init(type: "color", value: "#FFA500")),
-            "Secondary.Indigo.300": ColorInfo(properties: .init(type: "color", value: "#4B0082")),
-            "Secondary.Blue.400": ColorInfo(properties: .init(type: "color", value: "#0000FF")),
-            "Success.400": ColorInfo(properties: .init(type: "color", value: "#008000")),
-            "Error.400": ColorInfo(properties: .init(type: "color", value: "#FF0000"))
+            "secondary.indigo.700": .init(type: "color", value: "#4B0082"),
+            "secondary.magenta.300": .init(type: "color", value: "#FF00FF"),
+            "warning.400": .init(type: "color", value: "#FFD700"),
+            "secondary.orange.300": .init(type: "color", value: "#FFA500"),
+            "secondary.indigo.300": .init(type: "color", value: "#4B0082"),
+            "secondary.blue.400": .init(type: "color", value: "#0000FF"),
+            "success.400": .init(type: "color", value: "#008000"),
+            "error.400": .init(type: "color", value: "#FF0000")
         ]
     }
 }
