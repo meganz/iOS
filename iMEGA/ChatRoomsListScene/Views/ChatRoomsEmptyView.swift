@@ -26,7 +26,7 @@ struct ChatRoomsEmptyView: View {
             VStack {
                 Spacer()
                 
-                ChatRoomsEmptyCenterView(imageAsset: emptyViewState.centerImageAsset,
+                ChatRoomsEmptyCenterView(imageResource: emptyViewState.centerImageResource,
                                          title: emptyViewState.centerTitle,
                                          description: emptyViewState.centerDescription)
                 
@@ -52,16 +52,14 @@ struct ChatRoomsEmptyView: View {
 private struct ChatRoomsEmptyCenterView: View {
     @Environment(\.verticalSizeClass) var verticalSizeClass
     
-    let imageAsset: ImageAsset?
+    let imageResource: ImageResource
     let title: String
     let description: String?
     
     var body: some View {
         VStack {
-            if verticalSizeClass != .compact,
-                let imageAsset,
-                let image = Image(uiImage: UIImage(asset: imageAsset)) {
-                image
+            if verticalSizeClass != .compact {
+                Image(imageResource)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 120, height: 120)
@@ -91,7 +89,7 @@ private struct ChatRoomsEmptyBottomButtonView: View {
     var font: Font = .headline
     var menus: [ChatRoomsEmptyBottomButtonMenu]?
     var action: (() -> Void)?
-
+    
     var body: some View {
         if let menus {
             Menu {
@@ -102,7 +100,7 @@ private struct ChatRoomsEmptyBottomButtonView: View {
                         Label {
                             Text(menu.name)
                         } icon: {
-                            Image(uiImage: UIImage(asset: menu.image))
+                            Image(menu.image)
                         }
                     }
                 }

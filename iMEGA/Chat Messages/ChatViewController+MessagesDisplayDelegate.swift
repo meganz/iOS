@@ -102,9 +102,9 @@ extension ChatViewController: MessagesDisplayDelegate {
         button.isUserInteractionEnabled = false // respond to accessoryView tap through `MessageCellDelegate`
         accessoryView.clipsToBounds = true
         if let message = message as? ChatMessage, let transfer = message.transfer, transfer.state == .failed {
-            button.setImage(Asset.Images.Chat.triangle.image.imageFlippedForRightToLeftLayoutDirection(), for: .normal)
+            button.setImage(UIImage(resource: .triangle).imageFlippedForRightToLeftLayoutDirection(), for: .normal)
         } else {
-            button.setImage(Asset.Images.Chat.Messages.forward.image.imageFlippedForRightToLeftLayoutDirection(), for: .normal)
+            button.setImage(UIImage(resource: .forward).imageFlippedForRightToLeftLayoutDirection(), for: .normal)
         }
     }
     

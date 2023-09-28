@@ -75,7 +75,7 @@ class ChatViewCallCollectionCell: MessageContentCell {
                                              duration: NSNumber(value: chatMessage.message.duration),
                                              isGroup: chatMessage.chatRoom.isGroup)
         } else {
-            icon = Asset.Images.Chat.Messages.Management.callWithXIncoming.image
+            icon = UIImage(resource: .callWithXIncoming) 
             reason = Strings.Localizable.callStarted
         }
         

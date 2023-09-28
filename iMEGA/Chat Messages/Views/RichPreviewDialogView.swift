@@ -5,7 +5,7 @@ import UIKit
 class RichPreviewDialogView: UIView {
     
     private let rootFlexContainer = UIView()
-    private let warmingImageView = UIImageView(image: Asset.Images.Chat.privacyWarningIco.image)
+    private let warmingImageView = UIImageView(image: UIImage(resource: .privacyWarningIco))
     lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.preferredFont(style: .subheadline, weight: .medium)

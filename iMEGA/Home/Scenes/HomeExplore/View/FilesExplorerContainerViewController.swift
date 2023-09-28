@@ -140,7 +140,7 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
         contextBarButtonItem.image = Asset.Images.Generic.moreList.image
         
         if viewModel.getExplorerType() == .document {
-            uploadAddBarButonItem.image = Asset.Images.NavigationBar.add.image
+            uploadAddBarButonItem.image = UIImage.navigationbarAdd
 
             navigationItem.rightBarButtonItems = [contextBarButtonItem, uploadAddBarButonItem]
         } else {

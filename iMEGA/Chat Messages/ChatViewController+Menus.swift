@@ -169,7 +169,7 @@ extension ChatViewController {
                 saveMediaUseCase.saveToPhotosChatNode(handle: node.handle, messageId: chatMessage.message.messageId, chatId: chatRoom.chatId, completion: { result in
                     if case let .failure(error) = result, error != .cancelled {
                         SVProgressHUD.dismiss()
-                        SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.somethingWentWrong)
+                        SVProgressHUD.show(UIImage(resource: .saveToPhotos), status: Strings.Localizable.somethingWentWrong)
                     }
                 })
             } else {
