@@ -16,7 +16,7 @@ final class MeetingParticipantTableViewHeader: UITableViewHeaderFooterView {
             actionButton.isHidden = true
         case .waitingRoom:
             titleLabel.text = Strings.Localizable.Meetings.Panel.participantsInWaitingRoomCount(participantsCount)
-            actionButton.titleLabel?.text = Strings.Localizable.Chat.Call.WaitingRoom.Alert.Button.admitAll
+            actionButton.setTitle(Strings.Localizable.Chat.Call.WaitingRoom.Alert.Button.admitAll, for: .normal)
             actionButton.isHidden = participantsCount > 0 ? false : true
         }
     }
