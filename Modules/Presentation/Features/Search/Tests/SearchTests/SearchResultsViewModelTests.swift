@@ -20,6 +20,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         var contextTriggeredResults: [SearchResult] = []
         var keyboardResignedCount = 0
         var chipTaps: [(SearchChipEntity, Bool)] = []
+        var emptyContentRequested: [SearchChipEntity?] = []
         weak var testcase: XCTestCase?
         
         init(_ testcase: XCTestCase) {
@@ -37,10 +38,20 @@ final class SearchResultsViewModelTests: XCTestCase {
                 resignKeyboard: { keyboardResigned() },
                 chipTapped: { chipTapped($0, $1) }
             )
+            
+            var askedForEmptyContent: (SearchChipEntity?) -> SearchConfig.EmptyViewAssets = { SearchConfig.testConfig.emptyViewAssetFactory($0) }
+            let config = SearchConfig(
+                chipAssets: SearchConfig.testConfig.chipAssets,
+                emptyViewAssetFactory: { chip in
+                    askedForEmptyContent(chip)
+                },
+                rowAssets: SearchConfig.testConfig.rowAssets
+            )
+            
             sut = SearchResultsViewModel(
                 resultsProvider: resultsProvider,
                 bridge: bridge,
-                config: .testConfig,
+                config: config,
                 showLoadingPlaceholderDelay: 0.1,
                 keyboardVisibilityHandler: MockKeyboardVisibilityHandler()
             )
@@ -55,6 +66,11 @@ final class SearchResultsViewModelTests: XCTestCase {
             }
             chipTapped = { chip, isSelected in
                 self.chipTaps.append((chip, isSelected))
+            }
+            
+            askedForEmptyContent = {
+                self.emptyContentRequested.append($0)
+                return SearchConfig.testConfig.emptyViewAssetFactory($0)
             }
         }
         
@@ -87,6 +103,19 @@ final class SearchResultsViewModelTests: XCTestCase {
                 return results
             }
             
+            return self
+        }
+        
+        @discardableResult
+        func noResultsWithSingleChipApplied() -> Self {
+            resultsProvider.resultFactory = { _ in
+                let results = SearchResultsEntity(
+                    results: [],
+                    availableChips: [.init(id: 1, title: "appliedChip")],
+                    appliedChips: [.init(id: 1, title: "appliedChip")]
+                )
+                return results
+            }
             return self
         }
         
@@ -240,6 +269,23 @@ final class SearchResultsViewModelTests: XCTestCase {
         let expectedContent = SearchConfig.EmptyViewAssets.testAssets
         XCTAssertEqual(contentUnavailableVM.image, expectedContent.image)
         XCTAssertEqual(contentUnavailableVM.title, expectedContent.title)
+    }
+    
+    func testEmptyView_isDefault_whenChipSelected_AndQueryNotEmpty() async throws {
+        let harness = Harness(self).withChipsPrepared(2)
+        await harness.sut.queryChanged(to: "query")
+        await harness.sut.chipsItems.first!.select()
+        _ = try XCTUnwrap(harness.sut.emptyViewModel)
+        XCTAssertEqual(harness.emptyContentRequested, [nil, nil])
+    }
+    
+    func testEmptyView_isContextualBasedOnChip_whenChipSelected_AndQueryEmpty() async throws {
+        let harness = Harness(self)
+        await harness.sut.queryChanged(to: "")
+        harness.noResultsWithSingleChipApplied()
+        await harness.sut.chipsItems.first!.select()
+        _ = try XCTUnwrap(harness.sut.emptyViewModel)
+        XCTAssertEqual(harness.emptyContentRequested, [nil, .some(.init(id: 1, title: "appliedChip"))])
     }
 
     func testOnProlongedLoading_shouldDisplayShimmerLoadingView() async {
