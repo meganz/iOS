@@ -31,7 +31,8 @@ enum MeetingFloatingPanelAction: ActionType {
 final class MeetingFloatingPanelViewModel: ViewModelType {
     enum Command: CommandType, Equatable {
         case configView(canInviteParticipants: Bool,
-                        isOneToOneMeeting: Bool,
+                        isOneToOneCall: Bool,
+                        isMeeting: Bool,
                         isVideoEnabled: Bool,
                         cameraPosition: CameraPositionEntity?,
                         allowNonHostToAddParticipantsEnabled: Bool,
@@ -544,10 +545,10 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         populateParticipantsInWaitingRoom(forCall: call)
         populateParticipantsNotInCall()
         
-        if selectedParticipantsListTab == .waitingRoom {
+        if callParticipantsInWaitingRoom.isNotEmpty {
             loadParticipantsInWaitingRoom()
-        } else if selectedParticipantsListTab == .notInCall {
-            loadParticipantsNotInCall()
+        } else {
+            loadParticipantsInCall()
         }
     }
     
@@ -578,6 +579,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             sections: sections,
             hostControlsRows: hostControls,
             inviteSectionRow: invite,
+            tabs: tabsForParticipantList(),
             selectedTab: .inCall,
             participants: callParticipants,
             existsWaitingRoom: chatRoom.isWaitingRoomEnabled && isMyselfAModerator)
@@ -602,6 +604,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             sections: sections,
             hostControlsRows: hostControls,
             inviteSectionRow: [],
+            tabs: tabsForParticipantList(),
             selectedTab: .waitingRoom,
             participants: callParticipantsInWaitingRoom,
             existsWaitingRoom: chatRoom.isWaitingRoomEnabled && isMyselfAModerator)
@@ -626,11 +629,24 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             sections: sections,
             hostControlsRows: hostControls,
             inviteSectionRow: [],
+            tabs: tabsForParticipantList(),
             selectedTab: .notInCall,
             participants: callParticipantsNotInCall,
             existsWaitingRoom: chatRoom.isWaitingRoomEnabled && isMyselfAModerator)
         
         invokeCommand?(.reloadViewData(participantsListView: participantsListView))
+    }
+    
+    private func tabsForParticipantList() -> [ParticipantsListTab] {
+        if chatRoom.isWaitingRoomEnabled && isMyselfAModerator {
+            if callParticipantsInWaitingRoom.isNotEmpty {
+                return [.waitingRoom, .inCall, .notInCall]
+            } else {
+                return [.inCall, .notInCall, .waitingRoom]
+            }
+        } else {
+            return [.inCall, .notInCall]
+        }
     }
     
     private func reloadParticipantsIfNeeded() {
@@ -649,6 +665,9 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         if let call = call, chatRoom.isWaitingRoomEnabled && isMyselfAModerator {
             configureWaitingRoomListener(forCall: call)
             populateParticipantsInWaitingRoom(forCall: call)
+            if callParticipantsInWaitingRoom.isNotEmpty {
+                selectParticipantsListTab(.waitingRoom)
+            }
         }
         populateParticipantsNotInCall()
         if selectWaitingRoomList {
@@ -737,7 +756,8 @@ extension MeetingFloatingPanelViewModel: CallCallbacksUseCaseProtocol {
     
     func configView() {
         invokeCommand?(.configView(canInviteParticipants: canInviteParticipants,
-                                   isOneToOneMeeting: chatRoom.chatType == .oneToOne,
+                                   isOneToOneCall: chatRoom.chatType == .oneToOne,
+                                   isMeeting: chatRoom.chatType == .meeting,
                                    isVideoEnabled: isVideoEnabled ?? false,
                                    cameraPosition: (isVideoEnabled ?? false) ? (isBackCameraSelected() ? .back : .front) : nil,
                                    allowNonHostToAddParticipantsEnabled: chatRoom.isOpenInviteEnabled,

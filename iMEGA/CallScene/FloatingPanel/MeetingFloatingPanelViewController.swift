@@ -67,7 +67,6 @@ final class MeetingFloatingPanelViewController: UIViewController {
         dragIndicatorView.layer.cornerRadius = Constants.dragIndicatorCornerRadius
         endQuickActionView.icon = UIImage(resource: .hangCallMeetingAction)
         endQuickActionView.name = Strings.Localizable.leave
-        shareLinkLabel.text = Strings.Localizable.Meetings.Panel.shareLink
 
         registerTableViewCells()
         
@@ -126,13 +125,15 @@ final class MeetingFloatingPanelViewController: UIViewController {
     func executeCommand(_ command: MeetingFloatingPanelViewModel.Command) {
         switch command {
         case .configView(let canInviteParticipants,
-                         let isOneToOneMeeting,
+                         let isOneToOneCall,
+                         let isMeeting,
                          let isVideoEnabled,
                          let cameraPosition,
                          let allowNonHostToAddParticipantsEnabled,
                          let isMyselfAModerator):
             updateUI(canInviteParticipants: canInviteParticipants,
-                     isOneToOneMeeting: isOneToOneMeeting,
+                     isOneToOneCall: isOneToOneCall,
+                     isMeeting: isMeeting,
                      isVideoEnabled: isVideoEnabled,
                      cameraPosition: cameraPosition,
                      allowNonHostToAddParticipantsEnabled: allowNonHostToAddParticipantsEnabled,
@@ -158,7 +159,7 @@ final class MeetingFloatingPanelViewController: UIViewController {
             flipQuickActionView.disabled = !on
         case .reloadParticipantsList(let participants):
             callParticipants = participants
-            participantsTableView?.reloadSections([1, 2], with: .automatic)
+            participantsTableView.reloadData()
         case .updatedAudioPortSelection(let audioPort, let bluetoothAudioRouteAvailable):
             selectedAudioPortUpdated(audioPort, isBluetoothRouteAvailable: bluetoothAudioRouteAvailable)
         case .transitionToShortForm:
@@ -221,7 +222,8 @@ final class MeetingFloatingPanelViewController: UIViewController {
     }
     
     private func updateUI(canInviteParticipants: Bool,
-                          isOneToOneMeeting: Bool,
+                          isOneToOneCall: Bool,
+                          isMeeting: Bool,
                           isVideoEnabled: Bool,
                           cameraPosition: CameraPositionEntity?,
                           allowNonHostToAddParticipantsEnabled: Bool,
@@ -232,11 +234,12 @@ final class MeetingFloatingPanelViewController: UIViewController {
             flipQuickActionView.isSelected = cameraPosition == .back
         }
         
-        if isOneToOneMeeting {
+        if isOneToOneCall {
             optionsStackView.arrangedSubviews.forEach({ $0.removeFromSuperview() })
             optionsStackViewHeightConstraint.constant = 0.0
         }
-        
+        shareLinkLabel.text = isMeeting ? Strings.Localizable.Meetings.Action.shareLink : Strings.Localizable.Meetings.Panel.shareLink
+
         isAllowNonHostToAddParticipantsEnabled = allowNonHostToAddParticipantsEnabled
     }
 }
@@ -274,10 +277,7 @@ extension MeetingFloatingPanelViewController: UITableViewDataSource, UITableView
                     return cell
             case .listSelector:
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: ParticipantsListSelectorTableViewCell.reuseIdentifier, for: indexPath) as? ParticipantsListSelectorTableViewCell else { return UITableViewCell() }
-                cell.segmentedControl.selectedSegmentIndex = callParticipantsListView.selectedTab.rawValue
-                if !callParticipantsListView.existsWaitingRoom {
-                    cell.segmentedControl.removeSegment(at: 2, animated: false)
-                }
+                cell.configureFor(tabs: callParticipantsListView.tabs, selectedTab: callParticipantsListView.selectedTab)
                 cell.segmentedControlChangeHandler = { [weak self] selectedTab in
                     self?.viewModel.dispatch(.selectParticipantsList(selectedTab: selectedTab))
                 }
