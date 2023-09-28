@@ -13,70 +13,70 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
     }
     
     var sender: UIView?
-    lazy var forwardAction = ActionSheetAction(title: Strings.Localizable.forward, detail: nil, image: Asset.Images.Chat.forwardToolbar.image, style: .default) {
+    lazy var forwardAction = ActionSheetAction(title: Strings.Localizable.forward, detail: nil, image: UIImage(resource: .forwardToolbar), style: .default) {
         guard let chatMessage = self.chatMessage else {
             return
         }
         self.chatViewController?.forwardMessage(chatMessage)
      }
     
-     lazy var editAction = ActionSheetAction(title: Strings.Localizable.edit, detail: nil, image: Asset.Images.Generic.rename.image, style: .default) {
+     lazy var editAction = ActionSheetAction(title: Strings.Localizable.edit, detail: nil, image: UIImage(resource: .rename), style: .default) {
         guard let chatMessage = self.chatMessage else {
             return
         }
         self.chatViewController?.editMessage(chatMessage)
     }
     
-    lazy var copyAction = ActionSheetAction(title: Strings.Localizable.copy, detail: nil, image: Asset.Images.NodeActions.copy.image, style: .default) {
+    lazy var copyAction = ActionSheetAction(title: Strings.Localizable.copy, detail: nil, image: UIImage(resource: .copy), style: .default) {
         guard let chatMessage = self.chatMessage else {
             return
         }
         self.chatViewController?.copyMessage(chatMessage)
     }
 
-    lazy var deleteAction = ActionSheetAction(title: Strings.Localizable.delete, detail: nil, image: Asset.Images.NodeActions.delete.image, style: .destructive) {
+    lazy var deleteAction = ActionSheetAction(title: Strings.Localizable.delete, detail: nil, image: UIImage(resource: .delete), style: .destructive) {
         guard let chatMessage = self.chatMessage else {
             return
         }
         self.chatViewController?.deleteMessage(chatMessage)
     }
     
-    lazy var saveForOfflineAction = ActionSheetAction(title: Strings.Localizable.General.downloadToOffline, detail: nil, image: Asset.Images.NodeActions.offline.image, style: .default) {
+    lazy var saveForOfflineAction = ActionSheetAction(title: Strings.Localizable.General.downloadToOffline, detail: nil, image: UIImage(resource: .offline), style: .default) {
         guard let chatMessage = self.chatMessage else {
             return
         }
         self.chatViewController?.downloadMessage([chatMessage])
     }
     
-    lazy var importAction = ActionSheetAction(title: Strings.Localizable.importToCloudDrive, detail: nil, image: Asset.Images.InfoActions.import.image, style: .default) {
+    lazy var importAction = ActionSheetAction(title: Strings.Localizable.importToCloudDrive, detail: nil, image: UIImage(resource: .import), style: .default) {
         guard let chatMessage = self.chatMessage else {
             return
         }
         self.chatViewController?.importMessage([chatMessage])
     }
     
-    lazy var addContactAction = ActionSheetAction(title: Strings.Localizable.addContact, detail: nil, image: Asset.Images.Contacts.addContact.image, style: .default) {
+    lazy var addContactAction = ActionSheetAction(title: Strings.Localizable.addContact, detail: nil, image: UIImage(resource: .addContact), style: .default) {
         guard let chatMessage = self.chatMessage else {
             return
         }
         self.chatViewController?.addContactMessage(chatMessage)
     }
     
-    lazy var removeRichLinkAction = ActionSheetAction(title: Strings.Localizable.removePreview, detail: nil, image: Asset.Images.NodeActions.removeLink.image, style: .default) {
+    lazy var removeRichLinkAction = ActionSheetAction(title: Strings.Localizable.removePreview, detail: nil, image: UIImage(resource: .removeLink), style: .default) {
         guard let chatMessage = self.chatMessage else {
             return
         }
         self.chatViewController?.removeRichPreview(chatMessage)
     }
     
-    lazy var saveToPhotosAction = ActionSheetAction(title: Strings.Localizable.saveToPhotos, detail: nil, image: Asset.Images.NodeActions.saveToPhotos.image, style: .default) {
+    lazy var saveToPhotosAction = ActionSheetAction(title: Strings.Localizable.saveToPhotos, detail: nil, image: UIImage(resource: .saveToPhotos), style: .default) {
         guard let chatMessage = self.chatMessage else {
             return
         }
         self.chatViewController?.saveToPhotos([chatMessage])
     }
     
-    lazy var exportMessagesAction = ActionSheetAction(title: Strings.Localizable.General.export, detail: nil, image: Asset.Images.NodeActions.export.image, style: .default) {
+    lazy var exportMessagesAction = ActionSheetAction(title: Strings.Localizable.General.export, detail: nil, image: UIImage(resource: .export), style: .default) {
         guard let chatMessage = self.chatMessage, let presenter = self.chatViewController else {
             return
         }
@@ -297,7 +297,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
                 emojiView.backgroundColor = UIColor.mnz_whiteF2F2F2()
                 emojiView.addTarget(self, action: #selector(emojiPress(_:)), for: .touchUpInside)
             } else {
-                emojiView.setImage(Asset.Images.Chat.addReactionSmall.image, for: .normal)
+                emojiView.setImage(UIImage(resource: .addReactionSmall), for: .normal)
                 emojiView.backgroundColor = UIColor.mnz_emoji(self.traitCollection)
                 emojiView.imageView?.contentMode = .scaleAspectFit
                 emojiView.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)

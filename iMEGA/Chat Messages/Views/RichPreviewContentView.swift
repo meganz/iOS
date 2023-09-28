@@ -71,7 +71,7 @@ class RichPreviewContentView: UIView {
                 titleLabel.text = node?.name
                 descriptionLabel.text = String.memoryStyleString(fromByteCount: Int64(truncating: node?.size ?? 0))
                 linkLabel.text = "mega.nz"
-                iconImageView.image = Asset.Images.Logo.favicon.image
+                iconImageView.image = UIImage(resource: .favicon)
                 if let node = node {
                     imageView.mnz_setThumbnail(by: node)
                 }
@@ -79,15 +79,15 @@ class RichPreviewContentView: UIView {
                 titleLabel.text = message.richTitle
                 descriptionLabel.text = String(format: "%@\n%@", message.richString ?? "", String.memoryStyleString(fromByteCount: max(message.richNumber?.int64Value ?? 0, 0)))
                 linkLabel.text = "mega.nz"
-                iconImageView.image = Asset.Images.Logo.favicon.image
+                iconImageView.image = UIImage(resource: .favicon)
                 imageView.image = UIImage.mnz_folder()
                 
             case .publicChatLink:
                 titleLabel.text = message.richString
                 descriptionLabel.text = "\(message.richNumber?.int64Value ?? 0) \(Strings.Localizable.participants)"
                 linkLabel.text = "mega.nz"
-                iconImageView.image = Asset.Images.Logo.favicon.image
-                imageView.image = Asset.Images.Chat.groupChat.image
+                iconImageView.image = UIImage(resource: .favicon)
+                imageView.image = UIImage(resource: .groupChat)
                 
             default:
                 break

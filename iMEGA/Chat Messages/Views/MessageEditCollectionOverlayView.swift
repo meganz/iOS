@@ -11,9 +11,9 @@ class MessageEditCollectionOverlayView: MessageReusableView {
     var isActive = false {
         didSet {
             if isActive {
-                leftIconView.image = Asset.Images.Login.checkBoxSelected.image
+                leftIconView.image = UIImage(resource: .checkBoxSelected)
             } else {
-                leftIconView.image = Asset.Images.Login.checkBoxUnselected.image
+                leftIconView.image = UIImage(resource: .checkBoxUnselected)
             }
         }
     }

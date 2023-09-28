@@ -5,7 +5,7 @@ class AddToChatCameraCollectionCell: UICollectionViewCell {
     
     @IBOutlet weak var liveFeedView: UIView!
     @IBOutlet weak var cameraIconImageView: UIImageView!
-
+    
     var previewLayer: AVCaptureVideoPreviewLayer!
     var isCurrentShowingLiveFeed = false
     
@@ -46,7 +46,7 @@ class AddToChatCameraCollectionCell: UICollectionViewCell {
         previewLayer.videoGravity = .resizeAspectFill
         liveFeedView.layer.addSublayer(previewLayer)
         previewLayer.frame = liveFeedView.layer.bounds
-
+        
         let deviceDiscoverySession = AVCaptureDevice.default(.builtInWideAngleCamera,
                                                              for: AVMediaType.video,
                                                              position: .back)
@@ -106,7 +106,7 @@ class AddToChatCameraCollectionCell: UICollectionViewCell {
         }, completion: { _ in
             lifeFeedFadingView.removeFromSuperview()
         })
-
+        
     }
     
     private func addCornerRadius() {
@@ -115,14 +115,14 @@ class AddToChatCameraCollectionCell: UICollectionViewCell {
         let maskPath = UIBezierPath(roundedRect: bounds,
                                     byRoundingCorners: [.topLeft],
                                     cornerRadii: CGSize(width: 8.0, height: 0.0))
-
+        
         let maskLayer = CAShapeLayer()
         maskLayer.path = maskPath.cgPath
         layer.mask = maskLayer
     }
     
     private func updateCameraIconImageView() {
-        cameraIconImageView.image = (traitCollection.userInterfaceStyle == .dark) ? #imageLiteral(resourceName: "cameraIconWhite") : (permissionHandler.isVideoPermissionAuthorized ? Asset.Images.Chat.cameraIconWhite.image : UIImage(resource: .cameraIcon))
+        cameraIconImageView.image = (traitCollection.userInterfaceStyle == .dark) ? UIImage.cameraIconWhite : (permissionHandler.isVideoPermissionAuthorized ? UIImage.cameraIconWhite : UIImage.cameraIcon)
     }
     
     private func updateAppearance() {

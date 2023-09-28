@@ -41,7 +41,7 @@ extension CloudDriveViewController {
            let parentNode = parentNode,
            MEGASdk.shared.accessLevel(for: parentNode) != .accessRead {
             guard let menuConfig = uploadAddMenuConfiguration() else { return }
-            uploadAddBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.add.image,
+            uploadAddBarButtonItem = UIBarButtonItem(image: UIImage.navigationbarAdd,
                                                      menu: contextMenuManager?.contextMenu(with: menuConfig))
             navigationItem.rightBarButtonItems = [contextBarButtonItem, uploadAddBarButtonItem]
         } else {

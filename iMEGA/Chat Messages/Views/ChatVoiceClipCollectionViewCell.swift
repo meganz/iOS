@@ -13,7 +13,7 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
     weak var messagesCollectionView: MessagesCollectionView?
 
     open var waveView: UIImageView = {
-        let waveView = UIImageView(image: Asset.Images.Chat.Wave.waveform0000.image)
+        let waveView = UIImageView(image: UIImage(resource: .waveform0000))
         waveView.animationDuration = 1
         waveView.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: Dimensions.waveViewSize)
         return waveView
@@ -58,8 +58,8 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
         messageContainerView.addSubview(waveView)
         messageContainerView.addSubview(loadingIndicator)
         super.setupSubviews()
-        playButton.setImage(Asset.Images.Chat.Messages.playVoiceClip.image.withRenderingMode(.alwaysTemplate), for: .normal)
-        playButton.setImage(Asset.Images.Chat.Messages.pauseVoiceClip.image.withRenderingMode(.alwaysTemplate), for: .selected)
+        playButton.setImage(UIImage(resource: .playVoiceClip).withRenderingMode(.alwaysTemplate), for: .normal)
+        playButton.setImage(UIImage(resource: .pauseVoiceClip).withRenderingMode(.alwaysTemplate), for: .selected)
         progressView.isHidden = true
         durationLabel.textAlignment = .left
         durationLabel.font = .preferredFont(forTextStyle: .subheadline)

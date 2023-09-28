@@ -47,27 +47,27 @@ class ChatViewController: MessagesViewController {
     var startOrJoinButtonIsHiddenSubscription: AnyCancellable?
 
     lazy var exportBarButtonItem: UIBarButtonItem = {
-        let exportBarButtonItem = UIBarButtonItem(image: Asset.Images.NodeActions.export.image.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.exportSelectedMessages))
+        let exportBarButtonItem = UIBarButtonItem(image: UIImage(resource: .export).imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.exportSelectedMessages))
         return exportBarButtonItem
     }()
     lazy var forwardBarButtonItem: UIBarButtonItem = {
-        let forwardBarButtonItem = UIBarButtonItem(image: Asset.Images.Chat.forwardToolbar.image.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.forwardSelectedMessages))
+        let forwardBarButtonItem = UIBarButtonItem(image: UIImage(resource: .forwardToolbar).imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.forwardSelectedMessages))
         return forwardBarButtonItem
     }()
     lazy var copyBarButtonItem: UIBarButtonItem = {
-        let copyBarButtonItem = UIBarButtonItem(image: Asset.Images.NodeActions.copy.image.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.copySelectedMessages))
+        let copyBarButtonItem = UIBarButtonItem(image: UIImage(resource: .copy).imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.copySelectedMessages))
         return copyBarButtonItem
     }()
     lazy var offlineBarButtonItem: UIBarButtonItem = {
-        let offlineBarButtonItem = UIBarButtonItem(image: Asset.Images.NodeActions.offline.image.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.downloadSelectedMessages))
+        let offlineBarButtonItem = UIBarButtonItem(image: UIImage(resource: .offline).imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.downloadSelectedMessages))
         return offlineBarButtonItem
     }()
     lazy var saveToPhotosButtonItem: UIBarButtonItem = {
-        let saveToPhotosButtonItem = UIBarButtonItem(image: Asset.Images.NodeActions.saveToPhotos.image.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.saveToPhotoSelectedMessages))
+        let saveToPhotosButtonItem = UIBarButtonItem(image: UIImage(resource: .saveToPhotos).imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.saveToPhotoSelectedMessages))
         return saveToPhotosButtonItem
     }()
     lazy var importButtonItem: UIBarButtonItem = {
-        let importButtonItem = UIBarButtonItem(image: Asset.Images.InfoActions.import.image.imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.importSelectedMessages))
+        let importButtonItem = UIBarButtonItem(image: UIImage(resource: .import).imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.importSelectedMessages))
         return importButtonItem
     }()
     
@@ -130,21 +130,21 @@ class ChatViewController: MessagesViewController {
     }()
     
     lazy var audioCallBarButtonItem: UIBarButtonItem = {
-        return UIBarButtonItem(image: Asset.Images.Chat.NavigationBar.audioCall.image,
+        return UIBarButtonItem(image: UIImage(resource: .audioCall),
                                style: .done,
                                target: self,
                                action: #selector(startAudioCall))
     }()
     
     lazy var videoCallBarButtonItem = {
-        return UIBarButtonItem(image: Asset.Images.Chat.NavigationBar.videoCall.image,
+        return UIBarButtonItem(image: UIImage(resource: .videoCall),
                                style: .done,
                                target: self,
                                action: #selector(startVideoCall))
     }()
     
     lazy var addParticpantBarButtonItem = {
-        return UIBarButtonItem(image: Asset.Images.Contacts.addContact.image,
+        return UIBarButtonItem(image: UIImage(resource: .addContact),
                                style: .done,
                                target: self,
                                action: #selector(addParticipant))
@@ -353,7 +353,7 @@ class ChatViewController: MessagesViewController {
         if publicChatWithLinkCreated {
             let customModalAlertVC = CustomModalAlertViewController()
             customModalAlertVC.modalPresentationStyle = .overCurrentContext
-            customModalAlertVC.image = Asset.Images.Chat.chatLinkCreation.image
+            customModalAlertVC.image = UIImage(resource: .chatLinkCreation)
             customModalAlertVC.viewTitle = chatRoom.title
             customModalAlertVC.detail = Strings.Localizable.peopleCanJoinYourGroupByUsingThisLink
             customModalAlertVC.firstButtonTitle = Strings.Localizable.General.share
