@@ -19,6 +19,7 @@ struct ParticipantsListView: Equatable {
     let sections: [FloatingPanelTableViewSection]
     let hostControlsRows: [HostControlsSectionRow]
     let inviteSectionRow: [InviteSectionRow]
+    let tabs: [ParticipantsListTab]
     let selectedTab: ParticipantsListTab
     let participants: [CallParticipantEntity]
     let existsWaitingRoom: Bool
