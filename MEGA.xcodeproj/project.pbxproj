@@ -3803,6 +3803,7 @@
 		9449F7542AA961D500D39B6B /* ChatStatusEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "ChatStatusEntity+Mapper.swift"; path = "MEGAData/SDK/Model Mapping/ChatStatusEntity+Mapper.swift"; sourceTree = SOURCE_ROOT; };
 		944AD0B028EF039700AB1E59 /* BackupsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupsRepository.swift; sourceTree = "<group>"; };
 		944AD0B228EF651F00AB1E59 /* BackupsOCWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupsOCWrapper.swift; sourceTree = "<group>"; };
+		944E719D2AC4308800234486 /* Search.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; name = Search.xctestplan; path = Modules/Presentation/Features/Search/Search.xctestplan; sourceTree = "<group>"; };
 		9451F90928229A11000ACE3B /* OfflineViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OfflineViewController+ContextMenu.swift"; sourceTree = "<group>"; };
 		945339CC2A6014FA00363DAD /* FileLinkViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileLinkViewController+ContextMenu.swift"; sourceTree = "<group>"; };
 		94548FC5299D537C0050A9CC /* ChangeNameViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChangeNameViewController+Additions.swift"; sourceTree = "<group>"; };
@@ -5553,6 +5554,7 @@
 		137361811A6664C300B740E8 = {
 			isa = PBXGroup;
 			children = (
+				944E719D2AC4308800234486 /* Search.xctestplan */,
 				1373618C1A6664C300B740E8 /* iMEGA */,
 				B6CED48C22B8AC70009C4861 /* MEGAUnitTests */,
 				942254D71EDC02CB0074C51A /* Extensions */,
