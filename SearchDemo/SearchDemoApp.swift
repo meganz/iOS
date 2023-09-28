@@ -29,6 +29,9 @@ struct ContentView: View {
                 context: { result, _ in
                     print("Context menu \(result)")
                 },
+                resignKeyboard: {
+                    print("Resign keyboard")
+                },
                 chipTapped: {
                     print("Chip tapped \($0), \($1)")
                 }

@@ -44,6 +44,11 @@ public struct SearchResultsView: View {
                 SearchResultRowView(viewModel: $0)
             }
         }
+        .simultaneousGesture(
+            DragGesture().onChanged({ _ in
+                viewModel.scrolled()
+            })
+        )
         .listStyle(.plain)
         .padding(.bottom, viewModel.bottomInset)
         .emptyState(viewModel.emptyViewModel)
@@ -94,6 +99,7 @@ struct SearchResultsViewPreviews: PreviewProvider {
             bridge: .init(
                 selection: { _ in },
                 context: {_, _ in },
+                resignKeyboard: {},
                 chipTapped: { _, _ in }
             ),
             config: .init(

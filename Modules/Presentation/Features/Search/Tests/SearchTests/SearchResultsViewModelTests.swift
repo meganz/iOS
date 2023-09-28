@@ -18,18 +18,23 @@ final class SearchResultsViewModelTests: XCTestCase {
         let bridge: SearchBridge
         var selectedResults: [SearchResult] = []
         var contextTriggeredResults: [SearchResult] = []
+        var keyboardResignedCount = 0
         var chipTaps: [(SearchChipEntity, Bool)] = []
         weak var testcase: XCTestCase?
         
         init(_ testcase: XCTestCase) {
             self.testcase = testcase
             resultsProvider = MockSearchResultsProviding()
+            
             var selection: (SearchResult) -> Void = { _ in }
             var context: (SearchResult, UIButton) -> Void = { _, _ in }
             var chipTapped: (SearchChipEntity, Bool) -> Void = { _, _ in }
+            var keyboardResigned = {}
+            
             bridge = SearchBridge(
                 selection: { selection($0) },
                 context: { context($0, $1) },
+                resignKeyboard: { keyboardResigned() },
                 chipTapped: { chipTapped($0, $1) }
             )
             sut = SearchResultsViewModel(
@@ -44,6 +49,9 @@ final class SearchResultsViewModelTests: XCTestCase {
             }
             context = { result, _ in
                 self.contextTriggeredResults.append(result)
+            }
+            keyboardResigned = {
+                self.keyboardResignedCount += 1
             }
             chipTapped = { chip, isSelected in
                 self.chipTaps.append((chip, isSelected))
@@ -234,7 +242,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         XCTAssertEqual(contentUnavailableVM.title, expectedContent.title)
     }
 
-    func testOnProlonguedLoading_shouldDisplayShimmerLoadingView() async {
+    func testOnProlongedLoading_shouldDisplayShimmerLoadingView() async {
         let harness = Harness(self).withSingleResultPrepared()
 
         XCTAssertFalse(harness.sut.isLoadingPlaceholderShown)
@@ -248,6 +256,12 @@ final class SearchResultsViewModelTests: XCTestCase {
 
         await harness.sut.queryChanged(to: "query")
         XCTAssertFalse(harness.sut.isLoadingPlaceholderShown)
+    }
+    
+    func testScrolled_callsBridgeResignKeyboard() {
+        let harness = Harness(self)
+        harness.sut.scrolled()
+        XCTAssertEqual(harness.keyboardResignedCount, 1)
     }
 }
 
