@@ -74,16 +74,17 @@ extension AppDelegate {
         let cookieSettingsUseCase = CookieSettingsUseCase(repository: CookieSettingsRepository.newRepo)
         
         if cookieSettingsUseCase.cookieBannerEnabled() {
-            cookieSettingsUseCase.cookieSettings { [weak self] in
-                switch $0 {
-                case .success: break // Cookie settings already set
-                    
-                case .failure(let error):
+            Task { @MainActor in
+                do {
+                    // cookie settings already set
+                    _ = try await cookieSettingsUseCase.cookieSettings()
+                } catch {
+                    guard let error = error as? CookieSettingsErrorEntity else { return }
                     switch error {
                     case .generic, .invalidBitmap: break
                         
                     case .bitmapNotSet:
-                        self?.showCookieDialog()
+                        showCookieDialog()
                     }
                 }
             }
@@ -213,14 +214,11 @@ extension AppDelegate {
 extension AppDelegate {
     @objc func configAppWithNewCookieSettings() {
         let cookieSettingsUseCase = CookieSettingsUseCase(repository: CookieSettingsRepository.newRepo)
-        cookieSettingsUseCase.cookieSettings {
-            switch $0 {
-            case .success(let bitmap):
-                let isPerformanceAndAnalyticsEnabled = CookiesBitmap(rawValue: bitmap).contains(.analytics)
-                cookieSettingsUseCase.setCrashlyticsEnabled(isPerformanceAndAnalyticsEnabled)
-
-            case .failure: break
-            }
+        
+        Task {
+            let bitmap = try await cookieSettingsUseCase.cookieSettings()
+            let isPerformanceAndAnalyticsEnabled = CookiesBitmap(rawValue: bitmap).contains(.analytics)
+            cookieSettingsUseCase.setCrashlyticsEnabled(isPerformanceAndAnalyticsEnabled)
         }
     }
 }
