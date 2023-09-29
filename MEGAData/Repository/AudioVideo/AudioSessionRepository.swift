@@ -1,3 +1,4 @@
+import Combine
 import MEGADomain
 
 final class AudioSessionRepository: AudioSessionRepositoryProtocol {
@@ -138,6 +139,20 @@ final class AudioSessionRepository: AudioSessionRepositoryProtocol {
         }
         
         return audioSession.isOutputEqualToPortType(avAudioSessionPort)
+    }
+    
+    func onAudioSessionRouteChange() -> AnyPublisher<AudioSessionRouteChangedReason, Never> {
+        NotificationCenter.default
+            .publisher(for: AVAudioSession.routeChangeNotification)
+            .compactMap { notification -> AudioSessionRouteChangedReason? in
+                guard let userInfo = notification.userInfo,
+                      let reasonValue = userInfo[AVAudioSessionRouteChangeReasonKey] as? UInt,
+                      let reason = AVAudioSession.RouteChangeReason(rawValue: reasonValue) else {
+                    return nil
+                }
+                return reason.toAudioSessionRouteChangedReason()
+            }
+            .eraseToAnyPublisher()
     }
     
     // MARK: - Private methods

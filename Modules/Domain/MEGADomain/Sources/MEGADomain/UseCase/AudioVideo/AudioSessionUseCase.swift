@@ -1,3 +1,5 @@
+import Combine
+
 public protocol AudioSessionUseCaseProtocol {
     var isBluetoothAudioRouteAvailable: Bool { get }
     var currentSelectedAudioPort: AudioPort { get }
@@ -11,6 +13,7 @@ public protocol AudioSessionUseCaseProtocol {
     func enableLoudSpeaker(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?)
     func disableLoudSpeaker(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?)
     func routeChanged(handler: ((_ reason: AudioSessionRouteChangedReason, _ previousAudioPort: AudioPort?) -> Void)?)
+    func onAudioSessionRouteChange() -> AnyPublisher<AudioSessionRouteChangedReason, Never>
 }
 
 extension AudioSessionUseCaseProtocol {
@@ -104,5 +107,10 @@ public final class AudioSessionUseCase<T: AudioSessionRepositoryProtocol>: Audio
     
     public func routeChanged(handler: ((_ reason: AudioSessionRouteChangedReason, _ previousAudioPort: AudioPort?) -> Void)?) {
         audioSessionRepository.routeChanged = handler
+    }
+    
+    // Change it to AsyncSequence once we drop iOS 14
+    public func onAudioSessionRouteChange() -> AnyPublisher<AudioSessionRouteChangedReason, Never> {
+        audioSessionRepository.onAudioSessionRouteChange()
     }
 }
