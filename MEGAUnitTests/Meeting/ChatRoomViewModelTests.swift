@@ -4,6 +4,7 @@ import MEGADomainMock
 import MEGAL10n
 import MEGAPermissions
 import MEGAPermissionsMock
+import MEGAPresentationMock
 import XCTest
 
 final class ChatRoomViewModelTests: XCTestCase {

@@ -5,6 +5,7 @@ import MEGADomain
 import MEGADomainMock
 import MEGAL10n
 import MEGAPresentation
+import MEGAPresentationMock
 import XCTest
 
 final class AlbumContentViewModelTests: XCTestCase {

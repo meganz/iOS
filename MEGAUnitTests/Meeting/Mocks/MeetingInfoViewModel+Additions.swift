@@ -2,6 +2,7 @@
 import MEGADomain
 import MEGADomainMock
 import MEGAPresentation
+import MEGAPresentationMock
 
 extension MeetingInfoViewModel {
     convenience init(
