@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGASwift
 
 public struct MockCookieSettingsRepository: CookieSettingsRepositoryProtocol {
     public static var newRepo: MockCookieSettingsRepository {
@@ -21,11 +22,37 @@ public struct MockCookieSettingsRepository: CookieSettingsRepositoryProtocol {
         cookieBannerEnable
     }
     
-    public func cookieSettings(completion: @escaping (Result<Int, CookieSettingsErrorEntity>) -> Void) {
+    public func cookieSettings() async throws -> Int {
+        try await withAsyncThrowingValue { continuation in
+            self.cookieSettings { result in
+                switch result {
+                case .success(let value):
+                    continuation(.success(value))
+                case .failure(let error):
+                    continuation(.failure(error))
+                }
+            }
+        }
+    }
+    
+    private func cookieSettings(completion: @escaping (Result<Int, CookieSettingsErrorEntity>) -> Void) {
         completion(cookieSettings)
     }
     
-    public func setCookieSettings(with settings: Int, completion: @escaping (Result<Int, CookieSettingsErrorEntity>) -> Void) {
+    public func setCookieSettings(with settings: Int) async throws -> Int {
+        try await withAsyncThrowingValue { continuation in
+            self.setCookieSettings(with: settings) { result in
+                switch result {
+                case .success(let value):
+                    continuation(.success(value))
+                case .failure(let error):
+                    continuation(.failure(error))
+                }
+            }
+        }
+    }
+    
+    private func setCookieSettings(with settings: Int, completion: @escaping (Result<Int, CookieSettingsErrorEntity>) -> Void) {
         completion(setCookieSettings)
     }
     

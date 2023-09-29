@@ -2,6 +2,7 @@ import FirebaseCrashlytics
 import Foundation
 import MEGADomain
 import MEGASdk
+import MEGASwift
 
 public struct CookieSettingsRepository: CookieSettingsRepositoryProtocol {
     public static var newRepo: CookieSettingsRepository {
@@ -19,7 +20,30 @@ public struct CookieSettingsRepository: CookieSettingsRepositoryProtocol {
         return sdk.cookieBannerEnabled()
     }
     
-    public func cookieSettings(completion: @escaping (Result<Int, CookieSettingsErrorEntity>) -> Void) {
+    public func cookieSettings() async throws -> Int {
+        try await withAsyncThrowingValue { continuation in
+            cookieSettings { result in
+                handleCookieSettingsCompletion(result, continuation: continuation)
+            }
+        }
+    }
+    
+    public func setCookieSettings(with settings: Int) async throws -> Int {
+        try await withAsyncThrowingValue { continuation in
+            setCookieSettings(with: settings) { result in
+                handleCookieSettingsCompletion(result, continuation: continuation)
+            }
+        }
+    }
+    
+    public func setCrashlyticsEnabled(_ bool: Bool) {
+        crashlytics.setCrashlyticsCollectionEnabled(bool)
+    }
+}
+
+extension CookieSettingsRepository {
+    
+    private func cookieSettings(completion: @escaping (Result<Int, CookieSettingsErrorEntity>) -> Void) {
         sdk.cookieSettings(with: RequestDelegate { result in
             switch result {
             case .success(let request):
@@ -37,7 +61,7 @@ public struct CookieSettingsRepository: CookieSettingsRepositoryProtocol {
         })
     }
     
-    public func setCookieSettings(with settings: NSInteger, completion: @escaping (Result<Int, CookieSettingsErrorEntity>) -> Void) {
+    private func setCookieSettings(with settings: NSInteger, completion: @escaping (Result<Int, CookieSettingsErrorEntity>) -> Void) {
         sdk.setCookieSettings(settings, delegate: RequestDelegate { result in
             switch result {
             case .success(let request):
@@ -48,7 +72,12 @@ public struct CookieSettingsRepository: CookieSettingsRepositoryProtocol {
         })
     }
     
-    public func setCrashlyticsEnabled(_ bool: Bool) {
-        crashlytics.setCrashlyticsCollectionEnabled(bool)
+    private func handleCookieSettingsCompletion<T>(_ result: Result<T, CookieSettingsErrorEntity>, continuation: @escaping (Result<T, Error>) -> Void) {
+        switch result {
+        case .success(let value):
+            continuation(.success(value))
+        case .failure(let error):
+            continuation(.failure(error))
+        }
     }
 }

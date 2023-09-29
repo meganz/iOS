@@ -16,87 +16,88 @@ final class CookieSettingsUseCaseTests: XCTestCase {
         XCTAssertFalse(sut.cookieBannerEnabled())
     }
     
-    func testCookieSetting_error_Generic() {
+    func testCookieSetting_error_Generic() async {
         let mockError: CookieSettingsErrorEntity = .generic
         let repo = MockCookieSettingsRepository.newRepo
         let sut = CookieSettingsUseCase(repository: repo)
-        sut.cookieSettings { result in
-            switch result {
-            case .success:
-                XCTFail("error \(mockError) is expected!")
-            case .failure(let error):
-                XCTAssertEqual(mockError, error)
-            }
+        
+        do {
+            _ = try await sut.cookieSettings()
+            
+            XCTFail("error \(mockError) is expected!")
+        } catch {
+            XCTAssertEqual(mockError, error as? CookieSettingsErrorEntity)
         }
     }
     
-    func testCookieSetting_error_InvalidBitmap() {
+    func testCookieSetting_error_InvalidBitmap() async {
         let mockError: CookieSettingsErrorEntity = .invalidBitmap
         let repo = MockCookieSettingsRepository(cookieSettings: .failure(.invalidBitmap))
         let sut = CookieSettingsUseCase(repository: repo)
-        sut.cookieSettings { result in
-            switch result {
-            case .success:
-                XCTFail("error \(mockError) is expected!")
-            case .failure(let error):
-                XCTAssertEqual(mockError, error)
-            }
+        
+        do {
+            _ = try await sut.cookieSettings()
+            
+            XCTFail("error \(mockError) is expected!")
+        } catch {
+            XCTAssertEqual(mockError, error as? CookieSettingsErrorEntity)
         }
     }
     
-    func testCookieSetting_error_BitmapNotSet() {
+    func testCookieSetting_error_BitmapNotSet() async {
         let mockError: CookieSettingsErrorEntity = .bitmapNotSet
         let repo = MockCookieSettingsRepository(cookieSettings: .failure(.bitmapNotSet))
         let sut = CookieSettingsUseCase(repository: repo)
-        sut.cookieSettings { result in
-            switch result {
-            case .success:
-                XCTFail("error \(mockError) is expected!")
-            case .failure(let error):
-                XCTAssertEqual(mockError, error)
-            }
+        
+        do {
+            _ = try await sut.cookieSettings()
+            
+            XCTFail("error \(mockError) is expected!")
+        } catch {
+            XCTAssertEqual(mockError, error as? CookieSettingsErrorEntity)
         }
     }
     
-    func testCookieSetting_success() {
+    func testCookieSetting_success() async {
         let mockSucess: Int = 10
         let repo = MockCookieSettingsRepository(cookieSettings: .success(mockSucess))
         let sut = CookieSettingsUseCase(repository: repo)
-        sut.cookieSettings { result in
-            switch result {
-            case .success(let value):
-                XCTAssertEqual(mockSucess, value)
-            case .failure:
-                XCTFail("errors are not expected!")
-            }
+        
+        do {
+            let value = try await sut.cookieSettings()
+            
+            XCTAssertEqual(mockSucess, value)
+        } catch {
+            XCTFail("errors are not expected!")
         }
+        
     }
     
-    func testSetCookieSetting_error_Generic() {
+    func testSetCookieSetting_error_Generic() async {
         let mockError: CookieSettingsErrorEntity = .generic
         let repo = MockCookieSettingsRepository.newRepo
         let sut = CookieSettingsUseCase(repository: repo)
-        sut.setCookieSettings(with: 10) { result in
-            switch result {
-            case .success:
-                XCTFail("error \(mockError) is expected!")
-            case .failure(let error):
-                XCTAssertEqual(mockError, error)
-            }
+        
+        do {
+            _ = try await sut.setCookieSettings(with: 10)
+            
+            XCTFail("error \(mockError) is expected!")
+        } catch {
+            XCTAssertEqual(mockError, error as? CookieSettingsErrorEntity)
         }
     }
     
-    func testSetCookieSetting_success() {
+    func testSetCookieSetting_success() async {
         let setting: Int = 10
         let repo = MockCookieSettingsRepository(setCookieSettings: .success(setting))
         let sut = CookieSettingsUseCase(repository: repo)
-        sut.setCookieSettings(with: setting) { result in
-            switch result {
-            case .success(let value):
-                XCTAssertEqual(setting, value)
-            case .failure:
-                XCTFail("errors are not expected!")
-            }
+        
+        do {
+            let value = try await sut.setCookieSettings(with: setting)
+            
+            XCTAssertEqual(setting, value)
+        } catch {
+            XCTFail("errors are not expected!")
         }
     }
     

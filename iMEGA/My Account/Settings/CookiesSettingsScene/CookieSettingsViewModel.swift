@@ -11,7 +11,7 @@ enum CookiesBitPosition: Int {
     case thirdParty
 }
 
-struct CookiesBitmap: OptionSet {
+struct CookiesBitmap: OptionSet, Hashable {
     let rawValue: Int
     
     static let essential = CookiesBitmap(rawValue: 1 << 0)
@@ -21,6 +21,11 @@ struct CookiesBitmap: OptionSet {
     static let thirdparty = CookiesBitmap(rawValue: 1 << 4)
     
     static let all: CookiesBitmap = [.essential, .preference, .analytics, .ads, .thirdparty]
+}
+
+struct Cookie {
+    let name: CookiesBitmap
+    var value: Bool
 }
 
 enum CookieSettingsAction: ActionType {
@@ -52,9 +57,17 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
     
     var invokeCommand: ((Command) -> Void)?
     
-    private var cookiesConfigArray: [Bool] = [true, false, false, false, false] // [essential, preference, analytics, ads, thirdparty]
-    private var currentCookiesConfigArray: [Bool] = [true, false, false, false, false]
+    private var cookiesConfigArray: [Cookie] = .default
+    private var currentCookiesConfigArray: [Cookie] = .default
     private var cookieSettingsSet: Bool = true
+    
+    private let cookieSettingToPosition: [CookiesBitmap: CookiesBitPosition] = [
+        .essential: .essential,
+        .preference: .preference,
+        .analytics: .performanceAndAnalytics,
+        .ads: .advertising,
+        .thirdparty: .thirdParty
+    ]
     
     // MARK: - Init
     
@@ -66,14 +79,16 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
     func dispatch(_ action: CookieSettingsAction) {
         switch action {
         case .configView:
-            cookieSettings()
-            setFooters()
+            Task { @MainActor in
+                await cookieSettings()
+                setFooters()
+            }
             
-        case .acceptCookiesSwitchValueChanged(let bool):
-            cookiesConfigArray = bool ? [true, true, true, true, true] : [true, false, false, false, false]
+        case .acceptCookiesSwitchValueChanged(let isOn):
+            cookiesConfigArray = isOn ? .allTrue : .default
             
-        case .performanceAndAnalyticsSwitchValueChanged(let bool):
-            cookiesConfigArray[CookiesBitPosition.performanceAndAnalytics.rawValue] = bool
+        case .performanceAndAnalyticsSwitchValueChanged(let isOn):
+            cookiesConfigArray[CookiesBitPosition.performanceAndAnalytics.rawValue].value = isOn
         case .save:
             save()
         }
@@ -81,37 +96,35 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
     
     // MARK: - Private
     
-    private func cookieSettings() {
-        cookieSettingsUseCase.cookieSettings { [weak self] in
-            switch $0 {
-            case .success(let bitmap):
-                let cookiesBitmap = CookiesBitmap(rawValue: bitmap)
-                if cookiesBitmap.contains(.preference) {
-                    self?.cookiesConfigArray[CookiesBitPosition.preference.rawValue] = true
+    private func cookieSettings() async {
+        do {
+            let bitmap = try await cookieSettingsUseCase.cookieSettings()
+            
+            let cookiesBitmap = CookiesBitmap(rawValue: bitmap)
+            
+            if cookiesBitmap != .essential {
+                for (setting, position) in cookieSettingToPosition where cookiesBitmap.contains(setting) {
+                    cookiesConfigArray[position.rawValue].value = true
                 }
-                if cookiesBitmap.contains(.analytics) {
-                    self?.cookiesConfigArray[CookiesBitPosition.performanceAndAnalytics.rawValue] = true
-                }
-                if cookiesBitmap.contains(.ads) {
-                    self?.cookiesConfigArray[CookiesBitPosition.advertising.rawValue] = true
-                }
-                if cookiesBitmap.contains(.thirdparty) {
-                    self?.cookiesConfigArray[CookiesBitPosition.thirdParty.rawValue] = true
-                }
-                self?.currentCookiesConfigArray = self!.cookiesConfigArray
+            }
+            
+            currentCookiesConfigArray = cookiesConfigArray
+            
+            invokeCommand?(.configCookieSettings(CookiesBitmap(rawValue: bitmap)))
+            
+        } catch {
+            guard let cookieSettingsError = error as? CookieSettingsErrorEntity else {
+                return
+            }
+            
+            switch cookieSettingsError {
+            case .generic, .invalidBitmap: break
                 
-                self?.invokeCommand?(.configCookieSettings(CookiesBitmap(rawValue: bitmap)))
-                
-            case .failure(let error):
-                switch error {
-                case .generic, .invalidBitmap: break
-                    
-                case .bitmapNotSet:
-                    self?.cookieSettingsSet = false
-                    self?.cookiesConfigArray = [true, false, false, false, false]
-                    self?.currentCookiesConfigArray = self!.cookiesConfigArray
-                    self?.invokeCommand?(.configCookieSettings(CookiesBitmap.essential))
-                }
+            case .bitmapNotSet:
+                cookieSettingsSet = false
+                cookiesConfigArray = .default
+                currentCookiesConfigArray = cookiesConfigArray
+                invokeCommand?(.configCookieSettings(CookiesBitmap.essential))
             }
         }
     }
@@ -132,33 +145,28 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
             return
         }
         
-        var cookiesBitmap = CookiesBitmap(rawValue: 0)
-        cookiesBitmap.insert(.essential)
-        if cookiesConfigArray[CookiesBitPosition.preference.rawValue] {
-            cookiesBitmap.insert(.preference)
-        }
-        if cookiesConfigArray[CookiesBitPosition.performanceAndAnalytics.rawValue] {
-            cookiesBitmap.insert(.analytics)
-        }
-        if cookiesConfigArray[CookiesBitPosition.advertising.rawValue] {
-            cookiesBitmap.insert(.ads)
-        }
-        if cookiesConfigArray[CookiesBitPosition.thirdParty.rawValue] {
-            cookiesBitmap.insert(.thirdparty)
-        }
-        
-        cookieSettingsUseCase.setCookieSettings(with: cookiesBitmap.rawValue) { [weak self] in
-            switch $0 {
-            case .success:
-                self?.invokeCommand?(.cookieSettingsSaved)
+        Task { @MainActor in
+            do {
+                var cookiesBitmap = CookiesBitmap(rawValue: 0)
+                cookiesBitmap.insert(.essential)
                 
-            case .failure(let error):
+                for (setting, position) in cookieSettingToPosition where cookiesConfigArray[position.rawValue].value {
+                    cookiesBitmap.insert(setting)
+                }
+                
+                _ = try await cookieSettingsUseCase.setCookieSettings(with: cookiesBitmap.rawValue)
+                invokeCommand?(.cookieSettingsSaved)
+            } catch {
+                guard let error = error as? CookieSettingsErrorEntity else {
+                    invokeCommand?(.showResult(.error(error.localizedDescription)))
+                    return
+                }
                 switch error {
                 case .invalidBitmap:
-                    self?.invokeCommand?(.showResult(.error(error.localizedDescription)))
+                    invokeCommand?(.showResult(.error(error.localizedDescription)))
                     
                 default:
-                    self?.invokeCommand?(.showResult(.error(error.localizedDescription)))
+                    invokeCommand?(.showResult(.error(error.localizedDescription)))
                 }
             }
         }
@@ -169,10 +177,25 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
             return true
         }
         
-        for (index, value) in currentCookiesConfigArray.enumerated() where cookiesConfigArray[index] != value {
+        for (index, cookie) in currentCookiesConfigArray.enumerated() where cookiesConfigArray[index].value != cookie.value {
             return true
         }
         
         return false
+    }
+}
+
+private extension Array where Element == Cookie {
+    
+    static let `default`: [Cookie] = [
+        Cookie(name: .essential, value: true),
+        Cookie(name: .preference, value: false),
+        Cookie(name: .analytics, value: false),
+        Cookie(name: .ads, value: false),
+        Cookie(name: .thirdparty, value: false)
+    ]
+    
+    static var allTrue: [Cookie] {
+        `default`.map { Cookie(name: $0.name, value: true) }
     }
 }

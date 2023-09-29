@@ -19,14 +19,17 @@ extension CustomModalAlertViewController {
         
         firstCompletion = { [weak self] in
             self?.dismiss(animated: true, completion: {
-                let cookieSettingsUseCase = CookieSettingsUseCase(repository: CookieSettingsRepository.newRepo)
-                cookieSettingsUseCase.setCookieSettings(with: CookiesBitmap.all.rawValue) { [weak self] in
-                    switch $0 {
-                    case .success:
+                Task { @MainActor in
+                    do {
+                        let cookieSettingsUseCase = CookieSettingsUseCase(repository: CookieSettingsRepository.newRepo)
+                        _ = try await cookieSettingsUseCase.setCookieSettings(with: CookiesBitmap.all.rawValue)
                         self?.dismiss(animated: true, completion: nil)
-                        
-                    case .failure(let error):
-                        switch error {
+                    } catch {
+                        guard let cookieSettingsError = error as? CookieSettingsErrorEntity else {
+                            SVProgressHUD.showError(withStatus: error.localizedDescription)
+                            return
+                        }
+                        switch cookieSettingsError {
                         case .invalidBitmap:
                             SVProgressHUD.showError(withStatus: error.localizedDescription)
                             
