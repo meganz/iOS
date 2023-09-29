@@ -5,7 +5,10 @@ import UIKit
 /// Development only implementation, will be moved to SearchMocks on next MR once
 /// we have actual results provider using real SDK
 public struct NonProductionTestResultsProvider: SearchResultsProviding {
-    public init() {}
+    public var empty: Bool
+    public init(empty: Bool = false) {
+        self.empty = empty
+    }
     public func search(queryRequest: SearchQuery) async throws -> SearchResultsEntity {
         
         if
@@ -21,7 +24,7 @@ public struct NonProductionTestResultsProvider: SearchResultsProviding {
         let results = filter(using: searchString, chip: chips.first)
         
         return .init(
-            results: results,
+            results: empty ? [] : results,
             availableChips: allChips,
             appliedChips: chipsFor(query: queryRequest)
         )
