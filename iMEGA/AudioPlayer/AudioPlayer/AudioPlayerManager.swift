@@ -265,16 +265,17 @@ import MEGAPresentation
         
         let playlistRouter = AudioPlaylistViewRouter(configEntity: AudioPlayerConfigEntity(parentNode: configEntity.node?.parent, playerHandler: configEntity.playerHandler), presenter: presenter)
         
-        let router = AudioPlayerViewRouter(
+        let audioPlayerRouter = AudioPlayerViewRouter(
             configEntity: configEntity,
             presenter: presenter,
             audioPlaylistViewRouter: playlistRouter
         )
         
-        guard let vc = makeAudioPlayerViewController(configEntity: configEntity, router: router) else { return }
-        router.baseViewController = vc
+        guard let vc = makeAudioPlayerViewController(configEntity: configEntity, router: audioPlayerRouter) else { return }
+        audioPlayerRouter.baseViewController = vc
+        playlistRouter.setPresenter(audioPlayerRouter.baseViewController)
         
-        router.start()
+        audioPlayerRouter.start()
     }
     
     private func makeAudioPlayerViewController(configEntity: AudioPlayerConfigEntity, router: some AudioPlayerViewRouting) -> AudioPlayerViewController? {
