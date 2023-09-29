@@ -6,6 +6,7 @@ public struct MainTabBarWrapper: UIViewControllerRepresentable {
     
     public init(mainTabBar: UITabBarController) {
         self.mainTabBar = mainTabBar
+        self.loadTabBarView()
     }
     
     public func makeUIViewController(context: Context) -> UITabBarController {
@@ -13,4 +14,8 @@ public struct MainTabBarWrapper: UIViewControllerRepresentable {
     }
     
     public func updateUIViewController(_ uiViewController: UITabBarController, context: Context) {}
+    
+    private func loadTabBarView() {
+        _ = mainTabBar.view
+    }
 }

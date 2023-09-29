@@ -2402,6 +2402,7 @@
 		C4F31EDC25C19ABE00E15146 /* AudioPlayerFileToolbarConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F31EDB25C19ABE00E15146 /* AudioPlayerFileToolbarConfigurator.swift */; };
 		C4F31EF925C1C50B00E15146 /* CustomTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F31EF825C1C50B00E15146 /* CustomTitleView.swift */; };
 		C4F31F0325C1C51A00E15146 /* CustomTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4F31F0225C1C51A00E15146 /* CustomTitleView.xib */; };
+		E7EE7CCF2AC6DCDB00DBABCD /* AppDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EE7CCE2AC6DCDB00DBABCD /* AppDelegateTests.swift */; };
 		E803CB641D5336F100F81A36 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E803CB661D5336F100F81A36 /* InfoPlist.strings */; };
 		E80C76101DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E80C760F1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m */; };
 		E81616731A8397B5002EFDD7 /* FolderLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E81616721A8397B5002EFDD7 /* FolderLinkViewController.m */; };
@@ -4960,6 +4961,7 @@
 		C4F31EDB25C19ABE00E15146 /* AudioPlayerFileToolbarConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerFileToolbarConfigurator.swift; sourceTree = "<group>"; };
 		C4F31EF825C1C50B00E15146 /* CustomTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTitleView.swift; sourceTree = "<group>"; };
 		C4F31F0225C1C51A00E15146 /* CustomTitleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomTitleView.xib; sourceTree = "<group>"; };
+		E7EE7CCE2AC6DCDB00DBABCD /* AppDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateTests.swift; sourceTree = "<group>"; };
 		E803CB651D5336F100F81A36 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E803CB681D53374A00F81A36 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E80C760E1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GroupChatDetailsViewTableViewCell.h; path = Chat/GroupChatDetailsViewTableViewCell.h; sourceTree = "<group>"; };
@@ -10819,6 +10821,7 @@
 				B6D5482E283E2AF000D7302F /* Account */,
 				328FDCF629121D2200E5990A /* Album */,
 				160CEA802A5BB96B0051541F /* Analytics */,
+				E7EE7CCD2AC6DC9E00DBABCD /* AppDelegate */,
 				C452B66225CD4E550073B22C /* AudioPlayer */,
 				C46D4A7B26557AB900748BD3 /* BannerContainer */,
 				5B076EDA22C251BF00D773B9 /* CameraUpload */,
@@ -12073,6 +12076,14 @@
 				C4E78E9A272B4F9200DBF926 /* NodeLoadOperationProtocol.swift */,
 			);
 			path = NodeAccess;
+			sourceTree = "<group>";
+		};
+		E7EE7CCD2AC6DC9E00DBABCD /* AppDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				E7EE7CCE2AC6DCDB00DBABCD /* AppDelegateTests.swift */,
+			);
+			path = AppDelegate;
 			sourceTree = "<group>";
 		};
 		E84CDAFE1A7292AA003F4C77 /* Links */ = {
@@ -15022,6 +15033,7 @@
 				943649E02A4D83DE006CE8B8 /* AlertModel+Equatable.swift in Sources */,
 				12B1E57A2874FFEF00D23A58 /* AnalyticsRepositoryTests.swift in Sources */,
 				940445B4298B044A00A5ECA1 /* APIEnvironmentRepositoryTests.swift in Sources */,
+				E7EE7CCF2AC6DCDB00DBABCD /* AppDelegateTests.swift in Sources */,
 				B6D54830283E2BA900D7302F /* AppFirstLaunchSecurityCheckerTests.swift in Sources */,
 				B6D0B368283DC2AE0020C64D /* AppGroupContainerTests.swift in Sources */,
 				B63AEB182512040E000B8517 /* Array+Additions.swift in Sources */,
