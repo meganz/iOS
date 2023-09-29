@@ -445,14 +445,14 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         let addedMessage = notificationMessage(forParticipantCount: addedParticipantsCount,
                                                participantNames: addedParticipantsNames,
                                                oneParticipantMessageClosure: Strings.Localizable.Meetings.Notification.singleUserJoined,
-                                               twoParticpantsMessageClousre: Strings.Localizable.Meetings.Notification.twoUsersJoined,
-                                               moreThanTwoParticipantsMessageClousre: Strings.Localizable.Meetings.Notification.moreThanTwoUsersJoined)
+                                               twoParticipantsMessageClousure: Strings.Localizable.Meetings.Notification.twoUsersJoined,
+                                               moreThanTwoParticipantsMessageClousure: Strings.Localizable.Meetings.Notification.moreThanTwoUsersJoined)
         
         let removedMessage = notificationMessage(forParticipantCount: removedParticipantsCount,
                                                  participantNames: removedParticipantsNames,
                                                  oneParticipantMessageClosure: Strings.Localizable.Meetings.Notification.singleUserLeft,
-                                                 twoParticpantsMessageClousre: Strings.Localizable.Meetings.Notification.twoUsersLeft,
-                                                 moreThanTwoParticipantsMessageClousre: Strings.Localizable.Meetings.Notification.moreThanTwoUsersLeft)
+                                                 twoParticipantsMessageClousure: Strings.Localizable.Meetings.Notification.twoUsersLeft,
+                                                 moreThanTwoParticipantsMessageClousure: Strings.Localizable.Meetings.Notification.moreThanTwoUsersLeft)
         
         var message: String?
         if let addedMessage = addedMessage, let removedMessage = removedMessage {
@@ -474,8 +474,8 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     private func notificationMessage(forParticipantCount participantCount: Int,
                                      participantNames: [String]?,
                                      oneParticipantMessageClosure: (String) -> String,
-                                     twoParticpantsMessageClousre: (String, String) -> String,
-                                     moreThanTwoParticipantsMessageClousre: (String, String) -> String) -> String? {
+                                     twoParticipantsMessageClousure: (String, String) -> String,
+                                     moreThanTwoParticipantsMessageClousure: (String, String) -> String) -> String? {
         var message: String?
         
         if let participantNames = participantNames {
@@ -483,25 +483,16 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             case 1 where participantNames.count == 1:
                 message = oneParticipantMessageClosure(participantNames[0])
             case 2 where participantNames.count == 2:
-                message = twoParticpantsMessageClousre(participantNames[0], participantNames[1])
+                message = twoParticipantsMessageClousure(participantNames[0], participantNames[1])
             default:
                 if participantCount > 2,
-                   participantNames.count == 1,
-                   let spelledOutNumber = spellOut(number: participantCount - 1) {
-                    message = moreThanTwoParticipantsMessageClousre(participantNames[0], spelledOutNumber)
+                   participantNames.count == 1 {
+                    message = moreThanTwoParticipantsMessageClousure(participantNames[0], String(participantCount - 1))
                 }
             }
         }
         
         return message
-    }
-    
-    private func spellOut(number: Int) -> String? {
-        let numberFormatter = NumberFormatter()
-        numberFormatter.numberStyle = .spellOut
-        numberFormatter.locale = .current
-        let number = NSNumber(value: number)
-        return numberFormatter.string(from: number)
     }
 }
 
