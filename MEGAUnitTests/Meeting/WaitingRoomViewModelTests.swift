@@ -388,6 +388,62 @@ final class WaitingRoomViewModelTests: XCTestCase {
         }
     }
     
+    func testUpdateSpeakerInfo_forCurrentPortBuiltInReceiver_shouldNotEnabledSpeaker() {
+        let onAudioSessionRouteChangeSubject = PassthroughSubject<AudioSessionRouteChangedReason, Never>()
+        let audioSessionUseCase = MockAudioSessionUseCase(currentSelectedAudioPort: .builtInReceiver, onAudioSessionRouteChangeSubject: onAudioSessionRouteChangeSubject)
+        let sut = WaitingRoomViewModel(audioSessionUseCase: audioSessionUseCase)
+        
+        onAudioSessionRouteChangeSubject.send(.categoryChange)
+        
+        evaluate {
+            sut.isSpeakerEnabled == false
+        }
+    }
+    
+    func testUpdateSpeakerInfo_forCurrentPortBuiltInSpeaker_shouldEnabledSpeaker() {
+        let onAudioSessionRouteChangeSubject = PassthroughSubject<AudioSessionRouteChangedReason, Never>()
+        let audioSessionUseCase = MockAudioSessionUseCase(currentSelectedAudioPort: .builtInSpeaker, onAudioSessionRouteChangeSubject: onAudioSessionRouteChangeSubject)
+        let sut = WaitingRoomViewModel(audioSessionUseCase: audioSessionUseCase)
+        
+        onAudioSessionRouteChangeSubject.send(.categoryChange)
+        
+        evaluate {
+            sut.isSpeakerEnabled == true
+        }
+    }
+    
+    func testUpdateSpeakerInfo_forCurrentPortOtherAndBluetoothAudioRouteAvailable_shouldEnabledSpeaker() {
+        let onAudioSessionRouteChangeSubject = PassthroughSubject<AudioSessionRouteChangedReason, Never>()
+        let audioSessionUseCase = MockAudioSessionUseCase(
+            isBluetoothAudioRouteAvailable: true, 
+            currentSelectedAudioPort: .other,
+            onAudioSessionRouteChangeSubject: onAudioSessionRouteChangeSubject
+        )
+        let sut = WaitingRoomViewModel(audioSessionUseCase: audioSessionUseCase)
+        
+        onAudioSessionRouteChangeSubject.send(.categoryChange)
+        
+        evaluate {
+            sut.isSpeakerEnabled == true
+        }
+    }
+    
+    func testUpdateSpeakerInfo_forCurrentPortOtherAndBluetoothAudioRouteNotAvailable_shouldNotEnabledSpeaker() {
+        let onAudioSessionRouteChangeSubject = PassthroughSubject<AudioSessionRouteChangedReason, Never>()
+        let audioSessionUseCase = MockAudioSessionUseCase(
+            isBluetoothAudioRouteAvailable: false,
+            currentSelectedAudioPort: .other,
+            onAudioSessionRouteChangeSubject: onAudioSessionRouteChangeSubject
+        )
+        let sut = WaitingRoomViewModel(audioSessionUseCase: audioSessionUseCase)
+        
+        onAudioSessionRouteChangeSubject.send(.categoryChange)
+        
+        evaluate {
+            sut.isSpeakerEnabled == false
+        }
+    }
+    
     // MARK: - Private methods
     
     private func sampleDate(from string: String = "12/06/2023 09:10") -> Date? {

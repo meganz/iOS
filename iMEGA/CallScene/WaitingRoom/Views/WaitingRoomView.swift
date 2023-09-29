@@ -73,7 +73,8 @@ struct WaitingRoomView: View {
                 },
                 isSpeakerEnabled: $viewModel.isSpeakerEnabled.onChange { enable in
                     viewModel.enableLoudSpeaker(enabled: enable)
-                }
+                }, 
+                isBluetoothAudioRouteAvailable: $viewModel.isBluetoothAudioRouteAvailable
             )
             ZStack {
                 Spacer()

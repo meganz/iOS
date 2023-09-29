@@ -51,6 +51,7 @@ final class WaitingRoomViewModel: ObservableObject {
     @Published var isVideoEnabled = false
     @Published var isMicrophoneMuted = true
     @Published var isSpeakerEnabled = true
+    @Published var isBluetoothAudioRouteAvailable = false
     @Published var screenSize: CGSize = .zero {
         didSet {
             guard screenSize != .zero else { return }
@@ -82,8 +83,6 @@ final class WaitingRoomViewModel: ObservableObject {
     private var isActiveWaitingRoom: Bool { chatUseCase.isActiveWaitingRoom(for: scheduledMeeting.chatId) }
     private var chatId: HandleEntity { scheduledMeeting.chatId }
     
-    private var appDidBecomeActiveSubscription: AnyCancellable?
-    private var appWillResignActiveSubscription: AnyCancellable?
     private var onCallUpdateSubscription: AnyCancellable?
     private var subscriptions = Set<AnyCancellable>()
     
@@ -196,13 +195,9 @@ final class WaitingRoomViewModel: ObservableObject {
     
     func enableLoudSpeaker(enabled: Bool) {
         if enabled {
-            audioSessionUseCase.enableLoudSpeaker { [weak self] _ in
-                self?.updateSpeakerInfo()
-            }
+            audioSessionUseCase.enableLoudSpeaker()
         } else {
-            audioSessionUseCase.disableLoudSpeaker { [weak self] _ in
-                self?.updateSpeakerInfo()
-            }
+            audioSessionUseCase.disableLoudSpeaker()
         }
     }
     
@@ -262,21 +257,6 @@ final class WaitingRoomViewModel: ObservableObject {
     }
     
     private func initSubscriptions() {
-        appDidBecomeActiveSubscription = NotificationCenter.default
-            .publisher(for: UIApplication.didBecomeActiveNotification)
-            .sink { [weak self] _ in
-                guard let self else { return }
-                audioSessionUseCase.configureCallAudioSession()
-                addRouteChangedListener()
-                enableLoudSpeaker(enabled: isSpeakerEnabled)
-            }
-        
-        appWillResignActiveSubscription = NotificationCenter.default
-            .publisher(for: UIApplication.willResignActiveNotification)
-            .sink { [weak self] _ in
-                self?.removeRouteChangedListener()
-            }
-        
         onCallUpdateSubscription = callUseCase
             .onCallUpdate()
             .receive(on: DispatchQueue.main)
@@ -295,12 +275,28 @@ final class WaitingRoomViewModel: ObservableObject {
                 }
             }
         onCallUpdateSubscription?.store(in: &subscriptions)
+        
+        NotificationCenter.default
+            .publisher(for: UIApplication.didBecomeActiveNotification)
+            .sink { [weak self] _ in
+                guard let self else { return }
+                audioSessionUseCase.configureCallAudioSession()
+            }
+            .store(in: &subscriptions)
+                
+        audioSessionUseCase
+            .onAudioSessionRouteChange()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self else { return }
+                updateSpeakerInfo()
+            }
+            .store(in: &subscriptions)
     }
     
     private func fetchInitialValues() {
         audioSessionUseCase.configureCallAudioSession()
         if audioSessionUseCase.isBluetoothAudioRouteAvailable {
-            isSpeakerEnabled = audioSessionUseCase.isOutputFrom(port: .builtInSpeaker)
             updateSpeakerInfo()
         } else {
             enableLoudSpeaker(enabled: isSpeakerEnabled)
@@ -313,11 +309,15 @@ final class WaitingRoomViewModel: ObservableObject {
     }
     
     private func updateSpeakerInfo() {
-        let currentSelectedPort = audioSessionUseCase.currentSelectedAudioPort
-        let isBluetoothAvailable = audioSessionUseCase.isBluetoothAudioRouteAvailable
-        isSpeakerEnabled = audioSessionUseCase.isOutputFrom(port: .builtInSpeaker)
-        // Need this debug for the next ticket
-        MEGALogDebug("Waiting room: updating speaker info with selected port \(currentSelectedPort), bluetooth available \(isBluetoothAvailable), isSpeakerEnabled: \(isSpeakerEnabled)")
+        isBluetoothAudioRouteAvailable = audioSessionUseCase.isBluetoothAudioRouteAvailable
+        switch audioSessionUseCase.currentSelectedAudioPort {
+        case .builtInReceiver:
+            isSpeakerEnabled = false
+        case .headphones, .builtInSpeaker:
+            isSpeakerEnabled = true
+        default:
+            isSpeakerEnabled = isBluetoothAudioRouteAvailable
+        }
     }
     
     private func selectFrontCameraIfNeeded() {
@@ -335,21 +335,6 @@ final class WaitingRoomViewModel: ObservableObject {
             return false
         }
         return true
-    }
-    
-    private func addRouteChangedListener() {
-        audioSessionUseCase.routeChanged { [weak self] routeChangedReason, _ in
-            guard let self = self else { return }
-            self.sessionRouteChanged(routeChangedReason: routeChangedReason)
-        }
-    }
-    
-    private func removeRouteChangedListener() {
-        audioSessionUseCase.routeChanged()
-    }
-    
-    private func sessionRouteChanged(routeChangedReason: AudioSessionRouteChangedReason) {
-        updateSpeakerInfo()
     }
     
     private func checkForVideoPermission(onSuccess completionBlock: @escaping () -> Void) {
@@ -518,6 +503,7 @@ final class WaitingRoomViewModel: ObservableObject {
     private func goToCallUI(for call: CallEntity) {
         guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatId) else { return }
         router.openCallUI(for: call, in: chatRoom, isSpeakerEnabled: isSpeakerEnabled)
+        onCallUpdateSubscription?.cancel()
     }
 }
 
