@@ -40,11 +40,6 @@ typedef NS_ENUM(NSInteger, QRSection) {
 @property (weak, nonatomic) IBOutlet UILabel *hintLabel;
 @property (weak, nonatomic) IBOutlet UILabel *errorLabel;
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *contactLinkConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *linkCopyConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *hintConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *errorConstraint;
-
 @property (nonatomic) AVCaptureSession *captureSession;
 @property (nonatomic) AVCaptureVideoPreviewLayer *videoPreviewLayer;
 
@@ -105,6 +100,7 @@ typedef NS_ENUM(NSInteger, QRSection) {
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
 
+    self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.size.width / 2;
     [self setupCameraMask];
 }
 
@@ -113,19 +109,14 @@ typedef NS_ENUM(NSInteger, QRSection) {
     self.cameraMaskView.hidden = YES;
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
         [self.videoPreviewLayer.connection setVideoOrientation:(AVCaptureVideoOrientation) self.view.window.windowScene.interfaceOrientation];
-        [self setupCameraMask];
-        [self startRecognizingCodes];
+        if (self.segmentedControl.selectedSegmentIndex == QRSectionScanCode) {
+            [self startRecognizingCodes];
+            [self setupCameraMask];
+        }
+        
     } completion:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
         self.cameraMaskView.hidden = self.segmentedControl.selectedSegmentIndex == QRSectionMyCode;
     }];
-}
-
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    if ([[UIDevice currentDevice] iPhoneDevice]) {
-        return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
-    }
-    
-    return UIInterfaceOrientationMaskAll;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
