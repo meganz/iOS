@@ -1,3 +1,5 @@
+import Combine
+
 public protocol AudioSessionRepositoryProtocol {
     var isBluetoothAudioRouteAvailable: Bool { get }
     var currentSelectedAudioPort: AudioPort { get }
@@ -11,4 +13,5 @@ public protocol AudioSessionRepositoryProtocol {
     func enableLoudSpeaker(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?)
     func disableLoudSpeaker(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?)
     func isOutputFrom(port: AudioPort) -> Bool
+    func onAudioSessionRouteChange() -> AnyPublisher<AudioSessionRouteChangedReason, Never>
 }

@@ -1,6 +1,8 @@
+import Combine
 import MEGADomain
 
 public final class MockAudioSessionUseCase: AudioSessionUseCaseProtocol {
+    
     public var isBluetoothAudioRouteAvailable: Bool
     public var currentSelectedAudioPort: AudioPort
     private let audioPortOutput: AudioPort
@@ -12,6 +14,7 @@ public final class MockAudioSessionUseCase: AudioSessionUseCaseProtocol {
     private var configureChatDefaultAudioPlayerAudioSession_calledTimes: Int
     private var configureAudioRecorderAudioSession_calledTimes: Int
     private var configureVideoAudioSession_calledTimes: Int
+    private let onAudioSessionRouteChangeSubject: PassthroughSubject<AudioSessionRouteChangedReason, Never>
     
     public init(
         isBluetoothAudioRouteAvailable: Bool = false,
@@ -24,7 +27,8 @@ public final class MockAudioSessionUseCase: AudioSessionUseCaseProtocol {
         configureAudioPlayerAudioSession_calledTimes: Int = 0,
         configureChatDefaultAudioPlayerAudioSession_calledTimes: Int = 0,
         configureAudioRecorderAudioSession_calledTimes: Int = 0,
-        configureVideoAudioSession_calledTimes: Int = 0
+        configureVideoAudioSession_calledTimes: Int = 0,
+        onAudioSessionRouteChangeSubject: PassthroughSubject<AudioSessionRouteChangedReason, Never> = .init()
     ) {
         self.isBluetoothAudioRouteAvailable = isBluetoothAudioRouteAvailable
         self.currentSelectedAudioPort = currentSelectedAudioPort
@@ -37,6 +41,7 @@ public final class MockAudioSessionUseCase: AudioSessionUseCaseProtocol {
         self.configureChatDefaultAudioPlayerAudioSession_calledTimes = configureChatDefaultAudioPlayerAudioSession_calledTimes
         self.configureAudioRecorderAudioSession_calledTimes = configureAudioRecorderAudioSession_calledTimes
         self.configureVideoAudioSession_calledTimes = configureVideoAudioSession_calledTimes
+        self.onAudioSessionRouteChangeSubject = onAudioSessionRouteChangeSubject
     }
     
     public func setSpeaker(enabled: Bool, completion: ((Result<Void, MEGADomain.AudioSessionErrorEntity>) -> Void)?) {
@@ -83,5 +88,10 @@ public final class MockAudioSessionUseCase: AudioSessionUseCaseProtocol {
     
     public func configureVideoAudioSession(completion: ((Result<Void, AudioSessionErrorEntity>) -> Void)?) {
         configureVideoAudioSession_calledTimes += 1
+    }
+    
+    public func onAudioSessionRouteChange() -> AnyPublisher<AudioSessionRouteChangedReason, Never> {
+        onAudioSessionRouteChangeSubject
+            .eraseToAnyPublisher()
     }
 }
