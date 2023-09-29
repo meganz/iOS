@@ -1,3 +1,4 @@
+import ChatRepoMock
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock

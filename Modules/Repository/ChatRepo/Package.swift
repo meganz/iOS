@@ -12,8 +12,10 @@ let package = Package(
     products: [
         .library(
             name: "ChatRepo",
-            targets: ["ChatRepo"]
-        )
+            targets: ["ChatRepo"]),
+        .library(
+            name: "ChatRepoMock",
+            targets: ["ChatRepoMock"])
     ],
     dependencies: [
         .package(path: "../../DataSource/MEGAChatSdk"),
@@ -27,6 +29,19 @@ let package = Package(
                 "MEGADomain",
                 "MEGAChatSdk",
                 "MEGASDKRepo"
+            ],
+            swiftSettings: settings
+        ),
+        .target(
+            name: "ChatRepoMock",
+            dependencies: ["ChatRepo"],
+            swiftSettings: settings
+        ),
+        .testTarget(
+            name: "ChatRepoTests",
+            dependencies: [
+                "ChatRepo",
+                "ChatRepoMock"
             ],
             swiftSettings: settings
         )
