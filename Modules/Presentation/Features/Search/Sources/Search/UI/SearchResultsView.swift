@@ -17,7 +17,13 @@ public struct SearchResultsView: View {
             } else {
                 content
             }
+            Spacer()
         }
+        .frame(
+            maxWidth: .infinity,
+            maxHeight: .infinity,
+            alignment: .top
+        )
     }
     
     private var chipsView: some View {
@@ -95,7 +101,7 @@ struct SearchResultsViewPreviews: PreviewProvider {
     struct Wrapper: View {
         @State var text: String = ""
         @StateObject var viewModel = SearchResultsViewModel(
-            resultsProvider: NonProductionTestResultsProvider(),
+            resultsProvider: NonProductionTestResultsProvider(empty: true),
             bridge: .init(
                 selection: { _ in },
                 context: {_, _ in },
