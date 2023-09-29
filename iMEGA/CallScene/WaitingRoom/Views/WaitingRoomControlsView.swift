@@ -1,9 +1,11 @@
+import MEGASwiftUI
 import SwiftUI
 
 struct WaitingRoomControlsView: View {
     @Binding var isVideoEnabled: Bool
     @Binding var isMicrophoneMuted: Bool
     @Binding var isSpeakerEnabled: Bool
+    @Binding var isBluetoothAudioRouteAvailable: Bool
     
     var body: some View {
         HStack(spacing: 32) {
@@ -16,6 +18,10 @@ struct WaitingRoomControlsView: View {
             WaitingRoomControl(iconOff: .speakerOff,
                                iconOn: .speakerOn,
                                enabled: $isSpeakerEnabled)
+            .overlay(
+                AirPlayButton()
+                    .opacity(isBluetoothAudioRouteAvailable ? 1 : 0)
+            )
         }
         .padding()
     }
@@ -41,7 +47,8 @@ struct WaitingRoomControlsView_Previews: PreviewProvider {
     static var previews: some View {
         WaitingRoomControlsView(isVideoEnabled: .constant(false),
                                 isMicrophoneMuted: .constant(true),
-                                isSpeakerEnabled: .constant(true))
+                                isSpeakerEnabled: .constant(true),
+                                isBluetoothAudioRouteAvailable: .constant(false))
             .background(Color.black)
             .previewLayout(.sizeThatFits)
     }

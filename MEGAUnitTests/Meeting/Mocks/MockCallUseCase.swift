@@ -33,7 +33,7 @@ final class MockCallUseCase: CallUseCaseProtocol {
     init(call: CallEntity? = CallEntity(),
          callCompletion: Result<CallEntity, CallErrorEntity> = .failure(.generic),
          answerCallCompletion: Result<CallEntity, CallErrorEntity> = .failure(.generic),
-         callUpdateSubject: PassthroughSubject<CallEntity, Never> = PassthroughSubject<CallEntity, Never>()) {
+         callUpdateSubject: PassthroughSubject<CallEntity, Never> = .init()) {
         self.call = call
         self.callCompletion = callCompletion
         self.answerCallCompletion = answerCallCompletion
