@@ -1,3 +1,4 @@
+import Accounts
 import Foundation
 import MEGAL10n
 import SwiftUI
