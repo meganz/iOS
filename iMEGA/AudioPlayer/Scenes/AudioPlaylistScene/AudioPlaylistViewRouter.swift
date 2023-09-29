@@ -23,6 +23,10 @@ final class AudioPlaylistViewRouter: NSObject, AudioPlaylistViewRouting {
         presenter?.present(build(), animated: true, completion: nil)
     }
     
+    func setPresenter(_ presenter: UIViewController?) {
+        self.presenter = presenter
+    }
+    
     // MARK: - UI Actions
     func dismiss() {
         baseViewController?.dismiss(animated: true)
