@@ -609,7 +609,7 @@
 
 - (BOOL)manageQuickActionType:(NSString *)type {
     BOOL quickActionManaged = YES;
-    if ([type isEqualToString:@"mega.ios.search"]) {
+    if ([AppDelegate matchQuickAction:type with:@"search"]) {
         self.mainTBC.selectedIndex = TabTypeHome;
         MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:TabTypeHome];
         HomeViewController *homeVC = navigationController.viewControllers.firstObject;
@@ -624,12 +624,12 @@
         }
         
         
-    } else if ([type isEqualToString:@"mega.ios.upload"]) {
+    } else if ([AppDelegate matchQuickAction:type with: @"upload"]) {
         self.mainTBC.selectedIndex = TabTypeCloudDrive;
         MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:TabTypeCloudDrive];
         CloudDriveViewController *cloudDriveVC = navigationController.viewControllers.firstObject;
         [cloudDriveVC presentUploadOptions];
-    } else if ([type isEqualToString:@"mega.ios.offline"]) {
+    } else if ([AppDelegate matchQuickAction:type with: @"offline"]) {
         [self.mainTBC showOfflineAndPresentFileWithHandle:nil];
     } else {
         quickActionManaged = NO;
