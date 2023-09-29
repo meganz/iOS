@@ -12,7 +12,12 @@ let package = Package(
     products: [
         .library(
             name: "MEGAPresentation",
-            targets: ["MEGAPresentation"])
+            targets: ["MEGAPresentation"]
+        ),
+        .library(
+            name: "MEGAPresentationMock",
+            targets: ["MEGAPresentationMock"]
+        )
     ],
     dependencies: [
         .package(path: "../../Domain/MEGADomain"),
@@ -31,9 +36,14 @@ let package = Package(
                 .product(name: "MEGAAnalyticsiOS", package: "mobile-analytics-ios")
             ],
             swiftSettings: settings),
+        .target(
+            name: "MEGAPresentationMock",
+            dependencies: ["MEGAPresentation"]
+        ),
         .testTarget(
             name: "MEGAPresentationTests",
             dependencies: ["MEGAPresentation",
+                           "MEGAPresentationMock",
                            "MEGATest",
                            "MEGAAnalyticsDomain",
                            "MEGADomain",

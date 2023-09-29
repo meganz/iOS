@@ -4,6 +4,7 @@ import Combine
 import MEGADomain
 import MEGADomainMock
 import MEGAPresentation
+import MEGAPresentationMock
 import MEGASDKRepoMock
 import MEGATest
 import XCTest
