@@ -493,3 +493,19 @@ extension AppDelegate {
         SKPaymentQueue.default().add(MEGAPurchase.sharedInstance())
     }
 }
+
+// MARK: - Quick Action related
+extension AppDelegate {
+
+    @objc static func matchQuickAction(_ inputType: String, with type: String) -> Bool {
+        let regexPattern = "^mega\\.ios(?:\\.[a-zA-Z]+)?\\.\(type)$"
+        
+        guard let regex = try? NSRegularExpression(pattern: regexPattern, options: []) else {
+            return false
+        }
+        
+        let range = NSRange(location: 0, length: inputType.utf16.count)
+        return regex.firstMatch(in: inputType, options: [], range: range) != nil
+    }
+    
+}
