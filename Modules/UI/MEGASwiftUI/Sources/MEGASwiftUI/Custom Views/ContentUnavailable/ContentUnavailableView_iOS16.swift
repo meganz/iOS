@@ -17,25 +17,36 @@ public struct ContentUnavailableView_iOS16<Label, Description, Actions>: View wh
     }
     
     public var body: some View {
-        // once we start using iOS 17 SDK, we can use
-        // Apple's implementation when running on iOS 17
         backwardsCompatible
     }
     
-    var backwardsCompatible: some View {
-        VStack {
-            Spacer()
-            label()
-                .scaledToFill()
-                .foregroundColor(Color.gray)
-                .frame(width: 120, height: 120)
-                .labelStyle(VerticalLabelStyle())
-            Spacer()
-                .frame(height: 10)
-            description()
-            actions()
-            Spacer()
+    var backwardsCompatible: some View {       
+        GeometryReader { geo in
+            HStack {
+                Spacer()
+                VStack {
+                    Spacer()
+                    label()
+                        .scaledToFit()
+                        .foregroundColor(Color.gray)
+                        .frame(
+                            width: iconSize(geo),
+                            height: iconSize(geo)
+                        )
+                        .labelStyle(VerticalLabelStyle())
+                    Spacer()
+                        .frame(height: 10)
+                    description()
+                    actions()
+                    Spacer()
+                }
+                Spacer()
+            }
         }
+    }
+    
+    func iconSize(_ proxy: GeometryProxy) -> CGFloat {
+        proxy.size.height > 300 ? 120 : 80
     }
 }
 
@@ -64,7 +75,9 @@ extension ContentUnavailableView_iOS16 where Label == Image, Description == Text
     public init(viewModel: ContentUnavailableView_iOS16ViewModel) {
         
         self.label = {
-            viewModel.image
+            viewModel
+                .image
+                .resizable()
         }
         self.description = {
             Text(viewModel.title)

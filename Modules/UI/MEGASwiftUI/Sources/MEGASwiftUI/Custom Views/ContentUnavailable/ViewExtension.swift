@@ -11,7 +11,10 @@ struct EmptyStateViewModifier: ViewModifier {
     
     func body(content: Content) -> some View {
         if let emptyViewModel {
-            ContentUnavailableView_iOS16(viewModel: emptyViewModel)
+            content
+                .overlay(
+                    ContentUnavailableView_iOS16(viewModel: emptyViewModel)
+                )
         } else {
             content
         }
