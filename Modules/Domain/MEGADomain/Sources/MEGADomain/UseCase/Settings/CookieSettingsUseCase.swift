@@ -4,9 +4,9 @@ import Foundation
 public protocol CookieSettingsUseCaseProtocol {
     func cookieBannerEnabled() -> Bool
     
-    func cookieSettings(completion: @escaping (Result<Int, CookieSettingsErrorEntity>) -> Void)
+    func cookieSettings() async throws -> Int
     
-    func setCookieSettings(with settings: Int, completion: @escaping (Result<Int, CookieSettingsErrorEntity>) -> Void)
+    func setCookieSettings(with settings: Int) async throws -> Int
     
     func setCrashlyticsEnabled(_ bool: Bool)
 }
@@ -23,12 +23,12 @@ public struct CookieSettingsUseCase<T: CookieSettingsRepositoryProtocol>: Cookie
         repository.cookieBannerEnabled()
     }
     
-    public func cookieSettings(completion: @escaping (Result<Int, CookieSettingsErrorEntity>) -> Void) {
-        repository.cookieSettings(completion: completion)
+    public func cookieSettings() async throws -> Int {
+        try await repository.cookieSettings()
     }
     
-    public func setCookieSettings(with settings: Int, completion: @escaping (Result<Int, CookieSettingsErrorEntity>) -> Void) {
-        repository.setCookieSettings(with: settings, completion: completion)
+    public func setCookieSettings(with settings: Int) async throws -> Int {
+        try await repository.setCookieSettings(with: settings)
     }
     
     public func setCrashlyticsEnabled(_ bool: Bool) {
