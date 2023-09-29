@@ -4,6 +4,7 @@ import MEGADomainMock
 import MEGAPermissions
 import MEGAPermissionsMock
 import MEGAPresentation
+import MEGAPresentationMock
 
 extension ChatRoomViewModel {
     convenience init(

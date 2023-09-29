@@ -40,6 +40,7 @@ let package = Package(
                            "MEGADomain",
                            "MEGAPresentation",
                            "MEGATest",
+                           .product(name: "MEGAPresentationMock", package: "MEGAPresentation"),
                            .product(name: "MEGADomainMock", package: "MEGADomain"),
                            .product(name: "MEGASDKRepoMock", package: "MEGASDKRepo")]
         )
