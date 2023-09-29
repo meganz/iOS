@@ -1333,6 +1333,7 @@
 		99A27DA72AC1312900587B60 /* ChatContentViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A27DA62AC1312900587B60 /* ChatContentViewModel+Additions.swift */; };
 		99D65D732A8BB5AE005D5877 /* WaitingRoomControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D65D722A8BB5AE005D5877 /* WaitingRoomControlsView.swift */; };
 		99D65D772A8C699A005D5877 /* WaitingRoomUserAvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D65D762A8C699A005D5877 /* WaitingRoomUserAvatarView.swift */; };
+		99DB1D5A2AC64B34004A9CC3 /* ChatRepoMock in Frameworks */ = {isa = PBXBuildFile; productRef = 99DB1D592AC64B34004A9CC3 /* ChatRepoMock */; };
 		99E1A9292A383EC000974FC9 /* BadgeButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E1A9282A383EC000974FC9 /* BadgeButtonTests.swift */; };
 		99E1A9412A3C0CF800974FC9 /* MeetingLinkActivityItemSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E1A9402A3C0CF800974FC9 /* MeetingLinkActivityItemSource.swift */; };
 		99F9ABC02A7B428A0050B5E4 /* WaitingRoomWarningBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F9ABBF2A7B428A0050B5E4 /* WaitingRoomWarningBannerView.swift */; };
@@ -1816,8 +1817,6 @@
 		B6A4A11121A2544C007E7EEC /* MEGAError+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = B6A4A11021A2544C007E7EEC /* MEGAError+MNZCategory.m */; };
 		B6A4A11421A256B0007E7EEC /* MEGABackgroundTaskOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B6A4A11321A256B0007E7EEC /* MEGABackgroundTaskOperation.m */; };
 		B6A4A11A21A404DC007E7EEC /* NSError+CameraUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = B6A4A11921A404DC007E7EEC /* NSError+CameraUpload.m */; };
-		B6A6E19D287BCE8300179806 /* MockChatSdk.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A6E19C287BCE8300179806 /* MockChatSdk.swift */; };
-		B6A6E19F287BCEA700179806 /* MockChatRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A6E19E287BCEA700179806 /* MockChatRoom.swift */; };
 		B6A6E1A3287BD08D00179806 /* PhotoBrowserDataProvider_nodeEntity_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A6E1A2287BD08D00179806 /* PhotoBrowserDataProvider_nodeEntity_Tests.swift */; };
 		B6A6E1BF287CDE6600179806 /* MEGANode+Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A6E1BE287CDE6600179806 /* MEGANode+Array.swift */; };
 		B6A6E1C1287CDE6600179806 /* MEGANode+Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A6E1BE287CDE6600179806 /* MEGANode+Array.swift */; };
@@ -4415,8 +4414,6 @@
 		B6A4A11321A256B0007E7EEC /* MEGABackgroundTaskOperation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGABackgroundTaskOperation.m; sourceTree = "<group>"; };
 		B6A4A11821A404DC007E7EEC /* NSError+CameraUpload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSError+CameraUpload.h"; sourceTree = "<group>"; };
 		B6A4A11921A404DC007E7EEC /* NSError+CameraUpload.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSError+CameraUpload.m"; sourceTree = "<group>"; };
-		B6A6E19C287BCE8300179806 /* MockChatSdk.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockChatSdk.swift; sourceTree = "<group>"; };
-		B6A6E19E287BCEA700179806 /* MockChatRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockChatRoom.swift; sourceTree = "<group>"; };
 		B6A6E1A2287BD08D00179806 /* PhotoBrowserDataProvider_nodeEntity_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoBrowserDataProvider_nodeEntity_Tests.swift; sourceTree = "<group>"; };
 		B6A6E1BE287CDE6600179806 /* MEGANode+Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANode+Array.swift"; sourceTree = "<group>"; };
 		B6AADE8D25183626009A874C /* VerificationCodeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationCodeViewModelTests.swift; sourceTree = "<group>"; };
@@ -5057,6 +5054,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A85CF69D2A7180A90018FEF1 /* ChatRepo in Frameworks */,
+				99DB1D5A2AC64B34004A9CC3 /* ChatRepoMock in Frameworks */,
 				BF11643127F6612A00E5C5A4 /* CHTCollectionViewWaterfallLayoutObjC in Frameworks */,
 				940931FC2A56ED5F0093C169 /* DeviceCenter in Frameworks */,
 				A8F5157427F6F87A00AEE4D6 /* DZNEmptyDataSet in Frameworks */,
@@ -7487,7 +7485,6 @@
 		5D52C744250C4EED00286A43 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
-				B6A6E19B287BCE5900179806 /* ChatSdk */,
 				5D33D66A250D9BC900D74666 /* Client */,
 				5D52C748250C4F2800286A43 /* Functions */,
 				949704B52AB427A700B2CA3A /* Router */,
@@ -10724,15 +10721,6 @@
 			path = SMS;
 			sourceTree = "<group>";
 		};
-		B6A6E19B287BCE5900179806 /* ChatSdk */ = {
-			isa = PBXGroup;
-			children = (
-				B6A6E19E287BCEA700179806 /* MockChatRoom.swift */,
-				B6A6E19C287BCE8300179806 /* MockChatSdk.swift */,
-			);
-			path = ChatSdk;
-			sourceTree = "<group>";
-		};
 		B6AADF2F2519D5EB009A874C /* AddPhoneNumberScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -12357,6 +12345,7 @@
 				BF6149512A9FF33300AB051A /* MEGAL10n */,
 				BF6149532A9FF33300AB051A /* MEGAL10nObjc */,
 				BF67F7F72AB4171A00AC127E /* LogRepo */,
+				99DB1D592AC64B34004A9CC3 /* ChatRepoMock */,
 				B5D8DD8E2AC54DE200F1D18B /* MEGAPresentationMock */,
 			);
 			productName = iMEGA;
@@ -15225,9 +15214,7 @@
 				BF8895E82631213C002A18CA /* MockCallCoordinatorUseCase.swift in Sources */,
 				BF8895F226312EA1002A18CA /* MockCallUseCase.swift in Sources */,
 				83751C5629E5734D0030310B /* MockChatLinkUseCase.swift in Sources */,
-				B6A6E19F287BCEA700179806 /* MockChatRoom.swift in Sources */,
 				BF8895B62630F3A4002A18CA /* MockChatRoomUseCase.swift in Sources */,
-				B6A6E19D287BCE8300179806 /* MockChatSdk.swift in Sources */,
 				C4575F31265FA3D500D527DC /* MockDispatchQueue.swift in Sources */,
 				5BBC13E826CE68380010115B /* MockFavouriteNodesUseCase.swift in Sources */,
 				5BBC13E226CE635B0010115B /* MockFavouritesRouter.swift in Sources */,
@@ -17378,6 +17365,10 @@
 		94FD8A8A2AA0C6F300CD1C8B /* MEGARepo */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGARepo;
+		};
+		99DB1D592AC64B34004A9CC3 /* ChatRepoMock */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ChatRepoMock;
 		};
 		A803C8FC2955DB790056C9F0 /* SAMKeychain */ = {
 			isa = XCSwiftPackageProductDependency;
