@@ -23,12 +23,14 @@ final class ChatRoomParticipantViewModel: ObservableObject, Identifiable {
     
     let userAvatarViewModel: UserAvatarViewModel
 
-    init(router: some MeetingInfoRouting,
-         chatRoomUseCase: any ChatRoomUseCaseProtocol,
-         chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol,
-         chatUseCase: any ChatUseCaseProtocol,
-         chatParticipantId: MEGAHandle,
-         chatRoom: ChatRoomEntity) {
+    init(
+        router: some MeetingInfoRouting,
+        chatRoomUseCase: some ChatRoomUseCaseProtocol,
+        chatRoomUserUseCase: some ChatRoomUserUseCaseProtocol,
+        chatUseCase: some ChatUseCaseProtocol,
+        chatParticipantId: MEGAHandle,
+        chatRoom: ChatRoomEntity
+    ) {
         self.router = router
         self.chatRoomUseCase = chatRoomUseCase
         self.chatRoomUserUseCase = chatRoomUserUseCase
@@ -160,12 +162,28 @@ final class ChatRoomParticipantViewModel: ObservableObject, Identifiable {
         case .unknown, .removed:
             return
         default:
-            chatRoomUseCase.updateChatPrivilege(chatRoom: chatRoom, userHandle: chatParticipantId, privilege: privilege.toChatRoomPrivilegeEntity())
+            updatePrivilege(to: privilege.toChatRoomPrivilegeEntity())
         }
     }
     
     func removeParticipantTapped() {
         chatRoomUseCase.remove(fromChat: chatRoom, userId: chatParticipantId)
+    }
+    
+    // MARK: - Private
+    
+    private func updatePrivilege(to privilege: ChatRoomPrivilegeEntity) {
+        Task { @MainActor in
+            do {
+                let privilegeEntity = try await chatRoomUseCase.updateChatPrivilege(
+                    chatRoom: chatRoom,
+                    userHandle: chatParticipantId,
+                    privilege: privilege)
+                participantPrivilege = privilegeEntity.toChatRoomParticipantPrivilege()
+            } catch {
+                MEGALogError("Update participant privilege failed: \(error.localizedDescription)")
+            }
+        }
     }
 }
 

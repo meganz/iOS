@@ -29,4 +29,9 @@ public final class MockChatSDK: MEGAChatSdk {
         let request = MockChatRequest(chatHandle: chatId)
         delegate.onChatRequestFinish?(self, request: request, error: MockChatError())
     }
+    
+    public override func updateChatPermissions(_ chatId: UInt64, userHandle: UInt64, privilege: Int, delegate: MEGAChatRequestDelegate) {
+        let request = MockChatRequest(chatHandle: chatId, privilege: privilege)
+        delegate.onChatRequestFinish?(self, request: request, error: MockChatError())
+    }
 }
