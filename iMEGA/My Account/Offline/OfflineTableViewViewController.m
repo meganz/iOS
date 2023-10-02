@@ -117,17 +117,6 @@ static NSString *kPath = @"kPath";
     } else {
         NSString *extension = nameString.pathExtension.lowercaseString;
         
-        if (!handleString) {
-            NSString *fpLocal = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:pathForItem];
-            if (fpLocal) {
-                MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:fpLocal];
-                if (node) {
-                    handleString = node.base64Handle;
-                    [[MEGAStore shareInstance] insertOfflineNode:node api:[MEGASdkManager sharedMEGASdk] path:[[Helper pathRelativeToOfflineDirectory:pathForItem] decomposedStringWithCanonicalMapping]];
-                }
-            }
-        }
-        
         NSString *thumbnailFilePath = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
         thumbnailFilePath = [thumbnailFilePath stringByAppendingPathComponent:handleString];
         
@@ -149,6 +138,8 @@ static NSString *kPath = @"kPath";
             }
         } else {
             [cell.thumbnailImageView setImage:[NodeAssetsManager.shared imageFor:extension]];
+            NSURL *url = [NSURL fileURLWithPath:pathForItem];
+            [cell setThumbnailWithUrl:url];
         }
         
         NSDate *modificationDate = [NSFileManager.defaultManager attributesOfItemAtPath:pathForItem error:nil][NSFileModificationDate];
