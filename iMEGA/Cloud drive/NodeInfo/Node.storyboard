@@ -272,37 +272,41 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="33"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vxP-Wr-trY" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
-                                                    <rect key="frame" x="16" y="9.5" width="32.5" height="14"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
-                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <nil key="highlightedColor"/>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="caption1"/>
-                                                        <userDefinedRuntimeAttribute type="string" keyPath="weight" value="semibold"/>
-                                                    </userDefinedRuntimeAttributes>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y20-jb-Yhq" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
-                                                    <rect key="frame" x="365.5" y="9.5" width="32.5" height="14"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="caption1"/>
-                                                        <userDefinedRuntimeAttribute type="string" keyPath="weight" value="medium"/>
-                                                    </userDefinedRuntimeAttributes>
-                                                </label>
+                                                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h5D-1u-afG">
+                                                    <rect key="frame" x="16" y="9.5" width="382" height="14"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vxP-Wr-trY" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
+                                                            <rect key="frame" x="0.0" y="0.0" width="32.5" height="14"/>
+                                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
+                                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <nil key="highlightedColor"/>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="caption1"/>
+                                                                <userDefinedRuntimeAttribute type="string" keyPath="weight" value="semibold"/>
+                                                            </userDefinedRuntimeAttributes>
+                                                        </label>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p8t-H6-9vL">
+                                                            <rect key="frame" x="32.5" y="0.0" width="317" height="14"/>
+                                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                        </view>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y20-jb-Yhq" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
+                                                            <rect key="frame" x="349.5" y="0.0" width="32.5" height="14"/>
+                                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="caption1"/>
+                                                                <userDefinedRuntimeAttribute type="string" keyPath="weight" value="medium"/>
+                                                            </userDefinedRuntimeAttributes>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="y20-jb-Yhq" secondAttribute="bottom" constant="9.5" id="43f-a1-hro"/>
-                                                <constraint firstItem="y20-jb-Yhq" firstAttribute="centerY" secondItem="AfU-mf-vhS" secondAttribute="centerY" id="8Zq-4E-smb"/>
-                                                <constraint firstAttribute="bottom" secondItem="vxP-Wr-trY" secondAttribute="bottom" constant="9.5" id="GmH-CQ-S7J"/>
-                                                <constraint firstItem="vxP-Wr-trY" firstAttribute="top" secondItem="AfU-mf-vhS" secondAttribute="top" constant="9.5" id="JXk-Tg-K8r"/>
-                                                <constraint firstAttribute="trailing" secondItem="y20-jb-Yhq" secondAttribute="trailing" constant="16" id="LCu-Yz-GJo"/>
-                                                <constraint firstItem="y20-jb-Yhq" firstAttribute="top" secondItem="AfU-mf-vhS" secondAttribute="top" constant="9.5" id="i3U-wb-gIN"/>
-                                                <constraint firstItem="vxP-Wr-trY" firstAttribute="leading" secondItem="AfU-mf-vhS" secondAttribute="leading" constant="16" id="ivG-kb-F56"/>
-                                                <constraint firstItem="vxP-Wr-trY" firstAttribute="centerY" secondItem="AfU-mf-vhS" secondAttribute="centerY" id="mls-ol-qzl"/>
-                                                <constraint firstItem="y20-jb-Yhq" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="vxP-Wr-trY" secondAttribute="trailing" constant="2" id="qjx-mJ-Hef"/>
+                                                <constraint firstAttribute="bottom" secondItem="h5D-1u-afG" secondAttribute="bottom" constant="9.5" id="NHc-aM-p7a"/>
+                                                <constraint firstItem="h5D-1u-afG" firstAttribute="top" secondItem="AfU-mf-vhS" secondAttribute="top" constant="9.5" id="OyS-Eh-ri4"/>
+                                                <constraint firstAttribute="trailing" secondItem="h5D-1u-afG" secondAttribute="trailing" constant="16" id="Pct-4v-V1b"/>
+                                                <constraint firstItem="h5D-1u-afG" firstAttribute="leading" secondItem="AfU-mf-vhS" secondAttribute="leading" constant="16" id="fWg-qj-Mfj"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
