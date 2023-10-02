@@ -64,7 +64,11 @@ public final class ChatRoomRepository: ChatRoomRepositoryProtocol {
         let publicChatLinkCreationDelegate = ChatRequestDelegate { result in
             switch result {
             case .success(let request):
-                completion(.success(request.text))
+                if let text = request.text {
+                    completion(.success(text))
+                } else {
+                    completion(.failure(.generic))
+                }
             case .failure:
                 completion(.failure(.generic))
             }
@@ -72,17 +76,21 @@ public final class ChatRoomRepository: ChatRoomRepositoryProtocol {
         
         sdk.createChatLink(chatRoom.chatId, delegate: publicChatLinkCreationDelegate)
     }
-
+    
     public func queryChatLink(forChatRoom chatRoom: ChatRoomEntity, completion: @escaping (Result<String, ChatLinkErrorEntity>) -> Void) {
         let publicChatLinkCreationDelegate = ChatRequestDelegate { result in
             switch result {
             case .success(let request):
-                completion(.success(request.text))
+                if let text = request.text {
+                    completion(.success(text))
+                } else {
+                    completion(.failure(.resourceNotFound))
+                }
             case .failure(let error):
                 completion(.failure(error.toChatLinkErrorEntity()))
             }
         }
-
+        
         sdk.queryChatLink(chatRoom.chatId, delegate: publicChatLinkCreationDelegate)
     }
     
@@ -158,8 +166,8 @@ public final class ChatRoomRepository: ChatRoomRepositoryProtocol {
             sdk.openInvite(enabled, chatId: chatRoom.chatId, delegate: requestDelegate)
         }
     }
-
-    public func waitingRoom(_ enabled: Bool, forChatRoom chatRoom: ChatRoomEntity) async throws -> Bool {            
+    
+    public func waitingRoom(_ enabled: Bool, forChatRoom chatRoom: ChatRoomEntity) async throws -> Bool {
         try await withAsyncThrowingValue { completion in
             sdk.setWaitingRoom(enabled, chatId: chatRoom.chatId, delegate: ChatRequestDelegate { result in
                 switch result {
@@ -250,7 +258,7 @@ public final class ChatRoomRepository: ChatRoomRepositoryProtocol {
         closeChatRoom(chatId: chatRoom.chatId, delegate: ChatRoomDelegateDTO(chatId: chatRoom.chatId, chatRoomDelegate: delegate))
     }
     
-   public func openChatRoom(chatId: HandleEntity, delegate: some MEGAChatRoomDelegate) throws {
+    public func openChatRoom(chatId: HandleEntity, delegate: some MEGAChatRoomDelegate) throws {
         $openChatRooms.mutate { $0.insert(chatId) }
         
         if !sdk.openChatRoom(chatId, delegate: delegate) {
@@ -404,7 +412,7 @@ private extension MEGAChatSdk {
     func createChatRoom(userHandle: UInt64, completion: @escaping(_ chatRoom: MEGAChatRoom) -> Void) {
         let peerList = MEGAChatPeerList()
         peerList.addPeer(withHandle: userHandle, privilege: MEGAChatRoomPrivilege.standard.rawValue)
-
+        
         let delegate = ChatRequestDelegate { [weak self] result in
             guard
                 case .success(let request) = result,
@@ -413,10 +421,10 @@ private extension MEGAChatSdk {
             else {
                 return
             }
-
+            
             completion(chatRoom)
         }
-
+        
         createChatGroup(false, peers: peerList, delegate: delegate)
     }
 }

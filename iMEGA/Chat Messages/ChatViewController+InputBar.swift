@@ -240,10 +240,10 @@ extension ChatViewController {
                 }
                 if getChatLink {
                     let genericRequestDelegate = ChatRequestDelegate { result in
-                        if case let .success(request) = result {
+                        if case let .success(request) = result, let text = request.text {
                             let chatViewController = ChatViewController(chatRoom: newChatRoom)
                             chatViewController.publicChatWithLinkCreated = true
-                            chatViewController.publicChatLink = URL(string: request.text)
+                            chatViewController.publicChatLink = URL(string: text)
                             self.replaceCurrentViewController(withViewController: chatViewController)
                             SVProgressHUD.setDefaultMaskType(.none)
                             SVProgressHUD.dismiss()

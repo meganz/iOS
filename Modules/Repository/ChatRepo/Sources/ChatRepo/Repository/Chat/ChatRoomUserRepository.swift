@@ -50,7 +50,11 @@ public struct ChatRoomUserRepository: ChatRoomUserRepositoryProtocol {
                 chatSdk.userEmail(byUserHandle: userHandle, delegate: ChatRequestDelegate { result in
                     switch result {
                     case .success(let request):
-                        completion(.success(request.text))
+                        if let text = request.text {
+                            completion(.success(text))
+                        } else {
+                            completion(.failure(ChatRoomErrorEntity.emptyTextResponse))
+                        }
                     case .failure:
                         completion(.failure(ChatRoomErrorEntity.generic))
                     }

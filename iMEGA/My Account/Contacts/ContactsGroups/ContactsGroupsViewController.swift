@@ -127,10 +127,10 @@ class ContactsGroupsViewController: UIViewController {
                         }
                         if getChatlink {
                             MEGAChatSdk.shared.createChatLink(chatRoom.chatId, delegate: ChatRequestDelegate { result in
-                                if case .success = result {
+                                if case .success = result, let text = request.text {
                                     let messagesVC = ChatViewController(chatRoom: chatRoom)
                                     messagesVC.publicChatWithLinkCreated = true
-                                    messagesVC.publicChatLink = URL(string: request.text)
+                                    messagesVC.publicChatLink = URL(string: text)
                                     self?.navigationController?.pushViewController(messagesVC, animated: true)
                                 }
                             })
