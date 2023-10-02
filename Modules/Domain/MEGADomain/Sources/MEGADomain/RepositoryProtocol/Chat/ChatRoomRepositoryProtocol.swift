@@ -29,6 +29,7 @@ public protocol ChatRoomRepositoryProtocol: RepositoryProtocol {
     func closeChatRoomPreview(chatRoom: ChatRoomEntity)
     func leaveChatRoom(chatRoom: ChatRoomEntity) async -> Bool
     func updateChatPrivilege(chatRoom: ChatRoomEntity, userHandle: HandleEntity, privilege: ChatRoomPrivilegeEntity)
+    func updateChatPrivilege(chatRoom: ChatRoomEntity, userHandle: HandleEntity, privilege: ChatRoomPrivilegeEntity) async throws -> ChatRoomPrivilegeEntity
     func invite(toChat chat: ChatRoomEntity, userId: HandleEntity)
     func remove(fromChat chat: ChatRoomEntity, userId: HandleEntity)
     func loadMessages(forChat chat: ChatRoomEntity, count: Int) -> ChatSourceEntity

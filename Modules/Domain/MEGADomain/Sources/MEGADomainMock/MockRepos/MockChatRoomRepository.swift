@@ -21,6 +21,7 @@ public final class MockChatRoomRepository: ChatRoomRepositoryProtocol {
     private let message: MEGADomain.ChatMessageEntity?
     private let isChatRoomOpen: Bool
     private let leaveChatRoom: Bool
+    private let updateChatPrivilegeResult: Result<ChatRoomPrivilegeEntity, ChatRoomErrorEntity>
     private let loadMessages: MEGADomain.ChatSourceEntity
     private let chatRoomMessageLoadedPublisher: AnyPublisher<MEGADomain.ChatMessageEntity?, Never>
     private let hasScheduledMeetingChange: Bool
@@ -43,6 +44,7 @@ public final class MockChatRoomRepository: ChatRoomRepositoryProtocol {
         message: MEGADomain.ChatMessageEntity? = nil,
         isChatRoomOpen: Bool = true,
         leaveChatRoom: Bool = true,
+        updateChatPrivilegeResult: Result<ChatRoomPrivilegeEntity, ChatRoomErrorEntity> = .failure(.generic),
         loadMessages: MEGADomain.ChatSourceEntity = .local,
         chatRoomMessageLoadedPublisher: AnyPublisher<MEGADomain.ChatMessageEntity?, Never> = Empty().eraseToAnyPublisher(),
         hasScheduledMeetingChange: Bool = false
@@ -64,6 +66,7 @@ public final class MockChatRoomRepository: ChatRoomRepositoryProtocol {
         self.message = message
         self.isChatRoomOpen = isChatRoomOpen
         self.leaveChatRoom = leaveChatRoom
+        self.updateChatPrivilegeResult = updateChatPrivilegeResult
         self.loadMessages = loadMessages
         self.chatRoomMessageLoadedPublisher = chatRoomMessageLoadedPublisher
         self.hasScheduledMeetingChange = hasScheduledMeetingChange
@@ -173,6 +176,15 @@ public final class MockChatRoomRepository: ChatRoomRepositoryProtocol {
     }
     
     public func updateChatPrivilege(chatRoom: MEGADomain.ChatRoomEntity, userHandle: MEGADomain.HandleEntity, privilege: MEGADomain.ChatRoomPrivilegeEntity) {
+    }
+    
+    public func updateChatPrivilege(chatRoom: ChatRoomEntity, userHandle: HandleEntity, privilege: ChatRoomPrivilegeEntity) async throws -> ChatRoomPrivilegeEntity {
+        switch updateChatPrivilegeResult {
+        case .success(let privilege):
+            return privilege
+        case .failure(let error):
+            throw error
+        }
     }
     
     public func invite(toChat chat: MEGADomain.ChatRoomEntity, userId: MEGADomain.HandleEntity) {

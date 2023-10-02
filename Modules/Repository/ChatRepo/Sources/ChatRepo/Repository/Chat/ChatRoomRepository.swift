@@ -14,7 +14,7 @@ public final class ChatRoomRepository: ChatRoomRepositoryProtocol {
     private var chatRoomMessageLoadedListeners = [ChatRoomMessageLoadedListener]()
     @Atomic private var openChatRooms = Set<HandleEntity>()
     
-    private init(sdk: MEGAChatSdk) {
+    public init(sdk: MEGAChatSdk) {
         self.sdk = sdk
     }
     
@@ -293,6 +293,26 @@ public final class ChatRoomRepository: ChatRoomRepositoryProtocol {
     
     public func updateChatPrivilege(chatRoom: ChatRoomEntity, userHandle: HandleEntity, privilege: ChatRoomPrivilegeEntity) {
         sdk.updateChatPermissions(chatRoom.chatId, userHandle: userHandle, privilege: privilege.toMEGAChatRoomPrivilege().rawValue)
+    }
+    
+    public func updateChatPrivilege(chatRoom: ChatRoomEntity, userHandle: HandleEntity, privilege: ChatRoomPrivilegeEntity) async throws -> ChatRoomPrivilegeEntity {
+        try await withAsyncThrowingValue { completion in
+            let delegate = ChatRequestDelegate { result in
+                switch result {
+                case .success(let request):
+                    let peerPrivilege = MEGAChatRoomPrivilege(rawValue: request.privilege)?.toOwnPrivilegeEntity() ?? .unknown
+                    completion(.success(peerPrivilege))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+            sdk.updateChatPermissions(
+                chatRoom.chatId,
+                userHandle: userHandle,
+                privilege: privilege.toMEGAChatRoomPrivilege().rawValue,
+                delegate: delegate
+            )
+        }
     }
     
     public func invite(toChat chat: ChatRoomEntity, userId: HandleEntity) {
