@@ -2,6 +2,7 @@ import MEGASwiftUI
 import SwiftUI
 
 public struct AdsSlotView<T: View>: View {
+    @Environment(\.verticalSizeClass) var verticalSizeClass
     @StateObject var viewModel: AdsSlotViewModel
     public let contentView: T
 
@@ -9,7 +10,7 @@ public struct AdsSlotView<T: View>: View {
         VStack(spacing: 0) {
             contentView
             
-            if viewModel.displayAds {
+            if viewModel.displayAds && verticalSizeClass != .compact {
                 AdsWebView(url: viewModel.adsUrl,
                            coordinatorViewModel: AdsWebViewCoordinatorViewModel(),
                            adsTapAction: {
