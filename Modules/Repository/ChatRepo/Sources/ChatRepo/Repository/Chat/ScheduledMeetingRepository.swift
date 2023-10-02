@@ -124,7 +124,7 @@ public final class ScheduledMeetingRepository: ScheduledMeetingRepositoryProtoco
     private func makeChatRequestDelegate(withCompletion completion: @escaping (Result<ScheduledMeetingEntity, any Error>) -> Void) -> ChatRequestDelegate {
         ChatRequestDelegate { result in
             if case .success(let request) = result {
-                guard let scheduledMeeting = request.scheduledMeetingList.first?.toScheduledMeetingEntity() else {
+                guard let scheduledMeeting = request.scheduledMeetingList?.first?.toScheduledMeetingEntity() else {
                     completion(.failure(ScheduleMeetingErrorEntity.scheduledMeetingNotFound))
                     return
                 }
