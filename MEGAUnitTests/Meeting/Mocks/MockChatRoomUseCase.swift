@@ -26,6 +26,7 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     var leaveChatRoomSuccess = false
     var ownPrivilegeChangedSubject = PassthroughSubject<HandleEntity, Never>()
     var updatedChatPrivilege: ((HandleEntity, ChatRoomPrivilegeEntity) -> Void)?
+    var updatedChatPrivilegeResult: Result<ChatRoomPrivilegeEntity, ChatRoomErrorEntity> = .failure(.generic)
     var invitedToChat: ((HandleEntity) -> Void)?
     var removedFromChat: ((HandleEntity) -> Void)?
     var chatSourceEntity: ChatSourceEntity = .error
@@ -138,6 +139,15 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     
     func updateChatPrivilege(chatRoom: ChatRoomEntity, userHandle: HandleEntity, privilege: ChatRoomPrivilegeEntity) {
         updatedChatPrivilege?(userHandle, privilege)
+    }
+    
+    func updateChatPrivilege(chatRoom: ChatRoomEntity, userHandle: HandleEntity, privilege: ChatRoomPrivilegeEntity) async throws -> ChatRoomPrivilegeEntity {
+        switch updatedChatPrivilegeResult {
+        case .success(let privilege):
+            return privilege
+        case .failure(let error):
+            throw error
+        }
     }
     
     func invite(toChat chat: ChatRoomEntity, userId: HandleEntity) {

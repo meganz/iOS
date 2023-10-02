@@ -25,6 +25,7 @@ public protocol ChatRoomUseCaseProtocol {
     func closeChatRoomPreview(chatRoom: ChatRoomEntity)
     func leaveChatRoom(chatRoom: ChatRoomEntity) async -> Bool
     func updateChatPrivilege(chatRoom: ChatRoomEntity, userHandle: HandleEntity, privilege: ChatRoomPrivilegeEntity)
+    func updateChatPrivilege(chatRoom: ChatRoomEntity, userHandle: HandleEntity, privilege: ChatRoomPrivilegeEntity) async throws -> ChatRoomPrivilegeEntity
     func invite(toChat chat: ChatRoomEntity, userId: HandleEntity)
     func remove(fromChat chat: ChatRoomEntity, userId: HandleEntity)
     func loadMessages(for chatRoom: ChatRoomEntity, count: Int) -> ChatSourceEntity
@@ -160,6 +161,10 @@ public struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol>: ChatRoomUseCasePro
     
     public func updateChatPrivilege(chatRoom: ChatRoomEntity, userHandle: HandleEntity, privilege: ChatRoomPrivilegeEntity) {
         chatRoomRepo.updateChatPrivilege(chatRoom: chatRoom, userHandle: userHandle, privilege: privilege)
+    }
+    
+    public func updateChatPrivilege(chatRoom: ChatRoomEntity, userHandle: HandleEntity, privilege: ChatRoomPrivilegeEntity) async throws -> ChatRoomPrivilegeEntity {
+        try await chatRoomRepo.updateChatPrivilege(chatRoom: chatRoom, userHandle: userHandle, privilege: privilege)
     }
     
     public func invite(toChat chat: ChatRoomEntity, userId: HandleEntity) {
