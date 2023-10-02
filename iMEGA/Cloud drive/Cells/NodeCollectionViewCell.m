@@ -18,8 +18,6 @@ static NSString *kFileSize = @"kFileSize";
 
 @property (weak, nonatomic) IBOutlet UIView *topNodeIconsView;
 
-@property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
-@property (weak, nonatomic) IBOutlet UIImageView *thumbnailIconView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UIView *labelView;
 @property (weak, nonatomic) IBOutlet UIImageView *labelImageView;
@@ -175,17 +173,6 @@ static NSString *kFileSize = @"kFileSize";
         self.infoLabel.text = [NSString memoryStyleStringFromByteCount:[item[kFileSize] longLongValue]];
         NSString *extension = nameString.pathExtension.lowercaseString;
         
-        if (!handleString) {
-            NSString *fpLocal = [sdk fingerprintForFilePath:pathForItem];
-            if (fpLocal) {
-                MEGANode *node = [sdk nodeForFingerprint:fpLocal];
-                if (node) {
-                    handleString = node.base64Handle;
-                    [[MEGAStore shareInstance] insertOfflineNode:node api:sdk path:[[Helper pathRelativeToOfflineDirectory:pathForItem] decomposedStringWithCanonicalMapping]];
-                }
-            }
-        }
-        
         NSString *thumbnailFilePath = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
         thumbnailFilePath = [thumbnailFilePath stringByAppendingPathComponent:handleString];
         
@@ -211,6 +198,9 @@ static NSString *kFileSize = @"kFileSize";
             self.thumbnailIconView.hidden = NO;
             [self.thumbnailIconView setImage:[NodeAssetsManager.shared imageFor:extension]];
             self.thumbnailImageView.image = nil;
+            
+            NSURL *url = [NSURL fileURLWithPath:pathForItem];
+            [self setThumbnailWithUrl:url];
         }
         
     }

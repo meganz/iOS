@@ -50,13 +50,42 @@ final class FileAttributeGeneratorTests: XCTestCase {
         XCTAssertFalse(result, "Preview creation should fail")
     }
     
+    func testFetchThumbnail_whenGenerationSucceeds_shouldReturnImage() async {
+        let mockRepresentation = MockThumbnailRepresentation()
+        mockRepresentation._uiImage = UIImage(systemName: "folder.fill")
+        let mockGenerator = MockThumbnailGenerator()
+        mockGenerator._representation = mockRepresentation
+        
+        let sut = FileAttributeGenerator(sourceURL: sourceURL, qlThumbnailGenerator: mockGenerator)
+        
+        let result = await sut.requestThumbnail()
+        
+        XCTAssertNotNil(result)
+    }
+    
+    func testFetchThumbnail_whenGenerationFails_shouldReturnNil() async {
+        let mockGenerator = MockThumbnailGenerator()
+        mockGenerator._error = NSError(domain: "TestErrorDomain", code: 123, userInfo: nil)
+        
+        let sut = FileAttributeGenerator(sourceURL: sourceURL, qlThumbnailGenerator: mockGenerator)
+        
+        let result = await sut.requestThumbnail()
+        
+        XCTAssertNil(result)
+    }
+    
     // MARK: - Mock Classes
     
     class MockThumbnailRepresentation: QLThumbnailRepresentation {
         var _cgImage: CGImage?
+        var _uiImage: UIImage?
         
         override var cgImage: CGImage {
             return _cgImage!
+        }
+        
+        override var uiImage: UIImage {
+            return _uiImage!
         }
     }
     
