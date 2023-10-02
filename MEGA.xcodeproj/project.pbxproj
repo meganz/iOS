@@ -1326,6 +1326,8 @@
 		996A49022A8CBDAE00264298 /* MeetingInfoViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996A49012A8CBDAE00264298 /* MeetingInfoViewModel+Additions.swift */; };
 		996F742C2A794B9D007209F0 /* MeetingInfoWaitingRoomSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996F74242A794219007209F0 /* MeetingInfoWaitingRoomSettingView.swift */; };
 		996F742D2A794BAB007209F0 /* ScheduleMeetingCreationWaitingRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996F74272A794270007209F0 /* ScheduleMeetingCreationWaitingRoomView.swift */; };
+		998379312ACA408800A9A439 /* ChatRoomParticipantViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998379302ACA408800A9A439 /* ChatRoomParticipantViewModelTests.swift */; };
+		998379342ACA417100A9A439 /* ChatRoomParticipantViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998379332ACA417100A9A439 /* ChatRoomParticipantViewModel+Additions.swift */; };
 		9986031E2A78AA1800D39A20 /* SendToViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996309C52A78A61300382C38 /* SendToViewController+Additions.swift */; };
 		9986031F2A78AA1900D39A20 /* SendToViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996309C52A78A61300382C38 /* SendToViewController+Additions.swift */; };
 		99A27DA72AC1312900587B60 /* ChatContentViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A27DA62AC1312900587B60 /* ChatContentViewModel+Additions.swift */; };
@@ -3884,6 +3886,8 @@
 		996A49012A8CBDAE00264298 /* MeetingInfoViewModel+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MeetingInfoViewModel+Additions.swift"; sourceTree = "<group>"; };
 		996F74242A794219007209F0 /* MeetingInfoWaitingRoomSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingInfoWaitingRoomSettingView.swift; sourceTree = "<group>"; };
 		996F74272A794270007209F0 /* ScheduleMeetingCreationWaitingRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationWaitingRoomView.swift; sourceTree = "<group>"; };
+		998379302ACA408800A9A439 /* ChatRoomParticipantViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomParticipantViewModelTests.swift; sourceTree = "<group>"; };
+		998379332ACA417100A9A439 /* ChatRoomParticipantViewModel+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatRoomParticipantViewModel+Additions.swift"; sourceTree = "<group>"; };
 		99A27DA62AC1312900587B60 /* ChatContentViewModel+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatContentViewModel+Additions.swift"; sourceTree = "<group>"; };
 		99D65D722A8BB5AE005D5877 /* WaitingRoomControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomControlsView.swift; sourceTree = "<group>"; };
 		99D65D762A8C699A005D5877 /* WaitingRoomUserAvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomUserAvatarView.swift; sourceTree = "<group>"; };
@@ -11384,6 +11388,7 @@
 			isa = PBXGroup;
 			children = (
 				990AC4EF2A4ABEB7008E298F /* ChatRoomLinkViewModel+Additions.swift */,
+				998379332ACA417100A9A439 /* ChatRoomParticipantViewModel+Additions.swift */,
 				BF89C8A32947259B00710FD1 /* ChatRoomViewModel+Additions.swift */,
 				BFD4E22A2935F73C0011392C /* FutureMeetingRoomViewModel+Additions.swift */,
 				BFE3B9F1285838A7003949FF /* MeetingContainerViewModel+Additions.swift */,
@@ -11735,6 +11740,7 @@
 				BF8895AA2630F1AB002A18CA /* Mocks */,
 				BFC060F428A0C2DB00BA2AD7 /* Utils */,
 				990AC4EC2A4A77EC008E298F /* ChatRoomLinkViewModelTests.swift */,
+				998379302ACA408800A9A439 /* ChatRoomParticipantViewModelTests.swift */,
 				BF89C8A12947254B00710FD1 /* ChatRoomViewModelTests.swift */,
 				BF2B2C81263F549D006E12A4 /* EndMeetingOptionsViewModelTests.swift */,
 				BFD4E2282935F67A0011392C /* FutureMeetingRoomViewModelTests.swift */,
@@ -15065,6 +15071,8 @@
 				9949C3662A72424C000C299B /* ChatRoomAvatarInitialsGeneratorTest.swift in Sources */,
 				990AC4F02A4ABEB7008E298F /* ChatRoomLinkViewModel+Additions.swift in Sources */,
 				990AC4ED2A4A77EC008E298F /* ChatRoomLinkViewModelTests.swift in Sources */,
+				998379342ACA417100A9A439 /* ChatRoomParticipantViewModel+Additions.swift in Sources */,
+				998379312ACA408800A9A439 /* ChatRoomParticipantViewModelTests.swift in Sources */,
 				BFFB13332908A55F00A6B2CA /* ChatRoomsListViewModel+Additions.swift in Sources */,
 				8336E3F92906B449000F1E9F /* ChatRoomsListViewModelTests.swift in Sources */,
 				BF89C8A42947259B00710FD1 /* ChatRoomViewModel+Additions.swift in Sources */,

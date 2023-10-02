@@ -91,6 +91,8 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 
 @property (assign, nonatomic, getter=areCredentialsVerified) BOOL credentialsVerified;
 
+@property (assign, nonatomic) MEGAChatRoomPrivilege peerPrivilege;
+
 @end
 
 @implementation ContactDetailsViewController
@@ -126,6 +128,10 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     self.videoLabel.text = LocalizedString(@"Video", @"Title of the button in the contact info screen to start a video call");
         
     self.userNickname = self.user.mnz_nickname;
+    
+    if (self.groupChatRoom) {
+        self.peerPrivilege = [self.groupChatRoom peerPrivilegeByHandle:self.userHandle];
+    }
     
     if (self.contactDetailsMode == ContactDetailsModeFromChat || self.contactDetailsMode == ContactDetailsModeFromGroupChat) {
         MEGAChatRoom *chatRoom = self.groupChatRoom ?: self.chatRoom;
@@ -356,8 +362,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsPermissionsTypeID" forIndexPath:indexPath];
     cell.avatarImageView.image = [UIImage imageNamed:@"readWritePermissions"];
     cell.nameLabel.text = LocalizedString(@"permissions", @"Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder");
-    MEGAChatRoomPrivilege privilege = [self.groupChatRoom peerPrivilegeByHandle:self.userHandle];
-    switch (privilege) {
+    switch (self.peerPrivilege) {
         case MEGAChatRoomPrivilegeUnknown:
         case MEGAChatRoomPrivilegeRm:
             break;
@@ -434,12 +439,13 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
             [SVProgressHUD showErrorWithStatus:LocalizedString(error.name, @"")];
         } else {
             self.groupChatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:request.chatHandle];
+            self.peerPrivilege = request.privilege;
             [self.tableView reloadData];
         }
     }];
     __weak __typeof__(self) weakSelf = self;
     
-    MEGAChatRoomPrivilege privilege = [self.groupChatRoom peerPrivilegeByHandle:self.userHandle];
+    MEGAChatRoomPrivilege privilege = self.peerPrivilege;
     UIImageView *checkmarkImageView = [UIImageView.alloc initWithImage:[UIImage imageNamed:@"turquoise_checkmark"]];
 
     NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
@@ -793,8 +799,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
         [sections addObject:@(ContactDetailsSectionNicknameVerifyCredentials)];
     }
     
-    MEGAChatRoomPrivilege peerPrivilege = [self.groupChatRoom peerPrivilegeByHandle:self.userHandle];
-    if (self.groupChatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator && peerPrivilege >= MEGAChatRoomPrivilegeRo) {
+    if (self.groupChatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator && self.peerPrivilege >= MEGAChatRoomPrivilegeRo) {
         [sections addObjectsFromArray:@[@(ContactDetailsSectionSetPermission), @(ContactDetailsSectionRemoveParticipant)]];
     }
     
