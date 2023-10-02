@@ -41,7 +41,7 @@ if not gitlab_token:
     sys.exit(1)
 
 BASE_URL = "https://rest.api.transifex.com"
-GITLAB_URL = "https://code.developers.mega.co.nz/api/v4/projects/193/repository/files/Modules%2FPresentation%2FMEGAL10n%2FSources%2FMEGAL10n%2FResources%2FBase.lproj%2F$file/raw?ref=develop"
+GITLAB_URL = "https://code.developers.mega.co.nz/api/v4/projects/193/repository/files/$pathBase.lproj%2F$file/raw?ref=develop"
 PROJECT_ID = "o:meganz-1:p:ios-35"
 STORES_IOS_ID = "o:meganz-1:p:stores:r:app_store_ios"
 HEADER = {
@@ -53,9 +53,43 @@ REMAPPED_CODE = {
     "zh_TW": "zh-Hant",
 }
 I18N_FORMAT = ["STRINGS", "STRINGSDICT"]
-RESERVED_RESOURCES = ["Localizable", "InfoPlist", "Plurals", "Changelogs", "LTHPasscodeViewController"]
+
+# Wrapper to read content from file
+def file_get_contents(filepath):
+    with open(filepath, "r") as file:
+        content = file.read()
+    return content
+
 DOWNLOAD_FOLDER = os.getcwd() + "/download/"
 git_path = os.getcwd()
+
+# Read in the config file to determine the RESERVED_RESOURCES values.
+def parse_strings_config(path):
+    global git_path
+    if not os.path.exists(path):
+        print("ERROR: Missing configuration file for strings resources")
+        sys.exit(1)
+
+    config = file_get_contents(path)
+    config = [line for line in config.split('\n') if line.strip()]
+    map = {}
+    for line in config:
+        tmp = line.split(" ")
+        if len(tmp) == 2 and "-" not in tmp[0]:
+            if os.path.exists(git_path + "/" + tmp[1]):
+                map[tmp[0]] = tmp[1]
+            else:
+                print("ERROR: The specified folder does not exist. " + git_path + "/" + tmp[1])
+        else:
+            print("ERROR: Invalid configuration: " + line)
+    if len(map.keys()) == 0:
+        print("ERROR: No valid configurations")
+        sys.exit(1)
+    return map
+
+config_map = parse_strings_config(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'ios-35-resources.conf'))
+RESERVED_RESOURCES = config_map.keys()
+
 if "/transifex" in git_path:
     git_path = git_path + "/.."
 PROD_FOLDER = git_path + "/Modules/Presentation/MEGAL10n/Sources/MEGAL10n/Resources/"
@@ -802,7 +836,8 @@ def resource_put_english(resource, content):
 def gitlab_download(resource, language = "Base"):
     if "LTHPasscodeViewController" in resource:
         return False
-    url = GITLAB_URL.replace("$file", get_file_basename(resource))
+    global config_map
+    url = GITLAB_URL.replace("$file", get_file_basename(resource)).replace("$path", config_map[resource].replace("/", "%2F"))
     if language != "Base":
         if language in REMAPPED_CODE:
             language = REMAPPED_CODE[language]
@@ -1460,18 +1495,12 @@ def indent_xml(lines):
 def store_file(resource, content, lang = "Base"):
     if lang in REMAPPED_CODE:
         lang = REMAPPED_CODE[lang]
-    file_path = PROD_FOLDER
-    if "LTHPasscodeViewController" in resource:
-        if lang == "Base":
-            file_path = git_path + "/iMEGA/Vendor/LTHPasscodeViewController/Localizations/LTHPasscodeViewController.bundle/" + lang + ".lproj/LTHPasscodeViewController.strings"
-        else:
-            file_path = DOWNLOAD_FOLDER + "LTHPasscodeViewController.strings-" + lang
-    elif "InfoPlist" in resource:
-        file_path = git_path + "/iMEGA/Languages/" + lang + ".lproj/" + get_file_basename(resource)
+    if resource in RESERVED_RESOURCES:
+        file_path = get_reserved_resource_path(resource) + lang + ".lproj/" + get_file_basename(resource)
     elif "Changelogs" in resource:
         file_path = DOWNLOAD_FOLDER + "Changelogs.strings-" + lang
     else:
-        file_path += lang + ".lproj/" + get_file_basename(resource)
+        file_path = PROD_FOLDER + lang + ".lproj/" + get_file_basename(resource)
     print("Saving file " + file_path)
     file_put_contents(file_path, content)
     if lang == "Base" and ("Localizable" in resource or "InfoPlist" in resource or "Plurals" in resource):
@@ -1481,12 +1510,6 @@ def store_file(resource, content, lang = "Base"):
 def file_put_contents(filepath, content):
     with open(filepath, "w") as file:
         return file.write(content) > 0
-
-# Wrapper to read content from file
-def file_get_contents(filepath):
-    with open(filepath, "r") as file:
-        content = file.read()
-    return content
 
 # Call this function to return a resource name based on the current git branch
 def get_branch_name():
@@ -1501,10 +1524,22 @@ def get_branch_name():
 
 # Call this function to return the general file name for the given resource
 def get_file_basename(resource):
-    if "Plurals" in resource:
-        return resource.replace("Plurals", "Localizable") + ".stringsdict"
+    if "-" in resource:
+        if "Plurals" in resource:
+            return resource.replace("Plurals", "Localizable") + ".stringsdict"
+        else:
+            return resource + ".strings"
     else:
-        return resource + ".strings"
+        if "Plurals" in resource:
+            return "Localizable.stringsdict"
+        elif "Localizable" in resource:
+            return "Localizable.strings"
+        elif "InfoPlist" in resource:
+            return "InfoPlist.strings"
+        else: 
+            print("WARN: Unexpected resource name. Cannot retrieve base file name for " + resource)
+            print("Defaulting to Localizable.strings")
+            return "Localizable.strings"
 
 # Call this function to log errors from the Transifex API
 def print_error(errors):
@@ -1539,6 +1574,17 @@ def run_upload_stores(content):
     else:
         print("Error: No file content present")
         return False
+    
+# Return the path to store the strings files for the given RESERVED_RESOURCES resource.
+def get_reserved_resource_path(resource):
+    global config_map
+    global git_path
+
+    if resource not in config_map:
+        print("ERROR: Resource not configured in resources.conf: " + resource)
+        sys.exit(1)
+    
+    return git_path + "/" + config_map[resource]
 
 # Parses arguments and runs relevant mode
 def main():
@@ -1551,7 +1597,20 @@ def main():
     parser.add_argument("-b", "--branch", nargs="?", help="The Transifex branch resource to perform the action for", const=True, default=False)
     parser.add_argument("-f", "--file", nargs=1, help="The file to process or output to")
     parser.add_argument("-j", "--jira", nargs=1, help="The JIRA ticket id for the current branch e.g: IOS-1234")
+    parser.add_argument("-s", "--startPath", nargs=1, help="The start path in the repository where the strings files will be stored. e.g: /feature/")
     args = parser.parse_args()
+
+    global PROD_FOLDER
+    if args.startPath:
+        global git_path
+        if not os.path.isdir(git_path + args.startPath[0]):
+            print(git_path + args.startPath[0] + " is not a folder. Please ensure you entered the path correctly and the folder exists already")
+            os._exit(1)
+        PROD_FOLDER = git_path + args.startPath[0]
+    
+    if not os.path.isdir(PROD_FOLDER + "Base.lproj"):
+        os.makedirs(PROD_FOLDER + "Base.lproj")
+
     if args.jira:
         global jira_id
         jira_id = args.jira[0]
@@ -1583,17 +1642,14 @@ def main():
                 print("Error: Cannot update unspecified resource for develop/master branch")
             elif args.resource:
                 resource = args.resource[0]
-                file_name = get_file_basename(resource)
                 if "LTHPasscodeViewController" in resource:
                     file_path = git_path + "/iMEGA/Vendor/LTHPasscodeViewController/Localizations/LTHPasscodeViewController.bundle/Base.lproj/" + file_name
                     branch = False
                 elif "Changelogs" in resource:
                     file_path = DOWNLOAD_FOLDER + "Changelogs.strings-Base"
                     branch = False
-                elif "InfoPlist" in resource:
-                    file_path = git_path + "/iMEGA/Languages/" + "Base.lproj/" + file_name
                 else:
-                    file_path = PROD_FOLDER + "Base.lproj/" + file_name
+                    file_path = get_reserved_resource_path(resource) + "Base.lproj/" + get_file_basename(resource)
                 if args.file:
                     file_path = args.file[0]
                 if os.path.exists(file_path):
@@ -1679,17 +1735,14 @@ def main():
             print("Error: Cannot update unspecified resource for develop/master branch")
         elif args.resource:
             resource = args.resource[0]
-            file_name = get_file_basename(resource)
             if "LTHPasscodeViewController" in resource:
                 file_path = git_path + "/iMEGA/Vendor/LTHPasscodeViewController/Localizations/LTHPasscodeViewController.bundle/Base.lproj/" + file_name
                 branch = False
             elif "Changelogs" in resource:
                 file_path = DOWNLOAD_FOLDER + "Changelogs.strings-Base"
                 branch = False
-            elif "InfoPlist" in resource:
-                file_path = git_path + "/iMEGA/Languages/" + "Base.lproj/" + file_name
             else:
-                file_path = PROD_FOLDER + "Base.lproj/" + file_name
+                file_path = get_reserved_resource_path(resource) + "Base.lproj/" + get_file_basename(resource)
             if args.file:
                 file_path = args.file[0]
             if os.path.exists(file_path):
