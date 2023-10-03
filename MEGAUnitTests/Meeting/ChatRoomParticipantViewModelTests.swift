@@ -104,6 +104,27 @@ final class ChatRoomParticipantViewModelTests: XCTestCase {
         }
     }
     
+    func testChatParticipantTapped_onDidUpdatePariticipantPrivilegeInDetailScreen_shouldUpdateParticipantPrivilege() {
+        let router = MockMeetingInfoRouter()
+        router.didUpdatePeerPermissionResult = .readOnly
+        let chatUseCase = MockChatUseCase(myUserHandle: 1)
+        let chatRoomUserUseCase = MockChatRoomUserUseCase(userEmail: .success("Participant Email"))
+        let chatRoom = ChatRoomEntity(ownPrivilege: .standard)
+        let sut = ChatRoomParticipantViewModel(
+            router: router,
+            chatRoomUserUseCase: chatRoomUserUseCase,
+            chatUseCase: chatUseCase,
+            chatParticipantId: 2,
+            chatRoom: chatRoom
+        )
+        
+        sut.chatParticipantTapped()
+        
+        evaluate {
+            sut.participantPrivilege == .readOnly
+        }
+    }
+    
     // MARK: - Private methods.
 
     private func evaluate(isInverted: Bool = false, expression: @escaping () -> Bool) {
