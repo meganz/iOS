@@ -136,7 +136,10 @@ final class ChatRoomParticipantViewModel: ObservableObject, Identifiable {
         Task { @MainActor in
             do {
                 let participantEmail = try await chatRoomUserUseCase.userEmail(forUserHandle: chatParticipantId)
-                router.showParticipantDetails(email: participantEmail, userHandle: chatParticipantId, chatRoom: chatRoom)
+                router.showParticipantDetails(email: participantEmail, userHandle: chatParticipantId, chatRoom: chatRoom) { [weak self] peerPrivilege in
+                    guard let self else { return }
+                    participantPrivilege = peerPrivilege
+                }
             } catch {
                 MEGALogError("Email for participant handle: \(chatParticipantId) not found")
             }

@@ -109,7 +109,7 @@ final class MeetingInfoRouter: NSObject, MeetingInfoRouting {
         SVProgressHUD.show(Asset.Images.Hud.hudSuccess.image, status: Strings.Localizable.Meetings.Info.ShareOptions.ShareLink.linkCopied)
     }
     
-    func showParticipantDetails(email: String, userHandle: HandleEntity, chatRoom: ChatRoomEntity) {
+    func showParticipantDetails(email: String, userHandle: HandleEntity, chatRoom: ChatRoomEntity, didUpdatePeerPermission: @escaping (ChatRoomParticipantPrivilege) -> Void) {
         guard let contactDetailsVC = UIStoryboard(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "ContactDetailsViewControllerID") as? ContactDetailsViewController else {
             return
         }
@@ -117,6 +117,9 @@ final class MeetingInfoRouter: NSObject, MeetingInfoRouting {
         contactDetailsVC.userEmail = email
         contactDetailsVC.userHandle = userHandle
         contactDetailsVC.groupChatRoom = chatRoom.toMEGAChatRoom()
+        contactDetailsVC.didUpdatePeerPermission = { peerPrivilege in
+            didUpdatePeerPermission(peerPrivilege.toOwnPrivilegeEntity().toChatRoomParticipantPrivilege())
+        }
         
         presenter.pushViewController(contactDetailsVC, animated: true)
     }
