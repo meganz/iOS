@@ -104,6 +104,7 @@ final class MockMeetingInfoRouter: MeetingInfoRouting {
     var showNoAvailableContactsAlert_calledTimes = 0
     var editMeeting_calledTimes = 0
     var editMeetingPublisher = PassthroughSubject<ScheduledMeetingEntity, Never>()
+    var didUpdatePeerPermissionResult: ChatRoomParticipantPrivilege?
     
     func showSharedFiles(for chatRoom: MEGADomain.ChatRoomEntity) {
         showSharedFiles_calledTimes += 1
@@ -137,8 +138,11 @@ final class MockMeetingInfoRouter: MeetingInfoRouting {
         showLinkCopied_calledTimes += 1
     }
     
-    func showParticipantDetails(email: String, userHandle: MEGADomain.HandleEntity, chatRoom: MEGADomain.ChatRoomEntity) {
+    func showParticipantDetails(email: String, userHandle: MEGADomain.HandleEntity, chatRoom: MEGADomain.ChatRoomEntity, didUpdatePeerPermission: @escaping (ChatRoomParticipantPrivilege) -> Void) {
         showParticipantDetails_calledTimes += 1
+        if let didUpdatePeerPermissionResult {
+            didUpdatePeerPermission(didUpdatePeerPermissionResult)
+        }
     }
     
     func inviteParticipants(withParticipantsAddingViewFactory participantsAddingViewFactory: ParticipantsAddingViewFactory, excludeParticipantsId: Set<HandleEntity>, selectedUsersHandler: @escaping (([HandleEntity]) -> Void)) {

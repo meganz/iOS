@@ -440,6 +440,9 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
         } else {
             self.groupChatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:request.chatHandle];
             self.peerPrivilege = request.privilege;
+            if (self.didUpdatePeerPermission) {
+                self.didUpdatePeerPermission(request.privilege);
+            }
             [self.tableView reloadData];
         }
     }];
