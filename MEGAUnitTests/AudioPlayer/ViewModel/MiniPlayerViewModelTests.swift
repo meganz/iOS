@@ -240,6 +240,7 @@ final class MiniPlayerViewModelTests: XCTestCase {
         let mockPlaybackContinuationUseCase = MockPlaybackContinuationUseCase()
         let mockNodeInfoUseCase = MockNodeInfoUseCase()
         let mockStreamingInfoUseCase = MockStreamingInfoUseCase()
+        let mockAudioPlayerUseCase = MockAudioPlayerUseCase()
         
         let sut = MiniPlayerViewModel(
             configEntity: audioPlayerConfigEntity(
@@ -254,6 +255,7 @@ final class MiniPlayerViewModelTests: XCTestCase {
             streamingInfoUseCase: mockStreamingInfoUseCase,
             offlineInfoUseCase: OfflineFileInfoUseCase(offlineInfoRepository: MockOfflineInfoRepository()),
             playbackContinuationUseCase: mockPlaybackContinuationUseCase,
+            audioPlayerUseCase: mockAudioPlayerUseCase,
             dispatchQueue: TestDispatchQueue(label: "\(type(of: MiniPlayerViewModelTests.self)).preparePlayerQueue")
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)

@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 import MEGADomain
 import MEGAFoundation
@@ -82,7 +83,9 @@ final class AudioPlayerViewModel: ViewModelType {
     private let streamingInfoUseCase: (any StreamingInfoUseCaseProtocol)?
     private let offlineInfoUseCase: (any OfflineFileInfoUseCaseProtocol)?
     private let playbackContinuationUseCase: any PlaybackContinuationUseCaseProtocol
+    private let audioPlayerUseCase: any AudioPlayerUseCaseProtocol
     private let dispatchQueue: any DispatchQueueProtocol
+    private let sdk: MEGASdk
     private var repeatItemsState: RepeatMode {
         didSet {
             invokeCommand?(.updateRepeat(status: repeatItemsState))
@@ -101,6 +104,8 @@ final class AudioPlayerViewModel: ViewModelType {
     }
     private(set) var isSingleTrackPlayer: Bool = false
     
+    private var subscriptions = Set<AnyCancellable>()
+    
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
     var checkAppIsActive: () -> Bool = {
@@ -114,16 +119,23 @@ final class AudioPlayerViewModel: ViewModelType {
          streamingInfoUseCase: (any StreamingInfoUseCaseProtocol)? = nil,
          offlineInfoUseCase: (any OfflineFileInfoUseCaseProtocol)? = nil,
          playbackContinuationUseCase: any PlaybackContinuationUseCaseProtocol,
-         dispatchQueue: some DispatchQueueProtocol = DispatchQueue.global()) {
+         audioPlayerUseCase: some AudioPlayerUseCaseProtocol,
+         dispatchQueue: some DispatchQueueProtocol = DispatchQueue.global(),
+         sdk: MEGASdk = MEGASdk.shared
+    ) {
         self.configEntity = configEntity
         self.router = router
         self.nodeInfoUseCase = nodeInfoUseCase
         self.streamingInfoUseCase = streamingInfoUseCase
         self.offlineInfoUseCase = offlineInfoUseCase
         self.playbackContinuationUseCase = playbackContinuationUseCase
+        self.audioPlayerUseCase = audioPlayerUseCase
         self.repeatItemsState = configEntity.playerHandler.currentRepeatMode()
         self.speedModeState = configEntity.playerHandler.currentSpeedMode()
         self.dispatchQueue = dispatchQueue
+        self.sdk = sdk
+        
+        self.setupUpdateItemSubscription()
     }
     
     // MARK: - Private functions
@@ -187,7 +199,7 @@ final class AudioPlayerViewModel: ViewModelType {
             updateTracksActionStatus(enabled: tracks.count > 1)
             isSingleTrackPlayer = tracks.count == 1
         case .fileLink:
-            invokeCommand?(.configureFileLinkPlayer(title: currentTrack.name, subtitle: Strings.Localizable.fileLink))
+            invokeCommand?(.configureFileLinkPlayer(title: currentTrack.preferredName, subtitle: Strings.Localizable.fileLink))
         }
     }
     
@@ -335,6 +347,12 @@ final class AudioPlayerViewModel: ViewModelType {
     func dispatch(_ action: AudioPlayerAction) {
         switch action {
         case .onViewDidLoad:
+            Task {
+                await audioPlayerUseCase.registerMEGADelegate()
+            }
+            if configEntity.allNodes == nil {
+                configEntity.allNodes = configEntity.playerHandler.playerPlaylistItems()?.compactMap(\.node)
+            }
             if shouldInitializePlayer() {
                 invokeCommand?(.showLoading(true))
                 dispatchQueue.async(qos: .userInteractive) {
@@ -428,6 +446,9 @@ final class AudioPlayerViewModel: ViewModelType {
             configEntity.playerHandler.removePlayer(listener: self)
             if !configEntity.playerHandler.isPlayerDefined() {
                 streamingInfoUseCase?.stopServer()
+            }
+            Task {
+                await audioPlayerUseCase.unregisterMEGADelegate()
             }
         }
     }
@@ -529,5 +550,44 @@ extension AudioPlayerViewModel: AudioPlayerObserversProtocol {
             playbackContinuationUseCase.setPreference(to: .resumePreviousSession)
             configEntity.playerHandler.playerResumePlayback(from: playbackTime)
         }
+    }
+}
+
+extension AudioPlayerViewModel {
+    
+    private func setupUpdateItemSubscription() {
+        audioPlayerUseCase.reloadItemPublisher()
+            .sink(receiveValue: { [weak self] nodes in
+                self?.onNodesUpdate(nodes)
+            })
+            .store(in: &subscriptions)
+    }
+    
+    private func onNodesUpdate(_ nodeList: [NodeEntity]) {
+        guard
+            nodeList.count > 0,
+            let updatedNode = nodeList.first,
+            let allNodes = configEntity.allNodes
+        else {
+            return
+        }
+        
+        let shouldRefreshItem = allNodes.contains { $0.handle == updatedNode.handle }
+        guard shouldRefreshItem else { return }
+        
+        refreshItem(updatedNode)
+    }
+    
+    private func refreshItem(_ updatedNode: NodeEntity) {
+        guard let node = updatedNode.toMEGANode(in: sdk) else { return }
+        
+        let dataSourceCommand = AudioPlayerItemDataSourceCommand(configEntity: configEntity)
+        dataSourceCommand.executeRefreshItemDataSource(with: node)
+        
+        refreshItemUI(with: node)
+    }
+    
+    private func refreshItemUI(with updatedNode: MEGANode) {
+        reloadNodeInfoWithCurrentItem()
     }
 }
