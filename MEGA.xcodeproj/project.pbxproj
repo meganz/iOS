@@ -1018,6 +1018,10 @@
 		8394EB972643E5200064F741 /* MockRemoteVideoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8394EB962643E5200064F741 /* MockRemoteVideoUseCase.swift */; };
 		8395FE3124E2C1FD00B1C952 /* UIAlertController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8395FE3024E2C1FC00B1C952 /* UIAlertController+Additions.swift */; };
 		8396AB4127BBDD5600C71291 /* ImportNodeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8396AB4027BBDD5600C71291 /* ImportNodeRepository.swift */; };
+		8396E2962ACACB5C00C83102 /* WaitingRoomParticipantViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8396E2952ACACB5C00C83102 /* WaitingRoomParticipantViewModel.swift */; };
+		8396E2982ACACB9300C83102 /* WaitingRoomParticipantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8396E2972ACACB9300C83102 /* WaitingRoomParticipantView.swift */; };
+		8396E2A32ACB0C9700C83102 /* WaitingRoomParticipantsListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8396E2A22ACB0C9700C83102 /* WaitingRoomParticipantsListViewModelTests.swift */; };
+		8396E2A62ACB0D0000C83102 /* WaitingRoomParticipantViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8396E2A52ACB0D0000C83102 /* WaitingRoomParticipantViewModelTests.swift */; };
 		839999DB264AE52700520F38 /* MeetingOptionsMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839999DA264AE52700520F38 /* MeetingOptionsMenuViewController.swift */; };
 		839999ED264AE54A00520F38 /* MeetingOptionsMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839999EC264AE54A00520F38 /* MeetingOptionsMenuViewModel.swift */; };
 		839999F7264AE6A300520F38 /* MeetingOptionsMenuRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839999F6264AE6A300520F38 /* MeetingOptionsMenuRouter.swift */; };
@@ -1082,6 +1086,11 @@
 		83C9CE7D2A278F750009549B /* RecurrenceOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C9CE7C2A278F750009549B /* RecurrenceOptionView.swift */; };
 		83C9CE7F2A278FC90009549B /* ScheduleMeetingEndRecurrenceOptionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C9CE7E2A278FC90009549B /* ScheduleMeetingEndRecurrenceOptionsViewModel.swift */; };
 		83C9CE812A278FE20009549B /* ScheduleMeetingEndRecurrenceOptionsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83C9CE802A278FE20009549B /* ScheduleMeetingEndRecurrenceOptionsRouter.swift */; };
+		83CB60E72AC58A6C00042EBD /* SeeAllParticipantsInWaitingRoomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CB60E52AC58A6C00042EBD /* SeeAllParticipantsInWaitingRoomTableViewCell.swift */; };
+		83CB60E82AC58A6C00042EBD /* SeeAllParticipantsInWaitingRoomTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83CB60E62AC58A6C00042EBD /* SeeAllParticipantsInWaitingRoomTableViewCell.xib */; };
+		83CB60EE2AC58F9E00042EBD /* WaitingRoomParticipantsListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CB60ED2AC58F9E00042EBD /* WaitingRoomParticipantsListRouter.swift */; };
+		83CB60F32AC5952500042EBD /* WaitingRoomParticipantsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CB60F22AC5952500042EBD /* WaitingRoomParticipantsListViewModel.swift */; };
+		83CB60F62AC5953100042EBD /* WaitingRoomParticipantsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CB60F52AC5953100042EBD /* WaitingRoomParticipantsListView.swift */; };
 		83CBA3E127A81A85005F0FD5 /* CancellableTransferRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CCBC3D2795954E00B90EF2 /* CancellableTransferRouter.swift */; };
 		83CBA3E227A81A85005F0FD5 /* CancellableTransferControllerWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CCBC3C2795954E00B90EF2 /* CancellableTransferControllerWrapper.swift */; };
 		83CBA3E327A81A85005F0FD5 /* CancellableTransferViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CCBC3E2795954E00B90EF2 /* CancellableTransferViewModel.swift */; };
@@ -3603,6 +3612,10 @@
 		8394EB962643E5200064F741 /* MockRemoteVideoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRemoteVideoUseCase.swift; sourceTree = "<group>"; };
 		8395FE3024E2C1FC00B1C952 /* UIAlertController+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertController+Additions.swift"; sourceTree = "<group>"; };
 		8396AB4027BBDD5600C71291 /* ImportNodeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportNodeRepository.swift; sourceTree = "<group>"; };
+		8396E2952ACACB5C00C83102 /* WaitingRoomParticipantViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomParticipantViewModel.swift; sourceTree = "<group>"; };
+		8396E2972ACACB9300C83102 /* WaitingRoomParticipantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomParticipantView.swift; sourceTree = "<group>"; };
+		8396E2A22ACB0C9700C83102 /* WaitingRoomParticipantsListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomParticipantsListViewModelTests.swift; sourceTree = "<group>"; };
+		8396E2A52ACB0D0000C83102 /* WaitingRoomParticipantViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomParticipantViewModelTests.swift; sourceTree = "<group>"; };
 		839999DA264AE52700520F38 /* MeetingOptionsMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingOptionsMenuViewController.swift; sourceTree = "<group>"; };
 		839999EC264AE54A00520F38 /* MeetingOptionsMenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingOptionsMenuViewModel.swift; sourceTree = "<group>"; };
 		839999F6264AE6A300520F38 /* MeetingOptionsMenuRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingOptionsMenuRouter.swift; sourceTree = "<group>"; };
@@ -3662,6 +3675,11 @@
 		83C9CE7C2A278F750009549B /* RecurrenceOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurrenceOptionView.swift; sourceTree = "<group>"; };
 		83C9CE7E2A278FC90009549B /* ScheduleMeetingEndRecurrenceOptionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingEndRecurrenceOptionsViewModel.swift; sourceTree = "<group>"; };
 		83C9CE802A278FE20009549B /* ScheduleMeetingEndRecurrenceOptionsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingEndRecurrenceOptionsRouter.swift; sourceTree = "<group>"; };
+		83CB60E52AC58A6C00042EBD /* SeeAllParticipantsInWaitingRoomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeeAllParticipantsInWaitingRoomTableViewCell.swift; sourceTree = "<group>"; };
+		83CB60E62AC58A6C00042EBD /* SeeAllParticipantsInWaitingRoomTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SeeAllParticipantsInWaitingRoomTableViewCell.xib; sourceTree = "<group>"; };
+		83CB60ED2AC58F9E00042EBD /* WaitingRoomParticipantsListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomParticipantsListRouter.swift; sourceTree = "<group>"; };
+		83CB60F22AC5952500042EBD /* WaitingRoomParticipantsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomParticipantsListViewModel.swift; sourceTree = "<group>"; };
+		83CB60F52AC5953100042EBD /* WaitingRoomParticipantsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomParticipantsListView.swift; sourceTree = "<group>"; };
 		83CCBC3C2795954E00B90EF2 /* CancellableTransferControllerWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CancellableTransferControllerWrapper.swift; sourceTree = "<group>"; };
 		83CCBC3D2795954E00B90EF2 /* CancellableTransferRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CancellableTransferRouter.swift; sourceTree = "<group>"; };
 		83CCBC3E2795954E00B90EF2 /* CancellableTransferViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CancellableTransferViewModel.swift; sourceTree = "<group>"; };
@@ -8725,6 +8743,15 @@
 			path = Chat/Cells;
 			sourceTree = "<group>";
 		};
+		8396E2932ACACB4800C83102 /* WaitingRoomParticipant */ = {
+			isa = PBXGroup;
+			children = (
+				8396E2972ACACB9300C83102 /* WaitingRoomParticipantView.swift */,
+				8396E2952ACACB5C00C83102 /* WaitingRoomParticipantViewModel.swift */,
+			);
+			path = WaitingRoomParticipant;
+			sourceTree = "<group>";
+		};
 		8396FBC525D6894D00EB50FD /* User */ = {
 			isa = PBXGroup;
 			children = (
@@ -8762,6 +8789,7 @@
 				83B804C52AB89772006B356F /* ParticipantNotInCall */,
 				8365B2A12AB855F40057489A /* ParticipantsListSelector */,
 				BF66DFDD2613E7BE00066F35 /* ParticpantCell */,
+				83CB60E42AC58A3000042EBD /* SeeAllParticipantsInWaitingRoom */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -8932,6 +8960,26 @@
 			path = TitleView;
 			sourceTree = "<group>";
 		};
+		83CB60E42AC58A3000042EBD /* SeeAllParticipantsInWaitingRoom */ = {
+			isa = PBXGroup;
+			children = (
+				83CB60E52AC58A6C00042EBD /* SeeAllParticipantsInWaitingRoomTableViewCell.swift */,
+				83CB60E62AC58A6C00042EBD /* SeeAllParticipantsInWaitingRoomTableViewCell.xib */,
+			);
+			path = SeeAllParticipantsInWaitingRoom;
+			sourceTree = "<group>";
+		};
+		83CB60EB2AC58EC600042EBD /* WaitingRoomParticipantsListScene */ = {
+			isa = PBXGroup;
+			children = (
+				8396E2932ACACB4800C83102 /* WaitingRoomParticipant */,
+				83CB60ED2AC58F9E00042EBD /* WaitingRoomParticipantsListRouter.swift */,
+				83CB60F52AC5953100042EBD /* WaitingRoomParticipantsListView.swift */,
+				83CB60F22AC5952500042EBD /* WaitingRoomParticipantsListViewModel.swift */,
+			);
+			path = WaitingRoomParticipantsListScene;
+			sourceTree = "<group>";
+		};
 		83CCBC3B2795954E00B90EF2 /* CancellableTransfer */ = {
 			isa = PBXGroup;
 			children = (
@@ -9064,6 +9112,7 @@
 				836651272649374B00BC02F0 /* ParticipantsLayout */,
 				2FFCF39E25FB1A1500E1718D /* StartMeetingScene */,
 				9911BA892A8B209F00B88F28 /* WaitingRoom */,
+				83CB60EB2AC58EC600042EBD /* WaitingRoomParticipantsListScene */,
 				831807B82AA222CB00C91119 /* CallWaitingRoomUsersDialog.swift */,
 				BF5455E82844377600544A53 /* EndCallDialog.swift */,
 				BF66E00826140BE900066F35 /* MeetingContainerRouter.swift */,
@@ -11771,6 +11820,8 @@
 				838E55402A2E00DF00C3C2F8 /* ScheduleMeetingEndRecurrenceOptionsViewModelTests.swift */,
 				BF695F942A3A96B200162E0D /* ScheduleMeetingSelectedFrequencyDetailsTests.swift */,
 				83751C5329E572DC0030310B /* ScheduleMeetingViewModelTests.swift */,
+				8396E2A22ACB0C9700C83102 /* WaitingRoomParticipantsListViewModelTests.swift */,
+				8396E2A52ACB0D0000C83102 /* WaitingRoomParticipantViewModelTests.swift */,
 				99FF30D12A8F16E6006CE3DB /* WaitingRoomViewModelTests.swift */,
 			);
 			path = Meeting;
@@ -12837,6 +12888,7 @@
 				BFC214812547C04800AD648A /* RichPreviewContentView.xib in Resources */,
 				5D79EDD5251C71B500C0307A /* SearchHintTableViewCell.xib in Resources */,
 				5D4244E1251305BD00EE544D /* SearchResultFileTableViewCell.xib in Resources */,
+				83CB60E82AC58A6C00042EBD /* SeeAllParticipantsInWaitingRoomTableViewCell.xib in Resources */,
 				5B82814A1E7BE8300079C1BB /* SelectableTableViewCell.xib in Resources */,
 				415226981A692ECC00EC7BB6 /* Settings.storyboard in Resources */,
 				9D3563E028B5568500CB3365 /* SettingsTableViewCell.xib in Resources */,
@@ -14429,6 +14481,7 @@
 				5D1B23F324AF335000ACE1C5 /* SecondaryThemeButtonTextColorFactory.swift in Sources */,
 				41AA1A1C1AC081C600D32691 /* SecurityOptionsTableViewController.m in Sources */,
 				9D3563D228B5506A00CB3365 /* SecuritySettingsViewRouter.swift in Sources */,
+				83CB60E72AC58A6C00042EBD /* SeeAllParticipantsInWaitingRoomTableViewCell.swift in Sources */,
 				83DE6D2129894956000503CC /* SeeMoreOccurrencesView.swift in Sources */,
 				8358334D294A1E3200394F1A /* SeeMoreParticipantsView.swift in Sources */,
 				5DC0FD4B24D8FB94004DB649 /* SegmentTitleView.swift in Sources */,
@@ -14654,6 +14707,11 @@
 				838838712A97769300148640 /* WaitingRoomEntity+Mapper.swift in Sources */,
 				992453F02A8DF8FF00ADB76B /* WaitingRoomJoinPanelView.swift in Sources */,
 				9911BA9C2A8B949200B88F28 /* WaitingRoomMessageView.swift in Sources */,
+				83CB60EE2AC58F9E00042EBD /* WaitingRoomParticipantsListRouter.swift in Sources */,
+				83CB60F62AC5953100042EBD /* WaitingRoomParticipantsListView.swift in Sources */,
+				83CB60F32AC5952500042EBD /* WaitingRoomParticipantsListViewModel.swift in Sources */,
+				8396E2982ACACB9300C83102 /* WaitingRoomParticipantView.swift in Sources */,
+				8396E2962ACACB5C00C83102 /* WaitingRoomParticipantViewModel.swift in Sources */,
 				99D65D772A8C699A005D5877 /* WaitingRoomUserAvatarView.swift in Sources */,
 				9911BA902A8B20DE00B88F28 /* WaitingRoomView.swift in Sources */,
 				9911BA8E2A8B20CD00B88F28 /* WaitingRoomViewController.swift in Sources */,
@@ -15274,6 +15332,8 @@
 				3289848A2A288FF20049CD40 /* UserAttributeUseCase+AdditionsTests.swift in Sources */,
 				B6AADE8E25183626009A874C /* VerificationCodeViewModelTests.swift in Sources */,
 				9961E7262A283030004FB05F /* VideoExplorerTableCellViewModelTests.swift in Sources */,
+				8396E2A32ACB0C9700C83102 /* WaitingRoomParticipantsListViewModelTests.swift in Sources */,
+				8396E2A62ACB0D0000C83102 /* WaitingRoomParticipantViewModelTests.swift in Sources */,
 				BFB889932A1598DB00FC456A /* WaitingRoomViewModel+Additions.swift in Sources */,
 				99487BCC2A8F328D00BE4685 /* WaitingRoomViewModelTests.swift in Sources */,
 				B5B0E30627F1BCA700DB6146 /* WarningViewModelTests.swift in Sources */,

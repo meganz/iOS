@@ -11,6 +11,7 @@ final class MeetingFloatingPanelViewController: UIViewController {
         static let viewMaxHeight: CGFloat = 800.0
         static let backgroundViewCornerRadius: CGFloat = 13.0
         static let dragIndicatorCornerRadius: CGFloat = 2.5
+        static let maxParticipantsToListInWaitingRoom = 4
     }
 
     @IBOutlet private weak var dragIndicatorView: UIView!
@@ -259,7 +260,11 @@ extension MeetingFloatingPanelViewController: UITableViewDataSource, UITableView
         case .invite:
             return callParticipantsListView.inviteSectionRow.count
         case .participants:
-            return callParticipants.count
+            if callParticipantsListView.selectedTab == .waitingRoom {
+                return callParticipants.count <= Constants.maxParticipantsToListInWaitingRoom ? callParticipants.count : Constants.maxParticipantsToListInWaitingRoom + 1
+            } else {
+                return callParticipants.count
+            }
         }
     }
     
@@ -296,7 +301,16 @@ extension MeetingFloatingPanelViewController: UITableViewDataSource, UITableView
             case .notInCall:
                 return participantNotInCallCell(at: indexPath)
             case .waitingRoom:
-                return participantInWaitingRoomCell(at: indexPath)
+                switch indexPath.row {
+                case Constants.maxParticipantsToListInWaitingRoom:
+                    guard let cell = tableView.dequeueReusableCell(withIdentifier: SeeAllParticipantsInWaitingRoomTableViewCell.reuseIdentifier, for: indexPath) as? SeeAllParticipantsInWaitingRoomTableViewCell else { return UITableViewCell() }
+                    cell.seeAllButtonTappedHandler = { [weak self] in
+                        self?.viewModel.dispatch(.seeMoreParticipantsInWaitingRoomTapped)
+                    }
+                    return cell
+                default:
+                    return participantInWaitingRoomCell(at: indexPath)
+                }
             }
         }
     }
@@ -333,6 +347,7 @@ extension MeetingFloatingPanelViewController: UITableViewDataSource, UITableView
         participantsTableView.register(ParticipantsListSelectorTableViewCell.nib, forCellReuseIdentifier: ParticipantsListSelectorTableViewCell.reuseIdentifier)
         participantsTableView.register(ParticipantNotInCallTableViewCell.nib, forCellReuseIdentifier: ParticipantNotInCallTableViewCell.reuseIdentifier)
         participantsTableView.register(ParticipantInWaitingRoomTableViewCell.nib, forCellReuseIdentifier: ParticipantInWaitingRoomTableViewCell.reuseIdentifier)
+        participantsTableView.register(SeeAllParticipantsInWaitingRoomTableViewCell.nib, forCellReuseIdentifier: SeeAllParticipantsInWaitingRoomTableViewCell.reuseIdentifier)
         participantsTableView.register(MeetingParticipantTableViewHeader.nib, forHeaderFooterViewReuseIdentifier: MeetingParticipantTableViewHeader.reuseIdentifier)
     }
     

@@ -3840,3 +3840,7 @@
 "home.search.empty.no-audio"="No audio files";
 /* Empty screen copy when Video filter is selected on the home screen search */
 "home.search.empty.no-videos"="No video files";
+/* A title label for waiting room participants list view. */
+"chat.call.waitingRoom.participantsList.title"="Waiting room";
+/* A button label to close the waiting room participants list view. */
+"chat.call.waitingRoom.participantsList.close"="Close";
