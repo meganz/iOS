@@ -25,6 +25,7 @@ protocol MeetingFloatingPanelRouting: AnyObject, Routing {
     func didDisplayParticipantInMainView(_ participant: CallParticipantEntity)
     func didSwitchToGridView()
     func showConfirmDenyAction(for username: String, isCallUIVisible: Bool, confirmDenyAction: @escaping () -> Void, cancelDenyAction: @escaping () -> Void)
+    func showWaitingRoomParticipantsList(for call: CallEntity)
 }
 
 extension MeetingFloatingPanelRouting {
@@ -188,6 +189,11 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     
     func showAudioPermissionError() {
         permissionRouter.alertAudioPermission(incomingCall: false)
+    }
+    
+    func showWaitingRoomParticipantsList(for call: CallEntity) {
+        guard let baseViewController else { return }
+        WaitingRoomParticipantsListRouter(presenter: baseViewController, call: call).start()
     }
     
     // MARK: - Private methods.

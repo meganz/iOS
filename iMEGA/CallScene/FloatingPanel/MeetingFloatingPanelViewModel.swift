@@ -26,6 +26,7 @@ enum MeetingFloatingPanelAction: ActionType {
     case onAdmitParticipantTap(participant: CallParticipantEntity)
     case onDenyParticipantTap(participant: CallParticipantEntity)
     case onAdmitAllParticipantsTap
+    case seeMoreParticipantsInWaitingRoomTapped
 }
 
 final class MeetingFloatingPanelViewModel: ViewModelType {
@@ -246,6 +247,9 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             denyParticipant(participant)
         case .onAdmitAllParticipantsTap:
             admitAllParticipants()
+        case .seeMoreParticipantsInWaitingRoomTapped:
+            guard let call else { return }
+            router.showWaitingRoomParticipantsList(for: call)
         }
     }
     
