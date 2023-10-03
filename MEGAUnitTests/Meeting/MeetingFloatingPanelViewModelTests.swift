@@ -970,6 +970,28 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         viewModel.dispatch(.allowNonHostToAddParticipants(enabled: true))
         waitForExpectations(timeout: 10)
     }
+    
+    func testAction_seeMoreParticipantsInWaitingRoomTapped_navigateToView() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .oneToOne)
+        let call = CallEntity()
+        let router = MockMeetingFloatingPanelRouter()
+        let callUseCase = MockCallUseCase(call: call)
+        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase, callCoordinatorUseCase: MockCallCoordinatorUseCase())
+        let viewModel = MeetingFloatingPanelViewModel(router: router,
+                                                      containerViewModel: containerViewModel,
+                                                      chatRoom: chatRoom,
+                                                      isSpeakerEnabled: false,
+                                                      callCoordinatorUseCase: MockCallCoordinatorUseCase(),
+                                                      callUseCase: callUseCase,
+                                                      audioSessionUseCase: MockAudioSessionUseCase(),
+                                                      permissionHandler: makeDevicePermissionHandler(),
+                                                      captureDeviceUseCase: MockCaptureDeviceUseCase(),
+                                                      localVideoUseCase: MockCallLocalVideoUseCase(),
+                                                      accountUseCase: MockAccountUseCase())
+        
+        test(viewModel: viewModel, action: .seeMoreParticipantsInWaitingRoomTapped, expectedCommands: [])
+        XCTAssert(router.showWaitingRoomParticipantsList_calledTimes == 1)
+    }
 }
 
 final class MockMeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
@@ -984,6 +1006,7 @@ final class MockMeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     var showNoAvailableContactsAlert_CalledTimes = 0
     var invitedParticipantHandles: [HandleEntity]?
     var showConfirmDenyAction_calledTimes = 0
+    var showWaitingRoomParticipantsList_calledTimes = 0
 
     var viewModel: MeetingFloatingPanelViewModel? {
         return nil
@@ -1038,5 +1061,9 @@ final class MockMeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     
     func showConfirmDenyAction(for username: String, isCallUIVisible: Bool, confirmDenyAction: @escaping () -> Void, cancelDenyAction: @escaping () -> Void) {
         showConfirmDenyAction_calledTimes += 1
+    }
+    
+    func showWaitingRoomParticipantsList(for call: CallEntity) {
+        showWaitingRoomParticipantsList_calledTimes += 1
     }
 }
