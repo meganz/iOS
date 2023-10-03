@@ -256,6 +256,14 @@
         "identifier" : "AccountsTests",
         "name" : "AccountsTests"
       }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Modules\/Repository\/ChatRepo",
+        "identifier" : "ChatRepoTests",
+        "name" : "ChatRepoTests"
+      }
     }
   ],
   "version" : 1
