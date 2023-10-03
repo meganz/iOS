@@ -256,6 +256,7 @@ final class MiniPlayerViewModel_AudioPlayerObserversProtocolTests: XCTestCase {
     ) {
         let mockRouter = MockMiniPlayerViewRouter()
         let mockPlayerHandler = MockAudioPlayerHandler()
+        let mockAudioPlayerUseCase = MockAudioPlayerUseCase()
         let sut = MiniPlayerViewModel(
             configEntity: AudioPlayerConfigEntity(
                 node: nil,
@@ -268,7 +269,8 @@ final class MiniPlayerViewModel_AudioPlayerObserversProtocolTests: XCTestCase {
             nodeInfoUseCase: NodeInfoUseCase(nodeInfoRepository: MockNodeInfoRepository()),
             streamingInfoUseCase: StreamingInfoUseCase(streamingInfoRepository: MockStreamingInfoRepository()),
             offlineInfoUseCase: OfflineFileInfoUseCase(offlineInfoRepository: MockOfflineInfoRepository()),
-            playbackContinuationUseCase: playbackContinuationUseCase
+            playbackContinuationUseCase: playbackContinuationUseCase,
+            audioPlayerUseCase: mockAudioPlayerUseCase
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return (sut, playbackContinuationUseCase, mockPlayerHandler)

@@ -1,6 +1,6 @@
 import MEGADomain
 
-struct AudioPlayerConfigEntity {
+class AudioPlayerConfigEntity {
     // Nodes, File Links, Folder Links
     var node: MEGANode?
     var isFolderLink = false
@@ -23,6 +23,30 @@ struct AudioPlayerConfigEntity {
     // Common properties
     var playerHandler: any AudioPlayerHandlerProtocol
     var shouldResetPlayer = false
+    
+    init(
+        node: MEGANode? = nil,
+        isFolderLink: Bool = false,
+        fileLink: String? = nil,
+        messageId: HandleEntity? = nil,
+        chatId: HandleEntity? = nil,
+        relatedFiles: [String]? = nil,
+        parentNode: MEGANode? = nil,
+        allNodes: [MEGANode]? = nil,
+        playerHandler: some AudioPlayerHandlerProtocol,
+        shouldResetPlayer: Bool = false
+    ) {
+        self.node = node
+        self.isFolderLink = isFolderLink
+        self.fileLink = fileLink
+        self.messageId = messageId
+        self.chatId = chatId
+        self.relatedFiles = relatedFiles
+        self.parentNode = parentNode
+        self.allNodes = allNodes
+        self.playerHandler = playerHandler
+        self.shouldResetPlayer = shouldResetPlayer
+    }
     
     var isFileLink: Bool {
         fileLink != nil && relatedFiles == nil

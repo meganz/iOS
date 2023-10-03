@@ -286,7 +286,8 @@ import MEGAPresentation
                         configEntity: configEntity,
                         router: router,
                         offlineInfoUseCase: OfflineFileInfoUseCase(offlineInfoRepository: OfflineInfoRepository()),
-                        playbackContinuationUseCase: DIContainer.playbackContinuationUseCase
+                        playbackContinuationUseCase: DIContainer.playbackContinuationUseCase, 
+                        audioPlayerUseCase: AudioPlayerUseCase(repository: AudioPlayerRepository(sdk: .shared))
                     )
                 } else {
                     return AudioPlayerViewModel(
@@ -294,7 +295,8 @@ import MEGAPresentation
                         router: router,
                         nodeInfoUseCase: NodeInfoUseCase(nodeInfoRepository: NodeInfoRepository()),
                         streamingInfoUseCase: StreamingInfoUseCase(streamingInfoRepository: StreamingInfoRepository()),
-                        playbackContinuationUseCase: DIContainer.playbackContinuationUseCase
+                        playbackContinuationUseCase: DIContainer.playbackContinuationUseCase,
+                        audioPlayerUseCase: AudioPlayerUseCase(repository: AudioPlayerRepository(sdk: .shared))
                     )
                 }
             }
@@ -313,7 +315,8 @@ import MEGAPresentation
             
             guard player != nil else { return }
             
-            miniPlayerRouter = MiniPlayerViewRouter(configEntity: AudioPlayerConfigEntity(node: node, isFolderLink: isFolderLink, fileLink: fileLink, relatedFiles: filePaths, playerHandler: self, shouldResetPlayer: shouldResetPlayer), presenter: presenter)
+            let allNodes = currentPlayer()?.tracks.compactMap(\.node)
+            miniPlayerRouter = MiniPlayerViewRouter(configEntity: AudioPlayerConfigEntity(node: node, isFolderLink: isFolderLink, fileLink: fileLink, relatedFiles: filePaths, allNodes: allNodes, playerHandler: self, shouldResetPlayer: shouldResetPlayer), presenter: presenter)
             
             miniPlayerVC = nil
             
