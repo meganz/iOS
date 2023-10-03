@@ -329,6 +329,15 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         wait(for: [exception], timeout: 5)
     }
     
+    func testArchivedChatsTapped_underTheChatListTab_shouldShowArchivedChatRooms() {
+        let router = MockChatRoomsListRouter()
+        let sut = ChatRoomsListViewModel(router: router)
+        
+        sut.archivedChatsTapped()
+        
+        XCTAssertEqual(router.showArchivedChatRooms_calledTimes, 1)
+    }
+    
     // MARK: - Private methods
     
     private func assertContactsOnMegaViewStateWhenSelectedChatMode(isAuthorizedToAccessPhoneContacts: Bool, description: String, line: UInt = #line) {
