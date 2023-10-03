@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="eDp-9x-QPr">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="eDp-9x-QPr">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Chat Rooms View Controller-->
+        <!--Archived Chat Rooms View Controller-->
         <scene sceneID="u3Q-Re-YbU">
             <objects>
-                <viewController storyboardIdentifier="ChatRoomsViewControllerID" extendedLayoutIncludesOpaqueBars="YES" definesPresentationContext="YES" id="Li1-XI-VLz" customClass="ChatRoomsViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ArchivedChatRoomsViewControllerID" extendedLayoutIncludesOpaqueBars="YES" definesPresentationContext="YES" id="Li1-XI-VLz" customClass="ArchivedChatRoomsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lqj-pM-q0p">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

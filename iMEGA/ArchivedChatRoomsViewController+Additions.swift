@@ -3,7 +3,7 @@ import MEGAL10n
 import MEGAPermissions
 import MEGASDKRepo
 
-extension ChatRoomsViewController: ChatMenuDelegate, MeetingContextMenuDelegate {
+extension ArchivedChatRoomsViewController: ChatMenuDelegate, MeetingContextMenuDelegate {
     
     private func contextMenuConfiguration() -> CMConfigEntity {
         CMConfigEntity(menuType: .menu(type: .chat),
@@ -107,7 +107,7 @@ extension ChatRoomsViewController: ChatMenuDelegate, MeetingContextMenuDelegate 
     }
     
     func archivedChatsTapped() {
-        guard let archivedChatRoomsViewController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "ChatRoomsViewControllerID") as? ChatRoomsViewController else { return }
+        guard let archivedChatRoomsViewController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "ArchivedChatRoomsViewControllerID") as? ArchivedChatRoomsViewController else { return }
         archivedChatRoomsViewController.chatRoomsType = .archived
         navigationController?.pushViewController(archivedChatRoomsViewController, animated: true)
     }

@@ -2,7 +2,7 @@ import MEGADomain
 import MEGAL10n
 import UIKit
 
-extension ChatRoomsViewController {
+extension ArchivedChatRoomsViewController {
     @objc func joinActiveCall(withChatRoom chatRoom: MEGAChatRoom) {
         guard let call = MEGAChatSdk.shared.chatCall(forChatId: chatRoom.chatId) else {
             return
@@ -56,7 +56,7 @@ extension ChatRoomsViewController {
     }
 }
 
-extension ChatRoomsViewController: PushNotificationControlProtocol {
+extension ArchivedChatRoomsViewController: PushNotificationControlProtocol {
     func presentAlertController(_ alert: UIAlertController) {
         present(alert, animated: true)
     }
