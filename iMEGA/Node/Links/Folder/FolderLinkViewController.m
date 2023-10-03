@@ -643,7 +643,7 @@
             if ([FileExtensionGroupOCWrapper verifyIsVisualMedia:node.name]) {
                 [self presentMediaNode:node];
             } else {
-                [node mnz_openNodeInNavigationController:self.navigationController folderLink:YES fileLink:nil messageId:nil chatId:nil allNodes:nil];
+                [node mnz_openNodeInNavigationController:self.navigationController folderLink:YES fileLink:nil messageId:nil chatId:nil allNodes:self.nodesArray];
             }
             break;
         }
