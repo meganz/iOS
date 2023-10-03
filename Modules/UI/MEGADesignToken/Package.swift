@@ -41,12 +41,7 @@ let package = Package(
         ),
         .testTarget(
             name: "MEGADesignTokenTests",
-            dependencies: [
-                "MEGADesignToken",
-                "TokenCodegenGenerator",
-                .product(name: "SwiftSyntax", package: "swift-syntax"),
-                .product(name: "SwiftSyntaxBuilder", package: "swift-syntax")
-            ]
+            dependencies: ["MEGADesignToken", "TokenCodegenGenerator"]
         )
     ]
 )

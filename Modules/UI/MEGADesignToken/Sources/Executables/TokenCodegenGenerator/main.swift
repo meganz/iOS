@@ -100,8 +100,8 @@ private func generateCoreColorMap(with coreJSONObject: [String: Any]) throws -> 
 }
 
 private func generateSemanticInput(with url: URL, using map: [String: ColorInfo], isDark: Bool) throws -> SemanticInput {
-    let jsonObject = try extractJSON(from: url)
-    let data = try extractColorData(from: jsonObject, using: map)
+    let jsonData = try Data(contentsOf: url)
+    let data = try extractColorData(from: jsonData, using: map)
 
     return isDark ? .dark(data) : .light(data)
 }

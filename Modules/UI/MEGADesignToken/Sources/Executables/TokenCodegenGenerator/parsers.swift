@@ -24,7 +24,7 @@ func parseInput(_ input: String) throws -> ParseInputPayload {
         .split(separator: ",")
         .map {
             String($0)
-                .deletingPrefix(" ")
+                .trimmingCharacters(in: .whitespaces)
         }
 
     guard parsed.count == 3 else {
@@ -87,7 +87,7 @@ func parseRGBA(_ rgbaString: String) -> RGBA? {
     let (red, blue, green, alpha) = (rgbaComponents[0], rgbaComponents[1], rgbaComponents[2], rgbaComponents[3])
 
     // Normalization
-    return .init(red: red / 255.0,  green: green / 255.0, blue: blue / 255.0, alpha: alpha)
+    return .init(red: red / 255.0, green: green / 255.0, blue: blue / 255.0, alpha: alpha)
 }
 
 ///  Parses a given hexadecimal color string into a struct containing normalized rgba values.
@@ -130,7 +130,7 @@ private let decoder = JSONDecoder()
 ///     or a dictionary containing color information (`ColorInfo`).
 ///
 ///     Example for the expected `JSON` structure - **NOTE**: It can be indefinitely nested.
-///     ```
+/// ```
 /// {
 ///     "Black opacity": {
 ///         "090": {
@@ -147,7 +147,7 @@ private let decoder = JSONDecoder()
 ///         }
 ///     }
 /// }
-///```
+/// ```
 ///   - path: The current nested path as a string, used for recursion. Defaults to an empty string.
 ///
 /// - Returns: A dictionary of type `[String: ColorInfo]` containing the flattened color information.
@@ -183,10 +183,10 @@ enum ExtractColorDataError: Error {
 /// Parses a given JSON dictionary to a nested structure containing semantic color information.
 ///
 /// - Parameters:
-///   - jsonObject: A dictionary with a string key and `Any` matching the expected JSON structure.
-///  
+///   - jsonData: A `Data` object matching the expected JSON structure.
+///
 ///     Example for the expected `JSON` structure - **NOTE**: It can be only be nested one level.
-///     ```
+/// ```
 /// {
 ///     "Focus": {
 ///         "--color-focus": {
@@ -205,26 +205,25 @@ enum ExtractColorDataError: Error {
 ///         }
 ///     }
 /// }
-///```
+/// ```
 ///   - flatMap: The flat `[String: ColorInfo]` map used for O(1) lookups, containing core color information.
 ///
 /// - Returns: A `ColorData` dictionary that contains the hierarchical structure of color categories and their corresponding color information.
 ///
-/// - Complexity: O(m) (for categories) + O(n) (for semantic keys) = O(m+n)
-func extractColorData(from jsonObject: [String: Any], using flatMap: [String: ColorInfo]) throws -> ColorData {
-    let jsonData = try JSONSerialization.data(withJSONObject: jsonObject, options: [])
+/// - Complexity: Let m be the number of categories and n be the average number of semantic keys per category - O(mn)
+func extractColorData(from jsonData: Data, using flatMap: [String: ColorInfo]) throws -> ColorData {
     var colorData = try decoder.decode(ColorData.self, from: jsonData)
 
     for (categoryKey, var categoryValue) in colorData {
         for (semanticKey, var semanticInfo) in categoryValue {
             let sanitizedValue = semanticInfo.value.sanitizeSemanticJSONKey()
             // O(1) lookup
-            if let coreColorInfo = flatMap[sanitizedValue] {
-                semanticInfo.value = coreColorInfo.value
-                categoryValue[semanticKey] = semanticInfo
-            } else {
-                throw ExtractColorDataError.inputIsWrong(reason: "Error: couldn't lookup ColorInfo for \(semanticKey) with value \(semanticInfo.value)")
+            guard let coreColorInfo = flatMap[sanitizedValue] else {
+                let reason = "Error: couldn't lookup ColorInfo for \(semanticKey) with value \(semanticInfo.value)"
+                throw ExtractColorDataError.inputIsWrong(reason: reason)
             }
+            semanticInfo.value = coreColorInfo.value
+            categoryValue[semanticKey] = semanticInfo
         }
         colorData[categoryKey] = categoryValue
     }
@@ -238,6 +237,19 @@ func extractColorData(from jsonObject: [String: Any], using flatMap: [String: Co
 ///   - jsonObject: A dictionary with a string key and `Any` matching the expected JSON structure.
 ///     The JSON should contain number information that `NumberData` can decode.
 ///
+///     Example for the expected `JSON` structure:
+/// ```
+/// {
+///     "--border-radius-circle": {
+///         "$type": "number",
+///         "$value": "0.5"
+///     },
+///     "--border-radius-extra-small": {
+///         "$type": "number",
+///         "$value": "2"
+///      }
+/// }
+///  ```
 /// - Throws:
 ///   - JSONSerialization errors: If the JSON object is not serializable.
 ///   - Decoding errors: If the JSON data can't be decoded into a `NumberData` object.

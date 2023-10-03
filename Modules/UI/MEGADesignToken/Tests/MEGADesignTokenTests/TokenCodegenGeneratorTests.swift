@@ -1,5 +1,5 @@
-import XCTest
 @testable import TokenCodegenGenerator
+import XCTest
 
 final class TokenCodegenGeneratorTests: XCTestCase {
     // MARK: - Parser methods tests
@@ -151,9 +151,10 @@ final class TokenCodegenGeneratorTests: XCTestCase {
                 ]
             ]
         ]
+        let jsonData = try JSONSerialization.data(withJSONObject: jsonObject, options: [])
         let flatMap = makeColorsFlatMap()
 
-        let colorData = try extractColorData(from: jsonObject, using: flatMap)
+        let colorData = try extractColorData(from: jsonData, using: flatMap)
 
         XCTAssertEqual(colorData["Text"]?["--color-text-inverse"]?.value, "#4B0082")
         XCTAssertEqual(colorData["Icon"]?["--color-icon-disable"]?.value, "#0000FF")
@@ -168,9 +169,10 @@ final class TokenCodegenGeneratorTests: XCTestCase {
                 ]
             ]
         ]
+        let jsonData = try JSONSerialization.data(withJSONObject: jsonObject, options: [])
         let flatMap = makeColorsFlatMap()
 
-        XCTAssertThrowsError(try extractColorData(from: jsonObject, using: flatMap)) { error in
+        XCTAssertThrowsError(try extractColorData(from: jsonData, using: flatMap)) { error in
             if let extractError = error as? ExtractColorDataError {
                 switch extractError {
                 case .inputIsWrong(let reason):
