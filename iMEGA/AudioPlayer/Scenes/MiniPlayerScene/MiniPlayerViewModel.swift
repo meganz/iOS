@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 import MEGADomain
 import MEGAFoundation
@@ -37,7 +38,11 @@ final class MiniPlayerViewModel: ViewModelType {
     private let streamingInfoUseCase: (any StreamingInfoUseCaseProtocol)?
     private let offlineInfoUseCase: (any OfflineFileInfoUseCaseProtocol)?
     private let playbackContinuationUseCase: any PlaybackContinuationUseCaseProtocol
+    private let audioPlayerUseCase: any AudioPlayerUseCaseProtocol
     private let dispatchQueue: any DispatchQueueProtocol
+    private let sdk: MEGASdk
+    
+    private var subscriptions = Set<AnyCancellable>()
     
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
@@ -49,6 +54,8 @@ final class MiniPlayerViewModel: ViewModelType {
          streamingInfoUseCase: (any StreamingInfoUseCaseProtocol)?,
          offlineInfoUseCase: (any OfflineFileInfoUseCaseProtocol)?,
          playbackContinuationUseCase: any PlaybackContinuationUseCaseProtocol,
+         audioPlayerUseCase: some AudioPlayerUseCaseProtocol,
+         sdk: MEGASdk = .shared,
          dispatchQueue: some DispatchQueueProtocol = DispatchQueue.global()) {
         self.configEntity = configEntity
         self.router = router
@@ -56,14 +63,21 @@ final class MiniPlayerViewModel: ViewModelType {
         self.streamingInfoUseCase = streamingInfoUseCase
         self.offlineInfoUseCase = offlineInfoUseCase
         self.playbackContinuationUseCase = playbackContinuationUseCase
+        self.audioPlayerUseCase = audioPlayerUseCase
         self.dispatchQueue = dispatchQueue
+        self.sdk = sdk
         self.shouldInitializePlayer = configEntity.shouldResetPlayer
+        
+        self.setupUpdateItemSubscription()
     }
     
     // MARK: - Dispatch action
     func dispatch(_ action: MiniPlayerAction) {
         switch action {
         case .onViewDidLoad:
+            Task {
+                await audioPlayerUseCase.registerMEGADelegate()
+            }
             invokeCommand?(.showLoading(shouldInitializePlayer))
             determinePlayerSetupOnViewDidLoad()
         case .onPlayPause:
@@ -257,6 +271,10 @@ final class MiniPlayerViewModel: ViewModelType {
         if configEntity.isFolderLink, !router.isAFolderLinkPresenter() {
             nodeInfoUseCase?.folderLinkLogout()
         }
+        
+        Task {
+            await audioPlayerUseCase.unregisterMEGADelegate()
+        }
     }
 }
 
@@ -312,5 +330,62 @@ extension MiniPlayerViewModel: AudioPlayerObserversProtocol {
             configEntity.playerHandler.playerResumePlayback(from: playbackTime)
         case .startFromBeginning: break
         }
+    }
+}
+
+extension MiniPlayerViewModel {
+    
+    private func setupUpdateItemSubscription() {
+        audioPlayerUseCase.reloadItemPublisher()
+            .sink(receiveValue: { [weak self] nodes in
+                self?.onNodesUpdate(nodes)
+            })
+            .store(in: &subscriptions)
+    }
+    
+    private func onNodesUpdate(_ nodeList: [NodeEntity]) {
+        guard
+            nodeList.count > 0,
+            let updatedNode = nodeList.first,
+            let allNodes = configEntity.allNodes
+        else {
+            return
+        }
+        
+        let shouldRefreshItem = allNodes.contains { $0.handle == updatedNode.handle }
+        guard shouldRefreshItem else { return }
+        
+        refreshItem(updatedNode)
+    }
+    
+    private func refreshItem(_ updatedEntity: NodeEntity) {
+        guard let node = updatedEntity.toMEGANode(in: sdk) else { return }
+        configEntity.node = node
+        
+        let dataSourceCommand = AudioPlayerItemDataSourceCommand(configEntity: configEntity)
+        dataSourceCommand.executeRefreshItemDataSource(with: node)
+        
+        refreshItemUI(with: node, updatedEntity: updatedEntity)
+    }
+    
+    private func refreshItemUI(with updatedNode: MEGANode, updatedEntity: NodeEntity) {
+        let isDisplayingCurrentItem = configEntity.playerHandler.playerCurrentItem()?.node?.handle == updatedEntity.handle
+        if isDisplayingCurrentItem {
+            guard let currentItem = currentItem(from: updatedNode) else { return }
+            invokeCommand?(.reload(currentItem: currentItem))
+        }
+    }
+    
+    private func currentItem(from updatedNode: MEGANode) -> AudioPlayerItem? {
+        guard
+            let currentPlayingNode = configEntity.node, updatedNode.handle == currentPlayingNode.handle,
+            let newNodeName = updatedNode.name ?? currentPlayingNode.name,
+            let currentItem = configEntity.playerHandler.playerCurrentItem()
+        else {
+            return nil
+        }
+        currentItem.name = newNodeName
+        currentItem.node = updatedNode
+        return currentItem
     }
 }

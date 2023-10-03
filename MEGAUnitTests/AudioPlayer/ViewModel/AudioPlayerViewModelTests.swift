@@ -247,9 +247,12 @@ final class AudioPlayerViewModelTests: XCTestCase {
         nodeInfoUseCase: (any NodeInfoUseCaseProtocol)? = nil,
         streamingInfoUseCase: (any StreamingInfoUseCaseProtocol)? = nil,
         offlineInfoUseCase: (any OfflineFileInfoUseCaseProtocol)? = nil,
-        router: MockAudioPlayerViewRouter
+        router: MockAudioPlayerViewRouter,
+        file: StaticString = #filePath,
+        line: UInt = #line
     ) -> (sut: AudioPlayerViewModel, playbackContinuationUseCase: MockPlaybackContinuationUseCase) {
         let mockPlaybackContinuationUseCase = MockPlaybackContinuationUseCase()
+        let mockAudioPlayerUseCase = MockAudioPlayerUseCase()
         let sut = AudioPlayerViewModel(
             configEntity: configEntity,
             router: router,
@@ -257,8 +260,10 @@ final class AudioPlayerViewModelTests: XCTestCase {
             streamingInfoUseCase: streamingInfoUseCase,
             offlineInfoUseCase: offlineInfoUseCase,
             playbackContinuationUseCase: mockPlaybackContinuationUseCase,
+            audioPlayerUseCase: mockAudioPlayerUseCase,
             dispatchQueue: MockDispatchQueue()
         )
+        trackForMemoryLeaks(on: sut, file: file, line: line)
         return (sut, mockPlaybackContinuationUseCase)
     }
     
