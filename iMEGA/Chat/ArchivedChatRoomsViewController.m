@@ -1,4 +1,4 @@
-#import "ChatRoomsViewController.h"
+#import "ArchivedChatRoomsViewController.h"
 #import <Contacts/Contacts.h>
 #import "UIScrollView+EmptyDataSet.h"
 #import "UIApplication+MNZCategory.h"
@@ -24,7 +24,7 @@
 @import MEGAL10nObjc;
 @import MEGAUIKit;
 
-@interface ChatRoomsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatDelegate, UIScrollViewDelegate, MEGAChatCallDelegate, UISearchControllerDelegate, PushNotificationControlProtocol, AudioPlayerPresenterProtocol>
+@interface ArchivedChatRoomsViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatDelegate, UIScrollViewDelegate, MEGAChatCallDelegate, UISearchControllerDelegate, PushNotificationControlProtocol, AudioPlayerPresenterProtocol>
 
 @property (weak, nonatomic) IBOutlet UIView *archivedChatEmptyState;
 @property (weak, nonatomic) IBOutlet UILabel *archivedChatEmptyStateTitle;
@@ -62,7 +62,7 @@
 
 @end
 
-@implementation ChatRoomsViewController
+@implementation ArchivedChatRoomsViewController
 
 #pragma mark - Lifecycle
 
@@ -835,7 +835,7 @@
 }
 
 - (IBAction)openArchivedChats:(id)sender {
-    ChatRoomsViewController *archivedChatRooms = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"ChatRoomsViewControllerID"];
+    ArchivedChatRoomsViewController *archivedChatRooms = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"ArchivedChatRoomsViewControllerID"];
     [self.navigationController pushViewController:archivedChatRooms animated:YES];
     archivedChatRooms.chatRoomsType = ChatRoomsTypeArchived;
 }

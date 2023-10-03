@@ -5,7 +5,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ChatRoomsViewController : UIViewController
+@interface ArchivedChatRoomsViewController : UIViewController
 
 @property (assign, nonatomic) ChatRoomsType chatRoomsType;
 @property (nonatomic, strong, nullable) MyAvatarManager *myAvatarManager;

@@ -225,7 +225,7 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
     }
     
     func showArchivedChatRooms() {
-        guard let archivedChatRoomsViewController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "ChatRoomsViewControllerID") as? ChatRoomsViewController else {
+        guard let archivedChatRoomsViewController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "ArchivedChatRoomsViewControllerID") as? ArchivedChatRoomsViewController else {
             return
         }
         archivedChatRoomsViewController.chatRoomsType = .archived

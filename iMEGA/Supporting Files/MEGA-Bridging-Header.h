@@ -97,7 +97,7 @@
 #import "MEGANode.h"
 #import "PasswordView.h"
 #import "PasswordStrengthIndicatorView.h"
-#import "ChatRoomsViewController.h"
+#import "ArchivedChatRoomsViewController.h"
 #import "TransfersWidgetViewController.h"
 #import "PreviewDocumentViewController.h"
 #import "MEGAStartUploadTransferDelegate.h"
