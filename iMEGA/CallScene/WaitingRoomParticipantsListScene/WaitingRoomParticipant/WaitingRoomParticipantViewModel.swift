@@ -14,6 +14,7 @@ final class WaitingRoomParticipantViewModel: ObservableObject, Identifiable {
     let userAvatarViewModel: UserAvatarViewModel
 
     @Published var name: String = ""
+    @Published var showConfirmDenyAlert = false
 
     init(chatRoomUseCase: any ChatRoomUseCaseProtocol,
          chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol,
@@ -62,6 +63,10 @@ final class WaitingRoomParticipantViewModel: ObservableObject, Identifiable {
     }
     
     func denyTapped() {
+        showConfirmDenyAlert = true
+    }
+    
+    func confirmDenyTapped() {
         callUseCase.kickUsersFromCall(call, users: [waitingRoomParticipantId])
     }
 }

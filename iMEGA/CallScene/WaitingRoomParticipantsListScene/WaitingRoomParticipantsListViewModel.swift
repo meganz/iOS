@@ -52,6 +52,7 @@ final class WaitingRoomParticipantsListViewModel: ObservableObject {
     func admitAllTapped() {
         guard let sessionClientIds = call.waitingRoom?.sessionClientIds else { return }
         callUseCase.allowUsersJoinCall(call, users: sessionClientIds)
+        router.dismiss()
     }
     
     // MARK: - Private
@@ -61,7 +62,7 @@ final class WaitingRoomParticipantsListViewModel: ObservableObject {
         guard !Task.isCancelled else { return }
         
         if searchText.isNotEmpty {
-            displayWaitingRoomParticipants = waitingRoomParticipants.filter { $0.name.contains(searchText)}
+            displayWaitingRoomParticipants = waitingRoomParticipants.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
         } else {
             displayWaitingRoomParticipants = waitingRoomParticipants
         }
