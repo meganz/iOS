@@ -51,4 +51,8 @@ public struct MockBackupsUseCase: BackupsUseCaseProtocol {
     public func backupsRootNode() async throws -> NodeEntity {
         NodeEntity(name: "Backups", handle: 1)
     }
+    
+    public func parentsForBackupHandle(_ handle: HandleEntity) async -> [NodeEntity]? {
+        []
+    }
 }

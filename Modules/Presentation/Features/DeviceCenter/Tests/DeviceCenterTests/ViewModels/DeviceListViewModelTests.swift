@@ -399,7 +399,7 @@ final class DeviceListViewModelTests: XCTestCase {
                     type: .showInBackups
                 ),
                 DeviceCenterAction(
-                    type: .showInCD
+                    type: .showInCloudDrive
                 ),
                 DeviceCenterAction(
                     type: .sort

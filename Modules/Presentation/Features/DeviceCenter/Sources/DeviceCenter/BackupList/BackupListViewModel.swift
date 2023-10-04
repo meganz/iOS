@@ -173,7 +173,7 @@ public final class BackupListViewModel: ObservableObject {
         var actionTypes = [DeviceCenterActionType]()
         
         if backup.type == .cameraUpload || backup.type == .mediaUpload {
-            actionTypes.append(.showInCD)
+            actionTypes.append(.showInCloudDrive)
         } else {
             actionTypes.append(.showInBackups)
         }
