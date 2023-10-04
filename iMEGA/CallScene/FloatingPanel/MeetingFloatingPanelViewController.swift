@@ -438,4 +438,8 @@ extension MeetingFloatingPanelViewController: PanModalPresentable {
             return (view.frame.height - Constants.viewMaxHeight)
         }
     }
+    
+    var allowsExtendedPanScrolling: Bool {
+        true
+    }
 }

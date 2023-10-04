@@ -1,3 +1,4 @@
+import MEGAL10n
 import SwiftUI
 
 struct WaitingRoomParticipantView: View {
@@ -10,6 +11,35 @@ struct WaitingRoomParticipantView: View {
     }
     
     var body: some View {
+        if #available(iOS 15.0, *) {
+            contentView
+                .alert(Strings.Localizable.Chat.Call.WaitingRoom.Alert.Message.denyAccess(viewModel.name), isPresented: $viewModel.showConfirmDenyAlert) {
+                    Button { } label: {
+                        Text(Strings.Localizable.Chat.Call.WaitingRoom.Alert.Button.cancel)
+                    }
+                    Button {
+                        viewModel.confirmDenyTapped()
+                    } label: {
+                        Text(Strings.Localizable.Chat.Call.WaitingRoom.Alert.Button.confirmDeny)
+                    }
+                    .keyboardShortcut(.defaultAction)
+                }
+        } else {
+            contentView
+                .alert(isPresented: $viewModel.showConfirmDenyAlert) {
+                    Alert(title: Text(Strings.Localizable.Chat.Call.WaitingRoom.Alert.Message.denyAccess(viewModel.name)),
+                          primaryButton: .default(Text(Strings.Localizable.Chat.Call.WaitingRoom.Alert.Button.cancel)),
+                          secondaryButton: .default(
+                            Text(Strings.Localizable.Chat.Call.WaitingRoom.Alert.Button.confirmDeny),
+                            action: {
+                                viewModel.confirmDenyTapped()
+                            })
+                    )
+                }
+        }
+    }
+    
+    var contentView: some View {
         HStack {
             UserAvatarView(viewModel: viewModel.userAvatarViewModel, size: Constants.avatarViewSize)
             VStack {

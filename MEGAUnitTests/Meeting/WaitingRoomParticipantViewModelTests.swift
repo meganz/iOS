@@ -31,6 +31,21 @@ final class WaitingRoomParticipantViewModelTests: XCTestCase {
             call: CallEntity())
         
         viewModel.denyTapped()
+        XCTAssertTrue(viewModel.showConfirmDenyAlert == true)
+    }
+    
+    func testAction_confirmDenyTapped_kickUsersShouldBeCalled() {
+        let callUseCase = MockCallUseCase()
+        let viewModel = WaitingRoomParticipantViewModel(
+            chatRoomUseCase: MockChatRoomUseCase(),
+            chatRoomUserUseCase: MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Bob")),
+            chatUseCase: MockChatUseCase(),
+            callUseCase: callUseCase,
+            waitingRoomParticipantId: 100,
+            chatRoom: ChatRoomEntity(),
+            call: CallEntity())
+        
+        viewModel.confirmDenyTapped()
         XCTAssertTrue(callUseCase.kickUsersFromCall_CalledTimes == 1)
     }
 }
