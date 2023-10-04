@@ -56,20 +56,20 @@ final class FileVersioningViewModel: ViewModelType {
     // MARK: - Private
     
     private func viewLoaded() {
-        fileVersionsUseCase.isFileVersionsEnabled { [weak self] in
-            switch $0 {
-            case .success(let value):
-                self?.invokeCommand?(.updateSwitch(value))
-            case .failure(let error):
-                if error == .optionNeverSet {
-                    self?.invokeCommand?(.updateSwitch(true))
-                }
+        Task {
+            do {
+                let value = try await fileVersionsUseCase.isFileVersionsEnabled()
+                invokeCommand?(.updateSwitch(value))
+            } catch {
+                guard let error = error as? FileVersionErrorEntity, error == .optionNeverSet else { return }
+                invokeCommand?(.updateSwitch(true))
             }
-        }
+            
 #if MAIN_APP_TARGET
-        self.invokeCommand?(.updateFileVersions(fileVersionsUseCase.rootNodeFileVersionCount()))
-        self.invokeCommand?(.updateFileVersionsSize(fileVersionsUseCase.rootNodeFileVersionTotalSizeInBytes()))
+            invokeCommand?(.updateFileVersions(fileVersionsUseCase.rootNodeFileVersionCount()))
+            invokeCommand?(.updateFileVersionsSize(fileVersionsUseCase.rootNodeFileVersionTotalSizeInBytes()))
 #endif
+        }
     }
     
     private func disableFileVersions() {
@@ -83,24 +83,19 @@ final class FileVersioningViewModel: ViewModelType {
     }
     
     private func enableFileVersions(_ enable: Bool) {
-        fileVersionsUseCase.enableFileVersions(enable) { [weak self] in
-            switch $0 {
-            case .success(let enabled):
-                self?.invokeCommand?(.updateSwitch(enabled))
-            case .failure: break
-            }
+        Task {
+            guard let enabled = try? await fileVersionsUseCase.enableFileVersions(enable) else { return }
+            invokeCommand?(.updateSwitch(enabled))
         }
     }
     
     private func deletePreviousVersions() {
         router.showDeletePreviousVersionsAlert { [weak self] delete in
-            guard delete else { return }
-            self?.fileVersionsUseCase.deletePreviousFileVersions { [weak self] in
-                switch $0 {
-                case .success:
-                    self?.updateFileVersion()
-                case .failure: break
-                }
+            guard delete, let self else { return }
+            
+            Task {
+                guard ((try? await self.fileVersionsUseCase.deletePreviousFileVersions()) != nil) else { return }
+                self.updateFileVersion()
             }
         }
     }
