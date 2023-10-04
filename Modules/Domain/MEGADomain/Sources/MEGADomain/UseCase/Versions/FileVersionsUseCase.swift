@@ -1,9 +1,9 @@
 public protocol FileVersionsUseCaseProtocol {
-    func isFileVersionsEnabled(completion: @escaping (Result<Bool, FileVersionErrorEntity>) -> Void)
-    func enableFileVersions(_ enable: Bool, completion: @escaping (Result<Bool, FileVersionErrorEntity>) -> Void)
+    func isFileVersionsEnabled() async throws -> Bool
+    func enableFileVersions(_ enable: Bool) async throws -> Bool
     func rootNodeFileVersionCount() -> Int64
     func rootNodeFileVersionTotalSizeInBytes() -> Int64
-    func deletePreviousFileVersions(completion: @escaping (Result<Bool, FileVersionErrorEntity>) -> Void)
+    func deletePreviousFileVersions() async throws -> Bool
 }
 
 public struct FileVersionsUseCase<T: FileVersionsRepositoryProtocol>: FileVersionsUseCaseProtocol {
@@ -13,12 +13,12 @@ public struct FileVersionsUseCase<T: FileVersionsRepositoryProtocol>: FileVersio
         self.repo = repo
     }
     
-    public func isFileVersionsEnabled(completion: @escaping (Result<Bool, FileVersionErrorEntity>) -> Void) {
-        repo.isFileVersionsEnabled(completion: completion)
+    public func isFileVersionsEnabled() async throws -> Bool {
+        try await repo.isFileVersionsEnabled()
     }
     
-    public func enableFileVersions(_ enable: Bool, completion: @escaping (Result<Bool, FileVersionErrorEntity>) -> Void) {
-        repo.enableFileVersions(enable, completion: completion)
+    public func enableFileVersions(_ enable: Bool) async throws -> Bool {
+        try await repo.enableFileVersions(enable)
     }
     
     public func rootNodeFileVersionCount() -> Int64 {
@@ -28,8 +28,8 @@ public struct FileVersionsUseCase<T: FileVersionsRepositoryProtocol>: FileVersio
     public func rootNodeFileVersionTotalSizeInBytes() -> Int64 {
         repo.rootNodeFileVersionTotalSizeInBytes()
     }
-
-    public func deletePreviousFileVersions(completion: @escaping (Result<Bool, FileVersionErrorEntity>) -> Void) {
-        repo.deletePreviousFileVersions(completion: completion)
+    
+    public func deletePreviousFileVersions() async throws -> Bool {
+        try await repo.deletePreviousFileVersions()
     }
 }

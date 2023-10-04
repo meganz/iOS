@@ -1,7 +1,7 @@
 public protocol FileVersionsRepositoryProtocol: RepositoryProtocol {
-    func isFileVersionsEnabled(completion: @escaping (Result<Bool, FileVersionErrorEntity>) -> Void)
-    func enableFileVersions(_ enable: Bool, completion: @escaping (Result<Bool, FileVersionErrorEntity>) -> Void)
+    func isFileVersionsEnabled() async throws -> Bool
+    func enableFileVersions(_ enable: Bool) async throws -> Bool
     func rootNodeFileVersionCount() -> Int64
     func rootNodeFileVersionTotalSizeInBytes() -> Int64
-    func deletePreviousFileVersions(completion: @escaping (Result<Bool, FileVersionErrorEntity>) -> Void)
+    func deletePreviousFileVersions() async throws -> Bool
 }
