@@ -988,16 +988,6 @@
 "simplePasscodeLabel"="Mật Mã Đơn Giản";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Xóa dữ liệu được lưu";
-/* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="Tài khoản sẽ đăng xuất và tất cả tệp tin lưu về ngoại tuyến sẽ xóa khỏi máy sau 10 lần nhập sai mã";
-/* Button text to change the passcode type. */
-"Passcode Options"="Tùy Chọn Mật Mã";
-/* Action text to change to 4-Digit Numeric passcode type. */
-"4-Digit Numeric Code"="Mã 4 Số";
-/* Action text to change to 6-Digit Numeric passcode type. */
-"6-Digit Numeric Code"="Mã 6 Số";
-/* Action text to change to Custom Alphanumeric passcode type. */
-"Custom Alphanumeric Code"="Mã Chữ Số Tùy Ý";
 /* Menu item */
 "help"="Cần Trợ Giúp";
 /* Title of the section to access MEGA's help centre */
@@ -1291,7 +1281,7 @@
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="Gửi tin nhắn";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"="Chấp nhận chứng chỉ";
+"verifyCredentials"="Xác thực chứng thực";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
 "verify"="Chấp nhận";
 /* Button title */
@@ -2648,8 +2638,18 @@
 "meetings.panel.InviteParticipants"="Mời thêm thành viên";
 /* Meetings: Floating panel share link option */
 "meetings.panel.shareLink"="Chia sẻ đường liên kết";
-/* Meetings: Floating panel participants count header */
+/* Meetings: Floating panel participants list selector for participants in call */
+"meetings.panel.listSelector.inCall"="Đang trong cuộc gọi";
+/* Meetings: Floating panel participants list selector for participants not in call */
+"meetings.panel.listSelector.notInCall"="Ở ngoài cuộc gọi";
+/* Meetings: Floating panel participants list selector for participants in call */
+"meetings.panel.listSelector.inWaitingRoom"="Phòng chờ";
+/* Meetings: Floating panel participants in call count header */
 "meetings.panel.ParticipantsCount"="Thành viên (%d)";
+/* Meetings: Floating panel participants not in call count header */
+"meetings.panel.ParticipantsNotInCallCount"="Đang ở ngoài cuộc gọi (%d)";
+/* Meetings: Floating panel participants in waiting room count header */
+"meetings.panel.ParticipantsInWaitingRoomCount"="Đang chờ (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
 "meetings.participant.moderator"="Người chủ trì";
 /* Meetings: Action on a meeting that change participant's role to moderator */
@@ -3105,7 +3105,7 @@
 /* A log message in a chat to display that a participant's permission was changed to host role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep the [A], [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to host role by John Smith. */
 "chat.message.changedRole.host"="[B] đã đổi quyền hạn của [A] thành [S]người chủ trì[/S]";
 /* A log message in a chat to display that a participant's permission was changed to standard role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to standard role by John Smith. */
-"chat.message.changedRole.standard"="[B] đã đổi quyền hạn của [A] thành [S]thông thường[/S]";
+"chat.message.changedRole.standard"="[A] đã đổi thành [S]người tham gia thông thường[/S] bởi [B]";
 /* Type of data displayed in a map view. Standard imagery of the area. */
 "chat.sendLocation.map.standard"="Thường";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
@@ -3181,9 +3181,9 @@
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
 "sharedItems.contactVerification.section.verifyContact.receiver.message"="Chúng tôi bảo vệ dữ liệu của bạn bằng thuật toán mã hóa vô kiến thức. Để đảm bảo an toàn hơn, chúng tôi yêu cầu bạn xác thực các tên liên lạc mà bạn có nhận thông tin trước khi bạn truy cập vào các thư mục chia sẻ.";
 /* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
-"sharedItems.contactVerification.section.verifyContact.bannerMessage"="To access the shared folder, the person who shared it with you should verify you, too.";
+"sharedItems.contactVerification.section.verifyContact.bannerMessage"="Để có thể truy cập thư mục này, người chia sẻ thư mục này cho bạn cũng cần phải xác thực tin tưởng bạn.";
 /* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
-"sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ is shared by a contact you haven’t verified. To ensure extra security, we recommend that you verify their credentials in Contacts by tapping on ⓘ next to the contact you want to verify.";
+"sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ là mục được chia sẻ từ một tên liên lạc chưa được bạn xác thực tin tưởng. Để đảm bảo an toàn hơn, chúng tôi khuyên bạn nên xác thực chứng chỉ đăng nhập của họ trong Sổ Liên Lạc bằng cách nhấn vào ⓘ bên cạnh tên liên lạc bạn muốn xác thực.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="Chứng thực của bạn";
 /* Title of the header label in contact verification screen. */
@@ -3531,11 +3531,11 @@
 /* Show in Backups section action title */
 "device.center.show.in.backups.action.title"="Hiện trong Sao lưu dự phòng";
 /* Device Center rename device action title */
-"device.center.rename.device.title"="Device name";
+"device.center.rename.device.title"="Tên thiết bị";
 /* Device Center rename device action duplicated name message */
-"device.center.rename.device.duplicated.name"="A device with this name already exists";
+"device.center.rename.device.duplicated.name"="Đã có một thiết bị với tên này rồi.";
 /* Device Center rename device action enter a different name message */
-"device.center.rename.device.different.name"="Enter a different name";
+"device.center.rename.device.different.name"="Đặt một cái tên khác";
 /* Device Center camera upload status enabled */
 "device.center.camera.uploads.action.status.enabled"="Được kích hoạt";
 /* Device Center camera upload status disabled */
@@ -3729,7 +3729,7 @@
 /* Schedule meeting waiting room setting title */
 "meetings.scheduleMeeting.waitingRoom"="Phòng chờ";
 /* Schedule meeting waiting room setting description */
-"meetings.scheduleMeeting.waitingRoom.description"="Chỉ những người được người chủ trì thừa nhận mới có thể tham gia cuộc họp.";
+"meetings.scheduleMeeting.waitingRoom.description"="Chỉ những người tham gia được thừa nhận bởi người chủ trì mới có thể tham gia cuộc họp.";
 /* Schedule meeting waiting room warning banner title */
 "meetings.scheduleMeeting.waitingRoomWarningBanner.title"="Những người tham gia cuộc gọi được thêm bởi người không phải là người chủ trì sẽ không được chuyển đến phòng chờ.";
 /* Schedule meeting waiting room warning banner learn more */
@@ -3787,7 +3787,7 @@
 /* Meeting waiting room alert title of Host didn’t let you in */
 "meetings.waitingRoom.alert.hostDidNotLetYouIn"="Người chủ trì đã không cho bạn vào";
 /* Meeting waiting room alert message of You'll be removed from the waiting room */
-"meetings.waitingRoom.alert.youWillBeRemovedFromTheWaitingRoom"="You’ll be removed from the waiting room.";
+"meetings.waitingRoom.alert.youWillBeRemovedFromTheWaitingRoom"="Bạn sẽ được đưa ra khỏi phòng chờ.";
 /* Meeting waiting room alert title of Host didn’t respond */
 "meetings.waitingRoom.alert.hostDidNotRespond"="Người chủ trì không có trả lời";
 /* Meeting waiting room alert message of There is no response to your request to join the meeting */
@@ -3823,10 +3823,14 @@
 /* Empty screen copy when no filter is selected on the home screen search */
 "home.search.empty.no-chip-selected"="Không có kết quả";
 /* Empty screen copy when Images filter is selected on the home screen search */
-"home.search.empty.no-images"="No images";
+"home.search.empty.no-images"="Không có hình ảnh";
 /* Empty screen copy when Documents is selected on the home screen search */
-"home.search.empty.no-documents"="No documents";
+"home.search.empty.no-documents"="Không có tài liệu";
 /* Empty screen copy when Audio filter is selected on the home screen search */
-"home.search.empty.no-audio"="No audio files";
+"home.search.empty.no-audio"="Không có tệp tin âm thanh";
 /* Empty screen copy when Video filter is selected on the home screen search */
-"home.search.empty.no-videos"="No video files";
+"home.search.empty.no-videos"="Không có tệp tin video";
+/* A title label for waiting room participants list view. */
+"chat.call.waitingRoom.participantsList.title"="Phòng chờ";
+/* A button label to close the waiting room participants list view. */
+"chat.call.waitingRoom.participantsList.close"="Đóng";

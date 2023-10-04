@@ -721,7 +721,7 @@
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="Przesyłanie z kamery";
 /* Banner message on Camera Uploads that warns user that they have limited access to photos */
-"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA has limited access to your photo library and cannot backup all of your media. Tap to change permissions.";
+"cameraUploads.warning.limitedAccessToPhotoMessage"="MEGA ma ograniczony dostęp do biblioteki zdjęć i nie może tworzyć kopii zapasowych wszystkich multimediów. Wybierz, aby zmienić uprawnienia.";
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="Zdjęcia";
 /* Photo view is empty */
@@ -988,16 +988,6 @@
 "simplePasscodeLabel"="Prosty kod dostępu";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Usuń dane lokalne";
-/* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="Zostaniesz wylogowany, a Twoje pliki offline zostaną usunięte po 10 nieudanych próbach";
-/* Button text to change the passcode type. */
-"Passcode Options"="Opcje kodu dostępu";
-/* Action text to change to 4-Digit Numeric passcode type. */
-"4-Digit Numeric Code"="4-cyfrowy kod numeryczny";
-/* Action text to change to 6-Digit Numeric passcode type. */
-"6-Digit Numeric Code"="6-cyfrowy kod numeryczny";
-/* Action text to change to Custom Alphanumeric passcode type. */
-"Custom Alphanumeric Code"="Niestandardowy kod alfanumeryczny";
 /* Menu item */
 "help"="Pomoc";
 /* Title of the section to access MEGA's help centre */
@@ -2001,7 +1991,7 @@
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="Zmodyfikowane przez %@";
 /* Title for a recent action bucket with multiple files. %@ will be replaced by the filename of the first file in the bucket. %ld will be replaced by the total number of other files in the bucket. */
-"home.recent.multipleFileTitle"="“%@” and %ld more";
+"home.recent.multipleFileTitle"="\"%@\" i %ld więcej";
 /* Label that indicates who uploaded a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.createdByLabel"="Utworzone przez %@";
 /* Message shown when the user has not recent activity in their account. */
@@ -2648,8 +2638,18 @@
 "meetings.panel.InviteParticipants"="Zaproś uczestników";
 /* Meetings: Floating panel share link option */
 "meetings.panel.shareLink"="Udostępnij link";
-/* Meetings: Floating panel participants count header */
+/* Meetings: Floating panel participants list selector for participants in call */
+"meetings.panel.listSelector.inCall"="W trakcie rozmowy";
+/* Meetings: Floating panel participants list selector for participants not in call */
+"meetings.panel.listSelector.notInCall"="Nie w trakcie rozmowy";
+/* Meetings: Floating panel participants list selector for participants in call */
+"meetings.panel.listSelector.inWaitingRoom"="Poczekalnia";
+/* Meetings: Floating panel participants in call count header */
 "meetings.panel.ParticipantsCount"="Uczestnicy (%d)";
+/* Meetings: Floating panel participants not in call count header */
+"meetings.panel.ParticipantsNotInCallCount"="Nie w trakcie rozmowy (%d)";
+/* Meetings: Floating panel participants in waiting room count header */
+"meetings.panel.ParticipantsInWaitingRoomCount"="Oczekiwanie (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
 "meetings.participant.moderator"="Prowadzący";
 /* Meetings: Action on a meeting that change participant's role to moderator */
@@ -3105,7 +3105,7 @@
 /* A log message in a chat to display that a participant's permission was changed to host role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep the [A], [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to host role by John Smith. */
 "chat.message.changedRole.host"="[A] został zmieniony na [S]rolę gospodarza[/S] przez [B]";
 /* A log message in a chat to display that a participant's permission was changed to standard role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to standard role by John Smith. */
-"chat.message.changedRole.standard"="[A] został zmieniony na [S]rolę standardową[/S] przez [B]";
+"chat.message.changedRole.standard"="[A] został zmieniony na [S]standardowego uczestnika[/S] przez [B]";
 /* Type of data displayed in a map view. Standard imagery of the area. */
 "chat.sendLocation.map.standard"="Standard";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
@@ -3181,7 +3181,7 @@
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
 "sharedItems.contactVerification.section.verifyContact.receiver.message"="Chronimy Twoje dane za pomocą szyfrowania z zerową świadomością. Aby zapewnić dodatkowe bezpieczeństwo, prosimy o weryfikację kontaktów, od których otrzymujesz informacje, zanim uzyskasz dostęp do katalogow współdzielonych.";
 /* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
-"sharedItems.contactVerification.section.verifyContact.bannerMessage"="To access the shared folder, the person who shared it with you should verify you, too.";
+"sharedItems.contactVerification.section.verifyContact.bannerMessage"="Aby uzyskać dostęp do udostępnionego katalogu, osoba, która ci go udostępniła, również powinna cię zweryfikować.";
 /* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
 "sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ jest udostępniany przez kontakt, który nie został zweryfikowany. Aby zapewnić dodatkowe bezpieczeństwo, zalecamy zweryfikowanie uprawnień w Kontaktach, wybierając ⓘ obok kontaktu, który chcesz zweryfikować.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
@@ -3729,7 +3729,7 @@
 /* Schedule meeting waiting room setting title */
 "meetings.scheduleMeeting.waitingRoom"="Poczekalnia";
 /* Schedule meeting waiting room setting description */
-"meetings.scheduleMeeting.waitingRoom.description"="Tylko użytkownicy dopuszczeni przez gospodarza mogą dołączyć do spotkania.";
+"meetings.scheduleMeeting.waitingRoom.description"="Tylko uczestnicy dopuszczeni przez gospodarza mogą dołączyć do spotkania.";
 /* Schedule meeting waiting room warning banner title */
 "meetings.scheduleMeeting.waitingRoomWarningBanner.title"="Uczestnicy dodani przez osoby niebędące gospodarzami podczas połączeń nie będą wysyłani do poczekalni.";
 /* Schedule meeting waiting room warning banner learn more */
@@ -3830,3 +3830,7 @@
 "home.search.empty.no-audio"="Brak plików audio";
 /* Empty screen copy when Video filter is selected on the home screen search */
 "home.search.empty.no-videos"="Brak plików wideo";
+/* A title label for waiting room participants list view. */
+"chat.call.waitingRoom.participantsList.title"="Poczekalnia";
+/* A button label to close the waiting room participants list view. */
+"chat.call.waitingRoom.participantsList.close"="Zamknij";

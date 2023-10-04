@@ -988,16 +988,6 @@
 "simplePasscodeLabel"="Code d’accès simple";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Effacer les données locales";
-/* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="Vous serez déconnecté et vos fichiers Hors ligne seront supprimés après dix tentatives infructueuses";
-/* Button text to change the passcode type. */
-"Passcode Options"="Options du code d’accès";
-/* Action text to change to 4-Digit Numeric passcode type. */
-"4-Digit Numeric Code"="Code à quatre chiffres";
-/* Action text to change to 6-Digit Numeric passcode type. */
-"6-Digit Numeric Code"="Code à six chiffres";
-/* Action text to change to Custom Alphanumeric passcode type. */
-"Custom Alphanumeric Code"="Code alphanumérique personnalisé";
 /* Menu item */
 "help"="Aide";
 /* Title of the section to access MEGA's help centre */
@@ -1291,7 +1281,7 @@
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="Envoyer un message";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"="Approuver le numéro d’identification";
+"verifyCredentials"="Confirmer le numéro d’identification";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
 "verify"="Approuver";
 /* Button title */
@@ -2648,8 +2638,18 @@
 "meetings.panel.InviteParticipants"="Inviter des participants";
 /* Meetings: Floating panel share link option */
 "meetings.panel.shareLink"="Partager le lien";
-/* Meetings: Floating panel participants count header */
+/* Meetings: Floating panel participants list selector for participants in call */
+"meetings.panel.listSelector.inCall"="Dans l’appel";
+/* Meetings: Floating panel participants list selector for participants not in call */
+"meetings.panel.listSelector.notInCall"="Hors appel";
+/* Meetings: Floating panel participants list selector for participants in call */
+"meetings.panel.listSelector.inWaitingRoom"="Salle d’attente";
+/* Meetings: Floating panel participants in call count header */
 "meetings.panel.ParticipantsCount"="Participants (%d)";
+/* Meetings: Floating panel participants not in call count header */
+"meetings.panel.ParticipantsNotInCallCount"="Hors appel (%d)";
+/* Meetings: Floating panel participants in waiting room count header */
+"meetings.panel.ParticipantsInWaitingRoomCount"="En attente (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
 "meetings.participant.moderator"="Hôte";
 /* Meetings: Action on a meeting that change participant's role to moderator */
@@ -3105,7 +3105,7 @@
 /* A log message in a chat to display that a participant's permission was changed to host role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep the [A], [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to host role by John Smith. */
 "chat.message.changedRole.host"="[B] a attribué un droit d’[S]hôte[/S] à [A]";
 /* A log message in a chat to display that a participant's permission was changed to standard role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to standard role by John Smith. */
-"chat.message.changedRole.standard"="[B] a attribué un droit [S]normal[/S] à [A]";
+"chat.message.changedRole.standard"="[B] a changé [A] en [S]participant normal[/S]";
 /* Type of data displayed in a map view. Standard imagery of the area. */
 "chat.sendLocation.map.standard"="Normal";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
@@ -3729,7 +3729,7 @@
 /* Schedule meeting waiting room setting title */
 "meetings.scheduleMeeting.waitingRoom"="Salle d’attente";
 /* Schedule meeting waiting room setting description */
-"meetings.scheduleMeeting.waitingRoom.description"="Seuls les utilisateurs admis par l’hôte peuvent se joindre à la réunion.";
+"meetings.scheduleMeeting.waitingRoom.description"="Seuls les participants admis par l’hôte peuvent se joindre à la réunion.";
 /* Schedule meeting waiting room warning banner title */
 "meetings.scheduleMeeting.waitingRoomWarningBanner.title"="Les participants ajoutés par des non-hôtes pendant les appels ne seront pas envoyés dans la salle d’attente.";
 /* Schedule meeting waiting room warning banner learn more */
@@ -3830,3 +3830,7 @@
 "home.search.empty.no-audio"="Aucun fichier son";
 /* Empty screen copy when Video filter is selected on the home screen search */
 "home.search.empty.no-videos"="Aucun fichier vidéo";
+/* A title label for waiting room participants list view. */
+"chat.call.waitingRoom.participantsList.title"="Salle d’attente";
+/* A button label to close the waiting room participants list view. */
+"chat.call.waitingRoom.participantsList.close"="Fermer";
