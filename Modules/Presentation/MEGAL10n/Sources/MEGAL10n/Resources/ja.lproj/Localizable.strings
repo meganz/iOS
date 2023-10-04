@@ -988,16 +988,6 @@
 "simplePasscodeLabel"="シンプルなパスコード";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="ローカルデータを消去";
-/* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="10回失敗するとログアウトされ、オフラインファイルが削除されます";
-/* Button text to change the passcode type. */
-"Passcode Options"="パスコードオプション";
-/* Action text to change to 4-Digit Numeric passcode type. */
-"4-Digit Numeric Code"="4桁の数値コード";
-/* Action text to change to 6-Digit Numeric passcode type. */
-"6-Digit Numeric Code"="6桁の数値コード";
-/* Action text to change to Custom Alphanumeric passcode type. */
-"Custom Alphanumeric Code"="カスタム英数字コード";
 /* Menu item */
 "help"="ヘルプ";
 /* Title of the section to access MEGA's help centre */
@@ -1291,7 +1281,7 @@
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="メッセージを送信";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"="認証情報を承認";
+"verifyCredentials"="認証情報の検証";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
 "verify"="承認";
 /* Button title */
@@ -2648,8 +2638,18 @@
 "meetings.panel.InviteParticipants"="参加者を招待";
 /* Meetings: Floating panel share link option */
 "meetings.panel.shareLink"="リンクの共有";
-/* Meetings: Floating panel participants count header */
+/* Meetings: Floating panel participants list selector for participants in call */
+"meetings.panel.listSelector.inCall"="通話中";
+/* Meetings: Floating panel participants list selector for participants not in call */
+"meetings.panel.listSelector.notInCall"="通話中ではありません";
+/* Meetings: Floating panel participants list selector for participants in call */
+"meetings.panel.listSelector.inWaitingRoom"="待合室";
+/* Meetings: Floating panel participants in call count header */
 "meetings.panel.ParticipantsCount"="参加者 (%d)";
+/* Meetings: Floating panel participants not in call count header */
+"meetings.panel.ParticipantsNotInCallCount"="非通話中（%d人）";
+/* Meetings: Floating panel participants in waiting room count header */
+"meetings.panel.ParticipantsInWaitingRoomCount"="待機中（%d人）";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
 "meetings.participant.moderator"="主催者";
 /* Meetings: Action on a meeting that change participant's role to moderator */
@@ -3105,7 +3105,7 @@
 /* A log message in a chat to display that a participant's permission was changed to host role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep the [A], [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to host role by John Smith. */
 "chat.message.changedRole.host"="[A]さんは[B]さんによって[S]主催者の役割[/S]に変更されました";
 /* A log message in a chat to display that a participant's permission was changed to standard role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to standard role by John Smith. */
-"chat.message.changedRole.standard"="[A]さんは[B]さんによって[S]標準的な役割[/S]に変更されました";
+"chat.message.changedRole.standard"="[A]さんは[B]さんによって[S]標準的な参加者[/S]に変更されました";
 /* Type of data displayed in a map view. Standard imagery of the area. */
 "chat.sendLocation.map.standard"="標準";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
@@ -3729,7 +3729,7 @@
 /* Schedule meeting waiting room setting title */
 "meetings.scheduleMeeting.waitingRoom"="待合室";
 /* Schedule meeting waiting room setting description */
-"meetings.scheduleMeeting.waitingRoom.description"="ホストによって許可されたユーザーのみがミーティングに参加できます。";
+"meetings.scheduleMeeting.waitingRoom.description"="ホストによって許可された参加者のみがミーティングに参加できます。";
 /* Schedule meeting waiting room warning banner title */
 "meetings.scheduleMeeting.waitingRoomWarningBanner.title"="通話中に主催者以外によって追加された参加者は待合室に送られません。";
 /* Schedule meeting waiting room warning banner learn more */
@@ -3830,3 +3830,7 @@
 "home.search.empty.no-audio"="音声ファイルがありません";
 /* Empty screen copy when Video filter is selected on the home screen search */
 "home.search.empty.no-videos"="動画ファイルがありません";
+/* A title label for waiting room participants list view. */
+"chat.call.waitingRoom.participantsList.title"="待合室";
+/* A button label to close the waiting room participants list view. */
+"chat.call.waitingRoom.participantsList.close"="閉じる";

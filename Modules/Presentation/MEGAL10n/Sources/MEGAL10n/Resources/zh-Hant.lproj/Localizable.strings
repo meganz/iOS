@@ -565,7 +565,7 @@
 /* Used in create album popup. */
 "cameraUploads.albums.create.alert.placeholder"="新相簿";
 /* Used in create album popup user album name validation */
-"cameraUploads.albums.create.alert.userAlbumExists"="已存在相同名稱相簿。";
+"cameraUploads.albums.create.alert.userAlbumExists"="已存在相同名稱的相簿。";
 /* Used in create album popup system album name validation */
 "cameraUploads.albums.create.alert.albumNameNotAllowed"="不允許使用此相簿名稱";
 /* Used in create album popup album name validation */
@@ -721,7 +721,7 @@
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="相機上傳";
 /* Banner message on Camera Uploads that warns user that they have limited access to photos */
-"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA has limited access to your photo library and cannot backup all of your media. Tap to change permissions.";
+"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA對您的照片的存取權限有限，無法備份您的所有媒體。點選以更改權限。";
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="照片";
 /* Photo view is empty */
@@ -988,16 +988,6 @@
 "simplePasscodeLabel"="簡單密碼";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="清除本地資料";
-/* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="嘗試10次失敗後，您將被強制登出而且您的離線檔案將被刪除";
-/* Button text to change the passcode type. */
-"Passcode Options"="密碼選項";
-/* Action text to change to 4-Digit Numeric passcode type. */
-"4-Digit Numeric Code"="4位數字代碼";
-/* Action text to change to 6-Digit Numeric passcode type. */
-"6-Digit Numeric Code"="6位數字代碼";
-/* Action text to change to Custom Alphanumeric passcode type. */
-"Custom Alphanumeric Code"="自定義字母數字密碼";
 /* Menu item */
 "help"="幫助";
 /* Title of the section to access MEGA's help centre */
@@ -1291,7 +1281,7 @@
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="發送訊息";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"="確信憑證";
+"verifyCredentials"="驗證憑證";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
 "verify"="批准";
 /* Button title */
@@ -1375,7 +1365,7 @@
 /*  */
 "fromCloudDrive"="從雲端硬碟";
 /* A button label. The button sends contact information to a user in the conversation. */
-"sendContact"="傳送聯絡人";
+"sendContact"="發送聯絡人";
 /*  */
 "done"="完成";
 /* Used in the \"rich previews\", when the user first tries to send an url - we ask them before we generate previews for that URL, since we need to send them unencrypted to our servers. */
@@ -1417,11 +1407,11 @@
 /* Error message displayed when trying to invite a contact who is already added. */
 "alreadyAContact"="%s 已經是您的聯絡人。";
 /* A summary message when a user sent a contact's details through the chat. Please keep %@ as it will be replaced at runtime with the name of the contact that was sent. */
-"sentContact"="Sent contact: %@";
+"sentContact"="發送聯絡人：%@";
 /* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
 "sentXContacts"="已傳給%s位聯絡人。";
 /* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %@ as it will be replaced at runtime with the name of the attached file. */
-"attachedFile"="Attached: %@";
+"attachedFile"="附件：%@";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="已附加%s個檔案。";
 /* Label in a button that allows to jump to the latest item */
@@ -2001,7 +1991,7 @@
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="由%@修改";
 /* Title for a recent action bucket with multiple files. %@ will be replaced by the filename of the first file in the bucket. %ld will be replaced by the total number of other files in the bucket. */
-"home.recent.multipleFileTitle"="“%@” and %ld more";
+"home.recent.multipleFileTitle"="「%@」及另外%ld個";
 /* Label that indicates who uploaded a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.createdByLabel"="由%@建立";
 /* Message shown when the user has not recent activity in their account. */
@@ -2277,7 +2267,7 @@
 /* Warning message to alert user about logout in My Account section if has transfers in progress. */
 "When you logout, ongoing transfers will be cancelled."="當您登出時，正在進行中的傳輸將取消。";
 /* Warning message to alert user about logout in My Account section if has offline files. */
-"When you logout, files from your Offline section will be deleted from your device."="當您登出時，您裝置中可離線使用的檔案將會被刪除。";
+"When you logout, files from your Offline section will be deleted from your device."="當您登出時，可離線使用的檔案將從您的裝置中被刪除。";
 /* Warning message to alert user about logout in My Account section if has offline files and transfers in progress. */
 "When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="當您登出時，您裝置上可離線存取的檔案將會被刪除，而且正在進行中的傳輸將被取消。";
 /* Default title of an empty chat. */
@@ -2648,8 +2638,18 @@
 "meetings.panel.InviteParticipants"="邀請與會者";
 /* Meetings: Floating panel share link option */
 "meetings.panel.shareLink"="共享連結";
-/* Meetings: Floating panel participants count header */
+/* Meetings: Floating panel participants list selector for participants in call */
+"meetings.panel.listSelector.inCall"="通話中";
+/* Meetings: Floating panel participants list selector for participants not in call */
+"meetings.panel.listSelector.notInCall"="不在通話中";
+/* Meetings: Floating panel participants list selector for participants in call */
+"meetings.panel.listSelector.inWaitingRoom"="等候室";
+/* Meetings: Floating panel participants in call count header */
 "meetings.panel.ParticipantsCount"="與會者（%d）";
+/* Meetings: Floating panel participants not in call count header */
+"meetings.panel.ParticipantsNotInCallCount"="不在通話中（%d）";
+/* Meetings: Floating panel participants in waiting room count header */
+"meetings.panel.ParticipantsInWaitingRoomCount"="正在等待（%d）";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
 "meetings.participant.moderator"="主持人";
 /* Meetings: Action on a meeting that change participant's role to moderator */
@@ -3105,7 +3105,7 @@
 /* A log message in a chat to display that a participant's permission was changed to host role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep the [A], [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to host role by John Smith. */
 "chat.message.changedRole.host"="[B]將[A]的權限更改為[S]主持人[/S]";
 /* A log message in a chat to display that a participant's permission was changed to standard role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to standard role by John Smith. */
-"chat.message.changedRole.standard"="[B]將[A]的權限更改為[S]標準角色[/S]";
+"chat.message.changedRole.standard"="[A]被[B]更改為[S]標準與會者[/S]";
 /* Type of data displayed in a map view. Standard imagery of the area. */
 "chat.sendLocation.map.standard"="標準";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
@@ -3181,13 +3181,13 @@
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
 "sharedItems.contactVerification.section.verifyContact.receiver.message"="我們使用零知識加密保護您的資料。為確保額外的安全性，我們會要求您驗證您從之接收資訊的聯絡人，您才能存取共享資料夾。";
 /* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
-"sharedItems.contactVerification.section.verifyContact.bannerMessage"="To access the shared folder, the person who shared it with you should verify you, too.";
+"sharedItems.contactVerification.section.verifyContact.bannerMessage"="若要存取共享資料夾，與您共享它的人也應該對您進行驗證。";
 /* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
-"sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ is shared by a contact you haven’t verified. To ensure extra security, we recommend that you verify their credentials in Contacts by tapping on ⓘ next to the contact you want to verify.";
+"sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@是由您尚未驗證的聯絡人共享。為了確保額外的安全性，我們建議您於聯絡人中，透過點選要驗證的聯絡人旁邊的ⓘ來驗證他們的憑證。";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="您的憑證";
 /* Title of the header label in contact verification screen. */
-"verifyCredentials.headerMessage"="我們採用零知識加密技術來保護您的資料，因此您在MEGA上儲存、共享、接收的所有資訊都是安全的。為了確保額外的安全，我們要求您驗證您與之共享資訊，或從之接收資料的聯絡人。";
+"verifyCredentials.headerMessage"="我們採用零知識加密技術來保護您的資料，因此您在MEGA上儲存、共享、接收的所有資訊都是安全的。為了確保額外的安全，我們要求您驗證與您共享資訊或傳送資料給您的聯絡人";
 /* On Incoming Shared Items Tab. Name of the folder if the the owner and the receiver has not yet verified each other. */
 "sharedItems.tab.incoming.undecryptedFolderName"="[未解密資料夾]";
 /* On Outgoing Shared Items Tab. Text that shows the receiver's name of the shared folder. %@ will be replaced with the receiver's name. */
@@ -3531,9 +3531,9 @@
 /* Show in Backups section action title */
 "device.center.show.in.backups.action.title"="在備份中顯示";
 /* Device Center rename device action title */
-"device.center.rename.device.title"="Device name";
+"device.center.rename.device.title"="裝置名稱";
 /* Device Center rename device action duplicated name message */
-"device.center.rename.device.duplicated.name"="A device with this name already exists";
+"device.center.rename.device.duplicated.name"="已存在相同名稱的裝置";
 /* Device Center rename device action enter a different name message */
 "device.center.rename.device.different.name"="輸入不同名稱";
 /* Device Center camera upload status enabled */
@@ -3619,7 +3619,7 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Pro方案功能";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• 受密碼保護的連結\n\n• 連結可設定到期日期\n\n• 傳輸配額共享\n\n• 自動備份\n\n• Pro Lite最多可還原90天，Pro I、II、III最多可還原365天（即將推出）\n\n• 可設定7天到10年之間垃圾筒清理自動排程";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• 受密碼保護的連結\n\n• 連結可設定到期日期\n\n• 傳輸配額共享\n\n• 自動備份\n\n• Pro Lite最多可回溯90天，Pro I、II、III最多可回溯365天（即將推出）\n\n• 可設定7天到10年之間垃圾筒清理自動排程";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="訂閱詳情";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3729,7 +3729,7 @@
 /* Schedule meeting waiting room setting title */
 "meetings.scheduleMeeting.waitingRoom"="等候室";
 /* Schedule meeting waiting room setting description */
-"meetings.scheduleMeeting.waitingRoom.description"="只有主持人允許的使用者才可以加入會議。";
+"meetings.scheduleMeeting.waitingRoom.description"="只有主持人允許的與會者才能加入會議。";
 /* Schedule meeting waiting room warning banner title */
 "meetings.scheduleMeeting.waitingRoomWarningBanner.title"="通話期間由非主持人加入的與會者不會被傳送到等候室。";
 /* Schedule meeting waiting room warning banner learn more */
@@ -3739,7 +3739,7 @@
 /* Album failed to save to cloud drive alert message */
 "albumLink.alert.message.albumFailedToSaveToCloudDrive"="「%@」無法儲存到雲端硬碟。請稍後再試。如果問題仍然存在，請聯繫共享連結給您的人。";
 /* Text displayed on banner we show when sharing folder with unverified contacts */
-"shareFolder.contactsNotVerified"="某些您與之共享資訊的聯絡人尚未經過您的驗證。為了確保額外的安全性。為了確保額外的安全性，我們建議您點選待驗證的聯絡人旁邊的ⓘ來驗證其在聯絡人中的憑證。";
+"shareFolder.contactsNotVerified"="與您共享資訊的某些聯絡人尚未經過您的驗證。為了確保額外的安全性，我們建議您透過在聯絡人中點選您要驗證的聯絡人旁邊的ⓘ來驗證他們的憑證。";
 /* Rename public album alert title */
 "albumLink.alert.renameAlbum.title"="重新命名相簿";
 /* Rename public album alert message */
@@ -3787,11 +3787,11 @@
 /* Meeting waiting room alert title of Host didn’t let you in */
 "meetings.waitingRoom.alert.hostDidNotLetYouIn"="主持人沒有讓您進入";
 /* Meeting waiting room alert message of You'll be removed from the waiting room */
-"meetings.waitingRoom.alert.youWillBeRemovedFromTheWaitingRoom"="你將從等候室被移除。";
+"meetings.waitingRoom.alert.youWillBeRemovedFromTheWaitingRoom"="你將被從等候室移除。";
 /* Meeting waiting room alert title of Host didn’t respond */
 "meetings.waitingRoom.alert.hostDidNotRespond"="主持人沒有回應";
 /* Meeting waiting room alert message of There is no response to your request to join the meeting */
-"meetings.waitingRoom.alert.thereIsNoResponseToYourResquestToJoinTheMeeting"="There is no response to your request to join the meeting. You’ll be removed from the waiting room. Try joining again later.";
+"meetings.waitingRoom.alert.thereIsNoResponseToYourResquestToJoinTheMeeting"="你加入會議的請求沒有得到回應。你將被從等候室移除。請稍後再次嘗試加入。";
 /* Meeting waiting room alert action of ok got it */
 "meetings.waitingRoom.alert.okGotIt"="好的，明白了";
 /* Call waiting room alert message text to notify host that someone is waiting to join */
@@ -3821,12 +3821,16 @@
 /* Filter name for searching on the home screen */
 "home.search.filter.video"="影片";
 /* Empty screen copy when no filter is selected on the home screen search */
-"home.search.empty.no-chip-selected"="沒有符合搜尋的項目";
+"home.search.empty.no-chip-selected"="沒有搜尋結果";
 /* Empty screen copy when Images filter is selected on the home screen search */
-"home.search.empty.no-images"="No images";
+"home.search.empty.no-images"="沒有圖片";
 /* Empty screen copy when Documents is selected on the home screen search */
-"home.search.empty.no-documents"="No documents";
+"home.search.empty.no-documents"="沒有文件";
 /* Empty screen copy when Audio filter is selected on the home screen search */
-"home.search.empty.no-audio"="No audio files";
+"home.search.empty.no-audio"="沒有音訊檔案";
 /* Empty screen copy when Video filter is selected on the home screen search */
-"home.search.empty.no-videos"="No video files";
+"home.search.empty.no-videos"="沒有影片檔案";
+/* A title label for waiting room participants list view. */
+"chat.call.waitingRoom.participantsList.title"="等候室";
+/* A button label to close the waiting room participants list view. */
+"chat.call.waitingRoom.participantsList.close"="關閉";

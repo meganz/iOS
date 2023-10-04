@@ -988,16 +988,6 @@
 "simplePasscodeLabel"="Código de acesso simples";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Apagar dados locais";
-/* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="Depois de 10 tentativas incorretas, você será deslogado e os arquivos salvos em Offline serão deletados";
-/* Button text to change the passcode type. */
-"Passcode Options"="Opções de código de acesso";
-/* Action text to change to 4-Digit Numeric passcode type. */
-"4-Digit Numeric Code"="Código numérico de 4 dígitos";
-/* Action text to change to 6-Digit Numeric passcode type. */
-"6-Digit Numeric Code"="Código numérico de 6 dígitos";
-/* Action text to change to Custom Alphanumeric passcode type. */
-"Custom Alphanumeric Code"="Código alfanumérico personalizado";
 /* Menu item */
 "help"="Ajuda";
 /* Title of the section to access MEGA's help centre */
@@ -1291,7 +1281,7 @@
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="Enviar mensagem";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"="Validar as credenciais";
+"verifyCredentials"="Confirmar as credenciais";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
 "verify"="Validar";
 /* Button title */
@@ -2648,8 +2638,18 @@
 "meetings.panel.InviteParticipants"="Convidar participantes";
 /* Meetings: Floating panel share link option */
 "meetings.panel.shareLink"="Compartilhar link";
-/* Meetings: Floating panel participants count header */
+/* Meetings: Floating panel participants list selector for participants in call */
+"meetings.panel.listSelector.inCall"="Na chamada";
+/* Meetings: Floating panel participants list selector for participants not in call */
+"meetings.panel.listSelector.notInCall"="Fora da chamada";
+/* Meetings: Floating panel participants list selector for participants in call */
+"meetings.panel.listSelector.inWaitingRoom"="Sala de espera";
+/* Meetings: Floating panel participants in call count header */
 "meetings.panel.ParticipantsCount"="Participantes (%d)";
+/* Meetings: Floating panel participants not in call count header */
+"meetings.panel.ParticipantsNotInCallCount"="Fora da chamada (%d)";
+/* Meetings: Floating panel participants in waiting room count header */
+"meetings.panel.ParticipantsInWaitingRoomCount"="Esperando (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
 "meetings.participant.moderator"="Anfitrião";
 /* Meetings: Action on a meeting that change participant's role to moderator */
@@ -3729,7 +3729,7 @@
 /* Schedule meeting waiting room setting title */
 "meetings.scheduleMeeting.waitingRoom"="Sala de espera";
 /* Schedule meeting waiting room setting description */
-"meetings.scheduleMeeting.waitingRoom.description"="Somente usuários admitidos pelo host podem participar da reunião.";
+"meetings.scheduleMeeting.waitingRoom.description"="Somente participantes admitidos pelo host podem participar da reunião.";
 /* Schedule meeting waiting room warning banner title */
 "meetings.scheduleMeeting.waitingRoomWarningBanner.title"="Os participantes adicionados durante as chamadas por usuários que não sejam hosts não serão encaminhados para a sala de espera.";
 /* Schedule meeting waiting room warning banner learn more */
@@ -3830,3 +3830,7 @@
 "home.search.empty.no-audio"="Não há arquivos de áudio";
 /* Empty screen copy when Video filter is selected on the home screen search */
 "home.search.empty.no-videos"="Não há arquivos de vídeo";
+/* A title label for waiting room participants list view. */
+"chat.call.waitingRoom.participantsList.title"="Sala de espera";
+/* A button label to close the waiting room participants list view. */
+"chat.call.waitingRoom.participantsList.close"="Fechar";

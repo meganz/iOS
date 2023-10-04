@@ -988,16 +988,6 @@
 "simplePasscodeLabel"="단순 암호";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="로컬 데이터 삭제";
-/* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="당신은 로그아웃 되고 오프라인 파일은 10번의 실패 후에 삭제됩니다";
-/* Button text to change the passcode type. */
-"Passcode Options"="암호 옵션";
-/* Action text to change to 4-Digit Numeric passcode type. */
-"4-Digit Numeric Code"="4자리 숫자 코드";
-/* Action text to change to 6-Digit Numeric passcode type. */
-"6-Digit Numeric Code"="6자리 숫자 코드";
-/* Action text to change to Custom Alphanumeric passcode type. */
-"Custom Alphanumeric Code"="영숫자 코드";
 /* Menu item */
 "help"="도움말";
 /* Title of the section to access MEGA's help centre */
@@ -1291,11 +1281,11 @@
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="메시지 보내기";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"="자격 증명 확인";
+"verifyCredentials"="자격 증명 인증";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
 "verify"="확인";
 /* Button title */
-"verified"="확인됨";
+"verified"="인증됨";
 /* A button title to delete the history of a chat. */
 "clearChatHistory"="대화 기록 삭제";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
@@ -2648,8 +2638,18 @@
 "meetings.panel.InviteParticipants"="참여자 초대";
 /* Meetings: Floating panel share link option */
 "meetings.panel.shareLink"="링크 공유";
-/* Meetings: Floating panel participants count header */
+/* Meetings: Floating panel participants list selector for participants in call */
+"meetings.panel.listSelector.inCall"="통화 중";
+/* Meetings: Floating panel participants list selector for participants not in call */
+"meetings.panel.listSelector.notInCall"="통화 중 아님";
+/* Meetings: Floating panel participants list selector for participants in call */
+"meetings.panel.listSelector.inWaitingRoom"="대기실";
+/* Meetings: Floating panel participants in call count header */
 "meetings.panel.ParticipantsCount"="참여자(%d)";
+/* Meetings: Floating panel participants not in call count header */
+"meetings.panel.ParticipantsNotInCallCount"="Not in call (%d)";
+/* Meetings: Floating panel participants in waiting room count header */
+"meetings.panel.ParticipantsInWaitingRoomCount"="대기 중 (%d명)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
 "meetings.participant.moderator"="주최자";
 /* Meetings: Action on a meeting that change participant's role to moderator */
@@ -3105,7 +3105,7 @@
 /* A log message in a chat to display that a participant's permission was changed to host role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep the [A], [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to host role by John Smith. */
 "chat.message.changedRole.host"="[A]님이 [B]님에 의해 [S]주최자 역할[/S]로 변경되었습니다";
 /* A log message in a chat to display that a participant's permission was changed to standard role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to standard role by John Smith. */
-"chat.message.changedRole.standard"="[A]님이 [B]님에 의해 [S]일반 역할[/S]로 변경되었습니다";
+"chat.message.changedRole.standard"="[A] was changed to a [S]standard participant[/S] by [B]";
 /* Type of data displayed in a map view. Standard imagery of the area. */
 "chat.sendLocation.map.standard"="기본";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
@@ -3173,7 +3173,7 @@
 /* Chat Meetings tab - Section header title for the chat listing screen */
 "chat.listing.sectionHeader.pastMeetings.title"="지난 회의";
 /* Context menu item. Allows the user to verify contacts of the shared folder. The %@ placeholder will be replaced with the contact's name */
-"general.menuAction.verifyContact.title"="%@님 확인";
+"general.menuAction.verifyContact.title"="%@ 님 인증";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address that needs to be verified */
 "sharedItems.contactVerification.section.verifyContact.owner.message"="우리는 당신의 데이터를 영지식 암호화로 보호합니다. 추가적인 보안을 보장하기 위해, 당신의 연락처가 공유된 폴더에 접근할 수 있게 되기 전에 연락처를 인증할 것을 요청합니다.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of "My credentials" section */
@@ -3729,7 +3729,7 @@
 /* Schedule meeting waiting room setting title */
 "meetings.scheduleMeeting.waitingRoom"="대기실";
 /* Schedule meeting waiting room setting description */
-"meetings.scheduleMeeting.waitingRoom.description"="호스트가 승인한 이용자만 회의에 참여할 수 있습니다";
+"meetings.scheduleMeeting.waitingRoom.description"="Only participants admitted by the host can join the meeting.";
 /* Schedule meeting waiting room warning banner title */
 "meetings.scheduleMeeting.waitingRoomWarningBanner.title"="통화 중에 호스트가 아닌 사람으로부터 추가된 참여자들은 대기실에 보내질 수 없습니다.";
 /* Schedule meeting waiting room warning banner learn more */
@@ -3830,3 +3830,7 @@
 "home.search.empty.no-audio"="오디오 파일 없음";
 /* Empty screen copy when Video filter is selected on the home screen search */
 "home.search.empty.no-videos"="동영상 파일 없음";
+/* A title label for waiting room participants list view. */
+"chat.call.waitingRoom.participantsList.title"="대기실";
+/* A button label to close the waiting room participants list view. */
+"chat.call.waitingRoom.participantsList.close"="닫기";
