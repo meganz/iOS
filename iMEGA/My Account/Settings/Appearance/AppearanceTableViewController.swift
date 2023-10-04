@@ -1,9 +1,12 @@
 import MEGAL10n
+import SwiftUI
 import UIKit
 
 enum AppearanceSection: Int {
     case launch
     case layout
+    case mediaDiscovery
+    case mediaDiscoverySubfolder
     case recents
     case appIcon
 }
@@ -19,6 +22,12 @@ class AppearanceTableViewController: UITableViewController {
     @IBOutlet weak var sortingAndViewModeLabel: UILabel!
     @IBOutlet weak var defaultTabLabel: UILabel!
     @IBOutlet weak var defaultTabDetailLabel: UILabel!
+    
+    @IBOutlet weak var mediaDiscoveryViewLabel: UILabel!
+    @IBOutlet weak var mediaDiscoveryViewSwitch: UISwitch!
+    
+    @IBOutlet weak var mediaDiscoverySubfolderLabel: UILabel!
+    @IBOutlet weak var mediaDiscoverySubfolderSwitch: UISwitch!
     
     @IBOutlet weak var hideRecentActivityLabel: UILabel!
     @IBOutlet weak var hideRecentActivitySwitch: UISwitch!
@@ -39,6 +48,17 @@ class AppearanceTableViewController: UITableViewController {
     @IBOutlet weak var minimalIconButton: UIButton!
     @IBOutlet weak var minimalIconLabel: UILabel!
     
+    private let viewModel: AppearanceViewModel
+    
+    init?(coder: NSCoder, viewModel: AppearanceViewModel) {
+        self.viewModel = viewModel
+        super.init(coder: coder)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("You must create AppearanceTableViewController with a viewModel.")
+    }
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -51,6 +71,10 @@ class AppearanceTableViewController: UITableViewController {
         defaultTabLabel.text = Strings.Localizable.defaultTab
         
         sortingAndViewModeLabel.text = Strings.Localizable.sortingAndViewMode
+        
+        mediaDiscoveryViewLabel.text = Strings.Localizable.Settings.UserInterface.mediaDiscovery
+        
+        mediaDiscoverySubfolderLabel.text = Strings.Localizable.Settings.UserInterface.mediaDiscoverySubFolder
         
         hideRecentActivityLabel.text = Strings.Localizable.Settings.UserInterface.hideRecentActivity
         
@@ -68,6 +92,9 @@ class AppearanceTableViewController: UITableViewController {
         dayIconLabel.textColor = UIColor.white
         nightIconLabel.textColor = UIColor.white
         minimalIconLabel.textColor = UIColor.white
+        
+        mediaDiscoveryViewSwitch.isOn = viewModel.autoMediaDiscoverySetting
+        mediaDiscoverySubfolderSwitch.isOn = viewModel.mediaDiscoveryShouldIncludeSubfolderSetting
         
         let alternateIconName = UIApplication.shared.alternateIconName
         selectIcon(with: alternateIconName)
@@ -161,6 +188,12 @@ class AppearanceTableViewController: UITableViewController {
     }
     
     // MARK: - IBActions
+    @IBAction func mediaDiscoveryViewValueChanged(_ sender: UISwitch) {
+        viewModel.autoMediaDiscoverySetting = sender.isOn
+    }
+    @IBAction func mediaDiscoverySubfolderValueChanged(_ sender: UISwitch) {
+        viewModel.mediaDiscoveryShouldIncludeSubfolderSetting = sender.isOn
+    }
     
     @IBAction func hideRecentActivityValueChanged(_ sender: UISwitch) {
         RecentsPreferenceManager.setShowRecents(!sender.isOn)
@@ -201,22 +234,51 @@ class AppearanceTableViewController: UITableViewController {
        titleForHeader(in: section)
     }
     
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        switch AppearanceSection(rawValue: section) {
+        case .none, .mediaDiscoverySubfolder:
+            return .leastNonzeroMagnitude
+        case .launch, .layout, .recents, .appIcon:
+            return UITableView.automaticDimension
+        case .mediaDiscovery:
+            guard viewModel.showMediaDiscoverySetting else {
+                return .leastNonzeroMagnitude
+            }
+            return UITableView.automaticDimension
+        }
+    }
+    
     private func titleForHeader(in section: Int) -> String? {
         switch AppearanceSection(rawValue: section) {
+        case .none, .mediaDiscoverySubfolder:
+            return nil
         case .launch:
             return Strings.Localizable.launch
-            
         case .layout:
             return Strings.Localizable.layout
-            
+        case .mediaDiscovery:
+            guard viewModel.showMediaDiscoverySetting else {
+                return nil
+            }
+            return Strings.Localizable.Settings.UserInterface.MediaDiscovery.header
         case .recents:
             return Strings.Localizable.recents
-            
         case .appIcon:
             return Strings.Localizable.appIcon
-            
-        default:
-            return nil
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        switch AppearanceSection(rawValue: section) {
+        case .none:
+            return .leastNonzeroMagnitude
+        case .launch, .layout, .recents, .appIcon:
+            return UITableView.automaticDimension
+        case .mediaDiscovery, .mediaDiscoverySubfolder:
+            guard viewModel.showMediaDiscoverySetting else {
+                return .leastNonzeroMagnitude
+            }
+            return UITableView.automaticDimension
         }
     }
     
@@ -224,18 +286,79 @@ class AppearanceTableViewController: UITableViewController {
         switch AppearanceSection(rawValue: section) {
         case .launch:
             return Strings.Localizable.configureDefaultLaunchSection
-        
         case .layout:
             return Strings.Localizable.configureSortingOrderAndTheDefaultViewListOrThumbnail
-            
+        case .mediaDiscoverySubfolder:
+            guard viewModel.showMediaDiscoverySetting else {
+                return nil
+            }
+            return Strings.Localizable.Settings.UserInterface.MediaDiscoverySubFolder.footer
         case .recents:
             return Strings.Localizable.Settings.UserInterface.HideRecentActivity.footer
-            
-        case .appIcon:
-            return nil
-            
-        default:
+        case .appIcon, .mediaDiscovery, .none:
             return nil
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch AppearanceSection(rawValue: section) {
+        case .launch, .layout, .recents, .appIcon:
+            return 1
+        case .mediaDiscovery, .mediaDiscoverySubfolder:
+            return viewModel.showMediaDiscoverySetting ? 1 : 0
+        case .none:
+            return 0
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch AppearanceSection(rawValue: indexPath.section) {
+        case .launch, .layout, .recents, .appIcon:
+            return UITableView.automaticDimension
+        case .mediaDiscovery, .mediaDiscoverySubfolder:
+            return viewModel.showMediaDiscoverySetting ? UITableView.automaticDimension : .leastNormalMagnitude
+        case .none:
+            return .leastNonzeroMagnitude
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        switch AppearanceSection(rawValue: section) {
+        case .mediaDiscovery:
+            guard let linkUrl = viewModel.mediaDiscoveryHelpLink else {
+                return nil
+            }
+            return makeFooterView {
+                AppearanceListFooterWithLinkView(
+                    message: Strings.Localizable.Settings.UserInterface.MediaDiscovery.Footer.body,
+                    linkMessage: Strings.Localizable.Settings.UserInterface.MediaDiscovery.Footer.link,
+                    linkUrl: linkUrl)
+            }
+        case .none, .launch, .layout, .mediaDiscoverySubfolder, .recents, .appIcon:
+            return nil
+        }
+    }
+    
+    private func makeFooterView(@ViewBuilder content: () -> some View) -> UIView? {
+        let hostingController = UIHostingController(rootView: content())
+        guard let hostView = hostingController.view else {
+            return nil
+        }
+        
+        hostView.translatesAutoresizingMaskIntoConstraints = false
+        hostView.backgroundColor = .clear
+    
+        let containerView = UIView()
+        containerView.backgroundColor = .clear
+        containerView.addSubview(hostView)
+
+        NSLayoutConstraint.activate([
+            hostView.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 18),
+            containerView.rightAnchor.constraint(equalTo: hostView.rightAnchor, constant: 18),
+            hostView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 8),
+            containerView.bottomAnchor.constraint(equalTo: hostView.bottomAnchor, constant: 16)
+        ])
+        
+        return containerView
     }
 }

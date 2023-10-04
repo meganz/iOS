@@ -30,4 +30,6 @@ public enum PreferenceKeyEntity: String {
     case agreedCopywriteWarning
     case waitingRoomWarningBannerDismissed
     case isCallUIVisible
+    case shouldDisplayMediaDiscoveryWhenMediaOnly
+    case mediaDiscoveryShouldIncludeSubfolderMedia
 }
