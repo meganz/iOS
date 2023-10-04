@@ -17,7 +17,8 @@ extension MyAccountHallViewController {
             nodeUseCase:
                 NodeUseCase(
                     nodeDataRepository: NodeDataRepository.newRepo,
-                    nodeValidationRepository: NodeValidationRepository.newRepo
+                    nodeValidationRepository: NodeValidationRepository.newRepo,
+                    nodeRepository: NodeRepository.newRepo
                 ),
             deviceCenterAssets: makeDeviceListAssetData()
         ).start()
@@ -175,7 +176,7 @@ extension MyAccountHallViewController {
                 icon: Asset.Images.Generic.rename.name
             ),
             DeviceCenterAction(
-                type: .showInCD,
+                type: .showInCloudDrive,
                 title: Strings.Localizable.Device.Center.Show.In.Cloud.Drive.Action.title,
                 icon: Asset.Images.ActionSheetIcons.cloudDriveFolder.name
             ),
@@ -227,8 +228,8 @@ extension MyAccountHallViewController {
             }).start()
         }
 
-        bridge.infoActionTapped = { [weak self] node in
-            self?.showNodeInfo(for: node)
+        bridge.infoActionTapped = { [weak self] nodeEntity in
+            self?.showNodeInfo(for: nodeEntity)
         }
         
         bridge.renameActionTapped = { renameEntity in
@@ -245,12 +246,16 @@ extension MyAccountHallViewController {
             ).start()
         }
         
-        bridge.showInCDActionTapped = { _ in
-            // Will be added in future tickets
+        bridge.showInCloudDriveActionTapped = { [weak self] nodeEntity in
+            Task {
+                await self?.showInCloudDrive(nodeEntity)
+            }
         }
         
-        bridge.showInBackupsActionTapped = { _ in
-            // Will be added in future tickets
+        bridge.showInBackupsActionTapped = { [weak self] nodeEntity in
+            Task {
+                await self?.showContentForNode(nodeEntity, inBackupSection: true)
+            }
         }
         
         bridge.sortActionTapped = { _, _ in
@@ -258,15 +263,6 @@ extension MyAccountHallViewController {
         }
         
         return bridge
-    }
-    
-    private func findTopNavigationController() -> UINavigationController? {
-        guard let tabBarController = UIApplication.mainTabBarRootViewController(),
-              let selectedNavController = tabBarController.selectedViewController as? UINavigationController else {
-            return nil
-        }
-        
-        return selectedNavController
     }
     
     private func showNodeInfo(for node: NodeEntity?) {
@@ -284,5 +280,79 @@ extension MyAccountHallViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             presenter.present(nodeInfoNavigation, animated: true, completion: nil)
         }
+    }
+    
+    private func showInCloudDrive(_ nodeEntity: NodeEntity) async {
+        guard let mainTBC = UIApplication.mainTabBarRootViewController() else { return }
+        mainTBC.selectedIndex = TabType.cloudDrive.rawValue
+        
+        guard let navigationController = findTopNavigationController() else { return }
+        navigationController.popToRootViewController(animated: false)
+        
+        await showContentForNode(nodeEntity, inBackupSection: false)
+    }
+
+    private func showContentForNode(_ nodeEntity: NodeEntity?, inBackupSection isBackup: Bool) async {
+        guard let nodeEntity,
+              let navigationController = findTopNavigationController() else { return }
+        
+        let nodesTree = await fetchNodesTree(for: nodeEntity, isBackup: isBackup)
+        let viewControllersToAdd = nodesTree?.compactMap { createCloudDriveVCForNode($0, isBackup: isBackup) } ?? []
+        
+        let updatedStack = updateViewControllerStack(navigationController.viewControllers, appending: viewControllersToAdd, isBackup: isBackup)
+        navigationController.setViewControllers(updatedStack, animated: false)
+    }
+    
+    private func findTopNavigationController() -> UINavigationController? {
+        guard let tabBarController = UIApplication.mainTabBarRootViewController(),
+              let selectedNavController = tabBarController.selectedViewController as? UINavigationController else {
+            return nil
+        }
+        
+        return selectedNavController
+    }
+    
+    private func fetchNodesTree(for nodeEntity: NodeEntity, isBackup: Bool) async -> [NodeEntity]? {
+        if isBackup {
+            let backupsUseCase = BackupsUseCase(
+                backupsRepository: BackupsRepository.newRepo,
+                nodeRepository: NodeRepository.newRepo
+            )
+            return await backupsUseCase.parentsForBackupHandle(nodeEntity.handle)
+        } else {
+            let nodeUseCase = NodeUseCase(
+                nodeDataRepository: NodeDataRepository.newRepo,
+                nodeValidationRepository: NodeValidationRepository.newRepo,
+                nodeRepository: NodeRepository.newRepo
+            )
+            return await nodeUseCase.parentsForHandle(nodeEntity.handle)
+        }
+    }
+
+    func updateViewControllerStack(_ currentStack: [UIViewController], appending viewControllersToAdd: [UIViewController], isBackup: Bool) -> [UIViewController] {
+        let updatedStack: [UIViewController]
+        
+        if isBackup {
+            let filteredStack = currentStack.prefix { !($0 is MyAccountHallViewController) }
+            
+            if let targetVC = currentStack.first(where: { $0 is MyAccountHallViewController }) {
+                updatedStack = Array(filteredStack) + [targetVC] + viewControllersToAdd
+            } else {
+                updatedStack = Array(filteredStack) + viewControllersToAdd
+            }
+        } else {
+            updatedStack = currentStack + viewControllersToAdd
+        }
+        
+        return updatedStack
+    }
+    
+    private func createCloudDriveVCForNode(_ node: NodeEntity, isBackup: Bool) -> CloudDriveViewController? {
+        guard let node = node.toMEGANode(in: MEGASdk.shared),
+              let cloudDriveVC = UIStoryboard(name: "Cloud", bundle: nil).instantiateViewController(withIdentifier: "CloudDriveID") as? CloudDriveViewController else { return nil }
+        
+        cloudDriveVC.parentNode = node
+        cloudDriveVC.displayMode = isBackup ? .backup : .cloudDrive
+        return cloudDriveVC
     }
 }

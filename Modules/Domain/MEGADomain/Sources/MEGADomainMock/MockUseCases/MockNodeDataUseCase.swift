@@ -57,12 +57,15 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
         inRubbishBin
     }
     
-    public func nodeForHandle(_ handle: MEGADomain.HandleEntity) -> MEGADomain.NodeEntity? {
+    public func nodeForHandle(_ handle: MEGADomain.HandleEntity) -> NodeEntity? {
         nil
     }
     
-    public func parentForHandle(_ handle: MEGADomain.HandleEntity) -> MEGADomain.NodeEntity? {
+    public func parentForHandle(_ handle: MEGADomain.HandleEntity) -> NodeEntity? {
         nil
     }
     
+    public func parentsForHandle(_ handle: MEGADomain.HandleEntity) async -> [NodeEntity]? {
+        nil
+    }
 }
