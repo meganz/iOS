@@ -11,17 +11,22 @@ final class DeviceListViewModelTests: XCTestCase {
     let mockCurrentDeviceId = "1"
     let mockAuxDeviceId = "2"
     
-    func testLoadUserDevices_returnsUserDevices() async {
-        let devices = devices()
+    func testLoadUserDevices_returnsUserDevices() async throws {
+        let sourceDevices = devices()
         let viewModel = makeSUT(
-            devices: devices,
+            devices: sourceDevices,
             currentDeviceId: mockCurrentDeviceId
         )
+        let expectedCurrentDeviceName = "device1"
+        let expectedOtherDeviceNames = ["device2"]
         
-        let fetchedDevices = await viewModel.fetchUserDevices()
-        await viewModel.arrangeDevices(fetchedDevices)
+        let cancellables = try await setUpSubscriptionAndAwaitExpectation(
+            viewModel: viewModel) { otherDevices in
+                XCTAssertEqual(viewModel.currentDevice?.name, expectedCurrentDeviceName)
+                XCTAssertEqual(otherDevices.map(\.name), expectedOtherDeviceNames)
+            }
         
-        XCTAssertEqual(fetchedDevices.map(\.name), devices.map(\.name))
+        cancellables.forEach { $0.cancel() }
     }
     
     func testArrangeDevices_withCurrentDeviceId_loadsCurrentDevice() async throws {
@@ -31,22 +36,23 @@ final class DeviceListViewModelTests: XCTestCase {
             devices: devices,
             currentDeviceId: mockCurrentDeviceId
         )
-        
-        let userDevices = await viewModel.fetchUserDevices()
-        await viewModel.arrangeDevices(userDevices)
-        
         let currentDeviceName = try XCTUnwrap(currentDevice?.name)
-        XCTAssertEqual(viewModel.currentDevice?.name, currentDeviceName)
-        XCTAssertTrue(viewModel.otherDevices.isNotEmpty)
-        XCTAssertTrue(viewModel.otherDevices.count == 1)
+        
+        let cancellables = try await setUpSubscriptionAndAwaitExpectation(
+            viewModel: viewModel) { otherDevices in
+                XCTAssertEqual(viewModel.currentDevice?.name, currentDeviceName)
+                XCTAssertTrue(otherDevices.count == 1)
+            }
+        
+        cancellables.forEach { $0.cancel() }
     }
-
+    
     func testFilterDevices_withSearchText_matchingPartialDeviceName() async {
         let (viewModel, expectation, cancellables) = await makeSUTForSearch(searchText: "device")
         
         let expectedDeviceNames = ["device1", "device2"]
         
-        await fulfillment(of: [expectation], timeout: 2.0)
+        await fulfillment(of: [expectation], timeout: 1.0)
         
         let foundDeviceNames = viewModel.filteredDevices.map(\.name)
         XCTAssertEqual(expectedDeviceNames, foundDeviceNames)
@@ -59,7 +65,7 @@ final class DeviceListViewModelTests: XCTestCase {
         
         let expectedDeviceNames = ["device1"]
         
-        await fulfillment(of: [expectation], timeout: 2.0)
+        await fulfillment(of: [expectation], timeout: 1.0)
         
         let foundDeviceNames = viewModel.filteredDevices.map(\.name)
         XCTAssertEqual(expectedDeviceNames, foundDeviceNames)
@@ -70,7 +76,7 @@ final class DeviceListViewModelTests: XCTestCase {
     func testFilterDevices_withSearchText_whenNoMatchFound() async {
         let (viewModel, expectation, cancellables) = await makeSUTForSearch(searchText: "fake_name")
         
-        await fulfillment(of: [expectation], timeout: 2.0)
+        await fulfillment(of: [expectation], timeout: 1.0)
         
         XCTAssertTrue(viewModel.filteredDevices.isEmpty)
         
@@ -78,19 +84,22 @@ final class DeviceListViewModelTests: XCTestCase {
     }
     
     func testIsFiltered_withEmptySearchText_shouldReturnFalse() async {
-        let devices = devices()
+        let (viewModel, expectation, cancellables) = await makeSUTForSearch(searchText: "device1")
         
-        let viewModel = makeSUT(
-            devices: devices,
-            currentDeviceId: mockCurrentDeviceId
-        )
+        let expectedDeviceNames = ["device1"]
         
-        let userDevices = await viewModel.fetchUserDevices()
-        await viewModel.arrangeDevices(userDevices)
+        await fulfillment(of: [expectation], timeout: 1.0)
+        
+        let foundDeviceNames = viewModel.filteredDevices.map(\.name)
+        XCTAssertEqual(expectedDeviceNames, foundDeviceNames)
+        
+        XCTAssertTrue(viewModel.isFiltered)
         
         viewModel.searchText = ""
         
         XCTAssertFalse(viewModel.isFiltered)
+        
+        cancellables.forEach { $0.cancel() }
     }
     
     func testStartAutoRefreshUserDevices_cancellation() async throws {
@@ -108,6 +117,8 @@ final class DeviceListViewModelTests: XCTestCase {
         let task = Task {
             try await viewModel.startAutoRefreshUserDevices()
         }
+        
+        try await Task.sleep(nanoseconds: 100_000_000)
     
         task.cancel()
         
@@ -153,40 +164,6 @@ final class DeviceListViewModelTests: XCTestCase {
         let actionsType = actions?.compactMap {$0.type}
         XCTAssertEqual(actionsType, expectedActions, "Actions for the current device are incorrect")
     }
-    
-    func testDeviceIconName_nilUserAgent_defaultMobileIconName() async {
-        let devices = devices()
-        
-        let viewModel = makeSUT(
-            devices: devices,
-            currentDeviceId: mockCurrentDeviceId
-        )
-        
-        let userDevices = await viewModel.fetchUserDevices()
-        await viewModel.arrangeDevices(userDevices)
-        
-        let foundIconName = viewModel.deviceIconName(userAgent: nil, isMobile: true)
-        let expectedIconName = "mobile"
-        
-        XCTAssertEqual(foundIconName, expectedIconName)
-    }
-
-    func testDeviceIconName_nilUserAgent_defaultPCIconName() async {
-        let devices = devices()
-        
-        let viewModel = makeSUT(
-            devices: devices,
-            currentDeviceId: mockCurrentDeviceId
-        )
-        
-        let userDevices = await viewModel.fetchUserDevices()
-        await viewModel.arrangeDevices(userDevices)
-        
-        let foundIconName = viewModel.deviceIconName(userAgent: nil, isMobile: false)
-        let expectedIconName = "pc"
-        
-        XCTAssertEqual(foundIconName, expectedIconName)
-    }
 
     func testDeviceIconName_knownUserAgent_expectedIconName() async throws {
         var backup1 = BackupEntity(id: 1, name: "backup1", userAgent: "MEGAiOS/11.2 MEGAEnv/Dev (Darwin 22.6.0 iPhone11,2) MegaClient/4.28.2/64", type: .cameraUpload)
@@ -199,6 +176,11 @@ final class DeviceListViewModelTests: XCTestCase {
         backup4.backupStatus = .upToDate
         var backup5 = BackupEntity(id: 5, name: "backup1", userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_2) AppleWebKit/601.3.9 (KHTML, like Gecko) Version/9.0.2 Safari/601.3.9", type: .cameraUpload)
         backup5.backupStatus = .upToDate
+        
+        var backup6 = BackupEntity(id: 6, name: "backup1", userAgent: "Mozilla/5.0", type: .cameraUpload)
+        backup6.backupStatus = .upToDate
+        var backup7 = BackupEntity(id: 7, name: "backup1", userAgent: "Mozilla/5.0", type: .upSync)
+        backup7.backupStatus = .upToDate
         
         let device1 = DeviceEntity(
             id: mockCurrentDeviceId,
@@ -235,8 +217,22 @@ final class DeviceListViewModelTests: XCTestCase {
             status: .upToDate
         )
         
+        let device6 = DeviceEntity(
+            id: mockCurrentDeviceId,
+            name: "device6",
+            backups: [backup6],
+            status: .upToDate
+        )
+        
+        let device7 = DeviceEntity(
+            id: mockCurrentDeviceId,
+            name: "device7",
+            backups: [backup7],
+            status: .upToDate
+        )
+        
         let viewModel = makeSUT(
-            devices: [device1, device2, device3, device4, device5],
+            devices: [device1, device2, device3, device4, device5, device6, device7],
             currentDeviceId: mockCurrentDeviceId
         )
         
@@ -244,13 +240,13 @@ final class DeviceListViewModelTests: XCTestCase {
         await viewModel.arrangeDevices(userDevices)
         
         let userAgent = try XCTUnwrap(device1.backups?.first?.userAgent)
-        let foundIconName = viewModel.deviceIconName(userAgent: userAgent, isMobile: false)
+        let foundIconName = viewModel.deviceIconName(userAgent: userAgent, isMobile: true)
         let expectedIconName = "iphone"
         
         XCTAssertEqual(foundIconName, expectedIconName)
         
         let userAgent2 = try XCTUnwrap(device2.backups?.first?.userAgent)
-        let foundIconName2 = viewModel.deviceIconName(userAgent: userAgent2, isMobile: false)
+        let foundIconName2 = viewModel.deviceIconName(userAgent: userAgent2, isMobile: true)
         let expectedIconName2 = "android"
         
         XCTAssertEqual(foundIconName2, expectedIconName2)
@@ -272,8 +268,41 @@ final class DeviceListViewModelTests: XCTestCase {
         let expectedIconName5 = "pcMac"
         
         XCTAssertEqual(foundIconName5, expectedIconName5)
+        
+        let userAgent6 = try XCTUnwrap(device6.backups?.first?.userAgent)
+        let foundIconName6 = viewModel.deviceIconName(userAgent: userAgent6, isMobile: true)
+        let expectedIconName6 = "mobile"
+        
+        XCTAssertEqual(foundIconName6, expectedIconName6)
+        
+        let userAgent7 = try XCTUnwrap(device7.backups?.first?.userAgent)
+        let foundIconName7 = viewModel.deviceIconName(userAgent: userAgent7, isMobile: false)
+        let expectedIconName7 = "pc"
+        
+        XCTAssertEqual(foundIconName7, expectedIconName7)
     }
+    
+    private func setUpSubscriptionAndAwaitExpectation(viewModel: DeviceListViewModel, completion: @escaping ([DeviceCenterItemViewModel]) -> Void) async throws -> Set<AnyCancellable> {
+        let expectation = XCTestExpectation(description: "Wait for otherDevices update")
+        var cancellables = Set<AnyCancellable>()
 
+        viewModel.$otherDevices
+           .filter { !$0.isEmpty }
+           .first()
+           .sink(receiveValue: { otherDevices in
+               completion(otherDevices)
+               expectation.fulfill()
+           })
+           .store(in: &cancellables)
+        
+        let userDevices = await viewModel.fetchUserDevices()
+        await viewModel.arrangeDevices(userDevices)
+        
+        await fulfillment(of: [expectation], timeout: 1.0)
+        
+        return cancellables
+    }
+    
     private func filteredDevices(by text: String) -> [DeviceEntity] {
         devices().filter {
             $0.name.lowercased().contains(text.lowercased())
