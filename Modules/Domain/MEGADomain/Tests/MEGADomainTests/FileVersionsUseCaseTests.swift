@@ -18,113 +18,90 @@ final class FileVersionsUseCaseTests: XCTestCase {
         XCTAssertEqual(sut.rootNodeFileVersionTotalSizeInBytes(), versionsSize)
     }
 
-    func testFileVerions_success_isEnabled() {
+    func testFileVerions_success_isEnabled() async throws {
         let repo = MockFileVersionsRepository(isFileVersionsEnabled: .success(true))
         let sut = FileVersionsUseCase(repo: repo)
-        sut.isFileVersionsEnabled { result in
-            switch result {
-            case .success(let enable):
-                XCTAssertTrue(enable)
-            case .failure:
-                XCTFail("errors are not expected!")
-            }
-        }
+        
+        let enable = try await sut.isFileVersionsEnabled()
+        
+        XCTAssertTrue(enable)
     }
     
-    func testFileVerions_success_isDisabled() {
+    func testFileVerions_success_isDisabled() async throws {
         let repo = MockFileVersionsRepository(isFileVersionsEnabled: .success(false))
         let sut = FileVersionsUseCase(repo: repo)
-        sut.isFileVersionsEnabled { result in
-            switch result {
-            case .success(let enable):
-                XCTAssertFalse(enable)
-            case .failure:
-                XCTFail("errors are not expected!")
-            }
-        }
+        
+        let enable = try await sut.isFileVersionsEnabled()
+        
+        XCTAssertFalse(enable)
     }
     
-    func testFileVerions_error_isEnabled() {
+    func testFileVerions_error_isEnabled() async {
         let mockError: FileVersionErrorEntity = .generic
-        
         let repo = MockFileVersionsRepository(isFileVersionsEnabled: .failure(.generic))
         let sut = FileVersionsUseCase(repo: repo)
-        sut.isFileVersionsEnabled { result in
-            switch result {
-            case .success:
-                XCTFail("error \(mockError) is expected!")
-            case .failure(let error):
-                XCTAssertEqual(mockError, error)
-            }
+        
+        do {
+            _ = try await sut.isFileVersionsEnabled()
+            
+            XCTFail("error \(mockError) is expected!")
+        } catch {
+            XCTAssertEqual(mockError, error as? FileVersionErrorEntity)
         }
     }
         
-    func testFileVerions_success_enableFileVersions() {
+    func testFileVerions_success_enableFileVersions() async throws {
         let repo = MockFileVersionsRepository(enableFileVersions: .success(true))
         let sut = FileVersionsUseCase(repo: repo)
-        sut.enableFileVersions(true) { result in
-            switch result {
-            case .success(let enable):
-                XCTAssertTrue(enable)
-            case .failure:
-                XCTFail("errors are not expected!")
-            }
-        }
+        
+        let enable = try await sut.enableFileVersions(true)
+        
+        XCTAssertTrue(enable)
     }
     
-    func testFileVerions_success_disableFileVersions() {
+    func testFileVerions_success_disableFileVersions() async throws {
         let repo = MockFileVersionsRepository(enableFileVersions: .success(false))
         let sut = FileVersionsUseCase(repo: repo)
-        sut.enableFileVersions(false) { result in
-            switch result {
-            case .success(let enable):
-                XCTAssertFalse(enable)
-            case .failure:
-                XCTFail("errors are not expected!")
-            }
-        }
+        
+        let enable = try await sut.enableFileVersions(false)
+        
+        XCTAssertFalse(enable)
     }
     
-    func testFileVerions_error_enableFileVersions() {
+    func testFileVerions_error_enableFileVersions() async {
         let mockError: FileVersionErrorEntity = .generic
-        
         let repo = MockFileVersionsRepository(enableFileVersions: .failure(.generic))
         let sut = FileVersionsUseCase(repo: repo)
-        sut.enableFileVersions(true) { result in
-            switch result {
-            case .success:
-                XCTFail("error \(mockError) is expected!")
-            case .failure(let error):
-                XCTAssertEqual(mockError, error)
-            }
+        
+        do {
+            _ = try await sut.enableFileVersions(true)
+            
+            XCTFail("error \(mockError) is expected!")
+        } catch {
+            XCTAssertEqual(mockError, error as? FileVersionErrorEntity)
         }
     }
     
-    func testFileVerions_success_deletePreviousVersions() {
+    func testFileVerions_success_deletePreviousVersions() async throws {
         let repo = MockFileVersionsRepository(deletePreviousFileVersions: .success(true))
         let sut = FileVersionsUseCase(repo: repo)
-        sut.deletePreviousFileVersions { result in
-            switch result {
-            case .success(let delete):
-                XCTAssertTrue(delete)
-            case .failure:
-                XCTFail("errors are not expected!")
-            }
-        }
+        
+        let delete = try await sut.deletePreviousFileVersions()
+        
+        XCTAssertTrue(delete)
     }
     
-    func testFileVerions_error_deletePreviousVersions() {
+    func testFileVerions_error_deletePreviousVersions() async {
         let mockError: FileVersionErrorEntity = .generic
-        
         let repo = MockFileVersionsRepository(enableFileVersions: .failure(.generic))
         let sut = FileVersionsUseCase(repo: repo)
-        sut.deletePreviousFileVersions { result in
-            switch result {
-            case .success:
-                XCTFail("error \(mockError) is expected!")
-            case .failure(let error):
-                XCTAssertEqual(mockError, error)
-            }
+        
+        do {
+            _ = try await sut.deletePreviousFileVersions()
+            
+            XCTFail("error \(mockError) is expected!")
+        } catch {
+            XCTAssertEqual(mockError, error as? FileVersionErrorEntity)
         }
     }
 }

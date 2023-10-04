@@ -1,10 +1,12 @@
 import MEGADomain
+import MEGASdk
 import MEGASDKRepo
+import MEGASwift
 
 struct FileVersionsRepository: FileVersionsRepositoryProtocol {
     
     static var newRepo: FileVersionsRepository {
-        FileVersionsRepository(sdk: MEGASdkManager.sharedMEGASdk())
+        FileVersionsRepository(sdk: .shared)
     }
     
     private let sdk: MEGASdk
@@ -13,8 +15,21 @@ struct FileVersionsRepository: FileVersionsRepositoryProtocol {
         self.sdk = sdk
     }
     
-    func isFileVersionsEnabled(completion: @escaping (Result<Bool, FileVersionErrorEntity>) -> Void) {
-        sdk.getFileVersionsOption(with: RequestDelegate { (result) in
+    func isFileVersionsEnabled() async throws -> Bool {
+        try await withAsyncThrowingValue { completion in
+            isFileVersionsEnabled { result in
+                switch result {
+                case .success(let value):
+                    completion(.success(value))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+        }
+    }
+    
+    private func isFileVersionsEnabled(completion: @escaping (Result<Bool, FileVersionErrorEntity>) -> Void) {
+        sdk.getFileVersionsOption(with: RequestDelegate { result in
             switch result {
             case .success(let request):
                 completion(.success(!request.flag))
@@ -28,8 +43,21 @@ struct FileVersionsRepository: FileVersionsRepositoryProtocol {
         })
     }
     
-    func enableFileVersions(_ enable: Bool, completion: @escaping (Result<Bool, FileVersionErrorEntity>) -> Void) {
-        sdk.setFileVersionsOption(!enable, delegate: RequestDelegate { (result) in
+    func enableFileVersions(_ enable: Bool) async throws -> Bool {
+        try await withAsyncThrowingValue { completion in
+            enableFileVersions(enable) { result in
+                switch result {
+                case .success(let value):
+                    completion(.success(value))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+        }
+    }
+    
+    private func enableFileVersions(_ enable: Bool, completion: @escaping (Result<Bool, FileVersionErrorEntity>) -> Void) {
+        sdk.setFileVersionsOption(!enable, delegate: RequestDelegate { result in
             switch result {
             case .success(let request):
                 completion(.success(!(request.text == "1")))
@@ -62,9 +90,22 @@ struct FileVersionsRepository: FileVersionsRepositoryProtocol {
         return 0
 #endif
     }
+    
+    func deletePreviousFileVersions() async throws -> Bool {
+        try await withAsyncThrowingValue { completion in
+            deletePreviousFileVersions { result in
+                switch result {
+                case .success(let value):
+                    completion(.success(value))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+        }
+    }
 
-    func deletePreviousFileVersions(completion: @escaping (Result<Bool, FileVersionErrorEntity>) -> Void) {
-        sdk.removeVersions(with: RequestDelegate { (result) in
+    private func deletePreviousFileVersions(completion: @escaping (Result<Bool, FileVersionErrorEntity>) -> Void) {
+        sdk.removeVersions(with: RequestDelegate { result in
             switch result {
             case .success:
                 completion(.success(true))

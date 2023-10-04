@@ -21,12 +21,12 @@ public struct MockFileVersionsUseCase: FileVersionsUseCaseProtocol {
         self.deletePreviousFileVersions = deletePreviousFileVersions
     }
     
-    public func isFileVersionsEnabled(completion: @escaping (Result<Bool, FileVersionErrorEntity>) -> Void) {
-        completion(isFileVersionsEnabled)
+    public func isFileVersionsEnabled() async throws -> Bool {
+        try isFileVersionsEnabled.get()
     }
     
-    public func enableFileVersions(_ enable: Bool, completion: @escaping (Result<Bool, FileVersionErrorEntity>) -> Void) {
-        completion(enableFileVersions)
+    public func enableFileVersions(_ enable: Bool) async throws -> Bool {
+        try enableFileVersions.get()
     }
     
     public func rootNodeFileVersionCount() -> Int64 {
@@ -37,7 +37,7 @@ public struct MockFileVersionsUseCase: FileVersionsUseCaseProtocol {
         versionsSize
     }
     
-    public func deletePreviousFileVersions(completion: @escaping (Result<Bool, FileVersionErrorEntity>) -> Void) {
-        completion(deletePreviousFileVersions)
+    public func deletePreviousFileVersions() async throws -> Bool {
+        try deletePreviousFileVersions.get()
     }
 }
