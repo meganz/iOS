@@ -721,7 +721,7 @@
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="相机上传";
 /* Banner message on Camera Uploads that warns user that they have limited access to photos */
-"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA has limited access to your photo library and cannot backup all of your media. Tap to change permissions.";
+"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA对您的照片的访问受限，无法备份您的所有媒体。点击以更改权限。";
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="照片";
 /* Photo view is empty */
@@ -988,16 +988,6 @@
 "simplePasscodeLabel"="简易密码";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="擦除本地数据";
-/* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="若尝试10次失败后，您的帐户将被登出，您的离线文件将被删除";
-/* Button text to change the passcode type. */
-"Passcode Options"="密码选项";
-/* Action text to change to 4-Digit Numeric passcode type. */
-"4-Digit Numeric Code"="4位数字密码";
-/* Action text to change to 6-Digit Numeric passcode type. */
-"6-Digit Numeric Code"="6位数字密码";
-/* Action text to change to Custom Alphanumeric passcode type. */
-"Custom Alphanumeric Code"="自定字母数字密码";
 /* Menu item */
 "help"="帮助";
 /* Title of the section to access MEGA's help centre */
@@ -1417,11 +1407,11 @@
 /* Error message displayed when trying to invite a contact who is already added. */
 "alreadyAContact"="%s已经是您的联系人。";
 /* A summary message when a user sent a contact's details through the chat. Please keep %@ as it will be replaced at runtime with the name of the contact that was sent. */
-"sentContact"="Sent contact: %@";
+"sentContact"="已发送联系人：%@";
 /* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
 "sentXContacts"="已发送%s位联系人。";
 /* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %@ as it will be replaced at runtime with the name of the attached file. */
-"attachedFile"="Attached: %@";
+"attachedFile"="已附上文件：%@";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="已附上%s个文件。";
 /* Label in a button that allows to jump to the latest item */
@@ -2001,7 +1991,7 @@
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="由%@修改";
 /* Title for a recent action bucket with multiple files. %@ will be replaced by the filename of the first file in the bucket. %ld will be replaced by the total number of other files in the bucket. */
-"home.recent.multipleFileTitle"="“%@” and %ld more";
+"home.recent.multipleFileTitle"="”%@”和%ld及更多";
 /* Label that indicates who uploaded a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.createdByLabel"="由%@创建";
 /* Message shown when the user has not recent activity in their account. */
@@ -2648,8 +2638,18 @@
 "meetings.panel.InviteParticipants"="邀请参与者";
 /* Meetings: Floating panel share link option */
 "meetings.panel.shareLink"="分享链接";
-/* Meetings: Floating panel participants count header */
+/* Meetings: Floating panel participants list selector for participants in call */
+"meetings.panel.listSelector.inCall"="通话中";
+/* Meetings: Floating panel participants list selector for participants not in call */
+"meetings.panel.listSelector.notInCall"="未在通话中";
+/* Meetings: Floating panel participants list selector for participants in call */
+"meetings.panel.listSelector.inWaitingRoom"="正在等候室";
+/* Meetings: Floating panel participants in call count header */
 "meetings.panel.ParticipantsCount"="参与者（%d）";
+/* Meetings: Floating panel participants not in call count header */
+"meetings.panel.ParticipantsNotInCallCount"="未在通话中（%d）";
+/* Meetings: Floating panel participants in waiting room count header */
+"meetings.panel.ParticipantsInWaitingRoomCount"="正在等候(%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
 "meetings.participant.moderator"="主持人";
 /* Meetings: Action on a meeting that change participant's role to moderator */
@@ -3105,7 +3105,7 @@
 /* A log message in a chat to display that a participant's permission was changed to host role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep the [A], [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to host role by John Smith. */
 "chat.message.changedRole.host"="[B]将[A]的权限更改为[S]主持人[/S]";
 /* A log message in a chat to display that a participant's permission was changed to standard role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to standard role by John Smith. */
-"chat.message.changedRole.standard"="[B]将[A]的权限更改为[S]标准角色[/S]";
+"chat.message.changedRole.standard"="[A]被[B]更改为[S]标准参与者[/S]";
 /* Type of data displayed in a map view. Standard imagery of the area. */
 "chat.sendLocation.map.standard"="普通成员";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
@@ -3181,7 +3181,7 @@
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
 "sharedItems.contactVerification.section.verifyContact.receiver.message"="我们采用零知识加密保护您的数据。为了进一步确保安全性，我们要求您在访问共享文件夹之前您你接收信息的联系人进行验证。";
 /* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
-"sharedItems.contactVerification.section.verifyContact.bannerMessage"="To access the shared folder, the person who shared it with you should verify you, too.";
+"sharedItems.contactVerification.section.verifyContact.bannerMessage"="为了访问此共享文件夹，与您分享它的人应该也对您进行验证。";
 /* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
 "sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@是由您尚未验证的联系人共享。为确保额外的安全性，我们建议您通过点击要验证的联系人旁边的ⓘ来验证其在联系人中的凭证。";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
@@ -3729,7 +3729,7 @@
 /* Schedule meeting waiting room setting title */
 "meetings.scheduleMeeting.waitingRoom"="正在等候室";
 /* Schedule meeting waiting room setting description */
-"meetings.scheduleMeeting.waitingRoom.description"="只有主持人允许的用户可以加入会议。";
+"meetings.scheduleMeeting.waitingRoom.description"="只有主持人允许的参与者可以加入会议。";
 /* Schedule meeting waiting room warning banner title */
 "meetings.scheduleMeeting.waitingRoomWarningBanner.title"="在通话期间，非主持人添加的参与者将不会被添加到等候室。";
 /* Schedule meeting waiting room warning banner learn more */
@@ -3830,3 +3830,7 @@
 "home.search.empty.no-audio"="无音频文件";
 /* Empty screen copy when Video filter is selected on the home screen search */
 "home.search.empty.no-videos"="无视频文件";
+/* A title label for waiting room participants list view. */
+"chat.call.waitingRoom.participantsList.title"="正在等候室";
+/* A button label to close the waiting room participants list view. */
+"chat.call.waitingRoom.participantsList.close"="关闭";

@@ -988,16 +988,6 @@
 "simplePasscodeLabel"="Passcode Sederhana";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Hapus data lokal";
-/* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="Anda akan keluar dan file offline anda akan dihapus setelah 10 upaya gagal";
-/* Button text to change the passcode type. */
-"Passcode Options"="Opsi Kode Sandi";
-/* Action text to change to 4-Digit Numeric passcode type. */
-"4-Digit Numeric Code"="Kode Numerik 4-Digit";
-/* Action text to change to 6-Digit Numeric passcode type. */
-"6-Digit Numeric Code"="Kode Numerik 6-Digit";
-/* Action text to change to Custom Alphanumeric passcode type. */
-"Custom Alphanumeric Code"="Kode Alfanumerik Kustom";
 /* Menu item */
 "help"="Bantuan";
 /* Title of the section to access MEGA's help centre */
@@ -1291,7 +1281,7 @@
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="Kirim Pesan";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"="Setujui kredensial";
+"verifyCredentials"="Verifikasi kredensial";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
 "verify"="Setujui";
 /* Button title */
@@ -2648,8 +2638,18 @@
 "meetings.panel.InviteParticipants"="Undang Peserta";
 /* Meetings: Floating panel share link option */
 "meetings.panel.shareLink"="Bagikan Tautan";
-/* Meetings: Floating panel participants count header */
+/* Meetings: Floating panel participants list selector for participants in call */
+"meetings.panel.listSelector.inCall"="In call";
+/* Meetings: Floating panel participants list selector for participants not in call */
+"meetings.panel.listSelector.notInCall"="Not in call";
+/* Meetings: Floating panel participants list selector for participants in call */
+"meetings.panel.listSelector.inWaitingRoom"="Ruang tunggu";
+/* Meetings: Floating panel participants in call count header */
 "meetings.panel.ParticipantsCount"="Peserta (%d)";
+/* Meetings: Floating panel participants not in call count header */
+"meetings.panel.ParticipantsNotInCallCount"="Not in call (%d)";
+/* Meetings: Floating panel participants in waiting room count header */
+"meetings.panel.ParticipantsInWaitingRoomCount"="Waiting (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
 "meetings.participant.moderator"="Tuan rumah";
 /* Meetings: Action on a meeting that change participant's role to moderator */
@@ -3105,7 +3105,7 @@
 /* A log message in a chat to display that a participant's permission was changed to host role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep the [A], [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to host role by John Smith. */
 "chat.message.changedRole.host"="[A] diubah menjadi [S]tuan rumah[/S] oleh [B]";
 /* A log message in a chat to display that a participant's permission was changed to standard role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to standard role by John Smith. */
-"chat.message.changedRole.standard"="[A] diubah menjadi [S]peran standar[/S] oleh [B]";
+"chat.message.changedRole.standard"="[A] was changed to a [S]standard participant[/S] by [B]";
 /* Type of data displayed in a map view. Standard imagery of the area. */
 "chat.sendLocation.map.standard"="Standar";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
@@ -3729,7 +3729,7 @@
 /* Schedule meeting waiting room setting title */
 "meetings.scheduleMeeting.waitingRoom"="Ruang tunggu";
 /* Schedule meeting waiting room setting description */
-"meetings.scheduleMeeting.waitingRoom.description"="Hanya pengguna yang diakui oleh penyelenggara yang dapat bergabung dalam rapat.";
+"meetings.scheduleMeeting.waitingRoom.description"="Only participants admitted by the host can join the meeting.";
 /* Schedule meeting waiting room warning banner title */
 "meetings.scheduleMeeting.waitingRoomWarningBanner.title"="Peserta yang ditambahkan oleh non-host selama panggilan tidak akan dikirim ke ruang tunggu.";
 /* Schedule meeting waiting room warning banner learn more */
@@ -3830,3 +3830,7 @@
 "home.search.empty.no-audio"="Tidak ada file audio";
 /* Empty screen copy when Video filter is selected on the home screen search */
 "home.search.empty.no-videos"="Tidak ada file video";
+/* A title label for waiting room participants list view. */
+"chat.call.waitingRoom.participantsList.title"="Ruang tunggu";
+/* A button label to close the waiting room participants list view. */
+"chat.call.waitingRoom.participantsList.close"="Tutup";

@@ -2392,10 +2392,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>[UserName] is waiting to join “[MeetingName]“</string>
         <key>other</key>
-        <string>%d participants are waiting to join “[MeetingName]“</string>
+        <string>%d người đang chờ để tham gia “[MeetingName]”</string>
       </dict>
     </dict>
     <key>chat.call.waitingRoom.alert.message</key>
@@ -2410,6 +2408,22 @@
         <string>d</string>
         <key>other</key>
         <string>%d người đang chờ để tham gia cuộc gọi</string>
+      </dict>
+    </dict>
+    <key>chat.call.waitingRoom.participantsCount</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>1 participant</string>
+        <key>other</key>
+        <string>%d participants</string>
       </dict>
     </dict>
     <key>general.format.itemsSelected</key>

@@ -2410,6 +2410,20 @@
         <string>%d人の参加者が通話への参加を待っています</string>
       </dict>
     </dict>
+    <key>chat.call.waitingRoom.participantsCount</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d人の参加者</string>
+      </dict>
+    </dict>
     <key>general.format.itemsSelected</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>

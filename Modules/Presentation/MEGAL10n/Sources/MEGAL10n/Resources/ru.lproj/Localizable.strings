@@ -988,16 +988,6 @@
 "simplePasscodeLabel"="Простой код доступа";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Удалить локальные данные";
-/* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="После 10 неудачных попыток локальные файлы будут удалены, а вы выйдете из системы";
-/* Button text to change the passcode type. */
-"Passcode Options"="Настройки кода доступа";
-/* Action text to change to 4-Digit Numeric passcode type. */
-"4-Digit Numeric Code"="4-значный цифровой код";
-/* Action text to change to 6-Digit Numeric passcode type. */
-"6-Digit Numeric Code"="6-значный цифровой код";
-/* Action text to change to Custom Alphanumeric passcode type. */
-"Custom Alphanumeric Code"="Пользовательский буквенно-цифровой код";
 /* Menu item */
 "help"="Помощь";
 /* Title of the section to access MEGA's help centre */
@@ -1291,7 +1281,7 @@
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="Отправить Сообщение";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"="Подтвердите учётные данные";
+"verifyCredentials"="Подтвердить Учетные Данные";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
 "verify"="Подтвердить";
 /* Button title */
@@ -2648,8 +2638,18 @@
 "meetings.panel.InviteParticipants"="Пригласить участников";
 /* Meetings: Floating panel share link option */
 "meetings.panel.shareLink"="Поделиться ссылкой";
-/* Meetings: Floating panel participants count header */
+/* Meetings: Floating panel participants list selector for participants in call */
+"meetings.panel.listSelector.inCall"="В звонке";
+/* Meetings: Floating panel participants list selector for participants not in call */
+"meetings.panel.listSelector.notInCall"="Не в звонке";
+/* Meetings: Floating panel participants list selector for participants in call */
+"meetings.panel.listSelector.inWaitingRoom"="Комната ожидания";
+/* Meetings: Floating panel participants in call count header */
 "meetings.panel.ParticipantsCount"="Участники (%d)";
+/* Meetings: Floating panel participants not in call count header */
+"meetings.panel.ParticipantsNotInCallCount"="Не в звонке (%d)";
+/* Meetings: Floating panel participants in waiting room count header */
+"meetings.panel.ParticipantsInWaitingRoomCount"="В ожидании (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
 "meetings.participant.moderator"="Организатор";
 /* Meetings: Action on a meeting that change participant's role to moderator */
@@ -3105,7 +3105,7 @@
 /* A log message in a chat to display that a participant's permission was changed to host role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep the [A], [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to host role by John Smith. */
 "chat.message.changedRole.host"="[A] получил права [S]организатора[/S] от [B]";
 /* A log message in a chat to display that a participant's permission was changed to standard role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to standard role by John Smith. */
-"chat.message.changedRole.standard"="[A] получил [S]стандартные права[/S] от [B]";
+"chat.message.changedRole.standard"="[A] получил права [S]обычного участника[/S] от [B]";
 /* Type of data displayed in a map view. Standard imagery of the area. */
 "chat.sendLocation.map.standard"="Обычный";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
@@ -3729,7 +3729,7 @@
 /* Schedule meeting waiting room setting title */
 "meetings.scheduleMeeting.waitingRoom"="Комната ожидания";
 /* Schedule meeting waiting room setting description */
-"meetings.scheduleMeeting.waitingRoom.description"="К встрече могут присоединиться только пользователи, допущенные организатором.";
+"meetings.scheduleMeeting.waitingRoom.description"="К встрече могут присоединиться только участники, допущенные организатором.";
 /* Schedule meeting waiting room warning banner title */
 "meetings.scheduleMeeting.waitingRoomWarningBanner.title"="Участники, добавленные во время звонков не организаторами, не будут отправлены в комнату ожидания.";
 /* Schedule meeting waiting room warning banner learn more */
@@ -3830,3 +3830,7 @@
 "home.search.empty.no-audio"="Нет аудиофайлов";
 /* Empty screen copy when Video filter is selected on the home screen search */
 "home.search.empty.no-videos"="Нет видеофайлов";
+/* A title label for waiting room participants list view. */
+"chat.call.waitingRoom.participantsList.title"="Комната ожидания";
+/* A button label to close the waiting room participants list view. */
+"chat.call.waitingRoom.participantsList.close"="Закрыть";
