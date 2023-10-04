@@ -179,6 +179,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
 
     AVAsset *asset = [AVAsset assetWithURL:self.fileUrl];
     AVPlayerItem *playerItem = [AVPlayerItem playerItemWithAsset:asset];
+    [self setPlayerItemMetadataWithPlayerItem:playerItem node:self.node];
     self.player = [AVPlayer playerWithPlayerItem:playerItem];
     [self.subscriptions addObject:[self bindPlayerItemStatusWithPlayerItem:playerItem]];
     
@@ -254,6 +255,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
     if (![oldFileURL isEqual:self.fileUrl]) {
         CMTime currentTime = self.player.currentTime;
         AVPlayerItem *newPlayerItem = [AVPlayerItem playerItemWithURL:self.fileUrl];
+        [self setPlayerItemMetadataWithPlayerItem:newPlayerItem node:self.node];
         [self.player replaceCurrentItemWithPlayerItem:newPlayerItem];
         if (CMTIME_IS_VALID(currentTime)) {
             [self.player seekToTime:currentTime];
