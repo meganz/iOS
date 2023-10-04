@@ -721,7 +721,7 @@
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="Kamera-Uploads";
 /* Banner message on Camera Uploads that warns user that they have limited access to photos */
-"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA has limited access to your photo library and cannot backup all of your media. Tap to change permissions.";
+"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA hat nur eingeschränkten Zugriff auf Ihre Fotobibliothek und kann nicht alle Ihre Mediendateien sichern. Antippen, um die Berechtigungen zu ändern.";
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="Fotos";
 /* Photo view is empty */
@@ -988,16 +988,6 @@
 "simplePasscodeLabel"="Einfacher Passcode";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Lokale Daten löschen";
-/* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="Nach zehn Fehlversuchen werden Sie ausgeloggt und Ihre Offlinedateien gelöscht";
-/* Button text to change the passcode type. */
-"Passcode Options"="Passcode-Optionen";
-/* Action text to change to 4-Digit Numeric passcode type. */
-"4-Digit Numeric Code"="4stellig numerisch";
-/* Action text to change to 6-Digit Numeric passcode type. */
-"6-Digit Numeric Code"="6stellig numerisch";
-/* Action text to change to Custom Alphanumeric passcode type. */
-"Custom Alphanumeric Code"="Alphanumerisch";
 /* Menu item */
 "help"="Hilfe";
 /* Title of the section to access MEGA's help centre */
@@ -1291,7 +1281,7 @@
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="Nachricht schicken";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"="Identitätsdaten bestätigen";
+"verifyCredentials"="Identität verifizieren";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
 "verify"="Bestätigen";
 /* Button title */
@@ -2001,7 +1991,7 @@
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="Geändert durch %@";
 /* Title for a recent action bucket with multiple files. %@ will be replaced by the filename of the first file in the bucket. %ld will be replaced by the total number of other files in the bucket. */
-"home.recent.multipleFileTitle"="“%@” and %ld more";
+"home.recent.multipleFileTitle"="„%@“ und %ld weitere";
 /* Label that indicates who uploaded a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.createdByLabel"="Erstellt von %@";
 /* Message shown when the user has not recent activity in their account. */
@@ -2648,8 +2638,18 @@
 "meetings.panel.InviteParticipants"="Teilnehmer einladen";
 /* Meetings: Floating panel share link option */
 "meetings.panel.shareLink"="Link teilen";
-/* Meetings: Floating panel participants count header */
+/* Meetings: Floating panel participants list selector for participants in call */
+"meetings.panel.listSelector.inCall"="In Konferenz";
+/* Meetings: Floating panel participants list selector for participants not in call */
+"meetings.panel.listSelector.notInCall"="Nicht in Konferenz";
+/* Meetings: Floating panel participants list selector for participants in call */
+"meetings.panel.listSelector.inWaitingRoom"="Warteraum";
+/* Meetings: Floating panel participants in call count header */
 "meetings.panel.ParticipantsCount"="Teilnehmer (%d)";
+/* Meetings: Floating panel participants not in call count header */
+"meetings.panel.ParticipantsNotInCallCount"="Nicht in Konferenz (%d)";
+/* Meetings: Floating panel participants in waiting room count header */
+"meetings.panel.ParticipantsInWaitingRoomCount"="Wartend (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
 "meetings.participant.moderator"="Gastgeber";
 /* Meetings: Action on a meeting that change participant's role to moderator */
@@ -3105,7 +3105,7 @@
 /* A log message in a chat to display that a participant's permission was changed to host role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep the [A], [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to host role by John Smith. */
 "chat.message.changedRole.host"="[A] wurde von [B] auf die [S]Gastgeberrolle[/S] umgestellt";
 /* A log message in a chat to display that a participant's permission was changed to standard role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to standard role by John Smith. */
-"chat.message.changedRole.standard"="[A] wurde von [B] auf die [S]Standardrolle[/S] umgestellt";
+"chat.message.changedRole.standard"="[A] wurde von [B] zum [S]Standardteilnehmer[/S] geändert";
 /* Type of data displayed in a map view. Standard imagery of the area. */
 "chat.sendLocation.map.standard"="Standard";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
@@ -3181,7 +3181,7 @@
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
 "sharedItems.contactVerification.section.verifyContact.receiver.message"="Wir schützen Ihre Daten mit einer Zero-Knowledge-Verschlüsselung. Um eine besonders hohe Sicherheit zu gewährleisten, bitten wir Sie, die Kontakte, von denen Sie Informationen erhalten, zu verifizieren, bevor Sie auf die freigegebenen Ordner zugreifen können.";
 /* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
-"sharedItems.contactVerification.section.verifyContact.bannerMessage"="To access the shared folder, the person who shared it with you should verify you, too.";
+"sharedItems.contactVerification.section.verifyContact.bannerMessage"="Damit Sie auf den freigegebenen Ordner zugreifen können, sollte die freigebende Person Sie ebenfalls verifizieren.";
 /* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
 "sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ wurde von einem Kontakt freigegeben, den Sie noch nicht verifiziert haben. Um eine besonders hohe Sicherheit zu gewährleisten, empfehlen wir Ihnen, die Identitätsdaten des Kontakts in Ihrer Kontaktliste zu verifizieren, indem Sie auf das ⓘ-Symbol neben dem zu überprüfenden Kontakt tippen.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
@@ -3729,7 +3729,7 @@
 /* Schedule meeting waiting room setting title */
 "meetings.scheduleMeeting.waitingRoom"="Warteraum";
 /* Schedule meeting waiting room setting description */
-"meetings.scheduleMeeting.waitingRoom.description"="Nur vom Gastgeber zugelassene Benutzer können am Meeting teilnehmen.";
+"meetings.scheduleMeeting.waitingRoom.description"="Nur vom Gastgeber zugelassene Teilnehmer können am Meeting teilnehmen.";
 /* Schedule meeting waiting room warning banner title */
 "meetings.scheduleMeeting.waitingRoomWarningBanner.title"="Teilnehmer, die während einer Konferenz von Teilnehmern ohne Gastgeberrechte hinzugefügt werden, werden nicht in den Warteraum weitergeleitet.";
 /* Schedule meeting waiting room warning banner learn more */
@@ -3830,3 +3830,7 @@
 "home.search.empty.no-audio"="Keine Audiodateien";
 /* Empty screen copy when Video filter is selected on the home screen search */
 "home.search.empty.no-videos"="Keine Videodateien";
+/* A title label for waiting room participants list view. */
+"chat.call.waitingRoom.participantsList.title"="Warteraum";
+/* A button label to close the waiting room participants list view. */
+"chat.call.waitingRoom.participantsList.close"="Schließen";

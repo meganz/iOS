@@ -2378,10 +2378,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Download started</string>
         <key>other</key>
-        <string>%d downloads started</string>
+        <string>已開始%d個下載</string>
       </dict>
     </dict>
     <key>chat.call.waitingRoom.alert.outsideCallUI.message</key>
@@ -2394,10 +2392,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>[UserName] is waiting to join “[MeetingName]“</string>
         <key>other</key>
-        <string>%d participants are waiting to join “[MeetingName]“</string>
+        <string>%d位與會者正在等待加入「[MeetingName]」</string>
       </dict>
     </dict>
     <key>chat.call.waitingRoom.alert.message</key>
@@ -2410,10 +2406,24 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>[UserName] is waiting to join the call</string>
         <key>other</key>
-        <string>%d participants are waiting to join the call</string>
+        <string>%d位與會者正在等待加入通話</string>
+      </dict>
+    </dict>
+    <key>chat.call.waitingRoom.participantsCount</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>1 participant</string>
+        <key>other</key>
+        <string>%d participants</string>
       </dict>
     </dict>
     <key>general.format.itemsSelected</key>
@@ -2426,10 +2436,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>%d item selected</string>
         <key>other</key>
-        <string>%d items selected</string>
+        <string>已選擇%d個項目</string>
       </dict>
     </dict>
   </dict>

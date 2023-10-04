@@ -3442,6 +3442,22 @@
         <string>%d uczestników oczekuje na dołączenie do połączenia</string>
       </dict>
     </dict>
+    <key>chat.call.waitingRoom.participantsCount</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>1 participant</string>
+        <key>other</key>
+        <string>%d participants</string>
+      </dict>
+    </dict>
     <key>general.format.itemsSelected</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>

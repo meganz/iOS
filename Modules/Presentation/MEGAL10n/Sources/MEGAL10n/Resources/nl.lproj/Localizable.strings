@@ -988,16 +988,6 @@
 "simplePasscodeLabel"="Simpele Toegangscode";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="Lokale gegevens wissen";
-/* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="U wordt uitgelogd en uw offline bestanden worden verwijderd na 10 mislukte pogingen";
-/* Button text to change the passcode type. */
-"Passcode Options"="Toegangscode-Opties";
-/* Action text to change to 4-Digit Numeric passcode type. */
-"4-Digit Numeric Code"="4-Cijferige Numerieke Code";
-/* Action text to change to 6-Digit Numeric passcode type. */
-"6-Digit Numeric Code"="6-Cijferige Numerieke Code";
-/* Action text to change to Custom Alphanumeric passcode type. */
-"Custom Alphanumeric Code"="Aangepaste Alfanumerieke Code";
 /* Menu item */
 "help"="Help";
 /* Title of the section to access MEGA's help centre */
@@ -1291,7 +1281,7 @@
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="Bericht Versturen";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"="Gegevens goedkeuren";
+"verifyCredentials"="Bevestig gegevens";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
 "verify"="Goedkeuren";
 /* Button title */
@@ -2648,8 +2638,18 @@
 "meetings.panel.InviteParticipants"="Deelnemers Uitnodigen";
 /* Meetings: Floating panel share link option */
 "meetings.panel.shareLink"="Link Delen";
-/* Meetings: Floating panel participants count header */
+/* Meetings: Floating panel participants list selector for participants in call */
+"meetings.panel.listSelector.inCall"="In oproep";
+/* Meetings: Floating panel participants list selector for participants not in call */
+"meetings.panel.listSelector.notInCall"="Niet in oproep";
+/* Meetings: Floating panel participants list selector for participants in call */
+"meetings.panel.listSelector.inWaitingRoom"="Wachtkamer";
+/* Meetings: Floating panel participants in call count header */
 "meetings.panel.ParticipantsCount"="Deelnemers (%d)";
+/* Meetings: Floating panel participants not in call count header */
+"meetings.panel.ParticipantsNotInCallCount"="Niet in oproep (%d)";
+/* Meetings: Floating panel participants in waiting room count header */
+"meetings.panel.ParticipantsInWaitingRoomCount"="Wachtend (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
 "meetings.participant.moderator"="Gastheer/gastvrouw";
 /* Meetings: Action on a meeting that change participant's role to moderator */
@@ -3105,7 +3105,7 @@
 /* A log message in a chat to display that a participant's permission was changed to host role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep the [A], [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to host role by John Smith. */
 "chat.message.changedRole.host"="[A]was gewijzigd naar [S]gastheer/gastvrouw rol[/S] door [B]";
 /* A log message in a chat to display that a participant's permission was changed to standard role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to standard role by John Smith. */
-"chat.message.changedRole.standard"="[A] was gewijzigd naar [S] standaard rol[/S] door [B]";
+"chat.message.changedRole.standard"="[A] was gewijzigd naar een[S] standaard deelnemer[/S] door [B]";
 /* Type of data displayed in a map view. Standard imagery of the area. */
 "chat.sendLocation.map.standard"="Standaard";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
@@ -3830,3 +3830,7 @@
 "home.search.empty.no-audio"="Geen audio bestanden";
 /* Empty screen copy when Video filter is selected on the home screen search */
 "home.search.empty.no-videos"="Geen video bestanden";
+/* A title label for waiting room participants list view. */
+"chat.call.waitingRoom.participantsList.title"="Wachtkamer";
+/* A button label to close the waiting room participants list view. */
+"chat.call.waitingRoom.participantsList.close"="Sluiten";

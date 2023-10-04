@@ -97,7 +97,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>已复制链接到剪贴板</string>
+        <string>链接已复制到剪贴板</string>
       </dict>
     </dict>
     <key>sharedItems.getLink.linkCreatedAndCopied</key>
@@ -2408,6 +2408,20 @@
         <string>d</string>
         <key>other</key>
         <string>%d位参与者正在等待加入通话</string>
+      </dict>
+    </dict>
+    <key>chat.call.waitingRoom.participantsCount</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d位参与者</string>
       </dict>
     </dict>
     <key>general.format.itemsSelected</key>

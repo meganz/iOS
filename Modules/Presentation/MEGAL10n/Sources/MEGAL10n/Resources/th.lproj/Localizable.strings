@@ -988,16 +988,6 @@
 "simplePasscodeLabel"="รหัสแบบง่าย";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
 "eraseAllLocalDataLabel"="ลบข้อมูลบนเครื่อง";
-/* Footer text that explain what will happen if reach the max number of failed attempts */
-"failedAttempstSectionTitle"="คุณจะถูกออกจากระบบและไฟล์ออฟไลน์ของคุณจะถูกลบหลังจากความพยายามล้มเหลวเกิน 10 ครั้ง";
-/* Button text to change the passcode type. */
-"Passcode Options"="ตัวเลือกรหัส";
-/* Action text to change to 4-Digit Numeric passcode type. */
-"4-Digit Numeric Code"="รหัสตัวเลข 4 หลัก";
-/* Action text to change to 6-Digit Numeric passcode type. */
-"6-Digit Numeric Code"="รหัสตัวเลข 6 หลัก";
-/* Action text to change to Custom Alphanumeric passcode type. */
-"Custom Alphanumeric Code"="รหัสตัวอักษรและตัวเลขที่กำหนดเอง";
 /* Menu item */
 "help"="ช่วยเหลือ";
 /* Title of the section to access MEGA's help centre */
@@ -1291,7 +1281,7 @@
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="ส่งข้อความ";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"="อนุมัติข้อมูลประจำตัว";
+"verifyCredentials"="ตรวจสอบข้อมูลประจำตัว";
 /* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
 "verify"="อนุมัติ";
 /* Button title */
@@ -2648,8 +2638,18 @@
 "meetings.panel.InviteParticipants"="เชิญผู้เข้าร่วม";
 /* Meetings: Floating panel share link option */
 "meetings.panel.shareLink"="แชร์ลิงก์";
-/* Meetings: Floating panel participants count header */
+/* Meetings: Floating panel participants list selector for participants in call */
+"meetings.panel.listSelector.inCall"="อยู่ในสาย";
+/* Meetings: Floating panel participants list selector for participants not in call */
+"meetings.panel.listSelector.notInCall"="ไม่อยู่ในสาย";
+/* Meetings: Floating panel participants list selector for participants in call */
+"meetings.panel.listSelector.inWaitingRoom"="ห้องนั่งรอ";
+/* Meetings: Floating panel participants in call count header */
 "meetings.panel.ParticipantsCount"="ผู้เข้าร่วม (%d คน)";
+/* Meetings: Floating panel participants not in call count header */
+"meetings.panel.ParticipantsNotInCallCount"="ไม่อยู่ในสาย (%d)";
+/* Meetings: Floating panel participants in waiting room count header */
+"meetings.panel.ParticipantsInWaitingRoomCount"="กำลังรอ (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
 "meetings.participant.moderator"="ผู้จัดการประชุม";
 /* Meetings: Action on a meeting that change participant's role to moderator */
@@ -3105,7 +3105,7 @@
 /* A log message in a chat to display that a participant's permission was changed to host role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep the [A], [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to host role by John Smith. */
 "chat.message.changedRole.host"="[A] ถูกเปลี่ยนสิทธิ์เป็น [S]ผู้จัดการประชุม[/S] โดย [B]";
 /* A log message in a chat to display that a participant's permission was changed to standard role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to standard role by John Smith. */
-"chat.message.changedRole.standard"="[A] ถูกเปลี่ยนสิทธิ์เป็น [S]แบบมาตรฐาน[/S] โดย [B]";
+"chat.message.changedRole.standard"="[A] ถูกเปลี่ยนให้เป็น[S]ผู้เข้าร่วมแบบมาตรฐาน[/S]โดย [B]";
 /* Type of data displayed in a map view. Standard imagery of the area. */
 "chat.sendLocation.map.standard"="มาตรฐาน";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
@@ -3729,7 +3729,7 @@
 /* Schedule meeting waiting room setting title */
 "meetings.scheduleMeeting.waitingRoom"="ห้องนั่งรอ";
 /* Schedule meeting waiting room setting description */
-"meetings.scheduleMeeting.waitingRoom.description"="เฉพาะผู้ใช้ที่ได้รับอนุญาตจากผู้จัดการประชุมเท่านั้นที่สามารถเข้าร่วมการประชุมได้";
+"meetings.scheduleMeeting.waitingRoom.description"="เฉพาะผู้เข้าร่วมที่ได้รับอนุญาตจากผู้จัดการประชุมเท่านั้นถึงจะสามารถเข้าร่วมการประชุมได้";
 /* Schedule meeting waiting room warning banner title */
 "meetings.scheduleMeeting.waitingRoomWarningBanner.title"="ในระหว่างการโทร ผู้เข้าร่วมที่เพิ่มจากผู้ที่ไม่ใช่ผู้จัดการประชุมจะไม่ถูกจัดให้อยู่ในห้องนั่งรอ ";
 /* Schedule meeting waiting room warning banner learn more */
@@ -3830,3 +3830,7 @@
 "home.search.empty.no-audio"="ไม่มีไฟล์เสียง";
 /* Empty screen copy when Video filter is selected on the home screen search */
 "home.search.empty.no-videos"="ไม่มีไฟล์วิดีโอ";
+/* A title label for waiting room participants list view. */
+"chat.call.waitingRoom.participantsList.title"="ห้องนั่งรอ";
+/* A button label to close the waiting room participants list view. */
+"chat.call.waitingRoom.participantsList.close"="ปิด";
