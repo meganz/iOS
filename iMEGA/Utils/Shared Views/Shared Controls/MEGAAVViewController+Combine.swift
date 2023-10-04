@@ -41,7 +41,7 @@ extension MEGAAVViewController {
         
         return NSMutableSet(set: subscriptions)
     }
-
+    
     @objc func movieStalledCallback() {
         playerDidStall()
     }
@@ -151,5 +151,12 @@ extension MEGAAVViewController {
     
     private func stopLoading() {
         activityIndicator.stopAnimating()
+    }
+    
+    @objc func setPlayerItemMetadata(playerItem: AVPlayerItem, node: MEGANode) {
+        Task { @MainActor in
+            let command = SetVideoPlayerItemMetadataCommand(playerItem: playerItem, node: node)
+            await command.execute()
+        }
     }
 }
