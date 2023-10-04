@@ -9,17 +9,20 @@ public protocol NodeUseCaseProtocol {
     func isInRubbishBin(nodeHandle: HandleEntity) -> Bool
     func nodeForHandle(_ handle: HandleEntity) -> NodeEntity?
     func parentForHandle(_ handle: HandleEntity) -> NodeEntity?
+    func parentsForHandle(_ handle: HandleEntity) async -> [NodeEntity]?
 }
 
 // MARK: - Use case implementation -
-public struct NodeUseCase<T: NodeDataRepositoryProtocol, U: NodeValidationRepositoryProtocol>: NodeUseCaseProtocol {
+public struct NodeUseCase<T: NodeDataRepositoryProtocol, U: NodeValidationRepositoryProtocol, V: NodeRepositoryProtocol>: NodeUseCaseProtocol {
     
     private let nodeDataRepository: T
     private let nodeValidationRepository: U
+    private let nodeRepository: V
     
-    public init(nodeDataRepository: T, nodeValidationRepository: U) {
+    public init(nodeDataRepository: T, nodeValidationRepository: U, nodeRepository: V) {
         self.nodeDataRepository = nodeDataRepository
         self.nodeValidationRepository = nodeValidationRepository
+        self.nodeRepository = nodeRepository
     }
     
     public func nodeAccessLevel(nodeHandle: HandleEntity) -> NodeAccessTypeEntity {
@@ -53,7 +56,13 @@ public struct NodeUseCase<T: NodeDataRepositoryProtocol, U: NodeValidationReposi
     public func nodeForHandle(_ handle: HandleEntity) -> NodeEntity? {
         nodeDataRepository.nodeForHandle(handle)
     }
+    
     public func parentForHandle(_ handle: HandleEntity) -> NodeEntity? {
         nodeDataRepository.parentForHandle(handle)
+    }
+    
+    public func parentsForHandle(_ handle: HandleEntity) async -> [NodeEntity]? {
+        guard let node = nodeForHandle(handle) else { return nil }
+        return await nodeRepository.parents(of: node)
     }
 }

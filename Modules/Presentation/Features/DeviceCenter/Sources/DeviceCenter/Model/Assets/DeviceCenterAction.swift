@@ -2,7 +2,7 @@ public enum DeviceCenterActionType {
     case cameraUploads
     case info
     case rename
-    case showInCD
+    case showInCloudDrive
     case showInBackups
     case sort
     case sortAscending

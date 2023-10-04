@@ -102,6 +102,14 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
             case .info:
                 guard let node = nodeForEntityType() else { return }
                 deviceCenterBridge.infoActionTapped(node)
+            case .showInCloudDrive:
+                guard let nodeEntity = nodeForEntityType() else { return }
+                
+                deviceCenterBridge.showInCloudDriveActionTapped(nodeEntity)
+            case .showInBackups:
+                guard let nodeEntity = nodeForEntityType() else { return }
+                
+                deviceCenterBridge.showInBackupsActionTapped(nodeEntity)
             default: break
             }
         case .device(let device):

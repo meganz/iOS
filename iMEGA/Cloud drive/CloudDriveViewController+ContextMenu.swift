@@ -53,7 +53,7 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
     @objc func setNavigationBarButtons() {
         Task { @MainActor in
             guard let parentNode = parentNode else { return }
-            let nodeUseCase = NodeUseCase(nodeDataRepository: NodeDataRepository.newRepo, nodeValidationRepository: NodeValidationRepository.newRepo)
+            let nodeUseCase = NodeUseCase(nodeDataRepository: NodeDataRepository.newRepo, nodeValidationRepository: NodeValidationRepository.newRepo, nodeRepository: NodeRepository.newRepo)
             let parentAccessLevel = await nodeUseCase.nodeAccessLevelAsync(nodeHandle: parentNode.handle)
             let menuConfig = contextMenuConfiguration(parentNode: parentNode, parentAccessLevel: parentAccessLevel)
             configNavigationBarMenus(menuConfig: menuConfig, parentAccessLevel: parentAccessLevel)

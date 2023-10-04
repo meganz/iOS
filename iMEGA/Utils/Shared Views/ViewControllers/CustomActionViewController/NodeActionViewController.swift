@@ -15,7 +15,7 @@ import UIKit
 class NodeActionViewController: ActionSheetViewController {
     private var nodes: [MEGANode]
     private var displayMode: DisplayMode
-    private let viewModel = NodeActionViewModel(nodeUseCase: NodeUseCase(nodeDataRepository: NodeDataRepository.newRepo, nodeValidationRepository: NodeValidationRepository.newRepo))
+    private let viewModel = NodeActionViewModel(nodeUseCase: NodeUseCase(nodeDataRepository: NodeDataRepository.newRepo, nodeValidationRepository: NodeValidationRepository.newRepo, nodeRepository: NodeRepository.newRepo))
     
     var sender: Any
     var delegate: any NodeActionViewControllerDelegate
@@ -313,7 +313,7 @@ class NodeActionViewController: ActionSheetViewController {
     }
     
     private func getFilesAndFolders(_ nodeModel: NodeEntity) -> String {
-        let nodeUseCase = NodeUseCase(nodeDataRepository: NodeDataRepository.newRepo, nodeValidationRepository: NodeValidationRepository.newRepo)
+        let nodeUseCase = NodeUseCase(nodeDataRepository: NodeDataRepository.newRepo, nodeValidationRepository: NodeValidationRepository.newRepo, nodeRepository: NodeRepository.newRepo)
         let numberOfFilesAndFolders = nodeUseCase.getFilesAndFolders(nodeHandle: nodeModel.handle)
         let numberOfFiles = numberOfFilesAndFolders.0
         let numberOfFolders = numberOfFilesAndFolders.1

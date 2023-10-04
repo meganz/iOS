@@ -7,6 +7,7 @@ public protocol BackupsUseCaseProtocol {
     func isBackupsRootNodeEmpty() async -> Bool
     func backupsRootNodeSize() async -> UInt64
     func backupsRootNode() async throws -> NodeEntity
+    func parentsForBackupHandle(_ handle: HandleEntity) async -> [NodeEntity]?
 }
 
 public struct BackupsUseCase<T: BackupsRepositoryProtocol, U: NodeRepositoryProtocol>: BackupsUseCaseProtocol {
@@ -55,5 +56,12 @@ public struct BackupsUseCase<T: BackupsRepositoryProtocol, U: NodeRepositoryProt
     
     public func backupsRootNode() async throws -> NodeEntity {
         try await backupsRepository.backupRootNode()
+    }
+    
+    public func parentsForBackupHandle(_ handle: HandleEntity) async -> [NodeEntity]? {
+        guard let node = nodeRepository.nodeForHandle(handle) else { return nil }
+        return await nodeRepository.parents(of: node).filter {
+            $0.parentHandle != .invalid
+        }
     }
 }

@@ -15,6 +15,7 @@ public struct MockNodeRepository: NodeRepositoryProtocol {
     private let fileLinkNode: NodeEntity?
     private let childNodes: [String: NodeEntity]
     private let childrenNodes: [NodeEntity]
+    private let parentNodes: [NodeEntity]
     
     public init(
         node: NodeEntity? = nil,
@@ -26,7 +27,8 @@ public struct MockNodeRepository: NodeRepositoryProtocol {
         images: [NodeEntity] = [],
         fileLinkNode: NodeEntity? = nil,
         childNodes: [String: NodeEntity] = [:],
-        childrenNodes: [NodeEntity] = []
+        childrenNodes: [NodeEntity] = [],
+        parentNodes: [NodeEntity] = []
     ) {
         self.node = node
         self.rubbisNode = rubbishNode
@@ -38,6 +40,7 @@ public struct MockNodeRepository: NodeRepositoryProtocol {
         self.fileLinkNode = fileLinkNode
         self.childNodes = childNodes
         self.childrenNodes = childrenNodes
+        self.parentNodes = parentNodes
     }
     
     public func nodeForHandle(_ handle: HandleEntity) -> NodeEntity? {
@@ -90,10 +93,10 @@ public struct MockNodeRepository: NodeRepositoryProtocol {
     }
     
     public func parents(of node: NodeEntity) async -> [NodeEntity] {
-        []
+        parentNodes
     }
     
-    public func children(of node: MEGADomain.NodeEntity) async -> [NodeEntity] {
+    public func children(of node: NodeEntity) async -> [NodeEntity] {
         childrenNodes
     }
 }
