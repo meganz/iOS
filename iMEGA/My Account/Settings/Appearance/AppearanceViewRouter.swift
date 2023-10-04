@@ -1,5 +1,7 @@
 import Foundation
+import MEGADomain
 import MEGAPresentation
+import MEGARepo
 
 struct AppearanceViewRouter: Routing {
     
@@ -10,8 +12,17 @@ struct AppearanceViewRouter: Routing {
     }
     
     func build() -> UIViewController {
-        let storyboard = UIStoryboard(name: "Appearance", bundle: nil)
-        return storyboard.instantiateViewController(withIdentifier: "AppearanceTableViewControllerID")
+        guard let controller = UIStoryboard(name: "Appearance", bundle: nil)
+            .instantiateViewController(identifier: "AppearanceTableViewControllerID", creator: { coder in
+                let viewModel = AppearanceViewModel(
+                    preferenceUseCase: PreferenceUseCase(
+                        repository: PreferenceRepository.newRepo),
+                    featureFlagProvider: DIContainer.featureFlagProvider)
+                return AppearanceTableViewController(coder: coder, viewModel: viewModel)  }) as? AppearanceTableViewController else {
+            fatalError("AppearanceViewRouter: could not create an instance of AppearanceTableViewController")
+        }
+        
+        return controller
     }
     
     func start() {
