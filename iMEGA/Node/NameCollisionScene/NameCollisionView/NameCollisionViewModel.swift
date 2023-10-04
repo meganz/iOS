@@ -51,16 +51,16 @@ final class NameCollisionViewModel: ObservableObject {
         self.collisionType = collisionType
         self.isFolderLink = isFolderLink
         self.duplicatedItem = DuplicatedItem(name: "", isFile: false, size: "", date: "", imagePlaceholder: .photoCardPlaceholder)
-        fileVersionsUseCase.isFileVersionsEnabled(completion: { [weak self] result in
-            switch result {
-            case .success(let enabled):
-                self?.isVersioningEnabled = enabled
-            case .failure(let error):
-                if error == .optionNeverSet {
-                    self?.isVersioningEnabled = true // default value
-                }
+        
+        Task {
+            do {
+                let enabled = try await fileVersionsUseCase.isFileVersionsEnabled()
+                isVersioningEnabled = enabled
+            } catch {
+                guard let error = error as? FileVersionErrorEntity, error == .optionNeverSet else { return }
+                isVersioningEnabled = true // default value
             }
-        })
+        }
     }
     
     func cancelResolveNameCollisions() {
