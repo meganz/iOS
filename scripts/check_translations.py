@@ -37,14 +37,14 @@ def checkIfKeyIsPresent(key, filePath):
 
 
 print("Loading base file")
-baseKeys = getKeysInFile("./../Modules/Localization/MEGAL10n/Sources/MEGAL10n/Resources/Base.lproj/Localizable.strings")
+baseKeys = getKeysInFile("./../Modules/Presentation/MEGAL10n/Sources/MEGAL10n/Resources/Base.lproj/Localizable.strings")
 
 missingKeys = {}
 
 for baseKey in baseKeys:
     print("scanning key: " + baseKey)
-    directories = glob.glob("./../Modules/Localization/MEGAL10n/Sources/MEGAL10n/Resources/*.lproj")
-    directories.remove('./../Modules/Localization/MEGAL10n/Sources/MEGAL10n/Resources/Base.lproj')
+    directories = glob.glob("./../Modules/Presentation/MEGAL10n/Sources/MEGAL10n/Resources/*.lproj")
+    directories.remove('./../Modules/Presentation/MEGAL10n/Sources/MEGAL10n/Resources/Base.lproj')
 
     missingFiles = []
     for languageDir in directories:
