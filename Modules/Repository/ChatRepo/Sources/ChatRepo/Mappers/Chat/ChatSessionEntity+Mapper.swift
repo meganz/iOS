@@ -1,6 +1,7 @@
+import MEGAChatSdk
 import MEGADomain
 
-extension MEGAChatSession {
+public extension MEGAChatSession {
     func toChatSessionEntity() -> ChatSessionEntity {
         ChatSessionEntity(with: self)
     }

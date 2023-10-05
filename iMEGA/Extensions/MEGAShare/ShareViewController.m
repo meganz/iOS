@@ -25,6 +25,7 @@
 #import "MEGASdkManager+CleanUp.h"
 #import "MEGAProcessAsset.h"
 
+@import ChatRepo;
 @import Firebase;
 @import MEGASDKRepo;
 @import MEGAL10nObjc;
@@ -198,8 +199,8 @@
     }
     self.passcodePresented = NO;
     
-    [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:YES];
-    [[MEGASdkManager sharedMEGAChatSdk] saveCurrentState];
+    [MEGAChatSdk.shared setBackgroundStatus:YES];
+    [MEGAChatSdk.shared saveCurrentState];
     
     if (self.pendingAssets > self.unsupportedAssets) {
         dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
@@ -220,8 +221,7 @@
 }
 
 - (void)willEnterForeground {
-    [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:NO];
-    
+    [MEGAChatSdk.shared setBackgroundStatus:NO];
     [[MEGAReachabilityManager sharedManager] retryOrReconnect];
 }
 
@@ -267,22 +267,22 @@
 }
 
 - (void)resetSdks {
-    [MEGASdkManager.sharedMEGAChatSdk saveCurrentState];
+    [MEGAChatSdk.shared saveCurrentState];
     [MEGASdkManager localLogout];
 }
 
 #pragma mark - Login and Setup
 
 - (void)initChatAndStartLogging {
-    MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initState];
+    MEGAChatInit chatInit = [MEGAChatSdk.shared initState];
     if (chatInit == MEGAChatInitNotDone) {
-        chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:self.session];
+        chatInit = [MEGAChatSdk.shared initKarereWithSid:self.session];
         if (chatInit == MEGAChatInitWaitingNewSession || chatInit == MEGAChatInitOfflineSession) {
-            [[MEGASdkManager sharedMEGAChatSdk] resetClientId];
+            [MEGAChatSdk.shared resetClientId];
         }
         if (chatInit == MEGAChatInitError) {
             MEGALogError(@"Init Karere with session failed");
-            [[MEGASdkManager sharedMEGAChatSdk] logout];
+            [MEGAChatSdk.shared logout];
         }
     } else {
         [[MEGAReachabilityManager sharedManager] reconnect];
@@ -685,19 +685,19 @@
     
     for (MEGAChatListItem *chatListItem in self.chats) {
         self.pendingAssets++;
-        [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatListItem.chatId node:nodeHandle delegate:chatAttachNodeRequestDelegate];
+        [MEGAChatSdk.shared attachNodeToChat:chatListItem.chatId node:nodeHandle delegate:chatAttachNodeRequestDelegate];
     }
     
     for (MEGAUser *user in self.users) {
-        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:user.handle];
+        MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomByUser:user.handle];
         if (chatRoom) {
             self.pendingAssets++;
-            [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatRoom.chatId node:nodeHandle delegate:chatAttachNodeRequestDelegate];
+            [MEGAChatSdk.shared attachNodeToChat:chatRoom.chatId node:nodeHandle delegate:chatAttachNodeRequestDelegate];
         } else {
             MEGALogDebug(@"There is not a chat with %@, create the chat and attach", user.email);
-            [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUserHandle:user.handle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
+            [MEGAChatSdk.shared mnz_createChatRoomWithUserHandle:user.handle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
                 self.pendingAssets++;
-                [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatRoom.chatId node:nodeHandle delegate:chatAttachNodeRequestDelegate];
+                [MEGAChatSdk.shared attachNodeToChat:chatRoom.chatId node:nodeHandle delegate:chatAttachNodeRequestDelegate];
             }];
         }
     }
@@ -711,12 +711,12 @@
     }
     
     for (MEGAUser *user in self.users) {
-        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:user.handle];
+        MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomByUser:user.handle];
         if (chatRoom) {
             [self sendMessage:message toChat:chatRoom.chatId];
         } else {
             MEGALogDebug(@"There is not a chat with %@, create the chat and send message", user.email);
-            [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUserHandle:user.handle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
+            [MEGAChatSdk.shared mnz_createChatRoomWithUserHandle:user.handle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
                 [self sendMessage:message toChat:chatRoom.chatId];
             }];
         }
@@ -727,10 +727,10 @@
 
 - (void)sendMessage:(NSString *)message toChat:(uint64_t)chatId {
     if (![self.openedChatIds containsObject:@(chatId)]) {
-        [[MEGASdkManager sharedMEGAChatSdk] openChatRoom:chatId delegate:self];
+        [MEGAChatSdk.shared openChatRoom:chatId delegate:self];
         [self.openedChatIds addObject:@(chatId)];
     }
-    [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:chatId message:message];
+    [MEGAChatSdk.shared sendMessageToChat:chatId message:message];
     self.pendingAssets++;
 }
 
@@ -842,7 +842,7 @@
     [SVProgressHUD dismiss];
     
     for (NSNumber *chatIdNumber in self.openedChatIds) {
-        [[MEGASdkManager sharedMEGAChatSdk] closeChatRoom:chatIdNumber.unsignedLongLongValue delegate:self];
+        [MEGAChatSdk.shared closeChatRoom:chatIdNumber.unsignedLongLongValue delegate:self];
     }
     
     if (self.unsupportedAssets > 0) {

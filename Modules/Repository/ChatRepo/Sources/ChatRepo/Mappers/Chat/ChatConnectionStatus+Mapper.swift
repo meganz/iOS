@@ -1,6 +1,7 @@
+import MEGAChatSdk
 import MEGADomain
 
-extension MEGAChatConnection {
+public extension MEGAChatConnection {
     func toChatConnectionStatus() -> ChatConnectionStatus {
         switch self {
         case .offline:

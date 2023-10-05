@@ -1,12 +1,13 @@
+import Combine
+import MEGAChatSdk
 import MEGADomain
 import MEGASDKRepo
-
-import Combine
 
 public final class ChatRepository: ChatRepositoryProtocol {
     
     public static var newRepo: ChatRepository {
-        ChatRepository(sdk: .shared, chatSDK: .shared)
+        // NOTE: This should be refactored into two repositories, one depending only on the sdk and other depending only on the chat sdk
+        ChatRepository(sdk: .sharedSdk, chatSDK: .sharedChatSdk)
     }
     
     private let sdk: MEGASdk
@@ -39,20 +40,20 @@ public final class ChatRepository: ChatRepositoryProtocol {
         removeChatConnectionUpdateListener = chatConnectionUpdateListener.removeListenerAsync
         return chatConnectionUpdateListener
     }()
-
+    
     private lazy var chatRequestListener: ChatRequestListener = { [unowned self] in
         let chatRequestListener = ChatRequestListener(sdk: chatSDK)
         chatRequestListener.addListenerAsync()
         removeChatRequestListener = chatRequestListener.removeListenerAsync
         return chatRequestListener
     }()
-
+    
     private var removeChatStatusUpdateListener: (() -> Void)?
     private var removeChatListItemUpdateListener: (() -> Void)?
     private var removeChatCallUpdateListener: (() -> Void)?
     private var removeChatConnectionUpdateListener: (() -> Void)?
     private var removeChatRequestListener: (() -> Void)?
-
+    
     public init(sdk: MEGASdk, chatSDK: MEGAChatSdk) {
         self.sdk = sdk
         self.chatSDK = chatSDK
@@ -300,7 +301,7 @@ private final class ChatRequestListener: NSObject, MEGAChatRequestDelegate {
     func removeListenerAsync() {
         sdk.removeMEGAChatRequestDelegateAsync(self)
     }
-
+    
     func onChatRequestFinish(_ api: MEGAChatSdk, request: MEGAChatRequest, error: MEGAChatError) {
         if let chatRoom = sdk.chatRoom(forChatId: request.chatHandle) {
             source.send((chatRoom.toChatRoomEntity(), request.type))

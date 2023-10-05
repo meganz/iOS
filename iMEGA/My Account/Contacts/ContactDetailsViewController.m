@@ -25,6 +25,7 @@
 #import "MEGAUser+MNZCategory.h"
 #import "MEGA-Swift.h"
 
+@import ChatRepo;
 @import MEGAL10nObjc;
 @import MEGAUIKit;
 @import MEGASDKRepo;
@@ -111,7 +112,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     
     self.user = [[MEGASdkManager sharedMEGASdk] contactForEmail:self.userEmail];
     [self.avatarImageView mnz_setImageAvatarOrColorForUserHandle:self.userHandle];
-    self.chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomByUser:self.userHandle];
+    self.chatRoom = [MEGAChatSdk.shared chatRoomByUser:self.userHandle];
     
     if (self.contactDetailsMode != ContactDetailsModeMeeting) {
         [self.backButton setImage:self.backButton.imageView.image.imageFlippedForRightToLeftLayoutDirection forState:UIControlStateNormal];
@@ -141,10 +142,10 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
                 if (error.type) {
                     return;
                 }
-                self.userName = [[MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:request.chatHandle] userDisplayNameForUserHandle:self.userHandle];
+                self.userName = [[MEGAChatSdk.shared chatRoomForChatId:request.chatHandle] userDisplayNameForUserHandle:self.userHandle];
                 [self updateUserDetails];
             }];
-            [MEGASdkManager.sharedMEGAChatSdk loadUserAttributesForChatId:chatRoom.chatId usersHandles:@[@(self.userHandle)] delegate:delegate];
+            [MEGAChatSdk.shared loadUserAttributesForChatId:chatRoom.chatId usersHandles:@[@(self.userHandle)] delegate:delegate];
         }
     } else {
         if (self.userName.length == 0) {
@@ -163,15 +164,15 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     
     [self configureShadowInLayer:self.emailLabel.layer];
     
-    MEGAChatStatus userStatus = [MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:self.user.handle];
+    MEGAChatStatus userStatus = [MEGAChatSdk.shared userOnlineStatus:self.user.handle];
     if (userStatus != MEGAChatStatusInvalid) {
         if (userStatus < MEGAChatStatusOnline) {
-            [MEGASdkManager.sharedMEGAChatSdk requestLastGreen:self.user.handle];
+            [MEGAChatSdk.shared requestLastGreen:self.user.handle];
         }
         self.statusLabel.text = [NSString chatStatusString:userStatus];
         [self configureShadowInLayer:self.statusLabel.layer];
         
-        self.onlineStatusView.backgroundColor = [UIColor mnz_colorForChatStatus:[MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:self.user.handle]];
+        self.onlineStatusView.backgroundColor = [UIColor mnz_colorForChatStatus:[MEGAChatSdk.shared userOnlineStatus:self.user.handle]];
         [self configureShadowInLayer:self.onlineStatusView.layer];
         self.onlineStatusView.layer.borderWidth = 1;
         self.onlineStatusView.layer.borderColor = UIColor.whiteColor.CGColor;
@@ -199,8 +200,8 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
-    [[MEGASdkManager sharedMEGAChatSdk] addChatCallDelegate:self];
+    [MEGAChatSdk.shared addChatDelegate:self];
+    [MEGAChatSdk.shared addChatCallDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     [self updateCallButtonsState];
@@ -212,8 +213,8 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
-    [[MEGASdkManager sharedMEGAChatSdk] removeChatCallDelegate:self];
+    [MEGAChatSdk.shared removeChatDelegate:self];
+    [MEGAChatSdk.shared removeChatCallDelegate:self];
     
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegateAsync:self];
     
@@ -332,7 +333,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     cell.avatarImageView.image = [UIImage imageNamed:@"clearChatHistory"];
     cell.nameLabel.text = LocalizedString(@"Manage Chat History", @"Text related with the section where you can manage the chat history. There you can for example, clear the history or configure the retention setting.");
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = self.user.visibility == MEGAUserVisibilityVisible && MEGAReachabilityManager.isReachable && [MEGASdkManager.sharedMEGAChatSdk chatConnectionState:self.chatRoom.chatId] == MEGAChatConnectionOnline;
+    cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = self.user.visibility == MEGAUserVisibilityVisible && MEGAReachabilityManager.isReachable && [MEGAChatSdk.shared chatConnectionState:self.chatRoom.chatId] == MEGAChatConnectionOnline;
     
     return cell;
 }
@@ -343,7 +344,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     cell.avatarImageView.tintColor = self.chatRoom.isArchived ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
     cell.nameLabel.text = self.chatRoom.isArchived ? LocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") : LocalizedString(@"archiveChat", @"Title of button to archive chats.");
     cell.nameLabel.textColor = self.chatRoom.isArchived ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : UIColor.mnz_label;
-    cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = MEGAReachabilityManager.isReachable && [MEGASdkManager.sharedMEGAChatSdk chatConnectionState:self.chatRoom.chatId] == MEGAChatConnectionOnline;
+    cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = MEGAReachabilityManager.isReachable && [MEGAChatSdk.shared chatConnectionState:self.chatRoom.chatId] == MEGAChatConnectionOnline;
     
     return cell;
 }
@@ -380,7 +381,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
             break;
     }
     
-    cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = MEGAReachabilityManager.isReachable && [MEGASdkManager.sharedMEGAChatSdk chatConnectionState:self.groupChatRoom.chatId] == MEGAChatConnectionOnline;
+    cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = MEGAReachabilityManager.isReachable && [MEGAChatSdk.shared chatConnectionState:self.groupChatRoom.chatId] == MEGAChatConnectionOnline;
     
     return cell;
 }
@@ -390,7 +391,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     cell.avatarImageView.image = [UIImage imageNamed:@"delete"];
     cell.nameLabel.text = LocalizedString(@"removeParticipant", @"A button title which removes a participant from a chat.");
     cell.nameLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
-    cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = MEGAReachabilityManager.isReachable && [MEGASdkManager.sharedMEGAChatSdk chatConnectionState:self.groupChatRoom.chatId] == MEGAChatConnectionOnline;
+    cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = MEGAReachabilityManager.isReachable && [MEGAChatSdk.shared chatConnectionState:self.groupChatRoom.chatId] == MEGAChatConnectionOnline;
     
     return cell;
 }
@@ -427,7 +428,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
                 [self.tableView reloadData];
             }
         }];
-        [MEGASdkManager.sharedMEGAChatSdk archiveChat:self.chatRoom.chatId archive:!self.chatRoom.isArchived delegate:archiveChatRequesDelegate];
+        [MEGAChatSdk.shared archiveChat:self.chatRoom.chatId archive:!self.chatRoom.isArchived delegate:archiveChatRequesDelegate];
     }]];
     
     [self presentViewController:leaveAlertController animated:YES completion:nil];
@@ -438,7 +439,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
         if (error.type) {
             [SVProgressHUD showErrorWithStatus:LocalizedString(error.name, @"")];
         } else {
-            self.groupChatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:request.chatHandle];
+            self.groupChatRoom = [MEGAChatSdk.shared chatRoomForChatId:request.chatHandle];
             self.peerPrivilege = request.privilege;
             if (self.didUpdatePeerPermission) {
                 self.didUpdatePeerPermission(request.privilege);
@@ -453,13 +454,13 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 
     NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
     [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"moderator", @"The Moderator permission level in chat. With moderator permissions a participant can manage the chat.") detail:nil accessoryView:privilege == MEGAChatRoomPrivilegeModerator ? checkmarkImageView : nil image:[UIImage imageNamed:@"moderator"] style:UIAlertActionStyleDefault actionHandler:^{
-        [MEGASdkManager.sharedMEGAChatSdk updateChatPermissions:weakSelf.groupChatRoom.chatId userHandle:weakSelf.userHandle privilege:MEGAChatRoomPrivilegeModerator delegate:delegate];
+        [MEGAChatSdk.shared updateChatPermissions:weakSelf.groupChatRoom.chatId userHandle:weakSelf.userHandle privilege:MEGAChatRoomPrivilegeModerator delegate:delegate];
     }]];
     [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"standard", @"The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat.") detail:nil accessoryView:privilege == MEGAChatRoomPrivilegeStandard ? checkmarkImageView : nil image:[UIImage imageNamed:@"standard"] style:UIAlertActionStyleDefault actionHandler:^{
-        [MEGASdkManager.sharedMEGAChatSdk updateChatPermissions:weakSelf.groupChatRoom.chatId userHandle:weakSelf.userHandle privilege:MEGAChatRoomPrivilegeStandard delegate:delegate];
+        [MEGAChatSdk.shared updateChatPermissions:weakSelf.groupChatRoom.chatId userHandle:weakSelf.userHandle privilege:MEGAChatRoomPrivilegeStandard delegate:delegate];
     }]];
     [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") detail:nil accessoryView:privilege == MEGAChatRoomPrivilegeRo ? checkmarkImageView : nil image:[UIImage imageNamed:@"readOnly_chat"] style:UIAlertActionStyleDefault actionHandler:^{
-        [MEGASdkManager.sharedMEGAChatSdk updateChatPermissions:weakSelf.groupChatRoom.chatId userHandle:weakSelf.userHandle privilege:MEGAChatRoomPrivilegeRo delegate:delegate];
+        [MEGAChatSdk.shared updateChatPermissions:weakSelf.groupChatRoom.chatId userHandle:weakSelf.userHandle privilege:MEGAChatRoomPrivilegeRo delegate:delegate];
     }]];
     
     ActionSheetViewController *permissionsActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:LocalizedString(@"permissions", @"Title of the view that shows the kind of permissions (Read Only, Read & Write or Full Access) that you can give to a shared folder ") dismissCompletion:nil sender:sourceView];
@@ -475,7 +476,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
         }
     }];
     
-    [MEGASdkManager.sharedMEGAChatSdk removeFromChat:self.groupChatRoom.chatId userHandle:self.userHandle delegate:delegate];
+    [MEGAChatSdk.shared removeFromChat:self.groupChatRoom.chatId userHandle:self.userHandle delegate:delegate];
 }
 
 - (void)addParticipantToContact {
@@ -538,7 +539,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
         if (self.chatRoom) {
             [self openChatRoom:self.chatRoom];
         } else {
-            [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUserHandle:self.userHandle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
+            [MEGAChatSdk.shared mnz_createChatRoomWithUserHandle:self.userHandle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
                 self.chatRoom = chatRoom;
                 [self openChatRoom:self.chatRoom];
             }];
@@ -587,9 +588,9 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     if (self.chatRoom) {
         [self openCallViewWithVideo:video active:NO];
     } else {
-        [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUserHandle:self.userHandle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
+        [MEGAChatSdk.shared mnz_createChatRoomWithUserHandle:self.userHandle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
             self.chatRoom = chatRoom;
-            MEGAChatConnection chatConnection = [MEGASdkManager.sharedMEGAChatSdk chatConnectionState:self.chatRoom.chatId];
+            MEGAChatConnection chatConnection = [MEGAChatSdk.shared chatConnectionState:self.chatRoom.chatId];
             if (chatConnection == MEGAChatConnectionOnline) {
                 [self openCallViewWithVideo:video active:NO];
             } else {
@@ -601,7 +602,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 }
 
 - (void)openCallViewWithVideo:(BOOL)videoCall active:(BOOL)active {
-    MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomByUser:self.userHandle];
+    MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomByUser:self.userHandle];
     if (active) {
         [self joinMeetingWithChatRoom:chatRoom];
     } else {
@@ -677,7 +678,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
             self.messageButton.enabled = self.callButton.enabled = self.videoCallButton.enabled = NO;
             return;
         }
-        MEGAChatConnection chatConnection = [MEGASdkManager.sharedMEGAChatSdk chatConnectionState:self.chatRoom.chatId];
+        MEGAChatConnection chatConnection = [MEGAChatSdk.shared chatConnectionState:self.chatRoom.chatId];
         if (chatConnection != MEGAChatConnectionOnline) {
             self.callButton.enabled = self.videoCallButton.enabled = NO;
             return;
@@ -689,7 +690,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
         return;
     }
     
-    if (MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
+    if (MEGAChatSdk.shared.mnz_existsActiveCall) {
         self.callButton.enabled = self.videoCallButton.enabled = NO;
         return;
     }
@@ -855,7 +856,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     // audio call button has tag == 0 in the XIB
     // video call button has tag == 1 in the XIB
     BOOL videoCall = sender.tag > 0;
-    if (!MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
+    if (!MEGAChatSdk.shared.mnz_existsActiveCall) {
         self.callButton.enabled = self.videoCallButton.enabled = NO;
         DevicePermissionsHandlerObjC *handler = [[DevicePermissionsHandlerObjC alloc] init];
         [handler audioPermissionWithModal:YES incomingCall:NO completion:^(BOOL audioGranted) {
@@ -1128,7 +1129,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
         self.onlineStatusView.backgroundColor = [UIColor mnz_colorForChatStatus:onlineStatus];
         self.statusLabel.text = [NSString chatStatusString:onlineStatus];
         if (onlineStatus < MEGAChatStatusOnline) {
-            [MEGASdkManager.sharedMEGAChatSdk requestLastGreen:self.user.handle];
+            [MEGAChatSdk.shared requestLastGreen:self.user.handle];
         }
     }
 }
@@ -1149,7 +1150,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 - (void)onChatPresenceLastGreen:(MEGAChatSdk *)api userHandle:(uint64_t)userHandle lastGreen:(NSInteger)lastGreen {
     if (userHandle == self.user.handle) {
         if (self.user.handle == userHandle) {
-            MEGAChatStatus chatStatus = [[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:self.user.handle];
+            MEGAChatStatus chatStatus = [MEGAChatSdk.shared userOnlineStatus:self.user.handle];
             if (chatStatus < MEGAChatStatusOnline) {
                 self.statusLabel.text = [NSString mnz_lastGreenStringFromMinutes:lastGreen];
             }

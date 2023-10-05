@@ -25,6 +25,7 @@
 #import "ChatRoomCell.h"
 #import "ItemListViewController.h"
 #import "NSString+MNZCategory.h"
+@import ChatRepo;
 @import DZNEmptyDataSet;
 @import MEGAUIKit;
 @import MEGAL10nObjc;
@@ -214,7 +215,7 @@
 }
 
 - (void)sortAndFilterRecents {
-    self.recentsMutableArray = [MEGASdkManager.sharedMEGAChatSdk recentChatsWithMax:5].mutableCopy;
+    self.recentsMutableArray = [MEGAChatSdk.shared recentChatsWithMax:5].mutableCopy;
     for (NSUInteger i = 0; i < self.recentsMutableArray.count; i++) {
         MEGAChatListItem *chatListItem = [self.recentsMutableArray objectAtIndex:i];
         if (!chatListItem.isGroup) {
@@ -468,7 +469,7 @@
                             }];
                         } else {
                             MEGALogDebug(@"There is not a chat with %@, create the chat and attach", user.email);
-                            [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUserHandle:user.handle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
+                            [MEGAChatSdk.shared mnz_createChatRoomWithUserHandle:user.handle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
                                 [Helper importNode:node toShareWithCompletion:^(MEGANode *node) {
                                     [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatRoom.chatId node:node.handle delegate:chatAttachNodeRequestDelegate];
                                 }];
@@ -514,7 +515,7 @@
                             }
                         } else {
                             MEGALogDebug(@"There is not a chat with %@, create the chat and attach", user.email);
-                            [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUserHandle:user.handle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
+                            [MEGAChatSdk.shared mnz_createChatRoomWithUserHandle:user.handle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
                                 @synchronized(self.chatIdNumbers) {
                                     [self.chatIdNumbers addObject:@(chatRoom.chatId)];
                                     if (self.chatIdNumbers.count == destinationCount) {
@@ -539,7 +540,7 @@
                     if (chatRoom) {
                         [MEGASdkManager.sharedMEGAChatSdk sendMessageToChat:chatRoom.chatId message:[self.sendToChatActivityDelegate textToSend]];
                     } else {
-                        [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUserHandle:user.handle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
+                        [MEGAChatSdk.shared mnz_createChatRoomWithUserHandle:user.handle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
                             [MEGASdkManager.sharedMEGAChatSdk sendMessageToChat:chatRoom.chatId message:[self.sendToChatActivityDelegate textToSend]];
                         }];
                     }

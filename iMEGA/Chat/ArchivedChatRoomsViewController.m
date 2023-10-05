@@ -21,6 +21,7 @@
 #import "TransfersWidgetViewController.h"
 #import "NSArray+MNZCategory.h"
 
+@import ChatRepo;
 @import MEGAL10nObjc;
 @import MEGAUIKit;
 
@@ -93,7 +94,7 @@
     NSInteger count = users.size.integerValue;
     for (NSInteger i = 0; i < count; i++) {
         MEGAUser *user = [users userAtIndex:i];
-        if (![[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:user.handle] && user.visibility == MEGAUserVisibilityVisible) {
+        if (![MEGAChatSdk.shared chatRoomByUser:user.handle] && user.visibility == MEGAUserVisibilityVisible) {
             [self.usersWithoutChatArray addObject:user];
         }
     }
@@ -103,13 +104,13 @@
     switch (self.chatRoomsType) {
         case ChatRoomsTypeDefault:
             [self loadChatListItemListForSelectedChatType];
-            self.archivedChatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
+            self.archivedChatListItemList = [MEGAChatSdk.shared archivedChatListItems];
             self.addBarButtonItem.enabled = [MEGAReachabilityManager isReachable] && MEGASdkManager.sharedMEGASdk.businessStatus != BusinessStatusExpired;
             break;
             
         case ChatRoomsTypeArchived:
             self.chatOrMeetingSelectorView.hidden = YES;
-            self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
+            self.chatListItemList = [MEGAChatSdk.shared archivedChatListItems];
             self.navigationItem.rightBarButtonItems = @[];
             break;
     }
@@ -121,8 +122,8 @@
         [self configureSearchController];
     }
     
-    [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
-    [[MEGASdkManager sharedMEGAChatSdk] addChatCallDelegate:self];
+    [MEGAChatSdk.shared addChatDelegate:self];
+    [MEGAChatSdk.shared addChatCallDelegate:self];
     
     [self updateAppearance];
 }
@@ -138,21 +139,21 @@
     [self customNavigationBarLabel];
 
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
-    if ([[MEGASdkManager sharedMEGAChatSdk] initState] == MEGAChatInitOnlineSession) {
+    if ([MEGAChatSdk.shared initState] == MEGAChatInitOnlineSession) {
         [self reloadData];
     }
     
     self.chatRoomOnGoingCall = nil;
-    MEGAHandleList *chatRoomIDsWithCallInProgress = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress];
+    MEGAHandleList *chatRoomIDsWithCallInProgress = [MEGAChatSdk.shared chatCallsWithState:MEGAChatCallStatusInProgress];
     if ((chatRoomIDsWithCallInProgress.size > 0) && MEGAReachabilityManager.isReachable) {
-        self.chatRoomOnGoingCall = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:[chatRoomIDsWithCallInProgress megaHandleAtIndex:0]];
+        self.chatRoomOnGoingCall = [MEGAChatSdk.shared chatRoomForChatId:[chatRoomIDsWithCallInProgress megaHandleAtIndex:0]];
         
         if (self.chatRoomOnGoingCall) {
             if (self.topBannerViewTopConstraint.constant == -44) {
                 [self showTopBanner];
             }
             
-            MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForChatId:self.chatRoomOnGoingCall.chatId];
+            MEGAChatCall *call = [MEGAChatSdk.shared chatCallForChatId:self.chatRoomOnGoingCall.chatId];
             [self configureTopBannerForInProgressCall:call];
         } else {
             if (self.topBannerViewTopConstraint.constant == 0) {
@@ -182,8 +183,8 @@
     [super viewWillDisappear:animated];
 
     if (self.chatRoomsType == ChatRoomsTypeArchived) {
-        [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
-        [[MEGASdkManager sharedMEGAChatSdk] removeChatCallDelegate:self];
+        [MEGAChatSdk.shared removeChatDelegate:self];
+        [MEGAChatSdk.shared removeChatCallDelegate:self];
     }
     
     [AudioPlayerManager.shared removeDelegate:self];
@@ -215,7 +216,7 @@
 - (nullable UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView {
     if (MEGAReachabilityManager.isReachable) {
         if ([NSUserDefaults.standardUserDefaults boolForKey:@"IsChatEnabled"]) {
-            if (MEGASdkManager.sharedMEGAChatSdk.initState == MEGAChatInitWaitingNewSession || MEGASdkManager.sharedMEGAChatSdk.initState == MEGAChatInitNoCache) {
+            if (MEGAChatSdk.shared.initState == MEGAChatInitWaitingNewSession || MEGAChatSdk.shared.initState == MEGAChatInitNoCache) {
                 return [UIImageView.alloc initWithImage:[UIImage imageNamed:@"chatListLoading"]];
             }
         }
@@ -237,7 +238,7 @@
 - (void)emptyDataSetWillAppear:(UIScrollView *)scrollView {
     if (!self.searchController.active) {
         self.searchController.searchBar.hidden = YES;
-        self.archivedChatListItemList = MEGASdkManager.sharedMEGAChatSdk.archivedChatListItems;
+        self.archivedChatListItemList = MEGAChatSdk.shared.archivedChatListItems;
         if (self.archivedChatListItemList.size) {
             self.archivedChatEmptyStateTitle.text = LocalizedString(@"archivedChats", @"Title of archived chats button");
             self.archivedChatEmptyStateCount.text = [NSString stringWithFormat:@"%tu", self.archivedChatListItemList.size];
@@ -384,7 +385,7 @@
         }
     }
 
-    MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatID];
+    MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomForChatId:chatID];
     if (chatRoom != nil) {
         ChatViewController *chatViewController = [ChatViewController.alloc initWithChatRoom:chatRoom];
         [self.navigationController pushViewController:chatViewController animated:YES];
@@ -411,7 +412,7 @@
         }
     }
 
-    MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatID];
+    MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomForChatId:chatID];
     
     if (chatRoom != nil) {
         ChatViewController *messagesVC = [ChatViewController.alloc initWithChatRoom:chatRoom];
@@ -568,12 +569,12 @@
             return;
         }
         GroupChatDetailsViewController *groupChatDetailsVC = [[UIStoryboard storyboardWithName:@"Chat" bundle:nil] instantiateViewControllerWithIdentifier:@"GroupChatDetailsViewControllerID"];
-        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatListItem.chatId];
+        MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomForChatId:chatListItem.chatId];
         groupChatDetailsVC.chatRoom = chatRoom;
         [self.navigationController pushViewController:groupChatDetailsVC animated:YES];
     } else {
-        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatListItem.chatId];
-        NSString *peerEmail     = [[MEGASdkManager sharedMEGAChatSdk] contactEmailByHandle:[chatRoom peerHandleAtIndex:0]];
+        MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomForChatId:chatListItem.chatId];
+        NSString *peerEmail     = [MEGAChatSdk.shared contactEmailByHandle:[chatRoom peerHandleAtIndex:0]];
         uint64_t peerHandle     = [chatRoom peerHandleAtIndex:0];
         
         ContactDetailsViewController *contactDetailsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactDetailsViewControllerID"];
@@ -600,7 +601,7 @@
     } else {
         self.chatListItemList = [MEGAChatSdk.shared archivedChatListItems];
     }
-    self.archivedChatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
+    self.archivedChatListItemList = [MEGAChatSdk.shared archivedChatListItems];
     [self reorderList];
     [self updateChatIdIndexPathDictionary];
     [self.tableView reloadData];
@@ -634,7 +635,7 @@
 
 - (void)showChatRoomAtIndexPath:(NSIndexPath *)indexPath {
     MEGAChatListItem *chatListItem = [self chatListItemAtIndexPath:indexPath];
-    MEGAChatRoom *chatRoom         = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatListItem.chatId];
+    MEGAChatRoom *chatRoom         = [MEGAChatSdk.shared chatRoomForChatId:chatListItem.chatId];
     
     if (chatRoom != nil) {
         ChatViewController *chatViewController = [ChatViewController.alloc initWithChatRoom:chatRoom];
@@ -646,7 +647,7 @@
     MEGAUser *user = [self.searchUsersWithoutChatArray objectOrNilAtIndex:indexPath.row];
     if (user == nil) { return; }
     
-    [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUserHandle:user.handle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
+    [MEGAChatSdk.shared mnz_createChatRoomWithUserHandle:user.handle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
         ChatViewController *chatViewController = [ChatViewController.alloc initWithChatRoom:chatRoom];
         [self.navigationController pushViewController:chatViewController animated:YES];
     }];
@@ -717,7 +718,7 @@
   
     if (chatListItem.unreadCount != 0) {
         ActionSheetAction *markAsReadAction = [ActionSheetAction.alloc initWithTitle:LocalizedString(@"Mark as Read", @"A button label. The button allows the user to mark a conversation as read.)") detail:nil accessoryView:nil image:[UIImage imageNamed:@"markUnread_menu"] style:UIAlertActionStyleDefault actionHandler:^{
-            [MEGASdkManager.sharedMEGAChatSdk setMessageSeenForChat:chatListItem.chatId messageId:chatListItem.lastMessageId];
+            [MEGAChatSdk.shared setMessageSeenForChat:chatListItem.chatId messageId:chatListItem.lastMessageId];
         }];
         [actions addObject:markAsReadAction];
     }
@@ -740,7 +741,7 @@
     [actions addObject:infoAction];
 
     ActionSheetAction *archiveChatAction = [ActionSheetAction.alloc initWithTitle:LocalizedString(@"archiveChat", @"Title of button to archive chats.)") detail:nil accessoryView:nil image:[UIImage imageNamed:@"archiveChat_menu"] style:UIAlertActionStyleDefault actionHandler:^{
-        [MEGASdkManager.sharedMEGAChatSdk archiveChat:chatListItem.chatId archive:YES];
+        [MEGAChatSdk.shared archiveChat:chatListItem.chatId archive:YES];
     }];
     [actions addObject:archiveChatAction];
 
@@ -799,7 +800,7 @@
 }
 
 - (void)manageCallIndicators {
-    MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForChatId:self.chatRoomOnGoingCall.chatId];
+    MEGAChatCall *call = [MEGAChatSdk.shared chatCallForChatId:self.chatRoomOnGoingCall.chatId];
 
     self.topBannerMicrophoneMutedImageView.hidden = call.hasLocalAudio;
     self.topBannerCameraEnabledImageView.hidden = !call.hasLocalVideo;
@@ -845,14 +846,14 @@
     contactsVC.userSelected = ^void(NSArray *users) {
         if (users.count == 1) {
             MEGAUser *user = users.firstObject;
-            MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:user.handle];
+            MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomByUser:user.handle];
             if (chatRoom) {
                 dispatch_async(dispatch_get_main_queue(), ^(void){
                     ChatViewController *chatViewController = [ChatViewController.alloc initWithChatRoom:chatRoom];
                     [self.navigationController pushViewController:chatViewController animated:YES];
                 });
             } else {
-                [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUserHandle:user.handle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
+                [MEGAChatSdk.shared mnz_createChatRoomWithUserHandle:user.handle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
                     ChatViewController *chatViewController = [ChatViewController.alloc initWithChatRoom:chatRoom];
                     [self.navigationController pushViewController:chatViewController animated:YES];
                 }];
@@ -861,7 +862,7 @@
     };
     
     contactsVC.chatSelected = ^(uint64_t chatId) {
-        MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:chatId];
+        MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomForChatId:chatId];
         if (chatRoom != nil) {
             dispatch_async(dispatch_get_main_queue(), ^(void){
                 ChatViewController *chatViewController = [ChatViewController.alloc initWithChatRoom:chatRoom];
@@ -876,7 +877,7 @@
                                        BOOL getChatLink,
                                        BOOL allowNonHostToAddParticipants) {
         if (keyRotation) {
-            [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUsersArray:users
+            [MEGAChatSdk.shared mnz_createChatRoomWithUsersArray:users
                                                                          title:groupName
                                                  allowNonHostToAddParticipants:allowNonHostToAddParticipants
                                                                     completion:^(MEGAChatRoom * _Nonnull chatRoom) {
@@ -887,7 +888,7 @@
             }];
         } else {
             MEGAChatGenericRequestDelegate *createChatGroupRequestDelegate = [MEGAChatGenericRequestDelegate.alloc initWithCompletion:^(MEGAChatRequest *request, MEGAChatError *error) {
-                MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:request.chatHandle];
+                MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomForChatId:request.chatHandle];
                 if (chatRoom != nil) {
                     if (getChatLink) {
                         MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest *request, MEGAChatError *error) {
@@ -898,7 +899,7 @@
                                 [self.navigationController pushViewController:chatViewController animated:YES];
                             }
                         }];
-                        [MEGASdkManager.sharedMEGAChatSdk createChatLink:chatRoom.chatId delegate:delegate];
+                        [MEGAChatSdk.shared createChatLink:chatRoom.chatId delegate:delegate];
                     } else {
                         dispatch_async(dispatch_get_main_queue(), ^(void){
                             ChatViewController *chatViewController = [ChatViewController.alloc initWithChatRoom:chatRoom];
@@ -908,7 +909,7 @@
                 }
             }];
             
-            [MEGASdkManager.sharedMEGAChatSdk createPublicChatWithPeers:[MEGAChatPeerList mnz_standardPrivilegePeerListWithUsersArray:users]
+            [MEGAChatSdk.shared createPublicChatWithPeers:[MEGAChatPeerList mnz_standardPrivilegePeerListWithUsersArray:users]
                                                                   title:groupName
                                                            speakRequest:false
                                                             waitingRoom:false
@@ -975,7 +976,7 @@
 
 - (UIContextMenuConfiguration *)tableView:(UITableView *)tableView contextMenuConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath point:(CGPoint)point {
         MEGAChatListItem *chatListItem = [self chatListItemAtIndexPath:indexPath];
-        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatListItem.chatId];
+        MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomForChatId:chatListItem.chatId];
         
         if ((self.chatRoomsType == ChatRoomsTypeDefault && indexPath.section < 2) || chatRoom == nil) {
             return nil;
@@ -991,7 +992,7 @@
             
             if (chatRoom.unreadCount != 0) {
                 UIAction *markAsReadAction = [UIAction actionWithTitle:LocalizedString(@"Mark as Read",@"A button label. The button allows the user to mark a conversation as read.") image:[UIImage imageNamed:@"markUnread_menu"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
-                    [MEGASdkManager.sharedMEGAChatSdk setMessageSeenForChat:chatListItem.chatId messageId:chatListItem.lastMessageId];
+                    [MEGAChatSdk.shared setMessageSeenForChat:chatListItem.chatId messageId:chatListItem.lastMessageId];
                 }];
                 [menus addObject:markAsReadAction];
             }
@@ -1017,14 +1018,14 @@
             switch (self.chatRoomsType) {
                 case ChatRoomsTypeDefault: {
                     UIAction *archiveChatAction = [UIAction actionWithTitle:LocalizedString(@"archiveChat", @"Title of button to archive chats.") image:[UIImage imageNamed:@"archiveChat_menu"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
-                        [MEGASdkManager.sharedMEGAChatSdk archiveChat:chatListItem.chatId archive:YES];
+                        [MEGAChatSdk.shared archiveChat:chatListItem.chatId archive:YES];
                     }];
                     [menus addObject:archiveChatAction];
                     break;
                 }
                 case ChatRoomsTypeArchived:{
                     UIAction *archiveChatAction = [UIAction actionWithTitle:LocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") image:[UIImage imageNamed:@"unArchiveChat"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
-                        [[MEGASdkManager sharedMEGAChatSdk] archiveChat:chatListItem.chatId archive:NO];
+                        [MEGAChatSdk.shared archiveChat:chatListItem.chatId archive:NO];
                     }];
                     [menus addObject:archiveChatAction];
                     break;
@@ -1109,7 +1110,7 @@
     switch (self.chatRoomsType) {
         case ChatRoomsTypeDefault: {
             UIContextualAction *archiveAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-                [MEGASdkManager.sharedMEGAChatSdk archiveChat:chatListItem.chatId archive:YES];
+                [MEGAChatSdk.shared archiveChat:chatListItem.chatId archive:YES];
             }];
             archiveAction.image = [[UIImage imageNamed:@"archiveChat"] imageWithTintColor:UIColor.whiteColor];
             archiveAction.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
@@ -1125,7 +1126,7 @@
             
         case ChatRoomsTypeArchived: {
             UIContextualAction *unarchiveAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-                [MEGASdkManager.sharedMEGAChatSdk archiveChat:chatListItem.chatId archive:NO];
+                [MEGAChatSdk.shared archiveChat:chatListItem.chatId archive:NO];
             }];
             unarchiveAction.image = [UIImage imageNamed:@"unArchiveChat"];
             unarchiveAction.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
@@ -1215,7 +1216,7 @@
         
         if (!indexPath && [item hasChangedForType:MEGAChatListItemChangeTypeArchived]) {
             [self insertRowByChatListItem:item];
-            self.archivedChatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
+            self.archivedChatListItemList = [MEGAChatSdk.shared archivedChatListItems];
             if (self.isArchivedChatsRowVisible) {
                 
                 if ([self.archivedChatListItemList size] == 0) {
@@ -1261,9 +1262,9 @@
                 case MEGAChatListItemChangeTypeArchived:
                     [self deleteRowByChatId:item.chatId];
                     if (self.chatRoomsType == ChatRoomsTypeDefault) {
-                         self.archivedChatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
+                         self.archivedChatListItemList = [MEGAChatSdk.shared archivedChatListItems];
                     } else {
-                         self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] archivedChatListItems];
+                         self.chatListItemList = [MEGAChatSdk.shared archivedChatListItems];
                     }
                     if (self.isArchivedChatsRowVisible) {
                         [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
@@ -1305,7 +1306,7 @@
         NSIndexPath *indexPath = [self.chatIdIndexPathDictionary objectForKey:@(chatId)];
         if ([self.tableView.indexPathsForVisibleRows containsObject:indexPath]) {
             ChatRoomCell *cell = (ChatRoomCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-            cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForChatStatus:[MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:userHandle]];
+            cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForChatStatus:[MEGAChatSdk.shared userOnlineStatus:userHandle]];
         }
     }
 }
@@ -1320,7 +1321,7 @@
 
 - (void)updateCallStatus:(MEGAChatCall *)call {
     if (!self.chatRoomOnGoingCall) {
-        self.chatRoomOnGoingCall = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:call.chatId];
+        self.chatRoomOnGoingCall = [MEGAChatSdk.shared chatRoomForChatId:call.chatId];
     }
     NSIndexPath *indexPath = [self.chatIdIndexPathDictionary objectForKey:@(call.chatId)];
     if ([self.tableView.indexPathsForVisibleRows containsObject:indexPath]) {

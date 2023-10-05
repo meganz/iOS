@@ -1,3 +1,4 @@
+import MEGAChatSdk
 import MEGADomain
 
 extension MEGAChatWaitingRoom {
@@ -23,6 +24,8 @@ extension MEGAChatWaitingRoomStatus {
 
 fileprivate extension WaitingRoomEntity {
     init(with waitingRoom: MEGAChatWaitingRoom) {
-        self.init(sessionClientIds: waitingRoom.peers?.toHandleEntityArray() ?? [])
+        self.init(
+            sessionClientIds: waitingRoom.peers?.toHandleEntityArray() ?? []
+        )
     }
 }

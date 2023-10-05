@@ -18,6 +18,7 @@
 #import "MEGA-Swift.h"
 #import "NSArray+MNZCategory.h"
 
+@import ChatRepo;
 @import MEGAFoundation;
 @import MEGAL10nObjc;
 @import MEGASDKRepo;
@@ -272,7 +273,7 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 3.0;
 }
 
 - (UIViewController *)viewControllerForNode:(MEGANode *)node withFolderLink:(BOOL)isFolderLink {
-    if ([FileExtensionGroupOCWrapper verifyIsMultiMedia:node.name] && MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
+    if ([FileExtensionGroupOCWrapper verifyIsMultiMedia:node.name] && MEGAChatSdk.shared.mnz_existsActiveCall) {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:LocalizedString(@"It is not possible to play content while there is a call in progress", @"Message shown when there is an ongoing call and the user tries to play an audio or video") preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleCancel handler:nil]];
         return alertController;

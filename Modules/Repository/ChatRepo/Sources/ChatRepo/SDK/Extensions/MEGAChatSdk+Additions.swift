@@ -1,6 +1,7 @@
+import MEGAChatSdk
 import MEGADomain
 
-extension MEGAChatSdk {
+public extension MEGAChatSdk {
     var firstActiveCall: MEGAChatCall? {
         guard let callIds = chatCallsIds() else { return nil }
         let calls = (0..<callIds.size)
@@ -76,19 +77,19 @@ extension MEGAChatSdk {
     
     @objc func removeMEGAChatRequestDelegateAsync(_ delegate: any MEGAChatRequestDelegate) {
         Task.detached {
-            MEGAChatSdk.shared.remove(delegate)
+            MEGAChatSdk.sharedChatSdk.remove(delegate)
         }
     }
     
     @objc func removeMEGAChatDelegateAsync(_ delegate: any MEGAChatDelegate) {
         Task.detached {
-            MEGAChatSdk.shared.remove(delegate)
+            MEGAChatSdk.sharedChatSdk.remove(delegate)
         }
     }
     
     @objc func removeMEGACallDelegateAsync(_ delegate: any MEGAChatCallDelegate) {
         Task.detached {
-            MEGAChatSdk.shared.remove(delegate)
+            MEGAChatSdk.sharedChatSdk.remove(delegate)
         }
     }
     
@@ -104,19 +105,13 @@ extension MEGAChatSdk {
     
     // MARK: - Private
     
-    private func createChatDelegate(completion: @escaping(_ chatRoom: MEGAChatRoom) -> Void) -> MEGAChatGenericRequestDelegate {
-        let delegate = MEGAChatGenericRequestDelegate { (request, error) in
-            if error.type.rawValue == MEGAChatErrorType.MEGAChatErrorTypeOk.rawValue {
-                guard let chatRoom = self.chatRoom(forChatId: request.chatHandle) else {
-                    MEGALogError("Error when getting the newly created chat room with chat handle: \(request.chatHandle)")
-                    return
-                }
-                completion(chatRoom)
-            } else {
-                MEGALogError("Error when creating the chat room: \(error)")
+    private func createChatDelegate(completion: @escaping(_ chatRoom: MEGAChatRoom) -> Void) -> ChatRequestDelegate {
+        ChatRequestDelegate { result in
+            guard case .success(let request) = result,
+                  let chatRoom = self.chatRoom(forChatId: request.chatHandle) else {
+                return
             }
+            completion(chatRoom)
         }
-        
-        return delegate
     }
 }
