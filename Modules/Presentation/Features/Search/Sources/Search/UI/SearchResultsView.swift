@@ -12,11 +12,11 @@ public struct SearchResultsView: View {
     public var body: some View {
         VStack(spacing: .zero) {
             chipsView
-            if viewModel.isLoadingPlaceholderShown {
-                placeholderContent
-            } else {
-                content
-            }
+            PlaceholderContainerView(
+                isLoading: $viewModel.isLoadingPlaceholderShown,
+                content: content,
+                placeholder: PlaceholderContentView(placeholderRow: placeholderRowView)
+            )
             Spacer()
         }
         .frame(
@@ -60,16 +60,6 @@ public struct SearchResultsView: View {
         .emptyState(viewModel.emptyViewModel)
         .taskForiOS14 {
             await viewModel.task()
-        }
-    }
-
-    private var placeholderContent: some View {
-        ScrollView {
-            VStack(spacing: .zero) {
-                ForEach(0..<9, id: \.self) { _ in
-                    placeholderRowView
-                }
-            }
         }
     }
 
