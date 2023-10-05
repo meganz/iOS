@@ -34,6 +34,7 @@ extension CloudDriveViewController: MediaDiscoveryContentDelegate {
             contentMode: .mediaDiscovery,
             parentNode: parentNodeEntity,
             sortOrder: viewModel.sortOrder(for: .mediaDiscovery),
+            isAutomaticallyShown: false,
             delegate: self,
             analyticsUseCase: analyticsUseCase,
             mediaDiscoveryUseCase: mediaDiscoveryUseCase)

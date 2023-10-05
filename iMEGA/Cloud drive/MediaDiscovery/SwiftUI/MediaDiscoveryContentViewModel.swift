@@ -32,7 +32,7 @@ enum MediaDiscoveryContentViewState {
 }
 
 final class MediaDiscoveryContentViewModel: ObservableObject {
-    
+    @Published var showAutoMediaDiscoveryBanner = false
     @Published private(set) var viewState: MediaDiscoveryContentViewState = .normal
     let photoLibraryContentViewModel: PhotoLibraryContentViewModel
     let photoLibraryContentViewRouter: PhotoLibraryContentViewRouter
@@ -41,6 +41,9 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
         get { photoLibraryContentViewModel.selection.editMode }
         set { photoLibraryContentViewModel.selection.editMode = newValue }
     }
+    
+    @PreferenceWrapper(key: .autoMediaDiscoveryBannerDismissed, defaultValue: false)
+    var autoMediaDiscoveryBannerDismissed: Bool
         
     private let parentNode: NodeEntity
     private var sortOrder: SortOrderType
@@ -53,9 +56,11 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
     init(contentMode: PhotoLibraryContentMode,
          parentNode: NodeEntity,
          sortOrder: SortOrderType,
+         isAutomaticallyShown: Bool,
          delegate: (some MediaDiscoveryContentDelegate)?,
          analyticsUseCase: some MediaDiscoveryAnalyticsUseCaseProtocol,
-         mediaDiscoveryUseCase: some MediaDiscoveryUseCaseProtocol) {
+         mediaDiscoveryUseCase: some MediaDiscoveryUseCaseProtocol,
+         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default) {
         
         photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary(), contentMode: contentMode)
         photoLibraryContentViewRouter = PhotoLibraryContentViewRouter(contentMode: contentMode)
@@ -65,7 +70,12 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
         self.analyticsUseCase = analyticsUseCase
         self.mediaDiscoveryUseCase = mediaDiscoveryUseCase
         self.sortOrder = sortOrder
+        $autoMediaDiscoveryBannerDismissed.useCase = preferenceUseCase
         
+        if isAutomaticallyShown {
+            showAutoMediaDiscoveryBanner = !autoMediaDiscoveryBannerDismissed
+        }
+       
         subscribeToSelectionChanges()
         subscribeToNodeChanges()
     }

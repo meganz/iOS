@@ -22,12 +22,20 @@ struct MediaDiscoveryContentView: View {
     
     @ViewBuilder
     private var defaultView: some View {
-        PhotoLibraryContentView(
-            viewModel: viewModel.photoLibraryContentViewModel,
-            router: viewModel.photoLibraryContentViewRouter,
-            onFilterUpdate: nil
-        )
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+        VStack(spacing: .zero) {
+            if viewModel.showAutoMediaDiscoveryBanner {
+                AutoMediaDiscoveryBannerView(showBanner: $viewModel.showAutoMediaDiscoveryBanner) {
+                    viewModel.autoMediaDiscoveryBannerDismissed = true
+                }
+            }
+            
+            PhotoLibraryContentView(
+                viewModel: viewModel.photoLibraryContentViewModel,
+                router: viewModel.photoLibraryContentViewRouter,
+                onFilterUpdate: nil
+            )
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+        }
     }
     
     @ViewBuilder

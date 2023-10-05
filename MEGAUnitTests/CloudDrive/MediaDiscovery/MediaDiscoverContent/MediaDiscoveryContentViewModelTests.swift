@@ -333,6 +333,34 @@ class MediaDiscoveryContentViewModelTests: XCTestCase {
         
         XCTAssertEqual(sut.photoLibraryContentViewModel.library.allPhotos, nodesOrderedByOldest)
     }
+    
+    func testShowAutoMediaDiscoveryBanner_isNotAutomaticallyShownVisualMediaOnly_shouldNotShowBanner() {
+        let preferenceUseCase = MockPreferenceUseCase(dict: [.autoMediaDiscoveryBannerDismissed: false])
+        let sut = makeSUT(preferenceUseCase: preferenceUseCase)
+        
+        XCTAssertFalse(sut.showAutoMediaDiscoveryBanner)
+    }
+    
+    func testShowAutoMediaDiscoveryBanner_autoMediaDiscoveryBannerDismissedOff_shouldShowAutoMediaDiscoveryBanner() {
+        let preferenceUseCase = MockPreferenceUseCase(dict: [.autoMediaDiscoveryBannerDismissed: false])
+        let sut = makeSUT(isAutomaticallyShown: true,
+                          preferenceUseCase: preferenceUseCase)
+        
+        XCTAssertTrue(sut.showAutoMediaDiscoveryBanner)
+        XCTAssertFalse(sut.autoMediaDiscoveryBannerDismissed)
+    }
+    
+    func testAutoMediaDiscoveryBannerDismissed_onChange_shouldChangePreferenceUseCaseValue() throws {
+        let preferenceUseCase = MockPreferenceUseCase(dict: [.shouldDisplayMediaDiscoveryWhenMediaOnly: true,
+                                                             .autoMediaDiscoveryBannerDismissed: false])
+        let sut = makeSUT(isAutomaticallyShown: true,
+                          preferenceUseCase: preferenceUseCase)
+        
+        sut.autoMediaDiscoveryBannerDismissed = true
+        
+        let changedPreference = try XCTUnwrap(preferenceUseCase.dict[.autoMediaDiscoveryBannerDismissed] as? Bool)
+        XCTAssertTrue(changedPreference)
+    }
 }
 
 extension MediaDiscoveryContentViewModelTests {
@@ -340,21 +368,25 @@ extension MediaDiscoveryContentViewModelTests {
     private func makeSUT(
         parentNode: NodeEntity = NodeEntity(),
         sortOrder: SortOrderType = .newest,
+        isAutomaticallyShown: Bool = false,
         delegate: some MediaDiscoveryContentDelegate = MockMediaDiscoveryContentDelegate(),
         analyticsUseCase: some MediaDiscoveryAnalyticsUseCaseProtocol = MockMediaDiscoveryAnalyticsUseCase(),
         mediaDiscoveryUseCase: some MediaDiscoveryUseCaseProtocol = MockMediaDiscoveryUseCase(),
+        preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(),
         file: StaticString = #filePath,
         line: UInt = #line) -> MediaDiscoveryContentViewModel {
             let viewModel = MediaDiscoveryContentViewModel(
                 contentMode: .mediaDiscovery,
                 parentNode: parentNode,
                 sortOrder: sortOrder,
+                isAutomaticallyShown: isAutomaticallyShown,
                 delegate: delegate,
                 analyticsUseCase: analyticsUseCase,
-                mediaDiscoveryUseCase: mediaDiscoveryUseCase)
+                mediaDiscoveryUseCase: mediaDiscoveryUseCase,
+                preferenceUseCase: preferenceUseCase)
             
             trackForMemoryLeaks(on: viewModel, file: file, line: line)
-
+            
             return viewModel
         }
 }
