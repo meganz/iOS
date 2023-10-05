@@ -23,6 +23,7 @@
 #import "OfflineTableViewCell.h"
 #import "UIViewController+MNZCategory.h"
 #import "NSArray+MNZCategory.h"
+@import ChatRepo;
 @import MEGAL10nObjc;
 @import MEGAUIKit;
 
@@ -747,7 +748,7 @@ static NSString *kisDirectory = @"kisDirectory";
         [self.navigationController pushViewController:offlineVC animated:YES];
         
     } else if ([FileExtensionGroupOCWrapper verifyIsMultiMedia:self.previewDocumentPath]) {
-        if (MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
+        if (MEGAChatSdk.shared.mnz_existsActiveCall) {
             [Helper cannotPlayContentDuringACallAlert];
             return;
         }

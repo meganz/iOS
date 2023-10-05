@@ -36,6 +36,7 @@
 #import "UnavailableLinkView.h"
 #import "MEGA-Swift.h"
 
+@import ChatRepo;
 @import MEGAL10nObjc;
 
 static NSURL *linkURL;
@@ -195,19 +196,19 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
                         }];
                     }
                 }];
-                MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:request.chatHandle];
+                MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomForChatId:request.chatHandle];
                 if (!chatRoom.isPreview && !chatRoom.isActive) {
-                    [[MEGASdkManager sharedMEGAChatSdk] autorejoinPublicChat:request.chatHandle publicHandle:request.userHandle delegate:autojoinOrRejoinPublicChatDelegate];
+                    [MEGAChatSdk.shared autorejoinPublicChat:request.chatHandle publicHandle:request.userHandle delegate:autojoinOrRejoinPublicChatDelegate];
                     [MEGALinkManager.joiningOrLeavingChatBase64Handles addObject:[MEGASdk base64HandleForUserHandle:request.chatHandle]];
                 } else {
                     if (chatRoom.ownPrivilege == MEGAChatRoomPrivilegeUnknown) {
-                        [[MEGASdkManager sharedMEGAChatSdk] autojoinPublicChat:request.chatHandle delegate:autojoinOrRejoinPublicChatDelegate];
+                        [MEGAChatSdk.shared autojoinPublicChat:request.chatHandle delegate:autojoinOrRejoinPublicChatDelegate];
                     } else {
                         [self createChatAndShow:chatId publicChatLink:request.link];
                     }
                 }
             }];
-            [[MEGASdkManager sharedMEGAChatSdk] openChatPreview:MEGALinkManager.secondaryLinkURL delegate:openChatPreviewDelegate];
+            [MEGAChatSdk.shared openChatPreview:MEGALinkManager.secondaryLinkURL delegate:openChatPreviewDelegate];
             [MEGALinkManager resetLinkAndURLType];
             MEGALinkManager.secondaryLinkURL = nil;
             
@@ -767,7 +768,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
                 [SVProgressHUD dismiss];
             }
         } else { // Chat link
-            MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:request.chatHandle];
+            MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomForChatId:request.chatHandle];
             if (!chatRoom.isPreview && !chatRoom.isActive) {
                 MEGAChatGenericRequestDelegate *autorejoinPublicChatDelegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
                     if (error.type) {
@@ -778,7 +779,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
                     [MEGALinkManager.joiningOrLeavingChatBase64Handles removeObject:[MEGASdk base64HandleForUserHandle:request.chatHandle]];
                     [MEGALinkManager createChatAndShow:request.chatHandle publicChatLink:chatLinkUrl];
                 }];
-                [[MEGASdkManager sharedMEGAChatSdk] autorejoinPublicChat:request.chatHandle publicHandle:request.userHandle delegate:autorejoinPublicChatDelegate];
+                [MEGAChatSdk.shared autorejoinPublicChat:request.chatHandle publicHandle:request.userHandle delegate:autorejoinPublicChatDelegate];
                 [MEGALinkManager.joiningOrLeavingChatBase64Handles addObject:[MEGASdk base64HandleForUserHandle:request.chatHandle]];
             } else {
                 [MEGALinkManager createChatAndShow:request.chatHandle publicChatLink:chatLinkUrl];
@@ -788,18 +789,18 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         }
     }];
     
-    MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initState];
+    MEGAChatInit chatInit = [MEGAChatSdk.shared initState];
     if (chatInit == MEGAChatInitNotDone) {
-        chatInit = [[MEGASdkManager sharedMEGAChatSdk] initAnonymous];
+        chatInit = [MEGAChatSdk.shared initAnonymous];
         if (chatInit == MEGAChatInitError) {
             MEGALogError(@"Init Karere anonymous failed");
-            [[MEGASdkManager sharedMEGAChatSdk] logout];
+            [MEGAChatSdk.shared logout];
             [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"Error (%td) initializing the chat", chatInit]];
             return;
         }
     }
     
-    [[MEGASdkManager sharedMEGAChatSdk] checkChatLink:chatLinkUrl delegate:[[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+    [MEGAChatSdk.shared checkChatLink:chatLinkUrl delegate:[[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
         if (error.type != MEGAErrorTypeApiOk && error.type != MEGAErrorTypeApiEExist) {
             if (error.type == MEGAChatErrorTypeNoEnt) {
                 [SVProgressHUD dismiss];
@@ -821,7 +822,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         if (request.paramType == 1 && request.flag) {
             [self openMeetingWithRequest:request chatLinkURL:chatLinkUrl];
         } else {
-            [[MEGASdkManager sharedMEGAChatSdk] openChatPreview:chatLinkUrl delegate:delegate];
+            [MEGAChatSdk.shared openChatPreview:chatLinkUrl delegate:delegate];
         }
     }]];
 }
@@ -850,15 +851,15 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
                     [MEGALinkManager.joiningOrLeavingChatBase64Handles removeObject:[MEGASdk base64HandleForUserHandle:request.chatHandle]];
                     [MEGALinkManager createChatAndShow:request.chatHandle publicChatLink:chatLinkUrl];
                 }];
-                [[MEGASdkManager sharedMEGAChatSdk] autorejoinPublicChat:request.chatHandle publicHandle:request.userHandle delegate:autorejoinPublicChatDelegate];
+                [MEGAChatSdk.shared autorejoinPublicChat:request.chatHandle publicHandle:request.userHandle delegate:autorejoinPublicChatDelegate];
                 [MEGALinkManager.joiningOrLeavingChatBase64Handles addObject:[MEGASdk base64HandleForUserHandle:request.chatHandle]];
             } else {
                 [MEGALinkManager createChatAndShow:request.chatHandle publicChatLink:chatLinkUrl];
             }
         }]];
         [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            if ([MEGASdkManager sharedMEGAChatSdk].myEmail == nil || [MEGASdkManager sharedMEGAChatSdk].myEmail.mnz_isEmpty) {
-                [MEGASdkManager.sharedMEGAChatSdk logout];
+            if (MEGAChatSdk.shared.myEmail == nil || MEGAChatSdk.shared.myEmail.mnz_isEmpty) {
+                [MEGAChatSdk.shared logout];
                 [[[EncourageGuestUserToJoinMegaRouter alloc] initWithPresenter:UIApplication.mnz_visibleViewController] start];
             }
         }]];
@@ -869,7 +870,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
 + (void)createMeetingAndShow:(uint64_t)chatId userHandle:(uint64_t)userHandle publicChatLink:(NSURL *)publicChatLink {
     
     UIViewController *rootViewController = UIApplication.mnz_keyWindow.rootViewController;
-    MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatId];
+    MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomForChatId:chatId];
     if (chatRoom == nil) {
         return;
     } else if (MEGAChatSdk.shared.mnz_existsActiveCall) {
@@ -916,7 +917,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         }
     }
     
-    MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatId];
+    MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomForChatId:chatId];
     if (chatRoom == nil) {
         return;
     }

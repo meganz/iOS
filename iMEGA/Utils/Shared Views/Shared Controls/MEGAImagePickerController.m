@@ -15,6 +15,7 @@
 
 #import "MEGA-Swift.h"
 
+@import ChatRepo;
 @import MEGAL10nObjc;
 @import MEGASDKRepo;
 
@@ -106,7 +107,7 @@
 #pragma mark - Private
 
 - (NSArray<NSString *> *)mediaTypes {
-    if (self.toChangeAvatar || MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall ) {
+    if (self.toChangeAvatar || MEGAChatSdk.shared.mnz_existsActiveCall ) {
         return [NSArray.alloc initWithObjects:(NSString *)kUTTypeImage, nil];
     } else {
         return [UIImagePickerController availableMediaTypesForSourceType:self.sourceType];

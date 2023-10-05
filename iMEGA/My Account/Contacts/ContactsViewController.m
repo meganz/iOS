@@ -28,6 +28,7 @@
 #import "ItemListViewController.h"
 #import "NSArray+MNZCategory.h"
 
+@import ChatRepo;
 @import MEGAL10nObjc;
 @import MEGAUIKit;
 @import MEGASDKRepo;
@@ -175,7 +176,7 @@
     [self addNicknamesLoadedNotification];
     
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
-    [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
+    [MEGAChatSdk.shared addChatDelegate:self];
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     
     [self reloadUI];
@@ -190,7 +191,7 @@
     [self removeNicknamesLoadedNotification];
     
     [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegateAsync:self];
-    [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
+    [MEGAChatSdk.shared removeChatDelegate:self];
     
     if (self.isMovingFromParentViewController) {
         [[MEGASdkManager sharedMEGASdk] removeMEGARequestDelegateAsync:self];
@@ -491,7 +492,7 @@
         [self setupContactsTableViewHeader];
         self.tableView.tableHeaderView = self.contactsTableViewHeader;
     } else if (self.contactsMode == ContactsModeChatStartConversation) {
-        self.recentsArray = [MEGASdkManager.sharedMEGAChatSdk recentChatsWithMax:3];
+        self.recentsArray = [MEGAChatSdk.shared recentChatsWithMax:3];
         
         if (self.visibleUsersArray.count == 0) {
             self.tableView.tableFooterView = self.tableViewFooter;
@@ -986,7 +987,7 @@
 }
 
 - (void)newMeeting {
-    if (MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
+    if (MEGAChatSdk.shared.mnz_existsActiveCall) {
         [MeetingAlreadyExistsAlert showWithPresenter:self];
     } else {
         __weak typeof(UIViewController) *weakPresentingViewController = self.presentingViewController;
@@ -998,7 +999,7 @@
 }
 
 - (void)joinMeeting {
-    if (MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
+    if (MEGAChatSdk.shared.mnz_existsActiveCall) {
         [MeetingAlreadyExistsAlert showWithPresenter:self];
     } else {
         [[[EnterMeetingLinkRouter alloc] initWithViewControllerToPresent:self isGuest:NO] start];
@@ -1072,11 +1073,11 @@
         return;
     }
     
-    MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomByUser:user.handle];
+    MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomByUser:user.handle];
     if (chatRoom) {
         [self openChatRoom:chatRoom];
     } else {
-        [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUserHandle:user.handle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
+        [MEGAChatSdk.shared mnz_createChatRoomWithUserHandle:user.handle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
             [self openChatRoom:chatRoom];
         }];
     }
@@ -1491,7 +1492,7 @@
             } if (indexPath.section == 1) {
                 ContactTableViewCell *cell = [self dequeueOrInitCellWithIdentifier:@"contactCell" indexPath:indexPath];
                 MEGAChatListItem *chatListItem = self.recentsArray[indexPath.row];
-                MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:chatListItem.chatId];
+                MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomForChatId:chatListItem.chatId];
                 if (chatListItem.isGroup) {
                     cell.nameLabel.text = chatListItem.title;
                     cell.shareLabel.text = [chatRoom participantsNamesWithMe:YES];
@@ -1501,11 +1502,11 @@
                 } else {
                     uint64_t peerHandle = chatListItem.peerHandle;
                     cell.nameLabel.text = [chatRoom userDisplayNameForUserHandle:peerHandle];
-                    MEGAChatStatus userStatus = [MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:peerHandle];
+                    MEGAChatStatus userStatus = [MEGAChatSdk.shared userOnlineStatus:peerHandle];
                     cell.shareLabel.text = [NSString chatStatusString:userStatus];
                     cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForChatStatus:userStatus];
                     [cell.avatarImageView mnz_setImageForUserHandle:peerHandle name:cell.nameLabel.text];
-                    NSString *peerEmail = [MEGASdkManager.sharedMEGAChatSdk userEmailFromCacheByUserHandle:peerHandle];
+                    NSString *peerEmail = [MEGAChatSdk.shared userEmailFromCacheByUserHandle:peerHandle];
                     if (peerEmail) {
                         MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:peerEmail];
                         cell.verifiedImageView.hidden = ![MEGASdkManager.sharedMEGASdk areCredentialsVerifiedOfUser:user];
@@ -2186,7 +2187,7 @@
             cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForChatStatus:onlineStatus];
             cell.shareLabel.text = [NSString chatStatusString:onlineStatus];
             if (onlineStatus < MEGAChatStatusOnline) {
-                [MEGASdkManager.sharedMEGAChatSdk requestLastGreen:userHandle];
+                [MEGAChatSdk.shared requestLastGreen:userHandle];
             }
         }
     }
@@ -2195,7 +2196,7 @@
 - (void)onChatPresenceLastGreen:(MEGAChatSdk *)api userHandle:(uint64_t)userHandle lastGreen:(NSInteger)lastGreen {
     
     if (userHandle != api.myUserHandle && (self.contactsMode != ContactsModeFolderSharedWith)) {
-        MEGAChatStatus chatStatus = [[MEGASdkManager sharedMEGAChatSdk] userOnlineStatus:userHandle];
+        MEGAChatStatus chatStatus = [MEGAChatSdk.shared userOnlineStatus:userHandle];
         if (chatStatus < MEGAChatStatusOnline) {
             NSString *base64Handle = [MEGASdk base64HandleForUserHandle:userHandle];
             NSIndexPath *indexPath = [self.indexPathsMutableDictionary objectForKey:base64Handle];

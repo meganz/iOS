@@ -47,6 +47,7 @@
 #import "TransferSessionManager.h"
 #import <SDWebImage/SDWebImage.h>
 #import "MEGASdkManager+CleanUp.h"
+@import ChatRepo;
 @import Firebase;
 @import MEGAL10nObjc;
 @import MEGASDKRepo;
@@ -160,8 +161,8 @@
     [[MEGASdkManager sharedMEGASdkFolder] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
     
-    [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
-    [[MEGASdkManager sharedMEGAChatSdk] addChatRequestDelegate:self];
+    [MEGAChatSdk.shared addChatDelegate:self];
+    [MEGAChatSdk.shared addChatRequestDelegate:self];
         
     [[MEGASdkManager sharedMEGASdk] httpServerSetMaxBufferSize:[UIDevice currentDevice].maxBufferSize];
     
@@ -199,14 +200,14 @@
 
         [self initProviderDelegate];
                 
-        MEGAChatInit chatInit = [MEGASdkManager.sharedMEGAChatSdk initKarereWithSid:sessionV3];
+        MEGAChatInit chatInit = [MEGAChatSdk.shared initKarereWithSid:sessionV3];
         [self removeSDKLoggerWhenInitChatIfNeeded];
         if (chatInit == MEGAChatInitError) {
             MEGALogError(@"Init Karere with session failed");
             NSString *message = [NSString stringWithFormat:@"Error (%ld) initializing the chat", (long)chatInit];
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"error", @"nil") message:message preferredStyle:UIAlertControllerStyleAlert];
             [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleCancel handler:nil]];
-            [[MEGASdkManager sharedMEGAChatSdk] logout];
+            [MEGAChatSdk.shared logout];
             [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
         } else if (chatInit == MEGAChatInitOnlineSession || chatInit == MEGAChatInitOfflineSession) {
             [self importMessagesFromNSE];
@@ -294,8 +295,8 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     MEGALogDebug(@"[App Lifecycle] Application did enter background");
     
-    [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:YES];
-    [[MEGASdkManager sharedMEGAChatSdk] saveCurrentState];
+    [MEGAChatSdk.shared setBackgroundStatus:YES];
+    [MEGAChatSdk.shared saveCurrentState];
 
     [LTHPasscodeViewController.sharedUser setDelegate:self];
     
@@ -318,7 +319,7 @@
     [self checkChatInitState];
     [MEGAReachabilityManager.sharedManager retryOrReconnect];
     
-    [[MEGASdkManager sharedMEGAChatSdk] setBackgroundStatus:NO];
+    [MEGAChatSdk.shared setBackgroundStatus:NO];
     
     if (MEGASdk.isLoggedIn && self->isFetchNodesDone) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -346,7 +347,7 @@
     [sharedUserDefaults setInteger:0 forKey:MEGAApplicationIconBadgeNumber];    
     application.applicationIconBadgeNumber = 0;
     
-    [[MEGASdkManager sharedMEGAChatSdk] signalPresenceActivity];
+    [MEGAChatSdk.shared signalPresenceActivity];
     
     if (![NSStringFromClass([UIApplication sharedApplication].windows.firstObject.class) isEqualToString:@"UIWindow"]) {
         [[LTHPasscodeViewController sharedUser] enablePasscodeWhenApplicationEntersBackground];
@@ -419,7 +420,7 @@
                 self.email = personHandle.value;
                 self.videoCall = startCallIntent.callCapability == INCallCapabilityVideoCall;
                 MEGALogDebug(@"Email %@", self.email);
-                uint64_t userHandle = [[MEGASdkManager sharedMEGAChatSdk] userHandleByEmail:self.email];
+                uint64_t userHandle = [MEGAChatSdk.shared userHandleByEmail:self.email];
                 
                 if (userHandle == MEGAInvalidHandle) {
                     MEGALogDebug(@"Can't start a call because %@ is not your contact", self.email);
@@ -429,9 +430,9 @@
                         _presentInviteContactVCLater = YES;
                     }
                 } else {
-                    self.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:userHandle];
+                    self.chatRoom = [MEGAChatSdk.shared chatRoomByUser:userHandle];
                     if (self.chatRoom) {
-                        MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:self.chatRoom.chatId];
+                        MEGAChatCall *call = [MEGAChatSdk.shared chatCallForChatId:self.chatRoom.chatId];
                         if (call.status == MEGAChatCallStatusInProgress) {
                             MEGALogDebug(@"There is a call in progress for this chat %@", call);
                             BOOL isSpeakerEnabled = [AVAudioSession.sharedInstance isOutputEqualToPortType:AVAudioSessionPortBuiltInSpeaker];
@@ -440,7 +441,7 @@
                                           isSpeakerEnabled:isSpeakerEnabled];
                             self.chatRoom = nil;
                         } else {
-                            MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
+                            MEGAChatConnection chatConnection = [MEGAChatSdk.shared chatConnectionState:self.chatRoom.chatId];
                             MEGALogDebug(@"Chat %@ connection state: %ld", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId], (long)chatConnection);
                             if (chatConnection == MEGAChatConnectionOnline) {
                                 [self initiateCallAfterAskingForPermissionsWithVideoCall:self.isVideoCall];
@@ -448,9 +449,9 @@
                         }
                     } else {
                         MEGALogDebug(@"There is not a chat with %@, create the chat and inmediatelly perform the call", self.email);
-                        [MEGASdkManager.sharedMEGAChatSdk mnz_createChatRoomWithUserHandle:userHandle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
+                        [MEGAChatSdk.shared mnz_createChatRoomWithUserHandle:userHandle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
                             self.chatRoom = chatRoom;
-                            MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
+                            MEGAChatConnection chatConnection = [MEGAChatSdk.shared chatConnectionState:self.chatRoom.chatId];
                             MEGALogDebug(@"Chat %@ connection state: %ld", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId], (long)chatConnection);
                             if (chatConnection == MEGAChatConnectionOnline) {
                                 [self performCall];
@@ -460,19 +461,19 @@
                 }
             } if (personHandle.type == INPersonHandleTypeUnknown) {
                 uint64_t handle = [MEGASdk handleForBase64UserHandle:personHandle.value];
-                MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:handle];
+                MEGAChatCall *call = [MEGAChatSdk.shared chatCallForChatId:handle];
                 self.videoCall = startCallIntent.callCapability == INCallCapabilityVideoCall;
 
                 if (call && call.status == MEGAChatCallStatusInProgress) {
-                    self.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:call.chatId];
+                    self.chatRoom = [MEGAChatSdk.shared chatRoomForChatId:call.chatId];
                     MEGALogDebug(@"call id %llu", call.callId);
                     MEGALogDebug(@"There is a call in progress for this chat %@", call);
                     BOOL isSpeakerEnabled = [AVAudioSession.sharedInstance isOutputEqualToPortType:AVAudioSessionPortBuiltInSpeaker];
                     [self performCallWithPresenter:UIApplication.mnz_presentingViewController chatRoom:self.chatRoom isSpeakerEnabled:isSpeakerEnabled];
                     self.chatRoom = nil;
                 } else {
-                    self.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:handle];
-                    MEGAChatConnection chatConnection = [[MEGASdkManager sharedMEGAChatSdk] chatConnectionState:self.chatRoom.chatId];
+                    self.chatRoom = [MEGAChatSdk.shared chatRoomForChatId:handle];
+                    MEGAChatConnection chatConnection = [MEGAChatSdk.shared chatConnectionState:self.chatRoom.chatId];
                     MEGALogDebug(@"Chat %@ connection state: %ld", [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId], (long)chatConnection);
                     if (chatConnection == MEGAChatConnectionOnline) {
                         [self initiateCallAfterAskingForPermissionsWithVideoCall:self.isVideoCall];
@@ -723,7 +724,7 @@
         if (completion) completion();
     }];
     
-    [MEGASdkManager.sharedMEGAChatSdk removeChatDelegate:self.mainTBC];
+    [MEGAChatSdk.shared removeChatDelegate:self.mainTBC];
     self.mainTBC = nil;
 }
 
@@ -945,7 +946,7 @@
 }
 
 - (void)checkChatInitState {
-    MEGAChatInit initState = [MEGASdkManager.sharedMEGAChatSdk initState];
+    MEGAChatInit initState = [MEGAChatSdk.shared initState];
     MEGALogDebug(@"%@", [MEGAChatSdk stringForMEGAChatInitState:initState]);
     if (initState == MEGAChatInitOfflineSession || initState == MEGAChatInitOnlineSession) {
         [self importMessagesFromNSE];
@@ -964,7 +965,7 @@
         if ([NSFileManager.defaultManager fileExistsAtPath:nseCacheFileURL.path]) {
             if (MEGAStore.shareInstance.areTherePendingMessages) {
                 MEGALogDebug(@"Import messages from %@", nseCacheFileURL.path);
-                [MEGASdkManager.sharedMEGAChatSdk importMessagesFromPath:nseCacheFileURL.path];
+                [MEGAChatSdk.shared importMessagesFromPath:nseCacheFileURL.path];
             } else {
                 MEGALogDebug(@"No messages to import from NSE.");
             }
@@ -1511,7 +1512,7 @@
             [self updateContactsNickname];
             
             MEGAChatNotificationDelegate *chatNotificationDelegate = MEGAChatNotificationDelegate.new;
-            [[MEGASdkManager sharedMEGAChatSdk] addChatNotificationDelegate:chatNotificationDelegate];
+            [MEGAChatSdk.shared addChatNotificationDelegate:chatNotificationDelegate];
             
             if (MEGASdk.isGuest) {
                 return;
@@ -1695,7 +1696,7 @@
 - (void)onChatInitStateUpdate:(MEGAChatSdk *)api newState:(MEGAChatInit)newState {
     self.chatLastKnownInitState = newState;
     if (newState == MEGAChatInitError) {
-        [[MEGASdkManager sharedMEGAChatSdk] logout];
+        [MEGAChatSdk.shared logout];
     }
     if (newState == MEGAChatInitOnlineSession) {
         [self copyDatabasesForExtensions];

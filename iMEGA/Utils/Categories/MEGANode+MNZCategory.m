@@ -34,6 +34,7 @@
 #import "SendToViewController.h"
 #import "MEGAStartUploadTransferDelegate.h"
 
+@import ChatRepo;
 @import MEGAL10nObjc;
 
 @implementation MEGANode (MNZCategory)
@@ -128,7 +129,7 @@
 }
 
 - (void)mnz_openNodeInNavigationController:(UINavigationController *)navigationController folderLink:(BOOL)isFolderLink fileLink:(NSString *)fileLink messageId:(nullable NSNumber * )messageId chatId:(nullable NSNumber *)chatId allNodes: (NSArray *_Nullable)allNodes {
-    if ([FileExtensionGroupOCWrapper verifyIsMultiMedia:self.name] && MEGASdkManager.sharedMEGAChatSdk.mnz_existsActiveCall) {
+    if ([FileExtensionGroupOCWrapper verifyIsMultiMedia:self.name] && MEGAChatSdk.shared.mnz_existsActiveCall) {
         [Helper cannotPlayContentDuringACallAlert];
     } else {
         if ([FileExtensionGroupOCWrapper verifyIsMultiMedia:self.name] && ![FileExtensionGroupOCWrapper verifyIsVideo:self.name] && self.mnz_isPlayable) {
