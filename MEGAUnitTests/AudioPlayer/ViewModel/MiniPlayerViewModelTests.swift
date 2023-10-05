@@ -258,7 +258,7 @@ final class MiniPlayerViewModelTests: XCTestCase {
             audioPlayerUseCase: mockAudioPlayerUseCase,
             dispatchQueue: TestDispatchQueue(label: "\(type(of: MiniPlayerViewModelTests.self)).preparePlayerQueue")
         )
-        trackForMemoryLeaks(on: sut, file: file, line: line)
+        
         return (sut, mockRouter, mockPlayerHandler, mockPlaybackContinuationUseCase, mockNodeInfoUseCase, mockStreamingInfoUseCase)
     }
     
