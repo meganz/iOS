@@ -1,3 +1,4 @@
+import Accounts
 import Foundation
 import MEGADomain
 import MEGAL10n
@@ -148,5 +149,12 @@ extension FolderLinkViewController {
             return Strings.Localizable.selectTitle
         }
         return Strings.Localizable.General.Format.itemsSelected(selectedCount)
+    }
+}
+
+// MARK: - Ads
+extension FolderLinkViewController: AdsSlotViewControllerProtocol {
+    public func currentAdsSlotType() -> AdsSlotEntity? {
+        .sharedLink
     }
 }

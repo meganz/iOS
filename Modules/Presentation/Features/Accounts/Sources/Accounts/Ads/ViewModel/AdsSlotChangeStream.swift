@@ -41,7 +41,6 @@ public final class AdsSlotChangeStream: AdsSlotChangeStreamProtocol {
     // MARK: MainTabBar
     private func setUpTabBarSubscription(tabBar: UITabBarController, adsSlotVC: any AdsSlotViewControllerProtocol) {
         tabBar.publisher(for: \.selectedViewController)
-            .dropFirst()
             .sink { [weak self] _ in
                 guard let self else { return }
                 continuation.yield(adsSlotVC.currentAdsSlotType())

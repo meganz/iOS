@@ -1,3 +1,4 @@
+import Accounts
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
@@ -203,3 +204,15 @@ extension MEGALinkManager {
         ).start()
     }
 }
+
+// MARK: - Ads
+ extension MEGALinkManager {
+     @objc class func presentViewControllerWithAds(_ containerController: UIViewController, adsSlotViewController: UIViewController) {
+         guard let adsSlotViewController = adsSlotViewController as? (any AdsSlotViewControllerProtocol) else { return }
+         AdsSlotRouter(
+            adsSlotViewController: adsSlotViewController,
+            contentView: AdsViewWrapper(viewController: containerController),
+            presenter: UIApplication.mnz_visibleViewController()
+         ).start()
+     }
+ }

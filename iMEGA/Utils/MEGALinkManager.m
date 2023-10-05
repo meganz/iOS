@@ -594,8 +594,9 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
                 MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:@[node].mutableCopy api:[MEGASdkManager sharedMEGASdkFolder] displayMode:DisplayModeFileLink presentingNode:node];
                 photoBrowserVC.publicLink = fileLinkURLString;
                 photoBrowserVC.encryptedLink = MEGALinkManager.secondaryLinkURL.absoluteString;
-                
-                [UIApplication.mnz_visibleViewController presentViewController:photoBrowserVC animated:YES completion:nil];
+                photoBrowserVC.needsReload = YES;
+
+                [self presentViewControllerWithAds:photoBrowserVC adsSlotViewController:photoBrowserVC];
             } else if ([FileExtensionGroupOCWrapper verifyIsMultiMedia:node.name] && node.mnz_isPlayable) {
                 [self initFullScreenPlayerWithNode:node fileLink:fileLinkURLString filePaths:nil isFolderLink:NO presenter:UIApplication.mnz_visibleViewController];
             } else {
@@ -611,7 +612,6 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     [[MEGASdkManager sharedMEGASdk] publicNodeForMegaFileLink:fileLinkURLString delegate:delegate];
 }
 
-
 + (void)presentFileLinkViewForLink:(NSString *)link request:(MEGARequest *)request error:(MEGAError *)error {
     MEGANavigationController *fileLinkNavigationController = [[UIStoryboard storyboardWithName:@"Links" bundle:nil] instantiateViewControllerWithIdentifier:@"FileLinkNavigationControllerID"];
     FileLinkViewController *fileLinkVC = fileLinkNavigationController.viewControllers.firstObject;
@@ -620,7 +620,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     fileLinkVC.request = request;
     fileLinkVC.error = error;
     
-    [UIApplication.mnz_visibleViewController presentViewController:fileLinkNavigationController animated:YES completion:nil];
+    [self presentViewControllerWithAds:fileLinkNavigationController adsSlotViewController:fileLinkVC];
 }
 
 + (void)showFolderLinkView {
@@ -635,7 +635,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     
     folderlinkVC.player = [AudioPlayerManager.shared currentPlayer];
     
-    [UIApplication.mnz_visibleViewController presentViewController:folderNavigationController animated:YES completion:nil];
+    [self presentViewControllerWithAds:folderNavigationController adsSlotViewController:folderlinkVC];
 }
 
 + (void)showBackupLinkView {

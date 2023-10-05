@@ -1,3 +1,6 @@
+import Accounts
+import MEGADomain
+
 extension FileLinkViewController {
     @objc func download() {
         guard let publicLinkString = publicLinkString, let linkUrl = URL(string: publicLinkString) else { return }
@@ -31,5 +34,12 @@ extension FileLinkViewController {
         activityVC.popoverPresentationController?.barButtonItem = shareLinkBarButtonItem
 
         present(activityVC, animated: true)
+    }
+}
+
+// MARK: - Ads
+extension FileLinkViewController: AdsSlotViewControllerProtocol {
+    public func currentAdsSlotType() -> AdsSlotEntity? {
+        .sharedLink
     }
 }

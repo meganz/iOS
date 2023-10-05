@@ -1,3 +1,4 @@
+import Accounts
 import Foundation
 import MEGADomain
 import MEGAPresentation
@@ -43,7 +44,19 @@ final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
     }
     
     @objc func start() {
-        presenter.present(build(), animated: true, completion: nil)
+        switch configEntity.nodeOriginType {
+        case .fileLink:
+            var audioPlayerViewController = build()
+            if let adsSlotViewController = baseViewController as? (any AdsSlotViewControllerProtocol) {
+                audioPlayerViewController = AdsSlotRouter(
+                    adsSlotViewController: adsSlotViewController,
+                    contentView: AdsViewWrapper(viewController: audioPlayerViewController)
+                ).build()
+            }
+            presenter.present(audioPlayerViewController, animated: true, completion: nil)
+        default:
+            presenter.present(build(), animated: true, completion: nil)
+        }
     }
     
     // MARK: - UI Actions
