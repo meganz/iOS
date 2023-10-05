@@ -230,7 +230,7 @@ extension TextEditorViewRouter: TextEditorViewRouting {
             return
         }
         
-        ActionWarningViewRouter(presenter: baseViewController, nodes: [node.toNodeEntity()], actionType: .removeLink, onActionStart: {
+        let router = ActionWarningViewRouter(presenter: baseViewController, nodes: [node.toNodeEntity()], actionType: .removeLink, onActionStart: {
             SVProgressHUD.show()
         }, onActionFinish: {
             switch $0 {
@@ -239,6 +239,7 @@ extension TextEditorViewRouter: TextEditorViewRouting {
             case .failure:
                 SVProgressHUD.dismiss()
             }
-        }).start()
+        })
+        router.start()
     }
 }

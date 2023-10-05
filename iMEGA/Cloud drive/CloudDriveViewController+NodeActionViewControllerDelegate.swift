@@ -27,12 +27,13 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
             showSendToChat(nodes)
             toggle(editModeActive: false)
         case .removeLink:
-            ActionWarningViewRouter(presenter: self, nodes: nodes.toNodeEntities(), actionType: .removeLink, onActionStart: {
+            let router = ActionWarningViewRouter(presenter: self, nodes: nodes.toNodeEntities(), actionType: .removeLink, onActionStart: {
                 SVProgressHUD.show()
             }, onActionFinish: { [weak self] result in
                 self?.toggle(editModeActive: false)
                 self?.showRemoveLinkResultMessage(result)
-            }).start()
+            })
+                router.start()
         case .saveToPhotos:
             saveToPhotos(nodes: nodes.toNodeEntities())
         default:
@@ -63,11 +64,12 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
         case .rename:
             node.mnz_renameNode(in: self)
         case .removeLink:
-            ActionWarningViewRouter(presenter: self, nodes: [node.toNodeEntity()], actionType: .removeLink, onActionStart: {
+            let router = ActionWarningViewRouter(presenter: self, nodes: [node.toNodeEntity()], actionType: .removeLink, onActionStart: {
                 SVProgressHUD.show()
             }, onActionFinish: { [weak self] result in
                 self?.showRemoveLinkResultMessage(result)
-            }).start()
+            })
+            router.start()
         case .moveToRubbishBin:
             moveToRubbishBin(for: node)
         case .remove:

@@ -230,7 +230,7 @@ class ExplorerBaseViewController: UIViewController {
     }
     
     fileprivate func handleRemoveLinks(for nodes: [MEGANode]) {
-        ActionWarningViewRouter(presenter: self, nodes: nodes.toNodeEntities(), actionType: .removeLink, onActionStart: {
+        let router = ActionWarningViewRouter(presenter: self, nodes: nodes.toNodeEntities(), actionType: .removeLink, onActionStart: {
             SVProgressHUD.show()
         }, onActionFinish: { [weak self] result in
             self?.endEditingMode()
@@ -240,7 +240,8 @@ class ExplorerBaseViewController: UIViewController {
             case .failure:
                 SVProgressHUD.dismiss()
             }
-        }).start()
+        })
+        router.start()
     }
     
     // MARK: - Methods needs to be overriden by the subclass

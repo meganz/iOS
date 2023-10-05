@@ -81,7 +81,7 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
             showLink(for: node)
             
         case .removeLink:
-            ActionWarningViewRouter(presenter: viewController, nodes: [node.toNodeEntity()], actionType: .removeLink, onActionStart: {
+            let router = ActionWarningViewRouter(presenter: viewController, nodes: [node.toNodeEntity()], actionType: .removeLink, onActionStart: {
                 SVProgressHUD.show()
             }, onActionFinish: {
                 switch $0 {
@@ -90,7 +90,8 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
                 case .failure:
                     SVProgressHUD.dismiss()
                 }
-            }).start()
+            })
+            router.start()
             
         case .moveToRubbishBin:
             node.mnz_moveToTheRubbishBin { }

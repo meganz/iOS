@@ -175,7 +175,7 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
                 }
             }
         case .removeLink:
-            ActionWarningViewRouter(presenter: self, nodes: [parentNode.toNodeEntity()], actionType: .removeLink, onActionStart: {
+            let router = ActionWarningViewRouter(presenter: self, nodes: [parentNode.toNodeEntity()], actionType: .removeLink, onActionStart: {
                 SVProgressHUD.show()
             }, onActionFinish: {
                 switch $0 {
@@ -184,7 +184,8 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
                 case .failure:
                     SVProgressHUD.dismiss()
                 }
-            }).start()
+            })
+            router.start()
         default:
             break
         }
