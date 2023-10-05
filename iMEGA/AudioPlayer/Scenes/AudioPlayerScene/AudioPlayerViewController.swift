@@ -407,7 +407,7 @@ final class AudioPlayerViewController: UIViewController {
         [
             UIAlertAction(
                 title: Strings.Localizable.Media.Audio.PlaybackContinuation.Dialog.restart,
-                style: .cancel
+                style: .default
             ) { [weak self] _ in
                 self?.viewModel.dispatch(.onSelectRestartPlaybackContinuationDialog)
             },
