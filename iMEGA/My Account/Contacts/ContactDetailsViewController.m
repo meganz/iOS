@@ -296,7 +296,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
         cell.nameLabel.text = LocalizedString(@"removeUserTitle", @"Alert title shown when you want to remove one or more contacts");
         cell.nameLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
     } else { //Add contact
-        cell.avatarImageView.image = [UIImage imageNamed:@"add"];
+        cell.avatarImageView.image = [UIImage imageNamed:@"navigationbar_add"];
         cell.avatarImageView.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
         cell.nameLabel.text = LocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email");
     }
@@ -350,7 +350,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 
 - (ContactTableViewCell *)cellForAddParticipantAsContactWithIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"ContactDetailsDefaultTypeID" forIndexPath:indexPath];
-    cell.avatarImageView.image = [UIImage imageNamed:@"add"];
+    cell.avatarImageView.image = [UIImage imageNamed:@"navigationbar_add"];
     cell.avatarImageView.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
     cell.nameLabel.text = LocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email");
     cell.userInteractionEnabled = cell.avatarImageView.userInteractionEnabled = cell.nameLabel.enabled = MEGAReachabilityManager.isReachable;
