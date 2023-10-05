@@ -210,7 +210,7 @@ extension MEGAPhotoBrowserViewController {
     }
     
     @objc func showRemoveLinkWarning(_ node: MEGANode) {
-        ActionWarningViewRouter(presenter: self, nodes: [node.toNodeEntity()], actionType: .removeLink, onActionStart: {
+        let router = ActionWarningViewRouter(presenter: self, nodes: [node.toNodeEntity()], actionType: .removeLink, onActionStart: {
             SVProgressHUD.show()
         }, onActionFinish: {
             switch $0 {
@@ -219,7 +219,8 @@ extension MEGAPhotoBrowserViewController {
             case .failure:
                 SVProgressHUD.dismiss()
             }
-        }).start()
+        })
+        router.start()
     }
     
     @objc func presentGetLink(for nodes: [MEGANode]) {

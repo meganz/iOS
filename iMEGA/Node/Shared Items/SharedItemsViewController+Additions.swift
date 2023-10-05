@@ -296,7 +296,7 @@ extension SharedItemsViewController {
     
     @objc func showRemoveLinkWarning(_ nodes: [MEGANode]) {
         if MEGAReachabilityManager.isReachableHUDIfNot() {
-            ActionWarningViewRouter(presenter: self, nodes: nodes.toNodeEntities(), actionType: .removeLink, onActionStart: {
+            let router = ActionWarningViewRouter(presenter: self, nodes: nodes.toNodeEntities(), actionType: .removeLink, onActionStart: {
                 SVProgressHUD.show()
             }, onActionFinish: { [weak self] result in
                 self?.endEditingMode()
@@ -306,7 +306,8 @@ extension SharedItemsViewController {
                 case .failure:
                     SVProgressHUD.dismiss()
                 }
-            }).start()
+            })
+            router.start()
         }
     }
     
