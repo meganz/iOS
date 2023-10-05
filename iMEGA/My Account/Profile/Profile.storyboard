@@ -457,8 +457,8 @@
     </designables>
     <resources>
         <image name="backArrow" width="13" height="21"/>
+        <image name="filetype_text" width="72" height="72"/>
         <image name="phoneNumber" width="24" height="24"/>
-        <image name="text" width="72" height="72"/>
         <systemColor name="groupTableViewBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
