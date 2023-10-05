@@ -54,7 +54,6 @@ static const void *base64HandleKey = &base64HandleKey;
 }
 
 - (void)mnz_setImageAvatarOrColorForUserHandle:(uint64_t)userHandle {
-    
     NSString *base64Handle = [MEGASdk base64HandleForUserHandle:userHandle];
     NSString *avatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:base64Handle];
     
