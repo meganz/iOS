@@ -15,10 +15,7 @@
 @import MEGAL10nObjc;
 @import PureLayout;
 
-@interface MainTabBarController () <UITabBarControllerDelegate, MEGANavigationControllerDelegate, MEGAGlobalDelegate>
-
-@property (nonatomic, strong) PSAViewModel *psaViewModel;
-@property (nonatomic, strong) MainTabBarCallsViewModel *mainTabBarViewModel;
+@interface MainTabBarController () < MEGAGlobalDelegate>
 
 @end
 
@@ -28,42 +25,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    NSMutableArray *defaultViewControllersMutableArray = [[NSMutableArray alloc] initWithCapacity:5];
-    
-    [defaultViewControllersMutableArray addObject:[self cloudDriveViewController]];
-    [defaultViewControllersMutableArray addObject:[self photosViewController]];
-    [defaultViewControllersMutableArray addObject:[self makeHomeViewController]];
-    [defaultViewControllersMutableArray addObject:[self chatViewController]];
-    [defaultViewControllersMutableArray addObject:[self SharedItemsViewController]];
-    
-    for (NSInteger i = 0; i < [defaultViewControllersMutableArray count]; i++) {
-        MEGANavigationController *navigationController = defaultViewControllersMutableArray[i];
-        navigationController.navigationDelegate = self;
-        UITabBarItem *tabBarItem = navigationController.tabBarItem;
-        tabBarItem.title = nil;
-        [self reloadInsetsForTabBarItem:tabBarItem];
-        tabBarItem.accessibilityLabel = [[Tab alloc] initWithTabType:i].title;
-    }
-    
-    self.viewControllers = defaultViewControllersMutableArray;
-    
-    [self setDelegate:self];
-    
+    [self loadTabViewControllers];
+    [self setupHomeSearchForABTestingWithCompletionHandler:^{}];
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
-    
-    [self configProgressView];
-    
-    [self setBadgeValueForSharedItems];
-    [self setBadgeValueForChats];
-    [self configurePhoneImageBadge];
-    
-    self.selectedViewController = [defaultViewControllersMutableArray objectAtIndex:[TabManager getPreferenceTab].tabType];
-    [self showPSAViewIfNeeded];
-    
-    [AppearanceManager setupTabbar:self.tabBar traitCollection:self.traitCollection];
-    
-    self.mainTabBarViewModel = [self createMainTabBarViewModel];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -194,10 +158,6 @@
     [self presentViewController:navigation animated:YES completion:nil];
 }
 
-- (void)configProgressView {
-    [TransfersWidgetViewController.sharedTransferViewController setProgressViewInKeyWindow];
-}
-
 - (void)shouldUpdateProgressViewLocation {
     dispatch_async(dispatch_get_main_queue(), ^{
         for (UIView *subview in self.view.subviews) {
@@ -281,14 +241,6 @@
     return sharedItemsNavigationController;
 }
 
-- (void)showPSAViewIfNeeded {
-    if (self.psaViewModel == nil) {
-        self.psaViewModel = [self createPSAViewModel];
-    }
-    
-    [self showPSAViewIfNeeded:self.psaViewModel];
-}
-
 - (void)updatePhoneImageBadgeFrame {
     UITabBarItem *item = self.tabBar.items[TabTypeChat];
     CGFloat iconWidth = item.image.size.width;
@@ -320,20 +272,6 @@
     if (item.changes == MEGAChatListItemChangeTypeUnreadCount) {
         [self debounce:@selector(setBadgeValueForChats) delay:0.1];
         [self updateUnreadChatsOnBackButton];
-    }
-}
-
-- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
-    [self showPSAViewIfNeeded];
-}
-
-#pragma mark - MEGANavigationControllerDelegate
-
-- (void)navigationController:(UINavigationController *)navigationController
-      willShowViewController:(UIViewController *)viewController
-                    animated:(BOOL)animated {
-    if (self.psaViewModel != nil) {
-        [self hidePSAView:viewController.hidesBottomBarWhenPushed psaViewModel:self.psaViewModel];
     }
 }
 

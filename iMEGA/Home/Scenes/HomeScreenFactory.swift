@@ -14,7 +14,7 @@ final class HomeScreenFactory: NSObject {
     private var sdk: MEGASdk {
         MEGASdk.sharedSdk
     }
-    
+
     func createHomeScreen(
         from tabBarController: MainTabBarController,
         newHomeSearchResultsEnabled: Bool,
@@ -117,7 +117,7 @@ final class HomeScreenFactory: NSObject {
         NodeRepository.newRepo
     }
     
-    private func makeSearchResultViewController(
+    func makeSearchResultViewController(
         with navigationController: UINavigationController,
         bridge: SearchResultsBridge,
         newHomeSearchResultsEnabled: Bool,
