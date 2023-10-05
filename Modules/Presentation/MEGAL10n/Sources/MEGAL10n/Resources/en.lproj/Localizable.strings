@@ -3846,3 +3846,5 @@
 "chat.call.waitingRoom.participantsList.title"="Waiting room";
 /* A button label to close the waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.close"="Close";
+/* Auto media discovery banner title */
+"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="As this folder contains only images and videos, we've automatically opened it in media discovery view. This lets you see media in gallery mode and filter by date. You can disable this in Settings > User interface.";

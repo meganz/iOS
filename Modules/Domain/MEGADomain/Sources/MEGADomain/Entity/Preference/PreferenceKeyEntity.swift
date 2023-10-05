@@ -32,4 +32,5 @@ public enum PreferenceKeyEntity: String {
     case isCallUIVisible
     case shouldDisplayMediaDiscoveryWhenMediaOnly
     case mediaDiscoveryShouldIncludeSubfolderMedia
+    case autoMediaDiscoveryBannerDismissed
 }
