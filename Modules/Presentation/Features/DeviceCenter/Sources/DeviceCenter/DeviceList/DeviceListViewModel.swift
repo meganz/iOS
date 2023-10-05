@@ -40,6 +40,7 @@ public final class DeviceListViewModel: ObservableObject {
     @Published private(set) var refreshDevicesPublisher: PassthroughSubject<Void, Never>
     @Published var isSearchActive: Bool
     @Published var searchText: String = ""
+    @Published var isLoadingPlaceholderVisible = false
     
     init(
         devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>,
@@ -74,6 +75,13 @@ public final class DeviceListViewModel: ObservableObject {
         setupSearchCancellable()
         setupDevicesUpdateSubscription()
         loadUserDevices()
+        showLoadingPlaceholder()
+    }
+    
+    private func showLoadingPlaceholder() {
+        Task {
+            await updateLoadingPlaceholderVisibility(true)
+        }
     }
     
     private func setupSearchCancellable() {
@@ -208,6 +216,10 @@ public final class DeviceListViewModel: ObservableObject {
         otherDevices = devices
             .filter { $0.id != currentDeviceId }
             .compactMap(loadDeviceViewModel)
+        
+        if isLoadingPlaceholderVisible {
+            updateLoadingPlaceholderVisibility(false)
+        }
     }
     
     func actionsForDevice(_ device: DeviceEntity) -> [DeviceCenterAction]? {
@@ -224,5 +236,10 @@ public final class DeviceListViewModel: ObservableObject {
         return actionTypes.compactMap { type in
             sortedAvailableActions[type]?.first
         }
+    }
+    
+    @MainActor
+    private func updateLoadingPlaceholderVisibility(_ shown: Bool) {
+        isLoadingPlaceholderVisible = shown
     }
 }
