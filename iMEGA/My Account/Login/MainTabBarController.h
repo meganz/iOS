@@ -5,6 +5,8 @@
 @class AudioPlayer;
 @class MiniPlayerViewRouter;
 @class Tab;
+@class PSAViewModel;
+@class MainTabBarCallsViewModel;
 
 typedef NS_ENUM(NSInteger, MovementDirection) {
     MovementDirectionUp = 0,
@@ -21,8 +23,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) NSLayoutConstraint *snackBarViewBottomConstraint;
 @property (nonatomic, strong, nullable) AudioPlayer *player;
 @property (nonatomic, strong, nullable) MiniPlayerViewRouter *miniPlayerRouter;
-@property (nonatomic, strong) UIImageView *phoneBadgeImageView;
+@property (nonatomic, strong, nullable) UIImageView *phoneBadgeImageView;
 @property (nonatomic, assign) NSInteger unreadMessages;
+@property (strong, nonatomic) NSMutableArray<UIViewController *> *defaultViewControllers;
+@property (nonatomic, strong) MainTabBarCallsViewModel *mainTabBarViewModel;
+@property (nonatomic, strong, nullable) PSAViewModel *psaViewModel;
 
 - (void)openChatRoomNumber:(nullable NSNumber *)chatNumber;
 
