@@ -37,6 +37,11 @@ extension AudioPlayer {
             nowPlayingInfo[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(boundsSize: artwork.size) { _ in
                 artwork
             }
+        } else {
+            let defaultArtworkImage = UIImage(resource: .defaultArtwork)
+            nowPlayingInfo[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(boundsSize: defaultArtworkImage.size) { _ in
+                defaultArtworkImage
+            }
         }
         
         updateCommandsState(enabled: true)
