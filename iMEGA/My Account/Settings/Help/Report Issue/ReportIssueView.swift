@@ -11,6 +11,7 @@ struct ReportIssueView: View {
                 VStack(alignment: .leading) {
                     if !viewModel.isConnected {
                         WarningView(viewModel: WarningViewModel(warningType: .noInternetConnection))
+                            .fixedSize(horizontal: false, vertical: true)
                     }
                     
                     SubheadlineTextView(text: Strings.Localizable.Help.ReportIssue.describe)
