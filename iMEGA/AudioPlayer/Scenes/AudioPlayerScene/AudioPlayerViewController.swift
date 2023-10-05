@@ -1,3 +1,5 @@
+import Accounts
+import MEGADomain
 import MEGAL10n
 import UIKit
 
@@ -466,5 +468,12 @@ final class AudioPlayerViewController: UIViewController {
         case .displayPlaybackContinuationDialog(let fileName, let playbackTime):
             presentAudioPlaybackContinuation(fileName: fileName, playbackTime: playbackTime)
         }
+    }
+}
+
+// MARK: - Ads
+extension AudioPlayerViewController: AdsSlotViewControllerProtocol {
+    func currentAdsSlotType() -> AdsSlotEntity? {
+        .sharedLink
     }
 }
