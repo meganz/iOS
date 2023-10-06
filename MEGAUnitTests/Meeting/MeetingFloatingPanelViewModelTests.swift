@@ -69,7 +69,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .selectParticipantsList(selectedTab: .inCall),
              expectedCommands: [
-                .reloadViewData(participantsListView: ParticipantsListView(sections: [.hostControls, .invite, .participants], hostControlsRows: [.allowNonHostToInvite], inviteSectionRow: [.invite], tabs: [.inCall, .notInCall], selectedTab: .inCall, participants: [], existsWaitingRoom: false))
+                .reloadViewData(participantsListView: ParticipantsListView(sections: [.hostControls, .invite, .participants], hostControlsRows: [.listSelector, .allowNonHostToInvite], inviteSectionRow: [.invite], tabs: [.inCall, .notInCall], selectedTab: .inCall, participants: [], existsWaitingRoom: false))
              ])
     }
     
@@ -80,7 +80,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .selectParticipantsList(selectedTab: .inCall),
              expectedCommands: [
-                .reloadViewData(participantsListView: ParticipantsListView(sections: [.invite, .participants], hostControlsRows: [], inviteSectionRow: [], tabs: [.inCall, .notInCall], selectedTab: .inCall, participants: [], existsWaitingRoom: false))
+                .reloadViewData(participantsListView: ParticipantsListView(sections: [.invite, .participants], hostControlsRows: [.listSelector], inviteSectionRow: [], tabs: [.inCall, .notInCall], selectedTab: .inCall, participants: [], existsWaitingRoom: false))
              ])
     }
     
@@ -91,7 +91,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .selectParticipantsList(selectedTab: .inCall),
              expectedCommands: [
-                .reloadViewData(participantsListView: ParticipantsListView(sections: [.invite, .participants], hostControlsRows: [], inviteSectionRow: [.invite], tabs: [.inCall, .notInCall], selectedTab: .inCall, participants: [], existsWaitingRoom: false))
+                .reloadViewData(participantsListView: ParticipantsListView(sections: [.invite, .participants], hostControlsRows: [.listSelector], inviteSectionRow: [.invite], tabs: [.inCall, .notInCall], selectedTab: .inCall, participants: [], existsWaitingRoom: false))
              ])
     }
     
@@ -267,7 +267,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
     }
     
     func testAction_onViewReady_isMyselfParticipant_isOneToOneMeeting() {
-        let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
+        let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .oneToOne)
         let callUseCase = MockCallUseCase(call: CallEntity())
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         let audioSessionUseCase = MockAudioSessionUseCase()

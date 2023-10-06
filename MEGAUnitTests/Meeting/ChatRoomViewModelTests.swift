@@ -73,8 +73,7 @@ final class ChatRoomViewModelTests: XCTestCase {
         let router = MockChatRoomsListRouter()
         let chatRoomUseCase = MockChatRoomUseCase(shouldOpenWaitRoom: true)
         let scheduledMeetingUseCase = MockScheduledMeetingUseCase(scheduledMeetingsList: [ScheduledMeetingEntity()])
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.waitingRoom: true])
-        let sut = ChatRoomViewModel(router: router, chatRoomUseCase: chatRoomUseCase, scheduledMeetingUseCase: scheduledMeetingUseCase, featureFlagProvider: featureFlagProvider)
+        let sut = ChatRoomViewModel(router: router, chatRoomUseCase: chatRoomUseCase, scheduledMeetingUseCase: scheduledMeetingUseCase)
         
         sut.startOrJoinMeetingTapped()
         

@@ -126,8 +126,6 @@ final class ScheduleMeetingViewModel: ObservableObject {
     private let accountUseCase: any AccountUseCaseProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     
-    lazy var isWaitingRoomFeatureEnabled = featureFlagProvider.isFeatureFlagEnabled(for: .waitingRoom)
-    
     private var subscriptions = Set<AnyCancellable>()
 
     init(

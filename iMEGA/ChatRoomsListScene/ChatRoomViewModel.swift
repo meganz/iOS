@@ -40,11 +40,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
     private var searchString = ""
     
     private var isInfoLoaded = false
-    
-    private var isWaitingRoomEnabled: Bool {
-        featureFlagProvider.isFeatureFlagEnabled(for: .waitingRoom)
-    }
-    
+        
     let chatRoomAvatarViewModel: ChatRoomAvatarViewModel?
     
     let shouldShowUnreadCount: Bool
@@ -741,7 +737,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
                 return
             }
             
-            if chatRoomUseCase.shouldOpenWaitingRoom(forChatId: chatListItem.chatId) && isWaitingRoomEnabled {
+            if chatRoomUseCase.shouldOpenWaitingRoom(forChatId: chatListItem.chatId) {
                 openWaitingRoom()
             } else {
                 startOrJoinCall()

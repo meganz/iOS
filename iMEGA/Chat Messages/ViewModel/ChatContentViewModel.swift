@@ -44,9 +44,7 @@ final class ChatContentViewModel: ViewModelType {
     lazy var userHandle: HandleEntity = {
         chatUseCase.myUserHandle()
     }()
-    
-    lazy var isWaitingRoomFeatureEnabled = featureFlagProvider.isFeatureFlagEnabled(for: .waitingRoom)
-    
+        
     private var chatRoom: ChatRoomEntity
     private let chatUseCase: any ChatUseCaseProtocol
     private let scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol
@@ -104,7 +102,7 @@ final class ChatContentViewModel: ViewModelType {
 
     func shouldOpenWaitingRoom() -> Bool {
         let isModerator = chatRoom.ownPrivilege == .moderator
-        return !isModerator && chatRoom.isWaitingRoomEnabled && isWaitingRoomFeatureEnabled
+        return !isModerator && chatRoom.isWaitingRoomEnabled
     }
     
     // MARK: - Private
