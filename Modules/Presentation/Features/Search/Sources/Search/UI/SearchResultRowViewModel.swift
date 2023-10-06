@@ -1,3 +1,4 @@
+import MEGASwift
 import SwiftUI
 import UIKit
 

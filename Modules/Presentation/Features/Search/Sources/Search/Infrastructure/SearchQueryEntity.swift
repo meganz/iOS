@@ -1,5 +1,5 @@
 /// Represents a single search request with some properties
-public struct SearchQueryEntity: Equatable {
+public struct SearchQueryEntity: Equatable, Sendable {
     public let query: String
     public let sorting: SortOrderEntity
     public let mode: SearchModeEntity
@@ -14,7 +14,7 @@ public struct SearchQueryEntity: Equatable {
 }
 
 /// default value, iteration one of search project does not allow specifying sort order but that can come in next stages
-public enum SortOrderEntity {
+public enum SortOrderEntity: Sendable {
     case automatic
 }
 
@@ -26,6 +26,6 @@ public enum SortOrderEntity {
 /// .chats
 /// .outgoingShares
 /// .offlineFiles
-public enum SearchModeEntity {
+public enum SearchModeEntity: Sendable {
     case home
 }

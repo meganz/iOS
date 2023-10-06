@@ -42,7 +42,6 @@
 #import "NodeTableViewCell.h"
 #import "PhotosViewController.h"
 #import "PreviewDocumentViewController.h"
-#import "SearchOperation.h"
 #import "SharedItemsViewController.h"
 #import "UIViewController+MNZCategory.h"
 
@@ -775,9 +774,9 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         NSString *text = self.searchController.searchBar.text;
         [SVProgressHUD show];
         self.cancelToken = MEGACancelToken.alloc.init;
-        SearchOperation *searchOperation = [SearchOperation.alloc initWithParentNode:self.parentNode text:text cancelToken:self.cancelToken sdk:[MEGASdkManager sharedMEGASdk] completion:^(NSArray <MEGANode *> *nodesFound, BOOL isCancelled) {
+        SearchOperation* searchOperation = [[SearchOperation alloc] initWithSdk:[MEGASdkManager sharedMEGASdk] parentNode:self.parentNode text:text nodeFormat:MEGANodeFormatTypeUnknown sortOrder:[Helper sortTypeFor:self.parentNode] cancelToken:self.cancelToken completion:^(MEGANodeList*nodeList, BOOL isCancelled) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                self.searchNodesArray = [NSMutableArray arrayWithArray:nodesFound];
+                self.searchNodesArray = [NSMutableArray arrayWithArray: [nodeList toNodeArray]];
                 [self reloadData];
                 self.cancelToken = nil;
                 [self performSelector:@selector(dismissHUD) withObject:nil afterDelay:kHUDDismissDelay];

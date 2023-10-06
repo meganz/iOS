@@ -20,5 +20,5 @@ public protocol NodeRepositoryProtocol: RepositoryProtocol {
     func rubbishNode() -> NodeEntity?
     func rootNode() -> NodeEntity?
     func parents(of node: NodeEntity) async -> [NodeEntity]
-    func children(of node: NodeEntity) async -> [NodeEntity]
+    func children(of node: NodeEntity) async -> NodeListEntity?
 }

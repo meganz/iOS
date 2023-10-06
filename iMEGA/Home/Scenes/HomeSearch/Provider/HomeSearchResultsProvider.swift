@@ -8,7 +8,15 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
     private let searchFileUseCase: any SearchFileUseCaseProtocol
     private let nodeDetailUseCase: any NodeDetailUseCaseProtocol
     private let nodeRepository: any NodeRepositoryProtocol
-    
+
+    // We only initially fetch the node list when the user triggers search
+    // Concrete nodes are then loaded one by one in the pagination
+    private var nodeList: NodeListEntity?
+    private var currentPage = 0
+    private var totalPages = 0
+    private var pageSize = 100
+    private var loadMorePagesOffset = 20
+
     init(
         searchFileUseCase: some SearchFileUseCaseProtocol,
         nodeDetailUseCase: some NodeDetailUseCaseProtocol,
@@ -18,11 +26,21 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         self.nodeDetailUseCase = nodeDetailUseCase
         self.nodeRepository = nodeRepository
     }
-    
-    func search(queryRequest: SearchQuery) async throws -> SearchResultsEntity {
+
+    func search(queryRequest: SearchQuery, lastItemIndex: Int? = nil) async throws -> SearchResultsEntity? {
+        if let lastItemIndex {
+            return try await loadMore(queryRequest: queryRequest, index: lastItemIndex)
+        } else {
+            return try await searchInitially(queryRequest: queryRequest)
+        }
+    }
+
+    func searchInitially(queryRequest: SearchQuery) async throws -> SearchResultsEntity {
         // the requirement is to return children/contents of the
         // folder being searched when query is empty, no chips etc
-        
+
+        currentPage = 0
+
         switch queryRequest {
         case .initial:
             return await childrenOfRoot()
@@ -30,11 +48,50 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
             if shouldShowRoot(for: query) {
                 return await childrenOfRoot()
             } else {
-                return try await fullSearch(with: query)
+                self.nodeList = try await fullSearch(with: query)
+                return await fillResults(query: query)
             }
         }
     }
-    
+
+    func loadMore(queryRequest: SearchQuery, index: Int) async throws -> SearchResultsEntity? {
+        let itemsInPage = (currentPage == 0 ? 1 : currentPage)*pageSize
+        guard index >= itemsInPage - loadMorePagesOffset else { return nil }
+
+        currentPage+=1
+
+        switch queryRequest {
+        case .initial:
+            return await fillResults()
+        case .userSupplied(let query):
+            return await fillResults(query: query)
+        }
+    }
+
+    func childrenOfRoot() async -> SearchResultsEntity {
+        guard let root = nodeRepository.rootNode() else {
+            return .empty
+        }
+        self.nodeList = await nodeRepository.children(of: root)
+        return await fillResults()
+    }
+
+    func fullSearch(with queryRequest: SearchQueryEntity) async throws -> NodeListEntity? {
+        // SDK does not support empty query and MEGANodeFormatType.unknown
+        assert(!(queryRequest.query == "" && queryRequest.chips == []))
+        return try await withAsyncThrowingValue(in: { completion in
+            searchFileUseCase.searchFiles(
+                withName: queryRequest.query,
+                nodeFormat: nodeFormatFrom(chip: queryRequest.chips.first),
+                sortOrder: .defaultAsc,
+                searchPath: .root,
+                completion: { nodeList in
+                    completion(.success(nodeList))
+                }
+            )
+        })
+    }
+
     private func shouldShowRoot(for queryRequest: SearchQueryEntity) -> Bool {
         if queryRequest == .initialRootQuery {
             return true
@@ -44,45 +101,26 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         }
         return false
     }
-    
-    @MainActor
-    func childrenOfRoot() async -> SearchResultsEntity {
-        guard let root = nodeRepository.rootNode() else {
-            return .empty
+
+    private func fillResults(query: SearchQueryEntity? = nil) async -> SearchResultsEntity {
+        guard let nodeList, nodeList.nodesCount > 0 else { return .empty }
+
+        let nodesCount = nodeList.nodesCount
+        let nextPageFirstIndex = (currentPage+1)*pageSize
+        let lastItemIndex = nextPageFirstIndex > nodesCount ? nodesCount : nextPageFirstIndex
+
+        var results: [SearchResult] = []
+        for i in currentPage*pageSize...lastItemIndex-1 {
+            results.append(mapNodeToSearchResult(nodeList.nodeAt(i)))
         }
-        let children = await nodeRepository.children(of: root)
+
         return .init(
-            results: children.map { self.mapNodeToSearchResult($0) },
+            results: results,
             availableChips: SearchChipEntity.allChips,
-            appliedChips: []
+            appliedChips: query != nil ? chipsFor(query: query!) : []
         )
     }
-    
-    func fullSearch(with queryRequest: SearchQueryEntity) async throws -> SearchResultsEntity {
-        // SDK does not support empty query and MEGANodeFormatType.unknown
-        assert(!(queryRequest.query == "" && queryRequest.chips == []))
-        return try await withAsyncThrowingValue(in: { completion in
-            searchFileUseCase.searchFiles(
-                withName: queryRequest.query,
-                nodeFormat: nodeFormatFrom(chip: queryRequest.chips.first),
-                sortOrder: .defaultAsc,
-                searchPath: .root,
-                completion: { result in
-                    completion(
-                        .success(
-                            .init(
-                                results: result.map { self.mapNodeToSearchResult($0) },
-                                // will implement that in FM-797
-                                availableChips: SearchChipEntity.allChips,
-                                appliedChips: self.chipsFor(query: queryRequest)
-                            )
-                        )
-                    )
-                }
-            )
-        })
-    }
-    
+
     private func chipsFor(query: SearchQueryEntity) -> [SearchChipEntity] {
         SearchChipEntity.allChips.filter {
             query.chips.contains($0)

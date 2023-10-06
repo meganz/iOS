@@ -8,7 +8,7 @@ struct NodeSearchRepository {
         let nodeFormat: MEGANodeFormatType
         let sortOrder: MEGASortOrderType?
         let rootNodeHandle: HandleEntity?
-        let completion: ([NodeEntity]) -> Void
+        let completion: (MEGANodeList?) -> Void
     }
 
     var search: (
@@ -37,26 +37,25 @@ extension NodeSearchRepository {
                 }
 
                 guard let rootNode = searchRootNode else {
-                    parameter.completion([])
+                    parameter.completion(nil)
                     return {}
                 }
 
                 let cancelToken = MEGACancelToken()
 
                 let searchOperation = SearchOperation(
+                    sdk: sdk, 
                     parentNode: rootNode,
                     text: parameter.searchText,
-                    cancelToken: cancelToken,
-                    sortOrderType: parameter.sortOrder ?? .creationAsc,
-                    nodeFormatType: parameter.nodeFormat,
-                    sdk: sdk
-                ) { (foundNodes, _) -> Void in
-                    guard let foundNodes = foundNodes else {
-                        parameter.completion([])
+                    nodeFormat: parameter.nodeFormat,
+                    sortOrder: parameter.sortOrder ?? .creationAsc,
+                    cancelToken: cancelToken
+                ) { (nodeList, _) -> Void in
+                    guard let nodeList else {
+                        parameter.completion(nil)
                         return
                     }
-                    let sdkNodes = foundNodes.toNodeEntities()
-                    parameter.completion(sdkNodes)
+                    parameter.completion(nodeList)
                 }
 
                 searchQueue.addOperation(searchOperation)
