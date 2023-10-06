@@ -1173,6 +1173,7 @@
 		941135601F01011B00D33428 /* PhotoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 41AC33A31A926B55005118AF /* PhotoCollectionViewCell.m */; };
 		941135641F01071600D33428 /* NSString+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BADDAC1A8E1659008408B3 /* NSString+MNZCategory.m */; };
 		941135661F01541100D33428 /* NSFileManager+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41DC6F711D54E7080081832C /* NSFileManager+MNZCategory.m */; };
+		9418A7A22ACF84210014C01C /* MEGADesignToken in Frameworks */ = {isa = PBXBuildFile; productRef = 9418A7A12ACF84210014C01C /* MEGADesignToken */; };
 		9418DB292A4EE5FB002B0077 /* MEGAPermissions in Frameworks */ = {isa = PBXBuildFile; productRef = 9418DB282A4EE5FB002B0077 /* MEGAPermissions */; };
 		9418DB2B2A4EE611002B0077 /* MEGAPermissionsMock in Frameworks */ = {isa = PBXBuildFile; productRef = 9418DB2A2A4EE611002B0077 /* MEGAPermissionsMock */; };
 		9419E0472A50175F00813577 /* NodeLoadOperation+NodeAccessConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9419E0462A50175F00813577 /* NodeLoadOperation+NodeAccessConfiguration.swift */; };
@@ -3835,7 +3836,6 @@
 		946544852A4446D50038D8FC /* PermissionAlertRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionAlertRouterTests.swift; sourceTree = "<group>"; };
 		9467F575299F9E6600A24D4A /* UserAttributeEntityMappingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAttributeEntityMappingTests.swift; sourceTree = "<group>"; };
 		946ACCC1299C099900E6C0F5 /* MEGAPresentation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAPresentation; sourceTree = "<group>"; };
-		946AE1162AB497DA00B05AB8 /* MEGADesignToken */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGADesignToken; sourceTree = "<group>"; };
 		946E783429C0F79800BB3FE6 /* SharedItemsSearchOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItemsSearchOperation.swift; sourceTree = "<group>"; };
 		9470003829B77BCF00827E04 /* ActionWarningViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionWarningViewRouter.swift; sourceTree = "<group>"; };
 		94712EEF2A9C8E4800B5F2C9 /* HomeSearchResultsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSearchResultsProvider.swift; sourceTree = "<group>"; };
@@ -5073,6 +5073,7 @@
 				BF67F7F82AB4171A00AC127E /* LogRepo in Frameworks */,
 				94A220182A696502004130C4 /* MEGAAnalyticsiOS in Frameworks */,
 				A812CB392A4B0FAD00F99382 /* MEGAChatSdk in Frameworks */,
+				9418A7A22ACF84210014C01C /* MEGADesignToken in Frameworks */,
 				B6061FEC2897928D0094087E /* MEGADomain in Frameworks */,
 				B66BC70828A0F9CB00D4CB04 /* MEGADomainMock in Frameworks */,
 				B6A01BAC289A61CA00B503FD /* MEGAFoundation in Frameworks */,
@@ -11255,7 +11256,6 @@
 		B6FDEF7B2A204E9000276DD6 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				946AE1162AB497DA00B05AB8 /* MEGADesignToken */,
 				B639953F2898CE9100EA88F1 /* MEGASwiftUI */,
 				B6826B662898F43900B2B8D0 /* MEGAUI */,
 				B65D17CB2899E07200D5AD33 /* MEGAUIKit */,
@@ -12364,6 +12364,7 @@
 				99DB1D592AC64B34004A9CC3 /* ChatRepoMock */,
 				B5D8DD8E2AC54DE200F1D18B /* MEGAPresentationMock */,
 				B5D58D542AC67C89004ECD36 /* Accounts */,
+				9418A7A12ACF84210014C01C /* MEGADesignToken */,
 			);
 			productName = iMEGA;
 			productReference = 1373618A1A6664C300B740E8 /* MEGA.app */;
@@ -12711,6 +12712,7 @@
 				A8B51AE727F3565E0030F1EA /* XCRemoteSwiftPackageReference "WSTagsField" */,
 				A828E67F286B3112004CED9E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				943E6BBC2A60056100A92F94 /* XCRemoteSwiftPackageReference "mobile-analytics-ios" */,
+				9418A7A02ACF84210014C01C /* XCRemoteSwiftPackageReference "MEGADesignToken" */,
 			);
 			productRefGroup = 1373618B1A6664C300B740E8 /* Products */;
 			projectDirPath = "";
@@ -16942,6 +16944,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		9418A7A02ACF84210014C01C /* XCRemoteSwiftPackageReference "MEGADesignToken" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/meganz/MEGADesignToken";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		943E6BBC2A60056100A92F94 /* XCRemoteSwiftPackageReference "mobile-analytics-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://code.developers.mega.co.nz/mobile/kmm/mobile-analytics-ios";
@@ -17136,6 +17146,11 @@
 		940F41372A9FC40B00C2543F /* MEGAIntentDomain */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAIntentDomain;
+		};
+		9418A7A12ACF84210014C01C /* MEGADesignToken */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9418A7A02ACF84210014C01C /* XCRemoteSwiftPackageReference "MEGADesignToken" */;
+			productName = MEGADesignToken;
 		};
 		9418DB282A4EE5FB002B0077 /* MEGAPermissions */ = {
 			isa = XCSwiftPackageProductDependency;
