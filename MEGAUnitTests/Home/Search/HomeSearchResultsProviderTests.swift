@@ -22,7 +22,11 @@ class HomeSearchProviderTests: XCTestCase {
         ) {
             
             searchFile = MockSearchFileUseCase(
-                nodes: nodes
+                nodes: nodes,
+                nodeList: nodes.isNotEmpty ? .init(
+                    nodesCount: nodes.count,
+                    nodeAt: { nodes[$0] }
+                ) : nil
             )
             nodeDetails = MockNodeDetailUseCase(
                 owner: .init(name: "owner"),
@@ -55,7 +59,7 @@ class HomeSearchProviderTests: XCTestCase {
             queryRequest: .userSupplied(.query("node 1")) // we should match `node 1` and `node 10`
         )
 
-        XCTAssertEqual(searchResults.results.map(\.id), [1, 10])
+        XCTAssertEqual(searchResults?.results.map(\.id), [1, 10])
     }
 
     func testSearch_whenFailures_returnsNoResults() async throws {
@@ -65,7 +69,7 @@ class HomeSearchProviderTests: XCTestCase {
             queryRequest: .userSupplied(.query("node 1"))
         )
 
-        XCTAssertEqual(searchResults.results, [])
+        XCTAssertEqual(searchResults?.results, [])
     }
     
     func testSearch_whenInitialQuery_returnsContentsOfRoot() async throws {
@@ -75,7 +79,7 @@ class HomeSearchProviderTests: XCTestCase {
         let harness = Harness(self, rootNode: root, childrenNodes: children)
         
         let response = try await harness.sut.search(queryRequest: .initial)
-        XCTAssertEqual(response.results.map(\.id), [2, 3, 4])
+        XCTAssertEqual(response?.results.map(\.id), [2, 3, 4])
     }
     
     func testSearch_whenEmptyQuery_returnsContentsOfRoot() async throws {
@@ -84,7 +88,7 @@ class HomeSearchProviderTests: XCTestCase {
         let harness = Harness(self, rootNode: root, childrenNodes: children)
         
         let response = try await harness.sut.search(queryRequest: .userSupplied(.query("")))
-        XCTAssertEqual(response.results.map(\.id), [6, 7, 8])
+        XCTAssertEqual(response?.results.map(\.id), [6, 7, 8])
     }
     
     func testSearch_whenUsedForUserQuery_usesDefaultAscSortOrder() async throws {

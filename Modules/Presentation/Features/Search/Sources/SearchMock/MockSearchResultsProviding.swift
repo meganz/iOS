@@ -1,7 +1,6 @@
 import Search
 
 public class MockSearchResultsProviding: SearchResultsProviding {
-    
     public var passedInQueries: [SearchQuery] = []
     public var resultFactory: (_ query: SearchQuery) async throws -> SearchResultsEntity
     
@@ -10,10 +9,11 @@ public class MockSearchResultsProviding: SearchResultsProviding {
             .resultWithNoItemsAndSingleChip
         }
     }
-    
+
     public func search(
-        queryRequest: SearchQuery
-    ) async throws -> SearchResultsEntity {
+        queryRequest: SearchQuery,
+        lastItemIndex: Int?
+    ) async throws -> SearchResultsEntity? {
         passedInQueries.append(queryRequest)
         return try await resultFactory(queryRequest)
     }

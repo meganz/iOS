@@ -116,13 +116,17 @@ final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtocol, @unc
                                     completion: @escaping ([MEGANode]?, Bool) -> Void) {
         cancelToken = MEGACancelToken()
         
-        let searchOperation = SearchOperation(parentNode: parent,
-                                              text: string ?? "",
-                                              cancelToken: supportCancel ? cancelToken : MEGACancelToken(),
-                                              sortOrderType: sortOrderType.toMEGASortOrderType(),
-                                              nodeFormatType: formatType.toMEGANodeFormatType(),
-                                              sdk: sdk,
-                                              completion: completion)
+        let searchOperation = SearchOperation(
+            sdk: sdk,
+            parentNode: parent,
+            text: string ?? "",
+            nodeFormat: formatType.toMEGANodeFormatType(),
+            sortOrder: sortOrderType.toMEGASortOrderType(),
+            cancelToken: supportCancel ? cancelToken : MEGACancelToken(),
+            completion: { nodeList, isCanceled in
+                completion(nodeList?.toNodeArray(), isCanceled)
+            }
+        )
         searchOperationQueue.addOperation(searchOperation)
     }
 }

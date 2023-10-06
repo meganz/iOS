@@ -6,9 +6,9 @@ public struct SearchResultsView: View {
     public init(viewModel: @autoclosure @escaping () -> SearchResultsViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel())
     }
-    
+
     @StateObject var viewModel: SearchResultsViewModel
-    
+
     public var body: some View {
         VStack(spacing: .zero) {
             chipsView
@@ -46,8 +46,11 @@ public struct SearchResultsView: View {
 
     private var content: some View {
         List {
-            ForEach(viewModel.listItems) {
-                SearchResultRowView(viewModel: $0)
+            ForEach(Array(viewModel.listItems.enumerated()), id: \.element.id) { index, item in
+                SearchResultRowView(viewModel: item)
+                    .taskForiOS14 {
+                        await viewModel.loadMoreIfNeeded(at: index)
+                    }
             }
         }
         .simultaneousGesture(

@@ -135,7 +135,6 @@
 #import "OfflineViewController.h"
 #import "OfflineTableViewViewController.h"
 #import "OfflineTableViewCell.h"
-#import "SearchOperation.h"
 #import "CloudDriveViewController.h"
 #import "MEGAMoveRequestDelegate.h"
 #import "MEGAOperation.h"

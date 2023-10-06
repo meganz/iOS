@@ -102,7 +102,7 @@ final class NodeRepositoryTests: XCTestCase {
         let root = MockNode(handle: 1, nodeType: .folder)
         let harness = Harness(nodes: [root] )
         let result = await harness.sut.children(of: root.toNodeEntity())
-        XCTAssertEqual(result, [])
+        XCTAssertEqual(result?.nodesCount ?? 0, 0)
     }
     
     func testChildrenOfParent_returnChildrenArray_whenNoChildrenFound() async {
@@ -115,6 +115,7 @@ final class NodeRepositoryTests: XCTestCase {
         let children = [child0, child1, child2]
         let harness = Harness(nodes: [root] + children + [grandChild])
         let result = await harness.sut.children(of: root.toNodeEntity())
-        XCTAssertEqual(result, children.toNodeEntities())
+        let resultNodes = [result?.nodeAt(0), result?.nodeAt(1), result?.nodeAt(2)]
+        XCTAssertEqual(resultNodes, children.toNodeEntities())
     }
 }

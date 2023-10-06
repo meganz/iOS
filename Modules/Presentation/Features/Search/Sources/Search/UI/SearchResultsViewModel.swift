@@ -34,7 +34,7 @@ public class SearchResultsViewModel: ObservableObject {
 
     // this flag is used to indicate whether the data has been loaded for every triggered search
     @Atomic var areNewSearchResultsLoaded = false
-    
+
     // data source for the results (result list, chips)
     private let resultsProvider: any SearchResultsProviding
 
@@ -88,7 +88,9 @@ public class SearchResultsViewModel: ObservableObject {
     /// which means task is called on the appearance and cancelled on disappearance
     @MainActor
     func task() async {
-        guard !initialLoadDone else { return }
+        /// We need to check if listItems is empty  because after first load of the screen, the listItems will be filled with data,
+        /// so there is no need for additional query which will only cause flicker when we quickly go in and out of this screen
+        guard !initialLoadDone, listItems.isEmpty else { return }
         initialLoadDone = true
         await defaultSearchQuery()
     }
@@ -106,7 +108,7 @@ public class SearchResultsViewModel: ObservableObject {
         searchingTask?.cancel()
         searchingTask = nil
     }
-    
+
     func queryCleaned() async {
         // clearing query in the search bar
         // this should reset just query string but keep chips etc
@@ -150,8 +152,11 @@ public class SearchResultsViewModel: ObservableObject {
     
     private func queryChanged(to query: SearchQuery) async {
         cancelSearchTask()
+
         // we need to store query to know what chips are selected
         currentQuery = query
+
+        await clearSearchResults()
 
         searchingTask = Task {
             await performSearch(using: query)
@@ -160,38 +165,45 @@ public class SearchResultsViewModel: ObservableObject {
         try? await searchingTask?.value
         searchingTask = nil
     }
-    
-    private func performSearch(using query: SearchQuery) async {
-        updateSearchResultsLoaded(false)
+
+    private func performSearch(
+        using query: SearchQuery,
+        lastItemIndex: Int? = nil
+    ) async {
+        if lastItemIndex == nil {
+            updateSearchResultsLoaded(false)
+        }
 
         if Task.isCancelled { return }
-        
+
         var results: SearchResultsEntity?
         do {
-            results = try await resultsProvider.search(queryRequest: query)
+            results = try await resultsProvider.search(queryRequest: query, lastItemIndex: lastItemIndex)
         } catch {
             // error handling to be done
             // in the FM-800
         }
-        
+
         guard let results else { return }
-        
+
         if Task.isCancelled { return }
 
-        await consume(results, query: query)
-        updateSearchResultsLoaded(true)
-        await updateLoadingPlaceholderVisibility(false)
+        if lastItemIndex == nil {
+            await clearSearchResults()
+        }
+
+        await prepareResults(results, query: query)
     }
-    
-    @MainActor
-    private func consume(_ results: SearchResultsEntity, query: SearchQuery) {
-        lastAvailableChips = results.availableChips
-        updateChipsFrom(appliedChips: results.appliedChips)
-        
-        listItems = results.results.map { result in
+
+    func loadMoreIfNeeded(at index: Int) async {
+        await performSearch(using: currentQuery, lastItemIndex: index)
+    }
+
+    func prepareResults(_ results: SearchResultsEntity, query: SearchQuery) async {
+        let items = results.results.map { result in
             SearchResultRowViewModel(
                 with: result,
-                contextButtonImage: config.rowAssets.contextImage,
+                contextButtonImage: self.config.rowAssets.contextImage,
                 contextAction: { [weak self] button in
                     // we pass in button to show popover attached to the correct view
                     self?.bridge.context(result, button)
@@ -202,7 +214,24 @@ public class SearchResultsViewModel: ObservableObject {
                 }
             )
         }
-        
+
+        await self.consume(results, items: items, query: query)
+    }
+
+    @MainActor 
+    func consume(
+        _ results: SearchResultsEntity,
+        items: [SearchResultRowViewModel],
+        query: SearchQuery
+    ) {
+        updateSearchResultsLoaded(true)
+        updateLoadingPlaceholderVisibility(false)
+
+        lastAvailableChips = results.availableChips
+        updateChipsFrom(appliedChips: results.appliedChips)
+
+        self.listItems.append(contentsOf: items)
+
         emptyViewModel = Self.makeEmptyView(
             whenListItems: listItems.isEmpty,
             textQuery: query.query,
@@ -263,6 +292,11 @@ public class SearchResultsViewModel: ObservableObject {
     @MainActor
     private func updateLoadingPlaceholderVisibility(_ shown: Bool) {
         isLoadingPlaceholderShown = shown
+    }
+
+    @MainActor
+    private func clearSearchResults() {
+         listItems = []
     }
 
     private func updateSearchResultsLoaded(_ loaded: Bool) {

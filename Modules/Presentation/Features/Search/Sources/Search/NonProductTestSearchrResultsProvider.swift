@@ -9,7 +9,8 @@ public struct NonProductionTestResultsProvider: SearchResultsProviding {
     public init(empty: Bool = false) {
         self.empty = empty
     }
-    public func search(queryRequest: SearchQuery) async throws -> SearchResultsEntity {
+
+    public func search(queryRequest: SearchQuery, lastItemIndex: Int?) async throws -> SearchResultsEntity? {
         
         if
             queryRequest == .initial ||
@@ -29,7 +30,7 @@ public struct NonProductionTestResultsProvider: SearchResultsProviding {
             appliedChips: chipsFor(query: queryRequest)
         )
     }
-    
+
     func filter(using query: String, chip: SearchChipEntity?) -> [SearchResult] {
         guard let chip else {
             return allResults.filter { $0.title.contains(query) }

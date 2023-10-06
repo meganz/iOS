@@ -26,6 +26,14 @@ protocol SearchFileUseCaseProtocol {
         completion: @escaping ([NodeEntity]) -> Void
     )
 
+    func searchFiles(
+        withName name: String,
+        nodeFormat: MEGANodeFormatType?,
+        sortOrder: MEGASortOrderType?,
+        searchPath: SearchFileRootPath,
+        completion: @escaping (NodeListEntity?) -> Void
+    )
+
     func cancelCurrentSearch()
 }
 
@@ -89,9 +97,49 @@ final class SearchFileUseCase: SearchFileUseCaseProtocol {
             nodeFormat: nodeFormat,
             sortOrder: sortOrder,
             rootNodeHandle: searchPath.rootHandle,
-            completion: completion
+            completion: { completion($0?.toNodeEntities() ?? []) }
         )
         
+        cancelAction = nodeSearchClient.search(searchParameters)
+    }
+
+    func searchFiles(
+        withName name: String,
+        nodeFormat: MEGANodeFormatType?,
+        sortOrder: MEGASortOrderType?,
+        searchPath: SearchFileRootPath,
+        completion: @escaping (NodeListEntity?) -> Void
+    ) {
+        debouncer.start { [weak self] in
+            guard let self = self else { return }
+
+            self.startSearchingFiles(
+                withName: name,
+                nodeFormat: nodeFormat ?? .unknown,
+                sortOrder: sortOrder,
+                searchPath: searchPath,
+                completion: completion
+            )
+        }
+    }
+
+    private func startSearchingFiles(
+        withName fileName: String,
+        nodeFormat: MEGANodeFormatType,
+        sortOrder: MEGASortOrderType?,
+        searchPath: SearchFileRootPath,
+        completion: @escaping (NodeListEntity?) -> Void
+    ) {
+        cancelAction?()
+
+        let searchParameters = NodeSearchRepository.Parameter(
+            searchText: fileName,
+            nodeFormat: nodeFormat,
+            sortOrder: sortOrder,
+            rootNodeHandle: searchPath.rootHandle,
+            completion: { completion($0?.toNodeListEntity()) }
+        )
+
         cancelAction = nodeSearchClient.search(searchParameters)
     }
 
