@@ -24,8 +24,6 @@ enum MainTabBarCallsAction: ActionType { }
     
     var invokeCommand: ((Command) -> Void)?
 
-    private let tonePlayer = TonePlayer()
-
     private let router: any MainTabBarCallsRouting
     private let chatUseCase: any ChatUseCaseProtocol
     private let callUseCase: any CallUseCaseProtocol
@@ -143,7 +141,6 @@ enum MainTabBarCallsAction: ActionType { }
                 } denyAction: { [weak self] in
                     self?.showConfirmDenyWaitingRoomAlert(for: username, userHandle: userHandle, call: call)
                 }
-                tonePlayer.play(tone: .waitingRoomEvent)
             } catch {
                 MEGALogError("Failed to get username for participant in call waiting room")
             }
@@ -166,7 +163,6 @@ enum MainTabBarCallsAction: ActionType { }
                 router.showWaitingRoomListFor(call: call, in: chatRoom)
             }
         }
-        tonePlayer.play(tone: .waitingRoomEvent)
     }
     
     private func showConfirmDenyWaitingRoomAlert(for username: String, userHandle: UInt64, call: CallEntity) {

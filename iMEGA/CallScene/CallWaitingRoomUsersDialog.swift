@@ -6,7 +6,8 @@ final class CallWaitingRoomUsersDialog {
     
     private var callWaitingRoomDialogViewController: UIAlertController?
     private var presenter: UIViewController?
-    
+    private let tonePlayer = TonePlayer()
+
     // MARK: - Interface methods
     
     func dismiss(animated: Bool = true, completion: (() -> Void)? = nil) {
@@ -20,6 +21,7 @@ final class CallWaitingRoomUsersDialog {
                              admitUserAction: @escaping () -> Void,
                              denyAction: @escaping () -> Void) {
         presenter = presenterViewController
+        playSoundIfNeeded()
         guard callWaitingRoomDialogViewController != nil else {
             prepareAlertForOneUser(isCallUIVisible: isCallUIVisible, named: named, chatName: chatName, admitUserAction: admitUserAction, denyUserAction: denyAction)
             return
@@ -51,6 +53,7 @@ final class CallWaitingRoomUsersDialog {
                                   admitAllAction: @escaping () -> Void,
                                   seeWaitingRoomAction: @escaping () -> Void) {
         presenter = presenterViewController
+        playSoundIfNeeded()
         guard callWaitingRoomDialogViewController != nil else {
             prepareAlertForSeveralUsers(isCallUIVisible: isCallUIVisible, count: count, chatName: chatName, admitAllAction: admitAllAction, seeWaitingRoomAction: seeWaitingRoomAction)
             return
@@ -124,5 +127,12 @@ final class CallWaitingRoomUsersDialog {
     
     private func show(_ alert: UIAlertController, animated: Bool = true) {
         presenter?.present(alert, animated: animated)
+    }
+    
+    private func playSoundIfNeeded() {
+        guard presenter?.presentedViewController != callWaitingRoomDialogViewController else {
+            return
+        }
+        tonePlayer.play(tone: .waitingRoomEvent)
     }
 }
