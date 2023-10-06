@@ -22,9 +22,6 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
     private var searchString: String?
     private(set) var contextMenuOptions: [ChatRoomContextMenuOption]?
     private(set) var isMuted: Bool
-    private var isWaitingRoomEnabled: Bool {
-        featureFlagProvider.isFeatureFlagEnabled(for: .waitingRoom)
-    }
     
     private var subscriptions = Set<AnyCancellable>()
     
@@ -324,7 +321,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
                 return
             }
             
-            if chatRoomUseCase.shouldOpenWaitingRoom(forChatId: scheduledMeeting.chatId) && isWaitingRoomEnabled {
+            if chatRoomUseCase.shouldOpenWaitingRoom(forChatId: scheduledMeeting.chatId) {
                 openWaitingRoom()
             } else {
                 startOrJoinCall()

@@ -67,7 +67,6 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     private let accountUseCase: any AccountUseCaseProtocol
     private var chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
-    private let featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     private weak var containerViewModel: MeetingContainerViewModel?
     private var callParticipants = [CallParticipantEntity]()
     private var callParticipantsNotInCall = [CallParticipantEntity]()
@@ -95,7 +94,6 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     
     @PreferenceWrapper(key: .isCallUIVisible, defaultValue: false, useCase: PreferenceUseCase.default)
     var isCallUIVisible: Bool
-    private lazy var isWaitingRoomEnabled = featureFlagProvider.isFeatureFlagEnabled(for: .waitingRoom)
     private var selectWaitingRoomList: Bool
 
     var invokeCommand: ((Command) -> Void)?
@@ -567,7 +565,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         sections.append(.participants)
         
         var hostControls: [HostControlsSectionRow] = []
-        if chatRoom.chatType != .oneToOne && isWaitingRoomEnabled {
+        if chatRoom.chatType != .oneToOne {
             hostControls.append(.listSelector)
         }
         if isMyselfAModerator && chatRoom.chatType != .oneToOne {

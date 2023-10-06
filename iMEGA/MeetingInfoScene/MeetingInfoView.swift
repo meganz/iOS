@@ -12,7 +12,7 @@ struct MeetingInfoView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            if viewModel.isWaitingRoomFeatureEnabled && viewModel.showWaitingRoomWarningBanner {
+            if viewModel.showWaitingRoomWarningBanner {
                 WaitingRoomWarningBannerView(showBanner: $viewModel.showWaitingRoomWarningBanner) {
                     viewModel.waitingRoomWarningBannerDismissed = true
                 }
@@ -31,9 +31,7 @@ struct MeetingInfoView: View {
                     }
                     
                     if viewModel.isModerator {
-                        if viewModel.isWaitingRoomFeatureEnabled {
-                            MeetingInfoWaitingRoomSettingView(isWaitingRoomOn: $viewModel.isWaitingRoomOn, shouldAllowEditingWaitingRoom: viewModel.shouldAllowEditingWaitingRoom)
-                        }
+                        MeetingInfoWaitingRoomSettingView(isWaitingRoomOn: $viewModel.isWaitingRoomOn, shouldAllowEditingWaitingRoom: viewModel.shouldAllowEditingWaitingRoom)
                         
                         ToggleView(
                             image: Asset.Images.Meetings.Info.allowNonHostToAddParticipant.name,

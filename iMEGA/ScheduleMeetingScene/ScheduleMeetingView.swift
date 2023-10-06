@@ -11,7 +11,7 @@ struct ScheduleMeetingView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            if viewModel.isWaitingRoomFeatureEnabled && viewModel.showWaitingRoomWarningBanner {
+            if viewModel.showWaitingRoomWarningBanner {
                 WaitingRoomWarningBannerView(showBanner: $viewModel.showWaitingRoomWarningBanner) {
                     viewModel.waitingRoomWarningBannerDismissed = true
                 }
@@ -25,9 +25,7 @@ struct ScheduleMeetingView: View {
                     }
                     ScheduleMeetingCreationPropertiesView(viewModel: viewModel)
                     ScheduleMeetingCreationInvitationView(viewModel: viewModel)
-                    if viewModel.isWaitingRoomFeatureEnabled {
-                        ScheduleMeetingCreationWaitingRoomView(waitingRoomEnabled: $viewModel.waitingRoomEnabled, shouldAllowEditingWaitingRoom: viewModel.shouldAllowEditingWaitingRoom)
-                    }
+                    ScheduleMeetingCreationWaitingRoomView(waitingRoomEnabled: $viewModel.waitingRoomEnabled, shouldAllowEditingWaitingRoom: viewModel.shouldAllowEditingWaitingRoom)
                     ScheduleMeetingCreationOpenInviteView(viewModel: viewModel)
                     ScheduleMeetingCreationDescriptionView(viewModel: viewModel, isBottomViewInFocus: $isBottomViewInFocus)
                     

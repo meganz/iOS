@@ -217,8 +217,7 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
     func testStartOrJoinMeetingTapped_onNoActiveCallAndShouldOpenWaitRoom_shouldPresentWaitingRoom() {
         let router = MockChatRoomsListRouter()
         let chatRoomUseCase = MockChatRoomUseCase(shouldOpenWaitRoom: true)
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.waitingRoom: true])
-        let sut = FutureMeetingRoomViewModel(router: router, chatRoomUseCase: chatRoomUseCase, featureFlagProvider: featureFlagProvider)
+        let sut = FutureMeetingRoomViewModel(router: router, chatRoomUseCase: chatRoomUseCase)
         
         sut.startOrJoinMeetingTapped()
         
