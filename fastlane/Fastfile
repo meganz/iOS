@@ -135,7 +135,8 @@ platform :ios do
       workspace: WORKSPACE,
       scheme: SCHEME,
       sdk: "iphonesimulator",
-      derivedDataPath: "derivedData"
+      derivedDataPath: "derivedData",
+      xcargs: "-resolvePackageDependencies -skipPackagePluginValidation"
     )
   end
 
