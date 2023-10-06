@@ -36,6 +36,7 @@ final class ShareExtensionCancellableTransferViewModel: ViewModelType {
     func dispatch(_ action: CancellableTransferViewAction) {
         switch action {
         case .onViewReady:
+            invokeCommand?(.transferring)
             router.showTransfersAlert()
             if fileTransfers.isNotEmpty {
                 startShareExtensionFileUploads()
