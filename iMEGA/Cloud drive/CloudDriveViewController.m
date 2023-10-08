@@ -75,6 +75,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 @property (strong, nonatomic) MEGACancelToken *cancelToken;
 
 @property (nonatomic, assign) BOOL onlyUploadOptions;
+@property (nonatomic, assign) BOOL didShowMediaDiscoveryAutomatically;
 
 @end
 
@@ -406,7 +407,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     self.viewModePreference = viewModePreference;
     
     if(viewModePreference == ViewModePreferenceMediaDiscovery) {
-        [self configureMediaDiscoveryViewMode];
+        [self configureMediaDiscoveryViewModeWithIsShowingAutomatically:NO];
         self.shouldDetermineViewMode = NO;
     } else if ([NSUserDefaults.standardUserDefaults integerForKey:MEGAViewModePreference] == ViewModePreferencePerFolder) {
         [MEGAStore.shareInstance insertOrUpdateCloudViewModeWithHandle:self.parentNode.handle viewMode:self.viewModePreference];
@@ -431,12 +432,12 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 #pragma mark - Private
 
 - (void)reloadUI {
-    [self preparForReloadUI];
+    [self prepareForReloadUI];
     [self reloadData];
 }
 
 - (void)reloadUI:(MEGANodeList *)nodeList {
-    [self preparForReloadUI];
+    [self prepareForReloadUI];
     
     if (nodeList) {
         if (self.displayMode == DisplayModeCloudDrive && nodeList.size.intValue == 1 && self.viewModePreference == ViewModePreferenceThumbnail && self.wasSelectingFavoriteUnfavoriteNodeActionOption) {
@@ -453,9 +454,19 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     }
 }
 
-- (void)preparForReloadUI {
+- (void)prepareForReloadUI {
     [self prepareNodesAndNavigationBarForDisplayMode:self.displayMode];
     self.nodesArray = [self mapNodeListToArray:self.nodes];
+    
+    if (self.displayMode == DisplayModeCloudDrive &&
+        !self.didShowMediaDiscoveryAutomatically &&
+        [self.viewModel shouldShowMediaDiscoveryAutomaticallyForNodes:self.nodes]) {
+        self.didShowMediaDiscoveryAutomatically = YES;
+        self.viewModePreference = ViewModePreferenceMediaDiscovery;
+        [self configureMediaDiscoveryViewModeWithIsShowingAutomatically:YES];
+        self.shouldDetermineViewMode = NO;
+        return;
+    }
     
     if(self.nodes.size.unsignedIntegerValue > 0
        && self.viewModePreference == ViewModePreferenceMediaDiscovery
@@ -476,7 +487,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             }
             [self updateNavigationBarTitle];
             self.nodes = [MEGASdkManager.sharedMEGASdk childrenForParent:self.parentNode order:[Helper sortTypeFor:self.parentNode]];
-            self.hasMediaFiles = [[self.nodes mnz_mediaNodesMutableArrayFromNodeList] count] > 0;
+            self.hasMediaFiles = [self.viewModel hasMediaFilesWithNodes:self.nodes];
             [self updateSearchAppearanceFor:self.viewModePreference];
             break;
         }
