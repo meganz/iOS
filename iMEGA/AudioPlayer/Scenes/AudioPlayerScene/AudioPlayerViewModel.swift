@@ -208,6 +208,8 @@ final class AudioPlayerViewModel: ViewModelType {
         CrashlyticsLogger.log("[AudioPlayer] type: \(configEntity.playerType)")
         
         if !(configEntity.playerHandler.isPlayerDefined()) {
+            CrashlyticsLogger.log("[AudioPlayer] new instance created")
+            
             let audioPlayer = AudioPlayer()
             audioPlayer.add(listener: self)
             configEntity.playerHandler.setCurrent(player: audioPlayer, autoPlayEnabled: !configEntity.isFileLink, tracks: mutableTracks)
