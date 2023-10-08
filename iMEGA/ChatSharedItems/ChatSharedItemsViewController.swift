@@ -21,16 +21,16 @@ class ChatSharedItemsViewController: UIViewController {
     private lazy var selectBarButton: UIBarButtonItem = UIBarButtonItem(title: Strings.Localizable.select, style: .plain, target: self, action: #selector(selectTapped)
     )
     
-    private lazy var selectAllBarButton: UIBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.selectAll.image, style: .plain, target: self, action: #selector(selectAllTapped)
+    private lazy var selectAllBarButton: UIBarButtonItem = UIBarButtonItem(image: UIImage.selectAll, style: .plain, target: self, action: #selector(selectAllTapped)
     )
     
-    private lazy var forwardBarButton: UIBarButtonItem = UIBarButtonItem(image: Asset.Images.Chat.forwardToolbar.image, style: .plain, target: self, action: #selector(forwardTapped)
+    private lazy var forwardBarButton: UIBarButtonItem = UIBarButtonItem(image: UIImage.forwardToolbar, style: .plain, target: self, action: #selector(forwardTapped)
     )
     
-    private lazy var downloadBarButton: UIBarButtonItem = UIBarButtonItem(image: Asset.Images.NodeActions.offline.image, style: .plain, target: self, action: #selector(downloadTapped)
+    private lazy var downloadBarButton: UIBarButtonItem = UIBarButtonItem(image: UIImage.offline, style: .plain, target: self, action: #selector(downloadTapped)
     )
     
-    private lazy var importBarButton: UIBarButtonItem = UIBarButtonItem(image: Asset.Images.InfoActions.import.image, style: .plain, target: self, action: #selector(importTapped)
+    private lazy var importBarButton: UIBarButtonItem = UIBarButtonItem(image: UIImage.import, style: .plain, target: self, action: #selector(importTapped)
     )
     
     private lazy var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(style: .medium)
@@ -459,11 +459,11 @@ extension ChatSharedItemsViewController: DZNEmptyDataSetSource {
         }
     }
     
-    func imageForEmptyState() -> UIImage? {
+    func imageForEmptyState() -> UIImage {
         if MEGAReachabilityManager.isReachable() {
-            return Asset.Images.EmptyStates.sharedFilesEmptyState.image
+            return UIImage.sharedFilesEmptyState
         } else {
-            return Asset.Images.EmptyStates.noInternetEmptyState.image
+            return UIImage.noInternetEmptyState
         }
     }
 }
@@ -490,7 +490,7 @@ extension ChatSharedItemsViewController: NodeActionViewControllerDelegate {
             saveMediaUseCase.saveToPhotosChatNode(handle: node.handle, messageId: message.messageId, chatId: chatRoom.chatId, completion: { result in
                 if case let .failure(error) = result, error != .cancelled {
                     SVProgressHUD.dismiss()
-                    SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.somethingWentWrong)
+                    SVProgressHUD.show(UIImage.saveToPhotos, status: Strings.Localizable.somethingWentWrong)
                 }
             })
             

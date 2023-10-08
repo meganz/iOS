@@ -5,7 +5,7 @@ struct DisclosureView: View {
         static let disclosureOpacity: CGFloat = 0.6
     }
     
-    let image: String?
+    let image: ImageResource
     let text: String
     let action: (() -> Void)
     @Environment(\.layoutDirection) var layoutDirection
@@ -16,9 +16,7 @@ struct DisclosureView: View {
         VStack {
             Divider()
             HStack {
-                if let image {
-                    Image(image)
-                }
+                Image(image)
                 Text(text)
                     .font(.body)
                 Spacer()
