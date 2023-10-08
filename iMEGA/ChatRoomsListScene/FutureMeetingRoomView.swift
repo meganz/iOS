@@ -8,7 +8,7 @@ struct FutureMeetingRoomView: View {
         static let viewHeight: CGFloat = 65
         static let avatarViewSize = CGSize(width: 28, height: 28)
     }
-
+    
     var body: some View {
         HStack(spacing: 0) {
             if let avatarViewModel = viewModel.chatRoomAvatarViewModel {
@@ -23,12 +23,12 @@ struct FutureMeetingRoomView: View {
                     Text(viewModel.title)
                         .font(.subheadline)
                     if viewModel.isRecurring {
-                        Image(uiImage: Asset.Images.Meetings.Scheduled.ContextMenu.occurrences.image)
+                        Image(.occurrences)
                             .resizable()
                             .frame(width: 12, height: 12)
                     }
                     if viewModel.isMuted {
-                        Image(uiImage: Asset.Images.Chat.mutedChat.image)
+                        Image(.mutedChat)
                     }
                 }
                 
@@ -53,7 +53,7 @@ struct FutureMeetingRoomView: View {
             }
             
             Spacer()
-
+            
             if viewModel.shouldShowUnreadCount || viewModel.existsInProgressCallInChatRoom {
                 VStack(alignment: .trailing, spacing: 0) {
                     if let lastMessageTimestamp = viewModel.lastMessageTimestamp {
@@ -63,7 +63,7 @@ struct FutureMeetingRoomView: View {
                     
                     HStack(spacing: 4) {
                         if viewModel.existsInProgressCallInChatRoom {
-                            Image(uiImage: Asset.Images.Chat.onACall.image)
+                            Image(.onACall)
                                 .resizable()
                                 .frame(width: 21, height: 21)
                         }
@@ -89,7 +89,12 @@ struct FutureMeetingRoomView: View {
                     Button {
                         contextMenuOption.action()
                     } label: {
-                        Label(contextMenuOption.title, image: contextMenuOption.imageName)
+                        HStack(spacing: 0) {
+                            Image(contextMenuOption.image)
+                            Text(contextMenuOption.title)
+                                .fontWeight(.bold)
+                                .font(.title)
+                        }
                     }
                 }
             }

@@ -1,6 +1,6 @@
 struct ChatRoomContextMenuOption: Identifiable, Hashable {
     let title: String
-    let imageName: String
+    let image: ImageResource
     let action: () -> Void
     
     var id: String {

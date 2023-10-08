@@ -41,7 +41,7 @@ struct MeetingInfoView: View {
                     }
                     
                     DisclosureView(
-                        image: Asset.Images.Meetings.Info.sharedFilesInfo.name,
+                        image: .sharedFilesInfo,
                         text: Strings.Localizable.Meetings.Info.sharedFiles) {
                             viewModel.sharedFilesViewTapped()
                         }
@@ -49,7 +49,7 @@ struct MeetingInfoView: View {
                     
                     if viewModel.isModerator {
                         DisclosureView(
-                            image: Asset.Images.Meetings.Info.manageChatHistory.name,
+                            image: .manageChatHistory,
                             text: Strings.Localizable.Meetings.Info.manageMeetingHistory) {
                                 viewModel.manageChatHistoryViewTapped()
                             }

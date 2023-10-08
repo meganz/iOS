@@ -9,7 +9,7 @@ struct ChatRoomLinkNonHostView: View {
     var body: some View {
         VStack {
             DisclosureView(
-                image: Asset.Images.Meetings.Info.meetingLink.name,
+                image: .meetingLink,
                 text: Strings.Localizable.Meetings.Info.shareMeetingLink) {
                     viewModel.shareMeetingLinkTapped()
                 }

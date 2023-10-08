@@ -35,12 +35,12 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
     private(set) var displayDateString: String?
     
     private var subscriptions = Set<AnyCancellable>()
-
+    
     private var loadingChatRoomInfoSubscription: AnyCancellable?
     private var searchString = ""
     
     private var isInfoLoaded = false
-        
+    
     let chatRoomAvatarViewModel: ChatRoomAvatarViewModel?
     
     let shouldShowUnreadCount: Bool
@@ -49,7 +49,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
     var callDurationTotal: TimeInterval?
     var callDurationCapturedTime: TimeInterval?
     var timerSubscription: AnyCancellable?
-
+    
     init(chatListItem: ChatListItemEntity,
          router: some ChatRoomsListRouting,
          chatRoomUseCase: some ChatRoomUseCaseProtocol,
@@ -116,21 +116,21 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
     }
     
     // MARK: - Interface methods
-
+    
     func loadChatRoomInfo() async {
         let chatId = chatListItem.chatId
-
+        
         guard !Task.isCancelled else {
             MEGALogDebug("Task cancelled for \(chatId) - won't update description")
             return
         }
-
+        
         do {
             try await updateDescription()
         } catch {
             MEGALogDebug("Unable to load description for \(chatId) - \(error.localizedDescription)")
         }
-
+        
         do {
             try Task.checkCancellation()
             await sendObjectChangeNotification()
@@ -138,7 +138,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
             MEGALogDebug("Task cancelled for \(chatId) - won't send object change notification")
         }
     }
-
+    
     func chatStatusColor(forChatStatus chatStatus: ChatStatusEntity) -> UIColor? {
         switch chatStatus {
         case .online:
@@ -260,7 +260,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
             options.append(
                 ChatRoomContextMenuOption(
                     title: existsInProgressCallInChatRoom ? Strings.Localizable.Meetings.Scheduled.ContextMenu.joinMeeting : Strings.Localizable.Meetings.Scheduled.ContextMenu.startMeeting,
-                    imageName: existsInProgressCallInChatRoom ? Asset.Images.Meetings.Scheduled.ContextMenu.joinMeeting2.name : Asset.Images.Meetings.Scheduled.ContextMenu.startMeeting2.name,
+                    image: existsInProgressCallInChatRoom ? .joinMeeting2 : .startMeeting2,
                     action: { [weak self] in
                         self?.startOrJoinMeetingTapped()
                     }))
@@ -270,7 +270,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
             options.append(
                 ChatRoomContextMenuOption(
                     title: Strings.Localizable.markAsRead,
-                    imageName: Asset.Images.Chat.ContextualMenu.markUnreadMenu.name,
+                    image: .markUnreadMenu,
                     action: { [weak self] in
                         guard let self, let chatRoom = self.chatRoomUseCase.chatRoom(forChatId: self.chatListItem.chatId) else { return }
                         self.chatRoomUseCase.setMessageSeenForChat(
@@ -286,21 +286,21 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
         options += [
             ChatRoomContextMenuOption(
                 title: isDNDEnabled ? Strings.Localizable.unmute : Strings.Localizable.mute,
-                imageName: Asset.Images.Chat.mutedChat.name,
+                image: .mutedChat,
                 action: { [weak self] in
                     guard let self else { return }
                     self.toggleDND()
                 }),
             ChatRoomContextMenuOption(
                 title: Strings.Localizable.info,
-                imageName: Asset.Images.Generic.info.name,
+                image: .info,
                 action: { [weak self] in
                     guard let self else { return }
                     self.showChatRoomInfo()
                 }),
             ChatRoomContextMenuOption(
                 title: Strings.Localizable.archiveChat,
-                imageName: Asset.Images.Chat.ContextualMenu.archiveChatMenu.name,
+                image: .archiveChatMenu,
                 action: { [weak self] in
                     guard let self else { return }
                     self.archiveChat()
@@ -309,7 +309,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
         
         return options
     }
-
+    
     private func loadChatRoomSearchString() {
         Task { [weak self] in
             guard let self, let chatRoom = self.chatRoomUseCase.chatRoom(forChatId: self.chatListItem.chatId) else {

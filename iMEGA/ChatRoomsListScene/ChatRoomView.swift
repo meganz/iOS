@@ -1,6 +1,6 @@
 import MEGADomain
-import MEGASwiftUI
 import MEGAL10n
+import MEGASwiftUI
 import SwiftUI
 
 struct ChatRoomView: View {
@@ -102,7 +102,12 @@ private struct ChatRoomContentView: View {
                     Button {
                         contextMenuOption.action()
                     } label: {
-                        Label(contextMenuOption.title, image: contextMenuOption.imageName)
+                        HStack(spacing: 0) {
+                            Image(contextMenuOption.image)
+                            Text(contextMenuOption.title)
+                                .fontWeight(.bold)
+                                .font(.title)
+                        }
                     }
                 }
             }
@@ -137,7 +142,7 @@ private struct ChatRoomContentDetailsView: View {
                     
                     HStack(spacing: 4) {
                         if viewModel.existsInProgressCallInChatRoom {
-                            Image(uiImage: Asset.Images.Chat.onACall.image)
+                            Image(.onACall)
                                 .resizable()
                                 .frame(width: 21, height: 21)
                         }
@@ -190,11 +195,11 @@ private struct ChatRoomContentTitleView: View {
             }
             
             if viewModel.chatListItem.publicChat == false {
-                Image(uiImage: Asset.Images.Chat.privateChat.image)
+                Image(.privateChat)
             }
             
             if viewModel.isMuted {
-                Image(uiImage: Asset.Images.Chat.mutedChat.image)
+                Image(.mutedChat)
             }
         }
     }
