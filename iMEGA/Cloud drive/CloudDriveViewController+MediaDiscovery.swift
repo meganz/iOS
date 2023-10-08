@@ -16,7 +16,7 @@ extension CloudDriveViewController: MediaDiscoveryContentDelegate {
         return parent.type != .root && hasMediaFiles && !isFromSharedItem || currentViewModePreference == .mediaDiscovery
     }
     
-    @objc func configureMediaDiscoveryViewMode() {
+    @objc func configureMediaDiscoveryViewMode(isShowingAutomatically: Bool) {
         clearViewModeChildren()
         updateSearchAppearance(for: .mediaDiscovery)
         
@@ -34,7 +34,7 @@ extension CloudDriveViewController: MediaDiscoveryContentDelegate {
             contentMode: .mediaDiscovery,
             parentNode: parentNodeEntity,
             sortOrder: viewModel.sortOrder(for: .mediaDiscovery),
-            isAutomaticallyShown: false,
+            isAutomaticallyShown: isShowingAutomatically,
             delegate: self,
             analyticsUseCase: analyticsUseCase,
             mediaDiscoveryUseCase: mediaDiscoveryUseCase)

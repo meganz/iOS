@@ -27,18 +27,25 @@ enum CloudDriveAction: ActionType {
     }
     
     private let router = SharedItemsViewRouter()
-    private let shareUseCase: (any ShareUseCaseProtocol)?
+    private let shareUseCase: any ShareUseCaseProtocol
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let parentNode: MEGANode?
+    private let shouldDisplayMediaDiscoveryWhenMediaOnly: Bool
     
-    init(parentNode: MEGANode?, shareUseCase: any ShareUseCaseProtocol) {
+    init(parentNode: MEGANode?,
+         shareUseCase: some ShareUseCaseProtocol,
+         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
+         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default) {
         self.parentNode = parentNode
         self.shareUseCase = shareUseCase
+        self.featureFlagProvider = featureFlagProvider
+        shouldDisplayMediaDiscoveryWhenMediaOnly = preferenceUseCase[.shouldDisplayMediaDiscoveryWhenMediaOnly] ?? true
     }
     
     func openShareFolderDialog(forNodes nodes: [MEGANode]) {
         Task { @MainActor [shareUseCase] in
             do {
-                _ = try await shareUseCase?.createShareKeys(forNodes: nodes.toNodeEntities())
+                _ = try await shareUseCase.createShareKeys(forNodes: nodes.toNodeEntities())
                 router.showShareFoldersContactView(withNodes: nodes)
             } catch {
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
@@ -58,6 +65,19 @@ enum CloudDriveAction: ActionType {
         precondition(fileCount > .zero || folderCount > .zero, "If both file and folder count are zero, no files/folders are to be removed.  There is no need for an alert")
         guard fileCount > 1 else { return nil }
         return Strings.Localizable.removeNodeFromRubbishBinTitle
+    }
+    
+    @objc func shouldShowMediaDiscoveryAutomatically(forNodes nodes: MEGANodeList?) -> Bool {
+        guard featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveMediaDiscoveryIntegration),
+              shouldDisplayMediaDiscoveryWhenMediaOnly,
+              let nodes else {
+            return false
+        }
+        return nodes.containsOnlyVisualMedia()
+    }
+    
+    @objc func hasMediaFiles(nodes: MEGANodeList?) -> Bool {
+        nodes?.containsVisualMedia() ?? false
     }
     
     func dispatch(_ action: CloudDriveAction) {
@@ -91,5 +111,26 @@ enum CloudDriveAction: ActionType {
         }
         self.editModeActive = editModeActive
         invokeCommand?(editModeActive ? .enterSelectionMode : .exitSelectionMode)
+    }
+}
+
+private extension MEGANodeList {
+    var nodeCount: Int { size?.intValue ?? 0 }
+    
+    func containsOnlyVisualMedia() -> Bool {
+        guard nodeCount > 0 else { return false }
+        return (0..<nodeCount).notContains {
+            guard let nodeName = node(at: $0).name else {
+                return false
+            }
+            return !nodeName.fileExtensionGroup.isVisualMedia
+        }
+    }
+    
+    func containsVisualMedia() -> Bool {
+        guard nodeCount > 0 else { return false }
+        return (0..<nodeCount).contains {
+            node(at: $0).name?.fileExtensionGroup.isVisualMedia ?? false
+        }
     }
 }
