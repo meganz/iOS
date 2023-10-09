@@ -11,7 +11,7 @@ struct WaitingRoomControlsView: View {
     var body: some View {
         HStack(spacing: 32) {
             WaitingRoomControl(iconOff: .cameraOff,
-                               iconOn: .cameraOff,
+                               iconOn: .cameraOn,
                                enabled: $isVideoEnabled)
             WaitingRoomControl(iconOff: .micOn,
                                iconOn: .micOff,
