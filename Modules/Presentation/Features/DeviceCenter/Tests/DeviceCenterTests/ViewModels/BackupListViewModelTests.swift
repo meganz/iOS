@@ -385,13 +385,15 @@ final class BackupListViewModelTests: XCTestCase {
         
         let backupStatusEntities = backupStatusEntities()
         let backupTypeEntities = backupTypeEntities()
+        let networkMonitorUseCase = MockNetworkMonitorUseCase()
         let sut = BackupListViewModel(
             selectedDeviceId: currentDeviceId,
             selectedDeviceName: currentDeviceName,
             devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>(),
             updateInterval: updateInterval,
             deviceCenterUseCase: deviceCenterUseCase,
-            nodeUseCase: MockNodeDataUseCase(),
+            nodeUseCase: MockNodeDataUseCase(), 
+            networkMonitorUseCase: networkMonitorUseCase,
             router: MockBackupListViewRouter(),
             deviceCenterBridge: DeviceCenterBridge(),
             backups: backups,

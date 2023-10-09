@@ -23,7 +23,7 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
             chatUseCase: ChatUseCase(chatRepo: ChatRepository(sdk: .shared, chatSDK: .shared)),
             chatRoomUseCase: chatRoomUseCase,
             contactsUseCase: ContactsUseCase(repository: ContactsRepository()),
-            networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository()),
+            networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             scheduledMeetingUseCase: ScheduledMeetingUseCase(repository: ScheduledMeetingRepository(chatSDK: MEGAChatSdk.shared)),
             userAttributeUseCase: UserAttributeUseCase(repo: UserAttributeRepository.newRepo),

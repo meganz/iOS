@@ -3,6 +3,10 @@ import MEGADomain
 import Network
 
 public final class NetworkMonitorRepository: NetworkMonitorRepositoryProtocol {
+    public static var newRepo: NetworkMonitorRepository {
+        NetworkMonitorRepository()
+    }
+    
     private let monitor: NWPathMonitor
     private let queue: DispatchQueue
     private let (connectionChangedSourceStream, connectionContinuation) = AsyncStream

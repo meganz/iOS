@@ -34,6 +34,7 @@ final class BackupListsViewRouterTests: XCTestCase {
     ) throws -> (sut: BackupListViewRouter, mockPresenter: UINavigationController) {
         
         let mockPresenter = UINavigationController()
+        let networkMonitorUseCase = MockNetworkMonitorUseCase()
         
         let sut = BackupListViewRouter(
             selectedDeviceId: "1",
@@ -42,7 +43,8 @@ final class BackupListsViewRouterTests: XCTestCase {
             updateInterval: 1,
             backups: [],
             deviceCenterUseCase: MockDeviceCenterUseCase(),
-            nodeUseCase: MockNodeDataUseCase(),
+            nodeUseCase: MockNodeDataUseCase(), 
+            networkMonitorUseCase: networkMonitorUseCase,
             navigationController: mockPresenter,
             deviceCenterBridge: DeviceCenterBridge(),
             backupListAssets:

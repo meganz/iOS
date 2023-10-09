@@ -20,6 +20,7 @@ extension MyAccountHallViewController {
                     nodeValidationRepository: NodeValidationRepository.newRepo,
                     nodeRepository: NodeRepository.newRepo
                 ),
+            networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
             deviceCenterAssets: makeDeviceListAssetData()
         ).start()
     }

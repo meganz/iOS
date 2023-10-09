@@ -21,57 +21,59 @@ struct DeviceListContentView: View {
     @State private var selectedViewModel: DeviceCenterItemViewModel?
     
     var body: some View {
-        PlaceholderContainerView(
-            isLoading: $viewModel.isLoadingPlaceholderVisible,
-            content: content,
-            placeholder: PlaceholderContentView(placeholderRow: placeholderRowView)
-        )
+        ListViewContainer(
+            selectedItem: $selectedViewModel,
+            hasNetworkConnection: $viewModel.hasNetworkConnection) {
+            PlaceholderContainerView(
+                isLoading: $viewModel.isLoadingPlaceholderVisible,
+                content: content,
+                placeholder: PlaceholderContentView(placeholderRow: placeholderRowView)
+            )
+        }
     }
     
     private var content: some View {
-        ListViewContainer(
-            selectedItem: $selectedViewModel) {
-                List {
-                    if viewModel.isFiltered {
-                        ForEach(viewModel.filteredDevices) { deviceViewModel in
+        List {
+            if viewModel.isFiltered {
+                ForEach(viewModel.filteredDevices) { deviceViewModel in
+                    DeviceCenterItemView(
+                        viewModel: deviceViewModel,
+                        selectedViewModel: $selectedViewModel
+                    )
+                }
+            } else {
+                Section(header: Text(viewModel.deviceListAssets.currentDeviceTitle)) {
+                    if let currentDeviceVM = viewModel.currentDevice {
+                        DeviceCenterItemView(
+                            viewModel: currentDeviceVM,
+                            selectedViewModel: $selectedViewModel
+                        )
+                    }
+                }
+                
+                if viewModel.otherDevices.isNotEmpty {
+                    Section(header: Text(viewModel.deviceListAssets.otherDevicesTitle)) {
+                        ForEach(viewModel.otherDevices) { deviceViewModel in
                             DeviceCenterItemView(
                                 viewModel: deviceViewModel,
                                 selectedViewModel: $selectedViewModel
                             )
                         }
-                    } else {
-                        Section(header: Text(viewModel.deviceListAssets.currentDeviceTitle)) {
-                            if let currentDeviceVM = viewModel.currentDevice {
-                                DeviceCenterItemView(
-                                    viewModel: currentDeviceVM,
-                                    selectedViewModel: $selectedViewModel
-                                )
-                            }
-                        }
-                        
-                        if viewModel.otherDevices.isNotEmpty {
-                            Section(header: Text(viewModel.deviceListAssets.otherDevicesTitle)) {
-                                ForEach(viewModel.otherDevices) { deviceViewModel in
-                                    DeviceCenterItemView(
-                                        viewModel: deviceViewModel,
-                                        selectedViewModel: $selectedViewModel
-                                    )
-                                }
-                            }
-                        }
-                    }
-                }
-                .listStyle(.plain)
-                .throwingTaskForiOS14 {
-                    try await viewModel.startAutoRefreshUserDevices()
-                }
-                .onReceive(viewModel.refreshDevicesPublisher) { _ in
-                    Task {
-                        let userDevices = await self.viewModel.fetchUserDevices()
-                        self.viewModel.arrangeDevices(userDevices)
                     }
                 }
             }
+        }
+        .listStyle(.plain)
+        .onReceive(viewModel.refreshDevicesPublisher) { _ in
+            Task {
+                let userDevices = await self.viewModel.fetchUserDevices()
+                self.viewModel.arrangeDevices(userDevices)
+            }
+        }
+        .throwingTaskForiOS14 {
+            viewModel.updateInternetConnectionStatus()
+            try await viewModel.startAutoRefreshUserDevices()
+        }
     }
     
     private var placeholderRowView: some View {

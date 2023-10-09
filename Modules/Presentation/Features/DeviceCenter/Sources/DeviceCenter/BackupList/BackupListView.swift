@@ -22,7 +22,8 @@ struct BackupListContentView: View {
     
     var body: some View {
         ListViewContainer(
-            selectedItem: $selectedBackupViewModel) {
+            selectedItem: $selectedBackupViewModel,
+            hasNetworkConnection: $viewModel.hasNetworkConnection) {
                 List {
                     ForEach(viewModel.displayedBackups) { backupViewModel in
                         DeviceCenterItemView(
@@ -32,13 +33,14 @@ struct BackupListContentView: View {
                     }
                 }
                 .listStyle(.plain)
-                .throwingTaskForiOS14 {
-                    try await viewModel.updateDeviceStatusesAndNotify()
-                }
             }.toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     DeviceCenterMenu(viewModel: viewModel, menuIconName: "moreList", menuOptions: viewModel.actionsForDevice())
                 }
+            }
+            .throwingTaskForiOS14 {
+                viewModel.updateInternetConnectionStatus()
+                try await viewModel.updateDeviceStatusesAndNotify()
             }
     }
 }

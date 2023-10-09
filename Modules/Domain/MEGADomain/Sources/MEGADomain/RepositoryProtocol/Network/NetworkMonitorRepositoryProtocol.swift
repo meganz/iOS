@@ -1,4 +1,4 @@
-public protocol NetworkMonitorRepositoryProtocol {
+public protocol NetworkMonitorRepositoryProtocol: RepositoryProtocol {
     /// Infinite `AsyncStream` returning results from network path monitoring
     ///
     /// The stream will finish when repository instance is deallocated

@@ -18,12 +18,14 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
     private let deviceCenterAssets: DeviceCenterAssets
     private let deviceCenterUseCase: any DeviceCenterUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
+    private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
     
     public init(
         navigationController: UINavigationController?,
         deviceCenterBridge: DeviceCenterBridge,
-        deviceCenterUseCase: any DeviceCenterUseCaseProtocol,
-        nodeUseCase: any NodeUseCaseProtocol,
+        deviceCenterUseCase: some DeviceCenterUseCaseProtocol,
+        nodeUseCase: some NodeUseCaseProtocol,
+        networkMonitorUseCase: some NetworkMonitorUseCaseProtocol,
         deviceCenterAssets: DeviceCenterAssets
     ) {
         self.navigationController = navigationController
@@ -31,6 +33,7 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
         self.deviceCenterAssets = deviceCenterAssets
         self.deviceCenterUseCase = deviceCenterUseCase
         self.nodeUseCase = nodeUseCase
+        self.networkMonitorUseCase = networkMonitorUseCase
         
         devicesUpdatePublisher = PassthroughSubject<[DeviceEntity], Never>()
         refreshDevicesPublisher = PassthroughSubject<Void, Never>()
@@ -47,6 +50,7 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
             router: self,
             deviceCenterBridge: deviceCenterBridge,
             deviceCenterUseCase: deviceCenterUseCase,
+            networkMonitorUseCase: networkMonitorUseCase,
             deviceListAssets: deviceCenterAssets.deviceListAssets,
             emptyStateAssets: deviceCenterAssets.emptyStateAssets,
             searchAssets: deviceCenterAssets.searchAssets,
@@ -78,6 +82,7 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
             backups: backups,
             deviceCenterUseCase: deviceCenterUseCase,
             nodeUseCase: nodeUseCase,
+            networkMonitorUseCase: networkMonitorUseCase,
             navigationController: navigationController,
             deviceCenterBridge: deviceCenterBridge,
             backupListAssets: deviceCenterAssets.backupListAssets,

@@ -48,7 +48,7 @@ final class HomeScreenFactory: NSObject {
                 uploadPhotoAssetsRepository: UploadPhotoAssetsRepository(store: MEGAStore.shareInstance())
             ),
             permissionHandler: permissionHandler,
-            networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository()),
+            networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
             createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo),
             router: FileUploadingRouter(navigationController: navigationController, baseViewController: homeViewController)
         )
@@ -56,7 +56,7 @@ final class HomeScreenFactory: NSObject {
         homeViewController.myAvatarViewModel = myAvatarViewModel
         homeViewController.uploadViewModel = uploadViewModel
         homeViewController.startConversationViewModel = StartConversationViewModel(
-            networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository()),
+            networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
             router: NewChatRouter(
                 navigationController: navigationController,
                 tabBarController: tabBarController

@@ -32,7 +32,7 @@ protocol ReportIssueViewRouting: Routing {
         
         let uploadRepo = UploadFileRepository(sdk: sdk)
         let uploadUseCase = UploadFileUseCase(uploadFileRepository: uploadRepo, fileSystemRepository: FileSystemRepository.newRepo, nodeRepository: NodeRepository.newRepo, fileCacheRepository: FileCacheRepository.newRepo)
-        let monitorRepo = NetworkMonitorRepository()
+        let monitorRepo = NetworkMonitorRepository.newRepo
         let monitorUseCase = NetworkMonitorUseCase(repo: monitorRepo)
         let accountRepository = AccountRepository(sdk: sdk)
         let accountUseCase = AccountUseCase(repository: accountRepository)
