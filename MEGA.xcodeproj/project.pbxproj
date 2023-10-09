@@ -15526,7 +15526,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 11.3;
+				MARKETING_VERSION = 11.3.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
@@ -15587,7 +15587,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 11.3;
+				MARKETING_VERSION = 11.3.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_CFLAGS = "-DNDEBUG";
 				OTHER_LDFLAGS = "-ObjC";
@@ -15643,7 +15643,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 11.3;
+				MARKETING_VERSION = 11.3.1;
 				OTHER_LDFLAGS = "-ObjC";
 				OTHER_SWIFT_FLAGS = "$(inherited) -DMAIN_APP_TARGET -DQA_CONFIG -DDEBUG -enable-upcoming-feature ExistentialAny";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev;
@@ -15701,7 +15701,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 11.3;
+				MARKETING_VERSION = 11.3.1;
 				OTHER_LDFLAGS = "-ObjC";
 				OTHER_SWIFT_FLAGS = "$(inherited) -DMAIN_APP_TARGET";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios;
@@ -15755,7 +15755,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 11.3;
+				MARKETING_VERSION = 11.3.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = (
@@ -15811,7 +15811,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 11.3;
+				MARKETING_VERSION = 11.3.1;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_NOTIFICATION_EXTENSION";
@@ -15861,7 +15861,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 11.3;
+				MARKETING_VERSION = 11.3.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = (
@@ -15916,7 +15916,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 11.3;
+				MARKETING_VERSION = 11.3.1;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAWidget;
@@ -15956,7 +15956,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 11.3;
+				MARKETING_VERSION = 11.3.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = (
@@ -16000,7 +16000,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 11.3;
+				MARKETING_VERSION = 11.3.1;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAIntent;
@@ -16050,7 +16050,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 11.3;
+				MARKETING_VERSION = 11.3.1;
 				OTHER_LDFLAGS = (
 					"-Xlinker",
 					"-no_application_extension",
@@ -16109,7 +16109,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 11.3;
+				MARKETING_VERSION = 11.3.1;
 				OTHER_LDFLAGS = "-ObjC";
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_SHARE_EXTENSION";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAShare;
@@ -16264,7 +16264,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 11.3;
+				MARKETING_VERSION = 11.3.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = (
@@ -16312,7 +16312,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 11.3;
+				MARKETING_VERSION = 11.3.1;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = "";
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DDEBUG";
@@ -16356,7 +16356,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				MARKETING_VERSION = 11.3;
+				MARKETING_VERSION = 11.3.1;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = "";
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DDEBUG";
@@ -16396,7 +16396,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 11.3;
+				MARKETING_VERSION = 11.3.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = "";
@@ -16436,7 +16436,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 11.3;
+				MARKETING_VERSION = 11.3.1;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAPicker;
@@ -16475,7 +16475,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 11.3;
+				MARKETING_VERSION = 11.3.1;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.qa.MEGAPicker;
@@ -16530,7 +16530,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 11.3;
+				MARKETING_VERSION = 11.3.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.dev.MEGAUnitTests;
@@ -16586,7 +16586,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 11.3;
+				MARKETING_VERSION = 11.3.1;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.MEGAUnitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -16648,7 +16648,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 11.3;
+				MARKETING_VERSION = 11.3.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_CFLAGS = "-DNDEBUG";
 				OTHER_LDFLAGS = "-ObjC";
@@ -16702,7 +16702,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 11.3;
+				MARKETING_VERSION = 11.3.1;
 				OTHER_LDFLAGS = "-ObjC";
 				OTHER_SWIFT_FLAGS = "$(inherited) -DMAIN_APP_TARGET -DQA_CONFIG";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.qa;
@@ -16762,7 +16762,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 11.3;
+				MARKETING_VERSION = 11.3.1;
 				OTHER_LDFLAGS = "-ObjC";
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_SHARE_EXTENSION";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.qa.MEGAShare;
@@ -16812,7 +16812,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 11.3;
+				MARKETING_VERSION = 11.3.1;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-function-bodies=300 -Xfrontend -warn-long-expression-type-checking=300 -DMNZ_NOTIFICATION_EXTENSION";
@@ -16865,7 +16865,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
-				MARKETING_VERSION = 11.3;
+				MARKETING_VERSION = 11.3.1;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.qa.MEGAUnitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -16918,7 +16918,7 @@
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/swift",
 				);
-				MARKETING_VERSION = 11.3;
+				MARKETING_VERSION = 11.3.1;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = (
 					"-Xlinker",
@@ -16962,7 +16962,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 11.3;
+				MARKETING_VERSION = 11.3.1;
 				MTL_FAST_MATH = YES;
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = mega.ios.qa.MEGAIntent;
