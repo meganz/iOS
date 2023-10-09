@@ -1,6 +1,7 @@
 public protocol FilesSearchUseCaseProtocol {
     func search(string: String?,
                 parent node: NodeEntity?,
+                recursive: Bool,
                 supportCancel: Bool,
                 sortOrderType: SortOrderEntity,
                 cancelPreviousSearchIfNeeded: Bool,
@@ -29,6 +30,7 @@ public final class FilesSearchUseCase: FilesSearchUseCaseProtocol {
     public func search(
         string: String?,
         parent node: NodeEntity?,
+        recursive: Bool,
         supportCancel: Bool,
         sortOrderType: SortOrderEntity,
         cancelPreviousSearchIfNeeded: Bool,
@@ -40,6 +42,7 @@ public final class FilesSearchUseCase: FilesSearchUseCaseProtocol {
         
         repo.search(string: string,
                     parent: node,
+                    recursive: recursive,
                     supportCancel: supportCancel,
                     sortOrderType: sortOrderType,
                     formatType: nodeFormat,

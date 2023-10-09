@@ -2,6 +2,7 @@ class SearchOperation: MEGAOperation {
     let sdk: MEGASdk
     let parentNode: MEGANode
     let text: String
+    let recursive: Bool
     let nodeFormat: MEGANodeFormatType
     let sortOrder: MEGASortOrderType
     let cancelToken: MEGACancelToken
@@ -12,6 +13,7 @@ class SearchOperation: MEGAOperation {
         sdk: MEGASdk,
         parentNode: MEGANode,
         text: String,
+        recursive: Bool,
         nodeFormat: MEGANodeFormatType,
         sortOrder: MEGASortOrderType,
         cancelToken: MEGACancelToken,
@@ -20,6 +22,7 @@ class SearchOperation: MEGAOperation {
         self.sdk = sdk
         self.parentNode = parentNode
         self.text = text
+        self.recursive = recursive
         self.nodeFormat = nodeFormat
         self.sortOrder = sortOrder
         self.cancelToken = cancelToken
@@ -32,7 +35,7 @@ class SearchOperation: MEGAOperation {
             for: parentNode,
             search: text,
             cancelToken: cancelToken,
-            recursive: true,
+            recursive: recursive,
             orderType: sortOrder,
             nodeFormatType: nodeFormat,
             folderTargetType: .all

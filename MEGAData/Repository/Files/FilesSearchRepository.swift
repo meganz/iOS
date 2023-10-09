@@ -39,6 +39,7 @@ final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtocol, @unc
     
     func search(string: String?,
                 parent node: NodeEntity?,
+                recursive: Bool,
                 supportCancel: Bool,
                 sortOrderType: SortOrderEntity,
                 formatType: NodeFormatEntity,
@@ -49,6 +50,7 @@ final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtocol, @unc
         
         addSearchOperation(string: string,
                            parent: parent,
+                           recursive: recursive,
                            supportCancel: supportCancel,
                            sortOrderType: sortOrderType,
                            formatType: formatType) { nodes, fail in
@@ -59,12 +61,14 @@ final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtocol, @unc
     
     func search(string: String?,
                 parent node: NodeEntity?,
+                recursive: Bool,
                 supportCancel: Bool,
                 sortOrderType: SortOrderEntity,
                 formatType: NodeFormatEntity) async throws -> [NodeEntity] {
         return try await withCheckedThrowingContinuation({ continuation in
             search(string: string,
                    parent: node,
+                   recursive: recursive,
                    supportCancel: supportCancel,
                    sortOrderType: sortOrderType,
                    formatType: formatType) {
@@ -90,6 +94,7 @@ final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtocol, @unc
     
     private func search(string: String?,
                         parent node: NodeEntity?,
+                        recursive: Bool,
                         supportCancel: Bool,
                         sortOrderType: SortOrderEntity,
                         formatType: NodeFormatEntity,
@@ -100,6 +105,7 @@ final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtocol, @unc
         
         addSearchOperation(string: string,
                            parent: parent,
+                           recursive: recursive,
                            supportCancel: supportCancel,
                            sortOrderType: sortOrderType,
                            formatType: formatType) { nodes, fail in
@@ -110,6 +116,7 @@ final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtocol, @unc
     
     private func addSearchOperation(string: String?,
                                     parent: MEGANode,
+                                    recursive: Bool,
                                     supportCancel: Bool,
                                     sortOrderType: SortOrderEntity,
                                     formatType: NodeFormatEntity,
@@ -120,6 +127,7 @@ final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtocol, @unc
             sdk: sdk,
             parentNode: parent,
             text: string ?? "",
+            recursive: recursive,
             nodeFormat: formatType.toMEGANodeFormatType(),
             sortOrder: sortOrderType.toMEGASortOrderType(),
             cancelToken: supportCancel ? cancelToken : MEGACancelToken(),

@@ -785,7 +785,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         NSString *text = self.searchController.searchBar.text;
         [SVProgressHUD show];
         self.cancelToken = MEGACancelToken.alloc.init;
-        SearchOperation* searchOperation = [[SearchOperation alloc] initWithSdk:[MEGASdkManager sharedMEGASdk] parentNode:self.parentNode text:text nodeFormat:MEGANodeFormatTypeUnknown sortOrder:[Helper sortTypeFor:self.parentNode] cancelToken:self.cancelToken completion:^(MEGANodeList*nodeList, BOOL isCancelled) {
+        SearchOperation* searchOperation = [[SearchOperation alloc] initWithSdk:[MEGASdkManager sharedMEGASdk] parentNode:self.parentNode text:text recursive:YES nodeFormat:MEGANodeFormatTypeUnknown sortOrder:[Helper sortTypeFor:self.parentNode] cancelToken:self.cancelToken completion:^(MEGANodeList*nodeList, BOOL isCancelled) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.searchNodesArray = [NSMutableArray arrayWithArray: [nodeList toNodeArray]];
                 [self reloadData];

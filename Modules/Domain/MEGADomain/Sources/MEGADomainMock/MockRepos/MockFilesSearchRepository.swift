@@ -44,6 +44,7 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
     
     public func search(string: String?,
                        parent node: NodeEntity?,
+                       recursive: Bool,
                        supportCancel: Bool,
                        sortOrderType: SortOrderEntity,
                        formatType: NodeFormatEntity,
@@ -52,6 +53,7 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
     
     public func search(string: String?,
                        parent node: NodeEntity?,
+                       recursive: Bool,
                        supportCancel: Bool,
                        sortOrderType: SortOrderEntity,
                        formatType: NodeFormatEntity) async throws -> [NodeEntity] {

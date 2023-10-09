@@ -102,6 +102,7 @@ public struct AlbumListUseCase<T: FilesSearchRepositoryProtocol,
     private func allPhotos() async throws -> [NodeEntity] {
         try await fileSearchRepository.search(string: "",
                                               parent: nil,
+                                              recursive: true,
                                               supportCancel: false,
                                               sortOrderType: .defaultDesc,
                                               formatType: .photo)
@@ -110,6 +111,7 @@ public struct AlbumListUseCase<T: FilesSearchRepositoryProtocol,
     private func allVideos() async throws -> [NodeEntity] {
         try await fileSearchRepository.search(string: "",
                                               parent: nil,
+                                              recursive: true,
                                               supportCancel: false,
                                               sortOrderType: .defaultDesc,
                                               formatType: .video)

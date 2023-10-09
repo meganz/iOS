@@ -13,7 +13,7 @@ final class MediaDiscoveryUseCaseTests: XCTestCase {
         let fileSearchRepo = MockFilesSearchRepository(photoNodes: photoNodes, videoNodes: videoNodes)
         let useCase = MediaDiscoveryUseCase(filesSearchRepository: fileSearchRepo, nodeUpdateRepository: MockNodeUpdateRepository.newRepo)
         do {
-            let nodes = try await useCase.nodes(forParent: NodeEntity(name: "parent", handle: 0))
+            let nodes = try await useCase.nodes(forParent: NodeEntity(name: "parent", handle: 0), recursive: true)
             XCTAssertEqual(Set(nodes), Set(expectedNodes))
         } catch {
             XCTFail("Unexpected failure")
@@ -34,7 +34,7 @@ final class MediaDiscoveryUseCaseTests: XCTestCase {
         let useCase = MediaDiscoveryUseCase(filesSearchRepository: fileSearchRepo, nodeUpdateRepository: MockNodeUpdateRepository.newRepo)
         
         do {
-            let nodes = try await useCase.nodes(forParent: NodeEntity(name: "parent", handle: 0))
+            let nodes = try await useCase.nodes(forParent: NodeEntity(name: "parent", handle: 0), recursive: true)
             XCTAssertEqual(Set(nodes), Set(expectedNodes))
         } catch {
             XCTFail("Unexpected failure")

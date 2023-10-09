@@ -9,6 +9,7 @@ public protocol FilesSearchRepositoryProtocol: RepositoryProtocol, Sendable {
     
     func search(string: String?,
                 parent node: NodeEntity?,
+                recursive: Bool,
                 supportCancel: Bool,
                 sortOrderType: SortOrderEntity,
                 formatType: NodeFormatEntity,
@@ -16,6 +17,7 @@ public protocol FilesSearchRepositoryProtocol: RepositoryProtocol, Sendable {
     
     func search(string: String?,
                 parent node: NodeEntity?,
+                recursive: Bool,
                 supportCancel: Bool,
                 sortOrderType: SortOrderEntity,
                 formatType: NodeFormatEntity) async throws -> [NodeEntity]

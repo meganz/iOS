@@ -83,6 +83,7 @@ extension HomeSearchResultViewModel: HomeAccountSearchResultViewModelInputs {
         searchingInProgressCount += 1
         searchFileUseCase.searchFiles(
             withName: text,
+            recursive: true,
             nodeFormat: .unknown,
             sortOrder: nil,
             searchPath: .root

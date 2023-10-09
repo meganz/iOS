@@ -16,7 +16,7 @@ public struct MockMediaDiscoveryUseCase: MediaDiscoveryUseCaseProtocol {
         self.shouldReload = shouldReload
     }
     
-    public func nodes(forParent parent: NodeEntity) async throws -> [NodeEntity] {
+    public func nodes(forParent parent: NodeEntity, recursive: Bool) async throws -> [NodeEntity] {
         nodes
     }
     

@@ -5,6 +5,7 @@ struct NodeSearchRepository {
     
     struct Parameter {
         let searchText: String
+        let recursive: Bool
         let nodeFormat: MEGANodeFormatType
         let sortOrder: MEGASortOrderType?
         let rootNodeHandle: HandleEntity?
@@ -47,6 +48,7 @@ extension NodeSearchRepository {
                     sdk: sdk, 
                     parentNode: rootNode,
                     text: parameter.searchText,
+                    recursive: parameter.recursive,
                     nodeFormat: parameter.nodeFormat,
                     sortOrder: parameter.sortOrder ?? .creationAsc,
                     cancelToken: cancelToken

@@ -57,6 +57,7 @@ public struct MediaUseCase: MediaUseCaseProtocol {
     public func allPhotos() async throws -> [NodeEntity] {
         try await fileSearchRepo.search(string: "",
                                         parent: nil,
+                                        recursive: true,
                                         supportCancel: false,
                                         sortOrderType: .defaultDesc,
                                         formatType: .photo)
@@ -65,6 +66,7 @@ public struct MediaUseCase: MediaUseCaseProtocol {
     public func allVideos() async throws -> [NodeEntity] {
         try await fileSearchRepo.search(string: "",
                                         parent: nil,
+                                        recursive: true,
                                         supportCancel: false,
                                         sortOrderType: .defaultDesc,
                                         formatType: .video)

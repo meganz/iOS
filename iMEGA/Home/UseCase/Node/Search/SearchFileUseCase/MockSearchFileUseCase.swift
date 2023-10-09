@@ -17,6 +17,7 @@ final class MockSearchFileUseCase: SearchFileUseCaseProtocol {
 
     func searchFiles(
         withName name: String,
+        recursive: Bool,
         nodeFormat: MEGANodeFormatType?,
         sortOrder: MEGASortOrderType?,
         searchPath: SearchFileRootPath,
@@ -28,6 +29,7 @@ final class MockSearchFileUseCase: SearchFileUseCaseProtocol {
 
     func searchFiles(
         withName name: String,
+        recursive: Bool,
         nodeFormat: MEGANodeFormatType?,
         sortOrder: MEGASortOrderType?,
         searchPath: SearchFileRootPath,

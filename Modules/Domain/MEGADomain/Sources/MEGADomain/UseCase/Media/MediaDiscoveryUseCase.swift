@@ -3,7 +3,7 @@ import Foundation
 
 public protocol MediaDiscoveryUseCaseProtocol {
     var nodeUpdatesPublisher: AnyPublisher<[NodeEntity], Never> { get }
-    func nodes(forParent parent: NodeEntity) async throws -> [NodeEntity]
+    func nodes(forParent parent: NodeEntity, recursive: Bool) async throws -> [NodeEntity]
     func shouldReload(parentNode: NodeEntity, loadedNodes: [NodeEntity], updatedNodes: [NodeEntity]) -> Bool
 }
 
@@ -29,9 +29,19 @@ public class MediaDiscoveryUseCase<T: FilesSearchRepositoryProtocol,
         self.nodeUpdateRepository = nodeUpdateRepository
     }
 
-    public func nodes(forParent parent: NodeEntity) async throws -> [NodeEntity] {
-        async let photos = filesSearchRepository.search(string: nil, parent: parent, supportCancel: false, sortOrderType: .defaultDesc, formatType: .photo)
-        async let videos = filesSearchRepository.search(string: nil, parent: parent, supportCancel: false, sortOrderType: .defaultDesc, formatType: .video)
+    public func nodes(forParent parent: NodeEntity, recursive: Bool) async throws -> [NodeEntity] {
+        async let photos = filesSearchRepository.search(string: nil,
+                                                        parent: parent,
+                                                        recursive: recursive,
+                                                        supportCancel: false,
+                                                        sortOrderType: .defaultDesc,
+                                                        formatType: .photo)
+        async let videos = filesSearchRepository.search(string: nil,
+                                                        parent: parent,
+                                                        recursive: recursive,
+                                                        supportCancel: false,
+                                                        sortOrderType: .defaultDesc,
+                                                        formatType: .video)
 
         return try await photos + videos
     }
