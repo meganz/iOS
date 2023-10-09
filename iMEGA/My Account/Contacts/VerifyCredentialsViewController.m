@@ -140,7 +140,7 @@
         [self.verifyOrResetButton setTitle:LocalizedString(@"reset", @"Button to reset the password") forState:UIControlStateNormal];
         [self.verifyOrResetButton mnz_setupBasic:self.traitCollection];
     } else {
-        [self.verifyOrResetButton setTitle:LocalizedString(@"verify", @"Mark as verified") forState:UIControlStateNormal];
+        [self.verifyOrResetButton setTitle:LocalizedString(@"account.verifyContact.confirmButtonText", @"Mark as verified") forState:UIControlStateNormal];
         [self.verifyOrResetButton mnz_setupPrimary:self.traitCollection];
     }
 }
