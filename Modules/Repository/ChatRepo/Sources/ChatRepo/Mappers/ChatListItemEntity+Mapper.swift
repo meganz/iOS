@@ -27,7 +27,7 @@ fileprivate extension ChatListItemEntity {
             lastMessageId: chatListItem.lastMessageId,
             lastMessageType: chatListItem.lastMessageType.toChatMessageTypeEntity(),
             lastMessageSender: chatListItem.lastMessageSender,
-            lastMessageDate: chatListItem.lastMessageDate,
+            lastMessageDate: chatListItem.lastMessageDate ?? Date(),
             lastMessagePriv: chatListItem.lastMessagePriv.toChatMessageTypeEntity(),
             lastMessageHandle: chatListItem.lastMessageHandle
         )
