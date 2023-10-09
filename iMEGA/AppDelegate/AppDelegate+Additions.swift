@@ -416,10 +416,14 @@ extension AppDelegate {
         let callUseCase = CallUseCase(repository: CallRepository.newRepo)
 
         if let scheduleMeeting = scheduledMeetingUseCase.scheduledMeetingsByChat(chatId: chatRoom.chatId).first {
-            let callEntity = chatRoom.isWaitingRoomEnabled ?
-            try await callUseCase.startMeetingInWaitingRoomChatNoRinging(for: scheduleMeeting, enableVideo: false, enableAudio: true) :
-            try await callUseCase.startCallNoRinging(for: scheduleMeeting, enableVideo: false, enableAudio: true)
-            join(call: callEntity, chatRoom: chatRoom.toChatRoomEntity())
+            if shouldOpenWaitingRoom(for: chatRoom.toChatRoomEntity()) {
+                openWaitingRoom(for: scheduleMeeting)
+            } else {
+                let callEntity = chatRoom.isWaitingRoomEnabled ?
+                try await callUseCase.startMeetingInWaitingRoomChatNoRinging(for: scheduleMeeting, enableVideo: false, enableAudio: true) :
+                try await callUseCase.startCallNoRinging(for: scheduleMeeting, enableVideo: false, enableAudio: true)
+                join(call: callEntity, chatRoom: chatRoom.toChatRoomEntity())
+            }
         } else {
             let callEntity = try await callUseCase.startCall(for: chatRoom.chatId, enableVideo: false, enableAudio: true)
             join(call: callEntity, chatRoom: chatRoom.toChatRoomEntity())
@@ -429,6 +433,16 @@ extension AppDelegate {
     @MainActor
     private func join(call: CallEntity, chatRoom: ChatRoomEntity) {
         MeetingContainerRouter(presenter: UIApplication.mnz_presentingViewController(), chatRoom: chatRoom, call: call, isSpeakerEnabled: true).start()
+    }
+    
+    private func shouldOpenWaitingRoom(for chatRoom: ChatRoomEntity) -> Bool {
+        let isModerator = chatRoom.ownPrivilege == .moderator
+        return !isModerator && chatRoom.isWaitingRoomEnabled
+    }
+    
+    @MainActor
+    private func openWaitingRoom(for scheduledMeeting: ScheduledMeetingEntity) {
+        WaitingRoomViewRouter(presenter: UIApplication.mnz_presentingViewController(), scheduledMeeting: scheduledMeeting).start()
     }
     
     private func waitUntilChatStatusComesOnline(forChatId chatId: HandleEntity) async throws {
