@@ -126,43 +126,41 @@ final class DeviceListViewModelTests: XCTestCase {
     }
     
     func testActionsForDevice_selectedMobileDevice_returnsCorrectActions() async throws {
-        let devices = devices()
-        
+        let sourceDevices = devices()
         let viewModel = makeSUT(
-            devices: devices,
+            devices: sourceDevices,
             currentDeviceId: mockCurrentDeviceId
         )
+        let selectedDevice = try XCTUnwrap(sourceDevices.first {$0.id == mockCurrentDeviceId})
         
-        let userDevices = await viewModel.fetchUserDevices()
-        await viewModel.arrangeDevices(userDevices)
-        
-        let selectedDevice = try XCTUnwrap(devices.first {$0.id == mockCurrentDeviceId})
-        
-        let actions = viewModel.actionsForDevice(selectedDevice)
-        
-        let expectedActions: [DeviceCenterActionType] = [.cameraUploads, .rename]
-        let actionsType = actions?.compactMap {$0.type}
-        XCTAssertEqual(actionsType, expectedActions, "Actions for the current device are incorrect")
+        let cancellables = try await setUpSubscriptionAndAwaitExpectation(
+            viewModel: viewModel) { _ in
+            let actions = viewModel.actionsForDevice(selectedDevice)
+            
+            let expectedActions: [DeviceCenterActionType] = [.cameraUploads, .rename]
+            let actionsType = actions?.compactMap {$0.type}
+            XCTAssertEqual(actionsType, expectedActions, "Actions for the current device are incorrect")
+        }
+        cancellables.forEach { $0.cancel() }
     }
     
     func testActionsForDevice_selectedOtherDevice_returnsCorrectActions() async throws {
-        let devices = devices()
-        
+        let sourceDevices = devices()
         let viewModel = makeSUT(
-            devices: devices,
-            currentDeviceId: mockAuxDeviceId
+            devices: sourceDevices,
+            currentDeviceId: mockCurrentDeviceId
         )
+        let selectedDevice = try XCTUnwrap(sourceDevices.first {$0.id == mockAuxDeviceId})
         
-        let userDevices = await viewModel.fetchUserDevices()
-        await viewModel.arrangeDevices(userDevices)
-        
-        let selectedDevice = try XCTUnwrap(devices.first {$0.id == mockAuxDeviceId})
-        
-        let actions = viewModel.actionsForDevice(selectedDevice)
-        
-        let expectedActions: [DeviceCenterActionType] = [.rename]
-        let actionsType = actions?.compactMap {$0.type}
-        XCTAssertEqual(actionsType, expectedActions, "Actions for the current device are incorrect")
+        let cancellables = try await setUpSubscriptionAndAwaitExpectation(
+            viewModel: viewModel) { _ in
+            let actions = viewModel.actionsForDevice(selectedDevice)
+            
+            let expectedActions: [DeviceCenterActionType] = [.rename]
+            let actionsType = actions?.compactMap {$0.type}
+            XCTAssertEqual(actionsType, expectedActions, "Actions for the current device are incorrect")
+        }
+        cancellables.forEach { $0.cancel() }
     }
 
     func testDeviceIconName_knownUserAgent_expectedIconName() async throws {
@@ -397,6 +395,7 @@ final class DeviceListViewModelTests: XCTestCase {
                     devices: devices,
                     currentDeviceId: currentDeviceId
                 ),
+            networkMonitorUseCase: MockNetworkMonitorUseCase(),
             deviceListAssets:
                 DeviceListAssets(
                     title: "",

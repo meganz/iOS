@@ -173,7 +173,7 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
                     uploadPhotoAssetsRepository: UploadPhotoAssetsRepository(store: MEGAStore.shareInstance())
                 ),
                 permissionHandler: DevicePermissionsHandler.makeHandler(),
-                networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository()),
+                networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
                 createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo),
                 router: FileUploadingRouter(navigationController: navigationController, baseViewController: self)
             )

@@ -6379,7 +6379,6 @@
 		415226861A692ECC00EC7BB6 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				94CD25A72ACD7A090079FABD /* Search */,
 				A8AA4F6D1ED4295800E7BA23 /* API */,
 				940DB9122924D77F004E7349 /* AudioSession */,
 				9405E70C28A3AC43005A16D1 /* BackupNodesValidator */,
@@ -6403,6 +6402,7 @@
 				9495DBAB2A40865B00FA22EE /* Permissions */,
 				9441533028E4609B005EF5F9 /* ReportIssue */,
 				5D664364249CB0DB00CE9BD1 /* SDKService */,
+				94CD25A72ACD7A090079FABD /* Search */,
 				8371D2A52899331300D0972F /* ShareActivityUtils */,
 				B6730B0A2735F34100A9CF5F /* Shared Views */,
 				94485B5729B9FA1E006B919E /* SharedItems */,
@@ -14468,6 +14468,7 @@
 				5D79EDD4251C71B500C0307A /* SearchHintTableViewCell.swift in Sources */,
 				836B956F2063EADE003E279B /* SearchInPdfViewController.m in Sources */,
 				94485B5429B9F8BE006B919E /* SearchNodeRepository.swift in Sources */,
+				94CD25A92ACD7A1C0079FABD /* SearchOperation.swift in Sources */,
 				125E606E285A87C2003C7BB5 /* SearchResultErrorEntity.swift in Sources */,
 				5D4244E0251305BD00EE544D /* SearchResultFileTableViewCell.swift in Sources */,
 				947381BA2A9626D000C4E8EC /* SearchResultsBridge.swift in Sources */,
@@ -14603,7 +14604,6 @@
 				32A2AA092A283D85007FC630 /* TimelineFilter.swift in Sources */,
 				24E99B462A65257700E4D6A5 /* ToggleSecureFingerprintFlagUIAlertAdapter.swift in Sources */,
 				8358A6E82925460800EE197C /* ToggleView.swift in Sources */,
-				94CD25A92ACD7A1C0079FABD /* SearchOperation.swift in Sources */,
 				BF49DFBB282B30C700DE3742 /* TonePlayer.swift in Sources */,
 				947755BB2A4C714800DAAEE5 /* ToolbarButtonsDisabler.swift in Sources */,
 				2F6F08D5253E42F900C5B5D7 /* TransferActionViewController.swift in Sources */,

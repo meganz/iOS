@@ -7,6 +7,7 @@ public final class BackupListViewModel: ObservableObject {
     private let selectedDeviceId: String
     private let deviceCenterUseCase: any DeviceCenterUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
+    private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
     private let router: any BackupListRouting
     private let deviceCenterBridge: DeviceCenterBridge
     private let backupListAssets: BackupListAssets
@@ -42,15 +43,17 @@ public final class BackupListViewModel: ObservableObject {
     @Published private(set) var searchAssets: SearchAssets
     @Published var isSearchActive: Bool
     @Published var searchText: String = ""
+    @Published var hasNetworkConnection: Bool = false
     
     init(
         selectedDeviceId: String,
         selectedDeviceName: String,
         devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>,
         updateInterval: UInt64,
-        deviceCenterUseCase: any DeviceCenterUseCaseProtocol,
-        nodeUseCase: any NodeUseCaseProtocol,
-        router: any BackupListRouting,
+        deviceCenterUseCase: some DeviceCenterUseCaseProtocol,
+        nodeUseCase: some NodeUseCaseProtocol,
+        networkMonitorUseCase: some NetworkMonitorUseCaseProtocol,
+        router: some BackupListRouting,
         deviceCenterBridge: DeviceCenterBridge,
         backups: [BackupEntity],
         backupListAssets: BackupListAssets,
@@ -65,6 +68,7 @@ public final class BackupListViewModel: ObservableObject {
         self.updateInterval = updateInterval
         self.deviceCenterUseCase = deviceCenterUseCase
         self.nodeUseCase = nodeUseCase
+        self.networkMonitorUseCase = networkMonitorUseCase
         self.router = router
         self.deviceCenterBridge = deviceCenterBridge
         self.backups = backups
@@ -107,6 +111,20 @@ public final class BackupListViewModel: ObservableObject {
         } else {
             resetBackups()
         }
+    }
+    
+    @MainActor
+    private func monitorNetworkChanges() {
+        networkMonitorUseCase.networkPathChanged { [weak self] hasNetworkConnection in
+            guard let self else { return }
+            self.hasNetworkConnection = hasNetworkConnection
+        }
+    }
+    
+    @MainActor
+    func updateInternetConnectionStatus() {
+        hasNetworkConnection = networkMonitorUseCase.isConnected()
+        monitorNetworkChanges()
     }
     
     func updateDeviceStatusesAndNotify() async throws {
@@ -209,9 +227,9 @@ public final class BackupListViewModel: ObservableObject {
     func executeDeviceAction(type: DeviceCenterActionType) async {
         switch type {
         case .cameraUploads:
-            deviceCenterBridge.cameraUploadActionTapped {
+            deviceCenterBridge.cameraUploadActionTapped { [weak self] in
                 Task {
-                    await self.syncDevicesAndLoadBackups()
+                    await self?.syncDevicesAndLoadBackups()
                 }
             }
         case .rename:
@@ -219,9 +237,9 @@ public final class BackupListViewModel: ObservableObject {
             let renameEntity = RenameActionEntity(
                 deviceId: selectedDeviceId,
                 deviceOldName: selectedDeviceName,
-                otherDeviceNames: deviceNames) {
+                otherDeviceNames: deviceNames) { [weak self] in
                     Task {
-                        await self.syncDevicesAndLoadBackups()
+                        await self?.syncDevicesAndLoadBackups()
                     }
             }
             deviceCenterBridge.renameActionTapped(renameEntity)

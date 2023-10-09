@@ -123,9 +123,9 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
                 let renameEntity = RenameActionEntity(
                     deviceId: device.id,
                     deviceOldName: device.name,
-                    otherDeviceNames: deviceNames) {
+                    otherDeviceNames: deviceNames) { [weak self] in
                         DispatchQueue.main.async {
-                            self.refreshDevicesPublisher?.send()
+                            self?.refreshDevicesPublisher?.send()
                         }
                 }
                 deviceCenterBridge.renameActionTapped(renameEntity)

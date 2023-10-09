@@ -1,6 +1,9 @@
 import MEGADomain
 
 public struct MockNetworkMonitorRepository: NetworkMonitorRepositoryProtocol {
+    public static var newRepo: MockNetworkMonitorRepository {
+        MockNetworkMonitorRepository()
+    }
     
     public let connectionChangedStream: AsyncStream<Bool>
     public var connected: Bool

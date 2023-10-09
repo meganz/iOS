@@ -18,11 +18,9 @@ final class CallWaitingRoomUsersDialog {
                              named: String,
                              chatName: String,
                              presenterViewController: UIViewController,
-                             isDialogUpdateMandatory: Bool,
                              admitUserAction: @escaping () -> Void,
                              denyAction: @escaping () -> Void) {
         presenter = presenterViewController
-        guard shouldUpdateDialog(mandatory: isDialogUpdateMandatory) else { return }
         playSoundIfNeeded()
         guard callWaitingRoomDialogViewController != nil else {
             prepareAlertForOneUser(isCallUIVisible: isCallUIVisible, named: named, chatName: chatName, admitUserAction: admitUserAction, denyUserAction: denyAction)
@@ -52,11 +50,9 @@ final class CallWaitingRoomUsersDialog {
                                   count: Int,
                                   chatName: String,
                                   presenterViewController: UIViewController,
-                                  isDialogUpdateMandatory: Bool,
                                   admitAllAction: @escaping () -> Void,
                                   seeWaitingRoomAction: @escaping () -> Void) {
         presenter = presenterViewController
-        guard shouldUpdateDialog(mandatory: isDialogUpdateMandatory) else { return }
         playSoundIfNeeded()
         guard callWaitingRoomDialogViewController != nil else {
             prepareAlertForSeveralUsers(isCallUIVisible: isCallUIVisible, count: count, chatName: chatName, admitAllAction: admitAllAction, seeWaitingRoomAction: seeWaitingRoomAction)
@@ -138,13 +134,5 @@ final class CallWaitingRoomUsersDialog {
             return
         }
         tonePlayer.play(tone: .waitingRoomEvent)
-    }
-    
-    private func shouldUpdateDialog(mandatory: Bool) -> Bool {
-        guard !mandatory else {
-            return true
-        }
-        
-        return presenter?.presentedViewController == callWaitingRoomDialogViewController
     }
 }

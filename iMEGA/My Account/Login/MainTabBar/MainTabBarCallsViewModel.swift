@@ -4,8 +4,8 @@ import MEGAL10n
 import MEGAPresentation
 
 protocol MainTabBarCallsRouting: AnyObject {
-    func showOneUserWaitingRoomDialog(for username: String, chatName: String, isCallUIVisible: Bool, shouldUpdateDialog: Bool, admitAction: @escaping () -> Void, denyAction: @escaping () -> Void)
-    func showSeveralUsersWaitingRoomDialog(for participantsCount: Int, chatName: String, isCallUIVisible: Bool, shouldUpdateDialog: Bool, admitAction: @escaping () -> Void, seeWaitingRoomAction: @escaping () -> Void)
+    func showOneUserWaitingRoomDialog(for username: String, chatName: String, isCallUIVisible: Bool, admitAction: @escaping () -> Void, denyAction: @escaping () -> Void)
+    func showSeveralUsersWaitingRoomDialog(for participantsCount: Int, chatName: String, isCallUIVisible: Bool, admitAction: @escaping () -> Void, seeWaitingRoomAction: @escaping () -> Void)
     func dismissWaitingRoomDialog(animated: Bool)
     func showConfirmDenyAction(for username: String, isCallUIVisible: Bool, confirmDenyAction: @escaping () -> Void, cancelDenyAction: @escaping () -> Void)
     func showParticipantsJoinedTheCall(message: String)
@@ -132,7 +132,7 @@ enum MainTabBarCallsAction: ActionType { }
         Task { @MainActor in
             do {
                 let username = try await chatRoomUserUseCase.userDisplayName(forPeerId: userHandle, in: chatRoom)
-                router.showOneUserWaitingRoomDialog(for: username, chatName: chatRoom.title ?? "", isCallUIVisible: isCallUIVisible, shouldUpdateDialog: call.changeType != .waitingRoomUsersLeave) { [weak self] in
+                router.showOneUserWaitingRoomDialog(for: username, chatName: chatRoom.title ?? "", isCallUIVisible: isCallUIVisible) { [weak self] in
                     guard let self else { return}
                     callUseCase.allowUsersJoinCall(call, users: [userHandle])
                     if !isCallUIVisible {
@@ -148,7 +148,7 @@ enum MainTabBarCallsAction: ActionType { }
     }
     
     private func showSeveralUsersWaitingRoomAlert(userHandles: [UInt64], inChatRoom chatRoom: ChatRoomEntity, forCall call: CallEntity) {
-        router.showSeveralUsersWaitingRoomDialog(for: userHandles.count, chatName: chatRoom.title ?? "", isCallUIVisible: isCallUIVisible, shouldUpdateDialog: call.changeType != .waitingRoomUsersLeave) { [weak self] in
+        router.showSeveralUsersWaitingRoomDialog(for: userHandles.count, chatName: chatRoom.title ?? "", isCallUIVisible: isCallUIVisible) { [weak self] in
             guard let self else { return}
             callUseCase.allowUsersJoinCall(call, users: userHandles)
             if !isCallUIVisible {

@@ -147,11 +147,11 @@ final class MockMainTabBarCallsRouter: MainTabBarCallsRouting {
     var showParticipantsJoinedTheCall_calledTimes = 0
     var showWaitingRoomListFor_calledTimes = 0
     
-    func showOneUserWaitingRoomDialog(for username: String, chatName: String, isCallUIVisible: Bool, shouldUpdateDialog: Bool, admitAction: @escaping () -> Void, denyAction: @escaping () -> Void) {
+    func showOneUserWaitingRoomDialog(for username: String, chatName: String, isCallUIVisible: Bool, admitAction: @escaping () -> Void, denyAction: @escaping () -> Void) {
         showOneUserWaitingRoomDialog_calledTimes += 1
     }
     
-    func showSeveralUsersWaitingRoomDialog(for participantsCount: Int, chatName: String, isCallUIVisible: Bool, shouldUpdateDialog: Bool, admitAction: @escaping () -> Void, seeWaitingRoomAction: @escaping () -> Void) {
+    func showSeveralUsersWaitingRoomDialog(for participantsCount: Int, chatName: String, isCallUIVisible: Bool, admitAction: @escaping () -> Void, seeWaitingRoomAction: @escaping () -> Void) {
         showSeveralUsersWaitingRoomDialog_calledTimes += 1
     }
     

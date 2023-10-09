@@ -8,6 +8,7 @@ public final class DeviceListViewModel: ObservableObject {
     private let router: any DeviceListRouting
     private let deviceCenterBridge: DeviceCenterBridge
     private let deviceCenterUseCase: any DeviceCenterUseCaseProtocol
+    private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
     private let backupStatuses: [BackupStatus]
     private let deviceCenterActions: [DeviceCenterAction]
     private let devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>
@@ -41,14 +42,16 @@ public final class DeviceListViewModel: ObservableObject {
     @Published var isSearchActive: Bool
     @Published var searchText: String = ""
     @Published var isLoadingPlaceholderVisible = false
+    @Published var hasNetworkConnection: Bool = false
     
     init(
         devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>,
         refreshDevicesPublisher: PassthroughSubject<Void, Never>,
         updateInterval: UInt64,
-        router: any DeviceListRouting,
+        router: some DeviceListRouting,
         deviceCenterBridge: DeviceCenterBridge,
-        deviceCenterUseCase: any DeviceCenterUseCaseProtocol,
+        deviceCenterUseCase: some DeviceCenterUseCaseProtocol,
+        networkMonitorUseCase: some NetworkMonitorUseCaseProtocol,
         deviceListAssets: DeviceListAssets,
         emptyStateAssets: EmptyStateAssets,
         searchAssets: SearchAssets,
@@ -62,6 +65,7 @@ public final class DeviceListViewModel: ObservableObject {
         self.router = router
         self.deviceCenterBridge = deviceCenterBridge
         self.deviceCenterUseCase = deviceCenterUseCase
+        self.networkMonitorUseCase = networkMonitorUseCase
         self.deviceListAssets = deviceListAssets
         self.emptyStateAssets = emptyStateAssets
         self.searchAssets = searchAssets
@@ -76,6 +80,7 @@ public final class DeviceListViewModel: ObservableObject {
         setupDevicesUpdateSubscription()
         loadUserDevices()
         showLoadingPlaceholder()
+        updateInternetConnectionStatus()
     }
     
     private func showLoadingPlaceholder() {
@@ -160,6 +165,25 @@ public final class DeviceListViewModel: ObservableObject {
         )
     }
     
+    @MainActor
+    private func updateLoadingPlaceholderVisibility(_ shown: Bool) {
+        isLoadingPlaceholderVisible = shown
+    }
+    
+    private func monitorNetworkChanges() {
+        networkMonitorUseCase.networkPathChanged { [weak self] hasNetworkConnection in
+            guard let self else { return }
+            Task { @MainActor in
+                self.hasNetworkConnection = hasNetworkConnection
+            }
+        }
+    }
+    
+    func updateInternetConnectionStatus() {
+        hasNetworkConnection = networkMonitorUseCase.isConnected()
+        monitorNetworkChanges()
+    }
+    
     func deviceIconName(userAgent: String?, isMobile: Bool) -> String {
         let defaultIcon = isMobile ? BackupDeviceTypeEntity.defaultMobile : BackupDeviceTypeEntity.defaultPc
         let defaultIconName = deviceIconNames[defaultIcon] ?? ""
@@ -236,10 +260,5 @@ public final class DeviceListViewModel: ObservableObject {
         return actionTypes.compactMap { type in
             sortedAvailableActions[type]?.first
         }
-    }
-    
-    @MainActor
-    private func updateLoadingPlaceholderVisibility(_ shown: Bool) {
-        isLoadingPlaceholderVisible = shown
     }
 }

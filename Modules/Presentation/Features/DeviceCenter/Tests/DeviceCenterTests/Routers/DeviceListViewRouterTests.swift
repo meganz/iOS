@@ -66,6 +66,7 @@ final class DeviceListViewRouterTests: XCTestCase {
             deviceCenterBridge: DeviceCenterBridge(),
             deviceCenterUseCase: deviceCenterUseCase,
             nodeUseCase: MockNodeDataUseCase(),
+            networkMonitorUseCase: MockNetworkMonitorUseCase(),
             deviceCenterAssets: deviceListAssets
         )
         
