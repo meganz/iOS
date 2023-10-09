@@ -19,7 +19,7 @@ final class FilesSearchUseCaseTests: XCTestCase {
                                      nodeFormat: NodeFormatEntity.photo,
                                      nodesUpdateListenerRepo: MockSDKNodesUpdateListenerRepository.newRepo)
         
-        sut.search(string: "", parent: nil, supportCancel: false, sortOrderType: .none, cancelPreviousSearchIfNeeded: false) { results, _ in
+        sut.search(string: "", parent: nil, recursive: true, supportCancel: false, sortOrderType: .none, cancelPreviousSearchIfNeeded: false) { results, _ in
             guard let results else { XCTFail("Search results shouldn't be nil"); return }
             
             XCTAssertEqual(results, nodes)
@@ -49,7 +49,7 @@ final class FilesSearchUseCaseTests: XCTestCase {
                                      nodeFormat: NodeFormatEntity.photo,
                                      nodesUpdateListenerRepo: MockSDKNodesUpdateListenerRepository.newRepo)
         
-        sut.search(string: "", parent: nil, supportCancel: false, sortOrderType: .none, cancelPreviousSearchIfNeeded: true) { _, _ in
+        sut.search(string: "", parent: nil, recursive: true, supportCancel: false, sortOrderType: .none, cancelPreviousSearchIfNeeded: true) { _, _ in
             XCTAssertTrue(repo.hasCancelSearchCalled)
         }
     }

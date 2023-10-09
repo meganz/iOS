@@ -160,14 +160,15 @@ final class FilesExplorerViewModel {
         }
         
         useCase?.search(string: text,
-                       parent: nil,
-                       supportCancel: true,
-                       sortOrderType: SortOrderType.defaultSortOrderType(forNode: nil).toSortOrderEntity(),
-                       cancelPreviousSearchIfNeeded: true) { [weak self] nodes, isCancelled in
+                        parent: nil,
+                        recursive: true,
+                        supportCancel: true,
+                        sortOrderType: SortOrderType.defaultSortOrderType(forNode: nil).toSortOrderEntity(),
+                        cancelPreviousSearchIfNeeded: true) { [weak self] nodes, isCancelled in
             DispatchQueue.main.async {
                 guard let self = self, !isCancelled else { return }
                 
-                let megaNodes = nodes?.toMEGANodes(in: MEGASdkManager.sharedMEGASdk())
+                let megaNodes = nodes?.toMEGANodes(in: .sharedSdk)
                 self.updateListenerForFilesDownload(withNodes: megaNodes)
                 self.invokeCommand?(.reloadNodes(nodes: megaNodes, searchText: text))
             }
@@ -195,7 +196,7 @@ final class FilesExplorerViewModel {
         favouritesUseCase?.allFavouriteNodes(searchString: text) { [weak self] result in
             switch result {
             case .success(let nodes):
-                let nodeList = nodes.toMEGANodes(in: MEGASdkManager.sharedMEGASdk())
+                let nodeList = nodes.toMEGANodes(in: .sharedSdk)
                 self?.updateListenerForFilesDownload(withNodes: nodeList)
                 self?.invokeCommand?(.reloadNodes(nodes: nodeList, searchText: text))
             case .failure:

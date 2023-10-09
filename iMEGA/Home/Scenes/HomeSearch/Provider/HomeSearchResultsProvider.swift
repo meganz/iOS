@@ -82,6 +82,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         return try await withAsyncThrowingValue(in: { completion in
             searchFileUseCase.searchFiles(
                 withName: queryRequest.query,
+                recursive: true,
                 nodeFormat: nodeFormatFrom(chip: queryRequest.chips.first),
                 sortOrder: .defaultAsc,
                 searchPath: .root,

@@ -85,7 +85,7 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
         do {
             viewState = .normal
             try Task.checkCancellation()
-            let nodes = try await mediaDiscoveryUseCase.nodes(forParent: parentNode)
+            let nodes = try await mediaDiscoveryUseCase.nodes(forParent: parentNode, recursive: true)
             try Task.checkCancellation()
             photoLibraryContentViewModel.library = await sortIntoPhotoLibrary(nodes: nodes, sortOrder: sortOrder)
             try Task.checkCancellation()

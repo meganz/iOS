@@ -48,8 +48,8 @@ public final class MockSdk: MEGASdk {
     )]()
     
     public private(set) var nodeForHandleCallCount = 0
-    
     public private(set) var messages = [Message]()
+    public private(set) var searchQueryParameters: SearchQueryParameters?
     
     public enum Message: Equatable {
         case publicNodeForMegaFileLink(String)
@@ -236,7 +236,12 @@ public final class MockSdk: MEGASdk {
     public override var rubbishNode: MEGANode? { rubbishBinNode }
     
     public override func nodeListSearch(for node: MEGANode, search searchString: String?, cancelToken: MEGACancelToken, recursive: Bool, orderType: MEGASortOrderType, nodeFormatType: MEGANodeFormatType, folderTargetType: MEGAFolderTargetType) -> MEGANodeList {
-        MockNodeList(nodes: nodes)
+        searchQueryParameters = SearchQueryParameters(node: node,
+                                                      searchString: searchString,
+                                                      recursive: recursive,
+                                                      sortOrderType: orderType,
+                                                      formatType: nodeFormatType)
+        return MockNodeList(nodes: nodes)
     }
     
     public override func nodePath(for node: MEGANode) -> String? {
@@ -530,6 +535,28 @@ public final class MockSdk: MEGASdk {
             delegate.onRequestFinish?(self, request: request, error: MEGAError())
         case .failure(let error):
             delegate.onRequestFinish?(self, request: MockRequest(handle: 1), error: error)
+        }
+    }
+}
+
+extension MockSdk {
+    public struct SearchQueryParameters: Equatable {
+        public let node: MEGANode
+        public let searchString: String?
+        public let recursive: Bool
+        public let sortOrderType: MEGASortOrderType
+        public let formatType: MEGANodeFormatType
+        
+        public init(node: MEGANode,
+                    searchString: String?,
+                    recursive: Bool,
+                    sortOrderType: MEGASortOrderType,
+                    formatType: MEGANodeFormatType) {
+            self.node = node
+            self.searchString = searchString
+            self.recursive = recursive
+            self.sortOrderType = sortOrderType
+            self.formatType = formatType
         }
     }
 }
