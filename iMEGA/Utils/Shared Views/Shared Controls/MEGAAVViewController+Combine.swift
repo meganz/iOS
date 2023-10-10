@@ -1,6 +1,8 @@
 import Combine
 import Foundation
+import MEGAAnalyticsiOS
 import MEGADomain
+import MEGAPresentation
 
 extension MEGAAVViewController {
     
@@ -137,6 +139,15 @@ extension MEGAAVViewController {
     }
     
     @objc func playerDidChangeTimeControlStatus(_ status: AVPlayer.TimeControlStatus) {
+        handleLoadingViewOnChangeTimeControlStatus(status)
+        trackAnalytics(for: status, tracker: DIContainer.tracker)
+        
+        if case .playing = status {
+            hasPlayedOnceBefore = true
+        }
+    }
+    
+    private func handleLoadingViewOnChangeTimeControlStatus(_ status: AVPlayer.TimeControlStatus) {
         switch status {
         case .waitingToPlayAtSpecifiedRate:
             startLoading()
@@ -153,6 +164,21 @@ extension MEGAAVViewController {
         activityIndicator.stopAnimating()
     }
     
+    // MARK: - Analytics
+    
+    func trackAnalytics(for status: AVPlayer.TimeControlStatus, tracker: some AnalyticsTracking) {
+        switch status {
+        case .playing:
+            guard !hasPlayedOnceBefore else { return }
+            
+            tracker.trackAnalyticsEvent(with: VideoPlayerIsActivatedEvent())
+        default:
+            break
+        }
+    }
+    
+    // MARK: - PlayerItemMetadata for now playing info
+        
     @objc func setPlayerItemMetadata(playerItem: AVPlayerItem, node: MEGANode) {
         Task { @MainActor in
             let command = SetVideoPlayerItemMetadataCommand(playerItem: playerItem, node: node)
