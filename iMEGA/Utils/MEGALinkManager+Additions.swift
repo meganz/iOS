@@ -1,4 +1,5 @@
 import Accounts
+import ChatRepo
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
@@ -179,29 +180,57 @@ extension MEGALinkManager {
         return list.size > 0 && list.megaHandle(at: 0) != 0
     }
     
-    @objc class func shouldOpenWaitingRoom(request: MEGAChatRequest) -> Bool {
-        let megaChatRoom = MEGAChatSdk.shared.chatRoom(forChatId: request.chatHandle)
-        let chatRoom = megaChatRoom?.toChatRoomEntity()
-        let isModerator = chatRoom?.ownPrivilege == .moderator
-        let isWaitingRoomEnabled = MEGAChatSdk.shared.hasChatOptionEnabled(for: .waitingRoom, chatOptionsBitMask: request.privilege)
+    @objc class func shouldOpenWaitingRoom(request: MEGAChatRequest, chatSdk: MEGAChatSdk = .shared) -> Bool {
+        guard let megaChatRoom = chatSdk.chatRoom(forChatId: request.chatHandle) else { return false }
+        let (isModerator, isWaitingRoomEnabled) = meetingInfo(for: megaChatRoom.toChatRoomEntity(), request: request, chatSdk: chatSdk)
         return !isModerator && isWaitingRoomEnabled
     }
     
     @objc class func openWaitingRoom(for chatId: ChatIdEntity, chatLink: String, requestUserHandle: HandleEntity) {
         guard let scheduledMeeting = MEGAChatSdk.shared.scheduledMeetings(byChat: chatId).first?.toScheduledMeetingEntity() else { return }
-
         let rootViewController = UIApplication.mnz_visibleViewController()
         guard !MEGAChatSdk.shared.mnz_existsActiveCall else {
             MeetingAlreadyExistsAlert.show(presenter: rootViewController)
             return
         }
-        
         WaitingRoomViewRouter(
             presenter: rootViewController,
             scheduledMeeting: scheduledMeeting,
             chatLink: chatLink,
             requestUserHandle: requestUserHandle
         ).start()
+    }
+    
+    @objc class func isHostInWaitingRoom(request: MEGAChatRequest, chatSdk: MEGAChatSdk = .shared) -> Bool {
+        guard let megaChatRoom = chatSdk.chatRoom(forChatId: request.chatHandle) else { return false }
+        let (isModerator, isWaitingRoomEnabled) = meetingInfo(for: megaChatRoom.toChatRoomEntity(), request: request, chatSdk: chatSdk)
+        return isModerator && isWaitingRoomEnabled
+    }
+    
+    private class func meetingInfo(for chatRoom: ChatRoomEntity, request: MEGAChatRequest, chatSdk: MEGAChatSdk) -> (Bool, Bool) {
+        let isModerator = chatRoom.ownPrivilege == .moderator
+        let isWaitingRoomEnabled = chatSdk.hasChatOptionEnabled(for: .waitingRoom, chatOptionsBitMask: request.privilege)
+        return (isModerator, isWaitingRoomEnabled)
+    }
+    
+    @objc class func joinCall(request: MEGAChatRequest) {
+        let chatId = request.chatHandle
+        guard let megaChatRoom = MEGAChatSdk.shared.chatRoom(forChatId: chatId) else {
+            return
+        }
+        let chatRoom = megaChatRoom.toChatRoomEntity()
+        let callUseCase = CallUseCase(repository: CallRepository.newRepo)
+        Task { @MainActor in
+            guard let callEntity = try? await callUseCase.answerCall(for: chatId, enableVideo: false, enableAudio: true) else {
+                return
+            }
+            openCallUI(call: callEntity, chatRoom: chatRoom)
+        }
+    }
+    
+    @MainActor
+    private class func openCallUI(call: CallEntity, chatRoom: ChatRoomEntity) {
+        MeetingContainerRouter(presenter: UIApplication.mnz_presentingViewController(), chatRoom: chatRoom, call: call, isSpeakerEnabled: true).start()
     }
 }
 

@@ -828,14 +828,19 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
 }
 
 + (void)openMeetingWithRequest:(MEGAChatRequest * _Nonnull)request chatLinkURL:(NSURL * _Nonnull)chatLinkUrl {
-    if ([self shouldOpenWaitingRoomWithRequest:request]) {
+    if ([self shouldOpenWaitingRoomWithRequest:request chatSdk:MEGAChatSdk.shared]) {
         [SVProgressHUD dismiss];
         [self openWaitingRoomFor:request.chatHandle chatLink:chatLinkUrl.absoluteString requestUserHandle:request.userHandle];
     } else if ([self hasActiveMeetingFor:request]) {
-        [self createMeetingAndShow:request.chatHandle userHandle:request.userHandle publicChatLink:chatLinkUrl];
+        // Meeting started
         [SVProgressHUD dismiss];
+        if ([self isHostInWaitingRoomWithRequest:request chatSdk:MEGAChatSdk.shared]) {
+            [self joinCallWithRequest:request];
+        } else {
+            [self createMeetingAndShow:request.chatHandle userHandle:request.userHandle publicChatLink:chatLinkUrl];
+        }
     } else {
-        //  meeting ended
+        // Meeting ended
         [SVProgressHUD dismiss];
         MEGAChatRoom *chatRoom = [[MEGAChatSdk shared] chatRoomForChatId:request.chatHandle];
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"meetings.alert.end", @"") message:LocalizedString(@"meetings.alert.end.description", @"Shown when an inexisting/unavailable/removed link is tried to be opened.") preferredStyle:UIAlertControllerStyleAlert];
@@ -881,14 +886,14 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     // If the application was deleted when the user is logged and then reinstalled.
     // The sdk says the user is logged in but the session is cleared.
     NSString *sessionV3 = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
-    BOOL isLoggedIn = MEGASdkManager.sharedMEGASdk.isLoggedIn && sessionV3 != nil && !sessionV3.mnz_isEmpty;
+    BOOL isLoggedIn = MEGASdk.shared.isLoggedIn && sessionV3 != nil && !sessionV3.mnz_isEmpty;
+    MeetingConfigurationType type = isLoggedIn ? MeetingConfigurationTypeJoin : MeetingConfigurationTypeGuestJoin;
     
     if (UIApplication.mainTabBarRootViewController) {
-   
         MainTabBarController *mainTBC = (MainTabBarController *)UIApplication.mainTabBarRootViewController;
         mainTBC.selectedIndex = TabTypeChat;
         MeetingCreatingViewRouter *router = [[MeetingCreatingViewRouter alloc] initWithViewControllerToPresent:mainTBC
-                                                                                                          type:isLoggedIn ? MeetingConfigurationTypeJoin : MeetingConfigurationTypeGuestJoin
+                                                                                                          type:type
                                                                                                           link:publicChatLink.absoluteString
                                                                                                     userhandle:userHandle];
         if (mainTBC.presentedViewController) {
@@ -900,7 +905,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         }
     } else {
         MeetingCreatingViewRouter *router = [[MeetingCreatingViewRouter alloc] initWithViewControllerToPresent:UIApplication.mnz_visibleViewController
-                                                                                                          type:isLoggedIn ? MeetingConfigurationTypeJoin : MeetingConfigurationTypeGuestJoin
+                                                                                                          type:type
                                                                                                           link:publicChatLink.absoluteString
                                                                                                     userhandle:userHandle];
         [router start];
