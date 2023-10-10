@@ -533,7 +533,7 @@
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Activează Încărcări cameră";
 /* Success message shown when Camera Uploads has been enabled */
-"cameraUploadsEnabled"="Încărcări cameră activată";
+"cameraUploadsEnabled"="Încărcări cameră sunt activată";
 /* Message shown when the camera uploads have been completed */
 "cameraUploadsComplete"="Încărcări cameră încheiate";
 /* Message shown while uploading files. Singular. */
@@ -1282,8 +1282,8 @@
 "sendMessage"="Trimite un mesaj";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="Verifică acreditările";
-/* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
-"verify"="Aprobă";
+/* Title of button which marks contact as verified on Verify Contact screen */
+"account.verifyContact.confirmButtonText"="Marchează ca confirmat";
 /* Button title */
 "verified"="Verificat";
 /* A button title to delete the history of a chat. */
@@ -1843,11 +1843,11 @@
 /* Label shown while leaving a public chat */
 "Leaving..."="Se părăsește…";
 /* Text shown for switching from thumbnail view to list view. */
-"List View"="Vizualizare tip listă";
+"List View"="Modul listă";
 /* Text shown for switching from list view to thumbnail view. */
-"Thumbnail View"="Vizualizare tip miniaturi";
+"Thumbnail View"="Modul miniaturi";
 /* Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF. */
-"Page View"="Vizualizare tip pagini";
+"Page View"="Modul pagină";
 /* There are no notifications to display. */
 "No notifications"="Nicio notificare";
 /* The header of a notification related to payments */
@@ -2232,6 +2232,18 @@
 "Default Tab"="Filă implicită";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="Mod de sortare și vizualizare";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
+"settings.userInterface.mediaDiscovery"="Vizualizare pentru descoperire media";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
+"settings.userInterface.mediaDiscovery.header"="Descoperire media";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body that appears under that option */
+"settings.userInterface.mediaDiscovery.footer.body"="Folderele care conțin doar imagini și videoclipuri se vor deschide implicit în modul de descoperire media.";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body link that appears under that option */
+"settings.userInterface.mediaDiscovery.footer.link"="Aflați mai multe despre descoperirea media.";
+/* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the label in the setting */
+"settings.userInterface.mediaDiscoverySubFolder"="Descoperire media în subfoldere";
+/* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the footer message body that appears under that option */
+"settings.userInterface.mediaDiscoverySubFolder.footer"="Imaginile și videoclipurile din subfoldere vor fi, de asemenea, incluse î în modul de descoperire media";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
 "settings.userInterface.hideRecentActivity"="Ascunde activitatea recentă";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
@@ -3834,3 +3846,5 @@
 "chat.call.waitingRoom.participantsList.title"="Sala de asteptare";
 /* A button label to close the waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.close"="Închide";
+/* Auto media discovery banner title */
+"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="As this folder contains only images and videos, we’ve automatically opened it in media discovery view. You can enjoy your visual content with a more immersive layout. You can disable this in Settings.";

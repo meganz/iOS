@@ -3453,9 +3453,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 participant</string>
+        <string>%d uczestnik</string>
+        <key>few</key>
+        <string>%d uczestników</string>
+        <key>many</key>
+        <string>%d uczestników</string>
         <key>other</key>
-        <string>%d participants</string>
+        <string>%d uczestników</string>
       </dict>
     </dict>
     <key>general.format.itemsSelected</key>
