@@ -28,7 +28,7 @@ extension AudioPlayer {
         
         var nowPlayingInfo = [String: Any]()
         
-        nowPlayingInfo[MPMediaItemPropertyTitle] = item.name
+        nowPlayingInfo[MPMediaItemPropertyTitle] = item.preferredName
         nowPlayingInfo[MPMediaItemPropertyArtist] = item.artist
         nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = item.currentTime().seconds
         nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = item.asset.duration.seconds
