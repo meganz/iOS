@@ -339,7 +339,7 @@
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Nuova Cartella";
 /* Menu option from the `Add` section that displays all media files under current folder */
-"cloudDrive.menu.mediaDiscovery.title"="Galleria";
+"cloudDrive.menu.mediaDiscovery.title"="Esplora i media";
 /* Exit Text on Media Discovery Navigation Bar */
 "cloudDrive.mediaDiscovery.exit"="Esci";
 /* Hint text shown on the create folder alert. */
@@ -1282,8 +1282,8 @@
 "sendMessage"="Invia messaggio";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="Verifica credenziali";
-/* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
-"verify"="Approva";
+/* Title of button which marks contact as verified on Verify Contact screen */
+"account.verifyContact.confirmButtonText"="Segna come verificato";
 /* Button title */
 "verified"="Verificato";
 /* A button title to delete the history of a chat. */
@@ -2232,6 +2232,18 @@
 "Default Tab"="Pagina predefinita";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="Modalità di elencazione e di vista";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
+"settings.userInterface.mediaDiscovery"="Esplorazione dei media";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
+"settings.userInterface.mediaDiscovery.header"="Esplora i media";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body that appears under that option */
+"settings.userInterface.mediaDiscovery.footer.body"="Le cartelle che contengono solo immagini e video verranno aperte in modalità di esplorazione dei media in modo predefinito.";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body link that appears under that option */
+"settings.userInterface.mediaDiscovery.footer.link"="Scopri di più riguardo l'esplorazione dei media.";
+/* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the label in the setting */
+"settings.userInterface.mediaDiscoverySubFolder"="Esplora i media nelle sottocartelle";
+/* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the footer message body that appears under that option */
+"settings.userInterface.mediaDiscoverySubFolder.footer"="Immagini e video dalle sottocartelle saranno inclusi nell'esplorazione dei media.";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
 "settings.userInterface.hideRecentActivity"="Nascondi attività recente";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
@@ -3834,3 +3846,5 @@
 "chat.call.waitingRoom.participantsList.title"="Sala d'attesa";
 /* A button label to close the waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.close"="Chiudi";
+/* Auto media discovery banner title */
+"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="Dato che questa cartella contiene solamente immagini e video, la abbiamo aperta automaticamente nella modalità di esplorazione dei media. Questo ti permette di vedere i media in modalità galleria e di filtrare per data. Puoi disabilitarlo nelle Impostazioni.";

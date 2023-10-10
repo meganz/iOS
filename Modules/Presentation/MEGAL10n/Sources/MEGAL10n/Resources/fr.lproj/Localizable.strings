@@ -1282,8 +1282,8 @@
 "sendMessage"="Envoyer un message";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="Confirmer le numéro d’identification";
-/* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
-"verify"="Approuver";
+/* Title of button which marks contact as verified on Verify Contact screen */
+"account.verifyContact.confirmButtonText"="Marquer comme confirmé";
 /* Button title */
 "verified"="Confirmé";
 /* A button title to delete the history of a chat. */
@@ -1847,7 +1847,7 @@
 /* Text shown for switching from list view to thumbnail view. */
 "Thumbnail View"="Mode imagettes";
 /* Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF. */
-"Page View"="Vue par page";
+"Page View"="Mode page";
 /* There are no notifications to display. */
 "No notifications"="Aucune notification";
 /* The header of a notification related to payments */
@@ -1951,7 +1951,7 @@
 /* Text shown in location-type messages */
 "Pinned Location"="Position épinglée";
 /* Plural of participant. 2 participants */
-"%d participants"="%d participants";
+"%d participants"="%d participants";
 /* Singular of participant. 1 participant */
 "%d participant"="%d participant";
 /* Text shown in the chat toolbar while the user is recording a voice clip. The < character should be > in RTL languages. */
@@ -2232,6 +2232,18 @@
 "Default Tab"="Onglet par défaut";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="Tri et mode d’affichage";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
+"settings.userInterface.mediaDiscovery"="Mode de découverte des médias";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
+"settings.userInterface.mediaDiscovery.header"="Découverte des médias";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body that appears under that option */
+"settings.userInterface.mediaDiscovery.footer.body"="Les dossiers qui ne comprennent que des images et des vidéos s’ouvriront par défaut en mode de découverte des médias.";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body link that appears under that option */
+"settings.userInterface.mediaDiscovery.footer.link"="En apprendre davantage sur la découverte des médias";
+/* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the label in the setting */
+"settings.userInterface.mediaDiscoverySubFolder"="Découverte des médias dans les sous-dossiers";
+/* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the footer message body that appears under that option */
+"settings.userInterface.mediaDiscoverySubFolder.footer"="Les images et vidéos des sous-dossiers seront aussi comprises en mode de découverte des médias.";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
 "settings.userInterface.hideRecentActivity"="Cacher l’activité récente";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
@@ -3834,3 +3846,5 @@
 "chat.call.waitingRoom.participantsList.title"="Salle d’attente";
 /* A button label to close the waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.close"="Fermer";
+/* Auto media discovery banner title */
+"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="Comme ce dossier ne comprend que des images et des vidéos, nous l’avons automatiquement ouvert en mode de découverte des médias. Vous pouvez profiter de votre contenu visuel avec une mise en page plus immersive. Vous pouvez désactiver cette option dans Paramètres.";

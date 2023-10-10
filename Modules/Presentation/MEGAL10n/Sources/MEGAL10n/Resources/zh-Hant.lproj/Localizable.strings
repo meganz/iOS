@@ -1282,8 +1282,8 @@
 "sendMessage"="發送訊息";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="驗證憑證";
-/* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
-"verify"="批准";
+/* Title of button which marks contact as verified on Verify Contact screen */
+"account.verifyContact.confirmButtonText"="標記為已驗證";
 /* Button title */
 "verified"="已驗證";
 /* A button title to delete the history of a chat. */
@@ -2232,6 +2232,18 @@
 "Default Tab"="預設分頁";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="排序和檢視模式";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
+"settings.userInterface.mediaDiscovery"="媒體探索檢視";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
+"settings.userInterface.mediaDiscovery.header"="媒體探索";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body that appears under that option */
+"settings.userInterface.mediaDiscovery.footer.body"="預設情況下，僅包含圖片和影片的資料夾將在媒體探索檢視中開啟。";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body link that appears under that option */
+"settings.userInterface.mediaDiscovery.footer.link"="瞭解更多關於媒體探索的資訊。";
+/* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the label in the setting */
+"settings.userInterface.mediaDiscoverySubFolder"="子資料夾中的媒體探索";
+/* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the footer message body that appears under that option */
+"settings.userInterface.mediaDiscoverySubFolder.footer"="子資料夾中的影像和影片也將包含在媒體探索檢視中。";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
 "settings.userInterface.hideRecentActivity"="隱藏近期活動";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
@@ -3834,3 +3846,5 @@
 "chat.call.waitingRoom.participantsList.title"="等候室";
 /* A button label to close the waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.close"="關閉";
+/* Auto media discovery banner title */
+"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="由於此資料夾僅包含圖片和影片，我們已經自動在媒體探索檢視中開啟它。您可以透過更身臨其境的佈局享受您的視覺內容。您可以在設定中停用此功能。";

@@ -1282,8 +1282,8 @@
 "sendMessage"="Kirim Pesan";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="Verifikasi kredensial";
-/* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
-"verify"="Setujui";
+/* Title of button which marks contact as verified on Verify Contact screen */
+"account.verifyContact.confirmButtonText"="Tandai sebagai terverifikasi";
 /* Button title */
 "verified"="Terverifikasi";
 /* A button title to delete the history of a chat. */
@@ -2232,6 +2232,18 @@
 "Default Tab"="Tab Default";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="Mode Penyortiran Dan Tampilan";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
+"settings.userInterface.mediaDiscovery"="Tampilan penemuan media";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
+"settings.userInterface.mediaDiscovery.header"="Penemuan media";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body that appears under that option */
+"settings.userInterface.mediaDiscovery.footer.body"="Folders that contain only images and videos will open in media discovery view by default.";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body link that appears under that option */
+"settings.userInterface.mediaDiscovery.footer.link"="Learn more about media discovery.";
+/* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the label in the setting */
+"settings.userInterface.mediaDiscoverySubFolder"="Penemuan media di subfolder";
+/* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the footer message body that appears under that option */
+"settings.userInterface.mediaDiscoverySubFolder.footer"="Images and videos from subfolders will also be included in media discovery view.";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
 "settings.userInterface.hideRecentActivity"="Sembunyikan Aktivitas Terbaru";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
@@ -3834,3 +3846,5 @@
 "chat.call.waitingRoom.participantsList.title"="Ruang tunggu";
 /* A button label to close the waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.close"="Tutup";
+/* Auto media discovery banner title */
+"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="As this folder contains only images and videos, we’ve automatically opened it in media discovery view. You can enjoy your visual content with a more immersive layout. You can disable this in Settings.";

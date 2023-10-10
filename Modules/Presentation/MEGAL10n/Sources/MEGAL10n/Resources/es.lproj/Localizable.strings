@@ -339,7 +339,7 @@
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Nueva carpeta";
 /* Menu option from the `Add` section that displays all media files under current folder */
-"cloudDrive.menu.mediaDiscovery.title"="Galería multimedia";
+"cloudDrive.menu.mediaDiscovery.title"="Explorador multimedia";
 /* Exit Text on Media Discovery Navigation Bar */
 "cloudDrive.mediaDiscovery.exit"="Salir";
 /* Hint text shown on the create folder alert. */
@@ -721,7 +721,7 @@
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="Subidas de la cámara";
 /* Banner message on Camera Uploads that warns user that they have limited access to photos */
-"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA has limited access to your photo library and cannot backup all of your media. Tap to change permissions.";
+"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA tiene acceso limitado a tu biblioteca de fotos y no puede hacer un backup de todos tus archivos multimedia. Pulsa para cambiar los permisos.";
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="Fotos";
 /* Photo view is empty */
@@ -1282,8 +1282,8 @@
 "sendMessage"="Enviar mensaje";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="Verificar credenciales";
-/* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
-"verify"="Aceptar";
+/* Title of button which marks contact as verified on Verify Contact screen */
+"account.verifyContact.confirmButtonText"="Marcar como verificado";
 /* Button title */
 "verified"="Verificado";
 /* A button title to delete the history of a chat. */
@@ -1407,11 +1407,11 @@
 /* Error message displayed when trying to invite a contact who is already added. */
 "alreadyAContact"="%s ya es un contacto.";
 /* A summary message when a user sent a contact's details through the chat. Please keep %@ as it will be replaced at runtime with the name of the contact that was sent. */
-"sentContact"="Sent contact: %@";
+"sentContact"="Contacto enviado: %@";
 /* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
 "sentXContacts"="%s contactos enviados.";
 /* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %@ as it will be replaced at runtime with the name of the attached file. */
-"attachedFile"="Attached: %@";
+"attachedFile"="Adjunto: %@";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="%s archivos adjuntos.";
 /* Label in a button that allows to jump to the latest item */
@@ -1991,7 +1991,7 @@
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="Modificado por %@";
 /* Title for a recent action bucket with multiple files. %@ will be replaced by the filename of the first file in the bucket. %ld will be replaced by the total number of other files in the bucket. */
-"home.recent.multipleFileTitle"="“%@” and %ld more";
+"home.recent.multipleFileTitle"="“%@” y %ld más";
 /* Label that indicates who uploaded a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.createdByLabel"="Creado por %@";
 /* Message shown when the user has not recent activity in their account. */
@@ -2232,6 +2232,18 @@
 "Default Tab"="Pestaña predeterminada";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="Preferencias de ordenación y vista";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
+"settings.userInterface.mediaDiscovery"="Vista de explorador multimedia";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
+"settings.userInterface.mediaDiscovery.header"="Explorador multimedia";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body that appears under that option */
+"settings.userInterface.mediaDiscovery.footer.body"="Las carpetas que contienen solo imágenes y vídeos se abrirán en la vista de explorador multimedia de forma predeterminada.";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body link that appears under that option */
+"settings.userInterface.mediaDiscovery.footer.link"="Más información sobre el explorador multimedia.";
+/* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the label in the setting */
+"settings.userInterface.mediaDiscoverySubFolder"="Explorador multimedia en subcarpetas";
+/* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the footer message body that appears under that option */
+"settings.userInterface.mediaDiscoverySubFolder.footer"="Las imágenes y los vídeos de las subcarpetas también se incluirán en la vista de explorador multimedia.";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
 "settings.userInterface.hideRecentActivity"="Ocultar actividad reciente";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
@@ -2639,17 +2651,17 @@
 /* Meetings: Floating panel share link option */
 "meetings.panel.shareLink"="Compartir enlace";
 /* Meetings: Floating panel participants list selector for participants in call */
-"meetings.panel.listSelector.inCall"="In call";
+"meetings.panel.listSelector.inCall"="En llamada";
 /* Meetings: Floating panel participants list selector for participants not in call */
-"meetings.panel.listSelector.notInCall"="Not in call";
+"meetings.panel.listSelector.notInCall"="Fuera de llamada";
 /* Meetings: Floating panel participants list selector for participants in call */
 "meetings.panel.listSelector.inWaitingRoom"="Sala de espera";
 /* Meetings: Floating panel participants in call count header */
 "meetings.panel.ParticipantsCount"="Participantes (%d)";
 /* Meetings: Floating panel participants not in call count header */
-"meetings.panel.ParticipantsNotInCallCount"="Not in call (%d)";
+"meetings.panel.ParticipantsNotInCallCount"="Fuera de llamada (%d)";
 /* Meetings: Floating panel participants in waiting room count header */
-"meetings.panel.ParticipantsInWaitingRoomCount"="Waiting (%d)";
+"meetings.panel.ParticipantsInWaitingRoomCount"="Esperando (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
 "meetings.participant.moderator"="Anfitrión";
 /* Meetings: Action on a meeting that change participant's role to moderator */
@@ -3105,7 +3117,7 @@
 /* A log message in a chat to display that a participant's permission was changed to host role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep the [A], [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to host role by John Smith. */
 "chat.message.changedRole.host"="[B]ha asignado el rol de[S]anfitrión[/S] a [A]";
 /* A log message in a chat to display that a participant's permission was changed to standard role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to standard role by John Smith. */
-"chat.message.changedRole.standard"="[A] was changed to a [S]standard participant[/S] by [B]";
+"chat.message.changedRole.standard"="[B] ha cambiado a [A] a [S]participante estándar[/S]";
 /* Type of data displayed in a map view. Standard imagery of the area. */
 "chat.sendLocation.map.standard"="Estándar";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
@@ -3181,9 +3193,9 @@
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
 "sharedItems.contactVerification.section.verifyContact.receiver.message"="Protegemos tus datos con cifrado de conocimiento cero. Para garantizar una mayor seguridad, te pedimos que verifiques los contactos de los que recibes información antes de que puedas acceder a las carpetas compartidas.";
 /* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
-"sharedItems.contactVerification.section.verifyContact.bannerMessage"="To access the shared folder, the person who shared it with you should verify you, too.";
+"sharedItems.contactVerification.section.verifyContact.bannerMessage"="Para acceder a la carpeta compartida, la persona que la ha compartido contigo también debe verificar tus credenciales.";
 /* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
-"sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ is shared by a contact you haven’t verified. To ensure extra security, we recommend that you verify their credentials in Contacts by tapping on ⓘ next to the contact you want to verify.";
+"sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ está siendo compartida por un contacto que no has verificado. Para más seguridad, te recomendamos que verifiques sus credenciales en Contactos tocando el símbolo ⓘ junto al contacto que deseas verificar.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="Tus credenciales";
 /* Title of the header label in contact verification screen. */
@@ -3729,7 +3741,7 @@
 /* Schedule meeting waiting room setting title */
 "meetings.scheduleMeeting.waitingRoom"="Sala de espera";
 /* Schedule meeting waiting room setting description */
-"meetings.scheduleMeeting.waitingRoom.description"="Only participants admitted by the host can join the meeting.";
+"meetings.scheduleMeeting.waitingRoom.description"="Solo los participantes admitidos por el anfitrión pueden unirse a la reunión.";
 /* Schedule meeting waiting room warning banner title */
 "meetings.scheduleMeeting.waitingRoomWarningBanner.title"="Los participantes que han sido añadidos a las llamadas por usuarios que no son anfitriones no serán enviados a la sala de espera.";
 /* Schedule meeting waiting room warning banner learn more */
@@ -3834,3 +3846,5 @@
 "chat.call.waitingRoom.participantsList.title"="Sala de espera";
 /* A button label to close the waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.close"="Cerrar";
+/* Auto media discovery banner title */
+"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="Como esta carpeta solo contiene imágenes y vídeos, la abrimos automáticamente en la vista de explorador multimedia. Puedes disfrutar de tu contenido visual con un diseño más envolvente. Puedes desactivar esta opción en Ajustes.";

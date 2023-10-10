@@ -2765,9 +2765,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>1 participant</string>
+        <string>%d deelnemer</string>
         <key>other</key>
-        <string>%d participants</string>
+        <string>%d deelnemers</string>
       </dict>
     </dict>
     <key>general.format.itemsSelected</key>

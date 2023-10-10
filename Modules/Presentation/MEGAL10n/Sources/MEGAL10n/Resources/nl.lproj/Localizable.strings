@@ -1282,8 +1282,8 @@
 "sendMessage"="Bericht Versturen";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="Bevestig gegevens";
-/* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
-"verify"="Goedkeuren";
+/* Title of button which marks contact as verified on Verify Contact screen */
+"account.verifyContact.confirmButtonText"="Markeren als geverifieerd";
 /* Button title */
 "verified"="Bevestigd";
 /* A button title to delete the history of a chat. */
@@ -2232,6 +2232,18 @@
 "Default Tab"="Standaard Tabblad";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="Sorteer- en Weergavemodus";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
+"settings.userInterface.mediaDiscovery"="Media discovery weergave";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
+"settings.userInterface.mediaDiscovery.header"="Media discovery";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body that appears under that option */
+"settings.userInterface.mediaDiscovery.footer.body"="Mappen die alleen afbeeldingen en video's bevatten, worden standaard geopend in de mediaontdekkingsweergave.";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body link that appears under that option */
+"settings.userInterface.mediaDiscovery.footer.link"="Leer meer over mediaontdekking.";
+/* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the label in the setting */
+"settings.userInterface.mediaDiscoverySubFolder"="Media ontdekking in submappen";
+/* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the footer message body that appears under that option */
+"settings.userInterface.mediaDiscoverySubFolder.footer"="Afbeeldingen en video's uit submappen worden ook opgenomen in de mediaontdekkingsweergave.";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
 "settings.userInterface.hideRecentActivity"="Recente Activiteit Verbergen";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
@@ -3834,3 +3846,5 @@
 "chat.call.waitingRoom.participantsList.title"="Wachtkamer";
 /* A button label to close the waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.close"="Sluiten";
+/* Auto media discovery banner title */
+"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="Omdat deze map alleen afbeeldingen en video's bevat, hebben we deze automatisch geopend in de media ontdekkingsweergave. U kunt genieten van uw visuele inhoud met een meer meeslepende lay-out. U kunt dit uitschakelen in Instellingen.";
