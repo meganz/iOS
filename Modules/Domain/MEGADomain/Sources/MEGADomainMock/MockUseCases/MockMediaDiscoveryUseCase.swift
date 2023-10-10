@@ -1,10 +1,12 @@
 import Combine
 import MEGADomain
 
-public struct MockMediaDiscoveryUseCase: MediaDiscoveryUseCaseProtocol {
+public final class MockMediaDiscoveryUseCase: MediaDiscoveryUseCaseProtocol {
     public let nodeUpdatesPublisher: AnyPublisher<[NodeEntity], Never>
     private let nodes: [NodeEntity]
     private let shouldReload: Bool
+    
+    public var discoverRecursively: Bool?
     
     public init(
         nodeUpdates: AnyPublisher<[NodeEntity], Never> = Empty().eraseToAnyPublisher(),
@@ -17,7 +19,8 @@ public struct MockMediaDiscoveryUseCase: MediaDiscoveryUseCaseProtocol {
     }
     
     public func nodes(forParent parent: NodeEntity, recursive: Bool) async throws -> [NodeEntity] {
-        nodes
+        discoverRecursively = recursive
+        return nodes
     }
     
     public func shouldReload(parentNode: NodeEntity, loadedNodes: [NodeEntity], updatedNodes: [NodeEntity]) -> Bool {

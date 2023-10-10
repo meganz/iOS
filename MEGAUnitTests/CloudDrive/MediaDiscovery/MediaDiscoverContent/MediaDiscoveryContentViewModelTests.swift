@@ -296,6 +296,38 @@ class MediaDiscoveryContentViewModelTests: XCTestCase {
         XCTAssertEqual(sut.photoLibraryContentViewModel.library.allPhotos, nodesOrderedByOldest)
     }
     
+    func testLoadPhotos_mediaDiscoveryShouldIncludeSubfolderMediaNotSet_shouldSearchMediaRecuirsively() async {
+        let loadedNodes = [
+            NodeEntity(handle: 1),
+            NodeEntity(handle: 2)
+        ]
+        let preferenceUseCase = MockPreferenceUseCase(dict: [:])
+        let mediaDiscoveryUseCase = MockMediaDiscoveryUseCase(nodes: loadedNodes)
+        let sut = makeSUT(
+            mediaDiscoveryUseCase: mediaDiscoveryUseCase,
+            preferenceUseCase: preferenceUseCase)
+        
+        await sut.loadPhotos()
+        
+        XCTAssertTrue(mediaDiscoveryUseCase.discoverRecursively ?? false)
+    }
+    
+    func testLoadPhotos_mediaDiscoveryShouldIncludeSubfolderMediaOff_shouldNotSearchMediaRecuirsively() async {
+        let loadedNodes = [
+            NodeEntity(handle: 1),
+            NodeEntity(handle: 2)
+        ]
+        let preferenceUseCase = MockPreferenceUseCase(dict: [.mediaDiscoveryShouldIncludeSubfolderMedia: false])
+        let mediaDiscoveryUseCase = MockMediaDiscoveryUseCase(nodes: loadedNodes)
+        let sut = makeSUT(
+            mediaDiscoveryUseCase: mediaDiscoveryUseCase,
+            preferenceUseCase: preferenceUseCase)
+        
+        await sut.loadPhotos()
+        
+        XCTAssertFalse(mediaDiscoveryUseCase.discoverRecursively ?? true)
+    }
+    
     func testUpdateSortOrder_existingOrderEqualsNewestAndUpdatesToOldest_shouldReturnNodesinOrderOfOldest() async {
         let loadedNodes = [
             NodeEntity(name: "test10.png", handle: 10, modificationTime: Date(timeIntervalSinceNow: 10)),
