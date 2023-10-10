@@ -3,6 +3,7 @@ import MEGADomain
 import MEGADomainMock
 import MEGAPermissions
 import MEGAPermissionsMock
+import MEGAPresentation
 
 extension WaitingRoomViewModel {
     convenience init(
@@ -27,6 +28,7 @@ extension WaitingRoomViewModel {
                 audioAuthorized: true,
                 videoAuthorized: true
             ),
+        tracker: some AnalyticsTracking = MockTracker(),
         chatLink: String? = nil,
         requestUserHandle: HandleEntity = 0,
         isTesting: Bool = true
@@ -48,6 +50,7 @@ extension WaitingRoomViewModel {
             captureDeviceUseCase: captureDeviceUseCase,
             audioSessionUseCase: audioSessionUseCase,
             permissionHandler: permissionHandler,
+            tracker: tracker,
             chatLink: chatLink,
             requestUserHandle: requestUserHandle
         )

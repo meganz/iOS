@@ -1,4 +1,5 @@
 import Combine
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
@@ -18,6 +19,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
     private let permissionAlertRouter: any PermissionAlertRouting
     private var featureFlagProvider: any FeatureFlagProviderProtocol
+    private let tracker: any AnalyticsTracking
     
     private var searchString: String?
     private(set) var contextMenuOptions: [ChatRoomContextMenuOption]?
@@ -91,6 +93,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
          megaHandleUseCase: some MEGAHandleUseCaseProtocol,
          permissionAlertRouter: some PermissionAlertRouting,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
+         tracker: some AnalyticsTracking = DIContainer.tracker,
          chatNotificationControl: ChatNotificationControl) {
         
         self.scheduledMeeting = scheduledMeeting
@@ -106,6 +109,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
         self.permissionAlertRouter = permissionAlertRouter
         self.chatNotificationControl = chatNotificationControl
         self.featureFlagProvider = featureFlagProvider
+        self.tracker = tracker
         self.isMuted = chatNotificationControl.isChatDNDEnabled(chatId: scheduledMeeting.chatId)
         self.isRecurring = scheduledMeeting.rules.frequency != .invalid
         
@@ -435,6 +439,7 @@ extension FutureMeetingRoomViewModel {
             title: Strings.Localizable.edit,
             image: .editMeeting
         ) {
+            self.tracker.trackAnalyticsEvent(with: ScheduledMeetingEditMenuItemEvent())
             self.router.edit(scheduledMeeting: self.scheduledMeeting)
         }
     }
@@ -453,6 +458,7 @@ extension FutureMeetingRoomViewModel {
             title: Strings.Localizable.Meetings.Scheduled.ContextMenu.cancel,
             image: .rubbishBin
         ) {
+            self.tracker.trackAnalyticsEvent(with: ScheduledMeetingCancelMenuItemEvent())
             self.cancelMeeting()
         }
     }

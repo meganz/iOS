@@ -20,6 +20,7 @@ extension FutureMeetingRoomViewModel {
         megaHandleUseCase: some MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
         permissionAlertRouter: some PermissionAlertRouting = MockPermissionAlertRouter(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
+        tracker: some AnalyticsTracking = MockTracker(),
         chatNotificationControl: ChatNotificationControl = ChatNotificationControl(delegate: MockPushNotificationControl()),
         isTesting: Bool = true
     ) {
@@ -38,6 +39,7 @@ extension FutureMeetingRoomViewModel {
             megaHandleUseCase: megaHandleUseCase,
             permissionAlertRouter: permissionAlertRouter,
             featureFlagProvider: featureFlagProvider,
+            tracker: tracker,
             chatNotificationControl: chatNotificationControl
         )
     }

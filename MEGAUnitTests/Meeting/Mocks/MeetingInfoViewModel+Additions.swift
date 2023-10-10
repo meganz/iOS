@@ -17,6 +17,7 @@ extension MeetingInfoViewModel {
         megaHandleUseCase: some MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
         preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
+        tracker: some AnalyticsTracking = MockTracker(),
         isTesting: Bool = true
     ) {
         self.init(
@@ -29,7 +30,9 @@ extension MeetingInfoViewModel {
             accountUseCase: accountUseCase,
             chatLinkUseCase: chatLinkUseCase,
             megaHandleUseCase: megaHandleUseCase,
-            preferenceUseCase: preferenceUseCase
+            preferenceUseCase: preferenceUseCase,
+            featureFlagProvider: featureFlagProvider,
+            tracker: tracker
         )
     }
 }

@@ -1353,6 +1353,7 @@
 		99DB1D5A2AC64B34004A9CC3 /* ChatRepoMock in Frameworks */ = {isa = PBXBuildFile; productRef = 99DB1D592AC64B34004A9CC3 /* ChatRepoMock */; };
 		99E1A9292A383EC000974FC9 /* BadgeButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E1A9282A383EC000974FC9 /* BadgeButtonTests.swift */; };
 		99E1A9412A3C0CF800974FC9 /* MeetingLinkActivityItemSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E1A9402A3C0CF800974FC9 /* MeetingLinkActivityItemSource.swift */; };
+		99F7043D2AD3A7E600A774DB /* MeetingCreatingViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F7043C2AD3A7E600A774DB /* MeetingCreatingViewModel+Additions.swift */; };
 		99F9ABC02A7B428A0050B5E4 /* WaitingRoomWarningBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F9ABBF2A7B428A0050B5E4 /* WaitingRoomWarningBannerView.swift */; };
 		99FF30E42A8F3241006CE3DB /* ScheduleMeetingViewModel+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FF30E32A8F3241006CE3DB /* ScheduleMeetingViewModel+Init.swift */; };
 		9D26F234294BADCA00FAD016 /* TextFieldAlertRepresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D26F233294BADCA00FAD016 /* TextFieldAlertRepresenter.swift */; };
@@ -3919,6 +3920,7 @@
 		99D65D762A8C699A005D5877 /* WaitingRoomUserAvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomUserAvatarView.swift; sourceTree = "<group>"; };
 		99E1A9282A383EC000974FC9 /* BadgeButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeButtonTests.swift; sourceTree = "<group>"; };
 		99E1A9402A3C0CF800974FC9 /* MeetingLinkActivityItemSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingLinkActivityItemSource.swift; sourceTree = "<group>"; };
+		99F7043C2AD3A7E600A774DB /* MeetingCreatingViewModel+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MeetingCreatingViewModel+Additions.swift"; sourceTree = "<group>"; };
 		99F9ABBF2A7B428A0050B5E4 /* WaitingRoomWarningBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomWarningBannerView.swift; sourceTree = "<group>"; };
 		99FF30D12A8F16E6006CE3DB /* WaitingRoomViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomViewModelTests.swift; sourceTree = "<group>"; };
 		99FF30E32A8F3241006CE3DB /* ScheduleMeetingViewModel+Init.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ScheduleMeetingViewModel+Init.swift"; sourceTree = "<group>"; };
@@ -9448,15 +9450,6 @@
 			path = Search;
 			sourceTree = "<group>";
 		};
-		94D97AA62AA20B0600FE40F4 /* SearchDemo */ = {
-			isa = PBXGroup;
-			children = (
-				94004A7C2AA242D3004C873B /* SearchDemo.xctestplan */,
-				94D97AA72AA20B0600FE40F4 /* SearchDemoApp.swift */,
-			);
-			path = SearchDemo;
-			sourceTree = "<group>";
-		};
 		9911BA892A8B209F00B88F28 /* WaitingRoom */ = {
 			isa = PBXGroup;
 			children = (
@@ -11463,6 +11456,7 @@
 				BF89C8A32947259B00710FD1 /* ChatRoomViewModel+Additions.swift */,
 				BFD4E22A2935F73C0011392C /* FutureMeetingRoomViewModel+Additions.swift */,
 				BFE3B9F1285838A7003949FF /* MeetingContainerViewModel+Additions.swift */,
+				99F7043C2AD3A7E600A774DB /* MeetingCreatingViewModel+Additions.swift */,
 				BF30471E2892048700A6988F /* MeetingFloatingPanelViewModel+Additions.swift */,
 				996A49012A8CBDAE00264298 /* MeetingInfoViewModel+Additions.swift */,
 				BFBB888E28B8704800E8B482 /* MeetingParticipantsLayoutViewModel+Additions.swift */,
@@ -15167,6 +15161,7 @@
 				1240A4A327DD548600627262 /* MediaDiscoveryViewModelTests.swift in Sources */,
 				BFE3B9F2285838A7003949FF /* MeetingContainerViewModel+Additions.swift in Sources */,
 				BF8895DE26311821002A18CA /* MeetingContainerViewModelTests.swift in Sources */,
+				99F7043D2AD3A7E600A774DB /* MeetingCreatingViewModel+Additions.swift in Sources */,
 				2FE54377264DECBB00FF4955 /* MeetingCreatingViewModelTests.swift in Sources */,
 				BF30471F2892048700A6988F /* MeetingFloatingPanelViewModel+Additions.swift in Sources */,
 				BFA6CD5A263223B100791E02 /* MeetingFloatingPanelViewModelTests.swift in Sources */,

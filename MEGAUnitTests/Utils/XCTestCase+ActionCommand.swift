@@ -13,7 +13,7 @@ extension XCTestCase {
         
         let commandExpectation = expectation(description: "all commands are executed")
         
-        // Fulfill the expectaion if we don't expect any commands invoked from the view model
+        // Fulfill the expectation if we don't expect any commands invoked from the view model
         if expectedCommands.isEmpty {
             commandExpectation.fulfill()
         }

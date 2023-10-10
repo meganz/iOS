@@ -1,4 +1,5 @@
 import Combine
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAPresentation
 import SwiftUI
@@ -32,6 +33,7 @@ final class MeetingInfoViewModel: ObservableObject {
     private var chatLinkUseCase: any ChatLinkUseCaseProtocol
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private let tracker: any AnalyticsTracking
     private let router: any MeetingInfoRouting
     @Published var showWaitingRoomWarningBanner = false
     @Published var isWaitingRoomOn = false
@@ -71,7 +73,8 @@ final class MeetingInfoViewModel: ObservableObject {
          chatLinkUseCase: some ChatLinkUseCaseProtocol,
          megaHandleUseCase: some MEGAHandleUseCaseProtocol,
          preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
-         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
+         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
+         tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.scheduledMeeting = scheduledMeeting
         self.router = router
@@ -83,10 +86,11 @@ final class MeetingInfoViewModel: ObservableObject {
         self.chatLinkUseCase = chatLinkUseCase
         self.megaHandleUseCase = megaHandleUseCase
         self.featureFlagProvider = featureFlagProvider
+        self.tracker = tracker
         self.chatRoom = chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId)
         
         if let chatRoom {
-            self.chatRoomAvatarViewModel = ChatRoomAvatarViewModel(
+            chatRoomAvatarViewModel = ChatRoomAvatarViewModel(
                 title: chatRoom.title ?? "",
                 peerHandle: .invalid,
                 chatRoomEntity: chatRoom,
@@ -97,40 +101,14 @@ final class MeetingInfoViewModel: ObservableObject {
                 accountUseCase: accountUseCase,
                 megaHandleUseCase: megaHandleUseCase
             )
-            self.isModerator = chatRoom.ownPrivilege.toChatRoomParticipantPrivilege() == .moderator
+            isModerator = chatRoom.ownPrivilege.toChatRoomParticipantPrivilege() == .moderator
         } else {
-            self.chatRoomAvatarViewModel = nil
+            chatRoomAvatarViewModel = nil
         }
-        self.subtitle = ScheduledMeetingDateBuilder(scheduledMeeting: scheduledMeeting, chatRoom: chatRoom).buildDateDescriptionString()
+        subtitle = ScheduledMeetingDateBuilder(scheduledMeeting: scheduledMeeting, chatRoom: chatRoom).buildDateDescriptionString()
         $waitingRoomWarningBannerDismissed.useCase = preferenceUseCase
         initSubscriptions()
         fetchInitialValues()
-        listenToIsAllowNonHostToAddParticipantsOnChange()
-        listenToIsWaitingRoomOnChange()
-    }
-    
-    private func listenToIsAllowNonHostToAddParticipantsOnChange() {
-        $isAllowNonHostToAddParticipantsOn
-            .dropFirst()
-            .sink { [weak self] newValue in
-                guard let self, newValue != chatRoom?.isOpenInviteEnabled else { return }
-                Task {
-                    await self.allowNonHostToAddParticipantsValueChanged(to: newValue)
-                }
-            }
-            .store(in: &subscriptions)
-    }
-    
-    private func listenToIsWaitingRoomOnChange() {
-        $isWaitingRoomOn
-            .dropFirst()
-            .sink { [weak self] newValue in
-                guard let self, newValue != chatRoom?.isWaitingRoomEnabled else { return }
-                Task {
-                    await self.waitingRoomValueChanged(to: newValue)
-                }
-            }
-            .store(in: &subscriptions)
     }
     
     private func fetchInitialValues() {
@@ -177,23 +155,23 @@ final class MeetingInfoViewModel: ObservableObject {
             .sink(receiveCompletion: { error in
                 MEGALogError("error fetching allow host to add participants with error \(error)")
             }, receiveValue: { [weak self] _ in
-                guard let self = self,
-                      let chatRoom = self.chatRoomUseCase.chatRoom(forChatId: self.scheduledMeeting.chatId) else {
+                guard let self,
+                      let chatRoom = chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId) else {
                     return
                 }
                 self.chatRoom = chatRoom
-                self.isAllowNonHostToAddParticipantsOn = chatRoom.isOpenInviteEnabled
+                isAllowNonHostToAddParticipantsOn = chatRoom.isOpenInviteEnabled
             })
             .store(in: &subscriptions)
         
         chatRoomUseCase.waitingRoomValueChanged(forChatRoom: chatRoom)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
-                guard let self, let chatRoom = self.chatRoomUseCase.chatRoom(forChatId: self.scheduledMeeting.chatId) else {
+                guard let self, let chatRoom = chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId) else {
                     return
                 }
                 self.chatRoom = chatRoom
-                self.isWaitingRoomOn = chatRoom.isWaitingRoomEnabled
+                isWaitingRoomOn = chatRoom.isWaitingRoomEnabled
             }
             .store(in: &subscriptions)
         
@@ -214,12 +192,12 @@ final class MeetingInfoViewModel: ObservableObject {
                 MEGALogDebug("error fetching the changed privilege \(error)")
             }, receiveValue: { [weak self] _ in
                 guard  let self,
-                       let chatRoom = self.chatRoomUseCase.chatRoom(forChatId: self.scheduledMeeting.chatId) else {
+                       let chatRoom = chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId) else {
                     return
                 }
                 self.chatRoom = chatRoom
-                self.isModerator = chatRoom.ownPrivilege.toChatRoomParticipantPrivilege() == .moderator
-                self.isUserInChat = chatRoom.ownPrivilege.isUserInChat
+                isModerator = chatRoom.ownPrivilege.toChatRoomParticipantPrivilege() == .moderator
+                isUserInChat = chatRoom.ownPrivilege.isUserInChat
             })
             .store(in: &subscriptions)
         
@@ -242,26 +220,36 @@ final class MeetingInfoViewModel: ObservableObject {
 
 extension MeetingInfoViewModel {
     // MARK: - Open Invite
-    @MainActor func allowNonHostToAddParticipantsValueChanged(to enabled: Bool) {
-        Task {
-            do {
-                guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId) else { return }
-                isAllowNonHostToAddParticipantsOn = try await chatRoomUseCase.allowNonHostToAddParticipants(enabled, forChatRoom: chatRoom)
-            } catch {
-                MEGALogDebug("Unable to set the isAllowNonHostToAddParticipantsOn to \(enabled) for \(scheduledMeeting.chatId)")
+    @MainActor
+    func allowNonHostToAddParticipantsValueChanged(to enabled: Bool) async {
+        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId),
+              enabled != chatRoom.isOpenInviteEnabled else {
+            return
+        }
+        do {
+            isAllowNonHostToAddParticipantsOn = try await chatRoomUseCase.allowNonHostToAddParticipants(enabled, forChatRoom: chatRoom)
+            if isAllowNonHostToAddParticipantsOn {
+                tracker.trackAnalyticsEvent(with: ScheduledMeetingSettingEnableOpenInviteButtonEvent())
             }
+        } catch {
+            MEGALogDebug("Unable to set the isAllowNonHostToAddParticipantsOn to \(enabled) for \(scheduledMeeting.chatId)")
         }
     }
     
     // MARK: - Waiting Room
-    @MainActor func waitingRoomValueChanged(to enabled: Bool) {
-        Task {
-            do {
-                guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId) else { return }
-                isWaitingRoomOn = try await chatRoomUseCase.waitingRoom(enabled, forChatRoom: chatRoom)
-            } catch {
-                MEGALogDebug("Unable to set the isWaitingRoomOn to \(enabled) for \(scheduledMeeting.chatId)")
+    @MainActor
+    func waitingRoomValueChanged(to enabled: Bool) async {
+        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId),
+              enabled != chatRoom.isWaitingRoomEnabled else {
+            return
+        }
+        do {
+            isWaitingRoomOn = try await chatRoomUseCase.waitingRoom(enabled, forChatRoom: chatRoom)
+            if isWaitingRoomOn {
+                tracker.trackAnalyticsEvent(with: WaitingRoomEnableButtonEvent())
             }
+        } catch {
+            MEGALogDebug("Unable to set the isWaitingRoomOn to \(enabled) for \(scheduledMeeting.chatId)")
         }
     }
     
@@ -325,6 +313,7 @@ extension MeetingInfoViewModel {
     
     // MARK: - Edit meeting
     func editTapped() {
+        tracker.trackAnalyticsEvent(with: ScheduledMeetingEditMenuToolbarEvent())
         router
             .edit(meeting: scheduledMeeting)
             .sink { [weak self] meeting in

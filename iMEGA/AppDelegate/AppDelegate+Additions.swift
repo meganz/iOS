@@ -2,6 +2,7 @@ import ChatRepo
 import Combine
 import Foundation
 import LogRepo
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
@@ -324,6 +325,8 @@ extension AppDelegate {
     
     @MainActor
     @objc func openScheduleMeeting(forChatId chatId: ChatIdEntity, retry: Bool = true) {
+        DIContainer.tracker.trackAnalyticsEvent(with: ScheduledMeetingReminderNotificationMessageButtonEvent())
+
         guard MEGAChatSdk.shared.chatRoom(forChatId: chatId) != nil else {
             guard retry else { return }
             
@@ -350,6 +353,8 @@ extension AppDelegate {
     
     @MainActor
     @objc func joinScheduleMeeting(forChatId chatId: ChatIdEntity, retry: Bool = true) {
+        DIContainer.tracker.trackAnalyticsEvent(with: ScheduledMeetingReminderNotificationJoinButtonEvent())
+        
         guard let chatRoom = MEGAChatSdk.shared.chatRoom(forChatId: chatId) else {
             guard retry else { return }
             

@@ -1,4 +1,5 @@
 import Combine
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
@@ -33,6 +34,7 @@ final class WaitingRoomViewModel: ObservableObject {
     private let captureDeviceUseCase: any CaptureDeviceUseCaseProtocol
     private let audioSessionUseCase: any AudioSessionUseCaseProtocol
     private let permissionHandler: any DevicePermissionsHandling
+    private let tracker: any AnalyticsTracking
     private let chatLink: String?
     private let requestUserHandle: HandleEntity
     
@@ -103,6 +105,7 @@ final class WaitingRoomViewModel: ObservableObject {
          captureDeviceUseCase: some CaptureDeviceUseCaseProtocol,
          audioSessionUseCase: some AudioSessionUseCaseProtocol,
          permissionHandler: some DevicePermissionsHandling,
+         tracker: some AnalyticsTracking = DIContainer.tracker,
          chatLink: String? = nil,
          requestUserHandle: HandleEntity = 0) {
         self.scheduledMeeting = scheduledMeeting
@@ -121,6 +124,7 @@ final class WaitingRoomViewModel: ObservableObject {
         self.captureDeviceUseCase = captureDeviceUseCase
         self.audioSessionUseCase = audioSessionUseCase
         self.permissionHandler = permissionHandler
+        self.tracker = tracker
         self.chatLink = chatLink
         self.requestUserHandle = requestUserHandle
         initializeState()
@@ -205,6 +209,7 @@ final class WaitingRoomViewModel: ObservableObject {
     func leaveButtonTapped() {
         router.showLeaveAlert { [weak self] in
             guard let self else { return }
+            tracker.trackAnalyticsEvent(with: WaitingRoomLeaveButtonEvent())
             dismiss()
         }
     }
@@ -215,6 +220,7 @@ final class WaitingRoomViewModel: ObservableObject {
     
     func tapJoinAction(firstName: String, lastName: String) {
         guard viewState == .guestUserSetup else { return }
+        tracker.trackAnalyticsEvent(with: ScheduledMeetingJoinGuestButtonEvent())
         viewState = .guestUserJoining
         createEphemeralAccountAndJoinChat(firstName: firstName, lastName: lastName)
     }
@@ -402,6 +408,7 @@ final class WaitingRoomViewModel: ObservableObject {
     }
     
     private func showHostDidNotRespondAlert() {
+        tracker.trackAnalyticsEvent(with: WaitingRoomTimeoutEvent())
         showRespondAlert(router.showHostDidNotRespondAlert)
     }
 

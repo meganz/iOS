@@ -1,7 +1,9 @@
 @testable import MEGA
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
+import MEGAPresentation
 import MEGAPresentationMock
 import XCTest
 
@@ -267,6 +269,59 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
         let viewModel = FutureMeetingRoomViewModel(router: router, scheduledMeetingUseCase: scheduledMeetingUseCase)
         viewModel.cancelScheduledMeeting()
         evaluate { self.router.showErrorMessage_calledTimes == 1 }
+    }
+    
+    func testEditContextMenuOption_onOpenContextMenu_shouldShowEditOptionAtTheSecondPosition() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator)
+        let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoom)
+        let tracker = MockTracker()
+        let sut = FutureMeetingRoomViewModel(chatRoomUseCase: chatRoomUseCase, tracker: tracker)
+        
+        let title = sut.contextMenuOptions?[safe: 1]?.title
+        
+        XCTAssertEqual(title, Strings.Localizable.edit)
+    }
+    
+    func testEditContextMenuOption_onEdit_shouldTrackerEvent() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator)
+        let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoom)
+        let tracker = MockTracker()
+        let sut = FutureMeetingRoomViewModel(chatRoomUseCase: chatRoomUseCase, tracker: tracker)
+        
+        sut.contextMenuOptions?[safe: 1]?.action()
+        
+        tracker.assertTrackAnalyticsEventCalled(
+            with: [
+                ScheduledMeetingEditMenuItemEvent()
+            ]
+        )
+    }
+    
+    func testEditContextMenuOption_onEdit_shouldRouteToEditScreen() {
+        let router = MockChatRoomsListRouter()
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator)
+        let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoom)
+        let tracker = MockTracker()
+        let sut = FutureMeetingRoomViewModel(router: router, chatRoomUseCase: chatRoomUseCase, tracker: tracker)
+        
+        sut.contextMenuOptions?[safe: 1]?.action()
+        
+        XCTAssertEqual(router.editMeeting_calledTimes, 1)
+    }
+    
+    func testCancelContextMenuOption_onCancel_shouldTrackerEvent() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator)
+        let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoom)
+        let tracker = MockTracker()
+        let sut = FutureMeetingRoomViewModel(chatRoomUseCase: chatRoomUseCase, tracker: tracker)
+        
+        sut.contextMenuOptions?.last?.action()
+        
+        tracker.assertTrackAnalyticsEventCalled(
+            with: [
+                ScheduledMeetingCancelMenuItemEvent()
+            ]
+        )
     }
     
     // MARK: - Private methods

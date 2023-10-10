@@ -11,6 +11,7 @@ extension ScheduleMeetingViewModel {
         accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
         preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
+        tracker: some AnalyticsTracking = MockTracker(),
         isTesting: Bool = true
     ) {
         self.init(
@@ -18,7 +19,8 @@ extension ScheduleMeetingViewModel {
             viewConfiguration: viewConfiguration,
             accountUseCase: accountUseCase,
             preferenceUseCase: preferenceUseCase,
-            featureFlagProvider: featureFlagProvider
+            featureFlagProvider: featureFlagProvider,
+            tracker: tracker
         )
     }
 }
