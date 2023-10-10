@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGAAnalyticsiOS
 import XCTest
 
 @MainActor
@@ -70,6 +71,73 @@ final class MEGAAVViewControllerTests: XCTestCase {
             
             XCTAssertEqual(sut.activityIndicator.isAnimating, false, "Expect to false, failed instead at index: \(index) with status: \(status)")
         }
+    }
+    
+    // MARK: - Analytics
+    
+    func testPlayerDidChangeTimeControlStatusHasPlayedOnceBefore_whenStatusPlaying_setHasPlayedOnceBeforeTrue() throws {
+        let sut = try makeSUT()
+        
+        XCTAssertFalse(sut.hasPlayedOnceBefore)
+        
+        sut.playerDidChangeTimeControlStatus(.playing)
+        
+        XCTAssertTrue(sut.hasPlayedOnceBefore)
+    }
+    
+    func testHasPlayedOnceBefore_onViewDidLoad_doesNotSetHasPlayedOnceBeforeToTrue() throws {
+        let sut = try makeSUT()
+        
+        XCTAssertFalse(sut.hasPlayedOnceBefore)
+    }
+    
+    func testTrackAnalyticsOnStatus_nonPlaying_DoesNotSetHasPlayedOnceBeforeToTrue() throws {
+        let allCases: [AVPlayer.TimeControlStatus] = [.waitingToPlayAtSpecifiedRate, .playing, .paused]
+        
+        try? allCases
+            .filter { $0 != .playing }
+            .enumerated()
+            .forEach { (index, status) in
+                let sut = try makeSUT()
+                
+                sut.playerDidChangeTimeControlStatus(status)
+                
+                XCTAssertFalse(sut.hasPlayedOnceBefore, "fail at index: \(index) on status: \(status)")
+            }
+    }
+    
+    func testTrackAnalyticsOnStatus_playing_tracksAnalyticsEvent() throws {
+        let tracker = MockTracker()
+        let sut = try makeSUT()
+        
+        sut.trackAnalytics(for: .playing, tracker: tracker)
+        
+        tracker.assertTrackAnalyticsEventCalled(with: [VideoPlayerIsActivatedEvent()])
+    }
+    
+    func testTrackAnalyticsOnStatus_playingWhenVideoHasPlayedOnceBefore_DoesNotTrackskAnalyticsEvent() throws {
+        let tracker = MockTracker()
+        let sut = try makeSUT()
+        sut.hasPlayedOnceBefore = true
+        
+        sut.trackAnalytics(for: .playing, tracker: tracker)
+        
+        tracker.assertTrackAnalyticsEventCalled(with: [])
+    }
+    
+    func testTrackAnalyticsOnStatus_OtherThanPlaying_shouldNotTracksAnalyticsEvent() throws {
+        let allCases: [AVPlayer.TimeControlStatus] = [.waitingToPlayAtSpecifiedRate, .playing, .paused]
+        
+        try? allCases
+            .filter { $0 != .playing }
+            .forEach { status in
+                let tracker = MockTracker()
+                let sut = try makeSUT()
+                
+                sut.trackAnalytics(for: status, tracker: tracker)
+                
+                tracker.assertTrackAnalyticsEventCalled(with: [])
+            }
     }
     
     // MARK: - Helpers

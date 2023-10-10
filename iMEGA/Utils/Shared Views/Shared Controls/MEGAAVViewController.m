@@ -37,6 +37,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
         _node       = nil;
         _folderLink = NO;
         _subscriptions = [[NSMutableSet alloc] init];
+        _hasPlayedOnceBefore = NO;
     }
     
     return self;
@@ -50,6 +51,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
         _node            = folderLink ? [[MEGASdkManager sharedMEGASdkFolder] authorizeNode:node] : node;
         _folderLink      = folderLink;
         _fileUrl         = [apiForStreaming httpServerIsLocalOnly] ? [apiForStreaming httpServerGetLocalLink:_node] : [[apiForStreaming httpServerGetLocalLink:_node] mnz_updatedURLWithCurrentAddress];
+        _hasPlayedOnceBefore = NO;
     }
         
     return self;
