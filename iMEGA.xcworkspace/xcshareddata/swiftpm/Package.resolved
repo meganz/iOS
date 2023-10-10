@@ -181,6 +181,15 @@
       }
     },
     {
+      "identity" : "megadesigntoken",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/meganz/MEGADesignToken",
+      "state" : {
+        "branch" : "main",
+        "revision" : "934269c8b6b19a3f5e59d675014421cf37844f5d"
+      }
+    },
+    {
       "identity" : "messagekit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/MessageKit/MessageKit",
@@ -195,7 +204,7 @@
       "location" : "https://code.developers.mega.co.nz/mobile/kmm/mobile-analytics-ios",
       "state" : {
         "branch" : "main",
-        "revision" : "94d844d78abc95cdbd2a8bb675700cdc00fa1c33"
+        "revision" : "79d95b802c18a346b4df89e2cde04c7e90442bf6"
       }
     },
     {
@@ -330,15 +339,6 @@
       "state" : {
         "revision" : "4a3f36d1903554bb6b65df0e7936df9bb95d7525",
         "version" : "5.4.0"
-      }
-    },
-     {
-      "identity" : "MEGADesignToken",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/meganz/MEGADesignToken",
-      "state" : {
-        "branch" : "main",
-        "revision": "934269c8b6b19a3f5e59d675014421cf37844f5d"
       }
     }
   ],

@@ -1,10 +1,13 @@
 import Combine
 @testable import MEGA
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGADomainMock
 import XCTest
 
 final class MeetingInfoViewModelTests: XCTestCase {
+    private var subscriptions = Set<AnyCancellable>()
+    
     func testShowWaitingRoomWarningBanner_givenModeratorAndWaitingRoomOnAndAllowNonHostToAddParticipantsOn_shouldBeTrue() {
         let chatRoom =  ChatRoomEntity(ownPrivilege: .moderator, isOpenInviteEnabled: true, isWaitingRoomEnabled: true)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoom)
@@ -120,6 +123,66 @@ final class MeetingInfoViewModelTests: XCTestCase {
         evaluate {
             sut.showWaitingRoomWarningBanner == true
         }
+    }
+    
+    @MainActor
+    func testAllowNonHostToAddParticipantsValueChanged_toNewValueOn_shouldTrackEvent() async {
+        let tracker = MockTracker()
+        let chatRoom = ChatRoomEntity()
+        let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoom, allowNonHostToAddParticipantsEnabled: true)
+        let sut = MeetingInfoViewModel(chatRoomUseCase: chatRoomUseCase, tracker: tracker)
+                
+        await sut.allowNonHostToAddParticipantsValueChanged(to: true)
+                
+        tracker.assertTrackAnalyticsEventCalled(
+            with: [
+                ScheduledMeetingSettingEnableOpenInviteButtonEvent()
+            ]
+        )
+    }
+    
+    @MainActor
+    func testAllowNonHostToAddParticipantsValueChanged_toNewValueOff_shouldNotTrackEvent() async {
+        let tracker = MockTracker()
+        let chatRoom = ChatRoomEntity()
+        let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoom, allowNonHostToAddParticipantsEnabled: false)
+        let sut = MeetingInfoViewModel(chatRoomUseCase: chatRoomUseCase, tracker: tracker)
+                
+        await sut.allowNonHostToAddParticipantsValueChanged(to: false)
+                
+        tracker.assertTrackAnalyticsEventCalled(
+            with: []
+        )
+    }
+    
+    @MainActor
+    func testWaitingRoomValueChanged_toNewValueOn_shouldTrackEvent() async {
+        let tracker = MockTracker()
+        let chatRoom = ChatRoomEntity()
+        let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoom, waitingRoomEnabled: true)
+        let sut = MeetingInfoViewModel(chatRoomUseCase: chatRoomUseCase, tracker: tracker)
+                
+        await sut.waitingRoomValueChanged(to: true)
+                
+        tracker.assertTrackAnalyticsEventCalled(
+            with: [
+                WaitingRoomEnableButtonEvent()
+            ]
+        )
+    }
+    
+    @MainActor
+    func testWaitingRoomValueChanged_toNewValueOff_shouldNotTrackEvent() async {
+        let tracker = MockTracker()
+        let chatRoom = ChatRoomEntity()
+        let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoom, waitingRoomEnabled: false)
+        let sut = MeetingInfoViewModel(chatRoomUseCase: chatRoomUseCase, tracker: tracker)
+                
+        await sut.waitingRoomValueChanged(to: false)
+                
+        tracker.assertTrackAnalyticsEventCalled(
+            with: []
+        )
     }
     
     // MARK: - Private methods.

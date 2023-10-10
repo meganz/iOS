@@ -1,11 +1,14 @@
 import Combine
 @testable import MEGA
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
 import XCTest
 
 final class WaitingRoomViewModelTests: XCTestCase {
+    private var subscriptions = Set<AnyCancellable>()
+
     func testMeetingTitle_onLoadWaitingRoom_shouldMatch() {
         let meetingTitle = "Test Meeting"
         let scheduledMeeting = ScheduledMeetingEntity(title: meetingTitle)
@@ -506,6 +509,51 @@ final class WaitingRoomViewModelTests: XCTestCase {
         evaluate {
             sut.speakerOnIcon == .speakerOn
         }
+    }
+    
+    func testTapJoinAction_onGuestUserSetup_shouldTrackerEvent() {
+        let tracker = MockTracker()
+        let accountUseCase = MockAccountUseCase(isGuest: true)
+        let sut = WaitingRoomViewModel(accountUseCase: accountUseCase, tracker: tracker)
+        
+        sut.tapJoinAction(firstName: "First", lastName: "Last")
+        
+        tracker.assertTrackAnalyticsEventCalled(
+            with: [
+                ScheduledMeetingJoinGuestButtonEvent()
+            ]
+        )
+    }
+    
+    func testShowHostDidNotRespondAlert_onTimeout_shouldTrackerEvent() {
+        let scheduledMeeting = ScheduledMeetingEntity(chatId: 100)
+        let callEntity = CallEntity(status: .waitingRoom, chatId: 100, termCodeType: .waitingRoomTimeout)
+        let callUpdateSubject = PassthroughSubject<CallEntity, Never>()
+        let callUseCase = MockCallUseCase(callUpdateSubject: callUpdateSubject)
+        let tracker = MockTracker()
+        let sut = WaitingRoomViewModel(scheduledMeeting: scheduledMeeting, callUseCase: callUseCase, tracker: tracker)
+
+        XCTAssertEqual(sut.viewState, .waitForHostToLetIn)
+        
+        let exp = expectation(description: "Should receive waiting room timeout change")
+        
+        callUseCase
+            .onCallUpdate()
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+                exp.fulfill()
+            }
+            .store(in: &subscriptions)
+        
+        callUpdateSubject.send(callEntity)
+        
+        wait(for: [exp], timeout: 0.5)
+        
+        tracker.assertTrackAnalyticsEventCalled(
+            with: [
+                WaitingRoomTimeoutEvent()
+            ]
+        )
     }
     
     // MARK: - Private methods

@@ -1,12 +1,14 @@
 @testable import MEGA
 import MEGADomain
+import MEGAPresentation
 
 extension ChatRoomLinkViewModel {
     convenience init(
         router: some MeetingInfoRouting = MockMeetingInfoRouter(),
         chatRoom: ChatRoomEntity = ChatRoomEntity(),
         scheduledMeeting: ScheduledMeetingEntity = ScheduledMeetingEntity(),
-        chatLinkUseCase: any ChatLinkUseCaseProtocol = MockChatLinkUseCase(),
+        chatLinkUseCase: some ChatLinkUseCaseProtocol = MockChatLinkUseCase(),
+        tracker: some AnalyticsTracking = MockTracker(),
         subtitle: String = "",
         isTesting: Bool = true
     ) {
@@ -15,6 +17,7 @@ extension ChatRoomLinkViewModel {
             chatRoom: chatRoom,
             scheduledMeeting: scheduledMeeting,
             chatLinkUseCase: chatLinkUseCase,
+            tracker: tracker,
             subtitle: subtitle
         )
     }

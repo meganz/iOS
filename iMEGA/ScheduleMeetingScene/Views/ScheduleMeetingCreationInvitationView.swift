@@ -22,7 +22,9 @@ struct ScheduleMeetingCreationInvitationView: View {
                 Divider()
                     .padding(.leading)
                 
-                Toggle(isOn: $viewModel.calendarInviteEnabled) {
+                Toggle(isOn: $viewModel.calendarInviteEnabled.onChange { enabled in
+                    viewModel.onCalendarInviteEnabledChange(enabled)
+                }) {
                     Text(Strings.Localizable.Meetings.ScheduleMeeting.sendCalendarInvite)
                         .opacity(viewModel.shouldAllowEditingCalendarInvite ? 1.0 : 0.3)
                 }

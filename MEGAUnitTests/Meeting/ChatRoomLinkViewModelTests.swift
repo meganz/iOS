@@ -1,5 +1,6 @@
 import Combine
 @testable import MEGA
+import MEGAAnalyticsiOS
 import MEGADomain
 import XCTest
 
@@ -86,6 +87,19 @@ final class ChatRoomLinkViewModelTests: XCTestCase {
         }
         let exceptionShare = expectation(for: predicateShare, evaluatedWith: nil)
         wait(for: [exceptionShare], timeout: 10)
+    }
+
+    func testShareMeetingLinkTapped_onShareLinkTapped_shouldTrackEvent() {
+        let tracker = MockTracker()
+        let sut = ChatRoomLinkViewModel(tracker: tracker)
+        
+        sut.shareMeetingLinkTapped()
+        
+        tracker.assertTrackAnalyticsEventCalled(
+            with: [
+                ScheduledMeetingShareMeetingLinkButtonEvent()
+            ]
+        )
     }
 }
 

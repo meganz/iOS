@@ -31,12 +31,23 @@ struct MeetingInfoView: View {
                     }
                     
                     if viewModel.isModerator {
-                        MeetingInfoWaitingRoomSettingView(isWaitingRoomOn: $viewModel.isWaitingRoomOn, shouldAllowEditingWaitingRoom: viewModel.shouldAllowEditingWaitingRoom)
+                        MeetingInfoWaitingRoomSettingView(
+                            isWaitingRoomOn: $viewModel.isWaitingRoomOn.onChange { enabled in
+                                Task {
+                                    await viewModel.waitingRoomValueChanged(to: enabled)
+                                }
+                            },
+                            shouldAllowEditingWaitingRoom: viewModel.shouldAllowEditingWaitingRoom
+                        )
                         
                         ToggleView(
                             image: Asset.Images.Meetings.Info.allowNonHostToAddParticipant.name,
                             text: Strings.Localizable.Meetings.AddContacts.AllowNonHost.message,
-                            isOn: $viewModel.isAllowNonHostToAddParticipantsOn)
+                            isOn: $viewModel.isAllowNonHostToAddParticipantsOn.onChange { enabled in
+                                Task {
+                                    await viewModel.allowNonHostToAddParticipantsValueChanged(to: enabled)
+                                }
+                            })
                         .background(colorScheme == .dark ? Color(Colors.General.Black._1c1c1e.name) : .white)
                     }
                     

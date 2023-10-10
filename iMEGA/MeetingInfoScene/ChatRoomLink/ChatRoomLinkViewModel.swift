@@ -1,13 +1,15 @@
 import Combine
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAL10n
+import MEGAPresentation
 
 final class ChatRoomLinkViewModel: ObservableObject {
-    private var chatLinkUseCase: any ChatLinkUseCaseProtocol
     private let router: any MeetingInfoRouting
-
     private var chatRoom: ChatRoomEntity
     private let scheduledMeeting: ScheduledMeetingEntity
+    private var chatLinkUseCase: any ChatLinkUseCaseProtocol
+    private let tracker: any AnalyticsTracking
     private let subtitle: String
 
     @Published var isMeetingLinkOn = false
@@ -18,17 +20,21 @@ final class ChatRoomLinkViewModel: ObservableObject {
     private var subscriptions = Set<AnyCancellable>()
     private var meetingLink: String?
 
-    init(router: some MeetingInfoRouting,
-         chatRoom: ChatRoomEntity,
-         scheduledMeeting: ScheduledMeetingEntity,
-         chatLinkUseCase: any ChatLinkUseCaseProtocol,
-         subtitle: String) {
+    init(
+        router: some MeetingInfoRouting,
+        chatRoom: ChatRoomEntity,
+        scheduledMeeting: ScheduledMeetingEntity,
+        chatLinkUseCase: some ChatLinkUseCaseProtocol,
+        tracker: some AnalyticsTracking = DIContainer.tracker,
+        subtitle: String
+    ) {
         self.router = router
         self.chatRoom = chatRoom
         self.scheduledMeeting = scheduledMeeting
         self.chatLinkUseCase = chatLinkUseCase
+        self.tracker = tracker
         self.subtitle = subtitle
-
+        
         initSubscriptions()
         fetchInitialValues()
         listenToMeetingLinkToggleChange()
@@ -83,6 +89,7 @@ final class ChatRoomLinkViewModel: ObservableObject {
     }
     
     func shareMeetingLinkTapped() {
+        tracker.trackAnalyticsEvent(with: ScheduledMeetingShareMeetingLinkButtonEvent())
         showShareMeetingLinkOptions = true
     }
     

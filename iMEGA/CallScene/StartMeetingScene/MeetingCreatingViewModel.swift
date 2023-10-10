@@ -1,4 +1,5 @@
 import Combine
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
@@ -56,6 +57,7 @@ final class MeetingCreatingViewModel: ViewModelType {
     private let userImageUseCase: any UserImageUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
+    private let tracker: any AnalyticsTracking
 
     private var isVideoEnabled = false
     private var isSpeakerEnabled = true
@@ -78,22 +80,24 @@ final class MeetingCreatingViewModel: ViewModelType {
     }
     
     // MARK: - Init
-    init(router: some MeetingCreatingViewRouting,
-         type: MeetingConfigurationType,
-         meetingUseCase: some MeetingCreatingUseCaseProtocol,
-         audioSessionUseCase: some AudioSessionUseCaseProtocol,
-         localVideoUseCase: some CallLocalVideoUseCaseProtocol,
-         captureDeviceUseCase: some CaptureDeviceUseCaseProtocol,
-         permissionHandler: some DevicePermissionsHandling,
-         userImageUseCase: some UserImageUseCaseProtocol,
-         accountUseCase: some AccountUseCaseProtocol,
-         megaHandleUseCase: some MEGAHandleUseCaseProtocol,
-         link: String?,
-         userHandle: UInt64) {
+    init(
+        router: some MeetingCreatingViewRouting,
+        type: MeetingConfigurationType,
+        meetingUseCase: some MeetingCreatingUseCaseProtocol,
+        audioSessionUseCase: some AudioSessionUseCaseProtocol,
+        localVideoUseCase: some CallLocalVideoUseCaseProtocol,
+        captureDeviceUseCase: some CaptureDeviceUseCaseProtocol,
+        permissionHandler: some DevicePermissionsHandling,
+        userImageUseCase: some UserImageUseCaseProtocol,
+        accountUseCase: some AccountUseCaseProtocol,
+        megaHandleUseCase: some MEGAHandleUseCaseProtocol,
+        tracker: some AnalyticsTracking = DIContainer.tracker,
+        link: String?,
+        userHandle: UInt64
+    ) {
         self.router = router
         self.type = type
         self.meetingUseCase = meetingUseCase
-        self.link = link
         self.audioSessionUseCase = audioSessionUseCase
         self.localVideoUseCase = localVideoUseCase
         self.captureDeviceUseCase = captureDeviceUseCase
@@ -101,6 +105,8 @@ final class MeetingCreatingViewModel: ViewModelType {
         self.userImageUseCase = userImageUseCase
         self.accountUseCase = accountUseCase
         self.megaHandleUseCase = megaHandleUseCase
+        self.tracker = tracker
+        self.link = link
         self.userHandle = userHandle
         
         appDidBecomeActiveSubscription = NotificationCenter.default
@@ -135,19 +141,18 @@ final class MeetingCreatingViewModel: ViewModelType {
             selectFrontCameraIfNeeded()
             switch type {
             case .join, .guestJoin:
-                guard let link = link else {
-                    return
-                }
+                guard let link else { return }
                 checkChatLink(link: link)
             case .start:
                 meetingName = defaultMeetingName
                 invokeCommand?(
-                    .configView(title: meetingName,
-                                type: type,
-                                isMicrophoneEnabled: isMicrophoneEnabled)
+                    .configView(
+                        title: meetingName,
+                        type: type,
+                        isMicrophoneEnabled: isMicrophoneEnabled
+                    )
                 )
             }
-
         case .didTapMicroPhoneButton:
             checkForAudioPermission {
                 self.isMicrophoneEnabled = !self.isMicrophoneEnabled
@@ -176,14 +181,10 @@ final class MeetingCreatingViewModel: ViewModelType {
             case .start:
                 startChatCall()
             case .join:
-                guard let chatId = chatId else {
-                    return
-                }
+                guard let chatId else { return }
                 joinChatCall(chatId: chatId)
             case .guestJoin:
-                guard let chatId = chatId else {
-                    return
-                }
+                guard let chatId else { return }
                 createEphemeralAccountAndJoinChat(chatId: chatId)
             }
             invokeCommand?(.loadingStartMeeting)
@@ -246,18 +247,15 @@ final class MeetingCreatingViewModel: ViewModelType {
     }
     
     private func createEphemeralAccountAndJoinChat(chatId: UInt64) {
-        guard let link = link else {
-            return
-        }
-        
-        self.meetingUseCase.createEphemeralAccountAndJoinChat(firstName: self.firstName, lastName: self.lastName, link: link) { [weak self] in
-            guard let self = self else { return }
+        guard let link else { return }
+        tracker.trackAnalyticsEvent(with: ScheduledMeetingJoinGuestButtonEvent())
+        meetingUseCase.createEphemeralAccountAndJoinChat(firstName: firstName, lastName: lastName, link: link) { [weak self] in
+            guard let self else { return }
             switch $0 {
             case .success:
-                self.joinChatCall(chatId: chatId)
-                
+                joinChatCall(chatId: chatId)
             case .failure:
-                self.dismiss()
+                dismiss()
             }
         } karereInitCompletion: {
             if self.isVideoEnabled {

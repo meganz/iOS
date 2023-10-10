@@ -1,6 +1,7 @@
 import ChatRepo
 import Combine
 import Foundation
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
@@ -31,12 +32,15 @@ final class ChatRoomsListViewModel: ObservableObject {
     private let permissionHandler: any DevicePermissionsHandling
     private let permissionAlertRouter: any PermissionAlertRouting
     private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private let tracker: any AnalyticsTracking
     private let notificationCenter: NotificationCenter
     private let chatViewType: ChatViewType
     
-    lazy var contextMenuManager = ContextMenuManager(chatMenuDelegate: self,
-                                                     meetingContextMenuDelegate: self,
-                                                     createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo))
+    lazy var contextMenuManager = ContextMenuManager(
+        chatMenuDelegate: self,
+        meetingContextMenuDelegate: self,
+        createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo)
+    )
     private var myAvatarManager: MyAvatarManager?
     
     lazy private var globalDNDNotificationControl = GlobalDNDNotificationControl(delegate: self)
@@ -133,7 +137,8 @@ final class ChatRoomsListViewModel: ObservableObject {
          chatViewMode: ChatViewMode = .chats,
          permissionHandler: some DevicePermissionsHandling,
          permissionAlertRouter: some PermissionAlertRouting,
-         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
+         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
+         tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.router = router
         self.chatUseCase = chatUseCase
@@ -151,6 +156,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         self.permissionHandler = permissionHandler
         self.permissionAlertRouter = permissionAlertRouter
         self.featureFlagProvider = featureFlagProvider
+        self.tracker = tracker
         self.isSearchActive = false
         self.isFirstMeetingsLoad = true
         
@@ -678,7 +684,7 @@ final class ChatRoomsListViewModel: ObservableObject {
             image: .startMeeting
         ) { [weak self] in
             guard let self else { return }
-            self.router.presentCreateMeeting()
+            router.presentCreateMeeting()
         }
     }
     
@@ -688,7 +694,7 @@ final class ChatRoomsListViewModel: ObservableObject {
             image: .joinAMeeting
         ) { [weak self] in
             guard let self else { return }
-            self.router.presentEnterMeeting()
+            router.presentEnterMeeting()
         }
     }
     
@@ -698,7 +704,8 @@ final class ChatRoomsListViewModel: ObservableObject {
             image: .scheduleMeeting
         ) { [weak self] in
             guard let self else { return }
-            self.router.presentScheduleMeeting()
+            tracker.trackAnalyticsEvent(with: ScheduleMeetingMenuItemEvent())
+            router.presentScheduleMeeting()
         }
     }
     

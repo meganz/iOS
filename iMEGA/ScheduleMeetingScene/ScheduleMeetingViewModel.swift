@@ -1,4 +1,5 @@
 import Combine
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAFoundation
 import MEGAL10n
@@ -125,6 +126,7 @@ final class ScheduleMeetingViewModel: ObservableObject {
     private let viewConfiguration: any ScheduleMeetingViewConfigurable
     private let accountUseCase: any AccountUseCaseProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private let tracker: any AnalyticsTracking
     
     private var subscriptions = Set<AnyCancellable>()
 
@@ -133,12 +135,14 @@ final class ScheduleMeetingViewModel: ObservableObject {
         viewConfiguration: some ScheduleMeetingViewConfigurable,
         accountUseCase: some AccountUseCaseProtocol,
         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
-        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
+        tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.router = router
         self.viewConfiguration = viewConfiguration
         self.accountUseCase = accountUseCase
         self.featureFlagProvider = featureFlagProvider
+        self.tracker = tracker
         self.meetingName = viewConfiguration.meetingName
         self.meetingDescription = viewConfiguration.meetingDescription
         self.startDate = viewConfiguration.startDate
@@ -156,6 +160,9 @@ final class ScheduleMeetingViewModel: ObservableObject {
     
     // MARK: - Public
     func submitButtonTapped() {
+        if isNewMeeting {
+            tracker.trackAnalyticsEvent(with: ScheduledMeetingCreateConfirmButtonEvent())
+        }
         Task {
             do {
                 await showSpinner()
@@ -216,6 +223,7 @@ final class ScheduleMeetingViewModel: ObservableObject {
     }
     
     func showRecurrenceOptionsView() {
+        tracker.trackAnalyticsEvent(with: ScheduledMeetingSettingRecurrenceButtonEvent())
         router
             .showRecurrenceOptionsView(rules: rules, startDate: startDate)?
             .assign(to: &$rules)
@@ -244,6 +252,16 @@ final class ScheduleMeetingViewModel: ObservableObject {
         && !meetingNameTooLong
         && !meetingDescriptionTooLong
         && !trimmedMeetingName.isEmpty
+    }
+    
+    func onMeetingLinkEnabledChange(_ enabled: Bool) {
+        guard enabled else { return }
+        tracker.trackAnalyticsEvent(with: ScheduledMeetingSettingEnableMeetingLinkButtonEvent())
+    }
+    
+    func onCalendarInviteEnabledChange(_ enabled: Bool) {
+        guard enabled else { return }
+        tracker.trackAnalyticsEvent(with: ScheduledMeetingSettingSendCalendarInviteButtonEvent())
     }
     
     // MARK: - Private

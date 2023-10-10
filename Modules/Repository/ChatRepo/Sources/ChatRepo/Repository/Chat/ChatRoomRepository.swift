@@ -162,7 +162,6 @@ public final class ChatRoomRepository: ChatRoomRepositoryProtocol {
                     completion(.failure(error.toAllowNonHostToAddParticipantsErrorEntity()))
                 }
             }
-            
             sdk.openInvite(enabled, chatId: chatRoom.chatId, delegate: requestDelegate)
         }
     }

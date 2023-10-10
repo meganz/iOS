@@ -1,5 +1,6 @@
 import Combine
 @testable import MEGA
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
@@ -628,6 +629,93 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
         XCTAssertEqual(
             viewModel.endRecurrenceDetailText(),
             Strings.Localizable.Meetings.ScheduleMeeting.Create.SelectedRecurrenceOption.never
+        )
+    }
+    
+    func testSubmitButtonTapped_forNewMeeting_shouldTrackEvent() {
+        let viewConfiguration = MockScheduleMeetingViewConfiguration(type: .new)
+        let tracker = MockTracker()
+        let sut = ScheduleMeetingViewModel(viewConfiguration: viewConfiguration, tracker: tracker)
+        
+        sut.submitButtonTapped()
+        
+        tracker.assertTrackAnalyticsEventCalled(
+            with: [
+                ScheduledMeetingCreateConfirmButtonEvent()
+            ]
+        )
+    }
+    
+    func testSubmitButtonTapped_forEditMeeting_shouldNotTrackEvent() {
+        let viewConfiguration = MockScheduleMeetingViewConfiguration(type: .edit)
+        let tracker = MockTracker()
+        let sut = ScheduleMeetingViewModel(viewConfiguration: viewConfiguration, tracker: tracker)
+        
+        sut.submitButtonTapped()
+        
+        tracker.assertTrackAnalyticsEventCalled(
+            with: []
+        )
+    }
+    
+    func testShowRecurrenceOptionsView_onShow_shouldTrackEvent() {
+        let tracker = MockTracker()
+        let sut = ScheduleMeetingViewModel(tracker: tracker)
+        
+        sut.showRecurrenceOptionsView()
+        
+        tracker.assertTrackAnalyticsEventCalled(
+            with: [
+                ScheduledMeetingSettingRecurrenceButtonEvent()
+            ]
+        )
+    }
+    
+    func testOnMeetingLinkEnabledChange_onEnabled_shouldTrackEvent() {
+        let tracker = MockTracker()
+        let sut = ScheduleMeetingViewModel(tracker: tracker)
+        
+        sut.onMeetingLinkEnabledChange(true)
+        
+        tracker.assertTrackAnalyticsEventCalled(
+            with: [
+                ScheduledMeetingSettingEnableMeetingLinkButtonEvent()
+            ]
+        )
+    }
+    
+    func testOnMeetingLinkEnabledChange_onDisabled_shouldNotTrackEvent() {
+        let tracker = MockTracker()
+        let sut = ScheduleMeetingViewModel(tracker: tracker)
+        
+        sut.onMeetingLinkEnabledChange(false)
+        
+        tracker.assertTrackAnalyticsEventCalled(
+            with: []
+        )
+    }
+    
+    func testOnCalendarInviteEnabledChange_onEnabled_shouldTrackEvent() {
+        let tracker = MockTracker()
+        let sut = ScheduleMeetingViewModel(tracker: tracker)
+        
+        sut.onCalendarInviteEnabledChange(true)
+        
+        tracker.assertTrackAnalyticsEventCalled(
+            with: [
+                ScheduledMeetingSettingSendCalendarInviteButtonEvent()
+            ]
+        )
+    }
+    
+    func testOnCalendarInviteEnabledChange_onDisabled_shouldNotTrackEvent() {
+        let tracker = MockTracker()
+        let sut = ScheduleMeetingViewModel(tracker: tracker)
+        
+        sut.onCalendarInviteEnabledChange(false)
+        
+        tracker.assertTrackAnalyticsEventCalled(
+            with: []
         )
     }
     
