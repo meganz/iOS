@@ -1,3 +1,4 @@
+import ChatRepoMock
 @testable import MEGA
 import XCTest
 
@@ -20,5 +21,71 @@ final class MEGALinkManager_AdditionsTests: XCTestCase {
         
         XCTAssertEqual(MEGALinkManager.albumPublicLink(),
                        URL(string: "https://mega.nz/collection/p3IBQCiZ#Nt8-bopPB8em4cOlKFqStA"))
+    }
+    
+    func testShouldOpenWaitingRoom_forWaitingRoomEnabledAndOwnPrivilegeNotModerator_shouldReturnTrue() {
+        let request = MockChatRequest()
+        let chatSdk = MockChatSDK(
+            chatRoom: MockChatRoom(ownPrivilage: .standard),
+            hasChatOptionEnabled: true
+        )
+        let result = MEGALinkManager.shouldOpenWaitingRoom(request: request, chatSdk: chatSdk)
+        
+        XCTAssertTrue(result)
+    }
+    
+    func testShouldOpenWaitingRoom_forWaitingRoomEnabledAndOwnPrivilegeModerator_shouldReturnFalse() {
+        let request = MockChatRequest()
+        let chatSdk = MockChatSDK(
+            chatRoom: MockChatRoom(ownPrivilage: .moderator),
+            hasChatOptionEnabled: true
+        )
+        let result = MEGALinkManager.shouldOpenWaitingRoom(request: request, chatSdk: chatSdk)
+        
+        XCTAssertFalse(result)
+    }
+    
+    func testShouldOpenWaitingRoom_forWaitingRoomNotEnabledAndOwnPrivilegeNotModerator_shouldReturnFalse() {
+        let request = MockChatRequest()
+        let chatSdk = MockChatSDK(
+            chatRoom: MockChatRoom(ownPrivilage: .standard),
+            hasChatOptionEnabled: false
+        )
+        let result = MEGALinkManager.shouldOpenWaitingRoom(request: request, chatSdk: chatSdk)
+        
+        XCTAssertFalse(result)
+    }
+    
+    func testIsHostInWaitingRoom_forWaitingRoomEnabledAndOwnPrivilegeModerator_shouldReturnTrue() {
+        let request = MockChatRequest()
+        let chatSdk = MockChatSDK(
+            chatRoom: MockChatRoom(ownPrivilage: .moderator),
+            hasChatOptionEnabled: true
+        )
+        let result = MEGALinkManager.isHostInWaitingRoom(request: request, chatSdk: chatSdk)
+        
+        XCTAssertTrue(result)
+    }
+    
+    func testIsHostInWaitingRoom_forWaitingRoomEnabledAndOwnPrivilegeNotModerator_shouldReturnFalse() {
+        let request = MockChatRequest()
+        let chatSdk = MockChatSDK(
+            chatRoom: MockChatRoom(ownPrivilage: .standard),
+            hasChatOptionEnabled: true
+        )
+        let result = MEGALinkManager.isHostInWaitingRoom(request: request, chatSdk: chatSdk)
+        
+        XCTAssertFalse(result)
+    }
+    
+    func testIsHostInWaitingRoom_forWaitingRoomNotEnabledAndOwnPrivilegeModerator_shouldReturnFalse() {
+        let request = MockChatRequest()
+        let chatSdk = MockChatSDK(
+            chatRoom: MockChatRoom(ownPrivilage: .moderator),
+            hasChatOptionEnabled: false
+        )
+        let result = MEGALinkManager.isHostInWaitingRoom(request: request, chatSdk: chatSdk)
+        
+        XCTAssertFalse(result)
     }
 }

@@ -3,14 +3,17 @@ import MEGAChatSdk
 
 public final class MockChatSDK: MEGAChatSdk {
     private let chatRoom: MEGAChatRoom?
+    private let hasChatOptionEnabled: Bool
     
     public var autojoinPublicChatCalled = 0
     public var autorejoinPublicChatCalled = 0
     
     public init(
-        chatRoom: MEGAChatRoom? = MockChatRoom()
+        chatRoom: MEGAChatRoom? = MockChatRoom(),
+        hasChatOptionEnabled: Bool = false
     ) {
         self.chatRoom = chatRoom
+        self.hasChatOptionEnabled = hasChatOptionEnabled
         super.init()
     }
     
@@ -33,5 +36,9 @@ public final class MockChatSDK: MEGAChatSdk {
     public override func updateChatPermissions(_ chatId: UInt64, userHandle: UInt64, privilege: Int, delegate: MEGAChatRequestDelegate) {
         let request = MockChatRequest(chatHandle: chatId, privilege: privilege)
         delegate.onChatRequestFinish?(self, request: request, error: MockChatError())
+    }
+    
+    public override func hasChatOptionEnabled(for option: MEGAChatOption, chatOptionsBitMask: Int) -> Bool {
+        hasChatOptionEnabled
     }
 }
