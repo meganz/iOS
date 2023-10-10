@@ -16,6 +16,8 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
     
     public var startMonitoringNodesUpdateCalled = 0
     public var stopMonitoringNodesUpdateCalled = 0
+    public var searchString: String?
+    public var searchRecursive: Bool?
     
     public init(photoNodes: [NodeEntity] = [],
                 videoNodes: [NodeEntity] = [],
@@ -57,6 +59,8 @@ final public class MockFilesSearchRepository: NSObject, FilesSearchRepositoryPro
                        supportCancel: Bool,
                        sortOrderType: SortOrderEntity,
                        formatType: NodeFormatEntity) async throws -> [NodeEntity] {
+        searchString = string
+        searchRecursive = recursive
         if formatType == .photo {
             return photoNodes.filter { !$0.isFolder }
         } else if formatType == .video {

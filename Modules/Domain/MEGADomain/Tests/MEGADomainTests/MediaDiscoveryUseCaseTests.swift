@@ -13,11 +13,14 @@ final class MediaDiscoveryUseCaseTests: XCTestCase {
         let fileSearchRepo = MockFilesSearchRepository(photoNodes: photoNodes, videoNodes: videoNodes)
         let useCase = MediaDiscoveryUseCase(filesSearchRepository: fileSearchRepo, nodeUpdateRepository: MockNodeUpdateRepository.newRepo)
         do {
-            let nodes = try await useCase.nodes(forParent: NodeEntity(name: "parent", handle: 0), recursive: true)
+            let nodes = try await useCase.nodes(forParent: NodeEntity(name: "parent", handle: 0), recursive: false)
             XCTAssertEqual(Set(nodes), Set(expectedNodes))
         } catch {
             XCTFail("Unexpected failure")
         }
+        
+        XCTAssertEqual(fileSearchRepo.searchString, "*")
+        XCTAssertFalse(fileSearchRepo.searchRecursive ?? true)
     }
     
     func testLoadNodes_forParentNode_returnsNodesRecursively() async {
@@ -39,6 +42,9 @@ final class MediaDiscoveryUseCaseTests: XCTestCase {
         } catch {
             XCTFail("Unexpected failure")
         }
+        
+        XCTAssertEqual(fileSearchRepo.searchString, "*")
+        XCTAssertTrue(fileSearchRepo.searchRecursive ?? false)
     }
     
     func testNodeUpdates_subscription_returnPublishedNodeUpdatesAndHandleDelegateCalls() {

@@ -12,6 +12,8 @@ public class MediaDiscoveryUseCase<T: FilesSearchRepositoryProtocol,
     private let filesSearchRepository: T
     private let nodeUpdateRepository: U
     
+    private let searchAllPhotosString = "*"
+    
     public lazy var nodeUpdatesPublisher: AnyPublisher<[NodeEntity], Never> = {
         filesSearchRepository.nodeUpdatesPublisher.handleEvents(receiveSubscription: { [weak self] _ in
             self?.filesSearchRepository.startMonitoringNodesUpdate(callback: nil)
@@ -30,13 +32,13 @@ public class MediaDiscoveryUseCase<T: FilesSearchRepositoryProtocol,
     }
 
     public func nodes(forParent parent: NodeEntity, recursive: Bool) async throws -> [NodeEntity] {
-        async let photos = filesSearchRepository.search(string: nil,
+        async let photos = filesSearchRepository.search(string: searchAllPhotosString,
                                                         parent: parent,
                                                         recursive: recursive,
                                                         supportCancel: false,
                                                         sortOrderType: .defaultDesc,
                                                         formatType: .photo)
-        async let videos = filesSearchRepository.search(string: nil,
+        async let videos = filesSearchRepository.search(string: searchAllPhotosString,
                                                         parent: parent,
                                                         recursive: recursive,
                                                         supportCancel: false,

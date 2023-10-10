@@ -52,6 +52,7 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
     private lazy var pageStayTimeTracker = PageStayTimeTracker()
     private var subscriptions = Set<AnyCancellable>()
     private weak var delegate: (any MediaDiscoveryContentDelegate)?
+    private let shouldIncludeSubfolderMedia: Bool
     
     init(contentMode: PhotoLibraryContentMode,
          parentNode: NodeEntity,
@@ -70,6 +71,7 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
         self.analyticsUseCase = analyticsUseCase
         self.mediaDiscoveryUseCase = mediaDiscoveryUseCase
         self.sortOrder = sortOrder
+        shouldIncludeSubfolderMedia = preferenceUseCase[.mediaDiscoveryShouldIncludeSubfolderMedia] ?? true
         $autoMediaDiscoveryBannerDismissed.useCase = preferenceUseCase
         
         if isAutomaticallyShown {
@@ -85,7 +87,8 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
         do {
             viewState = .normal
             try Task.checkCancellation()
-            let nodes = try await mediaDiscoveryUseCase.nodes(forParent: parentNode, recursive: true)
+            let nodes = try await mediaDiscoveryUseCase.nodes(forParent: parentNode,
+                                                              recursive: shouldIncludeSubfolderMedia)
             try Task.checkCancellation()
             photoLibraryContentViewModel.library = await sortIntoPhotoLibrary(nodes: nodes, sortOrder: sortOrder)
             try Task.checkCancellation()
