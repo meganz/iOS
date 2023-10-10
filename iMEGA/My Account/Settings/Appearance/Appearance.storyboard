@@ -310,14 +310,14 @@
 Learn more about media discovery.</string>
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="n0F-JB-RHz">
-                                        <rect key="frame" x="0.0" y="309.5" width="375" height="48.5"/>
+                                        <rect key="frame" x="0.0" y="309.5" width="375" height="48"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="n0F-JB-RHz" id="MIX-VZ-K1s">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="48.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="48"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Mbe-4j-LXy">
-                                                    <rect key="frame" x="310" y="9" width="51" height="31"/>
+                                                    <rect key="frame" x="310" y="8.5" width="51" height="31"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="49" id="2Rz-79-cyd"/>
                                                     </constraints>
@@ -325,8 +325,8 @@ Learn more about media discovery.</string>
                                                         <action selector="mediaDiscoveryViewValueChanged:" destination="AiK-7O-QVc" eventType="valueChanged" id="kbk-d4-TTU"/>
                                                     </connections>
                                                 </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Media discovery view" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BxQ-tt-5Z4">
-                                                    <rect key="frame" x="16" y="13.5" width="163" height="21.5"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Media discovery view" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BxQ-tt-5Z4">
+                                                    <rect key="frame" x="16" y="13.5" width="163" height="21"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -358,14 +358,14 @@ Learn more about media discovery.</string>
                             <tableViewSection footerTitle="Images and videos from subfolders will also be included in the media discovery view when the main folder is in this view" id="jOt-3f-bw8">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="6ma-Ho-Ze5">
-                                        <rect key="frame" x="0.0" y="438" width="375" height="48.5"/>
+                                        <rect key="frame" x="0.0" y="437.5" width="375" height="48"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="6ma-Ho-Ze5" id="5y4-nb-zym">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="48.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="48"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="MYF-l0-Zwg">
-                                                    <rect key="frame" x="310" y="9" width="51" height="31"/>
+                                                    <rect key="frame" x="310" y="8.5" width="51" height="31"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="49" id="rjd-rJ-48y"/>
                                                     </constraints>
@@ -373,8 +373,8 @@ Learn more about media discovery.</string>
                                                         <action selector="mediaDiscoverySubfolderValueChanged:" destination="AiK-7O-QVc" eventType="valueChanged" id="kDJ-rw-kv0"/>
                                                     </connections>
                                                 </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subfolder media discovery" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bdV-sx-htU">
-                                                    <rect key="frame" x="16" y="13.5" width="202.5" height="21.5"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subfolder media discovery" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bdV-sx-htU">
+                                                    <rect key="frame" x="16" y="13.5" width="202.5" height="21"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -406,7 +406,7 @@ Learn more about media discovery.</string>
                             <tableViewSection headerTitle="Recents" footerTitle="Hide recent activity in Home section." id="bnu-wG-KmM">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="XCQ-DW-exr">
-                                        <rect key="frame" x="0.0" y="594" width="375" height="48.5"/>
+                                        <rect key="frame" x="0.0" y="593" width="375" height="48.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="XCQ-DW-exr" id="HZ5-Os-KZt">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="48.5"/>
@@ -454,7 +454,7 @@ Learn more about media discovery.</string>
                             <tableViewSection headerTitle="App Icon" id="lxy-35-dj1">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="DCF-pQ-waD" userLabel="Clear Rubbish Bin Table View Cell">
-                                        <rect key="frame" x="0.0" y="710.5" width="375" height="120.5"/>
+                                        <rect key="frame" x="0.0" y="709.5" width="375" height="120.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DCF-pQ-waD" id="lrX-gC-dCR">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="120.5"/>
