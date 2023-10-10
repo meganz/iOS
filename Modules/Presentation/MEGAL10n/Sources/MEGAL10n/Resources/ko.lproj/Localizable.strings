@@ -1282,8 +1282,8 @@
 "sendMessage"="메시지 보내기";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="자격 증명 인증";
-/* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
-"verify"="확인";
+/* Title of button which marks contact as verified on Verify Contact screen */
+"account.verifyContact.confirmButtonText"="인증된 것으로 표시";
 /* Button title */
 "verified"="인증됨";
 /* A button title to delete the history of a chat. */
@@ -2232,6 +2232,18 @@
 "Default Tab"="기본 탭";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="정렬과 보기 모드";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
+"settings.userInterface.mediaDiscovery"="미디어 발견 보기";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
+"settings.userInterface.mediaDiscovery.header"="미디어 발견";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body that appears under that option */
+"settings.userInterface.mediaDiscovery.footer.body"="Folders that contain only images and videos will open in media discovery view by default.";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body link that appears under that option */
+"settings.userInterface.mediaDiscovery.footer.link"="Learn more about media discovery.";
+/* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the label in the setting */
+"settings.userInterface.mediaDiscoverySubFolder"="하위 폴더에서 미디어 찾기";
+/* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the footer message body that appears under that option */
+"settings.userInterface.mediaDiscoverySubFolder.footer"="하위 폴더의 이미지와 동영상도 미디어 발견 보기에 포함합니다.";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
 "settings.userInterface.hideRecentActivity"="최근 활동 숨기기";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
@@ -3729,7 +3741,7 @@
 /* Schedule meeting waiting room setting title */
 "meetings.scheduleMeeting.waitingRoom"="대기실";
 /* Schedule meeting waiting room setting description */
-"meetings.scheduleMeeting.waitingRoom.description"="Only participants admitted by the host can join the meeting.";
+"meetings.scheduleMeeting.waitingRoom.description"="호스트가 승인한 참여자만 회의에 참여할 수 있습니다";
 /* Schedule meeting waiting room warning banner title */
 "meetings.scheduleMeeting.waitingRoomWarningBanner.title"="통화 중에 호스트가 아닌 사람으로부터 추가된 참여자들은 대기실에 보내질 수 없습니다.";
 /* Schedule meeting waiting room warning banner learn more */
@@ -3834,3 +3846,5 @@
 "chat.call.waitingRoom.participantsList.title"="대기실";
 /* A button label to close the waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.close"="닫기";
+/* Auto media discovery banner title */
+"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="이 폴더가 이미지와 동영상만 담고 있으므로, 자동으로 미디어 발견 보기에서 열었습니다. 시각 콘텐츠를 더욱 몰입되는 레이아웃에서 즐길 수 있습니다. 이것을 설정에서 비활성화 할 수 있습니다.";

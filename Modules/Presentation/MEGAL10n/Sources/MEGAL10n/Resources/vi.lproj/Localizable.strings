@@ -339,7 +339,7 @@
 /* Menu option from the `Add` section that allows you to create a 'New Folder' */
 "newFolder"="Thư Mục Mới";
 /* Menu option from the `Add` section that displays all media files under current folder */
-"cloudDrive.menu.mediaDiscovery.title"="Kho Phương Tiện Số";
+"cloudDrive.menu.mediaDiscovery.title"="Quan sát phương tiện số";
 /* Exit Text on Media Discovery Navigation Bar */
 "cloudDrive.mediaDiscovery.exit"="Thoát";
 /* Hint text shown on the create folder alert. */
@@ -721,7 +721,7 @@
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="Đăng Tải Camêra";
 /* Banner message on Camera Uploads that warns user that they have limited access to photos */
-"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA has limited access to your photo library and cannot backup all of your media. Tap to change permissions.";
+"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA bị giới hạn quyền truy cập vào thư viện ảnh và không thể sao lưu dự phòng tất cả phương tiện số của bạn. Chạm để thay đổi quyền hạn.";
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="Ảnh";
 /* Photo view is empty */
@@ -1281,9 +1281,9 @@
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="Gửi tin nhắn";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"="Xác thực chứng thực";
-/* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
-"verify"="Chấp nhận";
+"verifyCredentials"="Xác thực chứng chỉ";
+/* Title of button which marks contact as verified on Verify Contact screen */
+"account.verifyContact.confirmButtonText"="Đánh dấu là đã xác thực";
 /* Button title */
 "verified"="Đã xác thực";
 /* A button title to delete the history of a chat. */
@@ -1407,11 +1407,11 @@
 /* Error message displayed when trying to invite a contact who is already added. */
 "alreadyAContact"="Tên %s đã có mặt trong sổ liên lạc.";
 /* A summary message when a user sent a contact's details through the chat. Please keep %@ as it will be replaced at runtime with the name of the contact that was sent. */
-"sentContact"="Sent contact: %@";
+"sentContact"="Đã gửi tên liên lạc: %@";
 /* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
 "sentXContacts"="Gửi đến %s tên liên lạc.";
 /* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %@ as it will be replaced at runtime with the name of the attached file. */
-"attachedFile"="Attached: %@";
+"attachedFile"="Đã gửi đính kèm: %@";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="Gửi kèm %s tệp tin.";
 /* Label in a button that allows to jump to the latest item */
@@ -1991,7 +1991,7 @@
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="Chỉnh sửa bởi %@";
 /* Title for a recent action bucket with multiple files. %@ will be replaced by the filename of the first file in the bucket. %ld will be replaced by the total number of other files in the bucket. */
-"home.recent.multipleFileTitle"="“%@” and %ld more";
+"home.recent.multipleFileTitle"="“%@” và %ld mục nữa";
 /* Label that indicates who uploaded a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.createdByLabel"="Đã tạo bởi %@";
 /* Message shown when the user has not recent activity in their account. */
@@ -2229,13 +2229,25 @@
 /* Title of one of the Settings sections where you can customise the 'User Interface' of the app. */
 "settings.section.userInterface"="Giao Diện Người Dùng";
 /* Inside of Settings - User Interface, there is a view on which you can change the default tab when launch the app. */
-"Default Tab"="Tab Mặc Định";
+"Default Tab"="Tab mặc định";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
-"Sorting And View Mode"="Kiểu Xem Và Sắp Xếp";
+"Sorting And View Mode"="Kiểu xem và cách sắp xếp";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
+"settings.userInterface.mediaDiscovery"="Kiểu quan sát phương tiện số";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
+"settings.userInterface.mediaDiscovery.header"="Quan sát phương tiện số";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body that appears under that option */
+"settings.userInterface.mediaDiscovery.footer.body"="Theo mặc định, các thư mục chỉ chứa hình ảnh và video sẽ mở ra theo kiểu quan sát phương tiện số.";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body link that appears under that option */
+"settings.userInterface.mediaDiscovery.footer.link"="Tìm hiểu thêm về quan sát phương tiện số";
+/* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the label in the setting */
+"settings.userInterface.mediaDiscoverySubFolder"="Quan sát phương tiện số trong thư mục con";
+/* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the footer message body that appears under that option */
+"settings.userInterface.mediaDiscoverySubFolder.footer"="Hình ảnh và video từ các thư mục con cũng sẽ có trong kiểu quan sát phương tiện số.";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
-"settings.userInterface.hideRecentActivity"="Ẩn Hoạt Động Gần Đây";
+"settings.userInterface.hideRecentActivity"="Ẩn hoạt động gần đây";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
-"settings.userInterface.hideRecentActivity.footer"="Ẩn đi lịch sử động gần đây trong phần Trang Chủ.";
+"settings.userInterface.hideRecentActivity.footer"="Ẩn đi lịch sử hoạt động gần đây trong phần Trang Chủ.";
 /* Label for any ‘Default’ button, link, text, title, etc. - (String as short as possible). */
 "Default"="Gốc";
 /* Label for any ‘Night’ button, link, text, title, etc. - (String as short as possible). */
@@ -2247,7 +2259,7 @@
 /* Section title inside of Settings - Appearance, where you can change the app's layout. */
 "Layout"="Trình Bày";
 /* Section title inside of Settings - Appearance, where you can change the app's icon. */
-"App Icon"="Biểu Tượng App";
+"App Icon"="Biểu tượng app";
 /* Footer text to explain what you could do in the Settings - User Interface - Launch section. */
 "Configure default launch section."="Chỉnh phần muốn hiển thị mỗi khi khởi động.";
 /* Footer text to explain what you could do in the Settings - Appearance - Sorting And View Mode section. */
@@ -2273,7 +2285,7 @@
 /* Default title of an empty chat. */
 "Chat created on %s1"="Cuộc chát được tạo vào ngày %s1";
 /* Title shown when there are no shared files */
-"No Shared Files"="Không Có Tệp Tin Chia Sẻ";
+"No Shared Files"="Không có tệp tin chia sẻ";
 /* Error message shown when opening a folder link which doesn’t exist */
 "Folder link unavailable"="Liên kết thư mục bất khả dụng";
 /* Error message shown when opening a file link which doesn’t exist */
@@ -2281,7 +2293,7 @@
 /* Header of block with all shared files in chat. */
 "Shared Files"="Tệp tin đã chia sẻ";
 /* Over Disk Quota Screen Navigation Bar Title */
-"Storage Full"="Hết Không Gian Lưu Trữ";
+"Storage Full"="Không gian lưu trữ đã đầy";
 /* Over Disk Quota title message that tell customer your data at risk. */
 "Your Data is at Risk!"="Dữ liệu của bạn có nguy cơ bị xóa!";
 /* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and subject to deletion deadline and warning dates. */
@@ -2297,9 +2309,9 @@
 /* Over Disk Quota warnig message to tell user your data is subject to deletion. */
 "After that, your data is subject to deletion."="Nếu không sau đó, dữ liệu sẽ bị xóa.";
 /* Title for action to modify the registered phone number. */
-"Modify Phone Number"="Sửa Số Điện Thoại";
+"Modify Phone Number"="Sửa số điện thoại";
 /* Title for action to remove the registered phone number. */
-"Remove Phone Number"="Xóa Số Điện Thoại";
+"Remove Phone Number"="Xóa số điện thoại";
 /* Message for action to remove the registered phone number. */
 "This will remove your associated phone number from your account. If you later choose to add a phone number you will be required to verify it."="Thao tác này sẽ xóa số điện thoại hiện có trong tài khoản. Nếu sau này muốn thêm số điện thoại khác, hệ thống sẽ yêu cầu xác thực số điện thoại đó.";
 /* Message for action to modify the registered phone number. */
@@ -2313,7 +2325,7 @@
 /* Title of the Proxy section under Settings */
 "Proxy"="Proxy";
 /* Label to indicate the dialog of Proxy Settings. Keep capital letters. */
-"Proxy Settings"="Thiết Đặt Proxy";
+"Proxy Settings"="Thiết đặt proxy";
 /* Label to indicate not to use any proxy. String as short as possible. */
 "No proxy"="Không dùng proxy";
 /* Label to indicate the server IP to be used. String as short as possible. */
@@ -2325,11 +2337,11 @@
 /* Label to indicate the username of the proxy. String as short as possible. */
 "Username:"="Tên đăng nhập:";
 /* Text used for a title or header listing the details of something. */
-"DETAILS"="CHI TIẾT";
+"DETAILS"="Chi tiết";
 /* Text used as title or header for reference an url, for instance, a node link. */
 "LINK"="Đường liên kết";
 /* Text referencing the date of creation of a link */
-"Link Creation"="Ngày Tạo Liên Kết";
+"Link Creation"="Ngày tạo liên kết";
 /* Context menu item. Allows user to add file/folder to favourites */
 "Favourite"="Đánh dấu Ưa Thích";
 /* Context menu item. Allows user to delete file/folder from favourites */
@@ -2339,7 +2351,7 @@
 /* Context menu item which allows to mark folders with own color label */
 "general.chooseLabel.title"="Dán nhãn…";
 /* Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label */
-"Remove Label"="Gỡ bỏ Dán Nhãn";
+"Remove Label"="Gỡ bỏ dán nhãn";
 /* A user can mark a folder or file with its own colour, in this case “Red”. */
 "Red"="Màu đỏ";
 /* A user can mark a folder or file with its own colour, in this case "Orange */
@@ -2357,13 +2369,13 @@
 /* Text presenting a key (for a LINK or similar) as header usually */
 "KEY"="Chìa khóa";
 /* Text for options in Get Link View to separate the key from the link */
-"Send Decryption Key Separately"="Gửi Chìa Khóa Giải Mã Ra Riêng";
+"Send Decryption Key Separately"="Gửi chìa khóa giải mã ra riêng";
 /* Text for options in Get Link View to activate expiry date */
-"Expiry Date"="Giới Hạn Thời Gian";
+"Expiry Date"="Ngày hết hạn";
 /* Text for options in Get Link View to activate password protection */
-"Password Protection"="Bảo Vệ bằng Mật Khẩu";
+"Password Protection"="Bảo vệ bằng mật khẩu";
 /* Text for options in Get Link View to set password protection */
-"Set Password"="Đặt Mật Khẩu";
+"Set Password"="Đặt mật khẩu";
 /* Hint text for option separate the key from the link in Get Link View */
 "Export the link and decryption key separately."="Xuất đường liên kết và chìa khóa giải mã ra riêng rẽ.";
 /* Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible). */
@@ -2371,21 +2383,21 @@
 /* Text indicating the date until a link will be valid */
 "Link expires %@"="Sẽ hết hạn vào ngày %@";
 /* Text hint to let the user know that tapping something will be copied into the pasteboard */
-"Tap to Copy"="Chạm vào để Sao Chép";
+"Tap to Copy"="Chạm vào để sao chép";
 /* Caption of the button that will copy multiple files or folders export links to his clipboard */
-"Copy All"="Sao Chép Tất Cả";
+"Copy All"="Sao chép tất cả";
 /* Description text about options when exporting links for several nodes */
 "Options such as Send Decryption Key Separately, Set Expiry Date or Passwords are only available for single items."="Các tùy chọn như Gửi Chìa Khóa Giải Mã Ra Riêng, Chọn Ngày Hết Hạn và Mật Khẩu chỉ áp dụng được có các mục đơn lẻ.";
 /* Message shown when the key has been copied to the Clipboard */
-"Key Copied to Clipboard"="Chìa Khóa Được Ghi vào Bảng Nhớ Tạm";
+"Key Copied to Clipboard"="Chìa khóa đã được ghi vào bảng nhớ tạm";
 /* Message shown when the password has been copied to the Clipboard */
-"Password Copied to Clipboard"="Mật Khẩu đã được ghi vào Bộ Nhớ";
+"Password Copied to Clipboard"="Mật khẩu đã được ghi vào bảng nhớ tạm";
 /* Export links dialog -> Keys tip about links and keys. */
 "Our end-to-end encryption system requires a unique key automatically generated for this file. A link with this key is created by default, but you can export the decryption key separately for an added layer of security."="Mô hình mã hóa vô kiến thức của chúng tôi tự động yêu cầu phải tạo ra một chìa khóa cho tệp tin hoặc thư mục này. Đường liên kết với chìa khóa này được tạo theo cài đặt mặc định, nhưng bạn có thể xuất chìa khóa giải mã ra riêng để tăng thêm một lớp bảo mật bổ sung.";
 /* Text to indicate the user to remove the password of a link */
-"Remove Password"="Loại bỏ Mật Khẩu";
+"Remove Password"="Loại bỏ mật khẩu";
 /* Text to indicate the user to reset/change the password of a link */
-"Reset Password"="Đặt lại Mật Khẩu";
+"Reset Password"="Đặt lại mật khẩu";
 /* Stand-alone error message shown to users who attempt to load/access a link where the user has been suspended/taken-down due to severe violation of our terms of service. */
 "This link is unavailable as the user’s account has been closed for gross violation of MEGA’s [A]Terms of Service[/A]."="Đường liên kết này không còn tồn tại vì tài khoản đã bị đóng do vi phạm lớn tới [A]Điều Khoản Sử Dụng[/A] của MEGA.";
 /* Stand-alone error message shown to users who attempt to load/access a link where the link has been taken down due to severe violation of our terms of service. */
@@ -2397,7 +2409,7 @@
 /* Text related with the section where you can manage the chat history. There you can for example, clear the history or configure the retention setting. */
 "Manage Chat History"="Quản lý lịch sử chát";
 /* Setting title for the feature that deletes messages automatically from a chat  after a period of time */
-"History Clearing"="Tự Dọn Lịch Sử";
+"History Clearing"="Tự dọn lịch sử";
 /* Text show under the setting 'History Retention' to explain what will happen if enabled */
 "Automatically delete messages older than a certain amount of time"="Tự động xóa đi các tin nhắn đã tồn đọng trong một khoảng thời gian.";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 day' */
@@ -2411,13 +2423,13 @@
 /* Text show under the setting 'Clear Chat History' to explain what will happen if used */
 "Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Xóa tất cả tin nhắn và tệp tin đã chia sẻ trong cuộc trò chuyện này. Việc này sẽ không thể hoàn tác.";
 /* Title show on the sheet to configure default values of the 'History Retention' setting */
-"Clear Messages Older Than"="Xóa Các Tin Nhắn Đã Có Lâu Hơn";
+"Clear Messages Older Than"="Xóa các tin nhắn đã có lâu hơn";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
-"One Day"="Một Ngày";
+"One Day"="Một ngày";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
-"One Week"="Một Tuần";
+"One Week"="Một tuần";
 /* Used within the `Retention History` dropdown -- available option for the time range selection. */
-"One Month"="Một Tháng";
+"One Month"="Một tháng";
 /* Used within the `Retention History` dropdown -- opens the dialog providing the ability to specify custom time range. */
 "Custom..."="Chỉnh…";
 /* System message displayed to all chat participants when one of them enables retention history */
@@ -2427,11 +2439,11 @@
 /* Label for User Interface app icon "Day" in app settings */
 "day"="Ngày";
 /* Search placeholder text in search bar on home screen */
-"Search Your Files"="Tìm Tệp Tin";
+"Search Your Files"="Tìm các tệp tin";
 /* Section header of the settings that contains the folder to which photos will be uploded in camera upload */
-"MEGA CAMERA UPLOADS FOLDER"="Thư mục Đăng Tải Camêra trên MEGA";
+"MEGA CAMERA UPLOADS FOLDER"="Thư mục Đăng tải camêra trên MEGA";
 /* Action button text of folder selection screen for camera uploads */
-"Select Folder"="Chọn Thư Mục";
+"Select Folder"="Chọn thư mục";
 /* Section header of Audio Player playlist that contains playing track */
 "Playing"="Đang phát";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
@@ -2463,11 +2475,11 @@
 /* Accessibility label for Home section in tabbar item */
 "Home"="Trang Chủ";
 /* Home Screen: Explorer view card title - Documents */
-"Docs"="Tài Liệu";
+"Docs"="Tài liệu";
 /* Message shown when a link is shared with separated key */
 "This link was shared without a decryption key. Do you want to share its key?"="Đường liên kết này đẽ được chia sẻ mà không có chìa khóa giải mã. Ban có muốn chia sẻ chìa khóa bây giờ không?";
 /* Title for password protect link alert */
-"Link Password"="Mật Khẩu Đường Liên Kết";
+"Link Password"="Mật khẩu của đường liên kết";
 /* Message shown when a link is shared having a password */
 "Do you want to share the password for this link?"="Bạn có muốn chia sẻ mật khẩu cho đường liên kết này không?";
 /* Accessibility message when a message is sent in chat */
@@ -2485,13 +2497,13 @@
 /* Cookie dialog footer description */
 "settings.accept.cookies.footer"="Cookies không có được sử dụng để theo dõi quảng cáo hoặc chia sẻ bấ  kỳ thông tin cá nhân nào với bên thứ ba.";
 /* Cookie settings dialog text. */
-"settings.cookies.essential"="Cookies Thiết Yếu";
+"settings.cookies.essential"="Cookies thiết yếu";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
 "settings.cookies.essential.alwaysOn"="Luôn Bật";
 /* Cookie settings dialog text. */
 "settings.cookies.essential.footer"="Cần thiết để cung cấp cho quý khách chức năng quan trọng và quyền truy cập an toàn vào các dịch vụ của chúng tôi. Vì thế, các mục này không yêu cầu sự đồng ý.";
 /* Cookie settings dialog text. */
-"settings.cookies.performanceAndAnalytics"="Cookies Hiệu Suất và Phân Tích";
+"settings.cookies.performanceAndAnalytics"="Cookies hiệu suất và phân tích";
 /* Cookie settings dialog text. */
 "settings.cookies.performanceAndAnalytics.footer"="Giúp chúng tôi hiểu cách quý khách sử dụng dịch vụ và cung cấp cho chúng tôi dữ liệu có thể sử dụng để cải tiến. Việc không chấp nhận những Cookies này có nghĩa là chúng tôi sẽ nhận ít dữ liệu để giúp cải tiến thiết kế sau này.";
 /* Text shown when the creation of a version as a new file was successful */
@@ -2507,11 +2519,11 @@
 /* Text for title for favourite nodes */
 "Favourites"="Ưa Thích";
 /* Text describing that there is not any node marked as favourite */
-"No Favourites"="Không Có Mục Ưa Thích";
+"No Favourites"="Không có mục ưa thích";
 /* Text indicating to the user that can perform an action to view more results */
 "VIEW MORE"="Xem thêm";
 /* Title for the QuickAccess widget */
-"Quick Access"="Truy Cập Nhanh";
+"Quick Access"="Truy cập nhanh";
 /* Text description for the QuickAccess widget */
 "Quickly access files on Recents, Favourites, or Offline section"="Truy cập nhanh vào tệp tin trong phần Gần Đây, Ưa Thích, và Lưu Ngoại Tuyến";
 /* Text description for the Favourites QuickAccess widget */
@@ -2525,7 +2537,7 @@
 /* Dialog description for the no enough device storage screen */
 "Free up some space by deleting apps you no longer use or large video files in your gallery. You can manage your storage in %@"="Giảm tải không gian bằng cách xóa đi các ứng dụng không có sử dụng hoặc các video có kích thước lớn trong thư viện ảnh. Quản lý không gian trong phần %@";
 /* The title of Turn on Notifications view */
-"dialog.turnOnNotifications.label.title"="Bật Thông Báo";
+"dialog.turnOnNotifications.label.title"="Bật thông báo";
 /* The description of Turn on Notifications view */
 "dialog.turnOnNotifications.label.description"="Khi được bật, bạn sẽ thấy được tin nhắn trên thiết bị ngay tức thì.";
 /* First step to turn on notifications */
@@ -2539,11 +2551,11 @@
 /* Title of the button to open Settings */
 "dialog.turnOnNotifications.button.primary"="Đi tới Cài đặt";
 /* Dialog title for the change launch tab screen */
-"Change Launch Tab"="Đổi Tab Khởi Động";
+"Change Launch Tab"="Đổi tab mở ra khi khởi động";
 /* Dialog description for the change launch tab screen */
 "You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="Giờ bạn có thể chọn lựa phần trong app muốn được hiển thị mỗi khi khởi động. Chọn phần phù hợp với cách sử dụng cá nhân, như Chát, Ổ mây, hoặc Trang chủ.";
 /* Dialog button text for the change launch tab screen */
-"Change Setting"="Thay đổi Thiết Đặt";
+"Change Setting"="Thay đổi thiết đặt";
 /* Offline log out warning message */
 "offline.logOut.warning.message"="Đăng xuất tài khoản sẽ xóa các mục đã được lưu về ngoại tuyến.";
 /* A message shown when uploading to an incoming share and the owner’s account is over its storage quota. */
@@ -2561,7 +2573,7 @@
 /* Hint text to display user's current email */
 "account.changeEmail.currentEmail"="Địa chỉ email hiện tại";
 /* Title of Over Disk Quota dialog */
-"dialog.storage.odq.title"="Xin Nâng Cấp";
+"dialog.storage.odq.title"="Xin nâng cấp";
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
 "dialog.storage.almostFull.detail"="Ổ Mây sắp hết chỗ trống. Nâng cấp ngay lện hạng Pro để nhận thêm tới %@ TB (%@ GB) cho không gian lưu trữ.";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
@@ -3813,13 +3825,13 @@
 /* Context menu action seen from native files application when selecting a file that's also present on MEGA */
 "fileProviderExtension.action.open"="Mở trong MEGA";
 /* Filter name for searching on the home screen */
-"home.search.filter.docs"="Tệp Tài Liệu";
+"home.search.filter.docs"="Tài liệu";
 /* Filter name for searching on the home screen */
 "home.search.filter.images"="Hình";
 /* Filter name for searching on the home screen */
-"home.search.filter.audio"="Gọi Thoại";
+"home.search.filter.audio"="Âm thanh";
 /* Filter name for searching on the home screen */
-"home.search.filter.video"="Gọi Video";
+"home.search.filter.video"="Video";
 /* Empty screen copy when no filter is selected on the home screen search */
 "home.search.empty.no-chip-selected"="Không có kết quả";
 /* Empty screen copy when Images filter is selected on the home screen search */
@@ -3834,3 +3846,5 @@
 "chat.call.waitingRoom.participantsList.title"="Phòng chờ";
 /* A button label to close the waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.close"="Đóng";
+/* Auto media discovery banner title */
+"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="Vì thư mục này chỉ có chứa hoàn toàn là hình ảnh và videos, chúng tôi tự động đặt theo kiểu quan sát phương tiện số. Giúp bạn trải nghiệm nội dung hình ảnh của mình với bố cục sống động hơn. Tính năng này có thể tắt đi trong Thiết Đặt.";

@@ -1282,8 +1282,8 @@
 "sendMessage"="Nachricht schicken";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="Identität verifizieren";
-/* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
-"verify"="Bestätigen";
+/* Title of button which marks contact as verified on Verify Contact screen */
+"account.verifyContact.confirmButtonText"="Als verifiziert markieren";
 /* Button title */
 "verified"="Bestätigt";
 /* A button title to delete the history of a chat. */
@@ -1791,7 +1791,7 @@
 /* Message shown in a chat room when there is an active call */
 "There is an active call. Tap to join."="Konferenzgespräch läuft. Zum Teilnehmen antippen.";
 /* Message shown in a chat room for a one on one call */
-"Tap to return to call"="Zum Gespräch zurückkehren";
+"Tap to return to call"="Antippen, um zum Gespräch zurückkehren";
 /* A button label which allows the users save images/videos in the Photos app. */
 "Save to Photos"="In Fotos speichern";
 /* Text shown when starting the process to save a photo or video to Photos app */
@@ -2232,6 +2232,18 @@
 "Default Tab"="Standard-Tab";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="Sortierung und Ansicht";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
+"settings.userInterface.mediaDiscovery"="Medienerkennungsansicht";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
+"settings.userInterface.mediaDiscovery.header"="Medienerkennung";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body that appears under that option */
+"settings.userInterface.mediaDiscovery.footer.body"="Ordner, die nur Bilder und Videos enthalten, werden standardmäßig in der Medienerkennungsansicht geöffnet.";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body link that appears under that option */
+"settings.userInterface.mediaDiscovery.footer.link"="Erfahren Sie mehr über die Medienerkennung.";
+/* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the label in the setting */
+"settings.userInterface.mediaDiscoverySubFolder"="Medienerkennung in Unterordnern";
+/* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the footer message body that appears under that option */
+"settings.userInterface.mediaDiscoverySubFolder.footer"="Bilder und Videos in Unterordnern werden in der Medienerkennungsansicht ebenfalls angezeigt.";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
 "settings.userInterface.hideRecentActivity"="Letzte Aktivitäten ausblenden";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
@@ -3797,7 +3809,7 @@
 /* Call waiting room alert message text to notify host that someone is waiting to join */
 "chat.call.waitingRoom.alert.message.one"="%@ wartet darauf, der Konferenz beizutreten";
 /* Call waiting room alert button to deny access */
-"chat.call.waitingRoom.alert.button.deny"="Ablehnen";
+"chat.call.waitingRoom.alert.button.deny"="Abweisen";
 /* Call waiting room alert button to admit access */
 "chat.call.waitingRoom.alert.button.admit"="Hereinlassen";
 /* Call waiting room alert button to open waiting room UI */
@@ -3805,9 +3817,9 @@
 /* Call waiting room alert button to allow access to everyone */
 "chat.call.waitingRoom.alert.button.admitAll"="Alle hereinlassen";
 /* Call waiting room alert message text to confirm deny access from host */
-"chat.call.waitingRoom.alert.message.denyAccess"="%@ den Beitritt verweigern?";
+"chat.call.waitingRoom.alert.message.denyAccess"="%@ abweisen?";
 /* Call waiting room alert button to deny access */
-"chat.call.waitingRoom.alert.button.confirmDeny"="Beitritt verweigern";
+"chat.call.waitingRoom.alert.button.confirmDeny"="Abweisen";
 /* Call waiting room alert button to allow access */
 "chat.call.waitingRoom.alert.button.cancel"="Abbrechen";
 /* Context menu action seen from native files application when selecting a file that's also present on MEGA */
@@ -3834,3 +3846,5 @@
 "chat.call.waitingRoom.participantsList.title"="Warteraum";
 /* A button label to close the waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.close"="Schließen";
+/* Auto media discovery banner title */
+"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="Da dieser Ordner nur Bilder und Videos enthält, haben wir ihn automatisch in der Medienerkennungsansicht geöffnet. So können Sie Ihre visuellen Inhalte in einem ablenkungsfreien Layout genießen. Sie können dies in den Einstellungen deaktivieren.";
