@@ -901,7 +901,7 @@ def update_string_meta(to_lock, string_instructions):
                 "type": "resource_strings"
             }
         }
-        if string_instructions[key]:
+        if key in string_instructions and string_instructions[key]:
             payload["data"]["attributes"]["instructions"] = string_instructions[key].strip()
         response = do_request(BASE_URL + "/resource_strings/" + key, payload, "PATCH")
         if "errors" in response:
