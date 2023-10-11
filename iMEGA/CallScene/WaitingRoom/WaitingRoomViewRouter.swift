@@ -111,7 +111,9 @@ final class WaitingRoomViewRouter: NSObject, WaitingRoomViewRouting {
         }
         alertController.addAction(leaveAction)
         alertController.preferredAction = leaveAction
-        dismissAlertControllerThenPresent(alertController, from: baseViewController)
+        dismissAlertController {
+            baseViewController.present(alertController, animated: true)
+        }
     }
     
     func showHostDidNotRespondAlert(leaveAction: @escaping () -> Void) {
@@ -123,29 +125,34 @@ final class WaitingRoomViewRouter: NSObject, WaitingRoomViewRouting {
         }
         alertController.addAction(leaveAction)
         alertController.preferredAction = leaveAction
-        dismissAlertControllerThenPresent(alertController, from: baseViewController)
+        dismissAlertController {
+            baseViewController.present(alertController, animated: true)
+        }
     }
     
     func openCallUI(for call: CallEntity,
                     in chatRoom: ChatRoomEntity,
                     isSpeakerEnabled: Bool) {
         guard let presenter else { return }
-        baseViewController?.dismiss(animated: true)
-        MeetingContainerRouter(presenter: presenter,
-                               chatRoom: chatRoom,
-                               call: call,
-                               isSpeakerEnabled: isSpeakerEnabled)
-        .start()
+        dismissAlertController { [weak self] in
+            guard let self else { return }
+            baseViewController?.dismiss(animated: true)
+            MeetingContainerRouter(presenter: presenter,
+                                   chatRoom: chatRoom,
+                                   call: call,
+                                   isSpeakerEnabled: isSpeakerEnabled)
+            .start()
+        }
     }
     
-    private func dismissAlertControllerThenPresent(_ alertController: UIAlertController, from baseViewController: UIViewController) {
-        if let presentedViewController = presenter?.presenterViewController()?.presentedViewController,
-           presentedViewController.isKind(of: UIAlertController.self) {
-            presentedViewController.dismiss(animated: true) {
-                baseViewController.present(alertController, animated: true)
-            }
-        } else {
-            baseViewController.present(alertController, animated: true)
+    private func dismissAlertController(completion: @escaping () -> Void) {
+        guard let presentedViewController = presenter?.presenterViewController()?.presentedViewController,
+              presentedViewController.isKind(of: UIAlertController.self) else {
+            completion()
+            return
+        }
+        presentedViewController.dismiss(animated: true) {
+            completion()
         }
     }
 }
