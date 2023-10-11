@@ -76,6 +76,10 @@ final class ScheduleMeetingViewModel: ObservableObject {
         }
     }
     
+    @Published var meetingLinkEnabled: Bool {
+        didSet { updateRightBarButtonState() }
+    }
+    
     @Published var calendarInviteEnabled: Bool {
         didSet { updateRightBarButtonState() }
     }
@@ -85,10 +89,6 @@ final class ScheduleMeetingViewModel: ObservableObject {
     }
     
     @Published var allowNonHostsToAddParticipantsEnabled: Bool {
-        didSet { updateRightBarButtonState() }
-    }
-    
-    @Published var meetingLinkEnabled: Bool {
         didSet { updateRightBarButtonState() }
     }
 
@@ -262,6 +262,16 @@ final class ScheduleMeetingViewModel: ObservableObject {
     func onCalendarInviteEnabledChange(_ enabled: Bool) {
         guard enabled else { return }
         tracker.trackAnalyticsEvent(with: ScheduledMeetingSettingSendCalendarInviteButtonEvent())
+    }
+    
+    func onWaitingRoomEnabledChange(_ enabled: Bool) {
+        guard enabled else { return }
+        tracker.trackAnalyticsEvent(with: WaitingRoomEnableButtonEvent())
+    }
+    
+    func onAllowNonHostsToAddParticipantsEnabledChange(_ enabled: Bool) {
+        guard enabled else { return }
+        tracker.trackAnalyticsEvent(with: ScheduledMeetingSettingEnableOpenInviteButtonEvent())
     }
     
     // MARK: - Private

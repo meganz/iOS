@@ -719,6 +719,54 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
         )
     }
     
+    func testOnWaitingRoomEnabledChange_onEnabled_shouldTrackEvent() {
+        let tracker = MockTracker()
+        let sut = ScheduleMeetingViewModel(tracker: tracker)
+        
+        sut.onWaitingRoomEnabledChange(true)
+        
+        tracker.assertTrackAnalyticsEventCalled(
+            with: [
+                WaitingRoomEnableButtonEvent()
+            ]
+        )
+    }
+    
+    func testOnWaitingRoomEnabledChange_onDisabled_shouldNotTrackEvent() {
+        let tracker = MockTracker()
+        let sut = ScheduleMeetingViewModel(tracker: tracker)
+        
+        sut.onWaitingRoomEnabledChange(false)
+        
+        tracker.assertTrackAnalyticsEventCalled(
+            with: []
+        )
+    }
+    
+    func testOnAllowNonHostsToAddParticipantsEnabledChange_onEnabled_shouldTrackEvent() {
+        let tracker = MockTracker()
+        let sut = ScheduleMeetingViewModel(tracker: tracker)
+        
+        sut.onAllowNonHostsToAddParticipantsEnabledChange(true)
+        
+        tracker.assertTrackAnalyticsEventCalled(
+            with: [
+                ScheduledMeetingSettingEnableOpenInviteButtonEvent()
+            ]
+        )
+    }
+    
+    func testOnAllowNonHostsToAddParticipantsEnabledChange_onDisabled_shouldNotTrackEvent() {
+        let tracker = MockTracker()
+        let sut = ScheduleMeetingViewModel(tracker: tracker)
+        
+        sut.onAllowNonHostsToAddParticipantsEnabledChange(false)
+        
+        tracker.assertTrackAnalyticsEventCalled(
+            with: []
+        )
+    }
+    
     // MARK: - Private methods.
     
     private func evaluate(isInverted: Bool = false, expression: @escaping () -> Bool) {

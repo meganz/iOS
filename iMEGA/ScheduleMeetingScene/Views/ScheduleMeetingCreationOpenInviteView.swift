@@ -9,7 +9,9 @@ struct ScheduleMeetingCreationOpenInviteView: View {
         VStack {
             Divider()
             
-            Toggle(isOn: $viewModel.allowNonHostsToAddParticipantsEnabled) {
+            Toggle(isOn: $viewModel.allowNonHostsToAddParticipantsEnabled.onChange { enabled in
+                viewModel.onAllowNonHostsToAddParticipantsEnabledChange(enabled)
+            }) {
                 Text(Strings.Localizable.Meetings.ScheduleMeeting.openInvite)
                     .opacity(viewModel.shouldAllowEditingAllowNonHostsToAddParticipants ? 1.0 : 0.3)
             }
