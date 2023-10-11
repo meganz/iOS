@@ -107,7 +107,9 @@ enum MainTabBarCallsAction: ActionType { }
     }
     
     private func manageWaitingRoom(for call: CallEntity) {
-        guard let waitingRoomHandles = call.waitingRoom?.sessionClientIds, let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId) else { return }
+        guard call.changeType != .waitingRoomUsersAllow,
+              let waitingRoomHandles = call.waitingRoom?.sessionClientIds,
+              let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId) else { return }
         let waitingRoomNonModeratorHandles = waitingRoomHandles.filter { chatRoomUseCase.peerPrivilege(forUserHandle: $0, chatRoom: chatRoom).isUserInWaitingRoom }
         
         guard waitingRoomNonModeratorHandles.isNotEmpty else {

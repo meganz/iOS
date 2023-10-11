@@ -31,8 +31,7 @@ protocol CallUseCaseProtocol {
 protocol CallCallbacksUseCaseProtocol: AnyObject {
     func participantJoined(participant: CallParticipantEntity)
     func participantLeft(participant: CallParticipantEntity)
-    func waitingRoomUsersEntered(with handles: [HandleEntity])
-    func waitingRoomUsersLeave(with handles: [HandleEntity])
+    func waitingRoomUsersAllow(with handles: [HandleEntity])
     func updateParticipant(_ participant: CallParticipantEntity)
     func remoteVideoResolutionChanged(for participant: CallParticipantEntity)
     func highResolutionChanged(for participant: CallParticipantEntity)
@@ -65,8 +64,6 @@ extension CallCallbacksUseCaseProtocol {
     func chatTitleChanged(chatRoom: ChatRoomEntity) { }
     func networkQualityChanged(_ quality: NetworkQuality) { }
     func outgoingRingingStopReceived() { }
-    func waitingRoomUsersEntered(with handles: [HandleEntity]) { }
-    func waitingRoomUsersLeave(with handles: [HandleEntity]) { }
     func waitingRoomUsersAllow(with handles: [HandleEntity]) { }
 }
 
@@ -242,14 +239,6 @@ extension CallUseCase: CallCallbacksRepositoryProtocol {
     
     func outgoingRingingStopReceived() {
         callbacksDelegate?.outgoingRingingStopReceived()
-    }
-    
-    func waitingRoomUsersEntered(with handles: [HandleEntity]) {
-        callbacksDelegate?.waitingRoomUsersEntered(with: handles)
-    }
-    
-    func waitingRoomUsersLeave(with handles: [HandleEntity]) {
-        callbacksDelegate?.waitingRoomUsersLeave(with: handles)
     }
     
     func waitingRoomUsersAllow(with handles: [HandleEntity]) {

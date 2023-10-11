@@ -46,6 +46,5 @@ public protocol CallCallbacksRepositoryProtocol {
     func chatTitleChanged(chatRoom: ChatRoomEntity)
     func networkQualityChanged(_ quality: NetworkQuality)
     func outgoingRingingStopReceived()
-    func waitingRoomUsersEntered(with handles: [HandleEntity])
-    func waitingRoomUsersLeave(with handles: [HandleEntity])
+    func waitingRoomUsersAllow(with handles: [HandleEntity])
 }
