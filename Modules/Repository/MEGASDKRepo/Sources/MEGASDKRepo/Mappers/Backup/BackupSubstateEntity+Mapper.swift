@@ -49,6 +49,7 @@ extension MEGABackupSubstate {
         case .failureAccessingPersistentStorage: return .failureAccessingPersistentStorage
         case .mismatchOfRootRSID: return .mismatchOfRootRSID
         case .filesystemFileIdsAreUnstable: return .filesystemFileIdsAreUnstable
+        case .filesystemIDUnavailable: return .filesystemIDUnavailable
         @unknown default: return .unknownError
         }
     }
@@ -102,6 +103,7 @@ extension BackupSubstateEntity {
         case .failureAccessingPersistentStorage: return .failureAccessingPersistentStorage
         case .mismatchOfRootRSID: return .mismatchOfRootRSID
         case .filesystemFileIdsAreUnstable: return .filesystemFileIdsAreUnstable
+        case .filesystemIDUnavailable: return .filesystemIDUnavailable
         }
     }
 }

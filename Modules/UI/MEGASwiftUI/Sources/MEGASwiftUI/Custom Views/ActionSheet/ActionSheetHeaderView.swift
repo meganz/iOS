@@ -31,7 +31,7 @@ public struct ActionSheetHeaderView: View {
                     .lineLimit(1)
                     .foregroundColor(colorScheme == .dark ? .white : .black)
                 HStack {
-                    if let detailImageName {
+                    if let detailImageName, !detailImageName.isEmpty {
                         Image(detailImageName)
                             .renderingMode(.template)
                             .foregroundColor(Color(subtitleColorName))

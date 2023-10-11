@@ -44,4 +44,5 @@ public enum BackupSubstateEntity: Sendable {
     case failureAccessingPersistentStorage
     case mismatchOfRootRSID
     case filesystemFileIdsAreUnstable
+    case filesystemIDUnavailable
 }
