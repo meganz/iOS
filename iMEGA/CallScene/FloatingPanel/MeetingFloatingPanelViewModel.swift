@@ -53,6 +53,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     private let router: any MeetingFloatingPanelRouting
     private var chatRoom: ChatRoomEntity
     private var recentlyAddedHandles = [HandleEntity]()
+    private var invitedUserIdsToBypassWaitingRoom = Set<HandleEntity>()
     private var chatRoomParticipantsUpdatedTask: Task<Void, Never>?
     private var subscriptions = Set<AnyCancellable>()
     private var call: CallEntity? {
@@ -274,7 +275,14 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         ) { [weak self] userHandles in
             guard let self, let call else { return }
             recentlyAddedHandles.append(contentsOf: userHandles)
-            userHandles.forEach { self.callUseCase.addPeer(toCall: call, peerId: $0) }
+            if chatRoom.isWaitingRoomEnabled {
+                userHandles.forEach { 
+                    self.invitedUserIdsToBypassWaitingRoom.insert($0)
+                }
+                callUseCase.allowUsersJoinCall(call, users: userHandles)
+            } else {
+                userHandles.forEach { self.callUseCase.addPeer(toCall: call, peerId: $0) }
+            }
         }
     }
     
@@ -695,7 +703,8 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     }
     
     private func populateParticipantsInWaitingRoom(forCall call: CallEntity) {
-        guard let waitingRoomHandles = call.waitingRoom?.sessionClientIds else { return }
+        guard call.changeType != .waitingRoomUsersAllow,
+              let waitingRoomHandles = call.waitingRoom?.sessionClientIds else { return }
         
         let waitingRoomNonModeratorHandles = waitingRoomHandles.filter { chatRoomUseCase.peerPrivilege(forUserHandle: $0, chatRoom: chatRoom).isUserInWaitingRoom }
         
@@ -768,5 +777,13 @@ extension MeetingFloatingPanelViewModel: CallCallbacksUseCaseProtocol {
     
     func localAvFlagsUpdated(video: Bool, audio: Bool) {
         invokeCommand?(.microphoneMuted(muted: !audio))
+    }
+    
+    func waitingRoomUsersAllow(with handles: [HandleEntity]) {
+        guard let call else { return }
+        for userId in handles where invitedUserIdsToBypassWaitingRoom.contains(userId) {
+            callUseCase.addPeer(toCall: call, peerId: userId)
+            invitedUserIdsToBypassWaitingRoom.remove(userId)
+        }
     }
 }

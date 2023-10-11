@@ -129,6 +129,56 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         }
     }
     
+    func testCallUpdate_severalUsersOnWaitingAndRoomBeingModeratorAndCallChangeTypeWaitingRoomUsersAllow_shouldNotShowSeveralUsersAlert() {
+        let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .moderator, isWaitingRoomEnabled: true), peerPrivilege: .standard)
+        let userUseCase = MockChatRoomUserUseCase()
+
+        viewModel = MainTabBarCallsViewModel(
+            router: router,
+            chatUseCase: chatUseCase,
+            callUseCase: callUseCase,
+            chatRoomUseCase: chatRoomUseCase,
+            chatRoomUserUseCase: userUseCase
+        )
+        
+        callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress))
+        
+        evaluate {
+            self.viewModel.callWaitingRoomUsersUpdateSubscription != nil
+        }
+        
+        callUseCase.callWaitingRoomUsersUpdateSubject.send(CallEntity(changeType: .waitingRoomUsersAllow, waitingRoom: WaitingRoomEntity(sessionClientIds: [100, 101])))
+
+        evaluate {
+            self.router.showSeveralUsersWaitingRoomDialog_calledTimes == 0
+        }
+    }
+    
+    func testCallUpdate_oneUserOnWaitingRoomAndBeingModeratorAndCallChangeTypeWaitingRoomUsersAllow_shouldNotShowOneUserAlert() {
+        let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .moderator, isWaitingRoomEnabled: true), peerPrivilege: .standard)
+        let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("User name"))
+
+        viewModel = MainTabBarCallsViewModel(
+            router: router,
+            chatUseCase: chatUseCase,
+            callUseCase: callUseCase,
+            chatRoomUseCase: chatRoomUseCase,
+            chatRoomUserUseCase: userUseCase
+        )
+        
+        callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress))
+        
+        evaluate {
+            self.viewModel.callWaitingRoomUsersUpdateSubscription != nil
+        }
+        
+        callUseCase.callWaitingRoomUsersUpdateSubject.send(CallEntity(changeType: .waitingRoomUsersAllow, waitingRoom: WaitingRoomEntity(sessionClientIds: [100])))
+
+        evaluate {
+            self.router.showOneUserWaitingRoomDialog_calledTimes == 0
+        }
+    }
+    
     // MARK: - Private methods
     
     private func evaluate(expression: @escaping () -> Bool) {

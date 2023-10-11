@@ -259,11 +259,7 @@ extension MockCallUseCase: CallCallbacksRepositoryProtocol {
         callbacksDelegate?.outgoingRingingStopReceived()
     }
     
-    func waitingRoomUsersEntered(with handles: [HandleEntity]) {
-        callbacksDelegate?.waitingRoomUsersEntered(with: handles)
-    }
-    
-    func waitingRoomUsersLeave(with handles: [HandleEntity]) {
-        callbacksDelegate?.waitingRoomUsersLeave(with: handles)
+    func waitingRoomUsersAllow(with handles: [HandleEntity]) {
+        callbacksDelegate?.waitingRoomUsersAllow(with: handles)
     }
 }

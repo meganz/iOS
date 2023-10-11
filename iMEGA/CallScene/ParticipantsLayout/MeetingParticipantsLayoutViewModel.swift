@@ -804,14 +804,6 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
         }
     }
     
-    func waitingRoomUsersEntered(with handles: [HandleEntity]) {
-        // Next ticket: Logic for waitingRoomUsersEntered
-    }
-    
-    func waitingRoomUsersLeave(with handles: [HandleEntity]) {
-        // Next ticket: Logic for waitingRoomUsersLeave
-    }
-    
     func updateParticipant(_ participant: CallParticipantEntity) {
         guard let participantUpdated = callParticipants.first(where: {$0 == participant}) else {
             MEGALogError("Error getting participant updated")

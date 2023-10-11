@@ -880,6 +880,7 @@ extension ChatRoomsListViewModel: MeetingContextMenuDelegate {
         case .joinMeeting:
             router.presentEnterMeeting()
         case .scheduleMeeting:
+            tracker.trackAnalyticsEvent(with: ScheduleMeetingMenuItemEvent())
             router.presentScheduleMeeting()
         }
     }

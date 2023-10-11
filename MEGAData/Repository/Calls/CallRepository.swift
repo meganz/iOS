@@ -406,14 +406,9 @@ extension CallRepository: MEGAChatCallDelegate {
                 }
             }
             
-            if call.hasChanged(for: .waitingRoomUsersEntered) {
+            if call.hasChanged(for: .waitingRoomUsersAllow) {
                 guard let usersHandle = call.waitingRoomHandleList.toHandleEntityArray() else { return }
-                callbacksDelegate?.waitingRoomUsersEntered(with: usersHandle)
-            }
-            
-            if call.hasChanged(for: .waitingRoomUsersLeave) {
-                guard let usersHandle = call.waitingRoomHandleList.toHandleEntityArray() else { return }
-                callbacksDelegate?.waitingRoomUsersLeave(with: usersHandle)
+                callbacksDelegate?.waitingRoomUsersAllow(with: usersHandle)
             }
         case .terminatingUserParticipation, .destroyed:
             callbacksDelegate?.callTerminated(call.toCallEntity())
