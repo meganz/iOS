@@ -348,17 +348,18 @@ class AppearanceTableViewController: UITableViewController {
         hostView.translatesAutoresizingMaskIntoConstraints = false
         hostView.backgroundColor = .clear
     
-        let containerView = UIView()
-        containerView.backgroundColor = .clear
-        containerView.addSubview(hostView)
+        let footerView = UITableViewHeaderFooterView()
+        let contentView = footerView.contentView
+        contentView.backgroundColor = .clear
+        contentView.addSubview(hostView)
 
         NSLayoutConstraint.activate([
-            hostView.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 18),
-            containerView.rightAnchor.constraint(equalTo: hostView.rightAnchor, constant: 18),
-            hostView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 8),
-            containerView.bottomAnchor.constraint(equalTo: hostView.bottomAnchor, constant: 16)
+            hostView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 18),
+            contentView.rightAnchor.constraint(equalTo: hostView.rightAnchor, constant: 18),
+            hostView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+            contentView.bottomAnchor.constraint(equalTo: hostView.bottomAnchor, constant: 16)
         ])
         
-        return containerView
+        return footerView
     }
 }
