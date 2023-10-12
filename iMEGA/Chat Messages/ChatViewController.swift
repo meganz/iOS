@@ -1126,7 +1126,7 @@ class ChatViewController: MessagesViewController {
     
     private func startCall(isVideo: Bool) {
         permissionRouter.requestPermissionsFor(videoCall: isVideo) {[weak self] in
-            self?.openCallViewWithVideo(videoCall: isVideo)
+            self?.openCallViewWithVideo(videoCall: isVideo, isReturnToCall: false)
         }
     }
     
@@ -1273,7 +1273,7 @@ class ChatViewController: MessagesViewController {
         }
     }
     
-    func openCallViewWithVideo(videoCall: Bool, shouldRing: Bool = true) {
+    func openCallViewWithVideo(videoCall: Bool, shouldRing: Bool = true, isReturnToCall: Bool) {
         guard let call = MEGAChatSdk.shared.chatCall(forChatId: chatRoom.chatId) else {
             let reachable = MEGAReachabilityManager.isReachable()
  
@@ -1288,7 +1288,7 @@ class ChatViewController: MessagesViewController {
             return
         }
         
-        if chatContentViewModel.shouldOpenWaitingRoom() {
+        if chatContentViewModel.shouldOpenWaitingRoom(isReturnToCall: isReturnToCall) {
             openWaitingRoom()
         } else if call.isRinging || call.status == .userNoPresent {
             answerCall()

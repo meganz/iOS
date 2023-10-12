@@ -74,8 +74,7 @@ extension ChatViewController {
             }
             return
         }
-        
-        joinCall()
+        joinCall(isReturnToCall: false)
     }
     
     @objc func didTapToReturnToCall() {
@@ -87,8 +86,7 @@ extension ChatViewController {
             }
             return
         }
-        
-        joinCall()
+        joinCall(isReturnToCall: true)
     }
     
     private func endCall(_ call: CallEntity) {
@@ -101,16 +99,15 @@ extension ChatViewController {
         if let activeCall = MEGAChatSdk.shared.firstActiveCall {
             endCall(activeCall.toCallEntity())
         }
-        
-        joinCall()
+        joinCall(isReturnToCall: false)
     }
     
-    private func joinCall() {
+    private func joinCall(isReturnToCall: Bool) {
         permissionRouter.audioPermission(modal: true, incomingCall: false) {[weak self] granted in
             guard let self else { return }
             if granted {
                 timer?.invalidate()
-                openCallViewWithVideo(videoCall: false, shouldRing: false)
+                openCallViewWithVideo(videoCall: false, shouldRing: false, isReturnToCall: isReturnToCall)
             } else {
                 permissionRouter.alertAudioPermission(incomingCall: false)
             }
