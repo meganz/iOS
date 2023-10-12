@@ -280,4 +280,18 @@ final class ChatContentViewModelTests: XCTestCase {
             ]
         )
     }
+    
+    func testShouldOpenWaitingRoom_onNotModeratorAndWaitingRoomEnabledAndNotReturnToCall_shouldReturnTrue() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .standard, isWaitingRoomEnabled: true)
+        let sut = ChatContentViewModel(chatRoom: chatRoom)
+        
+        XCTAssertTrue(sut.shouldOpenWaitingRoom(isReturnToCall: false))
+    }
+    
+    func testShouldOpenWaitingRoom_onNotModeratorAndWaitingRoomEnabledAndReturnToCall_shouldReturnFalse() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .standard, isWaitingRoomEnabled: true)
+        let sut = ChatContentViewModel(chatRoom: chatRoom)
+        
+        XCTAssertFalse(sut.shouldOpenWaitingRoom(isReturnToCall: true))
+    }
 }
