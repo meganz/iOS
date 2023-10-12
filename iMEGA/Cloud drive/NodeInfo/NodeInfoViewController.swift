@@ -517,7 +517,7 @@ class NodeInfoViewController: UIViewController {
         }
         
         cell.backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
-        cell.avatarImageView.mnz_setImage(forUserHandle: MEGAInvalidHandle, name: cachedPendingShares[indexPath.row].user)
+        cell.avatarImageView.mnz_setImage(forUserHandle: MEGAInvalidHandle, name: cachedPendingShares[indexPath.row].user ?? "")
         cell.nameLabel.text = cachedPendingShares[indexPath.row].user
         cell.shareLabel.isHidden = true
         cell.permissionsImageView.isHidden = false

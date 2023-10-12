@@ -5,7 +5,7 @@ public extension ShareEntity {
     init(sharedUserEmail: String? = nil,
          nodeHandle: HandleEntity = 0,
          accessLevel: ShareAccessLevelEntity = .unknown,
-         createdDate: Date = Date(),
+         createdDate: Date? = Date(),
          isPending: Bool = false,
          isVerified: Bool = false,
          isTesting: Bool = true) {
