@@ -11,15 +11,19 @@ public struct AdsSlotView<T: View>: View {
             contentView
             
             if viewModel.displayAds && verticalSizeClass != .compact {
-                AdsWebView(url: viewModel.adsUrl,
-                           coordinatorViewModel: AdsWebViewCoordinatorViewModel(),
-                           adsTapAction: {
-                    Task { await viewModel.loadAds() }
-                })
+                HStack {
+                    AdsWebView(url: viewModel.adsUrl,
+                               coordinatorViewModel: AdsWebViewCoordinatorViewModel(),
+                               adsTapAction: {
+                        Task { await viewModel.loadAds() }
+                    })
+                    .frame(width: 320, height: 50)
+                    .padding(.bottom, 10)
+                }
                 .background(Color.clear)
-                .padding(.vertical, 15)
+                .padding(.vertical, 10)
                 .padding(.horizontal, 5)
-                .frame(height: 110)
+                .frame(height: 100)
             }
         }
         .taskForiOS14 {

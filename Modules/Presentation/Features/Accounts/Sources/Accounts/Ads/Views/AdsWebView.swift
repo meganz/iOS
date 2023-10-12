@@ -9,6 +9,7 @@ struct AdsWebView: UIViewRepresentable {
     func makeUIView(context: Context) -> WKWebView {
         let webview = WKWebView()
         webview.navigationDelegate = context.coordinator
+        webview.uiDelegate = context.coordinator
         webview.configuration.userContentController.addUserScript(disableZoomScript())
         webview.scrollView.isScrollEnabled = false
         webview.isOpaque = false
@@ -39,7 +40,7 @@ struct AdsWebView: UIViewRepresentable {
     }
     
     // MARK: - Coordinator
-    final class Coordinator: NSObject, WKNavigationDelegate {
+    final class Coordinator: NSObject, WKNavigationDelegate, WKUIDelegate {
         private let adsWebView: AdsWebView
         private let viewModel: AdsWebViewCoordinatorViewModel
         
@@ -48,7 +49,29 @@ struct AdsWebView: UIViewRepresentable {
             self.viewModel = viewModel
         }
         
+        // MARK: WKUIDelegate
+        
+        func webView(
+            _ webView: WKWebView,
+            createWebViewWith configuration: WKWebViewConfiguration,
+            for navigationAction: WKNavigationAction,
+            windowFeatures: WKWindowFeatures
+        ) -> WKWebView? {
+            guard let url = navigationAction.request.url,
+                  let currentDomain = viewModel.urlHost(url: webView.url),
+                  let targetDomain = viewModel.urlHost(url: url),
+                  viewModel.shouldHandleAdsTap(currentDomain: currentDomain,
+                                               targetDomain: targetDomain,
+                                               navigationAction: navigationAction) else {
+                return nil
+            }
+            
+            UIApplication.shared.open(url)
+            return nil
+        }
+        
         // MARK: WKNavigationDelegate
+
         func webView(
             _ webView: WKWebView,
             decidePolicyFor navigationAction: WKNavigationAction
