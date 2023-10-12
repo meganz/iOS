@@ -459,6 +459,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     self.nodesArray = [self mapNodeListToArray:self.nodes];
     
     if (self.displayMode == DisplayModeCloudDrive &&
+        self.parentNode.type != MEGANodeTypeRoot &&
+        !self.isFromSharedItem &&
         !self.didShowMediaDiscoveryAutomatically &&
         [self.viewModel shouldShowMediaDiscoveryAutomaticallyForNodes:self.nodes]) {
         self.didShowMediaDiscoveryAutomatically = YES;
