@@ -4,11 +4,11 @@ public struct ShareEntity: Sendable {
     public let sharedUserEmail: String?
     public let nodeHandle: HandleEntity
     public let accessLevel: ShareAccessLevelEntity
-    public let createdDate: Date
+    public let createdDate: Date?
     public let isPending: Bool
     public let isVerified: Bool
     
-    public init(sharedUserEmail: String?, nodeHandle: HandleEntity, accessLevel: ShareAccessLevelEntity, createdDate: Date, isPending: Bool, isVerified: Bool) {
+    public init(sharedUserEmail: String?, nodeHandle: HandleEntity, accessLevel: ShareAccessLevelEntity, createdDate: Date?, isPending: Bool, isVerified: Bool) {
         self.sharedUserEmail = sharedUserEmail
         self.nodeHandle = nodeHandle
         self.accessLevel = accessLevel
