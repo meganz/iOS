@@ -1,4 +1,5 @@
 import Accounts
+import Combine
 import MEGADomain
 import MEGAL10n
 import UIKit
@@ -473,7 +474,7 @@ final class AudioPlayerViewController: UIViewController {
 
 // MARK: - Ads
 extension AudioPlayerViewController: AdsSlotViewControllerProtocol {
-    func currentAdsSlotType() -> AdsSlotEntity? {
-        .sharedLink
+    public var adsSlotPublisher: AnyPublisher<AdsSlotConfig?, Never> {
+        Just(AdsSlotConfig(adsSlot: .sharedLink, displayAds: true)).eraseToAnyPublisher()
     }
 }

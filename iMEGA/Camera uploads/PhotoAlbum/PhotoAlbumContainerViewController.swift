@@ -84,6 +84,18 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnvironmen
         pageTabViewModel.didAppear()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        configureAdsVisibility()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        configureAdsVisibility()
+    }
+    
     // MARK: Internal
     
     func showViewController(at page: PhotoLibraryTab) -> UIViewController? {
@@ -289,5 +301,13 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnvironmen
     
     @objc private func removeLinksButtonPressed() {
         viewModel.showRemoveAlbumLinksAlert.toggle()
+    }
+}
+
+// MARK: - Ads
+extension PhotoAlbumContainerViewController {
+    @objc func configureAdsVisibility() {
+        guard let mainTabBar = UIApplication.mainTabBarRootViewController() as? MainTabBarController else { return }
+        mainTabBar.configureAdsVisibility()
     }
 }

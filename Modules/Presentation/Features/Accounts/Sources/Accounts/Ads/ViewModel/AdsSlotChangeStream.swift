@@ -3,48 +3,35 @@ import MEGADomain
 import UIKit
 
 // This procotol is for ViewController where the ads slots will be added.
-// It will provide the current ads slot type for the ViewController.
+// It will publish the new ads slot configuration of the ViewController.
 public protocol AdsSlotViewControllerProtocol {
-    func currentAdsSlotType() -> AdsSlotEntity?
+    var adsSlotPublisher: AnyPublisher<AdsSlotConfig?, Never> { get }
 }
 
-// This protocol will handle sending new Ads Slot changes.
-// Ads Slot is the type of container where the ads will be added in the view.
-// Loading Ads content is depending on their ads slot type.
+// This protocol will handle sending new Ads Slot configuration changes.
+// Ads Slot is the ads container that will be added in the view.
+// Loading Ads content is depending on their ads slot configuration - ads slot type and displayAds.
 public protocol AdsSlotChangeStreamProtocol {
-    var adsSlotStream: AsyncStream<AdsSlotEntity?>? { get }
+    var adsSlotStream: AsyncStream<AdsSlotConfig?> { get }
 }
 
 public final class AdsSlotChangeStream: AdsSlotChangeStreamProtocol {
     private var subscriptions = Set<AnyCancellable>()
-    private var continuation: AsyncStream<AdsSlotEntity?>.Continuation!
-    public var adsSlotStream: AsyncStream<AdsSlotEntity?>?
-    
+    public let (adsSlotStream, continuation) = AsyncStream
+        .makeStream(of: AdsSlotConfig?.self, bufferingPolicy: .bufferingNewest(1))
+
     public init(adsSlotViewController: any AdsSlotViewControllerProtocol) {
-        adsSlotStream = AsyncStream(AdsSlotEntity?.self) { continuation in
-            self.continuation = continuation
+        adsSlotViewController.adsSlotPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] newValue in
+                guard let self else { return }
+                continuation.yield(newValue)
         }
-        
-        if let tabController = adsSlotViewController as? UITabBarController {
-            setUpTabBarSubscription(tabBar: tabController,
-                                    adsSlotVC: adsSlotViewController)
-        } else {
-            continuation.yield(adsSlotViewController.currentAdsSlotType())
-        }
+        .store(in: &subscriptions)
     }
     
     deinit {
         continuation.finish()
         subscriptions.removeAll()
-    }
-    
-    // MARK: MainTabBar
-    private func setUpTabBarSubscription(tabBar: UITabBarController, adsSlotVC: any AdsSlotViewControllerProtocol) {
-        tabBar.publisher(for: \.selectedViewController)
-            .sink { [weak self] _ in
-                guard let self else { return }
-                continuation.yield(adsSlotVC.currentAdsSlotType())
-            }
-            .store(in: &subscriptions)
     }
 }

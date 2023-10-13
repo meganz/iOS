@@ -179,6 +179,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     if (self.myAvatarManager != nil) {
         [self refreshMyAvatar];
     }
+    
+    [self configureAdsVisibility];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -208,6 +210,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     if (self.shouldRemovePlayerDelegate) {
         [AudioPlayerManager.shared removeDelegate:self];
     }
+    
+    [self configureAdsVisibility];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {

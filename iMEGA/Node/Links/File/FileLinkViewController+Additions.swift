@@ -1,4 +1,5 @@
 import Accounts
+import Combine
 import MEGADomain
 
 extension FileLinkViewController {
@@ -39,7 +40,7 @@ extension FileLinkViewController {
 
 // MARK: - Ads
 extension FileLinkViewController: AdsSlotViewControllerProtocol {
-    public func currentAdsSlotType() -> AdsSlotEntity? {
-        .sharedLink
+    public var adsSlotPublisher: AnyPublisher<AdsSlotConfig?, Never> {
+        Just(AdsSlotConfig(adsSlot: .sharedLink, displayAds: true)).eraseToAnyPublisher()
     }
 }

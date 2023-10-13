@@ -1,4 +1,6 @@
+import Accounts
 import ChatRepo
+import Combine
 import MEGADomain
 import MEGAPresentation
 import MEGASDKRepo
@@ -35,6 +37,7 @@ extension MainTabBarController {
 
         addTabDelegate()
         mainTabBarViewModel = createMainTabBarViewModel()
+        mainTabBarAdsViewModel = createMainTabBarAdsViewModel()
         configProgressView()
         showPSAViewIfNeeded()
         updateUI()
@@ -172,6 +175,12 @@ extension MainTabBarController {
         return mainTabBarCallsViewModel
     }
     
+    func createMainTabBarAdsViewModel() -> MainTabBarAdsViewModel {
+        let sourcePublisher = PassthroughSubject<AdsSlotConfig?, Never>()
+        let viewModel = MainTabBarAdsViewModel(adsSlotConfigSourcePublisher: sourcePublisher)
+        return viewModel
+    }
+    
     private func excuteCommand(_ command: MainTabBarCallsViewModel.Command) {
         switch command {
         case .showActiveCallIcon:
@@ -192,6 +201,8 @@ extension MainTabBarController: UITabBarControllerDelegate {
 
     public func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         showPSAViewIfNeeded()
+        
+        configureAdsVisibility()
     }
 }
 

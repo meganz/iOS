@@ -1571,6 +1571,8 @@
 		B52CB2342A7FA78A00F9C56C /* OfflineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52CB2332A7FA78A00F9C56C /* OfflineViewModel.swift */; };
 		B52E231D28A0D66F0018C3C3 /* FeatureFlagUseCase+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52E231C28A0D66F0018C3C3 /* FeatureFlagUseCase+Additions.swift */; };
 		B53B02BE2A96135200550A69 /* MEGAPurchase+PromotedPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53B02BD2A96135200550A69 /* MEGAPurchase+PromotedPlan.swift */; };
+		B54081142AD8F5DF004392E8 /* MainTabBarAdsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54081132AD8F5DF004392E8 /* MainTabBarAdsViewModel.swift */; };
+		B54081172AD91471004392E8 /* MainTabBarAdsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54081162AD91471004392E8 /* MainTabBarAdsViewModelTests.swift */; };
 		B541CD302A6AAF53004B4CCC /* PlanSelectionSnackBarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B541CD2F2A6AAF53004B4CCC /* PlanSelectionSnackBarType.swift */; };
 		B5430FCE2AB97629003F8C34 /* UIApplication+TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A8CA002AB96442001F9B83 /* UIApplication+TabBar.swift */; };
 		B544E5DB2AB4610C006EB65C /* MainTabBarController+Ads.swift in Sources */ = {isa = PBXBuildFile; fileRef = B544E5DA2AB4610C006EB65C /* MainTabBarController+Ads.swift */; };
@@ -4159,6 +4161,8 @@
 		B52CB2332A7FA78A00F9C56C /* OfflineViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineViewModel.swift; sourceTree = "<group>"; };
 		B52E231C28A0D66F0018C3C3 /* FeatureFlagUseCase+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FeatureFlagUseCase+Additions.swift"; sourceTree = "<group>"; };
 		B53B02BD2A96135200550A69 /* MEGAPurchase+PromotedPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPurchase+PromotedPlan.swift"; sourceTree = "<group>"; };
+		B54081132AD8F5DF004392E8 /* MainTabBarAdsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarAdsViewModel.swift; sourceTree = "<group>"; };
+		B54081162AD91471004392E8 /* MainTabBarAdsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarAdsViewModelTests.swift; sourceTree = "<group>"; };
 		B541CD2F2A6AAF53004B4CCC /* PlanSelectionSnackBarType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanSelectionSnackBarType.swift; sourceTree = "<group>"; };
 		B544E5DA2AB4610C006EB65C /* MainTabBarController+Ads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabBarController+Ads.swift"; sourceTree = "<group>"; };
 		B547025128B8AFB6005F7F71 /* MEGAPhotoBrowserViewController+LiveText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPhotoBrowserViewController+LiveText.swift"; sourceTree = "<group>"; };
@@ -8473,6 +8477,7 @@
 		835CE84C2AA88E7E00861544 /* MainTabBar */ = {
 			isa = PBXGroup;
 			children = (
+				B54081162AD91471004392E8 /* MainTabBarAdsViewModelTests.swift */,
 				835CE84D2AA88E9300861544 /* MainTabBarCallsViewModelTests.swift */,
 			);
 			path = MainTabBar;
@@ -9197,6 +9202,7 @@
 		83F79CC42AA7789E00D2DE64 /* MainTabBar */ = {
 			isa = PBXGroup;
 			children = (
+				B54081132AD8F5DF004392E8 /* MainTabBarAdsViewModel.swift */,
 				83F79CBA2AA7372C00D2DE64 /* MainTabBarCallsRouter.swift */,
 				83663F5F2AA63869000A1115 /* MainTabBarCallsViewModel.swift */,
 			);
@@ -13810,6 +13816,7 @@
 				4156C80C1AD7E79A00F5E818 /* LTHKeychainUtils.m in Sources */,
 				4156C80D1AD7E79A00F5E818 /* LTHPasscodeViewController.m in Sources */,
 				137361901A6664C300B740E8 /* main.m in Sources */,
+				B54081142AD8F5DF004392E8 /* MainTabBarAdsViewModel.swift in Sources */,
 				83F79CBB2AA7372C00D2DE64 /* MainTabBarCallsRouter.swift in Sources */,
 				83663F602AA63869000A1115 /* MainTabBarCallsViewModel.swift in Sources */,
 				948425DB2A94F34F0024FF1F /* MainTabBarController+Additions.swift in Sources */,
@@ -15156,6 +15163,7 @@
 				94712EF42A9C8F9400B5F2C9 /* HomeSearchResultsProviderTests.swift in Sources */,
 				943C92572AC4360C00C2F67E /* HomeViewModelTests.swift in Sources */,
 				328C153B2A3989B1002499CE /* ImportAlbumViewModelTests.swift in Sources */,
+				B54081172AD91471004392E8 /* MainTabBarAdsViewModelTests.swift in Sources */,
 				835CE84E2AA88E9300861544 /* MainTabBarCallsViewModelTests.swift in Sources */,
 				25C2F8EF2AB126E100F8930A /* MediaDiscoveryContentViewModelTests.swift in Sources */,
 				1240A4A327DD548600627262 /* MediaDiscoveryViewModelTests.swift in Sources */,

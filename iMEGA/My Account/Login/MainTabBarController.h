@@ -7,6 +7,7 @@
 @class Tab;
 @class PSAViewModel;
 @class MainTabBarCallsViewModel;
+@class MainTabBarAdsViewModel;
 
 typedef NS_ENUM(NSInteger, MovementDirection) {
     MovementDirectionUp = 0,
@@ -27,6 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSInteger unreadMessages;
 @property (strong, nonatomic) NSMutableArray<UIViewController *> *defaultViewControllers;
 @property (nonatomic, strong) MainTabBarCallsViewModel *mainTabBarViewModel;
+@property (nonatomic, strong) MainTabBarAdsViewModel *mainTabBarAdsViewModel;
 @property (nonatomic, strong, nullable) PSAViewModel *psaViewModel;
 
 - (void)openChatRoomNumber:(nullable NSNumber *)chatNumber;

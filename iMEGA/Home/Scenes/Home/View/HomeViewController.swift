@@ -213,8 +213,16 @@ final class HomeViewController: UIViewController {
         super.viewWillAppear(animated)
         
         myAvatarViewModel?.inputs.viewIsAppearing()
+        
+        configureAdsVisibility()
     }
 
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+
+        configureAdsVisibility()
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         setupSlidePanelVerticalOffset()
@@ -726,5 +734,14 @@ extension HomeViewController: AudioPlayerPresenterProtocol {
         slidePanelView.offlineScrollView?.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
         slidePanelView.recentScrollView?.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: height, right: 0)
         searchResultsBridge.update(bottomInset: height)
+    }
+}
+
+// MARK: - Ads
+
+extension HomeViewController {
+    func configureAdsVisibility() {
+        guard let mainTabBar = UIApplication.mainTabBarRootViewController() as? MainTabBarController else { return }
+        mainTabBar.configureAdsVisibility()
     }
 }
