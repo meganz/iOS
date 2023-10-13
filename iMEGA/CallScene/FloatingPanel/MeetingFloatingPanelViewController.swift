@@ -430,15 +430,6 @@ extension MeetingFloatingPanelViewController: PanModalPresentable {
         false
     }
     
-    var topOffset: CGFloat {
-        guard let rootVC = UIApplication.shared.keyWindow?.rootViewController else { return 0.0 }
-        if (view.frame.height - rootVC.view.safeAreaInsets.top) < Constants.viewMaxHeight {
-            return rootVC.view.safeAreaInsets.top
-        } else {
-            return (view.frame.height - Constants.viewMaxHeight)
-        }
-    }
-    
     var allowsExtendedPanScrolling: Bool {
         true
     }
