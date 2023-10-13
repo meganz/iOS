@@ -200,6 +200,8 @@ class ChatViewController: MessagesViewController {
         chatContentViewModel = ChatContentViewModel(
             chatRoom: chatRoom.toChatRoomEntity(),
             chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
+            chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo),
+            callUseCase: CallUseCase(repository: CallRepository.newRepo),
             scheduledMeetingUseCase: ScheduledMeetingUseCase(repository: ScheduledMeetingRepository.newRepo)
         )
         super.init(nibName: nil, bundle: nil)

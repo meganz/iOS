@@ -281,6 +281,131 @@ final class ChatContentViewModelTests: XCTestCase {
         )
     }
     
+    func testInviteParticipants_onCallAndWaitingRoomEnabledAndModerator_shouldCallAllowUsersJoinCallAndMatchInvitedUsers() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, isWaitingRoomEnabled: true)
+        let callUseCase = MockCallUseCase(call: CallEntity())
+        let sut = ChatContentViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
+        
+        let invitedParticipants: [HandleEntity] = [1]
+        test(
+            viewModel: sut,
+            action: ChatContentAction.inviteParticipants(invitedParticipants),
+            expectedCommands: []
+        )
+        
+        XCTAssertEqual(callUseCase.allowUsersJoinCall_CalledTimes, 1)
+        XCTAssertEqual(callUseCase.allowedUsersJoinCall, invitedParticipants)
+    }
+    
+    func testInviteParticipants_onCallAndWaitingRoomEnabledAndOpenInviteEnabled_shouldCallAllowUsersJoinCallAndMatchInvitedUsers() {
+        let chatRoom = ChatRoomEntity(isOpenInviteEnabled: true, isWaitingRoomEnabled: true)
+        let callUseCase = MockCallUseCase(call: CallEntity())
+        let sut = ChatContentViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
+        
+        let invitedParticipants: [HandleEntity] = [1]
+        test(
+            viewModel: sut,
+            action: ChatContentAction.inviteParticipants(invitedParticipants),
+            expectedCommands: []
+        )
+        
+        XCTAssertEqual(callUseCase.allowUsersJoinCall_CalledTimes, 1)
+        XCTAssertEqual(callUseCase.allowedUsersJoinCall, invitedParticipants)
+    }
+    
+    func testInviteParticipants_onNotCall_shouldNotCallAllowUsersJoinCall() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, isOpenInviteEnabled: true, isWaitingRoomEnabled: true)
+        let callUseCase = MockCallUseCase(call: nil)
+        let sut = ChatContentViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
+        
+        let invitedParticipants: [HandleEntity] = [1]
+        test(
+            viewModel: sut,
+            action: ChatContentAction.inviteParticipants(invitedParticipants),
+            expectedCommands: []
+        )
+        
+        XCTAssertEqual(callUseCase.allowUsersJoinCall_CalledTimes, 0)
+    }
+    
+    func testInviteParticipants_onWaitingRoomNotEnabled_shouldNotCallAllowUsersJoinCall() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, isOpenInviteEnabled: true, isWaitingRoomEnabled: false)
+        let callUseCase = MockCallUseCase(call: CallEntity())
+        let sut = ChatContentViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
+        
+        let invitedParticipants: [HandleEntity] = [1]
+        test(
+            viewModel: sut,
+            action: ChatContentAction.inviteParticipants(invitedParticipants),
+            expectedCommands: []
+        )
+        
+        XCTAssertEqual(callUseCase.allowUsersJoinCall_CalledTimes, 0)
+    }
+    
+    func testInviteParticipants_onNotModeratorAndNotOpenInviteEnabled_shouldNotCallAllowUsersJoinCall() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .standard, isOpenInviteEnabled: false, isWaitingRoomEnabled: true)
+        let callUseCase = MockCallUseCase(call: CallEntity())
+        let sut = ChatContentViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
+        
+        let invitedParticipants: [HandleEntity] = [1]
+        test(
+            viewModel: sut,
+            action: ChatContentAction.inviteParticipants(invitedParticipants),
+            expectedCommands: []
+        )
+        
+        XCTAssertEqual(callUseCase.allowUsersJoinCall_CalledTimes, 0)
+    }
+    
+    func testInviteParticipants_onCallAndWaitingRoomEnabledAndModeratorAndCallChangeTypeWaitingRoomUsersAlowAndUsersInvitedMatch_shouldInviteUsersToCall() {
+        let chatRoom = ChatRoomEntity(chatId: 100, ownPrivilege: .moderator, chatType: .meeting, isWaitingRoomEnabled: true)
+        let call = CallEntity(status: .inProgress, chatId: 100, changeType: .waitingRoomUsersAllow, waitingRoomHandleList: [1])
+        let callUseCase = MockCallUseCase(call: call)
+        let chatUseCase = MockChatUseCase(activeCallEntity: call, currentChatConnectionStatus: .online)
+        let sut = ChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase, callUseCase: callUseCase)
+        
+        test(
+            viewModel: sut,
+            actions: [
+                ChatContentAction.inviteParticipants([1]),
+                ChatContentAction.updateContent
+            ],
+            expectedCommands: [
+                .configNavigationBar,
+                .hideStartOrJoinCallButton(true),
+                .initTimerForCall(call),
+                .showCallEndTimerIfNeeded(call)
+            ]
+        )
+        
+        XCTAssertEqual(callUseCase.addPeer_CalledTimes, 1)
+    }
+    
+    func testInviteParticipants_onCallAndWaitingRoomEnabledAndModeratorAndCallChangeTypeWaitingRoomUsersAlowAndUsersInvitedNotMatch_shouldNotInviteUsersToCall() {
+        let chatRoom = ChatRoomEntity(chatId: 100, ownPrivilege: .moderator, chatType: .meeting, isWaitingRoomEnabled: true)
+        let call = CallEntity(status: .inProgress, chatId: 100, changeType: .waitingRoomUsersAllow, waitingRoomHandleList: [2])
+        let callUseCase = MockCallUseCase(call: call)
+        let chatUseCase = MockChatUseCase(activeCallEntity: call, currentChatConnectionStatus: .online)
+        let sut = ChatContentViewModel(chatRoom: chatRoom, chatUseCase: chatUseCase, callUseCase: callUseCase)
+        
+        test(
+            viewModel: sut,
+            actions: [
+                ChatContentAction.inviteParticipants([1]),
+                ChatContentAction.updateContent
+            ],
+            expectedCommands: [
+                .configNavigationBar,
+                .hideStartOrJoinCallButton(true),
+                .initTimerForCall(call),
+                .showCallEndTimerIfNeeded(call)
+            ]
+        )
+        
+        XCTAssertEqual(callUseCase.addPeer_CalledTimes, 0)
+    }
+    
     func testShouldOpenWaitingRoom_onNotModeratorAndWaitingRoomEnabledAndNotReturnToCall_shouldReturnTrue() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, isWaitingRoomEnabled: true)
         let sut = ChatContentViewModel(chatRoom: chatRoom)

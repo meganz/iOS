@@ -19,6 +19,7 @@ enum ChatContentAction: ActionType {
     case updateContent
     case updateCall(_ call: CallEntity?)
     case updateChatRoom(_ chatRoom: ChatRoomEntity)
+    case inviteParticipants(_ userHandles: [HandleEntity])
 }
 
 final class ChatContentViewModel: ViewModelType {
@@ -38,7 +39,6 @@ final class ChatContentViewModel: ViewModelType {
         case hideStartOrJoinCallButton(_ hide: Bool)
     }
     
-    var chatCall: CallEntity?
     var invokeCommand: ((Command) -> Void)?
     
     lazy var userHandle: HandleEntity = {
@@ -47,16 +47,24 @@ final class ChatContentViewModel: ViewModelType {
         
     private var chatRoom: ChatRoomEntity
     private let chatUseCase: any ChatUseCaseProtocol
+    private let chatRoomUseCase: any ChatRoomUseCaseProtocol
+    private let callUseCase: any CallUseCaseProtocol
     private let scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
 
+    private var invitedUserIdsToBypassWaitingRoom = Set<HandleEntity>()
+
     init(chatRoom: ChatRoomEntity,
          chatUseCase: some ChatUseCaseProtocol,
+         chatRoomUseCase: some ChatRoomUseCaseProtocol,
+         callUseCase: some CallUseCaseProtocol,
          scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
         self.chatRoom = chatRoom
         self.chatUseCase = chatUseCase
+        self.chatRoomUseCase = chatRoomUseCase
+        self.callUseCase = callUseCase
         self.scheduledMeetingUseCase = scheduledMeetingUseCase
         self.featureFlagProvider = featureFlagProvider
     }
@@ -95,6 +103,8 @@ final class ChatContentViewModel: ViewModelType {
             onChatCallUpdate(for: call)
         case .updateChatRoom(let chatRoom):
             self.chatRoom = chatRoom
+        case .inviteParticipants(let userHandles):
+            inviteParticipants(userHandles)
         }
     }
     
@@ -256,8 +266,10 @@ final class ChatContentViewModel: ViewModelType {
         guard let call = call, call.chatId == chatRoom.chatId else { return }
         
         invokeCommand?(.configNavigationBar)
-        
-        chatCall = call
+                
+        if call.changeType == .waitingRoomUsersAllow {
+            waitingRoomUsersAllow(userHandles: call.waitingRoomHandleList)
+        }
         
         switch call.status {
         case .initial, .joining, .userNoPresent:
@@ -284,5 +296,34 @@ final class ChatContentViewModel: ViewModelType {
         || scheduledMeetings.isEmpty
         || chatUseCase.isCallInProgress(for: chatRoom.chatId)
         || !chatRoom.ownPrivilege.isUserInChat
+    }
+    
+    private func inviteParticipants(_ userHandles: [HandleEntity]) {
+        if let call = callUseCase.call(for: chatRoom.chatId),
+           shouldInvitedParticipantsByPassWaitingRoom() {
+            userHandles.forEach {
+                invitedUserIdsToBypassWaitingRoom.insert($0)
+            }
+            callUseCase.allowUsersJoinCall(call, users: userHandles)
+        } else {
+            userHandles.forEach {
+                chatRoomUseCase.invite(toChat: chatRoom, userId: $0)
+            }
+        }
+    }
+    
+    private func shouldInvitedParticipantsByPassWaitingRoom() -> Bool {
+        guard chatRoom.isWaitingRoomEnabled else { return false }
+        let isModerator = chatRoom.ownPrivilege == .moderator
+        let isOpenInviteEnabled = chatRoom.isOpenInviteEnabled
+        return isModerator || isOpenInviteEnabled
+    }
+    
+    private func waitingRoomUsersAllow(userHandles: [HandleEntity]) {
+        guard let call = callUseCase.call(for: chatRoom.chatId) else { return }
+        for userId in userHandles where invitedUserIdsToBypassWaitingRoom.contains(userId) {
+            callUseCase.addPeer(toCall: call, peerId: userId)
+            invitedUserIdsToBypassWaitingRoom.remove(userId)
+        }
     }
 }
