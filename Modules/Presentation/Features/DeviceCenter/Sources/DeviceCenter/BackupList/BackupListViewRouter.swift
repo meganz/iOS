@@ -16,7 +16,7 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
     private let selectedDeviceName: String
     private let devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>
     private let updateInterval: UInt64
-    private let backups: [BackupEntity]
+    private let backups: [BackupEntity]?
     private let deviceCenterUseCase: any DeviceCenterUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
     private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
@@ -31,7 +31,7 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
         selectedDeviceName: String,
         devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>,
         updateInterval: UInt64,
-        backups: [BackupEntity],
+        backups: [BackupEntity]?,
         deviceCenterUseCase: some DeviceCenterUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
         networkMonitorUseCase: some NetworkMonitorUseCaseProtocol,

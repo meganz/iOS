@@ -108,7 +108,7 @@ final class BackupListViewModelTests: XCTestCase {
         )
         
         let expectedBackupNames = userGroupedBackups[mockCurrentDeviceId]?.map(\.name)
-        let foundBackupNames = viewModel.backups.map(\.name)
+        let foundBackupNames = viewModel.backups?.map(\.name)
         
         await viewModel.filterAndLoadCurrentDeviceBackups(devices())
         XCTAssertEqual(foundBackupNames, expectedBackupNames)
@@ -122,7 +122,7 @@ final class BackupListViewModelTests: XCTestCase {
         await viewModel2.filterAndLoadCurrentDeviceBackups(devices())
         
         let expectedBackupNames2 = userGroupedBackups[mockAuxDeviceId]?.map(\.name)
-        let foundBackupNames2 = viewModel2.backups.map(\.name)
+        let foundBackupNames2 = viewModel2.backups?.map(\.name)
         
         XCTAssertEqual(foundBackupNames2, expectedBackupNames2)
     }
@@ -141,7 +141,7 @@ final class BackupListViewModelTests: XCTestCase {
         
         await viewModel.syncDevicesAndLoadBackups()
         let expectedBackupNames = userGroupedBackups[mockCurrentDeviceId]?.map(\.name)
-        let foundBackupNames = viewModel.backups.map(\.name)
+        let foundBackupNames = viewModel.backups?.map(\.name)
         
         XCTAssertEqual(foundBackupNames, expectedBackupNames)
     }

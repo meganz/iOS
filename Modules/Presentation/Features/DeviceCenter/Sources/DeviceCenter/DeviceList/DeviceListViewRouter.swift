@@ -6,6 +6,7 @@ import SwiftUI
 
 public protocol DeviceListRouting: Routing {
     func showDeviceBackups(_ device: DeviceEntity)
+    func showCurrentDeviceEmptyState(_ deviceId: String, deviceName: String)
 }
 
 public final class DeviceListViewRouter: NSObject, DeviceListRouting {
@@ -80,6 +81,26 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
             devicesUpdatePublisher: devicesUpdatePublisher,
             updateInterval: updateInterval,
             backups: backups,
+            deviceCenterUseCase: deviceCenterUseCase,
+            nodeUseCase: nodeUseCase,
+            networkMonitorUseCase: networkMonitorUseCase,
+            navigationController: navigationController,
+            deviceCenterBridge: deviceCenterBridge,
+            backupListAssets: deviceCenterAssets.backupListAssets,
+            emptyStateAssets: deviceCenterAssets.emptyStateAssets,
+            searchAssets: deviceCenterAssets.searchAssets,
+            backupStatuses: deviceCenterAssets.backupStatuses,
+            deviceCenterActions: deviceCenterAssets.deviceCenterActions
+        ).start()
+    }
+    
+    public func showCurrentDeviceEmptyState(_ deviceId: String, deviceName: String) {
+        BackupListViewRouter(
+            selectedDeviceId: deviceId,
+            selectedDeviceName: deviceName,
+            devicesUpdatePublisher: devicesUpdatePublisher,
+            updateInterval: updateInterval,
+            backups: nil,
             deviceCenterUseCase: deviceCenterUseCase,
             nodeUseCase: nodeUseCase,
             networkMonitorUseCase: networkMonitorUseCase,

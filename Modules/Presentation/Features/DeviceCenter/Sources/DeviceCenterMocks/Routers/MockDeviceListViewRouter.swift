@@ -13,4 +13,5 @@ public final class MockDeviceListViewRouter: DeviceListRouting {
     public func start() {}
     
     public func showDeviceBackups(_ device: DeviceEntity) {}
+    public func showCurrentDeviceEmptyState(_ deviceId: String, deviceName: String) {}
 }
