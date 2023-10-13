@@ -30,60 +30,135 @@ final class AdsSlotViewModelTests: XCTestCase {
 
     // MARK: - Ads slot
     func testLoadAdsForAdsSlot_featureFlagEnabled_shouldHaveNewUrlAndDisplayAds() async {
-        let expectedAdsSlot = randomAdsSlot
-        let expectedAdsUrl = adsList[expectedAdsSlot.rawValue]
-        let stream = makeMockAdsSlotChangeStream(adsSlots: [expectedAdsSlot])
-        
+        let expectedAdsSlotConfig = randomAdsSlotConfig
+        let expectedAdsUrl = adsList[expectedAdsSlotConfig.adsSlot.rawValue]
+        let stream = makeMockAdsSlotChangeStream(adsSlotConfigs: [expectedAdsSlotConfig])
         let sut = makeSUT(adsSlotChangeStream: stream,
                           adsList: adsList,
                           featureFlags: [.inAppAds: true])
         
-        await sut.monitorAdsSlotChanges()
+        sut.monitorAdsSlotChanges()
+        await sut.monitorAdsSlotChangesTask?.value
         
         XCTAssertNotNil(sut.adsUrl)
         XCTAssertEqual(sut.adsUrl?.absoluteString, expectedAdsUrl)
-        XCTAssertTrue(sut.displayAds)
+        XCTAssertEqual(sut.displayAds, expectedAdsSlotConfig.displayAds)
     }
 
     func testLoadAdsForAdsSlot_featureFlagDisabled_shouldHaveNilUrlAndDontDisplayAds() async {
-        let stream = makeMockAdsSlotChangeStream(adsSlots: [randomAdsSlot])
+        let stream = makeMockAdsSlotChangeStream(adsSlotConfigs: [randomAdsSlotConfig])
         let sut = makeSUT(adsSlotChangeStream: stream,
                           adsList: adsList,
                           featureFlags: [.inAppAds: false])
         
-        await sut.monitorAdsSlotChanges()
+        sut.monitorAdsSlotChanges()
+        await sut.monitorAdsSlotChangesTask?.value
         
         XCTAssertNil(sut.adsUrl)
         XCTAssertFalse(sut.displayAds)
     }
     
     func testLoadAdsForAdsSlot_noAds_shouldHaveNilUrlAndDontDisplayAds() async {
-        let stream = makeMockAdsSlotChangeStream(adsSlots: [nil])
+        let stream = makeMockAdsSlotChangeStream(adsSlotConfigs: [nil])
         let sut = makeSUT(adsSlotChangeStream: stream, adsList: adsList)
         
-        await sut.monitorAdsSlotChanges()
+        sut.monitorAdsSlotChanges()
+        await sut.monitorAdsSlotChangesTask?.value
         
         XCTAssertNil(sut.adsUrl)
         XCTAssertFalse(sut.displayAds)
     }
     
+    func testLoadAdsForAdsSlotList_shouldMatchDisplayAdsValue() async {
+        var adsSlotConfigs = [AdsSlotConfig(adsSlot: .files, displayAds: true),  // show ads on cloud drive
+                              AdsSlotConfig(adsSlot: .home, displayAds: true),   // show ads on home
+                              AdsSlotConfig(adsSlot: .home, displayAds: false),  // hide ads on home
+                              AdsSlotConfig(adsSlot: .photos, displayAds: true), // show ads on photos
+                              AdsSlotConfig(adsSlot: .files, displayAds: false)] // hide ads on cloud drive
+        let stream = makeMockAdsSlotChangeStream(adsSlotConfigs: adsSlotConfigs)
+        let sut = makeSUT(adsSlotChangeStream: stream, adsList: adsList)
+        
+        sut.$displayAds
+            .dropFirst()
+            .sink { displayAds in
+                let adsSlotConfig = adsSlotConfigs.removeFirst()
+                XCTAssertEqual(displayAds, adsSlotConfig.displayAds)
+            }
+            .store(in: &subscriptions)
+
+        sut.monitorAdsSlotChanges()
+        await sut.monitorAdsSlotChangesTask?.value
+    }
+    
     func testLoadAdsForAdsSlotList_shouldMatchAdsUrl() async {
-        var adsSlots: [AdsSlotEntity] = [.files, .home, .photos, .sharedLink]
-        let stream = makeMockAdsSlotChangeStream(adsSlots: adsSlots)
+        var adsSlotConfigs = [AdsSlotConfig(adsSlot: .files, displayAds: true),  // show ads on cloud drive
+                              AdsSlotConfig(adsSlot: .photos, displayAds: true), // show ads on photos
+                              AdsSlotConfig(adsSlot: .home, displayAds: true)]   // show ads on home
+        let stream = makeMockAdsSlotChangeStream(adsSlotConfigs: adsSlotConfigs)
         let ads = adsList
         let sut = makeSUT(adsSlotChangeStream: stream, adsList: ads)
-    
+        
         sut.$adsUrl
             .dropFirst()
             .sink { url in
-                let adsSlot = adsSlots.removeFirst()
-                XCTAssertEqual(url?.absoluteString, ads[adsSlot.rawValue])
+                let adsSlotConfig = adsSlotConfigs.removeFirst()
+                XCTAssertEqual(url?.absoluteString, ads[adsSlotConfig.adsSlot.rawValue])
             }
             .store(in: &subscriptions)
         
-        await sut.monitorAdsSlotChanges()
+        sut.monitorAdsSlotChanges()
+        await sut.monitorAdsSlotChangesTask?.value
     }
-
+    
+    func testUpdateAdsSlot_sameAdsSlotConfig_shouldNotChangeURLandDisplayAdsValue() async {
+        let expectedAdsSlotConfig = randomAdsSlotConfig
+        let stream = makeMockAdsSlotChangeStream(adsSlotConfigs: [expectedAdsSlotConfig])
+        let sut = makeSUT(adsSlotChangeStream: stream, adsList: adsList)
+        sut.monitorAdsSlotChanges()
+        await sut.monitorAdsSlotChangesTask?.value
+        
+        let currentAdsUrl = sut.adsUrl
+        let currentDisplayAds = sut.displayAds
+        await sut.updateAdsSlot(expectedAdsSlotConfig)
+        
+        XCTAssertEqual(currentAdsUrl, sut.adsUrl)
+        XCTAssertEqual(currentDisplayAds, sut.displayAds)
+        XCTAssertNotNil(sut.adsUrl)
+    }
+    
+    func testUpdateAdsSlot_configSameAdsSlotButDifferentDisplayAdsValue_shouldNotChangeURLButUpdateDisplayAdsValue() async {
+        let currentAdsSlotConfig = randomAdsSlotConfig
+        let expectedAdsSlotConfig = AdsSlotConfig(adsSlot: currentAdsSlotConfig.adsSlot,
+                                                  displayAds: !currentAdsSlotConfig.displayAds)
+        let stream = makeMockAdsSlotChangeStream(adsSlotConfigs: [currentAdsSlotConfig])
+        let sut = makeSUT(adsSlotChangeStream: stream, adsList: adsList)
+        sut.monitorAdsSlotChanges()
+        await sut.monitorAdsSlotChangesTask?.value
+        
+        let currentAdsUrl = sut.adsUrl
+        await sut.updateAdsSlot(expectedAdsSlotConfig)
+        
+        XCTAssertEqual(currentAdsUrl, sut.adsUrl)
+        XCTAssertEqual(expectedAdsSlotConfig.displayAds, sut.displayAds)
+        XCTAssertNotNil(sut.adsUrl)
+    }
+    
+    func testUpdateAdsSlot_differentAdsSlotConfig_shouldUpdateURLandDisplayAdsValue() async {
+        let currentAdsSlotConfig = AdsSlotConfig(adsSlot: .files, displayAds: true)
+        let expectedAdsSlotConfig = AdsSlotConfig(adsSlot: .home, displayAds: false)
+        let stream = makeMockAdsSlotChangeStream(adsSlotConfigs: [currentAdsSlotConfig])
+        let sut = makeSUT(adsSlotChangeStream: stream, adsList: adsList)
+        sut.monitorAdsSlotChanges()
+        await sut.monitorAdsSlotChangesTask?.value
+        
+        let currentAdsUrl = sut.adsUrl
+        await sut.updateAdsSlot(expectedAdsSlotConfig)
+        
+        XCTAssertNotEqual(currentAdsUrl, sut.adsUrl)
+        XCTAssertEqual(expectedAdsSlotConfig.displayAds, sut.displayAds)
+        XCTAssertNotNil(sut.adsUrl)
+    }
+    
     // MARK: Helper
     private func makeSUT(
         adsSlotChangeStream: any AdsSlotChangeStreamProtocol = MockAdsSlotChangeStream(),
@@ -103,10 +178,10 @@ final class AdsSlotViewModelTests: XCTestCase {
         return sut
     }
     
-    private func makeMockAdsSlotChangeStream(adsSlots: [AdsSlotEntity?]) -> MockAdsSlotChangeStream {
-        let adsSlotStream = AsyncStream<AdsSlotEntity?> { continuation in
-            adsSlots.forEach { adsSlot in
-                continuation.yield(adsSlot)
+    private func makeMockAdsSlotChangeStream(adsSlotConfigs: [AdsSlotConfig?]) -> MockAdsSlotChangeStream {
+        let adsSlotStream = AsyncStream<AdsSlotConfig?> { continuation in
+            adsSlotConfigs.forEach { config in
+                continuation.yield(config)
             }
             continuation.finish()
         }
@@ -117,8 +192,9 @@ final class AdsSlotViewModelTests: XCTestCase {
                            AdsSlotEntity.photos.rawValue: "https://testAd/newLink-photos",
                            AdsSlotEntity.home.rawValue: "https://testAd/newLink-home",
                            AdsSlotEntity.sharedLink.rawValue: "https://testAd/newLink-sharedLink"]
-    
-    private var randomAdsSlot: AdsSlotEntity {
-        [.files, .home, .photos, .sharedLink].randomElement() ?? .files
+
+    private var randomAdsSlotConfig: AdsSlotConfig {
+        let adsSlot: AdsSlotEntity = [.files, .home, .photos, .sharedLink].randomElement() ?? .files
+        return AdsSlotConfig(adsSlot: adsSlot, displayAds: Bool.random())
     }
 }

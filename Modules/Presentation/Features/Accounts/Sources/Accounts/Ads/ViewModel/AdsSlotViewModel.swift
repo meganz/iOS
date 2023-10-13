@@ -8,10 +8,12 @@ final public class AdsSlotViewModel: ObservableObject {
     private var adsUseCase: any AdsUseCaseProtocol
     private var featureFlagProvider: any FeatureFlagProviderProtocol
     private var adsSlotChangeStream: any AdsSlotChangeStreamProtocol
-    private var adsSlot: AdsSlotEntity?
+    private var adsSlotConfig: AdsSlotConfig?
     
     @Published var adsUrl: URL?
     @Published var displayAds: Bool = false
+    
+    private(set) var monitorAdsSlotChangesTask: Task<Void, Never>?
     
     public init(
         adsUseCase: some AdsUseCaseProtocol,
@@ -22,14 +24,10 @@ final public class AdsSlotViewModel: ObservableObject {
         self.adsSlotChangeStream = adsSlotChangeStream
         self.featureFlagProvider = featureFlagProvider
     }
-
-    func monitorAdsSlotChanges() async {
-        guard let adsSlotStream = adsSlotChangeStream.adsSlotStream else { return }
-        
-        for await newAdsSlot in adsSlotStream where adsSlot != newAdsSlot {
-            adsSlot = newAdsSlot
-            await loadAds()
-        }
+    
+    deinit {
+        monitorAdsSlotChangesTask?.cancel()
+        monitorAdsSlotChangesTask = nil
     }
     
     // MARK: Feature Flag
@@ -38,36 +36,68 @@ final public class AdsSlotViewModel: ObservableObject {
     }
     
     // MARK: Ads
-    func loadAds() async {
-        guard let adsSlot, isFeatureFlagForInAppAdsEnabled else {
-            await setAdsUrl(nil)
+    func monitorAdsSlotChanges() {
+        guard monitorAdsSlotChangesTask == nil else { return }
+        
+        monitorAdsSlotChangesTask = Task {
+            for await newAdsSlotConfig in adsSlotChangeStream.adsSlotStream {
+                await updateAdsSlot(newAdsSlotConfig)
+            }
+        }
+    }
+    
+    func updateAdsSlot(_ newAdsSlotConfig: AdsSlotConfig?) async {
+        guard isFeatureFlagForInAppAdsEnabled else {
+            adsSlotConfig = nil
+            await configureAds(url: nil)
+            return
+        }
+        
+        guard adsSlotConfig != newAdsSlotConfig else {
+            return
+        }
+        
+        if let adsSlotConfig,
+           let newAdsSlotConfig,
+            adsSlotConfig.adsSlot == newAdsSlotConfig.adsSlot {
+            self.adsSlotConfig = newAdsSlotConfig
+            await displayAds(newAdsSlotConfig.displayAds)
+        } else {
+            adsSlotConfig = newAdsSlotConfig
+            await loadNewAds()
+        }
+    }
+    
+    func loadNewAds() async {
+        guard let adsSlotConfig, isFeatureFlagForInAppAdsEnabled else {
+            await configureAds(url: nil)
             return
         }
         
         do {
+            let adsSlot = adsSlotConfig.adsSlot
             let adsResult = try await adsUseCase.fetchAds(adsFlag: .forceAds,
                                                           adUnits: [adsSlot],
                                                           publicHandle: .invalidHandle)
             guard let adsValue = adsResult[adsSlot.rawValue] else {
-                await setAdsUrl(nil)
+                await configureAds(url: nil)
                 return
             }
             
-            await setAdsUrl(URL(string: adsValue))
+            await configureAds(url: URL(string: adsValue), shouldDisplayAds: adsSlotConfig.displayAds)
         } catch {
-            await setAdsUrl(nil)
+            await configureAds(url: nil)
         }
     }
     
     @MainActor
-    private func setAdsUrl(_ url: URL?) {
-        guard let url else {
-            adsUrl = nil
-            displayAds = false
-            return
-        }
-        
+    private func configureAds(url: URL?, shouldDisplayAds: Bool = false) {
         adsUrl = url
-        displayAds = true
+        displayAds(shouldDisplayAds)
+    }
+    
+    @MainActor
+    private func displayAds(_ shouldDisplayAds: Bool) {
+        displayAds = shouldDisplayAds
     }
 }

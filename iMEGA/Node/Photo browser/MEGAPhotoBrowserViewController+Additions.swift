@@ -1,4 +1,5 @@
 import Accounts
+import Combine
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
@@ -443,7 +444,7 @@ extension MEGAPhotoBrowserViewController {
 
 // MARK: - Ads
 extension MEGAPhotoBrowserViewController: AdsSlotViewControllerProtocol {
-    public func currentAdsSlotType() -> AdsSlotEntity? {
-        .sharedLink
+    public var adsSlotPublisher: AnyPublisher<AdsSlotConfig?, Never> {
+        Just(AdsSlotConfig(adsSlot: .sharedLink, displayAds: true)).eraseToAnyPublisher()
     }
 }
