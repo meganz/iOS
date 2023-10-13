@@ -42,24 +42,8 @@ final class FileLinkActionViewControllerDelegate: NSObject, NodeActionViewContro
     }
     
     private func saveToPhotos(node: MEGANode) {
-        TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
-        let saveMediaToPhotosUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: .shared), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
-
-        Task { @MainActor in
-            do {
-                try await saveMediaToPhotosUseCase.saveToPhotos(nodes: [node.toNodeEntity()])
-            } catch {
-                if let errorEntity = error as? SaveMediaToPhotosErrorEntity, errorEntity != .cancelled {
-                    AnalyticsEventUseCase(repository: AnalyticsRepository.newRepo).sendAnalyticsEvent(.download(.saveToPhotos))
-                    await SVProgressHUD.dismiss()
-                    SVProgressHUD.show(
-                        Asset.Images.NodeActions.saveToPhotos.image,
-                        status: error.localizedDescription
-                    )
-                }
-            }
-            
-        }
+        let wrapper = SaveMediaToPhotosUseCaseOCWrapper()
+        wrapper.saveToPhotos(node: node)
     }
     
     func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, for node: MEGANode, from sender: Any) {
