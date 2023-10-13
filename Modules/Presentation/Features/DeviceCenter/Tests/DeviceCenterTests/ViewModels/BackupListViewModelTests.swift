@@ -191,7 +191,7 @@ final class BackupListViewModelTests: XCTestCase {
         
         let actions = viewModel.actionsForBackup(backup)
         let actionsType = actions?.compactMap {$0.type}
-        let expectedActions: [DeviceCenterActionType] = [.showInCloudDrive, .info]
+        let expectedActions: [DeviceCenterActionType] = [.info, .showInCloudDrive]
         
         XCTAssertEqual(actionsType, expectedActions, "Actions for camera upload backup are incorrect")
     }
@@ -217,7 +217,7 @@ final class BackupListViewModelTests: XCTestCase {
         
         let actions = viewModel.actionsForBackup(backup)
         let actionsType = actions?.compactMap {$0.type}
-        let expectedActions: [DeviceCenterActionType] = [.showInBackups, .info]
+        let expectedActions: [DeviceCenterActionType] = [.info, .showInBackups]
         
         XCTAssertEqual(actionsType, expectedActions, "Actions for backup are incorrect")
     }

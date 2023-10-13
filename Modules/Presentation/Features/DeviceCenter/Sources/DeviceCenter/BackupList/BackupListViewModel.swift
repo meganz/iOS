@@ -190,13 +190,13 @@ public final class BackupListViewModel: ObservableObject {
     func actionsForBackup(_ backup: BackupEntity) -> [DeviceCenterAction]? {
         var actionTypes = [DeviceCenterActionType]()
         
+        actionTypes.append(.info)
+        
         if backup.type == .cameraUpload || backup.type == .mediaUpload {
             actionTypes.append(.showInCloudDrive)
         } else {
             actionTypes.append(.showInBackups)
         }
-        
-        actionTypes.append(.info)
         
         return actionTypes.compactMap { type in
             sortedAvailableActions[type]?.first
