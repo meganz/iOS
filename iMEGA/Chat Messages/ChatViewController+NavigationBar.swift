@@ -126,14 +126,8 @@ extension ChatViewController {
             withContactsMode: .chatAddParticipant,
             additionallyExcludedParticipantsId: nil
         ) { [weak self] handles in
-            guard let self = self else { return }
-            for handle in handles {
-                MEGAChatSdk.shared.invite(
-                    toChat: self.chatRoom.chatId,
-                    user: handle,
-                    privilege: MEGAChatRoomPrivilege.standard.rawValue
-                )
-            }
+            guard let self else { return }
+            chatContentViewModel.dispatch(.inviteParticipants(handles))
         }
         
         guard let contactsNavigationController = contactsNavigationController else { return }

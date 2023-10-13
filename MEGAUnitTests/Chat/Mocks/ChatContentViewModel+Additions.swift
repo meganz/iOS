@@ -8,6 +8,8 @@ extension ChatContentViewModel {
     convenience init(
         chatRoom: ChatRoomEntity = ChatRoomEntity(),
         chatUseCase: some ChatUseCaseProtocol = MockChatUseCase(),
+        chatRoomUseCase: some ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
+        callUseCase: some CallUseCaseProtocol = MockCallUseCase(),
         scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol = MockScheduledMeetingUseCase(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         isTesting: Bool = true
@@ -15,6 +17,8 @@ extension ChatContentViewModel {
         self.init(
             chatRoom: chatRoom,
             chatUseCase: chatUseCase,
+            chatRoomUseCase: chatRoomUseCase,
+            callUseCase: callUseCase,
             scheduledMeetingUseCase: scheduledMeetingUseCase,
             featureFlagProvider: featureFlagProvider
         )

@@ -33,11 +33,11 @@ public final class MockChatUseCase: ChatUseCaseProtocol {
         isCallInProgress: Bool = false,
         isActiveWaitingRoom: Bool = false,
         activeCallEntity: CallEntity? = nil,
-        statusChangePublisher: PassthroughSubject<(HandleEntity, ChatStatusEntity), Never> = PassthroughSubject<(HandleEntity, ChatStatusEntity), Never>(),
+        statusChangePublisher: PassthroughSubject<(HandleEntity, ChatStatusEntity), Never> = .init(),
         chatListItemUpdatePublisher: PassthroughSubject<[ChatListItemEntity], Never> =  PassthroughSubject<[ChatListItemEntity], Never>(),
-        chatCallStatusUpdatePublisher: PassthroughSubject<CallEntity, Never> = PassthroughSubject<CallEntity, Never>(),
-        chatConnectionStatusUpdatePublisher: PassthroughSubject<ChatConnectionStatus, Never> = PassthroughSubject<ChatConnectionStatus, Never>(),
-        chatPrivateModeUpdatePublisher: PassthroughSubject<ChatRoomEntity, Never> = PassthroughSubject<ChatRoomEntity, Never>(),
+        chatCallStatusUpdatePublisher: PassthroughSubject<CallEntity, Never> = .init(),
+        chatConnectionStatusUpdatePublisher: PassthroughSubject<ChatConnectionStatus, Never> = .init(),
+        chatPrivateModeUpdatePublisher: PassthroughSubject<ChatRoomEntity, Never> = .init(),
         items: [ChatListItemEntity]? = [],
         currentChatConnectionStatus: ChatConnectionStatus = .invalid
     ) {

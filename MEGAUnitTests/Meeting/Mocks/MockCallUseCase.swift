@@ -10,6 +10,7 @@ final class MockCallUseCase: CallUseCaseProtocol {
     var endCall_CalledTimes = 0
     var addPeer_CalledTimes = 0
     var removePeer_CalledTimes = 0
+    var allowedUsersJoinCall = [HandleEntity]()
     var allowUsersJoinCall_CalledTimes = 0
     var kickUsersFromCall_CalledTimes = 0
     var pushUsersIntoWaitingRoom_CalledTimes = 0
@@ -138,6 +139,7 @@ final class MockCallUseCase: CallUseCaseProtocol {
     }
     
     func allowUsersJoinCall(_ call: CallEntity, users: [HandleEntity]) {
+        allowedUsersJoinCall = users
         allowUsersJoinCall_CalledTimes += 1
     }
     
