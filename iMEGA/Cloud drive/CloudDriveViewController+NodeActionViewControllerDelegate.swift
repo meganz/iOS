@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGASDKRepo
+import MEGAPermissions
 
 extension CloudDriveViewController: NodeActionViewControllerDelegate {
     func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, forNodes nodes: [MEGANode], from sender: Any) {
@@ -127,15 +128,27 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
     }
     
     private func saveToPhotos(nodes: [NodeEntity]) {
-        let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdk.shared), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
-        Task { @MainActor in
-            do {
-                try await saveMediaUseCase.saveToPhotos(nodes: nodes)
-            } catch {
-                if let errorEntity = error as? SaveMediaToPhotosErrorEntity, errorEntity != .cancelled {
+        permissionHandler.photosPermissionWithCompletionHandler { [weak self] granted in
+            guard let self else { return }
+            
+            guard granted else {
+                permissionRouter.alertPhotosPermission()
+                return
+            }
+            
+            let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdk.shared), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+            Task { @MainActor in
+                do {
+                    try await saveMediaUseCase.saveToPhotos(nodes: nodes)
+                } catch {
+                    guard let errorEntity = error as? SaveMediaToPhotosErrorEntity,
+                          errorEntity != .cancelled  else {
+                        return
+                    }
+                    
                     await SVProgressHUD.dismiss()
                     SVProgressHUD.show(
-                        Asset.Images.NodeActions.saveToPhotos.image,
+                        UIImage(resource: .saveToPhotos),
                         status: error.localizedDescription
                     )
                 }

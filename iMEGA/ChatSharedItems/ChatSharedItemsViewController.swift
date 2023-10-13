@@ -1,6 +1,7 @@
 import MEGADomain
 import MEGAL10n
 import MEGASDKRepo
+import MEGAPermissions
 import UIKit
 
 class ChatSharedItemsViewController: UIViewController {
@@ -34,6 +35,14 @@ class ChatSharedItemsViewController: UIViewController {
     )
     
     private lazy var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(style: .medium)
+    
+    var permissionHandler: any DevicePermissionsHandling {
+        DevicePermissionsHandler.makeHandler()
+    }
+    
+    var permissionRouter: some PermissionAlertRouting {
+        PermissionAlertRouter.makeRouter(deviceHandler: permissionHandler)
+    }
 
     // MARK: - Init methods
     
@@ -480,20 +489,7 @@ extension ChatSharedItemsViewController: NodeActionViewControllerDelegate {
             forwardMessages([message])
             
         case .saveToPhotos:
-            guard let message = messagesArray.first(where: { $0.nodeList?.node(at: 0)?.handle == node.handle }) else {
-                return
-            }
-            
-            let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdk.shared), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
-            TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
-            
-            saveMediaUseCase.saveToPhotosChatNode(handle: node.handle, messageId: message.messageId, chatId: chatRoom.chatId, completion: { result in
-                if case let .failure(error) = result, error != .cancelled {
-                    SVProgressHUD.dismiss()
-                    SVProgressHUD.show(UIImage.saveToPhotos, status: Strings.Localizable.somethingWentWrong)
-                }
-            })
-            
+            saveToPhotos(node)
         case .download:
             guard let message = messagesArray.first(where: { $0.nodeList?.node(at: 0)?.handle == node.handle }) else {
                 return
@@ -513,6 +509,33 @@ extension ChatSharedItemsViewController: NodeActionViewControllerDelegate {
             
         default: break
         }
+    }
+    
+    private func saveToPhotos(_ node: MEGANode) {
+        guard let message = messagesArray.first(where: { $0.nodeList?.node(at: 0)?.handle == node.handle }) else {
+            return
+        }
+        
+        permissionHandler.photosPermissionWithCompletionHandler { [weak self] granted in
+            guard let self else { return }
+            
+            guard granted else {
+                permissionRouter.alertPhotosPermission()
+                return
+            }
+            
+            let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdk.shared), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+            TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
+            
+            saveMediaUseCase.saveToPhotosChatNode(handle: node.handle, messageId: message.messageId, chatId: chatRoom.chatId, completion: { result in
+                if case let .failure(error) = result, error != .cancelled {
+                    SVProgressHUD.dismiss()
+                    SVProgressHUD.show(UIImage.saveToPhotos, status: Strings.Localizable.somethingWentWrong)
+                }
+            })
+        }
+        
+
     }
 }
 

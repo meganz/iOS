@@ -176,21 +176,8 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
     }
     
     private func saveToPhotos(_ node: MEGANode) {
-        TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
-        
-        Task { @MainActor in
-            do {
-                try await saveMediaToPhotosUseCase.saveToPhotos(nodes: [node.toNodeEntity()])
-            } catch {
-                if let errorEntity = error as? SaveMediaToPhotosErrorEntity, errorEntity != .cancelled {
-                    await SVProgressHUD.dismiss()
-                    SVProgressHUD.show(
-                        Asset.Images.NodeActions.saveToPhotos.image,
-                        status: errorEntity.localizedDescription
-                    )
-                }
-            }
-        }
+        let wrapper = SaveMediaToPhotosUseCaseOCWrapper()
+        wrapper.saveToPhotos(node: node)
     }
     
     private func download(_ node: MEGANode, isNodeFromFolderLink: Bool, messageId: HandleEntity? = nil, chatId: HandleEntity? = nil) {

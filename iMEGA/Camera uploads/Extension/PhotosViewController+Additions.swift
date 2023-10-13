@@ -1,7 +1,12 @@
 import MEGADomain
+import MEGAPermissions
 import MEGASDKRepo
 
 extension PhotosViewController {
+    var permissionRouter: some PermissionAlertRouting {
+        PermissionAlertRouter.makeRouter(deviceHandler: permissionHandler)
+    }
+    
     @IBAction func moreAction(_ sender: UIBarButtonItem) {
         let nodeActionsViewController = NodeActionViewController(nodes: selection.nodes, delegate: self, displayMode: .photosTimeline, sender: sender)
         present(nodeActionsViewController, animated: true, completion: nil)
@@ -76,21 +81,33 @@ extension PhotosViewController {
     }
     
     private func handleSaveToPhotos(for nodes: [MEGANode]) {
-        let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdk.sharedSdk),
-                                                        fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
-        Task { @MainActor in
-            do {
-                try await saveMediaUseCase.saveToPhotos(nodes: nodes.toNodeEntities())
-            } catch {
-                if let errorEntity = error as? SaveMediaToPhotosErrorEntity, errorEntity != .cancelled {
+        permissionHandler.photosPermissionWithCompletionHandler { [weak self] granted in
+            guard let self else { return }
+            
+            guard granted else {
+                permissionRouter.alertPhotosPermission()
+                return
+            }
+            
+            let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdk.sharedSdk),
+                                                            fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+            Task { @MainActor in
+                do {
+                    try await saveMediaUseCase.saveToPhotos(nodes: nodes.toNodeEntities())
+                } catch {
+                    guard let errorEntity = error as? SaveMediaToPhotosErrorEntity,
+                          errorEntity != .cancelled  else {
+                        return
+                    }
+                    
                     await SVProgressHUD.dismiss()
                     SVProgressHUD.show(
                         UIImage(resource: .saveToPhotos),
                         status: error.localizedDescription
                     )
                 }
+                self.toggleEditing()
             }
-            toggleEditing()
         }
     }
     

@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGAL10n
+import MEGAPermissions
 import MEGASDKRepo
 import UIKit
 
@@ -17,6 +18,14 @@ protocol AlbumToolbarProvider {
 }
 
 extension AlbumContentViewController: AlbumToolbarProvider {
+    var permissionHandler: any DevicePermissionsHandling {
+        DevicePermissionsHandler.makeHandler()
+    }
+    
+    var permissionRouter: some PermissionAlertRouting {
+        PermissionAlertRouter.makeRouter(deviceHandler: permissionHandler)
+    }
+    
     var isToolbarShown: Bool {
         return toolbar.superview != nil
     }
@@ -181,19 +190,32 @@ extension AlbumContentViewController: AlbumToolbarProvider {
         
         endEditingMode()
         
-        let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdk.shared),
-                                                        fileCacheRepository: FileCacheRepository.newRepo,
-                                                        nodeRepository: NodeRepository.newRepo)
-        
-        TransfersWidgetViewController.sharedTransfer().setProgressViewInKeyWindow()
-        TransfersWidgetViewController.sharedTransfer().progressView?.showWidgetIfNeeded()
-        TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
-        
-        Task { @MainActor in
-            do {
-                try await saveMediaUseCase.saveToPhotos(nodes: selectedNodes.toNodeEntities())
-            } catch {
-                if let errorEntity = error as? SaveMediaToPhotosErrorEntity, errorEntity != .cancelled {
+        permissionHandler.photosPermissionWithCompletionHandler { [weak self] granted in
+            guard let self else { return }
+            
+            guard granted else {
+                permissionRouter.alertPhotosPermission()
+                return
+            }
+            
+            let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdk.shared),
+                                                            fileCacheRepository: FileCacheRepository.newRepo,
+                                                            nodeRepository: NodeRepository.newRepo)
+            
+            TransfersWidgetViewController.sharedTransfer().setProgressViewInKeyWindow()
+            TransfersWidgetViewController.sharedTransfer().progressView?.showWidgetIfNeeded()
+            TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
+            
+            Task { @MainActor in
+                do {
+                    try await saveMediaUseCase.saveToPhotos(nodes: selectedNodes.toNodeEntities())
+                } catch {
+                    
+                    guard let errorEntity = error as? SaveMediaToPhotosErrorEntity,
+                          errorEntity != .cancelled else {
+                        return
+                    }
+                    
                     await SVProgressHUD.dismiss()
                     SVProgressHUD.show(
                         Asset.Images.NodeActions.saveToPhotos.image,
