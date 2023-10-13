@@ -3534,6 +3534,8 @@
 "device.center.camera.uploads.action.status.enabled"="Enabled";
 /* Device Center camera upload status disabled */
 "device.center.camera.uploads.action.status.disabled"="Disabled";
+/* Device center current device empty state message */
+"device.center.current.device.empty.state.message"="Nothing setup yet";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="End recurrence";
 /* End Recurrence on date option title in creating schedule meeting screen. */

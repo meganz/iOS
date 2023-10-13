@@ -4,7 +4,6 @@ import MEGASDKRepo
 import SwiftUI
 
 public final class BackupListViewModel: ObservableObject {
-    private let selectedDeviceId: String
     private let deviceCenterUseCase: any DeviceCenterUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
     private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
@@ -15,8 +14,9 @@ public final class BackupListViewModel: ObservableObject {
     private let deviceCenterActions: [DeviceCenterAction]
     private let devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>
     private let updateInterval: UInt64
+    private var selectedDeviceId: String
     private var selectedDeviceName: String
-    private(set) var backups: [BackupEntity]
+    private(set) var backups: [BackupEntity]?
     private var sortedBackupStatuses: [BackupStatusEntity: BackupStatus] {
         Dictionary(uniqueKeysWithValues: backupStatuses.map { ($0.status, $0) })
     }
@@ -26,7 +26,7 @@ public final class BackupListViewModel: ObservableObject {
     private var sortedAvailableActions: [DeviceCenterActionType: [DeviceCenterAction]] {
         Dictionary(grouping: deviceCenterActions, by: \.type)
     }
-    private var backupsPreloaded: Bool = false
+    private var backupsPreloaded = false
     private var searchCancellable: AnyCancellable?
     
     var isFilteredBackupsEmpty: Bool {
@@ -44,6 +44,7 @@ public final class BackupListViewModel: ObservableObject {
     @Published var isSearchActive: Bool
     @Published var searchText: String = ""
     @Published var hasNetworkConnection: Bool = false
+    @Published var showEmptyStateView: Bool = false
     
     init(
         selectedDeviceId: String,
@@ -55,7 +56,7 @@ public final class BackupListViewModel: ObservableObject {
         networkMonitorUseCase: some NetworkMonitorUseCaseProtocol,
         router: some BackupListRouting,
         deviceCenterBridge: DeviceCenterBridge,
-        backups: [BackupEntity],
+        backups: [BackupEntity]?,
         backupListAssets: BackupListAssets,
         emptyStateAssets: EmptyStateAssets,
         searchAssets: SearchAssets,
@@ -81,7 +82,12 @@ public final class BackupListViewModel: ObservableObject {
         self.searchText = ""
         
         setupSearchCancellable()
-        loadBackupsInitialStatus()
+        
+        if backups == nil {
+            showEmptyStateView = true
+        } else {
+            loadBackupsInitialStatus()
+        }
     }
     
     private func setupSearchCancellable() {
@@ -157,7 +163,7 @@ public final class BackupListViewModel: ObservableObject {
     }
     
     func loadBackupsModels() {
-        backupModels = backups
+        backupModels = backups?
             .compactMap { backup in
                 if let assets = loadAssets(for: backup),
                    let availableActions = actionsForBackup(backup) {
@@ -171,7 +177,7 @@ public final class BackupListViewModel: ObservableObject {
                     )
                 }
                 return nil
-            }
+            } ?? []
     }
     
     func loadAssets(for backup: BackupEntity) -> ItemAssets? {
@@ -206,9 +212,9 @@ public final class BackupListViewModel: ObservableObject {
     func actionsForDevice() -> [DeviceCenterAction] {
         let currentDeviceUUID = UIDevice.current.identifierForVendor?.uuidString ?? ""
         let currentDeviceId = deviceCenterUseCase.loadCurrentDeviceId()
-        let isMobileDevice = backups.contains {
+        let isMobileDevice = backups?.contains {
             $0.type == .cameraUpload || $0.type == .mediaUpload
-        }
+        } ?? false
         
         var actionTypes: [DeviceCenterActionType] = [.rename]
 
@@ -223,13 +229,25 @@ public final class BackupListViewModel: ObservableObject {
         }
     }
     
+    func showCameraUploadsSettingsFlow() {
+        Task {
+            await executeDeviceAction(type: .cameraUploads)
+        }
+    }
+    
     @MainActor
     func executeDeviceAction(type: DeviceCenterActionType) async {
         switch type {
         case .cameraUploads:
             deviceCenterBridge.cameraUploadActionTapped { [weak self] in
                 Task {
-                    await self?.syncDevicesAndLoadBackups()
+                    guard let self else { return }
+                    if self.showEmptyStateView,
+                       let currentDeviceId = self.deviceCenterUseCase.loadCurrentDeviceId() {
+                        self.selectedDeviceId = currentDeviceId
+                    }
+                    self.showEmptyStateView.toggle()
+                    await self.syncDevicesAndLoadBackups()
                 }
             }
         case .rename:
@@ -244,7 +262,7 @@ public final class BackupListViewModel: ObservableObject {
             }
             deviceCenterBridge.renameActionTapped(renameEntity)
         case .info:
-            guard let nodeHandle = backups.first?.rootHandle,
+            guard let nodeHandle = backups?.first?.rootHandle,
                   let nodeEntity = nodeUseCase.parentForHandle(nodeHandle) else { return }
             
             deviceCenterBridge.infoActionTapped(nodeEntity)

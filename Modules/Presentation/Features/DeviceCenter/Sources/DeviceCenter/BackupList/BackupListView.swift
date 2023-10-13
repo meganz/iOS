@@ -21,6 +21,16 @@ struct BackupListContentView: View {
     @State private var selectedBackupViewModel: DeviceCenterItemViewModel?
     
     var body: some View {
+        if viewModel.showEmptyStateView {
+            CurrentDeviceEmptyStateView {
+                viewModel.showCameraUploadsSettingsFlow()
+            }
+        } else {
+            content
+        }
+    }
+    
+    var content: some View {
         ListViewContainer(
             selectedItem: $selectedBackupViewModel,
             hasNetworkConnection: $viewModel.hasNetworkConnection) {
