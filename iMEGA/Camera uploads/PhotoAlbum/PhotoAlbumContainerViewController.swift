@@ -36,17 +36,17 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnvironmen
     var leftBarButton: UIBarButtonItem?
     lazy var isAlbumShareLinkEnabled = featureFlagProvider.isFeatureFlagEnabled(for: .albumShareLink)
     lazy var shareLinkBarButton = UIBarButtonItem(image: UIImage(resource: .link),
+                                                  style: .plain,
+                                                  target: self,
+                                                  action: #selector(shareLinksButtonPressed))
+    lazy var removeLinksBarButton = UIBarButtonItem(image: UIImage(resource: .removeLink),
+                                                    style: .plain,
+                                                    target: self,
+                                                    action: #selector(removeLinksButtonPressed))
+    lazy var deleteBarButton = UIBarButtonItem(image: UIImage(resource: .rubbishBin),
                                                style: .plain,
                                                target: self,
-                                               action: #selector(shareLinksButtonPressed))
-    lazy var removeLinksBarButton = UIBarButtonItem(image: UIImage(resource: .removeLink),
-                                                            style: .plain,
-                                                            target: self,
-                                                            action: #selector(removeLinksButtonPressed))
-    lazy var deleteBarButton = UIBarButtonItem(image: UIImage(resource: .rubbishBin),
-                                                        style: .plain,
-                                                        target: self,
-                                                        action: #selector(deleteAlbumButtonPressed))
+                                               action: #selector(deleteAlbumButtonPressed))
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -166,7 +166,7 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnvironmen
             photoViewController.viewModel = viewModel
             photoViewController.photoUpdatePublisher = photoUpdatePublisher
         }
-
+        
         albumHostingController = AlbumListViewRouter(photoAlbumContainerViewModel: viewModel).build()
         
         photoViewController?.parentPhotoAlbumsController = self
@@ -186,13 +186,15 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnvironmen
         
         hostingController.didMove(toParent: self)
         
-        pageTabViewModel.$selectedTab.sink { [weak self] in
-            if let viewController = self?.showViewController(at: $0) {
-                self?.pageController.setViewControllers([viewController], direction: $0 == .album ? .forward : .reverse, animated: true, completion: nil)
-                self?.pageController.currentPage = $0
+        pageTabViewModel.$selectedTab
+            .debounce(for: .seconds(0.4), scheduler: DispatchQueue.main)
+            .sink { [weak self] in
+                if let viewController = self?.showViewController(at: $0) {
+                    self?.pageController.setViewControllers([viewController], direction: $0 == .album ? .forward : .reverse, animated: true, completion: nil)
+                    self?.pageController.currentPage = $0
+                }
             }
-        }
-        .store(in: &subscriptions)
+            .store(in: &subscriptions)
     }
     
     private func setUpPageViewController() {
