@@ -3830,5 +3830,7 @@
 "chat.call.waitingRoom.participantsList.title"="Waiting room";
 /* A button label to close the waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.close"="Close";
+/* Error shown when moving folder to inside itself */
+"Error.nodeCopyOrMove.circularDependency" = "You can't move this folder as the destination is the same folder.";
 /* Auto media discovery banner title */
 "photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="As this folder contains only images and videos, we’ve automatically opened it in media discovery view. You can enjoy your visual content with a more immersive layout. You can disable this in Settings.";

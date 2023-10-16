@@ -64,7 +64,7 @@ final class Album: NSObject {
 extension Album: PHPhotoLibraryChangeObserver {
     func photoLibraryDidChange(_ changeInstance: PHChange) {
         OperationQueue.main.addOperation { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             
             if let changeDetails = changeInstance.changeDetails(for: self.fetchResult) {
                 let previousPhotosCount = self.fetchResult.count

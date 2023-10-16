@@ -69,7 +69,7 @@ extension ChatViewController {
         guard !MEGAChatSdk.shared.mnz_existsActiveCall ||
                 MEGAChatSdk.shared.isCallActive(forChatRoomId: chatRoom.chatId) else {
             MeetingAlreadyExistsAlert.show(presenter: self) { [weak self] in
-                guard let self = self else { return }
+                guard let self else { return }
                 self.endActiveCallAndJoinCurrentChatroomCall()
             }
             return
@@ -81,7 +81,7 @@ extension ChatViewController {
         guard !MEGAChatSdk.shared.mnz_existsActiveCall ||
                 MEGAChatSdk.shared.isCallActive(forChatRoomId: chatRoom.chatId) else {
             MeetingAlreadyExistsAlert.show(presenter: self) { [weak self] in
-                guard let self = self else { return }
+                guard let self else { return }
                 self.endActiveCallAndJoinCurrentChatroomCall()
             }
             return

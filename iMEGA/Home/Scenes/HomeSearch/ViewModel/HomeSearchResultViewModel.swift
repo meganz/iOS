@@ -88,7 +88,7 @@ extension HomeSearchResultViewModel: HomeAccountSearchResultViewModelInputs {
             sortOrder: nil,
             searchPath: .root
         ) { [weak self] sdkNodes in
-            guard let self = self else { return }
+            guard let self else { return }
 
             self.searchFileHistoryUseCase.saveSearchHistoryEntry(
                 SearchFileHistoryEntryDomain(text: text,

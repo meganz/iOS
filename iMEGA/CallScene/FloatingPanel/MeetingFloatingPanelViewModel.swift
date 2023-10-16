@@ -140,7 +140,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         switch action {
         case .onViewReady:
             audioSessionUseCase.routeChanged { [weak self] routeChangedReason, previousAudioPort in
-                guard let self = self else { return }
+                guard let self else { return }
                 if previousAudioPort == nil,
                    self.chatRoom.chatType == .meeting,
                    self.audioSessionUseCase.currentSelectedAudioPort == .builtInReceiver {
@@ -298,7 +298,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         chatRoomUseCase
             .participantsUpdated(forChatRoom: chatRoom)
             .sink { [weak self] peerHandles in
-                guard let self = self else { return }
+                guard let self else { return }
                 
                 self.chatRoomParticipantsUpdatedTask?.cancel()
                 self.chatRoomParticipantsUpdatedTask = Task {
@@ -380,7 +380,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             return
         }
         localVideoUseCase.selectCamera(withLocalizedName: selectCameraLocalizedString) { [weak self] _ in
-            guard let self = self else { return }
+            guard let self else { return }
             let cameraPosition: CameraPositionEntity = backCameraOn ? .back : .front
             self.invokeCommand?(.updatedCameraPosition(position: cameraPosition))
         }
@@ -398,7 +398,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     private func turnCamera(on: Bool, completion: (() -> Void)? = nil) {
         if on {
             localVideoUseCase.enableLocalVideo(for: chatRoom.chatId) { [weak self] result in
-                guard let self = self else { return }
+                guard let self else { return }
                 switch result {
                 case .success:
                     self.invokeCommand?(.cameraTurnedOn(on: on))
@@ -476,7 +476,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     
     private func createAllowNonHostToAddParticipants(enabled: Bool, chatRoom: ChatRoomEntity) -> Task<Void, Never> {
         Task { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             
             do {
                 let allowNonHostToAddParticipantsEnabled = try await self.chatRoomUseCase.allowNonHostToAddParticipants(enabled, forChatRoom: chatRoom)

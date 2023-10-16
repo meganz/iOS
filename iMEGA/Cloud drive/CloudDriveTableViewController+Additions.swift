@@ -24,7 +24,7 @@ extension CloudDriveTableViewController {
             }
             
             let downloadAction = swipeAction(image: Asset.Images.NodeActions.offline.image.withTintColor(.white), backgroundColor: UIColor.mnz_turquoise(for: traitCollection)) { [weak self] in
-                guard let self = self else { return }
+                guard let self else { return }
                 let nodeDownloadTransfer = CancellableTransfer(handle: node.handle, name: nil, appData: nil, priority: false, isFile: node.isFile(), type: .download)
                 
                 CancellableTransferRouter(presenter: self,

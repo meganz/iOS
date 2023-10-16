@@ -10,7 +10,7 @@ extension AchievementsDetailsViewController {
                 MEGASdk.shared.getAccountAchievements(with: RequestDelegate { result in
                     switch result {
                     case .success(let request):
-                        guard let self = self else { return }
+                        guard let self else { return }
                         self.achievementsDetails = request.megaAchievementsDetails
                         for i in 0...request.megaAchievementsDetails.rewardsCount where request.megaAchievementsDetails.awardClass(at: UInt(i)) == MEGAAchievement.addPhone.rawValue {
                             self.completedAchievementIndex = NSNumber(integerLiteral: i)

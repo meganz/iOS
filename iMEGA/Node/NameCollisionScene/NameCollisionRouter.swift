@@ -84,9 +84,15 @@ final class NameCollisionViewRouter: NameCollisionViewRouting {
     }
 
     @MainActor
-    func showCopyOrMoveError() async {
+    func showCopyOrMove(error: (any Error)?) async {
         dismiss()
-        SVProgressHUD.showError(withStatus: Strings.Localizable.somethingWentWrong)
+        if 
+            let nodeCopyOrMoveError = error as? CopyOrMoveErrorEntity,
+            nodeCopyOrMoveError == .nodeMoveFailedCircularLinkage {
+            SVProgressHUD.showError(withStatus: Strings.Localizable.Error.NodeCopyOrMove.circularDependency)
+        } else {
+            SVProgressHUD.showError(withStatus: Strings.Localizable.somethingWentWrong)
+        }
     }
     
     func showProgressIndicator() {

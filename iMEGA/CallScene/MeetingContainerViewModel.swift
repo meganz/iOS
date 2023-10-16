@@ -253,11 +253,11 @@ final class MeetingContainerViewModel: ViewModelType {
     private func showEndCallDialogIfNeeded(stayOnCallCompletion: (() -> Void)? = nil) {
         guard isOnlyMyselfInTheMeeting() else { return }
         router.showEndCallDialog { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             self.analyticsEventUseCase.sendAnalyticsEvent(.meetings(.endCallInNoParticipantsPopup))
             self.endCall()
         } stayOnCallCompletion: { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             self.analyticsEventUseCase.sendAnalyticsEvent(.meetings(.stayOnCallInNoParticipantsPopup))
             stayOnCallCompletion?()
         }
@@ -275,7 +275,7 @@ final class MeetingContainerViewModel: ViewModelType {
     
     private func removeEndCallAlertAndEndCall() {
         router.removeEndCallDialog { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             self.endCall()
         }
     }

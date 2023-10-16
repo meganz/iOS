@@ -37,7 +37,7 @@ final class FileUploadingRouter {
             }
         }
         asyncOnMain { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             self.navigationController?.present(
                 MEGANavigationController(rootViewController: albumTableViewController),
                 animated: true,
@@ -92,11 +92,11 @@ final class FileUploadingRouter {
 
     private func presentCameraViewController() {
         asyncOnMain { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             let imagePickerController = UploadImagePickerViewController()
             try? imagePickerController.prepare(withSourceType: .camera) { [weak self] result in
                 asyncOnMain {
-                    guard let self = self else { return }
+                    guard let self else { return }
                     imagePickerController.dismiss(animated: true) {
                         switch result {
                         case .failure: break
@@ -120,12 +120,12 @@ final class FileUploadingRouter {
     // MARK: - Display Document Scan View Controller
     private func presentDocumentScanViewController() {
         asyncOnMain { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             let scanViewController = VNDocumentCameraViewController()
             let vNDocumentCameraVCDelegate = VNDocumentCameraVCDelegate()
             vNDocumentCameraVCDelegate.completion = { [weak self] images in
                 asyncOnMain {
-                    guard let self = self else { return }
+                    guard let self else { return }
                     scanViewController.dismiss(animated: true, completion: nil)
                     let rootNode = MEGASdkManager.sharedMEGASdk().rootNode
                     let documentScanViewController = self.documentScanerSaveSettingViewController(parentNode: rootNode, images: images)

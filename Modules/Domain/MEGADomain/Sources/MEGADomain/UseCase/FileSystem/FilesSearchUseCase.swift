@@ -57,7 +57,7 @@ public final class FilesSearchUseCase: FilesSearchUseCaseProtocol {
     
     private func addNodesUpdateHandler() {
         self.nodesUpdateListenerRepo.onNodesUpdateHandler = { [weak self] nodes in
-            guard let self = self else { return }
+            guard let self else { return }
             self.nodesUpdateHandler?(nodes)
         }
     }

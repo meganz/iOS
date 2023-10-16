@@ -53,7 +53,7 @@ extension ChatViewController: MessageCellDelegate, MessageLabelDelegate {
     
     private func createInfoAction(for chatMessage: ChatMessage, userEmail: String) -> ActionSheetAction {
         ActionSheetAction(title: Strings.Localizable.info, detail: nil, image: nil, style: .default) { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             guard let contactDetailsVC = UIStoryboard(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "ContactDetailsViewControllerID") as? ContactDetailsViewController else {
                 return
             }

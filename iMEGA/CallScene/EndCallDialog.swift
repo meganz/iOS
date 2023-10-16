@@ -53,7 +53,7 @@ final class EndCallDialog {
                 title: type.cancelTitle,
                 style: .cancel
             ) { [weak self] _ in
-                guard let self = self else { return }
+                guard let self else { return }
                 self.stayOnCallAction()
             }
         )
@@ -62,7 +62,7 @@ final class EndCallDialog {
             title: type.endCallTitle,
             style: .default
         ) { [weak self] _ in
-            guard let self = self else { return }
+            guard let self else { return }
             self.endCallAction()
             if self.autodismiss {
                 self.endCallDialogViewController?.dismiss(animated: true)

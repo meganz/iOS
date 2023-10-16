@@ -23,7 +23,7 @@ final class PhotoGridViewController: UIViewController {
             collectionView: collectionView,
             selectedAssets: []
         ) { [weak self] asset, indexPath, cellSize, touchPoint in
-            guard let self = self else { return }
+            guard let self else { return }
             self.tapAsset(asset: asset, indexPath: indexPath, cellSize: cellSize, touchPoint: touchPoint)
         }
     }()

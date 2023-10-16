@@ -120,7 +120,7 @@ final class HomeViewController: UIViewController {
 
     private func setupViewModelEventListening() {
         myAvatarViewModel?.notifyUpdate = { [weak self] output in
-            guard let self = self else { return }
+            guard let self else { return }
             let resizedImage = output.avatarImage
 
             asyncOnMain {
@@ -172,7 +172,7 @@ final class HomeViewController: UIViewController {
 
         uploadViewModel?.notifyUpdate = { [weak self] homeUploadingViewModel in
             asyncOnMain {
-                guard let self = self else { return }
+                guard let self else { return }
                 self.startUploadBarButtonItem.isEnabled = homeUploadingViewModel.networkReachable
 
                 switch homeUploadingViewModel.state {
@@ -186,7 +186,7 @@ final class HomeViewController: UIViewController {
         uploadViewModel?.inputs.viewIsReady()
 
         bannerViewModel?.notifyUpdate = { [weak self] bannerViewModelOutput in
-            guard let self = self else { return }
+            guard let self else { return }
             asyncOnMain {
                 self.bannerCollectionView.reloadBanners(bannerViewModelOutput.state.banners)
                 self.toggleBannerCollectionView(isOn: true)
@@ -551,7 +551,7 @@ extension HomeViewController: RecentNodeActionDelegate, TextFileEditable {
 
     func showCustomActions(for node: MEGANode, fromSender sender: Any) {
         let selectionAction: (MEGANode, MegaNodeActionType) -> Void = { [router, weak self] node, action in
-            guard let self = self else { return }
+            guard let self else { return }
             switch action {
             
             // MARK: Text File

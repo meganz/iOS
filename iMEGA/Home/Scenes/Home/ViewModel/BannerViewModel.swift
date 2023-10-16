@@ -68,7 +68,7 @@ extension HomeBannerViewModel: HomeBannerViewModelInputs {
 
     func viewIsReady() {
         userBannerUseCase.banners { [weak self] bannersResult in
-            guard let self = self else { return }
+            guard let self else { return }
 
             switch bannersResult {
             case .failure(let error): MEGALogError(error.localizedDescription)

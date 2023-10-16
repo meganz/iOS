@@ -6,7 +6,7 @@ protocol NameCollisionViewRouting: Routing {
     func resolvedUploadCollisions(_ transfers: [CancellableTransfer])
     func dismiss()
     func showCopyOrMoveSuccess() async
-    func showCopyOrMoveError() async
+    func showCopyOrMove(error: (any Error)?) async
     func showProgressIndicator()
 }
 
@@ -14,7 +14,7 @@ final class NameCollisionViewModel: ObservableObject {
     private let thumbnailUseCase: any ThumbnailUseCaseProtocol
     private let nameCollisionUseCase: any NameCollisionUseCaseProtocol
     private var fileVersionsUseCase: any FileVersionsUseCaseProtocol
-
+    
     private let router: any NameCollisionViewRouting
     private var transfers: [CancellableTransfer]?
     private var nodes: [NodeEntity]?
@@ -22,7 +22,7 @@ final class NameCollisionViewModel: ObservableObject {
     private var collision: NameCollisionEntity?
     private var loadingTask: Task<Void, Never>?
     private let isFolderLink: Bool
-
+    
     var collisionType: NameCollisionType
     
     @Published var duplicatedItem: DuplicatedItem
@@ -95,7 +95,7 @@ final class NameCollisionViewModel: ObservableObject {
             }
             loadNextUnresolvedCollision()
         } else {
-           applySingleAction(action)
+            applySingleAction(action)
         }
     }
     
@@ -192,7 +192,7 @@ final class NameCollisionViewModel: ObservableObject {
             guard var nodes = nodes, let node = nodes.first(where: { $0.handle == collision.nodeHandle }) else {
                 return
             }
-
+            
             switch action {
             case .update, .replace, .merge:
                 break
@@ -208,7 +208,7 @@ final class NameCollisionViewModel: ObservableObject {
         loadNextUnresolvedCollision()
         calculateRemainingCollisions()
     }
-
+    
     private func loadNextUnresolvedCollision() {
         guard let collision = collisions.first(where: { $0.collisionAction == nil && $0.collisionNodeHandle != nil }) else {
             if collisions.contains(where: { $0.collisionAction != .cancel || $0.collisionNodeHandle == nil }) {
@@ -243,30 +243,30 @@ final class NameCollisionViewModel: ObservableObject {
             }
         }
     }
-
+    
     private func processMoveCollisions() async {
         do {
             let moveNodeHandles = try await nameCollisionUseCase.moveNodesFromResolvedCollisions(collisions)
             await finishedTask(for: moveNodeHandles)
-        } catch {
-           await router.showCopyOrMoveError()
+        } catch let error {
+            await router.showCopyOrMove(error: error)
         }
     }
-
+    
     private func processCopyCollisions() async {
         do {
             let copyNodeHandles = try await nameCollisionUseCase.copyNodesFromResolvedCollisions(collisions, isFolderLink: isFolderLink)
             await finishedTask(for: copyNodeHandles)
-        } catch {
-            await router.showCopyOrMoveError()
+        } catch let error {
+            await router.showCopyOrMove(error: error)
         }
     }
-
+    
     private func finishedTask(for handles: [HandleEntity]) async {
         if handles.count == collisions.count {
-           await router.showCopyOrMoveSuccess()
+            await router.showCopyOrMoveSuccess()
         } else {
-           await router.showCopyOrMoveError()
+            await router.showCopyOrMove(error: nil)
         }
     }
     
@@ -317,7 +317,7 @@ final class NameCollisionViewModel: ObservableObject {
         thumbnailUrl = nil
         thumbnailCollisionUrl = nil
         cancelLoading()
-
+        
         if duplicatedItem.isFile {
             if duplicatedItem.name.fileExtensionGroup.isVisualMedia {
                 guard let collision = collision else {

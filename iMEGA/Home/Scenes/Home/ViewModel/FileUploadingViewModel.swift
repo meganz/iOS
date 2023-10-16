@@ -34,17 +34,17 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
         notifyUpdate?(self.outputs)
         
         networkMonitorUseCase.networkPathChanged { [weak self] _ in
-            guard let self = self else { return }
+            guard let self else { return }
             self.notifyUpdate?(self.outputs)
         }
     }
 
     func didTapUploadFromPhotoAlbum() {
         permissionHandler.photosPermissionWithCompletionHandler { [weak self] granted in
-            guard let self = self else { return }
+            guard let self else { return }
             if granted {
                 let selectionHandler: (([PHAsset], MEGANode) -> Void) = { [weak self] assets, targetNode in
-                    guard let self = self else { return }
+                    guard let self else { return }
                     self.uploadFiles(fromPhotoAssets: assets, to: targetNode)
                 }
                 self.router.upload(from: .album(selectionHandler))
@@ -61,7 +61,7 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
 
     func didTapUploadFromCamera() {
         permissionHandler.requestVideoPermission { [weak self] granted in
-            guard let self = self else { return }
+            guard let self else { return }
             if granted {
                 self.router.upload(from: .camera)
             } else {
@@ -77,7 +77,7 @@ final class HomeUploadingViewModel: HomeUploadingViewModelType, HomeUploadingVie
 
     func didTapUploadFromDocumentScan() {
         permissionHandler.requestVideoPermission { [weak self] granted in
-            guard let self = self else { return }
+            guard let self else { return }
             if granted {
                 self.router.upload(from: .documentScan)
             } else {

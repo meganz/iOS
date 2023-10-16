@@ -34,7 +34,7 @@ final class BackupRecorder: NSObject {
         }
         
         debouncer.start { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             self.recordLastBackupNode(handle: handle)
             if self.hasCameraUploadsFinishedProcessing {
                 self.checkUploadStats()

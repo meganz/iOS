@@ -306,7 +306,7 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
             }
         }
         throttler.start { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             self.configureData()
         }
     }
@@ -338,7 +338,7 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
             MEGASdkManager.sharedMEGASdk().resetTotalDownloads()
         }
         throttler.start { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             self.configureData()
         }
     }

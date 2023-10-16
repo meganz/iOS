@@ -5,7 +5,7 @@ extension MEGASdk {
     @objc(areTherePendingTransfersWithCompletion:)
     func areTherePendingTransfers(completion: @escaping (Bool) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            guard let self = self else {
+            guard let self else {
                 completion(false)
                 return
             }

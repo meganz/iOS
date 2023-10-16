@@ -205,7 +205,7 @@ public final class DeviceListViewModel: ObservableObject {
         devicesUpdatePublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] devices in
-                guard let self = self else { return }
+                guard let self else { return }
                 Task {
                     await self.arrangeDevices(devices)
                 }

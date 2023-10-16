@@ -52,7 +52,7 @@ final class FileExplorerGridCellViewModel {
     }
     
     var sizeDescription: String {
-        return Helper.size(for: node, api: MEGASdkManager.sharedMEGASdk())
+        return Helper.size(for: node, api: MEGASdk.shared)
     }
     
     init(node: MEGANode,
@@ -69,7 +69,7 @@ final class FileExplorerGridCellViewModel {
     
     func loadThumbnail(completionBlock: @escaping (UIImage?, UInt64) -> Void) {
         nodeThumbnailHomeUseCase.loadThumbnail(of: node.handle) { [weak self] image in
-            guard let self = self else { return }
+            guard let self else { return }
             completionBlock(image, self.node.handle)
         }
     }
