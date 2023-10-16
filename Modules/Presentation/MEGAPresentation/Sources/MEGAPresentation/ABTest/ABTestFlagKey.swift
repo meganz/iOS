@@ -16,5 +16,5 @@ public enum ABTestFlagKey: ABTestFlagName, Sendable {
     case upgradePlanRevamp = "sus2023"
 
     // This flag is part of real experiment related to the new search improvements on Home screen
-    case newSearch = "ab_nsf"
+    case newSearch = "nsf"
 }
