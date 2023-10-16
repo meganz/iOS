@@ -31,16 +31,18 @@ final class MockCallUseCase: CallUseCaseProtocol {
     var callWaitingRoomUsersUpdateSubject = PassthroughSubject<CallEntity, Never>()
     var callUpdateSubject: PassthroughSubject<CallEntity, Never>
     
-    init(call: CallEntity? = CallEntity(),
-         callCompletion: Result<CallEntity, CallErrorEntity> = .failure(.generic),
-         answerCallCompletion: Result<CallEntity, CallErrorEntity> = .failure(.generic),
-         callUpdateSubject: PassthroughSubject<CallEntity, Never> = .init()) {
+    init(
+        call: CallEntity? = CallEntity(),
+        callCompletion: Result<CallEntity, CallErrorEntity> = .failure(.generic),
+        answerCallCompletion: Result<CallEntity, CallErrorEntity> = .failure(.generic),
+        callUpdateSubject: PassthroughSubject<CallEntity, Never> = .init()
+    ) {
         self.call = call
         self.callCompletion = callCompletion
         self.answerCallCompletion = answerCallCompletion
         self.callUpdateSubject = callUpdateSubject
     }
-
+    
     func startListeningForCallInChat<T: CallCallbacksUseCaseProtocol>(_ chatId: HandleEntity, callbacksDelegate: T) {
         startListeningForCall_CalledTimes += 1
     }
@@ -57,7 +59,7 @@ final class MockCallUseCase: CallUseCaseProtocol {
         completion(answerCallCompletion)
     }
     
-    func answerCall(for chatId: MEGADomain.HandleEntity, enableVideo: Bool, enableAudio: Bool) async throws -> CallEntity {
+    func answerCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool) async throws -> CallEntity {
         switch answerCallCompletion {
         case .success(let callEntity):
             return callEntity
@@ -105,7 +107,7 @@ final class MockCallUseCase: CallUseCaseProtocol {
         }
     }
     
-    func startMeetingInWaitingRoomChatNoRinging(for scheduledMeeting: MEGADomain.ScheduledMeetingEntity, enableVideo: Bool, enableAudio: Bool) async throws -> MEGADomain.CallEntity {
+    func startMeetingInWaitingRoomChatNoRinging(for scheduledMeeting: ScheduledMeetingEntity, enableVideo: Bool, enableAudio: Bool) async throws -> MEGADomain.CallEntity {
         switch callCompletion {
         case .success(let callEntity):
             return callEntity
