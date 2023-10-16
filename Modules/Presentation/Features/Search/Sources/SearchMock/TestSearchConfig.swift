@@ -14,7 +14,23 @@ extension SearchConfig {
             emptyViewAssetFactory: { _ in .testAssets },
             rowAssets: .init(
                 contextImage: UIImage(systemName: "ellipsis")!
-            )
+            ),
+            contextPreviewFactory: .test
+        )
+    }
+}
+
+extension SearchConfig.ContextPreviewFactory {
+    static var test: Self {
+        SearchConfig.ContextPreviewFactory(
+            previewContentForResult: { _ in
+                    .init(
+                        actions: [],
+                        previewMode: .preview({
+                            UIHostingController(rootView: Text("I'm preview"))
+                        })
+                    )
+            }
         )
     }
 }

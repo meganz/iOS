@@ -3,7 +3,7 @@ import Search
 import SwiftUI
 
 extension SearchConfig {
-    static var searchConfig: SearchConfig {
+    static func searchConfig(contextPreviewFactory: ContextPreviewFactory) -> SearchConfig {
         .init(
             chipAssets: .init(
                 selectedForeground: .white,
@@ -54,7 +54,8 @@ extension SearchConfig {
             },
             rowAssets: .init(
                 contextImage: Asset.Images.Generic.moreList.image
-            )
+            ), 
+            contextPreviewFactory: contextPreviewFactory
         )
     }
 }

@@ -117,6 +117,16 @@ struct SearchResultsViewPreviews: PreviewProvider {
                 },
                 rowAssets: .init(
                     contextImage: .init(systemName: "ellipsis")!
+                ),
+                contextPreviewFactory: .init(
+                    previewContentForResult: { result in
+                        return .init(
+                            actions: [],
+                            previewMode: .preview({
+                                UIHostingController(rootView: Text(result.title))
+                            })
+                        )
+                    }
                 )
             ),
             keyboardVisibilityHandler: MockKeyboardVisibilityHandler()

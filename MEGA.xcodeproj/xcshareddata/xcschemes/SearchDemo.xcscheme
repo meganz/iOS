@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1430"
+   LastUpgradeVersion = "1500"
    version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,38 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "94D97AA42AA20B0500FE40F4"
+               BlueprintIdentifier = "940BA4B72AD7EE1000C69514"
                BuildableName = "SearchDemo.app"
                BlueprintName = "SearchDemo"
                ReferencedContainer = "container:MEGA.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "Search"
-               BuildableName = "Search"
-               BlueprintName = "Search"
-               ReferencedContainer = "container:Modules/Presentation/Features/Search">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "SearchMock"
-               BuildableName = "SearchMock"
-               BlueprintName = "SearchMock"
-               ReferencedContainer = "container:Modules/Presentation/Features/Search">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -54,13 +26,8 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
-      <TestPlans>
-         <TestPlanReference
-            reference = "container:SearchDemo/SearchDemo.xctestplan"
-            default = "YES">
-         </TestPlanReference>
-      </TestPlans>
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      shouldAutocreateTestPlan = "YES">
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -76,7 +43,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "94D97AA42AA20B0500FE40F4"
+            BlueprintIdentifier = "940BA4B72AD7EE1000C69514"
             BuildableName = "SearchDemo.app"
             BlueprintName = "SearchDemo"
             ReferencedContainer = "container:MEGA.xcodeproj">
@@ -93,7 +60,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "94D97AA42AA20B0500FE40F4"
+            BlueprintIdentifier = "940BA4B72AD7EE1000C69514"
             BuildableName = "SearchDemo.app"
             BlueprintName = "SearchDemo"
             ReferencedContainer = "container:MEGA.xcodeproj">

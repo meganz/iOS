@@ -7,7 +7,7 @@ import MEGASDKRepo
 
 extension MainTabBarController {
     private var shouldUseNewHomeSearchResults: Bool {
-        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newHomeSearch)
+        true
     }
 
     @objc func makeHomeViewController() -> UIViewController {
@@ -44,12 +44,19 @@ extension MainTabBarController {
     }
 
     @objc func setupHomeSearchForABTesting() async {
-        let isNewHomeSearchEnabled = await DIContainer.abTestProvider.abTestVariant(for: .newSearch) == .variantA
-        await updateHomeSearchForABTesting(isNewHomeSearchEnabled: isNewHomeSearchEnabled)
+        let isNewHomeSearchABTestEnabled = await DIContainer.abTestProvider.abTestVariant(for: .newSearch) == .variantA
+        
+        let isNewHomeSearchFeatureFlagEnabled = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newHomeSearch)
+        
+        await updateHomeSearchForABTesting(
+            isNewHomeSearchEnabled: isNewHomeSearchABTestEnabled || isNewHomeSearchFeatureFlagEnabled
+        )
     }
 
     @MainActor
-    func updateHomeSearchForABTesting(isNewHomeSearchEnabled: Bool) async {
+    func updateHomeSearchForABTesting(
+        isNewHomeSearchEnabled: Bool
+    ) async {
         guard let nav = defaultViewControllers[2] as? MEGANavigationController,
               let homeVC = nav.viewControllers.first as? HomeViewController
         else {

@@ -2,11 +2,11 @@ import Combine
 import Foundation
 import UIKit
 
-public protocol KeyboardVisibiltyHandling {
+public protocol KeyboardVisibilityHandling {
     var keyboardPublisher: AnyPublisher<Bool, Never> { get }
 }
 
-public class KeyboardVisibiltyHandler: KeyboardVisibiltyHandling {
+public class KeyboardVisibilityHandler: KeyboardVisibilityHandling {
     let notificationCenter: NotificationCenter
 
     public init(
@@ -29,7 +29,7 @@ public class KeyboardVisibiltyHandler: KeyboardVisibiltyHandling {
     }
 }
 
-public class MockKeyboardVisibilityHandler: KeyboardVisibiltyHandling {
+public class MockKeyboardVisibilityHandler: KeyboardVisibilityHandling {
     let isKeyboardVisible: Bool
 
     public init(

@@ -40,12 +40,14 @@ final class SearchResultsViewModelTests: XCTestCase {
             )
             
             var askedForEmptyContent: (SearchChipEntity?) -> SearchConfig.EmptyViewAssets = { SearchConfig.testConfig.emptyViewAssetFactory($0) }
+            let base = SearchConfig.testConfig
             let config = SearchConfig(
-                chipAssets: SearchConfig.testConfig.chipAssets,
+                chipAssets: base.chipAssets,
                 emptyViewAssetFactory: { chip in
                     askedForEmptyContent(chip)
                 },
-                rowAssets: SearchConfig.testConfig.rowAssets
+                rowAssets: base.rowAssets,
+                contextPreviewFactory: base.contextPreviewFactory
             )
             
             sut = SearchResultsViewModel(
@@ -178,7 +180,19 @@ final class SearchResultsViewModelTests: XCTestCase {
         let harness = Harness(self).withSingleResultPrepared()
         await harness.sut.queryChanged(to: "query")
         let expectedListItems: [SearchResultRowViewModel] = [
-            .init(with: .sampleResult("title"), contextButtonImage: UIImage(systemName: "ellipsis")!, contextAction: {_ in}, selectionAction: {})
+            .init(
+                with: .sampleResult("title"),
+                contextButtonImage: UIImage(systemName: "ellipsis")!,
+                previewContent: .init(
+                    actions: [],
+                    previewMode: .noPreview
+                ),
+                actions: .init(
+                    contextAction: { _ in},
+                    selectionAction: {},
+                    previewTapAction: {}
+                )
+            )
         ]
         XCTAssertEqual(harness.sut.listItems, expectedListItems)
     }
@@ -215,7 +229,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         let harness = Harness(self).withSingleResultPrepared()
         await harness.sut.queryChanged(to: "query")
         let item = try XCTUnwrap(harness.sut.listItems.first)
-        item.selectionAction()
+        item.actions.selectionAction()
         XCTAssertEqual(harness.selectedResults, [.sampleResult("title")])
     }
     
@@ -223,7 +237,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         let harness = Harness(self).withSingleResultPrepared()
         await harness.sut.queryChanged(to: "query")
         let item = try XCTUnwrap(harness.sut.listItems.first)
-        item.contextAction(UIButton())
+        item.actions.contextAction(UIButton())
         XCTAssertEqual(harness.contextTriggeredResults, [.sampleResult("title")])
     }
     

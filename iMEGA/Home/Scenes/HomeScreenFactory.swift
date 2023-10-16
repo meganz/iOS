@@ -6,6 +6,7 @@ import MEGAPermissions
 import MEGAPresentation
 import MEGASDKRepo
 import MEGASwift
+import MEGASwiftUI
 import Search
 import SwiftUI
 
@@ -170,7 +171,6 @@ final class HomeScreenFactory: NSObject {
         // MEGA app level delegates. Using simple closures to pass data back and forth
         let searchBridge = SearchBridge(
             selection: { [weak sdk] result in
-                bridge.hideKeyboard()
                 router.didTapNode(result.id)
                 // map from result id to a node to check if this is folder or a file
                 if let node = sdk?.node(forHandle: result.id) {
@@ -218,10 +218,58 @@ final class HomeScreenFactory: NSObject {
                 nodeRepository: makeNodeRepo()
             ),
             bridge: searchBridge,
-            config: .searchConfig,
-            keyboardVisibilityHandler: KeyboardVisibiltyHandler(notificationCenter: .default)
+            config: .searchConfig(contextPreviewFactory: contextPreviewFactory),
+            keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: .default)
         )
         return UIHostingController(rootView: SearchResultsView(viewModel: vm))
+    }
+    
+    func nodeFor(result: SearchResult) -> MEGANode? {
+        sdk.node(forHandle: result.id)
+    }
+    
+    func previewViewController(for node: MEGANode) -> UIViewController? {
+        if node.isFolder() {
+            let storyboard = UIStoryboard(name: "Cloud", bundle: nil)
+            let cloudDriveVC = storyboard.instantiateViewController(identifier: "CloudDriveID") as! CloudDriveViewController
+            
+            cloudDriveVC.parentNode = node
+            
+            return cloudDriveVC
+        } else {
+            return nil
+        }
+    }
+    
+    private var contextPreviewFactory: SearchConfig.ContextPreviewFactory {
+        .init(
+            // this logic below, constructs actions and preview
+            // when an search item is long pressed
+            previewContentForResult: { result in
+                if let node = self.nodeFor(result: result) {
+                    let previewMode: () -> PreviewContent.PreviewMode = {
+                        if node.type == .folder {
+                            return .preview {
+                                self.previewViewController(for: node)
+                            }
+                        } else {
+                            return .noPreview
+                        }
+                    }
+                    return .init(
+                        actions: self.actionsFor(node: node),
+                        previewMode: previewMode()
+                    )
+                }
+                return .init(actions: [], previewMode: .noPreview)
+            }
+        )
+    }
+    
+    private func actionsFor(node: MEGANode) -> [PeekAction] {
+        [
+            // action (selection) will be implemented in [FM-1176]
+        ]
     }
     
     private func makeNodeDetailUseCase() -> some NodeDetailUseCaseProtocol {

@@ -5,18 +5,31 @@ struct SearchResultRowView: View {
     @StateObject var viewModel: SearchResultRowViewModel
     
     var body: some View {
-        Button(
-            action: viewModel.selectionAction,
-            label: { content }
-        )
-        .listRowInsets(
-            EdgeInsets(
-                top: -2,
-                leading: 12,
-                bottom: -2,
-                trailing: 16
+        content
+            .listRowInsets(
+                EdgeInsets(
+                    top: -2,
+                    leading: 12,
+                    bottom: -2,
+                    trailing: 16
+                )
             )
-        )
+            .contextMenuWithPreview(
+                actions: viewModel.previewContent.actions.toUIActions,
+                sourcePreview: {
+                    content
+                },
+                contentPreviewProvider: {
+                    switch viewModel.previewContent.previewMode {
+                    case let .preview(contentPreviewProvider):
+                        return contentPreviewProvider()
+                    case .noPreview:
+                        return nil
+                    }
+                },
+                didTapPreview: viewModel.actions.previewTapAction,
+                didSelect: viewModel.actions.selectionAction
+            )
     }
     
     private var content: some View {
@@ -58,7 +71,7 @@ struct SearchResultRowView: View {
         UIButtonWrapper(
             image: viewModel.contextButtonImage
         ) { button in
-            viewModel.contextAction(button)
+            viewModel.actions.contextAction(button)
         }
         .frame(width: 40, height: 60)
     }
@@ -78,12 +91,20 @@ struct SearchResultRowView_Previews: PreviewProvider {
                     type: .node
                 ),
                 contextButtonImage: UIImage(systemName: "ellipsis")!,
-                contextAction: { _ in },
-                selectionAction: { }
+                previewContent: .init(
+                    actions: [.init(title: "Select", imageName: "checkmark.circle", handler: { })],
+                    previewMode: .preview({
+                        UIHostingController(rootView: Text("Hello world"))
+                    })
+                ),
+                actions: .init(
+                    contextAction: { _ in },
+                    selectionAction: {},
+                    previewTapAction: {}
+                )
             )
         }
     }
-    
     static var previews: some View {
         
         List {
