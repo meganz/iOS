@@ -57,7 +57,7 @@ final class MeetingParticipantStatusPipeline {
             .publish(every: collectionDuration, on: .main, in: .common)
             .autoconnect()
             .sink { [weak self] _ in
-                guard let self = self else { return }
+                guard let self else { return }
                 
                 self.statusPublisher.send(self.handlerCollectionType)
                 

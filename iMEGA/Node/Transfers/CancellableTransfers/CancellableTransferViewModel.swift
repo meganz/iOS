@@ -99,7 +99,7 @@ final class CancellableTransferViewModel: ViewModelType {
         alertSubscription = Just(Void.self)
             .delay(for: .seconds(0.8), scheduler: RunLoop.main)
             .sink { [weak self] _ in
-                guard let self = self else { return }
+                guard let self else { return }
                 guard !self.transfersCancelled, !self.processingComplete else {
                     self.alertSubscription?.cancel()
                     return
@@ -115,7 +115,7 @@ final class CancellableTransferViewModel: ViewModelType {
         alertSubscription = Just(Void.self)
             .delay(for: .seconds(1.2), scheduler: RunLoop.main)
             .sink { [weak self] _ in
-                guard let self = self else { return }
+                guard let self else { return }
                 self.isAlertBlocked = false
                 if (self.fileTransfersStarted() && self.folderTransfers.isEmpty || self.folderTransfersStartedTransferring()) && !self.transfersCancelled {
                     self.manageTransfersCompletion()
@@ -343,7 +343,7 @@ final class CancellableTransferViewModel: ViewModelType {
                 }
                 self?.checkIfAllTransfersStartedTranferring()
             } folderUpdate: { [weak self] folderUpdate in
-                guard let self = self else { return }
+                guard let self else { return }
                 switch folderUpdate.stage {
                 case .scan:
                     self.invokeCommand?(.scanning(name: folderUpdate.transfer.fileName ?? "", folders: folderUpdate.folderCount, files: folderUpdate.fileCount))

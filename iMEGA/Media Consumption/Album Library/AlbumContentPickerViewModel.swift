@@ -71,7 +71,7 @@ final class AlbumContentPickerViewModel: ObservableObject {
     private func setupSubscriptions(isNewAlbum: Bool) {
         photoLibraryContentViewModel.selection.$photos
             .compactMap { [weak self] photos in
-                guard let self = self else { return nil }
+                guard let self else { return nil }
                 return photos.isEmpty ? self.normalNavigationTitle : Strings.Localizable.General.Format.itemsSelected(photos.count)
             }
             .receive(on: DispatchQueue.main)

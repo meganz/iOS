@@ -112,7 +112,7 @@ final class MeetingCreatingViewModel: ViewModelType {
         appDidBecomeActiveSubscription = NotificationCenter.default
             .publisher(for: UIApplication.didBecomeActiveNotification)
             .sink { [weak self] _ in
-                guard let self = self else { return }
+                guard let self else { return }
                 self.audioSessionUseCase.configureCallAudioSession()
                 self.addRouteChangedListener()
                 self.enableLoudSpeaker(enabled: self.isSpeakerEnabled)
@@ -212,7 +212,7 @@ final class MeetingCreatingViewModel: ViewModelType {
                                              base64Handle: base64Handle,
                                              avatarBackgroundHexColor: avatarBackgroundHexColor,
                                              name: meetingUseCase.getUsername()) { [weak self] result in
-                guard let self = self else { return }
+                guard let self else { return }
                 switch result {
                 case .success(let image):
                     self.invokeCommand?(.updateAvatarImage(image))
@@ -225,7 +225,7 @@ final class MeetingCreatingViewModel: ViewModelType {
     
     private func addRouteChangedListener() {
         audioSessionUseCase.routeChanged { [weak self] routeChangedReason, _ in
-            guard let self = self else { return }
+            guard let self else { return }
             self.sessionRouteChanged(routeChangedReason: routeChangedReason)
         }
     }
@@ -269,7 +269,7 @@ final class MeetingCreatingViewModel: ViewModelType {
     
     private func joinChatCall(chatId: UInt64) {
         meetingUseCase.joinCall(forChatId: chatId, enableVideo: isVideoEnabled, enableAudio: isMicrophoneEnabled, userHandle: userHandle) { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             switch $0 {
             case .success(let chatRoom):
                 guard let call = self.meetingUseCase.getCall(forChatId: chatRoom.chatId) else {
@@ -299,7 +299,7 @@ final class MeetingCreatingViewModel: ViewModelType {
             allowNonHostToAddParticipants: doesAllowNonHostToAddParticipants)
         
         meetingUseCase.startCall(startCall) { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             switch $0 {
             case .success(let chatRoom):
                 guard let call = self.meetingUseCase.getCall(forChatId: chatRoom.chatId) else {
@@ -342,7 +342,7 @@ final class MeetingCreatingViewModel: ViewModelType {
         invokeCommand?(.loadingStartMeeting)
         
         meetingUseCase.checkChatLink(link: link) { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             self.invokeCommand?(.loadingEndMeeting)
 
             switch $0 {

@@ -146,7 +146,7 @@ private final class OverDiskQuotaQueryTask {
         _ completion: @escaping (Result<any OverDiskQuotaInfomationProtocol, OverDiskQuotaService.DataObtainingError>) -> Void
     ) {
         MEGAPlanService.shared.send(MEGAPlanCommand { [weak self] result  in
-            guard let self = self else {
+            guard let self else {
                 assertionFailure("OverDiskQuotaQueryTask instance is unexpected released.")
                 completion(.failure(.unexpectedlyCancellation))
                 return

@@ -103,7 +103,7 @@ extension GroupChatDetailsViewController {
             withContactsMode: .chatAddParticipant,
             additionallyExcludedParticipantsId: nil
         ) { [weak self] handles in
-            guard let self = self else { return }
+            guard let self else { return }
             for handle in handles {
                 MEGAChatSdk.shared.invite(
                     toChat: self.chatRoom.chatId,

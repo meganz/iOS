@@ -342,7 +342,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         meetingParticipantStatusPipelineSubscription = meetingParticipantStatusPipeline
             .statusPublisher
             .sink { [weak self] handlerCollectionType in
-                guard let self = self else { return }
+                guard let self else { return }
                 
                 if self.callsSoundNotificationPreference {
                     if handlerCollectionType.removedHandlers.isEmpty == false {
@@ -354,7 +354,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                 
                 self.namesFetchingTask?.cancel()
                 self.namesFetchingTask = Task { [weak self, chatRoomUserUseCase = self.chatRoomUserUseCase, chatRoom = self.chatRoom] in
-                    guard let self = self else { return }
+                    guard let self else { return }
                     
                     let addedParticipantHandlersSubset = self.handlersSubsetToFetch(forHandlers: handlerCollectionType.addedHandlers)
                     let removedParticipantHandlersSubset = self.handlersSubsetToFetch(forHandlers: handlerCollectionType.removedHandlers)
@@ -530,7 +530,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             .publish(every: 1.0, on: .main, in: .common)
             .autoconnect()
             .sink { [weak self] date in
-                guard let self = self else { return }
+                guard let self else { return }
                 
                 let timeElapsed = date.timeIntervalSince(callEndCountDownTimerStartDate)
                 let timeRemaining = round(CallViewModelConstant.callEndCountDownTimerDuration - timeElapsed)
@@ -673,7 +673,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         reconnecting1on1Subscription = Just(Void.self)
             .delay(for: .seconds(10), scheduler: RunLoop.main)
             .sink { [weak self] _ in
-                guard let self = self else { return }
+                guard let self else { return }
                 self.tonePlayer.play(tone: .callEnded)
                 self.reconnecting1on1Subscription = nil
                 self.callTerminated(self.call)
@@ -690,7 +690,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             .sink { error in
                 MEGALogDebug("error fetching the changed avatar \(error)")
             } receiveValue: { [weak self] handles in
-                guard let self = self else { return }
+                guard let self else { return }
                 self.avatarRefetchTasks = handles.map {
                     self.createRefetchAvatarTask(forHandle: $0, chatId: chatId)
                 }

@@ -38,7 +38,7 @@ import MEGADomain
             chatId: chatId,
             sdk: chatSdk
         ) { [weak self] chatId in
-            guard let self = self else { return }
+            guard let self else { return }
             self.chatOnlineListener = nil
             MEGALogDebug("1: CallActionManager: state is online now \(MEGASdk.base64Handle(forUserHandle: chatId) ?? "-1") ")
             
@@ -159,7 +159,7 @@ import MEGADomain
             chatId: chatId,
             sdk: chatSdk
         ) { [weak self] chatId in
-            guard let self = self else { return }
+            guard let self else { return }
             self.chatOnlineListener = nil
             MEGALogDebug("2: CallActionManager: state is online now \(MEGASdk.base64Handle(forUserHandle: chatId) ?? "-1") ")
             group.leave()
@@ -170,7 +170,7 @@ import MEGADomain
             chatId: chatId,
             sdk: self.chatSdk
         ) { [weak self] chatId, call  in
-            guard let self = self else { return }
+            guard let self else { return }
             self.callAvailabilityListener = nil
             MEGALogDebug("3: CallActionManager: Call is now available for \(MEGASdk.base64Handle(forUserHandle: chatId) ?? "-1") - \(call)")
             group.leave()

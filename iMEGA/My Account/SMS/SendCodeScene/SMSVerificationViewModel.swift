@@ -87,7 +87,7 @@ final class SMSVerificationViewModel: ViewModelType {
     private func loadCallingCodes() {
         invokeCommand?(.startLoading)
         smsUseCase.getSMSUseCase.getRegionCallingCodes { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             
             self.invokeCommand?(.finishLoading)
             switch $0 {

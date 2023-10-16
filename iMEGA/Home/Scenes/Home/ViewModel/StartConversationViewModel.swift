@@ -22,7 +22,7 @@ final class StartConversationViewModel: ViewModelType {
     
     private func registerNetworkListener() {
         networkMonitorUseCase.networkPathChanged { [weak self] (connected) in
-            guard let self = self else { return }
+            guard let self else { return }
             self.invokeCommand?(.networkAvailablityUpdate(connected))
         }
     }

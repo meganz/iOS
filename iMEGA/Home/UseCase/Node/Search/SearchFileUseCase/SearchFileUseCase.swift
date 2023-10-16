@@ -74,7 +74,7 @@ final class SearchFileUseCase: SearchFileUseCaseProtocol {
         completion: @escaping ([NodeEntity]) -> Void
     ) {
         debouncer.start { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
 
             self.startSearchingFiles(
                 withName: fileName,
@@ -118,7 +118,7 @@ final class SearchFileUseCase: SearchFileUseCaseProtocol {
         completion: @escaping (NodeListEntity?) -> Void
     ) {
         debouncer.start { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
 
             self.startSearchingFiles(
                 withName: name,

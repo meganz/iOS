@@ -74,7 +74,7 @@ import MEGASDKRepo
     
     func setupMyAvatarEventListener() {
         myAvatarViewModel?.notifyUpdate = { [weak self] output in
-            guard let self = self else { return }
+            guard let self else { return }
             let resizedImage = output.avatarImage
 
             asyncOnMain {

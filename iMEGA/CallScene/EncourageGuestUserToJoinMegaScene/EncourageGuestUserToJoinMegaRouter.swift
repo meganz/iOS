@@ -42,7 +42,7 @@ extension EncourageGuestUserToJoinMegaRouting {
     
     func createAccount() {
         dismiss { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             
             if let onboardingViewController = self.presenter as? OnboardingViewController {
                 onboardingViewController.presentCreateAccountViewController()

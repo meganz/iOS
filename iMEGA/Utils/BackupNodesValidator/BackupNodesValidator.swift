@@ -40,7 +40,7 @@ final class BackupNodesValidator {
         inProgressSubscription = Just(Void.self)
             .delay(for: .seconds(0.3), scheduler: RunLoop.main)
             .sink { [weak self] _ in
-                guard let self = self else { return }
+                guard let self else { return }
                 if self.inProgress == true {
                     SVProgressHUD.show()
                 }

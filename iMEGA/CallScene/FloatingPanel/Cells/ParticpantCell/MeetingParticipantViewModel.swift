@@ -76,7 +76,7 @@ final class MeetingParticipantViewModel: ViewModelType {
                             shouldHideContextMenu: shouldHideContextMenu)
             )
             fetchName(forParticipant: participant) { [weak self] name in
-                guard let self = self else { return }
+                guard let self else { return }
                 self.fetchUserAvatar(forParticipant: self.participant, name: name)
                 self.requestAvatarChange(forParticipant: self.participant, name: name)
             }
@@ -116,7 +116,7 @@ final class MeetingParticipantViewModel: ViewModelType {
                                          base64Handle: base64Handle,
                                          avatarBackgroundHexColor: avatarBackgroundHexColor,
                                          name: name) { [weak self] result in
-            guard let self = self else { return }
+            guard let self else { return }
             switch result {
             case .success(let image):
                 self.invokeCommand?(.updateAvatarImage(image: image))
@@ -132,7 +132,7 @@ final class MeetingParticipantViewModel: ViewModelType {
             .sink(receiveCompletion: { error in
                 MEGALogDebug("error fetching the changed avatar \(error)")
             }, receiveValue: { [weak self] _ in
-                guard let self = self else { return }
+                guard let self else { return }
                 
                 if let base64Handle = self.megaHandleUseCase.base64Handle(forUserHandle: participant.participantId) {
                     self.userImageUseCase.clearAvatarCache(withUserHandle: participant.participantId, base64Handle: base64Handle)
@@ -145,7 +145,7 @@ final class MeetingParticipantViewModel: ViewModelType {
     
     private func createRefetchAvatarTask(forParticipant participant: CallParticipantEntity) -> Task<Void, Never> {
         Task { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             
             do {
                 try await self.updateAvatarUsingName(forParticipant: participant)

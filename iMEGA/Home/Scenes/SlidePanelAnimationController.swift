@@ -128,7 +128,7 @@ final class SlidePanelAnimationController {
             }
         }
         transitionAnimator.addCompletion { [weak self, weak delegate] (position) in
-            guard let self = self else { return }
+            guard let self else { return }
 
             switch position {
             case .start:

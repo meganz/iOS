@@ -26,7 +26,7 @@ final class HomeSearchResultViewController: UIViewController {
         disableAdjustingContentInsets(for: tableView)
 
         viewModel.notifyUpdate = { [weak self] output in
-            guard let self = self else { return }
+            guard let self else { return }
 
             switch output.viewState {
             case .hints(let searchHints):

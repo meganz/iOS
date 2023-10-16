@@ -224,7 +224,7 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
         titleView.setSegmentTitleViewModel(model: segmentModel)
         
         titleView.selectAction = { [weak self] title in
-            guard let self = self else { return }
+            guard let self else { return }
             
             switch title.text {
             case recentsTitle: self.currentDisplayTab = .recents

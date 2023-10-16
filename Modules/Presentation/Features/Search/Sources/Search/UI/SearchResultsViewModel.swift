@@ -204,7 +204,7 @@ public class SearchResultsViewModel: ObservableObject {
             let content = config.contextPreviewFactory.previewContentForResult(result)
             return SearchResultRowViewModel(
                 with: result,
-                contextButtonImage: self.config.rowAssets.contextImage,
+                contextButtonImage: config.rowAssets.contextImage,
                 previewContent: .init(
                     actions: content.actions,
                     previewMode: content.previewMode

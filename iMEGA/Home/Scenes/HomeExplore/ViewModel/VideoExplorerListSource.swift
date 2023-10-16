@@ -45,7 +45,7 @@ final class VideoExplorerListSource: NSObject, FilesExplorerListSourceProtocol {
     
     fileprivate func viewModel(forNode node: MEGANode) -> VideoExplorerTableCellViewModel {
         VideoExplorerTableCellViewModel(node: node) { [weak self] node, cell in
-            guard let self = self else { return }
+            guard let self else { return }
             
             self.delegate?.showMoreOptions(forNode: node, sender: cell)
         }

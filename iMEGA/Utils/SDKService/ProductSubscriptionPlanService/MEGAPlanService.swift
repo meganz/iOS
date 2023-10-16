@@ -59,7 +59,7 @@ private final class MEGAPlanLoadTask {
         with api: MEGASdk,
         completion: @escaping (MEGAPlanCommand.MEGAPlanFetchResult) -> Void) {
         api.getPricingWith(MEGAGenericRequestDelegate(completion: { [weak self] request, error in
-            guard let self = self else {
+            guard let self else {
                 assertionFailure("MEGAPlanLoadTask instance is unexpected released.")
                 completion(.failure(.unexpectedlyCancellation))
                 return

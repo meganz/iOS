@@ -33,7 +33,7 @@ extension CloudDriveViewController {
         }
         
         CameraUploadNodeAccess.shared.loadNode { [weak self] (cuNode, _) in
-            guard let self = self else { return }
+            guard let self else { return }
             
             DispatchQueue.main.async {
                 guard let cuNode = cuNode else {

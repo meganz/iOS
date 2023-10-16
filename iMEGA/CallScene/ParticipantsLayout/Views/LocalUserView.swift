@@ -50,7 +50,7 @@ class LocalUserView: UIView {
         }
         let location = touch.location(in: superview)
         UIView.animate(withDuration: 0.0) { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             self.center = CGPoint(x: location.x - self.offset.x + self.frame.size.width / 2, y: location.y - self.offset.y + self.frame.size.height / 2)
         }
     }
@@ -160,7 +160,7 @@ class LocalUserView: UIView {
             }
             
             UIView.animate(withDuration: Constants.animationDurations) { [weak self] in
-                guard let self = self else { return }
+                guard let self else { return }
                 self.frame.origin = self.originPointForView()
             }
         } else {
@@ -209,12 +209,12 @@ class LocalUserView: UIView {
     private func toggleViewLayout() {
         isCollapsed.toggle()
         UIView.animate(withDuration: Constants.animationDurations) { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             self.frame.size = self.sizeForView()
             self.frame.origin = self.originPointForView()
             self.layoutIfNeeded()
         } completion: { [weak self] _ in
-            guard let self = self else { return }
+            guard let self else { return }
             self.expandImageView.isHidden = !self.isCollapsed
             self.avatarImageView.isHidden = self.isCollapsed ? true : self.isVideoEnabled
             self.videoImageView.isHidden = self.isCollapsed ? true : !self.isVideoEnabled

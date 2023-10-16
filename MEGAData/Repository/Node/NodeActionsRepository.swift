@@ -3,7 +3,7 @@ import MEGASDKRepo
 
 struct NodeActionsRepository: NodeActionsRepositoryProtocol {
     static var newRepo: NodeActionsRepository {
-        NodeActionsRepository(sdk: MEGASdkManager.sharedMEGASdk(), sharedFolderSdk: MEGASdkManager.sharedMEGASdkFolder())
+        NodeActionsRepository(sdk: MEGASdk.shared, sharedFolderSdk: MEGASdk.sharedFolderLinkSdk)
     }
     private let sdk: MEGASdk
     private let sharedFolderSdk: MEGASdk
@@ -79,8 +79,12 @@ struct NodeActionsRepository: NodeActionsRepositoryProtocol {
             
             let delegate = RequestDelegate { result in
                 switch result {
-                case .failure:
-                    continuation.resume(throwing: CopyOrMoveErrorEntity.nodeCopyFailed)
+                case .failure(let error):
+                    if error.type == .apiECircular {
+                        continuation.resume(throwing: CopyOrMoveErrorEntity.nodeMoveFailedCircularLinkage)
+                    } else {
+                        continuation.resume(throwing: CopyOrMoveErrorEntity.nodeCopyFailed)
+                    }
                 case .success(let request):
                     continuation.resume(returning: request.nodeHandle)
                 }

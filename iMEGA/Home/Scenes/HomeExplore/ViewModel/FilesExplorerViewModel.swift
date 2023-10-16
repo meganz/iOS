@@ -80,14 +80,14 @@ final class FilesExplorerViewModel {
         self.filesDownloadUseCase = filesDownloadUseCase
 
         self.useCase?.onNodesUpdate { [weak self] _ in
-            guard let self = self else { return }
+            guard let self else { return }
             self.debouncer.start {
                 self.invokeCommand?(.reloadData)
             }
         }
         
         self.favouritesUseCase?.registerOnNodesUpdate { [weak self] _ in
-            guard let self = self else { return }
+            guard let self else { return }
             self.debouncer.start {
                 self.invokeCommand?(.reloadData)
             }
@@ -98,7 +98,7 @@ final class FilesExplorerViewModel {
         }
         
         self.nodeClipboardOperationUseCase.onNodeCopy { [weak self] _ in
-            guard let self = self else { return }
+            guard let self else { return }
             self.debouncer.start {
                 self.invokeCommand?(.reloadData)
             }
@@ -182,7 +182,7 @@ final class FilesExplorerViewModel {
     private func updateListenerForFilesDownload(withNodes nodes: [MEGANode]?) {
         filesDownloadUseCase.addListener(nodes: nodes) { [weak self] node in
             
-            guard let self = self else { return }
+            guard let self else { return }
             self.invokeCommand?(.onTransferCompleted(node))
         }
     }

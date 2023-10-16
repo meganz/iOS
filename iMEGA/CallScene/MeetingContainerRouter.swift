@@ -314,7 +314,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
         self.appDidBecomeActiveSubscription = NotificationCenter.default
             .publisher(for: UIApplication.didBecomeActiveNotification)
             .sink { [weak self] _ in
-                guard let self = self else { return }
+                guard let self else { return }
                 
                 if self.createCallUseCase.call(for: chatRoom.chatId) == nil {
                     self.containerViewModel?.dispatch(.dismissCall(completion: nil))

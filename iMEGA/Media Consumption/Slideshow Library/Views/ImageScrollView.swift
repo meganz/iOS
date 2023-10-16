@@ -132,7 +132,7 @@ final class ImageScrollView: UIScrollView {
         }
         
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             configureAfterDisplay()
             configureImageForSize(image.size)
             adjustFrameToCenter()

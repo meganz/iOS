@@ -83,7 +83,7 @@ extension AlbumContentViewController: QuickActionsMenuDelegate {
             }))
             alert.addAction(UIAlertAction(title: Strings.Localizable.CameraUploads.Albums.removeShareLinkAlertConfirmButtonTitle(1),
                                           style: .default, handler: { [weak self] _ in
-                guard let self = self else { return }
+                guard let self else { return }
                 viewModel.dispatch(.removeLink)
             }))
             present(alert, animated: true, completion: nil)

@@ -257,7 +257,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
             title: Text(Strings.Localizable.CameraUploads.Albums.removeShareLinkAlertTitle(selection.albums.count)),
             message: Text(Strings.Localizable.CameraUploads.Albums.removeShareLinkAlertMessage(selection.albums.count)),
             primaryButton: .default(Text(Strings.Localizable.CameraUploads.Albums.removeShareLinkAlertConfirmButtonTitle(selection.albums.count))) { [weak self] in
-                guard let self = self else { return }
+                guard let self else { return }
                 onAlbumShareLinkRemoveConfirm(Array(selection.albums.values))
             },
             secondaryButton: .cancel(Text(Strings.Localizable.cancel))
@@ -337,7 +337,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
         photoAlbumContainerViewModel?.$showDeleteAlbumAlert
             .dropFirst()
             .sink { [weak self] _ in
-                guard let self = self else { return }
+                guard let self else { return }
                 albumAlertType = .deleteAlbum
             }
             .store(in: &subscriptions)
@@ -345,7 +345,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
         photoAlbumContainerViewModel?.$showRemoveAlbumLinksAlert
             .dropFirst()
             .sink { [weak self] _ in
-                guard let self = self else { return }
+                guard let self else { return }
                 albumAlertType = .removeAlbumShareLink
             }
             .store(in: &subscriptions)

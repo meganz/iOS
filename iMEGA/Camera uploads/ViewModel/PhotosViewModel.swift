@@ -62,7 +62,7 @@ final class PhotosViewModel: NSObject {
     
     @objc func loadAllPhotosWithSavedFilters() {
         contentConsumptionAttributeLoadingTask = Task { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             
             do {
                 if let timelineFilters = try await userAttributeUseCase.timelineFilter(), timelineFilters.usePreference {
