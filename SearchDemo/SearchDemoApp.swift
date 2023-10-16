@@ -37,13 +37,13 @@ struct ContentView: View {
                 }
             ),
             config: .testConfig,
-            keyboardVisibilityHandler: KeyboardVisibiltyHandler(notificationCenter: .default)
+            keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: .default)
         )
         var body: some View {
             SearchResultsView(
                 viewModel: viewModel
             )
-            .onChange(of: text, perform: { newValue in
+            .onChange(of: text, initial: true, { _, newValue in
                 viewModel.bridge.queryChanged(newValue)
             })
             .searchable(text: $text)

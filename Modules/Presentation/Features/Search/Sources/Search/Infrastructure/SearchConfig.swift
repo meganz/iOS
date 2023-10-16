@@ -1,4 +1,6 @@
+import MEGASwiftUI
 import SwiftUI
+import UIKit
 
 /// Any configuration needed for search module assets, behaviour or styling
 /// currently on chips colors are specified here
@@ -7,15 +9,27 @@ public struct SearchConfig {
     public let chipAssets: ChipAssets
     public let emptyViewAssetFactory: (SearchChipEntity?) -> EmptyViewAssets
     public let rowAssets: RowAssets
+    public let contextPreviewFactory: ContextPreviewFactory
     
     public init(
         chipAssets: ChipAssets,
         emptyViewAssetFactory: @escaping (SearchChipEntity?) -> EmptyViewAssets,
-        rowAssets: RowAssets
+        rowAssets: RowAssets,
+        contextPreviewFactory: ContextPreviewFactory
     ) {
         self.chipAssets = chipAssets
         self.emptyViewAssetFactory = emptyViewAssetFactory
         self.rowAssets = rowAssets
+        self.contextPreviewFactory = contextPreviewFactory
+    }
+    
+    public struct ContextPreviewFactory {
+        public let previewContentForResult: (SearchResult) -> PreviewContent
+        public init(
+            previewContentForResult: @escaping (SearchResult) -> PreviewContent
+        ) {
+            self.previewContentForResult = previewContentForResult
+        }
     }
     
     public struct ChipAssets {

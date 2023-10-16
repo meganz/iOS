@@ -1,8 +1,20 @@
-import MEGASwift
+import MEGASwiftUI
 import SwiftUI
 import UIKit
 
+extension SearchResultRowViewModel {
+    struct UserActions {
+        /// ellipsis menu button was tapped
+        let contextAction: (UIButton) -> Void
+        /// result was selected
+        let selectionAction: () -> Void
+        /// result was previewed with long pressed and then tapped
+        let previewTapAction: () -> Void
+    }
+}
+
 final class SearchResultRowViewModel: ObservableObject, Identifiable, Equatable {
+    
     static func == (lhs: SearchResultRowViewModel, rhs: SearchResultRowViewModel) -> Bool {
         rhs.result == lhs.result
     }
@@ -21,21 +33,21 @@ final class SearchResultRowViewModel: ObservableObject, Identifiable, Equatable 
         result.description
     }
 
-    private let result: SearchResult
+    let result: SearchResult
     let contextButtonImage: UIImage
-    let contextAction: (UIButton) -> Void
-    let selectionAction: () -> Void
-
+    let previewContent: PreviewContent
+    let actions: UserActions
+    
     init(
         with result: SearchResult,
         contextButtonImage: UIImage,
-        contextAction: @escaping (UIButton) -> Void,
-        selectionAction: @escaping () -> Void
+        previewContent: PreviewContent,
+        actions: UserActions
     ) {
         self.result = result
-        self.contextAction = contextAction
-        self.selectionAction = selectionAction
         self.contextButtonImage = contextButtonImage
+        self.previewContent = previewContent
+        self.actions = actions
     }
     
     @MainActor

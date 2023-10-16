@@ -43,14 +43,14 @@ public class SearchResultsViewModel: ObservableObject {
     // delay after we should display loading placeholder, in seconds
     private let showLoadingPlaceholderDelay: Double
 
-    private let keyboardVisibilityHandler: any KeyboardVisibiltyHandling
+    private let keyboardVisibilityHandler: any KeyboardVisibilityHandling
 
     public init(
         resultsProvider: any SearchResultsProviding,
         bridge: SearchBridge,
         config: SearchConfig,
         showLoadingPlaceholderDelay: Double = 1,
-        keyboardVisibilityHandler: any KeyboardVisibiltyHandling
+        keyboardVisibilityHandler: any KeyboardVisibilityHandling
     ) {
         self.resultsProvider = resultsProvider
         self.bridge = bridge
@@ -198,24 +198,38 @@ public class SearchResultsViewModel: ObservableObject {
     func loadMoreIfNeeded(at index: Int) async {
         await performSearch(using: currentQuery, lastItemIndex: index)
     }
-
+    
     func prepareResults(_ results: SearchResultsEntity, query: SearchQuery) async {
         let items = results.results.map { result in
-            SearchResultRowViewModel(
+            let content = config.contextPreviewFactory.previewContentForResult(result)
+            return SearchResultRowViewModel(
                 with: result,
                 contextButtonImage: self.config.rowAssets.contextImage,
-                contextAction: { [weak self] button in
-                    // we pass in button to show popover attached to the correct view
-                    self?.bridge.context(result, button)
-                },
-                selectionAction: { [weak self] in
-                    // executeSelect
-                    self?.bridge.selection(result)
-                }
+                previewContent: .init(
+                    actions: content.actions,
+                    previewMode: content.previewMode
+                ),
+                actions: rowActions(for: result)
             )
         }
 
         await self.consume(results, items: items, query: query)
+    }
+    
+    private func rowActions(for result: SearchResult) -> SearchResultRowViewModel.UserActions {
+        .init(
+            contextAction: { [weak self] button in
+                // we pass in button to show popover attached to the correct view
+                self?.bridge.context(result, button)
+            },
+            selectionAction: { [weak self] in
+                // executeSelect
+                self?.bridge.selection(result)
+            },
+            previewTapAction: { [weak self] in
+                self?.bridge.selection(result)
+            }
+        )
     }
 
     @MainActor 
