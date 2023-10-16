@@ -263,7 +263,7 @@ final class ChatContentViewModel: ViewModelType {
     
     @MainActor
     private func onUpdate(for call: CallEntity?, with scheduledMeetings: [ScheduledMeetingEntity]) {
-        guard let call = call, call.chatId == chatRoom.chatId else { return }
+        guard let call, call.chatId == chatRoom.chatId else { return }
         
         invokeCommand?(.configNavigationBar)
                 
@@ -300,7 +300,7 @@ final class ChatContentViewModel: ViewModelType {
     
     private func inviteParticipants(_ userHandles: [HandleEntity]) {
         if let call = callUseCase.call(for: chatRoom.chatId),
-           shouldInvitedParticipantsByPassWaitingRoom() {
+           shouldInvitedParticipantsBypassWaitingRoom() {
             userHandles.forEach {
                 invitedUserIdsToBypassWaitingRoom.insert($0)
             }
@@ -312,7 +312,7 @@ final class ChatContentViewModel: ViewModelType {
         }
     }
     
-    private func shouldInvitedParticipantsByPassWaitingRoom() -> Bool {
+    private func shouldInvitedParticipantsBypassWaitingRoom() -> Bool {
         guard chatRoom.isWaitingRoomEnabled else { return false }
         let isModerator = chatRoom.ownPrivilege == .moderator
         let isOpenInviteEnabled = chatRoom.isOpenInviteEnabled
