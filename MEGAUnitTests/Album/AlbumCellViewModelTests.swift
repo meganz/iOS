@@ -275,34 +275,19 @@ final class AlbumCellViewModelTests: XCTestCase {
     }
     
     func testFeatureFlagForShowingShareIconOnAlbum_whenTurnedOff_shouldNotShowShareLink() {
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.albumShareLink: true])
         
         let sut = makeAlbumCellViewModel(
-            album: AlbumEntity(id: 4, name: "User", coverNode: NodeEntity(handle: 3),
-                               count: 1, type: .user, modificationTime: nil, sharedLinkStatus: .exported(true)),
-            featureFlagProvider: featureFlagProvider)
+            album: AlbumEntity(id: 4, name: "User", coverNode: NodeEntity(handle: 3), count: 1, type: .user, modificationTime: nil, sharedLinkStatus: .exported(true)))
         
         XCTAssertTrue(sut.isLinkShared)
     }
-    
-    func testFeatureFlagForShowingShareIconOnAlbum_whenTurnedOn_shouldShowShareLink() {
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.albumShareLink: false])
         
-        let sut = makeAlbumCellViewModel(
-            album: AlbumEntity(id: 4, name: "User", coverNode: NodeEntity(handle: 3),
-                               count: 1, type: .user, modificationTime: nil, sharedLinkStatus: .exported(true)),
-            featureFlagProvider: featureFlagProvider)
-        
-        XCTAssertFalse(sut.isLinkShared)
-    }
-    
     // MARK: - Helpers
     
     private func makeAlbumCellViewModel(
         album: AlbumEntity,
         thumbnailUseCase: some ThumbnailUseCaseProtocol = MockThumbnailUseCase(),
         selection: AlbumSelection = AlbumSelection(),
-        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         tracker: some AnalyticsTracking = MockTracker(),
         file: StaticString = #filePath,
         line: UInt = #line
@@ -310,7 +295,6 @@ final class AlbumCellViewModelTests: XCTestCase {
         let sut = AlbumCellViewModel(thumbnailUseCase: thumbnailUseCase,
                                      album: album,
                                      selection: selection,
-                                     featureFlagProvider: featureFlagProvider,
                                      tracker: tracker)
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut

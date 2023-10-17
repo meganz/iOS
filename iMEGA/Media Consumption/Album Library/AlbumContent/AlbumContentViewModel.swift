@@ -39,7 +39,6 @@ final class AlbumContentViewModel: ViewModelType {
     private let albumModificationUseCase: any AlbumModificationUseCaseProtocol
     private let photoLibraryUseCase: any PhotoLibraryUseCaseProtocol
     private let router: any AlbumContentRouting
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let shareAlbumUseCase: any ShareAlbumUseCaseProtocol
     private let tracker: any AnalyticsTracking
     
@@ -76,7 +75,6 @@ final class AlbumContentViewModel: ViewModelType {
         router: some AlbumContentRouting,
         newAlbumPhotosToAdd: [NodeEntity]? = nil,
         alertViewModel: TextFieldAlertViewModel,
-        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
         tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.album = album
@@ -87,7 +85,6 @@ final class AlbumContentViewModel: ViewModelType {
         self.shareAlbumUseCase = shareAlbumUseCase
         self.router = router
         self.alertViewModel = alertViewModel
-        self.featureFlagProvider = featureFlagProvider
         self.tracker = tracker
         
         setupSubscription()
@@ -162,7 +159,7 @@ final class AlbumContentViewModel: ViewModelType {
             isFilterEnabled: isFilterEnabled,
             isSelectHidden: isPhotoSelectionHidden,
             isEmptyState: photos.isEmpty,
-            sharedLinkStatus: featureFlagProvider.isFeatureFlagEnabled(for: .albumShareLink) ? album.sharedLinkStatus : .unavailable
+            sharedLinkStatus: album.sharedLinkStatus
         )
     }
     

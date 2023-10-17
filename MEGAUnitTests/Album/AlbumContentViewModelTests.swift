@@ -224,8 +224,7 @@ final class AlbumContentViewModelTests: XCTestCase {
     }
     
     func testContextMenuConfiguration_onAlbumShareLinkTurnedOff_shouldSetShareLinkStatusToUnavailble() throws {
-        let sut = makeAlbumContentViewModel(album: AlbumEntity(id: 1, type: .user),
-                                            featureFlagProvider: MockFeatureFlagProvider(list: [.albumShareLink: false]))
+        let sut = makeAlbumContentViewModel(album: AlbumEntity(id: 1, type: .user))
         
         let config = try XCTUnwrap(sut.contextMenuConfiguration)
         XCTAssertEqual(config.sharedLinkStatus, .unavailable)
@@ -233,8 +232,7 @@ final class AlbumContentViewModelTests: XCTestCase {
     
     func testContextMenuConfiguration_onAlbumSharedLinkTurnedOn_shouldSetCorrectStatusInContext() throws {
         let expectedAlbumShareLinkStatus = SharedLinkStatusEntity.exported(true)
-        let sut = makeAlbumContentViewModel(album: AlbumEntity(id: 1, type: .user, sharedLinkStatus: expectedAlbumShareLinkStatus),
-                                            featureFlagProvider: MockFeatureFlagProvider(list: [.albumShareLink: true]))
+        let sut = makeAlbumContentViewModel(album: AlbumEntity(id: 1, type: .user, sharedLinkStatus: expectedAlbumShareLinkStatus))
         
         let config = try XCTUnwrap(sut.contextMenuConfiguration)
         XCTAssertEqual(config.sharedLinkStatus, expectedAlbumShareLinkStatus)
@@ -728,8 +726,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         let userAlbum = AlbumEntity(id: 1, type: .user)
         let albumUpdatedPublisher = PassthroughSubject<SetEntity, Never>()
         let sut = makeAlbumContentViewModel(album: userAlbum,
-                                            albumContentsUseCase: MockAlbumContentUseCase(albumUpdatedPublisher: albumUpdatedPublisher.eraseToAnyPublisher()),
-                                            featureFlagProvider: MockFeatureFlagProvider(list: [.albumShareLink: true]))
+                                            albumContentsUseCase: MockAlbumContentUseCase(albumUpdatedPublisher: albumUpdatedPublisher.eraseToAnyPublisher()))
         
         let exp = expectation(description: "context menu should rebuild")
         sut.invokeCommand = {
@@ -759,7 +756,6 @@ final class AlbumContentViewModelTests: XCTestCase {
         router: some AlbumContentRouting = MockAlbumContentRouting(),
         newAlbumPhotosToAdd: [NodeEntity]? = nil,
         alertViewModel: TextFieldAlertViewModel? = nil,
-        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         tracker: some AnalyticsTracking = MockTracker()
     ) -> AlbumContentViewModel {
         AlbumContentViewModel(album: album,
@@ -770,7 +766,6 @@ final class AlbumContentViewModelTests: XCTestCase {
                               router: router,
                               newAlbumPhotosToAdd: newAlbumPhotosToAdd,
                               alertViewModel: alertViewModel ?? makeAlertViewModel(),
-                              featureFlagProvider: featureFlagProvider,
                               tracker: tracker)
     }
     
