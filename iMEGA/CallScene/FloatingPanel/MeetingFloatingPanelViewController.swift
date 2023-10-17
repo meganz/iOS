@@ -433,4 +433,8 @@ extension MeetingFloatingPanelViewController: PanModalPresentable {
     var allowsExtendedPanScrolling: Bool {
         true
     }
+    
+    func willTransition(to state: PanModalPresentationController.PresentationState) {
+        viewModel.dispatch(.panelTransitionIsLongForm(state == .longForm))
+    }
 }

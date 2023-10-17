@@ -27,6 +27,7 @@ enum MeetingFloatingPanelAction: ActionType {
     case onDenyParticipantTap(participant: CallParticipantEntity)
     case onAdmitAllParticipantsTap
     case seeMoreParticipantsInWaitingRoomTapped
+    case panelTransitionIsLongForm(Bool)
 }
 
 final class MeetingFloatingPanelViewModel: ViewModelType {
@@ -91,11 +92,23 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         (isMyselfAModerator || chatRoom.isOpenInviteEnabled) && !accountUseCase.isGuest
     }
     
-    private var selectedParticipantsListTab: ParticipantsListTab
+    private var selectedParticipantsListTab: ParticipantsListTab {
+        didSet {
+            isWaitingRoomListVisible = panelIsLongForm && selectedParticipantsListTab == .waitingRoom
+        }
+    }
     
     @PreferenceWrapper(key: .isCallUIVisible, defaultValue: false, useCase: PreferenceUseCase.default)
     var isCallUIVisible: Bool
+    @PreferenceWrapper(key: .isWaitingRoomListVisible, defaultValue: false, useCase: PreferenceUseCase.default)
+    var isWaitingRoomListVisible: Bool
+    
     private var selectWaitingRoomList: Bool
+    private var panelIsLongForm = false {
+        didSet {
+            isWaitingRoomListVisible = panelIsLongForm && selectedParticipantsListTab == .waitingRoom
+        }
+    }
 
     var invokeCommand: ((Command) -> Void)?
 
@@ -249,6 +262,8 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         case .seeMoreParticipantsInWaitingRoomTapped:
             guard let call else { return }
             router.showWaitingRoomParticipantsList(for: call)
+        case .panelTransitionIsLongForm(let isLongForm):
+            panelIsLongForm = isLongForm
         }
     }
     
@@ -555,10 +570,12 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         populateParticipantsInWaitingRoom(forCall: call)
         populateParticipantsNotInCall()
         
+        containerViewModel?.dispatch(.participantJoinedCallOrWaitingRoom)
+        
         if callParticipantsInWaitingRoom.isNotEmpty {
-            loadParticipantsInWaitingRoom()
+            selectParticipantsListTab(.waitingRoom)
         } else {
-            loadParticipantsInCall()
+            selectParticipantsListTab(.inCall)
         }
     }
     

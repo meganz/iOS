@@ -122,7 +122,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         let router = MockMeetingContainerRouter()
 
         viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom)
-        test(viewModel: viewModel, action: .participantAdded, expectedCommands: [])
+        test(viewModel: viewModel, action: .participantJoinedCallOrWaitingRoom, expectedCommands: [])
         XCTAssert(router.removeEndDialog_calledTimes == 1)
     }
     
