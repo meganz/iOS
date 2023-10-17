@@ -135,7 +135,7 @@ final class UserAlbumRepositoryTests: XCTestCase {
         let expectedSetElements = sampleSetElements()
         
         let exp = expectation(description: "Should receive set elements update")
-        repo.setElemetsUpdatedPublisher
+        repo.setElementsUpdatedPublisher
             .sink {
                 XCTAssertEqual($0, expectedSetElements.toSetElementsEntities())
                 exp.fulfill()

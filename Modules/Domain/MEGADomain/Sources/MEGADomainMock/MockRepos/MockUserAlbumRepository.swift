@@ -8,28 +8,46 @@ public struct MockUserAlbumRepository: UserAlbumRepositoryProtocol {
     private let albums: [SetEntity]
     private let albumContent: [HandleEntity: [SetElementEntity]]
     public let setsUpdatedPublisher: AnyPublisher<[SetEntity], Never>
-    public let setElemetsUpdatedPublisher: AnyPublisher<[SetElementEntity], Never>
+    public let setElementsUpdatedPublisher: AnyPublisher<[SetElementEntity], Never>
     public let albumElement: SetElementEntity?
     public let createAlbumResult: Result<SetEntity, Error>
+    public let updateAlbumNameResult: Result<String, Error>
+    public let deleteAlbumResult: Result<HandleEntity, Error>?
     public let addPhotosResult: Result<AlbumElementsResultEntity, Error>
+    public let updateAlbumElementNameResult: Result<String, Error>
+    public let updateAlbumElementOrderResult: Result<Int64, Error>
+    public let deleteAlbumElementsResult: Result<AlbumElementsResultEntity, Error>
+    public let updateAlbumCoverResult: Result<HandleEntity, Error>
     
     public init(node: NodeEntity? = nil,
                 albums: [SetEntity] = [],
                 albumContent: [HandleEntity: [SetElementEntity]] = [:],
                 setsUpdatedPublisher: AnyPublisher<[SetEntity], Never> = Empty().eraseToAnyPublisher(),
-                setElemetsUpdatedPublisher: AnyPublisher<[SetElementEntity], Never> = Empty().eraseToAnyPublisher(),
+                setElementsUpdatedPublisher: AnyPublisher<[SetElementEntity], Never> = Empty().eraseToAnyPublisher(),
                 albumElement: SetElementEntity? = nil,
                 createAlbumResult: Result<SetEntity, Error> = .failure(GenericErrorEntity()),
-                addPhotosResult: Result<AlbumElementsResultEntity, Error> = .failure(GenericErrorEntity())
+                updateAlbumNameResult: Result<String, Error> = .failure(GenericErrorEntity()),
+                deleteAlbumResult: Result<HandleEntity, Error>? = nil,
+                addPhotosResult: Result<AlbumElementsResultEntity, Error> = .failure(GenericErrorEntity()),
+                updateAlbumElementNameResult: Result<String, Error> = .failure(GenericErrorEntity()),
+                updateAlbumElementOrderResult: Result<Int64, Error> = .failure(GenericErrorEntity()),
+                deleteAlbumElementsResult: Result<AlbumElementsResultEntity, Error> = .failure(GenericErrorEntity()),
+                updateAlbumCoverResult: Result<HandleEntity, Error> = .failure(GenericErrorEntity())
     ) {
         self.node = node
         self.albums = albums
         self.albumContent = albumContent
         self.setsUpdatedPublisher = setsUpdatedPublisher
-        self.setElemetsUpdatedPublisher = setElemetsUpdatedPublisher
+        self.setElementsUpdatedPublisher = setElementsUpdatedPublisher
         self.albumElement = albumElement
         self.createAlbumResult = createAlbumResult
+        self.updateAlbumNameResult = updateAlbumNameResult
+        self.deleteAlbumResult = deleteAlbumResult
         self.addPhotosResult = addPhotosResult
+        self.updateAlbumElementNameResult = updateAlbumElementNameResult
+        self.updateAlbumElementOrderResult = updateAlbumElementOrderResult
+        self.deleteAlbumElementsResult = deleteAlbumElementsResult
+        self.updateAlbumCoverResult = updateAlbumCoverResult
     }
     
     public func albums() async -> [SetEntity] {
@@ -51,11 +69,18 @@ public struct MockUserAlbumRepository: UserAlbumRepositoryProtocol {
     }
     
     public func updateAlbumName(_ name: String, _ id: HandleEntity) async throws -> String {
-        name
+        try await withCheckedThrowingContinuation {
+            $0.resume(with: updateAlbumNameResult)
+        }
     }
     
     public func deleteAlbum(by id: HandleEntity) async throws -> HandleEntity {
-        id
+        guard let deleteAlbumResult else {
+            return id
+        }
+        return try await withCheckedThrowingContinuation {
+            $0.resume(with: deleteAlbumResult)
+        }
     }
     
     public func addPhotosToAlbum(by id: HandleEntity,
@@ -66,18 +91,26 @@ public struct MockUserAlbumRepository: UserAlbumRepositoryProtocol {
     }
     
     public func updateAlbumElementName(albumId: HandleEntity, elementId: HandleEntity, name: String) async throws -> String {
-        ""
+        try await withCheckedThrowingContinuation {
+            $0.resume(with: updateAlbumElementNameResult)
+        }
     }
     
     public func updateAlbumElementOrder(albumId: HandleEntity, elementId: HandleEntity, order: Int64) async throws -> Int64 {
-        0
+        try await withCheckedThrowingContinuation {
+            $0.resume(with: updateAlbumElementOrderResult)
+        }
     }
     
     public func deleteAlbumElements(albumId: HandleEntity, elementIds: [HandleEntity]) async throws -> AlbumElementsResultEntity {
-        AlbumElementsResultEntity(success: UInt(elementIds.count), failure: 0)
+        try await withCheckedThrowingContinuation {
+            $0.resume(with: deleteAlbumElementsResult)
+        }
     }
     
     public func updateAlbumCover(for albumId: HandleEntity, elementId: HandleEntity) async throws -> HandleEntity {
-        elementId
+        try await withCheckedThrowingContinuation {
+            $0.resume(with: updateAlbumCoverResult)
+        }
     }
 }

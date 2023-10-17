@@ -33,7 +33,7 @@ public struct AlbumListUseCase<T: FilesSearchRepositoryProtocol,
             .filter { $0.isNotEmpty }
             .map { _ in () }
             .eraseToAnyPublisher()
-            .merge(with: userAlbumRepository.setElemetsUpdatedPublisher
+            .merge(with: userAlbumRepository.setElementsUpdatedPublisher
                 .filter { $0.isNotEmpty }
                 .map { _ in () }
                 .eraseToAnyPublisher())

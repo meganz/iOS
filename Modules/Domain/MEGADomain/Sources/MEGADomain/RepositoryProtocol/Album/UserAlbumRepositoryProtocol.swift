@@ -10,7 +10,7 @@ public protocol UserAlbumRepositoryProtocol: RepositoryProtocol {
     
     /// Returns a publisher that emits album content updates.
     /// - Returns: A publisher that emits album content updates.
-    var setElemetsUpdatedPublisher: AnyPublisher<[SetElementEntity], Never> { get }
+    var setElementsUpdatedPublisher: AnyPublisher<[SetElementEntity], Never> { get }
     
     // MARK: - Album
     

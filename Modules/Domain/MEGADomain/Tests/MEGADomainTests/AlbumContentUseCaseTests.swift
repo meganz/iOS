@@ -114,12 +114,12 @@ final class AlbumContentUseCaseTests: XCTestCase {
     
     func testAlbumReloadPublisher_onNonUserAlbum_shouldOnlyReloadOnAlbumReloadPublisher() {
         let albumReloadPublisher = PassthroughSubject<Void, Never>()
-        let setElemetsUpdatedPublisher = PassthroughSubject<[SetElementEntity], Never>()
+        let setElementsUpdatedPublisher = PassthroughSubject<[SetElementEntity], Never>()
         let sut = AlbumContentsUseCase(
             albumContentsRepo: MockAlbumContentsUpdateNotifierRepository(albumReloadPublisher: albumReloadPublisher.eraseToAnyPublisher()),
             mediaUseCase: MockMediaUseCase(),
             fileSearchRepo: MockFilesSearchRepository.newRepo,
-            userAlbumRepo: MockUserAlbumRepository(setElemetsUpdatedPublisher: setElemetsUpdatedPublisher.eraseToAnyPublisher())
+            userAlbumRepo: MockUserAlbumRepository(setElementsUpdatedPublisher: setElementsUpdatedPublisher.eraseToAnyPublisher())
         )
         let favouriteAlbum = AlbumEntity(id: 1, name: "Favourites", coverNode: nil,
                                     count: 1, type: .favourite)
@@ -130,7 +130,7 @@ final class AlbumContentUseCaseTests: XCTestCase {
             }.store(in: &subscriptions)
         
         albumReloadPublisher.send()
-        setElemetsUpdatedPublisher.send([SetElementEntity(handle: 1, ownerId: favouriteAlbum.id,
+        setElementsUpdatedPublisher.send([SetElementEntity(handle: 1, ownerId: favouriteAlbum.id,
                                                           order: 1, nodeId: 1, modificationTime: Date(), name: "")])
         
         wait(for: [exp], timeout: 1.0)
@@ -138,12 +138,12 @@ final class AlbumContentUseCaseTests: XCTestCase {
     
     func testAlbumReloadPublisher_onUserAlbum_shouldReloadOnAlbumReloadPublisherAndSetElementsUpdated() {
         let albumReloadPublisher = PassthroughSubject<Void, Never>()
-        let setElemetsUpdatedPublisher = PassthroughSubject<[SetElementEntity], Never>()
+        let setElementsUpdatedPublisher = PassthroughSubject<[SetElementEntity], Never>()
         let sut = AlbumContentsUseCase(
             albumContentsRepo: MockAlbumContentsUpdateNotifierRepository(albumReloadPublisher: albumReloadPublisher.eraseToAnyPublisher()),
             mediaUseCase: MockMediaUseCase(),
             fileSearchRepo: MockFilesSearchRepository.newRepo,
-            userAlbumRepo: MockUserAlbumRepository(setElemetsUpdatedPublisher: setElemetsUpdatedPublisher.eraseToAnyPublisher())
+            userAlbumRepo: MockUserAlbumRepository(setElementsUpdatedPublisher: setElementsUpdatedPublisher.eraseToAnyPublisher())
         )
         let albumId = HandleEntity(6)
         let userAlbum = AlbumEntity(id: albumId, name: "Test", coverNode: nil,
@@ -157,9 +157,9 @@ final class AlbumContentUseCaseTests: XCTestCase {
             }.store(in: &subscriptions)
         
         albumReloadPublisher.send()
-        setElemetsUpdatedPublisher.send([])
-        setElemetsUpdatedPublisher.send([SetElementEntity(handle: 1, ownerId: 2, order: 1, nodeId: 1, modificationTime: Date(), name: "")])
-        setElemetsUpdatedPublisher.send([SetElementEntity(handle: 2, ownerId: albumId, order: 1, nodeId: 1, modificationTime: Date(), name: "")])
+        setElementsUpdatedPublisher.send([])
+        setElementsUpdatedPublisher.send([SetElementEntity(handle: 1, ownerId: 2, order: 1, nodeId: 1, modificationTime: Date(), name: "")])
+        setElementsUpdatedPublisher.send([SetElementEntity(handle: 2, ownerId: albumId, order: 1, nodeId: 1, modificationTime: Date(), name: "")])
         
         wait(for: [exp], timeout: 1.0)
     }
