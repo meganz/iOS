@@ -1,7 +1,7 @@
 import Foundation
 import MEGADomain
 
-protocol UserAlbumCacheProtocol: Actor {
+public protocol UserAlbumCacheProtocol: Actor {
     var albums: [SetEntity] { get }
     func setAlbums(_ albums: [SetEntity])
     func album(forHandle handle: HandleEntity) -> SetEntity?
