@@ -4,6 +4,7 @@ import MEGAAnalyticsiOS
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
+import MEGAPresentationMock
 import XCTest
 
 final class ScheduleMeetingViewModelTests: XCTestCase {
@@ -765,6 +766,20 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
         tracker.assertTrackAnalyticsEventCalled(
             with: []
         )
+    }
+    
+    func testIsWaitingRoomFeatureEnabled_onWaitingRoomFeatureFlagEnabled_shouldBeTrue() async {
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.waitingRoom: true])
+        let sut = ScheduleMeetingViewModel(featureFlagProvider: featureFlagProvider)
+                
+        XCTAssertTrue(sut.isWaitingRoomFeatureEnabled)
+    }
+    
+    func testIsWaitingRoomFeatureEnabled_onWaitingRoomFeatureFlagNotEnabled_shouldBeFalse() async {
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.waitingRoom: false])
+        let sut = ScheduleMeetingViewModel(featureFlagProvider: featureFlagProvider)
+                
+        XCTAssertFalse(sut.isWaitingRoomFeatureEnabled)
     }
     
     // MARK: - Private methods.
