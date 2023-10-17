@@ -17,7 +17,7 @@ enum MeetingContainerAction: ActionType {
     case displayParticipantInMainView(_ participant: CallParticipantEntity)
     case didDisplayParticipantInMainView(_ participant: CallParticipantEntity)
     case didSwitchToGridView
-    case participantAdded
+    case participantJoinedCallOrWaitingRoom
     case participantRemoved
     case showEndCallDialogIfNeeded
     case removeEndCallAlertAndEndCall
@@ -164,7 +164,7 @@ final class MeetingContainerViewModel: ViewModelType {
             router.didDisplayParticipantInMainView(participant)
         case .didSwitchToGridView:
             router.didSwitchToGridView()
-        case .participantAdded:
+        case .participantJoinedCallOrWaitingRoom:
             cancelMuteMicrophoneSubscription()
             cancelNoUserJoinedSubscription()
             router.removeEndCallDialog(completion: nil)

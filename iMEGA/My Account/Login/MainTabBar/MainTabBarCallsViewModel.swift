@@ -37,6 +37,8 @@ enum MainTabBarCallsAction: ActionType { }
     
     @PreferenceWrapper(key: .isCallUIVisible, defaultValue: false, useCase: PreferenceUseCase.default)
     var isCallUIVisible: Bool
+    @PreferenceWrapper(key: .isWaitingRoomListVisible, defaultValue: false, useCase: PreferenceUseCase.default)
+    var isWaitingRoomListVisible: Bool
     
     init(
         router: some MainTabBarCallsRouting,
@@ -109,7 +111,8 @@ enum MainTabBarCallsAction: ActionType { }
     private func manageWaitingRoom(for call: CallEntity) {
         guard call.changeType != .waitingRoomUsersAllow,
               let waitingRoomHandles = call.waitingRoom?.sessionClientIds,
-              let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId) else { return }
+              let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId),
+                !isWaitingRoomListVisible else { return }
         let waitingRoomNonModeratorHandles = waitingRoomHandles.filter { chatRoomUseCase.peerPrivilege(forUserHandle: $0, chatRoom: chatRoom).isUserInWaitingRoom }
         
         guard waitingRoomNonModeratorHandles.isNotEmpty else {
