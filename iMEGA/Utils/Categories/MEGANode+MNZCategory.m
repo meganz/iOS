@@ -32,7 +32,6 @@
 #import "PreviewDocumentViewController.h"
 #import "SharedItemsViewController.h"
 #import "SendToViewController.h"
-#import "MEGAStartUploadTransferDelegate.h"
 
 @import ChatRepo;
 @import MEGAL10nObjc;

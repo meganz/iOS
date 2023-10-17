@@ -155,7 +155,7 @@
     [CameraUploadManager.shared setupCameraUploadWhenApplicationLaunches];
     
     [Helper restoreAPISetting];
-    [ChatUploader.sharedInstance setup];
+    [self chatUploaderSetup];
     [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
     [[MEGASdkManager sharedMEGASdkFolder] addMEGATransferDelegate:self];

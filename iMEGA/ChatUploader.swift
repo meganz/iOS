@@ -1,5 +1,5 @@
-@objc class ChatUploader: NSObject {
-    @objc static let sharedInstance = ChatUploader()
+final class ChatUploader: NSObject {
+    static let sharedInstance = ChatUploader()
     
     private let store = MEGAStore.shareInstance()
     
@@ -13,7 +13,7 @@
         MEGASdk.shared.add(self)
     }
     
-    @objc func upload(image: UIImage, chatRoomId: UInt64) {
+    func upload(image: UIImage, chatRoomId: UInt64) {
         MyChatFilesFolderNodeAccess.shared.loadNode { myChatFilesFolderNode, error in
             guard let myChatFilesFolderNode = myChatFilesFolderNode else {
                 if let error = error {
@@ -42,12 +42,12 @@
         }
     }
     
-    @objc func upload(filepath: String,
-                      appData: String,
-                      chatRoomId: UInt64,
-                      parentNode: MEGANode,
-                      isSourceTemporary: Bool,
-                      delegate: MEGAStartUploadTransferDelegate) {
+    func upload(filepath: String,
+                appData: String,
+                chatRoomId: UInt64,
+                parentNode: MEGANode,
+                isSourceTemporary: Bool,
+                delegate: MEGAStartUploadTransferDelegate) {
         
         MEGALogInfo("[ChatUploader] uploading File path \(filepath)")
         cleanupDatabaseIfRequired()
@@ -71,6 +71,8 @@
                                               delegate: delegate)
         }
     }
+    
+    // MARK: - Private
     
     private func cleanupDatabaseIfRequired() {
         if let isDatabaseCleanupTaskCompleted = isDatabaseCleanupTaskCompleted,
@@ -143,7 +145,7 @@
                         dispatchGroup.wait()
                     }
                 }
-                
+                guard MEGASdk.isLoggedIn else { return }
                 store.save(context)
             }
         }
