@@ -16,6 +16,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
     private var totalPages = 0
     private var pageSize = 100
     private var loadMorePagesOffset = 20
+    private var isLastPageReached = false
 
     init(
         searchFileUseCase: some SearchFileUseCaseProtocol,
@@ -40,6 +41,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         // folder being searched when query is empty, no chips etc
 
         currentPage = 0
+        isLastPageReached = false
 
         switch queryRequest {
         case .initial:
@@ -104,14 +106,26 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
     }
 
     private func fillResults(query: SearchQueryEntity? = nil) async -> SearchResultsEntity {
-        guard let nodeList, nodeList.nodesCount > 0 else { return .empty }
+        guard let nodeList, nodeList.nodesCount > 0, !isLastPageReached else {
+            return .init(
+                results: [],
+                availableChips: SearchChipEntity.allChips,
+                appliedChips: query != nil ? chipsFor(query: query!) : []
+            )
+        }
 
         let nodesCount = nodeList.nodesCount
+        let previousPageStartIndex = (currentPage-1)*pageSize
+        let currentPageStartIndex = currentPage*pageSize
         let nextPageFirstIndex = (currentPage+1)*pageSize
-        let lastItemIndex = nextPageFirstIndex > nodesCount ? nodesCount : nextPageFirstIndex
+
+        isLastPageReached = nextPageFirstIndex > nodesCount
+
+        let firstItemIndex = currentPageStartIndex > nodesCount ? previousPageStartIndex : currentPageStartIndex
+        let lastItemIndex = isLastPageReached ? nodesCount : nextPageFirstIndex
 
         var results: [SearchResult] = []
-        for i in currentPage*pageSize...lastItemIndex-1 {
+        for i in firstItemIndex...lastItemIndex-1 {
             results.append(mapNodeToSearchResult(nodeList.nodeAt(i)))
         }
 
