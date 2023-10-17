@@ -1,3 +1,5 @@
+import ChatRepo
+
 final class ChatUploader: NSObject {
     static let sharedInstance = ChatUploader()
     
@@ -131,7 +133,7 @@ final class ChatUploader: NSObject {
                         let dispatchGroup = DispatchGroup()
                         dispatchGroup.enter()
 
-                        let requestDelegate = MEGAChatAttachNodeRequestDelegate { _, _ in
+                        let requestDelegate = ChatRequestDelegate { _ in
                             dispatchGroup.leave()
                         }
                         if let appData = transfer.appData, appData.contains("attachVoiceClipToChatID") {
