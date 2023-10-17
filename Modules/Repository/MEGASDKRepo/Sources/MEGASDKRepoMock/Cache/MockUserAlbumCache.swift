@@ -1,5 +1,5 @@
 import MEGADomain
-@testable import MEGASDKRepo
+import MEGASDKRepo
 
 public actor MockUserAlbumCache: UserAlbumCacheProtocol {
     public var albums: [SetEntity] {
