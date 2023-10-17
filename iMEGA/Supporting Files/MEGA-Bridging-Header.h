@@ -145,7 +145,6 @@
 #import "MEGAChatError.h"
 #import "MEGAChatStartCallRequestDelegate.h"
 #import "MEGAProviderDelegate.h"
-#import "MEGAChatAttachNodeRequestDelegate.h"
 #import "PhotosViewController.h"
 #import "SharedItemsViewController.h"
 #import "RTCAudioSession.h"
