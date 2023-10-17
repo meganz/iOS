@@ -18,11 +18,11 @@ extension NotificationsTableViewController {
         if alert.pendingContactRequestHandle != MEGAInvalidHandle {
             return occurrenceContent(for: alert, indexPath: indexPath)
         } else if scheduledMeeting.rules.frequency == .invalid {
-            return contentForOneOffNewScheduledMeeting(scheduledMeeting, chatId: alert.nodeHandle, email: alert.email)
+            return contentForOneOffNewScheduledMeeting(scheduledMeeting, chatId: alert.nodeHandle, email: alert.email ?? "")
         } else if scheduledMeeting.rules.frequency == .daily
                     || scheduledMeeting.rules.frequency == .weekly
                     || scheduledMeeting.rules.frequency == .monthly {
-            return contentForRecurringNewScheduledMeeting(scheduledMeeting, chatId: alert.nodeHandle, email: alert.email)
+            return contentForRecurringNewScheduledMeeting(scheduledMeeting, chatId: alert.nodeHandle, email: alert.email ?? "")
         }
         
         return NSAttributedString(string: alert.title)
@@ -45,9 +45,9 @@ extension NotificationsTableViewController {
             return occurrenceContent(for: alert, indexPath: indexPath)
         } else if alert.hasScheduledMeetingChangeType(.cancelled) {
             if scheduledMeetingEntity.rules.frequency != .invalid {
-                return contentForRecurringCancelledScheduledMeeting(withEmail: alert.email)
+                return contentForRecurringCancelledScheduledMeeting(withEmail: alert.email ?? "")
             } else {
-                return contentForOneOffCancelledScheduledMeeting(scheduledMeetingEntity, chatId: alert.nodeHandle, email: alert.email)
+                return contentForOneOffCancelledScheduledMeeting(scheduledMeetingEntity, chatId: alert.nodeHandle, email: alert.email ?? "")
             }
         } else if checkIfMultipleFieldsHaveChangedForScheduledMeeting(in: alert)
                     || alert.hasScheduledMeetingChangeType(.timeZone)
@@ -56,7 +56,7 @@ extension NotificationsTableViewController {
                 return contentForOneOffScheduledMeetingWithMultipleFieldsChanged(
                     scheduledMeeting: scheduledMeetingEntity,
                     chatId: alert.nodeHandle,
-                    email: alert.email
+                    email: alert.email ?? ""
                 )
             } else if scheduledMeetingEntity.rules.frequency == .daily
                         || scheduledMeetingEntity.rules.frequency == .weekly
@@ -64,7 +64,7 @@ extension NotificationsTableViewController {
                 return contentForRecurringScheduledMeetingWithMultipleFieldsChanged(
                     scheduledMeeting: scheduledMeetingEntity,
                     chatId: alert.nodeHandle,
-                    email: alert.email
+                    email: alert.email ?? ""
                 )
             }
         } else if alert.hasScheduledMeetingChangeType(.title) {
@@ -72,24 +72,24 @@ extension NotificationsTableViewController {
             return contentForScheduledMeetingTitleUpdate(
                 withScheduleMeetingId: alert.scheduledMeetingId,
                 chatId: alert.nodeHandle,
-                email: alert.email,
+                email: alert.email ?? "",
                 oldTitle: titleList.first,
                 newTitle: titleList.last,
-                isReccurring: scheduledMeetingEntity.rules.frequency != .invalid
+                isRecurring: scheduledMeetingEntity.rules.frequency != .invalid
             )
         } else if alert.hasScheduledMeetingChangeType(.description) {
             if scheduledMeetingEntity.rules.frequency == .invalid {
                 return contentForOneOffScheduledMeetingWithDescriptionFieldChanged(
                     scheduledMeeting: scheduledMeetingEntity,
                     chatId: alert.nodeHandle,
-                    email: alert.email)
+                    email: alert.email ?? "")
             } else if scheduledMeetingEntity.rules.frequency == .daily
                         || scheduledMeetingEntity.rules.frequency == .weekly
                         || scheduledMeetingEntity.rules.frequency == .monthly {
                 return contentForRecurringScheduledMeetingWithDescriptionFieldChanged(
                     scheduledMeeting: scheduledMeetingEntity,
                     chatId: alert.nodeHandle,
-                    email: alert.email)
+                    email: alert.email ?? "")
             }
         } else if alert.hasScheduledMeetingChangeType(.startDate) || alert.hasScheduledMeetingChangeType(.endDate) {
             if scheduledMeetingEntity.rules.frequency == .invalid {
@@ -199,7 +199,7 @@ extension NotificationsTableViewController {
             return contentForOneOffScheduledMeetingWithMultipleFieldsChanged(
                 scheduledMeeting: scheduledMeetingEntity,
                 chatId: alert.nodeHandle,
-                email: alert.email
+                email: alert.email ?? ""
             )
         }
         
@@ -212,7 +212,7 @@ extension NotificationsTableViewController {
         email: String,
         oldTitle: String?,
         newTitle: String?,
-        isReccurring: Bool
+        isRecurring: Bool
     ) -> NSAttributedString? {
         guard let scheduledMeeting = scheduledMeeting(
             withScheduleMeetingId: meetingId, chatId: chatId
@@ -225,7 +225,7 @@ extension NotificationsTableViewController {
             .replacingOccurrences(of: "[PreviousTitle]", with: oldTitle ?? "")
             .replacingOccurrences(of: "[UpdatedTitle]", with: newTitle ?? scheduledMeeting.title)
 
-        if !isReccurring, let dateInfo = dateInfo(for: scheduledMeeting, chatId: chatId, removingFormatter: .all) {
+        if !isRecurring, let dateInfo = dateInfo(for: scheduledMeeting, chatId: chatId, removingFormatter: .all) {
             content += "\n" + dateInfo
         }
         
@@ -339,7 +339,7 @@ extension NotificationsTableViewController {
         _ scheduledMeeting: ScheduledMeetingEntity,
         chatId: ChatIdEntity,
         email: String,
-        localizedString: String,
+        localisedString: String,
         removingFormatter formatter: ScheduledMeetingDateBuilder.Formatter,
         createAttributedStringWithBoldTag: (String) -> NSAttributedString?,
         startDate: Date? = nil,
@@ -347,7 +347,7 @@ extension NotificationsTableViewController {
         startTime: Date? = nil,
         endTime: Date? = nil
     ) -> NSAttributedString? {
-        let description = localizedString.replacingOccurrences(of: "[Email]", with: email)
+        let description = localisedString.replacingOccurrences(of: "[Email]", with: email)
         let dateInfo = dateInfo(
             for: scheduledMeeting,
             chatId: chatId,
@@ -369,7 +369,7 @@ extension NotificationsTableViewController {
             scheduledMeeting,
             chatId: chatId,
             email: email,
-            localizedString: Strings.Localizable.Inapp.Notifications.ScheduledMeetings.OneOff.New.description,
+            localisedString: Strings.Localizable.Inapp.Notifications.ScheduledMeetings.OneOff.New.description,
             removingFormatter: .all,
             createAttributedStringWithBoldTag: createAttributedStringForBoldTags
         )
@@ -384,7 +384,7 @@ extension NotificationsTableViewController {
             scheduledMeeting,
             chatId: chatId,
             email: email,
-            localizedString: Strings.Localizable.Inapp.Notifications.ScheduledMeetings.OneOff.Cancelled.description,
+            localisedString: Strings.Localizable.Inapp.Notifications.ScheduledMeetings.OneOff.Cancelled.description,
             removingFormatter: .all,
             createAttributedStringWithBoldTag: createAttributedStringForBoldTags
         )
@@ -399,7 +399,7 @@ extension NotificationsTableViewController {
             scheduledMeeting,
             chatId: chatId,
             email: email,
-            localizedString: Strings.Localizable.Inapp.Notifications.ScheduledMeetings.OneOff.MulitpleFieldsUpdate.description,
+            localisedString: Strings.Localizable.Inapp.Notifications.ScheduledMeetings.OneOff.MulitpleFieldsUpdate.description,
             removingFormatter: .all,
             createAttributedStringWithBoldTag: createAttributedStringForBoldTags
         )
@@ -414,7 +414,7 @@ extension NotificationsTableViewController {
             scheduledMeeting,
             chatId: chatId,
             email: email,
-            localizedString: Strings.Localizable.Inapp.Notifications.ScheduledMeetings.OneOff.DescriptionFieldUpdate.description,
+            localisedString: Strings.Localizable.Inapp.Notifications.ScheduledMeetings.OneOff.DescriptionFieldUpdate.description,
             removingFormatter: .all,
             createAttributedStringWithBoldTag: createAttributedStringForBoldTags
         )
@@ -449,7 +449,7 @@ extension NotificationsTableViewController {
                     scheduledMeeting,
                     chatId: alert.nodeHandle,
                     email: alert.email ?? "",
-                    localizedString: Strings.Localizable.Inapp.Notifications.ScheduledMeetings.OneOff.DayChanged.description,
+                    localisedString: Strings.Localizable.Inapp.Notifications.ScheduledMeetings.OneOff.DayChanged.description,
                     removingFormatter: .last,
                     createAttributedStringWithBoldTag: createAttributedStringForBoldTags,
                     startDate: startDate,
@@ -464,7 +464,7 @@ extension NotificationsTableViewController {
             scheduledMeeting,
             chatId: alert.nodeHandle,
             email: alert.email ?? "",
-            localizedString: Strings.Localizable.Inapp.Notifications.ScheduledMeetings.OneOff.TimeChanged.description,
+            localisedString: Strings.Localizable.Inapp.Notifications.ScheduledMeetings.OneOff.TimeChanged.description,
             removingFormatter: .first,
             createAttributedStringWithBoldTag: createAttributedStringForBoldTags,
             startDate: startDate,
@@ -487,7 +487,7 @@ extension NotificationsTableViewController {
     
     private func contentForRecurringScheduledMeeting(
         scheduledMeeting: ScheduledMeetingEntity,
-        localizedString: String,
+        localisedString: String,
         chatId: ChatIdEntity,
         email: String,
         removingFormatter formatter: ScheduledMeetingDateBuilder.Formatter,
@@ -497,7 +497,7 @@ extension NotificationsTableViewController {
         startTime: Date? = nil,
         endTime: Date? = nil
     ) -> NSAttributedString? {
-        let content = localizedString.replacingOccurrences(of: "[Email]", with: email)
+        let content = localisedString.replacingOccurrences(of: "[Email]", with: email)
         let dateInfo = dateInfo(
             for: scheduledMeeting,
             chatId: chatId,
@@ -517,7 +517,7 @@ extension NotificationsTableViewController {
     ) -> NSAttributedString? {
         contentForRecurringScheduledMeeting(
             scheduledMeeting: scheduledMeeting,
-            localizedString: Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.New.description,
+            localisedString: Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.New.description,
             chatId: chatId,
             email: email,
             removingFormatter: .all,
@@ -532,7 +532,7 @@ extension NotificationsTableViewController {
     ) -> NSAttributedString? {
         contentForRecurringScheduledMeeting(
             scheduledMeeting: scheduledMeeting,
-            localizedString: Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.MulitpleFieldsUpdate.description,
+            localisedString: Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.MulitpleFieldsUpdate.description,
             chatId: chatId,
             email: email,
             removingFormatter: .all,
@@ -547,7 +547,7 @@ extension NotificationsTableViewController {
     ) -> NSAttributedString? {
         contentForRecurringScheduledMeeting(
             scheduledMeeting: scheduledMeeting,
-            localizedString: Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.DescriptionFieldUpdate.description,
+            localisedString: Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.DescriptionFieldUpdate.description,
             chatId: chatId,
             email: email,
             removingFormatter: .all,
@@ -556,16 +556,16 @@ extension NotificationsTableViewController {
     }
     
     private func contentForRecurringScheduledMeetingWithDateFieldChanged(for alert: MEGAUserAlert) -> NSAttributedString? {
-        var localizedString: String
+        var localisedString: String
         
         let isTimeChanged = isTimeChanged(forAlert: alert)
         let removeFormatter: ScheduledMeetingDateBuilder.Formatter
         
         if isTimeChanged {
-            localizedString = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.TimeChanged.description
+            localisedString = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.TimeChanged.description
             removeFormatter = .first
         } else {
-            localizedString = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.DayChanged.description
+            localisedString = Strings.Localizable.Inapp.Notifications.ScheduledMeetings.Recurring.DayChanged.description
             removeFormatter = .last
         }
         
@@ -589,7 +589,7 @@ extension NotificationsTableViewController {
 
         return contentForRecurringScheduledMeeting(
             scheduledMeeting: scheduledMeeting,
-            localizedString: localizedString,
+            localisedString: localisedString,
             chatId: alert.nodeHandle,
             email: alert.email ?? "",
             removingFormatter: removeFormatter,
