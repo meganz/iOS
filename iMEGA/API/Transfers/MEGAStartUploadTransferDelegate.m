@@ -50,8 +50,6 @@
     if (self.completion) {
         self.completion(transfer);
     }
-    
-    if (error.type) return;
 }
 
 @end
