@@ -35,7 +35,6 @@ extension MEGALinkManager {
     }
     
     @objc class func showCollectionLinkView() {
-        guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .albumShareLink) else { return }
         guard let publicLink = albumPublicLink() else {
             MEGALinkManager.showLinkNotValid()
             return

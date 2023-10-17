@@ -45,7 +45,6 @@ final class AlbumCellViewModel: ObservableObject {
         thumbnailUseCase: any ThumbnailUseCaseProtocol,
         album: AlbumEntity,
         selection: AlbumSelection,
-        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
         tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.thumbnailUseCase = thumbnailUseCase
@@ -55,7 +54,7 @@ final class AlbumCellViewModel: ObservableObject {
         
         title = album.name
         numberOfNodes = album.count
-        isLinkShared = featureFlagProvider.isFeatureFlagEnabled(for: .albumShareLink) ? album.isLinkShared : false
+        isLinkShared = album.isLinkShared
         
         if let coverNode = album.coverNode,
            let container = thumbnailUseCase.cachedThumbnailContainer(for: coverNode, type: .thumbnail) {

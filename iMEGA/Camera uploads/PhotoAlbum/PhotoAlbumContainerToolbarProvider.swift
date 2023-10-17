@@ -19,11 +19,7 @@ extension PhotoAlbumContainerViewController: PhotoAlbumContainerToolbarProvider 
         guard let tabBarController = tabBarController else { return }
         guard !tabBarController.view.subviews.contains(toolbar) else { return }
         if toolbar.items == nil {
-            if isAlbumShareLinkEnabled {
-                toolbar.items = [shareLinkBarButton, flexibleItem, deleteBarButton]
-            } else {
-                toolbar.items = [flexibleItem, deleteBarButton]
-            }
+            toolbar.items = [shareLinkBarButton, flexibleItem, deleteBarButton]
         }
         toolbar.alpha = 0.0
         tabBarController.view.addSubview(toolbar)

@@ -27,14 +27,12 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnvironmen
     
     let pageTabViewModel = PagerTabViewModel(tracker: DIContainer.tracker)
     let viewModel = PhotoAlbumContainerViewModel(tracker: DIContainer.tracker)
-    let featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     
     private var subscriptions = Set<AnyCancellable>()
     private var pageTabHostingController: UIHostingController<PageTabView>?
     private var albumHostingController: UIViewController?
     
     var leftBarButton: UIBarButtonItem?
-    lazy var isAlbumShareLinkEnabled = featureFlagProvider.isFeatureFlagEnabled(for: .albumShareLink)
     lazy var shareLinkBarButton = UIBarButtonItem(image: UIImage(resource: .link),
                                                   style: .plain,
                                                   target: self,
@@ -256,16 +254,15 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnvironmen
             }
             .store(in: &subscriptions)
         
-        if isAlbumShareLinkEnabled {
-            viewModel.$isOnlyExportedAlbumsSelected
-                .removeDuplicates()
-                .receive(on: DispatchQueue.main)
-                .sink { [weak self] in
-                    guard let self else { return }
-                    updateRemoveLinksToolbarButtons(canRemoveLinks: $0)
-                }
-                .store(in: &subscriptions)
-        }
+        viewModel.$isOnlyExportedAlbumsSelected
+            .removeDuplicates()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                guard let self else { return }
+                updateRemoveLinksToolbarButtons(canRemoveLinks: $0)
+            }
+            .store(in: &subscriptions)
+        
     }
     
     private func updatePageTabViewLayout() {
