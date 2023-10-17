@@ -810,7 +810,6 @@
 		8313914F29351A4400E20170 /* ChatRoomParticipantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8313914E29351A4400E20170 /* ChatRoomParticipantView.swift */; };
 		8313915129351A8600E20170 /* ChatRoomParticipantsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8313915029351A8600E20170 /* ChatRoomParticipantsListViewModel.swift */; };
 		8313915329351AA300E20170 /* ChatRoomParticipantViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8313915229351AA300E20170 /* ChatRoomParticipantViewModel.swift */; };
-		83143B722604AB380033161A /* CallLocalVideoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83143B712604AB380033161A /* CallLocalVideoUseCase.swift */; };
 		831807B92AA222CB00C91119 /* CallWaitingRoomUsersDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831807B82AA222CB00C91119 /* CallWaitingRoomUsersDialog.swift */; };
 		8318CE8E2562DA0600C97779 /* ShortcutsWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8318CE832562D6DA00C97779 /* ShortcutsWidget.swift */; };
 		83199F1E25556CDE00344531 /* MEGAWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 83199F1125556CD900344531 /* MEGAWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -3406,7 +3405,6 @@
 		8313914E29351A4400E20170 /* ChatRoomParticipantView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomParticipantView.swift; sourceTree = "<group>"; };
 		8313915029351A8600E20170 /* ChatRoomParticipantsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomParticipantsListViewModel.swift; sourceTree = "<group>"; };
 		8313915229351AA300E20170 /* ChatRoomParticipantViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomParticipantViewModel.swift; sourceTree = "<group>"; };
-		83143B712604AB380033161A /* CallLocalVideoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallLocalVideoUseCase.swift; sourceTree = "<group>"; };
 		831807B82AA222CB00C91119 /* CallWaitingRoomUsersDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallWaitingRoomUsersDialog.swift; sourceTree = "<group>"; };
 		8318CE832562D6DA00C97779 /* ShortcutsWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsWidget.swift; sourceTree = "<group>"; };
 		83199F1125556CD900344531 /* MEGAWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MEGAWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -8182,6 +8180,15 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		831889532ADEC5A600658277 /* EndCallDialog */ = {
+			isa = PBXGroup;
+			children = (
+				BF5455E82844377600544A53 /* EndCallDialog.swift */,
+				BFE3BA3F285BD6F9003949FF /* EndCallDialogType.swift */,
+			);
+			path = EndCallDialog;
+			sourceTree = "<group>";
+		};
 		831B490F256FED6F0086002B /* MEGAIntent */ = {
 			isa = PBXGroup;
 			children = (
@@ -8743,7 +8750,6 @@
 		838A7B5225D55EE200767DB0 /* Calls */ = {
 			isa = PBXGroup;
 			children = (
-				83143B712604AB380033161A /* CallLocalVideoUseCase.swift */,
 				8338E0F22666552900D1458B /* CallManagerUseCase.swift */,
 				838A7B5525D55EFA00767DB0 /* CallUseCase.swift */,
 				2F0CB0C1260028EC002CB24F /* MeetingCreatingUseCase.swift */,
@@ -8771,7 +8777,6 @@
 		838B976426B15318000E480E /* Call */ = {
 			isa = PBXGroup;
 			children = (
-				BFE3BA3F285BD6F9003949FF /* EndCallDialogType.swift */,
 			);
 			path = Call;
 			sourceTree = "<group>";
@@ -9157,6 +9162,7 @@
 			isa = PBXGroup;
 			children = (
 				2F879C4D2629251200D2FA78 /* EncourageGuestUserToJoinMegaScene */,
+				831889532ADEC5A600658277 /* EndCallDialog */,
 				BFB33D89263B922F006E203D /* EndMeetingOptions */,
 				83850A3B26B2AACC00C62304 /* EnterMeetingLinkScene */,
 				BF66DFDB2613E73E00066F35 /* FloatingPanel */,
@@ -9166,7 +9172,6 @@
 				9911BA892A8B209F00B88F28 /* WaitingRoom */,
 				83CB60EB2AC58EC600042EBD /* WaitingRoomParticipantsListScene */,
 				831807B82AA222CB00C91119 /* CallWaitingRoomUsersDialog.swift */,
-				BF5455E82844377600544A53 /* EndCallDialog.swift */,
 				BF66E00826140BE900066F35 /* MeetingContainerRouter.swift */,
 				BF66DFFE26140B3D00066F35 /* MeetingContainerViewController.swift */,
 				BF66E01A26140BF700066F35 /* MeetingContainerViewModel.swift */,
@@ -13399,7 +13404,6 @@
 				BF22BFC9268D366E00460DB3 /* CallActionManager.swift in Sources */,
 				8366518726497B3600BC02F0 /* CallCollectionView.swift in Sources */,
 				BF2A7FFA29DE454300AAC203 /* CallInProgressTimeReporting.swift in Sources */,
-				83143B722604AB380033161A /* CallLocalVideoUseCase.swift in Sources */,
 				8338E0F32666552900D1458B /* CallManagerUseCase.swift in Sources */,
 				8366518A26497B3600BC02F0 /* CallNotificationView.swift in Sources */,
 				8366518826497B3600BC02F0 /* CallParticipantCell.swift in Sources */,

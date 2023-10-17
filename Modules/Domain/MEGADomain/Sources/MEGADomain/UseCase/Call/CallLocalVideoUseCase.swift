@@ -1,6 +1,6 @@
-import MEGADomain
+import Foundation
 
-protocol CallLocalVideoUseCaseProtocol {
+public protocol CallLocalVideoUseCaseProtocol {
     func enableLocalVideo(for chatId: HandleEntity, completion: @escaping (Result<Void, CallErrorEntity>) -> Void)
     func disableLocalVideo(for chatId: HandleEntity, completion: @escaping (Result<Void, CallErrorEntity>) -> Void)
     func addLocalVideo(for chatId: HandleEntity, callbacksDelegate: some CallLocalVideoCallbacksUseCaseProtocol)
@@ -11,61 +11,61 @@ protocol CallLocalVideoUseCaseProtocol {
     func releaseVideoDevice(completion: @escaping (Result<Void, CallErrorEntity>) -> Void)
 }
 
-protocol CallLocalVideoCallbacksUseCaseProtocol: AnyObject {
+public protocol CallLocalVideoCallbacksUseCaseProtocol: AnyObject {
     func localVideoFrameData(width: Int, height: Int, buffer: Data)
     func localVideoChangedCameraPosition()
 }
 
-final class CallLocalVideoUseCase<T: CallLocalVideoRepositoryProtocol>: NSObject, CallLocalVideoUseCaseProtocol {
+public final class CallLocalVideoUseCase<T: CallLocalVideoRepositoryProtocol>: NSObject, CallLocalVideoUseCaseProtocol {
     
     private let repository: T
     private weak var localVideoCallbacksDelegate: (any CallLocalVideoCallbacksUseCaseProtocol)?
     
-    init(repository: T) {
+    public init(repository: T) {
         self.repository = repository
     }
     
-    func enableLocalVideo(for chatId: HandleEntity, completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
+    public func enableLocalVideo(for chatId: HandleEntity, completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
         repository.enableLocalVideo(for: chatId, completion: completion)
     }
     
-    func disableLocalVideo(for chatId: HandleEntity, completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
+    public func disableLocalVideo(for chatId: HandleEntity, completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
         repository.disableLocalVideo(for: chatId, completion: completion)
     }
     
-    func addLocalVideo(for chatId: HandleEntity, callbacksDelegate: some CallLocalVideoCallbacksUseCaseProtocol) {
+    public func addLocalVideo(for chatId: HandleEntity, callbacksDelegate: some CallLocalVideoCallbacksUseCaseProtocol) {
         localVideoCallbacksDelegate = callbacksDelegate
         repository.addLocalVideo(for: chatId, localVideoListener: self)
     }
     
-    func removeLocalVideo(for chatId: HandleEntity, callbacksDelegate: some CallLocalVideoCallbacksUseCaseProtocol) {
+    public func removeLocalVideo(for chatId: HandleEntity, callbacksDelegate: some CallLocalVideoCallbacksUseCaseProtocol) {
         localVideoCallbacksDelegate = nil
         repository.removeLocalVideo(for: chatId, localVideoListener: self)
     }
     
-    func videoDeviceSelected() -> String? {
+    public func videoDeviceSelected() -> String? {
         repository.videoDeviceSelected()
     }
     
-    func selectCamera(withLocalizedName localizedName: String, completion: @escaping (Result<Void, any Error>) -> Void) {
+    public func selectCamera(withLocalizedName localizedName: String, completion: @escaping (Result<Void, any Error>) -> Void) {
         repository.selectCamera(withLocalizedName: localizedName, completion: completion)
     }
     
-    func openVideoDevice(completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
+    public func openVideoDevice(completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
         repository.openVideoDevice(completion: completion)
     }
     
-    func releaseVideoDevice(completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
+    public func releaseVideoDevice(completion: @escaping (Result<Void, CallErrorEntity>) -> Void) {
         repository.releaseVideoDevice(completion: completion)
     }
 }
 
 extension CallLocalVideoUseCase: CallLocalVideoListenerRepositoryProtocol {
-    func localVideoFrameData(width: Int, height: Int, buffer: Data) {
+    public func localVideoFrameData(width: Int, height: Int, buffer: Data) {
         localVideoCallbacksDelegate?.localVideoFrameData(width: width, height: height, buffer: buffer)
     }
     
-    func localVideoChangedCameraPosition() {
+    public func localVideoChangedCameraPosition() {
         localVideoCallbacksDelegate?.localVideoChangedCameraPosition()
     }
 }
