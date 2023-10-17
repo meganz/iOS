@@ -7,7 +7,7 @@ final public class UserAlbumRepository: NSObject, UserAlbumRepositoryProtocol {
     public static var newRepo: UserAlbumRepository = UserAlbumRepository(sdk: MEGASdk.sharedSdk)
     
     private let setsUpdatedSourcePublisher = PassthroughSubject<[SetEntity], Never>()
-    private let setElemetsUpdatedSourcePublisher = PassthroughSubject<[SetElementEntity], Never>()
+    private let setElementsUpdatedSourcePublisher = PassthroughSubject<[SetElementEntity], Never>()
     
     private let sdk: MEGASdk
     
@@ -15,8 +15,8 @@ final public class UserAlbumRepository: NSObject, UserAlbumRepositoryProtocol {
         setsUpdatedSourcePublisher.eraseToAnyPublisher()
     }
     
-    public var setElemetsUpdatedPublisher: AnyPublisher<[SetElementEntity], Never> {
-        setElemetsUpdatedSourcePublisher.eraseToAnyPublisher()
+    public var setElementsUpdatedPublisher: AnyPublisher<[SetElementEntity], Never> {
+        setElementsUpdatedSourcePublisher.eraseToAnyPublisher()
     }
     
     public init(sdk: MEGASdk) {
@@ -192,6 +192,6 @@ extension UserAlbumRepository: MEGAGlobalDelegate {
     }
     
     public func onSetElementsUpdate(_ api: MEGASdk, setElements: [MEGASetElement]) {
-        setElemetsUpdatedSourcePublisher.send(setElements.toSetElementsEntities())
+        setElementsUpdatedSourcePublisher.send(setElements.toSetElementsEntities())
     }
 }

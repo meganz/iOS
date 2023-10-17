@@ -28,7 +28,7 @@ public struct AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
     
     public func albumReloadPublisher(forAlbum album: AlbumEntity) -> AnyPublisher<Void, Never> {
         if album.type == .user {
-            return userAlbumRepo.setElemetsUpdatedPublisher
+            return userAlbumRepo.setElementsUpdatedPublisher
                 .filter { $0.contains(where: { $0.ownerId == album.id }) }
                 .map { _ in ()}
                 .eraseToAnyPublisher()

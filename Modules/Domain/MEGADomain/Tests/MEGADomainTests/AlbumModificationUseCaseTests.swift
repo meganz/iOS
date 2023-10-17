@@ -18,26 +18,30 @@ final class AlbumModificationUseCaseTests: XCTestCase {
     }
     
     func testRename_onAlbumRename_shouldReturnNewName() async throws {
-        let sut = AlbumModificationUseCase(userAlbumRepo: MockUserAlbumRepository.newRepo)
+        let updateName = "Hey There"
+        let userAlbumRepository = MockUserAlbumRepository(updateAlbumNameResult: .success(updateName))
+        let sut = AlbumModificationUseCase(userAlbumRepo: userAlbumRepository)
         
-        let newName = try await sut.rename(album: HandleEntity(1), with: "Hey There")
+        let newName = try await sut.rename(album: HandleEntity(1), with: updateName)
 
-        XCTAssertEqual(newName, "Hey There")
+        XCTAssertEqual(newName, updateName)
     }
     
     func testUpdateAlbumCover_onAlbumCoverUpdate_shouldReturnUpdatedCoverNode() async throws {
+        let coverHandle = HandleEntity(2)
         let setElem1 = SetElementEntity(handle: HandleEntity(1), ownerId: HandleEntity(1), order: HandleEntity(1), nodeId: HandleEntity(1), modificationTime: Date.distantPast, name: "1")
-        let setElem2 = SetElementEntity(handle: HandleEntity(2), ownerId: HandleEntity(2), order: HandleEntity(2), nodeId: HandleEntity(2), modificationTime: Date.distantPast, name: "2")
+        let setElem2 = SetElementEntity(handle: coverHandle, ownerId: HandleEntity(2), order: HandleEntity(2), nodeId: HandleEntity(2), modificationTime: Date.distantPast, name: "2")
         
         let albumContents: [HandleEntity: [SetElementEntity]] = [
             HandleEntity(1): [setElem1, setElem2]
         ]
         
-        let sut = AlbumModificationUseCase(userAlbumRepo: MockUserAlbumRepository(albumContent: albumContents))
+        let sut = AlbumModificationUseCase(userAlbumRepo: MockUserAlbumRepository(albumContent: albumContents, updateAlbumCoverResult: .success(coverHandle)))
         
-        let nodeId = try await sut.updateAlbumCover(album: HandleEntity(1), withAlbumPhoto: AlbumPhotoEntity(photo: NodeEntity(handle: HandleEntity(2)), albumPhotoId: HandleEntity(2)))
+        let nodeId = try await sut.updateAlbumCover(album: HandleEntity(1),
+                                                    withAlbumPhoto: AlbumPhotoEntity(photo: NodeEntity(handle: HandleEntity(2)), albumPhotoId: coverHandle))
 
-        XCTAssertEqual(nodeId, HandleEntity(2))
+        XCTAssertEqual(nodeId, coverHandle)
     }
     
     func testUpdateAlbumCover_onAlbumCoverUpdate_shouldThrowErrorForMissingPhotoId() async throws {
@@ -67,13 +71,16 @@ final class AlbumModificationUseCaseTests: XCTestCase {
     }
     
     func testDeletePhotos_onAlbumPhotoEntityWithValidPhotoIds_shouldReturnAlbumResultEntityWithIdCount() async throws {
-        let sut = AlbumModificationUseCase(userAlbumRepo: MockUserAlbumRepository.newRepo)
-        let album = AlbumEntity(id: 1, name: "Custom", coverNode: nil, count: 1, type: .user)
         let photosToRemove = [AlbumPhotoEntity(photo: NodeEntity(handle: 1), albumPhotoId: 1),
                               AlbumPhotoEntity(photo: NodeEntity(handle: 2), albumPhotoId: 2)]
+        let expectedAlbumResult = AlbumElementsResultEntity(success: UInt(photosToRemove.count), failure: 0)
+        let userAlbumRepository = MockUserAlbumRepository(deleteAlbumElementsResult: .success(expectedAlbumResult))
+        let sut = AlbumModificationUseCase(userAlbumRepo: userAlbumRepository)
+        let album = AlbumEntity(id: 1, name: "Custom", coverNode: nil, count: 1, type: .user)
+        
         let result = try await sut.deletePhotos(in: album.id, photos: photosToRemove)
-        XCTAssertEqual(result.success, UInt(photosToRemove.count))
-        XCTAssertEqual(result.failure, 0)
+        XCTAssertEqual(result.success, expectedAlbumResult.success)
+        XCTAssertEqual(result.failure, expectedAlbumResult.failure)
     }
     
     func testAlbumDelete_whenUserWantToDelete_shouldDeleteAlbum() async {

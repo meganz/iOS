@@ -279,7 +279,7 @@ final class AlbumListUseCaseTests: XCTestCase {
         let setsUpdatedPublisher = PassthroughSubject<[SetEntity], Never>()
         let setElementsUpdatedPublisher = PassthroughSubject<[SetElementEntity], Never>()
         let userRepo = MockUserAlbumRepository(setsUpdatedPublisher: setsUpdatedPublisher.eraseToAnyPublisher(),
-                                               setElemetsUpdatedPublisher: setElementsUpdatedPublisher.eraseToAnyPublisher())
+                                               setElementsUpdatedPublisher: setElementsUpdatedPublisher.eraseToAnyPublisher())
         let sut = AlbumListUseCase(
             fileSearchRepository: MockFilesSearchRepository.newRepo,
             mediaUseCase: MockMediaUseCase(),
