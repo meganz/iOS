@@ -105,7 +105,7 @@
 /* Message shown when the user enters a wrong password */
 "passwordInvalidFormat"="Introdu o parolă validă";
 /* Hint text to suggest that the user has to write his email */
-"emailPlaceholder"="E-mail";
+"emailPlaceholder"="Adresa e-mail";
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="Parolă";
 /* Account, Change Password view. Error shown when you type your current password. */
@@ -533,7 +533,7 @@
 /* Button title that enables the functionality 'Camera Uploads', which uploads all the photos in your device to MEGA */
 "enableCameraUploadsButton"="Activează Încărcări cameră";
 /* Success message shown when Camera Uploads has been enabled */
-"cameraUploadsEnabled"="Încărcări cameră activată";
+"cameraUploadsEnabled"="Încărcări cameră sunt activată";
 /* Message shown when the camera uploads have been completed */
 "cameraUploadsComplete"="Încărcări cameră încheiate";
 /* Message shown while uploading files. Singular. */
@@ -933,7 +933,7 @@
 /* Success message shown when the password has been changed */
 "passwordChanged"="Parola ți-a fost modificată.";
 /* An option to reset the password. */
-"forgotPassword"="Ai uitat parola?";
+"forgotPassword"="Ați uitat parola?";
 /* Message shown during forgot your password process if the link to reset password has expired */
 "recoveryLinkHasExpired"="Acest link de recuperare a expirat, te rugăm să încerci din nou.";
 /* Headline of the password reset recovery procedure */
@@ -1282,8 +1282,8 @@
 "sendMessage"="Trimite un mesaj";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="Verifică acreditările";
-/* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
-"verify"="Aprobă";
+/* Title of button which marks contact as verified on Verify Contact screen */
+"account.verifyContact.confirmButtonText"="Marchează ca confirmat";
 /* Button title */
 "verified"="Verificat";
 /* A button title to delete the history of a chat. */
@@ -1843,11 +1843,11 @@
 /* Label shown while leaving a public chat */
 "Leaving..."="Se părăsește…";
 /* Text shown for switching from thumbnail view to list view. */
-"List View"="Vizualizare tip listă";
+"List View"="Modul listă";
 /* Text shown for switching from list view to thumbnail view. */
-"Thumbnail View"="Vizualizare tip miniaturi";
+"Thumbnail View"="Modul miniaturi";
 /* Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF. */
-"Page View"="Vizualizare tip pagini";
+"Page View"="Modul pagină";
 /* There are no notifications to display. */
 "No notifications"="Nicio notificare";
 /* The header of a notification related to payments */
@@ -2232,6 +2232,18 @@
 "Default Tab"="Filă implicită";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="Mod de sortare și vizualizare";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
+"settings.userInterface.mediaDiscovery"="Vizualizare pentru descoperire media";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
+"settings.userInterface.mediaDiscovery.header"="Descoperire media";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body that appears under that option */
+"settings.userInterface.mediaDiscovery.footer.body"="Folderele care conțin doar imagini și videoclipuri se vor deschide implicit în modul de descoperire media.";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body link that appears under that option */
+"settings.userInterface.mediaDiscovery.footer.link"="Aflați mai multe despre descoperirea media.";
+/* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the label in the setting */
+"settings.userInterface.mediaDiscoverySubFolder"="Descoperire media în subfoldere";
+/* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the footer message body that appears under that option */
+"settings.userInterface.mediaDiscoverySubFolder.footer"="Imaginile și videoclipurile din subfoldere vor fi, de asemenea, incluse î în modul de descoperire media";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
 "settings.userInterface.hideRecentActivity"="Ascunde activitatea recentă";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
@@ -2981,7 +2993,7 @@
 /* Placeholder to indicate the user that needs to describe the issue through the text edit field of bug report form. */
 "help.reportIssue.describeIssue.placeholder"="Descrie problema";
 /* Label shown when users lost the internet connection */
-"general.NoIntenerConnection"="Imposibil de conectat la Internet. Vă rugăm să verificați conexiunea și să încercați din nou.";
+"general.NoIntenerConnection"="Imposibil de conectat la internet. Vă rugăm să verificați conexiunea și să încercați din nou.";
 /* Menu title in meetings that allows to switch to main view for a participant. */
 "meetings.displayInMainView.title"="Afișează în vizualizarea principală";
 /* Label indicating storage over quota */
@@ -3440,92 +3452,74 @@
 "device.center.backup.blocked.status.message"="Blocat";
 /* Default device name in case the device name cannot be obtained */
 "device.center.default.device.title"="Dispozitiv necunoscut";
-/* Device Center backup error: Unknown error */
-"device.center.backup.error.type.unknownError"="Eroare necunoscută";
-/* Device Center backup error: Unsupported filesystem */
-"device.center.backup.error.type.unsupportedFilesystem"="";
-/* Device Center backup error: Invalid remote node */
-"device.center.backup.error.type.invalidRemoteNode"="";
-/* Device Center backup error: Sync setup issue with individual file */
-"device.center.backup.error.type.syncSetupIndividualFile"="";
-/* Device Center backup error: Initial scan failed */
-"device.center.backup.error.type.initialScanFailed"="";
-/* Device Center backup error: Local drive folder not found */
-"device.center.backup.error.type.localDriveFolderNotFound"="";
-/* Device Center backup error: Local drive folder not found */
-"device.center.backup.error.type.localDriveFolderNotFoundAlt"="";
-/* Device Center backup error: MEGA folder not found or inaccessible */
-"device.center.backup.error.type.megaFolderNotFoundOrInaccessible"="";
-/* Device Center backup error: Storage quota reached */
-"device.center.backup.error.type.storageQuotaReached"="";
+/* Device Center backup error: Unknown issue */
+"device.center.backup.error.unknown"="Eroare necunoscută.";
+/* Device Center backup error: Filesystem not supported */
+"device.center.backup.error.fileSystemUnsupported"="MEGA nu poate sincroniza sau backup pentru acest folder, deoarece sistemul de fișiere de pe dispozitivul dvs. nu este acceptat.";
+/* Device Center backup error: Chosen folder can't be synced */
+"device.center.backup.error.folderCantSync"="Folderul ales nu poate fi sincronizat.";
+/* Device Center backup error: Individual file sync issue */
+"device.center.backup.error.fileSyncIndividual"="Un fișier nu poate fi sincronizat individual. Trebuie să configurați sincronizarea dintr-un folder.";
+/* Device Center backup error: Initial scan failure */
+"device.center.backup.error.initialScanFailed"="Scanarea inițială a eșuat. Va trebui să reactivați sincronizarea sau backupul din aplicația desktop.";
+/* Device Center backup error: Device folder not located */
+"device.center.backup.error.folderDeviceUnlocatedNow"="Dosarul din dispozitiv nu poate fi localizat acum, încercați din nou mai târziu.";
+/* Device Center backup error: Device folder can't be located */
+"device.center.backup.error.folderDeviceUnlocated"="Folderul din dispozitiv nu poate fi localizat.";
+/* Device Center backup error: MEGA folder moved or deleted */
+"device.center.backup.error.folderMegaMovedOrDeleted"="Dosarul din MEGA nu poate fi localizat deoarece a fost mutat sau șters sau este posibil să nu aveți acces.";
+/* Device Center backup error: Storage quota limit */
+"device.center.backup.error.storageQuotaReached"="Limita cotei de spațiu de stocare a fost atinsă.";
 /* Device Center backup error: Plan expired */
-"device.center.backup.error.type.planExpired"="";
+"device.center.backup.error.planExpired"="Nu se poate sincroniza sau face backup pentru acest folder, deoarece planul dvs. a expirat.";
 /* Device Center backup error: Shared folder quota reached */
-"device.center.backup.error.type.sharedFolderQuotaReached"="";
-/* Device Center backup error: MEGA folder moved */
-"device.center.backup.error.type.megaFolderMoved"="";
-/* Device Center backup error: Insufficient access to shared folder */
-"device.center.backup.error.type.insufficientAccessSharedFolder"="";
-/* Device Center backup error: Filesystem fingerprint mismatch */
-"device.center.backup.error.type.filesystemFingerprintMismatch"="";
-/* Device Center backup error: Folder sync disabled */
-"device.center.backup.error.type.folderSyncDisabled"="";
-/* Device Center backup error: Nested sync folders */
-"device.center.backup.error.type.nestedSyncFolders"="";
-/* Device Center backup error: Active sync above path */
-"device.center.backup.error.type.activeSyncAbovePath"="";
+"device.center.backup.error.userSharedQuotaReached"="Folderul nu poate fi sincronizat deoarece utilizatorul care a partajat acest folder a atins limita de cotă de stocare.";
+/* Device Center backup error: Shared folder without full access */
+"device.center.backup.error.sharedFolderNoFullAccess"="Folderul nu poate fi sincronizat deoarece este un folder partajat fără acces complet.";
+/* Device Center backup error: Files can't be synced */
+"device.center.backup.error.filesInFolder"="Fișierele din acest folder nu pot fi sincronizate sau backup-uite. Va trebui să reactivați sincronizarea sau backupul din aplicația desktop.";
+/* Device Center backup error: Folder contains synced folders */
+"device.center.backup.error.containsSyncedFolders"="Folderul nu poate fi sincronizat deoarece conține deja foldere sincronizate.";
+/* Device Center backup error: Folder inside another synced folder */
+"device.center.backup.error.insideSyncedFolder"="Folderul nu poate fi sincronizat, deoarece se află deja într-un folder sincronizat.";
 /* Device Center backup error: MEGA folder in rubbish bin */
-"device.center.backup.error.type.megaFolderInRubbishBin"="";
-/* Device Center backup error: Item in rubbish */
-"device.center.backup.error.type.itemInRubbish"="";
-/* Device Center backup error: Unsupported filesystem - VirtualBox folders */
-"device.center.backup.error.type.unsupportedFilesystemVirtualBox"="";
-/* Device Center backup error: Folder inside synced folder */
-"device.center.backup.error.type.folderInsideSyncedFolder"="";
+"device.center.backup.error.folderInRubbish"="Folderul nu poate fi sincronizat sau backup-uite, deoarece folderul MEGA se află în Coșul de gunoi.";
+/* Device Center backup error: Can't sync VirtualBox folders */
+"device.center.backup.error.virtualboxFolders"="MEGA nu poate sincroniza sau face backup pentru folderele VirtualBox.";
 /* Device Center backup error: Account blocked */
-"device.center.backup.error.type.accountBlocked"="";
-/* Device Center backup error: Sync or backup problem */
-"device.center.backup.error.type.syncOrBackupProblem"="";
-/* Device Center backup error: Account reloaded with missed updates */
-"device.center.backup.error.type.accountReloadedMissedUpdates"="";
-/* Device Center backup error: Sync or backup stopped */
-"device.center.backup.error.type.syncOrBackupStopped"="";
-/* Device Center backup error: MEGA folder changed */
-"device.center.backup.error.type.megaFolderChanged"="";
-/* Device Center backup error: External drive folder not found */
-"device.center.backup.error.type.externalDriveFolderNotFound"="";
-/* Device Center backup error: Sync or backup problem */
-"device.center.backup.error.type.syncOrBackupProblemAlt"="";
-/* Device Center backup error: Sync node conflict */
-"device.center.backup.error.type.syncNodeConflict"="";
-/* Device Center backup error: Renaming failed */
-"device.center.backup.error.type.renamingFailed"="";
-/* Device Center backup error: Sync creation failed */
-"device.center.backup.error.type.syncCreationFailed"="";
-/* Device Center backup error: Sync configs unreadable from disk */
-"device.center.backup.error.type.syncConfigsUnreadable"="";
-/* Device Center backup error: Unknown sync drive path */
-"device.center.backup.error.type.unknownSyncDrivePath"="";
+"device.center.backup.error.accountBlocked"="Nu se poate sincroniza sau face backup pentru acest folder, deoarece contul a fost blocat.";
+/* Device Center backup error: Contact support for sync issues */
+"device.center.backup.error.problemSyncingContactSupport"="Problemă la sincronizarea sau backup a acestui folder. Încercați din nou mai târziu. Dacă problema persistă, contactați Asistența.";
+/* Device Center backup error: Account reloaded */
+"device.center.backup.error.accountReloaded"="Contul a fost reîncărcat. Toate actualizările ratate ale backupurilor sau ale sincronizărilor nu au fost aplicate.";
+/* Device Center backup error: Logged out of Desktop app */
+"device.center.backup.error.loggedOut"="Sincronizarea sau backupul au fost oprite pe măsură ce parcă v-ați deconectat de la aplicația Desktop. Conectați-vă din nou prin aplicația Desktop și reluați sincronizarea sau backup-ul.";
+/* Device Center backup error: Changes to MEGA folder */
+"device.center.backup.error.changesToMegaFolder"="Problemă la sincronizarea sau copierea de rezervă a acestui folder din cauza modificărilor aduse folderului MEGA. Opriți sincronizarea sau backup-ul și încercați să o configurați din nou în aplicația Desktop sau contactați Asistența.";
+/* Device Center backup error: External drive folder not located */
+"device.center.backup.error.externalDriveUnlocated"="Folderul din unitatea externă nu poate fi localizat.";
+/* Device Center backup error: Synced folder at same path */
+"device.center.backup.error.alreadySyncedPath"="Există deja un folder sincronizat pe aceeași cale.";
+/* Device Center backup error: Renaming issue */
+"device.center.backup.error.renamingFailed"="Redenumirea a eșuat.";
+/* Device Center backup error: Ignored sync */
+"device.center.backup.error.syncIgnored"="Nu s-a putut crea o sincronizare. Fișierul a fost ignorat.";
+/* Device Center backup error: Sync configuration unreadable */
+"device.center.backup.error.couldntReadSyncConfig"="Imposibil de citit configurația de sincronizare. Verificați permisiunile folderului și încercați din nou mai târziu.";
+/* Device Center backup error: Unknown drive path for sync */
+"device.center.backup.error.unknownDrivePath"="Calea către unitatea de sincronizare este necunoscută.";
 /* Device Center backup error: Invalid scan interval */
-"device.center.backup.error.type.invalidScanInterval"="";
-/* Device Center backup error: Filesystem notification subsystem error */
-"device.center.backup.error.type.filesystemNotificationSubsystemError"="";
-/* Device Center backup error: Unable to add filesystem watch */
-"device.center.backup.error.type.unableToAddFilesystemWatch"="";
-/* Device Center backup error: Sync root's FSID retrieval failure */
-"device.center.backup.error.type.syncRootFsidRetrievalFailure"="";
-/* Device Center backup error: State cache database inaccessible */
-"device.center.backup.error.type.stateCacheDatabaseInaccessible"="";
+"device.center.backup.error.invalidScanInterval"="Interval de analiză invalid. Verificați configurarea intervalului de analiză și încercați din nou.";
+/* Device Center backup error: Sync or backup issue, setup again */
+"device.center.backup.error.syncOrBackupSetupAgain"="Problemă la sincronizarea sau copierea de rezervă a acestui folder. Opriți sincronizarea sau backup-ul și încercați să o configurați din nou în aplicația Desktop sau contactați Asistența.";
+/* Device Center backup error: Can't read sync location */
+"device.center.backup.error.cantReadSyncLocation"="Nu am putut citi locația de sincronizare. Verificați dacă locația este accesibilă și permisiunile pentru locația folderului sunt acordate.";
 /* Device Center backup error: Insufficient space for download */
-"device.center.backup.error.type.insufficientSpaceForDownload"="";
-/* Device Center backup error: No access to persistent storage */
-"device.center.backup.error.type.noAccessToPersistentStorage"="";
-/* Device Center backup error: Sync root's FSID change */
-"device.center.backup.error.type.syncRootFsidChange"="";
-/* Device Center backup error: FSID change on MAC device */
-"device.center.backup.error.type.fsidChangeOnMac"="";
-/* Device Center backup error: Unable to get filesystem's ID */
-"device.center.backup.error.type.unableToGetFilesystemsId"="";
+"device.center.backup.error.insufficientDownloadSpace"="Spațiu insuficient pentru descărcare.";
+/* Device Center backup error: Unable to add filesystem watch */
+"device.center.backup.error.addFilesystemWatch"="Imposibil de adăugat monitorizarea sistemului de fișiere. Asigurați-vă că există suficient spațiu liber și memorie și că ați acordat permisiuni pentru locația folderului.";
+/* Device Center backup error: Couldn't communicate with folder location */
+"device.center.backup.error.communicateWithFolderLocation"="Nu am putut comunica cu locația folderului. Verificați dacă locația este accesibilă și permisiunile pentru locația folderului sunt acordate.";
 /* Show in Cloud Drive section action title */
 "device.center.show.in.cloud.drive.action.title"="Afișează în Unitatea cloud";
 /* Show in Backups section action title */
@@ -3540,6 +3534,8 @@
 "device.center.camera.uploads.action.status.enabled"="Activată";
 /* Device Center camera upload status disabled */
 "device.center.camera.uploads.action.status.disabled"="Dezactivat";
+/* Device center current device empty state message */
+"device.center.current.device.empty.state.message"="Nimic nu este configurat";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="Încheiați recurența";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3791,7 +3787,7 @@
 /* Meeting waiting room alert title of Host didn’t respond */
 "meetings.waitingRoom.alert.hostDidNotRespond"="Gazda nu a răspuns";
 /* Meeting waiting room alert message of There is no response to your request to join the meeting */
-"meetings.waitingRoom.alert.thereIsNoResponseToYourResquestToJoinTheMeeting"="Nu există niciun răspuns la solicitarea dvs. de a vă alătura întâlnirii. Vei fi scos din sala de așteptare. Încercați să vă alăturați din nou mai târziu.";
+"meetings.waitingRoom.alert.thereIsNoResponseToYourResquestToJoinTheMeeting"="Nu a existat niciun răspuns la solicitarea dvs. de a vă alătura întâlnirii. Veți părăsi sala de așteptare. Încercați să vă alăturați din nou mai târziu.";
 /* Meeting waiting room alert action of ok got it */
 "meetings.waitingRoom.alert.okGotIt"="OK, am înțeles";
 /* Call waiting room alert message text to notify host that someone is waiting to join */
@@ -3834,3 +3830,7 @@
 "chat.call.waitingRoom.participantsList.title"="Sala de asteptare";
 /* A button label to close the waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.close"="Închide";
+/* Error shown when moving folder to inside itself */
+"Error.nodeCopyOrMove.circularDependency"="Nu puteți muta acest folder, deoarece destinația este același folder.";
+/* Auto media discovery banner title */
+"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="Deoarece acest folder conține doar imagini și videoclipuri, l-am deschis automat în vizualizarea de descoperire media. Vă puteți bucura de conținutul dvs. vizual cu un aspect mai captivant. Puteți dezactiva acest lucru în Setări.";

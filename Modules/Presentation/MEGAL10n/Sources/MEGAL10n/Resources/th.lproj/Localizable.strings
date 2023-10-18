@@ -1282,8 +1282,8 @@
 "sendMessage"="ส่งข้อความ";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="ตรวจสอบข้อมูลประจำตัว";
-/* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
-"verify"="อนุมัติ";
+/* Title of button which marks contact as verified on Verify Contact screen */
+"account.verifyContact.confirmButtonText"="ทำเครื่องหมายว่าตรวจสอบแล้ว";
 /* Button title */
 "verified"="ตรวจสอบแล้ว";
 /* A button title to delete the history of a chat. */
@@ -2232,6 +2232,18 @@
 "Default Tab"="แท็บเริ่มต้น";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="เรียงลําดับและโหมดมุมมอง";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
+"settings.userInterface.mediaDiscovery"="มุมมองการค้นพบสื่อ";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
+"settings.userInterface.mediaDiscovery.header"="การค้นพบสื่อ";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body that appears under that option */
+"settings.userInterface.mediaDiscovery.footer.body"="เมื่อโฟลเดอร์มีแค่รูปภาพและวิดีโอ จะถูกเปิดในมุมมองการค้นพบสื่อโดยค่าเริ่มต้น";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body link that appears under that option */
+"settings.userInterface.mediaDiscovery.footer.link"="เรียนรู้เพิ่มเติมเกี่ยวกับการค้นพบสื่อ";
+/* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the label in the setting */
+"settings.userInterface.mediaDiscoverySubFolder"="ให้โฟลเดอร์ย่อยแสดงในการค้นพบสื่อด้วย";
+/* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the footer message body that appears under that option */
+"settings.userInterface.mediaDiscoverySubFolder.footer"="รูปภาพและวิดีโอจากโฟลเดอร์ย่อยจะรวมอยู่ในมุมมองการค้นพบสื่อด้วย";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
 "settings.userInterface.hideRecentActivity"="ซ่อนกิจกรรมล่าสุด";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
@@ -3440,92 +3452,74 @@
 "device.center.backup.blocked.status.message"="บล็อกแล้ว";
 /* Default device name in case the device name cannot be obtained */
 "device.center.default.device.title"="อุปกรณ์ที่ไม่รู้จัก";
-/* Device Center backup error: Unknown error */
-"device.center.backup.error.type.unknownError"="ข้อผิดพลาดที่ไม่รู้จัก";
-/* Device Center backup error: Unsupported filesystem */
-"device.center.backup.error.type.unsupportedFilesystem"="";
-/* Device Center backup error: Invalid remote node */
-"device.center.backup.error.type.invalidRemoteNode"="";
-/* Device Center backup error: Sync setup issue with individual file */
-"device.center.backup.error.type.syncSetupIndividualFile"="";
-/* Device Center backup error: Initial scan failed */
-"device.center.backup.error.type.initialScanFailed"="";
-/* Device Center backup error: Local drive folder not found */
-"device.center.backup.error.type.localDriveFolderNotFound"="";
-/* Device Center backup error: Local drive folder not found */
-"device.center.backup.error.type.localDriveFolderNotFoundAlt"="";
-/* Device Center backup error: MEGA folder not found or inaccessible */
-"device.center.backup.error.type.megaFolderNotFoundOrInaccessible"="";
-/* Device Center backup error: Storage quota reached */
-"device.center.backup.error.type.storageQuotaReached"="";
+/* Device Center backup error: Unknown issue */
+"device.center.backup.error.unknown"="ข้อผิดพลาดที่ไม่รู้จัก";
+/* Device Center backup error: Filesystem not supported */
+"device.center.backup.error.fileSystemUnsupported"="MEGA ไม่สามารถซิงค์หรือสำรองข้อมูลโฟลเดอร์นี้ได้ เนื่องจากไม่สนับสนุนระบบไฟล์ในอุปกรณ์ของคุณ";
+/* Device Center backup error: Chosen folder can't be synced */
+"device.center.backup.error.folderCantSync"="โฟลเดอร์ที่คุณเลือกไม่สามารถซิงค์ได้";
+/* Device Center backup error: Individual file sync issue */
+"device.center.backup.error.fileSyncIndividual"="ไม่สามารถซิงค์ไฟล์ทีละไฟล์ได้ คุณต้องตั้งค่าการซิงค์จากโฟลเดอร์แทน";
+/* Device Center backup error: Initial scan failure */
+"device.center.backup.error.initialScanFailed"="Initial scan failed. You will need to re-enable your sync or backup from the Desktop app.";
+/* Device Center backup error: Device folder not located */
+"device.center.backup.error.folderDeviceUnlocatedNow"="ไม่สามารถหาโฟลเดอร์ในอุปกรณ์ของคุณได้ในขณะนี้ กรุณาลองอีกครั้งในภายหลัง";
+/* Device Center backup error: Device folder can't be located */
+"device.center.backup.error.folderDeviceUnlocated"="ไม่สามารถหาโฟลเดอร์ในอุปกรณ์ของคุณได้";
+/* Device Center backup error: MEGA folder moved or deleted */
+"device.center.backup.error.folderMegaMovedOrDeleted"="ไม่สามารถหาโฟลเดอร์ใน MEGAได้ อาจถูกย้ายหรือลบออก หรือคุณอาจไม่สามารถเข้าถึงได้";
+/* Device Center backup error: Storage quota limit */
+"device.center.backup.error.storageQuotaReached"="โควต้าพื้นที่จัดเก็บถึงขีดจำกัดแล้ว";
 /* Device Center backup error: Plan expired */
-"device.center.backup.error.type.planExpired"="";
+"device.center.backup.error.planExpired"="ไม่สามารถซิงค์หรือสำรองข้อมูลในโฟลเดอร์นี้ได้เนื่องจากแผนของคุณหมดอายุแล้ว";
 /* Device Center backup error: Shared folder quota reached */
-"device.center.backup.error.type.sharedFolderQuotaReached"="";
-/* Device Center backup error: MEGA folder moved */
-"device.center.backup.error.type.megaFolderMoved"="";
-/* Device Center backup error: Insufficient access to shared folder */
-"device.center.backup.error.type.insufficientAccessSharedFolder"="";
-/* Device Center backup error: Filesystem fingerprint mismatch */
-"device.center.backup.error.type.filesystemFingerprintMismatch"="";
-/* Device Center backup error: Folder sync disabled */
-"device.center.backup.error.type.folderSyncDisabled"="";
-/* Device Center backup error: Nested sync folders */
-"device.center.backup.error.type.nestedSyncFolders"="";
-/* Device Center backup error: Active sync above path */
-"device.center.backup.error.type.activeSyncAbovePath"="";
+"device.center.backup.error.userSharedQuotaReached"="Folder can’t be synced as the user who shared this folder has reached their storage quota limit.";
+/* Device Center backup error: Shared folder without full access */
+"device.center.backup.error.sharedFolderNoFullAccess"="ไม่สามารถซิงค์โฟลเดอร์ได้ เนื่องจากเป็นโฟลเดอร์ที่ถูกแชร์ไว้ แต่ไม่ได้รับสิทธิ์ให้เข้าถึงแบบเต็มที่";
+/* Device Center backup error: Files can't be synced */
+"device.center.backup.error.filesInFolder"="ไฟล์ในโฟลเดอร์นี้ไม่สามารถซิงค์หรือสำรองข้อมูลได้ คุณต้องเปิดใช้งานการซิงค์หรือการสำรองข้อมูลใหม่จากแอปบนเดสก์ท็อปก่อน";
+/* Device Center backup error: Folder contains synced folders */
+"device.center.backup.error.containsSyncedFolders"="ไม่สามารถซิงค์โฟลเดอร์นี้ได้เนื่องจากอยู่ในโฟลเดอร์ที่มีการซิงค์อยู่แล้ว";
+/* Device Center backup error: Folder inside another synced folder */
+"device.center.backup.error.insideSyncedFolder"="ไม่สามารถซิงค์โฟลเดอร์นี้ได้เนื่องจากอยู่ในโฟลเดอร์ที่มีการซิงค์อยู่แล้ว";
 /* Device Center backup error: MEGA folder in rubbish bin */
-"device.center.backup.error.type.megaFolderInRubbishBin"="";
-/* Device Center backup error: Item in rubbish */
-"device.center.backup.error.type.itemInRubbish"="";
-/* Device Center backup error: Unsupported filesystem - VirtualBox folders */
-"device.center.backup.error.type.unsupportedFilesystemVirtualBox"="";
-/* Device Center backup error: Folder inside synced folder */
-"device.center.backup.error.type.folderInsideSyncedFolder"="";
+"device.center.backup.error.folderInRubbish"="ไม่สามารถซิงค์หรือสำรองข้อมูลโฟลเดอร์ได้ เนื่องจากโฟลเดอร์ MEGA อยู่ในถังขยะ";
+/* Device Center backup error: Can't sync VirtualBox folders */
+"device.center.backup.error.virtualboxFolders"="MEGA ไม่สามารถซิงค์หรือสำรองโฟลเดอร์ VirtualBox ได้";
 /* Device Center backup error: Account blocked */
-"device.center.backup.error.type.accountBlocked"="";
-/* Device Center backup error: Sync or backup problem */
-"device.center.backup.error.type.syncOrBackupProblem"="";
-/* Device Center backup error: Account reloaded with missed updates */
-"device.center.backup.error.type.accountReloadedMissedUpdates"="";
-/* Device Center backup error: Sync or backup stopped */
-"device.center.backup.error.type.syncOrBackupStopped"="";
-/* Device Center backup error: MEGA folder changed */
-"device.center.backup.error.type.megaFolderChanged"="";
-/* Device Center backup error: External drive folder not found */
-"device.center.backup.error.type.externalDriveFolderNotFound"="";
-/* Device Center backup error: Sync or backup problem */
-"device.center.backup.error.type.syncOrBackupProblemAlt"="";
-/* Device Center backup error: Sync node conflict */
-"device.center.backup.error.type.syncNodeConflict"="";
-/* Device Center backup error: Renaming failed */
-"device.center.backup.error.type.renamingFailed"="";
-/* Device Center backup error: Sync creation failed */
-"device.center.backup.error.type.syncCreationFailed"="";
-/* Device Center backup error: Sync configs unreadable from disk */
-"device.center.backup.error.type.syncConfigsUnreadable"="";
-/* Device Center backup error: Unknown sync drive path */
-"device.center.backup.error.type.unknownSyncDrivePath"="";
+"device.center.backup.error.accountBlocked"="ไม่สามารถซิงค์หรือสำรองข้อมูลในโฟลเดอร์นี้ได้ เนื่องจากบัญชีถูกบล็อกไว้";
+/* Device Center backup error: Contact support for sync issues */
+"device.center.backup.error.problemSyncingContactSupport"="มีปัญหาในการซิงค์หรือสำรองข้อมูลในโฟลเดอร์นี้ ลองใหม่อีกครั้งในภายหลัง หากยังประสบปัญหาอยู่ กรุณาติดต่อฝ่ายสนับสนุน";
+/* Device Center backup error: Account reloaded */
+"device.center.backup.error.accountReloaded"="บัญชีของคุณถูกโหลดซ้ำ การเปลี่ยนแปลงที่หายไปจะไม่มีผลกับการสำรองข้อมูลหรือการซิงค์ของคุณ";
+/* Device Center backup error: Logged out of Desktop app */
+"device.center.backup.error.loggedOut"="การซิงค์หรือการสำรองข้อมูลถูกหยุดลง ซึ่งดูเหมือนว่าคุณได้ออกจากระบบแอปเดสก์ท็อปแล้ว กรุณาเข้าสู่ระบบผ่านแอปเดสก์ท็อปแล้วเริ่มต้นการซิงค์หรือการสำรองข้อมูลใหม่อีกครั้ง";
+/* Device Center backup error: Changes to MEGA folder */
+"device.center.backup.error.changesToMegaFolder"="มีปัญหาในการซิงค์หรือสำรองข้อมูลในโฟลเดอร์นี้เนื่องจากมีการเปลี่ยนแปลงในโฟลเดอร์ MEGA คุณสามารถหยุดการซิงค์หรือสำรองข้อมูลและลองตั้งค่าใหม่ในแอปเดสก์ท็อป หรือติดต่อฝ่ายสนับสนุน";
+/* Device Center backup error: External drive folder not located */
+"device.center.backup.error.externalDriveUnlocated"="ไม่พบโฟลเดอร์ในไดรฟ์ภายนอก";
+/* Device Center backup error: Synced folder at same path */
+"device.center.backup.error.alreadySyncedPath"="มีโฟลเดอร์ที่ซิงค์ข้อมูลอยู่ที่เส้นทางเดียวกันแล้ว";
+/* Device Center backup error: Renaming issue */
+"device.center.backup.error.renamingFailed"="การเปลี่ยนชื่อไม่สำเร็จ";
+/* Device Center backup error: Ignored sync */
+"device.center.backup.error.syncIgnored"="ไม่สามารถสร้างการซิงค์ได้ ไฟล์ถูกละเว้นไปแล้ว";
+/* Device Center backup error: Sync configuration unreadable */
+"device.center.backup.error.couldntReadSyncConfig"="Couldn’t read sync configuration. Check the folder permissions and try again later.";
+/* Device Center backup error: Unknown drive path for sync */
+"device.center.backup.error.unknownDrivePath"="ไม่ทราบเส้นทางไดรฟ์ที่ใช้การซิงค์ได้";
 /* Device Center backup error: Invalid scan interval */
-"device.center.backup.error.type.invalidScanInterval"="";
-/* Device Center backup error: Filesystem notification subsystem error */
-"device.center.backup.error.type.filesystemNotificationSubsystemError"="";
-/* Device Center backup error: Unable to add filesystem watch */
-"device.center.backup.error.type.unableToAddFilesystemWatch"="";
-/* Device Center backup error: Sync root's FSID retrieval failure */
-"device.center.backup.error.type.syncRootFsidRetrievalFailure"="";
-/* Device Center backup error: State cache database inaccessible */
-"device.center.backup.error.type.stateCacheDatabaseInaccessible"="";
+"device.center.backup.error.invalidScanInterval"="ช่วงเวลาสแกนไม่ถูกต้อง กรุณาตรวจสอบการตั้งค่าช่วงเวลาสแกนและลองใหม่อีกครั้ง";
+/* Device Center backup error: Sync or backup issue, setup again */
+"device.center.backup.error.syncOrBackupSetupAgain"="พบปัญหาในการซิงค์หรือสำรองข้อมูลโฟลเดอร์นี้ ให้หยุดการซิงค์หรือสำรองข้อมูล แล้วลองตั้งค่าอีกครั้งในแอปเดสก์ท็อป หรือติดต่อฝ่ายสนับสนุน";
+/* Device Center backup error: Can't read sync location */
+"device.center.backup.error.cantReadSyncLocation"="ไม่สามารถอ่านตำแหน่งที่ตั้งการซิงค์ได้ กรุณาตรวจสอบว่าสามารถเข้าถึงได้และได้รับอนุญาตให้ใช้งานโฟลเดอร์ตามตำแหน่งที่ตั้งนี้หรือไม่";
 /* Device Center backup error: Insufficient space for download */
-"device.center.backup.error.type.insufficientSpaceForDownload"="";
-/* Device Center backup error: No access to persistent storage */
-"device.center.backup.error.type.noAccessToPersistentStorage"="";
-/* Device Center backup error: Sync root's FSID change */
-"device.center.backup.error.type.syncRootFsidChange"="";
-/* Device Center backup error: FSID change on MAC device */
-"device.center.backup.error.type.fsidChangeOnMac"="";
-/* Device Center backup error: Unable to get filesystem's ID */
-"device.center.backup.error.type.unableToGetFilesystemsId"="";
+"device.center.backup.error.insufficientDownloadSpace"="มีพื้นที่ไม่เพียงพอที่จะดาวน์โหลด";
+/* Device Center backup error: Unable to add filesystem watch */
+"device.center.backup.error.addFilesystemWatch"="Unable to add a file system watch. Ensure there is sufficient free space and memory, and that you have granted permissions for the folder location.";
+/* Device Center backup error: Couldn't communicate with folder location */
+"device.center.backup.error.communicateWithFolderLocation"="ไม่สามารถสื่อสารกับตำแหน่งที่ตั้งโฟลเดอร์ได้ กรุณาตรวจสอบว่าสามารถเข้าถึงได้และได้รับอนุญาตให้ใช้งานโฟลเดอร์ตามตำแหน่งที่ตั้งนี้หรือไม่";
 /* Show in Cloud Drive section action title */
 "device.center.show.in.cloud.drive.action.title"="แสดงในคลาวด์ไดร์ฟ";
 /* Show in Backups section action title */
@@ -3540,6 +3534,8 @@
 "device.center.camera.uploads.action.status.enabled"="เปิดใช้งาน";
 /* Device Center camera upload status disabled */
 "device.center.camera.uploads.action.status.disabled"="ปิดใช้งาน";
+/* Device center current device empty state message */
+"device.center.current.device.empty.state.message"="Nothing set up yet";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="สิ้นสุดการทำประจำ";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3791,7 +3787,7 @@
 /* Meeting waiting room alert title of Host didn’t respond */
 "meetings.waitingRoom.alert.hostDidNotRespond"="ผู้จัดการประชุมไม่ตอบสนอง";
 /* Meeting waiting room alert message of There is no response to your request to join the meeting */
-"meetings.waitingRoom.alert.thereIsNoResponseToYourResquestToJoinTheMeeting"="ไม่มีการตอบสนองต่อคำขอของคุณในการเข้าร่วมการประชุม คุณจะถูกนำออกจากห้องนั่งรอ ลองเข้าร่วมใหม่ในภายหลัง";
+"meetings.waitingRoom.alert.thereIsNoResponseToYourResquestToJoinTheMeeting"="ไม่มีการตอบกลับคำขอเข้าร่วมการประชุมของคุณ คุณจะถูกนำออกจากห้องนั่งรอ ลองเข้าร่วมใหม่อีกครั้งในภายหลัง";
 /* Meeting waiting room alert action of ok got it */
 "meetings.waitingRoom.alert.okGotIt"="โอเค เข้าใจแล้ว";
 /* Call waiting room alert message text to notify host that someone is waiting to join */
@@ -3834,3 +3830,7 @@
 "chat.call.waitingRoom.participantsList.title"="ห้องนั่งรอ";
 /* A button label to close the waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.close"="ปิด";
+/* Error shown when moving folder to inside itself */
+"Error.nodeCopyOrMove.circularDependency"="You can’t move this folder as the destination is the same folder.";
+/* Auto media discovery banner title */
+"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="เนื่องจากโฟลเดอร์นี้มีเฉพาะรูปภาพและวิดีโอ เราจึงตั้งค่าประเภทการดูเป็นมุมมองการค้นพบสื่อโดยอัตโนมัติ คุณสามารถเพลิดเพลินกับเนื้อหาภาพของคุณด้วยเลย์เอาต์ที่สมจริงยิ่งขึ้น คุณสามารถปิดการใช้งานนี้ในการตั้งค่าได้";

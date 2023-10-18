@@ -721,7 +721,7 @@
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="ترفيعات الكاميرا";
 /* Banner message on Camera Uploads that warns user that they have limited access to photos */
-"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA has limited access to your photo library and cannot backup all of your media. Tap to change permissions.";
+"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA has limited access to your photo library and cannot back up all of your media. Tap to change permissions.";
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="تطبيق الصور";
 /* Photo view is empty */
@@ -1282,8 +1282,8 @@
 "sendMessage"="أرسل رسالة";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="وثق بيانات الاعتماد";
-/* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
-"verify"="موافق";
+/* Title of button which marks contact as verified on Verify Contact screen */
+"account.verifyContact.confirmButtonText"="وضع علامة على أنه تم التحقق منه";
 /* Button title */
 "verified"="تم التحقق";
 /* A button title to delete the history of a chat. */
@@ -2232,6 +2232,18 @@
 "Default Tab"="التبويب الرئيسي";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="شكل الفرز والعرض";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
+"settings.userInterface.mediaDiscovery"="عرض اكتشاف الوسائط";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
+"settings.userInterface.mediaDiscovery.header"="اكتشاف الوسائط";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body that appears under that option */
+"settings.userInterface.mediaDiscovery.footer.body"="Folders that contain only images and videos will open in media discovery view by default.";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body link that appears under that option */
+"settings.userInterface.mediaDiscovery.footer.link"="Learn more about media discovery.";
+/* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the label in the setting */
+"settings.userInterface.mediaDiscoverySubFolder"="اكتشاف الوسائط في المجلدات الفرعية";
+/* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the footer message body that appears under that option */
+"settings.userInterface.mediaDiscoverySubFolder.footer"="Images and videos from subfolders will also be included in media discovery view.";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
 "settings.userInterface.hideRecentActivity"="إخفاء التفاعل مؤخراً";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
@@ -3181,7 +3193,7 @@
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
 "sharedItems.contactVerification.section.verifyContact.receiver.message"="نحن نحمي بياناتك عن طريق تشفير المعرفة الصفرية. لضمان أمان إضافي نطلب منك التحقق من جهات الاتصال التي تستقبل المعلومات منها قبل أن تتمكن من الوصول إلى المجلدات المشاركة.";
 /* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
-"sharedItems.contactVerification.section.verifyContact.bannerMessage"="To access the shared folder, the person who shared it with you should verify you, too.";
+"sharedItems.contactVerification.section.verifyContact.bannerMessage"="للوصول إلى المجلد المشارك يجب على الشخص الذي شاركه معك التحقق منك أيضًا.";
 /* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
 "sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ is shared by a contact you haven’t verified. To ensure extra security, we recommend that you verify their credentials in Contacts by tapping on ⓘ next to the contact you want to verify.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
@@ -3440,92 +3452,74 @@
 "device.center.backup.blocked.status.message"="محظور";
 /* Default device name in case the device name cannot be obtained */
 "device.center.default.device.title"="جهاز غير معروف";
-/* Device Center backup error: Unknown error */
-"device.center.backup.error.type.unknownError"="خطأ غير معروف";
-/* Device Center backup error: Unsupported filesystem */
-"device.center.backup.error.type.unsupportedFilesystem"="";
-/* Device Center backup error: Invalid remote node */
-"device.center.backup.error.type.invalidRemoteNode"="";
-/* Device Center backup error: Sync setup issue with individual file */
-"device.center.backup.error.type.syncSetupIndividualFile"="";
-/* Device Center backup error: Initial scan failed */
-"device.center.backup.error.type.initialScanFailed"="";
-/* Device Center backup error: Local drive folder not found */
-"device.center.backup.error.type.localDriveFolderNotFound"="";
-/* Device Center backup error: Local drive folder not found */
-"device.center.backup.error.type.localDriveFolderNotFoundAlt"="";
-/* Device Center backup error: MEGA folder not found or inaccessible */
-"device.center.backup.error.type.megaFolderNotFoundOrInaccessible"="";
-/* Device Center backup error: Storage quota reached */
-"device.center.backup.error.type.storageQuotaReached"="";
+/* Device Center backup error: Unknown issue */
+"device.center.backup.error.unknown"="Unknown error.";
+/* Device Center backup error: Filesystem not supported */
+"device.center.backup.error.fileSystemUnsupported"="لا يمكن لميغا MEGA مزامنة هذا المجلد أو نسخه احتياطيًا لأن نظام الملفات على جهازك غير مدعوم.";
+/* Device Center backup error: Chosen folder can't be synced */
+"device.center.backup.error.folderCantSync"="The folder you chose can’t be synced.";
+/* Device Center backup error: Individual file sync issue */
+"device.center.backup.error.fileSyncIndividual"="لا يمكن مزامنة الملف بشكل فردي. تحتاج إلى إعداد المزامنة من المجلد.";
+/* Device Center backup error: Initial scan failure */
+"device.center.backup.error.initialScanFailed"="Initial scan failed. You will need to re-enable your sync or backup from the Desktop app.";
+/* Device Center backup error: Device folder not located */
+"device.center.backup.error.folderDeviceUnlocatedNow"="Folder in your device can’t be located now, try again later.";
+/* Device Center backup error: Device folder can't be located */
+"device.center.backup.error.folderDeviceUnlocated"="Folder in your device can’t be located.";
+/* Device Center backup error: MEGA folder moved or deleted */
+"device.center.backup.error.folderMegaMovedOrDeleted"="Folder in MEGA can’t be located as it’s been moved or deleted, or you might not have access.";
+/* Device Center backup error: Storage quota limit */
+"device.center.backup.error.storageQuotaReached"="Storage quota limit reached.";
 /* Device Center backup error: Plan expired */
-"device.center.backup.error.type.planExpired"="";
+"device.center.backup.error.planExpired"="Unable to sync or back up this folder as your plan has expired.";
 /* Device Center backup error: Shared folder quota reached */
-"device.center.backup.error.type.sharedFolderQuotaReached"="";
-/* Device Center backup error: MEGA folder moved */
-"device.center.backup.error.type.megaFolderMoved"="";
-/* Device Center backup error: Insufficient access to shared folder */
-"device.center.backup.error.type.insufficientAccessSharedFolder"="";
-/* Device Center backup error: Filesystem fingerprint mismatch */
-"device.center.backup.error.type.filesystemFingerprintMismatch"="";
-/* Device Center backup error: Folder sync disabled */
-"device.center.backup.error.type.folderSyncDisabled"="";
-/* Device Center backup error: Nested sync folders */
-"device.center.backup.error.type.nestedSyncFolders"="";
-/* Device Center backup error: Active sync above path */
-"device.center.backup.error.type.activeSyncAbovePath"="";
+"device.center.backup.error.userSharedQuotaReached"="Folder can’t be synced as the user who shared this folder has reached their storage quota limit.";
+/* Device Center backup error: Shared folder without full access */
+"device.center.backup.error.sharedFolderNoFullAccess"="لا يمكن مزامنة المجلد لأنه مجلد مشترك بدون إذن وصول كامل.";
+/* Device Center backup error: Files can't be synced */
+"device.center.backup.error.filesInFolder"="Files in this folder can’t be synced or backed up. You will need to re-enable the sync or backup from the Desktop app.";
+/* Device Center backup error: Folder contains synced folders */
+"device.center.backup.error.containsSyncedFolders"="لا يمكن مزامنة المجلد لأنه يحتوي بالفعل على مجلدات متزامنة.";
+/* Device Center backup error: Folder inside another synced folder */
+"device.center.backup.error.insideSyncedFolder"="لا يمكن مزامنة المجلد لأنه داخل مجلد متزامن.";
 /* Device Center backup error: MEGA folder in rubbish bin */
-"device.center.backup.error.type.megaFolderInRubbishBin"="";
-/* Device Center backup error: Item in rubbish */
-"device.center.backup.error.type.itemInRubbish"="";
-/* Device Center backup error: Unsupported filesystem - VirtualBox folders */
-"device.center.backup.error.type.unsupportedFilesystemVirtualBox"="";
-/* Device Center backup error: Folder inside synced folder */
-"device.center.backup.error.type.folderInsideSyncedFolder"="";
+"device.center.backup.error.folderInRubbish"="Folder can’t be synced or backed up as the MEGA folder is in the Rubbish bin.";
+/* Device Center backup error: Can't sync VirtualBox folders */
+"device.center.backup.error.virtualboxFolders"="MEGA can’t sync or back up VirtualBox folders.";
 /* Device Center backup error: Account blocked */
-"device.center.backup.error.type.accountBlocked"="";
-/* Device Center backup error: Sync or backup problem */
-"device.center.backup.error.type.syncOrBackupProblem"="";
-/* Device Center backup error: Account reloaded with missed updates */
-"device.center.backup.error.type.accountReloadedMissedUpdates"="";
-/* Device Center backup error: Sync or backup stopped */
-"device.center.backup.error.type.syncOrBackupStopped"="";
-/* Device Center backup error: MEGA folder changed */
-"device.center.backup.error.type.megaFolderChanged"="";
-/* Device Center backup error: External drive folder not found */
-"device.center.backup.error.type.externalDriveFolderNotFound"="";
-/* Device Center backup error: Sync or backup problem */
-"device.center.backup.error.type.syncOrBackupProblemAlt"="";
-/* Device Center backup error: Sync node conflict */
-"device.center.backup.error.type.syncNodeConflict"="";
-/* Device Center backup error: Renaming failed */
-"device.center.backup.error.type.renamingFailed"="";
-/* Device Center backup error: Sync creation failed */
-"device.center.backup.error.type.syncCreationFailed"="";
-/* Device Center backup error: Sync configs unreadable from disk */
-"device.center.backup.error.type.syncConfigsUnreadable"="";
-/* Device Center backup error: Unknown sync drive path */
-"device.center.backup.error.type.unknownSyncDrivePath"="";
+"device.center.backup.error.accountBlocked"="Unable to sync or back up this folder as the account has been blocked.";
+/* Device Center backup error: Contact support for sync issues */
+"device.center.backup.error.problemSyncingContactSupport"="Problem syncing or backing up this folder. Try again later. If the issue continues, contact Support.";
+/* Device Center backup error: Account reloaded */
+"device.center.backup.error.accountReloaded"="تمت إعادة تحميل الحساب. لم يتم تطبيق أي تحديثات فائتة على النسخ الاحتياطية أو المزامنات الخاصة بك.";
+/* Device Center backup error: Logged out of Desktop app */
+"device.center.backup.error.loggedOut"="Sync or backup has been stopped as you appear to have logged out of the Desktop app. Log back in via the Desktop app, and resume the sync or backup.";
+/* Device Center backup error: Changes to MEGA folder */
+"device.center.backup.error.changesToMegaFolder"="Problem syncing or backing up this folder because of changes to the MEGA folder. Stop the sync or backup and try setting it up again in the Desktop app, or contact Support.";
+/* Device Center backup error: External drive folder not located */
+"device.center.backup.error.externalDriveUnlocated"="لا يمكن تحديد موقع المجلد الموجود في السواقة الخارجية.";
+/* Device Center backup error: Synced folder at same path */
+"device.center.backup.error.alreadySyncedPath"="There’s already a synced folder at the same path.";
+/* Device Center backup error: Renaming issue */
+"device.center.backup.error.renamingFailed"="Renaming failed.";
+/* Device Center backup error: Ignored sync */
+"device.center.backup.error.syncIgnored"="Couldn’t create a sync. The file has been ignored.";
+/* Device Center backup error: Sync configuration unreadable */
+"device.center.backup.error.couldntReadSyncConfig"="Couldn’t read sync configuration. Check the folder permissions and try again later.";
+/* Device Center backup error: Unknown drive path for sync */
+"device.center.backup.error.unknownDrivePath"="Sync’s drive path is unknown.";
 /* Device Center backup error: Invalid scan interval */
-"device.center.backup.error.type.invalidScanInterval"="";
-/* Device Center backup error: Filesystem notification subsystem error */
-"device.center.backup.error.type.filesystemNotificationSubsystemError"="";
-/* Device Center backup error: Unable to add filesystem watch */
-"device.center.backup.error.type.unableToAddFilesystemWatch"="";
-/* Device Center backup error: Sync root's FSID retrieval failure */
-"device.center.backup.error.type.syncRootFsidRetrievalFailure"="";
-/* Device Center backup error: State cache database inaccessible */
-"device.center.backup.error.type.stateCacheDatabaseInaccessible"="";
+"device.center.backup.error.invalidScanInterval"="Invalid scan interval. Check the scan interval setup and try again.";
+/* Device Center backup error: Sync or backup issue, setup again */
+"device.center.backup.error.syncOrBackupSetupAgain"="Problem syncing or backing up this folder. Stop the sync or backup and try setting it up again in the Desktop app, or contact Support.";
+/* Device Center backup error: Can't read sync location */
+"device.center.backup.error.cantReadSyncLocation"="Couldn’t read sync location. Check the location is accessible and permissions for the folder location are granted.";
 /* Device Center backup error: Insufficient space for download */
-"device.center.backup.error.type.insufficientSpaceForDownload"="";
-/* Device Center backup error: No access to persistent storage */
-"device.center.backup.error.type.noAccessToPersistentStorage"="";
-/* Device Center backup error: Sync root's FSID change */
-"device.center.backup.error.type.syncRootFsidChange"="";
-/* Device Center backup error: FSID change on MAC device */
-"device.center.backup.error.type.fsidChangeOnMac"="";
-/* Device Center backup error: Unable to get filesystem's ID */
-"device.center.backup.error.type.unableToGetFilesystemsId"="";
+"device.center.backup.error.insufficientDownloadSpace"="Insufficient space for download.";
+/* Device Center backup error: Unable to add filesystem watch */
+"device.center.backup.error.addFilesystemWatch"="Unable to add a file system watch. Ensure there is sufficient free space and memory, and that you have granted permissions for the folder location.";
+/* Device Center backup error: Couldn't communicate with folder location */
+"device.center.backup.error.communicateWithFolderLocation"="Couldn’t communicate with the folder location. Check the location is accessible and permissions for the folder location are granted.";
 /* Show in Cloud Drive section action title */
 "device.center.show.in.cloud.drive.action.title"="عرض في السواقة السحابية";
 /* Show in Backups section action title */
@@ -3540,6 +3534,8 @@
 "device.center.camera.uploads.action.status.enabled"="تمكين";
 /* Device Center camera upload status disabled */
 "device.center.camera.uploads.action.status.disabled"="تعطيل";
+/* Device center current device empty state message */
+"device.center.current.device.empty.state.message"="Nothing set up yet";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="إنهاء التكرار";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3834,3 +3830,7 @@
 "chat.call.waitingRoom.participantsList.title"="غرفة الانتظار";
 /* A button label to close the waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.close"="إغلاق";
+/* Error shown when moving folder to inside itself */
+"Error.nodeCopyOrMove.circularDependency"="You can’t move this folder as the destination is the same folder.";
+/* Auto media discovery banner title */
+"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="As this folder contains only images and videos, we’ve automatically opened it in media discovery view. You can enjoy your visual content with a more immersive layout. You can disable this in Settings.";

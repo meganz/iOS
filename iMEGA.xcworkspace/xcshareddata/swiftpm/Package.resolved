@@ -201,7 +201,7 @@
     {
       "identity" : "mobile-analytics-ios",
       "kind" : "remoteSourceControl",
-      "location" : "https://code.developers.mega.co.nz/mobile/kmm/mobile-analytics-ios",
+      "location" : "https://code.developers.mega.co.nz/mobile/kmm/mobile-analytics-ios.git",
       "state" : {
         "branch" : "main",
         "revision" : "94963602538893373a9458c408c9d8f226b039b0"
