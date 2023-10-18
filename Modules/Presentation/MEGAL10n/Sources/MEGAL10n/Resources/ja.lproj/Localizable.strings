@@ -207,7 +207,7 @@
 /*  */
 "folderLinkUnavailableText4"="そのリンクはユーザーによって無効とされました。";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
-"noInternetConnection"="ネット接続なし";
+"noInternetConnection"="インターネット接続がありません";
 /* Title shown when a folder doesn't have any files */
 "emptyFolder"="空のフォルダ";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
@@ -1282,8 +1282,8 @@
 "sendMessage"="メッセージを送信";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="認証情報の検証";
-/* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
-"verify"="承認";
+/* Title of button which marks contact as verified on Verify Contact screen */
+"account.verifyContact.confirmButtonText"="認証済みとしてマークする";
 /* Button title */
 "verified"="検証済み";
 /* A button title to delete the history of a chat. */
@@ -2232,6 +2232,18 @@
 "Default Tab"="デフォルトタブ";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="並べ替えと表示モード";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
+"settings.userInterface.mediaDiscovery"="メディア検出ビュー";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
+"settings.userInterface.mediaDiscovery.header"="メディアディスカバリー";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body that appears under that option */
+"settings.userInterface.mediaDiscovery.footer.body"="画像と動画のみを含むフォルダは、デフォルトでメディア検出ビューで開きます。";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body link that appears under that option */
+"settings.userInterface.mediaDiscovery.footer.link"="メディア ディスカバリーの詳細はこちらをご覧ください。";
+/* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the label in the setting */
+"settings.userInterface.mediaDiscoverySubFolder"="サブフォルダ内のメディア検出";
+/* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the footer message body that appears under that option */
+"settings.userInterface.mediaDiscoverySubFolder.footer"="サブフォルダの画像と動画もメディア検出ビューに含まれます。";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
 "settings.userInterface.hideRecentActivity"="最近のアクティビティを非表示にする";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
@@ -3440,92 +3452,74 @@
 "device.center.backup.blocked.status.message"="ブロックされています";
 /* Default device name in case the device name cannot be obtained */
 "device.center.default.device.title"="端末が不明です";
-/* Device Center backup error: Unknown error */
-"device.center.backup.error.type.unknownError"="不明なエラー";
-/* Device Center backup error: Unsupported filesystem */
-"device.center.backup.error.type.unsupportedFilesystem"="";
-/* Device Center backup error: Invalid remote node */
-"device.center.backup.error.type.invalidRemoteNode"="";
-/* Device Center backup error: Sync setup issue with individual file */
-"device.center.backup.error.type.syncSetupIndividualFile"="";
-/* Device Center backup error: Initial scan failed */
-"device.center.backup.error.type.initialScanFailed"="";
-/* Device Center backup error: Local drive folder not found */
-"device.center.backup.error.type.localDriveFolderNotFound"="";
-/* Device Center backup error: Local drive folder not found */
-"device.center.backup.error.type.localDriveFolderNotFoundAlt"="";
-/* Device Center backup error: MEGA folder not found or inaccessible */
-"device.center.backup.error.type.megaFolderNotFoundOrInaccessible"="";
-/* Device Center backup error: Storage quota reached */
-"device.center.backup.error.type.storageQuotaReached"="";
+/* Device Center backup error: Unknown issue */
+"device.center.backup.error.unknown"="不明なエラー。";
+/* Device Center backup error: Filesystem not supported */
+"device.center.backup.error.fileSystemUnsupported"="デバイスのファイルシステムがサポートされていないため、MEGAはこのフォルダを同期またはバックアップできません。";
+/* Device Center backup error: Chosen folder can't be synced */
+"device.center.backup.error.folderCantSync"="選択したフォルダは同期できません。";
+/* Device Center backup error: Individual file sync issue */
+"device.center.backup.error.fileSyncIndividual"="ファイルを個別に同期することはできません。フォルダから同期を設定する必要があります。";
+/* Device Center backup error: Initial scan failure */
+"device.center.backup.error.initialScanFailed"="初期スキャンに失敗しました。デスクトップアプリから同期またはバックアップを再度有効にする必要があります。";
+/* Device Center backup error: Device folder not located */
+"device.center.backup.error.folderDeviceUnlocatedNow"="現在、デバイス内のフォルダが見つかりません。後でもう一度お試しください。";
+/* Device Center backup error: Device folder can't be located */
+"device.center.backup.error.folderDeviceUnlocated"="デバイス内のフォルダが見つかりません。";
+/* Device Center backup error: MEGA folder moved or deleted */
+"device.center.backup.error.folderMegaMovedOrDeleted"="MEGA内のフォルダは、移動または削除されたため見つからないか、アクセス権がない可能性があります。";
+/* Device Center backup error: Storage quota limit */
+"device.center.backup.error.storageQuotaReached"="ストレージ容量の制限に達しました。";
 /* Device Center backup error: Plan expired */
-"device.center.backup.error.type.planExpired"="";
+"device.center.backup.error.planExpired"="お客様のプランの有効期限が切れているため、このフォルダを同期またはバックアップできません。";
 /* Device Center backup error: Shared folder quota reached */
-"device.center.backup.error.type.sharedFolderQuotaReached"="";
-/* Device Center backup error: MEGA folder moved */
-"device.center.backup.error.type.megaFolderMoved"="";
-/* Device Center backup error: Insufficient access to shared folder */
-"device.center.backup.error.type.insufficientAccessSharedFolder"="";
-/* Device Center backup error: Filesystem fingerprint mismatch */
-"device.center.backup.error.type.filesystemFingerprintMismatch"="";
-/* Device Center backup error: Folder sync disabled */
-"device.center.backup.error.type.folderSyncDisabled"="";
-/* Device Center backup error: Nested sync folders */
-"device.center.backup.error.type.nestedSyncFolders"="";
-/* Device Center backup error: Active sync above path */
-"device.center.backup.error.type.activeSyncAbovePath"="";
+"device.center.backup.error.userSharedQuotaReached"="Folder can’t be synced as the user who shared this folder has reached their storage quota limit.";
+/* Device Center backup error: Shared folder without full access */
+"device.center.backup.error.sharedFolderNoFullAccess"="フォルダは、フルアクセスのない共有フォルダであるため、同期できません。";
+/* Device Center backup error: Files can't be synced */
+"device.center.backup.error.filesInFolder"="このフォルダ内のファイルは同期またはバックアップできません。デスクトップアプリから同期またはバックアップを再度有効にする必要があります。";
+/* Device Center backup error: Folder contains synced folders */
+"device.center.backup.error.containsSyncedFolders"="フォルダにはすでに同期フォルダが含まれているため、フォルダを同期できません。";
+/* Device Center backup error: Folder inside another synced folder */
+"device.center.backup.error.insideSyncedFolder"="フォルダはすでに同期フォルダ内にあるため同期できません。";
 /* Device Center backup error: MEGA folder in rubbish bin */
-"device.center.backup.error.type.megaFolderInRubbishBin"="";
-/* Device Center backup error: Item in rubbish */
-"device.center.backup.error.type.itemInRubbish"="";
-/* Device Center backup error: Unsupported filesystem - VirtualBox folders */
-"device.center.backup.error.type.unsupportedFilesystemVirtualBox"="";
-/* Device Center backup error: Folder inside synced folder */
-"device.center.backup.error.type.folderInsideSyncedFolder"="";
+"device.center.backup.error.folderInRubbish"="MEGAフォルダはごみ箱にあるため、フォルダを同期またはバックアップできません。";
+/* Device Center backup error: Can't sync VirtualBox folders */
+"device.center.backup.error.virtualboxFolders"="MEGAはVirtualBoxフォルダを同期またはバックアップできません。";
 /* Device Center backup error: Account blocked */
-"device.center.backup.error.type.accountBlocked"="";
-/* Device Center backup error: Sync or backup problem */
-"device.center.backup.error.type.syncOrBackupProblem"="";
-/* Device Center backup error: Account reloaded with missed updates */
-"device.center.backup.error.type.accountReloadedMissedUpdates"="";
-/* Device Center backup error: Sync or backup stopped */
-"device.center.backup.error.type.syncOrBackupStopped"="";
-/* Device Center backup error: MEGA folder changed */
-"device.center.backup.error.type.megaFolderChanged"="";
-/* Device Center backup error: External drive folder not found */
-"device.center.backup.error.type.externalDriveFolderNotFound"="";
-/* Device Center backup error: Sync or backup problem */
-"device.center.backup.error.type.syncOrBackupProblemAlt"="";
-/* Device Center backup error: Sync node conflict */
-"device.center.backup.error.type.syncNodeConflict"="";
-/* Device Center backup error: Renaming failed */
-"device.center.backup.error.type.renamingFailed"="";
-/* Device Center backup error: Sync creation failed */
-"device.center.backup.error.type.syncCreationFailed"="";
-/* Device Center backup error: Sync configs unreadable from disk */
-"device.center.backup.error.type.syncConfigsUnreadable"="";
-/* Device Center backup error: Unknown sync drive path */
-"device.center.backup.error.type.unknownSyncDrivePath"="";
+"device.center.backup.error.accountBlocked"="アカウントがブロックされているため、このフォルダを同期またはバックアップできません。";
+/* Device Center backup error: Contact support for sync issues */
+"device.center.backup.error.problemSyncingContactSupport"="このフォルダの同期またはバックアップ中に問題が発生しました。あとでもう一度お試しください。問題が解決しない場合は、サポートにお問い合わせください。";
+/* Device Center backup error: Account reloaded */
+"device.center.backup.error.accountReloaded"="アカウントが再読み込みされました。バックアップまたは同期に対して欠落した更新は適用されていません。";
+/* Device Center backup error: Logged out of Desktop app */
+"device.center.backup.error.loggedOut"="デスクトップアプリからログアウトしたようであるため、同期またはバックアップが停止されました。デスクトップアプリから再度ログインし、同期またはバックアップを再開してください。";
+/* Device Center backup error: Changes to MEGA folder */
+"device.center.backup.error.changesToMegaFolder"="MEGAフォルダへの変更により、このフォルダの同期またはバックアップ中に問題が発生しました。バックアップを停止し、デスクトップアプリでもう一度セットアップしてみるか、サポートにお問い合わせください。";
+/* Device Center backup error: External drive folder not located */
+"device.center.backup.error.externalDriveUnlocated"="外付けドライブのフォルダが見つかりません。";
+/* Device Center backup error: Synced folder at same path */
+"device.center.backup.error.alreadySyncedPath"="同じパスに同期フォルダがすでに存在します。";
+/* Device Center backup error: Renaming issue */
+"device.center.backup.error.renamingFailed"="名前の変更に失敗しました。";
+/* Device Center backup error: Ignored sync */
+"device.center.backup.error.syncIgnored"="同期を作成できませんでした。ファイルは無視されました。";
+/* Device Center backup error: Sync configuration unreadable */
+"device.center.backup.error.couldntReadSyncConfig"="同期構成を読み取れませんでした。フォルダのアクセス許可を確認し、後でもう一度試してください。";
+/* Device Center backup error: Unknown drive path for sync */
+"device.center.backup.error.unknownDrivePath"="同期のドライブパスが不明です。";
 /* Device Center backup error: Invalid scan interval */
-"device.center.backup.error.type.invalidScanInterval"="";
-/* Device Center backup error: Filesystem notification subsystem error */
-"device.center.backup.error.type.filesystemNotificationSubsystemError"="";
-/* Device Center backup error: Unable to add filesystem watch */
-"device.center.backup.error.type.unableToAddFilesystemWatch"="";
-/* Device Center backup error: Sync root's FSID retrieval failure */
-"device.center.backup.error.type.syncRootFsidRetrievalFailure"="";
-/* Device Center backup error: State cache database inaccessible */
-"device.center.backup.error.type.stateCacheDatabaseInaccessible"="";
+"device.center.backup.error.invalidScanInterval"="無効なスキャン間隔です。スキャン間隔の設定を確認して、再試行してください。";
+/* Device Center backup error: Sync or backup issue, setup again */
+"device.center.backup.error.syncOrBackupSetupAgain"="このフォルダの同期またはバックアップ中に問題が発生しました。同期またはバックアップを停止し、デスクトップアプリでもう一度設定してみるか、サポートにお問い合わせください。";
+/* Device Center backup error: Can't read sync location */
+"device.center.backup.error.cantReadSyncLocation"="同期の場所を読み取れませんでした。場所がアクセス可能であること、およびフォルダの場所に対するアクセス許可が付与されていることを確認してください。";
 /* Device Center backup error: Insufficient space for download */
-"device.center.backup.error.type.insufficientSpaceForDownload"="";
-/* Device Center backup error: No access to persistent storage */
-"device.center.backup.error.type.noAccessToPersistentStorage"="";
-/* Device Center backup error: Sync root's FSID change */
-"device.center.backup.error.type.syncRootFsidChange"="";
-/* Device Center backup error: FSID change on MAC device */
-"device.center.backup.error.type.fsidChangeOnMac"="";
-/* Device Center backup error: Unable to get filesystem's ID */
-"device.center.backup.error.type.unableToGetFilesystemsId"="";
+"device.center.backup.error.insufficientDownloadSpace"="ダウンロード用のスペースが不足しています。";
+/* Device Center backup error: Unable to add filesystem watch */
+"device.center.backup.error.addFilesystemWatch"="ファイルシステム監視を追加できません。十分な空き容量とメモリがあること、およびフォルダの場所に対するアクセス許可が付与されていることを確認してください。";
+/* Device Center backup error: Couldn't communicate with folder location */
+"device.center.backup.error.communicateWithFolderLocation"="フォルダの場所と通信できませんでした。場所がアクセス可能であること、およびフォルダの場所に対するアクセス許可が付与されていることを確認してください。";
 /* Show in Cloud Drive section action title */
 "device.center.show.in.cloud.drive.action.title"="クラウドドライブに表示";
 /* Show in Backups section action title */
@@ -3540,6 +3534,8 @@
 "device.center.camera.uploads.action.status.enabled"="有効になっています";
 /* Device Center camera upload status disabled */
 "device.center.camera.uploads.action.status.disabled"="無効になっています";
+/* Device center current device empty state message */
+"device.center.current.device.empty.state.message"="まだ何も設定されていません";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="定期開催を終了する";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3791,7 +3787,7 @@
 /* Meeting waiting room alert title of Host didn’t respond */
 "meetings.waitingRoom.alert.hostDidNotRespond"="主催者が応答しませんでした";
 /* Meeting waiting room alert message of There is no response to your request to join the meeting */
-"meetings.waitingRoom.alert.thereIsNoResponseToYourResquestToJoinTheMeeting"="ミーティングへの参加リクエストに対する応答がありません。そのため、待合室から退出させられます。後でもう一度参加してみてください。";
+"meetings.waitingRoom.alert.thereIsNoResponseToYourResquestToJoinTheMeeting"="ミーティングへの参加リクエストに対する応答がありませんでした。そのため、待合室から退出させられます。後でもう一度参加してみてください。";
 /* Meeting waiting room alert action of ok got it */
 "meetings.waitingRoom.alert.okGotIt"="はい、わかりました。";
 /* Call waiting room alert message text to notify host that someone is waiting to join */
@@ -3834,3 +3830,7 @@
 "chat.call.waitingRoom.participantsList.title"="待合室";
 /* A button label to close the waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.close"="閉じる";
+/* Error shown when moving folder to inside itself */
+"Error.nodeCopyOrMove.circularDependency"="このフォルダは移動先が同じフォルダのため移動できません。";
+/* Auto media discovery banner title */
+"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="このフォルダには画像と動画のみが含まれているため、自動的にメディア検出ビューで開きます。また、より没入感のあるレイアウトでビジュアルコンテンツを楽しむことができます。これは「設定」で無効にできます。";

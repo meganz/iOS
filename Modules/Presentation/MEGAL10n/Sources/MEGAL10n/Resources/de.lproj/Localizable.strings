@@ -641,9 +641,9 @@
 /* Title of the tab bar item for the Shared Items section */
 "shared"="Freigegeben";
 /* Title of the "Incoming" Shared Items. */
-"incoming"="Von anderen";
+"incoming"="Erhaltene";
 /* Title of the "Outgoing" Shared Items. */
-"outgoing"="An andere";
+"outgoing"="Eigene";
 /* Text shown to explain with how many contacts you have shared a folder */
 "sharedWithXContacts"="An %d Kontakte freigegeben";
 /* Message shown when you have changed the permissions of a shared folder */
@@ -849,7 +849,7 @@
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Rettungsschlüssel exportiert";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="Der Rettungsschlüssel wurde als MEGA-RETTUNGSSCHLUESSEL.txt in den Offlinebereich exportiert. Bitte beachten Sie: Wenn Sie sich abmelden, wird die Datei gelöscht. Bitte speichern Sie sie daher an einem sicheren Ort.";
+"masterKeyExported_alertMessage"="Der Rettungsschlüssel wurde als MEGA-RETTUNGSSCHLUESSEL.txt in den Offlinebereich exportiert. Bitte beachten Sie: Wenn Sie sich ausloggen, wird die Datei gelöscht. Bitte speichern Sie sie daher an einem sicheren Ort.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="Auf Ihrem Gerät";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
@@ -979,7 +979,7 @@
 /* The [X] will be replaced with the e-mail address. */
 "congratulationsNewEmailAddress"="Ihre neue Adresse für diesen MEGA-Account ist: [X]";
 /* Button text to close other login sessions except the current session in use. This will log out other devices which have an active login session. */
-"closeOtherSessions"="Alle anderen Logins ausloggen";
+"closeOtherSessions"="Alle anderen Sitzungen ausloggen";
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
 "sessionsClosed"="Sitzungen geschlossen";
 /* Section title where you can change the app's passcode */
@@ -1097,7 +1097,7 @@
 /*  */
 "days"="Tage";
 /* Title of the button which logs out from your account. */
-"logoutLabel"="Abmelden";
+"logoutLabel"="Ausloggen";
 /* String shown when you are logging out of your account. */
 "loggingOut"="Logge aus";
 /* Button to remove some photo, e.g. avatar photo. Try to keep the text short (as in English) */
@@ -1282,8 +1282,8 @@
 "sendMessage"="Nachricht schicken";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="Identität verifizieren";
-/* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
-"verify"="Bestätigen";
+/* Title of button which marks contact as verified on Verify Contact screen */
+"account.verifyContact.confirmButtonText"="Als verifiziert markieren";
 /* Button title */
 "verified"="Bestätigt";
 /* A button title to delete the history of a chat. */
@@ -1791,7 +1791,7 @@
 /* Message shown in a chat room when there is an active call */
 "There is an active call. Tap to join."="Konferenzgespräch läuft. Zum Teilnehmen antippen.";
 /* Message shown in a chat room for a one on one call */
-"Tap to return to call"="Zum Gespräch zurückkehren";
+"Tap to return to call"="Antippen, um zum Gespräch zurückkehren";
 /* A button label which allows the users save images/videos in the Photos app. */
 "Save to Photos"="In Fotos speichern";
 /* Text shown when starting the process to save a photo or video to Photos app */
@@ -2079,7 +2079,7 @@
 /* Title for empty state view of "Links" in Shared Items. */
 "No Public Links"="Keine öffentlichen Links";
 /* Text indicating to the user the action that will be executed on tap. */
-"Manage Share"="Ordnerfreigabe bearbeiten";
+"Manage Share"="Freigabe verwalten";
 /* Title of the screen that shows the users with whom the user can share a folder */
 "Share with"="Freigeben an";
 /* A dialog message which is shown to sub-users of expired business accounts. */
@@ -2232,6 +2232,18 @@
 "Default Tab"="Standard-Tab";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="Sortierung und Ansicht";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
+"settings.userInterface.mediaDiscovery"="Medienerkennungsansicht";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
+"settings.userInterface.mediaDiscovery.header"="Medienerkennung";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body that appears under that option */
+"settings.userInterface.mediaDiscovery.footer.body"="Ordner, die nur Bilder und Videos enthalten, werden standardmäßig in der Medienerkennungsansicht geöffnet.";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body link that appears under that option */
+"settings.userInterface.mediaDiscovery.footer.link"="Erfahren Sie mehr über die Medienerkennung.";
+/* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the label in the setting */
+"settings.userInterface.mediaDiscoverySubFolder"="Medienerkennung in Unterordnern";
+/* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the footer message body that appears under that option */
+"settings.userInterface.mediaDiscoverySubFolder.footer"="Bilder und Videos in Unterordnern werden in der Medienerkennungsansicht ebenfalls angezeigt.";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
 "settings.userInterface.hideRecentActivity"="Letzte Aktivitäten ausblenden";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
@@ -2545,7 +2557,7 @@
 /* Dialog button text for the change launch tab screen */
 "Change Setting"="Einstellung ändern";
 /* Offline log out warning message */
-"offline.logOut.warning.message"="Beim Abmelden werden Ihre Offline-Inhalte gelöscht.";
+"offline.logOut.warning.message"="Beim Ausloggen werden Ihre Offline-Inhalte gelöscht.";
 /* A message shown when uploading to an incoming share and the owner’s account is over its storage quota. */
 "transfer.cell.shareOwnerStorageQuota.infoLabel"="Der Eigentümer der Ordnerfreigabe hat sein Speicherplatzlimit überschritten.";
 /* An error message which is shown when we want to share a file with somebody who has used all the storage space in their MEGA account. */
@@ -3440,92 +3452,74 @@
 "device.center.backup.blocked.status.message"="Blockiert";
 /* Default device name in case the device name cannot be obtained */
 "device.center.default.device.title"="Unbekanntes Gerät";
-/* Device Center backup error: Unknown error */
-"device.center.backup.error.type.unknownError"="Unbekannter Fehler";
-/* Device Center backup error: Unsupported filesystem */
-"device.center.backup.error.type.unsupportedFilesystem"="";
-/* Device Center backup error: Invalid remote node */
-"device.center.backup.error.type.invalidRemoteNode"="";
-/* Device Center backup error: Sync setup issue with individual file */
-"device.center.backup.error.type.syncSetupIndividualFile"="";
-/* Device Center backup error: Initial scan failed */
-"device.center.backup.error.type.initialScanFailed"="";
-/* Device Center backup error: Local drive folder not found */
-"device.center.backup.error.type.localDriveFolderNotFound"="";
-/* Device Center backup error: Local drive folder not found */
-"device.center.backup.error.type.localDriveFolderNotFoundAlt"="";
-/* Device Center backup error: MEGA folder not found or inaccessible */
-"device.center.backup.error.type.megaFolderNotFoundOrInaccessible"="";
-/* Device Center backup error: Storage quota reached */
-"device.center.backup.error.type.storageQuotaReached"="";
+/* Device Center backup error: Unknown issue */
+"device.center.backup.error.unknown"="Unbekannter Fehler.";
+/* Device Center backup error: Filesystem not supported */
+"device.center.backup.error.fileSystemUnsupported"="MEGA kann diesen Ordner nicht synchronisieren oder sichern, da das Dateisystem Ihres Geräts nicht unterstützt wird.";
+/* Device Center backup error: Chosen folder can't be synced */
+"device.center.backup.error.folderCantSync"="Der gewählte Ordner kann nicht synchronisiert werden.";
+/* Device Center backup error: Individual file sync issue */
+"device.center.backup.error.fileSyncIndividual"="Dateien können nicht einzeln synchronisiert werden. Sie müssen die Synchronisierung für einen Ordner einrichten.";
+/* Device Center backup error: Initial scan failure */
+"device.center.backup.error.initialScanFailed"="Der Anfangsscan ist fehlgeschlagen. Sie müssen die Synchronisierung bzw. das Backup in der Desktop-App wieder aktivieren.";
+/* Device Center backup error: Device folder not located */
+"device.center.backup.error.folderDeviceUnlocatedNow"="Der Ordner auf Ihrem Gerät kann derzeit nicht gefunden werden, bitte versuchen Sie es später erneut.";
+/* Device Center backup error: Device folder can't be located */
+"device.center.backup.error.folderDeviceUnlocated"="Der Ordner auf Ihrem Gerät kann nicht gefunden werden.";
+/* Device Center backup error: MEGA folder moved or deleted */
+"device.center.backup.error.folderMegaMovedOrDeleted"="Der Ordner wurde auf MEGA nicht gefunden, da er verschoben oder gelöscht wurde oder Sie keinen Zugriff auf ihn haben.";
+/* Device Center backup error: Storage quota limit */
+"device.center.backup.error.storageQuotaReached"="Speicherplatzlimit erreicht.";
 /* Device Center backup error: Plan expired */
-"device.center.backup.error.type.planExpired"="";
+"device.center.backup.error.planExpired"="Dieser Ordner kann nicht synchronisiert oder gesichert werden, da Ihr Paket abgelaufen ist.";
 /* Device Center backup error: Shared folder quota reached */
-"device.center.backup.error.type.sharedFolderQuotaReached"="";
-/* Device Center backup error: MEGA folder moved */
-"device.center.backup.error.type.megaFolderMoved"="";
-/* Device Center backup error: Insufficient access to shared folder */
-"device.center.backup.error.type.insufficientAccessSharedFolder"="";
-/* Device Center backup error: Filesystem fingerprint mismatch */
-"device.center.backup.error.type.filesystemFingerprintMismatch"="";
-/* Device Center backup error: Folder sync disabled */
-"device.center.backup.error.type.folderSyncDisabled"="";
-/* Device Center backup error: Nested sync folders */
-"device.center.backup.error.type.nestedSyncFolders"="";
-/* Device Center backup error: Active sync above path */
-"device.center.backup.error.type.activeSyncAbovePath"="";
+"device.center.backup.error.userSharedQuotaReached"="Folder can’t be synced as the user who shared this folder has reached their storage quota limit.";
+/* Device Center backup error: Shared folder without full access */
+"device.center.backup.error.sharedFolderNoFullAccess"="Der Ordner kann nicht synchronisiert werden, da es sich um einen freigegebenen Ordner handelt, auf den Sie keinen Vollzugriff haben.";
+/* Device Center backup error: Files can't be synced */
+"device.center.backup.error.filesInFolder"="Die Dateien in diesem Ordner können nicht synchronisiert oder gesichert werden. Sie müssen die Synchronisierung bzw. das Backup in der Desktop-App wieder aktivieren.";
+/* Device Center backup error: Folder contains synced folders */
+"device.center.backup.error.containsSyncedFolders"="Der Ordner kann nicht synchronisiert werden, da er bereits synchronisierte Ordner enthält.";
+/* Device Center backup error: Folder inside another synced folder */
+"device.center.backup.error.insideSyncedFolder"="Der Ordner kann nicht synchronisiert werden, da er sich bereits innerhalb eines synchronisierten Ordners befindet.";
 /* Device Center backup error: MEGA folder in rubbish bin */
-"device.center.backup.error.type.megaFolderInRubbishBin"="";
-/* Device Center backup error: Item in rubbish */
-"device.center.backup.error.type.itemInRubbish"="";
-/* Device Center backup error: Unsupported filesystem - VirtualBox folders */
-"device.center.backup.error.type.unsupportedFilesystemVirtualBox"="";
-/* Device Center backup error: Folder inside synced folder */
-"device.center.backup.error.type.folderInsideSyncedFolder"="";
+"device.center.backup.error.folderInRubbish"="Der Ordner kann nicht synchronisiert oder gesichert werden, da sich der MEGA-Ordner im Papierkorb befindet.";
+/* Device Center backup error: Can't sync VirtualBox folders */
+"device.center.backup.error.virtualboxFolders"="MEGA kann VirtualBox-Ordner nicht synchronisieren oder sichern.";
 /* Device Center backup error: Account blocked */
-"device.center.backup.error.type.accountBlocked"="";
-/* Device Center backup error: Sync or backup problem */
-"device.center.backup.error.type.syncOrBackupProblem"="";
-/* Device Center backup error: Account reloaded with missed updates */
-"device.center.backup.error.type.accountReloadedMissedUpdates"="";
-/* Device Center backup error: Sync or backup stopped */
-"device.center.backup.error.type.syncOrBackupStopped"="";
-/* Device Center backup error: MEGA folder changed */
-"device.center.backup.error.type.megaFolderChanged"="";
-/* Device Center backup error: External drive folder not found */
-"device.center.backup.error.type.externalDriveFolderNotFound"="";
-/* Device Center backup error: Sync or backup problem */
-"device.center.backup.error.type.syncOrBackupProblemAlt"="";
-/* Device Center backup error: Sync node conflict */
-"device.center.backup.error.type.syncNodeConflict"="";
-/* Device Center backup error: Renaming failed */
-"device.center.backup.error.type.renamingFailed"="";
-/* Device Center backup error: Sync creation failed */
-"device.center.backup.error.type.syncCreationFailed"="";
-/* Device Center backup error: Sync configs unreadable from disk */
-"device.center.backup.error.type.syncConfigsUnreadable"="";
-/* Device Center backup error: Unknown sync drive path */
-"device.center.backup.error.type.unknownSyncDrivePath"="";
+"device.center.backup.error.accountBlocked"="Dieser Ordner kann nicht synchronisiert oder gesichert werden, da der Account gesperrt wurde.";
+/* Device Center backup error: Contact support for sync issues */
+"device.center.backup.error.problemSyncingContactSupport"="Problem bei der Synchronisierung oder Sicherung dieses Ordners. Bitte versuchen Sie es später erneut. Wenn das Problem weiterhin besteht, wenden Sie sich an den Support.";
+/* Device Center backup error: Account reloaded */
+"device.center.backup.error.accountReloaded"="Account neu geladen. Verpasste Updates Ihrer Backups oder Synchronisierungen wurden nicht übernommen.";
+/* Device Center backup error: Logged out of Desktop app */
+"device.center.backup.error.loggedOut"="Die Synchronisierung oder das Backup wurde angehalten, da Sie sich anscheinend in der Desktop-App ausgeloggt haben. Loggen Sie sich in der Desktop-App wieder ein und aktivieren Sie die Synchronisierung bzw. das Backup erneut.";
+/* Device Center backup error: Changes to MEGA folder */
+"device.center.backup.error.changesToMegaFolder"="Problem bei der Synchronisierung oder Sicherung dieses Ordners aufgrund von Änderungen am MEGA-Ordner. Beenden Sie die Synchronisierung bzw. das Backup und richten Sie sie in der Desktop-App erneut ein oder wenden Sie sich an den Support.";
+/* Device Center backup error: External drive folder not located */
+"device.center.backup.error.externalDriveUnlocated"="Ordner auf externem Laufwerk nicht gefunden.";
+/* Device Center backup error: Synced folder at same path */
+"device.center.backup.error.alreadySyncedPath"="Es gibt bereits einen synchronisierten Ordner unter demselben Pfad.";
+/* Device Center backup error: Renaming issue */
+"device.center.backup.error.renamingFailed"="Die Umbenennung ist fehlgeschlagen.";
+/* Device Center backup error: Ignored sync */
+"device.center.backup.error.syncIgnored"="Eine Synchronisierung konnte nicht erstellt werden. Die Datei wurde ignoriert.";
+/* Device Center backup error: Sync configuration unreadable */
+"device.center.backup.error.couldntReadSyncConfig"="Die Synchronisierungskonfiguration konnte nicht gelesen werden. Überprüfen Sie die Ordnerberechtigungen und versuchen Sie es später erneut.";
+/* Device Center backup error: Unknown drive path for sync */
+"device.center.backup.error.unknownDrivePath"="Der Laufwerkspfad der Synchronisierung ist unbekannt.";
 /* Device Center backup error: Invalid scan interval */
-"device.center.backup.error.type.invalidScanInterval"="";
-/* Device Center backup error: Filesystem notification subsystem error */
-"device.center.backup.error.type.filesystemNotificationSubsystemError"="";
-/* Device Center backup error: Unable to add filesystem watch */
-"device.center.backup.error.type.unableToAddFilesystemWatch"="";
-/* Device Center backup error: Sync root's FSID retrieval failure */
-"device.center.backup.error.type.syncRootFsidRetrievalFailure"="";
-/* Device Center backup error: State cache database inaccessible */
-"device.center.backup.error.type.stateCacheDatabaseInaccessible"="";
+"device.center.backup.error.invalidScanInterval"="Ungültiges Scan-Intervall. Überprüfen Sie die Einstellung des Scan-Intervalls und versuchen Sie es erneut.";
+/* Device Center backup error: Sync or backup issue, setup again */
+"device.center.backup.error.syncOrBackupSetupAgain"="Problem bei der Synchronisierung oder Sicherung dieses Ordners. Beenden Sie die Synchronisierung bzw. das Backup und richten Sie sie in der Desktop-App erneut ein oder wenden Sie sich an den Support.";
+/* Device Center backup error: Can't read sync location */
+"device.center.backup.error.cantReadSyncLocation"="Speicherort der Synchronisierung konnte nicht gelesen werden. Überprüfen Sie, ob auf den Speicherort zugegriffen werden kann und die erforderlichen Berechtigungen für den Ordner gewährt wurden.";
 /* Device Center backup error: Insufficient space for download */
-"device.center.backup.error.type.insufficientSpaceForDownload"="";
-/* Device Center backup error: No access to persistent storage */
-"device.center.backup.error.type.noAccessToPersistentStorage"="";
-/* Device Center backup error: Sync root's FSID change */
-"device.center.backup.error.type.syncRootFsidChange"="";
-/* Device Center backup error: FSID change on MAC device */
-"device.center.backup.error.type.fsidChangeOnMac"="";
-/* Device Center backup error: Unable to get filesystem's ID */
-"device.center.backup.error.type.unableToGetFilesystemsId"="";
+"device.center.backup.error.insufficientDownloadSpace"="Nicht genügend Speicherplatz für den Download.";
+/* Device Center backup error: Unable to add filesystem watch */
+"device.center.backup.error.addFilesystemWatch"="Eine Dateisystemüberwachung konnte nicht angelegt werden. Vergewissern Sie sich, dass genügend freier Speicherplatz und Arbeitsspeicher vorhanden sind und die erforderlichen Berechtigungen für den Ordner erteilt wurden.";
+/* Device Center backup error: Couldn't communicate with folder location */
+"device.center.backup.error.communicateWithFolderLocation"="Eine Kommunikation mit dem Ordnerspeicherort war nicht möglich. Überprüfen Sie, ob auf den Speicherort zugegriffen werden kann und die erforderlichen Berechtigungen für den Ordner gewährt wurden.";
 /* Show in Cloud Drive section action title */
 "device.center.show.in.cloud.drive.action.title"="Im Cloud Drive anzeigen";
 /* Show in Backups section action title */
@@ -3535,11 +3529,13 @@
 /* Device Center rename device action duplicated name message */
 "device.center.rename.device.duplicated.name"="Ein Gerät mit diesem Namen existiert bereits";
 /* Device Center rename device action enter a different name message */
-"device.center.rename.device.different.name"="Bitte geben Sie einen anderen Namen ein";
+"device.center.rename.device.different.name"="Bitte anderen Namen eingeben";
 /* Device Center camera upload status enabled */
 "device.center.camera.uploads.action.status.enabled"="Aktiv";
 /* Device Center camera upload status disabled */
 "device.center.camera.uploads.action.status.disabled"="Deaktiviert";
+/* Device center current device empty state message */
+"device.center.current.device.empty.state.message"="Nothing set up yet";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="Wiederholung beenden";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3739,7 +3735,7 @@
 /* Album failed to save to cloud drive alert message */
 "albumLink.alert.message.albumFailedToSaveToCloudDrive"="„%@“ kann nicht im Cloud Drive gespeichert werden. Versuchen Sie es später erneut. Wenn das Problem weiterhin besteht, wenden Sie sich an die Person, die Ihnen den Link mitgeteilt hat.";
 /* Text displayed on banner we show when sharing folder with unverified contacts */
-"shareFolder.contactsNotVerified"="Sie haben einige Kontakte, mit denen Sie Informationen teilen, noch nicht verifiziert. Um eine besonders hohe Sicherheit zu gewährleisten, empfehlen wir Ihnen, ihre Anmeldedaten in Ihren Kontakten zu verifizieren, indem Sie auf das Symbol ⓘ neben dem zu überprüfenden Kontakt tippen.";
+"shareFolder.contactsNotVerified"="Sie haben einige Kontakte, mit denen Sie Informationen teilen, noch nicht verifiziert. Um eine besonders hohe Sicherheit zu gewährleisten, empfehlen wir Ihnen, ihre Anmeldedaten in Ihren Kontakten zu verifizieren, indem Sie auf das ⓘ-Symbol neben dem zu überprüfenden Kontakt tippen.";
 /* Rename public album alert title */
 "albumLink.alert.renameAlbum.title"="Album umbenennen";
 /* Rename public album alert message */
@@ -3797,7 +3793,7 @@
 /* Call waiting room alert message text to notify host that someone is waiting to join */
 "chat.call.waitingRoom.alert.message.one"="%@ wartet darauf, der Konferenz beizutreten";
 /* Call waiting room alert button to deny access */
-"chat.call.waitingRoom.alert.button.deny"="Ablehnen";
+"chat.call.waitingRoom.alert.button.deny"="Abweisen";
 /* Call waiting room alert button to admit access */
 "chat.call.waitingRoom.alert.button.admit"="Hereinlassen";
 /* Call waiting room alert button to open waiting room UI */
@@ -3805,9 +3801,9 @@
 /* Call waiting room alert button to allow access to everyone */
 "chat.call.waitingRoom.alert.button.admitAll"="Alle hereinlassen";
 /* Call waiting room alert message text to confirm deny access from host */
-"chat.call.waitingRoom.alert.message.denyAccess"="%@ den Beitritt verweigern?";
+"chat.call.waitingRoom.alert.message.denyAccess"="%@ abweisen?";
 /* Call waiting room alert button to deny access */
-"chat.call.waitingRoom.alert.button.confirmDeny"="Beitritt verweigern";
+"chat.call.waitingRoom.alert.button.confirmDeny"="Abweisen";
 /* Call waiting room alert button to allow access */
 "chat.call.waitingRoom.alert.button.cancel"="Abbrechen";
 /* Context menu action seen from native files application when selecting a file that's also present on MEGA */
@@ -3834,3 +3830,7 @@
 "chat.call.waitingRoom.participantsList.title"="Warteraum";
 /* A button label to close the waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.close"="Schließen";
+/* Error shown when moving folder to inside itself */
+"Error.nodeCopyOrMove.circularDependency"="You can’t move this folder as the destination is the same folder.";
+/* Auto media discovery banner title */
+"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="Da dieser Ordner nur Bilder und Videos enthält, haben wir ihn automatisch in der Medienerkennungsansicht geöffnet. So können Sie Ihre visuellen Inhalte in einem ablenkungsfreien Layout genießen. Sie können dies in den Einstellungen deaktivieren.";

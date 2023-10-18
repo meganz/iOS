@@ -207,7 +207,7 @@
 /*  */
 "folderLinkUnavailableText4"="Le lien du dossier a été désactivé par l’utilisateur.";
 /* Text shown on the app when you don't have connection to the internet or when you have lost it */
-"noInternetConnection"="Il n’y a pas de connexion à Internet";
+"noInternetConnection"="Aucune connexion à Internet";
 /* Title shown when a folder doesn't have any files */
 "emptyFolder"="Le dossier est vide";
 /* Title shown when your Cloud Drive is empty, when you don't have any files. */
@@ -1282,8 +1282,8 @@
 "sendMessage"="Envoyer un message";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="Confirmer le numéro d’identification";
-/* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
-"verify"="Approuver";
+/* Title of button which marks contact as verified on Verify Contact screen */
+"account.verifyContact.confirmButtonText"="Marquer comme confirmé";
 /* Button title */
 "verified"="Confirmé";
 /* A button title to delete the history of a chat. */
@@ -1847,7 +1847,7 @@
 /* Text shown for switching from list view to thumbnail view. */
 "Thumbnail View"="Mode imagettes";
 /* Text shown when switching from thumbnail view to page view when previewing a document, for example a PDF. */
-"Page View"="Vue par page";
+"Page View"="Mode page";
 /* There are no notifications to display. */
 "No notifications"="Aucune notification";
 /* The header of a notification related to payments */
@@ -1951,7 +1951,7 @@
 /* Text shown in location-type messages */
 "Pinned Location"="Position épinglée";
 /* Plural of participant. 2 participants */
-"%d participants"="%d participants";
+"%d participants"="%d participants";
 /* Singular of participant. 1 participant */
 "%d participant"="%d participant";
 /* Text shown in the chat toolbar while the user is recording a voice clip. The < character should be > in RTL languages. */
@@ -2232,6 +2232,18 @@
 "Default Tab"="Onglet par défaut";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="Tri et mode d’affichage";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
+"settings.userInterface.mediaDiscovery"="Mode de découverte des médias";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
+"settings.userInterface.mediaDiscovery.header"="Découverte des médias";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body that appears under that option */
+"settings.userInterface.mediaDiscovery.footer.body"="Les dossiers qui ne comprennent que des images et des vidéos s’ouvriront par défaut en mode de découverte des médias.";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body link that appears under that option */
+"settings.userInterface.mediaDiscovery.footer.link"="En apprendre davantage sur la découverte des médias";
+/* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the label in the setting */
+"settings.userInterface.mediaDiscoverySubFolder"="Découverte des médias dans les sous-dossiers";
+/* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the footer message body that appears under that option */
+"settings.userInterface.mediaDiscoverySubFolder.footer"="Les images et vidéos des sous-dossiers seront aussi comprises en mode de découverte des médias.";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
 "settings.userInterface.hideRecentActivity"="Cacher l’activité récente";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
@@ -3440,92 +3452,74 @@
 "device.center.backup.blocked.status.message"="Bloqué";
 /* Default device name in case the device name cannot be obtained */
 "device.center.default.device.title"="Appareil inconnu";
-/* Device Center backup error: Unknown error */
-"device.center.backup.error.type.unknownError"="Erreur inconnue";
-/* Device Center backup error: Unsupported filesystem */
-"device.center.backup.error.type.unsupportedFilesystem"="";
-/* Device Center backup error: Invalid remote node */
-"device.center.backup.error.type.invalidRemoteNode"="";
-/* Device Center backup error: Sync setup issue with individual file */
-"device.center.backup.error.type.syncSetupIndividualFile"="";
-/* Device Center backup error: Initial scan failed */
-"device.center.backup.error.type.initialScanFailed"="";
-/* Device Center backup error: Local drive folder not found */
-"device.center.backup.error.type.localDriveFolderNotFound"="";
-/* Device Center backup error: Local drive folder not found */
-"device.center.backup.error.type.localDriveFolderNotFoundAlt"="";
-/* Device Center backup error: MEGA folder not found or inaccessible */
-"device.center.backup.error.type.megaFolderNotFoundOrInaccessible"="";
-/* Device Center backup error: Storage quota reached */
-"device.center.backup.error.type.storageQuotaReached"="";
+/* Device Center backup error: Unknown issue */
+"device.center.backup.error.unknown"="Erreur inconnue";
+/* Device Center backup error: Filesystem not supported */
+"device.center.backup.error.fileSystemUnsupported"="MEGA ne peut ni synchroniser ni sauvegarder ce dossier, car le système de fichiers de votre appareil n’est pas pris en charge.";
+/* Device Center backup error: Chosen folder can't be synced */
+"device.center.backup.error.folderCantSync"="Le dossier que vous avez choisi ne peut pas être synchronisé.";
+/* Device Center backup error: Individual file sync issue */
+"device.center.backup.error.fileSyncIndividual"="Un fichier ne peut pas être synchronisé individuellement. Vous devez définir la synchronisation du dossier.";
+/* Device Center backup error: Initial scan failure */
+"device.center.backup.error.initialScanFailed"="Échec de l’analyse initiale. Vous devrez réactiver votre synchronisation ou sauvegarde dans l’appli pour ordinateur.";
+/* Device Center backup error: Device folder not located */
+"device.center.backup.error.folderDeviceUnlocatedNow"="Impossible de trouver le dossier sur votre appareil. Réessayez plus tard.";
+/* Device Center backup error: Device folder can't be located */
+"device.center.backup.error.folderDeviceUnlocated"="Impossible de trouver le dossier sur votre appareil.";
+/* Device Center backup error: MEGA folder moved or deleted */
+"device.center.backup.error.folderMegaMovedOrDeleted"="Impossible de trouver le dossier dans MEGA. Soit il a été déplacé, soit il a été supprimé, soit vous n’y avez pas accès.";
+/* Device Center backup error: Storage quota limit */
+"device.center.backup.error.storageQuotaReached"="La limite du quota d’espace de stockage a été atteinte.";
 /* Device Center backup error: Plan expired */
-"device.center.backup.error.type.planExpired"="";
+"device.center.backup.error.planExpired"="Impossible de synchroniser ou sauvegarder ce dossier, car votre abonnement est expiré.";
 /* Device Center backup error: Shared folder quota reached */
-"device.center.backup.error.type.sharedFolderQuotaReached"="";
-/* Device Center backup error: MEGA folder moved */
-"device.center.backup.error.type.megaFolderMoved"="";
-/* Device Center backup error: Insufficient access to shared folder */
-"device.center.backup.error.type.insufficientAccessSharedFolder"="";
-/* Device Center backup error: Filesystem fingerprint mismatch */
-"device.center.backup.error.type.filesystemFingerprintMismatch"="";
-/* Device Center backup error: Folder sync disabled */
-"device.center.backup.error.type.folderSyncDisabled"="";
-/* Device Center backup error: Nested sync folders */
-"device.center.backup.error.type.nestedSyncFolders"="";
-/* Device Center backup error: Active sync above path */
-"device.center.backup.error.type.activeSyncAbovePath"="";
+"device.center.backup.error.userSharedQuotaReached"="Le dossier ne peut pas être synchronisé, car l’utilisateur qui l’a partagé a dépassé son quota de stockage.";
+/* Device Center backup error: Shared folder without full access */
+"device.center.backup.error.sharedFolderNoFullAccess"="Impossible de synchroniser le dossier, car c’est un dossier partagé sans accès total.";
+/* Device Center backup error: Files can't be synced */
+"device.center.backup.error.filesInFolder"="Les fichiers de ce dossier ne peuvent être ni synchronisés ni sauvegardés. Vous devrez réactiver la synchronisation ou la sauvegarde dans l’appli pour ordinateur.";
+/* Device Center backup error: Folder contains synced folders */
+"device.center.backup.error.containsSyncedFolders"="Le dossier ne peut pas être synchronisé, car il comprend déjà des dossiers synchronisés.";
+/* Device Center backup error: Folder inside another synced folder */
+"device.center.backup.error.insideSyncedFolder"="Le dossier ne peut pas être synchronisé, car il fait déjà partie d’un dossier synchronisé.";
 /* Device Center backup error: MEGA folder in rubbish bin */
-"device.center.backup.error.type.megaFolderInRubbishBin"="";
-/* Device Center backup error: Item in rubbish */
-"device.center.backup.error.type.itemInRubbish"="";
-/* Device Center backup error: Unsupported filesystem - VirtualBox folders */
-"device.center.backup.error.type.unsupportedFilesystemVirtualBox"="";
-/* Device Center backup error: Folder inside synced folder */
-"device.center.backup.error.type.folderInsideSyncedFolder"="";
+"device.center.backup.error.folderInRubbish"="Le dossier ne peut ni être synchronisé ni sauvegardé, car le dossier MEGA est dans la Corbeille.";
+/* Device Center backup error: Can't sync VirtualBox folders */
+"device.center.backup.error.virtualboxFolders"="MEGA ne peut ni synchroniser ni sauvegarder les dossiers VirtualBox.";
 /* Device Center backup error: Account blocked */
-"device.center.backup.error.type.accountBlocked"="";
-/* Device Center backup error: Sync or backup problem */
-"device.center.backup.error.type.syncOrBackupProblem"="";
-/* Device Center backup error: Account reloaded with missed updates */
-"device.center.backup.error.type.accountReloadedMissedUpdates"="";
-/* Device Center backup error: Sync or backup stopped */
-"device.center.backup.error.type.syncOrBackupStopped"="";
-/* Device Center backup error: MEGA folder changed */
-"device.center.backup.error.type.megaFolderChanged"="";
-/* Device Center backup error: External drive folder not found */
-"device.center.backup.error.type.externalDriveFolderNotFound"="";
-/* Device Center backup error: Sync or backup problem */
-"device.center.backup.error.type.syncOrBackupProblemAlt"="";
-/* Device Center backup error: Sync node conflict */
-"device.center.backup.error.type.syncNodeConflict"="";
-/* Device Center backup error: Renaming failed */
-"device.center.backup.error.type.renamingFailed"="";
-/* Device Center backup error: Sync creation failed */
-"device.center.backup.error.type.syncCreationFailed"="";
-/* Device Center backup error: Sync configs unreadable from disk */
-"device.center.backup.error.type.syncConfigsUnreadable"="";
-/* Device Center backup error: Unknown sync drive path */
-"device.center.backup.error.type.unknownSyncDrivePath"="";
+"device.center.backup.error.accountBlocked"="Impossible de synchroniser ou sauvegarder ce dossier, car le compte a été bloqué.";
+/* Device Center backup error: Contact support for sync issues */
+"device.center.backup.error.problemSyncingContactSupport"="Problème de synchronisation ou de sauvegarde de ce dossier. Réessayez ultérieurement. Si la situation persiste, contactez l’assistance.";
+/* Device Center backup error: Account reloaded */
+"device.center.backup.error.accountReloaded"="Le compte a été rechargé. Toute mise à jour manquée de vos sauvegardes ou synchronisations n’a pas été appliquée.";
+/* Device Center backup error: Logged out of Desktop app */
+"device.center.backup.error.loggedOut"="La synchronisation ou la sauvegarde a été arrêtée, car il semble que vous vous êtes déconnecté de l’appli pour ordinateur. Reconnectez-vous dans l’appli pour ordinateur et reprenez la synchronisation ou la sauvegarde.";
+/* Device Center backup error: Changes to MEGA folder */
+"device.center.backup.error.changesToMegaFolder"="Problème de synchronisation ou de sauvegarde de ce dossier en raison de modification du dossier MEGA. Arrêtez la synchronisation ou la sauvegarde, puis tentez de la définir de nouveau dans l’appli pour ordinateur ou contactez l’assistance.";
+/* Device Center backup error: External drive folder not located */
+"device.center.backup.error.externalDriveUnlocated"="Impossible de trouver le fichier sur le lecteur externe.";
+/* Device Center backup error: Synced folder at same path */
+"device.center.backup.error.alreadySyncedPath"="Un dossier synchronisé porte déjà ce nom dans le même chemin.";
+/* Device Center backup error: Renaming issue */
+"device.center.backup.error.renamingFailed"="Échec de renommage.";
+/* Device Center backup error: Ignored sync */
+"device.center.backup.error.syncIgnored"="Impossible de créer une synchronisation. Le fichier a été ignoré.";
+/* Device Center backup error: Sync configuration unreadable */
+"device.center.backup.error.couldntReadSyncConfig"="Impossible de lire la configuration de la synchronisation. Vérifiez les droits du dossier ultérieurement.";
+/* Device Center backup error: Unknown drive path for sync */
+"device.center.backup.error.unknownDrivePath"="Le chemin du lecteur de la synchronisation est inconnu.";
 /* Device Center backup error: Invalid scan interval */
-"device.center.backup.error.type.invalidScanInterval"="";
-/* Device Center backup error: Filesystem notification subsystem error */
-"device.center.backup.error.type.filesystemNotificationSubsystemError"="";
-/* Device Center backup error: Unable to add filesystem watch */
-"device.center.backup.error.type.unableToAddFilesystemWatch"="";
-/* Device Center backup error: Sync root's FSID retrieval failure */
-"device.center.backup.error.type.syncRootFsidRetrievalFailure"="";
-/* Device Center backup error: State cache database inaccessible */
-"device.center.backup.error.type.stateCacheDatabaseInaccessible"="";
+"device.center.backup.error.invalidScanInterval"="L’intervalle d’analyse est invalide. Vérifiez la configuration de l’intervalle d’analyse et réessayez.";
+/* Device Center backup error: Sync or backup issue, setup again */
+"device.center.backup.error.syncOrBackupSetupAgain"="Problème de synchronisation ou de sauvegarde de ce dossier. Arrêtez la synchronisation ou la sauvegarde, puis tentez de la définir de nouveau dans l’appli pour ordinateur ou contactez l’assistance.";
+/* Device Center backup error: Can't read sync location */
+"device.center.backup.error.cantReadSyncLocation"="Impossible de lire l’emplacement de la synchronisation. Vérifiez que l’emplacement est accessible et que les droits ont été accordés pour l’emplacement du dossier.";
 /* Device Center backup error: Insufficient space for download */
-"device.center.backup.error.type.insufficientSpaceForDownload"="";
-/* Device Center backup error: No access to persistent storage */
-"device.center.backup.error.type.noAccessToPersistentStorage"="";
-/* Device Center backup error: Sync root's FSID change */
-"device.center.backup.error.type.syncRootFsidChange"="";
-/* Device Center backup error: FSID change on MAC device */
-"device.center.backup.error.type.fsidChangeOnMac"="";
-/* Device Center backup error: Unable to get filesystem's ID */
-"device.center.backup.error.type.unableToGetFilesystemsId"="";
+"device.center.backup.error.insufficientDownloadSpace"="Il n’y a pas suffisamment d’espace pour télécharger.";
+/* Device Center backup error: Unable to add filesystem watch */
+"device.center.backup.error.addFilesystemWatch"="Impossible d’ajouter une surveillance du système de fichier. Assurez-vous qu’il y a suffisamment d’espace et de mémoire libres et que vous avez accordé les droits pour l’emplacement du dossier.";
+/* Device Center backup error: Couldn't communicate with folder location */
+"device.center.backup.error.communicateWithFolderLocation"="Impossible de communiquer avec l’emplacement de la synchronisation. Vérifiez que l’emplacement est accessible et que les droits ont été accordés pour l’emplacement du dossier.";
 /* Show in Cloud Drive section action title */
 "device.center.show.in.cloud.drive.action.title"="Afficher dans le Disque nuagique";
 /* Show in Backups section action title */
@@ -3540,6 +3534,8 @@
 "device.center.camera.uploads.action.status.enabled"="Activé";
 /* Device Center camera upload status disabled */
 "device.center.camera.uploads.action.status.disabled"="Désactivé";
+/* Device center current device empty state message */
+"device.center.current.device.empty.state.message"="Rien de configuré";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="Fin de la récurrence";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3791,7 +3787,7 @@
 /* Meeting waiting room alert title of Host didn’t respond */
 "meetings.waitingRoom.alert.hostDidNotRespond"="L’hôte n’a pas répondu";
 /* Meeting waiting room alert message of There is no response to your request to join the meeting */
-"meetings.waitingRoom.alert.thereIsNoResponseToYourResquestToJoinTheMeeting"="Votre demande de participation à la réunion n’a pas reçu de réponse. Vous serez retiré de la salle d’attente. Réessayez plus tard.";
+"meetings.waitingRoom.alert.thereIsNoResponseToYourResquestToJoinTheMeeting"="Votre demande de participation à la réunion n’a pas reçu de réponse. Vous quitterez la salle d’attente. Réessayez plus tard.";
 /* Meeting waiting room alert action of ok got it */
 "meetings.waitingRoom.alert.okGotIt"="D’accord, j’ai compris";
 /* Call waiting room alert message text to notify host that someone is waiting to join */
@@ -3834,3 +3830,7 @@
 "chat.call.waitingRoom.participantsList.title"="Salle d’attente";
 /* A button label to close the waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.close"="Fermer";
+/* Error shown when moving folder to inside itself */
+"Error.nodeCopyOrMove.circularDependency"="Vous ne pouvez pas déplacer ce dossier, car la destination est le même dossier.";
+/* Auto media discovery banner title */
+"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="Comme ce dossier ne comprend que des images et des vidéos, nous l’avons automatiquement ouvert en mode de découverte des médias. Vous pouvez profiter de votre contenu visuel avec une mise en page plus immersive. Vous pouvez désactiver cette option dans Paramètres.";

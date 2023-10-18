@@ -565,7 +565,7 @@
 /* Used in create album popup. */
 "cameraUploads.albums.create.alert.placeholder"="新相簿";
 /* Used in create album popup user album name validation */
-"cameraUploads.albums.create.alert.userAlbumExists"="已存在相同名稱的相簿。";
+"cameraUploads.albums.create.alert.userAlbumExists"="具有此名稱的相簿已存在。";
 /* Used in create album popup system album name validation */
 "cameraUploads.albums.create.alert.albumNameNotAllowed"="不允許使用此相簿名稱";
 /* Used in create album popup album name validation */
@@ -1282,8 +1282,8 @@
 "sendMessage"="發送訊息";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
 "verifyCredentials"="驗證憑證";
-/* Label for any ‘Verify’ button, link, text, title, etc. - (String as short as possible). */
-"verify"="批准";
+/* Title of button which marks contact as verified on Verify Contact screen */
+"account.verifyContact.confirmButtonText"="標記為已驗證";
 /* Button title */
 "verified"="已驗證";
 /* A button title to delete the history of a chat. */
@@ -2232,6 +2232,18 @@
 "Default Tab"="預設分頁";
 /* Inside of Settings - Appearance, there is a view on which you can change the sorting preferences or the view mode preference for the app. */
 "Sorting And View Mode"="排序和檢視模式";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the label in the setting */
+"settings.userInterface.mediaDiscovery"="媒體探索檢視";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
+"settings.userInterface.mediaDiscovery.header"="媒體探索";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body that appears under that option */
+"settings.userInterface.mediaDiscovery.footer.body"="預設情況下，僅包含圖片和影片的資料夾將在媒體探索檢視中開啟。";
+/* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body link that appears under that option */
+"settings.userInterface.mediaDiscovery.footer.link"="瞭解更多關於媒體探索的資訊。";
+/* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the label in the setting */
+"settings.userInterface.mediaDiscoverySubFolder"="子資料夾中的媒體探索";
+/* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the footer message body that appears under that option */
+"settings.userInterface.mediaDiscoverySubFolder.footer"="子資料夾中的影像和影片也將包含在媒體探索檢視中。";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
 "settings.userInterface.hideRecentActivity"="隱藏近期活動";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
@@ -3440,92 +3452,74 @@
 "device.center.backup.blocked.status.message"="已封鎖";
 /* Default device name in case the device name cannot be obtained */
 "device.center.default.device.title"="不明的裝置";
-/* Device Center backup error: Unknown error */
-"device.center.backup.error.type.unknownError"="未知的錯誤";
-/* Device Center backup error: Unsupported filesystem */
-"device.center.backup.error.type.unsupportedFilesystem"="";
-/* Device Center backup error: Invalid remote node */
-"device.center.backup.error.type.invalidRemoteNode"="";
-/* Device Center backup error: Sync setup issue with individual file */
-"device.center.backup.error.type.syncSetupIndividualFile"="";
-/* Device Center backup error: Initial scan failed */
-"device.center.backup.error.type.initialScanFailed"="";
-/* Device Center backup error: Local drive folder not found */
-"device.center.backup.error.type.localDriveFolderNotFound"="";
-/* Device Center backup error: Local drive folder not found */
-"device.center.backup.error.type.localDriveFolderNotFoundAlt"="";
-/* Device Center backup error: MEGA folder not found or inaccessible */
-"device.center.backup.error.type.megaFolderNotFoundOrInaccessible"="";
-/* Device Center backup error: Storage quota reached */
-"device.center.backup.error.type.storageQuotaReached"="";
+/* Device Center backup error: Unknown issue */
+"device.center.backup.error.unknown"="未知錯誤。";
+/* Device Center backup error: Filesystem not supported */
+"device.center.backup.error.fileSystemUnsupported"="MEGA無法同步或備份此資料夾，因為尚不支援您裝置上的檔案系統。";
+/* Device Center backup error: Chosen folder can't be synced */
+"device.center.backup.error.folderCantSync"="您選擇的資料夾無法同步。";
+/* Device Center backup error: Individual file sync issue */
+"device.center.backup.error.fileSyncIndividual"="檔案不能單獨同步。您需要從資料夾中設定同步。";
+/* Device Center backup error: Initial scan failure */
+"device.center.backup.error.initialScanFailed"="初始掃描失敗。您需要從桌面應用程式重新啟用同步或備份。";
+/* Device Center backup error: Device folder not located */
+"device.center.backup.error.folderDeviceUnlocatedNow"="現在無法找到您裝置中的資料夾，請稍後再試。";
+/* Device Center backup error: Device folder can't be located */
+"device.center.backup.error.folderDeviceUnlocated"="無法找到您裝置中的資料夾。";
+/* Device Center backup error: MEGA folder moved or deleted */
+"device.center.backup.error.folderMegaMovedOrDeleted"="無法找到MEGA中的資料夾，因為它已被移動或刪除，或者您可能無權權存取。";
+/* Device Center backup error: Storage quota limit */
+"device.center.backup.error.storageQuotaReached"="已達到儲存配額限制。";
 /* Device Center backup error: Plan expired */
-"device.center.backup.error.type.planExpired"="";
+"device.center.backup.error.planExpired"="由於您的方案已到期，因此無法同步或備份此資料夾。";
 /* Device Center backup error: Shared folder quota reached */
-"device.center.backup.error.type.sharedFolderQuotaReached"="";
-/* Device Center backup error: MEGA folder moved */
-"device.center.backup.error.type.megaFolderMoved"="";
-/* Device Center backup error: Insufficient access to shared folder */
-"device.center.backup.error.type.insufficientAccessSharedFolder"="";
-/* Device Center backup error: Filesystem fingerprint mismatch */
-"device.center.backup.error.type.filesystemFingerprintMismatch"="";
-/* Device Center backup error: Folder sync disabled */
-"device.center.backup.error.type.folderSyncDisabled"="";
-/* Device Center backup error: Nested sync folders */
-"device.center.backup.error.type.nestedSyncFolders"="";
-/* Device Center backup error: Active sync above path */
-"device.center.backup.error.type.activeSyncAbovePath"="";
+"device.center.backup.error.userSharedQuotaReached"="資料夾無法同步，因為共享此資料夾的使用者已達到其儲存配額限制。";
+/* Device Center backup error: Shared folder without full access */
+"device.center.backup.error.sharedFolderNoFullAccess"="由於它是一個不具完全存取權限的共享資料夾，因此無法進行同步。";
+/* Device Center backup error: Files can't be synced */
+"device.center.backup.error.filesInFolder"="無法同步或備份此資料夾中的檔案。您需要從桌面應用程式重新啟用同步或備份。";
+/* Device Center backup error: Folder contains synced folders */
+"device.center.backup.error.containsSyncedFolders"="資料夾無法同步，因為它已經包含同步的資料夾。";
+/* Device Center backup error: Folder inside another synced folder */
+"device.center.backup.error.insideSyncedFolder"="資料夾無法同步，因為它已經在同步資料夾中。";
 /* Device Center backup error: MEGA folder in rubbish bin */
-"device.center.backup.error.type.megaFolderInRubbishBin"="";
-/* Device Center backup error: Item in rubbish */
-"device.center.backup.error.type.itemInRubbish"="";
-/* Device Center backup error: Unsupported filesystem - VirtualBox folders */
-"device.center.backup.error.type.unsupportedFilesystemVirtualBox"="";
-/* Device Center backup error: Folder inside synced folder */
-"device.center.backup.error.type.folderInsideSyncedFolder"="";
+"device.center.backup.error.folderInRubbish"="由於MEGA資料夾位於垃圾筒中，因此資料夾無法同步或備份。";
+/* Device Center backup error: Can't sync VirtualBox folders */
+"device.center.backup.error.virtualboxFolders"="MEGA無法同步或備份VirtualBox資料夾。";
 /* Device Center backup error: Account blocked */
-"device.center.backup.error.type.accountBlocked"="";
-/* Device Center backup error: Sync or backup problem */
-"device.center.backup.error.type.syncOrBackupProblem"="";
-/* Device Center backup error: Account reloaded with missed updates */
-"device.center.backup.error.type.accountReloadedMissedUpdates"="";
-/* Device Center backup error: Sync or backup stopped */
-"device.center.backup.error.type.syncOrBackupStopped"="";
-/* Device Center backup error: MEGA folder changed */
-"device.center.backup.error.type.megaFolderChanged"="";
-/* Device Center backup error: External drive folder not found */
-"device.center.backup.error.type.externalDriveFolderNotFound"="";
-/* Device Center backup error: Sync or backup problem */
-"device.center.backup.error.type.syncOrBackupProblemAlt"="";
-/* Device Center backup error: Sync node conflict */
-"device.center.backup.error.type.syncNodeConflict"="";
-/* Device Center backup error: Renaming failed */
-"device.center.backup.error.type.renamingFailed"="";
-/* Device Center backup error: Sync creation failed */
-"device.center.backup.error.type.syncCreationFailed"="";
-/* Device Center backup error: Sync configs unreadable from disk */
-"device.center.backup.error.type.syncConfigsUnreadable"="";
-/* Device Center backup error: Unknown sync drive path */
-"device.center.backup.error.type.unknownSyncDrivePath"="";
+"device.center.backup.error.accountBlocked"="由於帳戶已被封鎖，因此無法同步或備份此資料夾。";
+/* Device Center backup error: Contact support for sync issues */
+"device.center.backup.error.problemSyncingContactSupport"="同步或備份此資料夾時出現問題。稍後再試。如果問題仍然存在，請聯繫客服。";
+/* Device Center backup error: Account reloaded */
+"device.center.backup.error.accountReloaded"="帳戶已重新載入。您的備份或同步的任何錯過的更新都沒有套用。";
+/* Device Center backup error: Logged out of Desktop app */
+"device.center.backup.error.loggedOut"="由於您似乎已登出桌面應用程式，因此同步或備份已停止。透過桌面應用程式重新登入，然後恢復同步或備份。";
+/* Device Center backup error: Changes to MEGA folder */
+"device.center.backup.error.changesToMegaFolder"="由於MEGA資料夾發生更動，因此同步或備份此資料夾時出現問題。請停止同步或備份，然後嘗試在桌面應用程式中重新設定，或聯繫客服。";
+/* Device Center backup error: External drive folder not located */
+"device.center.backup.error.externalDriveUnlocated"="無法找到外部磁碟的資料夾。";
+/* Device Center backup error: Synced folder at same path */
+"device.center.backup.error.alreadySyncedPath"="同一路徑下已經有一個同步資料夾。";
+/* Device Center backup error: Renaming issue */
+"device.center.backup.error.renamingFailed"="重新命名失敗。";
+/* Device Center backup error: Ignored sync */
+"device.center.backup.error.syncIgnored"="無法建立同步。檔案已被忽略。";
+/* Device Center backup error: Sync configuration unreadable */
+"device.center.backup.error.couldntReadSyncConfig"="無法讀取同步設定。檢查資料夾權限並稍後重試。";
+/* Device Center backup error: Unknown drive path for sync */
+"device.center.backup.error.unknownDrivePath"="同步的磁碟路徑未知。";
 /* Device Center backup error: Invalid scan interval */
-"device.center.backup.error.type.invalidScanInterval"="";
-/* Device Center backup error: Filesystem notification subsystem error */
-"device.center.backup.error.type.filesystemNotificationSubsystemError"="";
-/* Device Center backup error: Unable to add filesystem watch */
-"device.center.backup.error.type.unableToAddFilesystemWatch"="";
-/* Device Center backup error: Sync root's FSID retrieval failure */
-"device.center.backup.error.type.syncRootFsidRetrievalFailure"="";
-/* Device Center backup error: State cache database inaccessible */
-"device.center.backup.error.type.stateCacheDatabaseInaccessible"="";
+"device.center.backup.error.invalidScanInterval"="掃描間隔無效。檢查掃描間隔設定並且重試。";
+/* Device Center backup error: Sync or backup issue, setup again */
+"device.center.backup.error.syncOrBackupSetupAgain"="同步或備份此資料夾時出現問題。停止同步或備份，然後嘗試在桌面應用程式中重新設定，或聯繫客服。";
+/* Device Center backup error: Can't read sync location */
+"device.center.backup.error.cantReadSyncLocation"="無法讀取同步位置。檢查該位置是否可用，而且是否已授予該資料夾位置的權限。";
 /* Device Center backup error: Insufficient space for download */
-"device.center.backup.error.type.insufficientSpaceForDownload"="";
-/* Device Center backup error: No access to persistent storage */
-"device.center.backup.error.type.noAccessToPersistentStorage"="";
-/* Device Center backup error: Sync root's FSID change */
-"device.center.backup.error.type.syncRootFsidChange"="";
-/* Device Center backup error: FSID change on MAC device */
-"device.center.backup.error.type.fsidChangeOnMac"="";
-/* Device Center backup error: Unable to get filesystem's ID */
-"device.center.backup.error.type.unableToGetFilesystemsId"="";
+"device.center.backup.error.insufficientDownloadSpace"="空間不足，無法下載。";
+/* Device Center backup error: Unable to add filesystem watch */
+"device.center.backup.error.addFilesystemWatch"="無法新增檔案系統偵聽。確保有足夠的可用空間和記憶體，並且您已授予資料夾位置的權限。";
+/* Device Center backup error: Couldn't communicate with folder location */
+"device.center.backup.error.communicateWithFolderLocation"="無法與資料夾位置通訊。檢查該位置是否可用，而且是否已授予該資料夾位置的權限。";
 /* Show in Cloud Drive section action title */
 "device.center.show.in.cloud.drive.action.title"="在雲端硬碟中顯示";
 /* Show in Backups section action title */
@@ -3540,6 +3534,8 @@
 "device.center.camera.uploads.action.status.enabled"="啟用";
 /* Device Center camera upload status disabled */
 "device.center.camera.uploads.action.status.disabled"="已停用";
+/* Device center current device empty state message */
+"device.center.current.device.empty.state.message"="尚未設定任何內容";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="結束重複";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3791,7 +3787,7 @@
 /* Meeting waiting room alert title of Host didn’t respond */
 "meetings.waitingRoom.alert.hostDidNotRespond"="主持人沒有回應";
 /* Meeting waiting room alert message of There is no response to your request to join the meeting */
-"meetings.waitingRoom.alert.thereIsNoResponseToYourResquestToJoinTheMeeting"="你加入會議的請求沒有得到回應。你將被從等候室移除。請稍後再次嘗試加入。";
+"meetings.waitingRoom.alert.thereIsNoResponseToYourResquestToJoinTheMeeting"="你加入會議的請求沒有得到回應。你將從等候室被移除。請稍後再次嘗試加入。";
 /* Meeting waiting room alert action of ok got it */
 "meetings.waitingRoom.alert.okGotIt"="好的，明白了";
 /* Call waiting room alert message text to notify host that someone is waiting to join */
@@ -3834,3 +3830,7 @@
 "chat.call.waitingRoom.participantsList.title"="等候室";
 /* A button label to close the waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.close"="關閉";
+/* Error shown when moving folder to inside itself */
+"Error.nodeCopyOrMove.circularDependency"="您無法移動此資料夾，因為目的地是同一個資料夾。";
+/* Auto media discovery banner title */
+"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="由於此資料夾僅包含圖片和影片，我們已經自動在媒體探索檢視中開啟它。您可以透過更身臨其境的佈局享受您的視覺內容。您可以在設定中停用此功能。";
