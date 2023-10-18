@@ -252,8 +252,8 @@
     self.incomingNodesMutableArray = NSMutableArray.alloc.init;
     
     self.incomingShareList = [MEGASdkManager.sharedMEGASdk inSharesList:self.sortOrderType];
-    NSUInteger count = self.incomingShareList.size.unsignedIntegerValue;
-    for (NSUInteger i = 0; i < count; i++) {
+    NSInteger count = self.incomingShareList.size;
+    for (NSInteger i = 0; i < count; i++) {
         MEGAShare *share = [self.incomingShareList shareAtIndex:i];
         MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:share.nodeHandle];
         [self.incomingNodesMutableArray addObject:node];
@@ -274,8 +274,8 @@
     self.outgoingNodesMutableArray = NSMutableArray.alloc.init;
     self.outgoingUnverifiedNodesMutableArray = NSMutableArray.alloc.init;
     
-    NSUInteger count = self.outgoingShareList.size.unsignedIntegerValue;
-    for (NSUInteger i = 0; i < count; i++) {
+    NSInteger count = self.outgoingShareList.size;
+    for (NSInteger i = 0; i < count; i++) {
         MEGAShare *share = [_outgoingShareList shareAtIndex:i];
         if ([share user] != nil) {
             [_outgoingSharesMutableArray addObject:share];
@@ -425,7 +425,7 @@
     cell.delegate = self;
     
     MEGAShare *share = nil;
-    for (NSUInteger i = 0; i < self.incomingShareList.size.unsignedIntegerValue; i++) {
+    for (NSUInteger i = 0; i < self.incomingShareList.size; i++) {
         MEGAShare *s = [self.incomingShareList shareAtIndex:i];
         if (s.nodeHandle == node.handle) {
             share = s;
@@ -676,7 +676,7 @@
         MEGANode *n = nil;
         MEGAShare *s = nil;
         if (self.incomingButton.selected) {
-            NSUInteger count = self.incomingShareList.size.unsignedIntegerValue;
+            NSInteger count = self.incomingShareList.size;
             for (NSInteger i = 0; i < count; i++) {
                 s = [self.incomingShareList shareAtIndex:i];
                 n = [self.incomingNodesMutableArray objectAtIndex:i];

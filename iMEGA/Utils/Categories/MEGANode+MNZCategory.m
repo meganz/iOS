@@ -437,7 +437,7 @@
         NSMutableArray *outSharesForNodeMutableArray = [[NSMutableArray alloc] init];
         
         MEGAShareList *outSharesForNodeShareList = [[MEGASdkManager sharedMEGASdk] outSharesForNode:self];
-        NSUInteger outSharesForNodeCount = outSharesForNodeShareList.size.unsignedIntegerValue;
+        NSInteger outSharesForNodeCount = outSharesForNodeShareList.size;
         for (NSInteger i = 0; i < outSharesForNodeCount; i++) {
             MEGAShare *share = [outSharesForNodeShareList shareAtIndex:i];
             if (share.user != nil) {
@@ -867,7 +867,7 @@
     NSMutableArray *outSharesForNodeMutableArray = NSMutableArray.new;
     
     MEGAShareList *outSharesForNodeShareList = [MEGASdkManager.sharedMEGASdk outSharesForNode:self];
-    NSUInteger outSharesForNodeCount = outSharesForNodeShareList.size.unsignedIntegerValue;
+    NSInteger outSharesForNodeCount = outSharesForNodeShareList.size;
     for (NSInteger i = 0; i < outSharesForNodeCount; i++) {
         MEGAShare *share = [outSharesForNodeShareList shareAtIndex:i];
         if (share.user != nil) {

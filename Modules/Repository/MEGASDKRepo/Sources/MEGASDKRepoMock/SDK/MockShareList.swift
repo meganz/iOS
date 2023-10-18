@@ -8,11 +8,11 @@ public final class MockShareList: MEGAShareList {
         super.init()
     }
     
-    public override var size: NSNumber! {
-        NSNumber(value: shares.count)
+    public override var size: NSInteger {
+        shares.count
     }
     
-    public override func share(at index: Int) -> MEGAShare! {
+    public override func share(at index: Int) -> MEGAShare? {
         shares[index]
     }
 }

@@ -13,7 +13,7 @@ extension MainTabBarController {
                 share.sharedUserEmail != nil && !share.isVerified
             }
         
-        guard unverifiedOutShares != nil || unverifiedInShares.size.intValue > 0 else {
+        guard unverifiedOutShares != nil || unverifiedInShares.size > 0 else {
             setBadgeValue(nil, tabPosition: TabType.sharedItems.rawValue)
             return
         }
