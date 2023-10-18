@@ -1,7 +1,7 @@
 import MEGADomain
 
 extension ExplorerTypeEntity {
-    func toNodeFormatEntity() -> NodeFormatEntity {
+    public func toNodeFormatEntity() -> NodeFormatEntity {
         switch self {
         case .audio: return .audio
         case .document: return .document
