@@ -40,7 +40,9 @@ class ReactionContainerView: UIView {
                 return
             }
             for index in 0 ..< list.size {
-                emojis.append(list.string(at: index))
+                if let value = list.string(at: index) {
+                    emojis.append(value)
+                }
             }
             rootFlexContainer.flex.direction(.rowReverse).wrap(.wrap).paddingHorizontal(10).justifyContent(.start).alignItems(.start).define { (flex) in
                 emojis.forEach { (emoji) in

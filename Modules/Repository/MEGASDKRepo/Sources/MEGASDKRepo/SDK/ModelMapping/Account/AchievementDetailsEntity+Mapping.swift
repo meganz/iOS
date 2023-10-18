@@ -10,8 +10,10 @@ extension MEGAAchievementsDetails {
 
         var awardEmailsArray: [String] = []
         classes.forEach {
-            guard let awardEmails = awardEmails(at: UInt($0)), awardEmails.size > 0 else { return }
-            awardEmailsArray.append(awardEmails.string(at: 0))
+            guard let awardEmails = awardEmails(at: UInt($0)),
+                  awardEmails.size > 0,
+                  let email = awardEmails.string(at: 0) else { return }
+            awardEmailsArray.append(email)
         }
 
         return AchievementDetailsEntity(
