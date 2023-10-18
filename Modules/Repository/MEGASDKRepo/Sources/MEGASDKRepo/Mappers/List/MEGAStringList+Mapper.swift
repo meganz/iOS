@@ -3,6 +3,6 @@ import MEGASdk
 
 extension MEGAStringList {
     public func toArray() -> [String] {
-        (0..<size).map { string(at: $0) }
+        (0..<size).compactMap { string(at: $0) }
     }
 }
