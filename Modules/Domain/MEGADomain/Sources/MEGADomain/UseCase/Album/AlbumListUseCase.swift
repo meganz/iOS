@@ -9,18 +9,13 @@ public protocol AlbumListUseCaseProtocol {
     func hasNoPhotosAndVideos() async -> Bool
 }
 
-public struct AlbumListUseCase<T: FilesSearchRepositoryProtocol,
-                               U: MediaUseCaseProtocol,
-                               V: UserAlbumRepositoryProtocol,
-                               W: AlbumContentsUpdateNotifierRepositoryProtocol,
-                               X: AlbumContentsUseCaseProtocol>:
-                                AlbumListUseCaseProtocol {
+public struct AlbumListUseCase: AlbumListUseCaseProtocol {
     
-    private let fileSearchRepository: T
-    private let mediaUseCase: U
-    private let userAlbumRepository: V
-    private let albumContentsUpdateRepository: W
-    private let albumContentsUseCase: X
+    private let fileSearchRepository: any FilesSearchRepositoryProtocol
+    private let mediaUseCase: any MediaUseCaseProtocol
+    private let userAlbumRepository: any UserAlbumRepositoryProtocol
+    private let albumContentsUpdateRepository: any AlbumContentsUpdateNotifierRepositoryProtocol
+    private let albumContentsUseCase: any AlbumContentsUseCaseProtocol
     
     public var albumsUpdatedPublisher: AnyPublisher<Void, Never> {
         userAlbumUpdates
@@ -41,11 +36,11 @@ public struct AlbumListUseCase<T: FilesSearchRepositoryProtocol,
     }
     
     public init(
-        fileSearchRepository: T,
-        mediaUseCase: U,
-        userAlbumRepository: V,
-        albumContentsUpdateRepository: W,
-        albumContentsUseCase: X
+        fileSearchRepository: some FilesSearchRepositoryProtocol,
+        mediaUseCase: some MediaUseCaseProtocol,
+        userAlbumRepository: some UserAlbumRepositoryProtocol,
+        albumContentsUpdateRepository: some AlbumContentsUpdateNotifierRepositoryProtocol,
+        albumContentsUseCase: some AlbumContentsUseCaseProtocol
     ) {
         self.fileSearchRepository = fileSearchRepository
         self.mediaUseCase = mediaUseCase

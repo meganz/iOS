@@ -29,7 +29,7 @@ struct AlbumContentRouter: AlbumContentRouting {
     func build() -> UIViewController {
         let albumContentsUpdateRepo = AlbumContentsUpdateNotifierRepository.newRepo
         let filesSearchRepo = FilesSearchRepository.newRepo
-        let userAlbumRepo = UserAlbumRepository.newRepo
+        let userAlbumRepo = userAlbumRepository()
         let albumContentsUseCase = AlbumContentsUseCase(
             albumContentsRepo: albumContentsUpdateRepo,
             mediaUseCase: MediaUseCase(fileSearchRepo: filesSearchRepo),
@@ -87,7 +87,7 @@ struct AlbumContentRouter: AlbumContentRouting {
             albumContentsRepo: AlbumContentsUpdateNotifierRepository.newRepo,
             mediaUseCase: mediaUseCase,
             fileSearchRepo: filesSearchRepo,
-            userAlbumRepo: UserAlbumRepository.newRepo
+            userAlbumRepo: userAlbumRepository()
         )
         
         let viewModel = AlbumCoverPickerViewModel(album: album,
@@ -126,4 +126,11 @@ struct AlbumContentRouter: AlbumContentRouting {
     }
     
     func start() {}
+    
+    private func userAlbumRepository() -> any UserAlbumRepositoryProtocol {
+        guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .albumPhotoCache) else {
+            return UserAlbumRepository.newRepo
+        }
+        return UserAlbumCacheRepository.newRepo
+    }
 }
