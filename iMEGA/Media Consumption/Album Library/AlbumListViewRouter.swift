@@ -12,7 +12,7 @@ protocol AlbumListViewRouting {
 
 struct AlbumListViewRouter: AlbumListViewRouting, Routing {
     weak var photoAlbumContainerViewModel: PhotoAlbumContainerViewModel?
-
+    
     func cell(album: AlbumEntity, selection: AlbumSelection) -> AlbumCell {
         let vm = AlbumCellViewModel(
             thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo),
@@ -31,7 +31,7 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
         let filesSearchRepo = FilesSearchRepository.newRepo
         let albumContentsUpdatesRepo = AlbumContentsUpdateNotifierRepository.newRepo
         let mediaUseCase = MediaUseCase(fileSearchRepo: filesSearchRepo)
-        let userAlbumRepo = UserAlbumRepository.newRepo
+        let userAlbumRepo = userAlbumRepository()
         let vm = AlbumListViewModel(
             usecase: AlbumListUseCase(
                 fileSearchRepository: filesSearchRepo,
@@ -47,9 +47,9 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
             shareAlbumUseCase: ShareAlbumUseCase(shareAlbumRepository: ShareAlbumRepository.newRepo),
             tracker: DIContainer.tracker,
             alertViewModel: TextFieldAlertViewModel(title: Strings.Localizable.CameraUploads.Albums.Create.Alert.title,
-                                                       placeholderText: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder,
-                                                       affirmativeButtonTitle: Strings.Localizable.createFolderButton,
-                                                       message: nil),
+                                                    placeholderText: Strings.Localizable.CameraUploads.Albums.Create.Alert.placeholder,
+                                                    affirmativeButtonTitle: Strings.Localizable.createFolderButton,
+                                                    message: nil),
             photoAlbumContainerViewModel: photoAlbumContainerViewModel
         )
         
@@ -61,4 +61,11 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
     }
     
     func start() {}
+    
+    private func userAlbumRepository() -> any UserAlbumRepositoryProtocol {
+        guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .albumPhotoCache) else {
+            return UserAlbumRepository.newRepo
+        }
+        return UserAlbumCacheRepository.newRepo
+    }
 }
