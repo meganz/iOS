@@ -109,27 +109,29 @@ public struct NameCollisionUseCase<T: NodeRepositoryProtocol, U: NodeActionsRepo
     
     public func renameNode(named name: NSString, inParent parentHandle: HandleEntity) -> String {
         let counterPattern = #"\(\d+\)"#
-        var filename = name.deletingPathExtension
-        if let counterRange = filename.range(of: counterPattern, options: .regularExpression) {
-            let currentCounter = filename[counterRange]
-            guard let counter = Int(currentCounter.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()) else {
-                return filename + "." + name.pathExtension
-            }
-            filename.replaceSubrange(counterRange, with: "(\(counter + 1))")
-            filename = filename + "." + name.pathExtension
-            if nodeRepository.childNodeNamed(name: filename, in: parentHandle) != nil {
-                return renameNode(named: filename as NSString, inParent: parentHandle)
+        let fileName = name.deletingPathExtension
+        let pathExtension = name.pathExtension
+        
+        var newFileName = fileName
+        var counter = 1
+        
+        while counter < Int.max {
+            if let counterRange = newFileName.range(of: counterPattern, options: .regularExpression) {
+                newFileName.replaceSubrange(counterRange, with: "(\(counter))")
             } else {
-                return filename
+                newFileName = fileName + " (\(counter))"
             }
-        } else {
-            filename = filename + " (1)." + name.pathExtension
-            if nodeRepository.childNodeNamed(name: filename, in: parentHandle) != nil {
-                return renameNode(named: filename as NSString, inParent: parentHandle)
-            } else {
-                return filename
+                        
+            let searchFileName = newFileName + "." + pathExtension
+            
+            if nodeRepository.childNodeNamed(name: searchFileName, in: parentHandle) == nil {
+                return searchFileName
             }
+            
+            counter += 1
         }
+        
+        return name as String
     }
     
     public func node(for handle: HandleEntity) -> NodeEntity? {
