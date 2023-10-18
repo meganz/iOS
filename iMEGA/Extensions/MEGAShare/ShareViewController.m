@@ -165,7 +165,6 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self fakeModalPresentation];
     [MEGASdkManager.sharedMEGASdk addMEGARequestDelegate:self.logoutDelegate];
 }
 
@@ -349,13 +348,6 @@
         self.passcodePresented = YES;
     }
     
-}
-
-- (void)fakeModalPresentation {
-    self.view.transform = CGAffineTransformMakeTranslation(0, self.view.frame.size.height);
-    [UIView animateWithDuration:MNZ_ANIMATION_TIME animations:^{
-        self.view.transform = CGAffineTransformIdentity;
-    }];
 }
 
 - (void)hideViewWithCompletion:(void (^)(void))completion {
