@@ -17,7 +17,7 @@ struct MEGAPlan: Equatable {
     let price: Price
     let currency: Currency?
     let proLevel: MEGAAccountType
-    let description: Description
+    let description: Description?
 }
 
 extension MEGAPlan {
