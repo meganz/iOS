@@ -55,8 +55,11 @@ struct NodeActionsRepository: NodeActionsRepositoryProtocol {
             
             let delegate = RequestDelegate { result in
                 switch result {
-                case .failure:
-                    continuation.resume(throwing: CopyOrMoveErrorEntity.nodeCopyFailed)
+                case .failure(let error):
+                    continuation.resume(
+                        throwing: error.type == .apiEOverQuota ? CopyOrMoveErrorEntity.overQuota
+                        : CopyOrMoveErrorEntity.nodeCopyFailed
+                    )
                 case .success(let request):
                     continuation.resume(returning: request.nodeHandle)
                 }
