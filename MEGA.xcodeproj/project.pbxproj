@@ -8774,13 +8774,6 @@
 			path = Calls;
 			sourceTree = "<group>";
 		};
-		838B976426B15318000E480E /* Call */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Call;
-			sourceTree = "<group>";
-		};
 		838F63CC28367763009B41D6 /* ViewEntity */ = {
 			isa = PBXGroup;
 			children = (
@@ -11433,7 +11426,6 @@
 		BF782D23269BA4BA0001D169 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
-				838B976426B15318000E480E /* Call */,
 				BF782D42269BA4BA0001D169 /* Error */,
 			);
 			path = Entity;

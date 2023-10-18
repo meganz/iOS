@@ -33,15 +33,11 @@ extension MEGAShare {
 
 extension MEGAShareList {
     public func toShareEntities() -> [ShareEntity] {
-        guard let count = size?.intValue else {
+        guard size > 0 else {
             return []
         }
         
-        guard count > 0 else {
-            return []
-        }
-        
-        return (0..<count).compactMap {
+        return (0..<size).compactMap {
             share(at: $0)?.toShareEntity()
         }
     }

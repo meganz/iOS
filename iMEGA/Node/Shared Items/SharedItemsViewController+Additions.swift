@@ -113,8 +113,8 @@ extension SharedItemsViewController {
     }
 
     @objc func addInShareSearchBarIfNeeded() {
-        let inShareSize = incomingShareList?.size.intValue ?? 0
-        let unverifiedInShareSize = incomingUnverifiedShareList?.size.intValue ?? 0
+        let inShareSize = incomingShareList?.size ?? 0
+        let unverifiedInShareSize = incomingUnverifiedShareList?.size ?? 0
         
         guard inShareSize > 0 || unverifiedInShareSize > 0 else {
             tableView?.tableHeaderView = nil
@@ -209,11 +209,11 @@ extension SharedItemsViewController {
         
         var isEnabled = false
         if incomingButton?.isSelected == true {
-            let inShareSize = incomingShareList?.size.intValue ?? 0
-            let unverifiedInShareSize = incomingUnverifiedShareList?.size.intValue ?? 0
+            let inShareSize = incomingShareList?.size ?? 0
+            let unverifiedInShareSize = incomingUnverifiedShareList?.size ?? 0
             isEnabled = inShareSize > 0 || unverifiedInShareSize > 0
         } else if outgoingButton?.isSelected == true {
-            let outShareSize = outgoingShareList?.size.intValue ?? 0
+            let outShareSize = outgoingShareList?.size ?? 0
             isEnabled = outShareSize > 0
         } else if linksButton?.isSelected == true {
             isEnabled = publicLinksArray.isNotEmpty
@@ -227,8 +227,8 @@ extension SharedItemsViewController {
     }
     
     private func shares(from shareList: MEGAShareList) -> [MEGAShare] {
-        (0..<shareList.size.intValue).compactMap { index in
-            let share: MEGAShare = shareList.share(at: index)
+        (0..<shareList.size).compactMap { index in
+            guard let share = shareList.share(at: index) else { return nil }
             guard share.user != nil else { return nil }
             return share
         }
@@ -366,7 +366,7 @@ extension SharedItemsViewController {
     @objc func user(for node: MEGANode) -> MEGAUser? {
         guard let incomingShareList = incomingShareList else { return nil }
 
-        for i in 0...Int(truncating: incomingShareList.size) {
+        for i in 0...incomingShareList.size {
             guard let share = incomingShareList.share(at: i), share.nodeHandle == node.handle else {
                 continue
             }
