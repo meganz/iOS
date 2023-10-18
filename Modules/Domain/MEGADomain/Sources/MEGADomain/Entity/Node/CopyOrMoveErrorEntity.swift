@@ -4,4 +4,5 @@ public enum CopyOrMoveErrorEntity: Error {
     case nodeAuthorizeFailed
     case nodeCopyFailed
     case nodeMoveFailedCircularLinkage
+    case overQuota
 }
