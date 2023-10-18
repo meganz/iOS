@@ -1,5 +1,6 @@
 import Foundation
 import MEGAFoundation
+import MEGASDKRepo
 
 final class MEGAPlanCommand: NSObject {
 
@@ -58,22 +59,22 @@ private final class MEGAPlanLoadTask {
     fileprivate func start(
         with api: MEGASdk,
         completion: @escaping (MEGAPlanCommand.MEGAPlanFetchResult) -> Void) {
-        api.getPricingWith(MEGAGenericRequestDelegate(completion: { [weak self] request, error in
-            guard let self else {
-                assertionFailure("MEGAPlanLoadTask instance is unexpected released.")
-                completion(.failure(.unexpectedlyCancellation))
-                return
-            }
-
-            guard case .apiOk = error.type else {
-                completion(.failure(.unableToFetchMEGAPlan))
-                return
-            }
-
-            let fetchedMEGAPlans = self.setupCache(with: request.pricing, currencyName: request.currency.currencyName)
-            completion(.success(fetchedMEGAPlans))
-        }))
-    }
+            api.getPricingWith(RequestDelegate { [weak self] result in
+                guard let self else {
+                    assertionFailure("MEGAPlanLoadTask instance is unexpected released.")
+                    completion(.failure(.unexpectedlyCancellation))
+                    return
+                }
+                
+                switch result {
+                case .failure:
+                    completion(.failure(.unableToFetchMEGAPlan))
+                case .success(let request):
+                    let fetchedMEGAPlans = self.setupCache(with: request.pricing, currencyName: request.currency.currencyName)
+                    completion(.success(fetchedMEGAPlans))
+                }
+            })
+        }
 
     // MARK: - Privates
 
@@ -109,7 +110,7 @@ private final class MEGAPlanLoadTask {
 
     private var commands: [MEGAPlanCommand] = []
 
-    private var api: MEGASdk = MEGASdkManager.sharedMEGASdk()
+    private var api: MEGASdk = MEGASdk.shared
 
     // MARK: - Setup MEGA Plan
 
