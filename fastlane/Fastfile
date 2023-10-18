@@ -131,12 +131,16 @@ platform :ios do
 
   desc "build app for simulator"
   lane :build_simulator do
-    xcodebuild(
+    gym(
       workspace: WORKSPACE,
       scheme: SCHEME,
-      sdk: "iphonesimulator",
-      derivedDataPath: "derivedData",
-      xcargs: "-resolvePackageDependencies -skipPackagePluginValidation"
+      configuration: "Debug",
+      derived_data_path: "derivedData",
+      cloned_source_packages_path: "SwiftPackages",
+      skip_package_ipa: true,
+      skip_archive: true,
+      destination: "generic/platform=iOS Simulator",
+      xcargs: "-skipPackagePluginValidation"
     )
   end
 
