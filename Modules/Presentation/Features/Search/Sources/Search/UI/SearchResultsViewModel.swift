@@ -32,6 +32,9 @@ public class SearchResultsViewModel: ObservableObject {
     // executed
     private var searchingTask: Task<Void, any Error>?
 
+    // Debounce the search for 0.5 seconds after the user stops typing in the search input
+    private var debounceTask: Task<Void, any Error>?
+
     // this flag is used to indicate whether the data has been loaded for every triggered search
     @Atomic var areNewSearchResultsLoaded = false
 
@@ -43,6 +46,9 @@ public class SearchResultsViewModel: ObservableObject {
     // delay after we should display loading placeholder, in seconds
     private let showLoadingPlaceholderDelay: Double
 
+    // delay after which we trigger searching after the user stops typing, in seconds
+    private let searchInputDebounceDelay: Double
+
     private let keyboardVisibilityHandler: any KeyboardVisibilityHandling
 
     public init(
@@ -50,17 +56,22 @@ public class SearchResultsViewModel: ObservableObject {
         bridge: SearchBridge,
         config: SearchConfig,
         showLoadingPlaceholderDelay: Double = 1,
+        searchInputDebounceDelay: Double = 0.5,
         keyboardVisibilityHandler: any KeyboardVisibilityHandling
     ) {
         self.resultsProvider = resultsProvider
         self.bridge = bridge
         self.config = config
         self.showLoadingPlaceholderDelay = showLoadingPlaceholderDelay
+        self.searchInputDebounceDelay = searchInputDebounceDelay
         self.keyboardVisibilityHandler = keyboardVisibilityHandler
 
         self.bridge.queryChanged = { [weak self] query  in
             let _self = self
-            Task {
+            
+            _self?.debounceTask?.cancel()
+            _self?.debounceTask = Task {
+                try await Task.sleep(nanoseconds: UInt64(searchInputDebounceDelay*1_000_000_000))
                 await _self?.showLoadingPlaceholderIfNeeded()
                 await _self?.queryChanged(to: query)
             }
@@ -109,9 +120,15 @@ public class SearchResultsViewModel: ObservableObject {
         searchingTask = nil
     }
 
+    private func cancelDebounceTask() {
+        debounceTask?.cancel()
+        debounceTask = nil
+    }
+
     func queryCleaned() async {
         // clearing query in the search bar
         // this should reset just query string but keep chips etc
+        cancelDebounceTask()
         await showLoadingPlaceholderIfNeeded()
         await queryChanged(to: "")
     }
@@ -152,6 +169,7 @@ public class SearchResultsViewModel: ObservableObject {
     
     private func queryChanged(to query: SearchQuery) async {
         cancelSearchTask()
+        cancelDebounceTask()
 
         // we need to store query to know what chips are selected
         currentQuery = query
