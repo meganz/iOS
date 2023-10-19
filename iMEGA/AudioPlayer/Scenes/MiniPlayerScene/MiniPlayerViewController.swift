@@ -40,6 +40,9 @@ final class MiniPlayerViewController: UIViewController {
         }
         
         viewModel.dispatch(.onViewDidLoad)
+        
+        view.setNeedsLayout()
+        view.layoutIfNeeded()
     }
     
     override func viewDidLayoutSubviews() {
