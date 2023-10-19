@@ -122,7 +122,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
         let router = MockMeetingContainerRouter()
 
         viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom)
-        test(viewModel: viewModel, action: .participantJoinedCallOrWaitingRoom, expectedCommands: [])
+        test(viewModel: viewModel, action: .participantAdded, expectedCommands: [])
         XCTAssert(router.removeEndDialog_calledTimes == 1)
     }
     
@@ -131,6 +131,15 @@ final class MeetingContainerViewModelTests: XCTestCase {
         let router = MockMeetingContainerRouter()
         viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom)
         test(viewModel: viewModel, action: .removeEndCallAlertAndEndCall, expectedCommands: [])
+        XCTAssert(router.removeEndDialog_calledTimes == 1)
+    }
+    
+    func testAction_removeEndCallDialogWhenParticipantJoinWaitingRoom() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
+        let router = MockMeetingContainerRouter()
+
+        viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom)
+        test(viewModel: viewModel, action: .participantJoinedWaitingRoom, expectedCommands: [])
         XCTAssert(router.removeEndDialog_calledTimes == 1)
     }
     
@@ -350,7 +359,7 @@ final class MockMeetingContainerRouter: MeetingContainerRouting {
         didShowEndDialog_calledTimes += 1
     }
     
-    func removeEndCallDialog(completion: (() -> Void)?) {
+    func removeEndCallDialog(finishCountDown: Bool, completion: (() -> Void)?) {
         removeEndDialog_calledTimes += 1
     }
     

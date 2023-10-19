@@ -17,13 +17,14 @@ enum MeetingContainerAction: ActionType {
     case displayParticipantInMainView(_ participant: CallParticipantEntity)
     case didDisplayParticipantInMainView(_ participant: CallParticipantEntity)
     case didSwitchToGridView
-    case participantJoinedCallOrWaitingRoom
+    case participantAdded
     case participantRemoved
     case showEndCallDialogIfNeeded
     case removeEndCallAlertAndEndCall
     case showJoinMegaScreen
     case showHangOrEndCallDialog
     case endCallForAll
+    case participantJoinedWaitingRoom
 }
 
 final class MeetingContainerViewModel: ViewModelType {
@@ -164,10 +165,10 @@ final class MeetingContainerViewModel: ViewModelType {
             router.didDisplayParticipantInMainView(participant)
         case .didSwitchToGridView:
             router.didSwitchToGridView()
-        case .participantJoinedCallOrWaitingRoom:
+        case .participantAdded:
             cancelMuteMicrophoneSubscription()
             cancelNoUserJoinedSubscription()
-            router.removeEndCallDialog(completion: nil)
+            router.removeEndCallDialog(finishCountDown: true, completion: nil)
         case .participantRemoved:
             muteMicrophoneIfNoOtherParticipantsArePresent()
         case .showEndCallDialogIfNeeded:
@@ -180,6 +181,8 @@ final class MeetingContainerViewModel: ViewModelType {
             router.showHangOrEndCallDialog(containerViewModel: self)
         case .endCallForAll:
             endCallForAll()
+        case .participantJoinedWaitingRoom:
+            router.removeEndCallDialog(finishCountDown: false, completion: nil)
         }
     }
     
@@ -274,7 +277,7 @@ final class MeetingContainerViewModel: ViewModelType {
     }
     
     private func removeEndCallAlertAndEndCall() {
-        router.removeEndCallDialog { [weak self] in
+        router.removeEndCallDialog(finishCountDown: true) { [weak self] in
             guard let self else { return }
             self.endCall()
         }
