@@ -1350,7 +1350,6 @@
 		998379342ACA417100A9A439 /* ChatRoomParticipantViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998379332ACA417100A9A439 /* ChatRoomParticipantViewModel+Additions.swift */; };
 		9986031E2A78AA1800D39A20 /* SendToViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996309C52A78A61300382C38 /* SendToViewController+Additions.swift */; };
 		9986031F2A78AA1900D39A20 /* SendToViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996309C52A78A61300382C38 /* SendToViewController+Additions.swift */; };
-		99A27DA72AC1312900587B60 /* ChatContentViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A27DA62AC1312900587B60 /* ChatContentViewModel+Additions.swift */; };
 		99D65D732A8BB5AE005D5877 /* WaitingRoomControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D65D722A8BB5AE005D5877 /* WaitingRoomControlsView.swift */; };
 		99D65D772A8C699A005D5877 /* WaitingRoomUserAvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D65D762A8C699A005D5877 /* WaitingRoomUserAvatarView.swift */; };
 		99DB1D5A2AC64B34004A9CC3 /* ChatRepoMock in Frameworks */ = {isa = PBXBuildFile; productRef = 99DB1D592AC64B34004A9CC3 /* ChatRepoMock */; };
@@ -3921,7 +3920,6 @@
 		998299052ADCA02E001F9BED /* ChatRoomParticipantsListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomParticipantsListViewModelTests.swift; sourceTree = "<group>"; };
 		998379302ACA408800A9A439 /* ChatRoomParticipantViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomParticipantViewModelTests.swift; sourceTree = "<group>"; };
 		998379332ACA417100A9A439 /* ChatRoomParticipantViewModel+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatRoomParticipantViewModel+Additions.swift"; sourceTree = "<group>"; };
-		99A27DA62AC1312900587B60 /* ChatContentViewModel+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatContentViewModel+Additions.swift"; sourceTree = "<group>"; };
 		99D65D722A8BB5AE005D5877 /* WaitingRoomControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomControlsView.swift; sourceTree = "<group>"; };
 		99D65D762A8C699A005D5877 /* WaitingRoomUserAvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomUserAvatarView.swift; sourceTree = "<group>"; };
 		99E1A9282A383EC000974FC9 /* BadgeButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeButtonTests.swift; sourceTree = "<group>"; };
@@ -11872,7 +11870,6 @@
 		BFFB13312908A54500A6B2CA /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
-				99A27DA62AC1312900587B60 /* ChatContentViewModel+Additions.swift */,
 				BFFB13322908A55F00A6B2CA /* ChatRoomsListViewModel+Additions.swift */,
 				9422B9F12A41A55C007AA5D1 /* MockPermissionAlertRouter.swift */,
 			);
@@ -15178,7 +15175,6 @@
 				83B5E87927F6F8F50073C870 /* CancellableTransferViewModelTests.swift in Sources */,
 				B67B189925CAAEBA0022D6C0 /* CGSize.swift in Sources */,
 				B6FB5F8429A3254A0023BA6A /* ChangeTypeEntityMapperTests.swift in Sources */,
-				99A27DA72AC1312900587B60 /* ChatContentViewModel+Additions.swift in Sources */,
 				6DE5563629F61ED40015A950 /* ChatContentViewModelTests.swift in Sources */,
 				9949C3662A72424C000C299B /* ChatRoomAvatarInitialsGeneratorTest.swift in Sources */,
 				990AC4F02A4ABEB7008E298F /* ChatRoomLinkViewModel+Additions.swift in Sources */,
