@@ -3,22 +3,6 @@ import Foundation
 import MEGADomain
 
 extension ChatViewController {
-    private var rightBarButtons: [UIBarButtonItem] {
-        var barButtons: [UIBarButtonItem] = []
-        
-        if chatRoom.isGroup {
-            if chatRoom.ownPrivilege == .moderator {
-                barButtons.append(addParticpantBarButtonItem)
-            }
-            
-            barButtons.append(audioCallBarButtonItem)
-        } else {
-            barButtons = [videoCallBarButtonItem, audioCallBarButtonItem]
-        }
-        
-        return barButtons
-    }
-    
     func configureNavigationBar() {
         addRightBarButtons()
         setTitleView()
@@ -26,10 +10,10 @@ extension ChatViewController {
     
     func updateRightBarButtons() {
         guard !isEditing else {
-            navigationItem.rightBarButtonItems = [cancelBarButtonItem]
+            navigationItem.rightBarButtonItems = createNavBarRightButtonItems(isEditing: true)
             return
         }
-        navigationItem.rightBarButtonItems = rightBarButtons
+        navigationItem.rightBarButtonItems = createNavBarRightButtonItems()
         
         let reachable = MEGAReachabilityManager.isReachable()
         
@@ -37,8 +21,24 @@ extension ChatViewController {
     }
     
     private func addRightBarButtons() {
-        navigationItem.rightBarButtonItems = rightBarButtons
+        navigationItem.rightBarButtonItems = createNavBarRightButtonItems()
         updateRightBarButtons()
+    }
+    
+    private func createNavBarRightButtonItems(isEditing: Bool = false) -> [UIBarButtonItem] {
+        let navBarRightItems = chatContentViewModel.determineNavBarRightItems(isEditing: isEditing)
+        switch navBarRightItems {
+        case .cancel:
+            return [cancelBarButtonItem]
+        case .addParticipantAndAudioCall:
+            return [addParticipantBarButtonItem, audioCallBarButtonItem]
+        case .audioCall:
+            return [audioCallBarButtonItem]
+        case .videoAndAudioCall:
+            return [videoCallBarButtonItem, audioCallBarButtonItem]
+        default:
+            return []
+        }
     }
     
     private func setTitleView() {

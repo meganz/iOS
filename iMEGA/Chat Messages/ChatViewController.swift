@@ -143,7 +143,7 @@ class ChatViewController: MessagesViewController {
                                action: #selector(startVideoCall))
     }()
     
-    lazy var addParticpantBarButtonItem = {
+    lazy var addParticipantBarButtonItem = {
         return UIBarButtonItem(image: UIImage(resource: .addContact),
                                style: .done,
                                target: self,

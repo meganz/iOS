@@ -39,6 +39,17 @@ final class ChatContentViewModel: ViewModelType {
         case hideStartOrJoinCallButton(_ hide: Bool)
     }
     
+    struct NavBarRightItems: OptionSet {
+        let rawValue: Int
+        static let addParticipant = NavBarRightItems(rawValue: 1 << 0)
+        static let audioCall = NavBarRightItems(rawValue: 1 << 1)
+        static let videoCall = NavBarRightItems(rawValue: 1 << 2)
+        static let cancel = NavBarRightItems(rawValue: 1 << 3)
+        
+        static let videoAndAudioCall: NavBarRightItems = [.videoCall, .audioCall]
+        static let addParticipantAndAudioCall: NavBarRightItems = [.addParticipant, .audioCall]
+    }
+    
     var invokeCommand: ((Command) -> Void)?
     
     lazy var userHandle: HandleEntity = {
@@ -113,6 +124,20 @@ final class ChatContentViewModel: ViewModelType {
     func shouldOpenWaitingRoom(isReturnToCall: Bool = false) -> Bool {
         let isModerator = chatRoom.ownPrivilege == .moderator
         return !isModerator && chatRoom.isWaitingRoomEnabled && !isReturnToCall
+    }
+    
+    func determineNavBarRightItems(isEditing: Bool = false) -> NavBarRightItems {
+        if isEditing {
+            return .cancel
+        } else if chatRoom.chatType != .oneToOne {
+            if chatRoom.ownPrivilege == .moderator || chatRoom.isOpenInviteEnabled {
+                return .addParticipantAndAudioCall
+            } else {
+                return .audioCall
+            }
+        } else {
+            return .videoAndAudioCall
+        }
     }
     
     // MARK: - Private
