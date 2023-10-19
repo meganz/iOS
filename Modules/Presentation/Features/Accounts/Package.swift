@@ -17,6 +17,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../../Domain/MEGADomain"),
+        .package(path: "../../../Localization/MEGAL10n"),
         .package(path: "../../MEGAPresentation"),
         .package(path: "../../../UI/MEGASwiftUI"),
         .package(path: "../../Repository/MEGASDKRepo"),
@@ -26,6 +27,7 @@ let package = Package(
         .target(
             name: "Accounts",
             dependencies: ["MEGADomain",
+                           "MEGAL10n",
                            "MEGAPresentation",
                            "MEGASwiftUI"]
         ),
