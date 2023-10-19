@@ -892,7 +892,7 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
     
     func participantAdded(with handle: HandleEntity) {
         dispatch(.addParticipant(withHandle: handle))
-        containerViewModel?.dispatch(.participantJoinedCallOrWaitingRoom)
+        containerViewModel?.dispatch(.participantAdded)
     }
     
     func participantRemoved(with handle: HandleEntity) {

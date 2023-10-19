@@ -22,7 +22,7 @@ protocol MeetingContainerRouting: AnyObject, Routing {
     func didDisplayParticipantInMainView(_ participant: CallParticipantEntity)
     func didSwitchToGridView()
     func showEndCallDialog(endCallCompletion: @escaping () -> Void, stayOnCallCompletion: (() -> Void)?)
-    func removeEndCallDialog(completion: (() -> Void)?)
+    func removeEndCallDialog(finishCountDown: Bool, completion: (() -> Void)?)
     func showJoinMegaScreen()
     func showHangOrEndCallDialog(containerViewModel: MeetingContainerViewModel)
     func selectWaitingRoomList(containerViewModel: MeetingContainerViewModel)
@@ -257,13 +257,16 @@ final class MeetingContainerRouter: MeetingContainerRouting {
         self.endCallDialog = endCallDialog
     }
     
-    func removeEndCallDialog(completion: (() -> Void)?) {
+    func removeEndCallDialog(finishCountDown: Bool = true, completion: (() -> Void)?) {
         guard endCallDialog != nil else {
+            meetingParticipantsRouter?.endCallEndCountDownTimer()
             completion?()
             return
         }
         
-        meetingParticipantsRouter?.endCallEndCountDownTimer()
+        if finishCountDown {
+            meetingParticipantsRouter?.endCallEndCountDownTimer()
+        }
         endCallDialog?.dismiss(animated: true) { [weak self] in
             self?.endCallDialog = nil
             completion?()

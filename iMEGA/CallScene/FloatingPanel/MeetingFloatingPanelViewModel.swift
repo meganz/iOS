@@ -570,7 +570,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         populateParticipantsInWaitingRoom(forCall: call)
         populateParticipantsNotInCall()
         
-        containerViewModel?.dispatch(.participantJoinedCallOrWaitingRoom)
+        containerViewModel?.dispatch(.participantJoinedWaitingRoom)
         
         if callParticipantsInWaitingRoom.isNotEmpty {
             selectParticipantsListTab(.waitingRoom)
