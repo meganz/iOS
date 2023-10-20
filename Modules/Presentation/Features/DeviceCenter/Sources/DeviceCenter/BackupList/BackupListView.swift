@@ -1,3 +1,4 @@
+import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
 
@@ -17,14 +18,13 @@ struct BackupListView: View {
 }
 
 struct BackupListContentView: View {
+    @Environment(\.colorScheme) private var colorScheme
     @ObservedObject var viewModel: BackupListViewModel
     @State private var selectedBackupViewModel: DeviceCenterItemViewModel?
     
     var body: some View {
         if viewModel.showEmptyStateView {
-            CurrentDeviceEmptyStateView {
-                viewModel.showCameraUploadsSettingsFlow()
-            }
+            contentEmptyState
         } else {
             content
         }
@@ -52,6 +52,25 @@ struct BackupListContentView: View {
                 viewModel.updateInternetConnectionStatus()
                 try await viewModel.updateDeviceStatusesAndNotify()
             }
+    }
+    
+    var contentEmptyState: some View {
+        content
+            .emptyState(
+                ContentUnavailableView_iOS16ViewModel(
+                    image: Image("folderEmptyState"),
+                    title: Strings.Localizable.Device.Center.Current.Device.Empty.State.message,
+                    font: .body,
+                    color: colorScheme == .dark ? .white : .black,
+                    actions: [
+                        ContentUnavailableView_iOS16ViewModel.Action(
+                            title: Strings.Localizable.enableCameraUploadsButton,
+                            handler: viewModel.showCameraUploadsSettingsFlow,
+                            color: colorScheme == .dark ? Color("00C29A") : Color("00A886")
+                        )
+                    ]
+                )
+            )
     }
 }
 
