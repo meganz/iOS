@@ -199,7 +199,7 @@ final class AudioPlayerViewModel: ViewModelType {
             updateTracksActionStatus(enabled: tracks.count > 1)
             isSingleTrackPlayer = tracks.count == 1
         case .fileLink:
-            invokeCommand?(.configureFileLinkPlayer(title: currentTrack.preferredName, subtitle: Strings.Localizable.fileLink))
+            invokeCommand?(.configureFileLinkPlayer(title: currentTrack.name, subtitle: Strings.Localizable.fileLink))
         }
     }
     
