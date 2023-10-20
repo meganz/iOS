@@ -2,12 +2,14 @@ import MEGADomain
 
 extension MEGAProviderDelegate {
     @objc func answer(call: MEGAChatCall, chatRoom: MEGAChatRoom, presenter: UIViewController) {
-        MeetingContainerRouter(
-            presenter: presenter,
-            chatRoom: chatRoom.toChatRoomEntity(),
-            call: call.toCallEntity(),
-            isSpeakerEnabled: chatRoom.isMeeting
-        ).start()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            MeetingContainerRouter(
+                presenter: presenter,
+                chatRoom: chatRoom.toChatRoomEntity(),
+                call: call.toCallEntity(),
+                isSpeakerEnabled: chatRoom.isMeeting
+            ).start()
+        }
     }
     
     @objc func configureAudioSession() {
