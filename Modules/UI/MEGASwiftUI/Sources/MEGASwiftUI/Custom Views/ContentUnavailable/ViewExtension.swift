@@ -1,7 +1,9 @@
 import SwiftUI
 
 extension View {
-    public func emptyState(_ viewModel: ContentUnavailableView_iOS16ViewModel?) -> some View {
+    public func emptyState(
+        _ viewModel: ContentUnavailableView_iOS16ViewModel?
+    ) -> some View {
         modifier(EmptyStateViewModifier(emptyViewModel: viewModel))
     }
 }

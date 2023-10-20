@@ -37,8 +37,9 @@ public struct ContentUnavailableView_iOS16<Label, Description, Actions>: View wh
                     Spacer()
                         .frame(height: 10)
                     description()
-                    actions()
                     Spacer()
+                    actions()
+                    Spacer().frame(height: 40)
                 }
                 Spacer()
             }
@@ -55,29 +56,45 @@ public struct ContentUnavailableView_iOS16ViewModel {
         image: Image,
         title: String,
         font: Font,
-        color: Color
+        color: Color,
+        actions: [Action] = []
     ) {
         self.image = image
         self.title = title
         self.font = font
         self.color = color
+        self.actions = actions
     }
     
     public let image: Image
     public let title: String
     public let font: Font
     public let color: Color
+    public let actions: [Action]
     
+    public struct Action {
+        public init(
+            title: String,
+            handler: @escaping () -> Void,
+            color: Color
+        ) {
+            self.title = title
+            self.handler = handler
+            self.color = color
+        }
+        
+        public let title: String
+        public let handler: () -> Void
+        public let color: Color
+    }
 }
 
-extension ContentUnavailableView_iOS16 where Label == Image, Description == Text?, Actions == EmptyView {
-    
+extension ContentUnavailableView_iOS16 where Label == Image, Description == Text, Actions == ActionsView {
+
     public init(viewModel: ContentUnavailableView_iOS16ViewModel) {
         
         self.label = {
-            viewModel
-                .image
-                .resizable()
+            viewModel.image.resizable()
         }
         self.description = {
             Text(viewModel.title)
@@ -85,7 +102,33 @@ extension ContentUnavailableView_iOS16 where Label == Image, Description == Text
                 .font(viewModel.font)
         }
         self.actions = {
-            EmptyView()
+            ActionsView(actions: viewModel.actions)
+        }
+    }
+}
+
+public struct ActionsView: View {
+    public let actions: [ContentUnavailableView_iOS16ViewModel.Action]
+
+    public var body: some View {
+        Group {
+            if actions.isEmpty {
+                EmptyView()
+            } else {
+                VStack {
+                    ForEach(Array(actions.indices), id: \.self) { index in
+                        Button(action: actions[index].handler) {
+                            Text(actions[index].title)
+                                .foregroundColor(.white)
+                                .fontWeight(.semibold)
+                                .padding([.horizontal], 40)
+                        }
+                        .frame(height: 50)
+                        .background(actions[index].color)
+                        .cornerRadius(8)
+                    }
+                }
+            }
         }
     }
 }
