@@ -23,7 +23,7 @@ final class AudioPlayerItem: AVPlayerItem {
     }()
     
     init(name: String, url: URL, node: MEGANode?, hasThumbnail: Bool = false) {
-        self.name = name
+        self.name = node?.name ?? name
         self.url = url
         self.node = node
         self.nodeHasThumbnail = hasThumbnail
@@ -34,7 +34,10 @@ final class AudioPlayerItem: AVPlayerItem {
     func loadMetadata(completion: @escaping () -> Void) {
         asset.loadMetadata { [weak self] title, artist, albumName, artworkData in
             guard let `self` = self else { return }
-            if let title = title {
+            
+            if let nodeName = node?.name {
+                self.name = nodeName
+            } else if let title {
                 self.name = title
             }
             
@@ -77,11 +80,5 @@ extension AudioPlayerItem {
             return lhs.url == rhs.url
         }
         return lhsNode == rhsNode
-    }
-}
-
-extension AudioPlayerItem {
-    var preferredName: String {
-        node?.name ?? name
     }
 }

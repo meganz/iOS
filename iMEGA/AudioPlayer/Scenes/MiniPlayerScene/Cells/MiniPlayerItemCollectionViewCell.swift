@@ -25,7 +25,7 @@ final class MiniPlayerItemCollectionViewCell: UICollectionViewCell {
         
         self.item = item
         
-        titleLabel.text = item?.preferredName
+        titleLabel.text = item?.name
         subtitleLabel.text = item?.artist
     }
 }
