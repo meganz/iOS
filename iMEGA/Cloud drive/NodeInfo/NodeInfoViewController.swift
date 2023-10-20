@@ -471,9 +471,9 @@ class NodeInfoViewController: UIViewController {
         return cell
     }
     
-    private func addContactSharingCell(forIndexPath indexPath: IndexPath) -> ContactTableViewCell {
+    private func addContactSharingCell(forIndexPath indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "nodeInfoContactCell", for: indexPath) as? ContactTableViewCell else {
-            fatalError("Could not get ContactTableViewCell")
+            return UITableViewCell()
         }
         
         cell.backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
@@ -485,13 +485,14 @@ class NodeInfoViewController: UIViewController {
         return cell
     }
     
-    private func contactSharingCell(forIndexPath indexPath: IndexPath) -> ContactTableViewCell {
+    private func contactSharingCell(forIndexPath indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "nodeInfoContactCell", for: indexPath) as? ContactTableViewCell else {
-            fatalError("Could not get ContactTableViewCell")
+            return UITableViewCell()
         }
         
-        guard let user = sdk.contact(forEmail: cachedActiveShares[indexPath.row - 1].user) else {
-            fatalError("Could not get MEGAUser for ContactTableViewCell")
+        guard let user = sdk.contact(forEmail: cachedActiveShares[safe: indexPath.row - 1]?.user) else {
+            CrashlyticsLogger.log("[NodeInfo] User not found.")
+            return UITableViewCell()
         }
         
         cell.backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
