@@ -1,6 +1,7 @@
 import Combine
 import MEGADomain
 import MEGAL10n
+import MEGAUI
 import SwiftUI
 
 public class DeviceCenterItemViewModel: ObservableObject, Identifiable {    
@@ -95,7 +96,7 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
         if case let .device(device) = itemType {
             let currentDeviceUUID = UIDevice.current.identifierForVendor?.uuidString ?? ""
             if device.id == currentDeviceUUID && device.status == .noCameraUploads {
-                router.showCurrentDeviceEmptyState(currentDeviceUUID, deviceName: UIDevice.current.name)
+                router.showCurrentDeviceEmptyState(currentDeviceUUID, deviceName: UIDevice.current.modelName)
             } else {
                 router.showDeviceBackups(device)
             }
