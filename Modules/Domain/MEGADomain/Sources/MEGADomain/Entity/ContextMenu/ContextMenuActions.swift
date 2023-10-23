@@ -42,7 +42,7 @@ public enum UploadAddActionEntity: CaseIterable {
 }
 
 public enum DisplayActionEntity: CaseIterable {
-    case select, mediaDiscovery, thumbnailView, listView, sort, clearRubbishBin, filter
+    case select, mediaDiscovery, thumbnailView, listView, sort, clearRubbishBin, filter, filterActive
 }
 
 public enum QuickActionEntity: CaseIterable {

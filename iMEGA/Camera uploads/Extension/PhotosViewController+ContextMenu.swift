@@ -12,7 +12,8 @@ extension PhotosViewController {
             isCameraUploadExplorer: true,
             isFilterEnabled: true,
             isSelectHidden: viewModel.isSelectHidden,
-            isEmptyState: viewModel.mediaNodes.isEmpty
+            isEmptyState: viewModel.mediaNodes.isEmpty,
+            isFilterActive: viewModel.timelineCameraUploadStatusEnabled ? viewModel.isFilterActive : false
         )
     }
     
@@ -53,8 +54,13 @@ extension PhotosViewController {
             if photoLibraryContentViewModel.selectedMode == .all || viewModel.mediaNodes.isEmpty, let barButton = makeContextMenuBarButton() {
                 rightButtons.append(barButton)
             }
-            if viewModel.isFilterActive {
+            if viewModel.isFilterActive && !viewModel.timelineCameraUploadStatusEnabled {
                 rightButtons.append(filterBarButtonItem)
+            }
+            if viewModel.timelineCameraUploadStatusEnabled {
+                let cameraUploadStatusBarButton = UIBarButtonItem(image: UIImage(resource: .cuStatusComplete),
+                                                                  style: .plain, target: self, action: #selector(cameraUploadStatusPressed))
+                rightButtons.append(cameraUploadStatusBarButton)
             }
             if objcWrapper_parent.navigationItem.rightBarButtonItems !~ rightButtons {
                 objcWrapper_parent.navigationItem.setRightBarButtonItems(rightButtons, animated: true)
@@ -78,6 +84,10 @@ extension PhotosViewController {
     @objc private func onFilter() {
         photoLibraryContentViewModel.showFilter.toggle()
     }
+    
+    @objc private func cameraUploadStatusPressed() {
+        // Handle pressed in CC-5455
+    }
 }
 
 // MARK: - DisplayMenuDelegate
@@ -85,7 +95,7 @@ extension PhotosViewController: DisplayMenuDelegate {
     func displayMenu(didSelect action: DisplayActionEntity, needToRefreshMenu: Bool) {
         if action == .select {
             toggleEditing()
-        } else if action == .filter {
+        } else if action == .filter || action == .filterActive {
             onFilter()
         }
     }

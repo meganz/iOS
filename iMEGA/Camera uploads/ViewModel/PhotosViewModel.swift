@@ -14,6 +14,7 @@ final class PhotosViewModel: NSObject {
     private var photoLibraryUseCase: any PhotoLibraryUseCaseProtocol
     private let userAttributeUseCase: any UserAttributeUseCaseProtocol
     
+    let timelineCameraUploadStatusEnabled: Bool
     var contentConsumptionAttributeLoadingTask: Task<Void, Never>?
     
     var cameraUploadExplorerSortOrderType: SortOrderType = .newest {
@@ -40,12 +41,14 @@ final class PhotosViewModel: NSObject {
     
     init(
         photoUpdatePublisher: PhotoUpdatePublisher,
-        photoLibraryUseCase: any PhotoLibraryUseCaseProtocol,
-        userAttributeUseCase: any UserAttributeUseCaseProtocol
+        photoLibraryUseCase: some PhotoLibraryUseCaseProtocol,
+        userAttributeUseCase: some UserAttributeUseCaseProtocol,
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
         self.photoUpdatePublisher = photoUpdatePublisher
         self.photoLibraryUseCase = photoLibraryUseCase
         self.userAttributeUseCase = userAttributeUseCase
+        self.timelineCameraUploadStatusEnabled = featureFlagProvider.isFeatureFlagEnabled(for: .timelineCameraUploadStatus)
         super.init()
         cameraUploadExplorerSortOrderType = sortOrderType(forKey: .cameraUploadExplorerFeed)
     }

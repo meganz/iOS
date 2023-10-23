@@ -38,6 +38,7 @@ public final class ContextMenuBuilder {
     private var sharedLinkStatus: SharedLinkStatusEntity = .unavailable
     private var isArchivedChatsVisible: Bool = false
     private var isMediaFile: Bool = false
+    private var isFilterActive: Bool = false
 
     public init() {}
     
@@ -236,6 +237,11 @@ public final class ContextMenuBuilder {
         return self
     }
     
+    public func setIsFilterActive(_ isActive: Bool) -> ContextMenuBuilder {
+        self.isFilterActive = isActive
+        return self
+    }
+    
     public func build() -> CMEntity? {
         /// It is only allowed to build menu type elements. The other elements refer to the actions that a menu contains, and that cannot be constructed if not inside a menu.
         if case let .menu(type) = menuType {
@@ -375,7 +381,7 @@ public final class ContextMenuBuilder {
                                         filterVideos])
         } else {
             return CMEntity(displayInline: true,
-                     children: [filter])
+                     children: [filter(isActive: isFilterActive)])
         }
     }
     

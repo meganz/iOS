@@ -135,6 +135,8 @@ extension ContextMenuModel {
             return ContextMenuDataModel(identifier: "clearRubbishBin", title: Strings.Localizable.emptyRubbishBin, image: Asset.Images.NodeActions.rubbishBin.image)
         case .filter:
             return ContextMenuDataModel(identifier: "filter", title: Strings.Localizable.filter, subtitle: currentFilterType, image: Asset.Images.ActionSheetIcons.filter.image)
+        case .filterActive:
+            return ContextMenuDataModel(identifier: "filterActive", title: Strings.Localizable.filter, subtitle: currentFilterType, image: Asset.Images.ActionSheetIcons.filterActive.image)
         }
     }
 

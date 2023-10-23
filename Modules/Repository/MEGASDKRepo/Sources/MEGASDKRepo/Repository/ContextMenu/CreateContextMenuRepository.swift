@@ -46,6 +46,7 @@ public struct CreateContextMenuRepository: CreateContextMenuRepositoryProtocol {
                         .setSharedLinkStatus(config.sharedLinkStatus)
                         .setIsArchivedChatsVisible(config.isArchivedChatsVisible)
                         .setIsMediaFile(config.isMediaFile)
+                        .setIsFilterActive(config.isFilterActive)
                         .build()
     }
 }
