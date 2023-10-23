@@ -100,8 +100,8 @@ extension ContextMenuBuilder {
     }
     
     // MARK: - Filter Actions
-    var filter: CMActionEntity {
-        CMActionEntity(type: .display(actionType: .filter))
+    func filter(isActive: Bool) -> CMActionEntity {
+        CMActionEntity(type: .display(actionType: isActive ? .filterActive : .filter))
     }
     
     var filterAllMedia: CMActionEntity {

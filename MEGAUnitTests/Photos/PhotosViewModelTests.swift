@@ -2,6 +2,7 @@
 @testable import MEGADomain
 import MEGADomainMock
 import MEGAPresentation
+import MEGAPresentationMock
 import XCTest
 
 @MainActor
@@ -161,6 +162,20 @@ final class PhotosViewModelTests: XCTestCase {
         XCTAssertEqual(sut.filterLocation, .cloudDrive)
     }
     
+    func testTimelineCameraUploadStatusEnabled_featureToggleOn_shouldReturnTrue() {
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.timelineCameraUploadStatus: true])
+        let sut = makePhotosViewModel(featureFlagProvider: featureFlagProvider)
+        
+        XCTAssertTrue(sut.timelineCameraUploadStatusEnabled)
+    }
+    
+    func testTimelineCameraUploadStatusEnabled_featureToggleOff_shouldReturnFalse() {
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.timelineCameraUploadStatus: false])
+        let sut = makePhotosViewModel(featureFlagProvider: featureFlagProvider)
+        
+        XCTAssertFalse(sut.timelineCameraUploadStatusEnabled)
+    }
+    
     private func sampleNodesForAllLocations() -> [NodeEntity] {
         let node1 = NodeEntity(nodeType: .file, name: "TestImage1.png", handle: 1, parentHandle: 0, hasThumbnail: true)
         let node2 = NodeEntity(nodeType: .file, name: "TestImage2.png", handle: 2, parentHandle: 1, hasThumbnail: true)
@@ -192,13 +207,17 @@ final class PhotosViewModelTests: XCTestCase {
         return [node1, node2, node3, node4]
     }
     
-    private func makePhotosViewModel(userAttributeUseCase: any UserAttributeUseCaseProtocol = MockUserAttributeUseCase()) -> PhotosViewModel {
+    private func makePhotosViewModel(
+        userAttributeUseCase: some UserAttributeUseCaseProtocol = MockUserAttributeUseCase(),
+        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
+    ) -> PhotosViewModel {
         let publisher = PhotoUpdatePublisher(photosViewController: PhotosViewController())
         let usecase = MockPhotoLibraryUseCase(allPhotos: [],
                                               allPhotosFromCloudDriveOnly: [],
                                               allPhotosFromCameraUpload: [])
         return PhotosViewModel(photoUpdatePublisher: publisher,
                                photoLibraryUseCase: usecase,
-                               userAttributeUseCase: userAttributeUseCase)
+                               userAttributeUseCase: userAttributeUseCase,
+                               featureFlagProvider: featureFlagProvider)
     }
 }
