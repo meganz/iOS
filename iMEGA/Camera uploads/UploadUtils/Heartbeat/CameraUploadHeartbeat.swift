@@ -1,6 +1,7 @@
 import FirebaseCrashlytics
 import Foundation
 import MEGASDKRepo
+import MEGAUI
 
 import MEGADomain
 
@@ -18,7 +19,7 @@ final class CameraUploadHeartbeat: NSObject {
     private var lastHeartbeatNodeHandle: HandleEntity?
     
     @objc override init() {
-        sdk = MEGASdkManager.sharedMEGASdk()
+        sdk = MEGASdk.shared
         register = BackupRegister(sdk: sdk)
         recorder = BackupRecorder()
         super.init()
@@ -63,7 +64,7 @@ final class CameraUploadHeartbeat: NSObject {
     private func setDeviceNameIfNeeded() {
         sdk.getDeviceName(with: RequestDelegate { [weak self] getResult in
             if case let .failure(getError) = getResult, getError.type == .apiENoent {
-                self?.sdk.setDeviceName(UIDevice.current.name, delegate: RequestDelegate { setResult in
+                self?.sdk.setDeviceName(UIDevice.current.modelName, delegate: RequestDelegate { setResult in
                     if case let .failure(setError) = setResult {
                         MEGALogError("[Camera Upload] heartbeat - error when to set device name \(setError.type) \(String(describing: setError.name))")
                     }

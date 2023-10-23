@@ -2,6 +2,7 @@ import Combine
 import MEGADomain
 import MEGARepo
 import MEGASwift
+import MEGAUI
 import SwiftUI
 
 public final class DeviceListViewModel: ObservableObject {
@@ -144,7 +145,7 @@ public final class DeviceListViewModel: ObservableObject {
     private func loadDefaultDevice() {
         let device = DeviceEntity(
             id: currentDeviceUUID,
-            name: UIDevice.current.name,
+            name: UIDevice.current.modelName,
             status: .noCameraUploads
         )
         
