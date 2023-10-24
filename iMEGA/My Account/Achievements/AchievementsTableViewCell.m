@@ -1,4 +1,5 @@
 #import "AchievementsTableViewCell.h"
+#import "MEGA-Swift.h"
 
 @implementation AchievementsTableViewCell
 

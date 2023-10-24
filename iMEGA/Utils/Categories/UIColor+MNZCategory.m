@@ -11,207 +11,14 @@
 
 #pragma mark - Background
 
-+ (UIColor *)mnz_mainBarsForTraitCollection:(UITraitCollection *)traitCollection {
-    switch (traitCollection.userInterfaceStyle) {
-        case UIUserInterfaceStyleUnspecified:
-        case UIUserInterfaceStyleLight: {
-            if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
-                return UIColor.whiteColor;
-            } else {
-                return UIColor.mnz_grayF7F7F7;
-            }
-        }
-            
-        case UIUserInterfaceStyleDark: {
-            if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
-                return UIColor.blackColor;
-            } else {
-                return UIColor.mnz_black161616;
-            }
-        }
-    }
-}
-
 + (UIColor *)mnz_background {
     return UIColor.systemBackgroundColor;
-}
-
-+ (UIColor *)mnz_secondaryBackgroundForTraitCollection:(UITraitCollection *)traitCollection {
-    switch (traitCollection.userInterfaceStyle) {
-        case UIUserInterfaceStyleUnspecified:
-        case UIUserInterfaceStyleLight: {
-            if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
-                return UIColor.mnz_grayE6E6E6;
-            } else {
-                return UIColor.mnz_grayF7F7F7;
-            }
-        }
-            
-        case UIUserInterfaceStyleDark: {
-            if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
-                return UIColor.mnz_black2C2C2E;
-            } else {
-                return UIColor.mnz_black1C1C1E;
-            }
-        }
-    }
-}
-
-+ (UIColor *)mnz_homeRecentsCellBackgroundForTraitCollection:(UITraitCollection *)traitCollection {
-    switch (traitCollection.userInterfaceStyle) {
-        case UIUserInterfaceStyleUnspecified:
-        case UIUserInterfaceStyleLight: {
-            return UIColor.whiteColor;
-        }
-        case UIUserInterfaceStyleDark: {
-            return [UIColor colorWithRed: 28.0 / 255.0 green: 28.0 / 255.0 blue:28.0 / 255.0 alpha:1.0];
-        }
-    }
-}
-
-#pragma mark Background grouped
-
-+ (UIColor *)mnz_backgroundGroupedForTraitCollection:(UITraitCollection *)traitCollection {
-    switch (traitCollection.userInterfaceStyle) {
-        case UIUserInterfaceStyleUnspecified:
-        case UIUserInterfaceStyleLight: {
-            if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
-                return UIColor.mnz_grayE6E6E6;
-            } else {
-                return UIColor.mnz_grayF7F7F7;
-            }
-        }
-            
-        case UIUserInterfaceStyleDark: {
-            return UIColor.blackColor;
-        }
-    }
-}
-
-#pragma mark Background miscellany
-
-+ (UIColor *)mnz_notificationSeenBackgroundForTraitCollection:(UITraitCollection *)traitCollection {
-    switch (traitCollection.userInterfaceStyle) {
-        case UIUserInterfaceStyleUnspecified:
-        case UIUserInterfaceStyleLight: {
-            if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
-                return UIColor.mnz_grayF7F7F7;
-            } else {
-                return UIColor.mnz_grayFAFAFA;
-            }
-        }
-            
-        case UIUserInterfaceStyleDark: {
-            if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
-                return UIColor.mnz_black2C2C2E;
-            } else {
-                return UIColor.mnz_black1C1C1E;
-            }
-        }
-    }
-}
-
-#pragma mark - Objects
-
-+ (UIColor *)mnz_basicButtonForTraitCollection:(UITraitCollection *)traitCollection {
-    switch (traitCollection.userInterfaceStyle) {
-        case UIUserInterfaceStyleUnspecified:
-        case UIUserInterfaceStyleLight: {
-            return UIColor.whiteColor;
-        }
-            
-        case UIUserInterfaceStyleDark: {
-            if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
-                return UIColor.mnz_gray535356;
-            } else {
-                return UIColor.mnz_gray363638;
-            }
-        }
-    }
-}
-
-+ (UIColor *)mnz_separatorForTraitCollection:(UITraitCollection *)traitCollection {
-    switch (traitCollection.userInterfaceStyle) {
-        case UIUserInterfaceStyleUnspecified:
-        case UIUserInterfaceStyleLight: {
-            if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
-                return [UIColor.mnz_gray3C3C43 colorWithAlphaComponent:0.5];
-            } else {
-                return [UIColor.mnz_gray3C3C43 colorWithAlphaComponent:0.3];
-            }
-        }
-            
-        case UIUserInterfaceStyleDark: {
-            if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
-                return UIColor.mnz_gray545458;
-            } else {
-                return [UIColor.mnz_gray545458 colorWithAlphaComponent:0.65];
-            }
-        }
-    }
-}
-
-+ (UIColor *)mnz_handlebarForTraitCollection:(UITraitCollection *)traitCollection {
-    switch (traitCollection.userInterfaceStyle) {
-        case UIUserInterfaceStyleUnspecified:
-        case UIUserInterfaceStyleLight: {
-            if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
-                return [UIColor.mnz_gray04040F colorWithAlphaComponent:0.4];
-            } else {
-                return [UIColor.mnz_gray04040F colorWithAlphaComponent:0.15];
-            }
-        }
-            
-        case UIUserInterfaceStyleDark: {
-            if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
-                return [UIColor.mnz_grayEBEBF5 colorWithAlphaComponent:0.6];
-            } else {
-                return [UIColor.mnz_grayEBEBF5 colorWithAlphaComponent:0.3];
-            }
-        }
-    }
 }
 
 #pragma mark - Text
 
 + (UIColor *)mnz_label {
     return UIColor.labelColor;
-}
-
-+ (UIColor *)mnz_subtitlesForTraitCollection:(UITraitCollection *)traitCollection {
-    switch (traitCollection.userInterfaceStyle) {
-        case UIUserInterfaceStyleUnspecified:
-        case UIUserInterfaceStyleLight: {
-            return [UIColor colorWithRed:0 green:0 blue:0 alpha:.8];
-        }
-            
-        case UIUserInterfaceStyleDark: {
-            return [UIColor colorWithWhite:1 alpha:.8];
-        }
-    }
-}
-
-#pragma mark - Blue
-
-+ (UIColor *)mnz_blueForTraitCollection:(UITraitCollection *)traitCollection {
-    switch (traitCollection.userInterfaceStyle) {
-        case UIUserInterfaceStyleUnspecified:
-        case UIUserInterfaceStyleLight: {
-            if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
-                return UIColor.mnz_blue0089C7;
-            } else {
-                return UIColor.mnz_blue009AE0;
-            }
-        }
-            
-        case UIUserInterfaceStyleDark: {
-            if (traitCollection.accessibilityContrast == UIAccessibilityContrastHigh) {
-                return UIColor.mnz_blue38C1FF;
-            } else {
-                return UIColor.mnz_blue059DE2;
-            }
-        }
-    }
 }
 
 #pragma mark - Gray
@@ -277,10 +84,6 @@
             }
         }
     }
-}
-
-+ (UIColor *)mnz_grayFAFAFA {
-    return [UIColor colorWithRed:250.0/255.0 green:250.0/255.0 blue:250.0/255.0 alpha:1.0];
 }
 
 + (UIColor *)mnz_grayF7F7F7 {

@@ -1,3 +1,4 @@
+import MEGASDKRepo
 import MEGAUIKit
 import UIKit
 
@@ -22,7 +23,7 @@ class ContactLinkContentView: UIView {
     private func updateAppearance(with trait: UITraitCollection) {
         backgroundColor = .mnz_chatRichLinkContentBubble(trait)
         titleLabel.textColor = UIColor.label
-        descriptionLabel.textColor = UIColor.mnz_subtitles(trait)
+        descriptionLabel.textColor = UIColor.mnz_subtitles(for: trait)
     }
     
     func configureView() {
@@ -31,9 +32,13 @@ class ContactLinkContentView: UIView {
         titleLabel.text = message.richTitle
         descriptionLabel.text = message.richString
         
-        imageView.image = UIImage.mnz_image(forUserHandle: message.userHandle, name: message.richString ?? "", size: CGSize(width: 40, height: 40), delegate: MEGAGenericRequestDelegate { [weak self] (_, error) in
-            guard let `self` = self else { return }
-            if error.type != .apiOk {
+        imageView.image = UIImage.mnz_image(forUserHandle: message.userHandle, 
+                                            name: message.richString ?? "",
+                                            size: CGSize(width: 40, height: 40),
+                                            delegate: RequestDelegate { [weak self] result in
+            guard let self else { return }
+            
+            if case .failure = result {
                 self.imageView.isHidden = true
             }
         })

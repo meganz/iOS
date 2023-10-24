@@ -1,4 +1,5 @@
 #import "ContactRequestsTableViewCell.h"
+#import "MEGA-Swift.h"
 
 @implementation ContactRequestsTableViewCell
 
