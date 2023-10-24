@@ -3854,3 +3854,7 @@
 "onboarding.upgradeAccount.content.additionalSecurity.message"="Set passwords and expiry dates for file and folder links.";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
 "onboarding.upgradeAccount.button.viewProPlans"="View Pro plans";
+/* Camera uploads banner enable state title */
+"cameraUploads.banner.enableState.title"="Enable Camera uploads";
+/* Camera uploads banner enable state description */
+"cameraUploads.banner.enableState.description"="Automatically back up your photos and videos to your Cloud drive.";
