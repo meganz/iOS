@@ -1,4 +1,5 @@
 #import "OnboardingView.h"
+#import "MEGA-Swift.h"
 
 @import MEGAL10nObjc;
 

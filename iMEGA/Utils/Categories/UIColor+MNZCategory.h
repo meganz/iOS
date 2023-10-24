@@ -6,36 +6,11 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 
 #pragma mark - Background
 
-+ (UIColor *)mnz_mainBarsForTraitCollection:(UITraitCollection *)traitCollection;
-
 + (UIColor *)mnz_background;
-+ (UIColor *)mnz_secondaryBackgroundForTraitCollection:(UITraitCollection *)traitCollection;
-+ (UIColor *)mnz_homeRecentsCellBackgroundForTraitCollection:(UITraitCollection *)traitCollection;
-
-#pragma mark Background grouped
-
-+ (UIColor *)mnz_backgroundGroupedForTraitCollection:(UITraitCollection *)traitCollection;
-
-#pragma mark Background miscellany
-
-+ (UIColor *)mnz_notificationSeenBackgroundForTraitCollection:(UITraitCollection *)traitCollection;
-
-#pragma mark - Objects
-
-+ (UIColor *)mnz_basicButtonForTraitCollection:(UITraitCollection *)traitCollection;
-
-+ (UIColor *)mnz_separatorForTraitCollection:(UITraitCollection *)traitCollection;
-
-+ (UIColor *)mnz_handlebarForTraitCollection:(UITraitCollection *)traitCollection;
 
 #pragma mark - Text
 
 + (UIColor *)mnz_label;
-+ (UIColor *)mnz_subtitlesForTraitCollection:(UITraitCollection *)traitCollection;
-
-#pragma mark - Blue
-
-+ (UIColor *)mnz_blueForTraitCollection:(UITraitCollection *)traitCollection;
 
 #pragma mark - Gray
 
@@ -43,7 +18,6 @@ typedef NS_ENUM (NSInteger, MEGAChatStatus);
 + (UIColor *)mnz_secondaryGrayForTraitCollection:(UITraitCollection *)traitCollection;
 + (UIColor *)mnz_tertiaryGrayForTraitCollection:(UITraitCollection *)traitCollection;
 
-+ (UIColor *)mnz_grayFAFAFA;
 + (UIColor *)mnz_grayF7F7F7;
 
 #pragma mark Gradients

@@ -9,6 +9,7 @@
 #import "Helper.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
 #import "NSString+MNZCategory.h"
 #import "NSDate+MNZCategory.h"
 

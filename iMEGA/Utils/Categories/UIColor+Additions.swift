@@ -90,8 +90,49 @@ extension UIColor {
             return UIColor.white
         }
     }
+        
+    // MARK: - Main Bar
+    @objc(mnz_mainBarsForTraitCollection:)
+    class func mnz_mainBars(for traitCollection: UITraitCollection) -> UIColor {
+        switch traitCollection.userInterfaceStyle {
+        case .unspecified, .light:
+            if traitCollection.accessibilityContrast == .high {
+                return .white
+            } else {
+                return Colors.General.White.f7F7F7.color
+            }
+            
+        case .dark:
+            if traitCollection.accessibilityContrast == .high {
+                return .black
+            } else {
+                return Colors.General.Black._161616.color
+            }
+            
+        @unknown default:
+            return .white
+        }
+    }
     
     // MARK: Background grouped
+    
+    @objc(mnz_backgroundGroupedForTraitCollection:)
+    class func mnz_backgroundGrouped(for traitCollection: UITraitCollection) -> UIColor {
+        switch traitCollection.userInterfaceStyle {
+        case .unspecified, .light:
+            if traitCollection.accessibilityContrast == .high {
+                return Colors.General.Gray.e6E6E6.color
+            } else {
+                return Colors.General.White.f7F7F7.color
+            }
+            
+        case .dark:
+            return .black
+            
+        @unknown default:
+            return .white
+        }
+    }
     
     @objc class func mnz_secondaryBackgroundGrouped(_ traitCollection: UITraitCollection) -> UIColor {
         return mnz_backgroundElevated(traitCollection)
@@ -109,6 +150,28 @@ extension UIColor {
     
     @objc class func mnz_secondaryBackgroundGroupedElevated(_ traitCollection: UITraitCollection) -> UIColor {
         return mnz_tertiaryBackground(traitCollection)
+    }
+    
+    @objc(mnz_secondaryBackgroundForTraitCollection:)
+    class func mnz_secondaryBackground(for traitCollection: UITraitCollection) -> UIColor {
+        switch traitCollection.userInterfaceStyle {
+        case .unspecified, .light:
+            if traitCollection.accessibilityContrast == .high {
+                return Colors.General.Gray.e6E6E6.color
+            } else {
+                return Colors.General.White.f7F7F7.color
+            }
+            
+        case .dark:
+            if traitCollection.accessibilityContrast == .high {
+                return Colors.General.Black._2c2c2e.color
+            } else {
+                return Colors.General.Black._1c1c1e.color
+            }
+            
+        @unknown default:
+            return .white
+        }
     }
     
     @objc class func mnz_tertiaryBackgroundGroupedElevated(_ traitCollection: UITraitCollection) -> UIColor {
@@ -196,6 +259,42 @@ extension UIColor {
         }
     }
     
+    @objc(mnz_homeRecentsCellBackgroundForTraitCollection:)
+    class func mnz_homeRecentsCellBackground(for traitCollection: UITraitCollection) -> UIColor {
+        switch traitCollection.userInterfaceStyle {
+        case .unspecified, .light:
+            return UIColor.white
+            
+        case .dark:
+            return Colors.General.Black._1c1c1e.color
+            
+        @unknown default:
+            return UIColor.white
+        }
+    }
+    
+    @objc(mnz_notificationSeenBackgroundForTraitCollection:)
+    class func mnz_notificationSeenBackground(for traitCollection: UITraitCollection) -> UIColor {
+        switch traitCollection.userInterfaceStyle {
+        case .unspecified, .light:
+            if traitCollection.accessibilityContrast == .high {
+                return Colors.General.White.f7F7F7.color
+            } else {
+                return Colors.General.White.fafafa.color
+            }
+            
+        case .dark:
+            if traitCollection.accessibilityContrast == .high {
+                return Colors.General.Black._2c2c2e.color
+            } else {
+                return Colors.General.Black._1c1c1e.color
+            }
+            
+        @unknown default:
+            return UIColor.white
+        }
+    }
+    
     // MARK: - Objects
     @objc class func mnz_chatIncomingBubble(_ traitCollection: UITraitCollection) -> UIColor {
         switch traitCollection.userInterfaceStyle {
@@ -236,6 +335,67 @@ extension UIColor {
             
         @unknown default:
             return UIColor.mnz_green009476()
+        }
+    }
+    
+    class func mnz_basicButton(for traitCollection: UITraitCollection) -> UIColor {
+        switch traitCollection.userInterfaceStyle {
+        case .unspecified, .light:
+            return .white
+            
+        case .dark:
+            if traitCollection.accessibilityContrast == .high {
+                return Colors.General.Gray._535356.color
+            } else {
+                return Colors.General.Gray._363638.color
+            }
+            
+        @unknown default:
+            return .white
+        }
+    }
+    
+    @objc(mnz_separatorForTraitCollection:)
+    class func mnz_separator(for traitCollection: UITraitCollection) -> UIColor {
+        switch traitCollection.userInterfaceStyle {
+        case .unspecified, .light:
+            if traitCollection.accessibilityContrast == .high {
+                return Colors.General.Gray._3C3C43.color.withAlphaComponent(0.5)
+            } else {
+                return Colors.General.Gray._3C3C43.color.withAlphaComponent(0.3)
+            }
+            
+        case .dark:
+            if traitCollection.accessibilityContrast == .high {
+                return Colors.General.Gray._545458.color
+            } else {
+                return Colors.General.Gray._545458.color.withAlphaComponent(0.65)
+            }
+            
+        @unknown default:
+            return .white
+        }
+    }
+    
+    @objc(mnz_handlebarForTraitCollection:)
+    class func mnz_handlebar(for traitCollection: UITraitCollection) -> UIColor {
+        switch traitCollection.userInterfaceStyle {
+        case .unspecified, .light:
+            if traitCollection.accessibilityContrast == .high {
+                return Colors.General.Gray._04040F.color.withAlphaComponent(0.4)
+            } else {
+                return Colors.General.Gray._04040F.color.withAlphaComponent(0.15)
+            }
+            
+        case .dark:
+            if traitCollection.accessibilityContrast == .high {
+                return Colors.General.Gray.ebebf5.color.withAlphaComponent(0.6)
+            } else {
+                return Colors.General.Gray.ebebf5.color.withAlphaComponent(0.3)
+            }
+            
+        @unknown default:
+            return .white
         }
     }
     
@@ -306,7 +466,8 @@ extension UIColor {
         return UIColor.secondaryLabel
     }
     
-    @objc class func mnz_subtitles(_ traitCollection: UITraitCollection) -> UIColor {
+    @objc(mnz_subtitlesForTraitCollection:)
+    class func mnz_subtitles(for traitCollection: UITraitCollection) -> UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light: return UIColor(red: 0, green: 0, blue: 0, alpha: 0.8)
         case .dark: return UIColor(white: 1, alpha: 0.8)
@@ -644,6 +805,28 @@ extension UIColor {
     
     @objc class func mnz_blue38C1FF() -> UIColor {
         return Colors.General.Blue._38C1Ff.color
+    }
+    
+    @objc(mnz_blueForTraitCollection:)
+    class func mnz_blue(for traitCollection: UITraitCollection) -> UIColor {
+        switch traitCollection.userInterfaceStyle {
+        case .unspecified, .light:
+            if traitCollection.accessibilityContrast == .high {
+                return Colors.General.Blue._0089C7.color
+            } else {
+                return Colors.General.Blue._009Ae0.color
+            }
+            
+        case .dark:
+            if traitCollection.accessibilityContrast == .high {
+                return Colors.General.Blue._38C1Ff.color
+            } else {
+                return Colors.General.Blue._059De2.color
+            }
+            
+        @unknown default:
+            return .white
+        }
     }
     
     // MARK: Green

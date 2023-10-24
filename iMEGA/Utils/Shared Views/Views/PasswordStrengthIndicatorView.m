@@ -1,4 +1,5 @@
 #import "PasswordStrengthIndicatorView.h"
+#import "MEGA-Swift.h"
 
 @import MEGAL10nObjc;
 
