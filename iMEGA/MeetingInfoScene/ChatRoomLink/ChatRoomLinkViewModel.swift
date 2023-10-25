@@ -37,7 +37,9 @@ final class ChatRoomLinkViewModel: ObservableObject {
         
         initSubscriptions()
         fetchInitialValues()
-        listenToMeetingLinkToggleChange()
+        if chatRoom.ownPrivilege == .moderator {
+            listenToMeetingLinkToggleChange()
+        }
     }
     
     private func listenToMeetingLinkToggleChange() {
