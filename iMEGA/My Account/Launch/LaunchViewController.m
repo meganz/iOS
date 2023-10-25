@@ -1,6 +1,12 @@
 #import "LaunchViewController.h"
 #import "MEGASdkManager.h"
 
+#ifdef MNZ_SHARE_EXTENSION
+#import "MEGAShare-Swift.h"
+#else
+#import "MEGA-Swift.h"
+#endif
+
 @import MEGASDKRepo;
 @import MEGAL10nObjc;
 
@@ -62,7 +68,7 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.view.backgroundColor = UIColor.mnz_background;
+    self.view.backgroundColor = UIColor.systemBackgroundColor;
 }
 
 - (void)startTimerAPI_EAGAIN {

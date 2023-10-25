@@ -5,15 +5,15 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
 
-    self.backgroundColor = UIColor.mnz_background;
-    self.periodLabel.textColor = self.priceLabel.textColor = UIColor.mnz_label;
+    self.backgroundColor = UIColor.systemBackgroundColor;
+    self.periodLabel.textColor = self.priceLabel.textColor = UIColor.labelColor;
 }
 
 - (void)prepareForReuse {
     [super prepareForReuse];
 
-    self.backgroundColor = UIColor.mnz_background;
-    self.periodLabel.textColor = self.priceLabel.textColor = UIColor.mnz_label;
+    self.backgroundColor = UIColor.systemBackgroundColor;
+    self.periodLabel.textColor = self.priceLabel.textColor = UIColor.labelColor;
 }
 
 @end

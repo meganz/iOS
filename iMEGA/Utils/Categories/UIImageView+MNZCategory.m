@@ -9,6 +9,7 @@
 #import <objc/runtime.h>
 #import "MEGASdk+MNZCategory.h"
 
+@import MEGAUIKit;
 #ifdef MNZ_SHARE_EXTENSION
 #import "MEGAShare-Swift.h"
 #else
