@@ -25,8 +25,8 @@ public struct OnboardingUpgradeAccountView: View {
                 .padding(.horizontal, 2)
                 .padding(.bottom, 20)
             }
-            .padding(.horizontal, 15)
         }
+        .frame(maxWidth: 390)
         .taskForiOS14 {
             viewModel.setUpLowestProPlan()
         }
