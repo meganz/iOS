@@ -721,15 +721,15 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     
     private func populateParticipantsInWaitingRoom(forCall call: CallEntity) {
         guard call.changeType != .waitingRoomUsersAllow,
-              let waitingRoomHandles = call.waitingRoom?.sessionClientIds else { return }
+              let waitingRoomUserHandles = call.waitingRoom?.userIds else { return }
         
-        let waitingRoomNonModeratorHandles = waitingRoomHandles.filter { chatRoomUseCase.peerPrivilege(forUserHandle: $0, chatRoom: chatRoom).isUserInWaitingRoom }
+        let waitingRoomNonModeratorUserHandles = waitingRoomUserHandles.filter { chatRoomUseCase.peerPrivilege(forUserHandle: $0, chatRoom: chatRoom).isUserInWaitingRoom }
         
-        let callParticipantsInWaitingRoomHandles = callParticipantsInWaitingRoom.map { $0.participantId }
+        let callParticipantsInWaitingRoomUserHandles = callParticipantsInWaitingRoom.map { $0.participantId }
 
-        guard waitingRoomNonModeratorHandles != callParticipantsInWaitingRoomHandles else { return }
+        guard waitingRoomNonModeratorUserHandles != callParticipantsInWaitingRoomUserHandles else { return }
         
-        callParticipantsInWaitingRoom = waitingRoomNonModeratorHandles.compactMap {
+        callParticipantsInWaitingRoom = waitingRoomNonModeratorUserHandles.compactMap {
             CallParticipantEntity(chatId: chatRoom.chatId, userHandle: $0)
         }
     }

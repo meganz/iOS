@@ -50,8 +50,8 @@ final class WaitingRoomParticipantsListViewModel: ObservableObject {
     }
     
     func admitAllTapped() {
-        guard let sessionClientIds = call.waitingRoom?.sessionClientIds else { return }
-        callUseCase.allowUsersJoinCall(call, users: sessionClientIds)
+        guard let userIds = call.waitingRoom?.userIds else { return }
+        callUseCase.allowUsersJoinCall(call, users: userIds)
         router.dismiss()
     }
     
@@ -69,11 +69,11 @@ final class WaitingRoomParticipantsListViewModel: ObservableObject {
     }
     
     private func populateWaitingRoomParticipants() {
-        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId), let waitingRoomHandles = call.waitingRoom?.sessionClientIds else { return }
+        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId), let waitingRoomUserHandles = call.waitingRoom?.userIds else { return }
         
-        let waitingRoomNonModeratorHandles = waitingRoomHandles.filter { chatRoomUseCase.peerPrivilege(forUserHandle: $0, chatRoom: chatRoom).isUserInWaitingRoom }
+        let waitingRoomNonModeratorUserHandles = waitingRoomUserHandles.filter { chatRoomUseCase.peerPrivilege(forUserHandle: $0, chatRoom: chatRoom).isUserInWaitingRoom }
 
-        waitingRoomParticipants = waitingRoomNonModeratorHandles.compactMap {
+        waitingRoomParticipants = waitingRoomNonModeratorUserHandles.compactMap {
             WaitingRoomParticipantViewModel(chatRoomUseCase: chatRoomUseCase,
                                             chatRoomUserUseCase: ChatRoomUserUseCase(chatRoomRepo: ChatRoomUserRepository.newRepo, userStoreRepo: UserStoreRepository.newRepo),
                                             chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo), 

@@ -25,7 +25,7 @@ extension MEGAChatWaitingRoomStatus {
 fileprivate extension WaitingRoomEntity {
     init(with waitingRoom: MEGAChatWaitingRoom) {
         self.init(
-            sessionClientIds: waitingRoom.peers?.toHandleEntityArray() ?? []
+            sessionClientIds: waitingRoom.users?.toHandleEntityArray() ?? []
         )
     }
 }

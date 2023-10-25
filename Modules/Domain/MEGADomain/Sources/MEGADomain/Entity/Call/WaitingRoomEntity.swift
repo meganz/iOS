@@ -1,8 +1,8 @@
 public struct WaitingRoomEntity: Sendable {
-    public let sessionClientIds: [HandleEntity]
+    public let userIds: [HandleEntity]
     
     public init(sessionClientIds: [HandleEntity]) {
-        self.sessionClientIds = sessionClientIds
+        self.userIds = sessionClientIds
     }
 }
 
