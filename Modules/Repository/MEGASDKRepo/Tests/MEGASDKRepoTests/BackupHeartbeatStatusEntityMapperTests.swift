@@ -2,7 +2,7 @@ import MEGASdk
 import MEGASDKRepo
 import XCTest
 
-class BackupHeartbeatStatusMappingTests: XCTestCase {
+final class BackupHeartbeatStatusMappingTests: XCTestCase {
     
     func testBackupHeartbeatStatusEntity_OnUpdateStatus_shouldReturnCorrectMapping() {
         let sut: [MEGABackupHeartbeatStatus] = [.upToDate, .syncing, .pending, .inactive, .unknown]

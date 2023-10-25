@@ -2,13 +2,14 @@ import MEGASdk
 import MEGASDKRepo
 import XCTest
 
-class BackupSubstateMappingTests: XCTestCase {
+final class BackupSubstateMappingTests: XCTestCase {
     
     func testBackupSubstateEntity_OnUpdateType_shouldReturnCorrectMapping() {
-        let sut: [MEGABackupSubstate] = [.noSyncError, .unknownError, .unsupportedFileSystem, .invalidRemoteType, .invalidLocalType, .initialScanFailed, .localPathTemporaryUnavailable, .localPathUnavailable, .remoteNodeNotFound, .storageOverquota, .accountExpired, .foreignTargetOverstorage, .remotePathHasChanged, .shareNonFullAccess, .localFilesystemMismatch, .putNodesError, .activeSyncBelowPath, .activeSyncAbovePath, .remoteNodeMovedToRubbish, .remoteNodeInsideRubbish, .vBoxSharedFolderUnsupported, .localPathSyncCollision, .accountBlocked, .unknownTemporaryError, .tooManyActionPackets, .loggedOut, .wholeAccountRefetched, .missingParentNode, .backupModified, .backupSourceNotBelowDrive, .syncConfigWriteFailure, .activeSyncSamePath, .couldNotMoveCloudNodes, .couldNotCreateIgnoreFile, .syncConfigReadFailure, .unknownDrivePath, .invalidScanInterval, .notificationSystemUnavailable, .unableToAddWatch, .unableToRetrieveRootFSID, .unableToOpenDatabase, .insufficientDiskSpace, .failureAccessingPersistentStorage, .mismatchOfRootRSID, .filesystemFileIdsAreUnstable, .filesystemIDUnavailable]
+        let sut: [BackUpSubState] = [.invalid, .noSyncError, .unknownError, .unsupportedFileSystem, .invalidRemoteType, .invalidLocalType, .initialScanFailed, .localPathTemporaryUnavailable, .localPathUnavailable, .remoteNodeNotFound, .storageOverquota, .accountExpired, .foreignTargetOverstorage, .remotePathHasChanged, .shareNonFullAccess, .localFilesystemMismatch, .putNodesError, .activeSyncBelowPath, .activeSyncAbovePath, .remoteNodeMovedToRubbish, .remoteNodeInsideRubbish, .vBoxSharedFolderUnsupported, .localPathSyncCollision, .accountBlocked, .unknownTemporaryError, .tooManyActionPackets, .loggedOut, .wholeAccountRefetched, .missingParentNode, .backupModified, .backupSourceNotBelowDrive, .syncConfigWriteFailure, .activeSyncSamePath, .couldNotMoveCloudNodes, .couldNotCreateIgnoreFile, .syncConfigReadFailure, .unknownDrivePath, .invalidScanInterval, .notificationSystemUnavailable, .unableToAddWatch, .unableToRetrieveRootFSID, .unableToOpenDatabase, .insufficientDiskSpace, .failureAccessingPersistentStorage, .mismatchOfRootRSID, .filesystemFileIdsAreUnstable, .filesystemIDUnavailable]
         
         for type in sut {
             switch type {
+            case .invalid: XCTAssertEqual(type.toBackupSubstateEntity(), .invalid)
             case .noSyncError: XCTAssertEqual(type.toBackupSubstateEntity(), .noSyncError)
             case .unknownError: XCTAssertEqual(type.toBackupSubstateEntity(), .unknownError)
             case .unsupportedFileSystem: XCTAssertEqual(type.toBackupSubstateEntity(), .unsupportedFileSystem)

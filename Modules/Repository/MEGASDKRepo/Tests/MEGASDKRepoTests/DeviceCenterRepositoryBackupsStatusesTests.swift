@@ -123,8 +123,8 @@ final class DeviceCenterRepositoryBackupStatusesTests: XCTestCase {
     
     private func validateBackupStatusAfterFetching(
         backupType: BackupTypeEntity = .backupUpload,
-        syncState: SyncStateEntity,
-        backupSubstate: BackupSubstateEntity = .noSyncError,
+        syncState: BackUpStateEntity,
+        backupSubstate: BackUpSubStateEntity = .noSyncError,
         backupHeartbeatStatus: BackupHeartbeatStatusEntity,
         timestamp: Date = Date(),
         activityTimestamp: Date = Date(),
@@ -157,8 +157,8 @@ final class DeviceCenterRepositoryBackupStatusesTests: XCTestCase {
     
     private func makeSUT(
         backupType: BackupTypeEntity,
-        syncState: SyncStateEntity,
-        substate: BackupSubstateEntity,
+        syncState: BackUpStateEntity,
+        substate: BackUpSubStateEntity,
         heartbeatStatus: BackupHeartbeatStatusEntity,
         deviceId: String = "1",
         deviceName: String = "device1",
@@ -172,7 +172,7 @@ final class DeviceCenterRepositoryBackupStatusesTests: XCTestCase {
                     deviceIdentifier: deviceId,
                     backupType: backupType.toMEGABackupType(),
                     syncState: syncState.toMEGASyncState(),
-                    backupSubstate: substate.toMEGABackupSubstate(),
+                    backupSubstate: substate.toBackUpSubState(),
                     heartbeatStatus: heartbeatStatus.toMEGABackupHeartbeatStatus(),
                     timestamp: timestamp,
                     activityTimestamp: activityTimestamp
