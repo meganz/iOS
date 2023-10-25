@@ -57,8 +57,6 @@ final class MeetingInfoViewModel: ObservableObject {
     let chatRoomAvatarViewModel: ChatRoomAvatarViewModel?
     @Published var chatRoomLinkViewModel: ChatRoomLinkViewModel?
     var chatRoomParticipantsListViewModel: ChatRoomParticipantsListViewModel?
-
-    var meetingLink: String?
     
     @Published var subtitle: String = ""
     @Published var scheduledMeeting: ScheduledMeetingEntity
@@ -119,9 +117,9 @@ final class MeetingInfoViewModel: ObservableObject {
         isWaitingRoomOn = chatRoom.isWaitingRoomEnabled
         isPublicChat = chatRoom.isPublicChat
         isUserInChat = chatRoom.ownPrivilege.isUserInChat
-        chatLinkUseCase.queryChatLink(for: chatRoom)
         chatRoomNotificationsViewModel = ChatRoomNotificationsViewModel(chatRoom: chatRoom)
         if chatRoom.ownPrivilege == .moderator {
+            chatLinkUseCase.queryChatLink(for: chatRoom)
             chatRoomLinkViewModel = chatRoomLinkViewModel(for: chatRoom)
         } else {
             Task { @MainActor in
@@ -278,14 +276,6 @@ extension MeetingInfoViewModel {
             return
         }
         router.showEnableKeyRotation(for: chatRoom)
-    }
-    
-    // MARK: - Share link non host
-    func shareMeetingLinkViewTapped() {
-        guard let chatRoomLinkViewModel else {
-            return
-        }
-        chatRoomLinkViewModel.showShareMeetingLinkOptions = true
     }
     
     // MARK: - Leave group

@@ -42,52 +42,6 @@ final class ChatRoomLinkViewModelTests: XCTestCase {
         wait(for: [exp], timeout: 1)
         XCTAssertFalse(sut.isMeetingLinkOn)
     }
-    
-    func testMeetingLink_changeMeetingLinkToggleToOff_shouldNotBeAbleToShareMeetingLink() {
-        let router = MockMeetingInfoRouter()
-        let chatLinkUseCase = MockChatLinkUseCase(link: "Meeting link")
-        let chatRoom = ChatRoomEntity(hasCustomTitle: true)
-
-        let sut = ChatRoomLinkViewModel(router: router, chatRoom: chatRoom, chatLinkUseCase: chatLinkUseCase)
-        
-        let predicate = NSPredicate { _, _ in
-            sut.isMeetingLinkOn == true
-        }
-        let exception = expectation(for: predicate, evaluatedWith: nil)
-        wait(for: [exception], timeout: 10)
-        
-        sut.isMeetingLinkOn = false
-        
-        if XCTWaiter.wait(for: [expectation(description: "Wait for response")], timeout: 1) == .timedOut {
-            sut.shareOptionTapped(.send)
-            XCTAssertEqual(router.showSendToChat_calledTimes, 0)
-        } else {
-            XCTFail("Expected to time out!")
-        }
-    }
-    
-    func testMeetingLink_changeMeetingLinkToggleToOn_shouldBeAbleToShareMeetingLink() {
-        let router = MockMeetingInfoRouter()
-        let chatLinkUseCase = MockChatLinkUseCase(link: nil)
-        let chatRoom = ChatRoomEntity(hasCustomTitle: true)
-        
-        let sut = ChatRoomLinkViewModel(router: router, chatRoom: chatRoom, chatLinkUseCase: chatLinkUseCase)
-        
-        let predicate = NSPredicate { _, _ in
-            sut.isMeetingLinkOn == false
-        }
-        let exception = expectation(for: predicate, evaluatedWith: nil)
-        wait(for: [exception], timeout: 10)
-        
-        sut.isMeetingLinkOn = true
-        
-        let predicateShare = NSPredicate { _, _ in
-            sut.shareOptionTapped(.send)
-            return router.showSendToChat_calledTimes > 0
-        }
-        let exceptionShare = expectation(for: predicateShare, evaluatedWith: nil)
-        wait(for: [exceptionShare], timeout: 10)
-    }
 
     func testShareMeetingLinkTapped_onShareLinkTapped_shouldTrackEvent() {
         let tracker = MockTracker()
