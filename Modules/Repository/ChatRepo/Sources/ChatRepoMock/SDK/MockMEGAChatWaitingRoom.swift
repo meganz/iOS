@@ -2,23 +2,23 @@ import MEGAChatSdk
 import MEGASdk
 
 public final class MockMEGAChatWaitingRoom: MEGAChatWaitingRoom {
-    private let _peerStatus: MEGAChatWaitingRoomStatus
-    private let _peers: MEGAHandleList?
+    private let _userStatus: MEGAChatWaitingRoomStatus
+    private let _users: MEGAHandleList?
     
     public init(
-        peerStatus: MEGAChatWaitingRoomStatus = .allowed,
-        peers: MEGAHandleList? = nil
+        userStatus: MEGAChatWaitingRoomStatus = .allowed,
+        users: MEGAHandleList? = nil
     ) {
-        _peerStatus = peerStatus
-        _peers = peers
+        _userStatus = userStatus
+        _users = users
         super.init()
     }
     
-    public override func peerStatus(_ peerId: UInt64) -> MEGAChatWaitingRoomStatus {
-        _peerStatus
+    public override func userStatus(_ userId: UInt64) -> MEGAChatWaitingRoomStatus {
+        _userStatus
     }
     
-    public override var peers: MEGAHandleList? {
-        _peers
+    public override var users: MEGAHandleList? {
+        _users
     }
 }

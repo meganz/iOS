@@ -33,7 +33,7 @@ enum MainTabBarCallsAction: ActionType { }
     private var callUpdateSubscription: AnyCancellable?
     private (set) var callWaitingRoomUsersUpdateSubscription: AnyCancellable?
     
-    private var currentWaitingRoomHandles: [HandleEntity] = []
+    private var currentWaitingRoomUserHandles: [HandleEntity] = []
     
     @PreferenceWrapper(key: .isCallUIVisible, defaultValue: false, useCase: PreferenceUseCase.default)
     var isCallUIVisible: Bool
@@ -96,7 +96,7 @@ enum MainTabBarCallsAction: ActionType { }
             }
             
         case .destroyed, .terminatingUserParticipation:
-            currentWaitingRoomHandles.removeAll()
+            currentWaitingRoomUserHandles.removeAll()
             router.dismissWaitingRoomDialog(animated: false)
             if !chatUseCase.existsActiveCall() {
                 invokeCommand?(.hideActiveCallIcon)
@@ -110,26 +110,26 @@ enum MainTabBarCallsAction: ActionType { }
     
     private func manageWaitingRoom(for call: CallEntity) {
         guard call.changeType != .waitingRoomUsersAllow,
-              let waitingRoomHandles = call.waitingRoom?.sessionClientIds,
+              let waitingRoomUserHandles = call.waitingRoom?.userIds,
               let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId),
                 !isWaitingRoomListVisible else { return }
-        let waitingRoomNonModeratorHandles = waitingRoomHandles.filter { chatRoomUseCase.peerPrivilege(forUserHandle: $0, chatRoom: chatRoom).isUserInWaitingRoom }
+        let waitingRoomNonModeratorUserHandles = waitingRoomUserHandles.filter { chatRoomUseCase.peerPrivilege(forUserHandle: $0, chatRoom: chatRoom).isUserInWaitingRoom }
         
-        guard waitingRoomNonModeratorHandles.isNotEmpty else {
-            currentWaitingRoomHandles.removeAll()
+        guard waitingRoomNonModeratorUserHandles.isNotEmpty else {
+            currentWaitingRoomUserHandles.removeAll()
             router.dismissWaitingRoomDialog(animated: true)
             return
         }
         
-        guard waitingRoomNonModeratorHandles != currentWaitingRoomHandles else { return }
+        guard waitingRoomNonModeratorUserHandles != currentWaitingRoomUserHandles else { return }
         
-        currentWaitingRoomHandles = waitingRoomNonModeratorHandles
+        currentWaitingRoomUserHandles = waitingRoomNonModeratorUserHandles
         
-        if waitingRoomHandles.count == 1 {
-            guard let userHandle = currentWaitingRoomHandles.first else { return }
+        if waitingRoomUserHandles.count == 1 {
+            guard let userHandle = currentWaitingRoomUserHandles.first else { return }
             showOneUserWaitingRoomAlert(withUserHandle: userHandle, inChatRoom: chatRoom, forCall: call)
         } else {
-            showSeveralUsersWaitingRoomAlert(userHandles: currentWaitingRoomHandles, inChatRoom: chatRoom, forCall: call)
+            showSeveralUsersWaitingRoomAlert(userHandles: currentWaitingRoomUserHandles, inChatRoom: chatRoom, forCall: call)
         }
     }
     
