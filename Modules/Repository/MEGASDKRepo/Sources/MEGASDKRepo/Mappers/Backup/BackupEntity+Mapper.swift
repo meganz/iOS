@@ -25,7 +25,7 @@ fileprivate extension BackupEntity {
                   type: backupInfo.type.toBackupTypeEntity(),
                   localFolder: backupInfo.localFolder ?? "",
                   extra: backupInfo.extra ?? "",
-                  syncState: backupInfo.state.toSyncStateEntity(),
+                  syncState: backupInfo.state.toBackUpStateEntity(),
                   substate: backupInfo.substate.toBackupSubstateEntity(),
                   status: backupInfo.status.toBackupHeartbeatStatusEntity(),
                   progress: UInt(backupInfo.progress),

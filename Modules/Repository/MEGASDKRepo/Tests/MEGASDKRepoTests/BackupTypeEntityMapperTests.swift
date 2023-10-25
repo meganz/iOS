@@ -2,7 +2,7 @@ import MEGASdk
 import MEGASDKRepo
 import XCTest
 
-class BackupTypeMappingTests: XCTestCase {
+final class BackupTypeMappingTests: XCTestCase {
     
     func testBackupTypeEntity_OnUpdateType_shouldReturnCorrectMapping() {
         let sut: [MEGABackupType] = [.invalid, .twoWay, .upSync, .downSync, .cameraUpload, .mediaUpload, .backupUpload]

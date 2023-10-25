@@ -1,4 +1,5 @@
-public enum BackupSubstateEntity: Sendable {
+public enum BackUpSubStateEntity: Sendable {
+    case invalid
     case noSyncError
     case unknownError
     case unsupportedFileSystem

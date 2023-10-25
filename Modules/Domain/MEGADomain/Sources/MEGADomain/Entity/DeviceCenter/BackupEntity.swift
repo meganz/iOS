@@ -17,8 +17,8 @@ public struct BackupEntity: Sendable, Identifiable {
     public let extra: String
     
     // MARK: - Current Status
-    public let syncState: SyncStateEntity
-    public let substate: BackupSubstateEntity
+    public let syncState: BackUpStateEntity
+    public let substate: BackUpSubStateEntity
     public let status: BackupHeartbeatStatusEntity
     public let progress: UInt
     public let uploads: UInt
@@ -40,8 +40,8 @@ public struct BackupEntity: Sendable, Identifiable {
         type: BackupTypeEntity,
         localFolder: String,
         extra: String,
-        syncState: SyncStateEntity,
-        substate: BackupSubstateEntity,
+        syncState: BackUpStateEntity,
+        substate: BackUpSubStateEntity,
         status: BackupHeartbeatStatusEntity,
         progress: UInt,
         uploads: UInt,

@@ -1,9 +1,10 @@
 import MEGADomain
 import MEGASdk
 
-extension MEGABackupSubstate {
-    public func toBackupSubstateEntity() -> BackupSubstateEntity {
+extension BackUpSubState {
+    public func toBackupSubstateEntity() -> BackUpSubStateEntity {
         switch self {
+        case .invalid: return .invalid
         case .noSyncError: return .noSyncError
         case .unknownError: return .unknownError
         case .unsupportedFileSystem: return .unsupportedFileSystem
@@ -55,9 +56,10 @@ extension MEGABackupSubstate {
     }
 }
 
-extension BackupSubstateEntity {
-    public func toMEGABackupSubstate() -> MEGABackupSubstate {
+extension BackUpSubStateEntity {
+    public func toBackUpSubState() -> BackUpSubState {
         switch self {
+        case .invalid: return .invalid
         case .noSyncError: return .noSyncError
         case .unknownError: return .unknownError
         case .unsupportedFileSystem: return .unsupportedFileSystem

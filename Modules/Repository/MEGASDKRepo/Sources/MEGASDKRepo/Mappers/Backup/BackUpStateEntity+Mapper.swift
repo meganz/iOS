@@ -1,9 +1,10 @@
 import MEGADomain
 import MEGASdk
 
-extension MEGASyncState {
-    public func toSyncStateEntity() -> SyncStateEntity {
+extension BackUpState {
+    public func toBackUpStateEntity() -> BackUpStateEntity {
         switch self {
+        case .invalid: return .invalid
         case .notInitialized: return .notInitialized
         case .active: return .active
         case .failed: return .failed
@@ -19,9 +20,10 @@ extension MEGASyncState {
     }
 }
 
-extension SyncStateEntity {
-    public func toMEGASyncState() -> MEGASyncState {
+extension BackUpStateEntity {
+    public func toMEGASyncState() -> BackUpState {
         switch self {
+        case .invalid: return .invalid
         case .notInitialized: return .notInitialized
         case .active: return .active
         case .failed: return .failed

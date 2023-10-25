@@ -3,7 +3,7 @@ import MEGASdk
 import MEGASDKRepo
 import XCTest
 
-class BackupStatusEntityMappingTests: XCTestCase {
+final class BackupStatusEntityMappingTests: XCTestCase {
     
     func testBackupStatusEntity_highestPriority_shouldReturnTheElementWithHighestPriority() {
         let backupStatuses: [BackupStatusEntity] = [.backupStopped, .outOfQuota, .offline, .initialising, .paused, .updating, .scanning, .noCameraUploads, .error, .upToDate, .disabled, .blocked]

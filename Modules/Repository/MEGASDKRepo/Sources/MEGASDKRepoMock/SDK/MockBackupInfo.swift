@@ -18,8 +18,8 @@ public final class MockBackupInfo: MEGABackupInfo {
     private let extraInfo: String
     
     // MARK: - Current Status
-    private let syncState: MEGASyncState
-    private let backupSubstate: MEGABackupSubstate
+    private let syncState: BackUpState
+    private let backupSubstate: BackUpSubState
     private let heartbeatStatus: MEGABackupHeartbeatStatus
     private let backupProgress: Int
     private let backupUploads: Int
@@ -29,7 +29,7 @@ public final class MockBackupInfo: MEGABackupInfo {
     private let ts: Date
     private let activityTs: Date
     
-    public init(identifier: Int = 0, backupName: String = "", deviceIdentifier: String = "", currentUserAgent: String = "", rootHandle: MEGAHandle = .invalidHandle, lastHandleSync: MEGAHandle = .invalidHandle, backupType: MEGABackupType = .invalid, localFolderName: String = "", extraInfo: String = "", syncState: MEGASyncState = .unknown, backupSubstate: MEGABackupSubstate = .noSyncError, heartbeatStatus: MEGABackupHeartbeatStatus = .unknown, backupProgress: Int = 0, backupUploads: Int = 0, backupDownloads: Int = 0, timestamp: Date = Date(), activityTimestamp: Date = Date()) {
+    public init(identifier: Int = 0, backupName: String = "", deviceIdentifier: String = "", currentUserAgent: String = "", rootHandle: MEGAHandle = .invalidHandle, lastHandleSync: MEGAHandle = .invalidHandle, backupType: MEGABackupType = .invalid, localFolderName: String = "", extraInfo: String = "", syncState: BackUpState = .unknown, backupSubstate: BackUpSubState = .noSyncError, heartbeatStatus: MEGABackupHeartbeatStatus = .unknown, backupProgress: Int = 0, backupUploads: Int = 0, backupDownloads: Int = 0, timestamp: Date = Date(), activityTimestamp: Date = Date()) {
         self.identifier = identifier
         self.backupName = backupName
         self.deviceIdentifier = deviceIdentifier
@@ -58,8 +58,8 @@ public final class MockBackupInfo: MEGABackupInfo {
     public override var type: MEGABackupType { backupType }
     public override var localFolder: String? { localFolderName }
     public override var extra: String? { extraInfo }
-    public override var state: MEGASyncState { syncState }
-    public override var substate: MEGABackupSubstate { backupSubstate }
+    public override var state: BackUpState { syncState }
+    public override var substate: BackUpSubState { backupSubstate }
     public override var status: MEGABackupHeartbeatStatus { heartbeatStatus }
     public override var progress: UInt { UInt(backupProgress) }
     public override var uploads: UInt { UInt(backupUploads) }

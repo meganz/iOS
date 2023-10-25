@@ -1,6 +1,7 @@
 import Foundation
 
-public enum SyncStateEntity: Sendable {
+public enum BackUpStateEntity: Sendable {
+    case invalid
     case notInitialized
     case active
     case failed
