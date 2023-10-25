@@ -8,6 +8,7 @@
 #import "NSFileManager+MNZCategory.h"
 #import "MEGAGenericRequestDelegate.h"
 #import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
 
 @import MEGAL10nObjc;
 

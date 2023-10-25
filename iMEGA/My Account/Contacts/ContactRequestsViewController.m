@@ -14,6 +14,7 @@
 #import "NSDate+MNZCategory.h"
 
 @import MEGAL10nObjc;
+@import MEGAUIKit;
 
 typedef NS_ENUM(NSInteger, Segment) {
     SegmentReceived = 0,

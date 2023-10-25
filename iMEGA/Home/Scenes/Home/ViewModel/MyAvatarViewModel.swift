@@ -116,7 +116,7 @@ extension MyAvatarViewModel {
         else {
             return nil
         }
-        let avatarBackgroundColor = UIColor.mnz_(fromHexString: avatarBackgroundColorHex)
+        let avatarBackgroundColor = UIColor.colorFromHexString(avatarBackgroundColorHex)
         return UIImage(
             forName: avatarName,
             size: avatarSize,

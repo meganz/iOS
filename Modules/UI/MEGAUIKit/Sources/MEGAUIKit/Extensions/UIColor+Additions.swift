@@ -2,6 +2,7 @@ import UIKit
 
 public extension UIColor {
     
+    @objc(mnz_fromHexString:)
     static func colorFromHexString(_ hexString: String?) -> UIColor? {
         guard let hexString else { return nil }
 

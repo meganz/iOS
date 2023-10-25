@@ -21,7 +21,7 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.backgroundColor = UIColor.mnz_background;
+    self.backgroundColor = UIColor.systemBackgroundColor;
 }
 
 @end

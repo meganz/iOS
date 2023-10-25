@@ -32,7 +32,7 @@ struct PhotoCard<Content: View>: View {
                     }
                 }
             }
-            .background(Color(colorScheme == .dark ? UIColor.systemBackground : UIColor.mnz_grayF7F7F7()))
+            .background(Color(colorScheme == .dark ? UIColor.systemBackground : Colors.General.White.f7F7F7.color))
         }
         .cornerRadius(12)
         .contentShape(Rectangle())

@@ -10,6 +10,7 @@
 #import "UIImageView+MNZCategory.h"
 #import "MEGAStore.h"
 #import "MEGA-Swift.h"
+@import MEGAUIKit;
 
 static NSString *kFileName = @"kFileName";
 static NSString *kFileSize = @"kFileSize";

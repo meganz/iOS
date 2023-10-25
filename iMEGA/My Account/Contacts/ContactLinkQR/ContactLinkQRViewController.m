@@ -19,6 +19,7 @@
 
 @import MEGAL10nObjc;
 @import MEGASDKRepo;
+@import MEGAUIKit;
 
 typedef NS_ENUM(NSInteger, QRSection) {
     QRSectionMyCode = 0,

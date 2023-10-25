@@ -5,6 +5,7 @@
 #import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
 @import GKContactImage;
+@import MEGAUIKit;
 
 @implementation UIImage (MNZCategory)
 

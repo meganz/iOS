@@ -94,7 +94,7 @@ struct AlbumContentPickerView: View, DismissibleContentView {
     }
     
     private var backGroundColor: UIColor {
-        colorScheme == .dark ? UIColor.mnz_black1C1C1E() : UIColor.mnz_grayF7F7F7()
+        colorScheme == .dark ? UIColor.mnz_black1C1C1E() : Colors.General.White.f7F7F7.color
     }
     
     private var textColor: Color {

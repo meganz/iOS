@@ -38,6 +38,7 @@
 
 @import ChatRepo;
 @import MEGAL10nObjc;
+@import MEGAUIKit;
 
 static NSURL *linkURL;
 static NSURL *secondaryLinkURL;
