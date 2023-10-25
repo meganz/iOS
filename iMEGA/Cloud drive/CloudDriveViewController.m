@@ -202,7 +202,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     
-    if (self.cdTableView.tableView.isEditing || self.cdCollectionView.collectionView.allowsMultipleSelection) {
+    if (self.viewModel.editModeActive) {
         self.selectedNodesArray = nil;
         [self toggleWithEditModeActive:NO];
     }
