@@ -200,7 +200,7 @@
     if (self.overquota && self.transfer.type == MEGATransferTypeDownload) {
         self.arrowImageView.image = (self.transfer.type == MEGATransferTypeDownload) ? UIImage.mnz_downloadingOverquotaTransferImage : UIImage.mnz_uploadingOverquotaTransferImage;
         self.infoLabel.text = LocalizedString(@"Transfer over quota", @"Label indicating transfer over quota");
-        self.infoLabel.textColor = [UIColor mnz_fromHexString:@"FFCC00"];
+        self.infoLabel.textColor = UIColor.mnz_yellowFFCC00;
         self.pauseButton.hidden = self.cancelButton.hidden = NO;
         return;
     }
