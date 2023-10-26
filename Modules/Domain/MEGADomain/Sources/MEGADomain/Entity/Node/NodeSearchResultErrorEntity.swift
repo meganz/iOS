@@ -1,6 +1,4 @@
-import Foundation
-
-enum NodeSearchResultErrorEntity: Error {
+public enum NodeSearchResultErrorEntity: Error {
     case generic
     case noDataAvailable
     case cancelled
