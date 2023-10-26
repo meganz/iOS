@@ -9,7 +9,7 @@
     
     var darkBgColor: UIColor {
         switch self {
-        case .warning: return UIColor.mnz_Brown544b27()
+        case .warning: return UIColor.mnz_brown544b27()
         }
     }
     
