@@ -54,14 +54,14 @@ public struct UserEntity: Sendable, Equatable {
         case implicitRequest
     }
     
-    public let email: String
+    public let email: String?
     public let handle: HandleEntity
     public let visibility: VisibilityEntity
     public let changes: ChangeTypeEntity
     public let changeSource: ChangeSource
-    public let addedDate: Date
+    public let addedDate: Date?
     
-    public init(email: String, handle: HandleEntity, visibility: VisibilityEntity, changes: ChangeTypeEntity, changeSource: ChangeSource, addedDate: Date) {
+    public init(email: String?, handle: HandleEntity, visibility: VisibilityEntity, changes: ChangeTypeEntity, changeSource: ChangeSource, addedDate: Date?) {
         self.email = email
         self.handle = handle
         self.visibility = visibility

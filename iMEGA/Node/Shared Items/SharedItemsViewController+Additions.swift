@@ -81,7 +81,7 @@ extension SharedItemsViewController {
         
         cell.infoLabel.text = ""
         if let user = userContactFromShareAtIndexPath(indexPath) {
-            let userName: String = user.mnz_displayName ?? user.email
+            let userName: String = user.mnz_displayName ?? user.email ?? ""
             cell.infoLabel.text = Strings.Localizable.SharedItems.Tab.Outgoing.sharedToContact(userName)
         } else if let share = shareAtIndexPath(indexPath), let userEmail = share.user {
             cell.infoLabel.text = Strings.Localizable.SharedItems.Tab.Outgoing.sharedToContact(userEmail)
