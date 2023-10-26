@@ -98,7 +98,11 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
             if device.id == currentDeviceUUID && device.status == .noCameraUploads {
                 router.showCurrentDeviceEmptyState(currentDeviceUUID, deviceName: UIDevice.current.modelName)
             } else {
-                router.showDeviceBackups(device)
+                let currentDeviceId = deviceCenterUseCase.loadCurrentDeviceId()
+                router.showDeviceBackups(
+                    device,
+                    isCurrentDevice: device.id == currentDeviceUUID || (device.id == currentDeviceId)
+                )
             }
         }
     }

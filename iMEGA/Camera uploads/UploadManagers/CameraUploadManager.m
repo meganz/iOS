@@ -41,7 +41,6 @@ static const NSUInteger VideoUploadBatchCount = 1;
 @property (strong, nonatomic) DiskSpaceDetector *diskSpaceDetector;
 @property (strong, nonatomic) CameraUploadConcurrentCountCalculator *concurrentCountCalculator;
 @property (strong, nonatomic) BackgroundUploadingTaskMonitor *backgroundUploadingTaskMonitor;
-@property (strong, nonatomic) CameraUploadHeartbeat *heartbeat;
 
 @property (strong, nonatomic) dispatch_queue_t propertySerialQueue;
 
@@ -72,7 +71,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
             [self initializeCameraUpload];
         }
         
-        _heartbeat = [[CameraUploadHeartbeat alloc] init];
+        [self initializeCameraUploadHeartbeat];
     }
     return self;
 }

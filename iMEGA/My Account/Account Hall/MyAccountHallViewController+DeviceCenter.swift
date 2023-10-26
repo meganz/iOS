@@ -21,6 +21,7 @@ extension MyAccountHallViewController {
                     nodeRepository: NodeRepository.newRepo
                 ),
             networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
+            notificationCenter: NotificationCenter.default,
             deviceCenterAssets: makeDeviceListAssetData()
         ).start()
     }

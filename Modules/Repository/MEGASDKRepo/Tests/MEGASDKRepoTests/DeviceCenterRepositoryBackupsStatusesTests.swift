@@ -171,7 +171,7 @@ final class DeviceCenterRepositoryBackupStatusesTests: XCTestCase {
                     identifier: 1,
                     deviceIdentifier: deviceId,
                     backupType: backupType.toMEGABackupType(),
-                    syncState: syncState.toMEGASyncState(),
+                    syncState: syncState.toBackUpState(),
                     backupSubstate: substate.toBackUpSubState(),
                     heartbeatStatus: heartbeatStatus.toMEGABackupHeartbeatStatus(),
                     timestamp: timestamp,

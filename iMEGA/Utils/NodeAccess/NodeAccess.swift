@@ -14,7 +14,7 @@ struct NodeAccessConfiguration {
     var createNodeRequest: ((String, MEGANode, any MEGARequestDelegate) -> Void)?
 }
 
-class NodeAccess: NSObject {
+public class NodeAccess: NSObject {
     private let sdk = MEGASdk.shared
     private let nodeAccessSemaphore = DispatchSemaphore(value: 1)
     private var nodeLoadOperation: NodeLoadOperation?

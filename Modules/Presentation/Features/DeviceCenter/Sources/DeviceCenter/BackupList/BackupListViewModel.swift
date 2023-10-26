@@ -3,6 +3,10 @@ import MEGADomain
 import MEGASDKRepo
 import SwiftUI
 
+public extension Notification.Name {
+    static let didChangeCameraUploadsBackupName = Notification.Name("didChangeCameraUploadsBackupName")
+}
+
 public final class BackupListViewModel: ObservableObject {
     private let deviceCenterUseCase: any DeviceCenterUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
@@ -14,6 +18,8 @@ public final class BackupListViewModel: ObservableObject {
     private let deviceCenterActions: [DeviceCenterAction]
     private let devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>
     private let updateInterval: UInt64
+    private let isCurrentDevice: Bool
+    private let notificationCenter: NotificationCenter
     private var selectedDeviceId: String
     private var selectedDeviceName: String
     private(set) var backups: [BackupEntity]?
@@ -28,6 +34,13 @@ public final class BackupListViewModel: ObservableObject {
     }
     private var backupsPreloaded = false
     private var searchCancellable: AnyCancellable?
+    private var backupNameChangeObserver: Any?
+    
+    private var isMobileDevice: Bool {
+        backups?.contains {
+            $0.type == .cameraUpload || $0.type == .mediaUpload
+        } ?? false
+    }
     
     var isFilteredBackupsEmpty: Bool {
         filteredBackups.isEmpty
@@ -47,6 +60,7 @@ public final class BackupListViewModel: ObservableObject {
     @Published var showEmptyStateView: Bool = false
     
     init(
+        isCurrentDevice: Bool,
         selectedDeviceId: String,
         selectedDeviceName: String,
         devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>,
@@ -57,12 +71,14 @@ public final class BackupListViewModel: ObservableObject {
         router: some BackupListRouting,
         deviceCenterBridge: DeviceCenterBridge,
         backups: [BackupEntity]?,
+        notificationCenter: NotificationCenter,
         backupListAssets: BackupListAssets,
         emptyStateAssets: EmptyStateAssets,
         searchAssets: SearchAssets,
         backupStatuses: [BackupStatus],
         deviceCenterActions: [DeviceCenterAction]
     ) {
+        self.isCurrentDevice = isCurrentDevice
         self.selectedDeviceId = selectedDeviceId
         self.selectedDeviceName = selectedDeviceName
         self.devicesUpdatePublisher = devicesUpdatePublisher
@@ -73,6 +89,7 @@ public final class BackupListViewModel: ObservableObject {
         self.router = router
         self.deviceCenterBridge = deviceCenterBridge
         self.backups = backups
+        self.notificationCenter = notificationCenter
         self.backupListAssets = backupListAssets
         self.emptyStateAssets = emptyStateAssets
         self.searchAssets = searchAssets
@@ -82,11 +99,42 @@ public final class BackupListViewModel: ObservableObject {
         self.searchText = ""
         
         setupSearchCancellable()
+        addObservers()
         
         if backups == nil {
             showEmptyStateView = true
         } else {
             loadBackupsInitialStatus()
+        }
+    }
+    
+    deinit {
+        if let observer = backupNameChangeObserver {
+            notificationCenter.removeObserver(
+                observer
+            )
+        }
+    }
+    
+    private func addObservers() {
+        if isCurrentDevice && isMobileDevice {
+            backupNameChangeObserver = notificationCenter.addObserver(
+                forName: Notification.Name.didChangeCameraUploadsBackupName,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                self?.handleDidChangeCameraUploadsBackupName()
+            }
+        }
+    }
+    
+    private func handleDidChangeCameraUploadsBackupName() {
+        Task {
+            if self.showEmptyStateView,
+               let currentDeviceId = self.deviceCenterUseCase.loadCurrentDeviceId() {
+                self.selectedDeviceId = currentDeviceId
+            }
+            await syncDevicesAndLoadBackups()
         }
     }
     
@@ -210,15 +258,9 @@ public final class BackupListViewModel: ObservableObject {
     }
     
     func actionsForDevice() -> [DeviceCenterAction] {
-        let currentDeviceUUID = UIDevice.current.identifierForVendor?.uuidString ?? ""
-        let currentDeviceId = deviceCenterUseCase.loadCurrentDeviceId()
-        let isMobileDevice = backups?.contains {
-            $0.type == .cameraUpload || $0.type == .mediaUpload
-        } ?? false
-        
         var actionTypes: [DeviceCenterActionType] = [.rename]
 
-        if selectedDeviceId == currentDeviceUUID || (selectedDeviceId == currentDeviceId && isMobileDevice) {
+        if isCurrentDevice && isMobileDevice {
             actionTypes.append(.cameraUploads)
         }
         

@@ -12,11 +12,13 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
     private weak var baseViewController: UIViewController?
     private weak var navigationController: UINavigationController?
     private let deviceCenterBridge: DeviceCenterBridge
+    private let isCurrentDevice: Bool
     private let selectedDeviceId: String
     private let selectedDeviceName: String
     private let devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>
     private let updateInterval: UInt64
     private let backups: [BackupEntity]?
+    private let notificationCenter: NotificationCenter
     private let deviceCenterUseCase: any DeviceCenterUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
     private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
@@ -27,11 +29,13 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
     private let deviceCenterActions: [DeviceCenterAction]
     
     public init(
+        isCurrentDevice: Bool,
         selectedDeviceId: String,
         selectedDeviceName: String,
         devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>,
         updateInterval: UInt64,
         backups: [BackupEntity]?,
+        notificationCenter: NotificationCenter,
         deviceCenterUseCase: some DeviceCenterUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
         networkMonitorUseCase: some NetworkMonitorUseCaseProtocol,
@@ -43,11 +47,13 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
         backupStatuses: [BackupStatus],
         deviceCenterActions: [DeviceCenterAction]
     ) {
+        self.isCurrentDevice = isCurrentDevice
         self.selectedDeviceId = selectedDeviceId
         self.selectedDeviceName = selectedDeviceName
         self.devicesUpdatePublisher = devicesUpdatePublisher
         self.updateInterval = updateInterval
         self.backups = backups
+        self.notificationCenter = notificationCenter
         self.deviceCenterUseCase = deviceCenterUseCase
         self.nodeUseCase = nodeUseCase
         self.networkMonitorUseCase = networkMonitorUseCase
@@ -62,6 +68,7 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
     
     public func build() -> UIViewController {
         let backupListViewModel = BackupListViewModel(
+            isCurrentDevice: isCurrentDevice,
             selectedDeviceId: selectedDeviceId,
             selectedDeviceName: selectedDeviceName,
             devicesUpdatePublisher: devicesUpdatePublisher,
@@ -72,6 +79,7 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
             router: self,
             deviceCenterBridge: deviceCenterBridge,
             backups: backups,
+            notificationCenter: notificationCenter,
             backupListAssets: backupListAssets,
             emptyStateAssets: emptyStateAssets,
             searchAssets: searchAssets,

@@ -1,10 +1,13 @@
 #import <Foundation/Foundation.h>
 #import "UploadStats.h"
 
+@class CameraUploadHeartbeat;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CameraUploadManager : NSObject
 
+@property (strong, nonatomic) CameraUploadHeartbeat *heartbeat;
 @property (readonly) BOOL isNodeTreeCurrent;
 @property (nonatomic, getter=isPhotoUploadPaused) BOOL photoUploadPaused;
 @property (nonatomic, getter=isVideoUploadPaused) BOOL videoUploadPaused;
