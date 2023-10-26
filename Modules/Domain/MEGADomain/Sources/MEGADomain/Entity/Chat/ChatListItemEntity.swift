@@ -1,6 +1,6 @@
 import Foundation
 
-public struct ChatListItemEntity {
+public struct ChatListItemEntity: Sendable {
     public let chatId: HandleEntity
     public let title: String?
     public let changeType: ChangeType?
@@ -25,7 +25,7 @@ public struct ChatListItemEntity {
     public let lastMessagePriv: ChatMessageTypeEntity
     public let lastMessageHandle: HandleEntity
     
-    public enum ChangeType {
+    public enum ChangeType: Sendable {
         case noChanges
         case status
         case ownPrivilege
@@ -43,7 +43,28 @@ public struct ChatListItemEntity {
         case delete
     }
     
-    public init(chatId: HandleEntity, title: String?, changeType: ChangeType?, ownPrivilege: ChatRoomPrivilegeEntity, unreadCount: Int, previewersCount: UInt, group: Bool, publicChat: Bool, preview: Bool, active: Bool, deleted: Bool, meeting: Bool, peerHandle: HandleEntity, lastMessage: String?, lastMessageId: HandleEntity, lastMessageType: ChatMessageTypeEntity, lastMessageSender: HandleEntity, lastMessageDate: Date, lastMessagePriv: ChatMessageTypeEntity, lastMessageHandle: HandleEntity) {
+    public init(
+        chatId: HandleEntity,
+        title: String?,
+        changeType: ChangeType?,
+        ownPrivilege: ChatRoomPrivilegeEntity,
+        unreadCount: Int,
+        previewersCount: UInt,
+        group: Bool,
+        publicChat: Bool,
+        preview: Bool,
+        active: Bool,
+        deleted: Bool,
+        meeting: Bool,
+        peerHandle: HandleEntity,
+        lastMessage: String?,
+        lastMessageId: HandleEntity,
+        lastMessageType: ChatMessageTypeEntity,
+        lastMessageSender: HandleEntity,
+        lastMessageDate: Date,
+        lastMessagePriv: ChatMessageTypeEntity,
+        lastMessageHandle: HandleEntity
+    ) {
         self.chatId = chatId
         self.title = title
         self.changeType = changeType

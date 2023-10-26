@@ -22,13 +22,11 @@ final class ScheduledMeetingOccurrencesViewModel: ObservableObject {
     private var lastOccurrenceDate = Date()
     private var maxOccurrencesLoaded = 0
     var occurrences: [ScheduledMeetingOccurrenceEntity] = []
-    var selectedOccurrence: ScheduleMeetingOccurence?
+    var selectedOccurrence: ScheduleMeetingOccurrence?
 
     @Published var title: String
     @Published var subtitle: String?
-    @Published var displayOccurrences: [ScheduleMeetingOccurence] = []
-    @Published private(set) var primaryAvatar: UIImage?
-    @Published private(set) var secondaryAvatar: UIImage?
+    @Published var displayOccurrences: [ScheduleMeetingOccurrence] = []
     @Published var seeMoreOccurrencesVisible: Bool = true
     @Published var showCancelMeetingAlert = false
     
@@ -38,24 +36,21 @@ final class ScheduledMeetingOccurrencesViewModel: ObservableObject {
     private var subscriptions = Set<AnyCancellable>()
     var chatHasMessagesSubscription: AnyCancellable?
     
-    var chatHasMeesages = false
+    var chatHasMessages = false
     
-    init(router: some ScheduledMeetingOccurrencesRouting,
-         scheduledMeeting: ScheduledMeetingEntity,
-         scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol,
-         chatRoomUseCase: some ChatRoomUseCaseProtocol,
-         chatRoomAvatarViewModel: ChatRoomAvatarViewModel?
+    init(
+        router: some ScheduledMeetingOccurrencesRouting,
+        scheduledMeeting: ScheduledMeetingEntity,
+        scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol,
+        chatRoomUseCase: some ChatRoomUseCaseProtocol,
+        chatRoomAvatarViewModel: ChatRoomAvatarViewModel?
     ) {
         self.router = router
         self.scheduledMeeting = scheduledMeeting
         self.scheduledMeetingUseCase = scheduledMeetingUseCase
         self.chatRoomUseCase = chatRoomUseCase
         self.chatRoomAvatarViewModel = chatRoomAvatarViewModel
-        
-        self.title = scheduledMeeting.title
-        self.primaryAvatar = chatRoomAvatarViewModel?.primaryAvatar
-        self.secondaryAvatar = chatRoomAvatarViewModel?.secondaryAvatar
-        
+        title = scheduledMeeting.title
         contextMenuOptions = constructContextMenuOptions()
         
         updateSubtitle()
@@ -69,7 +64,7 @@ final class ScheduledMeetingOccurrencesViewModel: ObservableObject {
     }
 
     func cancelMeetingAlertData() -> CancelMeetingAlertDataModel {
-        let hasMessagesDescriptionString = chatHasMeesages ? Strings.Localizable.Meetings.Scheduled.CancelAlert.Occurrence.Last.WithMessages.description : Strings.Localizable.Meetings.Scheduled.CancelAlert.Occurrence.Last.WithoutMessages.description
+        let hasMessagesDescriptionString = chatHasMessages ? Strings.Localizable.Meetings.Scheduled.CancelAlert.Occurrence.Last.WithMessages.description : Strings.Localizable.Meetings.Scheduled.CancelAlert.Occurrence.Last.WithoutMessages.description
         return CancelMeetingAlertDataModel(
             title: occurrences.count != 1 ? Strings.Localizable.Meetings.Scheduled.CancelAlert.Occurrence.title(selectedOccurrence?.date ?? "") : Strings.Localizable.Meetings.Scheduled.CancelAlert.Occurrence.Last.title,
             message: occurrences.count != 1 ? Strings.Localizable.Meetings.Scheduled.CancelAlert.Occurrence.description : hasMessagesDescriptionString,
@@ -135,7 +130,7 @@ final class ScheduledMeetingOccurrencesViewModel: ObservableObject {
     
     private func scheduleMeetingOccurrence(
         from occurrence: ScheduledMeetingOccurrenceEntity
-    ) -> ScheduleMeetingOccurence {
+    ) -> ScheduleMeetingOccurrence {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEE, d MMM"
         let date = dateFormatter.localisedString(from: occurrence.startDate)
@@ -145,7 +140,7 @@ final class ScheduledMeetingOccurrencesViewModel: ObservableObject {
         + " - "
         + timeFormatter.localisedString(from: occurrence.endDate)
         
-        return ScheduleMeetingOccurence(
+        return ScheduleMeetingOccurrence(
             id: UUID().uuidString,
             date: date,
             title: scheduledMeeting.title,
@@ -194,7 +189,7 @@ final class ScheduledMeetingOccurrencesViewModel: ObservableObject {
         return options
     }
     
-    private func cancelOccurrenceTapped(_ occurrence: ScheduleMeetingOccurence) {
+    private func cancelOccurrenceTapped(_ occurrence: ScheduleMeetingOccurrence) {
         selectedOccurrence = occurrence
         guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId) else { return }
         subscribeToMessagesLoaded(in: chatRoom)
@@ -229,7 +224,7 @@ final class ScheduledMeetingOccurrencesViewModel: ObservableObject {
     private func chatHasMessages(_ chatRoom: ChatRoomEntity, _ hasMessages: Bool) {
         cancelChatHasMessageSuscription()
         closeChat(chatRoom)
-        chatHasMeesages = hasMessages
+        chatHasMessages = hasMessages
         showCancelMeetingAlert = true
     }
     
@@ -256,7 +251,7 @@ final class ScheduledMeetingOccurrencesViewModel: ObservableObject {
                 var scheduledMeeting = scheduledMeeting
                 scheduledMeeting.cancelled = true
                 self.scheduledMeeting = try await scheduledMeetingUseCase.updateScheduleMeeting(scheduledMeeting)
-                if !chatHasMeesages {
+                if !chatHasMessages {
                    archiveChatRoom()
                 } else {
                     router.showSuccessMessageAndDismiss(Strings.Localizable.Meetings.Scheduled.CancelAlert.Success.withMessages)

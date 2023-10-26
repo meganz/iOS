@@ -31,6 +31,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     private let userAttributeUseCase: any UserAttributeUseCaseProtocol
     private let permissionHandler: any DevicePermissionsHandling
     private let permissionAlertRouter: any PermissionAlertRouting
+    private let chatListItemCacheUseCase: any ChatListItemCacheUseCaseProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let tracker: any AnalyticsTracking
     private let notificationCenter: NotificationCenter
@@ -124,21 +125,23 @@ final class ChatRoomsListViewModel: ObservableObject {
     
     var refreshContextMenuBarButton: (@MainActor () -> Void)?
 
-    init(router: some ChatRoomsListRouting,
-         chatUseCase: any ChatUseCaseProtocol,
-         chatRoomUseCase: any ChatRoomUseCaseProtocol,
-         contactsUseCase: any ContactsUseCaseProtocol,
-         networkMonitorUseCase: any NetworkMonitorUseCaseProtocol,
-         accountUseCase: any AccountUseCaseProtocol,
-         scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol,
-         userAttributeUseCase: any UserAttributeUseCaseProtocol,
-         notificationCenter: NotificationCenter = NotificationCenter.default,
-         chatType: ChatViewType = .regular,
-         chatViewMode: ChatViewMode = .chats,
-         permissionHandler: some DevicePermissionsHandling,
-         permissionAlertRouter: some PermissionAlertRouting,
-         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
-         tracker: some AnalyticsTracking = DIContainer.tracker
+    init(
+        router: some ChatRoomsListRouting,
+        chatUseCase: any ChatUseCaseProtocol,
+        chatRoomUseCase: any ChatRoomUseCaseProtocol,
+        contactsUseCase: any ContactsUseCaseProtocol,
+        networkMonitorUseCase: any NetworkMonitorUseCaseProtocol,
+        accountUseCase: any AccountUseCaseProtocol,
+        scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol,
+        userAttributeUseCase: any UserAttributeUseCaseProtocol,
+        notificationCenter: NotificationCenter = NotificationCenter.default,
+        chatType: ChatViewType = .regular,
+        chatViewMode: ChatViewMode = .chats,
+        permissionHandler: some DevicePermissionsHandling,
+        permissionAlertRouter: some PermissionAlertRouting,
+        chatListItemCacheUseCase: some ChatListItemCacheUseCaseProtocol,
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
+        tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.router = router
         self.chatUseCase = chatUseCase
@@ -155,6 +158,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         self.searchText = ""
         self.permissionHandler = permissionHandler
         self.permissionAlertRouter = permissionAlertRouter
+        self.chatListItemCacheUseCase = chatListItemCacheUseCase
         self.featureFlagProvider = featureFlagProvider
         self.tracker = tracker
         self.isSearchActive = false
@@ -434,7 +438,12 @@ final class ChatRoomsListViewModel: ObservableObject {
         guard isViewOnScreen else { return }
         
         let chatListItems = chatUseCase.fetchNonMeetings() ?? []
-        chatRooms = chatListItems.map(constructChatRoomViewModel)
+        var newChatRooms = [ChatRoomViewModel]()
+        for chatListItem in chatListItems {
+            let newChatRoom = await constructChatRoomViewModel(forChatListItem: chatListItem)
+            newChatRooms.append(newChatRoom)
+        }
+        chatRooms = newChatRooms
         
         await filterChats()
     }
@@ -470,7 +479,7 @@ final class ChatRoomsListViewModel: ObservableObject {
             let futureScheduledMeetingsWithOccurrences = filterScheduledMeetingsWithOccurrences(futureScheduledMeetings: futureScheduledMeetings, upcomingOccurrences: upcomingOccurrences)
             
             let futureScheduledMeetingsChatIds = futureScheduledMeetingsWithOccurrences.map(\.chatId)
-            createPastMeetings(with: futureScheduledMeetingsChatIds)
+            await createPastMeetings(with: futureScheduledMeetingsChatIds)
             
             await populateFutureMeetings(from: futureScheduledMeetingsWithOccurrences, withUpcomingOccurrences: upcomingOccurrences)
             await filterMeetings()
@@ -484,16 +493,23 @@ final class ChatRoomsListViewModel: ObservableObject {
         }
     }
     
-    private func createPastMeetings(with futureScheduledMeetingsChatIds: [ChatIdEntity]) {
+    private func createPastMeetings(with futureScheduledMeetingsChatIds: [ChatIdEntity]) async {
         let chatListItems = chatUseCase.fetchMeetings() ?? []
 
-        pastMeetings = chatListItems.compactMap { chatListItem in
+        let pastChatListItems: [ChatListItemEntity] = chatListItems.compactMap { chatListItem in
             guard futureScheduledMeetingsChatIds.notContains(where: { $0 == chatListItem.chatId }) else {
                 return nil
             }
-            
-            return constructChatRoomViewModel(forChatListItem: chatListItem)
+            return chatListItem
         }
+        
+        var newChatRooms = [ChatRoomViewModel]()
+        for chatListItem in pastChatListItems {
+            let newChatRoom = await constructChatRoomViewModel(forChatListItem: chatListItem)
+            newChatRooms.append(newChatRoom)
+        }
+        
+        pastMeetings = newChatRooms
     }
     
     @MainActor
@@ -524,27 +540,28 @@ final class ChatRoomsListViewModel: ObservableObject {
     private func populateFutureMeetings(
         from meetings: [ScheduledMeetingEntity],
         withUpcomingOccurrences upcomingOccurrences: [ChatIdEntity: ScheduledMeetingOccurrenceEntity]
-    ) {
-        let filteredFutureMeetings = meetings.reduce([FutureMeetingSection]()) { futureMeetingSections, meeting in
-            merge(
+    ) async {
+        var filteredFutureMeetings = [FutureMeetingSection]()
+        for meeting in meetings {
+            filteredFutureMeetings = await merge(
                 scheduledMeeting: meeting,
-                intoFutureMeetingSections: futureMeetingSections,
+                intoFutureMeetingSections: filteredFutureMeetings,
                 withUpcomingOccurrences: upcomingOccurrences
             )
         }
-        
-       populate(futureMeetingSection: filteredFutureMeetings)
+        populate(futureMeetingSection: filteredFutureMeetings)
     }
     
+    @MainActor
     private func merge(
         scheduledMeeting: ScheduledMeetingEntity,
         intoFutureMeetingSections futureMeetingSections: [FutureMeetingSection],
         withUpcomingOccurrences upcomingOccurrences: [ChatIdEntity: ScheduledMeetingOccurrenceEntity]
-    ) -> [FutureMeetingSection] {
+    ) async -> [FutureMeetingSection] {
         let nextOccurrence = upcomingOccurrences[scheduledMeeting.scheduledId]
         let date = startDate(for: scheduledMeeting, nextOccurrence: nextOccurrence)
         let key = formatedDateString(date)
-        let futureMeetingViewModel = constructFutureMeetingViewModel(for: scheduledMeeting, nextOccurrence: nextOccurrence)
+        let futureMeetingViewModel = await constructFutureMeetingViewModel(for: scheduledMeeting, nextOccurrence: nextOccurrence)
         return merge(
             futureMeetingViewModel: futureMeetingViewModel,
             intoFutureMeetingSections: futureMeetingSections,
@@ -553,6 +570,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         )
     }
     
+    @MainActor
     private func merge(
         futureMeetingViewModel: FutureMeetingRoomViewModel,
         intoFutureMeetingSections futureMeetingSections: [FutureMeetingSection],
@@ -608,10 +626,12 @@ final class ChatRoomsListViewModel: ObservableObject {
         }
     }
     
-    private func constructChatRoomViewModel(forChatListItem chatListItem: ChatListItemEntity) -> ChatRoomViewModel {
+    private func constructChatRoomViewModel(forChatListItem chatListItem: ChatListItemEntity) async -> ChatRoomViewModel {
         let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo)
-        let chatRoomUserUseCase = ChatRoomUserUseCase(chatRoomRepo: ChatRoomUserRepository.newRepo,
-                                                      userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()))
+        let chatRoomUserUseCase = ChatRoomUserUseCase(
+            chatRoomRepo: ChatRoomUserRepository.newRepo,
+            userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance())
+        )
         let megaHandleUseCase = MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo)
         let userImageUseCase = UserImageUseCase(
             userImageRepo: UserImageRepository(sdk: .shared),
@@ -619,6 +639,8 @@ final class ChatRoomsListViewModel: ObservableObject {
             thumbnailRepo: ThumbnailRepository.newRepo,
             fileSystemRepo: FileSystemRepository.newRepo
         )
+        let chatListItemDescription = await chatListItemCacheUseCase.description(for: chatListItem)
+        let chatListItemAvatar = await chatListItemCacheUseCase.avatar(for: chatListItem)
         
         return ChatRoomViewModel(
             chatListItem: chatListItem,
@@ -632,17 +654,23 @@ final class ChatRoomsListViewModel: ObservableObject {
             callUseCase: CallUseCase(repository: CallRepository(chatSdk: .shared, callActionManager: CallActionManager.shared)),
             audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession(), callActionManager: CallActionManager.shared)), scheduledMeetingUseCase: scheduledMeetingUseCase,
             chatNotificationControl: chatNotificationControl,
-            permissionRouter: permissionAlertRouter
+            permissionRouter: permissionAlertRouter,
+            chatListItemCacheUseCase: chatListItemCacheUseCase,
+            chatListItemDescription: chatListItemDescription,
+            chatListItemAvatar: chatListItemAvatar
         )
     }
     
+    @MainActor
     private func constructFutureMeetingViewModel(
         for scheduledMeetingEntity: ScheduledMeetingEntity,
         nextOccurrence: ScheduledMeetingOccurrenceEntity?
-    ) -> FutureMeetingRoomViewModel {
+    ) async -> FutureMeetingRoomViewModel {
         let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo)
-        let chatRoomUserUseCase = ChatRoomUserUseCase(chatRoomRepo: ChatRoomUserRepository.newRepo,
-                                                      userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()))
+        let chatRoomUserUseCase = ChatRoomUserUseCase(
+            chatRoomRepo: ChatRoomUserRepository.newRepo,
+            userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance())
+        )
         let megaHandleUseCase = MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo)
         let userImageUseCase = UserImageUseCase(
             userImageRepo: UserImageRepository(sdk: .shared),
@@ -650,6 +678,8 @@ final class ChatRoomsListViewModel: ObservableObject {
             thumbnailRepo: ThumbnailRepository.newRepo,
             fileSystemRepo: FileSystemRepository.newRepo
         )
+        
+        let chatListItemAvatar = await chatListItemCacheUseCase.avatar(for: scheduledMeetingEntity)
         
         return FutureMeetingRoomViewModel(
             scheduledMeeting: scheduledMeetingEntity,
@@ -665,7 +695,9 @@ final class ChatRoomsListViewModel: ObservableObject {
             scheduledMeetingUseCase: scheduledMeetingUseCase,
             megaHandleUseCase: megaHandleUseCase,
             permissionAlertRouter: permissionAlertRouter,
-            chatNotificationControl: chatNotificationControl
+            chatNotificationControl: chatNotificationControl,
+            chatListItemCacheUseCase: chatListItemCacheUseCase, 
+            chatListItemAvatar: chatListItemAvatar
         )
     }
     

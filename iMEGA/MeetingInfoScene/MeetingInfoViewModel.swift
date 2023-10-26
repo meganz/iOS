@@ -1,3 +1,4 @@
+import ChatRepo
 import Combine
 import MEGAAnalyticsiOS
 import MEGADomain
@@ -54,7 +55,7 @@ final class MeetingInfoViewModel: ObservableObject {
     private var subscriptions = Set<AnyCancellable>()
 
     var chatRoomNotificationsViewModel: ChatRoomNotificationsViewModel?
-    let chatRoomAvatarViewModel: ChatRoomAvatarViewModel?
+    @Published var chatRoomAvatarViewModel: ChatRoomAvatarViewModel?
     @Published var chatRoomLinkViewModel: ChatRoomLinkViewModel?
     var chatRoomParticipantsListViewModel: ChatRoomParticipantsListViewModel?
     
@@ -89,23 +90,7 @@ final class MeetingInfoViewModel: ObservableObject {
         self.tracker = tracker
         self.chatRoom = chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId)
         
-        if let chatRoom {
-            chatRoomAvatarViewModel = ChatRoomAvatarViewModel(
-                title: chatRoom.title ?? "",
-                peerHandle: .invalid,
-                chatRoomEntity: chatRoom,
-                chatRoomUseCase: chatRoomUseCase,
-                chatRoomUserUseCase: chatRoomUserUseCase,
-                userImageUseCase: userImageUseCase,
-                chatUseCase: chatUseCase,
-                accountUseCase: accountUseCase,
-                megaHandleUseCase: megaHandleUseCase
-            )
-            isModerator = chatRoom.ownPrivilege.toChatRoomParticipantPrivilege() == .moderator
-        } else {
-            chatRoomAvatarViewModel = nil
-        }
-        subtitle = ScheduledMeetingDateBuilder(scheduledMeeting: scheduledMeeting, chatRoom: chatRoom).buildDateDescriptionString()
+        isModerator = chatRoom?.ownPrivilege.toChatRoomParticipantPrivilege() == .moderator
         $waitingRoomWarningBannerDismissed.useCase = preferenceUseCase
         initSubscriptions()
         fetchInitialValues()
@@ -113,6 +98,8 @@ final class MeetingInfoViewModel: ObservableObject {
     
     private func fetchInitialValues() {
         guard let chatRoom else { return }
+        chatRoomAvatarViewModel = chatRoomAvatarViewModel(for: chatRoom)
+        subtitle = ScheduledMeetingDateBuilder(scheduledMeeting: scheduledMeeting, chatRoom: chatRoom).buildDateDescriptionString()
         isAllowNonHostToAddParticipantsOn = chatRoom.isOpenInviteEnabled
         isWaitingRoomOn = chatRoom.isWaitingRoomEnabled
         isPublicChat = chatRoom.isPublicChat
@@ -129,15 +116,22 @@ final class MeetingInfoViewModel: ObservableObject {
                 } catch { }
             }
         }
-        
-        chatRoomParticipantsListViewModel = ChatRoomParticipantsListViewModel(
-            router: router,
+        chatRoomParticipantsListViewModel = chatRoomParticipantsListViewModel(for: chatRoom)
+    }
+    
+    private func chatRoomAvatarViewModel(for chatRoom: ChatRoomEntity) -> ChatRoomAvatarViewModel {
+        ChatRoomAvatarViewModel(
+            title: chatRoom.title ?? "",
+            peerHandle: .invalid,
+            chatRoom: chatRoom,
             chatRoomUseCase: chatRoomUseCase,
             chatRoomUserUseCase: chatRoomUserUseCase,
+            userImageUseCase: userImageUseCase,
             chatUseCase: chatUseCase,
-            accountUseCase: accountUseCase, 
-            callUseCase: CallUseCase(repository: CallRepository.newRepo),
-            chatRoom: chatRoom)
+            accountUseCase: accountUseCase,
+            megaHandleUseCase: megaHandleUseCase,
+            chatListItemCacheUseCase: ChatListItemCacheUseCase(repository: ChatListItemCacheRepository.newRepo)
+        )
     }
     
     private func chatRoomLinkViewModel(for chatRoom: ChatRoomEntity) -> ChatRoomLinkViewModel {
@@ -149,9 +143,21 @@ final class MeetingInfoViewModel: ObservableObject {
             subtitle: subtitle)
     }
     
+    private func chatRoomParticipantsListViewModel(for chatRoom: ChatRoomEntity) -> ChatRoomParticipantsListViewModel {
+        ChatRoomParticipantsListViewModel(
+            router: router,
+            chatRoomUseCase: chatRoomUseCase,
+            chatRoomUserUseCase: chatRoomUserUseCase,
+            chatUseCase: chatUseCase,
+            accountUseCase: accountUseCase,
+            callUseCase: CallUseCase(repository: CallRepository.newRepo),
+            chatRoom: chatRoom)
+    }
+    
     private func initSubscriptions() {
         guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId) else { return }
-        chatRoomUseCase.allowNonHostToAddParticipantsValueChanged(forChatRoom: chatRoom)
+        chatRoomUseCase
+            .allowNonHostToAddParticipantsValueChanged(forChatRoom: chatRoom)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { error in
                 MEGALogError("error fetching allow host to add participants with error \(error)")
@@ -165,7 +171,8 @@ final class MeetingInfoViewModel: ObservableObject {
             })
             .store(in: &subscriptions)
         
-        chatRoomUseCase.waitingRoomValueChanged(forChatRoom: chatRoom)
+        chatRoomUseCase
+            .waitingRoomValueChanged(forChatRoom: chatRoom)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 guard let self, let chatRoom = chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId) else {
@@ -187,7 +194,22 @@ final class MeetingInfoViewModel: ObservableObject {
             })
             .store(in: &subscriptions)
         
-        chatRoomUseCase.ownPrivilegeChanged(forChatRoom: chatRoom)
+        chatRoomUseCase
+            .participantsUpdated(forChatRoom: chatRoom)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] chatRoom in
+                guard let self else { return }
+                self.chatRoom = chatRoom
+                let isRightToLeftLanguage = chatRoomAvatarViewModel?.isRightToLeftLanguage
+                chatRoomAvatarViewModel = chatRoomAvatarViewModel(for: chatRoom)
+                Task {
+                    await self.chatRoomAvatarViewModel?.loadAvatar(isRightToLeftLanguage: isRightToLeftLanguage ?? false)
+                }
+            }
+            .store(in: &subscriptions)
+        
+        chatRoomUseCase
+            .ownPrivilegeChanged(forChatRoom: chatRoom)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { error in
                 MEGALogDebug("error fetching the changed privilege \(error)")
@@ -202,10 +224,12 @@ final class MeetingInfoViewModel: ObservableObject {
             })
             .store(in: &subscriptions)
         
-        Publishers.CombineLatest3($isModerator, $isWaitingRoomOn, $isAllowNonHostToAddParticipantsOn)
+        Publishers
+            .CombineLatest3($isModerator, $isWaitingRoomOn, $isAllowNonHostToAddParticipantsOn)
             .dropFirst(waitingRoomWarningBannerDismissed ? 3 : 0)
             .map { $0 && $1 && $2 }
             .removeDuplicates()
+            .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] show in
                 guard let self else { return }
                 withAnimation {

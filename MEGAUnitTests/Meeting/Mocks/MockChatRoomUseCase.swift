@@ -9,6 +9,7 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     var renameChatRoomCompletion: Result<String, ChatRoomErrorEntity> = .failure(.generic)
     var myPeerHandles: [HandleEntity] = []
     var participantsUpdatedSubject = PassthroughSubject<[HandleEntity], Never>()
+    var participantsUpdatedSubjectWithChatRoom = PassthroughSubject<ChatRoomEntity, Never>()
     var privilegeChangedSubject = PassthroughSubject<HandleEntity, Never>()
     var peerPrivilege: ChatRoomPrivilegeEntity = .unknown
     var allowNonHostToAddParticipantsEnabled = false
@@ -75,6 +76,10 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     
     func participantsUpdated(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<[HandleEntity], Never> {
         participantsUpdatedSubject.eraseToAnyPublisher()
+    }
+    
+    func participantsUpdated(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<ChatRoomEntity, Never> {
+        participantsUpdatedSubjectWithChatRoom.eraseToAnyPublisher()
     }
     
     func userStatus(forUserHandle userHandle: HandleEntity) -> ChatStatusEntity {

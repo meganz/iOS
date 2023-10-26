@@ -3,7 +3,7 @@ import SwiftUI
 struct OccurrenceView: View {
     @Environment(\.colorScheme) private var colorScheme
     
-    let occurrence: ScheduleMeetingOccurence
+    let occurrence: ScheduleMeetingOccurrence
     let chatRoomAvatarViewModel: ChatRoomAvatarViewModel?
 
     private enum Constants {

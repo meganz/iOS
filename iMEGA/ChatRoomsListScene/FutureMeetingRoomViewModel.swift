@@ -79,22 +79,26 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
     @Published var existsInProgressCallInChatRoom = false
     @Published var totalCallDuration: TimeInterval = 0
     
-    init(scheduledMeeting: ScheduledMeetingEntity,
-         nextOccurrence: ScheduledMeetingOccurrenceEntity?,
-         router: some ChatRoomsListRouting,
-         chatRoomUseCase: some ChatRoomUseCaseProtocol,
-         chatRoomUserUseCase: some ChatRoomUserUseCaseProtocol,
-         userImageUseCase: some UserImageUseCaseProtocol,
-         chatUseCase: some ChatUseCaseProtocol,
-         accountUseCase: some AccountUseCaseProtocol,
-         callUseCase: some CallUseCaseProtocol,
-         audioSessionUseCase: some AudioSessionUseCaseProtocol,
-         scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol,
-         megaHandleUseCase: some MEGAHandleUseCaseProtocol,
-         permissionAlertRouter: some PermissionAlertRouting,
-         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
-         tracker: some AnalyticsTracking = DIContainer.tracker,
-         chatNotificationControl: ChatNotificationControl) {
+    init(
+        scheduledMeeting: ScheduledMeetingEntity,
+        nextOccurrence: ScheduledMeetingOccurrenceEntity?,
+        router: some ChatRoomsListRouting,
+        chatRoomUseCase: some ChatRoomUseCaseProtocol,
+        chatRoomUserUseCase: some ChatRoomUserUseCaseProtocol,
+        userImageUseCase: some UserImageUseCaseProtocol,
+        chatUseCase: some ChatUseCaseProtocol,
+        accountUseCase: some AccountUseCaseProtocol,
+        callUseCase: some CallUseCaseProtocol,
+        audioSessionUseCase: some AudioSessionUseCaseProtocol,
+        scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol,
+        megaHandleUseCase: some MEGAHandleUseCaseProtocol,
+        permissionAlertRouter: some PermissionAlertRouting,
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
+        tracker: some AnalyticsTracking = DIContainer.tracker,
+        chatNotificationControl: ChatNotificationControl,
+        chatListItemCacheUseCase: some ChatListItemCacheUseCaseProtocol,
+        chatListItemAvatar: ChatListItemAvatarEntity? = nil
+    ) {
         
         self.scheduledMeeting = scheduledMeeting
         self.nextOccurrence = nextOccurrence
@@ -117,13 +121,15 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
             self.chatRoomAvatarViewModel = ChatRoomAvatarViewModel(
                 title: scheduledMeeting.title,
                 peerHandle: chatRoomEntity.peers.first?.handle ?? .invalid,
-                chatRoomEntity: chatRoomEntity,
+                chatRoom: chatRoomEntity,
                 chatRoomUseCase: chatRoomUseCase,
                 chatRoomUserUseCase: chatRoomUserUseCase,
                 userImageUseCase: userImageUseCase,
                 chatUseCase: chatUseCase,
                 accountUseCase: accountUseCase,
-                megaHandleUseCase: megaHandleUseCase
+                megaHandleUseCase: megaHandleUseCase,
+                chatListItemCacheUseCase: chatListItemCacheUseCase,
+                chatListItemAvatar: chatListItemAvatar
             )
             self.shouldShowUnreadCount = chatRoomEntity.unreadCount != 0
             self.unreadCountString = chatRoomEntity.unreadCount > 0 ? "\(chatRoomEntity.unreadCount)" : "\(-chatRoomEntity.unreadCount)+"

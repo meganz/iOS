@@ -1,4 +1,4 @@
-struct ScheduleMeetingOccurence: Identifiable, Equatable {
+struct ScheduleMeetingOccurrence: Identifiable, Equatable {
     let id: String
     let date: String
     let title: String

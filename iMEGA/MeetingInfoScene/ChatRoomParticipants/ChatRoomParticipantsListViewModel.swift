@@ -190,7 +190,7 @@ final class ChatRoomParticipantsListViewModel: ObservableObject {
             .sink(receiveCompletion: { error in
                 MEGALogDebug("error fetching the changed privilege \(error)")
             }, receiveValue: { [weak self] handles in
-                guard  let self, handles.count != self.chatRoom.peers.count, let chatRoom = self.chatRoomUseCase.chatRoom(forChatId: self.chatRoom.chatId) else {
+                guard let self, handles.count != self.chatRoom.peers.count, let chatRoom = self.chatRoomUseCase.chatRoom(forChatId: self.chatRoom.chatId) else {
                     return
                 }
                 self.chatRoom = chatRoom

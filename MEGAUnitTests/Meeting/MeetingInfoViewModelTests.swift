@@ -200,6 +200,51 @@ final class MeetingInfoViewModelTests: XCTestCase {
         XCTAssertFalse(sut.isWaitingRoomFeatureEnabled)
     }
     
+    func testMonitorChatListItemUpdate_onChatRoomPeersChange_shouldUpdateChatRoomAvatarViewModel() async {
+        let participantsUpdatedSubject = PassthroughSubject<ChatRoomEntity, Never>()
+        let chatRoomUseCase = MockChatRoomUseCase(
+            chatRoomEntity: ChatRoomEntity(
+                chatId: 100,
+                peerCount: 1,
+                chatType: .group,
+                peers: [
+                    ChatRoomEntity.Peer(handle: 101, privilege: .standard)
+                ]
+            ),
+            participantsUpdatedSubjectWithChatRoom: participantsUpdatedSubject
+        )
+        let chatRoomUserUseCase = MockChatRoomUserUseCase(
+            userDisplayNamesForPeersResult: .success([(101, "Peer1")])
+        )
+        let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: "base64Handle")
+        let userImageUseCase = MockUserImageUseCase(
+            result: .success(UIImage(systemName: "folder") ?? UIImage())
+        )
+        let sut = MeetingInfoViewModel(
+            chatRoomUseCase: chatRoomUseCase,
+            chatRoomUserUseCase: chatRoomUserUseCase,
+            userImageUseCase: userImageUseCase,
+            megaHandleUseCase: megaHandleUseCase
+        )
+
+        await sut.chatRoomAvatarViewModel?.loadAvatar(isRightToLeftLanguage: false)
+        let beforeChatListItemAvatar = sut.chatRoomAvatarViewModel?.chatListItemAvatar
+        let newChatRoomEntity = ChatRoomEntity(
+            chatId: 100,
+            peerCount: 2,
+            chatType: .group,
+            peers: [
+                ChatRoomEntity.Peer(handle: 101, privilege: .standard),
+                ChatRoomEntity.Peer(handle: 102, privilege: .standard)
+            ]
+        )
+        participantsUpdatedSubject.send(newChatRoomEntity)
+        
+        evaluate {
+            sut.chatRoomAvatarViewModel?.chatListItemAvatar != beforeChatListItemAvatar
+        }
+    }
+    
     // MARK: - Private methods.
     
     private func evaluate(isInverted: Bool = false, expression: @escaping () -> Bool) {

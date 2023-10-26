@@ -1,7 +1,7 @@
 struct OccurrenceContextMenuOption: Identifiable, Hashable {
     let title: String
     let imageName: String
-    let action: (ScheduleMeetingOccurence) -> Void
+    let action: (ScheduleMeetingOccurrence) -> Void
     
     var id: String {
         title
