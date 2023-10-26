@@ -37,11 +37,13 @@ final class BackupListsViewRouterTests: XCTestCase {
         let networkMonitorUseCase = MockNetworkMonitorUseCase()
         
         let sut = BackupListViewRouter(
+            isCurrentDevice: true,
             selectedDeviceId: "1",
             selectedDeviceName: "Device 1",
             devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>(),
             updateInterval: 1,
             backups: [],
+            notificationCenter: NotificationCenter.default,
             deviceCenterUseCase: MockDeviceCenterUseCase(),
             nodeUseCase: MockNodeDataUseCase(), 
             networkMonitorUseCase: networkMonitorUseCase,

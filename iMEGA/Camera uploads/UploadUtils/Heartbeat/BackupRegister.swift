@@ -1,11 +1,16 @@
+import DeviceCenter
 import FirebaseCrashlytics
 import Foundation
 import MEGADomain
 import MEGAL10n
 
+extension Notification.Name {
+    static let didChangeCameraUploadsFolderName = Notification.Name("didChangeCameraUploadsFolderName")
+}
+ 
 final class BackupRegister {
-    
     private let sdk: MEGASdk
+    private let cameraUploadsUseCase: any CameraUploadsUseCaseProtocol
     
     @PreferenceWrapper(key: .backupHeartbeatRegistrationId, defaultValue: nil, useCase: PreferenceUseCase.default)
     var cachedBackupId: HandleEntity?
@@ -13,14 +18,26 @@ final class BackupRegister {
     @PreferenceWrapper(key: .hasUpdatedBackupToFixExistingBackupNameStorageIssue, defaultValue: false, useCase: PreferenceUseCase.default)
     var hasUpdatedBackup: Bool
     
-    init(sdk: MEGASdk) {
+    init(
+        sdk: MEGASdk,
+        cameraUploadsUseCase: any CameraUploadsUseCaseProtocol
+    ) {
         self.sdk = sdk
+        self.cameraUploadsUseCase = cameraUploadsUseCase
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveTargetFolderUpdatedNotification), name: Notification.Name.MEGACameraUploadTargetFolderUpdatedInMemory, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveBusinessAccountExpiredNotification), name: Notification.Name.MEGABusinessAccountExpired, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveBusinessAccountActivatedNotification), name: Notification.Name.MEGABusinessAccountActivated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didChangeCameraUploadsFolderNotification), name: Notification.Name.didChangeCameraUploadsFolderName, object: nil)
+        
+        registerCameraUploadNodeNameUpdate() 
+    }
+    
+    deinit {
+        removeCameraUploadNodeNameUpdate()
     }
     
     // MARK: - Notification
+    
     @objc private func didReceiveTargetFolderUpdatedNotification() {
         if CameraUploadManager.isCameraUploadEnabled {
             updateBackup()
@@ -37,7 +54,14 @@ final class BackupRegister {
         updateBackup(state: .active, subState: .noSyncError)
     }
     
-    // MAKR: - Register backup
+    @objc private func didChangeCameraUploadsFolderNotification() {
+        Task {
+            await updateCameraUploadsBackupName()
+        }
+    }
+    
+    // MARK: - Register backup
+    
     func registerBackupIfNeeded() {
         MEGALogDebug("[Camera Upload] heartbeat - start registering backup")
         guard cachedBackupId == nil else {
@@ -45,34 +69,28 @@ final class BackupRegister {
             return
         }
         
-        CameraUploadNodeAccess.shared.loadNode { node, error in
-            guard let node = node else {
-                if let error = error {
-                    Crashlytics.crashlytics().record(error: error)
-                    MEGALogError("[Camera Upload] heartbeat - error when to load node \(error)")
-                }
-                return
+        Task {
+            do {
+                let parentHandle = try await cameraUploadsUseCase.registerCameraUploadsBackup(
+                    Strings.Localizable.cameraUploadsLabel
+                )
+                MEGALogDebug("[Camera Upload] heartbeat - register backup \(String(describing: type(of: sdk).base64Handle(forHandle: parentHandle))) success")
+                cachedBackupId = parentHandle
+            } catch {
+                Crashlytics.crashlytics().record(error: error)
+                MEGALogError("[Camera Upload] heartbeat - error when to register backup \(error)")
             }
-            
-            self.sdk.registerBackup(.cameraUploads,
-                                    targetNode: node,
-                                    folderPath: MEGACameraUploadsFolderPath,
-                                    name: Strings.Localizable.cameraUploadsLabel,
-                                    state: .active,
-                                    delegate: HeartbeatRequestDelegate { [weak self, sdkType = type(of: self.sdk)] result in
-                switch result {
-                case .failure(let error):
-                    Crashlytics.crashlytics().record(error: error)
-                    MEGALogError("[Camera Upload] heartbeat - error when to register backup \(error)")
-                case .success(let request):
-                    self?.cachedBackupId = request.parentHandle
-                    MEGALogDebug("[Camera Upload] heartbeat - register backup \(sdkType.base64Handle(forHandle: request.parentHandle) ?? "") success")
-                }
-            })
+        }
+    }
+    
+    func registerCameraUploadNodeNameUpdate() {
+        cameraUploadsUseCase.registerCameraUploadNodeNameUpdate {
+            NotificationCenter.default.post(name: .didChangeCameraUploadsFolderName, object: nil)
         }
     }
     
     // MARK: - Unregister backup
+    
     func unregisterBackup() {
         MEGALogDebug("[Camera Upload] heartbeat - start unregistering backup")
         guard let backupId = cachedBackupId else {
@@ -82,53 +100,65 @@ final class BackupRegister {
         
         $cachedBackupId.remove()
         
-        sdk.unregisterBackup(backupId, delegate: HeartbeatRequestDelegate { [sdkType = type(of: sdk)] result in
-            switch result {
-            case .failure(let error):
+        Task {
+            do {
+                try await cameraUploadsUseCase.unregisterCameraUploadsBackup(
+                    backupId
+                )
+                MEGALogDebug("[Camera Upload] heartbeat - unregister backup \(String(describing: type(of: sdk).base64Handle(forHandle: backupId)))")
+            } catch {
                 Crashlytics.crashlytics().record(error: error)
-                MEGALogError("[Camera Upload] heartbeat - error when to unregister backup \(sdkType.base64Handle(forHandle: backupId) ?? "")")
-            case .success:
-                MEGALogDebug("[Camera Upload] heartbeat - unregister backup \(sdkType.base64Handle(forHandle: backupId) ?? "") success")
+                MEGALogError("[Camera Upload] heartbeat - error when to unregister backup \(String(describing: type(of: sdk).base64Handle(forHandle: backupId)))")
+                
             }
-        })
+        }
+    }
+    
+    func removeCameraUploadNodeNameUpdate() {
+        cameraUploadsUseCase.removeCameraUploadNodeNameUpdate()
     }
     
     // MARK: - Update backup status
-    private func updateBackup(state: BackUpState = .active, subState: BackUpSubState = .noSyncError) {
-        MEGALogDebug("[Camera Upload] heartbeat - start updating backup")
+    
+    private func updateBackup(state: BackUpStateEntity = .active, subState: BackUpSubStateEntity = .noSyncError) {
+        MEGALogDebug("[Camera Upload] heartbeat - start updating backup status")
         guard let backupId = cachedBackupId else {
             MEGALogDebug("[Camera Upload] heartbeat - skip updating backup as no local cached backup id")
             return
         }
         
-        CameraUploadNodeAccess.shared.loadNode { node, error in
-            guard let node = node else {
-                if let error = error {
-                    Crashlytics.crashlytics().record(error: error)
-                    MEGALogError("[Camera Upload] heartbeat - error when to load node \(error)")
-                }
-                return
+        Task {
+            do {
+                try await cameraUploadsUseCase.updateCameraUploadsBackupState(
+                    backupId,
+                    state: state,
+                    substate: subState
+                )
+                hasUpdatedBackup = true
+            } catch {
+                Crashlytics.crashlytics().record(error: error)
+                MEGALogError("[Camera Upload] heartbeat - error when to update backup status \(String(describing: type(of: sdk).base64Handle(forHandle: backupId))) \(error)")
             }
-            
-            self.sdk.updateBackup(backupId,
-                                  backupType: .cameraUploads,
-                                  targetNode: node,
-                                  folderPath: MEGACameraUploadsFolderPath,
-                                  backupName: Strings.Localizable.cameraUploadsLabel,
-                                  state: state,
-                                  subState: subState,
-                                  delegate: HeartbeatRequestDelegate { [sdkType = type(of: self.sdk), weak self] result in
-                
-                self?.hasUpdatedBackup = true
-                
-                switch result {
-                case .failure(let error):
-                    Crashlytics.crashlytics().record(error: error)
-                    MEGALogError("[Camera Upload] heartbeat - error when to update backup \(sdkType.base64Handle(forHandle: backupId) ?? "") \(error)")
-                case .success:
-                    MEGALogDebug("[Camera Upload] heartbeat - update backup \(sdkType.base64Handle(forHandle: backupId) ?? "") success. state:\(state.rawValue), substate: \(subState.rawValue)")
-                }
-            })
+        }
+    }
+    
+    // MARK: - Update backup name
+    
+    private func updateCameraUploadsBackupName() async {
+        MEGALogDebug("[Camera Upload] heartbeat - start updating backup name")
+        guard let backupId = cachedBackupId else {
+            MEGALogDebug("[Camera Upload] heartbeat - skip updating backup as no local cached backup id")
+            return
+        }
+        
+        do {
+            try await cameraUploadsUseCase.updateCameraUploadsBackupName(
+                backupId
+            )
+            NotificationCenter.default.post(name: .didChangeCameraUploadsBackupName, object: nil)
+        } catch {
+            Crashlytics.crashlytics().record(error: error)
+            MEGALogError("[Camera Upload] heartbeat - error when to update backup name \(String(describing: type(of: sdk).base64Handle(forHandle: backupId))) \(error)")
         }
     }
     

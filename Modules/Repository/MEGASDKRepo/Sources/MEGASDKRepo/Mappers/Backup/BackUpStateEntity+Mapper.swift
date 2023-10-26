@@ -21,7 +21,7 @@ extension BackUpState {
 }
 
 extension BackUpStateEntity {
-    public func toMEGASyncState() -> BackUpState {
+    public func toBackUpState() -> BackUpState {
         switch self {
         case .invalid: return .invalid
         case .notInitialized: return .notInitialized

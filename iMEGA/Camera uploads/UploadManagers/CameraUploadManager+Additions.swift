@@ -1,3 +1,4 @@
+import MEGADomain
 import MEGAPermissions
 
 extension CameraUploadManager {
@@ -21,5 +22,16 @@ extension CameraUploadManager {
         {
             Self.shared().disableCameraUpload()
         }
+    }
+    
+    @objc
+    func initializeCameraUploadHeartbeat() {
+        let cameraUploadsUseCase = CameraUploadsUseCase(
+            cameraUploadsRepository: CameraUploadsRepository.newRepo
+        )
+        
+        self.heartbeat = CameraUploadHeartbeat(
+            cameraUploadsUseCase: cameraUploadsUseCase
+        )
     }
 }

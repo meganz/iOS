@@ -1,7 +1,7 @@
 import Foundation
 import MEGAL10n
 
-final class CameraUploadNodeAccess: NodeAccess {
+public final class CameraUploadNodeAccess: NodeAccess {
     @objc static let shared = CameraUploadNodeAccess(
         configuration: NodeAccessConfiguration(
             autoCreate: { CameraUploadManager.isCameraUploadEnabled },

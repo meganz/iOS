@@ -387,6 +387,7 @@ final class BackupListViewModelTests: XCTestCase {
         let backupTypeEntities = backupTypeEntities()
         let networkMonitorUseCase = MockNetworkMonitorUseCase()
         let sut = BackupListViewModel(
+            isCurrentDevice: true,
             selectedDeviceId: currentDeviceId,
             selectedDeviceName: currentDeviceName,
             devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>(),
@@ -397,6 +398,7 @@ final class BackupListViewModelTests: XCTestCase {
             router: MockBackupListViewRouter(),
             deviceCenterBridge: DeviceCenterBridge(),
             backups: backups,
+            notificationCenter: NotificationCenter.default,
             backupListAssets:
                 BackupListAssets(
                     backupTypes: backupTypeEntities.compactMap { BackupType(type: $0) }

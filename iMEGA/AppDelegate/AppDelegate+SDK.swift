@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 extension AppDelegate {
     @objc func postNodeUpdatesNotifications(for nodeList: MEGANodeList) {

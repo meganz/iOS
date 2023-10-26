@@ -18,9 +18,11 @@ final class CameraUploadHeartbeat: NSObject {
     private var statusTimer: (any DispatchSourceTimer)?
     private var lastHeartbeatNodeHandle: HandleEntity?
     
-    @objc override init() {
+    init(
+        cameraUploadsUseCase: any CameraUploadsUseCaseProtocol
+    ) {
         sdk = MEGASdk.shared
-        register = BackupRegister(sdk: sdk)
+        register = BackupRegister(sdk: sdk, cameraUploadsUseCase: cameraUploadsUseCase)
         recorder = BackupRecorder()
         super.init()
         
