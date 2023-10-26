@@ -59,7 +59,7 @@ final class CameraUploadHeartbeat: NSObject {
     
     @objc func unregisterHeartbeat() {
         cancelHeartbeatTimers()
-        register.unregisterBackup()
+        register.disableBackupByTheUser()
         recorder.stopRecordingBackupUpdate()
     }
     
