@@ -75,7 +75,7 @@ extension FileLinkActionViewControllerDelegate: SendToViewControllerDelegate {
                 }
                 MEGAChatSdk.shared.sendMessage(toChat: chatId, message: link)
             } else {
-                MEGALogDebug("There is not a chat with %@, create the chat and send message", $0.email)
+                MEGALogDebug("There is not a chat with %@, create the chat and send message", $0.email ?? "No user email")
                 MEGAChatSdk.shared.mnz_createChatRoom(userHandle: $0.handle, completion: {
                     MEGAChatSdk.shared.sendMessage(toChat: $0.chatId, message: self.link)
                 })
