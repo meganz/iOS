@@ -84,6 +84,8 @@ final class MiniPlayerViewController: UIViewController {
     }
     
     private func updatePlaybackTracks(_ currentItem: AudioPlayerItem, queue: [AudioPlayerItem]?, loopMode: Bool) {
+        CrashlyticsLogger.log("[MiniPlayer] Setup datasource - player items: \(queue?.count ?? 0)")
+
         miniPlayerSource = MiniPlayerDataSource(currentTrack: currentItem, queue: queue, loopMode: loopMode)
         miniPlayerDelegate = MiniPlayerDelegate(delegate: self, loopMode: loopMode, itemsNumber: queue?.count ?? 0)
         imageView.image = UIImage(resource: .defaultArtwork)
@@ -93,11 +95,18 @@ final class MiniPlayerViewController: UIViewController {
             let indexPath = IndexPath(row: queue?.firstIndex(of: currentItem) ?? 0, section: 0)
             self.collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
         }
+        
+        CrashlyticsLogger.log("[MiniPlayer] After reload - player items : \(collectionView.numberOfItems(inSection: 0))")
     }
     
     private func updateCurrent(indexPath: IndexPath, item: AudioPlayerItem) {
         guard let cell = collectionView.visibleCells.first as? MiniPlayerItemCollectionViewCell,
               let currentItem = cell.item else { return }
+        
+        guard indexPath.item >= 0, indexPath.item < collectionView.numberOfItems(inSection: indexPath.section) else {
+            CrashlyticsLogger.log("[MiniPlayer] Attempting to access the indexPath beyond its valid bounds.")
+            return
+        }
 
         if item != currentItem, (lastMovementIndexPath == nil || lastMovementIndexPath == indexPath) {
             collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
