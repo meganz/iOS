@@ -51,7 +51,7 @@ final class BackupRegister {
     
     @objc private func didReceiveBusinessAccountActivatedNotification() {
         MEGALogDebug("[Camera Upload] heartbeat - business account activated notification")
-        updateBackup(state: .active, subState: .noSyncError)
+        updateBackup(state: .active)
     }
     
     @objc private func didChangeCameraUploadsFolderNotification() {
@@ -66,6 +66,7 @@ final class BackupRegister {
         MEGALogDebug("[Camera Upload] heartbeat - start registering backup")
         guard cachedBackupId == nil else {
             MEGALogDebug("[Camera Upload] heartbeat - find local cached backup \(type(of: sdk).base64Handle(forHandle: (cachedBackupId ?? 0)) ?? "")")
+            enableBackupByTheUser()
             return
         }
         
@@ -87,6 +88,20 @@ final class BackupRegister {
         cameraUploadsUseCase.registerCameraUploadNodeNameUpdate {
             NotificationCenter.default.post(name: .didChangeCameraUploadsFolderName, object: nil)
         }
+    }
+    
+    // MARK: - Disable backup by the user
+    
+    func disableBackupByTheUser() {
+        updateBackup(state: .disabled)
+        MEGALogDebug("[Camera Upload] heartbeat - backup disabled by the user")
+    }
+    
+    // MARK: - Enable backup by the user
+    
+    func enableBackupByTheUser() {
+        updateBackup(state: .active)
+        MEGALogDebug("[Camera Upload] heartbeat - backup enabled by the user")
     }
     
     // MARK: - Unregister backup
