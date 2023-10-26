@@ -1,7 +1,7 @@
 import Foundation
 
 final class MiniPlayerDataSource: NSObject, MiniPlayerSource {
-    private var tracks: [AudioPlayerItem?]?
+    private(set) var tracks: [AudioPlayerItem?]?
     
     init(currentTrack: AudioPlayerItem, queue: [AudioPlayerItem]?, loopMode: Bool = false) {
         if let queue = queue {
