@@ -699,7 +699,7 @@ extension UIColor {
         return Colors.General.Gray._535356.color
     }
     
-    class func mnz_gray545458() -> UIColor {
+    @objc class func mnz_gray545458() -> UIColor {
         return Colors.General.Gray._545458.color
     }
     
@@ -879,7 +879,7 @@ extension UIColor {
     
     // MARK: Green
     
-    class func mnz_green00A886() -> UIColor {
+    @objc class func mnz_green00A886() -> UIColor {
         return Colors.General.Green._00A886.color
     }
     
@@ -991,7 +991,7 @@ extension UIColor {
         return Colors.General.White.fcfcfc.color
     }
     
-    class func mnz_whiteF7F7F7() -> UIColor {
+    @objc class func mnz_whiteF7F7F7() -> UIColor {
         return Colors.General.White.f7F7F7.color
     }
     
@@ -1012,7 +1012,11 @@ extension UIColor {
     class func mnz_yellowF8D552() -> UIColor {
         return Colors.General.Yellow.f8D552.color
     }
-    
+
+    @objc class func mnz_yellowFFCC00() -> UIColor {
+        return Colors.General.Yellow.ffcc00.color
+    }
+
     // MARK: Brown
     
     class func mnz_brown544b27() -> UIColor {

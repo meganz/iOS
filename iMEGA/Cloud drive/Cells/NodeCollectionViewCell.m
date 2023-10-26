@@ -54,17 +54,17 @@ static NSString *kFileSize = @"kFileSize";
     [super setSelected:selected];
     if (self.moreButton.hidden && selected) {
         self.selectImageView.image = [UIImage imageNamed:@"thumbnail_selected"];
-        self.contentView.layer.borderColor = [UIColor mnz_fromHexString:@"00A886"].CGColor;
+        self.contentView.layer.borderColor = UIColor.mnz_green00A886.CGColor;
     } else {
         self.selectImageView.image = [UIImage imageNamed:@"checkBoxUnselected"];
         switch (self.traitCollection.userInterfaceStyle) {
             case UIUserInterfaceStyleUnspecified:
             case UIUserInterfaceStyleLight: {
-                self.contentView.layer.borderColor = [UIColor mnz_fromHexString:@"F7F7F7"].CGColor;
+                self.contentView.layer.borderColor = UIColor.mnz_whiteF7F7F7.CGColor;
             }
                 break;
             case UIUserInterfaceStyleDark: {
-                self.contentView.layer.borderColor = [UIColor mnz_fromHexString:@"545458"].CGColor;
+                self.contentView.layer.borderColor = UIColor.mnz_gray545458.CGColor;
             }
         }
     }
@@ -244,12 +244,12 @@ static NSString *kFileSize = @"kFileSize";
         case UIUserInterfaceStyleUnspecified:
         case UIUserInterfaceStyleLight: {
             self.topNodeIconsView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.3];
-            self.thumbnailImageView.backgroundColor = [UIColor mnz_fromHexString:@"F7F7F7"];
+            self.thumbnailImageView.backgroundColor = UIColor.mnz_whiteF7F7F7;
         }
             break;
         case UIUserInterfaceStyleDark: {
             self.topNodeIconsView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.4];
-            self.thumbnailImageView.backgroundColor = [UIColor mnz_fromHexString:@"1C1C1E"];
+            self.thumbnailImageView.backgroundColor = UIColor.mnz_black1C1C1E;
         }
     }
 }
