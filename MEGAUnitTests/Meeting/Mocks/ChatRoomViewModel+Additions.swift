@@ -23,6 +23,9 @@ extension ChatRoomViewModel {
         permissionRouter: some PermissionAlertRouting = MockPermissionAlertRouter(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         notificationCenter: NotificationCenter = .default,
+        chatListItemCacheUseCase: some ChatListItemCacheUseCaseProtocol = MockChatListItemCacheUseCase(),
+        chatListItemDescription: ChatListItemDescriptionEntity? = nil,
+        chatListItemAvatar: ChatListItemAvatarEntity? = nil,
         isTesting: Bool = true
     ) {
         self.init(
@@ -40,7 +43,10 @@ extension ChatRoomViewModel {
             chatNotificationControl: chatNotificationControl,
             permissionRouter: permissionRouter,
             featureFlagProvider: featureFlagProvider,
-            notificationCenter: notificationCenter
+            notificationCenter: notificationCenter,
+            chatListItemCacheUseCase: chatListItemCacheUseCase,
+            chatListItemDescription: chatListItemDescription,
+            chatListItemAvatar: chatListItemAvatar
         )
     }
 }

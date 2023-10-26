@@ -19,6 +19,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
     private let scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol
     private var chatNotificationControl: ChatNotificationControl
     private let permissionRouter: any PermissionAlertRouting
+    private let chatListItemCacheUseCase: any ChatListItemCacheUseCaseProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let notificationCenter: NotificationCenter
     
@@ -50,21 +51,26 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
     var callDurationCapturedTime: TimeInterval?
     var timerSubscription: AnyCancellable?
     
-    init(chatListItem: ChatListItemEntity,
-         router: some ChatRoomsListRouting,
-         chatRoomUseCase: some ChatRoomUseCaseProtocol,
-         chatRoomUserUseCase: some ChatRoomUserUseCaseProtocol,
-         userImageUseCase: some UserImageUseCaseProtocol,
-         chatUseCase: some ChatUseCaseProtocol,
-         accountUseCase: some AccountUseCaseProtocol,
-         megaHandleUseCase: some MEGAHandleUseCaseProtocol,
-         callUseCase: some CallUseCaseProtocol,
-         audioSessionUseCase: some AudioSessionUseCaseProtocol,
-         scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol,
-         chatNotificationControl: ChatNotificationControl,
-         permissionRouter: some PermissionAlertRouting,
-         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
-         notificationCenter: NotificationCenter = .default) {
+    init(
+        chatListItem: ChatListItemEntity,
+        router: some ChatRoomsListRouting,
+        chatRoomUseCase: some ChatRoomUseCaseProtocol,
+        chatRoomUserUseCase: some ChatRoomUserUseCaseProtocol,
+        userImageUseCase: some UserImageUseCaseProtocol,
+        chatUseCase: some ChatUseCaseProtocol,
+        accountUseCase: some AccountUseCaseProtocol,
+        megaHandleUseCase: some MEGAHandleUseCaseProtocol,
+        callUseCase: some CallUseCaseProtocol,
+        audioSessionUseCase: some AudioSessionUseCaseProtocol,
+        scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol,
+        chatNotificationControl: ChatNotificationControl,
+        permissionRouter: some PermissionAlertRouting,
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
+        notificationCenter: NotificationCenter = .default,
+        chatListItemCacheUseCase: some ChatListItemCacheUseCaseProtocol,
+        chatListItemDescription: ChatListItemDescriptionEntity? = nil,
+        chatListItemAvatar: ChatListItemAvatarEntity? = nil
+    ) {
         self.chatListItem = chatListItem
         self.router = router
         self.chatRoomUseCase = chatRoomUseCase
@@ -78,6 +84,8 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
         self.permissionRouter = permissionRouter
         self.featureFlagProvider = featureFlagProvider
         self.notificationCenter = notificationCenter
+        self.chatListItemCacheUseCase = chatListItemCacheUseCase
+        self.description = chatListItemDescription?.description
         self.isMuted = chatNotificationControl.isChatDNDEnabled(chatId: chatListItem.chatId)
         self.shouldShowUnreadCount = chatListItem.unreadCount != 0
         self.unreadCountString = chatListItem.unreadCount > 0 ? "\(chatListItem.unreadCount)" : "\(-chatListItem.unreadCount)+"
@@ -86,13 +94,15 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
             self.chatRoomAvatarViewModel = ChatRoomAvatarViewModel(
                 title: chatListItem.title ?? "",
                 peerHandle: chatListItem.peerHandle,
-                chatRoomEntity: chatRoomEntity,
+                chatRoom: chatRoomEntity,
                 chatRoomUseCase: chatRoomUseCase,
                 chatRoomUserUseCase: chatRoomUserUseCase,
                 userImageUseCase: userImageUseCase,
                 chatUseCase: chatUseCase,
                 accountUseCase: accountUseCase,
-                megaHandleUseCase: megaHandleUseCase
+                megaHandleUseCase: megaHandleUseCase,
+                chatListItemCacheUseCase: chatListItemCacheUseCase,
+                chatListItemAvatar: chatListItemAvatar
             )
         } else {
             self.chatRoomAvatarViewModel = nil
@@ -204,9 +214,9 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
     func updateDescription() async throws {
         switch chatListItem.lastMessageType {
         case .loading:
-            updateDescription(withMessage: Strings.Localizable.loading)
+            await updateDescription(withMessage: Strings.Localizable.loading)
         case .invalid:
-            updateDescription(withMessage: Strings.Localizable.noConversationHistory)
+            await updateDescription(withMessage: Strings.Localizable.noConversationHistory)
         case .attachment:
             try await updateDescriptionForAttachment()
         case .voiceClip:
@@ -226,7 +236,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
         case .callEnded:
             await updateDescriptionForCallEnded()
         case .callStarted:
-            updateDescription(withMessage: Strings.Localizable.callStarted)
+            await updateDescription(withMessage: Strings.Localizable.callStarted)
         case .publicHandleCreate:
             try await updateDescriptionWithSender(usingMessage: Strings.Localizable.createdAPublicLinkForTheChat)
         case .publicHandleDelete:
@@ -413,9 +423,9 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
             message = Strings.Localizable.attachedXFiles(String(format: "%tu", components.count))
         }
         if let senderString {
-            updateDescription(withMessage: "\(senderString): \(message)")
+            await updateDescription(withMessage: "\(senderString): \(message)")
         } else {
-            updateDescription(withMessage: message)
+            await updateDescription(withMessage: message)
         }
     }
     
@@ -437,7 +447,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
                               userHandle: chatListItem.lastMessageSender,
                               duration: duration)
         
-        updateDescription(withMessage: message)
+        await updateDescription(withMessage: message)
     }
     
     private func updateDescriptionForRententionTime() async throws {
@@ -448,13 +458,13 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
         
         if chatRoom.retentionTime <= 0 {
             let message = removeFormatters(fromString: Strings.Localizable.A1SABDisabledMessageClearing.b(sender))
-            updateDescription(withMessage: message)
+            await updateDescription(withMessage: message)
         } else {
             guard let retention = retentionDuration(fromSeconds: Int(chatRoom.retentionTime)) else {
                 return
             }
             let message = removeFormatters(fromString: Strings.Localizable.A1SABChangedTheMessageClearingTimeToBA2SAB.b(sender, retention))
-            updateDescription(withMessage: message)
+            await updateDescription(withMessage: message)
         }
     }
     
@@ -471,21 +481,21 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
                 var message = Strings.Localizable.wasRemovedFromTheGroupChatBy
                 message = message.replacingOccurrences(of: "[A]", with: lastMessageUsername)
                 message = message.replacingOccurrences(of: "[B]", with: sender)
-                updateDescription(withMessage: message)
+                await updateDescription(withMessage: message)
             } else {
                 var message = Strings.Localizable.leftTheGroupChat
                 message = message.replacingOccurrences(of: "[A]", with: lastMessageUsername)
-                updateDescription(withMessage: message)
+                await updateDescription(withMessage: message)
             }
         case .joinedGroupChat:
             if let sender, sender != lastMessageUsername {
                 var message = Strings.Localizable.joinedTheGroupChatByInvitationFrom
                 message = message.replacingOccurrences(of: "[A]", with: lastMessageUsername)
                 message = message.replacingOccurrences(of: "[B]", with: sender)
-                updateDescription(withMessage: message)
+                await updateDescription(withMessage: message)
             } else {
                 let message = Strings.Localizable.joinedTheGroupChat(lastMessageUsername)
-                updateDescription(withMessage: message)
+                await updateDescription(withMessage: message)
             }
         default:
             break
@@ -520,7 +530,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
         message = message.replacingOccurrences(of: "[A]", with: lastMessageUsername)
         message = message.replacingOccurrences(of: "[B]", with: sender)
         message = removeFormatters(fromString: message)
-        updateDescription(withMessage: message)
+        await updateDescription(withMessage: message)
     }
     
     private func updateDescriptionForTruncate() async throws {
@@ -528,7 +538,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
             return
         }
         let message = Strings.Localizable.clearedTheChatHistory.replacingOccurrences(of: "[A]", with: sender)
-        updateDescription(withMessage: message)
+        await updateDescription(withMessage: message)
     }
     
     private func message(forEndCallReason endCallReason: ChatMessageEndCallReasonEntity,
@@ -587,7 +597,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
     
     private func updateDescriptionWithSender(usingMessage message: (Any) -> String) async throws {
         guard let sender = try await username(forUserHandle: chatListItem.lastMessageSender, shouldUseMeText: false) else { return }
-        updateDescription(withMessage: message(sender))
+        await updateDescription(withMessage: message(sender))
     }
     
     private func updateDesctiptionWithChatTitleChange() async throws {
@@ -597,7 +607,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
         var changedGroupChatNameTo = Strings.Localizable.changedGroupChatNameTo
         changedGroupChatNameTo = changedGroupChatNameTo.replacingOccurrences(of: "[A]", with: sender)
         changedGroupChatNameTo = changedGroupChatNameTo.replacingOccurrences(of: "[B]", with: chatListItem.lastMessage ?? "")
-        updateDescription(withMessage: changedGroupChatNameTo)
+        await updateDescription(withMessage: changedGroupChatNameTo)
     }
     
     private func updateDescriptionForContact() async throws {
@@ -615,9 +625,9 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
         }
         
         if let sender, chatListItem.group {
-            updateDescription(withMessage: "\(sender): \(message)")
+            await updateDescription(withMessage: "\(sender): \(message)")
         } else {
-            updateDescription(withMessage: message)
+            await updateDescription(withMessage: message)
         }
     }
     
@@ -656,10 +666,10 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
         
         if let message = chatListItem.lastMessage {
             if let sender {
-                updateDescription(withMessage: sender + ": " + message)
+                await updateDescription(withMessage: sender + ": " + message)
                 
             } else {
-                updateDescription(withMessage: message)
+                await updateDescription(withMessage: message)
             }
         }
     }
@@ -669,7 +679,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
             return
         }
         
-        updateDescription(withMessage: Strings.Localizable.Meetings.Scheduled.ManagementMessages.updated(sender))
+        await updateDescription(withMessage: Strings.Localizable.Meetings.Scheduled.ManagementMessages.updated(sender))
     }
     
     private func callDurationString(fromSeconds seconds: Int) -> String? {
@@ -720,8 +730,17 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
         hybridDescription = ChatRoomHybridDescriptionViewState(sender: sender, image: image, duration: duration)
     }
     
+    @MainActor
     private func updateDescription(withMessage message: String) {
+        guard !Task.isCancelled else { return }
+        
         description = message
+        Task {
+            await chatListItemCacheUseCase.setDescription(
+                ChatListItemDescriptionEntity(description: message),
+                for: chatListItem
+            )
+        }
     }
     
     func startOrJoinMeetingTapped() {

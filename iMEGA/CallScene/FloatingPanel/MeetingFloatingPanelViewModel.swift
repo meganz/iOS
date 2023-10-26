@@ -315,8 +315,8 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             .sink { [weak self] peerHandles in
                 guard let self else { return }
                 
-                self.chatRoomParticipantsUpdatedTask?.cancel()
-                self.chatRoomParticipantsUpdatedTask = Task {
+                chatRoomParticipantsUpdatedTask?.cancel()
+                chatRoomParticipantsUpdatedTask = Task {
                     await self.updateRecentlyAddedHandles(removing: peerHandles)
                 }
             }

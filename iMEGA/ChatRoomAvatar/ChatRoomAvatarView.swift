@@ -12,8 +12,7 @@ struct ChatRoomAvatarView: View {
     
     var body: some View {
         ZStack {
-            if let secondaryAvatar = viewModel.secondaryAvatar,
-               let primaryAvatar = viewModel.primaryAvatar {
+            if case let .two(primaryAvatar, secondaryAvatar) = viewModel.avatarType {
                 Image(uiImage: secondaryAvatar)
                     .resizable()
                     .scaledToFill()
@@ -31,14 +30,14 @@ struct ChatRoomAvatarView: View {
                             .stroke(colorScheme == .dark ? Color.black : Color.white, lineWidth: 1)
                     )
                     .offset(x: offsetValue, y: offsetValue)
-            } else if let primaryAvatar = viewModel.primaryAvatar {
-                Image(uiImage: primaryAvatar)
+            } else if case let .one(avatar) = viewModel.avatarType {
+                Image(uiImage: avatar)
                     .resizable()
                     .scaledToFill()
                     .frame(width: size.width + offsetValue, height: size.height + offsetValue)
                     .clipShape(Circle())
-            } else {
-                Image(systemName: "circle.fill")
+            } else if case let .placeHolder(name) = viewModel.avatarType {
+                Image(systemName: name)
                     .resizable()
                     .scaledToFill()
                     .frame(width: size.width + offsetValue, height: size.height + offsetValue)
@@ -48,11 +47,8 @@ struct ChatRoomAvatarView: View {
         }
         .frame(width: size.width + totalOffset, height: size.height + totalOffset)
         .padding(8)
-        .onAppear {
-            viewModel.loadAvatar(isRightToLeftLanguage: layoutDirection == .rightToLeft)
-        }
-        .onDisappear {
-            viewModel.cancelLoading()
+        .taskForiOS14(priority: .background) {
+            await viewModel.loadAvatar(isRightToLeftLanguage: layoutDirection == .rightToLeft)
         }
     }
 }

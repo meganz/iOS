@@ -13,7 +13,8 @@ public final class MockChatRoomRepository: ChatRoomRepositoryProtocol {
     private let queryChatLinkResult: Result<String, MEGADomain.ChatLinkErrorEntity>
     private let renameChatRoomResult: Result<String, MEGADomain.ChatRoomErrorEntity>
     private let base64Handle: String?
-    private let participantsUpdatedPublisher: AnyPublisher<[MEGADomain.HandleEntity], Never>
+    private let participantsUpdatedPublisher: AnyPublisher<[HandleEntity], Never>
+    private let participantsUpdatedPublisherWithChatRoom: AnyPublisher<ChatRoomEntity, Never>
     private let userPrivilegeChangedPublisher: AnyPublisher<MEGADomain.HandleEntity, Never>
     private let ownPrivilegeChangedPublisher: AnyPublisher<MEGADomain.HandleEntity, Never>
     private let allowNonHostToAddParticipantsValueChangedPublisher: AnyPublisher<Bool, Never>
@@ -36,9 +37,10 @@ public final class MockChatRoomRepository: ChatRoomRepositoryProtocol {
         queryChatLinkResult: Result<String, MEGADomain.ChatLinkErrorEntity> = .failure(.generic),
         renameChatRoomResult: Result<String, MEGADomain.ChatRoomErrorEntity> = .failure(.generic),
         base64Handle: String? = nil,
-        participantsUpdatedPublisher: AnyPublisher<[MEGADomain.HandleEntity], Never> = Empty().eraseToAnyPublisher(),
-        userPrivilegeChangedPublisher: AnyPublisher<MEGADomain.HandleEntity, Never> = Empty().eraseToAnyPublisher(),
-        ownPrivilegeChangedPublisher: AnyPublisher<MEGADomain.HandleEntity, Never> = Empty().eraseToAnyPublisher(),
+        participantsUpdatedPublisher: AnyPublisher<[HandleEntity], Never> = Empty().eraseToAnyPublisher(),
+        participantsUpdatedPublisherWithChatRoom: AnyPublisher<ChatRoomEntity, Never> = Empty().eraseToAnyPublisher(),
+        userPrivilegeChangedPublisher: AnyPublisher<HandleEntity, Never> = Empty().eraseToAnyPublisher(),
+        ownPrivilegeChangedPublisher: AnyPublisher<HandleEntity, Never> = Empty().eraseToAnyPublisher(),
         allowNonHostToAddParticipantsValueChangedPublisher: AnyPublisher<Bool, Never> = Empty().eraseToAnyPublisher(),
         waitingRoomValueChangedPublisher: AnyPublisher<Bool, Never> = Empty().eraseToAnyPublisher(),
         message: MEGADomain.ChatMessageEntity? = nil,
@@ -59,6 +61,7 @@ public final class MockChatRoomRepository: ChatRoomRepositoryProtocol {
         self.renameChatRoomResult = renameChatRoomResult
         self.base64Handle = base64Handle
         self.participantsUpdatedPublisher = participantsUpdatedPublisher
+        self.participantsUpdatedPublisherWithChatRoom = participantsUpdatedPublisherWithChatRoom
         self.userPrivilegeChangedPublisher = userPrivilegeChangedPublisher
         self.ownPrivilegeChangedPublisher = ownPrivilegeChangedPublisher
         self.allowNonHostToAddParticipantsValueChangedPublisher = allowNonHostToAddParticipantsValueChangedPublisher
@@ -134,8 +137,12 @@ public final class MockChatRoomRepository: ChatRoomRepositoryProtocol {
         enabled
     }
     
-    public func participantsUpdated(forChatRoom chatRoom: MEGADomain.ChatRoomEntity) -> AnyPublisher<[MEGADomain.HandleEntity], Never> {
+    public func participantsUpdated(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<[HandleEntity], Never> {
         participantsUpdatedPublisher
+    }
+    
+    public func participantsUpdated(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<ChatRoomEntity, Never> {
+        participantsUpdatedPublisherWithChatRoom
     }
     
     public func userPrivilegeChanged(forChatRoom chatRoom: MEGADomain.ChatRoomEntity) -> AnyPublisher<MEGADomain.HandleEntity, Never> {

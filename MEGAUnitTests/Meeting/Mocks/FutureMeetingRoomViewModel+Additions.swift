@@ -22,6 +22,8 @@ extension FutureMeetingRoomViewModel {
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         tracker: some AnalyticsTracking = MockTracker(),
         chatNotificationControl: ChatNotificationControl = ChatNotificationControl(delegate: MockPushNotificationControl()),
+        chatListItemCacheUseCase: some ChatListItemCacheUseCaseProtocol = MockChatListItemCacheUseCase(),
+        chatListItemAvatar: ChatListItemAvatarEntity? = nil,
         isTesting: Bool = true
     ) {
         self.init(
@@ -40,7 +42,9 @@ extension FutureMeetingRoomViewModel {
             permissionAlertRouter: permissionAlertRouter,
             featureFlagProvider: featureFlagProvider,
             tracker: tracker,
-            chatNotificationControl: chatNotificationControl
+            chatNotificationControl: chatNotificationControl,
+            chatListItemCacheUseCase: chatListItemCacheUseCase,
+            chatListItemAvatar: chatListItemAvatar
         )
     }
 }

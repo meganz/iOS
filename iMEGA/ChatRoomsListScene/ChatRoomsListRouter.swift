@@ -28,7 +28,8 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
             scheduledMeetingUseCase: ScheduledMeetingUseCase(repository: ScheduledMeetingRepository(chatSDK: MEGAChatSdk.shared)),
             userAttributeUseCase: UserAttributeUseCase(repo: UserAttributeRepository.newRepo),
             permissionHandler: permissionHandler,
-            permissionAlertRouter: PermissionAlertRouter.makeRouter(deviceHandler: permissionHandler)
+            permissionAlertRouter: PermissionAlertRouter.makeRouter(deviceHandler: permissionHandler),
+            chatListItemCacheUseCase: ChatListItemCacheUseCase(repository: ChatListItemCacheRepository.newRepo)
         )
         let viewController = ChatRoomsListViewController(viewModel: viewModel)
         let navigation = MEGANavigationController(rootViewController: viewController)

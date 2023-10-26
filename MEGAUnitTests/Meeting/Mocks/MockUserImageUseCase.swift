@@ -26,7 +26,7 @@ struct MockUserImageUseCase: UserImageUseCaseProtocol {
         clearAvatarCacheCompletion?(handle)
     }
     
-    func fetchAvatar(withUserHandle handle: MEGADomain.HandleEntity, base64Handle: MEGADomain.Base64HandleEntity, forceDownload: Bool) async throws -> UIImage {
+    func fetchAvatar(withUserHandle handle: HandleEntity, base64Handle: Base64HandleEntity, forceDownload: Bool) async throws -> UIImage {
         downloadAvatarCompletion?(handle)
         switch result {
         case .success(let image):

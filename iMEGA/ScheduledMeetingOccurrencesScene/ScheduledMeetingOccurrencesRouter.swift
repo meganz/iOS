@@ -23,7 +23,7 @@ final class ScheduledMeetingOccurrencesRouter: ScheduledMeetingOccurrencesRoutin
         )
         
         let userImageUseCase = UserImageUseCase(
-            userImageRepo: UserImageRepository(sdk: MEGASdkManager.sharedMEGASdk()),
+            userImageRepo: UserImageRepository(sdk: .sharedSdk),
             userStoreRepo: UserStoreRepository(store: MEGAStore.shareInstance()),
             thumbnailRepo: ThumbnailRepository.newRepo,
             fileSystemRepo: FileSystemRepository.newRepo
@@ -34,24 +34,25 @@ final class ScheduledMeetingOccurrencesRouter: ScheduledMeetingOccurrencesRoutin
             chatRoomAvatarViewModel = ChatRoomAvatarViewModel(
                 title: chatRoom.title ?? "",
                 peerHandle: .invalid,
-                chatRoomEntity: chatRoom,
+                chatRoom: chatRoom,
                 chatRoomUseCase: chatRoomUseCase,
                 chatRoomUserUseCase: chatRoomUserUseCase,
                 userImageUseCase: userImageUseCase,
                 chatUseCase: ChatUseCase(
                     chatRepo: ChatRepository(
-                        sdk: MEGASdkManager.sharedMEGASdk(),
-                        chatSDK: MEGASdkManager.sharedMEGAChatSdk())
+                        sdk: .sharedSdk,
+                        chatSDK: .sharedChatSdk)
                 ),
                 accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
-                megaHandleUseCase: MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo)
+                megaHandleUseCase: MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo),
+                chatListItemCacheUseCase: ChatListItemCacheUseCase(repository: ChatListItemCacheRepository.newRepo)
             )
         }
 
         let viewModel = ScheduledMeetingOccurrencesViewModel(
             router: self,
             scheduledMeeting: scheduledMeeting,
-            scheduledMeetingUseCase: ScheduledMeetingUseCase(repository: ScheduledMeetingRepository(chatSDK: MEGASdkManager.sharedMEGAChatSdk())),
+            scheduledMeetingUseCase: ScheduledMeetingUseCase(repository: ScheduledMeetingRepository(chatSDK: .sharedChatSdk)),
             chatRoomUseCase: chatRoomUseCase,
             chatRoomAvatarViewModel: chatRoomAvatarViewModel
         )

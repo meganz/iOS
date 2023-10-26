@@ -7,9 +7,9 @@ import XCTest
 final class ScheduledMeetingOccurrencesViewModelTests: XCTestCase {
     private let router = MockScheduledMeetingOccurrencesRouter()
     private let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(chatId: 100))
-    private let scheduleMeetingOccurence = ScheduleMeetingOccurence(id: "1", date: "2023/6/12", title: "Meeting Title", time: "12:00")
+    private let scheduleMeetingOccurrence = ScheduleMeetingOccurrence(id: "1", date: "2023/6/12", title: "Meeting Title", time: "12:00")
 
-    func test_cancelEntiryScheduledMeeting_meetingCancelledSuccess() {
+    func test_cancelEntityScheduledMeeting_meetingCancelledSuccess() {
         let scheduledMeetingUseCase = MockScheduledMeetingUseCase(scheduledMeetingsList: [ScheduledMeetingEntity()])
         let viewModel = ScheduledMeetingOccurrencesViewModel(router: router, scheduledMeeting: ScheduledMeetingEntity(), scheduledMeetingUseCase: scheduledMeetingUseCase, chatRoomUseCase: chatRoomUseCase, chatRoomAvatarViewModel: nil)
         viewModel.cancelScheduledMeeting()
@@ -27,8 +27,8 @@ final class ScheduledMeetingOccurrencesViewModelTests: XCTestCase {
     func test_cancelScheduledMeetingOccurrence_occurrenceCancelledSuccess() {
         let scheduledMeetingUseCase = MockScheduledMeetingUseCase(scheduledMeetingsList: [ScheduledMeetingEntity()])
         let viewModel = ScheduledMeetingOccurrencesViewModel(router: router, scheduledMeeting: ScheduledMeetingEntity(chatId: 100), scheduledMeetingUseCase: scheduledMeetingUseCase, chatRoomUseCase: chatRoomUseCase, chatRoomAvatarViewModel: nil)
-        viewModel.selectedOccurrence = scheduleMeetingOccurence
-        viewModel.displayOccurrences = [scheduleMeetingOccurence]
+        viewModel.selectedOccurrence = scheduleMeetingOccurrence
+        viewModel.displayOccurrences = [scheduleMeetingOccurrence]
         viewModel.occurrences = [ScheduledMeetingOccurrenceEntity()]
         viewModel.cancelScheduledMeetingOccurrence()
         evaluate { self.router.showSuccessMessage_calledTimes == 1 }
@@ -37,8 +37,8 @@ final class ScheduledMeetingOccurrencesViewModelTests: XCTestCase {
     func test_cancelScheduledMeetingOccurrence_occurrenceCancelledError() {
         let scheduledMeetingUseCase = MockScheduledMeetingUseCase(scheduleMeetingError: ScheduleMeetingErrorEntity.generic)
         let viewModel = ScheduledMeetingOccurrencesViewModel(router: router, scheduledMeeting: ScheduledMeetingEntity(), scheduledMeetingUseCase: scheduledMeetingUseCase, chatRoomUseCase: chatRoomUseCase, chatRoomAvatarViewModel: nil)
-        viewModel.selectedOccurrence = scheduleMeetingOccurence
-        viewModel.displayOccurrences = [scheduleMeetingOccurence]
+        viewModel.selectedOccurrence = scheduleMeetingOccurrence
+        viewModel.displayOccurrences = [scheduleMeetingOccurrence]
         viewModel.occurrences = [ScheduledMeetingOccurrenceEntity()]
         viewModel.cancelScheduledMeetingOccurrence()
         evaluate {

@@ -41,7 +41,8 @@ let package = Package(
             name: "ChatRepoTests",
             dependencies: [
                 "ChatRepo",
-                "ChatRepoMock"
+                "ChatRepoMock",
+                .product(name: "MEGADomainMock", package: "MEGADomain")
             ],
             swiftSettings: settings
         )

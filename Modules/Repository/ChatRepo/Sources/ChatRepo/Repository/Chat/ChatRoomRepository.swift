@@ -187,6 +187,13 @@ public final class ChatRoomRepository: ChatRoomRepositoryProtocol {
             .eraseToAnyPublisher()
     }
     
+    public func participantsUpdated(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<ChatRoomEntity, Never> {
+        chatRoomUpdateListener(forChatId: chatRoom.chatId)
+            .monitor
+            .filter { $0.changeType == .participants }
+            .eraseToAnyPublisher()
+    }
+    
     public func userPrivilegeChanged(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<HandleEntity, Never> {
         chatRoomUpdateListener(forChatId: chatRoom.chatId)
             .monitor

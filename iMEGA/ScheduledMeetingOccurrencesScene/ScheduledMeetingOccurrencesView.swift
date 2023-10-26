@@ -7,19 +7,22 @@ struct ScheduledMeetingOccurrencesView: View {
     var body: some View {
         List {
             ForEach(viewModel.displayOccurrences) { occurrence in
-                ScheduledMeetingOccurrencesContentView(occurrence: occurrence, chatRoomAvatarViewModel: viewModel.chatRoomAvatarViewModel)
-                    .contentShape(Rectangle())
-                    .contextMenu {
-                        if let contextMenuOptions = viewModel.contextMenuOptions {
-                            ForEach(contextMenuOptions) { contextMenuOption in
-                                Button {
-                                    contextMenuOption.action(occurrence)
-                                } label: {
-                                    Label(contextMenuOption.title, image: contextMenuOption.imageName)
-                                }
+                ScheduledMeetingOccurrencesContentView(
+                    occurrence: occurrence,
+                    chatRoomAvatarViewModel: viewModel.chatRoomAvatarViewModel
+                )
+                .contentShape(Rectangle())
+                .contextMenu {
+                    if let contextMenuOptions = viewModel.contextMenuOptions {
+                        ForEach(contextMenuOptions) { contextMenuOption in
+                            Button {
+                                contextMenuOption.action(occurrence)
+                            } label: {
+                                Label(contextMenuOption.title, image: contextMenuOption.imageName)
                             }
                         }
                     }
+                }
             }
             if viewModel.seeMoreOccurrencesVisible {
                 if #available(iOS 15.0, *) {
@@ -49,7 +52,7 @@ struct ScheduledMeetingOccurrencesView: View {
 }
 
 struct ScheduledMeetingOccurrencesContentView: View {
-    let occurrence: ScheduleMeetingOccurence
+    let occurrence: ScheduleMeetingOccurrence
     let chatRoomAvatarViewModel: ChatRoomAvatarViewModel?
 
     var body: some View {

@@ -22,6 +22,7 @@ extension ChatRoomsListViewModel {
         chatViewMode: ChatViewMode = .chats,
         permissionHandler: some DevicePermissionsHandling = MockDevicePermissionHandler(),
         permissionAlertRouter: some PermissionAlertRouting = MockPermissionAlertRouter(),
+        chatListItemCacheUseCase: some ChatListItemCacheUseCaseProtocol = MockChatListItemCacheUseCase(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         isTesting: Bool = true
     ) {
@@ -39,6 +40,7 @@ extension ChatRoomsListViewModel {
             chatViewMode: chatViewMode,
             permissionHandler: permissionHandler,
             permissionAlertRouter: permissionAlertRouter,
+            chatListItemCacheUseCase: chatListItemCacheUseCase,
             featureFlagProvider: featureFlagProvider
         )
     }
