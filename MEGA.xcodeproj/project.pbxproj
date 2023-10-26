@@ -144,6 +144,7 @@
 		243F74912A42D8380050D5E4 /* OfflineViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 243F74902A42D8380050D5E4 /* OfflineViewController+Additions.swift */; };
 		244F0A6E2A457ED0007DC61B /* AdvancedTableViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244F0A6D2A457ED0007DC61B /* AdvancedTableViewControllerTests.swift */; };
 		245385FA2A13C05B00208B31 /* NodeInfoViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245385F92A13C05B00208B31 /* NodeInfoViewControllerTests.swift */; };
+		2455359C2AE8E2D0007373C6 /* MiniPlayerDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2455359B2AE8E2D0007373C6 /* MiniPlayerDataSourceTests.swift */; };
 		24575FEF2A499A62003EAE79 /* CloudDriveViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24575FEE2A499A62003EAE79 /* CloudDriveViewControllerTests.swift */; };
 		245CB1A82A32DDFD005F6527 /* AppMetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245CB1A72A32DDFD005F6527 /* AppMetaData.swift */; };
 		245CB1AA2A32DE30005F6527 /* DeviceMetaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 245CB1A92A32DE30005F6527 /* DeviceMetaData.swift */; };
@@ -2661,6 +2662,7 @@
 		243F74902A42D8380050D5E4 /* OfflineViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OfflineViewController+Additions.swift"; sourceTree = "<group>"; };
 		244F0A6D2A457ED0007DC61B /* AdvancedTableViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedTableViewControllerTests.swift; sourceTree = "<group>"; };
 		245385F92A13C05B00208B31 /* NodeInfoViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoViewControllerTests.swift; sourceTree = "<group>"; };
+		2455359B2AE8E2D0007373C6 /* MiniPlayerDataSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerDataSourceTests.swift; sourceTree = "<group>"; };
 		24575FEE2A499A62003EAE79 /* CloudDriveViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveViewControllerTests.swift; sourceTree = "<group>"; };
 		245CB1A72A32DDFD005F6527 /* AppMetaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMetaData.swift; sourceTree = "<group>"; };
 		245CB1A92A32DE30005F6527 /* DeviceMetaData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceMetaData.swift; sourceTree = "<group>"; };
@@ -5718,6 +5720,14 @@
 			path = NodeInfo;
 			sourceTree = "<group>";
 		};
+		245535962AE8DF69007373C6 /* MiniPlayerScene */ = {
+			isa = PBXGroup;
+			children = (
+				2455359B2AE8E2D0007373C6 /* MiniPlayerDataSourceTests.swift */,
+			);
+			path = MiniPlayerScene;
+			sourceTree = "<group>";
+		};
 		247FC1BC2A4F1C2400CC8518 /* QASettings */ = {
 			isa = PBXGroup;
 			children = (
@@ -5795,6 +5805,7 @@
 			isa = PBXGroup;
 			children = (
 				24F231572A5FB31C000BFBBA /* AudioPlayerScenes */,
+				245535962AE8DF69007373C6 /* MiniPlayerScene */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -15250,6 +15261,7 @@
 				BFE556FC27E183B40028EF1F /* MEGANode+Additions_Tests.swift in Sources */,
 				BFE556FE27E183B40028EF1F /* MEGANode+FilePaths_Tests.swift in Sources */,
 				5D62093824ED1511004648A1 /* MEGANotificationUseCaseTests.swift in Sources */,
+				2455359C2AE8E2D0007373C6 /* MiniPlayerDataSourceTests.swift in Sources */,
 				24189DCE2AA705C70071F160 /* MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift in Sources */,
 				C45A2E2325D2E05100915A83 /* MiniPlayerViewModelTests.swift in Sources */,
 				5D52C74A250C4F4100286A43 /* mock-function.swift in Sources */,
