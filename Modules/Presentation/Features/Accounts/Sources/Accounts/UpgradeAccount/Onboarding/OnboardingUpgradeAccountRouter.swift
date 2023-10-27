@@ -1,17 +1,23 @@
+import MEGADomain
+import MEGASDKRepo
 import SwiftUI
 import UIKit
 
 public struct OnboardingUpgradeAccountRouter {
     private weak var presenter: UIViewController?
+    private weak var viewModel: OnboardingUpgradeAccountViewModel?
     
-    public init(presenter: UIViewController?) {
+    public init(viewModel: OnboardingUpgradeAccountViewModel, presenter: UIViewController?) {
         self.presenter = presenter
+        self.viewModel = viewModel
     }
     
     public func build() -> UIViewController {
-        let viewModel = OnboardingUpgradeAccountViewModel()
+        guard let viewModel else {
+            fatalError("[Onboarding] No viewModel OnboardingUpgradeAccountViewModel")
+        }
         let onboardingView = OnboardingUpgradeAccountView(viewModel: viewModel)
-        return UIHostingController(rootView: onboardingView)
+        return UIHostingController(dismissibleView: onboardingView)
     }
     
     public func start() {

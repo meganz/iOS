@@ -2,8 +2,10 @@ import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
 
-public struct OnboardingUpgradeAccountView: View {
-    var viewModel: OnboardingUpgradeAccountViewModel
+public struct OnboardingUpgradeAccountView: View, DismissibleContentView {
+    @Environment(\.presentationMode) private var presentationMode
+    @StateObject var viewModel: OnboardingUpgradeAccountViewModel
+    public var invokeDismiss: (() -> Void)?
     
     public var body: some View {
         ScrollView(showsIndicators: false) {
@@ -18,9 +20,13 @@ public struct OnboardingUpgradeAccountView: View {
                 Spacer()
                 
                 VStack(spacing: 15) {
-                    PrimaryActionButtonView(title: Strings.Localizable.Onboarding.UpgradeAccount.Button.viewProPlans) {}
+                    PrimaryActionButtonView(title: Strings.Localizable.Onboarding.UpgradeAccount.Button.viewProPlans) {
+                        viewModel.showProPlanView()
+                    }
                     
-                    SecondaryActionButtonView(title: Strings.Localizable.skipButton) {}
+                    SecondaryActionButtonView(title: Strings.Localizable.skipButton) {
+                        dismiss()
+                    }
                 }
                 .padding(.horizontal, 2)
                 .padding(.bottom, 20)
@@ -28,7 +34,15 @@ public struct OnboardingUpgradeAccountView: View {
         }
         .frame(maxWidth: 390)
         .taskForiOS14 {
-            viewModel.setUpLowestProPlan()
+            await viewModel.setUpLowestProPlan()
+        }
+    }
+    
+    private func dismiss() {
+        if #available(iOS 15.0, *) {
+            presentationMode.wrappedValue.dismiss()
+        } else {
+            invokeDismiss?()
         }
     }
 }

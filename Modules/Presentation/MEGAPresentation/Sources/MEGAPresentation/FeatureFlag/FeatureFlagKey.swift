@@ -8,4 +8,5 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable {
     case waitingRoom = "Waiting Room"
     case albumPhotoCache = "Album and Photo Cache"
     case timelineCameraUploadStatus = "Timeline Camera Upload Status"
+    case onboardingProPlan = "Onboarding Pro Plan Upselling Dialog"
 }
