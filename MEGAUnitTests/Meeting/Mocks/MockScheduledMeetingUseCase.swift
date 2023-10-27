@@ -56,8 +56,8 @@ final class MockScheduledMeetingUseCase: ScheduledMeetingUseCaseProtocol {
         try firstMeeting()
     }
     
-    func updateScheduleMeeting(_ meeting: ScheduledMeetingEntity) async throws -> ScheduledMeetingEntity {
-       try firstMeeting()
+    func updateScheduleMeeting(_ meeting: ScheduledMeetingEntity, updateChatTitle: Bool) async throws -> ScheduledMeetingEntity {
+        try firstMeeting()
     }
     
     func updateOccurrence(_ occurrence: ScheduledMeetingOccurrenceEntity, meeting: ScheduledMeetingEntity) async throws -> ScheduledMeetingEntity {

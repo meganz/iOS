@@ -278,7 +278,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
             do {
                 var scheduledMeeting = scheduledMeeting
                 scheduledMeeting.cancelled = true
-                _ = try await scheduledMeetingUseCase.updateScheduleMeeting(scheduledMeeting)
+                _ = try await scheduledMeetingUseCase.updateScheduleMeeting(scheduledMeeting, updateChatTitle: false)
                 if !chatHasMessages {
                     archiveChatRoom(afterCancelMeeting: true)
                 } else {

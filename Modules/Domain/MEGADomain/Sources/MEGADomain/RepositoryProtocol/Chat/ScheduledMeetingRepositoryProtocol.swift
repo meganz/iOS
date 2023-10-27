@@ -8,7 +8,10 @@ public protocol ScheduledMeetingRepositoryProtocol: RepositoryProtocol {
     func scheduledMeetingOccurrencesByChat(chatId: ChatIdEntity) async throws -> [ScheduledMeetingOccurrenceEntity]
     func scheduledMeetingOccurrencesByChat(chatId: ChatIdEntity, since: Date) async throws -> [ScheduledMeetingOccurrenceEntity]
     func createScheduleMeeting(_ meeting: ScheduleMeetingProxyEntity) async throws -> ScheduledMeetingEntity
-    func updateScheduleMeeting(_ meeting: ScheduledMeetingEntity) async throws -> ScheduledMeetingEntity
+    func updateScheduleMeeting(
+        _ meeting: ScheduledMeetingEntity,
+        updateChatTitle: Bool
+    ) async throws -> ScheduledMeetingEntity
     func updateOccurrence(
         _ occurrence: ScheduledMeetingOccurrenceEntity,
         meeting: ScheduledMeetingEntity
