@@ -76,7 +76,7 @@ public final class ScheduledMeetingRepository: ScheduledMeetingRepositoryProtoco
         }
     }
     
-    public func updateScheduleMeeting(_ meeting: ScheduledMeetingEntity) async throws -> ScheduledMeetingEntity {
+    public func updateScheduleMeeting(_ meeting: ScheduledMeetingEntity, updateChatTitle: Bool) async throws -> ScheduledMeetingEntity {
         try await withAsyncThrowingValue { completion in
             chatSDK.updateScheduledMeeting(
                 meeting.chatId,
@@ -89,6 +89,7 @@ public final class ScheduledMeetingRepository: ScheduledMeetingRepositoryProtoco
                 cancelled: meeting.cancelled,
                 flags: meeting.flags.toMEGAChatScheduledFlags(),
                 rules: meeting.rules.frequency != .invalid ? meeting.rules.toMEGAChatScheduledRules() : nil,
+                updateChatTitle: updateChatTitle,
                 delegate: makeChatRequestDelegate(withCompletion: completion)
             )
         }

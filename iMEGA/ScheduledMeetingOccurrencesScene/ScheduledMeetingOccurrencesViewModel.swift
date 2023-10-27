@@ -250,7 +250,7 @@ final class ScheduledMeetingOccurrencesViewModel: ObservableObject {
             do {
                 var scheduledMeeting = scheduledMeeting
                 scheduledMeeting.cancelled = true
-                self.scheduledMeeting = try await scheduledMeetingUseCase.updateScheduleMeeting(scheduledMeeting)
+                self.scheduledMeeting = try await scheduledMeetingUseCase.updateScheduleMeeting(scheduledMeeting, updateChatTitle: false)
                 if !chatHasMessages {
                    archiveChatRoom()
                 } else {

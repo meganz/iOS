@@ -10,7 +10,10 @@ public protocol ScheduledMeetingUseCaseProtocol {
     func scheduledMeetingOccurrencesByChat(chatId: ChatIdEntity, since: Date) async throws -> [ScheduledMeetingOccurrenceEntity]
     func upcomingOccurrences(forScheduledMeetings meetings: [ScheduledMeetingEntity]) async throws -> [ChatIdEntity: ScheduledMeetingOccurrenceEntity]
     func createScheduleMeeting(_ meeting: ScheduleMeetingProxyEntity) async throws -> ScheduledMeetingEntity
-    func updateScheduleMeeting(_ meeting: ScheduledMeetingEntity) async throws -> ScheduledMeetingEntity
+    func updateScheduleMeeting(
+        _ meeting: ScheduledMeetingEntity,
+        updateChatTitle: Bool
+    ) async throws -> ScheduledMeetingEntity
     func updateOccurrence(
         _ occurrence: ScheduledMeetingOccurrenceEntity,
         meeting: ScheduledMeetingEntity
@@ -66,8 +69,11 @@ public struct ScheduledMeetingUseCase<T: ScheduledMeetingRepositoryProtocol>: Sc
         try await repository.createScheduleMeeting(meeting)
     }
     
-    public func updateScheduleMeeting(_ meeting: ScheduledMeetingEntity) async throws -> ScheduledMeetingEntity {
-        try await repository.updateScheduleMeeting(meeting)
+    public func updateScheduleMeeting(
+        _ meeting: ScheduledMeetingEntity,
+        updateChatTitle: Bool
+    ) async throws -> ScheduledMeetingEntity {
+        try await repository.updateScheduleMeeting(meeting, updateChatTitle: updateChatTitle)
     }
     
     public func updateOccurrence(

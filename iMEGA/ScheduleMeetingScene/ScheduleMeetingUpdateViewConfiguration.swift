@@ -66,8 +66,7 @@ class ScheduleMeetingUpdateViewConfiguration: ScheduleMeetingViewConfigurable {
     
     func submit(meeting: ScheduleMeetingProxyEntity) async throws -> ScheduleMeetingViewConfigurationCompletion {
         var updatedScheduledMeeting = updateScheduledMeeting(meeting)
-        updatedScheduledMeeting = try await scheduledMeetingUseCase.updateScheduleMeeting(updatedScheduledMeeting)
-        try await renameChatRoom(meeting: meeting)
+        updatedScheduledMeeting = try await scheduledMeetingUseCase.updateScheduleMeeting(updatedScheduledMeeting, updateChatTitle: scheduledMeeting.title != meeting.title)
         try updateParticipants(with: meeting)
         try await updateMeetingLinkIfNeeded(meeting: meeting)
         try await updateWaitingRoomEnabled(meeting: meeting)
@@ -142,11 +141,6 @@ class ScheduleMeetingUpdateViewConfiguration: ScheduleMeetingViewConfigurable {
         }
         
         return chatRoom
-    }
-    
-    private func renameChatRoom(meeting: ScheduleMeetingProxyEntity) async throws {
-        guard scheduledMeeting.title != meeting.title else { return }
-        _ = try await chatRoomUseCase.renameChatRoom(try chatRoom(for: scheduledMeeting), title: meeting.title)
     }
     
     private func updateScheduledMeeting(_ meeting: ScheduleMeetingProxyEntity) -> ScheduledMeetingEntity {
