@@ -1,4 +1,6 @@
+import Accounts
 import Foundation
+import MEGADomain
 import MEGAPresentation
 
 final class UpgradeAccountRouter {
@@ -8,10 +10,16 @@ final class UpgradeAccountRouter {
         case newPlanPageRequired
     }
     
-    private var abTestProvider: any ABTestProviderProtocol
+    private let purchase: MEGAPurchase
+    private let abTestProvider: any ABTestProviderProtocol
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
     
-    init(abTestProvider: some ABTestProviderProtocol = DIContainer.abTestProvider) {
+    init(purchase: MEGAPurchase = MEGAPurchase.sharedInstance(),
+         abTestProvider: some ABTestProviderProtocol = DIContainer.abTestProvider,
+         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
+        self.purchase = purchase
         self.abTestProvider = abTestProvider
+        self.featureFlagProvider = featureFlagProvider
     }
 
     func pushUpgradeTVC(navigationController: UINavigationController) {
@@ -33,14 +41,20 @@ final class UpgradeAccountRouter {
     }
     
     func presentChooseAccountType() {
-        do {
-            try shouldShowPlanPage()
-        } catch {
-            handle(error: error)
-        }
+        guard let products = purchase.products, products.isNotEmpty else { return }
         
-        let upgradeAccountNC = UpgradeAccountFactory().createUpgradeAccountChooseAccountType()
-        UIApplication.mnz_visibleViewController().present(upgradeAccountNC, animated: true, completion: nil)
+        if featureFlagProvider.isFeatureFlagEnabled(for: .onboardingProPlan) {
+            let viewModel = OnboardingUpgradeAccountViewModel(
+                purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo), 
+                viewProPlanAction: {
+                    UpgradeAccountRouter(purchase: self.purchase).presentUpgradeTVC()
+                }
+            )
+            OnboardingUpgradeAccountRouter(viewModel: viewModel, presenter: UIApplication.mnz_presentingViewController()).start()
+        } else {
+            let upgradeAccountNC = UpgradeAccountFactory().createUpgradeAccountChooseAccountType()
+            UIApplication.mnz_presentingViewController().present(upgradeAccountNC, animated: true, completion: nil)
+        }
     }
     
     // MARK: AB Testing
@@ -72,7 +86,7 @@ final class UpgradeAccountRouter {
     
     @discardableResult
     private func shouldShowPlanPage() throws -> Bool {
-        guard let products = MEGAPurchase.sharedInstance().products, MEGASdk.shared.mnz_accountDetails != nil else {
+        guard let products = purchase.products, MEGASdk.shared.mnz_accountDetails != nil else {
             throw UpgradeAccountError.reachability
         }
         

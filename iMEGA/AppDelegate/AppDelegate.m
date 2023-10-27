@@ -1327,6 +1327,9 @@
             [self showUpgradeSecurityAlert];
             break;
             
+        case EventAccountConfirmation:
+            self.newAccount = YES;
+            
         default:
             break;
     }
@@ -1473,7 +1476,9 @@
                 isFetchNodesDone = NO;
             } else {
                 isAccountFirstLogin = YES;
-                self.newAccount = (MEGALinkManager.urlType == URLTypeConfirmationLink);
+                if (!self.isNewAccount) {
+                    self.newAccount = (MEGALinkManager.urlType == URLTypeConfirmationLink);
+                }
                 if (MEGALinkManager.selectedOption != LinkOptionJoinChatLink) {
                     [MEGALinkManager resetLinkAndURLType];
                 }

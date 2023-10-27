@@ -2,7 +2,7 @@ import MEGAL10n
 import SwiftUI
 
 struct OnboardingProPlanContentView: View {
-    var viewModel: OnboardingUpgradeAccountViewModel
+    @ObservedObject var viewModel: OnboardingUpgradeAccountViewModel
     
     var body: some View {
         VStack(spacing: 30) {
@@ -14,9 +14,7 @@ struct OnboardingProPlanContentView: View {
             ProPlanView(
                 imageName: "cloud",
                 title: Strings.Localizable.Onboarding.UpgradeAccount.Content.GenerousStorage.title,
-                message: Strings.Localizable.Onboarding.UpgradeAccount.Content.GenerousStorage.message
-                            .replacingOccurrences(of: "[A]", with: String(viewModel.lowestProPlanStorage))
-                            .replacingOccurrences(of: "[B]", with: String(viewModel.lowestProPlanStorageUnit))
+                message: viewModel.storageContentMessage
             )
             
             ProPlanView(
