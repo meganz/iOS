@@ -174,6 +174,7 @@
 		24C577FF2AC18A9F00302849 /* MockAudioPlayerUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C577FE2AC18A9F00302849 /* MockAudioPlayerUseCase.swift */; };
 		24DE90042AA765650039C846 /* MockNodeInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DE90032AA765650039C846 /* MockNodeInfoUseCase.swift */; };
 		24DE90072AA765970039C846 /* MockStreamingInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DE90062AA765970039C846 /* MockStreamingInfoUseCase.swift */; };
+		24E038462AEBE5570001159C /* AudioPlayerConfigEntityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E038452AEBE5570001159C /* AudioPlayerConfigEntityTests.swift */; };
 		24E99B462A65257700E4D6A5 /* ToggleSecureFingerprintFlagUIAlertAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E99B452A65257700E4D6A5 /* ToggleSecureFingerprintFlagUIAlertAdapter.swift */; };
 		24F231592A5FB33A000BFBBA /* AudioPlayerViewRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F231582A5FB33A000BFBBA /* AudioPlayerViewRouterTests.swift */; };
 		251863132AA69108005C77F0 /* CloudDriveViewController+ViewMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251863122AA69108005C77F0 /* CloudDriveViewController+ViewMode.swift */; };
@@ -2692,6 +2693,7 @@
 		24C577FE2AC18A9F00302849 /* MockAudioPlayerUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAudioPlayerUseCase.swift; sourceTree = "<group>"; };
 		24DE90032AA765650039C846 /* MockNodeInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNodeInfoUseCase.swift; sourceTree = "<group>"; };
 		24DE90062AA765970039C846 /* MockStreamingInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockStreamingInfoUseCase.swift; sourceTree = "<group>"; };
+		24E038452AEBE5570001159C /* AudioPlayerConfigEntityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerConfigEntityTests.swift; sourceTree = "<group>"; };
 		24E99B452A65257700E4D6A5 /* ToggleSecureFingerprintFlagUIAlertAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleSecureFingerprintFlagUIAlertAdapter.swift; sourceTree = "<group>"; };
 		24F231582A5FB33A000BFBBA /* AudioPlayerViewRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerViewRouterTests.swift; sourceTree = "<group>"; };
 		251863122AA69108005C77F0 /* CloudDriveViewController+ViewMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+ViewMode.swift"; sourceTree = "<group>"; };
@@ -5674,6 +5676,7 @@
 		240D80F92AB1A1CB00FBD2C4 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				24E038452AEBE5570001159C /* AudioPlayerConfigEntityTests.swift */,
 				240D80FA2AB1A1DC00FBD2C4 /* AudioPlayerItemTests.swift */,
 			);
 			path = Domain;
@@ -15151,6 +15154,7 @@
 				B63AEB182512040E000B8517 /* Array+Additions.swift in Sources */,
 				24AD30932AA9EF77004D4BF4 /* AssetCreationRequestLocationManagerTests.swift in Sources */,
 				24A6ADD92A81EBDA0035C7B0 /* AudioPlayerAllAudioAsPlaylistShiftStrategyTests.swift in Sources */,
+				24E038462AEBE5570001159C /* AudioPlayerConfigEntityTests.swift in Sources */,
 				24A6ADD62A81E87D0035C7B0 /* AudioPlayerDefaultPlaylistShiftStrategyTests.swift in Sources */,
 				C47E7BDB25D1550200DB6FF5 /* AudioPlayerItem.swift in Sources */,
 				240D80FB2AB1A1DC00FBD2C4 /* AudioPlayerItemTests.swift in Sources */,

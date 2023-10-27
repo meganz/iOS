@@ -1,6 +1,6 @@
 import MEGADomain
 
-class AudioPlayerConfigEntity {
+final class AudioPlayerConfigEntity {
     // Nodes, File Links, Folder Links
     var node: MEGANode?
     var isFolderLink = false
