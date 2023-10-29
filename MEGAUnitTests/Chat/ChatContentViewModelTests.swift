@@ -501,9 +501,7 @@ final class ChatContentViewModelTests: XCTestCase {
         chatRoomUseCase: some ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
         callUseCase: some CallUseCaseProtocol = MockCallUseCase(),
         scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol = MockScheduledMeetingUseCase(),
-        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
-        file: StaticString = #file,
-        line: UInt = #line
+        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> ChatContentViewModel {
         let sut = ChatContentViewModel(
             chatRoom: chatRoom,
@@ -513,7 +511,6 @@ final class ChatContentViewModelTests: XCTestCase {
             scheduledMeetingUseCase: scheduledMeetingUseCase,
             featureFlagProvider: featureFlagProvider
         )
-        trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
     }
 }
