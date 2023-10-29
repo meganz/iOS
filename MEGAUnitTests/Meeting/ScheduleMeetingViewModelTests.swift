@@ -768,20 +768,6 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
         )
     }
     
-    func testIsWaitingRoomFeatureEnabled_onWaitingRoomFeatureFlagEnabled_shouldBeTrue() async {
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.waitingRoom: true])
-        let sut = ScheduleMeetingViewModel(featureFlagProvider: featureFlagProvider)
-                
-        XCTAssertTrue(sut.isWaitingRoomFeatureEnabled)
-    }
-    
-    func testIsWaitingRoomFeatureEnabled_onWaitingRoomFeatureFlagNotEnabled_shouldBeFalse() async {
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.waitingRoom: false])
-        let sut = ScheduleMeetingViewModel(featureFlagProvider: featureFlagProvider)
-                
-        XCTAssertFalse(sut.isWaitingRoomFeatureEnabled)
-    }
-    
     // MARK: - Private methods.
     
     private func evaluate(isInverted: Bool = false, expression: @escaping () -> Bool) {

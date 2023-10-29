@@ -61,9 +61,7 @@ final class MeetingInfoViewModel: ObservableObject {
     
     @Published var subtitle: String = ""
     @Published var scheduledMeeting: ScheduledMeetingEntity
-    
-    lazy var isWaitingRoomFeatureEnabled = featureFlagProvider.isFeatureFlagEnabled(for: .waitingRoom)
-    
+        
     init(scheduledMeeting: ScheduledMeetingEntity,
          router: some MeetingInfoRouting,
          chatRoomUseCase: some ChatRoomUseCaseProtocol,
