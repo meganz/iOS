@@ -52,26 +52,17 @@ final class AppearanceViewModelTests: XCTestCase {
         XCTAssertFalse(changedPreference)
     }
     
-    func testMediaDiscoveryHelpLink_featureNotOn_shouldReturnNil() {
+    func testMediaDiscoveryHelpLink_shouldBeCorrect() {
         let sut = makeSUT()
-        
-        XCTAssertNil(sut.mediaDiscoveryHelpLink)
-    }
-    
-    func testMediaDiscoveryHelpLink_featureOn_shouldBeCorrect() {
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.cloudDriveMediaDiscoveryIntegration: true])
-        let sut = makeSUT(featureFlagProvider: featureFlagProvider)
         
         XCTAssertEqual(sut.mediaDiscoveryHelpLink, URL(string: "https://help.mega.io/files-folders/view-move/media-discovery-view-gallery"))
     }
     
     private func makeSUT(
         preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(dict: [:]),
-        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         file: StaticString = #file,
         line: UInt = #line) -> AppearanceViewModel {
-            let sut = AppearanceViewModel(preferenceUseCase: preferenceUseCase,
-                                          featureFlagProvider: featureFlagProvider)
+            let sut = AppearanceViewModel(preferenceUseCase: preferenceUseCase)
             trackForMemoryLeaks(on: sut, file: file, line: line)
             return sut
         }

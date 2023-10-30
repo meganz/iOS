@@ -30,8 +30,7 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
                                   isSelectHidden: viewModel.isSelectionHidden,
                                   isOutShare: parentNode.isOutShare(),
                                   isExported: parentNode.isExported(),
-                                  showMediaDiscovery: shouldShowMediaDiscovery(),
-                                  setMediaDiscoveryStateCanChange: DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveMediaDiscoveryIntegration))
+                                  showMediaDiscovery: shouldShowMediaDiscovery())
         }
     }
     
@@ -120,14 +119,6 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
             
             UIApplication.mnz_visibleViewController().present(alertController, animated: true, completion: nil)
         case .mediaDiscovery:
-            guard let parentNode = parentNode else { return }
-            
-            guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveMediaDiscoveryIntegration) else {
-                MediaDiscoveryRouter(viewController: self, parentNode: parentNode)
-                    .start()
-                return
-            }
-                        
             changeModeToMediaDiscovery()
         default:
             break
