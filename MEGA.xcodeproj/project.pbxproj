@@ -1322,6 +1322,7 @@
 		94CBB2C42A8A578400C62F32 /* ContactsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CBB2C32A8A578400C62F32 /* ContactsViewModelTests.swift */; };
 		94CD25A92ACD7A1C0079FABD /* SearchOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CD25A82ACD7A1C0079FABD /* SearchOperation.swift */; };
 		94CD8CEC29793E1A00098510 /* VideoUploadsTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94CD8CEB29793E1A00098510 /* VideoUploadsTableViewController+Additions.swift */; };
+		94D70BB42AEFF53500136E31 /* AccountRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FD6505268B39D700988A17 /* AccountRepository.swift */; };
 		94E0954F2A40CED30046BB0D /* CustomModalAlertViewController+Permissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E0954E2A40CED30046BB0D /* CustomModalAlertViewController+Permissions.swift */; };
 		94E37E5229D1A9B0009E396D /* NodeRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E37E5129D1A9B0009E396D /* NodeRepositoryTests.swift */; };
 		94E71807283D24D3000EDDDF /* ChatStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E71806283D24D3000EDDDF /* ChatStatus.swift */; };
@@ -15012,6 +15013,7 @@
 				83FB143E219C3C7100418BE6 /* MOOfflineFolderLayout+CoreDataClass.m in Sources */,
 				83FB143C219C3C6E00418BE6 /* MOOfflineFolderLayout+CoreDataProperties.m in Sources */,
 				83BFB9A727D8E2CE001755B6 /* MOOfflineNode.m in Sources */,
+				94D70BB42AEFF53500136E31 /* AccountRepository.swift in Sources */,
 				8361359221074C5D002FA3CC /* MOUploadTransfer+CoreDataClass.m in Sources */,
 				8361359521074C5D002FA3CC /* MOUploadTransfer+CoreDataProperties.m in Sources */,
 				BF22BFBB268AF67400460DB3 /* MOUploadTransfer+Mapper.swift in Sources */,

@@ -31,6 +31,7 @@ final class NameCollisionViewRouter: NameCollisionViewRouting {
             thumbnailUseCase: ThumbnailUseCase(repository: ThumbnailRepository.newRepo),
             nameCollisionUseCase: NameCollisionUseCase(nodeRepository: NodeRepository.newRepo, nodeActionsRepository: NodeActionsRepository.newRepo, nodeDataRepository: NodeDataRepository.newRepo, fileSystemRepository: FileSystemRepository.newRepo),
             fileVersionsUseCase: FileVersionsUseCase(repo: FileVersionsRepository.newRepo),
+            accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             transfers: transfers,
             nodes: nodes,
             collisions: collisions,

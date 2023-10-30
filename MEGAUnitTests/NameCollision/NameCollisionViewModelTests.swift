@@ -14,8 +14,8 @@ final class NameCollisionViewModelTests: XCTestCase {
     
     func testAcion_cancel() {
         let router = MockNameCollisionRouter()
-        let viewModel = NameCollisionViewModel(router: router, thumbnailUseCase: MockThumbnailUseCase(), nameCollisionUseCase: MockNameCollisionUseCase(), fileVersionsUseCase: MockFileVersionsUseCase(), transfers: nil, nodes: nil, collisions: [], collisionType: .upload)
-        
+        let viewModel = NameCollisionViewModel(router: router, thumbnailUseCase: MockThumbnailUseCase(), nameCollisionUseCase: MockNameCollisionUseCase(), fileVersionsUseCase: MockFileVersionsUseCase(), accountUseCase: MockAccountUseCase(), transfers: nil, nodes: nil, collisions: [], collisionType: .upload)
+
         viewModel.cancelResolveNameCollisions()
         XCTAssert(router.dismiss_calledTimes == 1)
     }
@@ -24,7 +24,7 @@ final class NameCollisionViewModelTests: XCTestCase {
         let router = MockNameCollisionRouter()
         let nameCollisionUseCase = MockNameCollisionUseCase(nameCollisions: nameCollisions, copiedNodes: copyMoveHandles)
         
-        let viewModel = NameCollisionViewModel(router: router, thumbnailUseCase: MockThumbnailUseCase(), nameCollisionUseCase: nameCollisionUseCase, fileVersionsUseCase: MockFileVersionsUseCase(), transfers: nil, nodes: nil, collisions: nameCollisions, collisionType: .copy)
+        let viewModel = NameCollisionViewModel(router: router, thumbnailUseCase: MockThumbnailUseCase(), nameCollisionUseCase: nameCollisionUseCase, fileVersionsUseCase: MockFileVersionsUseCase(), accountUseCase: MockAccountUseCase(), transfers: nil, nodes: nil, collisions: nameCollisions, collisionType: .copy)
         viewModel.checkNameCollisions()
         if XCTWaiter.wait(for: [expectation(description: "Wait for response")], timeout: 0.5) == .timedOut {
             XCTAssert(router.showCopyOrMoveSuccess_calledTimes == 1)
@@ -37,7 +37,7 @@ final class NameCollisionViewModelTests: XCTestCase {
         let router = MockNameCollisionRouter()
         let nameCollisionUseCase = MockNameCollisionUseCase(nameCollisions: nameCollisions)
         
-        let viewModel = NameCollisionViewModel(router: router, thumbnailUseCase: MockThumbnailUseCase(), nameCollisionUseCase: nameCollisionUseCase, fileVersionsUseCase: MockFileVersionsUseCase(), transfers: nil, nodes: nil, collisions: nameCollisions, collisionType: .copy)
+        let viewModel = NameCollisionViewModel(router: router, thumbnailUseCase: MockThumbnailUseCase(), nameCollisionUseCase: nameCollisionUseCase, fileVersionsUseCase: MockFileVersionsUseCase(), accountUseCase: MockAccountUseCase(), transfers: nil, nodes: nil, collisions: nameCollisions, collisionType: .copy)
         viewModel.checkNameCollisions()
         if XCTWaiter.wait(for: [expectation(description: "Wait for response")], timeout: 0.5) == .timedOut {
             XCTAssert(router.showCopyOrMoveError_calledTimes == 1)
@@ -55,7 +55,7 @@ final class NameCollisionViewModelTests: XCTestCase {
         }
         let nameCollisionUseCase = MockNameCollisionUseCase(nameCollisions: resolvedCollisions)
         
-        let viewModel = NameCollisionViewModel(router: router, thumbnailUseCase: MockThumbnailUseCase(), nameCollisionUseCase: nameCollisionUseCase, fileVersionsUseCase: MockFileVersionsUseCase(), transfers: nil, nodes: nil, collisions: nameCollisions, collisionType: .copy)
+        let viewModel = NameCollisionViewModel(router: router, thumbnailUseCase: MockThumbnailUseCase(), nameCollisionUseCase: nameCollisionUseCase, fileVersionsUseCase: MockFileVersionsUseCase(), accountUseCase: MockAccountUseCase(), transfers: nil, nodes: nil, collisions: nameCollisions, collisionType: .copy)
         viewModel.checkNameCollisions()
         if XCTWaiter.wait(for: [expectation(description: "Wait for response")], timeout: 0.5) == .timedOut {
             XCTAssert(router.showNameCollisionsView_calledTimes == 1)
@@ -68,7 +68,7 @@ final class NameCollisionViewModelTests: XCTestCase {
         let router = MockNameCollisionRouter()
         let nameCollisionUseCase = MockNameCollisionUseCase(nameCollisions: nameCollisions, movedNodes: copyMoveHandles)
         
-        let viewModel = NameCollisionViewModel(router: router, thumbnailUseCase: MockThumbnailUseCase(), nameCollisionUseCase: nameCollisionUseCase, fileVersionsUseCase: MockFileVersionsUseCase(), transfers: nil, nodes: nil, collisions: nameCollisions, collisionType: .move)
+        let viewModel = NameCollisionViewModel(router: router, thumbnailUseCase: MockThumbnailUseCase(), nameCollisionUseCase: nameCollisionUseCase, fileVersionsUseCase: MockFileVersionsUseCase(), accountUseCase: MockAccountUseCase(), transfers: nil, nodes: nil, collisions: nameCollisions, collisionType: .move)
         viewModel.checkNameCollisions()
         if XCTWaiter.wait(for: [expectation(description: "Wait for response")], timeout: 0.5) == .timedOut {
             XCTAssert(router.showCopyOrMoveSuccess_calledTimes == 1)
@@ -81,7 +81,7 @@ final class NameCollisionViewModelTests: XCTestCase {
         let router = MockNameCollisionRouter()
         let nameCollisionUseCase = MockNameCollisionUseCase(nameCollisions: nameCollisions)
         
-        let viewModel = NameCollisionViewModel(router: router, thumbnailUseCase: MockThumbnailUseCase(), nameCollisionUseCase: nameCollisionUseCase, fileVersionsUseCase: MockFileVersionsUseCase(), transfers: nil, nodes: nil, collisions: nameCollisions, collisionType: .move)
+        let viewModel = NameCollisionViewModel(router: router, thumbnailUseCase: MockThumbnailUseCase(), nameCollisionUseCase: nameCollisionUseCase, fileVersionsUseCase: MockFileVersionsUseCase(), accountUseCase: MockAccountUseCase(), transfers: nil, nodes: nil, collisions: nameCollisions, collisionType: .move)
         viewModel.checkNameCollisions()
         if XCTWaiter.wait(for: [expectation(description: "Wait for response")], timeout: 0.5) == .timedOut {
             XCTAssert(router.showCopyOrMoveError_calledTimes == 1)
@@ -94,7 +94,7 @@ final class NameCollisionViewModelTests: XCTestCase {
         let router = MockNameCollisionRouter()
         let nameCollisionUseCase = MockNameCollisionUseCase(nameCollisions: nameCollisions, copiedNodes: copyMoveHandles)
         
-        let viewModel = NameCollisionViewModel(router: router, thumbnailUseCase: MockThumbnailUseCase(), nameCollisionUseCase: nameCollisionUseCase, fileVersionsUseCase: MockFileVersionsUseCase(), transfers: nil, nodes: nil, collisions: nameCollisions, collisionType: .upload)
+        let viewModel = NameCollisionViewModel(router: router, thumbnailUseCase: MockThumbnailUseCase(), nameCollisionUseCase: nameCollisionUseCase, fileVersionsUseCase: MockFileVersionsUseCase(), accountUseCase: MockAccountUseCase(), transfers: nil, nodes: nil, collisions: nameCollisions, collisionType: .upload)
         viewModel.checkNameCollisions()
         if XCTWaiter.wait(for: [expectation(description: "Wait for response")], timeout: 0.5) == .timedOut {
             XCTAssert(router.resolvedUploadCollisions_calledTimes == 1)

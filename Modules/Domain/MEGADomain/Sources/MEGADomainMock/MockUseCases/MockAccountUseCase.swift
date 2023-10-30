@@ -11,7 +11,8 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
     private let _isLoggedIn: Bool
     private let _contacts: [UserEntity]
     private let _currentAccountDetails: AccountDetailsEntity?
-    
+    private let _isOverQuota: Bool
+
     public init(currentUser: UserEntity? = UserEntity(handle: 1),
                 isGuest: Bool = false,
                 isLoggedIn: Bool = true,
@@ -21,13 +22,16 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
                 currentAccountDetails: AccountDetailsEntity? = nil,
                 accountDetailsResult: Result<AccountDetailsEntity, AccountDetailsErrorEntity> = .failure(.generic),
                 isUpgradeSecuritySuccess: Bool = false,
-                bandwidthOverquotaDelay: Int64 = 0) {
+                bandwidthOverquotaDelay: Int64 = 0,
+                isOverQuota: Bool = false
+    ) {
         _currentUser = currentUser
         _isGuest = isGuest
         _isLoggedIn = isLoggedIn
         _contacts = contacts
         _currentAccountDetails = currentAccountDetails
         _bandwidthOverquotaDelay = bandwidthOverquotaDelay
+        _isOverQuota = isOverQuota
         self.totalNodesCountVariable = totalNodesCountVariable
         self.getMyChatFilesFolderResult = getMyChatFilesFolderResult
         self.accountDetailsResult = accountDetailsResult
@@ -69,7 +73,11 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
     public var currentAccountDetails: AccountDetailsEntity? {
         _currentAccountDetails
     }
-    
+
+    public var isOverQuota: Bool {
+        _isOverQuota
+    }
+
     public func refreshCurrentAccountDetails() async throws -> AccountDetailsEntity {
         switch accountDetailsResult {
         case .success(let details): return details
