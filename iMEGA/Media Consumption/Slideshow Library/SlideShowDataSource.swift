@@ -105,6 +105,8 @@ final class SlideShowDataSource: SlideShowDataSourceProtocol {
         if shouldLoadMorePhotos(currentSlideIndex) {
             loadNextSetOfPhotosPreview(advanceNumberOfPhotosToLoad, withInitialPhoto: false)
         }
+    
+        CrashlyticsLogger.log("[SlideShow] OldSlideIndex: \(oldSlideIndex), CurrentSlideIndex: \(currentSlideIndex)")
         
         if oldSlideIndex > currentSlideIndex {
             reloadUnusedPhotos(currentSlideIndex)
@@ -232,6 +234,8 @@ final class SlideShowDataSource: SlideShowDataSourceProtocol {
         let reloadIdx = currentSlideNumber - numberOfUnusedPhotosBuffer + 1
         guard reloadIdx >= 0 && photos[reloadIdx].image == nil else { return }
         
+        CrashlyticsLogger.log("[SlideShow] TotalPhotos: \(photos.count), UnusedPhotosBuffer: \(numberOfUnusedPhotosBuffer), ReloadIndex: \(reloadIdx)")
+                
         thumbnailLoadingTask = Task {
             if let mediaEntity = await loadMediaEntity(forNode: photos[reloadIdx].node) {
                 photos[reloadIdx].image = mediaEntity.image
