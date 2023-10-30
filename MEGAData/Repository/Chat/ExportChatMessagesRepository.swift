@@ -3,15 +3,13 @@ import MEGADomain
 
 final class ExportChatMessagesRepository: ExportChatMessagesRepositoryProtocol {
     static var newRepo: ExportChatMessagesRepository {
-        ExportChatMessagesRepository(sdk: .shared, chatSdk: .shared, store: MEGAStore.shareInstance())
+        ExportChatMessagesRepository(chatSdk: .shared, store: MEGAStore.shareInstance())
     }
-    
-    private let sdk: MEGASdk
+
     private let chatSdk: MEGAChatSdk
     private let store: MEGAStore
 
-    init(sdk: MEGASdk, chatSdk: MEGAChatSdk, store: MEGAStore) {
-        self.sdk = sdk
+    init(chatSdk: MEGAChatSdk, store: MEGAStore) {
         self.chatSdk = chatSdk
         self.store = store
     }

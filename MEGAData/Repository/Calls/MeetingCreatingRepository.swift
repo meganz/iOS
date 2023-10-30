@@ -167,14 +167,14 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
                                 switch result {
                                 case .success:
                                     MEGALogDebug("Create meeting: success fetching node for ephemeral account and now connecting to chat")
-                                    self?.connectToChat(link: link, request: request, completion: completion)
+                                    self?.connectToChat(link: link, completion: completion)
                                 case .failure(let error):
                                     MEGALogDebug("Create meeting: failure fetching node for ephemeral account \(error)")
                                     completion(.failure(.unexpected))
                                 }
                             })
                         } else {
-                            connectToChat(link: link, request: request, completion: completion)
+                            connectToChat(link: link, completion: completion)
                         }
                     }
                 })
@@ -185,7 +185,7 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
         })
     }
     
-    private func connectToChat(link: String, request: MEGARequest, completion: @escaping (Result<Void, MEGASDKErrorType>) -> Void) {
+    private func connectToChat(link: String, completion: @escaping (Result<Void, MEGASDKErrorType>) -> Void) {
         guard let url = URL(string: link) else {
             MEGALogDebug("Create meeting: invalid url \(link)")
             completion(.failure(.unexpected))
