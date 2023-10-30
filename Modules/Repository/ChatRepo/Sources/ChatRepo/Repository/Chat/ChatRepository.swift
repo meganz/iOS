@@ -6,11 +6,9 @@ import MEGASDKRepo
 public final class ChatRepository: ChatRepositoryProtocol {
     
     public static var newRepo: ChatRepository {
-        // NOTE: This should be refactored into two repositories, one depending only on the sdk and other depending only on the chat sdk
-        ChatRepository(sdk: .sharedSdk, chatSDK: .sharedChatSdk)
+        ChatRepository(chatSDK: .sharedChatSdk)
     }
     
-    private let sdk: MEGASdk
     private let chatSDK: MEGAChatSdk
     
     private lazy var chatStatusUpdateListener: ChatStatusUpdateListener = { [unowned self] in
@@ -54,8 +52,7 @@ public final class ChatRepository: ChatRepositoryProtocol {
     private var removeChatConnectionUpdateListener: (() -> Void)?
     private var removeChatRequestListener: (() -> Void)?
     
-    public init(sdk: MEGASdk, chatSDK: MEGAChatSdk) {
-        self.sdk = sdk
+    public init(chatSDK: MEGAChatSdk) {
         self.chatSDK = chatSDK
     }
     
@@ -101,7 +98,6 @@ public final class ChatRepository: ChatRepositoryProtocol {
     }
     
     public func retryPendingConnections() {
-        sdk.retryPendingConnections()
         chatSDK.retryPendingConnections()
     }
     

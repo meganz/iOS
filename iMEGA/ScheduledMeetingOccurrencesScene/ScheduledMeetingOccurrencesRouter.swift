@@ -38,11 +38,7 @@ final class ScheduledMeetingOccurrencesRouter: ScheduledMeetingOccurrencesRoutin
                 chatRoomUseCase: chatRoomUseCase,
                 chatRoomUserUseCase: chatRoomUserUseCase,
                 userImageUseCase: userImageUseCase,
-                chatUseCase: ChatUseCase(
-                    chatRepo: ChatRepository(
-                        sdk: .sharedSdk,
-                        chatSDK: .sharedChatSdk)
-                ),
+                chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
                 accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
                 megaHandleUseCase: MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo),
                 chatListItemCacheUseCase: ChatListItemCacheUseCase(repository: ChatListItemCacheRepository.newRepo)

@@ -20,7 +20,7 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         let permissionHandler = DevicePermissionsHandler.makeHandler()
         let viewModel = ChatRoomsListViewModel(
             router: self,
-            chatUseCase: ChatUseCase(chatRepo: ChatRepository(sdk: .shared, chatSDK: .shared)),
+            chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
             chatRoomUseCase: chatRoomUseCase,
             contactsUseCase: ContactsUseCase(repository: ContactsRepository()),
             networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
@@ -29,7 +29,8 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
             userAttributeUseCase: UserAttributeUseCase(repo: UserAttributeRepository.newRepo),
             permissionHandler: permissionHandler,
             permissionAlertRouter: PermissionAlertRouter.makeRouter(deviceHandler: permissionHandler),
-            chatListItemCacheUseCase: ChatListItemCacheUseCase(repository: ChatListItemCacheRepository.newRepo)
+            chatListItemCacheUseCase: ChatListItemCacheUseCase(repository: ChatListItemCacheRepository.newRepo),
+            retryPendingConnectionsUseCase: RetryPendingConnectionsUseCase(repo: RetryPendingConnectionsRepository.newRepo)
         )
         let viewController = ChatRoomsListViewController(viewModel: viewModel)
         let navigation = MEGANavigationController(rootViewController: viewController)

@@ -32,6 +32,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     private let permissionHandler: any DevicePermissionsHandling
     private let permissionAlertRouter: any PermissionAlertRouting
     private let chatListItemCacheUseCase: any ChatListItemCacheUseCaseProtocol
+    private let retryPendingConnectionsUseCase: any RetryPendingConnectionsUseCaseProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let tracker: any AnalyticsTracking
     private let notificationCenter: NotificationCenter
@@ -140,6 +141,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         permissionHandler: some DevicePermissionsHandling,
         permissionAlertRouter: some PermissionAlertRouting,
         chatListItemCacheUseCase: some ChatListItemCacheUseCaseProtocol,
+        retryPendingConnectionsUseCase: some RetryPendingConnectionsUseCaseProtocol,
         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
         tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
@@ -159,6 +161,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         self.permissionHandler = permissionHandler
         self.permissionAlertRouter = permissionAlertRouter
         self.chatListItemCacheUseCase = chatListItemCacheUseCase
+        self.retryPendingConnectionsUseCase = retryPendingConnectionsUseCase
         self.featureFlagProvider = featureFlagProvider
         self.tracker = tracker
         self.isSearchActive = false
@@ -178,6 +181,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     
     func loadChatRoomsIfNeeded() {
         isViewOnScreen = true
+        retryPendingConnectionsUseCase.retryPendingConnections()
         chatUseCase.retryPendingConnections()
         
         if chatUseCase.chatConnectionStatus() == .online {
