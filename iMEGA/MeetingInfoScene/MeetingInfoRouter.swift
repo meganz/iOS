@@ -38,11 +38,7 @@ final class MeetingInfoRouter: NSObject, MeetingInfoRouting {
             chatRoomUseCase: chatRoomUseCase,
             chatRoomUserUseCase: chatRoomUserUseCase,
             userImageUseCase: userImageUseCase,
-            chatUseCase: ChatUseCase(
-                chatRepo: ChatRepository(
-                    sdk: MEGASdk.shared,
-                    chatSDK: MEGAChatSdk.shared)
-            ),
+            chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             chatLinkUseCase: ChatLinkUseCase(chatLinkRepository: ChatLinkRepository.newRepo),
             megaHandleUseCase: MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo)

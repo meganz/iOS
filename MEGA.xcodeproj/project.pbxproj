@@ -2293,7 +2293,6 @@
 		BFEF8CAF2887A10100F8F9F1 /* QASetttingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEF8CAE2887A10100F8F9F1 /* QASetttingsViewModel.swift */; };
 		BFEF8CB12887A10B00F8F9F1 /* QASettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEF8CB02887A10B00F8F9F1 /* QASettingsView.swift */; };
 		BFF0EE0A2630E2D300FAEFF9 /* MeetingParticipantViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFF0EE092630E2D300FAEFF9 /* MeetingParticipantViewModelTests.swift */; };
-		BFFB13332908A55F00A6B2CA /* ChatRoomsListViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFB13322908A55F00A6B2CA /* ChatRoomsListViewModel+Additions.swift */; };
 		BFFB134F2908EF3100A6B2CA /* ActiveCallViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFB134E2908EF3100A6B2CA /* ActiveCallViewModelTests.swift */; };
 		BFFC467A2A6F64A900A5DAA8 /* MEGAPresentation in Frameworks */ = {isa = PBXBuildFile; productRef = BFFC46792A6F64A900A5DAA8 /* MEGAPresentation */; };
 		BFFE2289292F2F4B0063CFF2 /* FutureMeetingSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFE2288292F2F4B0063CFF2 /* FutureMeetingSection.swift */; };
@@ -4886,7 +4885,6 @@
 		BFEF8CAE2887A10100F8F9F1 /* QASetttingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QASetttingsViewModel.swift; sourceTree = "<group>"; };
 		BFEF8CB02887A10B00F8F9F1 /* QASettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QASettingsView.swift; sourceTree = "<group>"; };
 		BFF0EE092630E2D300FAEFF9 /* MeetingParticipantViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingParticipantViewModelTests.swift; sourceTree = "<group>"; };
-		BFFB13322908A55F00A6B2CA /* ChatRoomsListViewModel+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatRoomsListViewModel+Additions.swift"; sourceTree = "<group>"; };
 		BFFB134E2908EF3100A6B2CA /* ActiveCallViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActiveCallViewModelTests.swift; sourceTree = "<group>"; };
 		BFFE2288292F2F4B0063CFF2 /* FutureMeetingSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FutureMeetingSection.swift; sourceTree = "<group>"; };
 		BFFE228A292F8DB30063CFF2 /* MeetingsListHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingsListHeaderView.swift; sourceTree = "<group>"; };
@@ -11871,7 +11869,6 @@
 		BFFB13312908A54500A6B2CA /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
-				BFFB13322908A55F00A6B2CA /* ChatRoomsListViewModel+Additions.swift */,
 				9422B9F12A41A55C007AA5D1 /* MockPermissionAlertRouter.swift */,
 			);
 			path = Mocks;
@@ -15185,7 +15182,6 @@
 				998299062ADCA02E001F9BED /* ChatRoomParticipantsListViewModelTests.swift in Sources */,
 				998379342ACA417100A9A439 /* ChatRoomParticipantViewModel+Additions.swift in Sources */,
 				998379312ACA408800A9A439 /* ChatRoomParticipantViewModelTests.swift in Sources */,
-				BFFB13332908A55F00A6B2CA /* ChatRoomsListViewModel+Additions.swift in Sources */,
 				8336E3F92906B449000F1E9F /* ChatRoomsListViewModelTests.swift in Sources */,
 				BF89C8A42947259B00710FD1 /* ChatRoomViewModel+Additions.swift in Sources */,
 				BF89C8A22947254B00710FD1 /* ChatRoomViewModelTests.swift in Sources */,

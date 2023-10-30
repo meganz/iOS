@@ -5,6 +5,8 @@ import MEGADomainMock
 import MEGAL10n
 import MEGAPermissions
 import MEGAPermissionsMock
+import MEGAPresentation
+import MEGAPresentationMock
 import XCTest
 
 final class ChatRoomsListViewModelTests: XCTestCase {
@@ -19,7 +21,7 @@ final class ChatRoomsListViewModelTests: XCTestCase {
     func test_remoteChatStatusChange() {
         let userHandle: HandleEntity = 100
         let chatUseCase = MockChatUseCase(myUserHandle: userHandle)
-        let viewModel = ChatRoomsListViewModel(chatUseCase: chatUseCase, accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100)))
+        let viewModel = makeChatRoomsListViewModel(chatUseCase: chatUseCase, accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100)))
         viewModel.loadChatRoomsIfNeeded()
         
         let expectation = expectation(description: "Awaiting publisher")
@@ -35,14 +37,14 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         chatUseCase.statusChangePublisher.send((userHandle, chatStatus))
         
         waitForExpectations(timeout: 10)
-
+        
         XCTAssert(viewModel.chatStatus == chatStatus)
         subscription = nil
     }
     
     func testAction_networkNotReachable() {
         let networkUseCase = MockNetworkMonitorUseCase(connected: false)
-        let viewModel = ChatRoomsListViewModel(
+        let viewModel = makeChatRoomsListViewModel(
             networkMonitorUseCase: networkUseCase
         )
         
@@ -53,7 +55,7 @@ final class ChatRoomsListViewModelTests: XCTestCase {
     
     func testAction_addChatButtonTapped() {
         let router = MockChatRoomsListRouter()
-        let viewModel = ChatRoomsListViewModel(router: router)
+        let viewModel = makeChatRoomsListViewModel(router: router)
         
         viewModel.addChatButtonTapped()
         
@@ -66,12 +68,12 @@ final class ChatRoomsListViewModelTests: XCTestCase {
     
     func testSelectChatsMode_inputAsChats_viewModelsShouldMatch() {
         let mockList = chatsListMock
-        let viewModel = ChatRoomsListViewModel(
+        let viewModel = makeChatRoomsListViewModel(
             chatUseCase: MockChatUseCase(items: mockList),
             chatViewMode: .meetings
         )
         viewModel.loadChatRoomsIfNeeded()
-
+        
         let expectation = expectation(description: "Compare the past meetings")
         subscription = viewModel
             .$displayChatRooms
@@ -87,7 +89,7 @@ final class ChatRoomsListViewModelTests: XCTestCase {
     
     func testSelectChatsMode_inputAsMeeting_viewModelsShouldMatch() {
         let mockList = meetingsListMock
-        let viewModel = ChatRoomsListViewModel(
+        let viewModel = makeChatRoomsListViewModel(
             chatUseCase: MockChatUseCase(items: mockList),
             chatViewMode: .chats
         )
@@ -101,19 +103,19 @@ final class ChatRoomsListViewModelTests: XCTestCase {
             .sink { _ in
                 expectation.fulfill()
             }
-
+        
         viewModel.selectChatMode(.meetings)
         wait(for: [expectation], timeout: 10)
         XCTAssertEqual(mockList.map { ChatRoomViewModel(chatListItem: $0) }, viewModel.displayPastMeetings)
     }
     
     func test_EmptyChatsList() {
-        let viewModel = ChatRoomsListViewModel()
+        let viewModel = makeChatRoomsListViewModel()
         XCTAssert(viewModel.displayChatRooms == nil)
     }
     
     func test_ChatListWithoutViewOnScreen() {
-        let viewModel = ChatRoomsListViewModel()
+        let viewModel = makeChatRoomsListViewModel()
         XCTAssert(viewModel.displayChatRooms == nil)
     }
     
@@ -122,7 +124,7 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         let yesterday = try XCTUnwrap(futureDate(byAddingDays: -1))
         let scheduleMeeting = ScheduledMeetingEntity(chatId: 1, endDate: yesterday)
         let scheduleMeetingUseCase = MockScheduledMeetingUseCase(scheduledMeetingsList: [scheduleMeeting])
-        let viewModel = ChatRoomsListViewModel(chatUseCase: chatUseCase, scheduledMeetingUseCase: scheduleMeetingUseCase, chatViewMode: .meetings)
+        let viewModel = makeChatRoomsListViewModel(chatUseCase: chatUseCase, scheduledMeetingUseCase: scheduleMeetingUseCase, chatViewMode: .meetings)
         viewModel.loadChatRoomsIfNeeded()
         
         let predicate = NSPredicate { _, _ in
@@ -138,7 +140,7 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         let tomorrow = try XCTUnwrap(futureDate(byAddingDays: 1))
         let scheduleMeeting = ScheduledMeetingEntity(chatId: 1, scheduledId: 100, endDate: tomorrow)
         let scheduleMeetingUseCase = MockScheduledMeetingUseCase(scheduledMeetingsList: [scheduleMeeting], upcomingOccurrences: [100: ScheduledMeetingOccurrenceEntity()])
-        let viewModel = ChatRoomsListViewModel(chatUseCase: chatUseCase, scheduledMeetingUseCase: scheduleMeetingUseCase, chatViewMode: .meetings)
+        let viewModel = makeChatRoomsListViewModel(chatUseCase: chatUseCase, scheduledMeetingUseCase: scheduleMeetingUseCase, chatViewMode: .meetings)
         viewModel.loadChatRoomsIfNeeded()
         
         let predicate = NSPredicate { _, _ in
@@ -155,7 +157,7 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         let oneHourLater = try XCTUnwrap(futureDate(byAddingHours: 1))
         let scheduleMeetingWithNoOccurrence = ScheduledMeetingEntity(chatId: 1, scheduledId: 100, startDate: twoHourAgo, endDate: oneHourAgo, rules: ScheduledMeetingRulesEntity(frequency: .daily, until: oneHourLater))
         let scheduleMeetingUseCase = MockScheduledMeetingUseCase(scheduledMeetingsList: [scheduleMeetingWithNoOccurrence], upcomingOccurrences: [:])
-        let viewModel = ChatRoomsListViewModel(chatUseCase: chatUseCase, scheduledMeetingUseCase: scheduleMeetingUseCase, chatViewMode: .meetings)
+        let viewModel = makeChatRoomsListViewModel(chatUseCase: chatUseCase, scheduledMeetingUseCase: scheduleMeetingUseCase, chatViewMode: .meetings)
         viewModel.loadChatRoomsIfNeeded()
         
         let predicate = NSPredicate { _, _ in
@@ -171,7 +173,7 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         let tomorrow = try XCTUnwrap(futureDate(byAddingDays: 1))
         let scheduleMeetingWithOnOccurrence = ScheduledMeetingEntity(chatId: 1, scheduledId: 100, endDate: tomorrow, rules: ScheduledMeetingRulesEntity(frequency: .daily, until: tomorrow))
         let scheduleMeetingUseCase = MockScheduledMeetingUseCase(scheduledMeetingsList: [scheduleMeetingWithOnOccurrence], upcomingOccurrences: [100: ScheduledMeetingOccurrenceEntity()])
-        let viewModel = ChatRoomsListViewModel(chatUseCase: chatUseCase, scheduledMeetingUseCase: scheduleMeetingUseCase, chatViewMode: .meetings)
+        let viewModel = makeChatRoomsListViewModel(chatUseCase: chatUseCase, scheduledMeetingUseCase: scheduleMeetingUseCase, chatViewMode: .meetings)
         viewModel.loadChatRoomsIfNeeded()
         
         let predicate = NSPredicate { _, _ in
@@ -186,7 +188,7 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         let permissionHandler = MockDevicePermissionHandler()
         let permissionRouter = MockPermissionAlertRouter()
         permissionHandler.shouldAskForNotificaitonPermissionsValueToReturn = true
-        let viewModel = ChatRoomsListViewModel(
+        let viewModel = makeChatRoomsListViewModel(
             permissionHandler: permissionHandler,
             permissionAlertRouter: permissionRouter
         )
@@ -199,7 +201,7 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         let permissionHandler = MockDevicePermissionHandler()
         let permissionRouter = MockPermissionAlertRouter()
         permissionHandler.shouldAskForNotificaitonPermissionsValueToReturn = false
-        let viewModel = ChatRoomsListViewModel(
+        let viewModel = makeChatRoomsListViewModel(
             permissionHandler: permissionHandler,
             permissionAlertRouter: permissionRouter
         )
@@ -208,7 +210,7 @@ final class ChatRoomsListViewModelTests: XCTestCase {
     }
     
     func testMeetingTip_meetingListNotShown_shouldNotShowMeetingTip() {
-        let sut = ChatRoomsListViewModel()
+        let sut = makeChatRoomsListViewModel()
         
         sut.loadChatRoomsIfNeeded()
         
@@ -223,7 +225,7 @@ final class ChatRoomsListViewModelTests: XCTestCase {
     }
     
     func testCreateMeetingTip_meetingListIsFirstShown_shouldShowCreateMeetingTip() {
-        let sut = ChatRoomsListViewModel(chatViewMode: .meetings)
+        let sut = makeChatRoomsListViewModel(chatViewMode: .meetings)
         
         sut.loadChatRoomsIfNeeded()
         
@@ -237,7 +239,7 @@ final class ChatRoomsListViewModelTests: XCTestCase {
     func testStartMeetingTip_meetingTipRecordIsCreateMeeting_shouldNotShowStartMeetingTip() {
         let scheduleMeetingOnboarding = createScheduledMeetingOnboardingEntity(.createMeeting)
         let userAttributeUseCase = MockUserAttributeUseCase(scheduleMeetingOnboarding: scheduleMeetingOnboarding)
-        let sut = ChatRoomsListViewModel(userAttributeUseCase: userAttributeUseCase, chatViewMode: .meetings)
+        let sut = makeChatRoomsListViewModel(userAttributeUseCase: userAttributeUseCase, chatViewMode: .meetings)
         
         sut.loadChatRoomsIfNeeded()
         sut.startMeetingTipOffsetY = 100
@@ -253,7 +255,7 @@ final class ChatRoomsListViewModelTests: XCTestCase {
     func testStartMeetingTip_meetingTipRecordIsStartMeeting_shouldShowStartMeetingTip() {
         let scheduleMeetingOnboarding = createScheduledMeetingOnboardingEntity(.startMeeting)
         let userAttributeUseCase = MockUserAttributeUseCase(scheduleMeetingOnboarding: scheduleMeetingOnboarding)
-        let sut = ChatRoomsListViewModel(userAttributeUseCase: userAttributeUseCase, chatViewMode: .meetings)
+        let sut = makeChatRoomsListViewModel(userAttributeUseCase: userAttributeUseCase, chatViewMode: .meetings)
         
         sut.loadChatRoomsIfNeeded()
         sut.startMeetingTipOffsetY = 100
@@ -268,7 +270,7 @@ final class ChatRoomsListViewModelTests: XCTestCase {
     func testStartMeetingTip_meetingTipRecordIsStartMeetingAndScrollingList_shouldNotShowStartMeetingTip() {
         let scheduleMeetingOnboarding = createScheduledMeetingOnboardingEntity(.startMeeting)
         let userAttributeUseCase = MockUserAttributeUseCase(scheduleMeetingOnboarding: scheduleMeetingOnboarding)
-        let sut = ChatRoomsListViewModel(userAttributeUseCase: userAttributeUseCase, chatViewMode: .meetings)
+        let sut = makeChatRoomsListViewModel(userAttributeUseCase: userAttributeUseCase, chatViewMode: .meetings)
         
         sut.loadChatRoomsIfNeeded()
         sut.startMeetingTipOffsetY = 100
@@ -285,7 +287,7 @@ final class ChatRoomsListViewModelTests: XCTestCase {
     func testStartMeetingTip_meetingTipRecordIsStartMeetingAndTipIsNotVisiable_shouldNotShowStartMeetingTip() {
         let scheduleMeetingOnboarding = createScheduledMeetingOnboardingEntity(.startMeeting)
         let userAttributeUseCase = MockUserAttributeUseCase(scheduleMeetingOnboarding: scheduleMeetingOnboarding)
-        let sut = ChatRoomsListViewModel(userAttributeUseCase: userAttributeUseCase, chatViewMode: .meetings)
+        let sut = makeChatRoomsListViewModel(userAttributeUseCase: userAttributeUseCase, chatViewMode: .meetings)
         
         sut.loadChatRoomsIfNeeded()
         sut.startMeetingTipOffsetY = nil
@@ -301,7 +303,7 @@ final class ChatRoomsListViewModelTests: XCTestCase {
     func testRecurringMeetingTip_meetingTipRecordIsStartMeeting_shouldNotShowRecurringMeetingTip() {
         let scheduleMeetingOnboarding = createScheduledMeetingOnboardingEntity(.startMeeting)
         let userAttributeUseCase = MockUserAttributeUseCase(scheduleMeetingOnboarding: scheduleMeetingOnboarding)
-        let sut = ChatRoomsListViewModel(userAttributeUseCase: userAttributeUseCase, chatViewMode: .meetings)
+        let sut = makeChatRoomsListViewModel(userAttributeUseCase: userAttributeUseCase, chatViewMode: .meetings)
         
         sut.loadChatRoomsIfNeeded()
         sut.recurringMeetingTipOffsetY = 100
@@ -317,7 +319,7 @@ final class ChatRoomsListViewModelTests: XCTestCase {
     func testRecurringMeetingTip_meetingTipRecordIsStartMeeting_shouldShowRecurringMeetingTip() {
         let scheduleMeetingOnboarding = createScheduledMeetingOnboardingEntity(.recurringMeeting)
         let userAttributeUseCase = MockUserAttributeUseCase(scheduleMeetingOnboarding: scheduleMeetingOnboarding)
-        let sut = ChatRoomsListViewModel(userAttributeUseCase: userAttributeUseCase, chatViewMode: .meetings)
+        let sut = makeChatRoomsListViewModel(userAttributeUseCase: userAttributeUseCase, chatViewMode: .meetings)
         
         sut.loadChatRoomsIfNeeded()
         sut.recurringMeetingTipOffsetY = 100
@@ -331,11 +333,25 @@ final class ChatRoomsListViewModelTests: XCTestCase {
     
     func testArchivedChatsTapped_underTheChatListTab_shouldShowArchivedChatRooms() {
         let router = MockChatRoomsListRouter()
-        let sut = ChatRoomsListViewModel(router: router)
+        let sut = makeChatRoomsListViewModel(router: router)
         
         sut.archivedChatsTapped()
         
         XCTAssertEqual(router.showArchivedChatRooms_calledTimes, 1)
+    }
+    
+    func testLoadChatRoomsIfNeeded_onCall_shouldCallRetryPendingConnections() {
+        let retryPendingConnectionsUseCase = MockRetryPendingConnectionsUseCase()
+        let chatUseCase = MockChatUseCase()
+        let sut = makeChatRoomsListViewModel(
+            chatUseCase: chatUseCase,
+            retryPendingConnectionsUseCase: retryPendingConnectionsUseCase
+        )
+        
+        sut.loadChatRoomsIfNeeded()
+        
+        XCTAssertEqual(chatUseCase.retryPendingConnections_calledTimes, 1)
+        XCTAssertEqual(retryPendingConnectionsUseCase.retryPendingConnections_calledTimes, 1)
     }
     
     // MARK: - Private methods
@@ -343,7 +359,7 @@ final class ChatRoomsListViewModelTests: XCTestCase {
     private func assertContactsOnMegaViewStateWhenSelectedChatMode(isAuthorizedToAccessPhoneContacts: Bool, description: String, line: UInt = #line) {
         let router = MockChatRoomsListRouter()
         let contactsUseCase = MockContactsUseCase(authorized: isAuthorizedToAccessPhoneContacts)
-        let viewModel = ChatRoomsListViewModel(router: router, contactsUseCase: contactsUseCase, chatViewMode: .meetings)
+        let viewModel = makeChatRoomsListViewModel(router: router, contactsUseCase: contactsUseCase, chatViewMode: .meetings)
         
         let expectation = expectation(description: "Waiting for contactsOnMegaViewState to be updated")
         
@@ -353,7 +369,7 @@ final class ChatRoomsListViewModelTests: XCTestCase {
             .sink { _ in
                 expectation.fulfill()
             }
-
+        
         viewModel.selectChatMode(.chats)
         wait(for: [expectation], timeout: 10)
         XCTAssertEqual(viewModel.contactsOnMegaViewState?.description, description, line: line)
@@ -373,6 +389,47 @@ final class ChatRoomsListViewModelTests: XCTestCase {
     
     private func createScheduledMeetingOnboardingEntity(_ tipType: ScheduledMeetingOnboardingTipType) -> ScheduledMeetingOnboardingEntity {
         ScheduledMeetingOnboardingEntity(ios: ScheduledMeetingOnboardingIos(record: ScheduledMeetingOnboardingRecord(currentTip: tipType)))
+    }
+    
+    private func makeChatRoomsListViewModel(
+        router: some ChatRoomsListRouting = MockChatRoomsListRouter(),
+        chatUseCase: any ChatUseCaseProtocol = MockChatUseCase(),
+        contactsUseCase: any ContactsUseCaseProtocol = MockContactsUseCase(),
+        networkMonitorUseCase: any NetworkMonitorUseCaseProtocol = MockNetworkMonitorUseCase(),
+        accountUseCase: any AccountUseCaseProtocol = MockAccountUseCase(),
+        chatRoomUseCase: any ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
+        scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol = MockScheduledMeetingUseCase(),
+        userAttributeUseCase: any UserAttributeUseCaseProtocol = MockUserAttributeUseCase(),
+        notificationCenter: NotificationCenter = NotificationCenter.default,
+        chatType: ChatViewType = .regular,
+        chatViewMode: ChatViewMode = .chats,
+        permissionHandler: some DevicePermissionsHandling = MockDevicePermissionHandler(),
+        permissionAlertRouter: some PermissionAlertRouting = MockPermissionAlertRouter(),
+        chatListItemCacheUseCase: some ChatListItemCacheUseCaseProtocol = MockChatListItemCacheUseCase(),
+        retryPendingConnectionsUseCase: some RetryPendingConnectionsUseCaseProtocol = MockRetryPendingConnectionsUseCase(),
+        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
+        tracker: some AnalyticsTracking = DIContainer.tracker
+    ) -> ChatRoomsListViewModel {
+        let sut = ChatRoomsListViewModel(
+            router: router,
+            chatUseCase: chatUseCase,
+            chatRoomUseCase: chatRoomUseCase,
+            contactsUseCase: contactsUseCase,
+            networkMonitorUseCase: networkMonitorUseCase,
+            accountUseCase: accountUseCase,
+            scheduledMeetingUseCase: scheduledMeetingUseCase,
+            userAttributeUseCase: userAttributeUseCase,
+            notificationCenter: notificationCenter,
+            chatType: chatType,
+            chatViewMode: chatViewMode,
+            permissionHandler: permissionHandler,
+            permissionAlertRouter: permissionAlertRouter,
+            chatListItemCacheUseCase: chatListItemCacheUseCase,
+            retryPendingConnectionsUseCase: retryPendingConnectionsUseCase,
+            featureFlagProvider: featureFlagProvider,
+            tracker: tracker
+        )
+        return sut
     }
 }
 
@@ -398,7 +455,7 @@ final class MockChatRoomsListRouter: ChatRoomsListRouting {
     var showErrorMessage_calledTimes = 0
     var showSuccessMessage_calledTimes = 0
     var editMeeting_calledTimes = 0
-
+    
     var navigationController: UINavigationController?
     
     func presentStartConversation() {
@@ -456,7 +513,7 @@ final class MockChatRoomsListRouter: ChatRoomsListRouting {
     func showMeetingOccurrences(for scheduledMeeting: ScheduledMeetingEntity) {
         showMeetingOccurrences_calledTimes += 1
     }
-
+    
     func showContactDetailsInfo(forUseHandle userHandle: HandleEntity, userEmail: String) {
         showContactDetailsInfo_calledTimes += 1
     }
