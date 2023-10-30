@@ -104,6 +104,12 @@ final class SlideShowViewController: UIViewController, ViewType {
         }
     }
     
+    override func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+       
+        CrashlyticsLogger.log("[SlideShow] Device orientation is landscape: \(UIDevice.current.orientation.isLandscape)")
+    }
+    
     private func setNavigationAndToolbarColor() {
         AppearanceManager.forceNavigationBarUpdate(navigationBar, traitCollection: traitCollection)
         AppearanceManager.forceToolbarUpdate(bottomToolbar, traitCollection: traitCollection)
@@ -153,6 +159,9 @@ final class SlideShowViewController: UIViewController, ViewType {
         guard let viewModel = viewModel else { return }
         let cell = collectionView.visibleCells.first(where: { $0 is SlideShowCollectionViewCell }) as? SlideShowCollectionViewCell
         setVisibility(false)
+        
+        CrashlyticsLogger.log("[SlideShow] play button tapped.")
+        
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut) {
             self.collectionView.backgroundColor = UIColor.black
             self.view.backgroundColor = .black
@@ -166,6 +175,8 @@ final class SlideShowViewController: UIViewController, ViewType {
     }
     
     private func pause() {
+        CrashlyticsLogger.log("[SlideShow] paused.")
+
         setVisibility(true)
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut) {
             self.collectionView.backgroundColor = UIColor.mnz_background()
@@ -184,6 +195,7 @@ final class SlideShowViewController: UIViewController, ViewType {
     
     private func resetTimer() {
         guard let viewModel = viewModel else { return }
+        CrashlyticsLogger.log("[SlideShow] Timer reset.")
         
         slideShowTimer.invalidate()
         slideShowTimer = Timer.scheduledTimer(timeInterval: viewModel.timeIntervalForSlideInSeconds, target: self, selector: #selector(self.changeImage), userInfo: nil, repeats: true)
@@ -192,6 +204,7 @@ final class SlideShowViewController: UIViewController, ViewType {
     
     private func restart() {
         guard let viewModel = viewModel else { return }
+        CrashlyticsLogger.log("[SlideShow] restarted.")
         hideLoader()
         reload()
         collectionView.scrollToItem(at: IndexPath(item: viewModel.currentSlideIndex, section: 0), at: .left, animated: false)
@@ -204,10 +217,12 @@ final class SlideShowViewController: UIViewController, ViewType {
         let slideNumber = viewModel.currentSlideIndex + 1
         
         if slideNumber < viewModel.photos.count {
+            CrashlyticsLogger.log("[SlideShow] current slide is changed from \(viewModel.currentSlideIndex) to \(slideNumber)")
             viewModel.currentSlideIndex = slideNumber
             hideLoader()
             updateSlideInView()
         } else if viewModel.configuration.isRepeat {
+            CrashlyticsLogger.log("[SlideShow] current slide is changed from \(viewModel.currentSlideIndex) to 0")
             viewModel.currentSlideIndex = 0
             hideLoader()
             updateSlideInView()
@@ -290,6 +305,7 @@ extension SlideShowViewController: UIScrollViewDelegate {
         
         if let viewModel = viewModel, let visibleIndexPath = visibleIndexPath,
             viewModel.currentSlideIndex != visibleIndexPath.row {
+            CrashlyticsLogger.log("[SlideShow] scrollview interupption: - current slide is changed from \(viewModel.currentSlideIndex) to \(visibleIndexPath.row)")
             viewModel.currentSlideIndex = visibleIndexPath.row
         }
         
