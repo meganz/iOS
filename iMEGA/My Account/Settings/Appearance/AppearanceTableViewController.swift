@@ -238,12 +238,7 @@ class AppearanceTableViewController: UITableViewController {
         switch AppearanceSection(rawValue: section) {
         case .none, .mediaDiscoverySubfolder:
             return .leastNonzeroMagnitude
-        case .launch, .layout, .recents, .appIcon:
-            return UITableView.automaticDimension
-        case .mediaDiscovery:
-            guard viewModel.showMediaDiscoverySetting else {
-                return .leastNonzeroMagnitude
-            }
+        case .launch, .layout, .recents, .appIcon, .mediaDiscovery:
             return UITableView.automaticDimension
         }
     }
@@ -257,28 +252,11 @@ class AppearanceTableViewController: UITableViewController {
         case .layout:
             return Strings.Localizable.layout
         case .mediaDiscovery:
-            guard viewModel.showMediaDiscoverySetting else {
-                return nil
-            }
             return Strings.Localizable.Settings.UserInterface.MediaDiscovery.header
         case .recents:
             return Strings.Localizable.recents
         case .appIcon:
             return Strings.Localizable.appIcon
-        }
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        switch AppearanceSection(rawValue: section) {
-        case .none:
-            return .leastNonzeroMagnitude
-        case .launch, .layout, .recents, .appIcon:
-            return UITableView.automaticDimension
-        case .mediaDiscovery, .mediaDiscoverySubfolder:
-            guard viewModel.showMediaDiscoverySetting else {
-                return .leastNonzeroMagnitude
-            }
-            return UITableView.automaticDimension
         }
     }
     
@@ -289,36 +267,11 @@ class AppearanceTableViewController: UITableViewController {
         case .layout:
             return Strings.Localizable.configureSortingOrderAndTheDefaultViewListOrThumbnail
         case .mediaDiscoverySubfolder:
-            guard viewModel.showMediaDiscoverySetting else {
-                return nil
-            }
             return Strings.Localizable.Settings.UserInterface.MediaDiscoverySubFolder.footer
         case .recents:
             return Strings.Localizable.Settings.UserInterface.HideRecentActivity.footer
         case .appIcon, .mediaDiscovery, .none:
             return nil
-        }
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch AppearanceSection(rawValue: section) {
-        case .launch, .layout, .recents, .appIcon:
-            return 1
-        case .mediaDiscovery, .mediaDiscoverySubfolder:
-            return viewModel.showMediaDiscoverySetting ? 1 : 0
-        case .none:
-            return 0
-        }
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch AppearanceSection(rawValue: indexPath.section) {
-        case .launch, .layout, .recents, .appIcon:
-            return UITableView.automaticDimension
-        case .mediaDiscovery, .mediaDiscoverySubfolder:
-            return viewModel.showMediaDiscoverySetting ? UITableView.automaticDimension : .leastNormalMagnitude
-        case .none:
-            return .leastNonzeroMagnitude
         }
     }
     

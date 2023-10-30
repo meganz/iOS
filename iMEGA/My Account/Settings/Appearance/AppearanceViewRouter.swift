@@ -16,8 +16,7 @@ struct AppearanceViewRouter: Routing {
             .instantiateViewController(identifier: "AppearanceTableViewControllerID", creator: { coder in
                 let viewModel = AppearanceViewModel(
                     preferenceUseCase: PreferenceUseCase(
-                        repository: PreferenceRepository.newRepo),
-                    featureFlagProvider: DIContainer.featureFlagProvider)
+                        repository: PreferenceRepository.newRepo))
                 return AppearanceTableViewController(coder: coder, viewModel: viewModel)  }) as? AppearanceTableViewController else {
             fatalError("AppearanceViewRouter: could not create an instance of AppearanceTableViewController")
         }

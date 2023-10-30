@@ -9,19 +9,9 @@ class AppearanceViewModel {
     @PreferenceWrapper(key: .mediaDiscoveryShouldIncludeSubfolderMedia, defaultValue: true)
     var mediaDiscoveryShouldIncludeSubfolderSetting: Bool
     
-    let showMediaDiscoverySetting: Bool
+    let mediaDiscoveryHelpLink = URL(string: "https://help.mega.io/files-folders/view-move/media-discovery-view-gallery")
     
-    var mediaDiscoveryHelpLink: URL? {
-        guard showMediaDiscoverySetting else {
-            return nil
-        }
-        return URL(string: "https://help.mega.io/files-folders/view-move/media-discovery-view-gallery")
-    }
-    
-    init(preferenceUseCase: some PreferenceUseCaseProtocol,
-         featureFlagProvider: some FeatureFlagProviderProtocol) {
-        showMediaDiscoverySetting = featureFlagProvider
-            .isFeatureFlagEnabled(for: .cloudDriveMediaDiscoveryIntegration)
+    init(preferenceUseCase: some PreferenceUseCaseProtocol) {
         $autoMediaDiscoverySetting.useCase = preferenceUseCase
         $mediaDiscoveryShouldIncludeSubfolderSetting.useCase = preferenceUseCase
     }

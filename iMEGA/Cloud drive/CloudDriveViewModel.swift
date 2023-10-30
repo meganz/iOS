@@ -28,17 +28,14 @@ enum CloudDriveAction: ActionType {
     
     private let router = SharedItemsViewRouter()
     private let shareUseCase: any ShareUseCaseProtocol
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let parentNode: MEGANode?
     private let shouldDisplayMediaDiscoveryWhenMediaOnly: Bool
     
     init(parentNode: MEGANode?,
          shareUseCase: some ShareUseCaseProtocol,
-         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
          preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default) {
         self.parentNode = parentNode
         self.shareUseCase = shareUseCase
-        self.featureFlagProvider = featureFlagProvider
         shouldDisplayMediaDiscoveryWhenMediaOnly = preferenceUseCase[.shouldDisplayMediaDiscoveryWhenMediaOnly] ?? true
     }
     
@@ -68,8 +65,7 @@ enum CloudDriveAction: ActionType {
     }
     
     @objc func shouldShowMediaDiscoveryAutomatically(forNodes nodes: MEGANodeList?) -> Bool {
-        guard featureFlagProvider.isFeatureFlagEnabled(for: .cloudDriveMediaDiscoveryIntegration),
-              shouldDisplayMediaDiscoveryWhenMediaOnly,
+        guard shouldDisplayMediaDiscoveryWhenMediaOnly,
               let nodes else {
             return false
         }
