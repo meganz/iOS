@@ -14,7 +14,8 @@ final class NameCollisionViewModel: ObservableObject {
     private let thumbnailUseCase: any ThumbnailUseCaseProtocol
     private let nameCollisionUseCase: any NameCollisionUseCaseProtocol
     private var fileVersionsUseCase: any FileVersionsUseCaseProtocol
-    
+    private let accountsUseCase: any AccountUseCaseProtocol
+
     private let router: any NameCollisionViewRouting
     private var transfers: [CancellableTransfer]?
     private var nodes: [NodeEntity]?
@@ -36,6 +37,7 @@ final class NameCollisionViewModel: ObservableObject {
          thumbnailUseCase: any ThumbnailUseCaseProtocol,
          nameCollisionUseCase: any NameCollisionUseCaseProtocol,
          fileVersionsUseCase: any FileVersionsUseCaseProtocol,
+         accountUseCase: any AccountUseCaseProtocol,
          transfers: [CancellableTransfer]?,
          nodes: [NodeEntity]?,
          collisions: [NameCollisionEntity],
@@ -45,6 +47,7 @@ final class NameCollisionViewModel: ObservableObject {
         self.thumbnailUseCase = thumbnailUseCase
         self.nameCollisionUseCase = nameCollisionUseCase
         self.fileVersionsUseCase = fileVersionsUseCase
+        self.accountsUseCase = accountUseCase
         self.transfers = transfers
         self.nodes = nodes
         self.collisions = collisions
@@ -254,14 +257,21 @@ final class NameCollisionViewModel: ObservableObject {
     }
     
     private func processCopyCollisions() async {
+#if MAIN_APP_TARGET
         do {
+            guard !accountsUseCase.isOverQuota else {
+                await showOverQuotaPopup()
+                return
+            }
+
             let copyNodeHandles = try await nameCollisionUseCase.copyNodesFromResolvedCollisions(collisions, isFolderLink: isFolderLink)
             await finishedTask(for: copyNodeHandles)
         } catch let error {
             await router.showCopyOrMove(error: error)
         }
+#endif
     }
-    
+
     private func finishedTask(for handles: [HandleEntity]) async {
         if handles.count == collisions.count {
             await router.showCopyOrMoveSuccess()
@@ -354,4 +364,12 @@ final class NameCollisionViewModel: ObservableObject {
             }
         }
     }
+
+
+#if MAIN_APP_TARGET
+    @MainActor
+    private func showOverQuotaPopup() {
+        CustomModalAlertRouter(.storageQuotaError, presenter: UIApplication.mnz_presentingViewController()).start()
+    }
+#endif
 }

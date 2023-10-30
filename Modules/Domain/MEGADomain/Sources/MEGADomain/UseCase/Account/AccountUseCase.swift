@@ -10,6 +10,7 @@ public protocol AccountUseCaseProtocol {
     func getMyChatFilesFolder(completion: @escaping (Result<NodeEntity, AccountErrorEntity>) -> Void)
     func upgradeSecurity() async throws -> Bool
     var currentAccountDetails: AccountDetailsEntity? { get }
+    var isOverQuota: Bool { get }
     func refreshCurrentAccountDetails() async throws -> AccountDetailsEntity
 }
 
@@ -57,7 +58,12 @@ public struct AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseProtoc
     public var currentAccountDetails: AccountDetailsEntity? {
         repository.currentAccountDetails
     }
-    
+
+    public var isOverQuota: Bool {
+        guard let accountDetails = currentAccountDetails else { return false }
+        return accountDetails.storageUsed > accountDetails.storageMax
+    }
+
     public func refreshCurrentAccountDetails() async throws -> AccountDetailsEntity {
         try await repository.refreshCurrentAccountDetails()
     }
