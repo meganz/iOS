@@ -718,7 +718,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let chatRoomuserUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("test"), userDisplayNamesForPeersResult: .success([(handle: 100, name: "test")]))
         let expectation = expectation(description: "Awaiting publisher")
         let userUseCase = MockUserImageUseCase(result: .success(UIImage()), downloadAvatarCompletion: { handle in
-            XCTAssert(handle == 100, "handle should match")
+            XCTAssert(handle == "base64Handle", "handle should match")
             expectation.fulfill()
         })
         

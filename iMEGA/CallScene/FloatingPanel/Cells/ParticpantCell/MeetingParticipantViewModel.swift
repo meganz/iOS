@@ -135,7 +135,7 @@ final class MeetingParticipantViewModel: ViewModelType {
                 guard let self else { return }
                 
                 if let base64Handle = self.megaHandleUseCase.base64Handle(forUserHandle: participant.participantId) {
-                    self.userImageUseCase.clearAvatarCache(withUserHandle: participant.participantId, base64Handle: base64Handle)
+                    self.userImageUseCase.clearAvatarCache(base64Handle: base64Handle)
                 }
                 
                 self.avatarRefetchTask = self.createRefetchAvatarTask(forParticipant: participant)
@@ -170,7 +170,7 @@ final class MeetingParticipantViewModel: ViewModelType {
             throw UserImageLoadErrorEntity.base64EncodingError
         }
         
-        let downloadedAvatar = try await userImageUseCase.fetchAvatar(withUserHandle: participant.participantId, base64Handle: base64Handle, forceDownload: true)
+        let downloadedAvatar = try await userImageUseCase.fetchAvatar(base64Handle: base64Handle, forceDownload: true)
         try Task.checkCancellation()
         await updateAvatar(image: downloadedAvatar)
     }

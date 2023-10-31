@@ -125,7 +125,7 @@ final class UserAvatarViewModel: ObservableObject {
             throw UserImageLoadErrorEntity.base64EncodingError
         }
         
-        return try await userImageUseCase.fetchAvatar(withUserHandle: handle, base64Handle: base64Handle, forceDownload: false)
+        return try await userImageUseCase.fetchAvatar(base64Handle: base64Handle, forceDownload: false)
     }
     
     private func username(forUserHandle userHandle: HandleEntity, shouldUseMeText: Bool) async throws -> String? {

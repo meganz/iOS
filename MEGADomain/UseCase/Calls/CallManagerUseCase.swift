@@ -4,9 +4,6 @@ import MEGADomain
 protocol CallCoordinatorUseCaseProtocol {
     func endCall(_ call: CallEntity)
     func muteUnmuteCall(_ call: CallEntity, muted: Bool)
-    func addCall(_ call: CallEntity)
-    func startCall(_ call: CallEntity)
-    func answerCall(_ call: CallEntity)
     func addCallRemoved(handler: @escaping (UUID?) -> Void)
     func removeCallRemovedHandler()
 }
@@ -22,22 +19,7 @@ struct CallCoordinatorUseCase: CallCoordinatorUseCaseProtocol {
         
         return callManager
     }
-    
-    func addCall(_ call: CallEntity) {
-        MEGALogDebug("CallManagerUseCase: Add call called")
-        megaCallManager?.addCall(withCallId: call.callId, uuid: call.uuid)
-    }
-    
-    func startCall(_ call: CallEntity) {
-        MEGALogDebug("CallManagerUseCase: Start call called")
-        megaCallManager?.startCall(withChatId: call.chatId)
-    }
-    
-    func answerCall(_ call: CallEntity) {
-        MEGALogDebug("CallManagerUseCase: Answer call called")
-        megaCallManager?.answerCall(withChatId: call.chatId)
-    }
-    
+
     func endCall(_ call: CallEntity) {
         MEGALogDebug("CallManagerUseCase: End call called")
         let manager = megaCallManager

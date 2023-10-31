@@ -195,7 +195,6 @@ final class ChatRoomAvatarViewModel: ObservableObject {
         }
         
         return try await userImageUseCase.fetchAvatar(
-            withUserHandle: handle,
             base64Handle: base64Handle,
             forceDownload: forceDownload
         )
