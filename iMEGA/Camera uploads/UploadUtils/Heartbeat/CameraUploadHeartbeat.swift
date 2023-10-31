@@ -64,7 +64,7 @@ final class CameraUploadHeartbeat: NSObject {
     }
     
     private func setDeviceNameIfNeeded() {
-        sdk.getDeviceName(with: RequestDelegate { [weak self] getResult in
+        sdk.getDeviceName(nil, delegate: RequestDelegate { [weak self] getResult in
             if case let .failure(getError) = getResult, getError.type == .apiENoent {
                 self?.sdk.setDeviceName(UIDevice.current.modelName, delegate: RequestDelegate { setResult in
                     if case let .failure(setError) = setResult {
