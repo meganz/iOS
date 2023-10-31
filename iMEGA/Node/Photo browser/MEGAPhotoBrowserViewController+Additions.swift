@@ -346,11 +346,6 @@ extension MEGAPhotoBrowserViewController {
             let remainingNodesToUpdateCount = await dataProvider.removePhotos(in: nodeList)
             
             if remainingNodesToUpdateCount == 0 {
-                guard let currentNode = await dataProvider.currentPhoto() else { return }
-                let removedNodes = nodeList.toNodeEntities().removedChangeTypeNodes()
-                
-                guard removedNodes.isNotEmpty,
-                      removedNodes.first(where: { $0.handle == currentNode.handle }) != nil else { return }
                 dismiss(animated: true)
             } else {
                 dataProvider.updatePhotos(in: nodeList)
