@@ -81,7 +81,8 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
     func fullSearch(with queryRequest: SearchQueryEntity) async throws -> NodeListEntity? {
         // SDK does not support empty query and MEGANodeFormatType.unknown
         assert(!(queryRequest.query == "" && queryRequest.chips == []))
-        return try await withAsyncThrowingValue(in: { completion in
+        MEGALogInfo("[search] full search \(queryRequest.query)")
+        return await withAsyncValue(in: { completion in
             searchFileUseCase.searchFiles(
                 withName: queryRequest.query,
                 recursive: true,
@@ -94,7 +95,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
             )
         })
     }
-
+    
     private func shouldShowRoot(for queryRequest: SearchQueryEntity) -> Bool {
         if queryRequest == .initialRootQuery {
             return true

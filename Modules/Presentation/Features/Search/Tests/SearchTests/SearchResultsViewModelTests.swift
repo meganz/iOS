@@ -191,6 +191,11 @@ final class SearchResultsViewModelTests: XCTestCase {
                     contextAction: { _ in},
                     selectionAction: {},
                     previewTapAction: {}
+                ),
+                rowAssets: .init(
+                    contextImage: UIImage(),
+                    itemSelected: UIImage(),
+                    itemUnselected: UIImage()
                 )
             )
         ]
@@ -350,4 +355,11 @@ fileprivate extension SearchResultsEntity {
             .chipWith(id: 1)
         ]
     )
+}
+
+extension SearchResultRowViewModel: Equatable {
+    // test only
+    public static func == (lhs: Search.SearchResultRowViewModel, rhs: Search.SearchResultRowViewModel) -> Bool {
+        lhs.result == rhs.result
+    }
 }

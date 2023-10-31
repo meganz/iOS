@@ -13,18 +13,13 @@ extension SearchResultRowViewModel {
     }
 }
 
-final class SearchResultRowViewModel: ObservableObject, Identifiable, Equatable {
-    
-    static func == (lhs: SearchResultRowViewModel, rhs: SearchResultRowViewModel) -> Bool {
-        rhs.result == lhs.result
-    }
+class SearchResultRowViewModel: Identifiable, ObservableObject {
     
     @Published var thumbnailImage: UIImage = UIImage()
 
     var title: String {
         result.title
     }
-    
     var id: String {
         result.id.description
     }
@@ -32,27 +27,38 @@ final class SearchResultRowViewModel: ObservableObject, Identifiable, Equatable 
     var subtitle: String {
         result.description
     }
+    
+    var selectedCheckmarkImage: UIImage {
+        rowAssets.itemSelected
+    }
+    var unselectedCheckmarkImage: UIImage {
+        rowAssets.itemUnselected
+    }
 
     let result: SearchResult
     let contextButtonImage: UIImage
     let previewContent: PreviewContent
     let actions: UserActions
+    let rowAssets: SearchConfig.RowAssets
     
     init(
         with result: SearchResult,
         contextButtonImage: UIImage,
         previewContent: PreviewContent,
-        actions: UserActions
+        actions: UserActions,
+        rowAssets: SearchConfig.RowAssets
     ) {
         self.result = result
         self.contextButtonImage = contextButtonImage
         self.previewContent = previewContent
         self.actions = actions
+        self.rowAssets = rowAssets
     }
     
     @MainActor
     func loadThumbnail() async {
         let data = await result.thumbnailImageData()
+        
         if let image = UIImage(data: data) {
             thumbnailImage = image
         }

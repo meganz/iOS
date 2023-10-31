@@ -67,7 +67,8 @@ extension MainTabBarController {
             with: nav,
             bridge: homeVC.searchResultsBridge,
             newHomeSearchResultsEnabled: isNewHomeSearchEnabled,
-            tracker: DIContainer.tracker
+            tracker: DIContainer.tracker,
+            enableItemMultiSelection: false // not enabled in the home search results
         )
         homeVC.searchResultViewController = searchResultVC
     }

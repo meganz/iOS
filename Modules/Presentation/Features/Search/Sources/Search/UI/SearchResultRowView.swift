@@ -2,7 +2,9 @@ import MEGASwiftUI
 import SwiftUI
 
 struct SearchResultRowView: View {
-    @StateObject var viewModel: SearchResultRowViewModel
+    @ObservedObject var viewModel: SearchResultRowViewModel
+    @Binding var selected: Set<ResultId>
+    @Binding var selectionMode: Bool
     
     var body: some View {
         content
@@ -14,6 +16,9 @@ struct SearchResultRowView: View {
                     trailing: 16
                 )
             )
+            .onTapGesture {
+                viewModel.actions.selectionAction()
+            }
             .contextMenuWithPreview(
                 actions: viewModel.previewContent.actions.toUIActions,
                 sourcePreview: {
@@ -35,6 +40,7 @@ struct SearchResultRowView: View {
     private var content: some View {
         HStack {
             HStack {
+                selectionIcon
                 thumbnail
                 titleAndDescription
                 Spacer()
@@ -43,6 +49,25 @@ struct SearchResultRowView: View {
         }
         .taskForiOS14 {
             await viewModel.loadThumbnail()
+        }
+        .contentShape(Rectangle())
+        .frame(minHeight: 60)
+    }
+    
+    var isSelected: Bool {
+        selected.contains(viewModel.result.id)
+    }
+    
+    @ViewBuilder var selectionIcon: some View {
+        if selectionMode {
+            Image(
+                uiImage: isSelected ?
+                viewModel.selectedCheckmarkImage :
+                viewModel.unselectedCheckmarkImage
+            )
+            .resizable()
+            .scaledToFit()
+            .frame(width: 22, height: 22)
         }
     }
     
@@ -67,13 +92,16 @@ struct SearchResultRowView: View {
         }
     }
     
+    @ViewBuilder
     private var moreButton: some View {
-        UIButtonWrapper(
-            image: viewModel.contextButtonImage
-        ) { button in
-            viewModel.actions.contextAction(button)
+        if !selectionMode {
+            UIButtonWrapper(
+                image: viewModel.contextButtonImage
+            ) { button in
+                viewModel.actions.contextAction(button)
+            }
+            .frame(width: 40, height: 60)
         }
-        .frame(width: 40, height: 60)
     }
 }
 
@@ -101,6 +129,11 @@ struct SearchResultRowView_Previews: PreviewProvider {
                     contextAction: { _ in },
                     selectionAction: {},
                     previewTapAction: {}
+                ),
+                rowAssets: .init(
+                    contextImage: UIImage(systemName: "ellipsis")!,
+                    itemSelected: UIImage(systemName: "checkmark.circle")!,
+                    itemUnselected: UIImage(systemName: "circle")!
                 )
             )
         }
@@ -109,7 +142,11 @@ struct SearchResultRowView_Previews: PreviewProvider {
         
         List {
             ForEach(items) {
-                SearchResultRowView(viewModel: $0)
+                SearchResultRowView(
+                    viewModel: $0,
+                    selected: .constant([]),
+                    selectionMode: .constant(true)
+                )
             }
         }
         .listStyle(.plain)

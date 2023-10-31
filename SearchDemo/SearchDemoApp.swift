@@ -16,10 +16,14 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             Wrapper()
+                .toolbar {
+                    EditButton()
+                }
         }
     }
     struct Wrapper: View {
         @State var text: String = ""
+        @Environment(\.editMode) private var editMode
         @StateObject var viewModel = SearchResultsViewModel(
             resultsProvider: NonProductionTestResultsProvider(),
             bridge: .init(

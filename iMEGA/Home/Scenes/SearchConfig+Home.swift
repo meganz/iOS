@@ -53,8 +53,10 @@ extension SearchConfig {
                 }
             },
             rowAssets: .init(
-                contextImage: Asset.Images.Generic.moreList.image
-            ), 
+                contextImage: Asset.Images.Generic.moreList.image,
+                itemSelected: Asset.Images.Login.checkBoxSelected.image,
+                itemUnselected: Asset.Images.Login.checkBoxUnselected.image
+            ),
             contextPreviewFactory: contextPreviewFactory
         )
     }

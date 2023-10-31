@@ -3,12 +3,14 @@ import MEGASwiftUI
 import SwiftUI
 
 public struct SearchResultsView: View {
-    public init(viewModel: @autoclosure @escaping () -> SearchResultsViewModel) {
+    public init(
+        viewModel: @autoclosure @escaping () -> SearchResultsViewModel
+    ) {
         _viewModel = StateObject(wrappedValue: viewModel())
     }
-
+    
     @StateObject var viewModel: SearchResultsViewModel
-
+    
     public var body: some View {
         VStack(spacing: .zero) {
             chipsView
@@ -24,6 +26,9 @@ public struct SearchResultsView: View {
             maxHeight: .infinity,
             alignment: .top
         )
+        .taskForiOS14 {
+            await viewModel.task()
+        }
     }
     
     private var chipsView: some View {
@@ -32,7 +37,7 @@ public struct SearchResultsView: View {
                 ForEach(viewModel.chipsItems) { chip in
                     PillView(viewModel: chip.pill)
                         .onTapGesture {
-                            Task {
+                            Task { @MainActor in
                                 await chip.select()
                             }
                         }
@@ -43,14 +48,18 @@ public struct SearchResultsView: View {
         .padding([.leading, .trailing, .bottom])
         .padding(.top, 6)
     }
-
+    
     private var content: some View {
         List {
             ForEach(Array(viewModel.listItems.enumerated()), id: \.element.id) { index, item in
-                SearchResultRowView(viewModel: item)
-                    .taskForiOS14 {
-                        await viewModel.loadMoreIfNeeded(at: index)
-                    }
+                SearchResultRowView(
+                    viewModel: item,
+                    selected: $viewModel.selected,
+                    selectionMode: $viewModel.editing
+                )
+                .taskForiOS14 {
+                    await viewModel.loadMoreIfNeeded(at: index)
+                }
             }
         }
         .simultaneousGesture(
@@ -61,25 +70,22 @@ public struct SearchResultsView: View {
         .listStyle(.plain)
         .padding(.bottom, viewModel.bottomInset)
         .emptyState(viewModel.emptyViewModel)
-        .taskForiOS14 {
-            await viewModel.task()
-        }
     }
-
+    
     private var placeholderRowView: some View {
         HStack(spacing: 4) {
             RoundedRectangle(cornerRadius: 0)
                 .frame(width: 40, height: 40)
-
+            
             VStack(alignment: .leading, spacing: 4) {
                 RoundedRectangle(cornerRadius: 100)
                     .frame(width: 152, height: 20)
-
+                
                 RoundedRectangle(cornerRadius: 100)
                     .frame(width: 121, height: 20)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-
+            
             RoundedRectangle(cornerRadius: 0)
                 .frame(width: 28, height: 28)
         }
@@ -116,7 +122,9 @@ struct SearchResultsViewPreviews: PreviewProvider {
                         )
                 },
                 rowAssets: .init(
-                    contextImage: .init(systemName: "ellipsis")!
+                    contextImage: UIImage(systemName: "ellipsis")!,
+                    itemSelected: UIImage(systemName: "checkmark.circle")!,
+                    itemUnselected: UIImage(systemName: "circle")!
                 ),
                 contextPreviewFactory: .init(
                     previewContentForResult: { result in
@@ -130,7 +138,7 @@ struct SearchResultsViewPreviews: PreviewProvider {
                 )
             ),
             keyboardVisibilityHandler: MockKeyboardVisibilityHandler()
-
+            
         )
         var body: some View {
             SearchResultsView(

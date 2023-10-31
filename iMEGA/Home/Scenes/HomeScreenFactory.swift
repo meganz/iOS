@@ -19,7 +19,8 @@ final class HomeScreenFactory: NSObject {
     func createHomeScreen(
         from tabBarController: MainTabBarController,
         newHomeSearchResultsEnabled: Bool,
-        tracker: some AnalyticsTracking
+        tracker: some AnalyticsTracking,
+        enableItemMultiSelection: Bool = false // set to true to enable multiselect [not used now in the home search results]
     ) -> UIViewController {
         let homeViewController = HomeViewController()
         let navigationController = MEGANavigationController(rootViewController: homeViewController)
@@ -96,7 +97,8 @@ final class HomeScreenFactory: NSObject {
             with: navigationController,
             bridge: bridge,
             newHomeSearchResultsEnabled: newHomeSearchResultsEnabled,
-            tracker: tracker
+            tracker: tracker,
+            enableItemMultiSelection: enableItemMultiSelection
         )
         
         homeViewController.searchResultViewController = searchResultViewController
@@ -122,14 +124,16 @@ final class HomeScreenFactory: NSObject {
         with navigationController: UINavigationController,
         bridge: SearchResultsBridge,
         newHomeSearchResultsEnabled: Bool,
-        tracker: some AnalyticsTracking
+        tracker: some AnalyticsTracking,
+        enableItemMultiSelection: Bool
     ) -> UIViewController {
         
         if newHomeSearchResultsEnabled {
             return makeNewSearchResultsViewController(
                 with: navigationController,
                 bridge: bridge,
-                tracker: tracker
+                tracker: tracker,
+                enableItemMultiSelection: enableItemMultiSelection
             )
         } else {
             return makeLegacySearchResultsViewController(
@@ -156,7 +160,8 @@ final class HomeScreenFactory: NSObject {
     private func makeNewSearchResultsViewController(
         with navigationController: UINavigationController,
         bridge: SearchResultsBridge,
-        tracker: some AnalyticsTracking
+        tracker: some AnalyticsTracking,
+        enableItemMultiSelection: Bool
     ) -> UIViewController {
         
         let router = HomeSearchResultRouter(
@@ -187,8 +192,8 @@ final class HomeScreenFactory: NSObject {
                 // button reference is required to position popover on the iPad correctly
                 router.didTapMoreAction(on: result.id, button: button)
             },
-            resignKeyboard: {
-                bridge.hideKeyboard()
+            resignKeyboard: { [weak bridge] in
+                bridge?.hideKeyboard()
             },
             chipTapped: { chip, selected in
                 tracker.trackChip(tapped: chip, selected: selected)
@@ -218,14 +223,14 @@ final class HomeScreenFactory: NSObject {
                 nodeRepository: makeNodeRepo()
             ),
             bridge: searchBridge,
-            config: .searchConfig(contextPreviewFactory: contextPreviewFactory),
+            config: .searchConfig(
+                contextPreviewFactory: contextPreviewFactory(
+                enableItemMultiSelection: enableItemMultiSelection
+                )
+            ),
             keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: .default)
         )
         return UIHostingController(rootView: SearchResultsView(viewModel: vm))
-    }
-    
-    func nodeFor(result: SearchResult) -> MEGANode? {
-        sdk.node(forHandle: result.id)
     }
     
     func previewViewController(for node: MEGANode) -> UIViewController? {
@@ -241,12 +246,16 @@ final class HomeScreenFactory: NSObject {
         }
     }
     
-    private var contextPreviewFactory: SearchConfig.ContextPreviewFactory {
+    private func contextPreviewFactory(enableItemMultiSelection: Bool) -> SearchConfig.ContextPreviewFactory {
         .init(
             // this logic below, constructs actions and preview
             // when an search item is long pressed
-            previewContentForResult: { result in
-                if let node = self.nodeFor(result: result) {
+            previewContentForResult: { [weak sdk] result in
+                guard let sdk else {
+                    return .init(actions: [], previewMode: .noPreview)
+                }
+                
+                if let node = sdk.node(forHandle: result.id) {
                     let previewMode: () -> PreviewContent.PreviewMode = {
                         if node.type == .folder {
                             return .preview {
@@ -257,7 +266,7 @@ final class HomeScreenFactory: NSObject {
                         }
                     }
                     return .init(
-                        actions: self.actionsFor(node: node),
+                        actions: self.actionsFor(node: node, enableItemMultiSelection: enableItemMultiSelection),
                         previewMode: previewMode()
                     )
                 }
@@ -266,9 +275,19 @@ final class HomeScreenFactory: NSObject {
         )
     }
     
-    private func actionsFor(node: MEGANode) -> [PeekAction] {
-        [
+    private func actionsFor(node: MEGANode, enableItemMultiSelection: Bool) -> [PeekAction] {
+        guard enableItemMultiSelection else {
+            // if not enabled, there's no preview action returned
+            return []
+        }
+        return [
             // action (selection) will be implemented in [FM-1176]
+            .init(
+                title: Strings.Localizable.select,
+                imageName: "checkmark.circle",
+                handler: {
+                    print("selected tapped")
+                })
         ]
     }
     
