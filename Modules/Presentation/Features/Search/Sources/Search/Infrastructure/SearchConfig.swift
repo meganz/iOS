@@ -69,10 +69,18 @@ public struct SearchConfig {
     }
     
     public struct RowAssets {
-        public init(contextImage: UIImage) {
+        public init(
+            contextImage: UIImage,
+            itemSelected: UIImage,
+            itemUnselected: UIImage
+        ) {
             self.contextImage = contextImage
+            self.itemSelected = itemSelected
+            self.itemUnselected = itemUnselected
         }
         
         public let contextImage: UIImage
+        public let itemSelected: UIImage
+        public let itemUnselected: UIImage
     }
 }

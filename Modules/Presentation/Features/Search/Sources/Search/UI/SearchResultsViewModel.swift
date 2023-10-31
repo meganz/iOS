@@ -9,7 +9,10 @@ public class SearchResultsViewModel: ObservableObject {
     @Published var bottomInset: CGFloat = 0.0
     @Published var emptyViewModel: ContentUnavailableView_iOS16ViewModel?
     @Published var isLoadingPlaceholderShown = false
-
+    
+    // this will need to be to exposed outside when parent will need to know exactly what is selected
+    @Published var selected: Set<ResultId> = []
+    
     // this is needed to be able to construct new query after receiving new query string from SearchBar
     private var currentQuery: SearchQuery = .initial
     
@@ -50,7 +53,9 @@ public class SearchResultsViewModel: ObservableObject {
     private let searchInputDebounceDelay: Double
 
     private let keyboardVisibilityHandler: any KeyboardVisibilityHandling
-
+    
+    @Published public var editing: Bool = false
+    
     public init(
         resultsProvider: any SearchResultsProviding,
         bridge: SearchBridge,
@@ -76,7 +81,7 @@ public class SearchResultsViewModel: ObservableObject {
                 await _self?.queryChanged(to: query)
             }
         }
-        
+
         self.bridge.queryCleaned = { [weak self] in
             let _self = self
             Task { await _self?.queryCleaned() }
@@ -94,13 +99,13 @@ public class SearchResultsViewModel: ObservableObject {
 
         setupKeyboardVisibilityHandling()
     }
-
+    
     /// meant called to be called in the SwiftUI View's .task modifier
     /// which means task is called on the appearance and cancelled on disappearance
     @MainActor
     func task() async {
-        /// We need to check if listItems is empty  because after first load of the screen, the listItems will be filled with data,
-        /// so there is no need for additional query which will only cause flicker when we quickly go in and out of this screen
+        // We need to check if listItems is empty  because after first load of the screen, the listItems will be filled with data,
+        // so there is no need for additional query which will only cause flicker when we quickly go in and out of this screen
         guard !initialLoadDone, listItems.isEmpty else { return }
         initialLoadDone = true
         await defaultSearchQuery()
@@ -125,6 +130,7 @@ public class SearchResultsViewModel: ObservableObject {
         debounceTask = nil
     }
 
+    @MainActor
     func queryCleaned() async {
         // clearing query in the search bar
         // this should reset just query string but keep chips etc
@@ -145,10 +151,12 @@ public class SearchResultsViewModel: ObservableObject {
         // clear items, chips, initialLoadDone so that we load fresh
         // data when view appears again
         initialLoadDone = false
+        editing = false
         currentQuery = .initial
         listItems = []
         chipsItems = []
         lastAvailableChips = []
+        selected = []
         await defaultSearchQuery()
     }
     
@@ -163,10 +171,11 @@ public class SearchResultsViewModel: ObservableObject {
         Task {
             try await Task.sleep(nanoseconds: UInt64(showLoadingPlaceholderDelay*1_000_000_000))
             guard !areNewSearchResultsLoaded else { return }
-            await updateLoadingPlaceholderVisibility(true)
+            updateLoadingPlaceholderVisibility(true)
         }
     }
-    
+
+    @MainActor
     private func queryChanged(to query: SearchQuery) async {
         cancelSearchTask()
         cancelDebounceTask()
@@ -174,7 +183,7 @@ public class SearchResultsViewModel: ObservableObject {
         // we need to store query to know what chips are selected
         currentQuery = query
 
-        await clearSearchResults()
+        clearSearchResults()
 
         searchingTask = Task {
             await performSearch(using: query)
@@ -183,7 +192,8 @@ public class SearchResultsViewModel: ObservableObject {
         try? await searchingTask?.value
         searchingTask = nil
     }
-
+    
+    @MainActor
     private func performSearch(
         using query: SearchQuery,
         lastItemIndex: Int? = nil
@@ -193,7 +203,7 @@ public class SearchResultsViewModel: ObservableObject {
         }
 
         if Task.isCancelled { return }
-
+        
         var results: SearchResultsEntity?
         do {
             results = try await resultsProvider.search(queryRequest: query, lastItemIndex: lastItemIndex)
@@ -202,36 +212,65 @@ public class SearchResultsViewModel: ObservableObject {
             // in the FM-800
         }
 
+        if Task.isCancelled { return }
+        
         guard let results else { return }
 
-        if Task.isCancelled { return }
-
         if lastItemIndex == nil {
-            await clearSearchResults()
+            clearSearchResults()
         }
 
         await prepareResults(results, query: query)
     }
-
+    
     func loadMoreIfNeeded(at index: Int) async {
         await performSearch(using: currentQuery, lastItemIndex: index)
     }
     
+    @MainActor
     func prepareResults(_ results: SearchResultsEntity, query: SearchQuery) async {
+
         let items = results.results.map { result in
             let content = config.contextPreviewFactory.previewContentForResult(result)
             return SearchResultRowViewModel(
                 with: result,
                 contextButtonImage: config.rowAssets.contextImage,
                 previewContent: .init(
-                    actions: content.actions,
+                    actions: content.actions.map({ action in
+                        return .init(
+                            title: action.title,
+                            imageName: action.imageName,
+                            handler: { [weak self] in
+                                self?.actionPressedOn(result)
+                                action.handler()
+                            }
+                        )
+                    }),
                     previewMode: content.previewMode
                 ),
-                actions: rowActions(for: result)
+                actions: rowActions(for: result),
+                rowAssets: config.rowAssets
             )
         }
 
-        await self.consume(results, items: items, query: query)
+        consume(results, items: items, query: query)
+    }
+
+    func actionPressedOn(_ result: SearchResult) {
+        if !editing {
+            editing = true
+        }
+        toggleSelected(result)
+    }
+    
+    private func toggleSelected(_ result: SearchResult) {
+        
+        if selected.contains(result.id) {
+            selected.remove(result.id)
+        } else {
+            selected.insert(result.id)
+        }
+        
     }
     
     private func rowActions(for result: SearchResult) -> SearchResultRowViewModel.UserActions {
@@ -241,8 +280,12 @@ public class SearchResultsViewModel: ObservableObject {
                 self?.bridge.context(result, button)
             },
             selectionAction: { [weak self] in
-                // executeSelect
-                self?.bridge.selection(result)
+                guard let self else { return }
+                if editing {
+                    toggleSelected(result)
+                } else {
+                    bridge.selection(result)
+                }
             },
             previewTapAction: { [weak self] in
                 self?.bridge.selection(result)
@@ -250,7 +293,6 @@ public class SearchResultsViewModel: ObservableObject {
         )
     }
 
-    @MainActor 
     func consume(
         _ results: SearchResultsEntity,
         items: [SearchResultRowViewModel],
@@ -320,15 +362,15 @@ public class SearchResultsViewModel: ObservableObject {
             )
         }
     }
-    
-    @MainActor
+
     private func updateLoadingPlaceholderVisibility(_ shown: Bool) {
-        isLoadingPlaceholderShown = shown
+        Task { @MainActor in
+            isLoadingPlaceholderShown = shown
+        }
     }
 
-    @MainActor
     private func clearSearchResults() {
-         listItems = []
+        listItems = []
     }
 
     private func updateSearchResultsLoaded(_ loaded: Bool) {
@@ -343,8 +385,9 @@ public class SearchResultsViewModel: ObservableObject {
     // otherwise, it is equal to 0
     private func setupKeyboardVisibilityHandling() {
         keyboardVisibilityHandler.keyboardPublisher
-            .sink(receiveValue: { isShown in
-                self.bottomInset = isShown ? 0 : self.miniPlayerBottomInset
+            .sink(receiveValue: {[weak self] isShown in
+                guard let self else { return }
+                bottomInset = isShown ? 0 : miniPlayerBottomInset
             })
             .store(in: &subscriptions)
     }

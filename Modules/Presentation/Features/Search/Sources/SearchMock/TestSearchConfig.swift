@@ -13,7 +13,9 @@ extension SearchConfig {
             ),
             emptyViewAssetFactory: { _ in .testAssets },
             rowAssets: .init(
-                contextImage: UIImage(systemName: "ellipsis")!
+                contextImage: UIImage(systemName: "ellipsis")!,
+                itemSelected: UIImage(systemName: "checkmark.circle")!,
+                itemUnselected: UIImage(systemName: "circle")!
             ),
             contextPreviewFactory: .test
         )
@@ -25,7 +27,9 @@ extension SearchConfig.ContextPreviewFactory {
         SearchConfig.ContextPreviewFactory(
             previewContentForResult: { _ in
                     .init(
-                        actions: [],
+                        actions: [
+                            .init(title: "Select", imageName: "checkmark.circle", handler: {})
+                        ],
                         previewMode: .preview({
                             UIHostingController(rootView: Text("I'm preview"))
                         })

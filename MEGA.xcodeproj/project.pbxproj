@@ -12335,8 +12335,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				945E1EF52AEFF12900AC16B9 /* PBXTargetDependency */,
 				94CD1F752A8AA76C00DF456D /* PBXTargetDependency */,
-				164948672A41586F00AEB736 /* PBXTargetDependency */,
 				943F8B191EF26E9C00AFD89F /* PBXTargetDependency */,
 				7794AEDA231E4E0A0039C1D2 /* PBXTargetDependency */,
 				83199F1D25556CDE00344531 /* PBXTargetDependency */,
@@ -15398,10 +15398,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		164948672A41586F00AEB736 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 164948662A41586F00AEB736 /* SwiftLint */;
-		};
 		7794AEDA231E4E0A0039C1D2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 7794AED3231E4E0A0039C1D2 /* MEGANotifications */;
@@ -15421,6 +15417,10 @@
 			isa = PBXTargetDependency;
 			target = 943F8B0E1EF26E9C00AFD89F /* MEGAShare */;
 			targetProxy = 943F8B181EF26E9C00AFD89F /* PBXContainerItemProxy */;
+		};
+		945E1EF52AEFF12900AC16B9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 945E1EF42AEFF12900AC16B9 /* SwiftLint */;
 		};
 		946336DA2A8ABA23005C58D9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -17326,10 +17326,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		164948662A41586F00AEB736 /* SwiftLint */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "plugin:SwiftLint";
-		};
 		1678D7F12A45487E00336C52 /* MEGATest */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGATest;
@@ -17390,6 +17386,10 @@
 		945928F42AA23C1B0037694C /* Search */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Search;
+		};
+		945E1EF42AEFF12900AC16B9 /* SwiftLint */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = "plugin:SwiftLint";
 		};
 		946336D92A8ABA23005C58D9 /* SwiftGen */ = {
 			isa = XCSwiftPackageProductDependency;
