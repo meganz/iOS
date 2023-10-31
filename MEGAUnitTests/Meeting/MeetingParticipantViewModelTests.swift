@@ -161,7 +161,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
         let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
         let expectation = expectation(description: "Awaiting publisher")
         let userImageUseCase = MockUserImageUseCase(clearAvatarCacheCompletion: { handle in
-            XCTAssert(handle == 100, "Handle should match")
+            XCTAssert(handle == "100", "Handle should match")
             expectation.fulfill()
         })
         let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity(100))

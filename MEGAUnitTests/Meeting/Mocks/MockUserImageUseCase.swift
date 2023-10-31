@@ -4,8 +4,8 @@ import MEGADomain
 
 struct MockUserImageUseCase: UserImageUseCaseProtocol {
     var result: Result<UIImage, UserImageLoadErrorEntity> = .failure(.generic)
-    var clearAvatarCacheCompletion: ((HandleEntity) -> Void)?
-    var downloadAvatarCompletion: ((HandleEntity) -> Void)?
+    var clearAvatarCacheCompletion: ((Base64HandleEntity) -> Void)?
+    var downloadAvatarCompletion: ((Base64HandleEntity) -> Void)?
     var createAvatarCompletion: ((HandleEntity) -> Void)?
     var clearAvatarCache = false
     var avatarChangePublisher = PassthroughSubject<[HandleEntity], Never>()
@@ -22,12 +22,12 @@ struct MockUserImageUseCase: UserImageUseCaseProtocol {
         completion(result)
     }
     
-    func clearAvatarCache(withUserHandle handle: HandleEntity, base64Handle: Base64HandleEntity) {
-        clearAvatarCacheCompletion?(handle)
+    func clearAvatarCache(base64Handle: Base64HandleEntity) {
+        clearAvatarCacheCompletion?(base64Handle)
     }
     
-    func fetchAvatar(withUserHandle handle: HandleEntity, base64Handle: Base64HandleEntity, forceDownload: Bool) async throws -> UIImage {
-        downloadAvatarCompletion?(handle)
+    func fetchAvatar(base64Handle: Base64HandleEntity, forceDownload: Bool) async throws -> UIImage {
+        downloadAvatarCompletion?(base64Handle)
         switch result {
         case .success(let image):
             return image

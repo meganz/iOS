@@ -115,7 +115,7 @@ final class ParticipantInWaitingRoomViewModel: ViewModelType {
                 guard let self else { return }
                 
                 if let base64Handle = megaHandleUseCase.base64Handle(forUserHandle: participant.participantId) {
-                    userImageUseCase.clearAvatarCache(withUserHandle: participant.participantId, base64Handle: base64Handle)
+                    userImageUseCase.clearAvatarCache(base64Handle: base64Handle)
                 }
                 
                 avatarRefetchTask = createRefetchAvatarTask(forParticipant: participant)
@@ -150,7 +150,7 @@ final class ParticipantInWaitingRoomViewModel: ViewModelType {
             throw UserImageLoadErrorEntity.base64EncodingError
         }
         
-        let downloadedAvatar = try await userImageUseCase.fetchAvatar(withUserHandle: participant.participantId, base64Handle: base64Handle, forceDownload: true)
+        let downloadedAvatar = try await userImageUseCase.fetchAvatar(base64Handle: base64Handle, forceDownload: true)
         try Task.checkCancellation()
         await updateAvatar(image: downloadedAvatar)
     }

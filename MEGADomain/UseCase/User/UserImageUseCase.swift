@@ -10,8 +10,8 @@ protocol UserImageUseCaseProtocol {
                          avatarBackgroundHexColor: String,
                          name: String,
                          completion: @escaping (Result<UIImage, UserImageLoadErrorEntity>) -> Void)
-    func clearAvatarCache(withUserHandle handle: HandleEntity, base64Handle: Base64HandleEntity)
-    func fetchAvatar(withUserHandle handle: HandleEntity, base64Handle: Base64HandleEntity, forceDownload: Bool) async throws -> UIImage
+    func clearAvatarCache(base64Handle: Base64HandleEntity)
+    func fetchAvatar(base64Handle: Base64HandleEntity, forceDownload: Bool) async throws -> UIImage
     func createAvatar(withUserHandle handle: HandleEntity,
                       base64Handle: Base64HandleEntity?,
                       avatarBackgroundHexColor: String,
@@ -86,14 +86,13 @@ struct UserImageUseCase<T: UserImageRepositoryProtocol, U: UserStoreRepositoryPr
         }
     }
     
-    func clearAvatarCache(withUserHandle handle: HandleEntity,
-                          base64Handle: Base64HandleEntity) {
+    func clearAvatarCache(base64Handle: Base64HandleEntity) {
         let destinationURL = thumbnailRepo.generateCachingURL(for: base64Handle, type: .thumbnail)
         guard fileSystemRepo.fileExists(at: destinationURL) else { return }
         fileSystemRepo.removeFile(at: destinationURL)
     }
     
-    func fetchAvatar(withUserHandle handle: HandleEntity, base64Handle: Base64HandleEntity, forceDownload: Bool = false) async throws -> UIImage {
+    func fetchAvatar(base64Handle: Base64HandleEntity, forceDownload: Bool = false) async throws -> UIImage {
         let destinationURLPath = thumbnailRepo.generateCachingURL(for: base64Handle, type: .thumbnail).path
         if let image = fetchImage(fromPath: destinationURLPath), !forceDownload {
             return image
