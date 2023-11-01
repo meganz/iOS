@@ -10,8 +10,9 @@ struct PhotoLibraryCollectionViewRepresenter: UIViewRepresentable {
     }
     
     func makeUIView(context: Context) -> UICollectionView {
-        let layout = PhotoLibraryCollectionLayoutBuilder(zoomState: viewModel.zoomState).buildLayout()
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        let collectionView = UICollectionView(
+            frame: .zero,
+            collectionViewLayout: UICollectionViewLayout())
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 70, right: 0)
         context.coordinator.configureDataSource(for: collectionView)
         return collectionView
