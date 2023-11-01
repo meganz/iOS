@@ -97,26 +97,26 @@ extension CallParticipantEntity {
         chatSDK: MEGAChatSdk = .sharedChatSdk
     ) -> CallParticipantEntity? {
         guard let user = sdk.myUser,
-              let email = sdk.myEmail,
               let chatRoom = chatSDK.chatRoom(forChatId: chatId) else {
             return nil
         }
-        
-        let participant = CallParticipantEntity(chatId: chatId,
-                                                participantId: user.handle,
-                                                clientId: 0,
-                                                email: email,
-                                                isModerator: chatRoom.toChatRoomEntity().ownPrivilege == .moderator,
-                                                isInContactList: false,
-                                                video: .unknown,
-                                                audio: .unknown,
-                                                isVideoHiRes: true,
-                                                isVideoLowRes: false,
-                                                canReceiveVideoHiRes: true,
-                                                canReceiveVideoLowRes: false,
-                                                name: chatSDK.myFullname,
-                                                sessionRecoverable: false,
-                                                isSpeakerPinned: false)
+        let participant = CallParticipantEntity(
+            chatId: chatId,
+            participantId: user.handle,
+            clientId: 0,
+            email: sdk.myEmail,
+            isModerator: chatRoom.toChatRoomEntity().ownPrivilege == .moderator,
+            isInContactList: false,
+            video: .unknown,
+            audio: .unknown,
+            isVideoHiRes: true,
+            isVideoLowRes: false,
+            canReceiveVideoHiRes: true,
+            canReceiveVideoLowRes: false,
+            name: chatSDK.myFullname,
+            sessionRecoverable: false,
+            isSpeakerPinned: false
+        )
         
         return participant
     }

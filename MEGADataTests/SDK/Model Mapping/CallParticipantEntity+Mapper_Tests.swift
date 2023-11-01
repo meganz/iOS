@@ -81,12 +81,6 @@ final class CallParticipantEntity_Mapper_Tests: XCTestCase {
         XCTAssertNil(participant)
     }
     
-    func testMyselfFunc_withMyEmailNotFound() {
-        let sdk = MockSdk(myUser: MockUser(handle: 1))
-        let participant = CallParticipantEntity.myself(chatId: 1, sdk: sdk, chatSDK: MockChatSDK())
-        XCTAssertNil(participant)
-    }
-    
     func testMyselfFunc_withChatRoomNotFound() {
         let sdk = MockSdk(myUser: MockUser(handle: 1), myEmail: "my@email.com")
         let participant = CallParticipantEntity.myself(chatId: 1, sdk: sdk, chatSDK: MockChatSDK(chatRoom: nil))
@@ -97,5 +91,16 @@ final class CallParticipantEntity_Mapper_Tests: XCTestCase {
         let sdk = MockSdk(myUser: MockUser(handle: 1), myEmail: "my@email.com")
         let participant = CallParticipantEntity.myself(chatId: 1, sdk: sdk, chatSDK: MockChatSDK())
         XCTAssertNotNil(participant)
+    }
+    
+    func testMyselfFunc_withValidGuestParticipant_shouldReturnNonNil() {
+        let sdk = MockSdk(myUser: MockUser(handle: 1, email: nil))
+        let chatSdk = MockChatSDK()
+        let guestParticipant = CallParticipantEntity.myself(
+            chatId: 1,
+            sdk: sdk,
+            chatSDK: chatSdk
+        )
+        XCTAssertNotNil(guestParticipant)
     }
 }
