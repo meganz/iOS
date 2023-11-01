@@ -69,13 +69,6 @@ struct MockNodeInfoRepository: NodeInfoRepositoryProtocol {
         }
     }
     
-    func publicNode(fromFileLink: String) async -> MEGANode? {
-        switch result {
-        case .failure: return nil
-        case .success: return MEGANode()
-        }
-    }
-    
     func loginToFolder(link: String) {}
     func folderLinkLogout() {}
 }

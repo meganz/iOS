@@ -20,11 +20,7 @@ final class MockStreamingInfoUseCase: StreamingInfoUseCaseProtocol {
     func info(from folderLinkNode: MEGANode) -> MEGA.AudioPlayerItem? {
         infoNodePlayerItem
     }
-    
-    func info(from handle: MEGADomain.HandleEntity) -> MEGANode? {
-        infoNode
-    }
-    
+
     func isLocalHTTPProxyServerRunning() -> Bool {
         false
     }

@@ -6,7 +6,6 @@ protocol StreamingInfoRepositoryProtocol {
     func serverStart()
     func serverStop()
     func info(fromFolderLinkNode: MEGANode) -> AudioPlayerItem?
-    func info(fromHandle: HandleEntity) -> MEGANode?
     func path(fromNode: MEGANode) -> URL?
     func isLocalHTTPProxyServerRunning() -> Bool
 }
@@ -33,13 +32,6 @@ final class StreamingInfoRepository: StreamingInfoRepositoryProtocol {
               let name = node.name else { return nil }
         
         return AudioPlayerItem(name: name, url: url, node: node, hasThumbnail: node.hasThumbnail())
-    }
-    
-    func info(fromHandle: HandleEntity) -> MEGANode? {
-        guard let nodeHandled = sdk.node(forHandle: fromHandle),
-              let node = sdk.authorizeNode(nodeHandled) else { return nil }
-        
-        return node
     }
     
     func path(fromNode: MEGANode) -> URL? {

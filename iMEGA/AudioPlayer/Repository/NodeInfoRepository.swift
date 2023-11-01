@@ -11,7 +11,6 @@ protocol NodeInfoRepositoryProtocol {
     func node(fromHandle: HandleEntity) -> MEGANode?
     func folderNode(fromHandle: HandleEntity) -> MEGANode?
     func folderAuthNode(fromNode: MEGANode) -> MEGANode?
-    func publicNode(fromFileLink: String) async -> MEGANode?
     func loginToFolder(link: String)
     func folderLinkLogout()
 }
@@ -110,20 +109,6 @@ final class NodeInfoRepository: NodeInfoRepositoryProtocol {
     
     func folderChildrenInfo(fromParentHandle parent: HandleEntity) -> [AudioPlayerItem]? {
         folderPlayableChildren(of: parent).flatMap(authInfo)
-    }
-    
-    func publicNode(fromFileLink: String) async -> MEGANode? {
-        await withAsyncValue { publicNode(fromFileLink: fromFileLink, completion: $0) }
-    }
-    
-    private func publicNode(fromFileLink: String, completion: @escaping (Result<MEGANode?, Never>) -> Void) {
-        sdk.publicNode(forMegaFileLink: fromFileLink, delegate: MEGAGetPublicNodeRequestDelegate(completion: { (request, error) in
-            guard let error = error, error.type == .apiOk  else {
-                completion(.success(nil))
-                return
-            }
-            completion(.success(request?.publicNode))
-        }))
     }
     
     func loginToFolder(link: String) {
