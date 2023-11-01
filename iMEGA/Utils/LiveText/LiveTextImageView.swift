@@ -2,13 +2,8 @@
 
 @available(iOS 16.0, *)
 final class LiveTextImageView: SDAnimatedImageView {
-    private lazy var interaction: ImageAnalysisInteraction = {
-        let interaction = ImageAnalysisInteraction()
-        interaction.preferredInteractionTypes = .automatic
-        return interaction
-    }()
-    
-    private lazy var imageAnalyzer = ImageAnalyzer()
+    private let interaction = ImageAnalysisInteraction()
+    private let imageAnalyzer = ImageAnalyzer()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
