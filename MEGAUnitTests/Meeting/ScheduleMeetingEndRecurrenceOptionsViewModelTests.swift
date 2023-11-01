@@ -7,11 +7,7 @@ final class ScheduleMeetingEndRecurrenceOptionsViewModelTests: XCTestCase {
         let startDate = try XCTUnwrap(randomFutureDate())
         let defaultEndDate = try XCTUnwrap(addSixMonthsToDate(startDate))
         let viewModel = ScheduleMeetingEndRecurrenceOptionsViewModel(
-            router: ScheduleMeetingEndRecurrenceOptionsRouter(
-                presenter: UINavigationController(),
-                rules: ScheduledMeetingRulesEntity(),
-                startDate: startDate
-            ),
+            rules: ScheduledMeetingRulesEntity(),
             startDate: startDate
         )
         
@@ -24,11 +20,7 @@ final class ScheduleMeetingEndRecurrenceOptionsViewModelTests: XCTestCase {
     func testEndRecurrenceOptions_neverSelected_shouldMatch() throws {
         let endDate = try XCTUnwrap(randomFutureDate())
         let viewModel = ScheduleMeetingEndRecurrenceOptionsViewModel(
-            router: ScheduleMeetingEndRecurrenceOptionsRouter(
-                presenter: UINavigationController(),
-                rules: ScheduledMeetingRulesEntity(until: endDate),
-                startDate: Date()
-            ),
+            rules: ScheduledMeetingRulesEntity(until: endDate),
             startDate: Date()
         )
         viewModel.endRecurrenceNeverSelected()
@@ -39,11 +31,7 @@ final class ScheduleMeetingEndRecurrenceOptionsViewModelTests: XCTestCase {
     func testEndRecurrenceOptions_dateSelected_shouldMatch() throws {
         let endDate = try XCTUnwrap(randomFutureDate())
         let viewModel = ScheduleMeetingEndRecurrenceOptionsViewModel(
-            router: ScheduleMeetingEndRecurrenceOptionsRouter(
-                presenter: UINavigationController(),
-                rules: ScheduledMeetingRulesEntity(),
-                startDate: Date()
-            ),
+            rules: ScheduledMeetingRulesEntity(),
             startDate: Date()
         )
         viewModel.endRecurrenceDate = endDate

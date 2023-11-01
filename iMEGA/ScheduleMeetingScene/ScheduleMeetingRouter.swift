@@ -64,7 +64,7 @@ extension ScheduleMeetingRouter: ScheduleMeetingRouting {
     @MainActor
     func dismiss(animated: Bool) async {
         await withCheckedContinuation { continuation in
-            presenter.dismiss(animated: true) {
+            presenter.dismiss(animated: animated) {
                 continuation.resume()
             }
         }

@@ -1,7 +1,6 @@
 import MEGADomain
 
 final class ScheduleMeetingEndRecurrenceOptionsViewModel: ObservableObject {
-    private let router: ScheduleMeetingEndRecurrenceOptionsRouter
 
     @Published
     var endRecurrenceDate: Date {
@@ -14,11 +13,10 @@ final class ScheduleMeetingEndRecurrenceOptionsViewModel: ObservableObject {
     private(set) var rules: ScheduledMeetingRulesEntity
     let startDate: Date
 
-    init(router: ScheduleMeetingEndRecurrenceOptionsRouter, startDate: Date) {
-        self.router = router
-        self.rules = router.rules
+    init(rules: ScheduledMeetingRulesEntity, startDate: Date) {
+        self.rules = rules
         self.startDate = startDate
-        self.endRecurrenceDate = router.rules.until ?? Calendar.autoupdatingCurrent.date(byAdding: .month, value: 6, to: startDate) ?? Date()
+        self.endRecurrenceDate = rules.until ?? Calendar.autoupdatingCurrent.date(byAdding: .month, value: 6, to: startDate) ?? Date()
     }
     
     func endRecurrenceNeverSelected() {

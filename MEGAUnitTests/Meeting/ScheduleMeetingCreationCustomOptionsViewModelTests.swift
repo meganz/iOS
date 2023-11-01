@@ -147,13 +147,7 @@ final class ScheduleMeetingCreationCustomOptionsViewModelTests: XCTestCase {
         viewModel.update(interval: 2)
         XCTAssertNil(viewModel.rules.weekDayList)
     }
-    
-    func testUpdateFrequency_shouldMatch() {
-        let viewModel = makeViewModel(withFrequency: .daily)
-        viewModel.update(frequency: .monthly)
-        XCTAssertEqual(viewModel.frequency, .monthly)
-    }
-    
+
     func testToggleFrequencyOption_whenCollapsed_shouldBeTrue() {
         let viewModel = makeViewModel(withFrequency: .daily)
         viewModel.toggleFrequencyOption()
@@ -252,7 +246,6 @@ final class ScheduleMeetingCreationCustomOptionsViewModelTests: XCTestCase {
         startDate: Date = Date()
     ) -> ScheduleMeetingCreationCustomOptionsViewModel {
         ScheduleMeetingCreationCustomOptionsViewModel(
-            router: MockScheduleMeetingCreationCustomOptionsRouter(),
             rules: makeRules(withFrequency: frequency, interval: interval),
             startDate: startDate
         )
@@ -273,8 +266,4 @@ final class ScheduleMeetingCreationCustomOptionsViewModelTests: XCTestCase {
         dateFormatter.dateFormat = "dd/MM/yyyy"
         return dateFormatter.date(from: "14/06/2023")
     }
-}
-
-final class MockScheduleMeetingCreationCustomOptionsRouter: ScheduleMeetingCreationCustomOptionsRouting {
-    func start() {}
 }

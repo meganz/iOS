@@ -13,19 +13,7 @@ final class ScheduleMeetingCreationWeeklyCustomOptionsViewModelTests: XCTestCase
         let viewModel = makeViewModel(withWeekDayList: [1])
         XCTAssertEqual(viewModel.selectedWeekDays, Set([WeekDaysInformation().symbols[0]]))
     }
-    
-    func testUpdateWeekDayList_withSingleDaySelected_shouldMatch() {
-        let viewModel = makeViewModel(withWeekDayList: [5])
-        viewModel.updateWeekDayList(Set([WeekDaysInformation().symbols[0]]))
-        XCTAssertEqual(viewModel.rules.weekDayList, [1])
-    }
-    
-    func testUpdateWeekDayList_withAllDaysSelected_shouldMatch() {
-        let viewModel = makeViewModel(withWeekDayList: [5])
-        viewModel.updateWeekDayList(Set(WeekDaysInformation().symbols))
-        XCTAssertEqual(viewModel.rules.weekDayList, Array(1...7))
-    }
-    
+
     func testToogleSelection_givenOnlyWeekDaySelectedShouldNotBeRemoved_shouldMatch() {
         let viewModel = makeViewModel(withWeekDayList: [1])
         viewModel.toggleSelection(forWeekDay: WeekDaysInformation().symbols[0])

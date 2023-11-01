@@ -2,7 +2,6 @@ import MEGAL10n
 import SwiftUI
 
 struct ScheduleMeetingCreationCustomOptionsView: View {
-    @Environment(\.colorScheme) private var colorScheme
     @StateObject var viewModel: ScheduleMeetingCreationCustomOptionsViewModel
     
     var body: some View {
