@@ -13,7 +13,7 @@ final class AudioPlaylistViewRouter: NSObject, AudioPlaylistViewRouting {
     func build() -> UIViewController {
         let vc = UIStoryboard(name: "AudioPlayer", bundle: nil).instantiateViewController(withIdentifier: "AudioPlaylistViewControllerID") as! AudioPlaylistViewController
 
-        vc.viewModel = AudioPlaylistViewModel(configEntity: configEntity, router: self, nodeInfoUseCase: NodeInfoUseCase())
+        vc.viewModel = AudioPlaylistViewModel(configEntity: configEntity, router: self)
         baseViewController = vc
         
         return vc

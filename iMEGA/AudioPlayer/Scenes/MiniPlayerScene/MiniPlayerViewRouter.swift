@@ -3,7 +3,6 @@ import MEGAPresentation
 import UIKit
 
 final class MiniPlayerViewRouter: NSObject, MiniPlayerViewRouting {
-    private weak var baseViewController: UIViewController?
     private weak var presenter: UIViewController?
     private var configEntity: AudioPlayerConfigEntity
     private var folderSDKLogoutRequired: Bool = false
@@ -30,8 +29,6 @@ final class MiniPlayerViewRouter: NSObject, MiniPlayerViewRouting {
             audioPlayerUseCase: AudioPlayerUseCase(repository: AudioPlayerRepository(sdk: sdk)),
             sdk: sdk
         )
-        
-        baseViewController = vc
         
         return vc
     }

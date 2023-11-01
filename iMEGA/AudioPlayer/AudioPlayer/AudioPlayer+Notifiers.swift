@@ -76,14 +76,6 @@ extension AudioPlayer: AudioPlayerNotifyObserversProtocol {
         listenerManager.notify { $0.audio?(player: player, reload: item) }
     }
     
-    func aboutAudioPlayerDidPausePlayback(_ observer: some AudioPlayerObserversProtocol) {
-        observer.audioPlayerDidPausePlayback?()
-    }
-    
-    func aboutAudioPlayerDidResumePlayback(_ observer: some AudioPlayerObserversProtocol) {
-        observer.audioPlayerDidResumePlayback?()
-    }
-    
     func aboutAudioPlayerConfiguration(_ observer: some AudioPlayerObserversProtocol) {
         guard let player = queuePlayer else { return }
         

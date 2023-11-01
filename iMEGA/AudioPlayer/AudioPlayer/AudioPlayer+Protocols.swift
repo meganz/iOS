@@ -106,8 +106,6 @@ protocol AudioPlayerNotifyObserversProtocol: AudioPlayerProtocol {
     func aboutShowingLoadingView(_ observer: some AudioPlayerObserversProtocol)
     func aboutHidingLoadingView(_ observer: some AudioPlayerObserversProtocol)
     func aboutUpdateCurrentIndexPath(_ observer: some AudioPlayerObserversProtocol)
-    func aboutAudioPlayerDidPausePlayback(_ observer: some AudioPlayerObserversProtocol)
-    func aboutAudioPlayerDidResumePlayback(_ observer: some AudioPlayerObserversProtocol)
     func aboutAudioPlayerConfiguration(_ observer: some AudioPlayerObserversProtocol)
     func aboutAudioPlayerDidFinishBuffering(_ observer: some AudioPlayerObserversProtocol)
     func aboutStartPlayingNewItem(_ observer: some AudioPlayerObserversProtocol)

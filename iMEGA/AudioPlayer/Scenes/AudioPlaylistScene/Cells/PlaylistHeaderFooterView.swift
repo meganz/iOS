@@ -31,13 +31,13 @@ final class PlaylistHeaderFooterView: UITableViewHeaderFooterView {
     
     // MARK: - Private functions
     private func updateAppearance() {
-        style(with: traitCollection)
+        style()
         
         contentView.backgroundColor = .mnz_backgroundElevated(traitCollection)
         separatorView.backgroundColor = UIColor.mnz_gray3C3C43().withAlphaComponent(0.29)
     }
     
-    private func style(with trait: UITraitCollection) {
+    private func style() {
         typeLabel.textColor = .mnz_green00A886()
     }
 }
