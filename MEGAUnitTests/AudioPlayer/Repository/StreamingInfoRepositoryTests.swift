@@ -26,25 +26,6 @@ final class StreamingInfoRepositoryTests: XCTestCase {
         XCTAssertNil(result, "Expect nil non nil, got nil instead.")
     }
     
-    func testInfoFromHandle_whenInvalidHandleEntity_returnsNilNode() {
-        let sdk = MockSdk(nodes: [])
-        let sut = makeSUT(sdk: sdk)
-        
-        let result = sut.info(fromHandle: .invalid)
-        
-        XCTAssertNil(result, "Expect nil result, got non nil instead.")
-    }
-    
-    func testInfoFromHandle_whenValidHandleEntity_returnsNonNilNode() {
-        let expectedNode = MockNode(handle: 1)
-        let sdk = MockSdk(nodes: [expectedNode])
-        let sut = makeSUT(sdk: sdk)
-        
-        let result = sut.info(fromHandle: expectedNode.handle)
-        
-        XCTAssertEqual(result?.handle, expectedNode.handle, "Expect get same node, got different node instead.")
-    }
-    
     func testPathFromNode_returnsNil() {
         let validNode = MockNode(handle: 1, name: "any-name")
         let sdk = MockSdk(nodes: [validNode])

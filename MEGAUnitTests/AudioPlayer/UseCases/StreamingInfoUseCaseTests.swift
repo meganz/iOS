@@ -14,11 +14,6 @@ final class StreamingInfoUseCaseTests: XCTestCase {
         XCTAssertNil(nodeStreamingInfoFailureRepository.info(fromFolderLinkNode: MEGANode()))
     }
     
-    func testGetInfoFromHandleNode() {
-        XCTAssertNotNil(nodeStreamingInfoSuccessRepository.info(fromHandle: HandleEntity()))
-        XCTAssertNil(nodeStreamingInfoFailureRepository.info(fromHandle: HandleEntity()))
-    }
-    
     func testGetPathFromNode() throws {
         let nodePath = try XCTUnwrap(nodeStreamingInfoSuccessRepository.path(fromNode: MEGANode()))
         let mockNodePath = try XCTUnwrap(AudioPlayerItem.mockItem.url)

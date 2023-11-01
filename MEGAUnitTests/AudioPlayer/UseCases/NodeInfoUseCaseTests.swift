@@ -44,11 +44,4 @@ final class NodeInfoUseCaseTests: XCTestCase {
         XCTAssertEqual(nodeInfoArray.compactMap {$0.url}, mockArray.compactMap {$0.url})
         XCTAssertNil(nodeInfoFailureRepository.info(fromNodes: [MEGANode()]))
     }
-    
-    func testGetPublicNodeFromFileLink() async {
-        let successNode = await nodeInfoSuccessRepository.publicNode(fromFileLink: "")
-        XCTAssertNotNil(successNode)
-        let failureNode = await nodeInfoFailureRepository.publicNode(fromFileLink: "")
-        XCTAssertNil(failureNode)
-    }
 }

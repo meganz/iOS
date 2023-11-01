@@ -21,13 +21,6 @@ class MockStreamingInfoRepository: StreamingInfoRepositoryProtocol {
         }
     }
     
-    func info(fromHandle: HandleEntity) -> MEGANode? {
-        switch result {
-        case .failure: return nil
-        case .success: return MEGANode()
-        }
-    }
-    
     func path(fromNode: MEGANode) -> URL? {
         pathFromNodeCallCount += 1
         switch result {
