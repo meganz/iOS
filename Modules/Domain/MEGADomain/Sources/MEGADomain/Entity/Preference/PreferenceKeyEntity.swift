@@ -34,4 +34,5 @@ public enum PreferenceKeyEntity: String {
     case shouldDisplayMediaDiscoveryWhenMediaOnly
     case mediaDiscoveryShouldIncludeSubfolderMedia
     case autoMediaDiscoveryBannerDismissed
+    case isCameraUploadsEnabled = "IsCameraUploadsEnabled"
 }

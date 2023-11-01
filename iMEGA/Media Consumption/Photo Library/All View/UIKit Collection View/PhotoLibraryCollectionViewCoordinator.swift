@@ -4,41 +4,61 @@ import MEGADomain
 import SwiftUI
 import UIKit
 
+enum PhotoLibrarySupplementaryElementKind: String {
+    case photoDateSectionHeader = "photo-date-section-header-kind"
+    case layoutHeader = "layout-header-element-kind"
+    
+    var elementKind: String { rawValue }
+}
+
 @available(iOS 16.0, *)
 final class PhotoLibraryCollectionViewCoordinator: NSObject {
     private var subscriptions = Set<AnyCancellable>()
     private let router: PhotoLibraryContentViewRouter
-    
     private let representer: PhotoLibraryCollectionViewRepresenter
-    private var photoSections = [PhotoDateSection]()
     private var collectionView: UICollectionView?
     private var headerRegistration: UICollectionView.SupplementaryRegistration<UICollectionViewCell>!
-    private var cellRegistration: UICollectionView.CellRegistration<PhotoLibraryCollectionCell, NodeEntity>!
+    private var bannerRegistration: UICollectionView.SupplementaryRegistration<UICollectionViewCell>!
+    private var photoCellRegistration: UICollectionView.CellRegistration<PhotoLibraryCollectionCell, NodeEntity>!
+    private typealias PhotoLibraryEnableCameraUploadCollectionCell = UICollectionViewCell
+    private let layoutChangesMonitor: PhotoLibraryCollectionViewLayoutChangesMonitor
     private var scrollTracker: PhotoLibraryCollectionViewScrollTracker!
+    
+    private var photoLibraryDataSource: [PhotoDateSection] {
+        layoutChangesMonitor.photoLibraryDataSource
+    }
     
     init(_ representer: PhotoLibraryCollectionViewRepresenter) {
         self.representer = representer
         router = PhotoLibraryContentViewRouter(contentMode: representer.contentMode)
+        layoutChangesMonitor = PhotoLibraryCollectionViewLayoutChangesMonitor(representer)
         super.init()
-        subscribeToPhotoCategoryList()
-        subscribeToZoomState()
     }
     
     func configureDataSource(for collectionView: UICollectionView) {
         self.collectionView = collectionView
-        collectionView.dataSource = self
-        collectionView.delegate = self
         
-        headerRegistration = UICollectionView.SupplementaryRegistration<UICollectionViewCell>(
-            elementKind: UICollectionView.elementKindSectionHeader
-        ) { [unowned self] header, _, indexPath in
+        headerRegistration = UICollectionView.SupplementaryRegistration<UICollectionViewCell>(elementKind: PhotoLibrarySupplementaryElementKind.photoDateSectionHeader.elementKind) { [unowned self] header, _, indexPath in
             header.contentConfiguration = UIHostingConfiguration {
-                PhotoSectionHeader(section: self.photoSections[indexPath.section])
+                PhotoSectionHeader(section: photoLibraryDataSource[indexPath.section])
             }
             .margins(.all, 0)
         }
         
-        cellRegistration = UICollectionView.CellRegistration<PhotoLibraryCollectionCell, NodeEntity> { [unowned self] cell, _, photo in
+        bannerRegistration =  UICollectionView.SupplementaryRegistration<UICollectionViewCell>(elementKind: PhotoLibrarySupplementaryElementKind.layoutHeader.elementKind) { [unowned self] header, _, _ in
+            header.contentConfiguration = UIHostingConfiguration {
+                EnableCameraUploadsBannerView()
+                    .determineViewSize { [weak self] size in
+                        self?.representer
+                            .viewModel
+                            .photoZoomControlPositionTracker
+                            .update(viewSpace: size.height)
+                    }
+            }
+            .margins(.all, 0)
+        }
+        
+        photoCellRegistration = UICollectionView.CellRegistration { [unowned self] cell, _, photo in
             let viewModel = PhotoCellViewModel(
                 photo: photo,
                 viewModel: representer.viewModel,
@@ -55,6 +75,17 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
         }
         
         configureScrollTracker(for: collectionView)
+        
+        layoutChangesMonitor.configure(collectionView: collectionView)
+        
+        collectionView.dataSource = self
+        collectionView.delegate = self
+    }
+        
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        representer.viewModel
+            .photoZoomControlPositionTracker
+            .trackContentOffset(scrollView.contentOffset.y)
     }
     
     private func configureScrollTracker(for collectionView: UICollectionView) {
@@ -67,76 +98,35 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
     }
 }
 
-// MARK: - Reload data
-@available(iOS 16.0, *)
-extension PhotoLibraryCollectionViewCoordinator {
-    private func subscribeToPhotoCategoryList() {
-        representer.viewModel
-            .$photoCategoryList
-            .sink { [weak self] in
-                let shouldRefresh = self?.shouldRefresh(to: $0) == true
-                self?.photoSections = $0
-                if shouldRefresh {
-                    self?.collectionView?.reloadData()
-                }
-            }
-            .store(in: &subscriptions)
-    }
-    
-    private func shouldRefresh(to sections: [PhotoDateSection]) -> Bool {
-        guard let collectionView else { return false }
-        let visiblePositions = Dictionary(
-            uniqueKeysWithValues:
-                collectionView.indexPathsForVisibleItems.compactMap {
-                    self.photoSections.position(at: $0)
-                }.map {
-                    ($0, true)
-                }
-        )
-        
-        return photoSections.shouldRefresh(to: sections, visiblePositions: visiblePositions)
-    }
-}
-
-// MARK: - Reload layout
-@available(iOS 16.0, *)
-extension PhotoLibraryCollectionViewCoordinator {
-    private func subscribeToZoomState() {
-        representer.viewModel
-            .$zoomState
-            .dropFirst()
-            .map {
-                PhotoLibraryCollectionLayoutBuilder(zoomState: $0).buildLayout()
-            }
-            .receive(on: RunLoop.main)
-            .sink { [weak self] in
-                self?.collectionView?.setCollectionViewLayout($0, animated: true)
-            }
-            .store(in: &subscriptions)
-    }
-}
-
 // MARK: - UICollectionViewDataSource
 @available(iOS 16.0, *)
 extension PhotoLibraryCollectionViewCoordinator: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        photoSections.count
+        photoLibraryDataSource.count
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        photoSections[section].contentList.count
+        photoLibraryDataSource[section].contentList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         collectionView.dequeueConfiguredReusableCell(
-            using: cellRegistration,
+            using: photoCellRegistration,
             for: indexPath,
-            item: photoSections.photo(at: indexPath)
+            item: photoLibraryDataSource.photo(at: indexPath)
         )
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
+        switch PhotoLibrarySupplementaryElementKind(rawValue: kind) {
+        case .layoutHeader:
+            return collectionView.dequeueConfiguredReusableSupplementary(using: bannerRegistration, for: indexPath)
+        case .photoDateSectionHeader:
+            return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
+        case .none:
+            fatalError("Unknown supported PhotoLibraryCollectionViewCoordinator.viewForSupplementaryElementOfKind: \(kind)")
+        }
     }
 }
 
@@ -144,9 +134,9 @@ extension PhotoLibraryCollectionViewCoordinator: UICollectionViewDataSource {
 @available(iOS 16.0, *)
 extension PhotoLibraryCollectionViewCoordinator: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let photo = photoSections.photo(at: indexPath) else { return }
+        guard let photo = photoLibraryDataSource.photo(at: indexPath) else { return }
         
-        router.openPhotoBrowser(for: photo, allPhotos: photoSections.allPhotos)
+        router.openPhotoBrowser(for: photo, allPhotos: photoLibraryDataSource.allPhotos)
     }
 }
 
@@ -159,11 +149,11 @@ extension PhotoLibraryCollectionViewCoordinator: PhotoLibraryCollectionViewScrol
             return
         }
         
-        guard let indexPath = photoSections.indexPath(of: position) else { return }
+        guard let indexPath = photoLibraryDataSource.indexPath(of: position) else { return }
         collectionView?.scrollToItem(at: indexPath, at: .centeredVertically, animated: false)
     }
     
     func position(at indexPath: IndexPath) -> PhotoScrollPosition? {
-        photoSections.position(at: indexPath)
+        photoLibraryDataSource.position(at: indexPath)
     }
 }

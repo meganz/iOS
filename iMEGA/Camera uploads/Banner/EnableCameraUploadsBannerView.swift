@@ -16,7 +16,7 @@ struct EnableCameraUploadsBannerView: View {
     @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             HStack(alignment: .center, spacing: Constants.contentHorizontalSpacing) {
                 Image(.cuStatusEnable)
                 
@@ -26,7 +26,7 @@ struct EnableCameraUploadsBannerView: View {
                     Text(Strings.Localizable.CameraUploads.Banner.EnableState.description)
                         .font(Font.system(size: 11, weight: .regular, design: .default))
                 }
-                .frame(maxWidth: .infinity)
+                .frame(maxWidth: .infinity, alignment: .leading)
                
                 Image(.cuBannerChevron)
                     .frame(width: Constants.chevronFrameWidth,
@@ -34,10 +34,10 @@ struct EnableCameraUploadsBannerView: View {
             }
             .padding(.vertical, Constants.contentVerticalPadding)
             .padding(.horizontal, Constants.contentHorizontalPadding)
-            .frame(maxWidth: .infinity, alignment: .leading)
+            
+            Divider()
+                .background(bannerBorderColor)
         }
-        .border(bannerBorderColor,
-                width: Constants.bannerBorderWidth)
     }
     
     private var bannerBackgroundColor: Color {
@@ -53,6 +53,12 @@ struct EnableCameraUploadsBannerView: View {
 
 struct EnableCameraUploadsBannerView_Preview: PreviewProvider {
     static var previews: some View {
+        
         EnableCameraUploadsBannerView()
+        
+        if #available(iOS 15.0, *) {
+            EnableCameraUploadsBannerView()
+                .previewInterfaceOrientation(.landscapeLeft)
+        }
     }
 }

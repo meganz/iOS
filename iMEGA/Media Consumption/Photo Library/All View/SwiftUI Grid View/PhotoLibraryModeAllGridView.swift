@@ -11,6 +11,14 @@ struct PhotoLibraryModeAllGridView: View {
             GeometryReader { geoProxy in
                 ScrollViewReader { scrollProxy in
                     PhotoLibraryModeView(viewModel: viewModel) {
+                            EnableCameraUploadsBannerView()
+                                .determineViewSize { size in
+                                    viewModel.photoZoomControlPositionTracker.update(viewSpace: size.height + 8)
+                                }
+                                .opacity(viewModel.showEnableCameraUpload ? 1 : 0)
+                                .frame(maxHeight: viewModel.showEnableCameraUpload ? .infinity : 0)
+                                .animation(.default, value: viewModel.showEnableCameraUpload)
+                        
                         LazyVGrid(columns: viewModel.columns, spacing: 4, pinnedViews: .sectionHeaders) {
                             ForEach(viewModel.photoCategoryList) { section in
                                 sectionView(for: section, viewPortSize: geoProxy.size)
@@ -21,11 +29,14 @@ struct PhotoLibraryModeAllGridView: View {
                     .background(PhotoAutoScrollView(viewModel:
                                                         PhotoAutoScrollViewModel(viewModel: viewModel),
                                                     scrollProxy: scrollProxy))
+                    .onPreferenceChange(OffsetPreferenceKey.self) {
+                        viewModel.photoZoomControlPositionTracker.trackContentOffset($0)
+                    }
                 }
             }
             
             PhotoLibraryZoomControl(zoomState: $viewModel.zoomState)
-                .offset(y: 5)
+                .offset(by: viewModel.photoZoomControlPositionTracker)
         }
         .onReceive(viewModel.$selectedNode) { photo in
             guard let photo = photo else { return }

@@ -10,7 +10,7 @@ public extension Publisher {
     
     /// Publishes elements only after a specified time interval elapses between events. Except for the first element, that will publish immediately in to the downstream.
     ///
-    /// Refer to the Publisher/debounce(for:scheduler:options: to understand its functionailty
+    /// Refer to the Publisher/debounce(for:scheduler:options: to understand its functionality
     /// - Parameters:
     ///   - dueTime: The time the publisher should wait before publishing an element.
     ///   - scheduler: The scheduler on which this publisher delivers elements

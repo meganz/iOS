@@ -2,6 +2,7 @@ import SwiftUI
 
 @available(iOS 16.0, *)
 struct PhotoLibraryModeAllCollectionView: View {
+    
     @StateObject var viewModel: PhotoLibraryModeAllCollectionViewModel
     
     var body: some View {
@@ -9,6 +10,7 @@ struct PhotoLibraryModeAllCollectionView: View {
             PhotoLibraryCollectionViewRepresenter(viewModel: viewModel)
                 .ignoresSafeArea(edges: .bottom)
             PhotoLibraryZoomControl(zoomState: $viewModel.zoomState)
+                .offset(by: viewModel.photoZoomControlPositionTracker)
         }
     }
 }
