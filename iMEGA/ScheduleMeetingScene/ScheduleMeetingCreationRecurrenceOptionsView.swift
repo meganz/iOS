@@ -2,7 +2,6 @@ import MEGAL10n
 import SwiftUI
 
 struct ScheduleMeetingCreationRecurrenceOptionsView: View {
-    @Environment(\.colorScheme) private var colorScheme
     @StateObject var viewModel: ScheduleMeetingCreationRecurrenceOptionsViewModel
 
     var body: some View {

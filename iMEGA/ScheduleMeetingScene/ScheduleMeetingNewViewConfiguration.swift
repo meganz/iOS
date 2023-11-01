@@ -63,11 +63,7 @@ final class ScheduleMeetingNewViewConfiguration: ScheduleMeetingViewConfigurable
         components.minute = (minutes + 4) / 5 * 5
         return calendar.date(from: components) ?? date
     }
-    
-    private func trim(_ string: String) -> String {
-        string.trimmingCharacters(in: .whitespacesAndNewlines)
-    }
-    
+
     private func createMeetingLinkIfNeeded(
         for scheduledMeeting: ScheduledMeetingEntity,
         proxy meeting: ScheduleMeetingProxyEntity

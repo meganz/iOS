@@ -3,7 +3,6 @@ import SwiftUI
 
 struct ScheduleMeetingCreationDateAndRecurrenceView: View {
     @ObservedObject var viewModel: ScheduleMeetingViewModel
-    @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
         VStack(spacing: 0) {

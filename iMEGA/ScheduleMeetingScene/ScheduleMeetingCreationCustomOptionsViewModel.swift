@@ -49,15 +49,9 @@ final class ScheduleMeetingCreationCustomOptionsViewModel: ObservableObject {
     private(set) var weeklyOptionsViewModel: ScheduleMeetingCreationWeeklyCustomOptionsViewModel?
     
     private var subscriptions = Set<AnyCancellable>()
-    private let router: any ScheduleMeetingCreationCustomOptionsRouting
     private let startDate: Date
 
-    init(
-        router: some ScheduleMeetingCreationCustomOptionsRouting,
-        rules: ScheduledMeetingRulesEntity,
-        startDate: Date
-    ) {
-        self.router = router
+    init(rules: ScheduledMeetingRulesEntity, startDate: Date) {
         self.rules = rules
         self.startDate = startDate
         resetFrequencyToDailyFrequencyIfNeeded()
@@ -81,10 +75,6 @@ final class ScheduleMeetingCreationCustomOptionsViewModel: ObservableObject {
         }
         monthlyOptionsViewModel?.update(interval: interval)
         weeklyOptionsViewModel?.update(interval: interval)
-    }
-    
-    func update(frequency: ScheduledMeetingRulesEntity.Frequency) {
-        rules.frequency = frequency
     }
     
     func string(forInterval interval: Int) -> String? {

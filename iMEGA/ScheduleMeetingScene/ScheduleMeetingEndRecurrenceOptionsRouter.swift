@@ -16,7 +16,7 @@ final class ScheduleMeetingEndRecurrenceOptionsRouter {
     
     @discardableResult
     func start() -> ScheduleMeetingEndRecurrenceOptionsViewModel {
-        let viewModel = ScheduleMeetingEndRecurrenceOptionsViewModel(router: self, startDate: startDate)
+        let viewModel = ScheduleMeetingEndRecurrenceOptionsViewModel(rules: rules, startDate: startDate)
         
         viewModel
             .$rules

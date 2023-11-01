@@ -18,16 +18,7 @@ final class ScheduleMeetingCreationWeeklyCustomOptionsViewModel: ObservableObjec
     init(rules: ScheduledMeetingRulesEntity) {
         self.rules = rules
     }
-    
-    func updateWeekDayList(_ selectedWeekDays: Set<String>?) {
-        guard let selectedWeekDays else {
-            rules.weekDayList = nil
-            return
-        }
-        
-        rules.weekDayList = convertToWeekDayList(selectedWeekDays: selectedWeekDays)
-    }
-    
+
     func toggleSelection(forWeekDay weekDay: String) {
         guard let weekDayInt = convertToWeekDayList(selectedWeekDays: [weekDay]).first else { return }
         
