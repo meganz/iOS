@@ -67,7 +67,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA無法透過SSL安全的連線，您可能在使用有額外要求的公共Wi-Fi。";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="您嘗試存取的內容無法讓此帳戶存取。請試著以在手機瀏覽器中所登入的相同帳戶進行登入。";
+"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Please try to log in with same account as in the mobile browser.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="此處理過程比預期的要長。請稍候⋯";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -2681,7 +2681,7 @@
 /* Message description when the user enters a invalid meeting URL */
 "meetings.joinMeeting.description"="無法加入會議。請檢查連結是有效的。";
 /* Message shown when the meeting link cannot be generated */
-"meetings.sharelink.Error"="無法產生會議連結。請再試一次。";
+"meetings.sharelink.Error"="無法生成會議連結。請再試一次。";
 /* Button text to join a meeting for the logged in user */
 "meetings.link.loggedInUser.joinButtonText"="加入會議";
 /* Button text to join a meeting for the logged in user */
@@ -3475,7 +3475,7 @@
 /* Device Center backup error: Shared folder quota reached */
 "device.center.backup.error.userSharedQuotaReached"="資料夾無法同步，因為共享此資料夾的使用者已達到其儲存配額限制。";
 /* Device Center backup error: Shared folder without full access */
-"device.center.backup.error.sharedFolderNoFullAccess"="由於它是一個不具完全存取權限的共享資料夾，因此無法進行同步。";
+"device.center.backup.error.sharedFolderNoFullAccess"="由於它是一個不具完全控制權限的共享資料夾，因此無法進行同步。";
 /* Device Center backup error: Files can't be synced */
 "device.center.backup.error.filesInFolder"="無法同步或備份此資料夾中的檔案。您需要從桌面應用程式重新啟用同步或備份。";
 /* Device Center backup error: Folder contains synced folders */
@@ -3834,3 +3834,27 @@
 "Error.nodeCopyOrMove.circularDependency"="您無法移動此資料夾，因為目的地是同一個資料夾。";
 /* Auto media discovery banner title */
 "photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="由於此資料夾僅包含圖片和影片，我們已經自動在媒體探索檢視中開啟它。您可以透過更身臨其境的佈局享受您的視覺內容。您可以在設定中停用此功能。";
+/* Upgrade account screen header title after user onboarding */
+"onboarding.upgradeAccount.header.title"="使用Pro方案擁有更多";
+/* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
+"onboarding.upgradeAccount.header.subTitle"="升級到Pro方案獲得更多儲存空間和許多額外的功能。我們的方案從每月%@起。";
+/* Upgrade account screen content header for pro plan feature list */
+"onboarding.upgradeAccount.content.proPlanFeatureHeader"="一些值得期待的功能是：";
+/* Upgrade account screen content title about pro plan featuring as Generous Storage */
+"onboarding.upgradeAccount.content.generousStorage.title"="大容量空間";
+/* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Store unlimited data, starting from 400 GB. */
+"onboarding.upgradeAccount.content.generousStorage.message"="儲存無限資料，從[A][B]起。";
+/* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
+"onboarding.upgradeAccount.content.transferSharing.title"="傳輸流量共享";
+/* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
+"onboarding.upgradeAccount.content.transferSharing.message"="與您共享資料的人可以使用您的傳輸配額來下載和串流傳輸您所共享的項目。";
+/* Upgrade account screen content title about pro plan featuring the Additional security when sharing */
+"onboarding.upgradeAccount.content.additionalSecurity.title"="共享時的額外安全性";
+/* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
+"onboarding.upgradeAccount.content.additionalSecurity.message"="設定檔案和資料夾連結的密碼和到期日期。";
+/* Upgrade account screen button title that will direct to Upgrade plan page */
+"onboarding.upgradeAccount.button.viewProPlans"="查看Pro方案";
+/* Camera uploads banner enable state title */
+"cameraUploads.banner.enableState.title"="啟用相機上傳";
+/* Camera uploads banner enable state description */
+"cameraUploads.banner.enableState.description"="自動將您的相片與影片備份到您的雲端硬碟。";

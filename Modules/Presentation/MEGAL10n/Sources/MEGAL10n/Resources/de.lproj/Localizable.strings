@@ -67,7 +67,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Ihre SSL-Verbindung zu den MEGA-Servern wurde manipuliert. Bitte prüfen Sie, ob Ihr WLAN-Hotspot einen Login erfordert.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="Der Inhalt, auf den Sie zugreifen möchten, ist mit diesem Account nicht zugänglich. Bitte melden Sie sich mit demselben Account wie im mobilen Webclient an.";
+"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Please try to log in with same account as in the mobile browser.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="Der Vorgang dauert ungewöhnlich lange. Bitte haben Sie Geduld…";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -983,7 +983,7 @@
 /* Message shown when you click on 'Close other session' to block other login sessions except the current session in use. This message is shown when this has been done. */
 "sessionsClosed"="Sitzungen geschlossen";
 /* Section title where you can change the app's passcode */
-"changePasscodeLabel"="Pincode ändern";
+"changePasscodeLabel"="Passcode ändern";
 /* Title to describe a simple (four digit) passcode */
 "simplePasscodeLabel"="Einfacher Passcode";
 /* Title of one of the passcode options. If enabled will do what footer explains. */
@@ -3473,7 +3473,7 @@
 /* Device Center backup error: Plan expired */
 "device.center.backup.error.planExpired"="Dieser Ordner kann nicht synchronisiert oder gesichert werden, da Ihr Paket abgelaufen ist.";
 /* Device Center backup error: Shared folder quota reached */
-"device.center.backup.error.userSharedQuotaReached"="Folder can’t be synced as the user who shared this folder has reached their storage quota limit.";
+"device.center.backup.error.userSharedQuotaReached"="Der Ordner kann nicht synchronisiert werden, da der freigebende Benutzer sein Speicherplatzlimit erreicht hat.";
 /* Device Center backup error: Shared folder without full access */
 "device.center.backup.error.sharedFolderNoFullAccess"="Der Ordner kann nicht synchronisiert werden, da es sich um einen freigegebenen Ordner handelt, auf den Sie keinen Vollzugriff haben.";
 /* Device Center backup error: Files can't be synced */
@@ -3535,7 +3535,7 @@
 /* Device Center camera upload status disabled */
 "device.center.camera.uploads.action.status.disabled"="Deaktiviert";
 /* Device center current device empty state message */
-"device.center.current.device.empty.state.message"="Nothing set up yet";
+"device.center.current.device.empty.state.message"="Noch nichts eingerichtet";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="Wiederholung beenden";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3831,6 +3831,30 @@
 /* A button label to close the waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.close"="Schließen";
 /* Error shown when moving folder to inside itself */
-"Error.nodeCopyOrMove.circularDependency"="You can’t move this folder as the destination is the same folder.";
+"Error.nodeCopyOrMove.circularDependency"="Sie können diesen Ordner nicht verschieben, da das Ziel derselbe Ordner ist.";
 /* Auto media discovery banner title */
 "photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="Da dieser Ordner nur Bilder und Videos enthält, haben wir ihn automatisch in der Medienerkennungsansicht geöffnet. So können Sie Ihre visuellen Inhalte in einem ablenkungsfreien Layout genießen. Sie können dies in den Einstellungen deaktivieren.";
+/* Upgrade account screen header title after user onboarding */
+"onboarding.upgradeAccount.header.title"="Mit einem Pro-Paket bekommen Sie mehr";
+/* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
+"onboarding.upgradeAccount.header.subTitle"="Ein Pro-Paket bietet Ihnen mehr Speicherplatz und viele zusätzliche Funktionen. Unsere Pakete erhalten Sie bereits ab %@ pro Monat.";
+/* Upgrade account screen content header for pro plan feature list */
+"onboarding.upgradeAccount.content.proPlanFeatureHeader"="Sie können sich unter anderem auf folgende Funktionen freuen:";
+/* Upgrade account screen content title about pro plan featuring as Generous Storage */
+"onboarding.upgradeAccount.content.generousStorage.title"="Großzügiger Speicherplatz";
+/* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Store unlimited data, starting from 400 GB. */
+"onboarding.upgradeAccount.content.generousStorage.message"="Speichern Sie beliebig viele Daten, beginnend mit [A] [B].";
+/* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
+"onboarding.upgradeAccount.content.transferSharing.title"="Transfervolumen teilen";
+/* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
+"onboarding.upgradeAccount.content.transferSharing.message"="Die Personen, für die Sie Daten freigeben, können Ihr Transfervolumen nutzen, um die von Ihnen freigegebenen Inhalte herunterzuladen und zu streamen.";
+/* Upgrade account screen content title about pro plan featuring the Additional security when sharing */
+"onboarding.upgradeAccount.content.additionalSecurity.title"="Mehr Sicherheit beim Teilen";
+/* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
+"onboarding.upgradeAccount.content.additionalSecurity.message"="Schützen Sie Datei- und Ordnerlinks mit Passwort und Ablaufdatum.";
+/* Upgrade account screen button title that will direct to Upgrade plan page */
+"onboarding.upgradeAccount.button.viewProPlans"="Pro-Pakete ansehen";
+/* Camera uploads banner enable state title */
+"cameraUploads.banner.enableState.title"="Kamera-Uploads aktivieren";
+/* Camera uploads banner enable state description */
+"cameraUploads.banner.enableState.description"="Automatisches Backup Ihrer Fotos und Videos in Ihr Cloud Drive.";

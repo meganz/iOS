@@ -67,7 +67,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA no puede conectarse de forma segura a través de SSL. Es posible que estés conectado a una Wi-Fi pública con requisitos adicionales.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="El contenido al que estás intentando acceder no pertenece a esta cuenta. Inicia sesión con la misma cuenta que tienes abierta en el navegador.";
+"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Please try to log in with same account as in the mobile browser.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="Tardando más de lo previsto. Por favor, espera…";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -3485,41 +3485,41 @@
 /* Device Center backup error: MEGA folder in rubbish bin */
 "device.center.backup.error.folderInRubbish"="Los archivos de esta carpeta no se pueden sincronizar ni se puede hacer un backup porque la carpeta de MEGA está en la Papelera.";
 /* Device Center backup error: Can't sync VirtualBox folders */
-"device.center.backup.error.virtualboxFolders"="MEGA can’t sync or back up VirtualBox folders.";
+"device.center.backup.error.virtualboxFolders"="MEGA no puede sincronizar ni hacer backups de las carpetas de VirtualBox.";
 /* Device Center backup error: Account blocked */
-"device.center.backup.error.accountBlocked"="Unable to sync or back up this folder as the account has been blocked.";
+"device.center.backup.error.accountBlocked"="No se puede sincronizar ni hacer backups de esta carpeta porque la cuenta está bloqueada.";
 /* Device Center backup error: Contact support for sync issues */
-"device.center.backup.error.problemSyncingContactSupport"="Problem syncing or backing up this folder. Try again later. If the issue continues, contact Support.";
+"device.center.backup.error.problemSyncingContactSupport"="Se ha producido un problema al sincronizar o hacer un backup de esta carpeta. Vuelve a intentarlo más tarde. Si el problema persiste, ponte en contacto con el servicio de soporte.";
 /* Device Center backup error: Account reloaded */
 "device.center.backup.error.accountReloaded"="Cuenta recargada. No se han realizado actualizaciones pendientes de tus backups o sincronizaciones.";
 /* Device Center backup error: Logged out of Desktop app */
-"device.center.backup.error.loggedOut"="Sync or backup has been stopped as you appear to have logged out of the Desktop app. Log back in via the Desktop app, and resume the sync or backup.";
+"device.center.backup.error.loggedOut"="La sincronización o el backup se han detenido porque parece que has cerrado sesión en la aplicación de escritorio. Vuelve a iniciar sesión a través de la aplicación de escritorio y reanuda la operación.";
 /* Device Center backup error: Changes to MEGA folder */
-"device.center.backup.error.changesToMegaFolder"="Problem syncing or backing up this folder because of changes to the MEGA folder. Stop the sync or backup and try setting it up again in the Desktop app, or contact Support.";
+"device.center.backup.error.changesToMegaFolder"="Ha habido un problema al sincronizar o hacer un backup de esta carpeta debido a unos cambios en la carpeta de MEGA. Detén la sincronización o el backup y actívalos de nuevo desde la aplicación de escritorio o contacta con el servicio de soporte.";
 /* Device Center backup error: External drive folder not located */
 "device.center.backup.error.externalDriveUnlocated"="No es posible encontrar la carpeta en la unidad externa.";
 /* Device Center backup error: Synced folder at same path */
-"device.center.backup.error.alreadySyncedPath"="There’s already a synced folder at the same path.";
+"device.center.backup.error.alreadySyncedPath"="Ya existe una carpeta sincronizada en la misma ruta.";
 /* Device Center backup error: Renaming issue */
-"device.center.backup.error.renamingFailed"="Renaming failed.";
+"device.center.backup.error.renamingFailed"="Error al cambiar el nombre.";
 /* Device Center backup error: Ignored sync */
-"device.center.backup.error.syncIgnored"="Couldn’t create a sync. The file has been ignored.";
+"device.center.backup.error.syncIgnored"="No se ha podido crear una sincronización. Se ha ignorado el archivo.";
 /* Device Center backup error: Sync configuration unreadable */
-"device.center.backup.error.couldntReadSyncConfig"="Couldn’t read sync configuration. Check the folder permissions and try again later.";
+"device.center.backup.error.couldntReadSyncConfig"="No se ha podido leer la configuración de la sincronización. Comprueba los permisos de la carpeta e inténtalo de nuevo más tarde.";
 /* Device Center backup error: Unknown drive path for sync */
-"device.center.backup.error.unknownDrivePath"="Sync’s drive path is unknown.";
+"device.center.backup.error.unknownDrivePath"="Se desconoce la ruta de la unidad de sincronización.";
 /* Device Center backup error: Invalid scan interval */
-"device.center.backup.error.invalidScanInterval"="Invalid scan interval. Check the scan interval setup and try again.";
+"device.center.backup.error.invalidScanInterval"="Intervalo de escaneo no válido. Comprueba la configuración del intervalo de escaneo e inténtalo de nuevo.";
 /* Device Center backup error: Sync or backup issue, setup again */
-"device.center.backup.error.syncOrBackupSetupAgain"="Problem syncing or backing up this folder. Stop the sync or backup and try setting it up again in the Desktop app, or contact Support.";
+"device.center.backup.error.syncOrBackupSetupAgain"="Se ha producido un problema al sincronizar o hacer un backup de esta carpeta. Detén la sincronización o el backup e intenta volver a configurarlos en la aplicación de escritorio, o ponte en contacto con el servicio de soporte.";
 /* Device Center backup error: Can't read sync location */
-"device.center.backup.error.cantReadSyncLocation"="Couldn’t read sync location. Check the location is accessible and permissions for the folder location are granted.";
+"device.center.backup.error.cantReadSyncLocation"="No se ha podido leer la ubicación de la sincronización. Comprueba que se pueda acceder a la ubicación y que se hayan concedido los permisos para la ubicación de la carpeta.";
 /* Device Center backup error: Insufficient space for download */
-"device.center.backup.error.insufficientDownloadSpace"="Insufficient space for download.";
+"device.center.backup.error.insufficientDownloadSpace"="Espacio insuficiente para la descarga.";
 /* Device Center backup error: Unable to add filesystem watch */
-"device.center.backup.error.addFilesystemWatch"="Unable to add a file system watch. Ensure there is sufficient free space and memory, and that you have granted permissions for the folder location.";
+"device.center.backup.error.addFilesystemWatch"="No se puede añadir una vigilancia del sistema de archivos. Asegúrate de que haya suficiente espacio libre y suficiente memoria y de que los permisos para la ubicación de la carpeta estén concedidos.";
 /* Device Center backup error: Couldn't communicate with folder location */
-"device.center.backup.error.communicateWithFolderLocation"="Couldn’t communicate with the folder location. Check the location is accessible and permissions for the folder location are granted.";
+"device.center.backup.error.communicateWithFolderLocation"="No se ha podido comunicar con la ubicación de la carpeta. Comprueba que se pueda acceder a la ubicación y que se hayan concedido los permisos para la ubicación de la carpeta.";
 /* Show in Cloud Drive section action title */
 "device.center.show.in.cloud.drive.action.title"="Mostrar en la Nube";
 /* Show in Backups section action title */
@@ -3535,7 +3535,7 @@
 /* Device Center camera upload status disabled */
 "device.center.camera.uploads.action.status.disabled"="Desactivado";
 /* Device center current device empty state message */
-"device.center.current.device.empty.state.message"="Nothing set up yet";
+"device.center.current.device.empty.state.message"="Aún no hay nada configurado";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="Dejar de repetir";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3831,6 +3831,30 @@
 /* A button label to close the waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.close"="Cerrar";
 /* Error shown when moving folder to inside itself */
-"Error.nodeCopyOrMove.circularDependency"="You can’t move this folder as the destination is the same folder.";
+"Error.nodeCopyOrMove.circularDependency"="No puedes mover esta carpeta porque el destino es la misma carpeta.";
 /* Auto media discovery banner title */
 "photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="Como esta carpeta solo contiene imágenes y vídeos, la abrimos automáticamente en la vista de explorador multimedia. Puedes disfrutar de tu contenido visual con un diseño más envolvente. Puedes desactivar esta opción en Ajustes.";
+/* Upgrade account screen header title after user onboarding */
+"onboarding.upgradeAccount.header.title"="Obtén más con un plan Pro";
+/* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
+"onboarding.upgradeAccount.header.subTitle"="Amplía a un plan Pro para obtener más almacenamiento y muchas funciones adicionales. Nuestros planes comienzan desde %@ al mes.";
+/* Upgrade account screen content header for pro plan feature list */
+"onboarding.upgradeAccount.content.proPlanFeatureHeader"="Algunas de las características que esperamos con ansias son:";
+/* Upgrade account screen content title about pro plan featuring as Generous Storage */
+"onboarding.upgradeAccount.content.generousStorage.title"="Almacenamiento generoso";
+/* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Store unlimited data, starting from 400 GB. */
+"onboarding.upgradeAccount.content.generousStorage.message"="Almacena datos ilimitados, a partir de [A] [B].";
+/* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
+"onboarding.upgradeAccount.content.transferSharing.title"="Transferencia compartida";
+/* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
+"onboarding.upgradeAccount.content.transferSharing.message"="Las personas con las que compartes datos pueden usar tu cuota de transferencia para descargar y hacer streaming de lo que has compartido.";
+/* Upgrade account screen content title about pro plan featuring the Additional security when sharing */
+"onboarding.upgradeAccount.content.additionalSecurity.title"="Seguridad adicional al compartir";
+/* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
+"onboarding.upgradeAccount.content.additionalSecurity.message"="Establece contraseñas y fechas de caducidad para los enlaces a carpetas y archivos.";
+/* Upgrade account screen button title that will direct to Upgrade plan page */
+"onboarding.upgradeAccount.button.viewProPlans"="Descubre los planes Pro";
+/* Camera uploads banner enable state title */
+"cameraUploads.banner.enableState.title"="Activar las Subidas de la cámara";
+/* Camera uploads banner enable state description */
+"cameraUploads.banner.enableState.description"="Realizar backups automáticos de fotos y vídeos en la Nube.";

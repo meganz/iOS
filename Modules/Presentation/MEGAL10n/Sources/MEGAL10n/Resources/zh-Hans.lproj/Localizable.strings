@@ -67,7 +67,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA无法通过SSL进行安全连接。您可能正在使用受限制的公共网络。";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="您尝试访问的内容无法用于该帐户。请尝试使用与手机浏览器中相同的帐户登录。";
+"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Please try to log in with same account as in the mobile browser.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="加载时间较长，请稍后…";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -3834,3 +3834,27 @@
 "Error.nodeCopyOrMove.circularDependency"="您无法移动此文件夹，因为目的地是同一个文件夹。";
 /* Auto media discovery banner title */
 "photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="由于此文件夹仅包含图像和视频，我们已自动在媒体发现视图中将其打开。您可以通过更身临其境的布局欣赏您的视觉内容。您可以在设置中禁用此功能。";
+/* Upgrade account screen header title after user onboarding */
+"onboarding.upgradeAccount.header.title"="通过Pro方案获得更多权益";
+/* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
+"onboarding.upgradeAccount.header.subTitle"="升级到Pro方案可获得更多存储空间和更多额外功能。我们的会员方案从每月%@起。";
+/* Upgrade account screen content header for pro plan feature list */
+"onboarding.upgradeAccount.content.proPlanFeatureHeader"="一些值得期待的功能是：";
+/* Upgrade account screen content title about pro plan featuring as Generous Storage */
+"onboarding.upgradeAccount.content.generousStorage.title"="大容量存储空间";
+/* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Store unlimited data, starting from 400 GB. */
+"onboarding.upgradeAccount.content.generousStorage.message"="存储无限数据，从[A][B]起。";
+/* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
+"onboarding.upgradeAccount.content.transferSharing.title"="传输流量共享";
+/* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
+"onboarding.upgradeAccount.content.transferSharing.message"="与您共享数据的人可以使用您的传输流量来下载和串流播放您共享的项目。";
+/* Upgrade account screen content title about pro plan featuring the Additional security when sharing */
+"onboarding.upgradeAccount.content.additionalSecurity.title"="共享时的额外安全性";
+/* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
+"onboarding.upgradeAccount.content.additionalSecurity.message"="为文件和文件夹链接设置密码和到期日期。";
+/* Upgrade account screen button title that will direct to Upgrade plan page */
+"onboarding.upgradeAccount.button.viewProPlans"="查看Pro方案";
+/* Camera uploads banner enable state title */
+"cameraUploads.banner.enableState.title"="启用相机上传";
+/* Camera uploads banner enable state description */
+"cameraUploads.banner.enableState.description"="自动备份您的照片和视频到您的云盘。";

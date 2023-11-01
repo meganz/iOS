@@ -3473,7 +3473,7 @@
 /* Device Center backup error: Plan expired */
 "device.center.backup.error.planExpired"="Kan deze map niet synchroniseren of er een back-up van maken, omdat uw abonnement is verlopen.";
 /* Device Center backup error: Shared folder quota reached */
-"device.center.backup.error.userSharedQuotaReached"="Folder can’t be synced as the user who shared this folder has reached their storage quota limit.";
+"device.center.backup.error.userSharedQuotaReached"="De map kan niet worden gesynchroniseerd omdat de gebruiker die deze map heeft gedeeld het opslagtegoed heeft bereikt.";
 /* Device Center backup error: Shared folder without full access */
 "device.center.backup.error.sharedFolderNoFullAccess"="Map kan niet worden gesynchroniseerd omdat het een gedeelde map is zonder volledige toegang.";
 /* Device Center backup error: Files can't be synced */
@@ -3831,6 +3831,30 @@
 /* A button label to close the waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.close"="Sluiten";
 /* Error shown when moving folder to inside itself */
-"Error.nodeCopyOrMove.circularDependency"="You can’t move this folder as the destination is the same folder.";
+"Error.nodeCopyOrMove.circularDependency"="U kunt deze map niet verplaatsen omdat de bestemming dezelfde map is.";
 /* Auto media discovery banner title */
 "photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="Omdat deze map alleen afbeeldingen en video's bevat, hebben we deze automatisch geopend in de media ontdekkingsweergave. U kunt genieten van uw visuele inhoud met een meer meeslepende lay-out. U kunt dit uitschakelen in Instellingen.";
+/* Upgrade account screen header title after user onboarding */
+"onboarding.upgradeAccount.header.title"="Krijg meer met een Pro abonnement";
+/* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
+"onboarding.upgradeAccount.header.subTitle"="Upgrade naar een Pro-abonnement voor meer opslagruimte en veel extra functies. Onze plannen beginnen bij %@ per maand.";
+/* Upgrade account screen content header for pro plan feature list */
+"onboarding.upgradeAccount.content.proPlanFeatureHeader"="Enkele functies om naar uit te kijken zijn:";
+/* Upgrade account screen content title about pro plan featuring as Generous Storage */
+"onboarding.upgradeAccount.content.generousStorage.title"="Vrijgevige opslag";
+/* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Store unlimited data, starting from 400 GB. */
+"onboarding.upgradeAccount.content.generousStorage.message"="Bewaar onbeperkt data, vanaf [A][B].";
+/* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
+"onboarding.upgradeAccount.content.transferSharing.title"="Overdracht deling";
+/* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
+"onboarding.upgradeAccount.content.transferSharing.message"="De mensen met wie u gegevens deelt, kunnen uw overdrachtstegoed gebruiken om de items die u hebt gedeeld te downloaden en te streamen.";
+/* Upgrade account screen content title about pro plan featuring the Additional security when sharing */
+"onboarding.upgradeAccount.content.additionalSecurity.title"="Extra veiligheid bij het delen";
+/* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
+"onboarding.upgradeAccount.content.additionalSecurity.message"="Stel wachtwoorden en vervaldata in voor bestands- en mapkoppelingen.";
+/* Upgrade account screen button title that will direct to Upgrade plan page */
+"onboarding.upgradeAccount.button.viewProPlans"="Bekijk Pro abonnementen";
+/* Camera uploads banner enable state title */
+"cameraUploads.banner.enableState.title"="Camera uploads inschakelen";
+/* Camera uploads banner enable state description */
+"cameraUploads.banner.enableState.description"="Automatisch een backup maken van uw foto's en video's naar uw Cloud Schijf.";
