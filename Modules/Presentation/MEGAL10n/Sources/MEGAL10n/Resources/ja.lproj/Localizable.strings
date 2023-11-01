@@ -67,7 +67,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGAは SSLを介して安全に接続できません。追加要件を伴う公共の Wi-Fiを利用している可能性があります。";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="アクセスしようとしているコンテンツは、このアカウントではご利用いただけません。モバイルウェブクライアントと同じアカウントでログインしてみてください。";
+"theContentIsNotAvailableForThisAccount"="アクセスしようとしているコンテンツは、このアカウントではご利用いただけません。モバイルブラウザと同じアカウントでログインしてみてください。";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="プロセスに予想以上時間がかかっています。お待ちください…";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -3473,7 +3473,7 @@
 /* Device Center backup error: Plan expired */
 "device.center.backup.error.planExpired"="お客様のプランの有効期限が切れているため、このフォルダを同期またはバックアップできません。";
 /* Device Center backup error: Shared folder quota reached */
-"device.center.backup.error.userSharedQuotaReached"="Folder can’t be synced as the user who shared this folder has reached their storage quota limit.";
+"device.center.backup.error.userSharedQuotaReached"="このフォルダを共有したユーザーはストレージ容量制限に達したため、フォルダを同期できません。";
 /* Device Center backup error: Shared folder without full access */
 "device.center.backup.error.sharedFolderNoFullAccess"="フォルダは、フルアクセスのない共有フォルダであるため、同期できません。";
 /* Device Center backup error: Files can't be synced */
@@ -3834,3 +3834,27 @@
 "Error.nodeCopyOrMove.circularDependency"="このフォルダは移動先が同じフォルダのため移動できません。";
 /* Auto media discovery banner title */
 "photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="このフォルダには画像と動画のみが含まれているため、自動的にメディア検出ビューで開きます。また、より没入感のあるレイアウトでビジュアルコンテンツを楽しむことができます。これは「設定」で無効にできます。";
+/* Upgrade account screen header title after user onboarding */
+"onboarding.upgradeAccount.header.title"="Proプランでさらに充実";
+/* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
+"onboarding.upgradeAccount.header.subTitle"="Proプランにアップグレードしていただくと、より多くのストレージと多くの追加機能をご利用いただけます。当社のプランは月額%@から始まります。";
+/* Upgrade account screen content header for pro plan feature list */
+"onboarding.upgradeAccount.content.proPlanFeatureHeader"="ご期待いただける機能としては次のようなものがあります。";
+/* Upgrade account screen content title about pro plan featuring as Generous Storage */
+"onboarding.upgradeAccount.content.generousStorage.title"="豊富なストレージ";
+/* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Store unlimited data, starting from 400 GB. */
+"onboarding.upgradeAccount.content.generousStorage.message"="無制限にデータを保管できます（[A][B]から）。";
+/* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
+"onboarding.upgradeAccount.content.transferSharing.title"="転送共有";
+/* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
+"onboarding.upgradeAccount.content.transferSharing.message"="データを共有する相手は、お客様の転送容量を使用して、お客様が共有した項目をダウンロードしてストリーミングできます。";
+/* Upgrade account screen content title about pro plan featuring the Additional security when sharing */
+"onboarding.upgradeAccount.content.additionalSecurity.title"="共有時のセキュリティの強化";
+/* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
+"onboarding.upgradeAccount.content.additionalSecurity.message"="ファイルとフォルダのリンクのパスワードと有効期限を設定できます。";
+/* Upgrade account screen button title that will direct to Upgrade plan page */
+"onboarding.upgradeAccount.button.viewProPlans"="Proプランを見る";
+/* Camera uploads banner enable state title */
+"cameraUploads.banner.enableState.title"="カメラアップロードを有効にする";
+/* Camera uploads banner enable state description */
+"cameraUploads.banner.enableState.description"="あなたの写真や動画をあなたのクラウドドライブに自動的にバックアップします。";

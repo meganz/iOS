@@ -67,7 +67,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA ไม่สามารถเชื่อมต่อผ่าน SSL ได้อย่างปลอดภัย คุณอาจใช้ Wi-Fi สาธารณะที่มาพร้อมกับข้อกำหนดเพิ่มเติม";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="รายการเนื้อหาที่คุณพยายามเข้าถึงยังไม่พร้อมใช้งานกับบัญชีนี้ กรุณาลองเข้าสู่ระบบด้วยบัญชีเดียวกับในไคลเอนต์เว็บบนมือถือ";
+"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Please try to log in with same account as in the mobile browser.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="กระบวนการนี้ใช้เวลานานกว่าที่คาดไว้ กรุณารอ…";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -3461,7 +3461,7 @@
 /* Device Center backup error: Individual file sync issue */
 "device.center.backup.error.fileSyncIndividual"="ไม่สามารถซิงค์ไฟล์ทีละไฟล์ได้ คุณต้องตั้งค่าการซิงค์จากโฟลเดอร์แทน";
 /* Device Center backup error: Initial scan failure */
-"device.center.backup.error.initialScanFailed"="Initial scan failed. You will need to re-enable your sync or backup from the Desktop app.";
+"device.center.backup.error.initialScanFailed"="การสแกนเริ่มต้นล้มเหลว คุณจะต้องเปิดใช้งานการซิงค์หรือสำรองข้อมูลจากแอปเดสก์ทอปของคุณใหม่";
 /* Device Center backup error: Device folder not located */
 "device.center.backup.error.folderDeviceUnlocatedNow"="ไม่สามารถหาโฟลเดอร์ในอุปกรณ์ของคุณได้ในขณะนี้ กรุณาลองอีกครั้งในภายหลัง";
 /* Device Center backup error: Device folder can't be located */
@@ -3473,7 +3473,7 @@
 /* Device Center backup error: Plan expired */
 "device.center.backup.error.planExpired"="ไม่สามารถซิงค์หรือสำรองข้อมูลในโฟลเดอร์นี้ได้เนื่องจากแผนของคุณหมดอายุแล้ว";
 /* Device Center backup error: Shared folder quota reached */
-"device.center.backup.error.userSharedQuotaReached"="Folder can’t be synced as the user who shared this folder has reached their storage quota limit.";
+"device.center.backup.error.userSharedQuotaReached"="ไม่สามารถซิงค์โฟลเดอร์ได้ เนื่องจากผู้ใช้ที่แชร์โฟลเดอร์นี้ได้ใช้พื้นที่จัดเก็บข้อมูลถึงขีดจำกัดแล้ว";
 /* Device Center backup error: Shared folder without full access */
 "device.center.backup.error.sharedFolderNoFullAccess"="ไม่สามารถซิงค์โฟลเดอร์ได้ เนื่องจากเป็นโฟลเดอร์ที่ถูกแชร์ไว้ แต่ไม่ได้รับสิทธิ์ให้เข้าถึงแบบเต็มที่";
 /* Device Center backup error: Files can't be synced */
@@ -3505,7 +3505,7 @@
 /* Device Center backup error: Ignored sync */
 "device.center.backup.error.syncIgnored"="ไม่สามารถสร้างการซิงค์ได้ ไฟล์ถูกละเว้นไปแล้ว";
 /* Device Center backup error: Sync configuration unreadable */
-"device.center.backup.error.couldntReadSyncConfig"="Couldn’t read sync configuration. Check the folder permissions and try again later.";
+"device.center.backup.error.couldntReadSyncConfig"="ไม่สามารถอ่านการกำหนดค่าการซิงค์ได้ กรุณาตรวจสอบสิทธิ์โฟลเดอร์แล้วลองอีกครั้งในภายหลัง";
 /* Device Center backup error: Unknown drive path for sync */
 "device.center.backup.error.unknownDrivePath"="ไม่ทราบเส้นทางไดรฟ์ที่ใช้การซิงค์ได้";
 /* Device Center backup error: Invalid scan interval */
@@ -3517,7 +3517,7 @@
 /* Device Center backup error: Insufficient space for download */
 "device.center.backup.error.insufficientDownloadSpace"="มีพื้นที่ไม่เพียงพอที่จะดาวน์โหลด";
 /* Device Center backup error: Unable to add filesystem watch */
-"device.center.backup.error.addFilesystemWatch"="Unable to add a file system watch. Ensure there is sufficient free space and memory, and that you have granted permissions for the folder location.";
+"device.center.backup.error.addFilesystemWatch"="ไม่สามารถเพิ่มการตรวจดูระบบไฟล์ได้ ตรวจสอบให้แน่ใจว่ามีพื้นที่ว่างและหน่วยความจำเพียงพอแล้ว และคุณได้ให้สิทธิ์ในการเข้าถึงตำแหน่งที่ตั้งโฟลเดอร์แล้ว";
 /* Device Center backup error: Couldn't communicate with folder location */
 "device.center.backup.error.communicateWithFolderLocation"="ไม่สามารถสื่อสารกับตำแหน่งที่ตั้งโฟลเดอร์ได้ กรุณาตรวจสอบว่าสามารถเข้าถึงได้และได้รับอนุญาตให้ใช้งานโฟลเดอร์ตามตำแหน่งที่ตั้งนี้หรือไม่";
 /* Show in Cloud Drive section action title */
@@ -3535,7 +3535,7 @@
 /* Device Center camera upload status disabled */
 "device.center.camera.uploads.action.status.disabled"="ปิดใช้งาน";
 /* Device center current device empty state message */
-"device.center.current.device.empty.state.message"="Nothing set up yet";
+"device.center.current.device.empty.state.message"="ยังไม่ได้ตั้งค่าอะไรเลย";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="สิ้นสุดการทำประจำ";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3831,6 +3831,30 @@
 /* A button label to close the waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.close"="ปิด";
 /* Error shown when moving folder to inside itself */
-"Error.nodeCopyOrMove.circularDependency"="You can’t move this folder as the destination is the same folder.";
+"Error.nodeCopyOrMove.circularDependency"="คุณไม่สามารถย้ายโฟลเดอร์นี้ได้ เนื่องจากปลายทางเป็นโฟลเดอร์เดียวกัน";
 /* Auto media discovery banner title */
 "photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="เนื่องจากโฟลเดอร์นี้มีเฉพาะรูปภาพและวิดีโอ เราจึงตั้งค่าประเภทการดูเป็นมุมมองการค้นพบสื่อโดยอัตโนมัติ คุณสามารถเพลิดเพลินกับเนื้อหาภาพของคุณด้วยเลย์เอาต์ที่สมจริงยิ่งขึ้น คุณสามารถปิดการใช้งานนี้ในการตั้งค่าได้";
+/* Upgrade account screen header title after user onboarding */
+"onboarding.upgradeAccount.header.title"="รับสิทธิประโยชน์เพิ่มเติมด้วยการอัปเกรดเป็นแผน Pro";
+/* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
+"onboarding.upgradeAccount.header.subTitle"="อัปเกรดเป็นแผน Pro เพื่อเพิ่มพื้นที่เก็บข้อมูลและคุณสมบัติพิเศษอีกมากมาย แผนของเราเริ่มต้นที่ %@ ต่อเดือน";
+/* Upgrade account screen content header for pro plan feature list */
+"onboarding.upgradeAccount.content.proPlanFeatureHeader"="คุณสมบัติที่คุณจะได้สัมผัสอย่างเต็มอิ่มคือ:";
+/* Upgrade account screen content title about pro plan featuring as Generous Storage */
+"onboarding.upgradeAccount.content.generousStorage.title"="พื้นที่เก็บข้อมูลจุได้ไม่อั้น";
+/* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Store unlimited data, starting from 400 GB. */
+"onboarding.upgradeAccount.content.generousStorage.message"="เก็บข้อมูลได้ไม่จำกัด เริ่มต้นที่ [A][B]";
+/* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
+"onboarding.upgradeAccount.content.transferSharing.title"="แชร์การถ่ายโอนของคุณให้คนอื่นได้";
+/* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
+"onboarding.upgradeAccount.content.transferSharing.message"="คนที่คุณแชร์ข้อมูลด้วย สามารถใช้โควต้าการถ่ายโอนของคุณเพื่อดาวน์โหลดและสตรีมรายการที่คุณแชร์ได้";
+/* Upgrade account screen content title about pro plan featuring the Additional security when sharing */
+"onboarding.upgradeAccount.content.additionalSecurity.title"="เพิ่มความปลอดภัยเมื่อแชร์ข้อมูล";
+/* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
+"onboarding.upgradeAccount.content.additionalSecurity.message"="ลิงก์ไฟล์และโฟลเดอร์สามารถตั้งรหัสผ่านและวันหมดอายุได้";
+/* Upgrade account screen button title that will direct to Upgrade plan page */
+"onboarding.upgradeAccount.button.viewProPlans"="ดูแผน Pro";
+/* Camera uploads banner enable state title */
+"cameraUploads.banner.enableState.title"="เปิดใช้งานอัปโหลดกล้อง";
+/* Camera uploads banner enable state description */
+"cameraUploads.banner.enableState.description"="สำรองรูปภาพและวิดีโอของคุณไปยังคลาวด์ไดร์ฟโดยอัตโนมัติ";

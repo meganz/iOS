@@ -67,7 +67,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA не может безопасно подключиться через SSL. Возможно, вы используете общедоступный Wi-Fi с дополнительными требованиями.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="Содержимое, которое вы пытаетесь получить, недоступно для этого аккаунта. Пожалуйста, попробуйте войти в тот же аккаунт, что и в мобильном веб-клиенте.";
+"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Please try to log in with same account as in the mobile browser.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="Процесс длится дольше ожидаемого. Пожалуйста, подождите…";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -3473,7 +3473,7 @@
 /* Device Center backup error: Plan expired */
 "device.center.backup.error.planExpired"="Невозможно синхронизировать или создать резервную копию этой папки, так как срок действия вашего плана истёк.";
 /* Device Center backup error: Shared folder quota reached */
-"device.center.backup.error.userSharedQuotaReached"="Folder can’t be synced as the user who shared this folder has reached their storage quota limit.";
+"device.center.backup.error.userSharedQuotaReached"="Папку нельзя синхронизировать, так как у пользователя, который поделился ей, хранилище полностью заполнено.";
 /* Device Center backup error: Shared folder without full access */
 "device.center.backup.error.sharedFolderNoFullAccess"="Папку нельзя синхронизировать, поскольку это общая папка без полного доступа.";
 /* Device Center backup error: Files can't be synced */
@@ -3831,6 +3831,30 @@
 /* A button label to close the waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.close"="Закрыть";
 /* Error shown when moving folder to inside itself */
-"Error.nodeCopyOrMove.circularDependency"="You can’t move this folder as the destination is the same folder.";
+"Error.nodeCopyOrMove.circularDependency"="Невозможно переместить папку в саму себя.";
 /* Auto media discovery banner title */
 "photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="Поскольку эта папка содержит только изображения и видео, мы автоматически открыли её в режиме обнаружения медиа. Наслаждайтесь более наглядным представлением содержимого. Это можно отключить в «Настройках».";
+/* Upgrade account screen header title after user onboarding */
+"onboarding.upgradeAccount.header.title"="Получите больше с планом Pro";
+/* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
+"onboarding.upgradeAccount.header.subTitle"="Перейдите на план Pro, чтобы получить больше места и множество дополнительных функций. Наши планы стоят от %@ в месяц.";
+/* Upgrade account screen content header for pro plan feature list */
+"onboarding.upgradeAccount.content.proPlanFeatureHeader"="Некоторые особенности, которые вас ждут:";
+/* Upgrade account screen content title about pro plan featuring as Generous Storage */
+"onboarding.upgradeAccount.content.generousStorage.title"="Выгодный объём";
+/* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Store unlimited data, starting from 400 GB. */
+"onboarding.upgradeAccount.content.generousStorage.message"="Храните неограниченный объём данных, начиная с [A] [B].";
+/* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
+"onboarding.upgradeAccount.content.transferSharing.title"="Обмен объёмами передач";
+/* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
+"onboarding.upgradeAccount.content.transferSharing.message"="Люди, с которыми вы делитесь данными, могут использовать ваш объём передачи данных для скачивания и стриминга элементов, которыми вы поделились.";
+/* Upgrade account screen content title about pro plan featuring the Additional security when sharing */
+"onboarding.upgradeAccount.content.additionalSecurity.title"="Дополнительная безопасность при обмене";
+/* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
+"onboarding.upgradeAccount.content.additionalSecurity.message"="Устанавливайте пароли и сроки действия для ссылок на файлы и папки.";
+/* Upgrade account screen button title that will direct to Upgrade plan page */
+"onboarding.upgradeAccount.button.viewProPlans"="Посмотреть";
+/* Camera uploads banner enable state title */
+"cameraUploads.banner.enableState.title"="Включить Загрузки из камеры";
+/* Camera uploads banner enable state description */
+"cameraUploads.banner.enableState.description"="Автоматически загружать фото и видео на облачный диск.";

@@ -67,7 +67,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="ميغا MEGA غير قادرة على الاتصال بأمان عبر طبقة اتصال آمنة SSL. قد تكون على شبكة Wi-Fi عامة بمتطلبات إضافية.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="المحتوى الذي تحاول الوصول إليه غير متوفر لهذا الحساب. يرجى محاولة تسجيل الدخول بنفس الحساب الموجود في تطبيق الويب للهاتف المحمول.";
+"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Please try to log in with same account as in the mobile browser.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="تستغرق العملية وقتا أطول من المتوقع. الرجاء الإنتظار…";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -721,7 +721,7 @@
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="ترفيعات الكاميرا";
 /* Banner message on Camera Uploads that warns user that they have limited access to photos */
-"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA has limited access to your photo library and cannot back up all of your media. Tap to change permissions.";
+"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ لدى ميغا MEGA وصول محدود إلى مكتبة الصور الخاصة بك ولا يمكنها عمل نسخة احتياطية لجميع الوسائط الخاصة بك. انقر لتغيير الأذونات.";
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="تطبيق الصور";
 /* Photo view is empty */
@@ -1407,11 +1407,11 @@
 /* Error message displayed when trying to invite a contact who is already added. */
 "alreadyAContact"="%s موجود كجهة اتصال بالفعل.";
 /* A summary message when a user sent a contact's details through the chat. Please keep %@ as it will be replaced at runtime with the name of the contact that was sent. */
-"sentContact"="Sent contact: %@";
+"sentContact"="جهة الاتصال المرسلة: %@";
 /* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
 "sentXContacts"="أرسل %s جهة اتصال.";
 /* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %@ as it will be replaced at runtime with the name of the attached file. */
-"attachedFile"="Attached: %@";
+"attachedFile"="مُرفَق: %@";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="أرفق %s ملف.";
 /* Label in a button that allows to jump to the latest item */
@@ -1991,7 +1991,7 @@
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="تم التعديل من قبل %@";
 /* Title for a recent action bucket with multiple files. %@ will be replaced by the filename of the first file in the bucket. %ld will be replaced by the total number of other files in the bucket. */
-"home.recent.multipleFileTitle"="“%@” and %ld more";
+"home.recent.multipleFileTitle"="”%@“ و %ld أكثر";
 /* Label that indicates who uploaded a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.createdByLabel"="انشأ من قبل %@";
 /* Message shown when the user has not recent activity in their account. */
@@ -2237,13 +2237,13 @@
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
 "settings.userInterface.mediaDiscovery.header"="اكتشاف الوسائط";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body that appears under that option */
-"settings.userInterface.mediaDiscovery.footer.body"="Folders that contain only images and videos will open in media discovery view by default.";
+"settings.userInterface.mediaDiscovery.footer.body"="سيتم فتح المجلدات التي تحتوي على الصور ومقاطع الفيديو فقط في عرض اكتشاف الوسائط بشكل افتراضي.";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body link that appears under that option */
-"settings.userInterface.mediaDiscovery.footer.link"="Learn more about media discovery.";
+"settings.userInterface.mediaDiscovery.footer.link"="اعرف المزيد عن اكتشاف الوسائط.";
 /* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the label in the setting */
 "settings.userInterface.mediaDiscoverySubFolder"="اكتشاف الوسائط في المجلدات الفرعية";
 /* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the footer message body that appears under that option */
-"settings.userInterface.mediaDiscoverySubFolder.footer"="Images and videos from subfolders will also be included in media discovery view.";
+"settings.userInterface.mediaDiscoverySubFolder.footer"="سيتم أيضًا تضمين الصور ومقاطع الفيديو من المجلدات الفرعية في عرض اكتشاف الوسائط.";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section */
 "settings.userInterface.hideRecentActivity"="إخفاء التفاعل مؤخراً";
 /* In Settings - User Interface, there is an option that you can enable to hide the contents of the Recents section. This is the footer that appears under that option. */
@@ -2651,17 +2651,17 @@
 /* Meetings: Floating panel share link option */
 "meetings.panel.shareLink"="مشاركة رابط";
 /* Meetings: Floating panel participants list selector for participants in call */
-"meetings.panel.listSelector.inCall"="In call";
+"meetings.panel.listSelector.inCall"="في المكالمة";
 /* Meetings: Floating panel participants list selector for participants not in call */
-"meetings.panel.listSelector.notInCall"="Not in call";
+"meetings.panel.listSelector.notInCall"="ليس في المكالمة ";
 /* Meetings: Floating panel participants list selector for participants in call */
 "meetings.panel.listSelector.inWaitingRoom"="غرفة الانتظار";
 /* Meetings: Floating panel participants in call count header */
 "meetings.panel.ParticipantsCount"="المشاركون (%d)";
 /* Meetings: Floating panel participants not in call count header */
-"meetings.panel.ParticipantsNotInCallCount"="Not in call (%d)";
+"meetings.panel.ParticipantsNotInCallCount"="ليس في المكالمة (%d)";
 /* Meetings: Floating panel participants in waiting room count header */
-"meetings.panel.ParticipantsInWaitingRoomCount"="Waiting (%d)";
+"meetings.panel.ParticipantsInWaitingRoomCount"="بالانتظار (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
 "meetings.participant.moderator"="مُضيف";
 /* Meetings: Action on a meeting that change participant's role to moderator */
@@ -3117,7 +3117,7 @@
 /* A log message in a chat to display that a participant's permission was changed to host role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep the [A], [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to host role by John Smith. */
 "chat.message.changedRole.host"="[A] قد تم تغيير [S]دوره إلى مُضيف[/S] من قبل [B]";
 /* A log message in a chat to display that a participant's permission was changed to standard role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to standard role by John Smith. */
-"chat.message.changedRole.standard"="[A] was changed to a [S]standard participant[/S] by [B]";
+"chat.message.changedRole.standard"="[A]قد تم تغيير [S]دوره إلى عادي[/S] من قبل [B]";
 /* Type of data displayed in a map view. Standard imagery of the area. */
 "chat.sendLocation.map.standard"="معيار";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
@@ -3195,7 +3195,7 @@
 /* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
 "sharedItems.contactVerification.section.verifyContact.bannerMessage"="للوصول إلى المجلد المشارك يجب على الشخص الذي شاركه معك التحقق منك أيضًا.";
 /* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
-"sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ is shared by a contact you haven’t verified. To ensure extra security, we recommend that you verify their credentials in Contacts by tapping on ⓘ next to the contact you want to verify.";
+"sharedItems.contactVerification.contactNotVerifiedBannerMessage"="تتم مشاركة %@ من قبل جهة اتصال لم يتم التحقق منها. لضمان المزيد من الأمان، نوصيك بالتحقق من بيانات الاعتماد الخاصة بهم في جهات الاتصال من خلال النقر على ⓘ بجوار جهة الاتصال التي تريد التحقق منها.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="بيانات الاعتماد الخاصة بك";
 /* Title of the header label in contact verification screen. */
@@ -3453,73 +3453,73 @@
 /* Default device name in case the device name cannot be obtained */
 "device.center.default.device.title"="جهاز غير معروف";
 /* Device Center backup error: Unknown issue */
-"device.center.backup.error.unknown"="Unknown error.";
+"device.center.backup.error.unknown"="خطأ غير معروف.";
 /* Device Center backup error: Filesystem not supported */
 "device.center.backup.error.fileSystemUnsupported"="لا يمكن لميغا MEGA مزامنة هذا المجلد أو نسخه احتياطيًا لأن نظام الملفات على جهازك غير مدعوم.";
 /* Device Center backup error: Chosen folder can't be synced */
-"device.center.backup.error.folderCantSync"="The folder you chose can’t be synced.";
+"device.center.backup.error.folderCantSync"="لا يمكن مزامنة المجلد الذي اخترته.";
 /* Device Center backup error: Individual file sync issue */
 "device.center.backup.error.fileSyncIndividual"="لا يمكن مزامنة الملف بشكل فردي. تحتاج إلى إعداد المزامنة من المجلد.";
 /* Device Center backup error: Initial scan failure */
-"device.center.backup.error.initialScanFailed"="Initial scan failed. You will need to re-enable your sync or backup from the Desktop app.";
+"device.center.backup.error.initialScanFailed"="فشل الفحص الأولي. ستحتاج إلى إعادة تمكين المزامنة أو النسخ الاحتياطي من تطبيق الحاسوب المكتبي.";
 /* Device Center backup error: Device folder not located */
-"device.center.backup.error.folderDeviceUnlocatedNow"="Folder in your device can’t be located now, try again later.";
+"device.center.backup.error.folderDeviceUnlocatedNow"="لا يمكن تحديد موقع المجلد الموجود في جهازك الآن، حاول مرة أخرى لاحقًا.";
 /* Device Center backup error: Device folder can't be located */
-"device.center.backup.error.folderDeviceUnlocated"="Folder in your device can’t be located.";
+"device.center.backup.error.folderDeviceUnlocated"="لا يمكن تحديد موقع المجلد الموجود في جهازك.";
 /* Device Center backup error: MEGA folder moved or deleted */
-"device.center.backup.error.folderMegaMovedOrDeleted"="Folder in MEGA can’t be located as it’s been moved or deleted, or you might not have access.";
+"device.center.backup.error.folderMegaMovedOrDeleted"="لا يمكن تحديد موقع المجلد الموجود في ميغا MEGA نظرًا لأنه تم نقله أو حذفه، أو ربما ليس لديك إذن للوصول إليه.";
 /* Device Center backup error: Storage quota limit */
-"device.center.backup.error.storageQuotaReached"="Storage quota limit reached.";
+"device.center.backup.error.storageQuotaReached"="تم الوصول إلى الحد الأقصى لمساحة التخزين.";
 /* Device Center backup error: Plan expired */
-"device.center.backup.error.planExpired"="Unable to sync or back up this folder as your plan has expired.";
+"device.center.backup.error.planExpired"="تم الوصول إلى الحد الأقصى لمساحة التخزين. غير قادر على مزامنة هذا المجلد أو نسخه احتياطيًا نظرًا لانتهاء باقتك.";
 /* Device Center backup error: Shared folder quota reached */
-"device.center.backup.error.userSharedQuotaReached"="Folder can’t be synced as the user who shared this folder has reached their storage quota limit.";
+"device.center.backup.error.userSharedQuotaReached"="لا يمكن مزامنة المجلد نظرًا لأن المستخدم الذي شارك هذا المجلد قد وصل إلى الحد الأقصى لمساحة التخزين الخاصة به.";
 /* Device Center backup error: Shared folder without full access */
 "device.center.backup.error.sharedFolderNoFullAccess"="لا يمكن مزامنة المجلد لأنه مجلد مشترك بدون إذن وصول كامل.";
 /* Device Center backup error: Files can't be synced */
-"device.center.backup.error.filesInFolder"="Files in this folder can’t be synced or backed up. You will need to re-enable the sync or backup from the Desktop app.";
+"device.center.backup.error.filesInFolder"="لا يمكن مزامنة الملفات الموجودة في هذا المجلد أو نسخها احتياطيًا. ستحتاج إلى إعادة تمكين المزامنة أو النسخ الاحتياطي من تطبيق الحاسوب المكتبي.";
 /* Device Center backup error: Folder contains synced folders */
 "device.center.backup.error.containsSyncedFolders"="لا يمكن مزامنة المجلد لأنه يحتوي بالفعل على مجلدات متزامنة.";
 /* Device Center backup error: Folder inside another synced folder */
 "device.center.backup.error.insideSyncedFolder"="لا يمكن مزامنة المجلد لأنه داخل مجلد متزامن.";
 /* Device Center backup error: MEGA folder in rubbish bin */
-"device.center.backup.error.folderInRubbish"="Folder can’t be synced or backed up as the MEGA folder is in the Rubbish bin.";
+"device.center.backup.error.folderInRubbish"="لا يمكن مزامنة المجلد أو نسخه احتياطيًا لأن مجلد ميغا MEGA موجود في سلة المحذوفات.";
 /* Device Center backup error: Can't sync VirtualBox folders */
-"device.center.backup.error.virtualboxFolders"="MEGA can’t sync or back up VirtualBox folders.";
+"device.center.backup.error.virtualboxFolders"="لا تستطيع ميغا MEGA مزامنة مجلدات VirtualBox أو نسخها احتياطيًا.";
 /* Device Center backup error: Account blocked */
-"device.center.backup.error.accountBlocked"="Unable to sync or back up this folder as the account has been blocked.";
+"device.center.backup.error.accountBlocked"="غير قادر على مزامنة هذا المجلد أو عمل نسخة احتياطية منه لأنه تم حظر الحساب.";
 /* Device Center backup error: Contact support for sync issues */
-"device.center.backup.error.problemSyncingContactSupport"="Problem syncing or backing up this folder. Try again later. If the issue continues, contact Support.";
+"device.center.backup.error.problemSyncingContactSupport"="حدثت مشكلة في مزامنة هذا المجلد أو نسخه احتياطيًا. حاول مرة أخرى في وقت لاحق. إذا استمرت المشكلة، تواصل مع قسم الدعم.";
 /* Device Center backup error: Account reloaded */
 "device.center.backup.error.accountReloaded"="تمت إعادة تحميل الحساب. لم يتم تطبيق أي تحديثات فائتة على النسخ الاحتياطية أو المزامنات الخاصة بك.";
 /* Device Center backup error: Logged out of Desktop app */
-"device.center.backup.error.loggedOut"="Sync or backup has been stopped as you appear to have logged out of the Desktop app. Log back in via the Desktop app, and resume the sync or backup.";
+"device.center.backup.error.loggedOut"="تم إيقاف المزامنة أو النسخ الاحتياطي حيث يبدو أنك قمت بتسجيل الخروج من تطبيق الحاسوب المكتبي. قم بتسجيل الدخول مرة أخرى عبر تطبيق الحاسوب المكتبي واستأنف المزامنة أو النسخ الاحتياطي.";
 /* Device Center backup error: Changes to MEGA folder */
-"device.center.backup.error.changesToMegaFolder"="Problem syncing or backing up this folder because of changes to the MEGA folder. Stop the sync or backup and try setting it up again in the Desktop app, or contact Support.";
+"device.center.backup.error.changesToMegaFolder"="حدثت مشكلة أثناء مزامنة هذا المجلد أو نسخه احتياطيًا بسبب التغييرات التي تم إجراؤها على مجلد ميغا MEGA. أوقف المزامنة أو النسخ الاحتياطي وحاول إعداده مرة أخرى في تطبيق الحاسوب المكتبي أو تواصل مع قسم الدعم.";
 /* Device Center backup error: External drive folder not located */
 "device.center.backup.error.externalDriveUnlocated"="لا يمكن تحديد موقع المجلد الموجود في السواقة الخارجية.";
 /* Device Center backup error: Synced folder at same path */
-"device.center.backup.error.alreadySyncedPath"="There’s already a synced folder at the same path.";
+"device.center.backup.error.alreadySyncedPath"="يوجد بالفعل مجلد متزامن في نفس المسار.";
 /* Device Center backup error: Renaming issue */
-"device.center.backup.error.renamingFailed"="Renaming failed.";
+"device.center.backup.error.renamingFailed"="فشلت عملية إعادة التسمية.";
 /* Device Center backup error: Ignored sync */
-"device.center.backup.error.syncIgnored"="Couldn’t create a sync. The file has been ignored.";
+"device.center.backup.error.syncIgnored"="تعذر إنشاء مزامنة. لقد تم تجاهل الملف.";
 /* Device Center backup error: Sync configuration unreadable */
-"device.center.backup.error.couldntReadSyncConfig"="Couldn’t read sync configuration. Check the folder permissions and try again later.";
+"device.center.backup.error.couldntReadSyncConfig"="تعذرت قراءة إعدادات المزامنة. تحقق من أذونات المجلد وحاول مرة أخرى لاحقًا.";
 /* Device Center backup error: Unknown drive path for sync */
-"device.center.backup.error.unknownDrivePath"="Sync’s drive path is unknown.";
+"device.center.backup.error.unknownDrivePath"="مسار سواقة المزامنة غير معروف.";
 /* Device Center backup error: Invalid scan interval */
-"device.center.backup.error.invalidScanInterval"="Invalid scan interval. Check the scan interval setup and try again.";
+"device.center.backup.error.invalidScanInterval"="الفاصل الزمني للفحص غير صالح. تحقق من إعداد الفاصل الزمني للفحص وحاول مرة أخرى.";
 /* Device Center backup error: Sync or backup issue, setup again */
-"device.center.backup.error.syncOrBackupSetupAgain"="Problem syncing or backing up this folder. Stop the sync or backup and try setting it up again in the Desktop app, or contact Support.";
+"device.center.backup.error.syncOrBackupSetupAgain"="حدثت مشكلة في مزامنة هذا المجلد أو نسخه احتياطيًا. أوقف المزامنة أو النسخ الاحتياطي وحاول إعداده مرة أخرى في تطبيق الحاسوب المكتبي أو تواصل مع قسم الدعم.";
 /* Device Center backup error: Can't read sync location */
-"device.center.backup.error.cantReadSyncLocation"="Couldn’t read sync location. Check the location is accessible and permissions for the folder location are granted.";
+"device.center.backup.error.cantReadSyncLocation"="تعذرت قراءة موقع المزامنة. تحقق من إمكانية الوصول إلى الموقع ومن منح الأذونات لموقع المجلد.";
 /* Device Center backup error: Insufficient space for download */
-"device.center.backup.error.insufficientDownloadSpace"="Insufficient space for download.";
+"device.center.backup.error.insufficientDownloadSpace"="مساحة غير كافية للتحميل.";
 /* Device Center backup error: Unable to add filesystem watch */
-"device.center.backup.error.addFilesystemWatch"="Unable to add a file system watch. Ensure there is sufficient free space and memory, and that you have granted permissions for the folder location.";
+"device.center.backup.error.addFilesystemWatch"="غير قادر على إضافة مراقبة نظام الملفات. تأكد من وجود مساحة خالية وذاكرة كافية ومن أنك منحت الأذونات لموقع المجلد.";
 /* Device Center backup error: Couldn't communicate with folder location */
-"device.center.backup.error.communicateWithFolderLocation"="Couldn’t communicate with the folder location. Check the location is accessible and permissions for the folder location are granted.";
+"device.center.backup.error.communicateWithFolderLocation"="لا يمكن الاتصال بموقع المجلد. تحقق من إمكانية الوصول إلى الموقع ومن منح الأذونات لموقع المجلد.";
 /* Show in Cloud Drive section action title */
 "device.center.show.in.cloud.drive.action.title"="عرض في السواقة السحابية";
 /* Show in Backups section action title */
@@ -3535,7 +3535,7 @@
 /* Device Center camera upload status disabled */
 "device.center.camera.uploads.action.status.disabled"="تعطيل";
 /* Device center current device empty state message */
-"device.center.current.device.empty.state.message"="Nothing set up yet";
+"device.center.current.device.empty.state.message"="لم يتم إعداد أي شيء حتى الآن";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="إنهاء التكرار";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3725,7 +3725,7 @@
 /* Schedule meeting waiting room setting title */
 "meetings.scheduleMeeting.waitingRoom"="غرفة الانتظار";
 /* Schedule meeting waiting room setting description */
-"meetings.scheduleMeeting.waitingRoom.description"="Only participants admitted by the host can join the meeting.";
+"meetings.scheduleMeeting.waitingRoom.description"="يمكن فقط للمشاركين الذين تم قبولهم من قبل المضيف الانضمام إلى الاجتماع.";
 /* Schedule meeting waiting room warning banner title */
 "meetings.scheduleMeeting.waitingRoomWarningBanner.title"="لن يتم إرسال المشاركين الذين أضافهم غير المضيفين أثناء المكالمات إلى غرفة الانتظار.";
 /* Schedule meeting waiting room warning banner learn more */
@@ -3735,7 +3735,7 @@
 /* Album failed to save to cloud drive alert message */
 "albumLink.alert.message.albumFailedToSaveToCloudDrive"="لا يمكن حفظ ”%@“ في السواقة السحابية. حاول مرة أخرى لاحقًا وإذا استمرت المشكلة اتصل بالشخص الذي شارك الرابط معك.";
 /* Text displayed on banner we show when sharing folder with unverified contacts */
-"shareFolder.contactsNotVerified"="Some of the contacts you’re sharing information with haven’t been verified by you. To ensure extra security, we recommend that you verify their credentials in Contacts by tapping on ⓘ next to the contact you want to verify.";
+"shareFolder.contactsNotVerified"="لم يتم التحقق من بعض جهات الاتصال التي تشارك المعلومات معها. لضمان المزيد من الأمان، نوصيك بالتحقق من بيانات الاعتماد الخاصة بهم في جهات الاتصال من خلال النقر على ⓘ بجوار جهة الاتصال التي تريد التحقق منها.";
 /* Rename public album alert title */
 "albumLink.alert.renameAlbum.title"="إعادة تسمية الألبوم";
 /* Rename public album alert message */
@@ -3831,6 +3831,30 @@
 /* A button label to close the waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.close"="إغلاق";
 /* Error shown when moving folder to inside itself */
-"Error.nodeCopyOrMove.circularDependency"="You can’t move this folder as the destination is the same folder.";
+"Error.nodeCopyOrMove.circularDependency"="لا يمكنك نقل هذا المجلد لأن الوجهة هي نفس المجلد.";
 /* Auto media discovery banner title */
-"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="As this folder contains only images and videos, we’ve automatically opened it in media discovery view. You can enjoy your visual content with a more immersive layout. You can disable this in Settings.";
+"photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="نظرًا لأن هذا المجلد يحتوي فقط على الصور ومقاطع الفيديو، فقد قمنا بفتحه تلقائيًا في عرض اكتشاف الوسائط. يمكنك الاستمتاع بالمحتوى المرئي الخاص بك بتصميم أكثر غامرة. يمكنك تعطيل هذا في الإعدادات.";
+/* Upgrade account screen header title after user onboarding */
+"onboarding.upgradeAccount.header.title"="احصل على المزيد مع باقة برو Pro";
+/* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
+"onboarding.upgradeAccount.header.subTitle"="قم بالترقية إلى باقة برو Pro لمزيد من مساحة التخزين والكثير من الميزات الإضافية. تبدأ باقاتنا من %@ في الشهر الواحد.";
+/* Upgrade account screen content header for pro plan feature list */
+"onboarding.upgradeAccount.content.proPlanFeatureHeader"="بعض الميزات التي تتطلع إليها هي:";
+/* Upgrade account screen content title about pro plan featuring as Generous Storage */
+"onboarding.upgradeAccount.content.generousStorage.title"="مساحة تخزين سخية";
+/* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Store unlimited data, starting from 400 GB. */
+"onboarding.upgradeAccount.content.generousStorage.message"="قم بتخزين بيانات غير محدودة، بدءًا من [A][B].";
+/* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
+"onboarding.upgradeAccount.content.transferSharing.title"="تشارك تراسل المعطيات";
+/* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
+"onboarding.upgradeAccount.content.transferSharing.message"="يمكن للأشخاص الذين تشارك البيانات معهم استخدام حجم تراسل المعطيات الخاص بك لتنزيل وبث العناصر التي شاركتها.";
+/* Upgrade account screen content title about pro plan featuring the Additional security when sharing */
+"onboarding.upgradeAccount.content.additionalSecurity.title"="أمان إضافي عند المشاركة";
+/* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
+"onboarding.upgradeAccount.content.additionalSecurity.message"="قم بتعيين كلمات المرور وتواريخ انتهاء الصلاحية لروابط الملفات والمجلدات.";
+/* Upgrade account screen button title that will direct to Upgrade plan page */
+"onboarding.upgradeAccount.button.viewProPlans"="عرض باقات برو Pro";
+/* Camera uploads banner enable state title */
+"cameraUploads.banner.enableState.title"="تمكين ترفيعات الكاميرا";
+/* Camera uploads banner enable state description */
+"cameraUploads.banner.enableState.description"="نسخ احتياطي للصور ومقاطع الفيديو تلقائياً إلى سواقتك السحابية.";

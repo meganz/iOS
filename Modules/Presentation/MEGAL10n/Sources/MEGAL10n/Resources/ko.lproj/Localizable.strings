@@ -67,7 +67,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA가 SSL을 통하여 안전하게 연결할 수 없습니다. 추가적인 요구 사항이 있는 공개 Wi-Fi에 접속했을 수 있습니다.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="접근하려는 항목은 이 계정에서 이용할 수 없습니다. 모바일 웹 클라이언트와 같은 계정으로 로그인하세요.";
+"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Please try to log in with same account as in the mobile browser.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="과정이 예상보다 오래 걸립니다. 잠시 기다려주세요…";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -3473,7 +3473,7 @@
 /* Device Center backup error: Plan expired */
 "device.center.backup.error.planExpired"="요금제가 만료되었기 때문에 이 폴더를 동기화 또는 백업할 수 없습니다.";
 /* Device Center backup error: Shared folder quota reached */
-"device.center.backup.error.userSharedQuotaReached"="Folder can’t be synced as the user who shared this folder has reached their storage quota limit.";
+"device.center.backup.error.userSharedQuotaReached"="이 폴더를 공유한 사람의 저장소 할당량 한도에 도달하여 폴더를 동기화할 수 없습니다.";
 /* Device Center backup error: Shared folder without full access */
 "device.center.backup.error.sharedFolderNoFullAccess"="전체 권한 없이 공유된 폴더이기 때문에 폴더를 동기화할 수 없습니다.";
 /* Device Center backup error: Files can't be synced */
@@ -3535,7 +3535,7 @@
 /* Device Center camera upload status disabled */
 "device.center.camera.uploads.action.status.disabled"="해제됨";
 /* Device center current device empty state message */
-"device.center.current.device.empty.state.message"="Nothing set up yet";
+"device.center.current.device.empty.state.message"="아직 아무 것도 설정되지 않았습니다";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="되풀이 종료";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3831,6 +3831,30 @@
 /* A button label to close the waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.close"="닫기";
 /* Error shown when moving folder to inside itself */
-"Error.nodeCopyOrMove.circularDependency"="You can’t move this folder as the destination is the same folder.";
+"Error.nodeCopyOrMove.circularDependency"="목적지가 동일하기 때문에 이 폴더를 이동할 수 없습니다.";
 /* Auto media discovery banner title */
 "photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="이 폴더가 이미지와 동영상만 담고 있으므로, 자동으로 미디어 발견 보기에서 열었습니다. 시각 콘텐츠를 더욱 몰입되는 레이아웃에서 즐길 수 있습니다. 이것을 설정에서 비활성화 할 수 있습니다.";
+/* Upgrade account screen header title after user onboarding */
+"onboarding.upgradeAccount.header.title"="Pro 요금제로 더 받기";
+/* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
+"onboarding.upgradeAccount.header.subTitle"="더 많은 저장소와 추가 기능을 위해 Pro 요금제로 업그레이드 하세요. 요금제는 월 %@부터 시작합니다.";
+/* Upgrade account screen content header for pro plan feature list */
+"onboarding.upgradeAccount.content.proPlanFeatureHeader"="기대할 수 있는 몇 가지 기능은 다음과 같습니다:";
+/* Upgrade account screen content title about pro plan featuring as Generous Storage */
+"onboarding.upgradeAccount.content.generousStorage.title"="넉넉한 저장소";
+/* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Store unlimited data, starting from 400 GB. */
+"onboarding.upgradeAccount.content.generousStorage.message"="무제한 데이터 보관, [A][B]부터 시작";
+/* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
+"onboarding.upgradeAccount.content.transferSharing.title"="전송 공유";
+/* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
+"onboarding.upgradeAccount.content.transferSharing.message"="당신이 데이터를 공유해준 사람들이 당신이 공유해준 것을 다운로드 하거나 스트림 하기 위해 당신의 전송 할당량을 이용할 수 있습니다.";
+/* Upgrade account screen content title about pro plan featuring the Additional security when sharing */
+"onboarding.upgradeAccount.content.additionalSecurity.title"="공유할 때 추가 보안";
+/* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
+"onboarding.upgradeAccount.content.additionalSecurity.message"="파일과 폴더 링크에 암호와 만료일을 설정";
+/* Upgrade account screen button title that will direct to Upgrade plan page */
+"onboarding.upgradeAccount.button.viewProPlans"="Pro 요금제 보기";
+/* Camera uploads banner enable state title */
+"cameraUploads.banner.enableState.title"="카메라 업로드 활성화";
+/* Camera uploads banner enable state description */
+"cameraUploads.banner.enableState.description"="자동으로 당신의 사진과 동영상을 클라우드 드라이브에 백업합니다.";

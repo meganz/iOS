@@ -67,7 +67,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA non riesce a connettersi in sicurezza tramite SSL. Potresti essere collegato ad un WiFi pubblico che richiede requisiti addizionali.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="Il contenuto a cui stai provando ad accedere non è disponibile per questo account. Per favore, prova ad effettuare il login con lo stesso account come nel client web mobile.";
+"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Please try to log in with same account as in the mobile browser.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="Il processo sta prendendo più tempo di quanto previsto. Per favore, aspetta…";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -721,7 +721,7 @@
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="Caricamenti da fotocamera";
 /* Banner message on Camera Uploads that warns user that they have limited access to photos */
-"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA has limited access to your photo library and cannot back up all of your media. Tap to change permissions.";
+"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA ha accesso limitato alla tua Galleria e non può effettuare il backup di tutti i tuoi media. Tocca per cambiare i permessi.";
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="Foto";
 /* Photo view is empty */
@@ -1407,11 +1407,11 @@
 /* Error message displayed when trying to invite a contact who is already added. */
 "alreadyAContact"="%s è già un contatto.";
 /* A summary message when a user sent a contact's details through the chat. Please keep %@ as it will be replaced at runtime with the name of the contact that was sent. */
-"sentContact"="Sent contact: %@";
+"sentContact"="Contatto inviato: %@";
 /* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
 "sentXContacts"="Invia %s contatti.";
 /* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %@ as it will be replaced at runtime with the name of the attached file. */
-"attachedFile"="Attached: %@";
+"attachedFile"="Allegato: %@";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="%s file allegati.";
 /* Label in a button that allows to jump to the latest item */
@@ -1837,7 +1837,7 @@
 /* Message show when a user cannot activate the video in a group call because the max number of videos has been reached */
 "Error. No more video are allowed in this group call."="Non ti è permesso di attivare il video in questa chiamata in quanto ha raggiunto il massimo numero di partecipanti che utilizzano il video.";
 /* Error shown when trying to start a call in a group with more peers than allowed */
-"Unable to start a call because the participants limit was exceeded."="Unable to start the call due to the participant limit having been exceeded.";
+"Unable to start a call because the participants limit was exceeded."="Impossibile avviare la chiamata perché il limite di partecipanti è stato superato.";
 /* Label shown while joining a public chat */
 "Joining..."="Unione in corso…";
 /* Label shown while leaving a public chat */
@@ -1925,7 +1925,7 @@
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
 "This action can not be completed as it would take you over your current storage limit"="Questa azione non può essere completata in quanto ti farebbe superare il limite del tuo spazio di archiviazione";
 /* uploads over storage quota warning dialog title */
-"Your upload(s) cannot proceed because your account is full"="Your upload cannot proceed because your Cloud storage is full";
+"Your upload(s) cannot proceed because your account is full"="Il tuo upload non può procedere perché il tuo Cloud Drive è pieno";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
 "Allow your contacts to see the last time you were active on MEGA."="Permetti ai tuoi contatti di vedere l'ultima volta in cui sei stato attivo su MEGA.";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
@@ -1991,7 +1991,7 @@
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="Modificato da %@";
 /* Title for a recent action bucket with multiple files. %@ will be replaced by the filename of the first file in the bucket. %ld will be replaced by the total number of other files in the bucket. */
-"home.recent.multipleFileTitle"="“%@” and %ld more";
+"home.recent.multipleFileTitle"="“%@” e altri %ld ";
 /* Label that indicates who uploaded a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.createdByLabel"="Creato da %@";
 /* Message shown when the user has not recent activity in their account. */
@@ -2035,7 +2035,7 @@
 /* Text used as a section title or similar */
 "Enter Email"="Inserisci email";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
-"contact.invite.message"="You have a MEGA Chat request waiting. Register an account on MEGA and get 20 GB free lifetime storage.";
+"contact.invite.message"="Hai una richiesta MEGA Chat in attesa. Registra un account su MEGA ed ottieni 20 GB di spazio gratuito di archiviazione per sempre.";
 /* Destination folder name of chat files */
 "My chat files"="File delle mie chat";
 /* Title of the section about the plan in the storage tab in My Account Section */
@@ -2585,11 +2585,11 @@
 /* Over Disk Quota paywall not final detail message. */
 "dialog.storage.paywall.notFinal.detail"="<paragraph>Sfortunatamente, non hai intrapreso alcuna azione durante i <b>%@</b> da quando le nostre email sono state mandate a <b>%@</b> il <b>%@</b>. Stai ancora utilizzando <b>%@</b> di spazio, che è oltre il tuo limite gratuito. Per favore, vedi le email che ti abbiamo inviato per maggiori informazioni su quel che devi fare.</paragraph>";
 /* Over Disk Quota paywall final detail message. */
-"dialog.storage.paywall.final.detail"="<paragraph>Your data will be deleted tomorrow if your account has not been upgraded.</paragraph>";
+"dialog.storage.paywall.final.detail"="<paragraph>I tuoi dati saranno eliminati domani se non effettuerai l'upgrade del tuo account.</paragraph>";
 /* Over Disk Quota paywall, not final warning label. */
-"dialog.storage.paywall.notFinal.warning"="<body>Upgrade within <warn>%@</warn> to avoid your data getting deleted.</body>";
+"dialog.storage.paywall.notFinal.warning"="<body>Effettua l'upgrade entro <warn>%@</warn> per evitare l'eliminazione dei tuoi dati.</body>";
 /* Over Disk Quota paywall, final warning label. */
-"dialog.storage.paywall.final.warning"="<body><warn>Upgrade today if you wish to keep your data.</warn></body>";
+"dialog.storage.paywall.final.warning"="<body><warn>Effettua l'upgrade oggi se desideri mantenere i tuoi dati.</warn></body>";
 /* Button title to see the available bonus */
 "general.button.getBonus"="Ottieni il bonus";
 /* Backup setup warning title */
@@ -2599,7 +2599,7 @@
 /* Change the default backup location warning title. %@ is a folder */
 "dialog.backup.folder.location.warning.title"="Sposta “%@”";
 /* Change the default backup location warning message */
-"dialog.root.backup.folder.location.warning.message"="You are changing a default backup folder location. This may affect your ability to find your backup folder. Please remember where it is located so that you can find it in the future.";
+"dialog.root.backup.folder.location.warning.message"="Stai modificando la posizione di una cartella predefinita di backup. Per favore, ricorda dove si trova in modo da trovarla in futuro.";
 /* Change the default backup location warning message */
 "dialog.backup.folder.location.warning.message"="Spostare questa cartella cambia la destinazione del backup. Il backup verrà disabilitato per sicurezza. È questo quel che vuoi fare? I backup possono essere riattivati dall'app per desktop di MEGA.";
 /* Delete the default backup folder warning title. %@ is a folder */
@@ -2643,7 +2643,7 @@
 /* Shown when an invalid/inexisting/not-available-anymore meeting link is opened. */
 "meetings.alert.end"="Meeting terminato";
 /* Meeting ended Alert button -- View Meeting Chat history. */
-"meetings.alert.meetingchat"="View chat history";
+"meetings.alert.meetingchat"="Vedi la cronologia della chat";
 /* Shown description when an invalid/inexisting/not-available-anymore meeting link is opened. */
 "meetings.alert.end.description"="Il meeting a cui stai cercando di unirti è già terminato. Puoi ancora vedere la chat del meeting.";
 /* Contacts selection screen header: Invite contacts to meetings */
@@ -2651,17 +2651,17 @@
 /* Meetings: Floating panel share link option */
 "meetings.panel.shareLink"="Condividi link";
 /* Meetings: Floating panel participants list selector for participants in call */
-"meetings.panel.listSelector.inCall"="In call";
+"meetings.panel.listSelector.inCall"="In chiamata";
 /* Meetings: Floating panel participants list selector for participants not in call */
-"meetings.panel.listSelector.notInCall"="Not in call";
+"meetings.panel.listSelector.notInCall"="Non nella chiamata";
 /* Meetings: Floating panel participants list selector for participants in call */
 "meetings.panel.listSelector.inWaitingRoom"="Sala d'attesa";
 /* Meetings: Floating panel participants in call count header */
 "meetings.panel.ParticipantsCount"="Partecipanti (%d)";
 /* Meetings: Floating panel participants not in call count header */
-"meetings.panel.ParticipantsNotInCallCount"="Not in call (%d)";
+"meetings.panel.ParticipantsNotInCallCount"="Non in chiamata (%d)";
 /* Meetings: Floating panel participants in waiting room count header */
-"meetings.panel.ParticipantsInWaitingRoomCount"="Waiting (%d)";
+"meetings.panel.ParticipantsInWaitingRoomCount"="In attesa (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
 "meetings.participant.moderator"="Host";
 /* Meetings: Action on a meeting that change participant's role to moderator */
@@ -3117,7 +3117,7 @@
 /* A log message in a chat to display that a participant's permission was changed to host role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep the [A], [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to host role by John Smith. */
 "chat.message.changedRole.host"="[B] ha impostato [A] come [S]host[/S]";
 /* A log message in a chat to display that a participant's permission was changed to standard role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to standard role by John Smith. */
-"chat.message.changedRole.standard"="[A] was changed to a [S]standard participant[/S] by [B]";
+"chat.message.changedRole.standard"="[B] ha impostato [A] come [S]partecipante standard[/S]";
 /* Type of data displayed in a map view. Standard imagery of the area. */
 "chat.sendLocation.map.standard"="Standard";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
@@ -3163,9 +3163,9 @@
 /* Start conversation: Schedule meeting context menu */
 "meetings.startConversation.contextMenu.scheduleMeeting"="Programma meeting";
 /* Error message when trying to login and the account is blocked due to copyright violation */
-"account.suspension.message.copyright"="Your MEGA account has been suspended due to repeated allegations of copyright infringements. This means you cannot access your account or data within it.\n\nCheck your email for more information on how to file a counter-notice.";
+"account.suspension.message.copyright"="Il tuo account MEGA è stato sospeso a causa di ripetute accuse di violazione di copyright. Ciò significa che non puoi accedere al tuo account o ai dati che contiene.\n\nControlla la nostra email per ottenere maggiori informazioni su come puoi inviare una contro-notifica.";
 /* Error message when trying to login and the account is blocked due to any type of suspension, but copyright suspension */
-"account.suspension.message.nonCopyright"="Your account was terminated due to a breach of MEGA’s Terms of Service.\n\nYou will not be able to regain access to your stored data or be authorised to register a new MEGA account.";
+"account.suspension.message.nonCopyright"="Il tuo account MEGA è stato chiuso a causa di una violazione dei Termini di Servizio di MEGA.\n\nNon puoi riottenere accesso ai dati che hai archiviato o registrare un nuovo account.";
 /* Text shown in extensions to notify users that they have to open the application first */
 "extensions.OpenApp.Message"="Apri l'app di MEGA ed effettua il login per continuare.";
 /* Account Storage title label of used storage size */
@@ -3195,7 +3195,7 @@
 /* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
 "sharedItems.contactVerification.section.verifyContact.bannerMessage"="Per accedere alla cartella condivisa, la persona che la ha condivisa con te deve verificarti.";
 /* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
-"sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ is shared by a contact you haven’t verified. To ensure extra security, we recommend that you verify their credentials in Contacts by tapping on ⓘ next to the contact you want to verify.";
+"sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ è condivisa da un contatto che non hai verificato. Per assicurare una sicurezza extra, ti raccomandiamo di verificare le sue credenziali in Contatti toccando sull'icona ⓘ affianco il contatto che desideri verificare.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="Le tue credenziali";
 /* Title of the header label in contact verification screen. */
@@ -3453,89 +3453,89 @@
 /* Default device name in case the device name cannot be obtained */
 "device.center.default.device.title"="Dispositivo sconosciuto";
 /* Device Center backup error: Unknown issue */
-"device.center.backup.error.unknown"="Unknown error.";
+"device.center.backup.error.unknown"="Errore sconosciuto.";
 /* Device Center backup error: Filesystem not supported */
 "device.center.backup.error.fileSystemUnsupported"="MEGA non può sincronizzare o effettuare il backup di questa cartella perché il filesystem sul tuo dispositivo non è supportato.";
 /* Device Center backup error: Chosen folder can't be synced */
-"device.center.backup.error.folderCantSync"="The folder you chose can’t be synced.";
+"device.center.backup.error.folderCantSync"="La cartella che hai scelto non può essere sincronizzata.";
 /* Device Center backup error: Individual file sync issue */
 "device.center.backup.error.fileSyncIndividual"="Un file non può essere sincronizzato individualmente. Devi impostare la sincronizzazione di una cartella.";
 /* Device Center backup error: Initial scan failure */
-"device.center.backup.error.initialScanFailed"="Initial scan failed. You will need to re-enable your sync or backup from the Desktop app.";
+"device.center.backup.error.initialScanFailed"="Scansione iniziale fallita. Dovrai riattivare la tua sincronizzazione o il tuo backup dall'app per desktop.";
 /* Device Center backup error: Device folder not located */
-"device.center.backup.error.folderDeviceUnlocatedNow"="Folder in your device can’t be located now, try again later.";
+"device.center.backup.error.folderDeviceUnlocatedNow"="La cartella nel tuo dispositivo non può essere trovata, riprova più tardi.";
 /* Device Center backup error: Device folder can't be located */
-"device.center.backup.error.folderDeviceUnlocated"="Folder in your device can’t be located.";
+"device.center.backup.error.folderDeviceUnlocated"="La cartella nel tuo dispositivo non può essere trovata.";
 /* Device Center backup error: MEGA folder moved or deleted */
-"device.center.backup.error.folderMegaMovedOrDeleted"="Folder in MEGA can’t be located as it’s been moved or deleted, or you might not have access.";
+"device.center.backup.error.folderMegaMovedOrDeleted"="La cartella in MEGA non può essere trovata perché è stata eliminata o spostata, o potresti non avere accesso ad essa.";
 /* Device Center backup error: Storage quota limit */
-"device.center.backup.error.storageQuotaReached"="Storage quota limit reached.";
+"device.center.backup.error.storageQuotaReached"="Limite della banda di trasferimento raggiunto.";
 /* Device Center backup error: Plan expired */
-"device.center.backup.error.planExpired"="Unable to sync or back up this folder as your plan has expired.";
+"device.center.backup.error.planExpired"="Impossibile sincronizzare o effettuare il backup perché il tuo piano è scaduto.";
 /* Device Center backup error: Shared folder quota reached */
-"device.center.backup.error.userSharedQuotaReached"="Folder can’t be synced as the user who shared this folder has reached their storage quota limit.";
+"device.center.backup.error.userSharedQuotaReached"="La cartella non può essere sincronizzata perché l'utente che ha condiviso questa cartella ha raggiunto il limite della propria banda di trasferimento.";
 /* Device Center backup error: Shared folder without full access */
 "device.center.backup.error.sharedFolderNoFullAccess"="La cartella non può essere sincronizzata perché è una cartella condivisa senza pieno accesso.";
 /* Device Center backup error: Files can't be synced */
-"device.center.backup.error.filesInFolder"="Files in this folder can’t be synced or backed up. You will need to re-enable the sync or backup from the Desktop app.";
+"device.center.backup.error.filesInFolder"="I file in questa cartella non possono essere sincronizzati o effettuare il backup. Dovrai riattivare la sincronizzazione o il backup dall'app per desktop.";
 /* Device Center backup error: Folder contains synced folders */
 "device.center.backup.error.containsSyncedFolders"="La cartella non può essere sincronizzata perché già contiene cartelle sincronizzate.";
 /* Device Center backup error: Folder inside another synced folder */
 "device.center.backup.error.insideSyncedFolder"="La cartella non può essere sincronizzata in quanto è già dentro una cartella sincronizzata.";
 /* Device Center backup error: MEGA folder in rubbish bin */
-"device.center.backup.error.folderInRubbish"="Folder can’t be synced or backed up as the MEGA folder is in the Rubbish bin.";
+"device.center.backup.error.folderInRubbish"="La cartella non può essere sincronizzata o effettuare il backup in quanto la cartella corrispettiva su MEGA è nel Cestino.";
 /* Device Center backup error: Can't sync VirtualBox folders */
-"device.center.backup.error.virtualboxFolders"="MEGA can’t sync or back up VirtualBox folders.";
+"device.center.backup.error.virtualboxFolders"="MEGA non può sincronizzare o effettuare il backup di cartelle di VirtualBox.";
 /* Device Center backup error: Account blocked */
-"device.center.backup.error.accountBlocked"="Unable to sync or back up this folder as the account has been blocked.";
+"device.center.backup.error.accountBlocked"="Impossibile sincronizzare o effettuare il backup di questa cartella perché l'account è stato bloccato.";
 /* Device Center backup error: Contact support for sync issues */
-"device.center.backup.error.problemSyncingContactSupport"="Problem syncing or backing up this folder. Try again later. If the issue continues, contact Support.";
+"device.center.backup.error.problemSyncingContactSupport"="Problema nella sincronizzazione o nel backup di questa cartella. Riprova più tardi. Se il problema persiste, contatta il Supporto.";
 /* Device Center backup error: Account reloaded */
 "device.center.backup.error.accountReloaded"="Account ricaricato. Qualsiasi aggiornamento mancato ai tuoi backup o alle tue sincronizzazioni non è stato applicato.";
 /* Device Center backup error: Logged out of Desktop app */
-"device.center.backup.error.loggedOut"="Sync or backup has been stopped as you appear to have logged out of the Desktop app. Log back in via the Desktop app, and resume the sync or backup.";
+"device.center.backup.error.loggedOut"="La sincronizzazione o il backup è stato fermato perché sembra che tu abbia effettuato il logout dall'app per desktop. Effettua nuovamente l'accesso tramite l'app per desktop, e riprendi la sincronizzazione o il backup.";
 /* Device Center backup error: Changes to MEGA folder */
-"device.center.backup.error.changesToMegaFolder"="Problem syncing or backing up this folder because of changes to the MEGA folder. Stop the sync or backup and try setting it up again in the Desktop app, or contact Support.";
+"device.center.backup.error.changesToMegaFolder"="Problema nella sincronizzazione o nel backup di questa cartella a causa di cambiamenti alla cartella MEGA. Ferma la sincronizzazione o il backup e prova ad impostarlo nuovamente nell’app per desktop, o contatta il Supporto.";
 /* Device Center backup error: External drive folder not located */
 "device.center.backup.error.externalDriveUnlocated"="La cartella nel drive esterno non può essere trovata.";
 /* Device Center backup error: Synced folder at same path */
-"device.center.backup.error.alreadySyncedPath"="There’s already a synced folder at the same path.";
+"device.center.backup.error.alreadySyncedPath"="C'è già una cartella sincronizzata allo stesso percorso.";
 /* Device Center backup error: Renaming issue */
-"device.center.backup.error.renamingFailed"="Renaming failed.";
+"device.center.backup.error.renamingFailed"="Rinominazione fallita.";
 /* Device Center backup error: Ignored sync */
-"device.center.backup.error.syncIgnored"="Couldn’t create a sync. The file has been ignored.";
+"device.center.backup.error.syncIgnored"="Impossibile creare una sincronizzazione. Il file è stato ignorato.";
 /* Device Center backup error: Sync configuration unreadable */
-"device.center.backup.error.couldntReadSyncConfig"="Couldn’t read sync configuration. Check the folder permissions and try again later.";
+"device.center.backup.error.couldntReadSyncConfig"="Impossibile leggere la configurazione della sincronizzazione. Controlla i permessi della cartella e riprova più tardi.";
 /* Device Center backup error: Unknown drive path for sync */
 "device.center.backup.error.unknownDrivePath"="Sync’s drive path is unknown.";
 /* Device Center backup error: Invalid scan interval */
-"device.center.backup.error.invalidScanInterval"="Invalid scan interval. Check the scan interval setup and try again.";
+"device.center.backup.error.invalidScanInterval"="Intervallo della scansione invalido. Controlla l'impostazione dell'intervallo della scansione e riprova.";
 /* Device Center backup error: Sync or backup issue, setup again */
-"device.center.backup.error.syncOrBackupSetupAgain"="Problem syncing or backing up this folder. Stop the sync or backup and try setting it up again in the Desktop app, or contact Support.";
+"device.center.backup.error.syncOrBackupSetupAgain"="Problemi nella sincronizzazione o nel backup di questa cartella. Ferma la sincronizzazione o il backup e prova ad impostarlo nuovamente dall'app per desktop, o contatta il Supporto.";
 /* Device Center backup error: Can't read sync location */
-"device.center.backup.error.cantReadSyncLocation"="Couldn’t read sync location. Check the location is accessible and permissions for the folder location are granted.";
+"device.center.backup.error.cantReadSyncLocation"="Impossibile leggere la posizione della sincronizzazione. Controlla che la posizione sia accessibile e i permessi per la cartella della posizione siano garantiti.";
 /* Device Center backup error: Insufficient space for download */
-"device.center.backup.error.insufficientDownloadSpace"="Insufficient space for download.";
+"device.center.backup.error.insufficientDownloadSpace"="Spazio per il download insufficiente.";
 /* Device Center backup error: Unable to add filesystem watch */
-"device.center.backup.error.addFilesystemWatch"="Unable to add a file system watch. Ensure there is sufficient free space and memory, and that you have granted permissions for the folder location.";
+"device.center.backup.error.addFilesystemWatch"="Impossibile aggiungere un watch del file system. Assicurati che ci sia abbastanza spazio libero, e che tu abbia garantito i permessi per la cartella della posizione.";
 /* Device Center backup error: Couldn't communicate with folder location */
-"device.center.backup.error.communicateWithFolderLocation"="Couldn’t communicate with the folder location. Check the location is accessible and permissions for the folder location are granted.";
+"device.center.backup.error.communicateWithFolderLocation"="Impossibile comunicare con la cartella della posizione. Controlla che la posizione sia accessibile e i permessi per la cartella della posizione siano garantiti.";
 /* Show in Cloud Drive section action title */
 "device.center.show.in.cloud.drive.action.title"="Mostra nel Cloud drive";
 /* Show in Backups section action title */
-"device.center.show.in.backups.action.title"="Show in Backups";
+"device.center.show.in.backups.action.title"="Mostra in Backup";
 /* Device Center rename device action title */
-"device.center.rename.device.title"="Device name";
+"device.center.rename.device.title"="Nome del dispositivo";
 /* Device Center rename device action duplicated name message */
-"device.center.rename.device.duplicated.name"="A device with this name already exists";
+"device.center.rename.device.duplicated.name"="Un dispositivo con questo nome già esiste";
 /* Device Center rename device action enter a different name message */
-"device.center.rename.device.different.name"="Enter a different name";
+"device.center.rename.device.different.name"="Inserisci un nome differente";
 /* Device Center camera upload status enabled */
 "device.center.camera.uploads.action.status.enabled"="Attivato";
 /* Device Center camera upload status disabled */
 "device.center.camera.uploads.action.status.disabled"="Disattivato";
 /* Device center current device empty state message */
-"device.center.current.device.empty.state.message"="Nothing set up yet";
+"device.center.current.device.empty.state.message"="Nulla è stato impostato";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="Termina evento";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3725,21 +3725,21 @@
 /* Schedule meeting waiting room setting title */
 "meetings.scheduleMeeting.waitingRoom"="Sala d'attesa";
 /* Schedule meeting waiting room setting description */
-"meetings.scheduleMeeting.waitingRoom.description"="Only participants admitted by the host can join the meeting.";
+"meetings.scheduleMeeting.waitingRoom.description"="Solo i partecipanti ammessi dall'host possono unirsi al meeting.";
 /* Schedule meeting waiting room warning banner title */
 "meetings.scheduleMeeting.waitingRoomWarningBanner.title"="I partecipanti aggiunti da utenti che non sono l'host non verranno inviati nella sala d'attesa.";
 /* Schedule meeting waiting room warning banner learn more */
 "meetings.scheduleMeeting.waitingRoomWarningBanner.learnMore"="Scopri di più";
 /* Album saved to cloud drive alert message */
-"albumLink.alert.message.albumSavedToCloudDrive"="“%@” saved to Cloud drive";
+"albumLink.alert.message.albumSavedToCloudDrive"="“%@” salvato nel Cloud drive";
 /* Album failed to save to cloud drive alert message */
-"albumLink.alert.message.albumFailedToSaveToCloudDrive"="“%@” can’t be saved to Cloud drive. Try again later and if the problem continues, contact the person who shared the link with you.";
+"albumLink.alert.message.albumFailedToSaveToCloudDrive"="Impossibile salvare “%@” nel Cloud drive. Riprova più tardi e se il problema persiste, contatta la persona che ha condiviso il link con te.";
 /* Text displayed on banner we show when sharing folder with unverified contacts */
-"shareFolder.contactsNotVerified"="Some of the contacts you’re sharing information with haven’t been verified by you. To ensure extra security, we recommend that you verify their credentials in Contacts by tapping on ⓘ next to the contact you want to verify.";
+"shareFolder.contactsNotVerified"="Alcuni dei contatti con cui stai condividendo informazioni non sono stati verificati da te. Per aumentare la sicurezza, ti raccomandiamo di verificare le loro credenziali in Contatti toccando sull'icona ⓘ affianco il contatto che desideri verificare.";
 /* Rename public album alert title */
 "albumLink.alert.renameAlbum.title"="Rinomina album";
 /* Rename public album alert message */
-"albumLink.alert.renameAlbum.message"="An album named “%@” already exists in your Albums. Enter a new name for the album you’re saving.";
+"albumLink.alert.renameAlbum.message"="Un album di nome “%@” già esiste nei tuoi Album. Inserisci un nuovo nome per l'album che stai salvando.";
 /* Button title of the dialog for transfer quota error that will direct to upgrade plan */
 "transferQuotaError.button.upgrade"="Fai l’upgrade";
 /* Button title of the dialog for transfer quota error that will dismiss dialog */
@@ -3747,21 +3747,21 @@
 /* Button title of the dialog for transfer quota error to buy new plan */
 "transferQuotaError.button.buyNewPlan"="Acquista un nuovo piano";
 /* Footer message of the dialog for transfer quota error. [A] will be replaced by the usage quota percent. [B] will be replaced by the max transfer quota in TB. For example: 100% of 16 TB used */
-"transferQuotaError.footerMessage.quotaUsage"="[A]%% of [B] TB used";
+"transferQuotaError.footerMessage.quotaUsage"="[A]%% usato su [B] TB";
 /* Title of the dialog for transfer quota error with limited available trasfer quota */
 "transferQuotaError.downloadLimitedQuota.title"="Quota di trasferimento limitata superata";
 /* Message text of the dialog for transfer quota error with limited available trasfer quota for free accounts */
-"transferQuotaError.downloadLimitedQuota.freeAccount.message"="Downloading may be interrupted as you’ve used most of your transfer quota for this IP address. To get more quota, upgrade to a Pro plan or wait for %@ until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.";
+"transferQuotaError.downloadLimitedQuota.freeAccount.message"="Il download potrebbe essere interrotto perché hai utilizzato quasi tutta la banda di trasferimento disponibile per questo indirizzo IP. Per ottenere maggior banda di trasferimento, effettua l'upgrade ad un piano Pro o attendi per %@ finché altra banda di trasferimento diventa disponibile per il tuo indirizzo IP. [A]Scopri di più[/A] riguardo la banda di trasferimento.";
 /* Message text of the dialog for transfer quota error with limited available trasfer quota for pro accounts */
 "transferQuotaError.downloadLimitedQuota.proAccount.message"="Il download potrebbe essere interrotto perché hai utilizzato quasi tutta la banda di trasferimento disponibile per questo account. Per ottenere maggior banda di trasferimento, acquista un nuovo piano, oppure se possiedi un abbonamento con MEGA, attendi che il tuo piano venga rinnovato.";
 /* Title of the dialog for transfer quota error with exceeded quota */
 "transferQuotaError.downloadExceededQuota.title"="Banda di trasferimento superata";
 /* Message text of the dialog for transfer quota error with exceeded download trasfer quota for free accounts */
-"transferQuotaError.downloadExceededQuota.freeAccount.message"="You can’t continue downloading as you don’t have any transfer quota left for this IP address. To get more quota, upgrade to a Pro plan or wait for %@ until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.";
+"transferQuotaError.downloadExceededQuota.freeAccount.message"="Non puoi continuare con il download perché non hai banda di trasferimento disponibile per questo indirizzo IP. Per ottenere maggior banda di trasferimento, effettua l'upgrade ad un piano Pro o attendi per %@ finché altra banda di trasferimento diventa disponibile per il tuo indirizzo IP. [A]Scopri di più[/A] riguardo la banda di trasferimento.";
 /* Message text of the dialog for transfer quota error with exceeded download trasfer quota for pro accounts */
 "transferQuotaError.downloadExceededQuota.proAccount.message"="Non puoi continuare con il download perché non hai banda di trasferimento disponibile per questo account. Per ottenere maggior banda di trasferimento, acquista un nuovo piano, oppure se possiedi un abbonamento con MEGA, attendi che il tuo piano venga rinnovato.";
 /* Message text of the dialog for transfer quota error with exceeded streaming trasfer quota for free accounts */
-"transferQuotaError.streamingExceededQuota.freeAccount.message"="Your media stopped playing as you don’t have any transfer quota left for this IP address. To get more quota, upgrade to a Pro plan or wait for %@ until more free quota becomes available on your IP address. [A]Learn more[/A] about transfer quota.";
+"transferQuotaError.streamingExceededQuota.freeAccount.message"="Si è interrotta la riproduzione del tuo media perché non hai banda di trasferimento disponibile per questo indirizzo IP. Per ottenere maggior banda di trasferimento, effettua l'upgrade ad un piano Pro oppure attendi per %@ finché altra banda di trasferimento diventa disponibile per il tuo indirizzo IP. [A]Scopri di più[/A] riguardo la banda di trasferimento.";
 /* Message text of the dialog for transfer quota error with exceeded download trasfer quota for pro accounts */
 "transferQuotaError.streamingExceededQuota.proAccount.message"="Si è interrotta la riproduzione del tuo media perché non hai banda di trasferimento disponibile per questo account. Per ottenere maggior banda di trasferimento, acquista un nuovo piano, oppure se possiedi un abbonamento con MEGA, attendi che il tuo piano venga rinnovato.";
 /* Meeting waiting room leave button */
@@ -3791,7 +3791,7 @@
 /* Meeting waiting room alert action of ok got it */
 "meetings.waitingRoom.alert.okGotIt"="OK, capito";
 /* Call waiting room alert message text to notify host that someone is waiting to join */
-"chat.call.waitingRoom.alert.message.one"="%@ is waiting to join the call";
+"chat.call.waitingRoom.alert.message.one"="%@ sta aspettando di unirsi alla chiamata";
 /* Call waiting room alert button to deny access */
 "chat.call.waitingRoom.alert.button.deny"="Nega";
 /* Call waiting room alert button to admit access */
@@ -3801,13 +3801,13 @@
 /* Call waiting room alert button to allow access to everyone */
 "chat.call.waitingRoom.alert.button.admitAll"="Ammetti tutti";
 /* Call waiting room alert message text to confirm deny access from host */
-"chat.call.waitingRoom.alert.message.denyAccess"="Deny %@ entry?";
+"chat.call.waitingRoom.alert.message.denyAccess"="Negare a %@ l'ingresso?";
 /* Call waiting room alert button to deny access */
 "chat.call.waitingRoom.alert.button.confirmDeny"="Nega l'accesso";
 /* Call waiting room alert button to allow access */
 "chat.call.waitingRoom.alert.button.cancel"="Annulla";
 /* Context menu action seen from native files application when selecting a file that's also present on MEGA */
-"fileProviderExtension.action.open"="Open in MEGA";
+"fileProviderExtension.action.open"="Apri in MEGA";
 /* Filter name for searching on the home screen */
 "home.search.filter.docs"="Documenti";
 /* Filter name for searching on the home screen */
@@ -3831,6 +3831,30 @@
 /* A button label to close the waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.close"="Chiudi";
 /* Error shown when moving folder to inside itself */
-"Error.nodeCopyOrMove.circularDependency"="You can’t move this folder as the destination is the same folder.";
+"Error.nodeCopyOrMove.circularDependency"="Non puoi spstare questa cartella perché la destinazione è la stessa cartella.";
 /* Auto media discovery banner title */
 "photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="Dato che questa cartella contiene solamente immagini e video, la abbiamo aperta automaticamente nella modalità di esplorazione dei media. Questo ti permette di vedere i media in modalità galleria e di filtrare per data. Puoi disabilitarlo nelle Impostazioni.";
+/* Upgrade account screen header title after user onboarding */
+"onboarding.upgradeAccount.header.title"="Ottieni di più con un piano Pro";
+/* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
+"onboarding.upgradeAccount.header.subTitle"="Effettua l'upgrade ad un piano Pro per maggiore spazio di archiviazione e molte funzioni extra. I nostri piani partono da %@ al mese.";
+/* Upgrade account screen content header for pro plan feature list */
+"onboarding.upgradeAccount.content.proPlanFeatureHeader"="Alcune funzioni che puoi trovare sono:";
+/* Upgrade account screen content title about pro plan featuring as Generous Storage */
+"onboarding.upgradeAccount.content.generousStorage.title"="Grande archivio";
+/* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Store unlimited data, starting from 400 GB. */
+"onboarding.upgradeAccount.content.generousStorage.message"="Archivia dati illimitati, a partire da [A] [B].";
+/* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
+"onboarding.upgradeAccount.content.transferSharing.title"="Condivisione della banda di trasferimento";
+/* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
+"onboarding.upgradeAccount.content.transferSharing.message"="Le persone con cui condividi dati possono utilizzare la tua banda di trasferimento per scaricare ed effettuare lo streaming degli oggetti che hai condiviso.";
+/* Upgrade account screen content title about pro plan featuring the Additional security when sharing */
+"onboarding.upgradeAccount.content.additionalSecurity.title"="Sicurezza addizionale nella condivisione";
+/* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
+"onboarding.upgradeAccount.content.additionalSecurity.message"="Imposta password e date di scadenza per i link di file e cartelle.";
+/* Upgrade account screen button title that will direct to Upgrade plan page */
+"onboarding.upgradeAccount.button.viewProPlans"="Vedi i piani Pro";
+/* Camera uploads banner enable state title */
+"cameraUploads.banner.enableState.title"="Attiva i Caricamenti da fotocamera";
+/* Camera uploads banner enable state description */
+"cameraUploads.banner.enableState.description"="Fai un backup in automatico delle tue foto e dei tuoi video nel tuo Cloud Drive.";

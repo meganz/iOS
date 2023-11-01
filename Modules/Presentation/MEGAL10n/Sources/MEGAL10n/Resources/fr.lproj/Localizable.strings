@@ -67,7 +67,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA n’arrive pas à se connecter de façon sécurisée par SSL. Vous vous trouvez peut-être sur un réseau Wi-Fi public avec des exigences supplémentaires.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="Le contenu auquel vous tentez d’accéder n’est pas proposé pour ce compte. Veuillez essayer de vous connecter avec le même compte que pour le client Web mobile.";
+"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Please try to log in with same account as in the mobile browser.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="Le processus prend plus longtemps que prévu. Veuillez patienter…";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -3834,3 +3834,27 @@
 "Error.nodeCopyOrMove.circularDependency"="Vous ne pouvez pas déplacer ce dossier, car la destination est le même dossier.";
 /* Auto media discovery banner title */
 "photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="Comme ce dossier ne comprend que des images et des vidéos, nous l’avons automatiquement ouvert en mode de découverte des médias. Vous pouvez profiter de votre contenu visuel avec une mise en page plus immersive. Vous pouvez désactiver cette option dans Paramètres.";
+/* Upgrade account screen header title after user onboarding */
+"onboarding.upgradeAccount.header.title"="Obtenir davantage avec un abonnement Pro";
+/* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
+"onboarding.upgradeAccount.header.subTitle"="Passez à un abonnement Pro et obtenez davantage d’espace de stockage et de nombreuses fonctions supplémentaires. Nos abonnements commencent à %@ par mois.";
+/* Upgrade account screen content header for pro plan feature list */
+"onboarding.upgradeAccount.content.proPlanFeatureHeader"="Voici ce que vous obtiendrez :";
+/* Upgrade account screen content title about pro plan featuring as Generous Storage */
+"onboarding.upgradeAccount.content.generousStorage.title"="Espace de stockage généreux";
+/* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Store unlimited data, starting from 400 GB. */
+"onboarding.upgradeAccount.content.generousStorage.message"="Stockez des données sans limite, à partir de [A] [B]";
+/* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
+"onboarding.upgradeAccount.content.transferSharing.title"="Partage des transferts";
+/* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
+"onboarding.upgradeAccount.content.transferSharing.message"="Les personnes avec qui vous partagez des données peuvent utiliser votre quota de transfert pour télécharger ou diffuser en continu les éléments que vous avez partagés.";
+/* Upgrade account screen content title about pro plan featuring the Additional security when sharing */
+"onboarding.upgradeAccount.content.additionalSecurity.title"="Sécurité supplémentaire lors de partages";
+/* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
+"onboarding.upgradeAccount.content.additionalSecurity.message"="Définissez des mots de passe et des dates d’expiration pour les liens de fichier et de dossier.";
+/* Upgrade account screen button title that will direct to Upgrade plan page */
+"onboarding.upgradeAccount.button.viewProPlans"="Afficher les abonnements Pro";
+/* Camera uploads banner enable state title */
+"cameraUploads.banner.enableState.title"="Activer les Téléversements de l’appareil photo";
+/* Camera uploads banner enable state description */
+"cameraUploads.banner.enableState.description"="Sauvegardez automatiquement vos photos et vos vidéos dans votre Disque nuagique.";

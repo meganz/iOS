@@ -67,7 +67,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA không tạo được liên kết an ninh tới SSL. Thiết bị bạn đang sử dụng có thể đang dùng mạng WiFi công cộng có yêu cầu một số điều kiện khi kết nối.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="Nội dung mà bạn muốn truy cập không có tồn tại cho tài khoản hiện đang được đăng nhập. Xin thử đăng nhập với một tài khoản trùng khớp hiện có trên phiên bản nền web di động.";
+"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Please try to log in with same account as in the mobile browser.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="Quá trình diễn ra lâu hơn dự kiến. Xin kiên nhẫn chờ…";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -2993,7 +2993,7 @@
 /* Placeholder to indicate the user that needs to describe the issue through the text edit field of bug report form. */
 "help.reportIssue.describeIssue.placeholder"="Mô tả vấn đề";
 /* Label shown when users lost the internet connection */
-"general.NoIntenerConnection"="Không thể kết nối tới internet. Xin kiểm tra đường truyền kết nối mạng và thử lại.";
+"general.NoIntenerConnection"="Không thể kết nối tới internet. Xin kiểm tra đường truyền kết nối mạng và thử lại.";
 /* Menu title in meetings that allows to switch to main view for a participant. */
 "meetings.displayInMainView.title"="Hiện trong Khung Xem Chính";
 /* Label indicating storage over quota */
@@ -3455,7 +3455,7 @@
 /* Device Center backup error: Unknown issue */
 "device.center.backup.error.unknown"="Lỗi không xác định được.";
 /* Device Center backup error: Filesystem not supported */
-"device.center.backup.error.fileSystemUnsupported"="MEGA can’t sync or back up this folder because the file system on your device is not supported.";
+"device.center.backup.error.fileSystemUnsupported"="MEGA không thể đồng bộ hoặc sao lưu thư mục này bởi vì hệ thống tệp trên thiết bị của bạn không được hỗ trợ.";
 /* Device Center backup error: Chosen folder can't be synced */
 "device.center.backup.error.folderCantSync"="The folder you chose can’t be synced.";
 /* Device Center backup error: Individual file sync issue */
@@ -3465,11 +3465,11 @@
 /* Device Center backup error: Device folder not located */
 "device.center.backup.error.folderDeviceUnlocatedNow"="Folder in your device can’t be located now, try again later.";
 /* Device Center backup error: Device folder can't be located */
-"device.center.backup.error.folderDeviceUnlocated"="Folder in your device can’t be located.";
+"device.center.backup.error.folderDeviceUnlocated"="Không tìm thấy vị trí của thư mục trong thiết bị của bạn.";
 /* Device Center backup error: MEGA folder moved or deleted */
-"device.center.backup.error.folderMegaMovedOrDeleted"="Folder in MEGA can’t be located as it’s been moved or deleted, or you might not have access.";
+"device.center.backup.error.folderMegaMovedOrDeleted"="Không tìm thấy vị trí của thư mục trên MEGA, có thể do đã bị di chuyển hoặc bị xóa, cũng có thể là bạn không có quyền truy cập.";
 /* Device Center backup error: Storage quota limit */
-"device.center.backup.error.storageQuotaReached"="Storage quota limit reached.";
+"device.center.backup.error.storageQuotaReached"="Vượt mức giới hạn không gian lưu trữ.";
 /* Device Center backup error: Plan expired */
 "device.center.backup.error.planExpired"="Unable to sync or back up this folder as your plan has expired.";
 /* Device Center backup error: Shared folder quota reached */
@@ -3483,9 +3483,9 @@
 /* Device Center backup error: Folder inside another synced folder */
 "device.center.backup.error.insideSyncedFolder"="Thư mục không thể đồng bộ được bởi vì nó đang nằm ở trong một thư mục được đồng bộ.";
 /* Device Center backup error: MEGA folder in rubbish bin */
-"device.center.backup.error.folderInRubbish"="Folder can’t be synced or backed up as the MEGA folder is in the Rubbish bin.";
+"device.center.backup.error.folderInRubbish"="Thư mục không thể đồng bộ hoặc tạo sao lưu được bởi vì thư mục tương ứng trên MEGA đang nằm trong Thùng Rác.";
 /* Device Center backup error: Can't sync VirtualBox folders */
-"device.center.backup.error.virtualboxFolders"="MEGA can’t sync or back up VirtualBox folders.";
+"device.center.backup.error.virtualboxFolders"="MEGA không thể đồng bộ hóa hoặc sao lưu các thư mục VirtualBox.";
 /* Device Center backup error: Account blocked */
 "device.center.backup.error.accountBlocked"="Unable to sync or back up this folder as the account has been blocked.";
 /* Device Center backup error: Contact support for sync issues */
@@ -3501,11 +3501,11 @@
 /* Device Center backup error: Synced folder at same path */
 "device.center.backup.error.alreadySyncedPath"="There’s already a synced folder at the same path.";
 /* Device Center backup error: Renaming issue */
-"device.center.backup.error.renamingFailed"="Renaming failed.";
+"device.center.backup.error.renamingFailed"="Đổi tên không thành công.";
 /* Device Center backup error: Ignored sync */
-"device.center.backup.error.syncIgnored"="Couldn’t create a sync. The file has been ignored.";
+"device.center.backup.error.syncIgnored"="Không thể tạo việc đồng bộ. Tệp tin đã bị bỏ qua.";
 /* Device Center backup error: Sync configuration unreadable */
-"device.center.backup.error.couldntReadSyncConfig"="Couldn’t read sync configuration. Check the folder permissions and try again later.";
+"device.center.backup.error.couldntReadSyncConfig"="Không thể đọc cấu hình của đồng bộ. Hãy kiểm tra quyền hạn của thư mục và thử lại sau.";
 /* Device Center backup error: Unknown drive path for sync */
 "device.center.backup.error.unknownDrivePath"="Sync’s drive path is unknown.";
 /* Device Center backup error: Invalid scan interval */
@@ -3535,7 +3535,7 @@
 /* Device Center camera upload status disabled */
 "device.center.camera.uploads.action.status.disabled"="Đã vô hiệu";
 /* Device center current device empty state message */
-"device.center.current.device.empty.state.message"="Nothing set up yet";
+"device.center.current.device.empty.state.message"="Chưa có gì được thiết lập";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="Ngừng tái diễn";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3834,3 +3834,27 @@
 "Error.nodeCopyOrMove.circularDependency"="You can’t move this folder as the destination is the same folder.";
 /* Auto media discovery banner title */
 "photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="Vì thư mục này chỉ có chứa hoàn toàn là hình ảnh và videos, chúng tôi tự động đặt theo kiểu quan sát phương tiện số. Giúp bạn trải nghiệm nội dung hình ảnh của mình với bố cục sống động hơn. Tính năng này có thể tắt đi trong Thiết Đặt.";
+/* Upgrade account screen header title after user onboarding */
+"onboarding.upgradeAccount.header.title"="Get more with a Pro plan";
+/* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
+"onboarding.upgradeAccount.header.subTitle"="Upgrade to a Pro plan for more storage and lots of extra features. Our plans start at %@ a month.";
+/* Upgrade account screen content header for pro plan feature list */
+"onboarding.upgradeAccount.content.proPlanFeatureHeader"="Some features to look forward to are:";
+/* Upgrade account screen content title about pro plan featuring as Generous Storage */
+"onboarding.upgradeAccount.content.generousStorage.title"="Không gian hào phóng";
+/* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Store unlimited data, starting from 400 GB. */
+"onboarding.upgradeAccount.content.generousStorage.message"="Lưu trữ dữ liệu không giới hạn, bắt đầu từ [A] [B].";
+/* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
+"onboarding.upgradeAccount.content.transferSharing.title"="Chia sẻ lượng truyền tải";
+/* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
+"onboarding.upgradeAccount.content.transferSharing.message"="The people you share data with can use your transfer quota to download and stream the items you shared.";
+/* Upgrade account screen content title about pro plan featuring the Additional security when sharing */
+"onboarding.upgradeAccount.content.additionalSecurity.title"="Additional security when sharing";
+/* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
+"onboarding.upgradeAccount.content.additionalSecurity.message"="Set passwords and expiry dates for file and folder links.";
+/* Upgrade account screen button title that will direct to Upgrade plan page */
+"onboarding.upgradeAccount.button.viewProPlans"="Xem các gói Pro";
+/* Camera uploads banner enable state title */
+"cameraUploads.banner.enableState.title"="Bật Đăng Tải Camêra";
+/* Camera uploads banner enable state description */
+"cameraUploads.banner.enableState.description"="Tự động hóa sao lưu các hình ảnh và videos lên Ổ Mây của bạn.";

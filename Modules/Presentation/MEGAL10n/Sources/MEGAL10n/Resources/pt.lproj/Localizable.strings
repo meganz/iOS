@@ -67,7 +67,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Não foi possível conectar-se ao MEGA de forma segura via SSL. Você pode estar usando uma rede Wi-Fi pública com requisitos adicionais.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="O conteúdo que você está tentando acessar não está disponível para esta conta. Por favor, faça login com a mesma conta usada no navegador móvel.";
+"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Please try to log in with same account as in the mobile browser.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="O processo está demorando mais do que o esperado. Por favor, aguarde…";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -3834,3 +3834,27 @@
 "Error.nodeCopyOrMove.circularDependency"="Não é possível mover essa pasta porque o destino é a mesma pasta.";
 /* Auto media discovery banner title */
 "photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="Como essa pasta contém apenas imagens e vídeos, nós a abrimos automaticamente na visualização do explorador multimídia. Você pode aproveitar o seu conteúdo visual com um layout mais envolvente. Para desativar essa função, acesse as Configurações.";
+/* Upgrade account screen header title after user onboarding */
+"onboarding.upgradeAccount.header.title"="Obtenha mais com um plano Pro";
+/* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
+"onboarding.upgradeAccount.header.subTitle"="Faça o upgrade a um plano Pro para obter mais armazenamento e muitos recursos adicionais. O nossos planos são a partir de %@ por mês.";
+/* Upgrade account screen content header for pro plan feature list */
+"onboarding.upgradeAccount.content.proPlanFeatureHeader"="Alguns dos recursos incluídos são:";
+/* Upgrade account screen content title about pro plan featuring as Generous Storage */
+"onboarding.upgradeAccount.content.generousStorage.title"="Amplo espaço de armazenamento";
+/* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Store unlimited data, starting from 400 GB. */
+"onboarding.upgradeAccount.content.generousStorage.message"="Armazene uma quantidade ilimitada de dados, a partir de [A] [B].";
+/* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
+"onboarding.upgradeAccount.content.transferSharing.title"="Compartilhamento de transferência";
+/* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
+"onboarding.upgradeAccount.content.transferSharing.message"="As pessoas com as quais você compartilhar dados podem usar a sua cota de transferência para fazer download e streaming dos itens que você compartilhou.";
+/* Upgrade account screen content title about pro plan featuring the Additional security when sharing */
+"onboarding.upgradeAccount.content.additionalSecurity.title"="Segurança adicional ao compartilhar";
+/* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
+"onboarding.upgradeAccount.content.additionalSecurity.message"="Adicione senhas e datas de validade para links de arquivos e de pastas.";
+/* Upgrade account screen button title that will direct to Upgrade plan page */
+"onboarding.upgradeAccount.button.viewProPlans"="Conheça os planos Pro";
+/* Camera uploads banner enable state title */
+"cameraUploads.banner.enableState.title"="Ativar Uploads da câmera";
+/* Camera uploads banner enable state description */
+"cameraUploads.banner.enableState.description"="Faça o backup automático de fotos e vídeos na sua Nuvem.";
