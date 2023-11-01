@@ -147,8 +147,4 @@ extension AudioPlayer: AudioPlayerRemoteCommandProtocol {
     func disableRemoteCommands() {
         updateCommandsState(enabled: false)
     }
-    
-    func areRemoteCommandsEnabled() -> Bool {
-        MPRemoteCommandCenter.shared().playCommand.isEnabled
-    }
 }

@@ -10,7 +10,6 @@ enum PlayerConfiguration: String {
 final class AudioPlayer: NSObject {
     
     // MARK: - Internal properties
-    var observers = [UIViewController]()
     var queuePlayer: AVQueuePlayer?
     var tracks: [AudioPlayerItem] = []
     var audioQueueObserver: NSKeyValueObservation?
@@ -45,9 +44,6 @@ final class AudioPlayer: NSObject {
     var needToBeResumedAfterInterruption = false
     
     // MARK: - Private properties
-    private let assetQueue = DispatchQueue(label: "player.queue", qos: .utility)
-    private let assetKeysRequiredToPlay = ["playable"]
-    private var playerViewControllerKVOContext = 0
     private var timer: Timer?
     private var taskId: UIBackgroundTaskIdentifier?
     private let debouncer = Debouncer(delay: 1.0, dispatchQueue: DispatchQueue.global(qos: .userInteractive))

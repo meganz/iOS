@@ -155,10 +155,10 @@ final class AudioPlaylistViewController: UIViewController {
         
         toolbarView.layer.addBorder(edge: .top, color: UIColor.mnz_gray3C3C43().withAlphaComponent(0.29), thickness: 0.5)
         
-        style(with: traitCollection)
+        style()
     }
     
-    private func style(with trait: UITraitCollection) {
+    private func style() {
         closeButton.titleLabel?.adjustsFontForContentSizeCategory = true
         closeButton.setTitleColor(UIColor.mnz_primaryGray(for: traitCollection), for: .normal)
         removeButton.titleLabel?.adjustsFontForContentSizeCategory = true

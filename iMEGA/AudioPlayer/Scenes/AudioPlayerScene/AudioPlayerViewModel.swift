@@ -586,10 +586,10 @@ extension AudioPlayerViewModel {
         let dataSourceCommand = AudioPlayerItemDataSourceCommand(configEntity: configEntity)
         dataSourceCommand.executeRefreshItemDataSource(with: node)
         
-        refreshItemUI(with: node)
+        refreshItemUI()
     }
     
-    private func refreshItemUI(with updatedNode: MEGANode) {
+    private func refreshItemUI() {
         reloadNodeInfoWithCurrentItem()
     }
 }

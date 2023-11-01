@@ -4,10 +4,6 @@ import MEGADomain
 import MEGAL10n
 import UIKit
 
-enum PlayerViewType {
-    case `default`, offline, fileLink
-}
-
 final class AudioPlayerViewController: UIViewController {
     @IBOutlet weak var imageViewContainerView: UIView!
     @IBOutlet weak var imageView: UIImageView!
@@ -40,7 +36,6 @@ final class AudioPlayerViewController: UIViewController {
     @IBOutlet weak var separatorView: UIView!
     
     private var toolbarConfigurator: AudioPlayerFileToolbarConfigurator?
-    private var shadowLayer: CAShapeLayer?
     private var pendingDragEvent: Bool = false
     private var playerType: PlayerType = .default
 
@@ -376,14 +371,6 @@ final class AudioPlayerViewController: UIViewController {
     
     private func shareBarButtonPressed(_ button: UIBarButtonItem) {
         viewModel.dispatch(.share(sender: button))
-    }
-    
-    private func importAction() {
-        viewModel.dispatch(.import)
-    }
-    
-    private func shareAction(sender: UIBarButtonItem) {
-        viewModel.dispatch(.share(sender: sender))
     }
     
     @objc private func closeButtonAction() {

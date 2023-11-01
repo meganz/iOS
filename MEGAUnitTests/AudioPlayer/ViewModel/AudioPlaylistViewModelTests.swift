@@ -6,8 +6,7 @@ final class AudioPlaylistViewModelTests: XCTestCase {
     let playerHandler = MockAudioPlayerHandler()
     
     lazy var viewModel = AudioPlaylistViewModel(configEntity: AudioPlayerConfigEntity(parentNode: MEGANode(), playerHandler: playerHandler),
-                                                router: router,
-                                                nodeInfoUseCase: NodeInfoUseCase(nodeInfoRepository: MockNodeInfoRepository()))
+                                                router: router)
     
     func testAudioPlayerActions() throws {
         test(viewModel: viewModel, action: .onViewDidLoad, expectedCommands: [.reloadTracks(currentItem: AudioPlayerItem.mockItem, queue: nil, selectedIndexPaths: []),
