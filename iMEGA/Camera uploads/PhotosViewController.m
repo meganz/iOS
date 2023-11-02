@@ -77,6 +77,9 @@
     self.editBarButtonItem = [self makeEditBarButton];
     self.cancelBarButtonItem = [self makeCancelBarButton];
     self.filterBarButtonItem = [self makeFilterActiveBarButton];
+    if (self.viewModel.timelineCameraUploadStatusFeatureEnabled) {
+        self.cameraUploadStatusBarButtonItem = [self makeCameraUploadStatusBarButton];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {

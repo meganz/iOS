@@ -2,6 +2,7 @@ import MEGADomain
 import MEGAL10n
 import MEGASDKRepo
 import MEGASwift
+import SwiftUI
 import UIKit
 
 extension PhotosViewController {
@@ -13,7 +14,7 @@ extension PhotosViewController {
             isFilterEnabled: true,
             isSelectHidden: viewModel.isSelectHidden,
             isEmptyState: viewModel.mediaNodes.isEmpty,
-            isFilterActive: viewModel.timelineCameraUploadStatusEnabled ? viewModel.isFilterActive : false
+            isFilterActive: viewModel.timelineCameraUploadStatusFeatureEnabled ? viewModel.isFilterActive : false
         )
     }
     
@@ -54,13 +55,11 @@ extension PhotosViewController {
             if photoLibraryContentViewModel.selectedMode == .all || viewModel.mediaNodes.isEmpty, let barButton = makeContextMenuBarButton() {
                 rightButtons.append(barButton)
             }
-            if viewModel.isFilterActive && !viewModel.timelineCameraUploadStatusEnabled {
+            if viewModel.isFilterActive && !viewModel.timelineCameraUploadStatusFeatureEnabled {
                 rightButtons.append(filterBarButtonItem)
             }
-            if viewModel.timelineCameraUploadStatusEnabled {
-                let cameraUploadStatusBarButton = UIBarButtonItem(image: UIImage(resource: .cuStatusComplete),
-                                                                  style: .plain, target: self, action: #selector(cameraUploadStatusPressed))
-                rightButtons.append(cameraUploadStatusBarButton)
+            if let cameraUploadStatusBarButtonItem {
+                rightButtons.append(cameraUploadStatusBarButtonItem)
             }
             if objcWrapper_parent.navigationItem.rightBarButtonItems !~ rightButtons {
                 objcWrapper_parent.navigationItem.setRightBarButtonItems(rightButtons, animated: true)
@@ -76,6 +75,13 @@ extension PhotosViewController {
         UIBarButtonItem(image: UIImage(resource: .selectAll), style: .plain, target: self, action: #selector(toggleEditing))
     }
     
+    @objc func makeCameraUploadStatusBarButton() -> UIBarButtonItem {
+        let statusButtonView = CameraUploadStatusButtonView(viewModel: CameraUploadStatusButtonViewModel(status: .enable))
+        let cameraStatusViewController = UIHostingController(rootView: statusButtonView)
+        cameraStatusViewController.view.backgroundColor = .clear
+        return UIBarButtonItem(customView: cameraStatusViewController.view)
+    }
+    
     @objc func toggleEditing() {
         setEditing(!isEditing, animated: true)
         setupNavigationBarButtons()
@@ -83,10 +89,6 @@ extension PhotosViewController {
     
     @objc private func onFilter() {
         photoLibraryContentViewModel.showFilter.toggle()
-    }
-    
-    @objc private func cameraUploadStatusPressed() {
-        // Handle pressed in CC-5455
     }
 }
 

@@ -162,18 +162,18 @@ final class PhotosViewModelTests: XCTestCase {
         XCTAssertEqual(sut.filterLocation, .cloudDrive)
     }
     
-    func testTimelineCameraUploadStatusEnabled_featureToggleOn_shouldReturnTrue() {
+    func testTimelineCameraUploadStatusFeatureEnabled_featureToggleOn_shouldReturnTrue() {
         let featureFlagProvider = MockFeatureFlagProvider(list: [.timelineCameraUploadStatus: true])
         let sut = makePhotosViewModel(featureFlagProvider: featureFlagProvider)
         
-        XCTAssertTrue(sut.timelineCameraUploadStatusEnabled)
+        XCTAssertTrue(sut.timelineCameraUploadStatusFeatureEnabled)
     }
     
-    func testTimelineCameraUploadStatusEnabled_featureToggleOff_shouldReturnFalse() {
+    func testTimelineCameraUploadStatusFeatureEnabled_featureToggleOff_shouldReturnFalse() {
         let featureFlagProvider = MockFeatureFlagProvider(list: [.timelineCameraUploadStatus: false])
         let sut = makePhotosViewModel(featureFlagProvider: featureFlagProvider)
         
-        XCTAssertFalse(sut.timelineCameraUploadStatusEnabled)
+        XCTAssertFalse(sut.timelineCameraUploadStatusFeatureEnabled)
     }
     
     private func sampleNodesForAllLocations() -> [NodeEntity] {
