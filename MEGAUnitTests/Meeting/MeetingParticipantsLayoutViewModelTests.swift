@@ -13,7 +13,6 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(
-            router: MockCallViewRouter(),
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -45,7 +44,6 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(
-            router: MockCallViewRouter(),
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -77,7 +75,6 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(
-            router: MockCallViewRouter(),
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -105,7 +102,6 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(
-            router: MockCallViewRouter(),
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -128,7 +124,6 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         let viewModel = MeetingParticipantsLayoutViewModel(
-            router: MockCallViewRouter(),
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -156,7 +151,6 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(
-            router: MockCallViewRouter(),
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -183,7 +177,6 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(
-            router: MockCallViewRouter(),
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -208,7 +201,6 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(
-            router: MockCallViewRouter(),
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -233,7 +225,6 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(
-            router: MockCallViewRouter(),
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -263,7 +254,6 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(
-            router: MockCallViewRouter(),
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -300,7 +290,6 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(
-            router: MockCallViewRouter(),
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -337,7 +326,6 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(
-            router: MockCallViewRouter(),
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -374,7 +362,6 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(
-            router: MockCallViewRouter(),
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -411,7 +398,6 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(
-            router: MockCallViewRouter(),
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -448,7 +434,6 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(
-            router: MockCallViewRouter(),
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -486,7 +471,6 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(
-            router: MockCallViewRouter(),
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -526,7 +510,6 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(
-            router: MockCallViewRouter(),
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -566,7 +549,6 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(
-            router: MockCallViewRouter(),
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -603,7 +585,6 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(
-            router: MockCallViewRouter(),
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -629,7 +610,6 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(
-            router: MockCallViewRouter(),
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -655,7 +635,6 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         
         let viewModel = MeetingParticipantsLayoutViewModel(
-            router: MockCallViewRouter(),
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -688,7 +667,6 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         })
         
         let viewModel = MeetingParticipantsLayoutViewModel(
-            router: MockCallViewRouter(),
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -723,7 +701,6 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         })
         
         let viewModel = MeetingParticipantsLayoutViewModel(
-            router: MockCallViewRouter(),
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -759,25 +736,4 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         await viewModel.namesFetchingTask?.value
         await fulfillment(of: [commandExpectation], timeout: 1.0)
     }
-}
-
-final class MockCallViewRouter: MeetingParticipantsLayoutRouting {
-    var showRenameChatAlert_calledTimes = 0
-    var didAddFirstParticipant_calledTimes = 0
-    
-    var viewModel: MeetingParticipantsLayoutViewModel? {
-        return nil
-    }
-    
-    func showRenameChatAlert() {
-        showRenameChatAlert_calledTimes += 1
-    }
-    
-    func didAddFirstParticipant() {
-        didAddFirstParticipant_calledTimes += 1
-    }
-    
-    func startCallEndCountDownTimer() {}
-    
-    func endCallEndCountDownTimer() {}
 }

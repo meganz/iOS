@@ -205,7 +205,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
 
         case .muteUnmuteCall(let muted):
             guard let call = self.call else { return }
-            checkForAudioPermission(forCall: call) { granted in
+            checkForAudioPermission { granted in
                 let microphoneMuted = granted ? muted : true
                 self.callCoordinatorUseCase.muteUnmuteCall(call, muted: microphoneMuted)
                 self.invokeCommand?(.microphoneMuted(muted: microphoneMuted))
@@ -354,7 +354,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         }
     }
     
-    private func checkForAudioPermission(forCall call: CallEntity, completionBlock: @escaping (Bool) -> Void) {
+    private func checkForAudioPermission(_ completionBlock: @escaping (Bool) -> Void) {
         permissionHandler.requestAudioPermission { [weak self] granted in
             self?.audioPermissionGranted(granted, withCompletionBlock: completionBlock)
         }
@@ -365,10 +365,6 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         if !granted {
             router.showAudioPermissionError()
         }
-    }
-    
-    private func currentCameraPosition() -> CameraPositionEntity {
-        return captureDeviceUseCase.wideAngleCameraLocalizedName(position: .front) == localVideoUseCase.videoDeviceSelected() ? .front : .back
     }
     
     private func sessionRouteChanged(routeChangedReason: AudioSessionRouteChangedReason) {

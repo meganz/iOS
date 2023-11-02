@@ -3,13 +3,11 @@ import MEGAL10n
 import MEGAPresentation
 
 protocol EnterMeetingLinkRouting: Routing {
-    func joinMeeting(link: String)
     func showLinkError()
 }
 
 final class EnterMeetingLinkRouter: NSObject, EnterMeetingLinkRouting {
     
-    private weak var baseViewController: UIViewController?
     private weak var viewControllerToPresent: UIViewController?
     private let isGuest: Bool
     
@@ -26,15 +24,6 @@ final class EnterMeetingLinkRouter: NSObject, EnterMeetingLinkRouting {
     @objc func start() {
         guard let viewControllerToPresent = viewControllerToPresent else { return }
         viewControllerToPresent.present(build(), animated: true)
-    }
-    
-    func joinMeeting(link: String) {
-        guard let viewControllerToPresent = viewControllerToPresent else {
-            return
-        }
-        
-        let router = MeetingCreatingViewRouter(viewControllerToPresent: viewControllerToPresent, type: isGuest ? .guestJoin : .join, link: link, userhandle: 0)
-        router.start()
     }
     
     func showLinkError() {

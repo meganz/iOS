@@ -64,6 +64,7 @@ final class MeetingParticipantViewModel: ViewModelType {
     
     deinit {
         avatarRefetchTask?.cancel()
+        loadNameTask?.cancel()
     }
     
     func dispatch(_ action: MeetingParticipantViewAction) {
@@ -78,7 +79,7 @@ final class MeetingParticipantViewModel: ViewModelType {
             fetchName(forParticipant: participant) { [weak self] name in
                 guard let self else { return }
                 self.fetchUserAvatar(forParticipant: self.participant, name: name)
-                self.requestAvatarChange(forParticipant: self.participant, name: name)
+                self.requestAvatarChange(forParticipant: self.participant)
             }
         case .contextMenuTapped(let button):
             contextMenuTappedHandler(participant, button)
@@ -126,7 +127,7 @@ final class MeetingParticipantViewModel: ViewModelType {
         }
     }
     
-    private func requestAvatarChange(forParticipant participant: CallParticipantEntity, name: String) {
+    private func requestAvatarChange(forParticipant participant: CallParticipantEntity) {
         userImageUseCase
             .requestAvatarChangeNotification(forUserHandles: [participant.participantId])
             .sink(receiveCompletion: { error in

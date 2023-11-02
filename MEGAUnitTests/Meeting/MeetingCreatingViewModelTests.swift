@@ -188,7 +188,7 @@ final class MockMeetingCreateRouter: MeetingCreatingViewRouting {
         dismiss_calledTimes += 1
     }
     
-    func goToMeetingRoom(chatRoom: ChatRoomEntity, call: CallEntity, isVideoEnabled: Bool, isSpeakerEnabled: Bool) {
+    func goToMeetingRoom(chatRoom: ChatRoomEntity, call: CallEntity, isSpeakerEnabled: Bool) {
         goToMeetingRoom_calledTimes += 1
     }
     

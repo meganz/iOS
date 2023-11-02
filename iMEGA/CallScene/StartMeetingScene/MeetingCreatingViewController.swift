@@ -18,7 +18,6 @@ class MeetingCreatingViewController: UIViewController, UITextFieldDelegate {
         static let bottomBarText = UIFont.preferredFont(style: .title3, weight: .semibold)
         static let bottomBarButtonText = UIFont.preferredFont(forTextStyle: .headline)
         static let backgroundColor = #colorLiteral(red: 0.2, green: 0.1843137255, blue: 0.1843137255, alpha: 1)
-        static let textColor = UIColor.white
         static let iconTintColorNormal = UIColor.white
         static let iconTintColorSelected = UIColor.black
         static let iconBackgroundColorNormal = #colorLiteral(red: 0.1333158016, green: 0.1333456039, blue: 0.1333118975, alpha: 1)
