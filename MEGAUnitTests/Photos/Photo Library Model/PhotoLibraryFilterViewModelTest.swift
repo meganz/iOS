@@ -8,21 +8,6 @@ import XCTest
 final class PhotoLibraryFilterViewModelTest: XCTestCase {
     private var subscriptions = Set<AnyCancellable>()
     
-    func testPhotosFilterType_forImageOption_shouldReturnImage() throws {
-        let sut = photoLibraryFilterViewModel().filterType(for: .images)
-        XCTAssert(sut == .images)
-    }
-    
-    func testPhotosFilterType_forVideoOption_shouldReturnVideo() throws {
-        let sut = photoLibraryFilterViewModel().filterType(for: .videos)
-        XCTAssert(sut == .videos)
-    }
-    
-    func testPhotosFilterType_forAllMediaTypeOption_shouldReturnAllMediaType() throws {
-        let sut = photoLibraryFilterViewModel().filterType(for: .allMedia)
-        XCTAssert(sut == .allMedia)
-    }
-    
     func testPhotosFilterOption_forImageMediaType_shouldReturnImage() throws {
         let sut = photoLibraryFilterViewModel().filterOption(for: .images)
         XCTAssert(sut == .images)
@@ -51,21 +36,6 @@ final class PhotoLibraryFilterViewModelTest: XCTestCase {
     func testPhotosFilterMatrixRepresentation_forThreeHundredFiftyPixel_shouldReturnOneRow() throws {
         let sut = photoLibraryFilterViewModel().filterTypeMatrixRepresentation(forScreenWidth: 300, fontSize: 15, horizontalPadding: 15)
         XCTAssert(sut.count == 1)
-    }
-    
-    func testPhotosFilterLocation_forCloudDrive_shouldReturnCloudDrive() throws {
-        let sut = photoLibraryFilterViewModel().filterLocation(for: .cloudDrive)
-        XCTAssert(sut == .cloudDrive)
-    }
-    
-    func testPhotosFilterLocation_forCameraUpload_shouldReturnCameraUpload() throws {
-        let sut = photoLibraryFilterViewModel().filterLocation(for: .cameraUploads)
-        XCTAssert(sut == .cameraUploads)
-    }
-    
-    func testPhotosFilterLocation_forAllLocation_shouldReturnAllLocation() throws {
-        let sut = photoLibraryFilterViewModel().filterLocation(for: .allLocations)
-        XCTAssert(sut == .allLocations)
     }
     
     func testPhotosFilterOption_forAllLocation_shouldReturnAllLocation() throws {

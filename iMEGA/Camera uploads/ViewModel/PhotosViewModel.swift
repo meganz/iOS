@@ -29,8 +29,6 @@ final class PhotosViewModel: NSObject {
         case cameraUploadExplorerFeed
     }
     
-    private var filterOptions: PhotosFilterOptions = [.allMedia, .allLocations]
-    
     var filterType: PhotosFilterOptions = .allMedia
     var filterLocation: PhotosFilterOptions = .allLocations
     
@@ -156,13 +154,6 @@ final class PhotosViewModel: NSObject {
         }
         
         return false
-    }
-}
-
-extension PhotosViewModel {
-    func resetFilters() {
-        self.filterType = .allMedia
-        self.filterLocation = .allLocations
     }
 }
 

@@ -104,31 +104,6 @@ final class BackupRegister {
         MEGALogDebug("[Camera Upload] heartbeat - backup enabled by the user")
     }
     
-    // MARK: - Unregister backup
-    
-    func unregisterBackup() {
-        MEGALogDebug("[Camera Upload] heartbeat - start unregistering backup")
-        guard let backupId = cachedBackupId else {
-            MEGALogDebug("[Camera Upload] heartbeat - skip unregistering as no local cached backup id")
-            return
-        }
-        
-        $cachedBackupId.remove()
-        
-        Task {
-            do {
-                try await cameraUploadsUseCase.unregisterCameraUploadsBackup(
-                    backupId
-                )
-                MEGALogDebug("[Camera Upload] heartbeat - unregister backup \(String(describing: type(of: sdk).base64Handle(forHandle: backupId)))")
-            } catch {
-                Crashlytics.crashlytics().record(error: error)
-                MEGALogError("[Camera Upload] heartbeat - error when to unregister backup \(String(describing: type(of: sdk).base64Handle(forHandle: backupId)))")
-                
-            }
-        }
-    }
-    
     func removeCameraUploadNodeNameUpdate() {
         cameraUploadsUseCase.removeCameraUploadNodeNameUpdate()
     }

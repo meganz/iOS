@@ -2,8 +2,6 @@ import MEGADomain
 import UIKit
 
 protocol PhotoAlbumContainerToolbarProvider {
-    var isToolbarShown: Bool { get }
-    
     func showToolbar()
     func hideToolbar()
     func updateToolbarButtonEnabledState(isSelected: Bool)
@@ -11,10 +9,6 @@ protocol PhotoAlbumContainerToolbarProvider {
 }
 
 extension PhotoAlbumContainerViewController: PhotoAlbumContainerToolbarProvider {
-    var isToolbarShown: Bool {
-        return toolbar.superview != nil
-    }
-    
     func showToolbar() {
         guard let tabBarController = tabBarController else { return }
         guard !tabBarController.view.subviews.contains(toolbar) else { return }

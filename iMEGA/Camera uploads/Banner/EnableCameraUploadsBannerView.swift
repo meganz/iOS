@@ -40,11 +40,6 @@ struct EnableCameraUploadsBannerView: View {
         }
     }
     
-    private var bannerBackgroundColor: Color {
-        Color(colorScheme == .dark ? Colors.General.Black._2c2c2e.color :
-                Colors.General.White.ffffff.color)
-    }
-    
     private var bannerBorderColor: Color {
         colorScheme == .dark ? Color(Colors.General.Gray._545458.color).opacity(Constants.bannerBorderOpacityDarkMode) :
         Color(Colors.General.Gray._3C3C43.color).opacity(Constants.bannerBorderOpacityLightMode)

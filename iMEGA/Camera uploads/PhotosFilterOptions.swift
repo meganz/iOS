@@ -2,10 +2,6 @@ import Foundation
 import MEGADomain
 import MEGAL10n
 
-struct PhotosFilterOptionKeys {
-    static let cameraUploadTimeline = "cameraUploadTimeline"
-}
-
 enum PhotosFilterType: CaseIterable {
     case allMedia
     case images

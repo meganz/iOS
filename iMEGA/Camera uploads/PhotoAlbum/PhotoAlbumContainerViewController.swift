@@ -9,7 +9,6 @@ import UIKit
 
 final class PhotoAlbumContainerViewController: UIViewController, TraitEnvironmentAware {
     var photoViewController: PhotosViewController?
-    var numberOfPages: Int = PhotoLibraryTab.allCases.count
     
     lazy var toolbar = UIToolbar()
     
