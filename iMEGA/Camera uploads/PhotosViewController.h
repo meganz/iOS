@@ -33,6 +33,7 @@ typedef NS_ENUM(NSUInteger, MEGACameraUploadsState) {
 @property (nonatomic, strong) UIBarButtonItem *editBarButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *cancelBarButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *filterBarButtonItem;
+@property (nonatomic, strong, nullable) UIBarButtonItem *cameraUploadStatusBarButtonItem;
 @property (nonatomic, strong) PhotosViewModel *viewModel;
 @property (strong, nonatomic) PhotoUpdatePublisher *photoUpdatePublisher;
 @property (nonatomic, strong, nullable) ContextMenuManager * contextMenuManager;

@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "cuStatusComplete.pdf",
+      "filename" : "cuStatusUpload.pdf",
       "idiom" : "universal"
     },
     {
@@ -11,7 +11,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "cuStatusCompleteDark.pdf",
+      "filename" : "cuStatusUploadDark.pdf",
       "idiom" : "universal"
     }
   ],
