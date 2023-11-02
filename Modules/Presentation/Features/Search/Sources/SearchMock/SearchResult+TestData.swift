@@ -11,7 +11,20 @@ extension SearchResult {
             description: "subtitle_\(id)",
             properties: [],
             thumbnailImageData: { .init() },
-            type: .node
+            type: .node,
+            thumbnailPreviewInfo: .init(
+                id: "1",
+                displayMode: .file,
+                title: "File title",
+                subtitle: "Info",
+                iconIndicatorPath: nil,
+                duration: "2:00",
+                isVideoIconHidden: true,
+                hasThumbnail: true,
+                thumbnailImageData: { .init() },
+                propertiesData: { [] },
+                downloadVisibilityData: { false }
+            )
         )
     }
     public static func resultWith(id: ResultId) -> Self {

@@ -55,7 +55,21 @@ extension SearchConfig {
             rowAssets: .init(
                 contextImage: Asset.Images.Generic.moreList.image,
                 itemSelected: Asset.Images.Login.checkBoxSelected.image,
-                itemUnselected: Asset.Images.Login.checkBoxUnselected.image
+                itemUnselected: Asset.Images.Login.checkBoxUnselected.image,
+                playImage: Asset.Images.Generic.videoList.image,
+                downloadedImage: Asset.Images.Generic.downloaded.image,
+                moreList: Asset.Images.Generic.moreList.image,
+                moreGrid: Asset.Images.Generic.moreGrid.image
+            ), 
+            colorAssets: .init(
+                F7F7F7: Colors.General.White.f7F7F7.swiftUIColor,
+                _161616: Colors.General.Black._161616.swiftUIColor,
+                _545458: Colors.General.Gray._545458.swiftUIColor,
+                CE0A11: Colors.General.Red.ce0A11.swiftUIColor,
+                F30C14: Colors.General.Red.f30C14.swiftUIColor,
+                F95C61: Colors.General.Red.f95C61.swiftUIColor,
+                F7363D: Colors.General.Red.f7363D.swiftUIColor,
+                _1C1C1E: Colors.General.Black._1c1c1e.swiftUIColor
             ),
             contextPreviewFactory: contextPreviewFactory
         )

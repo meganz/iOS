@@ -12,7 +12,19 @@ public class SearchResultsViewModel: ObservableObject {
     
     // this will need to be to exposed outside when parent will need to know exactly what is selected
     @Published var selected: Set<ResultId> = []
-    
+
+    @Published var displayMode: DisplayMode = .list
+
+    let isThumbnailPreviewEnabled: Bool
+
+    var fileListItems: [SearchResultRowViewModel] {
+        listItems.filter { $0.result.thumbnailPreviewInfo.displayMode == .file }
+    }
+
+    var folderListItems: [SearchResultRowViewModel] {
+        listItems.filter { $0.result.thumbnailPreviewInfo.displayMode == .folder }
+    }
+
     // this is needed to be able to construct new query after receiving new query string from SearchBar
     private var currentQuery: SearchQuery = .initial
     
@@ -62,6 +74,7 @@ public class SearchResultsViewModel: ObservableObject {
         config: SearchConfig,
         showLoadingPlaceholderDelay: Double = 1,
         searchInputDebounceDelay: Double = 0.5,
+        isThumbnailPreviewEnabled: Bool = false,
         keyboardVisibilityHandler: any KeyboardVisibilityHandling
     ) {
         self.resultsProvider = resultsProvider
@@ -70,6 +83,7 @@ public class SearchResultsViewModel: ObservableObject {
         self.showLoadingPlaceholderDelay = showLoadingPlaceholderDelay
         self.searchInputDebounceDelay = searchInputDebounceDelay
         self.keyboardVisibilityHandler = keyboardVisibilityHandler
+        self.isThumbnailPreviewEnabled = isThumbnailPreviewEnabled
 
         self.bridge.queryChanged = { [weak self] query  in
             let _self = self
@@ -144,7 +158,31 @@ public class SearchResultsViewModel: ObservableObject {
             bridge.resignKeyboard()
         }
     }
-    
+
+    func changeMode() {
+        if displayMode == .list {
+            displayMode = .thumbnail
+        } else {
+            displayMode = .list
+        }
+    }
+
+    func columns(
+        horizontalSizeClass: UserInterfaceSizeClass?,
+        verticalSizeClass: UserInterfaceSizeClass?
+    ) -> [GridItem] {
+        guard let horizontalSizeClass else {
+            return Array(
+                repeating: .init(.flexible()),
+                count: 3
+            )
+        }
+        return Array(
+            repeating: .init(.flexible()),
+            count: horizontalSizeClass == .compact && verticalSizeClass == .regular ? 2 : 3
+        )
+    }
+
     @MainActor
     func searchCancelled() async {
         // cancel button on the search bar was tapped
@@ -226,7 +264,17 @@ public class SearchResultsViewModel: ObservableObject {
     func loadMoreIfNeeded(at index: Int) async {
         await performSearch(using: currentQuery, lastItemIndex: index)
     }
-    
+
+    func loadMoreIfNeededThumbnailMode(at index: Int, isFile: Bool) async {
+        var index = index
+        if isFile {
+            index += folderListItems.count
+        } else if fileListItems.isNotEmpty {
+            index += fileListItems.count
+        }
+        await loadMoreIfNeeded(at: index)
+    }
+
     @MainActor
     func prepareResults(_ results: SearchResultsEntity, query: SearchQuery) async {
 
@@ -234,7 +282,8 @@ public class SearchResultsViewModel: ObservableObject {
             let content = config.contextPreviewFactory.previewContentForResult(result)
             return SearchResultRowViewModel(
                 with: result,
-                contextButtonImage: config.rowAssets.contextImage,
+                rowAssets: config.rowAssets,
+                colorAssets: config.colorAssets,
                 previewContent: .init(
                     actions: content.actions.map({ action in
                         return .init(
@@ -248,8 +297,7 @@ public class SearchResultsViewModel: ObservableObject {
                     }),
                     previewMode: content.previewMode
                 ),
-                actions: rowActions(for: result),
-                rowAssets: config.rowAssets
+                actions: rowActions(for: result)
             )
         }
 

@@ -7,14 +7,16 @@ public struct SearchResult: Identifiable, Sendable {
     public let properties: [Property]
     public let thumbnailImageData: @Sendable () async -> Data
     public let type: ResultType
-    
+    public let thumbnailPreviewInfo: SearchResultThumbnailInfo
+
     public init(
         id: ResultId,
         title: String,
         description: String,
         properties: [Property],
         thumbnailImageData: @Sendable @escaping () async -> Data,
-        type: ResultType
+        type: ResultType,
+        thumbnailPreviewInfo: SearchResultThumbnailInfo
     ) {
         self.id = id
         self.title = title
@@ -22,6 +24,7 @@ public struct SearchResult: Identifiable, Sendable {
         self.properties = properties
         self.thumbnailImageData = thumbnailImageData
         self.type = type
+        self.thumbnailPreviewInfo = thumbnailPreviewInfo
     }
 }
 

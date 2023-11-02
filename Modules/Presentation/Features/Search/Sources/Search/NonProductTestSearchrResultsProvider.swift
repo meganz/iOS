@@ -113,35 +113,50 @@ fileprivate extension SearchResult {
     private static func image(_ name: String) -> Data {
         UIImage(systemName: name)!.withRenderingMode(.alwaysTemplate).pngData()!
     }
+    private static func thumbnailPreviewData() -> SearchResultThumbnailInfo {
+        .init(
+            id: "1",
+            displayMode: .file,
+            title: "File title",
+            subtitle: "Info",
+            iconIndicatorPath: nil,
+            duration: "2:00",
+            isVideoIconHidden: true,
+            hasThumbnail: true,
+            thumbnailImageData: { .init() },
+            propertiesData: { [] },
+            downloadVisibilityData: { false }
+        )
+    }
     static var imageResults: [Self] {
         [
-            .init(id: 1, title: "Image 1", description: "Parent folder", properties: [], thumbnailImageData: { image("photo") }, type: .node),
-            .init(id: 3, title: "Image 2", description: "Parent folder", properties: [], thumbnailImageData: { image("photo") }, type: .node),
-            .init(id: 10, title: "Image 3", description: "Parent folder", properties: [], thumbnailImageData: { image("photo") }, type: .node)
+            .init(id: 1, title: "Image 1", description: "Parent folder", properties: [], thumbnailImageData: { image("photo") }, type: .node, thumbnailPreviewInfo: thumbnailPreviewData()),
+            .init(id: 3, title: "Image 2", description: "Parent folder", properties: [], thumbnailImageData: { image("photo") }, type: .node, thumbnailPreviewInfo: thumbnailPreviewData()),
+            .init(id: 10, title: "Image 3", description: "Parent folder", properties: [], thumbnailImageData: { image("photo") }, type: .node, thumbnailPreviewInfo: thumbnailPreviewData())
         ]
     }
     
     static var docsResults: [Self] {
         [
-            .init(id: 23, title: "Doc 1", description: "Parent folder", properties: [], thumbnailImageData: { image("doc.richtext") }, type: .node),
-            .init(id: 44, title: "Doc 2", description: "Parent folder", properties: [], thumbnailImageData: { image("doc.richtext") }, type: .node),
-            .init(id: 11, title: "Doc 3", description: "Parent folder", properties: [], thumbnailImageData: { image("doc.richtext") }, type: .node)
+            .init(id: 23, title: "Doc 1", description: "Parent folder", properties: [], thumbnailImageData: { image("doc.richtext") }, type: .node, thumbnailPreviewInfo: thumbnailPreviewData()),
+            .init(id: 44, title: "Doc 2", description: "Parent folder", properties: [], thumbnailImageData: { image("doc.richtext") }, type: .node, thumbnailPreviewInfo: thumbnailPreviewData()),
+            .init(id: 11, title: "Doc 3", description: "Parent folder", properties: [], thumbnailImageData: { image("doc.richtext") }, type: .node, thumbnailPreviewInfo: thumbnailPreviewData())
         ]
     }
     
     static var audioResults: [Self] {
         [
-            .init(id: 2, title: "Audio 1", description: "Parent folder", properties: [], thumbnailImageData: { image("music.note") }, type: .node),
-            .init(id: 5, title: "Audio 2", description: "Parent folder", properties: [], thumbnailImageData: { image("music.note") }, type: .node),
-            .init(id: 12, title: "Audio 3", description: "Parent folder", properties: [], thumbnailImageData: { image("music.note") }, type: .node)
+            .init(id: 2, title: "Audio 1", description: "Parent folder", properties: [], thumbnailImageData: { image("music.note") }, type: .node, thumbnailPreviewInfo: thumbnailPreviewData()),
+            .init(id: 5, title: "Audio 2", description: "Parent folder", properties: [], thumbnailImageData: { image("music.note") }, type: .node, thumbnailPreviewInfo: thumbnailPreviewData()),
+            .init(id: 12, title: "Audio 3", description: "Parent folder", properties: [], thumbnailImageData: { image("music.note") }, type: .node, thumbnailPreviewInfo: thumbnailPreviewData())
         ]
     }
     
     static var videoResults: [Self] {
         [
-            .init(id: 7, title: "Video 1", description: "Parent folder", properties: [], thumbnailImageData: { image("video") }, type: .node),
-            .init(id: 17, title: "Video 2", description: "Parent folder", properties: [], thumbnailImageData: { image("video") }, type: .node),
-            .init(id: 77, title: "Video 3", description: "Parent folder", properties: [], thumbnailImageData: { image("video") }, type: .node)
+            .init(id: 7, title: "Video 1", description: "Parent folder", properties: [], thumbnailImageData: { image("video") }, type: .node, thumbnailPreviewInfo: thumbnailPreviewData()),
+            .init(id: 17, title: "Video 2", description: "Parent folder", properties: [], thumbnailImageData: { image("video") }, type: .node, thumbnailPreviewInfo: thumbnailPreviewData()),
+            .init(id: 77, title: "Video 3", description: "Parent folder", properties: [], thumbnailImageData: { image("video") }, type: .node, thumbnailPreviewInfo: thumbnailPreviewData())
         ]
     }
 }
