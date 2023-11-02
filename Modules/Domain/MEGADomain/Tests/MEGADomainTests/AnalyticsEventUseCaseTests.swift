@@ -145,17 +145,6 @@ final class AnalyticsEventUseCaseTests: XCTestCase {
         XCTAssertTrue(repo.type == .nse(.willExpireAndMessageNotFound))
     }
     
-    // MARK: - Extensions
-    
-    func testSendEvent_extensions_withoutNoDDatabase() {
-        let repo = MockAnalyticsRepository.newRepo
-        let sut = AnalyticsEventUseCase(repository: repo)
-        
-        sut.sendAnalyticsEvent(.extensions(.withoutNoDDatabase))
-        
-        XCTAssertTrue(repo.type == .extensions(.withoutNoDDatabase))
-    }
-    
     // MARK: - Download Behavior
     
     func testSendEvent_makeAvailableOfflinePhotosVideos() {

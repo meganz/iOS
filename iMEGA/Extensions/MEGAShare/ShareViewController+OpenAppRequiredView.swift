@@ -25,11 +25,10 @@ extension ShareViewController {
         openAppNC.view.removeFromSuperview()
     }
     
-    @objc func openApp(loginRequired: Bool) {
+    @objc func openApp() {
         if self.openAppNC == nil {
             self.openAppNC = UIStoryboard(name: "Share", bundle: Bundle(for: OpenAppRequiredViewController.self)).instantiateViewController(withIdentifier: "OpenAppRequiredNavigationViewController") as? UINavigationController
             let openAppVC = self.openAppNC?.children.first as? OpenAppRequiredViewController
-            openAppVC?.isLoginRequired = loginRequired
             openAppVC?.navigationItem.title = "MEGA"
             openAppVC?.cancelBarButtonItem.title = Strings.Localizable.cancel
             

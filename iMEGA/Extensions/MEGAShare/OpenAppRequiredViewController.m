@@ -19,11 +19,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    if (self.isLoginRequired) {
-        self.descriptionLabel.text = LocalizedString(@"openMEGAAndSignInToContinue", @"Text shown when you try to use a MEGA extension in iOS and you aren't logged");
-    } else {
-        self.descriptionLabel.text = LocalizedString(@"extensions.OpenApp.Message", @"");
-    }
+    self.descriptionLabel.text = LocalizedString(@"openMEGAAndSignInToContinue", @"Text shown when you try to use a MEGA extension in iOS and you aren't logged");
     
     [self.openButton setTitle:LocalizedString(@"openButton", @"Button title to trigger the action of opening the file without downloading or opening it.") forState:UIControlStateNormal];
 }
@@ -50,11 +46,7 @@
 #pragma mark - IBActions
 
 - (IBAction)openMegaTouchUpInside:(id)sender {
-    if (self.isLoginRequired) {
-        [self openURL:[NSURL URLWithString:@"mega://#loginrequired"]];
-    } else {
-        [self openURL:[NSURL URLWithString:@"mega://"]];
-    }
+    [self openURL:[NSURL URLWithString:@"mega://#loginrequired"]];
 }
 
 - (IBAction)cancel:(UIBarButtonItem *)sender {

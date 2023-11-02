@@ -4,6 +4,5 @@
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
 @property (nonatomic, copy) void (^cancelCompletion)(void);
-@property (nonatomic, getter=isLoginRequired) BOOL loginRequired;
 
 @end

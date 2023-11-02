@@ -9,8 +9,6 @@ extension AnalyticsEventEntity: AnalyticsEventProtocol {
             return meetingsAnalyticsEventEntity.code
         case .nse(let nseAnalyticsEventEntity):
             return nseAnalyticsEventEntity.code
-        case .extensions(let extensionsAnalyticsEventEntity):
-            return extensionsAnalyticsEventEntity.code
         case .download(let downloadAnalyticsEventEntity):
             return downloadAnalyticsEventEntity.code
         case .accountPlans(let accountPlanAnalyticsEventEntity):
@@ -28,8 +26,6 @@ extension AnalyticsEventEntity: AnalyticsEventProtocol {
                 return meetingsAnalyticsEventEntity.description
             case .nse(let nseAnalyticsEventEntity):
                 return nseAnalyticsEventEntity.description
-            case .extensions(let extensionsAnalyticsEventEntity):
-                return extensionsAnalyticsEventEntity.description
             case .download(let downloadAnalyticsEventEntity):
                 return downloadAnalyticsEventEntity.description
             case .accountPlans(let accountPlanAnalyticsEventEntity):
