@@ -57,16 +57,6 @@ final class PhotoLibraryFilterViewModel: ObservableObject {
         applyFilters()
     }
     
-    func filterType(for option: PhotosFilterOptions) -> PhotosFilterType {
-        var type: PhotosFilterType
-        switch option {
-        case .images: type = .images
-        case .videos: type = .videos
-        default: type = .allMedia
-        }
-        return type
-    }
-    
     func filterOption(for type: PhotosFilterType) -> PhotosFilterOptions {
         guard shouldShowMediaTypeFilter else {
             return .allMedia
@@ -110,16 +100,6 @@ final class PhotoLibraryFilterViewModel: ObservableObject {
         }
         
         return filterTypeMatrix
-    }
-    
-    func filterLocation(for option: PhotosFilterOptions) -> PhotosFilterLocation {
-        var location: PhotosFilterLocation
-        switch option {
-        case .cloudDrive: location = .cloudDrive
-        case .cameraUploads: location = .cameraUploads
-        default: location = .allLocations
-        }
-        return location
     }
     
     func filterOption(for location: PhotosFilterLocation) -> PhotosFilterOptions {
