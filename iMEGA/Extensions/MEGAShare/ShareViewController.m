@@ -135,27 +135,21 @@
     [[AppFirstLaunchSecurityChecker newChecker] performSecurityCheck];
     self.session = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
     if (self.session) {
-        NodesOnDemandMigrationCheckerUseCaseOCWrapper *checker = NodesOnDemandMigrationCheckerUseCaseOCWrapper.alloc.init;
-        if ([checker doesExistNodesOnDemandDatabaseWith:self.session]) {
-            [self initChatAndStartLogging];
-            [self fetchAttachments];
-            
-            if ([MEGAReachabilityManager isReachable]) {
-                [self loginToMEGA];
-            } else {
-                [self addShareDestinationView];
-                [self checkPasscode];
-            }
-            
-            if ([self.sharedUserDefaults boolForKey:@"useHttpsOnly"]) {
-                [[MEGASdkManager sharedMEGASdk] useHttpsOnly:YES];
-            }
+        [self initChatAndStartLogging];
+        [self fetchAttachments];
+        
+        if ([MEGAReachabilityManager isReachable]) {
+            [self loginToMEGA];
         } else {
-            [self openAppWithLoginRequired:NO];
-            [checker sendExtensionsWithoutNoDStats];
+            [self addShareDestinationView];
+            [self checkPasscode];
+        }
+        
+        if ([self.sharedUserDefaults boolForKey:@"useHttpsOnly"]) {
+            [[MEGASdkManager sharedMEGASdk] useHttpsOnly:YES];
         }
     } else {
-        [self openAppWithLoginRequired:YES];
+        [self openApp];
     }
     
     self.openedChatIds = [NSMutableSet<NSNumber *> new];
@@ -233,20 +227,19 @@
     self.session = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
     if (self.session) {
         [self copyDatabasesFromMainApp];
-        BOOL hasNoDDatabase = [NodesOnDemandMigrationCheckerUseCaseOCWrapper.alloc.init doesExistNodesOnDemandDatabaseWith:self.session];
         if (self.openAppNC) {
             [self.openAppNC dismissViewControllerAnimated:YES completion:nil];
             [self initChatAndStartLogging];
             [self fetchAttachments];
         }
-        if (!self.fetchNodesDone && hasNoDDatabase) {
+        if (!self.fetchNodesDone) {
             [self removeOpenAppView];
             [self loginToMEGA];
         }
         
         [self checkPasscode];
     } else {
-        [self openAppWithLoginRequired:YES];
+        [self openApp];
     }
 }
 
