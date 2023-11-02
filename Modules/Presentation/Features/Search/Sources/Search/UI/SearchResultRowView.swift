@@ -116,9 +116,40 @@ struct SearchResultRowView_Previews: PreviewProvider {
                     description: "subtitle_\($0)",
                     properties: [],
                     thumbnailImageData: { UIImage(systemName: "scribble")?.pngData() ?? Data() },
-                    type: .node
+                    type: .node,
+                    thumbnailPreviewInfo: .init(
+                        id: "1",
+                        displayMode: .folder,
+                        title: "Folder Title",
+                        subtitle: "Info",
+                        iconIndicatorPath: nil,
+                        duration: "2:00",
+                        isVideoIconHidden: true,
+                        hasThumbnail: true,
+                        thumbnailImageData: { .init() },
+                        propertiesData: { [] },
+                        downloadVisibilityData: { false }
+                    )
                 ),
-                contextButtonImage: UIImage(systemName: "ellipsis")!,
+                rowAssets: .init(
+                    contextImage: UIImage(systemName: "ellipsis")!,
+                    itemSelected: UIImage(systemName: "ellipsis")!,
+                    itemUnselected: UIImage(systemName: "ellipsis")!,
+                    playImage: UIImage(systemName: "ellipsis")!,
+                    downloadedImage: UIImage(systemName: "ellipsis")!,
+                    moreList: UIImage(systemName: "ellipsis")!,
+                    moreGrid: UIImage(systemName: "ellipsis")!
+                ),
+                colorAssets: .init(
+                    F7F7F7: Color("F7F7F7"),
+                    _161616: Color("161616"),
+                    _545458: Color("545458"),
+                    CE0A11: Color("CE0A11"),
+                    F30C14: Color("F30C14"),
+                    F95C61: Color("F95C61"),
+                    F7363D: Color("F7363D"),
+                    _1C1C1E: Color("1C1C1E")
+                ),
                 previewContent: .init(
                     actions: [.init(title: "Select", imageName: "checkmark.circle", handler: { })],
                     previewMode: .preview({
@@ -129,11 +160,6 @@ struct SearchResultRowView_Previews: PreviewProvider {
                     contextAction: { _ in },
                     selectionAction: {},
                     previewTapAction: {}
-                ),
-                rowAssets: .init(
-                    contextImage: UIImage(systemName: "ellipsis")!,
-                    itemSelected: UIImage(systemName: "checkmark.circle")!,
-                    itemUnselected: UIImage(systemName: "circle")!
                 )
             )
         }

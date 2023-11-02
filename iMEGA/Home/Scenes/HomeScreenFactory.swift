@@ -220,6 +220,8 @@ final class HomeScreenFactory: NSObject {
             resultsProvider: HomeSearchResultsProvider(
                 searchFileUseCase: makeSearchFileUseCase(),
                 nodeDetailUseCase: makeNodeDetailUseCase(),
+                nodeUseCase: makeNodeUseCase(),
+                mediaUseCase: makeMediaUseCase(),
                 nodeRepository: makeNodeRepo()
             ),
             bridge: searchBridge,
@@ -228,6 +230,7 @@ final class HomeScreenFactory: NSObject {
                 enableItemMultiSelection: enableItemMultiSelection
                 )
             ),
+            isThumbnailPreviewEnabled: DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .thumbnailSearchPreview),
             keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: .default)
         )
         return UIHostingController(rootView: SearchResultsView(viewModel: vm))
@@ -310,7 +313,22 @@ final class HomeScreenFactory: NSObject {
             )
         )
     }
-    
+
+    private func makeNodeUseCase() -> some NodeUseCaseProtocol {
+        NodeUseCase(
+            nodeDataRepository: NodeDataRepository.newRepo,
+            nodeValidationRepository: NodeValidationRepository.newRepo,
+            nodeRepository: NodeRepository.newRepo
+        )
+    }
+
+    private func makeMediaUseCase() -> some MediaUseCaseProtocol {
+        MediaUseCase(
+            fileSearchRepo: FilesSearchRepository.newRepo,
+            videoMediaUseCase: VideoMediaUseCase(videoMediaRepository: VideoMediaRepository.newRepo)
+        )
+    }
+
     private func makeLegacySearchResultsViewController(
         with navigationController: UINavigationController,
         bridge: SearchResultsBridge,

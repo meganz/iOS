@@ -17,6 +17,10 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
     
     @Published var thumbnailImage: UIImage = UIImage()
 
+    @Published var properties: [UIImage] = []
+
+    @Published var isDownloadHidden: Bool = true
+
     var title: String {
         result.title
     }
@@ -35,33 +39,60 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
         rowAssets.itemUnselected
     }
 
+    var thumbnailInfo: SearchResultThumbnailInfo {
+        result.thumbnailPreviewInfo
+    }
+
     let result: SearchResult
+
     let contextButtonImage: UIImage
+    let playImage: UIImage
+    let downloadedImage: UIImage
+    let moreList: UIImage
+    let moreGrid: UIImage
+
+    let colorAssets: SearchConfig.ColorAssets
     let previewContent: PreviewContent
     let actions: UserActions
     let rowAssets: SearchConfig.RowAssets
-    
+
     init(
         with result: SearchResult,
-        contextButtonImage: UIImage,
+        rowAssets: SearchConfig.RowAssets,
+        colorAssets: SearchConfig.ColorAssets,
         previewContent: PreviewContent,
-        actions: UserActions,
-        rowAssets: SearchConfig.RowAssets
+        actions: UserActions
     ) {
         self.result = result
-        self.contextButtonImage = contextButtonImage
+
+        self.contextButtonImage = rowAssets.contextImage
+        self.playImage = rowAssets.playImage
+        self.downloadedImage = rowAssets.downloadedImage
+        self.moreList = rowAssets.moreList
+        self.moreGrid = rowAssets.moreGrid
+
+        self.colorAssets = colorAssets
         self.previewContent = previewContent
         self.actions = actions
         self.rowAssets = rowAssets
     }
-    
+
     @MainActor
     func loadThumbnail() async {
         let data = await result.thumbnailImageData()
         
         if let image = UIImage(data: data) {
-            thumbnailImage = image
+            self.thumbnailImage = image
         }
     }
-    
+
+    @MainActor
+    func loadProperties() async {
+        properties = await thumbnailInfo.propertiesData()
+    }
+
+    @MainActor
+    func chekDownloadVisibility() async {
+        isDownloadHidden = await thumbnailInfo.downloadVisibilityData()
+    }
 }

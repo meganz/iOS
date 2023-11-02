@@ -9,6 +9,8 @@ class HomeSearchProviderTests: XCTestCase {
     class Harness {
         let searchFile: MockSearchFileUseCase
         let nodeDetails: MockNodeDetailUseCase
+        let nodeDataUseCase: MockNodeDataUseCase
+        let mediaUseCase: MockMediaUseCase
         let nodeRepo: MockNodeRepository
         let sut: HomeSearchResultsProvider
         
@@ -32,7 +34,11 @@ class HomeSearchProviderTests: XCTestCase {
                 owner: .init(name: "owner"),
                 thumbnail: UIImage(systemName: "square.and.arrow.up")
             )
-            
+
+            nodeDataUseCase = MockNodeDataUseCase()
+
+            mediaUseCase = MockMediaUseCase()
+
             nodeRepo = MockNodeRepository(
                 nodeRoot: rootNode,
                 childrenNodes: childrenNodes
@@ -41,6 +47,8 @@ class HomeSearchProviderTests: XCTestCase {
             sut = HomeSearchResultsProvider(
                 searchFileUseCase: searchFile,
                 nodeDetailUseCase: nodeDetails,
+                nodeUseCase: nodeDataUseCase,
+                mediaUseCase: mediaUseCase,
                 nodeRepository: nodeRepo
             )
             

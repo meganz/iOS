@@ -3,17 +3,21 @@ import MEGASwiftUI
 import SwiftUI
 
 public struct SearchResultsView: View {
-    public init(
-        viewModel: @autoclosure @escaping () -> SearchResultsViewModel
-    ) {
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass: UserInterfaceSizeClass?
+    @Environment(\.verticalSizeClass) var verticalSizeClass
+
+    @StateObject var viewModel: SearchResultsViewModel
+
+    public init(viewModel: @autoclosure @escaping () -> SearchResultsViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel())
     }
-    
-    @StateObject var viewModel: SearchResultsViewModel
-    
+
     public var body: some View {
         VStack(spacing: .zero) {
             chipsView
+            if viewModel.isThumbnailPreviewEnabled {
+                changeModeButton
+            }
             PlaceholderContainerView(
                 isLoading: $viewModel.isLoadingPlaceholderShown,
                 content: content,
@@ -30,7 +34,7 @@ public struct SearchResultsView: View {
             await viewModel.task()
         }
     }
-    
+
     private var chipsView: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack {
@@ -48,8 +52,32 @@ public struct SearchResultsView: View {
         .padding([.leading, .trailing, .bottom])
         .padding(.top, 6)
     }
-    
+
+    @ViewBuilder
     private var content: some View {
+        contentWrapper
+            .simultaneousGesture(
+                DragGesture().onChanged({ _ in
+                    viewModel.scrolled()
+                })
+            )
+            .padding(.bottom, viewModel.bottomInset)
+            .emptyState(viewModel.emptyViewModel)
+            .taskForiOS14 {
+                await viewModel.task()
+            }
+    }
+
+    @ViewBuilder
+    private var contentWrapper: some View {
+        if viewModel.displayMode == .list {
+            listContent
+        } else {
+            thumbnailContent
+        }
+    }
+
+    private var listContent: some View {
         List {
             ForEach(Array(viewModel.listItems.enumerated()), id: \.element.id) { index, item in
                 SearchResultRowView(
@@ -62,30 +90,65 @@ public struct SearchResultsView: View {
                 }
             }
         }
-        .simultaneousGesture(
-            DragGesture().onChanged({ _ in
-                viewModel.scrolled()
-            })
-        )
         .listStyle(.plain)
-        .padding(.bottom, viewModel.bottomInset)
-        .emptyState(viewModel.emptyViewModel)
     }
-    
+
+    private var thumbnailContent: some View {
+        ScrollView {
+            LazyVGrid(
+                columns: viewModel.columns(
+                    horizontalSizeClass: horizontalSizeClass,
+                    verticalSizeClass: verticalSizeClass
+                )
+            ) {
+                ForEach(Array(viewModel.folderListItems.enumerated()), id: \.element.id) { index, item in
+                    SearchResultThumbnailItemView(viewModel: item)
+                        .taskForiOS14 {
+                            await viewModel.loadMoreIfNeededThumbnailMode(at: index, isFile: false)
+                        }
+                }
+            }
+
+            LazyVGrid(
+                columns: viewModel.columns(
+                    horizontalSizeClass: horizontalSizeClass,
+                    verticalSizeClass: verticalSizeClass
+                )
+            ) {
+                ForEach(Array(viewModel.fileListItems.enumerated()), id: \.element.id) { index, item in
+                    SearchResultThumbnailItemView(viewModel: item)
+                        .taskForiOS14 {
+                            await viewModel.loadMoreIfNeededThumbnailMode(at: index, isFile: true)
+                        }
+                }
+            }
+        }
+        .padding(.horizontal, 8)
+    }
+
+    private var changeModeButton: some View {
+        Button(action: {
+            viewModel.changeMode()
+        }, label: {
+            // This is debug only, triggered by feature flag, so we don't need it localized
+            Text("Toggle thumbnail view on/off")
+        })
+    }
+
     private var placeholderRowView: some View {
         HStack(spacing: 4) {
             RoundedRectangle(cornerRadius: 0)
                 .frame(width: 40, height: 40)
-            
+
             VStack(alignment: .leading, spacing: 4) {
                 RoundedRectangle(cornerRadius: 100)
                     .frame(width: 152, height: 20)
-                
+
                 RoundedRectangle(cornerRadius: 100)
                     .frame(width: 121, height: 20)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            
+
             RoundedRectangle(cornerRadius: 0)
                 .frame(width: 28, height: 28)
         }
@@ -96,7 +159,7 @@ public struct SearchResultsView: View {
 
 @available(iOS 15.0, *)
 struct SearchResultsViewPreviews: PreviewProvider {
-    
+
     struct Wrapper: View {
         @State var text: String = ""
         @StateObject var viewModel = SearchResultsViewModel(
@@ -124,7 +187,21 @@ struct SearchResultsViewPreviews: PreviewProvider {
                 rowAssets: .init(
                     contextImage: UIImage(systemName: "ellipsis")!,
                     itemSelected: UIImage(systemName: "checkmark.circle")!,
-                    itemUnselected: UIImage(systemName: "circle")!
+                    itemUnselected: UIImage(systemName: "circle")!,
+                    playImage: .init(systemName: "ellipsis")!,
+                    downloadedImage: .init(systemName: "ellipsis")!,
+                    moreList: UIImage(systemName: "ellipsis")!,
+                    moreGrid: UIImage(systemName: "ellipsis")!
+                ),
+                colorAssets: .init(
+                    F7F7F7: Color("F7F7F7"),
+                    _161616: Color("161616"),
+                    _545458: Color("545458"),
+                    CE0A11: Color("CE0A11"),
+                    F30C14: Color("F30C14"),
+                    F95C61: Color("F95C61"),
+                    F7363D: Color("F7363D"),
+                    _1C1C1E: Color("1C1C1E")
                 ),
                 contextPreviewFactory: .init(
                     previewContentForResult: { result in
@@ -138,7 +215,7 @@ struct SearchResultsViewPreviews: PreviewProvider {
                 )
             ),
             keyboardVisibilityHandler: MockKeyboardVisibilityHandler()
-            
+
         )
         var body: some View {
             SearchResultsView(
