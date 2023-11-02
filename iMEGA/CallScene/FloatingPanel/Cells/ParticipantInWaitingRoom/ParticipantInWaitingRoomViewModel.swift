@@ -26,7 +26,6 @@ final class ParticipantInWaitingRoomViewModel: ViewModelType {
 
     private var subscriptions = Set<AnyCancellable>()
     private var avatarRefetchTask: Task<Void, Never>?
-    private var name: String = ""
 
     var invokeCommand: ((Command) -> Void)?
     var loadNameTask: Task<Void, Never>?
@@ -50,6 +49,7 @@ final class ParticipantInWaitingRoomViewModel: ViewModelType {
     
     deinit {
         avatarRefetchTask?.cancel()
+        loadNameTask?.cancel()
     }
     
     func dispatch(_ action: ParticipantNoInWaitingRoomViewAction) {
@@ -58,7 +58,7 @@ final class ParticipantInWaitingRoomViewModel: ViewModelType {
             fetchName(forParticipant: participant) { [weak self] name in
                 guard let self else { return }
                 fetchUserAvatar(forParticipant: participant, name: name)
-                requestAvatarChange(forParticipant: participant, name: name)
+                requestAvatarChange(forParticipant: participant)
             }
         case .admitButtonTapped:
             admitButtonTappedHandler(participant)
@@ -106,7 +106,7 @@ final class ParticipantInWaitingRoomViewModel: ViewModelType {
         }
     }
     
-    private func requestAvatarChange(forParticipant participant: CallParticipantEntity, name: String) {
+    private func requestAvatarChange(forParticipant participant: CallParticipantEntity) {
         userImageUseCase
             .requestAvatarChangeNotification(forUserHandles: [participant.participantId])
             .sink(receiveCompletion: { error in

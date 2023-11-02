@@ -2,7 +2,6 @@ import MEGADomain
 import MEGAPresentation
 
 struct MeetingOptionsMenuRouter: Routing {
-    private weak var baseViewController: UIViewController?
     private let sender: UIBarButtonItem
     private weak var presenter: UIViewController?
     private let isMyselfModerator: Bool
@@ -22,7 +21,7 @@ struct MeetingOptionsMenuRouter: Routing {
     }
     
     func build() -> UIViewController {
-        let viewModel = MeetingOptionsMenuViewModel(router: self, chatRoom: chatRoom, isMyselfModerator: isMyselfModerator, containerViewModel: containerViewModel, sender: sender)
+        let viewModel = MeetingOptionsMenuViewModel(chatRoom: chatRoom, isMyselfModerator: isMyselfModerator, containerViewModel: containerViewModel, sender: sender)
         
         return MeetingOptionsMenuViewController(viewModel: viewModel, sender: sender)
     }

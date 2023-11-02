@@ -13,7 +13,6 @@ protocol MeetingParticipantsLayoutRouting: Routing {
 final class MeetingParticipantsLayoutRouter: NSObject, MeetingParticipantsLayoutRouting {
     private weak var baseViewController: UIViewController?
     private weak var presenter: UINavigationController?
-    private weak var navigationController: UINavigationController?
     private weak var containerViewModel: MeetingContainerViewModel?
     private(set) weak var viewModel: MeetingParticipantsLayoutViewModel?
     
@@ -39,9 +38,7 @@ final class MeetingParticipantsLayoutRouter: NSObject, MeetingParticipantsLayout
         )
         let analyticsEventUseCase = AnalyticsEventUseCase(repository: AnalyticsRepository(sdk: .sharedSdk))
 
-        let vm = MeetingParticipantsLayoutViewModel(
-            router: self,
-            containerViewModel: containerViewModel,
+        let vm = MeetingParticipantsLayoutViewModel(containerViewModel: containerViewModel,
             callUseCase: CallUseCase(repository: CallRepository(chatSdk: .sharedChatSdk, callActionManager: CallActionManager.shared)),
             captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),
             localVideoUseCase: CallLocalVideoUseCase(repository: CallLocalVideoRepository(chatSdk: .sharedChatSdk)),

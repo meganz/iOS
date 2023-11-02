@@ -48,7 +48,6 @@ final class MeetingContainerViewModel: ViewModelType {
     private var noUserJoinedSubscription: AnyCancellable?
     private var muteMicSubscription: AnyCancellable?
     private var muteUnmuteFailedNotificationsSubscription: AnyCancellable?
-    private var callWaitingRoomUsersUpdateSubscription: AnyCancellable?
     private var seeWaitingRoomListEventSubscription: AnyCancellable?
 
     private var call: CallEntity? {

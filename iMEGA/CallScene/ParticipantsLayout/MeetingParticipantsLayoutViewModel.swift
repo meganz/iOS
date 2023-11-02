@@ -41,7 +41,6 @@ enum DeviceOrientation {
 }
 
 private enum CallViewModelConstant {
-    static let maxParticipantsCountForHighResolution = 5
     static let callEndCountDownTimerDuration: TimeInterval = 120
 }
 
@@ -87,11 +86,10 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case removeCallEndDurationView
     }
     
-    private let router: any MeetingParticipantsLayoutRouting
     private var chatRoom: ChatRoomEntity
     private var call: CallEntity
     private var timer: Timer?
-    private var callDurationInfo: CallDurationInfo?
+    
     private var callParticipants = [CallParticipantEntity]() {
         didSet {
             if let myself = CallParticipantEntity.myself(chatId: call.chatId) {
@@ -172,8 +170,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
     
-    init(router: some MeetingParticipantsLayoutRouting,
-         containerViewModel: MeetingContainerViewModel,
+    init(containerViewModel: MeetingContainerViewModel,
          callUseCase: some CallUseCaseProtocol,
          captureDeviceUseCase: some CaptureDeviceUseCaseProtocol,
          localVideoUseCase: some CallLocalVideoUseCaseProtocol,
@@ -188,7 +185,6 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
          call: CallEntity,
          preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default) {
         
-        self.router = router
         self.containerViewModel = containerViewModel
         self.callUseCase = callUseCase
         self.captureDeviceUseCase = captureDeviceUseCase
@@ -668,7 +664,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         reconnecting1on1Subscription = nil
     }
     
-    private func waitForRecoverable1on1Call(participant: CallParticipantEntity) {
+    private func waitForRecoverable1on1Call() {
         
         reconnecting1on1Subscription = Just(Void.self)
             .delay(for: .seconds(10), scheduler: RunLoop.main)
@@ -775,7 +771,7 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
             callTerminated(call)
         } else if let index = callParticipants.firstIndex(of: participant) {
             if chatRoom.chatType == .oneToOne && participant.sessionRecoverable {
-                waitForRecoverable1on1Call(participant: participant)
+                waitForRecoverable1on1Call()
             }
             callParticipants.remove(at: index)
             invokeCommand?(.updateParticipants(callParticipants))

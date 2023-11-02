@@ -14,18 +14,15 @@ struct MeetingOptionsMenuViewModel: ViewModelType {
         case configView(actions: [ActionSheetAction])
     }
     
-    private let router: MeetingOptionsMenuRouter
     private let chatRoom: ChatRoomEntity
     private let isMyselfModerator: Bool
     private weak var containerViewModel: MeetingContainerViewModel?
     private let sender: UIBarButtonItem
 
-    init(router: MeetingOptionsMenuRouter,
-         chatRoom: ChatRoomEntity,
+    init(chatRoom: ChatRoomEntity,
          isMyselfModerator: Bool,
          containerViewModel: MeetingContainerViewModel?,
          sender: UIBarButtonItem) {
-        self.router = router
         self.chatRoom = chatRoom
         self.isMyselfModerator = isMyselfModerator
         self.containerViewModel = containerViewModel

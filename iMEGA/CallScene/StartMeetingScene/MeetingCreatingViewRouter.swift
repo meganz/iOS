@@ -8,8 +8,7 @@ import MEGASDKRepo
 
 protocol MeetingCreatingViewRouting: Routing {
     func dismiss()
-    func goToMeetingRoom(chatRoom: ChatRoomEntity, call: CallEntity, isVideoEnabled: Bool, isSpeakerEnabled: Bool)
-    func openChatRoom(withChatId chatId: UInt64)
+    func goToMeetingRoom(chatRoom: ChatRoomEntity, call: CallEntity, isSpeakerEnabled: Bool)
     func showVideoPermissionError()
     func showAudioPermissionError()
 }
@@ -69,16 +68,8 @@ class MeetingCreatingViewRouter: NSObject, MeetingCreatingViewRouting {
     func dismiss() {
         baseViewController?.dismiss(animated: true, completion: nil)
     }
-    
-    func openChatRoom(withChatId chatId: UInt64) {
-        guard let chatViewController = ChatViewController(chatId: chatId) else { return }
-        viewControllerToPresent?.present(
-            MEGANavigationController(rootViewController: chatViewController),
-            animated: true
-        )
-    }
 
-    func goToMeetingRoom(chatRoom: ChatRoomEntity, call: CallEntity, isVideoEnabled: Bool, isSpeakerEnabled: Bool) {
+    func goToMeetingRoom(chatRoom: ChatRoomEntity, call: CallEntity, isSpeakerEnabled: Bool) {
      guard let viewControllerToPresent = viewControllerToPresent else {
             return
         }

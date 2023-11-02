@@ -8,7 +8,6 @@ final class MeetingFloatingPanelViewController: UIViewController {
     enum Constants {
         static let viewShortFormHeight: CGFloat = 164.0
         static let viewMaxWidth: CGFloat = 500.0
-        static let viewMaxHeight: CGFloat = 800.0
         static let backgroundViewCornerRadius: CGFloat = 13.0
         static let dragIndicatorCornerRadius: CGFloat = 2.5
         static let maxParticipantsToListInWaitingRoom = 4

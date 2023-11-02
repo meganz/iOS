@@ -96,24 +96,6 @@ struct MeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRouting {
         presenter?.present(MEGANavigationController(rootViewController: chatViewController),
                            animated: true)
     }
-    
-    func showInviteSuccess(email: String) {
-        let customModalAlertViewController = CustomModalAlertViewController()
-        customModalAlertViewController.image = UIImage(resource: .inviteSent)
-        customModalAlertViewController.viewTitle = Strings.Localizable.inviteSent
-        customModalAlertViewController.detail = Strings.Localizable.theUsersHaveBeenInvited
-        customModalAlertViewController.boldInDetail = email
-        customModalAlertViewController.firstButtonTitle = Strings.Localizable.close
-        customModalAlertViewController.firstCompletion = { [weak customModalAlertViewController] in
-            customModalAlertViewController?.dismiss(animated: true, completion: nil)
-        }
-        
-        presenter?.present(customModalAlertViewController, animated: true)
-    }
-
-    func showInviteErrorMessage(_ message: String) {
-        SVProgressHUD.showError(withStatus: message)
-    }
 
     func displayInMainView() {
         meetingFloatingPanelModel?.dispatch(.displayParticipantInMainView(participant))

@@ -4,7 +4,6 @@ import MEGADomainMock
 
 extension MeetingParticipantsLayoutViewModel {
     convenience init(
-        router: some MeetingParticipantsLayoutRouting = MockCallViewRouter(),
         containerViewModel: MeetingContainerViewModel = MeetingContainerViewModel(),
         callUseCase: some CallUseCaseProtocol = MockCallUseCase(),
         captureDeviceUseCase: some CaptureDeviceUseCaseProtocol = MockCaptureDeviceUseCase(),
@@ -22,7 +21,6 @@ extension MeetingParticipantsLayoutViewModel {
         isTesting: Bool = true
     ) {
         self.init(
-            router: router,
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: captureDeviceUseCase,

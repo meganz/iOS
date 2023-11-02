@@ -60,16 +60,6 @@ class MeetingQuickActionView: UIView {
 }
 
 final class MeetingSpeakerQuickActionView: MeetingQuickActionView {
-    
-    convenience init(circularView: CircularView?, iconImageView: UIImageView?, nameLabel: UILabel?, button: UIButton?) {
-        self.init()
-        self.circularView = circularView
-        self.iconImageView = iconImageView
-        self.iconImageView.image = UIImage(resource: .speakerMeetingAction)
-        self.iconImageView.contentMode = .scaleAspectFit
-        self.nameLabel = nameLabel
-        self.button = button
-    }
         
     func selectedAudioPortUpdated(_ selectedAudioPort: AudioPort, isBluetoothRouteAvailable: Bool) {
         switch selectedAudioPort {
