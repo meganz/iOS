@@ -26,8 +26,8 @@ public struct AccountStorageUseCase<T: AccountRepositoryProtocol>: AccountStorag
             return true
         }
         
-        let expectedNodesSize: UInt64 = nodes
-            .reduce(0, { result, value in result + value.size })
+        let expectedNodesSize = nodes
+            .reduce(0, { result, value in result + (Int64(exactly: value.size) ?? 0) })
         
         return accountDetails.storageUsed + expectedNodesSize > accountDetails.storageMax
     }

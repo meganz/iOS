@@ -23,7 +23,7 @@ struct MEGAPlan: Equatable {
 extension MEGAPlan {
 
     var readableName: String {
-        MEGAAccountDetails.string(for: proLevel)
+        MEGAAccountDetails.string(for: proLevel) ?? ""
     }
 
     var storageSpaceInBytes: Measurement<UnitDataStorage> {

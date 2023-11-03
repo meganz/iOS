@@ -16,7 +16,7 @@ import Foundation
 
     private var blockedCommands: [OverDiskQuotaCommand] = []
 
-    private var api: MEGASdk = MEGASdkManager.sharedMEGASdk()
+    private var api: MEGASdk = .shared
 
     // MARK: - Lifecycle
 
@@ -28,10 +28,10 @@ import Foundation
         blockedCommands = []
     }
 
-    @objc func updateUserStorageUsed(_ stroageUsed: NSNumber) {
+    @objc func updateUserStorageUsed(_ storageUsed: Int64) {
         blockedCommands.forEach { command in
-            if command.storageUsed == nil {
-                command.storageUsed = stroageUsed
+            if command.storageUsed == -1 {
+                command.storageUsed = storageUsed
                 command.execute(with: api, completion: completion(ofCommand:result:))
             }
         }
@@ -39,7 +39,7 @@ import Foundation
 
     @objc func send(_ command: OverDiskQuotaCommand) {
         blockedCommands.append(command)
-        if command.storageUsed != nil {
+        if command.storageUsed != -1 {
             command.execute(with: api, completion: completion(ofCommand:result:))
         }
     }

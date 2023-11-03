@@ -47,7 +47,9 @@ extension CustomModalAlertViewController {
     func configureForStorageQuotaError(_ uploading: Bool) {
         var imageName: String?
         if let accountDetails = MEGASdk.shared.mnz_accountDetails {
-            imageName = accountDetails.storageMax.int64Value > accountDetails.storageUsed.int64Value ? Asset.Images.WarningStorageAlmostFull.storageAlmostFull.name : Asset.Images.WarningStorageAlmostFull.warningStorageFull.name
+            imageName = accountDetails.storageMax > accountDetails.storageUsed
+            ? Asset.Images.WarningStorageAlmostFull.storageAlmostFull.name
+            : Asset.Images.WarningStorageAlmostFull.warningStorageFull.name
         }
         
         let title = Strings.Localizable.upgradeAccount

@@ -34,7 +34,7 @@ fileprivate extension AccountPlanEntity {
         subscriptionCycle = SubscriptionCycleEntity(productIdentifier: productIdentifier)
         
         let planType = planType(productIdentifier: productIdentifier)
-        name = MEGAAccountDetails.string(for: planType)
+        name = MEGAAccountDetails.string(for: planType) ?? ""
         type = planType.toAccountTypeEntity()
         
         let numberFormatter = NumberFormatter()

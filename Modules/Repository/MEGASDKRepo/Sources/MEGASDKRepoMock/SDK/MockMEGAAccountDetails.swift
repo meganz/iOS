@@ -2,11 +2,11 @@ import MEGASdk
 import MEGASDKRepo
 
 public final class MockMEGAAccountDetails: MEGAAccountDetails {
-    private var _storageUsed: NSNumber
+    private var _storageUsed: Int64
     private var _versionsStorageUsed: Int64
-    private var _storageMax: NSNumber
-    private var _transferOwnUsed: NSNumber
-    private var _transferMax: NSNumber
+    private var _storageMax: Int64
+    private var _transferOwnUsed: Int64
+    private var _transferMax: Int64
     private var _type: MEGAAccountType
     private var _proExpiration: Int
     private var _subscriptionStatus: MEGASubscriptionStatus
@@ -15,11 +15,11 @@ public final class MockMEGAAccountDetails: MEGAAccountDetails {
     private var _subscriptionCycle: String
     private var _numberUsageItems: Int
     
-    public init(storageUsed: NSNumber = 0,
+    public init(storageUsed: Int64 = 0,
                 versionsStorageUsed: Int64 = 0,
-                storageMax: NSNumber = 0,
-                transferOwnUsed: NSNumber = 0,
-                transferMax: NSNumber = 0,
+                storageMax: Int64 = 0,
+                transferOwnUsed: Int64 = 0,
+                transferMax: Int64 = 0,
                 type: MEGAAccountType = .free,
                 proExpiration: Int = 0,
                 subscriptionStatus: MEGASubscriptionStatus = .none,
@@ -41,11 +41,11 @@ public final class MockMEGAAccountDetails: MEGAAccountDetails {
         _numberUsageItems = numberUsageItems
     }
     
-    public override var storageUsed: NSNumber { _storageUsed }
+    public override var storageUsed: Int64 { _storageUsed }
     public override var versionStorageUsed: Int64 { _versionsStorageUsed }
-    public override var storageMax: NSNumber { _storageMax }
-    public override var transferOwnUsed: NSNumber { _transferOwnUsed }
-    public override var transferMax: NSNumber { _transferMax }
+    public override var storageMax: Int64 { _storageMax }
+    public override var transferOwnUsed: Int64 { _transferOwnUsed }
+    public override var transferMax: Int64 { _transferMax }
     public override var type: MEGAAccountType { _type }
     public override var proExpiration: Int { _proExpiration }
     public override var subscriptionStatus: MEGASubscriptionStatus { _subscriptionStatus }

@@ -25,6 +25,7 @@
     [self configStorageContentView];
     
     self.rubbishBinSizeLabel.text = [self textForSizeLabels:self.rubbishBinSize];
+    
     self.incomingSharesSizeLabel.text = [self textForSizeLabels:self.incomingSharesSize];
     
     [self updateAppearance];
@@ -45,7 +46,7 @@
 }
 
 - (BOOL)isStorageFull {
-    return [self.usedStorage compare: self.maxStorage] != NSOrderedAscending;
+    return self.usedStorage >= self.maxStorage;
 }
 
 - (void)setUpPieChartView {
@@ -68,15 +69,21 @@
 }
 
 - (NSMutableAttributedString *)textForMainLabel:(NSInteger)currentPage {
+    NSNumber *usedStorageNumber = [NSNumber numberWithInteger:self.usedStorage];
+    NSNumber *maxStorageNumber = [NSNumber numberWithInteger:self.maxStorage];
+    
+    NSNumber *transferOwnUsedNumber = [NSNumber numberWithInteger:self.transferOwnUsed];
+    NSNumber *transferMaxNumber = [NSNumber numberWithInteger:self.transferMax];
+    
     NSNumber *number;
     switch (currentPage) {
         case 0: {
-            number = [NSNumber numberWithFloat:(self.usedStorage.floatValue / self.maxStorage.floatValue) * 100];
+            number = [NSNumber numberWithFloat:(usedStorageNumber.floatValue / maxStorageNumber.floatValue) * 100];
             break;
         }
             
         case 1: {
-            number = [NSNumber numberWithFloat:(self.transferOwnUsed.floatValue / self.transferMax.floatValue) * 100];
+            number = [NSNumber numberWithFloat:(transferOwnUsedNumber.floatValue / transferMaxNumber.floatValue) * 100];
             break;
         }
     }
@@ -106,8 +113,8 @@
 }
 
 - (void)textForSecondaryAndTertiaryLabels:(NSInteger)currentPage {
-    NSNumber *firstNumber;
-    NSNumber *secondNumber;
+    NSInteger firstNumber = 0;
+    NSInteger secondNumber = 0;
     NSString *tertiaryTextString;
     switch (currentPage) {
         case 0: {
@@ -129,24 +136,24 @@
     
     NSString *firstPartString;
     NSString *secondPartString;
-    if (firstNumber.boolValue == 0) {
+    if (firstNumber == 0) {
         firstPartString = @"-";
     } else {
-        firstPartString = [NSString memoryStyleStringFromByteCount:firstNumber.longLongValue];
+        firstPartString = [NSString memoryStyleStringFromByteCount:firstNumber];
     }
     
-    if (secondNumber.boolValue == 0) {
+    if (secondNumber == 0) {
         secondPartString = @"-";
     } else {
-        secondPartString = [NSString memoryStyleStringFromByteCount:secondNumber.longLongValue];
+        secondPartString = [NSString memoryStyleStringFromByteCount:secondNumber];
     }
     
     self.pieChartSecondaryLabel.text = [NSString stringWithFormat:@"%@ / %@", firstPartString, secondPartString];
     self.pieChartTertiaryLabel.text = tertiaryTextString;
 }
 
-- (NSString * _Nonnull)textForSizeLabels:(NSNumber * _Nonnull)number {
-    NSString *stringFromByteCount = [NSString memoryStyleStringFromByteCount:number.longLongValue];
+- (NSString * _Nonnull)textForSizeLabels:(long long)number {
+    NSString *stringFromByteCount = [NSString memoryStyleStringFromByteCount:number];
     
     return [NSString mnz_formatStringFromByteCountFormatter:stringFromByteCount];
 }
@@ -222,18 +229,18 @@
     switch (index) {
         case 0: { //Storage / Transfer Quota consumed
             if (self.usagePageControl.currentPage == 0) {
-                valueForSlice = (self.cloudDriveSize.doubleValue / self.maxStorage.doubleValue);
+                valueForSlice = ((double)self.cloudDriveSize / (double)self.maxStorage);
             } else {
-                valueForSlice = (self.transferOwnUsed.doubleValue / self.transferMax.doubleValue);
+                valueForSlice = ((double)self.transferOwnUsed / (double)self.transferMax);
             }
             break;
         }
             
         case 1: { //Available storage/quota
             if (self.usagePageControl.currentPage == 0) {
-                valueForSlice = ((self.maxStorage.doubleValue - self.usedStorage.doubleValue) / self.maxStorage.doubleValue);
+                valueForSlice = (((double)self.maxStorage - (double)self.usedStorage) / (double)self.maxStorage);
             } else {
-                valueForSlice = ((self.transferMax.doubleValue - self.transferOwnUsed.doubleValue) / self.transferMax.doubleValue);
+                valueForSlice = (((double)self.transferMax - (double)self.transferOwnUsed) / (double)self.transferMax);
             }
             
             if (isnan(valueForSlice)) {

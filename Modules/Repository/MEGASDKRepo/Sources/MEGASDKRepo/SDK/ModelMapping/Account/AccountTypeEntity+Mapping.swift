@@ -46,6 +46,6 @@ extension AccountTypeEntity {
     
     public func toAccountTypeDisplayName() -> String {
         let accountType = toMEGAAccountType()
-        return MEGAAccountDetails.string(for: accountType)
+        return MEGAAccountDetails.string(for: accountType) ?? ""
     }
 }

@@ -22,7 +22,7 @@ extension MEGASdk {
         guard let accountDetails = mnz_accountDetails else {
             return false
         }
-        return accountDetails.storageUsed.int64Value > accountDetails.storageMax.int64Value
+        return accountDetails.storageUsed > accountDetails.storageMax
     }
     
     // MARK: Account types

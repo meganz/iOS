@@ -1,11 +1,11 @@
 import MEGADomain
 
 public extension AccountDetailsEntity {
-    init(storageUsed: UInt64 = 0,
+    init(storageUsed: Int64 = 0,
          versionsStorageUsed: Int64 = 0,
-         storageMax: UInt64 = 0,
-         transferOwnUsed: UInt64 = 0,
-         transferMax: UInt64 = 0,
+         storageMax: Int64 = 0,
+         transferOwnUsed: Int64 = 0,
+         transferMax: Int64 = 0,
          proLevel: AccountTypeEntity = .free,
          proExpiration: Int = 0,
          subscriptionStatus: SubscriptionStatusEntity = .none,

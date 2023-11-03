@@ -1285,8 +1285,8 @@
                 [api getAccountDetails];
             } else if (event.number == StorageStatePaywall) {
                 __weak typeof(self) weakSelf = self;
-                NSNumber *cloudStroageUsed = MEGASdkManager.sharedMEGASdk.mnz_accountDetails.storageUsed;
-                OverDiskQuotaCommand *presentOverDiskQuotaScreenCommand = [OverDiskQuotaCommand.alloc initWithStorageUsed:cloudStroageUsed completionAction:^(id<OverDiskQuotaInfomationProtocol> _Nullable infor) {
+                NSInteger cloudStorageUsed = MEGASdkManager.sharedMEGASdk.mnz_accountDetails.storageUsed;
+                OverDiskQuotaCommand *presentOverDiskQuotaScreenCommand = [OverDiskQuotaCommand.alloc initWithStorageUsed:cloudStorageUsed completionAction:^(id<OverDiskQuotaInfomationProtocol> _Nullable infor) {
                     if (infor != nil) {
                         [weakSelf presentOverDiskQuotaViewControllerIfNeededWithInformation:infor];
                     }
@@ -1451,9 +1451,9 @@
                 break;
             case MEGAErrorTypeApiEPaywall: {
                 __weak typeof(self) weakSelf = self;
-                NSNumber *cloudStroageUsed = MEGASdkManager.sharedMEGASdk.mnz_accountDetails.storageUsed;
+                NSInteger cloudStorageUsed = MEGASdkManager.sharedMEGASdk.mnz_accountDetails.storageUsed;
                 OverDiskQuotaCommand *presentOverDiskQuotaScreenCommand =
-                    [[OverDiskQuotaCommand alloc] initWithStorageUsed:cloudStroageUsed completionAction:^(id<OverDiskQuotaInfomationProtocol> _Nullable infor) {
+                    [[OverDiskQuotaCommand alloc] initWithStorageUsed:cloudStorageUsed completionAction:^(id<OverDiskQuotaInfomationProtocol> _Nullable infor) {
                         if (infor != nil) {
                             [weakSelf presentOverDiskQuotaViewControllerIfNeededWithInformation:infor];
                         }
@@ -1569,7 +1569,8 @@
             [self postDidFinishFetchAccountDetailsNotificationWithAccountDetails:[request megaAccountDetails]];
             [self postSetShouldRequestAccountDetailsNotification:NO];
             
-            [OverDiskQuotaService.sharedService updateUserStorageUsed:MEGASdkManager.sharedMEGASdk.mnz_accountDetails.storageUsed];
+            NSInteger storageUsed = MEGASdkManager.sharedMEGASdk.mnz_accountDetails.storageUsed;
+            [OverDiskQuotaService.sharedService updateUserStorageUsed:storageUsed];
             break;
             
         case MEGARequestTypeGetAttrUser: {
