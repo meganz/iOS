@@ -9,8 +9,8 @@ protocol ChatRoomsListRouting {
     func presentScheduleMeeting()
     func presentWaitingRoom(for scheduledMeeting: ScheduledMeetingEntity)
     func showInviteContactScreen()
-    func showDetails(forChatId chatId: HandleEntity, unreadMessagesCount: Int)
-    func openChatRoom(withChatId chatId: ChatIdEntity, publicLink: String?, unreadMessageCount: Int)
+    func showDetails(forChatId chatId: HandleEntity)
+    func openChatRoom(withChatId chatId: ChatIdEntity, publicLink: String?)
     func present(alert: UIAlertController, animated: Bool)
     func presentMoreOptionsForChat(
         withDNDEnabled dndEnabled: Bool,

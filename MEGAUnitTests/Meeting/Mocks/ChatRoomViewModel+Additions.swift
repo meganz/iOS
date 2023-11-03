@@ -21,8 +21,6 @@ extension ChatRoomViewModel {
         scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol = MockScheduledMeetingUseCase(),
         chatNotificationControl: ChatNotificationControl = ChatNotificationControl(delegate: MockPushNotificationControl()),
         permissionRouter: some PermissionAlertRouting = MockPermissionAlertRouter(),
-        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
-        notificationCenter: NotificationCenter = .default,
         chatListItemCacheUseCase: some ChatListItemCacheUseCaseProtocol = MockChatListItemCacheUseCase(),
         chatListItemDescription: ChatListItemDescriptionEntity? = nil,
         chatListItemAvatar: ChatListItemAvatarEntity? = nil,
@@ -42,8 +40,6 @@ extension ChatRoomViewModel {
             scheduledMeetingUseCase: scheduledMeetingUseCase,
             chatNotificationControl: chatNotificationControl,
             permissionRouter: permissionRouter,
-            featureFlagProvider: featureFlagProvider,
-            notificationCenter: notificationCenter,
             chatListItemCacheUseCase: chatListItemCacheUseCase,
             chatListItemDescription: chatListItemDescription,
             chatListItemAvatar: chatListItemAvatar

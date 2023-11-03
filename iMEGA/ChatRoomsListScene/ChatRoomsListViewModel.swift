@@ -24,7 +24,6 @@ final class ChatRoomsListViewModel: ObservableObject {
     let router: any ChatRoomsListRouting
     private let chatUseCase: any ChatUseCaseProtocol
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
-    private let contactsUseCase: any ContactsUseCaseProtocol
     private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     private let scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol
@@ -33,9 +32,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     private let permissionAlertRouter: any PermissionAlertRouting
     private let chatListItemCacheUseCase: any ChatListItemCacheUseCaseProtocol
     private let retryPendingConnectionsUseCase: any RetryPendingConnectionsUseCaseProtocol
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let tracker: any AnalyticsTracking
-    private let notificationCenter: NotificationCenter
     private let chatViewType: ChatViewType
     
     lazy var contextMenuManager = ContextMenuManager(
@@ -130,30 +127,25 @@ final class ChatRoomsListViewModel: ObservableObject {
         router: some ChatRoomsListRouting,
         chatUseCase: any ChatUseCaseProtocol,
         chatRoomUseCase: any ChatRoomUseCaseProtocol,
-        contactsUseCase: any ContactsUseCaseProtocol,
         networkMonitorUseCase: any NetworkMonitorUseCaseProtocol,
         accountUseCase: any AccountUseCaseProtocol,
         scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol,
         userAttributeUseCase: any UserAttributeUseCaseProtocol,
-        notificationCenter: NotificationCenter = NotificationCenter.default,
         chatType: ChatViewType = .regular,
         chatViewMode: ChatViewMode = .chats,
         permissionHandler: some DevicePermissionsHandling,
         permissionAlertRouter: some PermissionAlertRouting,
         chatListItemCacheUseCase: some ChatListItemCacheUseCaseProtocol,
         retryPendingConnectionsUseCase: some RetryPendingConnectionsUseCaseProtocol,
-        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
         tracker: some AnalyticsTracking = DIContainer.tracker
     ) {
         self.router = router
         self.chatUseCase = chatUseCase
-        self.contactsUseCase = contactsUseCase
         self.chatRoomUseCase = chatRoomUseCase
         self.networkMonitorUseCase = networkMonitorUseCase
         self.scheduledMeetingUseCase = scheduledMeetingUseCase
         self.accountUseCase = accountUseCase
         self.userAttributeUseCase = userAttributeUseCase
-        self.notificationCenter = notificationCenter
         self.chatViewType = chatType
         self.chatViewMode = chatViewMode
         self.isConnectedToNetwork = networkMonitorUseCase.isConnected()
@@ -162,7 +154,6 @@ final class ChatRoomsListViewModel: ObservableObject {
         self.permissionAlertRouter = permissionAlertRouter
         self.chatListItemCacheUseCase = chatListItemCacheUseCase
         self.retryPendingConnectionsUseCase = retryPendingConnectionsUseCase
-        self.featureFlagProvider = featureFlagProvider
         self.tracker = tracker
         self.isSearchActive = false
         self.isFirstMeetingsLoad = true
