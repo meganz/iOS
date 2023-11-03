@@ -43,6 +43,11 @@ custom_rules:
         name: "Avoid empty lines at the top of the file"
         message: "No empty lines are allowed at the top of the file"
 
+    disallow_preview_macro:
+        regex: '#Preview'
+        name: "Disallow #Preview macro"
+        message: "Using the Preview macro will break our archiving, use PreviewProvider instead"
+
 # Currently we use `only_rules` so that we can validate each and every default rule.
 # Once everything has been set, we can start using the `disabled_rules` and `opt_in_rules`.
 
