@@ -20,8 +20,6 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
     private var chatNotificationControl: ChatNotificationControl
     private let permissionRouter: any PermissionAlertRouting
     private let chatListItemCacheUseCase: any ChatListItemCacheUseCaseProtocol
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
-    private let notificationCenter: NotificationCenter
     
     private(set) var description: String?
     private(set) var hybridDescription: ChatRoomHybridDescriptionViewState?
@@ -36,11 +34,8 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
     private(set) var displayDateString: String?
     
     private var subscriptions = Set<AnyCancellable>()
-    
-    private var loadingChatRoomInfoSubscription: AnyCancellable?
+
     private var searchString = ""
-    
-    private var isInfoLoaded = false
     
     let chatRoomAvatarViewModel: ChatRoomAvatarViewModel?
     
@@ -65,8 +60,6 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
         scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol,
         chatNotificationControl: ChatNotificationControl,
         permissionRouter: some PermissionAlertRouting,
-        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
-        notificationCenter: NotificationCenter = .default,
         chatListItemCacheUseCase: some ChatListItemCacheUseCaseProtocol,
         chatListItemDescription: ChatListItemDescriptionEntity? = nil,
         chatListItemAvatar: ChatListItemAvatarEntity? = nil
@@ -82,8 +75,6 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
         self.scheduledMeetingUseCase = scheduledMeetingUseCase
         self.chatNotificationControl = chatNotificationControl
         self.permissionRouter = permissionRouter
-        self.featureFlagProvider = featureFlagProvider
-        self.notificationCenter = notificationCenter
         self.chatListItemCacheUseCase = chatListItemCacheUseCase
         self.description = chatListItemDescription?.description
         self.isMuted = chatNotificationControl.isChatDNDEnabled(chatId: chatListItem.chatId)
@@ -169,8 +160,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
     }
     
     func showDetails() {
-        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: chatListItem.chatId) else { return }
-        router.showDetails(forChatId: chatListItem.chatId, unreadMessagesCount: chatRoom.unreadCount)
+        router.showDetails(forChatId: chatListItem.chatId)
     }
     
     func presentMoreOptionsForChat() {

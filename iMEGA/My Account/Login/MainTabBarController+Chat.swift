@@ -40,10 +40,10 @@ extension MainTabBarController {
         
         if let rootViewController = UIApplication.shared.windows.first?.rootViewController {
             rootViewController.dismiss(animated: true) {
-                chatRoomsListViewController.viewModel.router.openChatRoom(withChatId: chatID, publicLink: publicLink, unreadMessageCount: totalUnreadChats)
+                chatRoomsListViewController.viewModel.router.openChatRoom(withChatId: chatID, publicLink: publicLink)
             }
         } else {
-            chatRoomsListViewController.viewModel.router.openChatRoom(withChatId: chatID, publicLink: publicLink, unreadMessageCount: totalUnreadChats)
+            chatRoomsListViewController.viewModel.router.openChatRoom(withChatId: chatID, publicLink: publicLink)
         }
     }
     

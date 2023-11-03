@@ -16,9 +16,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
     private let callUseCase: any CallUseCaseProtocol
     private let audioSessionUseCase: any AudioSessionUseCaseProtocol
     private let scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol
-    private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
     private let permissionAlertRouter: any PermissionAlertRouting
-    private var featureFlagProvider: any FeatureFlagProviderProtocol
     private let tracker: any AnalyticsTracking
     
     private var searchString: String?
@@ -93,7 +91,6 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
         scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol,
         megaHandleUseCase: some MEGAHandleUseCaseProtocol,
         permissionAlertRouter: some PermissionAlertRouting,
-        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
         tracker: some AnalyticsTracking = DIContainer.tracker,
         chatNotificationControl: ChatNotificationControl,
         chatListItemCacheUseCase: some ChatListItemCacheUseCaseProtocol,
@@ -109,10 +106,8 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
         self.callUseCase = callUseCase
         self.audioSessionUseCase = audioSessionUseCase
         self.scheduledMeetingUseCase = scheduledMeetingUseCase
-        self.megaHandleUseCase = megaHandleUseCase
         self.permissionAlertRouter = permissionAlertRouter
         self.chatNotificationControl = chatNotificationControl
-        self.featureFlagProvider = featureFlagProvider
         self.tracker = tracker
         self.isMuted = chatNotificationControl.isChatDNDEnabled(chatId: scheduledMeeting.chatId)
         self.isRecurring = scheduledMeeting.rules.frequency != .invalid
@@ -168,8 +163,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
     }
     
     func showDetails() {
-        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: scheduledMeeting.chatId) else { return }
-        router.showDetails(forChatId: scheduledMeeting.chatId, unreadMessagesCount: chatRoom.unreadCount)
+        router.showDetails(forChatId: scheduledMeeting.chatId)
     }
     
     func cancelMeetingAlertData() -> CancelMeetingAlertDataModel {

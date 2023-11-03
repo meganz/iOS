@@ -4,17 +4,6 @@ import MEGADomainMock
 import XCTest
 
 final class FutureMeetingSectionTests: XCTestCase {
-    
-    func testAllChatIds_withEmptyItems_shouldMatch() {
-        let section = FutureMeetingSection(title: "", date: Date(), items: [])
-        XCTAssertEqual(section.allChatIds, [])
-    }
-    
-    func testAllChatIds_withMultipleItems_shouldMatch() {
-        let chatIds: [UInt64] = createdRandomChatIds(count: Int.random(in: 1...10))
-        XCTAssertEqual(createFutureMeetingSection(chatIds: chatIds).allChatIds, chatIds)
-    }
-    
     func testFilter_withEmptySearchText_shouldBeNil() {
         XCTAssertNil(createFutureMeetingSection().filter(withSearchText: ""))
     }
@@ -36,14 +25,6 @@ final class FutureMeetingSectionTests: XCTestCase {
         
         let expectation = expectation(for: predicate, evaluatedWith: nil)
         wait(for: [expectation], timeout: 10)
-    }
-    
-    func testContains_notMatchFound_shouldBeFalse() {
-        XCTAssertFalse(contains(matching: false))
-    }
-    
-    func testContains_matchFound_shouldBeTrue() {
-        XCTAssertTrue(contains(matching: true))
     }
     
     func testInsert_AtFirstIndex_shouldMatch() throws {
@@ -88,18 +69,7 @@ final class FutureMeetingSectionTests: XCTestCase {
             dateSetList: createDateSetList(withCount: chatIds.count, dayRange: dayRange)
         )
     }
-    
-    private func contains(matching: Bool) -> Bool {
-        let chatIds: [UInt64] = [1, 2, 3, 4, 5]
-        let futureMeetingSection = createFutureMeetingSection(
-            withChatIds: chatIds,
-            chatRoomUsersDescriptionResults: createFailureResult(withCount: chatIds.count),
-            dateSetList: createDateSetList(withCount: chatIds.count)
-        )
-        
-        return futureMeetingSection.contains(itemsWithChatId: matching ? 5 : 6)
-    }
-    
+
     private func createDateSetList(withCount count: Int, dayRange: ClosedRange<Int> = 1...31) -> [(startDate: Date, endDate: Date)] {
         let dates = createSampleDates(withCount: count, dayRange: dayRange)
         return dates.map { ($0, $0)}

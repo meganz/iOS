@@ -63,7 +63,7 @@ final class ChatRoomsListViewModelTests: XCTestCase {
     }
     
     func testSelectChatMode_inviteContactNow_shouldMatch() throws {
-        assertContactsOnMegaViewStateWhenSelectedChatMode(isAuthorizedToAccessPhoneContacts: true, description: Strings.Localizable.inviteContactNow)
+        assertContactsOnMegaViewStateWhenSelectedChatMode(description: Strings.Localizable.inviteContactNow)
     }
     
     func testSelectChatsMode_inputAsChats_viewModelsShouldMatch() {
@@ -356,10 +356,9 @@ final class ChatRoomsListViewModelTests: XCTestCase {
     
     // MARK: - Private methods
     
-    private func assertContactsOnMegaViewStateWhenSelectedChatMode(isAuthorizedToAccessPhoneContacts: Bool, description: String, line: UInt = #line) {
+    private func assertContactsOnMegaViewStateWhenSelectedChatMode(description: String, line: UInt = #line) {
         let router = MockChatRoomsListRouter()
-        let contactsUseCase = MockContactsUseCase(authorized: isAuthorizedToAccessPhoneContacts)
-        let viewModel = makeChatRoomsListViewModel(router: router, contactsUseCase: contactsUseCase, chatViewMode: .meetings)
+        let viewModel = makeChatRoomsListViewModel(router: router, chatViewMode: .meetings)
         
         let expectation = expectation(description: "Waiting for contactsOnMegaViewState to be updated")
         
@@ -394,39 +393,33 @@ final class ChatRoomsListViewModelTests: XCTestCase {
     private func makeChatRoomsListViewModel(
         router: some ChatRoomsListRouting = MockChatRoomsListRouter(),
         chatUseCase: any ChatUseCaseProtocol = MockChatUseCase(),
-        contactsUseCase: any ContactsUseCaseProtocol = MockContactsUseCase(),
         networkMonitorUseCase: any NetworkMonitorUseCaseProtocol = MockNetworkMonitorUseCase(),
         accountUseCase: any AccountUseCaseProtocol = MockAccountUseCase(),
         chatRoomUseCase: any ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
         scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol = MockScheduledMeetingUseCase(),
         userAttributeUseCase: any UserAttributeUseCaseProtocol = MockUserAttributeUseCase(),
-        notificationCenter: NotificationCenter = NotificationCenter.default,
         chatType: ChatViewType = .regular,
         chatViewMode: ChatViewMode = .chats,
         permissionHandler: some DevicePermissionsHandling = MockDevicePermissionHandler(),
         permissionAlertRouter: some PermissionAlertRouting = MockPermissionAlertRouter(),
         chatListItemCacheUseCase: some ChatListItemCacheUseCaseProtocol = MockChatListItemCacheUseCase(),
         retryPendingConnectionsUseCase: some RetryPendingConnectionsUseCaseProtocol = MockRetryPendingConnectionsUseCase(),
-        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         tracker: some AnalyticsTracking = DIContainer.tracker
     ) -> ChatRoomsListViewModel {
         let sut = ChatRoomsListViewModel(
             router: router,
             chatUseCase: chatUseCase,
             chatRoomUseCase: chatRoomUseCase,
-            contactsUseCase: contactsUseCase,
             networkMonitorUseCase: networkMonitorUseCase,
             accountUseCase: accountUseCase,
             scheduledMeetingUseCase: scheduledMeetingUseCase,
             userAttributeUseCase: userAttributeUseCase,
-            notificationCenter: notificationCenter,
             chatType: chatType,
             chatViewMode: chatViewMode,
             permissionHandler: permissionHandler,
             permissionAlertRouter: permissionAlertRouter,
             chatListItemCacheUseCase: chatListItemCacheUseCase,
             retryPendingConnectionsUseCase: retryPendingConnectionsUseCase,
-            featureFlagProvider: featureFlagProvider,
             tracker: tracker
         )
         return sut
@@ -490,7 +483,7 @@ final class MockChatRoomsListRouter: ChatRoomsListRouting {
         showContactsOnMegaScreen_calledTimes += 1
     }
     
-    func showDetails(forChatId chatId: HandleEntity, unreadMessagesCount: Int) {
+    func showDetails(forChatId chatId: HandleEntity) {
         showDetails_calledTimes += 1
     }
     
@@ -522,7 +515,7 @@ final class MockChatRoomsListRouter: ChatRoomsListRouting {
         showArchivedChatRooms_calledTimes += 1
     }
     
-    func openChatRoom(withChatId chatId: ChatIdEntity, publicLink: String?, unreadMessageCount: Int) {
+    func openChatRoom(withChatId chatId: ChatIdEntity, publicLink: String?) {
         openChatRoom_calledTimes += 1
     }
     

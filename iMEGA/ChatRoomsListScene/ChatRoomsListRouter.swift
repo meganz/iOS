@@ -22,7 +22,6 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
             router: self,
             chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
             chatRoomUseCase: chatRoomUseCase,
-            contactsUseCase: ContactsUseCase(repository: ContactsRepository()),
             networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             scheduledMeetingUseCase: ScheduledMeetingUseCase(repository: ScheduledMeetingRepository(chatSDK: MEGAChatSdk.shared)),
@@ -87,12 +86,12 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         WaitingRoomViewRouter(presenter: chatRoomsListViewController, scheduledMeeting: scheduledMeeting).start()
     }
         
-    func showDetails(forChatId chatId: HandleEntity, unreadMessagesCount: Int) {
+    func showDetails(forChatId chatId: HandleEntity) {
         guard let navigationController, let chatViewController = ChatViewController(chatId: chatId) else { return }
         navigationController.pushViewController(chatViewController, animated: true)
     }
     
-    func openChatRoom(withChatId chatId: ChatIdEntity, publicLink: String?, unreadMessageCount: Int) {
+    func openChatRoom(withChatId chatId: ChatIdEntity, publicLink: String?) {
         guard let navigationController else { return }
         
         if let chatViewController = navigationController.viewControllers[safe: 1] as? ChatViewController {
