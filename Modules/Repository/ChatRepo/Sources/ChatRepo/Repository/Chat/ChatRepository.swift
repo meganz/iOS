@@ -124,12 +124,12 @@ public final class ChatRepository: ChatRepositoryProtocol {
     
     public func fetchMeetings() -> [ChatListItemEntity]? {
         guard let chatList = chatSDK.chatListItems(by: [.meetingOrNonMeeting, .archivedOrNonArchived], filter: .meeting) else { return nil }
-        return (0..<chatList.size).map { chatList.chatListItem(at: $0).toChatListItemEntity() }
+        return (0..<chatList.size).compactMap { chatList.chatListItem(at: $0)?.toChatListItemEntity() }
     }
     
     public func fetchNonMeetings() -> [ChatListItemEntity]? {
         guard let chatList = chatSDK.chatListItems(by: [.meetingOrNonMeeting, .archivedOrNonArchived], filter: []) else { return nil }
-        return (0..<chatList.size).map { chatList.chatListItem(at: $0).toChatListItemEntity() }
+        return (0..<chatList.size).compactMap { chatList.chatListItem(at: $0)?.toChatListItemEntity() }
     }
     
     public func isCallInProgress(for chatRoomId: HandleEntity) -> Bool {
