@@ -38,23 +38,25 @@ class RichPreviewContentView: UIView {
                 return
             }
             titleLabel.text = richPreview.title
-            if (richPreview.previewDescription as NSString).mnz_isEmpty() {
+            if let description = richPreview.previewDescription, description.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                 descriptionLabel.isHidden = true
             } else {
                 descriptionLabel.isHidden = false
                 descriptionLabel.text = richPreview.previewDescription
             }
-            linkLabel.text = URL(string: richPreview.url)?.host
-            if richPreview.image != nil,
-               let data = Data(base64Encoded: richPreview.image, options: .ignoreUnknownCharacters) {
+            if let url = richPreview.url {
+                linkLabel.text = URL(string: url)?.host
+            }
+            if let image = richPreview.image,
+               let data = Data(base64Encoded: image, options: .ignoreUnknownCharacters) {
                 imageView.image = UIImage(data: data)
                 imageViewContainer.isHidden = false
             } else {
                 imageViewContainer.isHidden = true
             }
             
-            if richPreview.icon != nil,
-               let data = Data(base64Encoded: richPreview.icon, options: .ignoreUnknownCharacters) {
+            if let icon = richPreview.icon,
+               let data = Data(base64Encoded: icon, options: .ignoreUnknownCharacters) {
                 iconImageView.image = UIImage(data: data)
                 iconImageView.isHidden = false
             } else {

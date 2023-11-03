@@ -288,7 +288,7 @@ extension ChatViewController: MessageCellDelegate, MessageLabelDelegate {
         let megaMessage = chatMessage.message
         guard let containsMeta = megaMessage.containsMeta else { return }
         if megaMessage.containsMeta?.type == .richPreview {
-            let url = URL(string: containsMeta.richPreview.url)
+            let url = URL(string: containsMeta.richPreview.url ?? "")
             MEGALinkManager.linkURL = url
             MEGALinkManager.processLinkURL(url)
         } else if megaMessage.containsMeta?.type == .geolocation {

@@ -240,13 +240,13 @@ open class ChatRichPreviewMediaCollectionViewSizeCalculator: TextMessageSizeCalc
             return defaultPreviewSize
         }
     
-        if richPreview.image != nil,
-           Data(base64Encoded: richPreview.image, options: .ignoreUnknownCharacters) != nil {
+        if let image = richPreview.image,
+           Data(base64Encoded: image, options: .ignoreUnknownCharacters) != nil {
             return defaultPreviewSize
         }
         
-        if richPreview.icon != nil,
-           Data(base64Encoded: richPreview.icon, options: .ignoreUnknownCharacters) != nil {
+        if let icon = richPreview.icon,
+           Data(base64Encoded: icon, options: .ignoreUnknownCharacters) != nil {
             return defaultPreviewSize
         }
         
@@ -258,7 +258,7 @@ open class ChatRichPreviewMediaCollectionViewSizeCalculator: TextMessageSizeCalc
             guard let richPreview = chatMessage.message.containsMeta?.richPreview else {
                 return  ("", "", "")
             }
-            return (richPreview.title, richPreview.previewDescription, URL(string: richPreview.url)?.host ?? "")
+            return (richPreview.title ?? "", richPreview.previewDescription ?? "", URL(string: richPreview.url ?? "")?.host ?? "")
             
         } else {
             guard let megaLink = chatMessage.message.megaLink else {
