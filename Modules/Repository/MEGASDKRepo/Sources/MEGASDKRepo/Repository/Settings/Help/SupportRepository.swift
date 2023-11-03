@@ -19,8 +19,12 @@ public struct SupportRepository: SupportRepositoryProtocol {
                 switch result {
                 case .success:
                     completion(.success)
-                case .failure:
-                    completion(.failure(GenericErrorEntity()))
+                case .failure(let error):
+                    if error.type == .apiETooMany {
+                        completion(.failure(ReportErrorEntity.tooManyRequest))
+                    } else {
+                        completion(.failure(ReportErrorEntity.generic))
+                    }
                 }
             })
         })

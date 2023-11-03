@@ -19,7 +19,7 @@ final class SupportRepositoryTests: XCTestCase {
             repo = SupportRepository(sdk: sdk)
             try await repo.createSupportTicket(withMessage: "This is a test")
             XCTFail("Did not throw error! Expected to catch GenericErrorEntity.")
-        } catch let error as GenericErrorEntity {
+        } catch let error as ReportErrorEntity {
             XCTAssertNotNil(error)
         } catch {
             XCTFail("Invalid exception caught")
