@@ -340,9 +340,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         NSString *alertMessage = node.isFolder ? LocalizedString(@"This folder has been the subject of a takedown notice.", @"Popup notification text on mouse-over taken down folder.") : LocalizedString(@"This file has been the subject of a takedown notice.", @"Popup notification text on mouse-over of taken down file.");
         
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"openButton", @"Button title to trigger the action of opening the file without downloading or opening it.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            node.isFolder ? [self openFolderNode:node] : [self openFileNode:node];
-        }]];
         [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"Dispute Takedown", @"File Manager -> Context menu item for taken down file or folder, for dispute takedown.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             [[NSURL URLWithString:MEGADisputeURL] mnz_presentSafariViewController];
         }]];
