@@ -50,14 +50,14 @@ extension UsageViewController {
             cloudDriveSize = accountDetails.storageUsed(forHandle: rootNode.handle)
         }
         
-        cloudDriveSizeLabel?.text = text(forSizeLabels: cloudDriveSize ?? NSNumber(value: 0))
+        cloudDriveSizeLabel?.text = text(forSizeLabels: cloudDriveSize)
         
         backupsActivityIndicator?.isHidden = false
         backupsActivityIndicator?.startAnimating()
         
         Task {
             let backupSize = await BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo).backupsRootNodeSize()
-            backupsSizeLabel?.text = self.text(forSizeLabels: NSNumber(value: backupSize))
+            backupsSizeLabel?.text = self.text(forSizeLabels: Int64(backupSize))
             backupsActivityIndicator?.stopAnimating()
             backupsActivityIndicator?.isHidden = true
         }
@@ -66,7 +66,7 @@ extension UsageViewController {
             rubbishBinSize = accountDetails.storageUsed(forHandle: rubbishNode.handle)
         }
         
-        rubbishBinSizeLabel?.text = text(forSizeLabels: rubbishBinSize ?? NSNumber(value: 0))
+        rubbishBinSizeLabel?.text = text(forSizeLabels: rubbishBinSize)
         
         var incomingSharedSizeSum: Int64 = 0
         
@@ -74,9 +74,7 @@ extension UsageViewController {
             incomingSharedSizeSum += MEGASdk.shared.size(for: node).int64Value
         }
         
-        incomingSharesSize = NSNumber(value: incomingSharedSizeSum)
-        
-        incomingSharesSizeLabel?.text = text(forSizeLabels: incomingSharesSize ?? NSNumber(value: 0))
+        incomingSharesSizeLabel?.text = text(forSizeLabels: incomingSharedSizeSum)
         
         usedStorage = accountDetails.storageUsed
         maxStorage = accountDetails.storageMax
@@ -141,19 +139,19 @@ extension UsageViewController {
         switch page {
         case 0:
             usageTitleLabel?.text = Strings.Localizable.Account.Storage.StorageUsed.title
-            guard let usedStorage, usedStorage != 0 else {
+            guard usedStorage != 0 else {
                 usageSizeLabel?.text = "-"
                 return
             }
-            usageSizeLabel?.text = String.memoryStyleString(fromByteCount: usedStorage.int64Value)
+            usageSizeLabel?.text = String.memoryStyleString(fromByteCount: usedStorage)
             
         case 1:
             usageTitleLabel?.text = Strings.Localizable.Account.Storage.TransferUsed.title
-            guard let transferOwnUsed, transferOwnUsed != 0 else {
+            guard transferOwnUsed != 0 else {
                 usageSizeLabel?.text = "-"
                 return
             }
-            usageSizeLabel?.text = String.memoryStyleString(fromByteCount: transferOwnUsed.int64Value)
+            usageSizeLabel?.text = String.memoryStyleString(fromByteCount: transferOwnUsed)
             
         default: return
         }

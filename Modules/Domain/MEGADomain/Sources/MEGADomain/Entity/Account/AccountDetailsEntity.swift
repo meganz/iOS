@@ -21,11 +21,11 @@ public enum SubscriptionCycleEntity: Sendable {
 }
 
 public struct AccountDetailsEntity: Sendable {
-    public let storageUsed: UInt64
+    public let storageUsed: Int64
     public let versionsStorageUsed: Int64
-    public let storageMax: UInt64
-    public let transferOwnUsed: UInt64
-    public let transferMax: UInt64
+    public let storageMax: Int64
+    public let transferOwnUsed: Int64
+    public let transferMax: Int64
     public let proLevel: AccountTypeEntity
     public let proExpiration: Int
     public let subscriptionStatus: SubscriptionStatusEntity
@@ -34,7 +34,7 @@ public struct AccountDetailsEntity: Sendable {
     public let subscriptionCycle: SubscriptionCycleEntity
     public let numberUsageItems: Int
     
-    public init(storageUsed: UInt64, versionsStorageUsed: Int64, storageMax: UInt64, transferOwnUsed: UInt64, transferMax: UInt64, proLevel: AccountTypeEntity, proExpiration: Int, subscriptionStatus: SubscriptionStatusEntity, subscriptionRenewTime: Int, subscriptionMethod: String?, subscriptionCycle: SubscriptionCycleEntity, numberUsageItems: Int) {
+    public init(storageUsed: Int64, versionsStorageUsed: Int64, storageMax: Int64, transferOwnUsed: Int64, transferMax: Int64, proLevel: AccountTypeEntity, proExpiration: Int, subscriptionStatus: SubscriptionStatusEntity, subscriptionRenewTime: Int, subscriptionMethod: String?, subscriptionCycle: SubscriptionCycleEntity, numberUsageItems: Int) {
         self.storageUsed = storageUsed
         self.versionsStorageUsed = versionsStorageUsed
         self.storageMax = storageMax

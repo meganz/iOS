@@ -15,14 +15,12 @@ extension UpgradeTableViewController {
     }
     
     @objc func setCurrentPlanMaxQuotaData() {
-        guard let accountDetails = MEGASdk.shared.mnz_accountDetails,
-              let storage = accountDetails.storageMax as? Int64,
-              let transfer = accountDetails.transferMax as? Int64 else {
+        guard let accountDetails = MEGASdk.shared.mnz_accountDetails else {
             return
         }
-
-        let storageMax = String.memoryStyleString(fromByteCount: storage)
-        let transferMax = String.memoryStyleString(fromByteCount: transfer)
+        
+        let storageMax = String.memoryStyleString(fromByteCount: accountDetails.storageMax)
+        let transferMax = String.memoryStyleString(fromByteCount: accountDetails.transferMax)
         currentPlanStorageLabel.attributedText = quotaAttributedText(maxQuota: storageMax, fullQuotaString: Strings.Localizable.Account.storageQuota(storageMax))
         currentPlanBandwidthLabel.attributedText = quotaAttributedText(maxQuota: transferMax, fullQuotaString: Strings.Localizable.Account.storageQuota(transferMax))
     }

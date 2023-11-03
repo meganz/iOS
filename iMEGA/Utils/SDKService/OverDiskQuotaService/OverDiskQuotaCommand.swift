@@ -13,11 +13,11 @@ import MEGASDKRepo
 
     private var completionAction: ((any OverDiskQuotaInfomationProtocol)?) -> Void
 
-    var storageUsed: NSNumber?
+    var storageUsed: Int64
 
     // MARK: - Lifecycles
 
-    @objc init(storageUsed: NSNumber?,
+    @objc init(storageUsed: Int64,
                completionAction: @escaping ((any OverDiskQuotaInfomationProtocol)?) -> Void) {
         self.completionAction = completionAction
         self.storageUsed = storageUsed
@@ -29,12 +29,6 @@ import MEGASDKRepo
         with api: MEGASdk,
         completion: @escaping (OverDiskQuotaCommand?, OverDiskQuotaFetchResult) -> Void
     ) {
-        guard let storageUsed = storageUsed else {
-            assertionFailure("Do not schedule a command to execute while stroage used is still nil.")
-            completion(self, .failure(.illegaillyScheduling))
-            return
-        }
-
         let task = OverDiskQuotaQueryTask()
         task.updatedStorageStore(with: storageUsed)
         task.start(with: api) { [weak self] result in
@@ -92,8 +86,8 @@ private final class OverDiskQuotaQueryTask {
         completion(.failure(.unexpectedlyCancellation))
     }
 
-    func updatedStorageStore(with storage: NSNumber) {
-        self.storageUsedStore = OverDiskQuotaStorageUsed(cloudStorageTaking: .bytes(of: storage.int64Value))
+    func updatedStorageStore(with storage: Int64) {
+        self.storageUsedStore = OverDiskQuotaStorageUsed(cloudStorageTaking: .bytes(of: storage))
     }
 
     // MARK: - Privates

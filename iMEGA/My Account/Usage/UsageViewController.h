@@ -36,20 +36,20 @@
 @property (weak, nonatomic) IBOutlet UIPageControl * _Nullable usagePageControl;
 @property (weak, nonatomic) IBOutlet UIView * _Nullable usageBottomSeparatorView;
 
-@property (strong, nonatomic, nullable) NSNumber *cloudDriveSize;
+@property (nonatomic) long long cloudDriveSize;
 @property (strong, nonatomic, nullable) NSNumber *backupsSize;
-@property (strong, nonatomic, nullable) NSNumber *rubbishBinSize;
-@property (strong, nonatomic, nullable) NSNumber *incomingSharesSize;
+@property (nonatomic) long long rubbishBinSize;
+@property (nonatomic) long long incomingSharesSize;
 
 @property (strong, nonatomic) NSNumberFormatter * _Nullable numberFormatter;
-@property (strong, nonatomic, nullable) NSNumber *usedStorage;
-@property (strong, nonatomic, nullable) NSNumber *maxStorage;
+@property (nonatomic) long long usedStorage;
+@property (nonatomic) long long maxStorage;
 
-@property (strong, nonatomic, nullable) NSNumber *transferOwnUsed;
-@property (strong, nonatomic, nullable) NSNumber *transferMax;
+@property (nonatomic) long long transferOwnUsed;
+@property (nonatomic) long long transferMax;
 
 - (BOOL)isStorageFull;
-- (NSString * _Nonnull)textForSizeLabels:(NSNumber * _Nonnull)number;
+- (NSString * _Nonnull)textForSizeLabels:(long long)number;
 - (void)setUpPieChartView;
 - (void)reloadPieChart:(NSInteger)currentPage;
 

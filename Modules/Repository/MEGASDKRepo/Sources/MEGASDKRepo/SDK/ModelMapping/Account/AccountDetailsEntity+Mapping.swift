@@ -4,11 +4,11 @@ import MEGASdk
 extension MEGAAccountDetails {
     public func toAccountDetailsEntity() -> AccountDetailsEntity {
         AccountDetailsEntity(
-            storageUsed: self.storageUsed?.uint64Value ?? 0,
+            storageUsed: self.storageUsed,
             versionsStorageUsed: self.versionStorageUsed,
-            storageMax: self.storageMax?.uint64Value ?? 0,
-            transferOwnUsed: self.transferOwnUsed?.uint64Value ?? 0,
-            transferMax: self.transferMax?.uint64Value ?? 0,
+            storageMax: self.storageMax,
+            transferOwnUsed: self.transferOwnUsed,
+            transferMax: self.transferMax,
             proLevel: self.type.toAccountTypeEntity(),
             proExpiration: self.proExpiration,
             subscriptionStatus: self.subscriptionStatus.toSubscriptionStatusEntity(),
