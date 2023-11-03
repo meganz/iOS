@@ -2986,6 +2986,10 @@
 "help.reportIssue.success.message"="Thanks. We’ll look into this issue and a member of our team will get back to you.";
 /* Error message shown when some error occurs during uploading a bug report. */
 "help.reportIssue.fail.message"="Unable to submit your report. Please try again.";
+/* Error title shown when the user try to send more than one report in less than 10 minutes */
+"help.reportIssue.fail.too.many.request.title"="You must wait 10 minutes before submitting another issue";
+/* Error message shown when the user try to send more than one report in less than 10 minutes */
+"help.reportIssue.fail.too.many.request.message"="Please try again later or contact our support team via support@mega.nz if the problem persists";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.title"="Are you sure you want to cancel uploading your reported issue?";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */

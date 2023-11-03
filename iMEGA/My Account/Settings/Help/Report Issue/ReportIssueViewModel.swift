@@ -88,7 +88,11 @@ final class ReportIssueViewModel: ObservableObject {
                 try await supportUseCase.createSupportTicket(withMessage: getFormattedReportIssueMessage(details, filename: filename))
                 reportAlertType = .createSupportTicketFinished
             } catch {
-                reportAlertType = .createSupportTicketFailure
+                if let err = error as? ReportErrorEntity, case .tooManyRequest = err {
+                    reportAlertType = .createSupportTicketTooManyRequestFailure
+                } else {
+                    reportAlertType = .createSupportTicketFailure
+                }
             }
             showingReportIssueAlert = true
         }
@@ -144,6 +148,10 @@ final class ReportIssueViewModel: ObservableObject {
     
     func reportIssueAlertData() -> ReportIssueAlertDataModel {
         switch reportAlertType {
+        case .createSupportTicketTooManyRequestFailure:
+            return ReportIssueAlertDataModel(title: Strings.Localizable.Help.ReportIssue.Fail.Too.Many.Request.title,
+                                             message: Strings.Localizable.Help.ReportIssue.Fail.Too.Many.Request.message,
+                                             primaryButtonTitle: Strings.Localizable.ok)
         case .uploadLogFileFailure, .createSupportTicketFailure:
             return ReportIssueAlertDataModel(title: Strings.Localizable.somethingWentWrong,
                                              message: Strings.Localizable.Help.ReportIssue.Fail.message,
