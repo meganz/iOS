@@ -713,6 +713,11 @@
 		6D60256428F8946E00FF9767 /* NodesUpdateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D60256328F8946E00FF9767 /* NodesUpdateProtocol.swift */; };
 		6D60256628F8999A00FF9767 /* CloudDriveViewController+NodesUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D60256528F8999A00FF9767 /* CloudDriveViewController+NodesUpdate.swift */; };
 		6D64B70D2A09BCB1002ECBD1 /* AccountHallViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D64B70C2A09BCB1002ECBD1 /* AccountHallViewModel.swift */; };
+		6D6749402AF84C410023FAC0 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D67493F2AF84C410023FAC0 /* Colors.xcassets */; };
+		6D6749412AF84C410023FAC0 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D67493F2AF84C410023FAC0 /* Colors.xcassets */; };
+		6D6749422AF84C410023FAC0 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D67493F2AF84C410023FAC0 /* Colors.xcassets */; };
+		6D6749432AF84C410023FAC0 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D67493F2AF84C410023FAC0 /* Colors.xcassets */; };
+		6D6749442AF84C410023FAC0 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D67493F2AF84C410023FAC0 /* Colors.xcassets */; };
 		6DB163F02880F953004EFBC7 /* PhotosViewModel+FilterAndSort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB163EF2880F953004EFBC7 /* PhotosViewModel+FilterAndSort.swift */; };
 		6DB772CE28836A8500B75A93 /* PhotosViewController+Empty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB772CD28836A8500B75A93 /* PhotosViewController+Empty.swift */; };
 		6DD7B2362A776313007EBB20 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6DD7B2352A776313007EBB20 /* Images.xcassets */; };
@@ -1618,11 +1623,6 @@
 		B582966A27C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B582966927C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift */; };
 		B58F7BFD298A8ABF0046F0FA /* ShareViewController+SecureFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58F7BFB298A88750046F0FA /* ShareViewController+SecureFlag.swift */; };
 		B5902A812872F38200B450E9 /* MEGANodeList+SortOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5902A802872F38100B450E9 /* MEGANodeList+SortOrder.swift */; };
-		B5925B79279115FA00170CD6 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5925B78279115FA00170CD6 /* Colors.xcassets */; };
-		B5925B7C279115FA00170CD6 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5925B78279115FA00170CD6 /* Colors.xcassets */; };
-		B5925B7D279115FA00170CD6 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5925B78279115FA00170CD6 /* Colors.xcassets */; };
-		B5925B7E279115FA00170CD6 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5925B78279115FA00170CD6 /* Colors.xcassets */; };
-		B5925B7F279115FA00170CD6 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5925B78279115FA00170CD6 /* Colors.xcassets */; };
 		B59580A82A1478D400E5FC1C /* UpgradeAccountPlanRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59580A52A1478D300E5FC1C /* UpgradeAccountPlanRouter.swift */; };
 		B59580A92A1478D400E5FC1C /* UpgradeAccountPlanViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59580A62A1478D400E5FC1C /* UpgradeAccountPlanViewModel.swift */; };
 		B59580AA2A1478D400E5FC1C /* UpgradeAccountPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59580A72A1478D400E5FC1C /* UpgradeAccountPlanView.swift */; };
@@ -3316,6 +3316,7 @@
 		6D60256328F8946E00FF9767 /* NodesUpdateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodesUpdateProtocol.swift; sourceTree = "<group>"; };
 		6D60256528F8999A00FF9767 /* CloudDriveViewController+NodesUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+NodesUpdate.swift"; sourceTree = "<group>"; };
 		6D64B70C2A09BCB1002ECBD1 /* AccountHallViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountHallViewModel.swift; sourceTree = "<group>"; };
+		6D67493F2AF84C410023FAC0 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Colors.xcassets; path = Modules/Presentation/MEGAAssets/Sources/MEGAAssets/Resources/Colors.xcassets; sourceTree = SOURCE_ROOT; };
 		6DB163EF2880F953004EFBC7 /* PhotosViewModel+FilterAndSort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewModel+FilterAndSort.swift"; sourceTree = "<group>"; };
 		6DB772CD28836A8500B75A93 /* PhotosViewController+Empty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewController+Empty.swift"; sourceTree = "<group>"; };
 		6DD7B2342A7761BD007EBB20 /* MEGAAssets */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAAssets; sourceTree = "<group>"; };
@@ -4213,7 +4214,6 @@
 		B582966927C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CreateAccountViewController+Additions.swift"; sourceTree = "<group>"; };
 		B58F7BFB298A88750046F0FA /* ShareViewController+SecureFlag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShareViewController+SecureFlag.swift"; sourceTree = "<group>"; };
 		B5902A802872F38100B450E9 /* MEGANodeList+SortOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANodeList+SortOrder.swift"; sourceTree = "<group>"; };
-		B5925B78279115FA00170CD6 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		B59580A52A1478D300E5FC1C /* UpgradeAccountPlanRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeAccountPlanRouter.swift; sourceTree = "<group>"; };
 		B59580A62A1478D400E5FC1C /* UpgradeAccountPlanViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeAccountPlanViewModel.swift; sourceTree = "<group>"; };
 		B59580A72A1478D400E5FC1C /* UpgradeAccountPlanView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeAccountPlanView.swift; sourceTree = "<group>"; };
@@ -5644,8 +5644,8 @@
 				1373618D1A6664C300B740E8 /* Supporting Files */,
 				415226861A692ECC00EC7BB6 /* Utils */,
 				415226671A692EBD00EC7BB6 /* Vendor */,
-				B5925B78279115FA00170CD6 /* Colors.xcassets */,
 				6DD7B2352A776313007EBB20 /* Images.xcassets */,
+				6D67493F2AF84C410023FAC0 /* Colors.xcassets */,
 			);
 			path = iMEGA;
 			sourceTree = "<group>";
@@ -12860,7 +12860,6 @@
 				BF1053DF2498663B009094C8 /* ChatUnreadMessagesLabelCollectionCell.xib in Resources */,
 				BFB463FC243456D900FB90B9 /* ChatViewIntroductionHeaderView.xib in Resources */,
 				4152268B1A692ECC00EC7BB6 /* Cloud.storyboard in Resources */,
-				B5925B79279115FA00170CD6 /* Colors.xcassets in Resources */,
 				9422494428DB77B8009626E6 /* ContactLinkContentView.xib in Resources */,
 				5B9F2010243332D200F22FBA /* ContactLinkQR.storyboard in Resources */,
 				415226901A692ECC00EC7BB6 /* Contacts.storyboard in Resources */,
@@ -12971,6 +12970,7 @@
 				B695B60B264B43160050DF09 /* SVProgressHUD.bundle in Resources */,
 				BF33EF7924451A6200CD35AC /* TapAndHoldMessageView.xib in Resources */,
 				94614C752910554200503174 /* TransferNodeTableViewCell.xib in Resources */,
+				6D6749402AF84C410023FAC0 /* Colors.xcassets in Resources */,
 				2F6F088D253E387600C5B5D7 /* Transfers.storyboard in Resources */,
 				94614C7329104F6900503174 /* TransferTableViewCell.xib in Resources */,
 				5B5FBDDF20BD8CB2000EE35B /* TwoFactorAuthentication.storyboard in Resources */,
@@ -12988,8 +12988,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B5925B7D279115FA00170CD6 /* Colors.xcassets in Resources */,
 				6DD7B2382A776313007EBB20 /* Images.xcassets in Resources */,
+				6D6749422AF84C410023FAC0 /* Colors.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12997,8 +12997,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6D6749442AF84C410023FAC0 /* Colors.xcassets in Resources */,
 				83422B28255984C300D46907 /* Assets.xcassets in Resources */,
-				B5925B7E279115FA00170CD6 /* Colors.xcassets in Resources */,
 				6DD7B23A2A776313007EBB20 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -13007,8 +13007,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6D6749412AF84C410023FAC0 /* Colors.xcassets in Resources */,
 				A882981E29F1668E00DEDE98 /* AppIntentVocabulary.plist in Resources */,
-				B5925B7F279115FA00170CD6 /* Colors.xcassets in Resources */,
 				6DD7B2372A776313007EBB20 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -13026,7 +13026,6 @@
 			files = (
 				7767C39F247BB723001166A8 /* Chat.storyboard in Resources */,
 				9411354F1F00FD1500D33428 /* Cloud.storyboard in Resources */,
-				B5925B7C279115FA00170CD6 /* Colors.xcassets in Resources */,
 				A836581C2102101C005E616F /* Contacts.storyboard in Resources */,
 				B6831C1525B65C7E0072827F /* CustomModalAlertViewController.xib in Resources */,
 				5B95DD94237C35610068DF97 /* EmptyStateView.xib in Resources */,
@@ -13038,6 +13037,7 @@
 				77E70DB82475760F00E74806 /* MegaAvatarView.xib in Resources */,
 				94598D751F0CD53A00B57144 /* Share.storyboard in Resources */,
 				B695B60D264B43160050DF09 /* SVProgressHUD.bundle in Resources */,
+				6D6749432AF84C410023FAC0 /* Colors.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
