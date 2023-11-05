@@ -516,6 +516,6 @@ extension MeetingParticipantsLayoutViewController: CallCollectionViewDelegate {
     }
     
     func participantCellIsVisible(_ participant: CallParticipantEntity, at indexPath: IndexPath) {
-        viewModel.dispatch(.particpantIsVisible(participant, index: indexPath.item))
+        viewModel.dispatch(.participantIsVisible(participant, index: indexPath.item))
     }
 }

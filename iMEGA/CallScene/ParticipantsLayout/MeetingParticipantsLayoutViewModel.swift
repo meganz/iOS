@@ -18,7 +18,7 @@ enum CallViewAction: ActionType {
     case tapParticipantToPinAsSpeaker(CallParticipantEntity, IndexPath)
     case fetchAvatar(participant: CallParticipantEntity)
     case fetchSpeakerAvatar
-    case particpantIsVisible(_ participant: CallParticipantEntity, index: Int)
+    case participantIsVisible(_ participant: CallParticipantEntity, index: Int)
     case indexVisibleParticipants([Int])
     case pinParticipantAsSpeaker(CallParticipantEntity)
     case addParticipant(withHandle: HandleEntity)
@@ -140,6 +140,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private var userImageUseCase: any UserImageUseCaseProtocol
     private let analyticsEventUseCase: any AnalyticsEventUseCaseProtocol
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
 
     @PreferenceWrapper(key: .callsSoundNotification, defaultValue: true)
     private var callsSoundNotificationPreference: Bool
@@ -166,24 +167,31 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     var namesFetchingTask: Task<Void, Never>?
 
     private var reconnecting1on1Subscription: AnyCancellable?
+    
+    var isPresenterVideoAndSharedScreenFeatureFlagEnabled: Bool {
+        featureFlagProvider.isFeatureFlagEnabled(for: .presenterVideoAndSharedScreen)
+    }
 
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
     
-    init(containerViewModel: MeetingContainerViewModel,
-         callUseCase: some CallUseCaseProtocol,
-         captureDeviceUseCase: some CaptureDeviceUseCaseProtocol,
-         localVideoUseCase: some CallLocalVideoUseCaseProtocol,
-         remoteVideoUseCase: some CallRemoteVideoUseCaseProtocol,
-         chatRoomUseCase: some ChatRoomUseCaseProtocol,
-         chatRoomUserUseCase: some ChatRoomUserUseCaseProtocol,
-         accountUseCase: some AccountUseCaseProtocol,
-         userImageUseCase: some UserImageUseCaseProtocol,
-         analyticsEventUseCase: some AnalyticsEventUseCaseProtocol,
-         megaHandleUseCase: some MEGAHandleUseCaseProtocol,
-         chatRoom: ChatRoomEntity,
-         call: CallEntity,
-         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default) {
+    init(
+        containerViewModel: MeetingContainerViewModel,
+        callUseCase: some CallUseCaseProtocol,
+        captureDeviceUseCase: some CaptureDeviceUseCaseProtocol,
+        localVideoUseCase: some CallLocalVideoUseCaseProtocol,
+        remoteVideoUseCase: some CallRemoteVideoUseCaseProtocol,
+        chatRoomUseCase: some ChatRoomUseCaseProtocol,
+        chatRoomUserUseCase: some ChatRoomUserUseCaseProtocol,
+        accountUseCase: some AccountUseCaseProtocol,
+        userImageUseCase: some UserImageUseCaseProtocol,
+        analyticsEventUseCase: some AnalyticsEventUseCaseProtocol,
+        megaHandleUseCase: some MEGAHandleUseCaseProtocol,
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
+        chatRoom: ChatRoomEntity,
+        call: CallEntity,
+        preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default
+    ) {
         
         self.containerViewModel = containerViewModel
         self.callUseCase = callUseCase
@@ -196,6 +204,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         self.userImageUseCase = userImageUseCase
         self.analyticsEventUseCase = analyticsEventUseCase
         self.megaHandleUseCase = megaHandleUseCase
+        self.featureFlagProvider = featureFlagProvider
         self.chatRoom = chatRoom
         self.call = call
 
@@ -462,7 +471,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                     self?.invokeCommand?(.updateSpeakerAvatar(image))
                 }
             }
-        case .particpantIsVisible(let participant, let index):
+        case .participantIsVisible(let participant, let index):
             if participant.video == .on {
                 enableRemoteVideo(for: participant)
             } else {
