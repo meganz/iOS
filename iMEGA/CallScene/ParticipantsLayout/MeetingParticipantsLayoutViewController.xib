@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="landscape" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -11,6 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MeetingParticipantsLayoutViewController" customModule="MEGA" customModuleProvider="target">
             <connections>
                 <outlet property="callCollectionView" destination="3Ni-IQ-UdW" id="ToX-VW-8QR"/>
+                <outlet property="callCollectionViewSpeakerModeHeight" destination="24m-pV-ZUr" id="Pms-hw-iH7"/>
                 <outlet property="localUserView" destination="zKP-u0-Mn5" id="1bM-SA-maD"/>
                 <outlet property="pageControl" destination="rae-xX-FxW" id="USz-kA-pAs"/>
                 <outlet property="speakerAvatarImageView" destination="aFk-YE-N4v" id="8Cz-ZO-poE"/>
@@ -18,30 +19,26 @@
                 <outlet property="speakerNameLabel" destination="Ae0-ne-geK" id="chS-Q8-VSy"/>
                 <outlet property="speakerRemoteVideoImageView" destination="fDl-Bh-v8H" id="kFT-VQ-JMo"/>
                 <outlet property="stackViewBottomConstraint" destination="LNy-wp-ml8" id="Pvp-kt-d3R"/>
+                <outlet property="stackViewLeadingConstraint" destination="JEh-18-lQw" id="1tx-d2-TP4"/>
                 <outlet property="stackViewTopConstraint" destination="5dl-sw-vq3" id="Q0A-bR-zZC"/>
+                <outlet property="stackViewTrailingConstraint" destination="Xmg-dt-nAE" id="1hD-NZ-AHR"/>
                 <outlet property="view" destination="pkd-uI-bDa" id="BkG-kn-r2y"/>
-                <outletCollection property="speakerViews" destination="Qe2-Ae-8bt" collectionClass="NSMutableArray" id="7oR-y1-zcL"/>
                 <outletCollection property="speakerViews" destination="cBL-OH-Rsv" collectionClass="NSMutableArray" id="K0f-vZ-Da1"/>
-                <outletCollection property="speakerViews" destination="w6k-iw-iFa" collectionClass="NSMutableArray" id="KlP-tO-KkN"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="pkd-uI-bDa">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="wEF-YB-JwX">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                    <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                     <subviews>
-                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qe2-Ae-8bt">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="179"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </view>
                         <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cBL-OH-Rsv" userLabel="SpeakerView">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="358.5"/>
+                            <rect key="frame" x="0.0" y="0.0" width="896" height="0.0"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aFk-YE-N4v">
-                                    <rect key="frame" x="167" y="139" width="80" height="80"/>
+                                    <rect key="frame" x="408" y="0.0" width="80" height="0.0"/>
                                     <constraints>
                                         <constraint firstAttribute="height" relation="lessThanOrEqual" constant="80" id="DZn-dd-mHW"/>
                                         <constraint firstAttribute="width" constant="80" id="Y2b-m9-jyi"/>
@@ -53,11 +50,11 @@
                                     </userDefinedRuntimeAttributes>
                                 </imageView>
                                 <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fDl-Bh-v8H">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="358"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="896" height="0.0"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </imageView>
                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="6bw-X5-gQJ">
-                                    <rect key="frame" x="4" y="326.5" width="93.5" height="24"/>
+                                    <rect key="frame" x="4" y="-32" width="93.5" height="24"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="userMutedBig" translatesAutoresizingMaskIntoConstraints="NO" id="C0Z-bC-2l6">
                                             <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
@@ -104,8 +101,11 @@
                             </constraints>
                         </view>
                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" contentInsetAdjustmentBehavior="never" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="3Ni-IQ-UdW" customClass="CallCollectionView" customModule="MEGA" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="112" id="24m-pV-ZUr"/>
+                            </constraints>
                             <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="1" minimumInteritemSpacing="1" id="Fxa-fy-aa1">
                                 <size key="itemSize" width="150" height="150"/>
                                 <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -113,21 +113,33 @@
                                 <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                             </collectionViewFlowLayout>
                             <cells/>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="24m-pV-ZUr"/>
+                                </mask>
+                            </variation>
                         </collectionView>
-                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w6k-iw-iFa">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="179"/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </view>
                         <pageControl hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="1" translatesAutoresizingMaskIntoConstraints="NO" id="rae-xX-FxW">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="0.0"/>
+                            <rect key="frame" x="0.0" y="0.0" width="896" height="0.0"/>
                         </pageControl>
                     </subviews>
                     <constraints>
-                        <constraint firstItem="Qe2-Ae-8bt" firstAttribute="height" secondItem="wEF-YB-JwX" secondAttribute="height" multiplier="0.2" id="8rE-QX-Lyw"/>
                         <constraint firstItem="cBL-OH-Rsv" firstAttribute="width" secondItem="wEF-YB-JwX" secondAttribute="width" priority="750" id="Ea0-3l-4KU"/>
                         <constraint firstItem="cBL-OH-Rsv" firstAttribute="height" secondItem="wEF-YB-JwX" secondAttribute="height" multiplier="0.4" id="azD-Ck-dbP"/>
-                        <constraint firstItem="w6k-iw-iFa" firstAttribute="height" secondItem="wEF-YB-JwX" secondAttribute="height" multiplier="0.2" id="f7y-wY-eW4"/>
+                        <constraint firstItem="cBL-OH-Rsv" firstAttribute="height" secondItem="wEF-YB-JwX" secondAttribute="height" multiplier="0.7" id="rf7-j3-jrt"/>
                     </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="Ea0-3l-4KU"/>
+                            <exclude reference="azD-Ck-dbP"/>
+                            <exclude reference="rf7-j3-jrt"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <exclude reference="azD-Ck-dbP"/>
+                        </mask>
+                    </variation>
                 </stackView>
                 <view hidden="YES" contentMode="scaleToFill" id="zKP-u0-Mn5" customClass="LocalUserView" customModule="MEGA" customModuleProvider="target">
                     <rect key="frame" x="16" y="104" width="75" height="134"/>
@@ -205,7 +217,6 @@
                 <constraint firstAttribute="bottom" secondItem="wEF-YB-JwX" secondAttribute="bottom" id="LNy-wp-ml8"/>
                 <constraint firstItem="wEF-YB-JwX" firstAttribute="trailing" secondItem="pkd-uI-bDa" secondAttribute="trailing" id="Xmg-dt-nAE"/>
             </constraints>
-            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outletCollection property="gestureRecognizers" destination="WAH-dH-DYg" appends="YES" id="Ts8-n5-vDk"/>
             </connections>

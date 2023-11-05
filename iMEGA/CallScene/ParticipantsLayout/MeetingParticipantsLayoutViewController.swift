@@ -6,9 +6,9 @@ import MEGAPresentation
 
 final class MeetingParticipantsLayoutViewController: UIViewController, ViewType {
     private enum Constants {
-        static let notificatitionMessageWhiteBackgroundColor = UIColor(white: 1.0, alpha: 0.95)
-        static let notificatitionMessageWhiteTextColor = UIColor.white
-        static let notificatitionMessageBlackTextColor = UIColor.black
+        static let notificationMessageWhiteBackgroundColor = UIColor(white: 1.0, alpha: 0.95)
+        static let notificationMessageWhiteTextColor = UIColor.white
+        static let notificationMessageBlackTextColor = UIColor.black
     }
     
     @IBOutlet private weak var callCollectionView: CallCollectionView!
@@ -22,8 +22,11 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     @IBOutlet private weak var pageControl: UIPageControl!
     @IBOutlet private weak var stackViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet private weak var stackViewTopConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var stackViewLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var stackViewTrailingConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var callCollectionViewSpeakerModeHeight: NSLayoutConstraint!
     
-    private var reconncectingNotificationView: CallNotificationView?
+    private var reconnectingNotificationView: CallNotificationView?
     private var poorConnectionNotificationView: CallNotificationView?
     private var waitingForOthersNotificationView: CallNotificationView?
     private var callEndTimerNotificationView: CallNotificationView?
@@ -88,17 +91,12 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     
     override func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
-        if UIDevice.current.iPhoneDevice {
-            if UIDevice.current.orientation.isLandscape {
-                viewModel.dispatch(.switchIphoneOrientation(.landscape))
-            } else {
-                viewModel.dispatch(.switchIphoneOrientation(.portrait))
-            }
-        }
-        coordinator.animate(alongsideTransition: { _ in
-            self.callCollectionView.collectionViewLayout.invalidateLayout()
-            self.localUserView.repositionView()
-            self.emptyMeetingMessageView?.invalidateIntrinsicContentSize()
+        coordinator.animate(alongsideTransition: { [weak self] _ in
+            guard let self else { return }
+            callCollectionView.collectionViewLayout.invalidateLayout()
+            localUserView.repositionView()
+            emptyMeetingMessageView?.invalidateIntrinsicContentSize()
+            viewModel.dispatch(.orientationOrModeChange(isSpeakerIPhoneLandscape: UIDevice.current.iPhoneDevice && UIDevice.current.orientation.isLandscape && callCollectionView.layoutMode == .speaker))
         })
     }
     
@@ -137,6 +135,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             if isOneToOne {
                 navigationItem.rightBarButtonItems = nil
             }
+            configureLayout(mode: .grid, participantsCount: 0)
         case .configLocalUserView(let position):
             localUserView.configure(for: position)
         case .switchMenusVisibility:
@@ -144,8 +143,6 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             navigationController?.setNavigationBarHidden(!(navigationController?.navigationBar.isHidden ?? false), animated: true)
             localUserView.updateOffsetWithNavigation(hidden: statusBarHidden)
             forceDarkNavigationUI()
-        case .enableLayoutButton(let enabled):
-            layoutModeBarButton.isEnabled = enabled
         case .switchLayoutMode(let layoutMode, let participantsCount):
             configureLayout(mode: layoutMode, participantsCount: participantsCount)
         case .switchLocalVideo(let isVideoEnabled):
@@ -183,7 +180,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         case .reconnected:
             removeReconnectingNotification()
             removeParticipantsBlurEffect()
-            showNotification(message: Strings.Localizable.online, backgroundColor: UIColor.systemGreen, textColor: Constants.notificatitionMessageWhiteTextColor)
+            showNotification(message: Strings.Localizable.online, backgroundColor: UIColor.systemGreen, textColor: Constants.notificationMessageWhiteTextColor)
         case .updateCameraPositionTo(let position):
             localUserView.addBlurEffect()
             localUserView.transformLocalVideo(for: position)
@@ -211,10 +208,10 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             speakerViews.forEach { $0.isHidden = hidden }
         case .ownPrivilegeChangedToModerator:
             showNotification(message: Strings.Localizable.Meetings.Notifications.moderatorPrivilege,
-                             backgroundColor: Constants.notificatitionMessageWhiteBackgroundColor,
-                             textColor: Constants.notificatitionMessageBlackTextColor)
+                             backgroundColor: Constants.notificationMessageWhiteBackgroundColor,
+                             textColor: Constants.notificationMessageBlackTextColor)
         case .showBadNetworkQuality:
-            if reconncectingNotificationView == nil {
+            if reconnectingNotificationView == nil {
                 showPoorConnectionNotification()
             }
         case .hideBadNetworkQuality:
@@ -229,6 +226,9 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             updateCallEndDurationRemaining(string: durationRemainingString)
         case .removeCallEndDurationView:
             removeCallEndDurationView()
+        case .configureSpeakerView(let isSpeakerMode, let constraintValue):
+            callCollectionViewSpeakerModeHeight.isActive = isSpeakerMode
+            configureLeadingAndTrailingConstraint(to: constraintValue)
         }
     }
     
@@ -257,12 +257,8 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     // MARK: - Private
     
     private func configureLayout(mode: ParticipantsLayoutMode, participantsCount: Int) {
-        switch mode {
-        case .grid:
-            layoutModeBarButton.image = UIImage(resource: .speakerView)
-        case .speaker:
-            layoutModeBarButton.image = UIImage(resource: .galleryView)
-        }
+        layoutModeBarButton.image = mode == .speaker ? UIImage(resource: .galleryView) : UIImage(resource: .speakerView)
+        viewModel.dispatch(.orientationOrModeChange(isSpeakerIPhoneLandscape: UIDevice.current.iPhoneDevice && UIDevice.current.orientation.isLandscape && callCollectionView.layoutMode == .speaker))
         speakerViews.forEach { $0.isHidden = mode == .grid || participantsCount == 0 }
         pageControl.isHidden = mode == .speaker || participantsCount <= 6
         callCollectionView.changeLayoutMode(mode)
@@ -301,8 +297,8 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             view.addSubview(notification)
 
             notification.show(message: displayString,
-                              backgroundColor: Constants.notificatitionMessageWhiteBackgroundColor,
-                              textColor: Constants.notificatitionMessageBlackTextColor)
+                              backgroundColor: Constants.notificationMessageWhiteBackgroundColor,
+                              textColor: Constants.notificationMessageBlackTextColor)
             callEndTimerNotificationView = notification
             return
         }
@@ -359,8 +355,6 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         }
         navigationItem.rightBarButtonItems = [optionsMenuButton,
                                               layoutModeBarButton]
-        
-        layoutModeBarButton.isEnabled = !(UIDevice.current.iPhoneDevice && UIDevice.current.orientation.isLandscape)
     }
     
     private func showReconnectingNotification() {
@@ -368,16 +362,16 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         view.addSubview(notification)
         notification.show(message: Strings.Localizable.Meetings.Reconnecting.title,
                           backgroundColor: .clear,
-                          textColor: Constants.notificatitionMessageWhiteTextColor,
+                          textColor: Constants.notificationMessageWhiteTextColor,
                           autoFadeOut: false,
                           blinking: true)
-        reconncectingNotificationView = notification
+        reconnectingNotificationView = notification
     }
     
     private func removeReconnectingNotification() {
-        guard let notification = reconncectingNotificationView else { return }
+        guard let notification = reconnectingNotificationView else { return }
         notification.removeFromSuperview()
-        reconncectingNotificationView = nil
+        reconnectingNotificationView = nil
     }
     
     private func showPoorConnectionNotification() {
@@ -385,7 +379,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         view.addSubview(notification)
         notification.show(message: Strings.Localizable.Meetings.poorConnection,
                           backgroundColor: .clear,
-                          textColor: Constants.notificatitionMessageWhiteTextColor,
+                          textColor: Constants.notificationMessageWhiteTextColor,
                           autoFadeOut: false)
         poorConnectionNotificationView = notification
     }
@@ -411,8 +405,8 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         view.addSubview(notification)
         notification.show(
             message: Strings.Localizable.Meetings.Message.waitingOthers,
-            backgroundColor: Constants.notificatitionMessageWhiteBackgroundColor,
-            textColor: Constants.notificatitionMessageBlackTextColor
+            backgroundColor: Constants.notificationMessageWhiteBackgroundColor,
+            textColor: Constants.notificationMessageBlackTextColor
         )
         waitingForOthersNotificationView = notification
     }
@@ -465,8 +459,8 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         
         if let message = message {
             showNotification(message: message,
-                             backgroundColor: Constants.notificatitionMessageWhiteBackgroundColor,
-                             textColor: Constants.notificatitionMessageBlackTextColor,
+                             backgroundColor: Constants.notificationMessageWhiteBackgroundColor,
+                             textColor: Constants.notificationMessageBlackTextColor,
                              completion: completion)
         }
     }
@@ -493,6 +487,11 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         }
         
         return message
+    }
+    
+    private func configureLeadingAndTrailingConstraint(to constant: CGFloat) {
+        stackViewLeadingConstraint.constant = constant
+        stackViewTrailingConstraint.constant = -constant
     }
 }
 

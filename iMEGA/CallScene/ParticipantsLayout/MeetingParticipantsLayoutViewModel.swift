@@ -11,7 +11,6 @@ enum CallViewAction: ActionType {
     case tapOnLayoutModeButton
     case tapOnOptionsMenuButton(presenter: UIViewController, sender: UIBarButtonItem)
     case tapOnBackButton
-    case switchIphoneOrientation(_ orientation: DeviceOrientation)
     case showRenameChatAlert
     case setNewTitle(String)
     case discardChangeTitle
@@ -28,6 +27,7 @@ enum CallViewAction: ActionType {
     case endCallEndCountDownTimer
     case didEndDisplayLastPeerLeftStatusMessage
     case showNavigation
+    case orientationOrModeChange(isSpeakerIPhoneLandscape: Bool)
 }
 
 enum ParticipantsLayoutMode {
@@ -49,7 +49,6 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case configView(title: String, subtitle: String, isUserAGuest: Bool, isOneToOne: Bool)
         case configLocalUserView(position: CameraPositionEntity)
         case switchMenusVisibility
-        case enableLayoutButton(Bool)
         case switchLayoutMode(layout: ParticipantsLayoutMode, participantsCount: Int)
         case switchLocalVideo(Bool)
         case updateName(String)
@@ -84,6 +83,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case updateMyAvatar(UIImage)
         case updateCallEndDurationRemainingString(String)
         case removeCallEndDurationView
+        case configureSpeakerView(isSpeakerMode: Bool, leadingAndTrailingConstraint: CGFloat)
     }
     
     private var chatRoom: ChatRoomEntity
@@ -219,14 +219,6 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             RunLoop.main.add(timer, forMode: .common)
             self.timer = timer
         }
-    }
-    
-    private func forceGridLayout() {
-        if layoutMode == .grid {
-            return
-        }
-        layoutMode = .grid
-        invokeCommand?(.switchLayoutMode(layout: layoutMode, participantsCount: callParticipants.count))
     }
     
     private func switchLayout() {
@@ -437,14 +429,6 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             timer?.invalidate()
             remoteVideoUseCase.disableAllRemoteVideos()
             containerViewModel?.dispatch(.tapOnBackButton)
-        case .switchIphoneOrientation(let orientation):
-            switch orientation {
-            case .landscape:
-                forceGridLayout()
-                invokeCommand?(.enableLayoutButton(false))
-            case .portrait:
-                invokeCommand?(.enableLayoutButton(true))
-            }
         case .showRenameChatAlert:
             invokeCommand?(.showRenameAlert(title: chatRoom.title ?? "", isMeeting: chatRoom.chatType == .meeting))
         case .setNewTitle(let newTitle):
@@ -505,6 +489,12 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             }
         case .showNavigation:
             invokeCommand?(.switchMenusVisibility)
+        case .orientationOrModeChange(let isSpeakerIPhoneLandscape):
+            if isSpeakerIPhoneLandscape {
+                invokeCommand?(.configureSpeakerView(isSpeakerMode: true, leadingAndTrailingConstraint: 180))
+            } else {
+                invokeCommand?(.configureSpeakerView(isSpeakerMode: false, leadingAndTrailingConstraint: 0))
+            }
         }
     }
     

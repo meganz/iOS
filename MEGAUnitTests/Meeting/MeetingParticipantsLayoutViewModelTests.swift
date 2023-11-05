@@ -169,7 +169,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         XCTAssert(remoteVideoUseCase.disableAllRemoteVideos_CalledTimes == 1)
     }
     
-    func testAction_switchIphoneOrientation_toLandscape() {
+    func testAction_orientationOrModeChange_isSpeakerIPhoneLandscape() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity()
         let callUseCase = MockCallUseCase(call: call)
@@ -189,11 +189,11 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             call: call
         )
         test(viewModel: viewModel,
-             action: .switchIphoneOrientation(.landscape),
-             expectedCommands: [.enableLayoutButton(false)])
+             action: .orientationOrModeChange(isSpeakerIPhoneLandscape: true),
+             expectedCommands: [.configureSpeakerView(isSpeakerMode: true, leadingAndTrailingConstraint: 180)])
     }
     
-    func testAction_switchIphoneOrientation_toProtrait() {
+    func testAction_orientationOrModeChange_isNotSpeakerIPhoneLandscape() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity()
         let callUseCase = MockCallUseCase(call: call)
@@ -213,34 +213,8 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             call: call
         )
         test(viewModel: viewModel,
-             action: .switchIphoneOrientation(.portrait),
-             expectedCommands: [.enableLayoutButton(true)])
-    }
-    
-    func testAction_switchIphoneOrientation_toLandscape_forceGridLayout() {
-        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
-        let call = CallEntity()
-        let callUseCase = MockCallUseCase(call: call)
-        let remoteVideoUseCase = MockCallRemoteVideoUseCase()
-        let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
-        
-        let viewModel = MeetingParticipantsLayoutViewModel(
-            containerViewModel: containerViewModel,
-            callUseCase: callUseCase,
-            captureDeviceUseCase: MockCaptureDeviceUseCase(),
-            localVideoUseCase: MockCallLocalVideoUseCase(),
-            remoteVideoUseCase: remoteVideoUseCase,
-            chatRoomUseCase: MockChatRoomUseCase(),
-            accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
-            userImageUseCase: MockUserImageUseCase(),
-            chatRoom: chatRoom,
-            call: call
-        )
-        viewModel.layoutMode = .speaker
-        test(viewModel: viewModel,
-             action: .switchIphoneOrientation(.landscape),
-             expectedCommands: [.switchLayoutMode(layout: .grid, participantsCount: 0),
-                                .enableLayoutButton(false)])
+             action: .orientationOrModeChange(isSpeakerIPhoneLandscape: false),
+             expectedCommands: [.configureSpeakerView(isSpeakerMode: false, leadingAndTrailingConstraint: 0)])
     }
     
     func testAction_singleParticipantsAdded() async throws {
