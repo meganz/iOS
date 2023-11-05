@@ -1,6 +1,8 @@
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
+import MEGAPresentation
+import MEGAPresentationMock
 import XCTest
 
 class MeetingParticipantsLayoutViewModelTests: XCTestCase {
@@ -12,7 +14,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         
-        let viewModel = MeetingParticipantsLayoutViewModel(
+        let viewModel = makeMeetingParticipantsLayoutViewModel(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -43,7 +45,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         
-        let viewModel = MeetingParticipantsLayoutViewModel(
+        let viewModel = makeMeetingParticipantsLayoutViewModel(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -74,7 +76,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         
-        let viewModel = MeetingParticipantsLayoutViewModel(
+        let viewModel = makeMeetingParticipantsLayoutViewModel(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -101,7 +103,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         
-        let viewModel = MeetingParticipantsLayoutViewModel(
+        let viewModel = makeMeetingParticipantsLayoutViewModel(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -123,7 +125,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let callUseCase = MockCallUseCase(call: call)
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
-        let viewModel = MeetingParticipantsLayoutViewModel(
+        let viewModel = makeMeetingParticipantsLayoutViewModel(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -150,7 +152,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         
-        let viewModel = MeetingParticipantsLayoutViewModel(
+        let viewModel = makeMeetingParticipantsLayoutViewModel(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -176,7 +178,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         
-        let viewModel = MeetingParticipantsLayoutViewModel(
+        let viewModel = makeMeetingParticipantsLayoutViewModel(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -200,7 +202,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         
-        let viewModel = MeetingParticipantsLayoutViewModel(
+        let viewModel = makeMeetingParticipantsLayoutViewModel(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -227,7 +229,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let userUseCase = MockChatRoomUserUseCase(userDisplayNamesForPeersResult: .success(handleNamePairArray))
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         
-        let viewModel = MeetingParticipantsLayoutViewModel(
+        let viewModel = makeMeetingParticipantsLayoutViewModel(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -245,11 +247,13 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         await verifyParticipantsStatus(
             viewModel: viewModel,
             actions: handleNamePairArray.map { .addParticipant(withHandle: $0.handle) },
-            relaysCommand: .participantsStatusChanged(addedParticipantCount: handleNamePairArray.count,
-                                                      removedParticipantCount: 0,
-                                                      addedParticipantNames: handleNamePairArray.map(\.name),
-                                                      removedParticipantNames: [],
-                                                      isOnlyMyselfRemainingInTheCall: false)
+            relaysCommand: .participantsStatusChanged(
+                addedParticipantCount: handleNamePairArray.count,
+                removedParticipantCount: 0,
+                addedParticipantNames: handleNamePairArray.map(\.name),
+                removedParticipantNames: [],
+                isOnlyMyselfRemainingInTheCall: false
+            )
         )
     }
     
@@ -263,7 +267,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let userUseCase = MockChatRoomUserUseCase(userDisplayNamesForPeersResult: .success(handleNamePairArray))
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         
-        let viewModel = MeetingParticipantsLayoutViewModel(
+        let viewModel = makeMeetingParticipantsLayoutViewModel(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -281,11 +285,13 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         await verifyParticipantsStatus(
             viewModel: viewModel,
             actions: handleNamePairArray.map { .addParticipant(withHandle: $0.handle) },
-            relaysCommand: .participantsStatusChanged(addedParticipantCount: handleNamePairArray.count,
-                                                      removedParticipantCount: 0,
-                                                      addedParticipantNames: handleNamePairArray.map(\.name),
-                                                      removedParticipantNames: [],
-                                                      isOnlyMyselfRemainingInTheCall: false)
+            relaysCommand: .participantsStatusChanged(
+                addedParticipantCount: handleNamePairArray.count,
+                removedParticipantCount: 0,
+                addedParticipantNames: handleNamePairArray.map(\.name),
+                removedParticipantNames: [],
+                isOnlyMyselfRemainingInTheCall: false
+            )
         )
     }
     
@@ -299,7 +305,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let userUseCase = MockChatRoomUserUseCase(userDisplayNamesForPeersResult: .success(handleNamePairArray))
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         
-        let viewModel = MeetingParticipantsLayoutViewModel(
+        let viewModel = makeMeetingParticipantsLayoutViewModel(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -317,11 +323,13 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         await verifyParticipantsStatus(
             viewModel: viewModel,
             actions: handleNamePairArray.map { .addParticipant(withHandle: $0.handle) },
-            relaysCommand: .participantsStatusChanged(addedParticipantCount: handleNamePairArray.count,
-                                                      removedParticipantCount: 0,
-                                                      addedParticipantNames: Array(handleNamePairArray.map(\.name).prefix(1)),
-                                                      removedParticipantNames: [],
-                                                      isOnlyMyselfRemainingInTheCall: false)
+            relaysCommand: .participantsStatusChanged(
+                addedParticipantCount: handleNamePairArray.count,
+                removedParticipantCount: 0,
+                addedParticipantNames: Array(handleNamePairArray.map(\.name).prefix(1)),
+                removedParticipantNames: [],
+                isOnlyMyselfRemainingInTheCall: false
+            )
         )
     }
     
@@ -335,7 +343,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let userUseCase = MockChatRoomUserUseCase(userDisplayNamesForPeersResult: .success(handleNamePairArray))
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         
-        let viewModel = MeetingParticipantsLayoutViewModel(
+        let viewModel = makeMeetingParticipantsLayoutViewModel(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -353,11 +361,13 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         await verifyParticipantsStatus(
             viewModel: viewModel,
             actions: handleNamePairArray.map { .removeParticipant(withHandle: $0.handle) },
-            relaysCommand: .participantsStatusChanged(addedParticipantCount: 0,
-                                                      removedParticipantCount: handleNamePairArray.count,
-                                                      addedParticipantNames: [],
-                                                      removedParticipantNames: handleNamePairArray.map(\.name),
-                                                      isOnlyMyselfRemainingInTheCall: false)
+            relaysCommand: .participantsStatusChanged(
+                addedParticipantCount: 0,
+                removedParticipantCount: handleNamePairArray.count,
+                addedParticipantNames: [],
+                removedParticipantNames: handleNamePairArray.map(\.name),
+                isOnlyMyselfRemainingInTheCall: false
+            )
         )
     }
     
@@ -371,7 +381,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let userUseCase = MockChatRoomUserUseCase(userDisplayNamesForPeersResult: .success(handleNamePairArray))
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         
-        let viewModel = MeetingParticipantsLayoutViewModel(
+        let viewModel = makeMeetingParticipantsLayoutViewModel(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -389,11 +399,13 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         await verifyParticipantsStatus(
             viewModel: viewModel,
             actions: handleNamePairArray.map { .removeParticipant(withHandle: $0.handle) },
-            relaysCommand: .participantsStatusChanged(addedParticipantCount: 0,
-                                                      removedParticipantCount: handleNamePairArray.count,
-                                                      addedParticipantNames: [],
-                                                      removedParticipantNames: handleNamePairArray.map(\.name),
-                                                      isOnlyMyselfRemainingInTheCall: false)
+            relaysCommand: .participantsStatusChanged(
+                addedParticipantCount: 0,
+                removedParticipantCount: handleNamePairArray.count,
+                addedParticipantNames: [],
+                removedParticipantNames: handleNamePairArray.map(\.name),
+                isOnlyMyselfRemainingInTheCall: false
+            )
         )
     }
     
@@ -407,7 +419,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let userUseCase = MockChatRoomUserUseCase(userDisplayNamesForPeersResult: .success(handleNamePairArray))
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         
-        let viewModel = MeetingParticipantsLayoutViewModel(
+        let viewModel = makeMeetingParticipantsLayoutViewModel(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -425,11 +437,13 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         await verifyParticipantsStatus(
             viewModel: viewModel,
             actions: handleNamePairArray.map { .removeParticipant(withHandle: $0.handle) },
-            relaysCommand: .participantsStatusChanged(addedParticipantCount: 0,
-                                                      removedParticipantCount: handleNamePairArray.count,
-                                                      addedParticipantNames: [],
-                                                      removedParticipantNames: Array(handleNamePairArray.map(\.name).prefix(1)),
-                                                      isOnlyMyselfRemainingInTheCall: false)
+            relaysCommand: .participantsStatusChanged(
+                addedParticipantCount: 0,
+                removedParticipantCount: handleNamePairArray.count,
+                addedParticipantNames: [],
+                removedParticipantNames: Array(handleNamePairArray.map(\.name).prefix(1)),
+                isOnlyMyselfRemainingInTheCall: false
+            )
         )
     }
     
@@ -444,7 +458,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let userUseCase = MockChatRoomUserUseCase(userDisplayNamesForPeersResult: .success(addedHandleNamePairArray + removedHandleNamePairArray))
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         
-        let viewModel = MeetingParticipantsLayoutViewModel(
+        let viewModel = makeMeetingParticipantsLayoutViewModel(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -464,11 +478,13 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         await verifyParticipantsStatus(
             viewModel: viewModel,
             actions: addActions + removeActions,
-            relaysCommand: .participantsStatusChanged(addedParticipantCount: 1,
-                                                      removedParticipantCount: 1,
-                                                      addedParticipantNames: addedHandleNamePairArray.map(\.name),
-                                                      removedParticipantNames: removedHandleNamePairArray.map(\.name),
-                                                      isOnlyMyselfRemainingInTheCall: false)
+            relaysCommand: .participantsStatusChanged(
+                addedParticipantCount: 1,
+                removedParticipantCount: 1,
+                addedParticipantNames: addedHandleNamePairArray.map(\.name),
+                removedParticipantNames: removedHandleNamePairArray.map(\.name),
+                isOnlyMyselfRemainingInTheCall: false
+            )
         )
     }
     
@@ -483,7 +499,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let userUseCase = MockChatRoomUserUseCase(userDisplayNamesForPeersResult: .success(addedHandleNamePairArray + removedHandleNamePairArray))
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         
-        let viewModel = MeetingParticipantsLayoutViewModel(
+        let viewModel = makeMeetingParticipantsLayoutViewModel(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -503,11 +519,13 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         await verifyParticipantsStatus(
             viewModel: viewModel,
             actions: addActions + removeActions,
-            relaysCommand: .participantsStatusChanged(addedParticipantCount: addedHandleNamePairArray.count,
-                                                      removedParticipantCount: removedHandleNamePairArray.count,
-                                                      addedParticipantNames: addedHandleNamePairArray.map(\.name),
-                                                      removedParticipantNames: removedHandleNamePairArray.map(\.name),
-                                                      isOnlyMyselfRemainingInTheCall: false)
+            relaysCommand: .participantsStatusChanged(
+                addedParticipantCount: addedHandleNamePairArray.count,
+                removedParticipantCount: removedHandleNamePairArray.count,
+                addedParticipantNames: addedHandleNamePairArray.map(\.name),
+                removedParticipantNames: removedHandleNamePairArray.map(\.name),
+                isOnlyMyselfRemainingInTheCall: false
+            )
         )
     }
     
@@ -522,7 +540,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let userUseCase = MockChatRoomUserUseCase(userDisplayNamesForPeersResult: .success(addedHandleNamePairArray + removedHandleNamePairArray))
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         
-        let viewModel = MeetingParticipantsLayoutViewModel(
+        let viewModel = makeMeetingParticipantsLayoutViewModel(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -542,11 +560,13 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         await verifyParticipantsStatus(
             viewModel: viewModel,
             actions: addActions + removeActions,
-            relaysCommand: .participantsStatusChanged(addedParticipantCount: addedHandleNamePairArray.count,
-                                                      removedParticipantCount: removedHandleNamePairArray.count,
-                                                      addedParticipantNames: Array(addedHandleNamePairArray.map(\.name).prefix(1)),
-                                                      removedParticipantNames: Array(removedHandleNamePairArray.map(\.name).prefix(1)),
-                                                      isOnlyMyselfRemainingInTheCall: false)
+            relaysCommand: .participantsStatusChanged(
+                addedParticipantCount: addedHandleNamePairArray.count,
+                removedParticipantCount: removedHandleNamePairArray.count,
+                addedParticipantNames: Array(addedHandleNamePairArray.map(\.name).prefix(1)),
+                removedParticipantNames: Array(removedHandleNamePairArray.map(\.name).prefix(1)),
+                isOnlyMyselfRemainingInTheCall: false
+            )
         )
     }
     
@@ -558,7 +578,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         
-        let viewModel = MeetingParticipantsLayoutViewModel(
+        let viewModel = makeMeetingParticipantsLayoutViewModel(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -583,7 +603,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         
-        let viewModel = MeetingParticipantsLayoutViewModel(
+        let viewModel = makeMeetingParticipantsLayoutViewModel(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -608,7 +628,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
         
-        let viewModel = MeetingParticipantsLayoutViewModel(
+        let viewModel = makeMeetingParticipantsLayoutViewModel(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -640,7 +660,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             expectation.fulfill()
         })
         
-        let viewModel = MeetingParticipantsLayoutViewModel(
+        let viewModel = makeMeetingParticipantsLayoutViewModel(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -650,8 +670,8 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             chatRoomUserUseCase: chatRoomUserUseCase,
             accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
             userImageUseCase: userUseCase,
-            chatRoom: chatRoom,
             megaHandleUseCase: MockMEGAHandleUseCase(base64Handle: "base64Handle"),
+            chatRoom: chatRoom,
             call: call
         )
         viewModel.participantJoined(participant: CallParticipantEntity(participantId: 100))
@@ -674,7 +694,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             expectation.fulfill()
         })
         
-        let viewModel = MeetingParticipantsLayoutViewModel(
+        let viewModel = makeMeetingParticipantsLayoutViewModel(
             containerViewModel: containerViewModel,
             callUseCase: callUseCase,
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -684,13 +704,65 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             chatRoomUserUseCase: chatRoomuserUseCase,
             accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
             userImageUseCase: userUseCase,
-            chatRoom: chatRoom,
             megaHandleUseCase: MockMEGAHandleUseCase(base64Handle: "base64Handle"),
+            chatRoom: chatRoom,
             call: call
         )
         viewModel.participantJoined(participant: CallParticipantEntity(participantId: 100))
         userUseCase.avatarChangePublisher.send([100])
         waitForExpectations(timeout: 20)
+    }
+    
+    func testIsPresenterVideoAndSharedScreenFeatureFlagEabled_onEnabled_shouldReturnTrue() {
+        let sut = makeMeetingParticipantsLayoutViewModel(
+            featureFlagProvider: MockFeatureFlagProvider(list: [.presenterVideoAndSharedScreen: true])
+        )
+        XCTAssertTrue(sut.isPresenterVideoAndSharedScreenFeatureFlagEnabled)
+    }
+    
+    func testIsPresenterVideoAndSharedScreenFeatureFlagEabled_onDisabled_shouldReturnFalse() {
+        let sut = makeMeetingParticipantsLayoutViewModel(
+            featureFlagProvider: MockFeatureFlagProvider(list: [.presenterVideoAndSharedScreen: false])
+        )
+        XCTAssertFalse(sut.isPresenterVideoAndSharedScreenFeatureFlagEnabled)
+    }
+    
+    // MARK: - Private functions
+    
+    private func makeMeetingParticipantsLayoutViewModel(
+        containerViewModel: MeetingContainerViewModel = MeetingContainerViewModel(),
+        callUseCase: some CallUseCaseProtocol = MockCallUseCase(),
+        captureDeviceUseCase: some CaptureDeviceUseCaseProtocol = MockCaptureDeviceUseCase(),
+        localVideoUseCase: some CallLocalVideoUseCaseProtocol = MockCallLocalVideoUseCase(),
+        remoteVideoUseCase: some CallRemoteVideoUseCaseProtocol = MockCallRemoteVideoUseCase(),
+        chatRoomUseCase: some ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
+        chatRoomUserUseCase: some ChatRoomUserUseCaseProtocol = MockChatRoomUserUseCase(),
+        accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
+        userImageUseCase: some UserImageUseCaseProtocol = MockUserImageUseCase(),
+        analyticsEventUseCase: some AnalyticsEventUseCaseProtocol = MockAnalyticsEventUseCase(),
+        megaHandleUseCase: some MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
+        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
+        chatRoom: ChatRoomEntity = ChatRoomEntity(),
+        call: CallEntity = CallEntity(),
+        preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default
+    ) -> MeetingParticipantsLayoutViewModel {
+        MeetingParticipantsLayoutViewModel(
+            containerViewModel: containerViewModel,
+            callUseCase: callUseCase,
+            captureDeviceUseCase: captureDeviceUseCase,
+            localVideoUseCase: localVideoUseCase,
+            remoteVideoUseCase: remoteVideoUseCase,
+            chatRoomUseCase: chatRoomUseCase,
+            chatRoomUserUseCase: chatRoomUserUseCase,
+            accountUseCase: accountUseCase,
+            userImageUseCase: userImageUseCase,
+            analyticsEventUseCase: analyticsEventUseCase,
+            megaHandleUseCase: megaHandleUseCase,
+            featureFlagProvider: featureFlagProvider,
+            chatRoom: chatRoom,
+            call: call,
+            preferenceUseCase: preferenceUseCase
+        )
     }
     
     private func verifyParticipantsStatus(viewModel: MeetingParticipantsLayoutViewModel, actions: [CallViewAction], relaysCommand: MeetingParticipantsLayoutViewModel.Command) async {
