@@ -12,7 +12,7 @@ class CallCollectionView: UICollectionView {
         case main
     }
     private var callParticipants = [CallParticipantEntity]()
-    private var layoutMode: ParticipantsLayoutMode = .grid
+    var layoutMode: ParticipantsLayoutMode = .grid
     private weak var callCollectionViewDelegate: (any CallCollectionViewDelegate)?
     private var avatars = [UInt64: UIImage]()
     private let spacingForCells: CGFloat = 1.0
