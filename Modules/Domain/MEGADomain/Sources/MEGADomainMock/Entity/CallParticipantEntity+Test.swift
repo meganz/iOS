@@ -18,6 +18,12 @@ public extension CallParticipantEntity {
         name: String? = nil,
         sessionRecoverable: Bool = false,
         isSpeakerPinned: Bool = false,
+        hasCamera: Bool = false,
+        isLowResCamera: Bool = false,
+        isHiResCamera: Bool = false,
+        hasScreenShare: Bool = false,
+        isLowResScreenShare: Bool = false,
+        isHiResScreenShare: Bool = false,
         isTesting: Bool = true
     ) {
         self.init(
@@ -35,7 +41,13 @@ public extension CallParticipantEntity {
             canReceiveVideoLowRes: canReceiveVideoLowRes,
             name: name,
             sessionRecoverable: sessionRecoverable,
-            isSpeakerPinned: isSpeakerPinned
+            isSpeakerPinned: isSpeakerPinned,
+            hasCamera: hasCamera,
+            isLowResCamera: isLowResCamera,
+            isHiResCamera: isHiResCamera,
+            hasScreenShare: hasScreenShare,
+            isLowResScreenShare: isLowResScreenShare,
+            isHiResScreenShare: isHiResScreenShare
         )
     }
 }

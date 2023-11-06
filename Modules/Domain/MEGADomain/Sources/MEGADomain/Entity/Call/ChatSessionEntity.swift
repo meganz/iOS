@@ -24,8 +24,34 @@ public struct ChatSessionEntity: Sendable {
     public let isLowResolution: Bool
     public let canReceiveVideoHiRes: Bool
     public let canReceiveVideoLowRes: Bool
+    public let hasCamera: Bool
+    public let isLowResCamera: Bool
+    public let isHiResCamera: Bool
+    public let hasScreenShare: Bool
+    public let isLowResScreenShare: Bool
+    public let isHiResScreenShare: Bool
     
-    public init(statusType: StatusType?, termCode: ChatSessionTermCode?, hasAudio: Bool, hasVideo: Bool, peerId: HandleEntity, clientId: HandleEntity, audioDetected: Bool, isOnHold: Bool, changes: Int, isHighResolution: Bool, isLowResolution: Bool, canReceiveVideoHiRes: Bool, canReceiveVideoLowRes: Bool) {
+    public init(
+        statusType: StatusType?,
+        termCode: ChatSessionTermCode?,
+        hasAudio: Bool, 
+        hasVideo: Bool,
+        peerId: HandleEntity,
+        clientId: HandleEntity,
+        audioDetected: Bool,
+        isOnHold: Bool,
+        changes: Int,
+        isHighResolution: Bool,
+        isLowResolution: Bool,
+        canReceiveVideoHiRes: Bool,
+        canReceiveVideoLowRes: Bool,
+        hasCamera: Bool,
+        isLowResCamera: Bool,
+        isHiResCamera: Bool,
+        hasScreenShare: Bool,
+        isLowResScreenShare: Bool,
+        isHiResScreenShare: Bool
+    ) {
         self.statusType = statusType
         self.termCode = termCode
         self.hasAudio = hasAudio
@@ -39,5 +65,11 @@ public struct ChatSessionEntity: Sendable {
         self.isLowResolution = isLowResolution
         self.canReceiveVideoHiRes = canReceiveVideoHiRes
         self.canReceiveVideoLowRes = canReceiveVideoLowRes
+        self.hasCamera = hasCamera
+        self.isLowResCamera = isLowResCamera
+        self.isHiResCamera = isHiResCamera
+        self.hasScreenShare = hasScreenShare
+        self.isLowResScreenShare = isLowResScreenShare
+        self.isHiResScreenShare = isHiResScreenShare
     }
 }

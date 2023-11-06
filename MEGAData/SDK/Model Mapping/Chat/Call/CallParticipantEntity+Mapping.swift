@@ -19,21 +19,29 @@ extension CallParticipantEntity {
         let contact = sdk.visibleContacts().first(where: { $0.handle == session.peerId })
         isInContactList = (contact != nil)
         
-        self.init(chatId: chatId,
-                  participantId: session.peerId,
-                  clientId: session.clientId,
-                  email: contact?.email,
-                  isModerator: isModerator,
-                  isInContactList: isInContactList,
-                  video: session.hasVideo ? .on : .off,
-                  audio: session.hasAudio ? .on : .off,
-                  isVideoHiRes: session.isHighResolution,
-                  isVideoLowRes: session.isLowResolution,
-                  canReceiveVideoHiRes: session.canReceiveVideoHiRes,
-                  canReceiveVideoLowRes: session.canReceiveVideoLowRes,
-                  name: nil,
-                  sessionRecoverable: session.termCode == .recoverable,
-                  isSpeakerPinned: false)
+        self.init(
+            chatId: chatId,
+            participantId: session.peerId,
+            clientId: session.clientId,
+            email: contact?.email,
+            isModerator: isModerator,
+            isInContactList: isInContactList,
+            video: session.hasVideo ? .on : .off,
+            audio: session.hasAudio ? .on : .off,
+            isVideoHiRes: session.isHighResolution,
+            isVideoLowRes: session.isLowResolution,
+            canReceiveVideoHiRes: session.canReceiveVideoHiRes,
+            canReceiveVideoLowRes: session.canReceiveVideoLowRes,
+            name: nil,
+            sessionRecoverable: session.termCode == .recoverable,
+            isSpeakerPinned: false,
+            hasCamera: session.hasCamera,
+            isLowResCamera: session.isLowResCamera,
+            isHiResCamera: session.isHiResCamera,
+            hasScreenShare: session.hasScreenShare,
+            isLowResScreenShare: session.isLowResScreenShare,
+            isHiResScreenShare: session.isHiResScreenShare
+        )
     }
     
     convenience init(
@@ -47,21 +55,29 @@ extension CallParticipantEntity {
         let contact = sdk.visibleContacts().first(where: { $0.handle == userHandle })
         isInContactList = (contact != nil)
         
-        self.init(chatId: chatId,
-                  participantId: userHandle,
-                  clientId: .invalid,
-                  email: contact?.email,
-                  isModerator: peerPrivilege == .moderator,
-                  isInContactList: isInContactList,
-                  video: .unknown,
-                  audio: .unknown,
-                  isVideoHiRes: false,
-                  isVideoLowRes: false,
-                  canReceiveVideoHiRes: false,
-                  canReceiveVideoLowRes: false,
-                  name: nil,
-                  sessionRecoverable: false,
-                  isSpeakerPinned: false)
+        self.init(
+            chatId: chatId,
+            participantId: userHandle,
+            clientId: .invalid,
+            email: contact?.email,
+            isModerator: peerPrivilege == .moderator,
+            isInContactList: isInContactList,
+            video: .unknown,
+            audio: .unknown,
+            isVideoHiRes: false,
+            isVideoLowRes: false,
+            canReceiveVideoHiRes: false,
+            canReceiveVideoLowRes: false,
+            name: nil,
+            sessionRecoverable: false,
+            isSpeakerPinned: false,
+            hasCamera: false,
+            isLowResCamera: false,
+            isHiResCamera: false,
+            hasScreenShare: false,
+            isLowResScreenShare: false,
+            isHiResScreenShare: false
+        )
     }
     
     convenience init(
@@ -74,21 +90,29 @@ extension CallParticipantEntity {
         let contact = sdk.visibleContacts().first(where: { $0.handle == userHandle })
         isInContactList = (contact != nil)
         
-        self.init(chatId: chatId,
-                  participantId: userHandle,
-                  clientId: .invalid,
-                  email: contact?.email,
-                  isModerator: false,
-                  isInContactList: isInContactList,
-                  video: .unknown,
-                  audio: .unknown,
-                  isVideoHiRes: false,
-                  isVideoLowRes: false,
-                  canReceiveVideoHiRes: false,
-                  canReceiveVideoLowRes: false,
-                  name: nil,
-                  sessionRecoverable: false,
-                  isSpeakerPinned: false)
+        self.init(
+            chatId: chatId,
+            participantId: userHandle,
+            clientId: .invalid,
+            email: contact?.email,
+            isModerator: false,
+            isInContactList: isInContactList,
+            video: .unknown,
+            audio: .unknown,
+            isVideoHiRes: false,
+            isVideoLowRes: false,
+            canReceiveVideoHiRes: false,
+            canReceiveVideoLowRes: false,
+            name: nil,
+            sessionRecoverable: false,
+            isSpeakerPinned: false,
+            hasCamera: false,
+            isLowResCamera: false,
+            isHiResCamera: false,
+            hasScreenShare: false,
+            isLowResScreenShare: false,
+            isHiResScreenShare: false
+        )
     }
     
     static func myself(
@@ -115,7 +139,13 @@ extension CallParticipantEntity {
             canReceiveVideoLowRes: false,
             name: chatSDK.myFullname,
             sessionRecoverable: false,
-            isSpeakerPinned: false
+            isSpeakerPinned: false,
+            hasCamera: false,
+            isLowResCamera: false,
+            isHiResCamera: false,
+            hasScreenShare: false,
+            isLowResScreenShare: false,
+            isHiResScreenShare: false
         )
         
         return participant

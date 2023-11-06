@@ -809,6 +809,12 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
         participantUpdated.isVideoLowRes = participant.isVideoLowRes
         participantUpdated.isVideoHiRes = participant.isVideoHiRes
         participantUpdated.audio = participant.audio
+        participantUpdated.hasCamera = participant.hasCamera
+        participantUpdated.isLowResCamera = participant.isLowResCamera
+        participantUpdated.isHiResCamera = participant.isHiResCamera
+        participantUpdated.hasScreenShare = participant.hasScreenShare
+        participantUpdated.isLowResScreenShare = participant.isLowResScreenShare
+        participantUpdated.isHiResScreenShare = participant.isHiResScreenShare
         
         reloadParticipant(participantUpdated)
     }

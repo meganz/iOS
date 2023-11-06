@@ -28,6 +28,12 @@ public final class CallParticipantEntity {
     public weak var speakerVideoDataDelegate: (any CallParticipantVideoDelegate)?
     public var isSpeakerPinned: Bool
     public var sessionRecoverable: Bool
+    public var hasCamera: Bool
+    public var isLowResCamera: Bool
+    public var isHiResCamera: Bool
+    public var hasScreenShare: Bool
+    public var isLowResScreenShare: Bool
+    public var isHiResScreenShare: Bool
     
     public init(
         chatId: HandleEntity,
@@ -44,7 +50,13 @@ public final class CallParticipantEntity {
         canReceiveVideoLowRes: Bool,
         name: String?,
         sessionRecoverable: Bool,
-        isSpeakerPinned: Bool
+        isSpeakerPinned: Bool,
+        hasCamera: Bool,
+        isLowResCamera: Bool,
+        isHiResCamera: Bool,
+        hasScreenShare: Bool,
+        isLowResScreenShare: Bool,
+        isHiResScreenShare: Bool
     ) {
         self.chatId = chatId
         self.participantId = participantId
@@ -61,6 +73,12 @@ public final class CallParticipantEntity {
         self.name = name
         self.sessionRecoverable = sessionRecoverable
         self.isSpeakerPinned = isSpeakerPinned
+        self.hasCamera = hasCamera
+        self.isLowResCamera = isLowResCamera
+        self.isHiResCamera = isHiResCamera
+        self.hasScreenShare = hasScreenShare
+        self.isLowResScreenShare = isLowResScreenShare
+        self.isHiResScreenShare = isHiResScreenShare
     }
     
     public func remoteVideoFrame(width: Int, height: Int, buffer: Data!) {
