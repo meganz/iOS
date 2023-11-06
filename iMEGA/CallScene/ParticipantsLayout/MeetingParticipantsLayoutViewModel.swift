@@ -27,7 +27,7 @@ enum CallViewAction: ActionType {
     case endCallEndCountDownTimer
     case didEndDisplayLastPeerLeftStatusMessage
     case showNavigation
-    case orientationOrModeChange(isSpeakerIPhoneLandscape: Bool)
+    case orientationOrModeChange(isIPhoneLandscape: Bool, isSpeakerMode: Bool)
 }
 
 enum ParticipantsLayoutMode {
@@ -498,11 +498,11 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             }
         case .showNavigation:
             invokeCommand?(.switchMenusVisibility)
-        case .orientationOrModeChange(let isSpeakerIPhoneLandscape):
-            if isSpeakerIPhoneLandscape {
-                invokeCommand?(.configureSpeakerView(isSpeakerMode: true, leadingAndTrailingConstraint: 180))
+        case .orientationOrModeChange(let isIPhoneLandscape, let isSpeakerMode):
+            if isIPhoneLandscape && isSpeakerMode {
+                invokeCommand?(.configureSpeakerView(isSpeakerMode: isSpeakerMode, leadingAndTrailingConstraint: 180))
             } else {
-                invokeCommand?(.configureSpeakerView(isSpeakerMode: false, leadingAndTrailingConstraint: 0))
+                invokeCommand?(.configureSpeakerView(isSpeakerMode: isSpeakerMode, leadingAndTrailingConstraint: 0))
             }
         }
     }
