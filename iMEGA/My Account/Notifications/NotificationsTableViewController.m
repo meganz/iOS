@@ -259,8 +259,9 @@
             MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:userAlert.nodeHandle];
             if ([userAlert numberAtIndex:0] == 0) {
                 NSAttributedString *nodeName = [[NSAttributedString alloc] initWithString:node.name ?: @""  attributes:@{ NSFontAttributeName : boldFont }];
-                NSString *text = LocalizedString(@"A user has left the shared folder {0}", @"notification text");
-                NSRange range = [text rangeOfString:@"{0}"];
+                NSString *text = LocalizedString(@"inapp.notifications.sharedItems.userLeftTheSharedFolder.message", @"notification text");
+                text = [text stringByReplacingOccurrencesOfString:@"[A]" withString:userAlert.email];
+                NSRange range = [text rangeOfString:@"[B]"];
                 NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:text];
                 [attributedText replaceCharactersInRange:range withAttributedString:nodeName];
                 contentLabel.attributedText = attributedText;
