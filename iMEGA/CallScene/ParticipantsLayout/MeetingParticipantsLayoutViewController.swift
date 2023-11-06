@@ -96,7 +96,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             callCollectionView.collectionViewLayout.invalidateLayout()
             localUserView.repositionView()
             emptyMeetingMessageView?.invalidateIntrinsicContentSize()
-            viewModel.dispatch(.orientationOrModeChange(isSpeakerIPhoneLandscape: UIDevice.current.iPhoneDevice && UIDevice.current.orientation.isLandscape && callCollectionView.layoutMode == .speaker))
+            viewModel.dispatch(.orientationOrModeChange(isIPhoneLandscape: UIDevice.current.iPhoneDevice && UIDevice.current.orientation.isLandscape, isSpeakerMode: callCollectionView.layoutMode == .speaker))
         })
     }
     
@@ -258,7 +258,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     
     private func configureLayout(mode: ParticipantsLayoutMode, participantsCount: Int) {
         layoutModeBarButton.image = mode == .speaker ? UIImage(resource: .galleryView) : UIImage(resource: .speakerView)
-        viewModel.dispatch(.orientationOrModeChange(isSpeakerIPhoneLandscape: UIDevice.current.iPhoneDevice && UIDevice.current.orientation.isLandscape && callCollectionView.layoutMode == .speaker))
+        viewModel.dispatch(.orientationOrModeChange(isIPhoneLandscape: UIDevice.current.iPhoneDevice && UIDevice.current.orientation.isLandscape, isSpeakerMode: mode == .speaker))
         speakerViews.forEach { $0.isHidden = mode == .grid || participantsCount == 0 }
         pageControl.isHidden = mode == .speaker || participantsCount <= 6
         callCollectionView.changeLayoutMode(mode)

@@ -171,7 +171,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         XCTAssert(remoteVideoUseCase.disableAllRemoteVideos_CalledTimes == 1)
     }
     
-    func testAction_orientationOrModeChange_isSpeakerIPhoneLandscape() {
+    func testAction_orientationOrModeChange_isIPhoneLandscape_inSpeakerMode() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity()
         let callUseCase = MockCallUseCase(call: call)
@@ -191,11 +191,11 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             call: call
         )
         test(viewModel: viewModel,
-             action: .orientationOrModeChange(isSpeakerIPhoneLandscape: true),
+             action: .orientationOrModeChange(isIPhoneLandscape: true, isSpeakerMode: true),
              expectedCommands: [.configureSpeakerView(isSpeakerMode: true, leadingAndTrailingConstraint: 180)])
     }
     
-    func testAction_orientationOrModeChange_isNotSpeakerIPhoneLandscape() {
+    func testAction_orientationOrModeChange_noIPhoneLandscape_inSpeakerMode() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity()
         let callUseCase = MockCallUseCase(call: call)
@@ -215,7 +215,55 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
             call: call
         )
         test(viewModel: viewModel,
-             action: .orientationOrModeChange(isSpeakerIPhoneLandscape: false),
+             action: .orientationOrModeChange(isIPhoneLandscape: false, isSpeakerMode: true),
+             expectedCommands: [.configureSpeakerView(isSpeakerMode: true, leadingAndTrailingConstraint: 0)])
+    }
+    
+    func testAction_orientationOrModeChange_noIPhoneLandscape_noSpeakerMode() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
+        let call = CallEntity()
+        let callUseCase = MockCallUseCase(call: call)
+        let remoteVideoUseCase = MockCallRemoteVideoUseCase()
+        let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
+        
+        let viewModel = makeMeetingParticipantsLayoutViewModel(
+            containerViewModel: containerViewModel,
+            callUseCase: callUseCase,
+            captureDeviceUseCase: MockCaptureDeviceUseCase(),
+            localVideoUseCase: MockCallLocalVideoUseCase(),
+            remoteVideoUseCase: remoteVideoUseCase,
+            chatRoomUseCase: MockChatRoomUseCase(),
+            accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
+            userImageUseCase: MockUserImageUseCase(),
+            chatRoom: chatRoom,
+            call: call
+        )
+        test(viewModel: viewModel,
+             action: .orientationOrModeChange(isIPhoneLandscape: false, isSpeakerMode: false),
+             expectedCommands: [.configureSpeakerView(isSpeakerMode: false, leadingAndTrailingConstraint: 0)])
+    }
+    
+    func testAction_orientationOrModeChange_isIPhoneLandscape_noSpeakerMode() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
+        let call = CallEntity()
+        let callUseCase = MockCallUseCase(call: call)
+        let remoteVideoUseCase = MockCallRemoteVideoUseCase()
+        let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
+        
+        let viewModel = makeMeetingParticipantsLayoutViewModel(
+            containerViewModel: containerViewModel,
+            callUseCase: callUseCase,
+            captureDeviceUseCase: MockCaptureDeviceUseCase(),
+            localVideoUseCase: MockCallLocalVideoUseCase(),
+            remoteVideoUseCase: remoteVideoUseCase,
+            chatRoomUseCase: MockChatRoomUseCase(),
+            accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
+            userImageUseCase: MockUserImageUseCase(),
+            chatRoom: chatRoom,
+            call: call
+        )
+        test(viewModel: viewModel,
+             action: .orientationOrModeChange(isIPhoneLandscape: true, isSpeakerMode: false),
              expectedCommands: [.configureSpeakerView(isSpeakerMode: false, leadingAndTrailingConstraint: 0)])
     }
     
