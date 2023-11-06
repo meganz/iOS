@@ -22,7 +22,13 @@ fileprivate extension ChatSessionEntity {
             isHighResolution: session.isHighResVideo,
             isLowResolution: session.isLowResVideo,
             canReceiveVideoHiRes: session.canReceiveVideoHiRes,
-            canReceiveVideoLowRes: session.canReceiveVideoLowRes
+            canReceiveVideoLowRes: session.canReceiveVideoLowRes,
+            hasCamera: session.hasCamera,
+            isLowResCamera: session.isLowResCamera,
+            isHiResCamera: session.isHiResCamera,
+            hasScreenShare: session.hasScreenShare,
+            isLowResScreenShare: session.isLowResScreenShare,
+            isHiResScreenShare: session.isHiResScreenShare
         )
     }
 }

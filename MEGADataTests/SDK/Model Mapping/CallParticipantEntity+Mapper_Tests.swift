@@ -7,7 +7,27 @@ import XCTest
 final class CallParticipantEntity_Mapper_Tests: XCTestCase {
     
     private func createChatSessionEntity(hasAudio: Bool = true, hasVideo: Bool = true) -> ChatSessionEntity {
-        ChatSessionEntity(statusType: nil, termCode: .invalid, hasAudio: hasAudio, hasVideo: hasVideo, peerId: 1, clientId: 1, audioDetected: true, isOnHold: true, changes: 1, isHighResolution: true, isLowResolution: true, canReceiveVideoHiRes: true, canReceiveVideoLowRes: true)
+        ChatSessionEntity(
+            statusType: nil,
+            termCode: .invalid,
+            hasAudio: hasAudio,
+            hasVideo: hasVideo,
+            peerId: 1,
+            clientId: 1,
+            audioDetected: true,
+            isOnHold: true,
+            changes: 1,
+            isHighResolution: true,
+            isLowResolution: true,
+            canReceiveVideoHiRes: true,
+            canReceiveVideoLowRes: true,
+            hasCamera: false,
+            isLowResCamera: false,
+            isHiResCamera: false,
+            hasScreenShare: false,
+            isLowResScreenShare: false,
+            isHiResScreenShare: false
+        )
     }
     
     private var sampleUsers: [MockUser] {
@@ -56,7 +76,6 @@ final class CallParticipantEntity_Mapper_Tests: XCTestCase {
         let chatSDK = MockChatSDK(chatRoom: chatRoom)
         let participant = CallParticipantEntity(session: createChatSessionEntity(hasVideo: false), chatId: 100, sdk: sdk, chatSDK: chatSDK)
         XCTAssertTrue(participant.video == .off)
-
     }
     
     func testInit_withParticipantAudioOn() {
