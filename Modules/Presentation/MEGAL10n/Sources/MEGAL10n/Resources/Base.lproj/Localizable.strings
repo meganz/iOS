@@ -3862,3 +3862,5 @@
 "cameraUploads.banner.enableState.title"="Enable Camera uploads";
 /* Camera uploads banner enable state description */
 "cameraUploads.banner.enableState.description"="Automatically back up your photos and videos to your Cloud drive.";
+/* In app notification description for Shared Items when user left a shared folder. [A] will be replaced by the user's email who left. [B] will be replaced by shared folder name. */
+"inapp.notifications.sharedItems.userLeftTheSharedFolder.message"="User [A] has left the shared folder [B]";
