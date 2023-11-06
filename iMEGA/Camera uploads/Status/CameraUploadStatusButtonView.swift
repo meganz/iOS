@@ -13,6 +13,12 @@ struct CameraUploadStatusButtonView: View {
                 .taskForiOS14 {
                     await viewModel.monitorCameraUpload()
                 }
+                .onAppear {
+                    viewModel.onViewAppear()
+                }
+                .onDisappear {
+                    viewModel.onViewDisappear()
+                }
         }
     }
 }
