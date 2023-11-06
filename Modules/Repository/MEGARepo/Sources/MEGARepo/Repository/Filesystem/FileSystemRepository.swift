@@ -7,15 +7,26 @@ public struct FileSystemRepository: FileSystemRepositoryProtocol {
     }
     
     private let fileManager: FileManager
+    private static var cachedDocumentDirectoryURL: URL?
     
     public init(fileManager: FileManager) {
         self.fileManager = fileManager
     }
 
     public func documentsDirectory() -> URL {
-        let paths = fileManager.urls(for: .documentDirectory, in: .userDomainMask)
-        guard let documentsDirectory = URL(string: paths[0].lastPathComponent) else { return paths[0] }
-        return documentsDirectory
+        if let cachedURL = FileSystemRepository.cachedDocumentDirectoryURL {
+            return cachedURL
+        } else {
+            let paths = fileManager.urls(for: .documentDirectory, in: .userDomainMask)
+            
+            guard let documentsDirectory = URL(string: paths[0].lastPathComponent) else {
+                FileSystemRepository.cachedDocumentDirectoryURL = paths[0]
+                return paths[0]
+            }
+
+            FileSystemRepository.cachedDocumentDirectoryURL = documentsDirectory
+            return documentsDirectory
+        }
     }
     
     public func fileExists(at url: URL) -> Bool {
