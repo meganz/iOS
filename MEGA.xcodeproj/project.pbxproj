@@ -5650,8 +5650,8 @@
 				1373618D1A6664C300B740E8 /* Supporting Files */,
 				415226861A692ECC00EC7BB6 /* Utils */,
 				415226671A692EBD00EC7BB6 /* Vendor */,
-				6DD7B2352A776313007EBB20 /* Images.xcassets */,
 				6D67493F2AF84C410023FAC0 /* Colors.xcassets */,
+				6DD7B2352A776313007EBB20 /* Images.xcassets */,
 			);
 			path = iMEGA;
 			sourceTree = "<group>";
@@ -12866,6 +12866,7 @@
 				BF1053DF2498663B009094C8 /* ChatUnreadMessagesLabelCollectionCell.xib in Resources */,
 				BFB463FC243456D900FB90B9 /* ChatViewIntroductionHeaderView.xib in Resources */,
 				4152268B1A692ECC00EC7BB6 /* Cloud.storyboard in Resources */,
+				6D6749402AF84C410023FAC0 /* Colors.xcassets in Resources */,
 				9422494428DB77B8009626E6 /* ContactLinkContentView.xib in Resources */,
 				5B9F2010243332D200F22FBA /* ContactLinkQR.storyboard in Resources */,
 				415226901A692ECC00EC7BB6 /* Contacts.storyboard in Resources */,
@@ -12976,7 +12977,6 @@
 				B695B60B264B43160050DF09 /* SVProgressHUD.bundle in Resources */,
 				BF33EF7924451A6200CD35AC /* TapAndHoldMessageView.xib in Resources */,
 				94614C752910554200503174 /* TransferNodeTableViewCell.xib in Resources */,
-				6D6749402AF84C410023FAC0 /* Colors.xcassets in Resources */,
 				2F6F088D253E387600C5B5D7 /* Transfers.storyboard in Resources */,
 				94614C7329104F6900503174 /* TransferTableViewCell.xib in Resources */,
 				5B5FBDDF20BD8CB2000EE35B /* TwoFactorAuthentication.storyboard in Resources */,
@@ -12994,8 +12994,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6DD7B2382A776313007EBB20 /* Images.xcassets in Resources */,
 				6D6749422AF84C410023FAC0 /* Colors.xcassets in Resources */,
+				6DD7B2382A776313007EBB20 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13003,8 +13003,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6D6749442AF84C410023FAC0 /* Colors.xcassets in Resources */,
 				83422B28255984C300D46907 /* Assets.xcassets in Resources */,
+				6D6749442AF84C410023FAC0 /* Colors.xcassets in Resources */,
 				6DD7B23A2A776313007EBB20 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -13013,8 +13013,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6D6749412AF84C410023FAC0 /* Colors.xcassets in Resources */,
 				A882981E29F1668E00DEDE98 /* AppIntentVocabulary.plist in Resources */,
+				6D6749412AF84C410023FAC0 /* Colors.xcassets in Resources */,
 				6DD7B2372A776313007EBB20 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -13032,6 +13032,7 @@
 			files = (
 				7767C39F247BB723001166A8 /* Chat.storyboard in Resources */,
 				9411354F1F00FD1500D33428 /* Cloud.storyboard in Resources */,
+				6D6749432AF84C410023FAC0 /* Colors.xcassets in Resources */,
 				A836581C2102101C005E616F /* Contacts.storyboard in Resources */,
 				B6831C1525B65C7E0072827F /* CustomModalAlertViewController.xib in Resources */,
 				5B95DD94237C35610068DF97 /* EmptyStateView.xib in Resources */,
@@ -13043,7 +13044,6 @@
 				77E70DB82475760F00E74806 /* MegaAvatarView.xib in Resources */,
 				94598D751F0CD53A00B57144 /* Share.storyboard in Resources */,
 				B695B60D264B43160050DF09 /* SVProgressHUD.bundle in Resources */,
-				6D6749432AF84C410023FAC0 /* Colors.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
