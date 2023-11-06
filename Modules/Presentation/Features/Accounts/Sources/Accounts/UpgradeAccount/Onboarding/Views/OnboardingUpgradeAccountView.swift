@@ -17,8 +17,6 @@ public struct OnboardingUpgradeAccountView: View, DismissibleContentView {
                 
                 OnboardingProPlanContentView(viewModel: viewModel)
                 
-                Spacer()
-                
                 VStack(spacing: 15) {
                     PrimaryActionButtonView(title: Strings.Localizable.Onboarding.UpgradeAccount.Button.viewProPlans) {
                         viewModel.showProPlanView()
@@ -28,10 +26,10 @@ public struct OnboardingUpgradeAccountView: View, DismissibleContentView {
                         dismiss()
                     }
                 }
-                .padding(.horizontal, 2)
-                .padding(.bottom, 20)
+                .padding(EdgeInsets(top: 0, leading: 2, bottom: 20, trailing: 2))
             }
         }
+        .padding(.horizontal, 16)
         .frame(maxWidth: 390)
         .taskForiOS14 {
             await viewModel.setUpLowestProPlan()
