@@ -76,7 +76,7 @@ extension PhotosViewController {
     }
     
     @objc func makeCameraUploadStatusBarButton() -> UIBarButtonItem {
-        let statusButtonView = CameraUploadStatusButtonView(viewModel: CameraUploadStatusButtonViewModel(status: .enable))
+        let statusButtonView = CameraUploadStatusButtonView(viewModel: CameraUploadStatusButtonViewModel(monitorCameraUploadUseCase: FakeCameraUploadSuccessfulUseCase()))
         let cameraStatusViewController = UIHostingController(rootView: statusButtonView)
         cameraStatusViewController.view.backgroundColor = .clear
         return UIBarButtonItem(customView: cameraStatusViewController.view)
