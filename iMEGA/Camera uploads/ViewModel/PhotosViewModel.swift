@@ -14,6 +14,8 @@ final class PhotosViewModel: NSObject {
     private var photoLibraryUseCase: any PhotoLibraryUseCaseProtocol
     private let userAttributeUseCase: any UserAttributeUseCaseProtocol
     
+    let cameraUploadStatusButtonViewModel = CameraUploadStatusButtonViewModel(monitorCameraUploadUseCase: FakeCameraUploadSuccessfulUseCase())
+    
     @objc let timelineCameraUploadStatusFeatureEnabled: Bool
     var contentConsumptionAttributeLoadingTask: Task<Void, Never>?
     
