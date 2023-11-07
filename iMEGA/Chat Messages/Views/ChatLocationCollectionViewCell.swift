@@ -29,16 +29,18 @@ class ChatLocationCollectionViewCell: MessageContentCell {
         }
         
         let megaMessage = chatMessage.message
-        if let image = megaMessage.containsMeta?.geolocation.image,
+        if let image = megaMessage.containsMeta?.geolocation?.image,
             let imageData = Data(base64Encoded: image, options: .ignoreUnknownCharacters) {
             locationView.imageView.image = UIImage(data: imageData)
         }
         locationView.titleLabel.text = Strings.Localizable.pinnedLocation
         
-        guard let containsMeta = megaMessage.containsMeta else {
+        guard let containsMeta = megaMessage.containsMeta, 
+              let latitude = containsMeta.geolocation?.latitude,
+              let longitude = containsMeta.geolocation?.longitude else {
             return
         }
-        locationView.subtitleLabel.text = NSString.mnz_convertCoordinatesLatitude(containsMeta.geolocation.latitude, longitude: containsMeta.geolocation.longitude)
+        locationView.subtitleLabel.text = NSString.mnz_convertCoordinatesLatitude(latitude, longitude: longitude)
     }
 }
 
