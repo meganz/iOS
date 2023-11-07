@@ -59,14 +59,6 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
                 favouritesContainerView.isHidden = true
                 offlineContainerView.isHidden = true
                 
-            case .favourites:
-                recentsContainerView.isHidden = true
-                favouritesContainerView.isHidden = false
-                offlineContainerView.isHidden = true
-                if favouritesScrollView == nil {
-                    delegate?.loadFavourites()
-                }
-                
             case .offline:
                 recentsContainerView.isHidden = true
                 favouritesContainerView.isHidden = true
@@ -80,7 +72,6 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
     
     enum DisplayTab: Int {
         case recents
-        case favourites
         case offline
     }
     
@@ -116,11 +107,7 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
                 return true
             }
             return offlineScrollView.contentOffset.y <= 0
-        case .favourites:
-            guard let favouritesScrollView = favouritesScrollView else {
-                return true
-            }
-            return favouritesScrollView.contentOffset.y <= 0
+
         case .recents:
             guard let recentScrollView = recentScrollView else {
                 return true
@@ -202,11 +189,6 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
             favouritesContainerView.isHidden = true
             offlineContainerView.isHidden = true
             
-        case .favourites:
-            recentsContainerView.isHidden = true
-            offlineContainerView.isHidden = true
-            favouritesContainerView.isHidden = false
-            
         case .offline:
             recentsContainerView.isHidden = true
             favouritesContainerView.isHidden = true
@@ -216,7 +198,6 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
     
     private func setupSegmentTitle() {
         let recentsTitle = Strings.Localizable.recents
-        let favouritesTitle = Strings.Localizable.favourites
         let offlineTitle = Strings.Localizable.offline
         
         let segmentModel: SegmentTitleView.SegmentTitleViewModel = .init(titles: [.init(text: recentsTitle, index: 0),
@@ -228,7 +209,6 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
             
             switch title.text {
             case recentsTitle: self.currentDisplayTab = .recents
-            case favouritesTitle: self.currentDisplayTab = .favourites
             case offlineTitle: self.currentDisplayTab = .offline
             default: fatalError()
             }

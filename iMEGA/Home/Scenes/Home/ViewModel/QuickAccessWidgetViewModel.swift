@@ -15,7 +15,6 @@ final class QuickAccessWidgetViewModel: ViewModelType {
     
     enum Command: CommandType, Equatable {
         case selectRecentsTab
-        case selectFavouritesTab
         case presentFavouritesNode(Base64HandleEntity)
         case selectOfflineTab
         case presentOfflineFileWithPath(String)
@@ -50,8 +49,7 @@ final class QuickAccessWidgetViewModel: ViewModelType {
                     return
                 }
                 invokeCommand(.presentOfflineFileWithPath(path))
-            case .showFavourites:
-                invokeCommand(.selectFavouritesTab)
+            case .showFavourites: break
             case .showFavouritesNode(let base64Handle):
                 invokeCommand(.presentFavouritesNode(base64Handle))
             }
