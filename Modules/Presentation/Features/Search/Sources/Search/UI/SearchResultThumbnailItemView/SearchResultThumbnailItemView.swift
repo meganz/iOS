@@ -90,7 +90,8 @@ private struct FileView: View {
         if viewModel.thumbnailInfo.hasThumbnail {
             Image(uiImage: viewModel.thumbnailImage)
                 .resizable()
-                .aspectRatio(contentMode: .fill)
+                .aspectRatio(1, contentMode: .fill)
+                .frame(height: 174)
                 .clipped()
                 .background(thumbnailBackgroundColor)
         } else {
