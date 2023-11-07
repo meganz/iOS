@@ -94,7 +94,7 @@ private struct FileView: View {
                 .clipped()
                 .background(thumbnailBackgroundColor)
         } else {
-            viewModel.colorAssets.F7F7F7.opacity(0.9)
+            thumbnailBackgroundColor
         }
     }
 
