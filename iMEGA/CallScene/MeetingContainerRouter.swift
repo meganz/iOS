@@ -36,7 +36,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     private var selectWaitingRoomList: Bool
     private weak var baseViewController: UINavigationController?
     private weak var floatingPanelRouter: (any MeetingFloatingPanelRouting)?
-    private weak var meetingParticipantsRouter: MeetingParticipantsLayoutRouter?
+    private var meetingParticipantsRouter: (any MeetingParticipantsLayoutRouting)?
     private weak var hangOrEndCallRouter: (any HangOrEndCallRouting)?
     private var appDidBecomeActiveSubscription: AnyCancellable?
     private weak var containerViewModel: MeetingContainerViewModel?

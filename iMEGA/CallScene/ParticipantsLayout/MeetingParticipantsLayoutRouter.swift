@@ -4,10 +4,12 @@ import MEGAPresentation
 import MEGARepo
 import MEGASDKRepo
 
-protocol MeetingParticipantsLayoutRouting: Routing {
+protocol MeetingParticipantsLayoutRouting: AnyObject, Routing {
     func showRenameChatAlert()
     func startCallEndCountDownTimer()
     func endCallEndCountDownTimer()
+    func pinParticipantAsSpeaker(_ participant: CallParticipantEntity)
+    func showNavigation()
 }
 
 final class MeetingParticipantsLayoutRouter: NSObject, MeetingParticipantsLayoutRouting {
