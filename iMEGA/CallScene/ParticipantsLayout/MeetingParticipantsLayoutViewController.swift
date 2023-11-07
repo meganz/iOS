@@ -97,6 +97,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             localUserView.repositionView()
             emptyMeetingMessageView?.invalidateIntrinsicContentSize()
             viewModel.dispatch(.orientationOrModeChange(isIPhoneLandscape: UIDevice.current.iPhoneDevice && UIDevice.current.orientation.isLandscape, isSpeakerMode: callCollectionView.layoutMode == .speaker))
+            viewModel.dispatch(.onOrientationChanged)
         })
     }
     
@@ -145,6 +146,8 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             forceDarkNavigationUI()
         case .switchLayoutMode(let layoutMode, let participantsCount):
             configureLayout(mode: layoutMode, participantsCount: participantsCount)
+        case .disableSwitchLayoutModeButton(let disable):
+            disableSwitchLayoutModeButton(disable)
         case .switchLocalVideo(let isVideoEnabled):
             localUserView.switchVideo(to: isVideoEnabled)
         case .updateName(let name):
@@ -245,7 +248,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         viewModel.dispatch(.tapOnOptionsMenuButton(presenter: navigationController ?? self, sender: optionsMenuButton))
     }
     
-    @IBAction func didTapBagkgroundView(_ sender: UITapGestureRecognizer) {
+    @IBAction func didTapBackgroundView(_ sender: UITapGestureRecognizer) {
         guard view?.hitTest(sender.location(in: view), with: nil) != localUserView else {
             return
         }
@@ -262,6 +265,10 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         speakerViews.forEach { $0.isHidden = mode == .grid || participantsCount == 0 }
         pageControl.isHidden = mode == .speaker || participantsCount <= 6
         callCollectionView.changeLayoutMode(mode)
+    }
+    
+    private func disableSwitchLayoutModeButton(_ disable: Bool) {
+        layoutModeBarButton.isEnabled = !disable
     }
     
     private func updateSpeaker(_ participant: CallParticipantEntity) {
