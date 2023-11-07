@@ -288,12 +288,12 @@ extension ChatViewController: MessageCellDelegate, MessageLabelDelegate {
         let megaMessage = chatMessage.message
         guard let containsMeta = megaMessage.containsMeta else { return }
         if megaMessage.containsMeta?.type == .richPreview {
-            let url = URL(string: containsMeta.richPreview.url ?? "")
+            let url = URL(string: containsMeta.richPreview?.url ?? "")
             MEGALinkManager.linkURL = url
             MEGALinkManager.processLinkURL(url)
-        } else if megaMessage.containsMeta?.type == .geolocation {
+        } else if megaMessage.containsMeta?.type == .geolocation, let geolocation = containsMeta.geolocation {
             let geocoder = CLGeocoder()
-            let location = CLLocation(latitude: CLLocationDegrees(containsMeta.geolocation.latitude), longitude: CLLocationDegrees(containsMeta.geolocation.longitude))
+            let location = CLLocation(latitude: CLLocationDegrees(geolocation.latitude), longitude: CLLocationDegrees(geolocation.longitude))
             geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
                 let placemark = MKPlacemark(coordinate: location.coordinate)
                 let mapItem = MKMapItem(placemark: placemark)
