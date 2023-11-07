@@ -775,6 +775,59 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         XCTAssertFalse(sut.isPresenterVideoAndSharedScreenFeatureFlagEnabled)
     }
     
+    func testUpdateLayoutModeAccordingScreenSharingParticipant_onUpdateParticipantAndHasScreenSharingParticipant_shouldSwitchToSpeakerLayoutModeAndDisableSwitchLayoutModeButton() {
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.presenterVideoAndSharedScreen: true])
+        let sut = makeMeetingParticipantsLayoutViewModel(
+            featureFlagProvider: featureFlagProvider
+        )
+        
+        XCTAssertEqual(sut.layoutMode, .grid)
+        
+        sut.participantJoined(participant: CallParticipantEntity(participantId: 100, hasScreenShare: false))
+        sut.updateParticipant(CallParticipantEntity(participantId: 100, hasScreenShare: true))
+        
+        XCTAssertEqual(sut.layoutMode, .speaker)
+    }
+    
+    func testUpdateLayoutModeAccordingScreenSharingParticipant_onParticipantJoinedAndHasScreenSharingParticipant_shouldSwitchToSpeakerLayoutModeAndDisableSwitchLayoutModeButton() {
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.presenterVideoAndSharedScreen: true])
+        let sut = makeMeetingParticipantsLayoutViewModel(
+            featureFlagProvider: featureFlagProvider
+        )
+        
+        XCTAssertEqual(sut.layoutMode, .grid)
+        
+        sut.participantJoined(participant: CallParticipantEntity(participantId: 100, hasScreenShare: true))
+        
+        XCTAssertEqual(sut.layoutMode, .speaker)
+    }
+    
+    func testUpdateLayoutModeAccordingScreenSharingParticipant_onUpdateParticipantAndHasNoScreenSharingParticipant_shouldKeepCurrentLayoutModeAndEnableSwitchLayoutModeButton() {
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.presenterVideoAndSharedScreen: true])
+        let sut = makeMeetingParticipantsLayoutViewModel(
+            featureFlagProvider: featureFlagProvider
+        )
+        
+        XCTAssertEqual(sut.layoutMode, .grid)
+        
+        sut.participantJoined(participant: CallParticipantEntity(participantId: 100, hasScreenShare: false))
+        sut.updateParticipant(CallParticipantEntity(participantId: 100, hasScreenShare: false))
+        
+        XCTAssertEqual(sut.layoutMode, .grid)
+    }
+    
+    func testUpdateLayoutModeAccordingScreenSharingParticipant_onParticipantJoinedndHasScreenSharingParticipant_shouldKeepCurrentLayoutModeAndEnableSwitchLayoutModeButton() {
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.presenterVideoAndSharedScreen: true])
+        let sut = makeMeetingParticipantsLayoutViewModel(
+            featureFlagProvider: featureFlagProvider
+        )
+        
+        XCTAssertEqual(sut.layoutMode, .grid)
+        
+        sut.participantJoined(participant: CallParticipantEntity(participantId: 100, hasScreenShare: false))
+        
+        XCTAssertEqual(sut.layoutMode, .grid)
+    }
     // MARK: - Private functions
     
     private func makeMeetingParticipantsLayoutViewModel(

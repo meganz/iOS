@@ -28,6 +28,7 @@ enum CallViewAction: ActionType {
     case didEndDisplayLastPeerLeftStatusMessage
     case showNavigation
     case orientationOrModeChange(isIPhoneLandscape: Bool, isSpeakerMode: Bool)
+    case onOrientationChanged
 }
 
 enum ParticipantsLayoutMode {
@@ -50,6 +51,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case configLocalUserView(position: CameraPositionEntity)
         case switchMenusVisibility
         case switchLayoutMode(layout: ParticipantsLayoutMode, participantsCount: Int)
+        case disableSwitchLayoutModeButton(disable: Bool)
         case switchLocalVideo(Bool)
         case updateName(String)
         case updateDuration(String)
@@ -97,6 +99,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             } else {
                 requestAvatarChanges(forParticipants: callParticipants, chatId: call.chatId)
             }
+            updateLayoutModeAccordingScreenSharingParticipant()
         }
     }
     private var indexOfVisibleParticipants = [Int]()
@@ -479,7 +482,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             }
             indexOfVisibleParticipants.append(index)
         case .indexVisibleParticipants(let visibleIndex):
-            updateVisibeParticipants(for: visibleIndex)
+            updateVisibleParticipants(for: visibleIndex)
         case .pinParticipantAsSpeaker(let participant):
             pinParticipantAsSpeaker(participant)
         case .addParticipant(let handle):
@@ -504,6 +507,8 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             } else {
                 invokeCommand?(.configureSpeakerView(isSpeakerMode: isSpeakerMode, leadingAndTrailingConstraint: 0))
             }
+        case .onOrientationChanged:
+            updateLayoutModeAccordingScreenSharingParticipant()
         }
     }
     
@@ -581,7 +586,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         )
     }
     
-    private func updateVisibeParticipants(for visibleIndex: [Int]) {
+    private func updateVisibleParticipants(for visibleIndex: [Int]) {
         indexOfVisibleParticipants.forEach {
             if !visibleIndex.contains($0),
                let participant = callParticipants[safe: $0] {
@@ -735,6 +740,21 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             }
         }
     }
+    
+    private func updateLayoutModeAccordingScreenSharingParticipant() {
+        guard isPresenterVideoAndSharedScreenFeatureFlagEnabled else { return }
+        let hasScreenSharingParticipant = callParticipants.contains { $0.hasScreenShare }
+        if hasScreenSharingParticipant {
+            layoutMode = .speaker
+        }
+        invokeCommand?(.switchLayoutMode(layout: layoutMode, participantsCount: callParticipants.count))
+        let shouldDisableSwitchLayoutModeButton = hasScreenSharingParticipant && isIPhoneAndNotLandScape()
+        invokeCommand?(.disableSwitchLayoutModeButton(disable: shouldDisableSwitchLayoutModeButton))
+    }
+    
+    private func isIPhoneAndNotLandScape() -> Bool {
+        UIDevice.current.userInterfaceIdiom == .phone && !UIDevice.current.orientation.isLandscape
+    }
 }
 
 struct CallDurationInfo {
@@ -816,6 +836,7 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
         participantUpdated.isLowResScreenShare = participant.isLowResScreenShare
         participantUpdated.isHiResScreenShare = participant.isHiResScreenShare
         
+        updateLayoutModeAccordingScreenSharingParticipant()
         reloadParticipant(participantUpdated)
     }
     
