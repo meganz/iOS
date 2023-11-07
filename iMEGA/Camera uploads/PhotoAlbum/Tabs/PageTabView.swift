@@ -18,6 +18,9 @@ struct PageTabView: View {
     private var tabTextColor: Color {
         colorScheme == .dark ? .white : .black
     }
+
+    private let defaultTabFont = Font.system(.subheadline, design: .default).weight(.regular)
+    private let selectedTabFont = Font.system(.subheadline, design: .default).weight(.medium)
     
     init(viewModel: PagerTabViewModel) {
         self.viewModel = viewModel
@@ -34,7 +37,7 @@ struct PageTabView: View {
                         }
                     } label: {
                         Text(viewModel.timeLineTitle)
-                            .font(Font.system(size: 15, weight: .semibold, design: Font.Design.default))
+                            .font(viewModel.selectedTab == .timeline ? selectedTabFont : defaultTabFont)
                             .frame(maxWidth: proxy.size.width, alignment: .center)
                             .foregroundColor(viewModel.selectedTab == .timeline ? textForgroundRedColor : tabForgroundColor)
                     }
@@ -47,7 +50,7 @@ struct PageTabView: View {
                         
                     } label: {
                         Text(viewModel.albumsTitle)
-                            .font(Font.system(size: 15, weight: .semibold, design: Font.Design.default))
+                            .font(viewModel.selectedTab == .album ? selectedTabFont : defaultTabFont)
                             .frame(maxWidth: proxy.size.width, alignment: .center)
                             .foregroundColor(viewModel.selectedTab == .album ? textForgroundRedColor : tabForgroundColor)
                     }
