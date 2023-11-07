@@ -108,6 +108,7 @@ public struct SearchResultsView: View {
                         }
                 }
             }
+            .padding(.horizontal, 8)
 
             LazyVGrid(
                 columns: viewModel.columns(
@@ -122,8 +123,8 @@ public struct SearchResultsView: View {
                         }
                 }
             }
+            .padding(.horizontal, 8)
         }
-        .padding(.horizontal, 8)
     }
 
     private var changeModeButton: some View {
