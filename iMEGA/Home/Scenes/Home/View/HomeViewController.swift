@@ -155,12 +155,8 @@ final class HomeViewController: UIViewController {
                 
             case .selectRecentsTab:
                 self?.slidePanelView.showTab(.recents)
-                
-            case .selectFavouritesTab:
-                self?.slidePanelView.showTab(.favourites)
-                
+
             case .presentFavouritesNode(let base64Handle):
-                self?.slidePanelView.showTab(.favourites)
                 self?.router.showNode(base64Handle)
                 
             case .presentOfflineFileWithPath(let path):
