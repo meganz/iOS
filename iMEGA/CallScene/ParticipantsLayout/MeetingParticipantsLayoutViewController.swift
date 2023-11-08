@@ -275,8 +275,13 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         participant.speakerVideoDataDelegate = self
         viewModel.dispatch(.fetchSpeakerAvatar)
         speakerRemoteVideoImageView.isHidden = participant.video != .on
-        speakerMutedImageView.isHidden = participant.audio == .on
-        speakerNameLabel.text = participant.name
+        if participant.hasScreenShare {
+            speakerMutedImageView.isHidden = true
+            speakerNameLabel.text = Strings.Localizable.Calls.ScreenShare.MainView.presentingLabel(participant.name ?? "")
+        } else {
+            speakerMutedImageView.isHidden = participant.audio == .on
+            speakerNameLabel.text = participant.name
+        }
     }
     
     private func showNotification(message: String, backgroundColor: UIColor, textColor: UIColor, completion: (() -> Void)? = nil) {
