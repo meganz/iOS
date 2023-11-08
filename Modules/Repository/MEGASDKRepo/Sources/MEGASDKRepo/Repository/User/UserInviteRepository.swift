@@ -32,10 +32,10 @@ struct UserInviteRepository: UserInviteRepositoryProtocol {
                                 outgoingContactRequests1.contactRequest(at: $0)
                             }
                             let isInOutgoingContactRequest1 = contactRequests.contains { $0.targetEmail == email }
-                            completion(.failure(isInOutgoingContactRequest1 ? .isInOutgoingContactRequest : InviteErrorEntity.generic(error.name ?? "")))
+                            completion(.failure(isInOutgoingContactRequest1 ? .isInOutgoingContactRequest : InviteErrorEntity.generic(error.name)))
                         }
                     default:
-                        completion(.failure(InviteErrorEntity.generic(error.name ?? "")))
+                        completion(.failure(InviteErrorEntity.generic(error.name)))
                     }
                 }
             })

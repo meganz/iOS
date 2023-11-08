@@ -742,8 +742,7 @@ extension ChatViewController: AddToChatViewControllerDelegate {
                     let enableGeolocationDelegate = RequestDelegate { result in
                         if case let .failure(error) = result {
                             let alertTitle = Strings.Localizable.error
-                            let errorName = error.name ?? Strings.Localizable.somethingWentWrong
-                            let alertMessage = Strings.Localizable.Chat.Map.Location.enableGeolocationFailedError(errorName)
+                            let alertMessage = Strings.Localizable.Chat.Map.Location.enableGeolocationFailedError(error.name)
                             
                             let enableGeolocationAlertAction = UIAlertAction(title: Strings.Localizable.ok,
                                                                              style: .default,
