@@ -117,6 +117,11 @@ final class HomeViewController: UIViewController {
         AudioPlayerManager.shared.addDelegate(self)
         TransfersWidgetViewController.sharedTransfer().progressView?.showWidgetIfNeeded()
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        AudioPlayerManager.shared.playerHiddenIgnoringPlayerLifeCycle(true, presenter: self)
+    }
 
     private func setupViewModelEventListening() {
         myAvatarViewModel?.notifyUpdate = { [weak self] output in
