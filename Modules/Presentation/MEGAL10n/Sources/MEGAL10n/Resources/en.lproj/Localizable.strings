@@ -3866,5 +3866,7 @@
 "cameraUploads.banner.enableState.description"="Automatically back up your photos and videos to your Cloud drive.";
 /* In app notification description for Shared Items when user left a shared folder. [A] will be replaced by the user's email who left. [B] will be replaced by shared folder name. */
 "inapp.notifications.sharedItems.userLeftTheSharedFolder.message"="User [A] has left the shared folder [B]";
+/* Shared Screen label in the main view when one user is sharing screen */
+"calls.screenShare.mainView.presentingLabel" = "%@ is presenting";
 /* A warning HUB to show in the call UI when the user A try to tap user B who is sharing screen and the shared screen is in the main view*/
 "calls.screenShare.waring.title"="This person is screen sharing";
