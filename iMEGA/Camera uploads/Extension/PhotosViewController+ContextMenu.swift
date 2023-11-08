@@ -31,6 +31,10 @@ extension PhotosViewController {
     
     @objc func makeContextMenuBarButton() -> UIBarButtonItem? {
         guard let config = contextMenuConfiguration(), let menu = contextMenuManager?.contextMenu(with: config) else { return nil }
+        if viewModel.timelineCameraUploadStatusFeatureEnabled {
+            return UIBarButtonItem(image: UIImage(resource: .moreNavigationBar),
+                                   menu: makeTestingMenuItems(from: menu))
+        }
         return UIBarButtonItem(image: UIImage(resource: .moreNavigationBar), menu: menu)
     }
     
@@ -89,6 +93,54 @@ extension PhotosViewController {
     
     @objc private func onFilter() {
         photoLibraryContentViewModel.showFilter.toggle()
+    }
+    
+    // MARK: - Camera Upload QA Testing options
+    
+    // Add Camera Status testing option to UIMenu
+    private func makeTestingMenuItems(from original: UIMenu) -> UIMenu {
+        var children = original.children
+        let testingOptionsAction = UIAction(title: "CU Status Testing") { _ in
+            self.showCameraUploadStatusTestingOptions()
+        }
+        children.append(testingOptionsAction)
+        let menuItem = UIMenu(title: original.title,
+                              image: original.image,
+                              options: original.options,
+                              children: children)
+        if #available(iOS 15.0, *) {
+            menuItem.subtitle = original.subtitle
+        }
+        return menuItem
+    }
+    
+    // Action sheet to show testing options for camera uploads.
+    private func showCameraUploadStatusTestingOptions() {
+        let alertController = UIAlertController(title: "CU Testing", message: "Select Testing Option", preferredStyle: .actionSheet)
+        alertController.addAction(UIAlertAction(title: "Upload Photos", style: .default, handler: { [weak self] _ in
+            self?.reloadCUBarButtonWithUseCase(FakeCameraUploadSuccessfulUseCase())
+        }))
+        alertController.addAction(UIAlertAction(title: "Upload already completed", style: .default, handler: { [weak self] _ in
+            self?.reloadCUBarButtonWithUseCase(FakeNoItemsToUploadUseCase())
+        }))
+        alertController.addAction(UIAlertAction(title: "Upload Warning / Error", style: .default, handler: { [weak self] _ in
+            self?.reloadCUBarButtonWithUseCase(FakeCameraUploadFailedUseCase())
+        }))
+        
+        alertController.modalPresentationStyle = .popover
+        if let view = cameraUploadStatusBarButtonItem?.customView {
+            alertController.popoverPresentationController?.sourceRect = view.frame
+            alertController.popoverPresentationController?.sourceView = view
+        }
+        present(alertController, animated: true)
+    }
+    
+    // Reload CU button with new use case to view different testing options
+    private func reloadCUBarButtonWithUseCase(_ useCase: some MonitorCameraUploadUseCaseProtocol) {
+        viewModel.cameraUploadStatusButtonViewModel = CameraUploadStatusButtonViewModel(
+            monitorCameraUploadUseCase: useCase)
+        cameraUploadStatusBarButtonItem = makeCameraUploadStatusBarButton()
+        setupRightNavigationBarButtons()
     }
 }
 

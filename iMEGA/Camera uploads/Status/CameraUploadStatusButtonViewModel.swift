@@ -26,15 +26,15 @@ final class CameraUploadStatusButtonViewModel: NSObject, ObservableObject {
         guard isCameraUploadsEnabled else { return }
         uploadCompleteIdleCheck()
 
-        for await uploadStats in monitorCameraUploadUseCase.monitorUploadStatus {
+        for await uploadStatsResult in monitorCameraUploadUseCase.monitorUploadStatus {
             cancelUploadCompleteIdleTask()
             
-            guard uploadStats.pendingFilesCount > 0 else {
-                await updateStatus(.completed)
-                uploadCompleteIdleCheck()
-                continue
+            switch uploadStatsResult {
+            case .success(let uploadStats):
+                await handleStatsUpdate(uploadStats)
+            case .failure:
+                await updateStatus(.warning)
             }
-            await updateStatus(.uploading(progress: uploadStats.progress))
         }
     }
     
@@ -51,12 +51,23 @@ final class CameraUploadStatusButtonViewModel: NSObject, ObservableObject {
     // MARK: - Private Functions
     
     @MainActor
+    private func handleStatsUpdate(_ uploadStats: CameraUploadStatsEntity) {
+        guard uploadStats.pendingFilesCount > 0 else {
+            imageViewModel.status = .completed
+            uploadCompleteIdleCheck()
+            return
+        }
+        imageViewModel.status = .uploading(progress: uploadStats.progress)
+    }
+    
+    @MainActor
     private func updateStatus(_ status: CameraUploadStatus) {
         imageViewModel.status = status
     }
     
     // After the upload is complete the green checkmark should turn dark grey after a few seconds.
     private func uploadCompleteIdleCheck() {
+        cancelUploadCompleteIdleTask()
         checkIdleTask = Task {
             defer {
                 cancelUploadCompleteIdleTask()
