@@ -4,7 +4,8 @@ import XCTest
 final class FakeCameraUploadSuccessfulUseCaseTests: XCTestCase {
     func testMonitorUploadStats_startMonitoring_shouldUpdateProgressTillComplete() async {
         let sut = FakeCameraUploadSuccessfulUseCase(photoUploadCount: 4,
-                                              initialDelayInNanoSeconds: 10)
+                                                    initialDelayInNanoSeconds: 10,
+                                                    delayBetweenItemsInNanoSeconds: 10)
         
         var iterator = sut.monitorUploadStatus.makeAsyncIterator()
         
