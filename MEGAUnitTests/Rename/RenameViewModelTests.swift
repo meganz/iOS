@@ -151,6 +151,15 @@ class RenameViewModelTests: XCTestCase {
 
         XCTAssertEqual(result, .label)
     }
+    
+    func testAlertTestsColor_deviceNameLargerThanAllowed_returnsRedColor() {
+        let invalidName = "12345678901234567890123456789012345"
+        let (viewModel, _, _) = makeSUT(renameShouldThrowError: false)
+
+        let result = viewModel.alertTextsColor(text: invalidName)
+
+        XCTAssertEqual(result, Colors.General.Red.ff3B30.color)
+    }
 
     func testIsActionButtonEnabled_textIsEmpty_returnsFalse() {
         let emptyText = ""
@@ -188,17 +197,28 @@ class RenameViewModelTests: XCTestCase {
         XCTAssertTrue(result)
     }
     
+    func testIsActionButtonEnabled_deviceNameLargerThanAllowed_returnsFalse() {
+        let invalidName = "12345678901234567890123456789012345"
+        let (viewModel, _, _) = makeSUT(renameShouldThrowError: false)
+
+        let result = viewModel.isActionButtonEnabled(text: invalidName)
+
+        XCTAssertFalse(result)
+    }
+    
     private func makeSUT(
         deviceId: String = "device1",
         deviceOldName: String = "OldName",
         otherDeviceNames: [String] = [],
         renameShouldThrowError: Bool,
+        maxDeviceNameCharacters: Int = 32,
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> (RenameViewModel, MockRenameViewRouter, MockRenameUseCase) {
         let renameEntity = RenameActionEntity(
             deviceId: deviceId,
-            deviceOldName: deviceOldName,
+            deviceOldName: deviceOldName, 
+            maxCharacters: maxDeviceNameCharacters,
             otherDeviceNames: otherDeviceNames) {
                 
             }

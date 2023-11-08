@@ -46,6 +46,13 @@ struct RenameViewModel {
         return text.rangeOfCharacter(from: invalidCharacterSet) != nil
     }
     
+    func isNewNameWithinMaxLength(_ newName: String) -> Bool {
+        switch type {
+        case .device(let renameEntity):
+            return newName.count < renameEntity.maxCharacters
+        }
+    }
+    
     func textfieldText() -> String {
         switch type {
         case .device(let renameEntity):
@@ -65,26 +72,29 @@ struct RenameViewModel {
             return Strings.Localizable.General.Error.charactersNotAllowed(String.Constants.invalidFileFolderNameCharacters)
         } else if isDuplicated(text) {
             return Strings.Localizable.Device.Center.Rename.Device.Duplicated.name
+        } else if !isNewNameWithinMaxLength(text) {
+            return Strings.Localizable.Device.Center.Rename.Device.Invalid.Long.name
         }
         
         return Strings.Localizable.rename
     }
     
     func alertMessage(text: String) -> String {
-        isDuplicated(text) ?
+        isDuplicated(text) || !isNewNameWithinMaxLength(text) ?
             Strings.Localizable.Device.Center.Rename.Device.Different.name :
             Strings.Localizable.renameNodeMessage
     }
     
     func alertTextsColor(text: String) -> UIColor {
-        containsInvalidChars(text) || isDuplicated(text) ? Colors.General.Red.ff3B30.color : UIColor.label
+        containsInvalidChars(text) || isDuplicated(text) || !isNewNameWithinMaxLength(text) ? Colors.General.Red.ff3B30.color : UIColor.label
     }
     
     func isActionButtonEnabled(text: String) -> Bool {
         !(
             text.isEmpty ||
             containsInvalidChars(text) ||
-            isDuplicated(text)
+            isDuplicated(text) ||
+            !isNewNameWithinMaxLength(text)
         )
     }
 }
