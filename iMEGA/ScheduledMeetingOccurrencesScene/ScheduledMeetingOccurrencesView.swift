@@ -1,7 +1,8 @@
+import MEGASwiftUI
 import SwiftUI
 
 struct ScheduledMeetingOccurrencesView: View {
-
+    
     @ObservedObject var viewModel: ScheduledMeetingOccurrencesViewModel
     
     var body: some View {
@@ -18,7 +19,7 @@ struct ScheduledMeetingOccurrencesView: View {
                             Button {
                                 contextMenuOption.action(occurrence)
                             } label: {
-                                Label(contextMenuOption.title, image: contextMenuOption.imageName)
+                                HorizontalImageTextLabel(image: UIImage(resource: contextMenuOption.image), text: contextMenuOption.title)
                             }
                         }
                     }
@@ -54,7 +55,7 @@ struct ScheduledMeetingOccurrencesView: View {
 struct ScheduledMeetingOccurrencesContentView: View {
     let occurrence: ScheduleMeetingOccurrence
     let chatRoomAvatarViewModel: ChatRoomAvatarViewModel?
-
+    
     var body: some View {
         if #available(iOS 15.0, *) {
             OccurrenceView(occurrence: occurrence, chatRoomAvatarViewModel: chatRoomAvatarViewModel)

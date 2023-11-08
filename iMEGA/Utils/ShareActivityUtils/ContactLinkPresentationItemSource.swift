@@ -3,9 +3,9 @@ import LinkPresentation
 class ContactLinkPresentationItemSource: NSObject, UIActivityItemSource {
     let linkMetaData: LPLinkMetadata
     
-    init(title: String, description: String, icon: ImageAsset, url: URL) {
+    init(title: String, description: String, icon: ImageResource, url: URL) {
         let linkMetaData = LPLinkMetadata()
-        linkMetaData.iconProvider = NSItemProvider(object: icon.image)
+        linkMetaData.iconProvider = NSItemProvider(object: UIImage(resource: icon))
         linkMetaData.url = url
         linkMetaData.originalURL = URL(fileURLWithPath: description)
         linkMetaData.title = title

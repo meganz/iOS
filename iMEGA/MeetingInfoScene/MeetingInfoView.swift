@@ -41,7 +41,7 @@ struct MeetingInfoView: View {
                         )
                         
                         ToggleView(
-                            image: Asset.Images.Meetings.Info.allowNonHostToAddParticipant.name,
+                            image: .allowNonHostToAddParticipant,
                             text: Strings.Localizable.Meetings.AddContacts.AllowNonHost.message,
                             isOn: $viewModel.isAllowNonHostToAddParticipantsOn.onChange { enabled in
                                 Task {

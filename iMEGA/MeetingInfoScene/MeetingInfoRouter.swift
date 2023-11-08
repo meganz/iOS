@@ -82,7 +82,7 @@ final class MeetingInfoRouter: NSObject, MeetingInfoRouting {
     
     func showShareActivity(_ link: String, title: String?, description: String?) {
         guard let url = URL(string: link), let sourceView = presenter.viewControllers.first?.view else { return }
-        let metadataItemSource = ContactLinkPresentationItemSource(title: title ?? "", description: description ?? "", icon: Asset.Images.Logo.megaShareContactLink, url: url)
+        let metadataItemSource = ContactLinkPresentationItemSource(title: title ?? "", description: description ?? "", icon: .megaShareContactLink, url: url)
         let shareActivity = UIActivityViewController(activityItems: [metadataItemSource], applicationActivities: [SendToChatActivity(text: link)])
         shareActivity.popoverPresentationController?.sourceView = sourceView
         presenter.present(shareActivity, animated: true)
@@ -102,7 +102,7 @@ final class MeetingInfoRouter: NSObject, MeetingInfoRouting {
     }
 
     func showLinkCopied() {
-        SVProgressHUD.show(Asset.Images.Hud.hudSuccess.image, status: Strings.Localizable.Meetings.Info.ShareOptions.ShareLink.linkCopied)
+        SVProgressHUD.show(UIImage(resource: .hudSuccess), status: Strings.Localizable.Meetings.Info.ShareOptions.ShareLink.linkCopied)
     }
     
     func showParticipantDetails(email: String, userHandle: HandleEntity, chatRoom: ChatRoomEntity, didUpdatePeerPermission: @escaping (ChatRoomParticipantPrivilege) -> Void) {
@@ -165,7 +165,7 @@ final class MeetingInfoRouter: NSObject, MeetingInfoRouting {
         let navigationController = MEGANavigationController(rootViewController: inviteContactsViewController)
         
         let backBarButton = UIBarButtonItem(
-            image: Asset.Images.Chat.backArrow.image,
+            image: UIImage(resource: .backArrow),
             style: .plain,
             target: self,
             action: #selector(self.dismissInviteContactsScreen)

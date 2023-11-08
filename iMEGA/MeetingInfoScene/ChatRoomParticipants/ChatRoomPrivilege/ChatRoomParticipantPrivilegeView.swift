@@ -4,7 +4,7 @@ struct ChatRoomParticipantPrivilegeView: View {
     
     let chatRoomParticipantPrivilege: ChatRoomParticipantPrivilege
     var body: some View {
-        Image(chatRoomParticipantPrivilege.imageName)
+        Image(chatRoomParticipantPrivilege.image)
             .padding(.horizontal)
     }
 }

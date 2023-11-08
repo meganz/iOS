@@ -25,10 +25,10 @@ class GetLinkInfoTableViewCell: UITableViewCell {
         nameLabel.text = node.name
         if node.isFile() {
             thumbnailImageView.mnz_setThumbnail(by: node)
-            subtitleLabel.text = Helper.size(for: node, api: MEGASdkManager.sharedMEGASdk())
+            subtitleLabel.text = Helper.size(for: node, api: MEGASdk.shared)
         } else {
             thumbnailImageView.image = NodeAssetsManager.shared.icon(for: node)
-            subtitleLabel.text = Helper.filesAndFolders(inFolderNode: node, api: MEGASdkManager.sharedMEGASdk())
+            subtitleLabel.text = Helper.filesAndFolders(inFolderNode: node, api: MEGASdk.shared)
         }
     }
     
@@ -39,7 +39,7 @@ class GetLinkInfoTableViewCell: UITableViewCell {
             guard let image = UIImage(contentsOfFile: imagePath) else { return }
             thumbnailImageView.image = image
         case .setPlaceholderThumbnail:
-            thumbnailImageView.image = Asset.Images.Album.placeholder.image
+            thumbnailImageView.image = UIImage.placeholder
         case .setLabels(let title, let subtitle):
             nameLabel.text = title
             subtitleLabel.text = subtitle

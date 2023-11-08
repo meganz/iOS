@@ -8,7 +8,7 @@ struct ChatRoomNotificationsView: View {
     var body: some View {
         VStack {
             ToggleView(
-                image: Asset.Images.Meetings.Info.enableChatNotifications.name,
+                image: .enableChatNotifications,
                 text: Strings.Localizable.Meetings.Info.meetingNotifications,
                 isOn: $viewModel.isChatNotificationsOn)
             if !viewModel.isChatNotificationsOn {
