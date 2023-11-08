@@ -2,7 +2,7 @@ import MEGASwift
 
 /// Simulate uploading of photos till completion. This is for testing purposes only until actual upload use case is implemented.
 public struct FakeCameraUploadSuccessfulUseCase: MonitorCameraUploadUseCaseProtocol {
-    public let monitorUploadStatus: AnyAsyncSequence<CameraUploadStatsEntity>
+    public let monitorUploadStatus: AnyAsyncSequence<Result<CameraUploadStatsEntity, Error>>
     
     public init(photoUploadCount: UInt = 10_000,
                 initialDelayInNanoSeconds: UInt64 = 1_000_000_000) {
@@ -13,7 +13,7 @@ public struct FakeCameraUploadSuccessfulUseCase: MonitorCameraUploadUseCaseProto
     }
     
     private struct UploadPhotosAsyncSequence: AsyncSequence {
-        typealias Element = CameraUploadStatsEntity
+        typealias Element = Result<CameraUploadStatsEntity, Error>
         private let uploadCount: UInt
         private let initialDelayInNanoSeconds: UInt64
         
@@ -24,7 +24,7 @@ public struct FakeCameraUploadSuccessfulUseCase: MonitorCameraUploadUseCaseProto
         }
         
         struct UploadPhotosAsyncIterator: AsyncIteratorProtocol {
-            typealias Element = CameraUploadStatsEntity
+            typealias Element = Result<CameraUploadStatsEntity, Error>
             
             private let uploadCount: UInt
             private let initialDelayInNanoSeconds: UInt64
@@ -35,7 +35,7 @@ public struct FakeCameraUploadSuccessfulUseCase: MonitorCameraUploadUseCaseProto
                 self.initialDelayInNanoSeconds = initialDelayInNanoSeconds
             }
             
-            mutating func next() async throws -> CameraUploadStatsEntity? {
+            mutating func next() async -> Result<CameraUploadStatsEntity, Error>? {
                 guard !Task.isCancelled,
                       currentCount <= uploadCount else {
                     return nil
@@ -47,7 +47,7 @@ public struct FakeCameraUploadSuccessfulUseCase: MonitorCameraUploadUseCaseProto
                     progress: Float(currentCount) / Float(uploadCount),
                     pendingFilesCount: uploadCount - currentCount)
                 currentCount += 1
-                return nextValue
+                return .success(nextValue)
             }
         }
         
@@ -55,5 +55,21 @@ public struct FakeCameraUploadSuccessfulUseCase: MonitorCameraUploadUseCaseProto
             UploadPhotosAsyncIterator(uploadCount: uploadCount,
                                       initialDelayInNanoSeconds: initialDelayInNanoSeconds)
         }
+    }
+}
+
+/// Simulate no items to upload. This is for testing purposes only until actual upload use case is implemented.
+public struct FakeNoItemsToUploadUseCase: MonitorCameraUploadUseCaseProtocol {
+    public let monitorUploadStatus: AnyAsyncSequence<Result<CameraUploadStatsEntity, Error>> = EmptyAsyncSequence<Result<CameraUploadStatsEntity, Error>>().eraseToAnyAsyncSequence()
+    
+    public init() {}
+}
+
+/// Simulate upload failed. This is for testing purposes only until actual upload use case is implemented.
+public struct FakeCameraUploadFailedUseCase: MonitorCameraUploadUseCaseProtocol {
+    public let monitorUploadStatus: AnyAsyncSequence<Result<CameraUploadStatsEntity, Error>>
+    
+    public init() {
+        monitorUploadStatus = SingleItemAsyncSequence(item: .failure(GenericErrorEntity())).eraseToAnyAsyncSequence()
     }
 }
