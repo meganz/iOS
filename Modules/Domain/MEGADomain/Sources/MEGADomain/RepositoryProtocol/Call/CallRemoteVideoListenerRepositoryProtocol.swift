@@ -11,5 +11,5 @@ public protocol CallRemoteVideoRepositoryProtocol {
 }
 
 public protocol CallRemoteVideoListenerRepositoryProtocol {
-    func remoteVideoFrameData(clientId: HandleEntity, width: Int, height: Int, buffer: Data)
+    func remoteVideoFrameData(clientId: HandleEntity, width: Int, height: Int, buffer: Data, isHiRes: Bool)
 }

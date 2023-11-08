@@ -13,7 +13,7 @@ public final class CallRemoteVideoRepository: NSObject, CallRemoteVideoRepositor
     }
     
     public func enableRemoteVideo(for chatId: HandleEntity, clientId: HandleEntity, hiRes: Bool, remoteVideoListener: some CallRemoteVideoListenerRepositoryProtocol) {
-        guard remoteVideos.notContains(where: { $0.chatId == chatId && $0.clientId == clientId }) else {
+        guard remoteVideos.notContains(where: { $0.chatId == chatId && $0.clientId == clientId && $0.hiRes == hiRes}) else {
             return
         }
         let remoteVideoData = RemoteVideoData(chatId: chatId, clientId: clientId, hiRes: hiRes, remoteVideoListener: remoteVideoListener)
@@ -22,7 +22,7 @@ public final class CallRemoteVideoRepository: NSObject, CallRemoteVideoRepositor
     }
     
     public func disableRemoteVideo(for chatId: HandleEntity, clientId: HandleEntity, hiRes: Bool) {
-        guard let remoteVideo = remoteVideos.first(where: { $0.chatId == chatId && $0.clientId == clientId }) else {
+        guard let remoteVideo = remoteVideos.first(where: { $0.chatId == chatId && $0.clientId == clientId && $0.hiRes == hiRes }) else {
             return
         }
         chatSdk.removeChatRemoteVideo(chatId, cliendId: clientId, hiRes: remoteVideo.hiRes, delegate: remoteVideo)
@@ -108,7 +108,12 @@ final class RemoteVideoData: NSObject, MEGAChatVideoDelegate {
     var hiRes: Bool = false
     var remoteVideoListener: (any CallRemoteVideoListenerRepositoryProtocol)?
     
-    init(chatId: HandleEntity, clientId: HandleEntity, hiRes: Bool, remoteVideoListener: some CallRemoteVideoListenerRepositoryProtocol) {
+    init(
+        chatId: HandleEntity,
+        clientId: HandleEntity,
+        hiRes: Bool,
+        remoteVideoListener: some CallRemoteVideoListenerRepositoryProtocol
+    ) {
         self.chatId = chatId
         self.clientId = clientId
         self.hiRes = hiRes
@@ -116,6 +121,7 @@ final class RemoteVideoData: NSObject, MEGAChatVideoDelegate {
     }
     
     func onChatVideoData(_ api: MEGAChatSdk, chatId: UInt64, width: Int, height: Int, buffer: Data) {
-        remoteVideoListener?.remoteVideoFrameData(clientId: clientId, width: width, height: height, buffer: buffer)
+        print("onChatVideoData: \(chatId) clientId: \(clientId) hiRes: \(hiRes)")
+        remoteVideoListener?.remoteVideoFrameData(clientId: clientId, width: width, height: height, buffer: buffer, isHiRes: hiRes)
     }
 }

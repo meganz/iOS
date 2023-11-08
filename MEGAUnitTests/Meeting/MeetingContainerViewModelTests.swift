@@ -306,6 +306,8 @@ final class MockMeetingContainerRouter: MeetingContainerRouting {
     var showJoinMegaScreen_calledTimes = 0
     var showHangOrEndCallDialog_calledTimes = 0
     var selectWaitingRoomList_calledTimes = 0
+    var showScreenShareWarning_calledTimes = 0
+    
     func showMeetingUI(containerViewModel: MeetingContainerViewModel) {
         showMeetingUI_calledTimes += 1
     }
@@ -373,5 +375,9 @@ final class MockMeetingContainerRouter: MeetingContainerRouting {
     
     func selectWaitingRoomList(containerViewModel: MeetingContainerViewModel) {
         selectWaitingRoomList_calledTimes += 1
+    }
+    
+    func showScreenShareWarning() {
+        showScreenShareWarning_calledTimes += 1
     }
 }

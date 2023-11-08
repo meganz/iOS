@@ -26,6 +26,7 @@ protocol MeetingContainerRouting: AnyObject, Routing {
     func showJoinMegaScreen()
     func showHangOrEndCallDialog(containerViewModel: MeetingContainerViewModel)
     func selectWaitingRoomList(containerViewModel: MeetingContainerViewModel)
+    func showScreenShareWarning()
 }
 
 final class MeetingContainerRouter: MeetingContainerRouting {
@@ -281,6 +282,13 @@ final class MeetingContainerRouter: MeetingContainerRouting {
         let hangOrEndCallRouter = HangOrEndCallRouter(presenter: UIApplication.mnz_presentingViewController(), meetingContainerViewModel: containerViewModel)
         hangOrEndCallRouter.start()
         self.hangOrEndCallRouter = hangOrEndCallRouter
+    }
+    
+    func showScreenShareWarning() {
+        SVProgressHUD.setHudViewCustomBlurEffect(UIBlurEffect.init(style: UIBlurEffect.Style.systemMaterialDark))
+        SVProgressHUD.setForegroundColor(.white)
+        SVProgressHUD.setForegroundImageColor(.white)
+        SVProgressHUD.showError(withStatus: Strings.Localizable.Calls.ScreenShare.Waring.title)
     }
     
     // MARK: - Private methods.
