@@ -187,6 +187,10 @@
         [MEGAChatSdk.shared removeChatCallDelegate:self];
     }
     
+    [AudioPlayerManager.shared playerHiddenIgnoringPlayerLifeCycle:YES presenter:self];
+}
+
+- (void)dealloc {
     [AudioPlayerManager.shared removeDelegate:self];
 }
 

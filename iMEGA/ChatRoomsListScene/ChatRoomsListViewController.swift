@@ -42,8 +42,12 @@ final class ChatRoomsListViewController: UIViewController {
         }
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        AudioPlayerManager.shared.playerHiddenIgnoringPlayerLifeCycle(true, presenter: self)
+    }
+    
+    deinit {
         AudioPlayerManager.shared.removeDelegate(self)
     }
     

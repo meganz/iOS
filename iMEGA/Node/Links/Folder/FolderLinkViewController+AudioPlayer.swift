@@ -17,9 +17,7 @@ extension FolderLinkViewController: AudioMiniPlayerHandlerProtocol {
     }
     
     func showMiniPlayer() {
-        if bottomView == nil {
-            AudioPlayerManager.shared.showMiniPlayer()
-        }
+        AudioPlayerManager.shared.showMiniPlayer()
         DispatchQueue.main.async {
             self.bottomView?.isHidden = false
         }

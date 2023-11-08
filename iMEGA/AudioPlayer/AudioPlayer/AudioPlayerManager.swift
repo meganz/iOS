@@ -350,13 +350,29 @@ import MEGAPresentation
     func playerHidden(_ hidden: Bool, presenter: UIViewController) {
         guard presenter.conforms(to: (any AudioPlayerPresenterProtocol).self) else { return }
         
-        if hidden {
-            miniPlayerHandlerListenerManager.notify { $0.hideMiniPlayer() }
-        } else {
-            miniPlayerHandlerListenerManager.notify { $0.showMiniPlayer() }
-        }
+        notifyDelegatesToShowHideMiniPlayer(hidden)
         
         player?.updateContentViews()
+    }
+    
+    func playerHiddenIgnoringPlayerLifeCycle(_ hidden: Bool, presenter: UIViewController) {
+        guard presenter.conforms(to: (any AudioPlayerPresenterProtocol).self) else { return }
+        
+        notifyDelegatesToShowHideMiniPlayer(hidden)
+        
+        player?.updateContentViewsIgnorePlayerLifeCycle(showMiniPlayer: !hidden)
+    }
+    
+    private func notifyDelegatesToShowHideMiniPlayer(_ hidden: Bool) {
+        if hidden {
+            miniPlayerHandlerListenerManager.notify {
+                $0.hideMiniPlayer()
+            }
+        } else {
+            miniPlayerHandlerListenerManager.notify {
+                $0.showMiniPlayer()
+            }
+        }
     }
     
     func addDelegate(_ delegate: any AudioPlayerPresenterProtocol) {
@@ -394,6 +410,14 @@ import MEGAPresentation
             return
         }
         miniPlayerHandlerListenerManager.notify { $0.presentMiniPlayer(miniPlayerVC) }
+    }
+    
+    func showMiniPlayer(in handler: any AudioMiniPlayerHandlerProtocol) {
+        guard let miniPlayerVC = miniPlayerVC else {
+            miniPlayerRouter?.start()
+            return
+        }
+        handler.presentMiniPlayer(miniPlayerVC)
     }
     
     func audioInterruptionDidStart() {

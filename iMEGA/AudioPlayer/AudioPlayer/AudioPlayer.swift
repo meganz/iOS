@@ -300,6 +300,12 @@ final class AudioPlayer: NSObject {
         }
     }
     
+    func updateContentViewsIgnorePlayerLifeCycle(showMiniPlayer: Bool) {
+        presenterListenerManager.notify {
+            $0.updateContentView(showMiniPlayer ? 60: 0)
+        }
+    }
+    
     func playerTracksContains(url: URL) -> Bool {
         tracks.compactMap { $0.url }
             .contains(url)
