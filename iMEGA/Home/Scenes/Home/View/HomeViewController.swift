@@ -162,6 +162,9 @@ final class HomeViewController: UIViewController {
             case .presentOfflineFileWithPath(let path):
                 self?.navigationController?.popToRootViewController(animated: false)
                 self?.offlineViewController.openFileFromWidget(with: path)
+            case .showFavourites:
+                self?.navigationController?.popToRootViewController(animated: false)
+                self?.tappedCard(.favourites)
             }
         }
         quickAccessWidgetViewModel?.dispatch(.managePendingAction)
