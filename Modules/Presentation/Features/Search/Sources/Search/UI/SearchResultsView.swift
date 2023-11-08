@@ -3,9 +3,6 @@ import MEGASwiftUI
 import SwiftUI
 
 public struct SearchResultsView: View {
-    @Environment(\.horizontalSizeClass) var horizontalSizeClass: UserInterfaceSizeClass?
-    @Environment(\.verticalSizeClass) var verticalSizeClass
-
     @StateObject var viewModel: SearchResultsViewModel
 
     public init(viewModel: @autoclosure @escaping () -> SearchResultsViewModel) {
@@ -94,27 +91,23 @@ public struct SearchResultsView: View {
     }
 
     private var thumbnailContent: some View {
-        ScrollView {
-            LazyVGrid(
-                columns: viewModel.columns(
-                    horizontalSizeClass: horizontalSizeClass,
-                    verticalSizeClass: verticalSizeClass
-                )
-            ) {
-                ForEach(Array(viewModel.folderListItems.enumerated()), id: \.element.id) { index, item in
-                    SearchResultThumbnailItemView(viewModel: item)
-                        .taskForiOS14 {
-                            await viewModel.loadMoreIfNeededThumbnailMode(at: index, isFile: false)
-                        }
+        GeometryReader { geo in
+            ScrollView {
+                LazyVGrid(
+                    columns: viewModel.columns(geo.size.width)
+                ) {
+                    ForEach(Array(viewModel.folderListItems.enumerated()), id: \.element.id) { index, item in
+                        SearchResultThumbnailItemView(viewModel: item)
+                            .taskForiOS14 {
+                                await viewModel.loadMoreIfNeededThumbnailMode(at: index, isFile: false)
+                            }
+                    }
                 }
             }
             .padding(.horizontal, 8)
 
             LazyVGrid(
-                columns: viewModel.columns(
-                    horizontalSizeClass: horizontalSizeClass,
-                    verticalSizeClass: verticalSizeClass
-                )
+                columns: viewModel.columns(geo.size.width)
             ) {
                 ForEach(Array(viewModel.fileListItems.enumerated()), id: \.element.id) { index, item in
                     SearchResultThumbnailItemView(viewModel: item)
@@ -123,8 +116,8 @@ public struct SearchResultsView: View {
                         }
                 }
             }
-            .padding(.horizontal, 8)
         }
+        .padding(.horizontal, 8)
     }
 
     private var changeModeButton: some View {
