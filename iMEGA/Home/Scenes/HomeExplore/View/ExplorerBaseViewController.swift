@@ -25,11 +25,11 @@ class ExplorerBaseViewController: UIViewController {
             toolbar.alpha = 0.0
             tabBarController.view.addSubview(toolbar)
             toolbar.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
-            toolbar.autoPinEdge(.top, to: .top, of: tabBarController.tabBar)
-            let bottomAnchor: NSLayoutYAxisAnchor = tabBarController.tabBar.safeAreaLayoutGuide.bottomAnchor
-            toolbar.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
-            toolbar.autoPinEdge(.leading, to: .leading, of: tabBarController.tabBar)
-            toolbar.autoPinEdge(.trailing, to: .trailing, of: tabBarController.tabBar)
+            toolbar.translatesAutoresizingMaskIntoConstraints = false
+            toolbar.topAnchor.constraint(equalTo: tabBarController.tabBar.topAnchor).isActive = true
+            toolbar.leadingAnchor.constraint(equalTo: tabBarController.tabBar.leadingAnchor).isActive = true
+            toolbar.trailingAnchor.constraint(equalTo: tabBarController.tabBar.trailingAnchor).isActive = true
+            toolbar.bottomAnchor.constraint(equalTo: tabBarController.tabBar.safeAreaLayoutGuide.bottomAnchor).isActive = true
             
             UIView.animate(withDuration: 0.3) {
                 self.toolbar.alpha = 1.0

@@ -120,10 +120,13 @@ final class SegmentTitleView: UIView {
     }
 
     private func pinStackView(_ stackView: UIStackView) {
-        stackView.configureForAutoLayout()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(stackView)
-        stackView.autoPinEdge(toSuperviewMargin: .leading, withInset: Constants.stackViewInset)
-        stackView.autoPinEdge(toSuperviewEdge: .top)
+        NSLayoutConstraint.activate([
+            stackView.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor, constant: Constants.stackViewInset),
+            stackView.topAnchor.constraint(equalTo: topAnchor)
+        ])
+
     }
 
     private enum Constants {

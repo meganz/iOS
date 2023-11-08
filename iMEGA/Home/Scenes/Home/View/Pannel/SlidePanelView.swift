@@ -155,9 +155,7 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
     }
     
     private func move(_ content: UIView, toContainerView container: UIView) {
-        container.addSubview(content)
-        content.translatesAutoresizingMaskIntoConstraints = false
-        content.autoPinEdgesToSuperviewEdges()
+        container.wrap(content)
     }
     
     private func firstScrollViewInSubviews(_ subviews: [UIView]) -> UIScrollView? {

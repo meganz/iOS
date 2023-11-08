@@ -69,9 +69,7 @@ final class MEGASearchBarView: UIView, NibOwnerLoadable {
         self.contentView = contentView
 
         func initialise(contentView: UIView) {
-            contentView.translatesAutoresizingMaskIntoConstraints = false
-            addSubview(contentView)
-            contentView.autoPinEdgesToSuperviewEdges()
+            self.wrap(contentView)
         }
 
         func initialise(cancelButton: UIButton) {

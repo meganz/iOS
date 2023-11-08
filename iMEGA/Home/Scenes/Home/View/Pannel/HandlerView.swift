@@ -28,7 +28,8 @@ final class HandlerView: UIView {
     private func setupView(with trait: UITraitCollection) {
         let (backgroundColor, shadowColor) = themeColor(of: trait)
         
-        let slideIndicatorView = SlideIndicatorView(forAutoLayout: ())
+        let slideIndicatorView = SlideIndicatorView()
+        slideIndicatorView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(slideIndicatorView)
         self.indicatorView = slideIndicatorView
         

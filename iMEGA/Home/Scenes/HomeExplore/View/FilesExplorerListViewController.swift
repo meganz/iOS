@@ -135,8 +135,7 @@ class FilesExplorerListViewController: FilesExplorerViewController {
     }
     
     private func addAndConfigureTableView() {
-        view.addSubview(tableView)
-        tableView.autoPinEdgesToSuperviewEdges()
+        view.wrap(tableView)
     }
 }
 

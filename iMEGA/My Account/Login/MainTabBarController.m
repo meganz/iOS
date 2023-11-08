@@ -13,7 +13,6 @@
 #import "NSObject+Debounce.h"
 
 @import MEGAL10nObjc;
-@import PureLayout;
 
 @interface MainTabBarController () < MEGAGlobalDelegate>
 

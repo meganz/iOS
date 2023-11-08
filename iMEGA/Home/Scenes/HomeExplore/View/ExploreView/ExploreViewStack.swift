@@ -41,9 +41,7 @@ final class ExploreViewStack: UIView, NibOwnerLoadable {
     
     private func addStackView() {
         guard let contentview = loadedViewFromNibContent() else { return }
-        contentview.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(contentview)
-        contentview.autoPinEdgesToSuperviewEdges()
+        self.wrap(contentview)
     }
 
     private func setupView(with trait: UITraitCollection) {
