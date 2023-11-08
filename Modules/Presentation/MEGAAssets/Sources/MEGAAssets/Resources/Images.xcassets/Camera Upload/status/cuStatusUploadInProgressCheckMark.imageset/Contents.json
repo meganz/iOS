@@ -3,6 +3,16 @@
     {
       "filename" : "cuStatusUploadInProgressCheckMark.pdf",
       "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "cuStatusUploadInProgressCheckMarkDark.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {

@@ -27,9 +27,9 @@ final class CameraUploadStatusImageViewModel: ObservableObject {
     var progressLineColor: Color {
         switch status {
         case .uploading:
-            return Color(Colors.General.Blue._007Aff.color)
+            return Color(UIColor.cuStatusUploading)
         case .completed:
-            return Color(Colors.General.Green._34C759.color)
+            return Color(UIColor.cuStatusCompleted)
         default:
             return .clear
         }
