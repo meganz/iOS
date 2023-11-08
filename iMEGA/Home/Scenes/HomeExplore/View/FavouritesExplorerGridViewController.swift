@@ -70,7 +70,7 @@ final class FavouritesExplorerGridViewController: FilesExplorerViewController {
         
         searchController.searchBar.removeFromSuperview()
         searchBarView.removeFromSuperview()
-        collectionView.autoPinEdge(toSuperviewEdge: .top)
+        collectionView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
     }
     
     override func setEditingMode() {
@@ -112,8 +112,7 @@ final class FavouritesExplorerGridViewController: FilesExplorerViewController {
     }
     
     private func addCollectionView() {
-        view.addSubview(collectionView)
-        collectionView.autoPinEdgesToSuperviewSafeArea()
+        view.wrap(collectionView)
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {

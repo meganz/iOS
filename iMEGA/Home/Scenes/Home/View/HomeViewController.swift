@@ -654,21 +654,24 @@ extension HomeViewController: MEGASearchBarViewDelegate {
 
         guard searchResultContainerView == nil else { return }
 
-        let containerView = UIView(forAutoLayout: ())
+        let containerView = UIView()
+        containerView.translatesAutoresizingMaskIntoConstraints = false
         searchResultContainerView = containerView
 
         view.addSubview(containerView)
-        containerView.autoPinEdge(.top, to: .bottom, of: searchBarView)
-        containerView.autoPinEdge(.leading, to: .leading, of: view)
-        containerView.autoPinEdge(.trailing, to: .trailing, of: view)
-        containerView.autoPinEdge(.bottom, to: .bottom, of: view)
+        NSLayoutConstraint.activate([
+            containerView.topAnchor.constraint(equalTo: searchBarView.bottomAnchor),
+            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+
         containerView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
 
         searchResultViewController.view.translatesAutoresizingMaskIntoConstraints = false
         searchResultViewController.willMove(toParent: self)
         addChild(searchResultViewController)
-        containerView.addSubview(searchResultViewController.view)
-        searchResultViewController.view.autoPinEdgesToSuperviewEdges()
+        containerView.wrap(searchResultViewController.view)
         searchResultViewController.didMove(toParent: self)
     }
 

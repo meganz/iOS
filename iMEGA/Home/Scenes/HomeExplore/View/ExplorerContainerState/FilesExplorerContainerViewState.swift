@@ -31,8 +31,7 @@ class FilesExplorerContainerViewState: FilesExplorerViewControllerDelegate {
 
     func add(content: UIViewController) {
         containerViewController.addChild(content)
-        containerViewController.view.addSubview(content.view)
-        content.view.autoPinEdgesToSuperviewEdges()
+        containerViewController.view.wrap(content.view)
         content.didMove(toParent: containerViewController)
     }
 

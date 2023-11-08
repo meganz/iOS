@@ -41,7 +41,6 @@
 #import "MEGAPhotoBrowserViewController.h"
 #import "NodeTableViewCell.h"
 #import "PhotosViewController.h"
-#import "PreviewDocumentViewController.h"
 #import "SharedItemsViewController.h"
 #import "UIViewController+MNZCategory.h"
 
