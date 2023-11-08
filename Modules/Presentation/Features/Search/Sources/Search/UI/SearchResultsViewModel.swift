@@ -15,8 +15,6 @@ public class SearchResultsViewModel: ObservableObject {
 
     @Published var displayMode: DisplayMode = .list
 
-    let isThumbnailPreviewEnabled: Bool
-
     var fileListItems: [SearchResultRowViewModel] {
         listItems.filter { $0.result.thumbnailPreviewInfo.displayMode == .file }
     }
@@ -24,6 +22,8 @@ public class SearchResultsViewModel: ObservableObject {
     var folderListItems: [SearchResultRowViewModel] {
         listItems.filter { $0.result.thumbnailPreviewInfo.displayMode == .folder }
     }
+
+    let isThumbnailPreviewEnabled: Bool
 
     // this is needed to be able to construct new query after receiving new query string from SearchBar
     private var currentQuery: SearchQuery = .initial
@@ -65,7 +65,7 @@ public class SearchResultsViewModel: ObservableObject {
     private let searchInputDebounceDelay: Double
 
     private let keyboardVisibilityHandler: any KeyboardVisibilityHandling
-    
+
     @Published public var editing: Bool = false
     
     public init(
@@ -167,22 +167,6 @@ public class SearchResultsViewModel: ObservableObject {
         }
     }
 
-    func columns(
-        horizontalSizeClass: UserInterfaceSizeClass?,
-        verticalSizeClass: UserInterfaceSizeClass?
-    ) -> [GridItem] {
-        guard let horizontalSizeClass else {
-            return Array(
-                repeating: .init(.flexible()),
-                count: 3
-            )
-        }
-        return Array(
-            repeating: .init(.flexible()),
-            count: horizontalSizeClass == .compact && verticalSizeClass == .regular ? 2 : 3
-        )
-    }
-
     @MainActor
     func searchCancelled() async {
         // cancel button on the search bar was tapped
@@ -260,7 +244,7 @@ public class SearchResultsViewModel: ObservableObject {
 
         await prepareResults(results, query: query)
     }
-    
+
     func loadMoreIfNeeded(at index: Int) async {
         await performSearch(using: currentQuery, lastItemIndex: index)
     }
@@ -310,7 +294,25 @@ public class SearchResultsViewModel: ObservableObject {
         }
         toggleSelected(result)
     }
-    
+
+    // The total number of columns we should display is calculated based on how many columns
+    // with the columnWidth can fit in the current width of the screen
+    // If the number of columns we calculate is less than 2, we should always
+    // display minimum of 2 columns
+    func columns(_ screenWidth: CGFloat) -> [GridItem] {
+        let columnWidth = 180
+        let horizontalPadding: CGFloat = 16
+
+        let containerWidth = screenWidth - horizontalPadding
+
+        let columnCount = max(2, Int(containerWidth) / columnWidth)
+
+        return Array(
+            repeating: .init(.flexible()),
+            count: columnCount
+        )
+    }
+
     private func toggleSelected(_ result: SearchResult) {
         
         if selected.contains(result.id) {
