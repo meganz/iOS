@@ -58,7 +58,8 @@ struct CameraUploadStatusImageView: View {
     private func progressView(progress: Float) -> some View {
         Circle()
             .trim(from: 0.0, to: min(CGFloat(progress), 1.0))
-            .stroke(viewModel.progressLineColor, lineWidth: 1.6)
+            .stroke(viewModel.progressLineColor,
+                    lineWidth: 1.6)
             .rotationEffect(.degrees(-90))
             .animation(.linear, value: progress)
             .frame(width: 27.5,

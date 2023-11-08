@@ -3,6 +3,16 @@
     {
       "filename" : "cuStatusUploadWarningCheckMark.pdf",
       "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "cuStatusUploadWarningCheckMarkDark.pdf",
+      "idiom" : "universal"
     }
   ],
   "info" : {
