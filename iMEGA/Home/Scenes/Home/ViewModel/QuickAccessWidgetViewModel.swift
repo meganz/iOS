@@ -18,6 +18,7 @@ final class QuickAccessWidgetViewModel: ViewModelType {
         case presentFavouritesNode(Base64HandleEntity)
         case selectOfflineTab
         case presentOfflineFileWithPath(String)
+        case showFavourites
     }
     
     // MARK: - Private properties
@@ -49,7 +50,8 @@ final class QuickAccessWidgetViewModel: ViewModelType {
                     return
                 }
                 invokeCommand(.presentOfflineFileWithPath(path))
-            case .showFavourites: break
+            case .showFavourites:
+                invokeCommand(.showFavourites)
             case .showFavouritesNode(let base64Handle):
                 invokeCommand(.presentFavouritesNode(base64Handle))
             }
