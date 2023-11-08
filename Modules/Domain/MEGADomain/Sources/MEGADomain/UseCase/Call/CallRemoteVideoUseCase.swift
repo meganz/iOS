@@ -5,8 +5,8 @@ public typealias ResolutionVideoChangeCompletion = (Result<Void, CallErrorEntity
 
 public protocol CallRemoteVideoUseCaseProtocol {
     func addRemoteVideoListener(_ remoteVideoListener: some CallRemoteVideoListenerUseCaseProtocol)
-    func enableRemoteVideo(for participant: CallParticipantEntity)
-    func disableRemoteVideo(for participant: CallParticipantEntity)
+    func enableRemoteVideo(for participant: CallParticipantEntity, isHiRes: Bool)
+    func disableRemoteVideo(for participant: CallParticipantEntity, isHiRes: Bool)
     func disableAllRemoteVideos()
     func requestHighResolutionVideo(for chatId: HandleEntity, clientId: HandleEntity, completion: ResolutionVideoChangeCompletion?)
     func stopHighResolutionVideo(for chatId: HandleEntity, clientId: HandleEntity, completion: ResolutionVideoChangeCompletion?)
@@ -15,13 +15,13 @@ public protocol CallRemoteVideoUseCaseProtocol {
 }
 
 public protocol CallRemoteVideoListenerUseCaseProtocol: AnyObject {
-    func remoteVideoFrameData(clientId: HandleEntity, width: Int, height: Int, buffer: Data)
+    func remoteVideoFrameData(clientId: HandleEntity, width: Int, height: Int, buffer: Data, isHiRes: Bool)
 }
 
 public final class CallRemoteVideoUseCase<T: CallRemoteVideoRepositoryProtocol>: CallRemoteVideoUseCaseProtocol {
     enum VideoRequestType {
-        case enableVideo(CallParticipantEntity)
-        case disableVideo(CallParticipantEntity)
+        case enableVideo(CallParticipantEntity, isHiRes: Bool)
+        case disableVideo(CallParticipantEntity, isHiRes: Bool)
         case requestHighResolutionVideo(chatId: HandleEntity, clientId: HandleEntity, completion: ResolutionVideoChangeCompletion?)
         case stopHighResolutionVideo(chatId: HandleEntity, clientId: HandleEntity, completion: ResolutionVideoChangeCompletion?)
         case requestLowResolutionVideos(chatId: HandleEntity, clientId: HandleEntity, completion: ResolutionVideoChangeCompletion?)
@@ -52,10 +52,10 @@ public final class CallRemoteVideoUseCase<T: CallRemoteVideoRepositoryProtocol>:
     
     private func requestVideo(for type: VideoRequestType) {
         switch type {
-        case let .enableVideo(participant):
-            repository.enableRemoteVideo(for: participant.chatId, clientId: participant.clientId, hiRes: participant.canReceiveVideoHiRes, remoteVideoListener: self)
-        case let .disableVideo(participant):
-            repository.disableRemoteVideo(for: participant.chatId, clientId: participant.clientId, hiRes: participant.canReceiveVideoHiRes)
+        case let .enableVideo(participant, isHiRes: isHiRes):
+            repository.enableRemoteVideo(for: participant.chatId, clientId: participant.clientId, hiRes: isHiRes, remoteVideoListener: self)
+        case let .disableVideo(participant, isHiRes: isHiRes):
+            repository.disableRemoteVideo(for: participant.chatId, clientId: participant.clientId, hiRes: isHiRes)
         case let .requestHighResolutionVideo(chatId, clientId, completion):
             repository.requestHighResolutionVideo(for: chatId, clientId: clientId, completion: completion)
         case let .stopHighResolutionVideo(chatId, clientId, completion):
@@ -71,12 +71,12 @@ public final class CallRemoteVideoUseCase<T: CallRemoteVideoRepositoryProtocol>:
         self.remoteVideoListener = remoteVideoListener
     }
     
-    public func enableRemoteVideo(for participant: CallParticipantEntity) {
-        videoRequestSubject.send(.enableVideo(participant))
+    public func enableRemoteVideo(for participant: CallParticipantEntity, isHiRes: Bool) {
+        videoRequestSubject.send(.enableVideo(participant, isHiRes: isHiRes))
     }
     
-    public func disableRemoteVideo(for participant: CallParticipantEntity) {
-        videoRequestSubject.send(.disableVideo(participant))
+    public func disableRemoteVideo(for participant: CallParticipantEntity, isHiRes: Bool) {
+        videoRequestSubject.send(.disableVideo(participant, isHiRes: isHiRes))
     }
     
     public func disableAllRemoteVideos() {
@@ -101,7 +101,7 @@ public final class CallRemoteVideoUseCase<T: CallRemoteVideoRepositoryProtocol>:
 }
 
 extension CallRemoteVideoUseCase: CallRemoteVideoListenerRepositoryProtocol {
-    public func remoteVideoFrameData(clientId: HandleEntity, width: Int, height: Int, buffer: Data) {
-        remoteVideoListener?.remoteVideoFrameData(clientId: clientId, width: width, height: height, buffer: buffer)
+    public func remoteVideoFrameData(clientId: HandleEntity, width: Int, height: Int, buffer: Data, isHiRes: Bool) {
+        remoteVideoListener?.remoteVideoFrameData(clientId: clientId, width: width, height: height, buffer: buffer, isHiRes: isHiRes)
     }
 }

@@ -32,6 +32,11 @@ class CallParticipantCell: UICollectionViewCell {
             }
         }
         
+        if participant.hasScreenShare && !participant.hasCamera {
+            avatarImageView.isHidden = false
+            videoImageView.isHidden = true
+        }
+        
         if layoutMode == .speaker && participant.isSpeakerPinned {
             borderWidth = 1
             borderColor = .systemYellow
@@ -52,7 +57,7 @@ class CallParticipantCell: UICollectionViewCell {
 }
 
 extension CallParticipantCell: CallParticipantVideoDelegate {
-    func frameData(width: Int, height: Int, buffer: Data!) {
+    func videoFrameData(width: Int, height: Int, buffer: Data!) {
         videoImageView.image = UIImage.mnz_convert(toUIImage: buffer, withWidth: width, withHeight: height)
     }
 }

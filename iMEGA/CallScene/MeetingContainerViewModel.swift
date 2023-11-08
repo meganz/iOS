@@ -25,6 +25,7 @@ enum MeetingContainerAction: ActionType {
     case showHangOrEndCallDialog
     case endCallForAll
     case participantJoinedWaitingRoom
+    case showScreenShareWarning
 }
 
 final class MeetingContainerViewModel: ViewModelType {
@@ -182,6 +183,8 @@ final class MeetingContainerViewModel: ViewModelType {
             endCallForAll()
         case .participantJoinedWaitingRoom:
             router.removeEndCallDialog(finishCountDown: false, completion: nil)
+        case .showScreenShareWarning:
+            router.showScreenShareWarning()
         }
     }
     

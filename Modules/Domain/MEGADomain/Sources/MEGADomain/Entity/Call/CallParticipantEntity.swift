@@ -1,7 +1,7 @@
 import Foundation
 
 public protocol CallParticipantVideoDelegate: AnyObject {
-    func frameData(width: Int, height: Int, buffer: Data!)
+    func videoFrameData(width: Int, height: Int, buffer: Data!)
 }
 
 public final class CallParticipantEntity {
@@ -81,9 +81,24 @@ public final class CallParticipantEntity {
         self.isHiResScreenShare = isHiResScreenShare
     }
     
-    public func remoteVideoFrame(width: Int, height: Int, buffer: Data!) {
-        videoDataDelegate?.frameData(width: width, height: height, buffer: buffer)
-        speakerVideoDataDelegate?.frameData(width: width, height: height, buffer: buffer)
+    public func remoteVideoFrame(width: Int, height: Int, buffer: Data!, isHiRes: Bool) {
+        if isVideoHiRes && isVideoLowRes {
+            if isHiRes {
+                speakerVideoDataDelegate?.videoFrameData(width: width, height: height, buffer: buffer)
+            }
+            if hasScreenShare {
+                if !isHiRes {
+                    videoDataDelegate?.videoFrameData(width: width, height: height, buffer: buffer)
+                }
+            } else {
+                if isHiRes {
+                    videoDataDelegate?.videoFrameData(width: width, height: height, buffer: buffer)
+                }
+            }
+        } else {
+            videoDataDelegate?.videoFrameData(width: width, height: height, buffer: buffer)
+            speakerVideoDataDelegate?.videoFrameData(width: width, height: height, buffer: buffer)
+        }
     }
 }
 
