@@ -156,7 +156,7 @@ final class ScheduledMeetingOccurrencesViewModel: ObservableObject {
             options.append(
                 OccurrenceContextMenuOption(
                     title: Strings.Localizable.edit,
-                    imageName: Asset.Images.NodeActions.edittext.name
+                    image: .edittext
                 ) { [weak self] occurrence in
                     guard let self,
                             let occurrenceIndex = displayOccurrences.firstIndex(of: occurrence) else {
@@ -178,7 +178,7 @@ final class ScheduledMeetingOccurrencesViewModel: ObservableObject {
             options.append(
                 OccurrenceContextMenuOption(
                     title: Strings.Localizable.Meetings.Scheduled.ContextMenu.cancel,
-                    imageName: Asset.Images.NodeActions.rubbishBin.name
+                    image: .rubbishBin
                 ) { [weak self] occurrence in
                     guard let self else { return }
                     cancelOccurrenceTapped(occurrence)

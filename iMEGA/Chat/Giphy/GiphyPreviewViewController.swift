@@ -43,7 +43,7 @@ class GiphyPreviewViewController: UIViewController {
         previewImageView.autoPinEdge(toSuperviewEdge: .right)
         previewImageView.autoMatch(.height, to: .width, of: view, withMultiplier: ratio)
         previewImageView.sd_setImage(with: URL(string: giphy.webp))
-        previewImageView.backgroundColor = UIColor(patternImage: Asset.Images.Chat.giphyCellBackground.image)
+        previewImageView.backgroundColor = UIColor(patternImage: UIImage.giphyCellBackground)
     }
 }
 

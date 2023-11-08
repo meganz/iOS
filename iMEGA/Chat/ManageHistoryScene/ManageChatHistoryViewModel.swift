@@ -285,7 +285,7 @@ final class ManageChatHistoryViewModel: ViewModelType {
                     let message = self.isChatTypeMeeting
                         ? Strings.Localizable.Meetings.Info.ManageMeetingHistory.meetingHistoryHasBeenCleared
                         : Strings.Localizable.chatHistoryHasBeenCleared
-                    self.invokeCommand?(.showResult(.content(Asset.Images.Chat.ContactDetails.clearChatHistory.image, message)))
+                    self.invokeCommand?(.showResult(.content(UIImage.clearChatHistory, message)))
                     
                 case .failure:
                     self.invokeCommand?(.showResult(.error(Strings.Localizable.AnErrorHasOccurred.theChatHistoryHasNotBeenSuccessfullyCleared)))

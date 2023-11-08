@@ -18,14 +18,14 @@ enum ChatRoomParticipantPrivilege: String, CaseIterable {
         }
     }
     
-    var imageName: String {
+    var image: ImageResource {
         switch self {
         case .unknown, .removed, .readOnly:
-            return Asset.Images.ActionSheetIcons.ChatPermissions.readOnlyChat.name
+            return .readOnlyChat
         case .standard:
-            return Asset.Images.ActionSheetIcons.ChatPermissions.standard.name
+            return .standard
         case .moderator:
-            return Asset.Images.ActionSheetIcons.ChatPermissions.moderator.name
+            return .moderator
         }
     }
 }

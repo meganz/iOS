@@ -5,7 +5,7 @@ struct ToggleView: View {
         static let viewHeight: CGFloat = 44
     }
     
-    let image: String?
+    let image: ImageResource?
     let text: String
     var enabled: Bool = true
     @Binding var isOn: Bool

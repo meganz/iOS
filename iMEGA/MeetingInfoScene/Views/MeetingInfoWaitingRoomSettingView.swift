@@ -9,7 +9,7 @@ struct MeetingInfoWaitingRoomSettingView: View {
     var body: some View {
         VStack {
             ToggleView(
-                image: Asset.Images.Meetings.Info.enableWaitingRoom.name,
+                image: .enableWaitingRoom,
                 text: Strings.Localizable.Meetings.ScheduleMeeting.waitingRoom,
                 enabled: shouldAllowEditingWaitingRoom,
                 isOn: $isWaitingRoomOn)

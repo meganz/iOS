@@ -101,12 +101,7 @@ private struct ChatRoomContentView: View {
                     Button {
                         contextMenuOption.action()
                     } label: {
-                        HStack(spacing: 0) {
-                            Image(contextMenuOption.image)
-                            Text(contextMenuOption.title)
-                                .fontWeight(.bold)
-                                .font(.title)
-                        }
+                        HorizontalImageTextLabel(image: UIImage(resource: contextMenuOption.image), text: contextMenuOption.title)
                     }
                 }
             }

@@ -119,7 +119,7 @@ extension GroupChatDetailsViewController {
     
     @objc func configureAllowNonHostToAddParticipantsCell(_ cell: GroupChatDetailsViewTableViewCell) {
         cell.nameLabel.text = Strings.Localizable.Meetings.AddContacts.AllowNonHost.message
-        cell.leftImageView.image = Asset.Images.Contacts.addContact.image
+        cell.leftImageView.image = UIImage.addContact
         cell.controlSwitch.isOn = chatRoom.isOpenInviteEnabled
         cell.delegate = self
     }

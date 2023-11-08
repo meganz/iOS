@@ -3,7 +3,6 @@ import MEGASwiftUI
 import SwiftUI
 
 struct EmptyMediaDiscoveryContentView: View {
-    
     let image: UIImage
     let title: String
     let menuActionHandler: (EmptyMediaDiscoveryContentMenuAction) -> Void
