@@ -103,21 +103,21 @@ public struct SearchResultsView: View {
                             }
                     }
                 }
-            }
-            .padding(.horizontal, 8)
+                .padding(.horizontal, 8)
 
-            LazyVGrid(
-                columns: viewModel.columns(geo.size.width)
-            ) {
-                ForEach(Array(viewModel.fileListItems.enumerated()), id: \.element.id) { index, item in
-                    SearchResultThumbnailItemView(viewModel: item)
-                        .taskForiOS14 {
-                            await viewModel.loadMoreIfNeededThumbnailMode(at: index, isFile: true)
-                        }
+                LazyVGrid(
+                    columns: viewModel.columns(geo.size.width)
+                ) {
+                    ForEach(Array(viewModel.fileListItems.enumerated()), id: \.element.id) { index, item in
+                        SearchResultThumbnailItemView(viewModel: item)
+                            .taskForiOS14 {
+                                await viewModel.loadMoreIfNeededThumbnailMode(at: index, isFile: true)
+                            }
+                    }
                 }
+                .padding(.horizontal, 8)
             }
         }
-        .padding(.horizontal, 8)
     }
 
     private var changeModeButton: some View {
