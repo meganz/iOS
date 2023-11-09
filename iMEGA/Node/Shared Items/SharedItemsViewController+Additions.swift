@@ -392,6 +392,27 @@ extension SharedItemsViewController {
         }
         return Strings.Localizable.General.Format.itemsSelected(selectedCount)
     }
+    
+    @objc func configureButtons() {
+        let buttonConfigurations: [(button: UIButton?, title: String)] = [
+            (self.incomingButton, Strings.Localizable.incoming),
+            (self.outgoingButton, Strings.Localizable.outgoing),
+            (self.linksButton, Strings.Localizable.links)
+        ]
+        
+        for (button, title) in buttonConfigurations {
+            guard let button else { continue }
+            
+            var container = AttributeContainer()
+            container.underlineStyle = .single
+            
+            button.configurationUpdateHandler = { configuredButton in
+                let isSelected = configuredButton.state == .selected
+                container.font = UIFont.preferredFont(style: .caption2, weight: isSelected ? .semibold : .regular)
+                configuredButton.configuration?.attributedTitle = AttributedString(title, attributes: container)
+            }
+        }
+    }
 }
 
 // MARK: - SharedItemsTableViewCellDelegate

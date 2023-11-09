@@ -181,16 +181,16 @@ class LocalUserView: UIView {
         switch corner {
         case .topLeft:
             x = Constants.fixedMargin + iPhoneXOffset
-            y = Constants.fixedMargin + UIApplication.shared.windows[0].safeAreaInsets.top + (navigationHidden ? 0 : 44)
+            y = Constants.fixedMargin + (UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0) + (navigationHidden ? 0 : 44)
         case .topRight:
             x = superview.frame.size.width - frame.size.width - Constants.fixedMargin - iPhoneXOffset
-            y = Constants.fixedMargin + UIApplication.shared.windows[0].safeAreaInsets.top  + (navigationHidden ? 0 : 44)
+            y = Constants.fixedMargin + (UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0)  + (navigationHidden ? 0 : 44)
         case .bottomLeft:
             x = Constants.fixedMargin + iPhoneXOffset
-            y = superview.frame.size.height - frame.size.height - UIApplication.shared.windows[0].safeAreaInsets.bottom - Constants.fixedMargin
+            y = superview.frame.size.height - frame.size.height - (UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0) - Constants.fixedMargin
         case .bottomRight:
             x = superview.frame.size.width - frame.size.width - Constants.fixedMargin - iPhoneXOffset
-            y = superview.frame.size.height - frame.size.height - UIApplication.shared.windows[0].safeAreaInsets.bottom - Constants.fixedMargin
+            y = superview.frame.size.height - frame.size.height - (UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0) - Constants.fixedMargin
         }
         
         return CGPoint(x: x, y: y)

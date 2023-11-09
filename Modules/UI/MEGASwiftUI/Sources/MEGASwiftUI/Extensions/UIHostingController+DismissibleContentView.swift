@@ -1,6 +1,5 @@
 import SwiftUI
 
-@available(iOS, deprecated: 15.0, message: "Use EnvironmentValues.dismiss that is available in iOS 15.")
 public protocol DismissibleContentView {
     var invokeDismiss: (() -> Void)? { get set }
 }

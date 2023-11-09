@@ -1,5 +1,4 @@
 import LinkPresentation
-import MobileCoreServices
 
 class MeetingLinkPresentationItemSource: NSObject, UIActivityItemSource {
     private let metadata: LPLinkMetadata

@@ -1,8 +1,8 @@
 import Foundation
 import MEGADomain
 import MEGASwift
-import MobileCoreServices
 import Photos
+import UniformTypeIdentifiers
 
 extension PHAsset {
     
@@ -29,11 +29,12 @@ extension PHAsset {
     
     /// Check if the current asset is a raw image or not
     @objc var mnz_isRawImage: Bool {
-        guard let resource = searchResource(by: [.photo, .alternatePhoto]) else {
+        guard let resource = searchResource(by: [.photo, .alternatePhoto]),
+              let resourceType = UTType(filenameExtension: resource.originalFilename.pathExtension) else {
             return mediaType == .image && mediaSubtypes.contains(.mnz_rawImage)
         }
         
-        return UTTypeConformsTo(resource.uniformTypeIdentifier as CFString, kUTTypeRawImage)
+        return resourceType.conforms(to: UTType.rawImage)
     }
     
     @objc var mnz_isLivePhoto: Bool {

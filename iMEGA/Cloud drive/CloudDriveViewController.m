@@ -2,7 +2,6 @@
 
 #import <AVFoundation/AVCaptureDevice.h>
 #import <AVFoundation/AVMediaFormat.h>
-#import <MobileCoreServices/MobileCoreServices.h>
 #import <VisionKit/VisionKit.h>
 #import <PDFKit/PDFKit.h>
 

@@ -1,6 +1,7 @@
 import CoreServices
 import Photos
 import UIKit
+import UniformTypeIdentifiers
 
 final class UploadImagePickerViewController: UIImagePickerController {
 
@@ -74,12 +75,12 @@ extension UploadImagePickerViewController: UIImagePickerControllerDelegate, UINa
     ) {
         guard let mediaType = info[InfoKey.mediaType] as? String else { return }
 
-        if mediaType == (kUTTypeImage as String) {
+        if mediaType == UTType.image.identifier {
             processImageType(with: info[.originalImage] as! UIImage)
             return
         }
 
-        if mediaType == (kUTTypeMovie as String) {
+        if mediaType == UTType.movie.identifier {
             processMovieType(with: info[.mediaURL] as! URL)
             return
         }

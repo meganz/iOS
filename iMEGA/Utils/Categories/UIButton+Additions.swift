@@ -87,33 +87,6 @@ extension UIButton {
         removeLayer()
     }
     
-    @objc func mnz_alignImageAndTitleVertically(padding: CGFloat) {
-        guard let imageView = imageView,
-              let titleLabel = titleLabel else {
-                  return
-              }
-        
-        let imageSize = imageView.frame.size
-        let titleSize = titleLabel.frame.size
-        let totalHeight = imageSize.height + titleSize.height + padding
-
-        let imageTopValue = totalHeight - imageSize.height
-        imageEdgeInsets = UIEdgeInsets(
-            top: imageTopValue * -1,
-            left: 0,
-            bottom: 0,
-            right: titleSize.width * -1
-        )
-
-        let titleBottomValue = totalHeight - titleSize.height
-        titleEdgeInsets = UIEdgeInsets(
-            top: 0,
-            left: imageSize.width * -1,
-            bottom: titleBottomValue * -1,
-            right: 0
-        )
-    }
-    
     // MARK: - Private
     
     private func setupLayer() {

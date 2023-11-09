@@ -21,7 +21,6 @@ extension NotificationService {
 
         bestAttemptContent.categoryIdentifier = notificationInfo.startTime == .now ? ScheduleMeetingPushNotifications.startsNowCategoryIdentifier : ScheduleMeetingPushNotifications.startsInFifteenMinutesCategoryIdentifier
         bestAttemptContent.title = notificationInfo.title
-        bestAttemptContent.summaryArgument = notificationInfo.title
         bestAttemptContent.body = bodyForStartScheduledMeetingNotification(withInfo: notificationInfo)
         bestAttemptContent.sound = UNNotificationSound.default
         bestAttemptContent.userInfo = ["chatId": notificationInfo.chatId]

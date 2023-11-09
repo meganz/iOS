@@ -41,33 +41,34 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OQ5-04-k4z">
-                                <rect key="frame" x="0.0" y="92" width="414" height="50"/>
+                                <rect key="frame" x="0.0" y="92" width="414" height="57.5"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="aED-R9-RNX">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="57.5"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jG1-zV-rlv">
-                                                <rect key="frame" x="0.0" y="0.0" width="138" height="50"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="138" height="57.5"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleAspectFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B7H-d7-rZL" customClass="MEGAVerticalButton" customModule="MEGA" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="0.0" width="138" height="50"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="138" height="57.5"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
                                                         <state key="normal" title="Incoming" image="incomingSegmentControler"/>
                                                         <state key="selected">
                                                             <color key="titleColor" red="0.95294117649999999" green="0.047058823530000002" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
-                                                        <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="caption2"/>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="weight" value="regular"/>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="selectedTextStyle" value="caption2"/>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="selectedWeight" value="semibold"/>
-                                                        </userDefinedRuntimeAttributes>
+                                                        <buttonConfiguration key="configuration" style="plain" image="incomingSegmentControler" imagePlacement="top" title="Incoming">
+                                                            <backgroundConfiguration key="background">
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </backgroundConfiguration>
+                                                            <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" weight="bold"/>
+                                                            <fontDescription key="titleFontDescription" style="UICTFontTextStyleCaption2"/>
+                                                        </buttonConfiguration>
                                                         <connections>
                                                             <action selector="incomingTouchUpInside:" destination="2AR-na-hSZ" eventType="touchUpInside" id="3wR-mu-5d1"/>
                                                         </connections>
                                                     </button>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sda-hY-kL3">
-                                                        <rect key="frame" x="0.0" y="49" width="138" height="1"/>
+                                                        <rect key="frame" x="0.0" y="56.5" width="138" height="1"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="1" id="GCM-NW-gf5"/>
                                                         </constraints>
@@ -84,15 +85,21 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i0g-8u-weC">
-                                                <rect key="frame" x="138" y="0.0" width="138" height="50"/>
+                                                <rect key="frame" x="138" y="0.0" width="138" height="57.5"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IrF-Sh-NQN" customClass="MEGAVerticalButton" customModule="MEGA" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="0.0" width="138" height="50"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="138" height="57.5"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
                                                         <state key="normal" title="outgoing" image="outgoingSegmentControler"/>
                                                         <state key="selected">
                                                             <color key="titleColor" red="0.95294117649999999" green="0.047058823530000002" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
+                                                        <buttonConfiguration key="configuration" style="plain" image="outgoingSegmentControler" imagePlacement="top" title="Outgoing">
+                                                            <backgroundConfiguration key="background">
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </backgroundConfiguration>
+                                                            <fontDescription key="titleFontDescription" style="UICTFontTextStyleCaption2"/>
+                                                        </buttonConfiguration>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="caption2"/>
                                                             <userDefinedRuntimeAttribute type="string" keyPath="selectedTextStyle" value="caption2"/>
@@ -104,7 +111,7 @@
                                                         </connections>
                                                     </button>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7So-eg-Rwh">
-                                                        <rect key="frame" x="0.0" y="49" width="138" height="1"/>
+                                                        <rect key="frame" x="0.0" y="56.5" width="138" height="1"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="1" id="Qie-hd-HOg"/>
                                                         </constraints>
@@ -121,27 +128,28 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nI0-PD-DCd">
-                                                <rect key="frame" x="276" y="0.0" width="138" height="50"/>
+                                                <rect key="frame" x="276" y="0.0" width="138" height="57.5"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sHD-aL-jy5" customClass="MEGAVerticalButton" customModule="MEGA" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="0.0" width="138" height="50"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="138" height="57.5"/>
                                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="10"/>
                                                         <state key="normal" title="link" image="linksSegmentControler"/>
                                                         <state key="selected">
                                                             <color key="titleColor" red="0.95294117649999999" green="0.047058823530000002" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
-                                                        <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="caption2"/>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="selectedTextStyle" value="caption2"/>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="weight" value="regular"/>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="selectedWeight" value="semibold"/>
-                                                        </userDefinedRuntimeAttributes>
+                                                        <buttonConfiguration key="configuration" style="plain" image="linksSegmentControler" imagePlacement="top" title="Links">
+                                                            <backgroundConfiguration key="background">
+                                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </backgroundConfiguration>
+                                                            <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="small"/>
+                                                            <fontDescription key="titleFontDescription" style="UICTFontTextStyleCaption2"/>
+                                                        </buttonConfiguration>
                                                         <connections>
                                                             <action selector="linksTouchUpInside:" destination="2AR-na-hSZ" eventType="touchUpInside" id="tut-1z-P85"/>
                                                         </connections>
                                                     </button>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9uF-Cm-O0m">
-                                                        <rect key="frame" x="0.0" y="49" width="138" height="1"/>
+                                                        <rect key="frame" x="0.0" y="56.5" width="138" height="1"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="1" id="hZk-d8-BeY"/>
                                                         </constraints>
@@ -169,7 +177,7 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="-1" estimatedRowHeight="60" sectionHeaderHeight="-1" sectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="bc0-wE-0j5">
-                                <rect key="frame" x="0.0" y="142" width="414" height="720"/>
+                                <rect key="frame" x="0.0" y="149.5" width="414" height="712.5"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" selectionStyle="default" indentationLevel="1" indentationWidth="60" shouldIndentWhileEditing="NO" reuseIdentifier="nodeCell" id="kaG-HS-c3J" customClass="NodeTableViewCell">
@@ -441,17 +449,8 @@
         </scene>
     </scenes>
     <designables>
-        <designable name="B7H-d7-rZL">
-            <size key="intrinsicContentSize" width="70" height="24"/>
-        </designable>
-        <designable name="IrF-Sh-NQN">
-            <size key="intrinsicContentSize" width="68" height="24"/>
-        </designable>
         <designable name="ggt-c4-txk">
             <size key="intrinsicContentSize" width="31" height="18"/>
-        </designable>
-        <designable name="sHD-aL-jy5">
-            <size key="intrinsicContentSize" width="42" height="24"/>
         </designable>
     </designables>
     <resources>

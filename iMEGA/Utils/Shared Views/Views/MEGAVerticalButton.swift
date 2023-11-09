@@ -1,14 +1,13 @@
 import UIKit
 
-@IBDesignable
-final class MEGAVerticalButton: MEGAButton {
+final class MEGAVerticalButton: UIButton {
     private var badgeView: UIView?
     private var badgeLabel: UILabel?
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    override func awakeFromNib() {
+        super.awakeFromNib()
         
-        mnz_alignImageAndTitleVertically(padding: 0.0)
+        titleLabel?.adjustsFontForContentSizeCategory = true
     }
     
     // MARK: - Badge
@@ -49,7 +48,7 @@ final class MEGAVerticalButton: MEGAButton {
             badgeView.widthAnchor.constraint(greaterThanOrEqualToConstant: 18),
             badgeView.heightAnchor.constraint(equalToConstant: 18),
             badgeView.bottomAnchor.constraint(equalTo: imageView.topAnchor, constant: 14),
-            badgeView.leadingAnchor.constraint(equalTo: imageView.leadingAnchor, constant: (imageView.frame.width / 2) + 6),
+            badgeView.leadingAnchor.constraint(equalTo: imageView.leadingAnchor, constant: (imageView.frame.width / 2) + 16),
             badgeLabel.leadingAnchor.constraint(equalTo: badgeView.leadingAnchor, constant: 4),
             badgeLabel.trailingAnchor.constraint(equalTo: badgeView.trailingAnchor, constant: -4),
             badgeLabel.topAnchor.constraint(equalTo: badgeView.topAnchor, constant: 2),

@@ -7,11 +7,11 @@ class ChatBottomNewMessageIndicatorView: UIView {
     
     private lazy var badgeLabel: UIButton = {
         let label = UIButton()
-        label.setTitle("", for: .normal)
-        label.contentEdgeInsets =  UIEdgeInsets(top: 3, left: 5, bottom: 3, right: 5)
+        var config = UIButton.Configuration.plain()
+        config.contentInsets = NSDirectionalEdgeInsets(top: 3, leading: 5, bottom: 3, trailing: 5)
+        label.configuration = config
         label.backgroundColor = #colorLiteral(red: 0.2, green: 0.2, blue: 0.2039215686, alpha: 0.9)
         label.layer.cornerRadius = 10
-        label.titleLabel?.font = .systemFont(ofSize: 11, weight: .medium)
         label.clipsToBounds = true
         label.layer.borderWidth = 1
         label.isUserInteractionEnabled = false
@@ -34,7 +34,10 @@ class ChatBottomNewMessageIndicatorView: UIView {
                 badgeLabel.isHidden = true
             } else {
                 badgeLabel.isHidden = false
-                badgeLabel.setTitle(unreadNewMessagesCount > 99 ? "99+" : "\(unreadNewMessagesCount)", for: .normal)
+                var attributed = AttributedString((unreadNewMessagesCount > 99) ? "99+" : "\(unreadNewMessagesCount)")
+                attributed.font = .systemFont(ofSize: 11, weight: .medium)
+                attributed.foregroundColor = .mnz_label()
+                badgeLabel.configuration?.attributedTitle = attributed
                 badgeLabel.flex.markDirty()
                 rootFlexContainer.flex.layout()
             }

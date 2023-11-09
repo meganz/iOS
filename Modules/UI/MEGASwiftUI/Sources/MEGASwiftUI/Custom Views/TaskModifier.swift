@@ -97,7 +97,6 @@ public extension View {
     /// - Note: On iOS 15 and later, this modifier is obsolete and has no effect due to the availability
     ///         of the native `task(priority:_:)` modifier. On iOS 14 and lower, it creates a custom `Task`
     ///         using `onAppear` and `onDisappear` modifiers to handle the asynchronous action.
-    @available(iOS, obsoleted: 15.0, message: "task(priority:_:) is available on iOS 15.")
     func taskForiOS14(
         priority: TaskPriority = .userInitiated,
         @_inheritActorContext _ action: @escaping @Sendable () async -> Void
@@ -119,7 +118,6 @@ public extension View {
     ///         to execute the provided action. On iOS 14 and lower, it creates a custom `Task`
     ///         using `onAppear` and `onDisappear` modifiers to handle the asynchronous action.
     ///         If the action throws an error, the task will be cancelled.
-    @available(iOS, obsoleted: 15.0, message: "task(priority:_:) is available on iOS 15.")
     func throwingTaskForiOS14(
         priority: TaskPriority = .userInitiated,
         @_inheritActorContext _ action: @escaping @Sendable () async throws -> Void

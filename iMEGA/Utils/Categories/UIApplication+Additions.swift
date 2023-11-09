@@ -34,6 +34,7 @@ extension UIApplication {
     }
     
     var keyWindow: UIWindow? {
-        UIApplication.shared.windows.first(where: \.isKeyWindow)
+        guard let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene else { return nil }
+        return scene.windows.first(where: \.isKeyWindow)
     }
 }

@@ -67,8 +67,8 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        stackViewTopConstraint.constant = UIApplication.shared.windows[0].safeAreaInsets.top
-        stackViewBottomConstraint.constant = UIApplication.shared.windows[0].safeAreaInsets.bottom
+        stackViewTopConstraint.constant = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0
+        stackViewBottomConstraint.constant = UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0
         
         navigationController?.navigationBar.isTranslucent = true
         overrideUserInterfaceStyle = .dark

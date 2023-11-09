@@ -31,17 +31,21 @@ class ReactionEmojiButton: UIButton {
         
         let attributedEmoji = NSAttributedString(string: emoji, attributes: [NSAttributedString.Key.font: UIFont(name: "Apple color emoji", size: 22) as Any])
         let attributedCount = NSAttributedString(string: " \(count)", attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13, weight: .medium),
-                                                                                   NSAttributedString.Key.baselineOffset: 3
-                                                                                  
-        ])
-        setTitleColor(.mnz_label(), for: .normal)
+                                                                                   NSAttributedString.Key.baselineOffset: 3])
+        
         let attributedString = NSMutableAttributedString()
         attributedString.append(attributedEmoji)
         attributedString.append(attributedCount)
+
+        var attributed = AttributedString(attributedString)
+        attributed.foregroundColor = .mnz_label()
+        
+        var config = UIButton.Configuration.plain()
+        config.attributedTitle = attributed
+        config.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8)
+        configuration = config
         
         contentVerticalAlignment = .center
-        setAttributedTitle(attributedString, for: .normal)
-        contentEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
         
         layer.borderWidth = 1
         layer.cornerRadius = 12

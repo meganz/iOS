@@ -2,7 +2,7 @@ import Combine
 import CoreSpotlight
 import MEGADomain
 import MEGASDKRepo
-import MobileCoreServices
+import UniformTypeIdentifiers
 
 final class SpotlightIndexer: NSObject {
     private let sdk: MEGASdk
@@ -102,7 +102,7 @@ final class SpotlightIndexer: NSObject {
     }
     
     private func searchableItem(node: NodeEntity) -> CSSearchableItem {
-        let attributeSet = CSSearchableItemAttributeSet(itemContentType: kUTTypeData as String)
+        let attributeSet = CSSearchableItemAttributeSet(itemContentType: UTType.data.identifier)
         attributeSet.title = node.name
         
         if node.isFile {

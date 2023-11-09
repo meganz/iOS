@@ -1,7 +1,7 @@
 #import "ShareAttachment.h"
 
 #import <ContactsUI/ContactsUI.h>
-#import <MobileCoreServices/MobileCoreServices.h>
+#import <UniformTypeIdentifiers/UTCoreTypes.h>
 
 #import "MEGAShare-Swift.h"
 #import "NSString+MNZCategory.h"
@@ -28,7 +28,7 @@ static NSMutableArray<ShareAttachment *> *_attachmentsArray;
 
 + (void)addImage:(UIImage *)image fromItemProvider:(NSItemProvider *)itemProvider {
     ShareAttachment *shareAttachment = [[ShareAttachment alloc] init];
-    BOOL isPNG = [itemProvider hasItemConformingToTypeIdentifier:(NSString *)kUTTypePNG];
+    BOOL isPNG = [itemProvider hasItemConformingToTypeIdentifier:UTTypePNG.identifier];
     shareAttachment.type = isPNG ? ShareAttachmentTypePNG : ShareAttachmentTypeImage;
     shareAttachment.name = [ShareAttachment suggestedNameForImageWithItemProvider:itemProvider];
     shareAttachment.content = image;
@@ -110,7 +110,7 @@ static NSMutableArray<ShareAttachment *> *_attachmentsArray;
     
     if (!suggestedName) {
         NSString *name = [NSUUID UUID].UUIDString;
-        NSString *extension = [itemProvider hasItemConformingToTypeIdentifier:(NSString *)kUTTypePNG] ? @"png" : @"jpg";
+        NSString *extension = [itemProvider hasItemConformingToTypeIdentifier:UTTypePNG.identifier] ? @"png" : @"jpg";
         suggestedName = [NSString stringWithFormat:@"%@.%@", name, extension];
     }
     

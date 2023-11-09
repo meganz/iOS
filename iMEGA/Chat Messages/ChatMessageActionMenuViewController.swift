@@ -300,7 +300,6 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
                 emojiView.setImage(UIImage(resource: .addReactionSmall), for: .normal)
                 emojiView.backgroundColor = UIColor.mnz_emoji(self.traitCollection)
                 emojiView.imageView?.contentMode = .scaleAspectFit
-                emojiView.imageEdgeInsets = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
                 emojiView.addTarget(self, action: #selector(addMorePress(_:)), for: .touchUpInside)
             }
             emojiView.heightAnchor.constraint(equalToConstant: 44).isActive = true
