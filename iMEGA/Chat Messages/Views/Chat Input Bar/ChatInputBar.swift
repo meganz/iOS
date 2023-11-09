@@ -78,12 +78,15 @@ class ChatInputBar: UIView {
 
                 voiceClipInputBar = VoiceClipInputBar.instanceFromNib
                 voiceClipInputBar.delegate = self
-                addSubview(voiceClipInputBar)
-                voiceClipInputBar.autoPinEdgesToSuperviewEdges(with: .zero, excludingEdge: .top)
+                
+                self.wrap(voiceClipInputBar, excludeConstraints: [.top])
+               
                 let voiceClipInputBarHeight = (traitCollection.verticalSizeClass == .compact) ? voiceClipInputBarRegularHeight - 100: voiceClipInputBarRegularHeight
                 let voiceClipInputBarHeightConstraint = voiceClipInputBar.heightAnchor.constraint(equalToConstant: 0)
                 voiceClipInputBarHeightConstraint.isActive = true
-                voiceClipInputBar.autoPinEdge(.top, to: .bottom, of: messageInputBar)
+                
+                voiceClipInputBar.topAnchor.constraint(equalTo: messageInputBar.bottomAnchor).isActive = true
+                
                 layoutIfNeeded()
                 
                 UIView.animate(withDuration: animationDuration, animations: {
@@ -109,7 +112,8 @@ class ChatInputBar: UIView {
                     voiceClipInputBarHeightConstraint.constant = 0.0
                     self.layoutIfNeeded()
                 }, completion: { _ in
-                    self.messageInputBar.autoPinEdge(toSuperviewEdge: .bottom)
+                    
+                    self.messageInputBar.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
 
                     self.voiceClipInputBar.startRecordingView.isHidden = false
                     self.voiceClipInputBar.trashView.isHidden = false
@@ -240,8 +244,7 @@ class ChatInputBar: UIView {
         }
         
         messageInputBar.delegate = self
-        addSubview(messageInputBar)
-        messageInputBar.autoPinEdgesToSuperviewEdges()
+        self.wrap(messageInputBar)
     }
     
     private func voiceInputBarToTextInputSwitch(completionBlock: (() -> Void)? = nil) {
@@ -279,8 +282,7 @@ class ChatInputBar: UIView {
         audioRecordingInputBar.delegate = self
         
         audioRecordingInputBar.alpha = 0.0
-        addSubview(audioRecordingInputBar)
-        audioRecordingInputBar.autoPinEdgesToSuperviewEdges()
+        self.wrap(audioRecordingInputBar)
         
         audioRecordingInputBar.startRecording()
         

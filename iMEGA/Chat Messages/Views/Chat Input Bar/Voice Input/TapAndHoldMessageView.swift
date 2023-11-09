@@ -32,8 +32,7 @@ class TapAndHoldMessageView: UIView {
     
     func add(toView view: UIView, bottom: CGFloat) {
         alpha = 0.0
-        view.addSubview(self)
-        autoPinEdgesToSuperviewEdges(with: UIEdgeInsets(top: 0.0, left: 0.0, bottom: bottom, right: 0.0))
+        view.wrap(self, edgeInsets: .init(top: 0, left: 0, bottom: bottom, right: 0))
         UINotificationFeedbackGenerator().notificationOccurred(.error)
         
         UIView.animate(withDuration: 0.4, animations: {

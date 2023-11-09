@@ -43,8 +43,7 @@ class AudioRecordingInputBar: UIView {
                 
         suggestionLabel.text = Strings.Localizable.dragLeftToCancelReleaseToSend
         audioWavesView = AudioWavesView.instanceFromNib
-        audioWavesholderView.addSubview(audioWavesView)
-        audioWavesView.autoPinEdgesToSuperviewEdges()
+        audioWavesholderView.wrap(audioWavesView)
         updateAppearance()
 
         audioRecorder.updateHandler = {[weak self] timeString, level in

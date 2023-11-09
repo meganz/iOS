@@ -12,7 +12,12 @@ class ChatLocationCollectionViewCell: MessageContentCell {
     
     /// Responsible for setting up the constraints of the cell's subviews.
     open func setupConstraints() {
-        locationView.autoPinEdgesToSuperviewEdges()
+        NSLayoutConstraint.activate([
+            locationView.topAnchor.constraint(equalTo: messageContainerView.topAnchor),
+            locationView.leadingAnchor.constraint(equalTo: messageContainerView.leadingAnchor),
+            locationView.bottomAnchor.constraint(equalTo: messageContainerView.bottomAnchor),
+            locationView.trailingAnchor.constraint(equalTo: messageContainerView.trailingAnchor)
+        ])
     }
     
     open override func setupSubviews() {

@@ -30,9 +30,8 @@ class VoiceClipInputBar: UIView {
         super.awakeFromNib()
         sendImageView.renderImage(withColor: .white)
         
-        audioWavesView = AudioWavesView.instanceFromNib
-        audioWavesholderView.addSubview(audioWavesView)
-        audioWavesView.autoPinEdgesToSuperviewEdges()
+        audioWavesView = AudioWavesView.instanceFromNib        
+        audioWavesholderView.wrap(audioWavesView)
         
         updateAppearance()
     }

@@ -14,6 +14,7 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
 
     open var waveView: UIImageView = {
         let waveView = UIImageView(image: UIImage(resource: .waveform0000))
+        waveView.translatesAutoresizingMaskIntoConstraints = false
         waveView.animationDuration = 1
         waveView.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: Dimensions.waveViewSize)
         return waveView
@@ -21,6 +22,7 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
     
     open var loadingIndicator: UIActivityIndicatorView = {
         let loadingIndicator = UIActivityIndicatorView()
+        loadingIndicator.translatesAutoresizingMaskIntoConstraints = false
         loadingIndicator.startAnimating()
         loadingIndicator.isHidden = true
         return loadingIndicator
@@ -36,22 +38,37 @@ class ChatVoiceClipCollectionViewCell: AudioMessageCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func setupConstraints() {
-        playButton.autoPinEdge(toSuperviewEdge: .leading, withInset: Dimensions.itemSpacing)
-        playButton.autoAlignAxis(toSuperviewAxis: .horizontal)
-        playButton.autoSetDimensions(to: Dimensions.playButtonSize)
-        durationLabel.autoPinEdge(.leading, to: .trailing, of: playButton, withOffset: Dimensions.itemSpacing)
-        durationLabel.autoPinEdge(.trailing, to: .leading, of: waveView, withOffset: Dimensions.itemSpacing)
-        durationLabel.autoAlignAxis(toSuperviewAxis: .horizontal)
+    override func setupConstraints() {        
+        playButton.translatesAutoresizingMaskIntoConstraints = false
         
-        waveView.autoPinEdge(toSuperviewEdge: .trailing, withInset: Dimensions.itemSpacing)
-        waveView.autoAlignAxis(toSuperviewAxis: .horizontal)
-        waveView.autoSetDimensions(to: Dimensions.waveViewSize)
+        NSLayoutConstraint.activate([
+            playButton.leadingAnchor.constraint(equalTo: messageContainerView.leadingAnchor, constant: Dimensions.itemSpacing),
+            playButton.centerYAnchor.constraint(equalTo: messageContainerView.centerYAnchor),
+            playButton.widthAnchor.constraint(equalToConstant: Dimensions.playButtonSize.width),
+            playButton.heightAnchor.constraint(equalToConstant: Dimensions.playButtonSize.height)
+        ])
+        
+        durationLabel.translatesAutoresizingMaskIntoConstraints = false
 
-        loadingIndicator.autoPinEdge(.left, to: .left, of: playButton)
-        loadingIndicator.autoPinEdge(.right, to: .right, of: playButton)
-        loadingIndicator.autoPinEdge(.top, to: .top, of: playButton)
-        loadingIndicator.autoPinEdge(.bottom, to: .bottom, of: playButton)
+        NSLayoutConstraint.activate([
+            durationLabel.leadingAnchor.constraint(equalTo: playButton.trailingAnchor, constant: Dimensions.itemSpacing),
+            durationLabel.trailingAnchor.constraint(equalTo: waveView.leadingAnchor, constant: -Dimensions.itemSpacing),
+            durationLabel.centerYAnchor.constraint(equalTo: messageContainerView.centerYAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            waveView.trailingAnchor.constraint(equalTo: messageContainerView.trailingAnchor, constant: -Dimensions.itemSpacing),
+            waveView.centerYAnchor.constraint(equalTo: messageContainerView.centerYAnchor),
+            waveView.widthAnchor.constraint(equalToConstant: Dimensions.waveViewSize.width),
+            waveView.heightAnchor.constraint(equalToConstant: Dimensions.waveViewSize.height)
+        ])
+        
+        NSLayoutConstraint.activate([
+            loadingIndicator.leadingAnchor.constraint(equalTo: playButton.leadingAnchor),
+            loadingIndicator.trailingAnchor.constraint(equalTo: playButton.trailingAnchor),
+            loadingIndicator.topAnchor.constraint(equalTo: playButton.topAnchor),
+            loadingIndicator.bottomAnchor.constraint(equalTo: playButton.bottomAnchor)
+        ])
     }
     
     open override func setupSubviews() {

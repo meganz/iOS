@@ -27,8 +27,7 @@ class AddToChatMenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.addSubview(menuView)
-        menuView.autoPinEdgesToSuperviewEdges()
+        view.wrap(menuView)
     }
 }
 

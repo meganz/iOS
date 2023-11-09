@@ -97,10 +97,17 @@ class AddToChatCameraCollectionCell: UICollectionViewCell {
         }
         
         let lifeFeedFadingView = UIView()
+        lifeFeedFadingView.translatesAutoresizingMaskIntoConstraints = false
         lifeFeedFadingView.backgroundColor = .black
         mainView.insertSubview(lifeFeedFadingView, aboveSubview: liveFeedView)
-        lifeFeedFadingView.autoPinEdgesToSuperviewEdges()
         
+        NSLayoutConstraint.activate([
+            lifeFeedFadingView.leadingAnchor.constraint(equalTo: mainView.leadingAnchor),
+            lifeFeedFadingView.trailingAnchor.constraint(equalTo: mainView.trailingAnchor),
+            lifeFeedFadingView.topAnchor.constraint(equalTo: mainView.topAnchor),
+            lifeFeedFadingView.bottomAnchor.constraint(equalTo: mainView.bottomAnchor)
+        ])
+                
         UIView.animate(withDuration: 0.2, animations: {
             lifeFeedFadingView.alpha = 0.0
         }, completion: { _ in

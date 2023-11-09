@@ -4,7 +4,7 @@ import UIKit
 
 class ChatMessageActionMenuViewController: ActionSheetViewController {
     weak var chatViewController: ChatViewController?
-    private let separatorLineView = UIView.newAutoLayout()
+    private let separatorLineView = UIView()
     var emojiViews = [UIView]()
     var chatMessage: ChatMessage? {
         didSet {
