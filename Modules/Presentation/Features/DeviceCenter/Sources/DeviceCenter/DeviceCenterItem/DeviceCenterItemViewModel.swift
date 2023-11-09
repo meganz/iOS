@@ -92,8 +92,14 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
     }
     
     func showDetail() {
-        guard let router else { return }
-        if case let .device(device) = itemType {
+        switch itemType {
+        case .backup(let backup):
+            guard let nodeEntity = nodeForEntityType(),
+                    backup.type != .cameraUpload && backup.type != .mediaUpload else { return }
+            
+            deviceCenterBridge.showInBackupsActionTapped(nodeEntity)
+        case .device(let device):
+            guard let router else { return }
             let currentDeviceUUID = UIDevice.current.identifierForVendor?.uuidString ?? ""
             if device.id == currentDeviceUUID && device.status == .noCameraUploads {
                 router.showCurrentDeviceEmptyState(currentDeviceUUID, deviceName: UIDevice.current.modelName)

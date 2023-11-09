@@ -248,8 +248,6 @@ public final class BackupListViewModel: ObservableObject {
         
         if backup.type == .cameraUpload || backup.type == .mediaUpload {
             actionTypes.append(.showInCloudDrive)
-        } else {
-            actionTypes.append(.showInBackups)
         }
         
         return actionTypes.compactMap { type in
