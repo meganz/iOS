@@ -41,8 +41,8 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
     
     private let throttler = Throttler(timeInterval: 1.0, dispatchQueue: .main)
     
-    private let transferInventoryUseCase = TransferInventoryUseCase(transferInventoryRepository: TransferInventoryRepository(sdk: MEGASdkManager.sharedMEGASdk()), fileSystemRepository: FileSystemRepository.newRepo)
-    private let sharedFolderTransferInventoryUseCase = TransferInventoryUseCase(transferInventoryRepository: TransferInventoryRepository(sdk: MEGASdkManager.sharedMEGASdkFolder()), fileSystemRepository: FileSystemRepository.newRepo)
+    private let transferInventoryUseCase = TransferInventoryUseCase(transferInventoryRepository: TransferInventoryRepository(sdk: MEGASdk.shared), fileSystemRepository: FileSystemRepository.newRepo)
+    private let sharedFolderTransferInventoryUseCase = TransferInventoryUseCase(transferInventoryRepository: TransferInventoryRepository(sdk: MEGASdk.sharedFolderLink), fileSystemRepository: FileSystemRepository.newRepo)
 
     @objc func animate(progress: CGFloat, duration: TimeInterval) {
         guard let progressLayer = progressLayer else {
@@ -134,14 +134,14 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
     }
     
     private func configureDelegate() {
-        MEGASdkManager.sharedMEGASdk().add(self as (any MEGARequestDelegate))
-        MEGASdkManager.sharedMEGASdk().add(self as (any MEGATransferDelegate))
+        MEGASdk.shared.add(self as (any MEGARequestDelegate))
+        MEGASdk.shared.add(self as (any MEGATransferDelegate))
     }
     
     private func updateProgress() {
-        let transferedBytes = MEGASdkManager.sharedMEGASdk().totalsDownloadedBytes.floatValue + MEGASdkManager.sharedMEGASdk().totalsUploadedBytes.floatValue
+        let transferedBytes = MEGASdk.shared.totalsDownloadedBytes.floatValue + MEGASdk.shared.totalsUploadedBytes.floatValue
         
-        let totalBytes = MEGASdkManager.sharedMEGASdk().totalsDownloadBytes.floatValue + MEGASdkManager.sharedMEGASdk().totalsUploadBytes.floatValue
+        let totalBytes = MEGASdk.shared.totalsDownloadBytes.floatValue + MEGASdk.shared.totalsUploadBytes.floatValue
         
         progress = CGFloat(transferedBytes / totalBytes)
         
@@ -330,12 +330,12 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
     
     func onTransferFinish(_ api: MEGASdk, transfer: MEGATransfer, error: MEGAError) {
         if !transfer.isStreamingTransfer {
-            MEGASdkManager.sharedMEGASdk().completedTransfers.add(transfer)
+            MEGASdk.shared.completedTransfers.add(transfer)
         }
 
-        if MEGASdkManager.sharedMEGASdk().transfers.size.intValue == 0 {
-            MEGASdkManager.sharedMEGASdk().resetTotalUploads()
-            MEGASdkManager.sharedMEGASdk().resetTotalDownloads()
+        if MEGASdk.shared.transfers.size == 0 {
+            MEGASdk.shared.resetTotalUploads()
+            MEGASdk.shared.resetTotalDownloads()
         }
         throttler.start { [weak self] in
             guard let self else { return }
