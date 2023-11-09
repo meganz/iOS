@@ -104,12 +104,12 @@ pipeline {
                         def used_phrase = env.gitlabTriggerPhrase
                         def phased_release = used_phrase.contains("submit_appstore_auto_phased_release")
 
-                        if (used_phrase.contains("build:")) {
-                            def buildNumber = used_phrase.replaceAll(/.*build:(\d+).*/, '$1')
-                            sh "bundle exec fastlane submit_review phased_release:${phased_release} build_number:${buildNumber}"
-                        } else {
-                            sh "bundle exec fastlane submit_review phased_release:${phased_release}"
+                        if (!used_phrase.contains("build:")) {
+                            error "Submit command must contain explicit build number"
                         }
+
+                        def buildNumber = used_phrase.replaceAll(/.*build:(\d+).*/, '$1')
+                        sh "bundle exec fastlane submit_review phased_release:${phased_release} build_number:${buildNumber}"
                     }
                 }
             }
