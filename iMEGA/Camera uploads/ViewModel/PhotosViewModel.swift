@@ -10,26 +10,14 @@ final class PhotosViewModel: NSObject {
         }
     }
     
-    private var photoUpdatePublisher: PhotoUpdatePublisher
-    private var photoLibraryUseCase: any PhotoLibraryUseCaseProtocol
-    private let userAttributeUseCase: any UserAttributeUseCaseProtocol
-    
     var cameraUploadStatusButtonViewModel = CameraUploadStatusButtonViewModel(monitorCameraUploadUseCase: FakeCameraUploadSuccessfulUseCase())
     
     @objc let timelineCameraUploadStatusFeatureEnabled: Bool
     var contentConsumptionAttributeLoadingTask: Task<Void, Never>?
     
-    var cameraUploadExplorerSortOrderType: SortOrderType = .newest {
-        didSet {
-            if cameraUploadExplorerSortOrderType != oldValue {
-                photoUpdatePublisher.updatePhotoLibrary()
-            }
-        }
-    }
+    @Published private(set) var cameraUploadExplorerSortOrderType: SortOrderType = .newest
     
-    enum SortingKeys: String {
-        case cameraUploadExplorerFeed
-    }
+    private var filterOptions: PhotosFilterOptions = [.allMedia, .allLocations]
     
     var filterType: PhotosFilterOptions = .allMedia
     var filterLocation: PhotosFilterOptions = .allLocations
@@ -39,18 +27,27 @@ final class PhotosViewModel: NSObject {
     }
     var isSelectHidden: Bool = false
     
+    private var photoUpdatePublisher: PhotoUpdatePublisher
+    private var photoLibraryUseCase: any PhotoLibraryUseCaseProtocol
+    private let userAttributeUseCase: any UserAttributeUseCaseProtocol
+    private let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
+    private var subscriptions = Set<AnyCancellable>()
+    
     init(
         photoUpdatePublisher: PhotoUpdatePublisher,
         photoLibraryUseCase: some PhotoLibraryUseCaseProtocol,
         userAttributeUseCase: some UserAttributeUseCaseProtocol,
+        sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
         self.photoUpdatePublisher = photoUpdatePublisher
         self.photoLibraryUseCase = photoLibraryUseCase
         self.userAttributeUseCase = userAttributeUseCase
+        self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
         self.timelineCameraUploadStatusFeatureEnabled = featureFlagProvider.isFeatureFlagEnabled(for: .timelineCameraUploadStatus)
         super.init()
-        cameraUploadExplorerSortOrderType = sortOrderType(forKey: .cameraUploadExplorerFeed)
+        
+        monitorSortOrderSubscription()
     }
     
     @objc func onCameraAndMediaNodesUpdate(nodeList: MEGANodeList) {
@@ -121,6 +118,13 @@ final class PhotosViewModel: NSObject {
         }
     }
     
+    // MARK: - Sort
+    func update(sortOrderType: SortOrderType) {
+        sortOrderPreferenceUseCase.save(
+            sortOrder: sortOrderType.toSortOrderEntity(),
+            for: .cameraUploadExplorerFeed)
+    }
+    
     // MARK: - Private
     private func loadFilteredPhotos() async throws -> [NodeEntity] {
         let filterOptions: PhotosFilterOptions = [filterType, filterLocation]
@@ -156,6 +160,29 @@ final class PhotosViewModel: NSObject {
         }
         
         return false
+    }
+    
+    private func monitorSortOrderSubscription() {
+        sortOrderPreferenceUseCase
+            .monitorSortOrder(for: .cameraUploadExplorerFeed)
+            .map { sortOrderType -> SortOrderType in
+                switch sortOrderType.toSortOrderType() {
+                case .oldest:
+                    return .oldest
+                default:
+                    return .newest
+                }
+            }
+            .removeDuplicates()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.cameraUploadExplorerSortOrderType = $0 }
+            .store(in: &subscriptions)
+        
+        $cameraUploadExplorerSortOrderType
+            .removeDuplicates()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak photoUpdatePublisher] _ in photoUpdatePublisher?.updatePhotoLibrary() }
+            .store(in: &subscriptions)
     }
 }
 

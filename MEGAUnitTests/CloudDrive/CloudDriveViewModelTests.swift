@@ -105,16 +105,73 @@ class CloudDriveViewModelTests: XCTestCase {
         XCTAssertFalse(sut.hasMediaFiles(nodes: nodes))
     }
     
+    func testSortOrder_whereViewModeIsMediaDiscovery_shouldReturnEitherNewestOrOldest() throws {
+        
+        let expectations: [(SortOrderEntity, SortOrderType)] = [
+            (.defaultAsc, .newest),
+            (.modificationAsc, .oldest),
+            (.modificationDesc, .newest),
+            (.favouriteDesc, .newest),
+            (.favouriteAsc, .newest)
+        ]
+        
+        expectations.forEach { (arrangement, expect) in
+            // Arrange
+            let sut = makeSUT(sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: arrangement))
+            // Act
+            let result = sut.sortOrder(for: .mediaDiscovery)
+            XCTAssertEqual(result, expect, "Given SortOrderEntity \(arrangement)")
+        }
+    }
+    
+    func testSortOrder_whereViewModeIsList_shouldReturnMatchingSortOrder() throws {
+        
+        SortOrderEntity.allCases.forEach { sortOrder in
+            // Arrange
+            let sut = makeSUT(sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: sortOrder))
+            // Act
+            let result = sut.sortOrder(for: .list)
+            // Assert
+            XCTAssertEqual(result, sortOrder.toSortOrderType(), "Given SortOrderEntity \(sortOrder)")
+        }
+    }
+    
+    func testSortOrder_whereViewModeIsThumbnail_shouldReturnMatchingSortOrder() throws {
+        
+        SortOrderEntity.allCases.forEach { sortOrder in
+            // Arrange
+            let sut = makeSUT(sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: sortOrder))
+            // Act
+            let result = sut.sortOrder(for: .thumbnail)
+            // Assert
+            XCTAssertEqual(result, sortOrder.toSortOrderType(), "Given SortOrderEntity \(sortOrder)")
+        }
+    }
+    
+    func testSortOrder_whereViewModeIsPerFolder_shouldReturnMatchingSortOrder() throws {
+        
+        SortOrderEntity.allCases.forEach { sortOrder in
+            // Arrange
+            let sut = makeSUT(sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: sortOrder))
+            // Act
+            let result = sut.sortOrder(for: .perFolder)
+            // Assert
+            XCTAssertEqual(result, sortOrder.toSortOrderType(), "Given SortOrderEntity \(sortOrder)")
+        }
+    }
+    
     func makeSUT(
         parentNode: MEGANode = MockNode(handle: 1),
         shareUseCase: some ShareUseCaseProtocol = MockShareUseCase(),
         preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(dict: [:]),
+        sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol = MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc),
         file: StaticString = #file,
         line: UInt = #line
     ) -> CloudDriveViewModel {
         let sut = CloudDriveViewModel(
             parentNode: parentNode,
-            shareUseCase: shareUseCase,
+            shareUseCase: shareUseCase, 
+            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
             preferenceUseCase: preferenceUseCase)
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut

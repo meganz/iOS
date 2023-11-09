@@ -13,8 +13,14 @@ extension CloudDriveViewController {
     }
     
     @objc func createCloudDriveViewModel() -> CloudDriveViewModel {
-        CloudDriveViewModel(parentNode: parentNode,
-                            shareUseCase: ShareUseCase(repo: ShareRepository.newRepo))
+        let preferenceUseCase = PreferenceUseCase.default
+        return CloudDriveViewModel(
+            parentNode: parentNode,
+            shareUseCase: ShareUseCase(repo: ShareRepository.newRepo),
+            sortOrderPreferenceUseCase: SortOrderPreferenceUseCase(
+                preferenceUseCase: preferenceUseCase,
+                sortOrderPreferenceRepository: SortOrderPreferenceRepository.newRepo),
+            preferenceUseCase: preferenceUseCase)
     }
     
     private func updatedParentNodeIfBelongs(_ nodeList: MEGANodeList) -> MEGANode? {

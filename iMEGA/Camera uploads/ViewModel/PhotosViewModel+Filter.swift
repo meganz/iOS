@@ -2,14 +2,6 @@ import Foundation
 import MEGADomain
 
 extension PhotosViewModel {
-    // MARK: - Sort
-    
-    func sortOrderType(forKey key: SortingKeys) -> SortOrderType {
-        let sortType = SortOrderType(megaSortOrderType: Helper.sortType(for: key.rawValue))
-        return sortType != .newest && sortType != .oldest ? .newest : sortType
-    }
-    
-    // MARK: - Filter
     
     func filter(nodes: inout [NodeEntity], with type: PhotosFilterOptions) {
         if type == .allMedia {
