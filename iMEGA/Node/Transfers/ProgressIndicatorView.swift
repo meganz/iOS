@@ -107,24 +107,33 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
     
     private func configureView() {
         addSubview(arrowImageView)
-        arrowImageView.autoSetDimensions(to: CGSize(width: 28, height: 28))
-        arrowImageView.autoCenterInSuperview()
+        arrowImageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            arrowImageView.widthAnchor.constraint(equalToConstant: 28),
+            arrowImageView.heightAnchor.constraint(equalToConstant: 28),
+            arrowImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            arrowImageView.centerYAnchor.constraint(equalTo: centerYAnchor)
+        ])
         arrowImageView.contentMode = .scaleToFill
         
         addSubview(stateBadge)
-        stateBadge.autoSetDimensions(to: CGSize(width: 12, height: 12))
+        stateBadge.translatesAutoresizingMaskIntoConstraints = false
         
-        stateBadge.autoPinEdge(.right, to: .right, of: arrowImageView)
-        stateBadge.autoPinEdge(.top, to: .top, of: arrowImageView)
+        NSLayoutConstraint.activate([
+            stateBadge.widthAnchor.constraint(equalToConstant: 12),
+            stateBadge.heightAnchor.constraint(equalToConstant: 12),
+            stateBadge.trailingAnchor.constraint(equalTo: arrowImageView.trailingAnchor),
+            stateBadge.topAnchor.constraint(equalTo: arrowImageView.topAnchor)
+        ])
         
         if transfersPaused {
             stateBadge.image = Asset.Images.Transfers.Widget.Pause.combinedShape.image
         } else {
-             stateBadge.image = nil
+            stateBadge.image = nil
         }
-         
-        updateProgress()
 
+        updateProgress()
     }
     
     private func configureLayers() {

@@ -294,8 +294,7 @@ extension PhotoCarouselViewController: AlbumDelegate {
                 
                 snapshotView = view.snapshotView(afterScreenUpdates: false)
                 if let snapshotView = snapshotView {
-                    view.addSubview(snapshotView)
-                    snapshotView.autoPinEdgesToSuperviewEdges()
+                    view.wrap(snapshotView)
                 }
             }
         }
