@@ -36,10 +36,10 @@ typedef NS_ENUM(NSUInteger, MEGAAPIEnv) {
 + (void)startPendingUploadTransferIfNeeded;
 
 #pragma mark - Utils
-
+/// DEPRECATED: Migrate to the usage of SortOrderPreferenceUseCase to determine the desired sort order model.
 + (void)saveSortOrder:(MEGASortOrderType)selectedSortOrderType for:(_Nullable id)object;
+/// DEPRECATED: Migrate to the usage of SortOrderPreferenceUseCase to save the desired sort order model.
 + (MEGASortOrderType)sortTypeFor:(_Nullable id)object;
-+ (MEGASortOrderType)defaultSortType;
 
 + (void)changeApiURL;
 + (void)restoreAPISetting;
