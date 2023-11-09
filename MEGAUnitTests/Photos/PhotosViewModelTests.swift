@@ -17,21 +17,51 @@ final class PhotosViewModelTests: XCTestCase {
         let usecase = MockPhotoLibraryUseCase(allPhotos: allPhotos,
                                               allPhotosFromCloudDriveOnly: allPhotosForCloudDrive,
                                               allPhotosFromCameraUpload: allPhotosForCameraUploads)
-        sut = PhotosViewModel(photoUpdatePublisher: publisher, photoLibraryUseCase: usecase, userAttributeUseCase: MockUserAttributeUseCase(contentConsumption: ContentConsumptionEntity(ios: ContentConsumptionIos(timeline: ContentConsumptionTimeline(mediaType: .images, location: .cloudDrive, usePreference: true)))))
+        sut = PhotosViewModel(
+            photoUpdatePublisher: publisher,
+            photoLibraryUseCase: usecase,
+            userAttributeUseCase: MockUserAttributeUseCase(
+                contentConsumption: ContentConsumptionEntity(
+                    ios: ContentConsumptionIos(timeline: ContentConsumptionTimeline(mediaType: .images, location: .cloudDrive, usePreference: true)))),
+            sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc))
     }
     
-    func testLoadSortOrderType() throws {
-        Helper.save(.defaultAsc, for: PhotosViewModel.SortingKeys.cameraUploadExplorerFeed.rawValue)
-        let sortTypeUnknown = sut.sortOrderType(forKey: .cameraUploadExplorerFeed)
-        XCTAssert(sortTypeUnknown == .newest)
+    func testCameraUploadExplorerSortOrderType_whenGivenValueEqualsModificationDesc_shouldReturnNewest() async throws {
+                
+        let givenSortOrder = SortOrderEntity.modificationDesc
         
-        Helper.save(.modificationAsc, for: PhotosViewModel.SortingKeys.cameraUploadExplorerFeed.rawValue)
-        let sortTypeOldest = sut.sortOrderType(forKey: .cameraUploadExplorerFeed)
-        XCTAssert(sortTypeOldest == .oldest)
+        // Arrange
+        let sut = makePhotosViewModel(sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: givenSortOrder))
+        // Act
+        let result = await sut.$cameraUploadExplorerSortOrderType.values.first { @Sendable sort in sort == .newest }
+        // Assert
+        XCTAssertEqual(result, .newest)
+    }
+    
+    func testCameraUploadExplorerSortOrderType_whenGivenValueEqualsModificationAsc_shouldReturnOldest() async throws {
         
-        Helper.save(.modificationDesc, for: PhotosViewModel.SortingKeys.cameraUploadExplorerFeed.rawValue)
-        let sortTypeNewest = sut.sortOrderType(forKey: .cameraUploadExplorerFeed)
-        XCTAssert(sortTypeNewest == .newest)
+        let givenSortOrder = SortOrderEntity.modificationAsc
+        
+        // Arrange
+        let sut = makePhotosViewModel(sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: givenSortOrder))
+        // Act
+        let result = await sut.$cameraUploadExplorerSortOrderType
+            .values
+            .first { @Sendable sort in sort == .oldest }
+        // Assert
+        XCTAssertEqual(result, .oldest)
+    }
+    
+    func testCameraUploadExplorerSortOrderType_whenGivenValueEqualsNonModificationType_shouldReturnNewest() async throws {
+                
+        let givenSortOrder = SortOrderEntity.favouriteAsc
+        
+        // Arrange
+        let sut = makePhotosViewModel(sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: givenSortOrder))
+        // Act
+        let result = await sut.$cameraUploadExplorerSortOrderType.values.first { @Sendable sort in sort == .newest }
+        // Assert
+        XCTAssertEqual(result, .newest)
     }
     
     // MARK: - All locations test cases
@@ -57,7 +87,11 @@ final class PhotosViewModelTests: XCTestCase {
         let usecase = MockPhotoLibraryUseCase(allPhotos: photos,
                                               allPhotosFromCloudDriveOnly: [],
                                               allPhotosFromCameraUpload: [])
-        sut = PhotosViewModel(photoUpdatePublisher: publisher, photoLibraryUseCase: usecase, userAttributeUseCase: MockUserAttributeUseCase())
+        sut = PhotosViewModel(
+            photoUpdatePublisher: publisher,
+            photoLibraryUseCase: usecase,
+            userAttributeUseCase: MockUserAttributeUseCase(),
+            sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc))
         
         sut.filterType = .allMedia
         sut.filterLocation = . allLocations
@@ -209,6 +243,7 @@ final class PhotosViewModelTests: XCTestCase {
     
     private func makePhotosViewModel(
         userAttributeUseCase: some UserAttributeUseCaseProtocol = MockUserAttributeUseCase(),
+        sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol = MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> PhotosViewModel {
         let publisher = PhotoUpdatePublisher(photosViewController: PhotosViewController())
@@ -218,6 +253,7 @@ final class PhotosViewModelTests: XCTestCase {
         return PhotosViewModel(photoUpdatePublisher: publisher,
                                photoLibraryUseCase: usecase,
                                userAttributeUseCase: userAttributeUseCase,
+                               sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
                                featureFlagProvider: featureFlagProvider)
     }
 }

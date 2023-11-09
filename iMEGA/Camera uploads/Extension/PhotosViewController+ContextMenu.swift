@@ -9,7 +9,7 @@ extension PhotosViewController {
     private func contextMenuConfiguration() -> CMConfigEntity? {
         return CMConfigEntity(
             menuType: .menu(type: .timeline),
-            sortType: viewModel.sortOrderType(forKey: .cameraUploadExplorerFeed).megaSortOrderType.toSortOrderEntity(),
+            sortType: viewModel.cameraUploadExplorerSortOrderType.megaSortOrderType.toSortOrderEntity(),
             isCameraUploadExplorer: true,
             isFilterEnabled: true,
             isSelectHidden: viewModel.isSelectHidden,
@@ -155,9 +155,7 @@ extension PhotosViewController: DisplayMenuDelegate {
     }
     
     func sortMenu(didSelect sortType: SortOrderType) {
-        guard sortType != viewModel.sortOrderType(forKey: .cameraUploadExplorerFeed) else { return }
-        viewModel.cameraUploadExplorerSortOrderType = sortType
-        Helper.save(sortType.megaSortOrderType, for: PhotosViewModel.SortingKeys.cameraUploadExplorerFeed.rawValue)
+        viewModel.update(sortOrderType: sortType)
         setupNavigationBarButtons()
     }
 }

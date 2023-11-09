@@ -723,7 +723,7 @@
 		6D6749422AF84C410023FAC0 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D67493F2AF84C410023FAC0 /* Colors.xcassets */; };
 		6D6749432AF84C410023FAC0 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D67493F2AF84C410023FAC0 /* Colors.xcassets */; };
 		6D6749442AF84C410023FAC0 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D67493F2AF84C410023FAC0 /* Colors.xcassets */; };
-		6DB163F02880F953004EFBC7 /* PhotosViewModel+FilterAndSort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB163EF2880F953004EFBC7 /* PhotosViewModel+FilterAndSort.swift */; };
+		6DB163F02880F953004EFBC7 /* PhotosViewModel+Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB163EF2880F953004EFBC7 /* PhotosViewModel+Filter.swift */; };
 		6DB772CE28836A8500B75A93 /* PhotosViewController+Empty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB772CD28836A8500B75A93 /* PhotosViewController+Empty.swift */; };
 		6DD7B2362A776313007EBB20 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6DD7B2352A776313007EBB20 /* Images.xcassets */; };
 		6DD7B2372A776313007EBB20 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6DD7B2352A776313007EBB20 /* Images.xcassets */; };
@@ -3326,7 +3326,7 @@
 		6D60256528F8999A00FF9767 /* CloudDriveViewController+NodesUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+NodesUpdate.swift"; sourceTree = "<group>"; };
 		6D64B70C2A09BCB1002ECBD1 /* AccountHallViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountHallViewModel.swift; sourceTree = "<group>"; };
 		6D67493F2AF84C410023FAC0 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Colors.xcassets; path = Modules/Presentation/MEGAAssets/Sources/MEGAAssets/Resources/Colors.xcassets; sourceTree = SOURCE_ROOT; };
-		6DB163EF2880F953004EFBC7 /* PhotosViewModel+FilterAndSort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewModel+FilterAndSort.swift"; sourceTree = "<group>"; };
+		6DB163EF2880F953004EFBC7 /* PhotosViewModel+Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewModel+Filter.swift"; sourceTree = "<group>"; };
 		6DB772CD28836A8500B75A93 /* PhotosViewController+Empty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewController+Empty.swift"; sourceTree = "<group>"; };
 		6DD7B2342A7761BD007EBB20 /* MEGAAssets */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAAssets; sourceTree = "<group>"; };
 		6DD7B2352A776313007EBB20 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Modules/Presentation/MEGAAssets/Sources/MEGAAssets/Resources/Images.xcassets; sourceTree = SOURCE_ROOT; };
@@ -8030,7 +8030,7 @@
 			isa = PBXGroup;
 			children = (
 				32C98A3A2887DEFF00B67B23 /* PhotoLibraryFilterViewModel.swift */,
-				6DB163EF2880F953004EFBC7 /* PhotosViewModel+FilterAndSort.swift */,
+				6DB163EF2880F953004EFBC7 /* PhotosViewModel+Filter.swift */,
 				3293D8082845B4380013EA72 /* PhotosViewModel.swift */,
 			);
 			path = ViewModel;
@@ -14409,7 +14409,7 @@
 				12397E302820C98A00A30CCC /* PhotosViewController+PhotoAlbum.swift in Sources */,
 				B6FCBFD727121B4500B3599F /* PhotosViewController+PhotoLibrary.swift in Sources */,
 				41BADDB61A8E2E92008408B3 /* PhotosViewController.m in Sources */,
-				6DB163F02880F953004EFBC7 /* PhotosViewModel+FilterAndSort.swift in Sources */,
+				6DB163F02880F953004EFBC7 /* PhotosViewModel+Filter.swift in Sources */,
 				3293D8092845B4380013EA72 /* PhotosViewModel.swift in Sources */,
 				B6E6726B277D4E4B00158FA0 /* PhotoUpdatePublisher.swift in Sources */,
 				B658D3B8218F9357004C0D64 /* PhotoUploadOperation.m in Sources */,

@@ -28,14 +28,17 @@ enum CloudDriveAction: ActionType {
     
     private let router = SharedItemsViewRouter()
     private let shareUseCase: any ShareUseCaseProtocol
+    private let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
     private let parentNode: MEGANode?
     private let shouldDisplayMediaDiscoveryWhenMediaOnly: Bool
     
     init(parentNode: MEGANode?,
          shareUseCase: some ShareUseCaseProtocol,
-         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default) {
+         sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
+         preferenceUseCase: some PreferenceUseCaseProtocol) {
         self.parentNode = parentNode
         self.shareUseCase = shareUseCase
+        self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
         shouldDisplayMediaDiscoveryWhenMediaOnly = preferenceUseCase[.shouldDisplayMediaDiscoveryWhenMediaOnly] ?? true
     }
     
@@ -86,12 +89,16 @@ enum CloudDriveAction: ActionType {
     }
     
     private func update(sortType: SortOrderType) {
-        Helper.save(sortType.megaSortOrderType, for: parentNode)
+        
+        guard let parentNodeEntity = parentNode?.toNodeEntity() else {
+            return
+        }
+        sortOrderPreferenceUseCase.save(sortOrder: sortType.toSortOrderEntity(), for: parentNodeEntity)
         invokeCommand?(.updateSortedData)
     }
     
     func sortOrder(for viewMode: ViewModePreference) -> SortOrderType {
-        let sortType = SortOrderType(megaSortOrderType: Helper.sortType(for: parentNode))
+        let sortType = sortOrderPreferenceUseCase.sortOrder(for: parentNode?.toNodeEntity()).toSortOrderType()
         switch viewMode {
         case .perFolder, .list, .thumbnail:
             return sortType
