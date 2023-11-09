@@ -1,7 +1,6 @@
 #import "NSString+MNZCategory.h"
 #import <AVKit/AVKit.h>
 #import <CommonCrypto/CommonDigest.h>
-#import <MobileCoreServices/MobileCoreServices.h>
 #import <Photos/Photos.h>
 #import "Helper.h"
 #import "NSDate+MNZCategory.h"

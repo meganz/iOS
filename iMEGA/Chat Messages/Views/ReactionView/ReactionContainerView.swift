@@ -22,7 +22,6 @@ class ReactionContainerView: UIView {
         let addMoreView = UIButton()
         addMoreView.setImage(UIImage(resource: .addReactionSmall), for: .normal)
         addMoreView.imageView?.contentMode = .scaleAspectFit
-        addMoreView.imageEdgeInsets = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
         addMoreView.layer.borderColor = Colors.Chat.ReactionBubble.border.color.cgColor
         addMoreView.layer.borderWidth = 1
         addMoreView.layer.cornerRadius = 12

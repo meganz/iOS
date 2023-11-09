@@ -1,6 +1,6 @@
 #import "ShareViewController.h"
 
-#import <MobileCoreServices/MobileCoreServices.h>
+#import <UniformTypeIdentifiers/UTCoreTypes.h>
 #import "LTHPasscodeViewController.h"
 #import "SAMKeychain.h"
 #import "SVProgressHUD.h"
@@ -464,23 +464,23 @@
     self.unsupportedAssets = 0;
     
     // This ordered array is needed because the allKeys properties of the classSupport dictionary are unordered, and the order here is determining
-    NSArray<NSString *> *typeIdentifiers = @[(NSString *)kUTTypeFileURL,
-                                             (NSString *)kUTTypeGIF,
-                                             (NSString *)kUTTypeImage,
-                                             (NSString *)kUTTypeMovie,
-                                             (NSString *)kUTTypeURL,
-                                             (NSString *)kUTTypeVCard,
-                                             (NSString *)kUTTypePlainText,
-                                             (NSString *)kUTTypeData];
+    NSArray<NSString *> *typeIdentifiers = @[UTTypeFileURL.identifier,
+                                             UTTypeGIF.identifier,
+                                             UTTypeImage.identifier,
+                                             UTTypeMovie.identifier,
+                                             UTTypeURL.identifier,
+                                             UTTypeVCard.identifier,
+                                             UTTypePlainText.identifier,
+                                             UTTypeData.identifier];
     
-    NSDictionary<NSString *, NSArray<Class> *> *classesSupported = @{(NSString *)kUTTypeGIF : @[NSURL.class, NSData.class],
-                                                                     (NSString *)kUTTypeImage : @[NSURL.class, UIImage.class, NSData.class],
-                                                                     (NSString *)kUTTypeMovie : @[NSURL.class],
-                                                                     (NSString *)kUTTypeFileURL : @[NSURL.class],
-                                                                     (NSString *)kUTTypeURL : @[NSURL.class],
-                                                                     (NSString *)kUTTypeVCard : @[NSData.class],
-                                                                     (NSString *)kUTTypePlainText : @[NSString.class],
-                                                                     (NSString *)kUTTypeData : @[NSURL.class]};
+    NSDictionary<NSString *, NSArray<Class> *> *classesSupported = @{UTTypeGIF.identifier : @[NSURL.class, NSData.class],
+                                                                     UTTypeImage.identifier : @[NSURL.class, UIImage.class, NSData.class],
+                                                                     UTTypeMovie.identifier : @[NSURL.class],
+                                                                     UTTypeFileURL.identifier : @[NSURL.class],
+                                                                     UTTypeURL.identifier : @[NSURL.class],
+                                                                     UTTypeVCard.identifier : @[NSData.class],
+                                                                     UTTypePlainText.identifier : @[NSString.class],
+                                                                     UTTypeData.identifier : @[NSURL.class]};
 
     for (NSItemProvider *itemProvider in content.attachments) {
         BOOL unsupported = YES;
@@ -494,12 +494,12 @@
                         for (Class supportedClass in [classesSupported objectForKey:typeIdentifier]) {
                             if ([[data class] isSubclassOfClass:supportedClass]) {
                                 if (supportedClass == NSData.class) {
-                                    if ([typeIdentifier isEqualToString:(NSString *)kUTTypeGIF]) {
+                                    if ([typeIdentifier isEqualToString:UTTypeGIF.identifier]) {
                                         [ShareAttachment addGIF:(NSData *)data fromItemProvider:itemProvider];
-                                    } else if ([typeIdentifier isEqualToString:(NSString *)kUTTypeImage]) {
+                                    } else if ([typeIdentifier isEqualToString:UTTypeImage.identifier]) {
                                         UIImage *image = [UIImage imageWithData:data];
                                         [ShareAttachment addImage:image fromItemProvider:itemProvider];
-                                    } else if ([typeIdentifier isEqualToString:(NSString *)kUTTypeVCard]) {
+                                    } else if ([typeIdentifier isEqualToString:UTTypeVCard.identifier]) {
                                         [ShareAttachment addContact:data];
                                     }
                                     

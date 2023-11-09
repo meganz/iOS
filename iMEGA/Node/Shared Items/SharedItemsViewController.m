@@ -73,10 +73,6 @@
     [self.outgoingButton setTitle:LocalizedString(@"outgoing", @"") forState:UIControlStateNormal];
     [self.linksButton setTitle:LocalizedString(@"Links", @"") forState:UIControlStateNormal];
     
-    self.incomingButton.titleLabel.adjustsFontForContentSizeCategory = YES;
-    self.outgoingButton.titleLabel.adjustsFontForContentSizeCategory = YES;
-    self.linksButton.titleLabel.adjustsFontForContentSizeCategory = YES;
-    
     self.incomingNodesForEmailMutableDictionary = NSMutableDictionary.alloc.init;
     self.incomingIndexPathsMutableDictionary = NSMutableDictionary.alloc.init;
     self.outgoingNodesForEmailMutableDictionary = NSMutableDictionary.alloc.init;
@@ -106,6 +102,8 @@
     
     [self.tableView registerNib:[UINib nibWithNibName:@"SharedItemsTableViewCell" bundle:nil] forCellReuseIdentifier:@"sharedItemsTableViewCell"];
     [self.tableView registerNib:[UINib nibWithNibName:@"NodeTableViewCell" bundle:nil] forCellReuseIdentifier:@"nodeCell"];
+    
+    [self configureButtons];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

@@ -11,7 +11,6 @@ extension SharedItemsViewController {
         guard let button = button, let lineView = lineView else { return }
         let selector = button.isSelected ? setSelectedTab : setNormalTab
         selector(button, lineView)
-        button.applyFontSizes()
     }
     
     private func setSelectedTab(forTabButton button: UIButton, lineView: UIView) {

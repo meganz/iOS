@@ -110,7 +110,6 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
         let displayName = chatRoom.userDisplayName(forUserHandle: message.userHandle)
         if chatRoom.isGroup {
             bestAttemptContent?.title = chatRoom.title ?? ""
-            bestAttemptContent?.summaryArgument = chatRoom.title ?? ""
         }
         setupDisplayName(displayName: displayName, for: chatRoom)
         
@@ -326,7 +325,6 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             bestAttemptContent?.subtitle = displayName
         } else {
             bestAttemptContent?.title = displayName
-            bestAttemptContent?.summaryArgument = displayName
         }
     }
     

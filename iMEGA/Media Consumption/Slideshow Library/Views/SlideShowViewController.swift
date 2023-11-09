@@ -119,7 +119,7 @@ final class SlideShowViewController: UIViewController, ViewType {
     }
     
     private func adjustHeightOfTopAndBottomView() {
-        let safeArea = UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.safeAreaInsets
+        let safeArea = UIApplication.shared.keyWindow?.safeAreaInsets
         statusBarBackgroundViewHeightConstraint.constant = safeArea?.top ?? .zero
         bottomBarBackgroundViewHeightConstraint.constant = safeArea?.bottom ?? .zero
     }

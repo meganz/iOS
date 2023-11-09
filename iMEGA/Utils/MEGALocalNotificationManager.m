@@ -85,7 +85,6 @@
                 }
                 
                 content.threadIdentifier = [MEGASdk base64HandleForUserHandle:self.chatRoom.chatId] ?: @"";
-                content.summaryArgument = self.chatRoom.title;
                 
                 if (self.message.type == MEGAChatMessageTypeAttachment) {
                     MEGANodeList *nodeList = self.message.nodeList;

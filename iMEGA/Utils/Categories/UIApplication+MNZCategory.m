@@ -49,16 +49,17 @@
     return rootViewController;
 }
 
-+ (UIWindow *)mnz_keyWindow {
-    UIWindow *keyWindow;
-    NSArray *windows = UIApplication.sharedApplication.windows;
-    for (UIWindow *window in windows) {
-        if (window.isKeyWindow) {
-            keyWindow = window;
-            break;
++ (nullable UIWindow *)mnz_keyWindow {
+    NSSet <UIScene *> *connectedScenes = UIApplication.sharedApplication.connectedScenes;
+
+    for (UIWindowScene *scene in connectedScenes) {
+        for (UIWindow *window in scene.windows) {
+            if (window.isKeyWindow) {
+                return window;
+            }
         }
     }
-    return keyWindow;
+    return nil;
 }
 
 @end
