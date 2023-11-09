@@ -471,10 +471,10 @@ static NSString *kisDirectory = @"kisDirectory";
     NSInteger transferListSize;
     if (isFolderLink) {
         transferList = [[MEGASdkManager sharedMEGASdkFolder] transfers];
-        transferListSize = [transferList.size integerValue];
+        transferListSize = transferList.size;
     } else {
         transferList = [[MEGASdkManager sharedMEGASdk] transfers];
-        transferListSize = [transferList.size integerValue];
+        transferListSize = transferList.size;
     }
     
     for (NSInteger i = 0; i < transferListSize; i++) {
@@ -853,10 +853,10 @@ static NSString *kisDirectory = @"kisDirectory";
     BOOL isDirectory;
     [[NSFileManager defaultManager] fileExistsAtPath:itemPath isDirectory:&isDirectory];
     if (isDirectory) {
-        if ([[[[MEGASdkManager sharedMEGASdk] transfers] size] integerValue]) {
+        if ([[[MEGASdkManager sharedMEGASdk] transfers] size]) {
             [self cancelPendingTransfersOnFolder:itemPath folderLink:NO];
         }
-        if ([[[[MEGASdkManager sharedMEGASdkFolder] transfers] size] integerValue]) {
+        if ([[[MEGASdkManager sharedMEGASdkFolder] transfers] size]) {
             [self cancelPendingTransfersOnFolder:itemPath folderLink:YES];
         }
         offlinePathsOnFolderArray = [self offlinePathOnFolder:itemPath];

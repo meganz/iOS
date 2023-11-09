@@ -511,12 +511,12 @@ static TransfersWidgetViewController* instance = nil;
 
 - (void)cancelTransfersForDirection:(NSInteger)direction {
     MEGATransferList *transferList = [[MEGASdkManager sharedMEGASdk] transfers];
-    if ([transferList.size integerValue] != 0) {
+    if (transferList.size > 0) {
         [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:direction];
     }
     
     transferList = [[MEGASdkManager sharedMEGASdkFolder] transfers];
-    if ([transferList.size integerValue] != 0) {
+    if (transferList.size > 0) {
         [[MEGASdkManager sharedMEGASdkFolder] cancelTransfersForDirection:direction delegate:self];
     }
     
