@@ -7,11 +7,15 @@ extension FolderLinkViewController: AudioMiniPlayerHandlerProtocol {
         bottomView?.removeFromSuperview()
         
         view.addSubview(miniPlayerView)
+
+        miniPlayerView.translatesAutoresizingMaskIntoConstraints = false
         
-        miniPlayerView.autoSetDimension(.height, toSize: 60.0)
-        miniPlayerView.autoPinEdge(toSuperviewEdge: .leading, withInset: 0)
-        miniPlayerView.autoPinEdge(toSuperviewEdge: .trailing, withInset: 0)
-        miniPlayerView.autoPinEdge(toSuperviewSafeArea: .bottom, withInset: 0)
+        NSLayoutConstraint.activate([
+            miniPlayerView.heightAnchor.constraint(equalToConstant: 60.0),
+            miniPlayerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            miniPlayerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            miniPlayerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
         
         bottomView = miniPlayerView
     }
