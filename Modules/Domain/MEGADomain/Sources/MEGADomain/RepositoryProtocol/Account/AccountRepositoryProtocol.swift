@@ -5,6 +5,7 @@ public protocol AccountRepositoryProtocol: RepositoryProtocol {
     func currentUser() async -> UserEntity?
     var isGuest: Bool { get }
     var isMasterBusinessAccount: Bool { get }
+    var isNewAccount: Bool { get }
     var bandwidthOverquotaDelay: Int64 { get }
     func isLoggedIn() -> Bool
     func contacts() -> [UserEntity]

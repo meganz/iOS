@@ -11,6 +11,16 @@ final class AccountUseCaseTests: XCTestCase {
         XCTAssertTrue(isSuccess)
     }
     
+    func testIsNewAccount_accountIsNew_shouldReturnTrue() {
+        let sut = AccountUseCase(repository: MockAccountRepository(isNewAccount: true))
+        XCTAssertTrue(sut.isNewAccount)
+    }
+    
+    func testIsNewAccount_accountIsAnExistingAccount_shouldReturnFalse() {
+        let sut = AccountUseCase(repository: MockAccountRepository(isNewAccount: false))
+        XCTAssertFalse(sut.isNewAccount)
+    }
+    
     func testCurrentAccountDetails_shouldReturnCurrentAccountDetails() {
         let accountDetails = AccountDetailsEntity.random
         let sut = AccountUseCase(repository: MockAccountRepository(currentAccountDetails: accountDetails))

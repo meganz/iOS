@@ -8,6 +8,7 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
     private let _bandwidthOverquotaDelay: Int64
     private let _currentUser: UserEntity?
     private let _isGuest: Bool
+    private let _isNewAccount: Bool
     private let _isLoggedIn: Bool
     private let _contacts: [UserEntity]
     private let _currentAccountDetails: AccountDetailsEntity?
@@ -15,6 +16,7 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
 
     public init(currentUser: UserEntity? = UserEntity(handle: 1),
                 isGuest: Bool = false,
+                isNewAccount: Bool = false,
                 isLoggedIn: Bool = true,
                 contacts: [UserEntity] = [],
                 totalNodesCountVariable: UInt64 = 0,
@@ -27,6 +29,7 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
     ) {
         _currentUser = currentUser
         _isGuest = isGuest
+        _isNewAccount = isNewAccount
         _isLoggedIn = isLoggedIn
         _contacts = contacts
         _currentAccountDetails = currentAccountDetails
@@ -48,6 +51,10 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
     
     public var isGuest: Bool {
         _isGuest
+    }
+    
+    public var isNewAccount: Bool {
+        _isNewAccount
     }
     
     public func isLoggedIn() -> Bool {
