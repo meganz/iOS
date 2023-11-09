@@ -109,7 +109,7 @@ private struct ChatRoomContentView: View {
         .onTapGesture {
             viewModel.showDetails()
         }
-        .taskForiOS14 {
+        .task {
             await viewModel.loadChatRoomInfo()
         }
     }

@@ -51,7 +51,7 @@ struct AlbumCell: View {
             }
         }
         .opacity(viewModel.opacity)
-        .taskForiOS14 {
+        .task {
             await viewModel.loadAlbumThumbnail()
         }
         .gesture(viewModel.editMode.isEditing ? tap : nil)

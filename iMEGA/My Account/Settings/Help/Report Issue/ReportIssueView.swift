@@ -30,7 +30,7 @@ struct ReportIssueView: View {
                 .background(Color(.secondarySystemBackground))
                 .blur(radius: viewModel.isUploadingLog ? 1 : 0)
                 .allowsHitTesting(viewModel.isUploadingLog ? false : true)
-                .taskForiOS14 {
+                .task {
                     await viewModel.monitorNetworkChanges()
                 }
                 

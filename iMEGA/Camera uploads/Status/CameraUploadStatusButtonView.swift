@@ -10,7 +10,7 @@ struct CameraUploadStatusButtonView: View {
             // Handle pressed in CC-5455
         } label: {
             CameraUploadStatusImageView(viewModel: viewModel.imageViewModel)
-                .taskForiOS14 {
+                .task {
                     await viewModel.monitorCameraUpload()
                 }
                 .onAppear {

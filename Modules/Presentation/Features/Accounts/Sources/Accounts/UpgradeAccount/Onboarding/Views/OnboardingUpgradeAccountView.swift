@@ -31,7 +31,7 @@ public struct OnboardingUpgradeAccountView: View, DismissibleContentView {
         }
         .padding(.horizontal, 16)
         .frame(maxWidth: 390)
-        .taskForiOS14 {
+        .task {
             await viewModel.setUpLowestProPlan()
         }
     }

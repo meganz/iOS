@@ -47,7 +47,7 @@ struct ChatRoomAvatarView: View {
         }
         .frame(width: size.width + totalOffset, height: size.height + totalOffset)
         .padding(8)
-        .taskForiOS14(priority: .background) {
+        .task(priority: .background) {
             await viewModel.loadAvatar(isRightToLeftLanguage: layoutDirection == .rightToLeft)
         }
     }

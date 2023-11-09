@@ -34,7 +34,7 @@ public struct AdsSlotView<T: View>: View {
                 showAds = newValue
             }
         }
-        .taskForiOS14 {
+        .task {
             viewModel.monitorAdsSlotChanges()
         }
         .ignoresSafeArea()

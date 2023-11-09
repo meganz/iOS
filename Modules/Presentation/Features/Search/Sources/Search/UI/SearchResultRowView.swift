@@ -47,7 +47,7 @@ struct SearchResultRowView: View {
             }
             moreButton
         }
-        .taskForiOS14 {
+        .task {
             await viewModel.loadThumbnail()
         }
         .contentShape(Rectangle())
