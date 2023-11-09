@@ -44,6 +44,13 @@ extension SortOrderEntity {
             return .favouriteDesc
         }
     }
+    
+    public init?(megaSortOrderTypeCode: Int) {
+        guard let sortOrderEntity = MEGASortOrderType(rawValue: megaSortOrderTypeCode)?.toSortOrderEntity() else {
+            return nil
+        }
+        self = sortOrderEntity
+    }
 }
 
 extension MEGASortOrderType {
