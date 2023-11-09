@@ -256,7 +256,11 @@ extension MyAccountHallViewController {
         
         bridge.showInBackupsActionTapped = { [weak self] nodeEntity in
             Task {
-                await self?.showContentForNode(nodeEntity, inBackupSection: true)
+                guard let self,
+                      let navigationController = self.findTopNavigationController(),
+                      let backupViewController = self.createCloudDriveVCForNode(nodeEntity, isBackup: true) else { return }
+                
+                navigationController.pushViewController(backupViewController, animated: true)
             }
         }
         

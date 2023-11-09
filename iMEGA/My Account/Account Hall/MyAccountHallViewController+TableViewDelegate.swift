@@ -16,7 +16,7 @@ extension MyAccountHallViewController: UITableViewDelegate {
         case .achievements:
             shouldShowCell = MEGASdk.shared.isAchievementsEnabled
         case .backups:
-            shouldShowCell = isBackupSectionVisible
+            shouldShowCell = isBackupSectionVisible && !viewModel.isDeviceCenterEnabled()
         case .deviceCenter:
             shouldShowCell = viewModel.isDeviceCenterEnabled()
         default: break

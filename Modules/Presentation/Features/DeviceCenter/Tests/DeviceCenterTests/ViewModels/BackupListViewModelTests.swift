@@ -217,7 +217,7 @@ final class BackupListViewModelTests: XCTestCase {
         
         let actions = viewModel.actionsForBackup(backup)
         let actionsType = actions?.compactMap {$0.type}
-        let expectedActions: [DeviceCenterActionType] = [.info, .showInBackups]
+        let expectedActions: [DeviceCenterActionType] = [.info]
         
         XCTAssertEqual(actionsType, expectedActions, "Actions for backup are incorrect")
     }
