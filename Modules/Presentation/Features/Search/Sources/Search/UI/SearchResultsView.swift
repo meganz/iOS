@@ -27,7 +27,7 @@ public struct SearchResultsView: View {
             maxHeight: .infinity,
             alignment: .top
         )
-        .taskForiOS14 {
+        .task {
             await viewModel.task()
         }
     }
@@ -60,7 +60,7 @@ public struct SearchResultsView: View {
             )
             .padding(.bottom, viewModel.bottomInset)
             .emptyState(viewModel.emptyViewModel)
-            .taskForiOS14 {
+            .task {
                 await viewModel.task()
             }
     }
@@ -82,7 +82,7 @@ public struct SearchResultsView: View {
                     selected: $viewModel.selected,
                     selectionMode: $viewModel.editing
                 )
-                .taskForiOS14 {
+                .task {
                     await viewModel.loadMoreIfNeeded(at: index)
                 }
             }
@@ -98,7 +98,7 @@ public struct SearchResultsView: View {
                 ) {
                     ForEach(Array(viewModel.folderListItems.enumerated()), id: \.element.id) { index, item in
                         SearchResultThumbnailItemView(viewModel: item)
-                            .taskForiOS14 {
+                            .task {
                                 await viewModel.loadMoreIfNeededThumbnailMode(at: index, isFile: false)
                             }
                     }
@@ -110,7 +110,7 @@ public struct SearchResultsView: View {
                 ) {
                     ForEach(Array(viewModel.fileListItems.enumerated()), id: \.element.id) { index, item in
                         SearchResultThumbnailItemView(viewModel: item)
-                            .taskForiOS14 {
+                            .task {
                                 await viewModel.loadMoreIfNeededThumbnailMode(at: index, isFile: true)
                             }
                     }

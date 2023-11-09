@@ -24,7 +24,7 @@ struct EnforceCopyrightWarningView<T: View>: View, DismissibleContentView {
                     .scaleEffect(1.5)
                     .opacity(viewModel.viewStatus == .unknown ? 1.0 : 0.0)
             }
-            .taskForiOS14 {
+            .task {
                 await viewModel.determineViewState()
             }
             .onReceive(viewModel.$isTermsAgreed.dropFirst()) {

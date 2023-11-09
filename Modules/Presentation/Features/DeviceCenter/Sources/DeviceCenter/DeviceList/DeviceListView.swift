@@ -70,7 +70,7 @@ struct DeviceListContentView: View {
                 self.viewModel.arrangeDevices(userDevices)
             }
         }
-        .throwingTaskForiOS14 {
+        .throwingTask {
             viewModel.updateInternetConnectionStatus()
             try await viewModel.startAutoRefreshUserDevices()
         }

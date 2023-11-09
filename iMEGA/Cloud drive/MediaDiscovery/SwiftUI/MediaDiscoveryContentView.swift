@@ -15,7 +15,7 @@ struct MediaDiscoveryContentView: View {
                 emptyStateView
             }
         }
-        .taskForiOS14 { await viewModel.loadPhotos() }
+        .task { await viewModel.loadPhotos() }
         .onAppear { viewModel.onViewAppear() }
         .onDisappear { viewModel.onViewDisappear() }
     }

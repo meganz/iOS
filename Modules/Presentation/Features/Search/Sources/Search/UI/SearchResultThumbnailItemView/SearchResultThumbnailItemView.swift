@@ -8,7 +8,7 @@ struct SearchResultThumbnailItemView: View {
 
     var body: some View {
         content
-            .taskForiOS14 {
+            .task {
                 await viewModel.loadThumbnail()
                 await viewModel.loadProperties()
             }

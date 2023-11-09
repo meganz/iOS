@@ -48,7 +48,7 @@ struct ImportAlbumView: View, DismissibleContentView {
                         },
                         alignment: .top)
             }
-            .taskForiOS14 {
+            .task {
                 await viewModel.monitorNetworkConnection()
             }
         }
@@ -89,7 +89,7 @@ struct ImportAlbumView: View, DismissibleContentView {
                   dismissButton: .cancel(Text(Strings.Localizable.AlbumLink.InvalidAlbum.Alert.dissmissButtonTitle),
                                          action: dismissImportAlbumScreen))
         }
-        .taskForiOS14 {
+        .task {
             await viewModel.loadPublicAlbum()
         }
     }

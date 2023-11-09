@@ -15,7 +15,7 @@ struct AlbumCoverPickerPhotoCell: View {
         .onTapGesture(count: 1) {
             viewModel.onPhotoSelect()
         }
-        .taskForiOS14 { await viewModel.startLoadingThumbnail() }
+        .task { await viewModel.startLoadingThumbnail() }
     }
     
     @ViewBuilder

@@ -48,7 +48,7 @@ struct BackupListContentView: View {
                     DeviceCenterMenu(viewModel: viewModel, menuIconName: "moreList", menuOptions: viewModel.actionsForDevice())
                 }
             }
-            .throwingTaskForiOS14 {
+            .throwingTask {
                 viewModel.updateInternetConnectionStatus()
                 try await viewModel.updateDeviceStatusesAndNotify()
             }
