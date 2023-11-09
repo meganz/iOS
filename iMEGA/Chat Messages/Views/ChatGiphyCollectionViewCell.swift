@@ -4,6 +4,7 @@ import MessageKit
 class ChatGiphyCollectionViewCell: MessageContentCell {
     open var imageView: UIImageView = {
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.backgroundColor = .clear
         imageView.contentMode = .scaleAspectFit
         return imageView
@@ -11,6 +12,7 @@ class ChatGiphyCollectionViewCell: MessageContentCell {
 
     open var loadingIndicator: UIActivityIndicatorView = {
         let loadingIndicator = UIActivityIndicatorView(style: .medium)
+        loadingIndicator.translatesAutoresizingMaskIntoConstraints = false
         loadingIndicator.startAnimating()
         loadingIndicator.hidesWhenStopped = true
         return loadingIndicator
@@ -20,10 +22,22 @@ class ChatGiphyCollectionViewCell: MessageContentCell {
 
     /// Responsible for setting up the constraints of the cell's subviews.
     open func setupConstraints() {
-        imageView.autoPinEdgesToSuperviewEdges()
 
-        loadingIndicator.autoCenterInSuperview()
-        loadingIndicator.autoSetDimensions(to: CGSize(width: 20, height: 20))
+        let imageViewConstraints = [
+            imageView.topAnchor.constraint(equalTo: messageContainerView.topAnchor),
+            imageView.leadingAnchor.constraint(equalTo: messageContainerView.leadingAnchor),
+            imageView.bottomAnchor.constraint(equalTo: messageContainerView.bottomAnchor),
+            imageView.trailingAnchor.constraint(equalTo: messageContainerView.trailingAnchor)
+        ]
+        
+        let loadingIndicatorConstraints = [
+            loadingIndicator.centerXAnchor.constraint(equalTo: messageContainerView.centerXAnchor),
+            loadingIndicator.centerYAnchor.constraint(equalTo: messageContainerView.centerYAnchor),
+            loadingIndicator.widthAnchor.constraint(equalToConstant: 20),
+            loadingIndicator.heightAnchor.constraint(equalToConstant: 20)
+        ]
+        
+        NSLayoutConstraint.activate(imageViewConstraints + loadingIndicatorConstraints)
     }
 
     override open func setupSubviews() {

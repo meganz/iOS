@@ -7,6 +7,7 @@ class ChatViewAttachmentCell: MessageContentCell {
 
     public lazy var imageView: UIImageView = {
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: imageWidth, height: imageWidth))
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
@@ -29,6 +30,7 @@ class ChatViewAttachmentCell: MessageContentCell {
     
     public lazy var labelsStackView: UIStackView = {
         let labelsStackView = UIStackView()
+        labelsStackView.translatesAutoresizingMaskIntoConstraints = false
         labelsStackView.axis = .vertical
         labelsStackView.distribution  = .fill
         labelsStackView.alignment = .fill
@@ -40,14 +42,19 @@ class ChatViewAttachmentCell: MessageContentCell {
 
     /// Responsible for setting up the constraints of the cell's subviews.
     open func setupConstraints() {
-        imageView.autoSetDimensions(to: CGSize(width: imageWidth, height: imageWidth))
-        imageView.autoAlignAxis(toSuperviewAxis: .horizontal)
-        imageView.autoPinEdge(toSuperviewEdge: .leading, withInset: defaultSpacing)
+        NSLayoutConstraint.activate([
+            imageView.widthAnchor.constraint(equalToConstant: imageWidth),
+            imageView.heightAnchor.constraint(equalToConstant: imageWidth),
+            imageView.centerYAnchor.constraint(equalTo: messageContainerView.centerYAnchor),
+            imageView.leadingAnchor.constraint(equalTo: messageContainerView.leadingAnchor, constant: defaultSpacing)
+        ])
         
-        labelsStackView.autoPinEdge(.leading, to: .trailing, of: imageView, withOffset: defaultSpacing)
-        labelsStackView.autoPinEdge(toSuperviewEdge: .trailing, withInset: defaultSpacing)
-        labelsStackView.autoPinEdge(toSuperviewEdge: .top, withInset: defaultSpacing)
-        labelsStackView.autoPinEdge(toSuperviewEdge: .bottom, withInset: defaultSpacing)
+        NSLayoutConstraint.activate([
+            labelsStackView.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: defaultSpacing),
+            labelsStackView.trailingAnchor.constraint(equalTo: messageContainerView.trailingAnchor, constant: -defaultSpacing),
+            labelsStackView.topAnchor.constraint(equalTo: messageContainerView.topAnchor, constant: defaultSpacing),
+            labelsStackView.bottomAnchor.constraint(equalTo: messageContainerView.bottomAnchor, constant: -defaultSpacing)
+        ])
     }
 
     open override func setupSubviews() {

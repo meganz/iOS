@@ -116,6 +116,7 @@ class ChatViewController: MessagesViewController {
     
     lazy var previewerView: PreviewersView = {
         let view = PreviewersView.instanceFromNib
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
@@ -156,6 +157,7 @@ class ChatViewController: MessagesViewController {
     
     private lazy var chatBottomInfoScreen: ChatBottomNewMessageIndicatorView = {
         let chatBottomNewMessageIndicatorView = ChatBottomNewMessageIndicatorView()
+        chatBottomNewMessageIndicatorView.translatesAutoresizingMaskIntoConstraints = false
         return chatBottomNewMessageIndicatorView
     }()
     
@@ -882,12 +884,17 @@ class ChatViewController: MessagesViewController {
     
     private func configurePreviewerButton() {
         view.addSubview(previewerView)
-        previewerView.autoPinEdge(toSuperviewMargin: .top, withInset: 12)
-        previewerView.autoAlignAxis(toSuperviewAxis: .vertical)
-        previewerView.autoSetDimensions(to: CGSize(width: 75, height: 34))
+
+        NSLayoutConstraint.activate([
+            previewerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 12),
+            previewerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            previewerView.widthAnchor.constraint(equalToConstant: 75),
+            previewerView.heightAnchor.constraint(equalToConstant: 34)
+        ])
+       
         previewerView.isHidden = true
     }
-    
+
     private func relayoutChatInputBarIfNeeded() {
         if let inputbar = inputAccessoryView as? ChatInputBar {
             inputbar.relayout()
@@ -1080,11 +1087,16 @@ class ChatViewController: MessagesViewController {
         }
         view.addSubview(chatBottomInfoScreen)
         chatBottomInfoScreen.isHidden = true
-        chatBottomInfoScreen.translatesAutoresizingMaskIntoConstraints = false
         
-        chatBottomInfoScreen.autoSetDimensions(to: CGSize(width: chatBottomInfoScreen.bounds.width, height: chatBottomInfoScreen.bounds.height))
-        chatBottomInfoScreenBottomConstraint = chatBottomInfoScreen.autoPinEdge(toSuperviewEdge: .bottom, withInset: -chatBottomInfoScreenBottomPadding)
-        chatBottomInfoScreen.autoPinEdge(toSuperviewSafeArea: .right, withInset: 20)
+        NSLayoutConstraint.activate([
+            chatBottomInfoScreen.widthAnchor.constraint(equalToConstant: chatBottomInfoScreen.bounds.width),
+            chatBottomInfoScreen.heightAnchor.constraint(equalToConstant: chatBottomInfoScreen.bounds.height)
+        ])
+
+        chatBottomInfoScreenBottomConstraint = chatBottomInfoScreen.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -chatBottomInfoScreenBottomPadding)
+        chatBottomInfoScreenBottomConstraint?.isActive = true
+
+        chatBottomInfoScreen.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20).isActive = true
     }
     
     func showOrHideJumpToBottom() {

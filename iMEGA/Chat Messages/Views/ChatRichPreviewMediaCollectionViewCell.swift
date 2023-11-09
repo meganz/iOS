@@ -143,10 +143,15 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
 
     /// Responsible for setting up the constraints of the cell's subviews.
     open func setupConstraints() {
-        richPreviewContentView.autoPinEdge(toSuperviewEdge: .leading)
-        richPreviewContentView.autoPinEdge(toSuperviewEdge: .trailing)
-        richPreviewContentView.autoPinEdge(toSuperviewEdge: .bottom)
+        richPreviewContentView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            richPreviewContentView.leadingAnchor.constraint(equalTo: messageContainerView.leadingAnchor),
+            richPreviewContentView.trailingAnchor.constraint(equalTo: messageContainerView.trailingAnchor),
+            richPreviewContentView.bottomAnchor.constraint(equalTo: messageContainerView.bottomAnchor)
+        ])
     }
+
 }
 
 open class ChatRichPreviewMediaCollectionViewSizeCalculator: TextMessageSizeCalculator {

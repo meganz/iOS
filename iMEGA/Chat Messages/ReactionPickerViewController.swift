@@ -15,14 +15,13 @@ class ReactionPickerViewController: UIViewController {
         emojiView.delegate = self
         
         view.backgroundColor = .systemBackground
-        view.addSubview(emojiView)
         return emojiView
         
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        emojiInputView.autoPinEdgesToSuperviewSafeArea()
+        view.wrap(emojiInputView)
         preferredContentSize = CGSize(width: 400, height: 300)
 
         view.backgroundColor = .systemBackground

@@ -214,8 +214,7 @@ class AddToChatViewController: UIViewController {
         if let menuPageViewController = menuPageViewController {
             menuPageViewController.menuDelegate = self
             addChild(menuPageViewController)
-            menuView.addSubview(menuPageViewController.view)
-            menuPageViewController.view.autoPinEdgesToSuperviewEdges()
+            menuView.wrap(menuPageViewController.view)
             menuPageViewController.didMove(toParent: self)
         }
     }
