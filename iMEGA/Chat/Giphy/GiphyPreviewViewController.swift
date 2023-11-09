@@ -3,7 +3,12 @@ import UIKit
 
 class GiphyPreviewViewController: UIViewController {
 
-    var previewImageView: UIImageView = UIImageView.newAutoLayout()
+    lazy var previewImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
     var onCompleted: (_ giphy: GiphyResponseModel?) -> Void = {_ in } // closure must be held in this class.
     var giphy: GiphyResponseModel?
     
@@ -37,11 +42,15 @@ class GiphyPreviewViewController: UIViewController {
               let ratio = giphy.sizeRatio else {
                   return
               }
+       
+        NSLayoutConstraint.activate([
+            previewImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            previewImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            previewImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            previewImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            previewImageView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: ratio)
+        ])
         
-        previewImageView.autoCenterInSuperview()
-        previewImageView.autoPinEdge(toSuperviewEdge: .left)
-        previewImageView.autoPinEdge(toSuperviewEdge: .right)
-        previewImageView.autoMatch(.height, to: .width, of: view, withMultiplier: ratio)
         previewImageView.sd_setImage(with: URL(string: giphy.webp))
         previewImageView.backgroundColor = UIColor(patternImage: UIImage.giphyCellBackground)
     }
