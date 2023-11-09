@@ -65,6 +65,10 @@ final class AccountRepository: NSObject, AccountRepositoryProtocol {
         sdk.isMasterBusinessAccount
     }
     
+    var isNewAccount: Bool {
+        sdk.isNewAccount
+    }
+    
     var bandwidthOverquotaDelay: Int64 {
         sdk.bandwidthOverquotaDelay
     }

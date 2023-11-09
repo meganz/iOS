@@ -53,6 +53,11 @@ final class AccountRepositoryTests: XCTestCase {
         XCTAssertFalse(makeSUT(sdk: MockSdk(isMasterBusinessAccount: false)).isMasterBusinessAccount)
     }
     
+    func testIsNewAccount() {
+        XCTAssertTrue(makeSUT(sdk: MockSdk(isNewAccount: true)).isNewAccount)
+        XCTAssertFalse(makeSUT(sdk: MockSdk(isNewAccount: false)).isNewAccount)
+    }
+    
     func testContacts_shouldMapSdkContacts() {
         let userStubOne = MockUser()
         let userStubTwo = MockUser()
