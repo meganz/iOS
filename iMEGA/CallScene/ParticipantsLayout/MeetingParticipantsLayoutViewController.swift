@@ -431,9 +431,13 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     
     private func showNoOneElseHereMessageView() {
         let emptyMessage = EmptyMeetingMessageView.instanceFromNib
+        emptyMessage.translatesAutoresizingMaskIntoConstraints = false
         emptyMessage.messageLabel.text = Strings.Localizable.Meetings.Message.noOtherParticipants
         view.addSubview(emptyMessage)
-        emptyMessage.autoCenterInSuperview()
+        
+        emptyMessage.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        emptyMessage.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+
         emptyMeetingMessageView = emptyMessage
     }
     
