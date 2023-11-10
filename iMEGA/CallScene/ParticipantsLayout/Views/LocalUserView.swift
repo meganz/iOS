@@ -169,31 +169,32 @@ class LocalUserView: UIView {
     }
     
     private func originPointForView() -> CGPoint {
-        var x: CGFloat = 0.0
-        var y: CGFloat = 0.0
+        guard let superview else { return .zero }
         var iPhoneXOffset: CGFloat = 0.0
         
         if UIDevice.current.iPhoneX && UIScreen.main.bounds.size.height < UIScreen.main.bounds.size.width {
             iPhoneXOffset = Constants.iPhoneXOffset
         }
-        guard let superview = superview else { return .zero }
-
+        
+        let superviewWidth = superview.frame.size.width
+        let superviewHeight = superview.frame.size.height
+        let topInset = (UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0)
+        let bottomInset = (UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0)
+        
         switch corner {
         case .topLeft:
-            x = Constants.fixedMargin + iPhoneXOffset
-            y = Constants.fixedMargin + (UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0) + (navigationHidden ? 0 : 44)
+            return CGPoint(x: Constants.fixedMargin + iPhoneXOffset,
+                           y: Constants.fixedMargin + topInset + (navigationHidden ? 0 : 44))
         case .topRight:
-            x = superview.frame.size.width - frame.size.width - Constants.fixedMargin - iPhoneXOffset
-            y = Constants.fixedMargin + (UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0)  + (navigationHidden ? 0 : 44)
+            return CGPoint(x: superviewWidth - frame.size.width - Constants.fixedMargin - iPhoneXOffset,
+                           y: Constants.fixedMargin + topInset + (navigationHidden ? 0 : 44))
         case .bottomLeft:
-            x = Constants.fixedMargin + iPhoneXOffset
-            y = superview.frame.size.height - frame.size.height - (UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0) - Constants.fixedMargin
+            return CGPoint(x: Constants.fixedMargin + iPhoneXOffset,
+                           y: superviewHeight - frame.size.height - bottomInset - Constants.fixedMargin)
         case .bottomRight:
-            x = superview.frame.size.width - frame.size.width - Constants.fixedMargin - iPhoneXOffset
-            y = superview.frame.size.height - frame.size.height - (UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0) - Constants.fixedMargin
+            return CGPoint(x: superviewWidth - frame.size.width - Constants.fixedMargin - iPhoneXOffset,
+                           y: superviewHeight - frame.size.height - bottomInset - Constants.fixedMargin)
         }
-        
-        return CGPoint(x: x, y: y)
     }
     
     private func sizeForView() -> CGSize {
