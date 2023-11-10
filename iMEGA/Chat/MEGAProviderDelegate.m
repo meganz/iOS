@@ -478,30 +478,14 @@
             if ([self.megaCallManager callIdForUUID:[self.megaCallManager uuidForChatId:call.chatId callId:call.callId]]) {
                 [self.megaCallManager answerCall:call];
             }
+            if (![api isAudioLevelMonitorEnabledForChatId:call.chatId]) {
+                [api enableAudioMonitor:YES chatId:call.chatId];
+            }
             break;
             
         case MEGAChatCallStatusInProgress: {
             if ([call hasChangedForType:MEGAChatCallChangeTypeLocalAVFlags]) {
                 [self callUpdateVideoForCall:call];
-            }
-            
-            if ([call hasChangedForType:MEGAChatCallChangeTypeCallComposition]) {
-                switch (call.callCompositionChange) {
-                    case MEGAChatCallCompositionChangePeerRemoved:
-                        if (call.participants.size < MEGAGroupCallsPeersChangeLayout && [api isAudioLevelMonitorEnabledForChatId:call.chatId]) {
-                            [api enableAudioMonitor:NO chatId:call.chatId];
-                        }
-                        break;
-                        
-                    case MEGAChatCallCompositionChangePeerAdded:
-                        if (call.participants.size >= MEGAGroupCallsPeersChangeLayout && ![api isAudioLevelMonitorEnabledForChatId:call.chatId]) {
-                            [api enableAudioMonitor:YES chatId:call.chatId];
-                        }
-                        break;
-                        
-                    default:
-                        break;
-                }
             }
             break;
         }
@@ -516,6 +500,9 @@
             if (self.isOutgoingCall) {
                 [self stopDialerTone];
                 self.outgoingCall = NO;
+            }
+            if ([api isAudioLevelMonitorEnabledForChatId:call.chatId]) {
+                [api enableAudioMonitor:NO chatId:call.chatId];
             }
             break;
             

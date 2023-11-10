@@ -893,6 +893,108 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         XCTAssertEqual(remoteVideoUseCase.requestLowResolutionVideo_calledTimes, 1)
     }
     
+    func testAction_switchToSpeakerView_shouldPinFirstParticipantAsSpeaker() {
+        let sut = makeMeetingParticipantsLayoutViewModel()
+        let firstParticipant = CallParticipantEntity(participantId: 100, clientId: 1)
+        sut.participantJoined(participant: firstParticipant)
+        sut.layoutMode = .speaker
+        
+        XCTAssertEqual(sut.layoutMode, .speaker)
+        XCTAssertEqual(firstParticipant.isSpeakerPinned, true)
+        XCTAssertEqual(sut.isSpeakerParticipantPinned, true)
+        XCTAssertEqual(sut.speakerParticipant, firstParticipant)
+    }
+    
+    func testAction_switchToGridView_shouldUnpinSpeaker() {
+        let sut = makeMeetingParticipantsLayoutViewModel()
+        let firstParticipant = CallParticipantEntity(participantId: 100, clientId: 1)
+        sut.participantJoined(participant: firstParticipant)
+        sut.layoutMode = .speaker
+        sut.layoutMode = .grid
+
+        XCTAssertEqual(sut.layoutMode, .grid)
+        XCTAssertEqual(firstParticipant.isSpeakerPinned, false)
+        XCTAssertEqual(sut.isSpeakerParticipantPinned, false)
+        XCTAssertEqual(sut.speakerParticipant, nil)
+    }
+    
+    func testCallBack_participantAudioLevelDetectedInGridMode_shouldUpdateAudioDetectedAndNoSetAsSpeakerPartipant() {
+        let sut = makeMeetingParticipantsLayoutViewModel()
+        let firstParticipant = CallParticipantEntity(participantId: 100, clientId: 1)
+        sut.participantJoined(participant: firstParticipant)
+        firstParticipant.audioDetected = true
+        sut.audioLevel(for: firstParticipant)
+        
+        XCTAssertEqual(sut.layoutMode, .grid)
+        XCTAssertEqual(firstParticipant.isSpeakerPinned, false)
+        XCTAssertEqual(firstParticipant.audioDetected, true)
+        XCTAssertEqual(sut.speakerParticipant, nil)
+    }
+    
+    func testCallBack_participantAudioLevelDetectedInSpeakerModeAndOtherParticipantPinned_shouldUpdateAudioDetectedAndNoSetAsSpeakerPartipant() {
+        let sut = makeMeetingParticipantsLayoutViewModel()
+        let firstParticipant = CallParticipantEntity(participantId: 100, clientId: 1)
+        let secondParticipant = CallParticipantEntity(participantId: 102, clientId: 2)
+        sut.participantJoined(participant: firstParticipant)
+        sut.participantJoined(participant: secondParticipant)
+        sut.layoutMode = .speaker
+        secondParticipant.audioDetected = true
+        sut.audioLevel(for: secondParticipant)
+        
+        XCTAssertEqual(sut.layoutMode, .speaker)
+        XCTAssertEqual(sut.isSpeakerParticipantPinned, true)
+        XCTAssertEqual(firstParticipant.isSpeakerPinned, true)
+        XCTAssertEqual(secondParticipant.isSpeakerPinned, false)
+        XCTAssertEqual(secondParticipant.audioDetected, true)
+        XCTAssertEqual(sut.speakerParticipant, firstParticipant)
+    }
+    
+    func testCallBack_participantAudioLevelDetectedInSpeakerModeAndNoOtherParticipantPinned_shouldUpdateAudioDetectedAndSetAsSpeakerPartipant() {
+        let sut = makeMeetingParticipantsLayoutViewModel()
+        let firstParticipant = CallParticipantEntity(participantId: 100, clientId: 1)
+        let secondParticipant = CallParticipantEntity(participantId: 102, clientId: 2)
+        sut.participantJoined(participant: firstParticipant)
+        sut.participantJoined(participant: secondParticipant)
+        sut.layoutMode = .speaker
+        
+        sut.tappedParticipant(firstParticipant)
+
+        XCTAssertEqual(sut.isSpeakerParticipantPinned, false)
+        XCTAssertEqual(sut.speakerParticipant, nil)
+        XCTAssertEqual(firstParticipant.isSpeakerPinned, false)
+
+        secondParticipant.audioDetected = true
+        sut.audioLevel(for: secondParticipant)
+        
+        XCTAssertEqual(sut.layoutMode, .speaker)
+        XCTAssertEqual(sut.isSpeakerParticipantPinned, false)
+        XCTAssertEqual(firstParticipant.isSpeakerPinned, false)
+        XCTAssertEqual(secondParticipant.isSpeakerPinned, false)
+        XCTAssertEqual(secondParticipant.audioDetected, true)
+        XCTAssertEqual(sut.speakerParticipant, secondParticipant)
+    }
+    
+    func testCallBack_participantPinnedAndAudioLevelDetectedInSpeakerMode_shouldUpdateAudioDetectedAndKeepAsSpeakerPartipant() {
+        let sut = makeMeetingParticipantsLayoutViewModel()
+        let firstParticipant = CallParticipantEntity(participantId: 100, clientId: 1)
+        let secondParticipant = CallParticipantEntity(participantId: 102, clientId: 2)
+        sut.participantJoined(participant: firstParticipant)
+        sut.participantJoined(participant: secondParticipant)
+        sut.layoutMode = .speaker
+        
+        sut.tappedParticipant(secondParticipant)
+
+        secondParticipant.audioDetected = true
+        sut.audioLevel(for: secondParticipant)
+        
+        XCTAssertEqual(sut.layoutMode, .speaker)
+        XCTAssertEqual(sut.isSpeakerParticipantPinned, true)
+        XCTAssertEqual(firstParticipant.isSpeakerPinned, false)
+        XCTAssertEqual(secondParticipant.isSpeakerPinned, true)
+        XCTAssertEqual(secondParticipant.audioDetected, true)
+        XCTAssertEqual(sut.speakerParticipant, secondParticipant)
+    }
+    
     // MARK: - Private functions
     
     private func makeMeetingParticipantsLayoutViewModel(

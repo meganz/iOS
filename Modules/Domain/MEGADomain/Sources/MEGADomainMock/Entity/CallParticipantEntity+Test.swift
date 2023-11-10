@@ -24,6 +24,7 @@ public extension CallParticipantEntity {
         hasScreenShare: Bool = false,
         isLowResScreenShare: Bool = false,
         isHiResScreenShare: Bool = false,
+        audioDetected: Bool = false,
         isTesting: Bool = true
     ) {
         self.init(
@@ -47,7 +48,8 @@ public extension CallParticipantEntity {
             isHiResCamera: isHiResCamera,
             hasScreenShare: hasScreenShare,
             isLowResScreenShare: isLowResScreenShare,
-            isHiResScreenShare: isHiResScreenShare
+            isHiResScreenShare: isHiResScreenShare,
+            audioDetected: audioDetected
         )
     }
 }

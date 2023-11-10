@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -32,32 +31,32 @@
                         </userDefinedRuntimeAttributes>
                     </imageView>
                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ebm-Rq-7x0">
-                        <rect key="frame" x="8" y="118" width="93.5" height="24"/>
+                        <rect key="frame" x="8" y="118" width="101.5" height="24"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="userMutedBig" translatesAutoresizingMaskIntoConstraints="NO" id="SYT-6T-OgV">
-                                <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="24" id="Ovc-cI-3gL"/>
-                                </constraints>
-                            </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2qo-pV-Gov">
-                                <rect key="frame" x="24" y="0.0" width="69.5" height="24"/>
+                                <rect key="frame" x="0.0" y="0.0" width="77.5" height="24"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Participant" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MyB-ef-dCd">
-                                        <rect key="frame" x="4" y="5" width="61.5" height="14.5"/>
+                                        <rect key="frame" x="8" y="5" width="61.5" height="14.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="MyB-ef-dCd" firstAttribute="leading" secondItem="2qo-pV-Gov" secondAttribute="leading" constant="4" id="L5p-MS-5xv"/>
+                                    <constraint firstItem="MyB-ef-dCd" firstAttribute="leading" secondItem="2qo-pV-Gov" secondAttribute="leading" constant="8" id="L5p-MS-5xv"/>
                                     <constraint firstAttribute="height" constant="24" id="cZF-1Y-Udb"/>
                                     <constraint firstItem="MyB-ef-dCd" firstAttribute="centerY" secondItem="2qo-pV-Gov" secondAttribute="centerY" id="gYa-lN-bj3"/>
-                                    <constraint firstAttribute="trailing" secondItem="MyB-ef-dCd" secondAttribute="trailing" constant="4" id="vqh-CX-8AC"/>
+                                    <constraint firstAttribute="trailing" secondItem="MyB-ef-dCd" secondAttribute="trailing" constant="8" id="vqh-CX-8AC"/>
                                 </constraints>
                             </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="micMuted" translatesAutoresizingMaskIntoConstraints="NO" id="SYT-6T-OgV">
+                                <rect key="frame" x="77.5" y="0.0" width="24" height="24"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="24" id="Ovc-cI-3gL"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.086274509799999996" green="0.086274509799999996" blue="0.086274509799999996" alpha="0.5025197401" colorSpace="custom" customColorSpace="calibratedRGB"/>
                         <userDefinedRuntimeAttributes>
@@ -83,7 +82,7 @@
             <size key="customSize" width="150" height="150"/>
             <connections>
                 <outlet property="avatarImageView" destination="FsE-o6-edj" id="qdk-My-vjn"/>
-                <outlet property="mutedImageView" destination="SYT-6T-OgV" id="POB-wL-Jtb"/>
+                <outlet property="micImageView" destination="SYT-6T-OgV" id="POB-wL-Jtb"/>
                 <outlet property="nameLabel" destination="MyB-ef-dCd" id="yAX-Ra-S8p"/>
                 <outlet property="videoImageView" destination="VDk-hn-xkP" id="6Qo-rT-3Uv"/>
             </connections>
@@ -91,6 +90,6 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="userMutedBig" width="25" height="24"/>
+        <image name="micMuted" width="24" height="24"/>
     </resources>
 </document>

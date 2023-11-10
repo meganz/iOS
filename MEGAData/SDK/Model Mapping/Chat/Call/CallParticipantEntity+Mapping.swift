@@ -40,7 +40,8 @@ extension CallParticipantEntity {
             isHiResCamera: session.isHiResCamera,
             hasScreenShare: session.hasScreenShare,
             isLowResScreenShare: session.isLowResScreenShare,
-            isHiResScreenShare: session.isHiResScreenShare
+            isHiResScreenShare: session.isHiResScreenShare,
+            audioDetected: session.audioDetected
         )
     }
     
@@ -76,7 +77,8 @@ extension CallParticipantEntity {
             isHiResCamera: false,
             hasScreenShare: false,
             isLowResScreenShare: false,
-            isHiResScreenShare: false
+            isHiResScreenShare: false,
+            audioDetected: false
         )
     }
     
@@ -111,7 +113,8 @@ extension CallParticipantEntity {
             isHiResCamera: false,
             hasScreenShare: false,
             isLowResScreenShare: false,
-            isHiResScreenShare: false
+            isHiResScreenShare: false,
+            audioDetected: false
         )
     }
     
@@ -145,7 +148,8 @@ extension CallParticipantEntity {
             isHiResCamera: false,
             hasScreenShare: false,
             isLowResScreenShare: false,
-            isHiResScreenShare: false
+            isHiResScreenShare: false,
+            audioDetected: false
         )
         
         return participant

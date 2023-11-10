@@ -15,7 +15,7 @@ class CallCollectionView: UICollectionView {
     var layoutMode: ParticipantsLayoutMode = .grid
     private weak var callCollectionViewDelegate: (any CallCollectionViewDelegate)?
     private var avatars = [UInt64: UIImage]()
-    private let spacingForCells: CGFloat = 1.0
+    private let spacingForCells: CGFloat = 2.0
     private var diffableDataSource: UICollectionViewDiffableDataSource<SectionType, CallParticipantEntity>?
     
     private lazy var blurEffectView: UIVisualEffectView = {
@@ -111,19 +111,6 @@ class CallCollectionView: UICollectionView {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         callCollectionViewDelegate?.collectionViewDidChangeOffset(to: Int(ceil(scrollView.contentOffset.x / scrollView.frame.width)), visibleIndexPaths: indexPathsForVisibleItems)
     }
-    
-    func configurePinnedCell(at indexPath: IndexPath?) {
-        visibleCells.forEach { cell in
-            cell.borderWidth = 0
-            cell.borderColor = .clear
-        }
-        
-        guard let indexPath = indexPath, let pinnedCell = cellForItem(at: indexPath) else {
-            return
-        }
-        pinnedCell.borderWidth = 1
-        pinnedCell.borderColor = .systemYellow
-    }
 }
 
 extension CallCollectionView: UICollectionViewDelegate {
@@ -185,7 +172,7 @@ extension CallCollectionView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         switch layoutMode {
         case .grid:
-            return 1.0
+            return 4.0
         case .speaker:
             return 4.0
         }
@@ -193,14 +180,5 @@ extension CallCollectionView: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        switch layoutMode {
-        case .grid:
-            return .zero
-        case .speaker:
-            return UIEdgeInsets(top: 4, left: 0, bottom: 0, right: 0)
-        }
     }
 }
