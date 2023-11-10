@@ -13,14 +13,14 @@ public class SearchResultsViewModel: ObservableObject {
     // this will need to be to exposed outside when parent will need to know exactly what is selected
     @Published var selected: Set<ResultId> = []
 
-    @Published var displayMode: DisplayMode = .list
+    @Published public var layout: PageLayout = .list
 
     var fileListItems: [SearchResultRowViewModel] {
-        listItems.filter { $0.result.thumbnailPreviewInfo.displayMode == .file }
+        listItems.filter { $0.result.thumbnailDisplayMode == .vertical }
     }
 
     var folderListItems: [SearchResultRowViewModel] {
-        listItems.filter { $0.result.thumbnailPreviewInfo.displayMode == .folder }
+        listItems.filter { $0.result.thumbnailDisplayMode == .horizontal }
     }
 
     let isThumbnailPreviewEnabled: Bool
@@ -159,11 +159,11 @@ public class SearchResultsViewModel: ObservableObject {
         }
     }
 
-    func changeMode() {
-        if displayMode == .list {
-            displayMode = .thumbnail
+    public func changeMode() {
+        if layout == .list {
+            layout = .thumbnail
         } else {
-            displayMode = .list
+            layout = .list
         }
     }
 
@@ -265,7 +265,7 @@ public class SearchResultsViewModel: ObservableObject {
         let items = results.results.map { result in
             let content = config.contextPreviewFactory.previewContentForResult(result)
             return SearchResultRowViewModel(
-                with: result,
+                result: result,
                 rowAssets: config.rowAssets,
                 colorAssets: config.colorAssets,
                 previewContent: .init(

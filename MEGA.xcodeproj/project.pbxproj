@@ -1346,6 +1346,7 @@
 		94E8304A29DAD18100869522 /* OnboardingViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E8304929DAD18100869522 /* OnboardingViewController+Additions.swift */; };
 		94F2DD8029EFED3200718176 /* AchievementsDetailsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F2DD7F29EFED3200718176 /* AchievementsDetailsViewController+Additions.swift */; };
 		94FABD152ADE95A9003E8894 /* CameraUploadsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FABD142ADE95A9003E8894 /* CameraUploadsRepository.swift */; };
+		94FAFF1B2AFA6CA50056A177 /* Node+ResultProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FAFF1A2AFA6CA50056A177 /* Node+ResultProperties.swift */; };
 		94FD8A8B2AA0C6F300CD1C8B /* MEGARepo in Frameworks */ = {isa = PBXBuildFile; productRef = 94FD8A8A2AA0C6F300CD1C8B /* MEGARepo */; };
 		990AC4ED2A4A77EC008E298F /* ChatRoomLinkViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990AC4EC2A4A77EC008E298F /* ChatRoomLinkViewModelTests.swift */; };
 		990AC4F02A4ABEB7008E298F /* ChatRoomLinkViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990AC4EF2A4ABEB7008E298F /* ChatRoomLinkViewModel+Additions.swift */; };
@@ -3926,6 +3927,7 @@
 		94F568C12A56E7A6005CE9F2 /* DeviceCenter */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DeviceCenter; sourceTree = "<group>"; };
 		94F991472AB45ED500C7CC18 /* SearchConfig+Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchConfig+Home.swift"; sourceTree = "<group>"; };
 		94FABD142ADE95A9003E8894 /* CameraUploadsRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraUploadsRepository.swift; sourceTree = "<group>"; };
+		94FAFF1A2AFA6CA50056A177 /* Node+ResultProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Node+ResultProperties.swift"; sourceTree = "<group>"; };
 		990AC4EC2A4A77EC008E298F /* ChatRoomLinkViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomLinkViewModelTests.swift; sourceTree = "<group>"; };
 		990AC4EF2A4ABEB7008E298F /* ChatRoomLinkViewModel+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatRoomLinkViewModel+Additions.swift"; sourceTree = "<group>"; };
 		9911BA8A2A8B20C300B88F28 /* WaitingRoomViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomViewRouter.swift; sourceTree = "<group>"; };
@@ -9439,6 +9441,7 @@
 				947DC5DE2AC1C7F5002C1D7C /* HomeChips.swift */,
 				947DC5E22AC1C863002C1D7C /* HomeSearchResultsAdditions.swift */,
 				94712EEF2A9C8E4800B5F2C9 /* HomeSearchResultsProvider.swift */,
+				94FAFF1A2AFA6CA50056A177 /* Node+ResultProperties.swift */,
 			);
 			path = Provider;
 			sourceTree = "<group>";
@@ -12378,7 +12381,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				945E1EF52AEFF12900AC16B9 /* PBXTargetDependency */,
+				94621F9A2AFD3C5000BEBB55 /* PBXTargetDependency */,
 				94CD1F752A8AA76C00DF456D /* PBXTargetDependency */,
 				943F8B191EF26E9C00AFD89F /* PBXTargetDependency */,
 				7794AEDA231E4E0A0039C1D2 /* PBXTargetDependency */,
@@ -14172,6 +14175,7 @@
 				5D48593E2526CD5F007BF705 /* NewChatRouter.swift in Sources */,
 				5DE448EB248D15F300EE00CB /* NibOwnerLoadable.swift in Sources */,
 				BFD23CCE236255A5005D4A1E /* NicknameViewController.swift in Sources */,
+				94FAFF1B2AFA6CA50056A177 /* Node+ResultProperties.swift in Sources */,
 				C4E78E8C272AF59D00DBF926 /* NodeAccess.swift in Sources */,
 				837B9C07247817F100D409B4 /* NodeActionBuilder.swift in Sources */,
 				943092F42913E26D0092B99A /* NodeActionsRepository.swift in Sources */,
@@ -15470,9 +15474,9 @@
 			target = 943F8B0E1EF26E9C00AFD89F /* MEGAShare */;
 			targetProxy = 943F8B181EF26E9C00AFD89F /* PBXContainerItemProxy */;
 		};
-		945E1EF52AEFF12900AC16B9 /* PBXTargetDependency */ = {
+		94621F9A2AFD3C5000BEBB55 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			productRef = 945E1EF42AEFF12900AC16B9 /* SwiftLint */;
+			productRef = 94621F992AFD3C5000BEBB55 /* SwiftLint */;
 		};
 		946336DA2A8ABA23005C58D9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -17442,7 +17446,7 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = Search;
 		};
-		945E1EF42AEFF12900AC16B9 /* SwiftLint */ = {
+		94621F992AFD3C5000BEBB55 /* SwiftLint */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = "plugin:SwiftLint";
 		};

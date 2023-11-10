@@ -36,6 +36,7 @@
     if (self) {
         _stack = [[MEGACoreDataStack alloc] initWithModelName:@"MEGACD" storeURL:[self storeURL]];
         [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveLogoutNotification) name:MEGALogoutNotification object:nil];
+        
     }
     return self;
 }
@@ -47,6 +48,11 @@
 - (NSManagedObjectContext *)managedObjectContext {
     return self.stack.viewContext;
 }
+
+- (NSManagedObjectContext *)newBackgroundObjectContext {
+    return self.stack.newBackgroundContext;
+}
+
 
 - (NSURL *)storeURL {
     NSString *dbName = @"MEGACD.sqlite";
@@ -131,29 +137,13 @@
     return [array firstObject];
 }
 
+
 - (MOOfflineNode *)offlineNodeWithNode:(MEGANode *)node {
-    if (self.managedObjectContext == nil) return nil;
-    
-    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"OfflineNode" inManagedObjectContext:self.managedObjectContext];
-    
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    [request setEntity:entityDescription];
-
-    NSPredicate *predicate;
-    NSString *fingerprint = node.fingerprint;
-    if(fingerprint) {
-        predicate = [NSPredicate predicateWithFormat:@"fingerprint == %@", fingerprint];
+    if ([NSThread isMainThread]) {
+        return [self offlineNodeWithNode:node context:self.managedObjectContext];
     } else {
-        predicate = [NSPredicate predicateWithFormat:@"base64Handle == %@", node.base64Handle];
+        return [self offlineNodeWithNode:node context:[self newBackgroundObjectContext]];
     }
-    
-    [request setPredicate:predicate];
-    
-    NSError *error;
-    NSArray *array = [self.managedObjectContext executeFetchRequest:request error:&error];
-    
-    return [array firstObject];
-
 }
 
 - (MOOfflineNode *)offlineNodeWithNode:(MEGANode *)node context:(NSManagedObjectContext *)context {

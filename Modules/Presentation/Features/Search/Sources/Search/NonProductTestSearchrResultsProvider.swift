@@ -113,50 +113,54 @@ fileprivate extension SearchResult {
     private static func image(_ name: String) -> Data {
         UIImage(systemName: name)!.withRenderingMode(.alwaysTemplate).pngData()!
     }
-    private static func thumbnailPreviewData() -> SearchResultThumbnailInfo {
+    private static func test(
+        idx: UInt64,
+        prefix: String,
+        image: Data,
+        thumbnailDisplayMode: ResultCellLayout.ThumbnailMode = .vertical,
+        backgroundDisplayMode: VerticalBackgroundViewMode = .preview
+    ) -> SearchResult {
         .init(
-            id: "1",
-            displayMode: .file,
-            title: "File title",
-            subtitle: "Info",
-            iconIndicatorPath: nil,
-            duration: "2:00",
-            isVideoIconHidden: true,
-            hasThumbnail: true,
-            thumbnailImageData: { .init() },
-            propertiesData: { [] },
-            downloadVisibilityData: { false }
+            id: idx,
+            thumbnailDisplayMode: thumbnailDisplayMode,
+            backgroundDisplayMode: backgroundDisplayMode,
+            title: "\(prefix) \(idx)",
+            description: "Parent folder",
+            type: .node,
+            properties: [],
+            thumbnailImageData: { image }
         )
     }
+    
     static var imageResults: [Self] {
         [
-            .init(id: 1, title: "Image 1", description: "Parent folder", properties: [], thumbnailImageData: { image("photo") }, type: .node, thumbnailPreviewInfo: thumbnailPreviewData()),
-            .init(id: 3, title: "Image 2", description: "Parent folder", properties: [], thumbnailImageData: { image("photo") }, type: .node, thumbnailPreviewInfo: thumbnailPreviewData()),
-            .init(id: 10, title: "Image 3", description: "Parent folder", properties: [], thumbnailImageData: { image("photo") }, type: .node, thumbnailPreviewInfo: thumbnailPreviewData())
+            test(idx: 1, prefix: "Image", image: image("photo"), thumbnailDisplayMode: .vertical, backgroundDisplayMode: .preview),
+            test(idx: 3, prefix: "Image", image: image("photo"), thumbnailDisplayMode: .vertical, backgroundDisplayMode: .icon),
+            test(idx: 10, prefix: "Image", image: image("photo"), thumbnailDisplayMode: .vertical, backgroundDisplayMode: .icon)
         ]
     }
     
     static var docsResults: [Self] {
         [
-            .init(id: 23, title: "Doc 1", description: "Parent folder", properties: [], thumbnailImageData: { image("doc.richtext") }, type: .node, thumbnailPreviewInfo: thumbnailPreviewData()),
-            .init(id: 44, title: "Doc 2", description: "Parent folder", properties: [], thumbnailImageData: { image("doc.richtext") }, type: .node, thumbnailPreviewInfo: thumbnailPreviewData()),
-            .init(id: 11, title: "Doc 3", description: "Parent folder", properties: [], thumbnailImageData: { image("doc.richtext") }, type: .node, thumbnailPreviewInfo: thumbnailPreviewData())
+            test(idx: 4, prefix: "Doc", image: image("doc.richtext")),
+            test(idx: 14, prefix: "Doc", image: image("doc.richtext")),
+            test(idx: 44, prefix: "Doc", image: image("doc.richtext"))
         ]
     }
     
     static var audioResults: [Self] {
         [
-            .init(id: 2, title: "Audio 1", description: "Parent folder", properties: [], thumbnailImageData: { image("music.note") }, type: .node, thumbnailPreviewInfo: thumbnailPreviewData()),
-            .init(id: 5, title: "Audio 2", description: "Parent folder", properties: [], thumbnailImageData: { image("music.note") }, type: .node, thumbnailPreviewInfo: thumbnailPreviewData()),
-            .init(id: 12, title: "Audio 3", description: "Parent folder", properties: [], thumbnailImageData: { image("music.note") }, type: .node, thumbnailPreviewInfo: thumbnailPreviewData())
+            test(idx: 2, prefix: "Audio", image: image("music.note")),
+            test(idx: 5, prefix: "Audio", image: image("music.note")),
+            test(idx: 12, prefix: "Audio", image: image("music.note"))
         ]
     }
     
     static var videoResults: [Self] {
         [
-            .init(id: 7, title: "Video 1", description: "Parent folder", properties: [], thumbnailImageData: { image("video") }, type: .node, thumbnailPreviewInfo: thumbnailPreviewData()),
-            .init(id: 17, title: "Video 2", description: "Parent folder", properties: [], thumbnailImageData: { image("video") }, type: .node, thumbnailPreviewInfo: thumbnailPreviewData()),
-            .init(id: 77, title: "Video 3", description: "Parent folder", properties: [], thumbnailImageData: { image("video") }, type: .node, thumbnailPreviewInfo: thumbnailPreviewData())
+            test(idx: 7, prefix: "Video", image: image("video")),
+            test(idx: 17, prefix: "Video", image: image("video")),
+            test(idx: 77, prefix: "Video", image: image("video"))
         ]
     }
 }

@@ -1,6 +1,8 @@
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
+import MEGASdk
+import MEGASDKRepoMock
 import Search
 import SearchMock
 import XCTest
@@ -49,10 +51,22 @@ class HomeSearchProviderTests: XCTestCase {
                 nodeDetailUseCase: nodeDetails,
                 nodeUseCase: nodeDataUseCase,
                 mediaUseCase: mediaUseCase,
-                nodeRepository: nodeRepo
+                nodeRepository: nodeRepo,
+                sdk: MockSdk()
             )
             
             testCase.trackForMemoryLeaks(on: sut, file: file, line: line)
+        }
+        
+        func propertyIdsForFoundNode() async throws -> Set<NodePropertyId> {
+            let searchResults = try await sut.search(
+                queryRequest: .userSupplied(.query("node 0"))
+            )
+            let result = try XCTUnwrap(searchResults?.results.first)
+            let props = result.properties.compactMap { resultProperty in
+                NodePropertyId(rawValue: resultProperty.id)
+            }
+            return Set(props)
         }
     }
     func testSearch_whenSuccess_returnsResults() async throws {
@@ -108,4 +122,82 @@ class HomeSearchProviderTests: XCTestCase {
         _ = try await harness.sut.search(queryRequest: .userSupplied(.query("any search string")))
         XCTAssertEqual(harness.searchFile.passedInSortOrders, [.defaultAsc])
     }
+    
+    func testSearch_resultProperty_isFavorite() async throws {
+        let harness = Harness(self, nodes: [
+            .init(name: "node 0", handle: 0, isFavourite: true)
+        ])
+        let propertyIds = try await harness.propertyIdsForFoundNode()
+        XCTAssertEqual(propertyIds, [.favorite])
+    }
+    
+    func testSearch_resultProperty_label() async throws {
+        let node = NodeEntity(name: "node 0", handle: 0, label: .red)
+        
+        let harness = Harness(self, nodes: [
+            node
+        ])
+        
+        harness.nodeDataUseCase.labelStringToReturn = "Red"
+        let propertyIds = try await harness.propertyIdsForFoundNode()
+        XCTAssertEqual(propertyIds, [.label])
+    }
+    
+    func testSearch_resultProperty_isLinked() async throws {
+        
+        let harness = Harness(self, nodes: [
+            .init(name: "node 0", handle: 0, isExported: true)
+        ])
+        
+        harness.nodeDataUseCase.inRubbishBinToReturn = false
+        let propertyIds = try await harness.propertyIdsForFoundNode()
+        XCTAssertEqual(propertyIds, [.linked])
+    }
+    
+    func testSearch_resultProperty_isVersioned() async throws {
+        
+        let harness = Harness(self, nodes: [
+            .init(name: "node 0", handle: 0, isFile: true)
+        ])
+        
+        harness.nodeDataUseCase.versions = true
+        let propertyIds = try await harness.propertyIdsForFoundNode()
+        XCTAssertEqual(propertyIds, [.versioned])
+    }
+    
+    func testSearch_resultProperty_isDownloaded() async throws {
+        
+        let harness = Harness(self, nodes: [
+            .init(name: "node 0", handle: 0, isFile: true)
+        ])
+        
+        harness.nodeDataUseCase.downloadedToReturn = true
+        let propertyIds = try await harness.propertyIdsForFoundNode()
+        XCTAssertEqual(propertyIds, [.downloaded])
+    }
+    
+    func testSearch_resultProperty_isVideo() async throws {
+        
+        let harness = Harness(self, nodes: [
+            .init(name: "node 0", handle: 0, duration: 123)
+        ])
+        
+        harness.mediaUseCase.isStringVideoToReturn = true
+        let propertyIds = try await harness.propertyIdsForFoundNode()
+        XCTAssertEqual(propertyIds, [.videoDuration, .playIcon])
+    }
+    
+    func testSearch_resultProperty_multipleProperties() async throws {
+        
+        let harness = Harness(self, nodes: [
+            .init(name: "node 0", handle: 0, isFile: true, isExported: true)
+        ])
+        
+        harness.nodeDataUseCase.inRubbishBinToReturn = false
+        harness.nodeDataUseCase.versions = true
+        
+        let propertyIds = try await harness.propertyIdsForFoundNode()
+        XCTAssertEqual(propertyIds, [.versioned, .linked])
+    }
+    
 }

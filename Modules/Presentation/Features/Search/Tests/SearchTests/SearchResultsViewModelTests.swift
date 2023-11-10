@@ -81,7 +81,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         func withSingleResultPrepared(_ title: String = "title") -> Self {
             let results = SearchResultsEntity(
                 results: [
-                    .sampleResult(title)
+                    .resultWith(id: 1, title: title)
                 ],
                 availableChips: [],
                 appliedChips: []
@@ -123,10 +123,11 @@ final class SearchResultsViewModelTests: XCTestCase {
         }
         
         @discardableResult
-        func withResultsPrepared(_ idx: Int) -> Self {
+        func withResultsPrepared(_ idx: UInt64) -> Self {
+            let range = 1...idx
             let results = SearchResultsEntity(
-                results: Array(1...idx).map {
-                    .sampleResult("\($0)")
+                results: Array(range).map {
+                    .resultWith(id: $0, title: "\($0)")
                 },
                 availableChips: [],
                 appliedChips: []
@@ -182,7 +183,11 @@ final class SearchResultsViewModelTests: XCTestCase {
         await harness.sut.queryChanged(to: "query")
         let expectedListItems: [SearchResultRowViewModel] = [
             .init(
-                with: .sampleResult("title"),
+                result: .resultWith(
+                    id: 1,
+                    title: "title",
+                    backgroundDisplayMode: .preview
+                ),
                 rowAssets: .init(
                     contextImage: UIImage(systemName: "ellipsis")!,
                     itemSelected: UIImage(systemName: "ellipsis")!,
@@ -249,7 +254,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         await harness.sut.queryChanged(to: "query")
         let item = try XCTUnwrap(harness.sut.listItems.first)
         item.actions.selectionAction()
-        XCTAssertEqual(harness.selectedResults, [.sampleResult("title")])
+        XCTAssertEqual(harness.selectedResults, [.resultWith(id: 1, title: "title")])
     }
     
     func testOnContextAction_passesSelectedResultViaBridge() async throws {
@@ -257,7 +262,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         await harness.sut.queryChanged(to: "query")
         let item = try XCTUnwrap(harness.sut.listItems.first)
         item.actions.contextAction(UIButton())
-        XCTAssertEqual(harness.contextTriggeredResults, [.sampleResult("title")])
+        XCTAssertEqual(harness.contextTriggeredResults, [.resultWith(id: 1, title: "title")])
     }
     
     func testListItems_showResultsTitleAndDescription() async {
@@ -265,7 +270,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         await harness.sut.queryChanged(to: "query")
         let result = harness.resultVM(at: 0)
         XCTAssertEqual(result.title, "title")
-        XCTAssertEqual(result.subtitle, "desc")
+        XCTAssertEqual(result.subtitle, "Desc")
     }
     
     func testChipItems_byDefault_noChipsSelected() async {
@@ -341,32 +346,6 @@ final class SearchResultsViewModelTests: XCTestCase {
         let harness = Harness(self)
         harness.sut.scrolled()
         XCTAssertEqual(harness.keyboardResignedCount, 1)
-    }
-}
-
-fileprivate extension SearchResult {
-    static func sampleResult(_ title: String) -> Self {
-        .init(
-            id: 1,
-            title: title,
-            description: "desc",
-            properties: [],
-            thumbnailImageData: { Data() },
-            type: .node,
-            thumbnailPreviewInfo: .init(
-                id: "1",
-                displayMode: .file,
-                title: "File title",
-                subtitle: "Info",
-                iconIndicatorPath: nil,
-                duration: "2:00",
-                isVideoIconHidden: true,
-                hasThumbnail: true,
-                thumbnailImageData: { .init() },
-                propertiesData: { [] },
-                downloadVisibilityData: { false }
-            )
-        )
     }
 }
 

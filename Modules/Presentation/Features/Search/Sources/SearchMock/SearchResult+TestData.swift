@@ -1,30 +1,22 @@
 import Search
+import UIKit
 
 extension SearchResult {
     public static func resultWith(
         id: ResultId,
-        title: String
+        title: String,
+        thumbnailDisplayMode: ResultCellLayout.ThumbnailMode = .vertical,
+        backgroundDisplayMode: VerticalBackgroundViewMode = .preview
     ) -> Self {
-        return .init(
+        .init(
             id: id,
+            thumbnailDisplayMode: thumbnailDisplayMode,
+            backgroundDisplayMode: backgroundDisplayMode,
             title: title,
-            description: "subtitle_\(id)",
-            properties: [],
-            thumbnailImageData: { .init() },
+            description: "Desc",
             type: .node,
-            thumbnailPreviewInfo: .init(
-                id: "1",
-                displayMode: .file,
-                title: "File title",
-                subtitle: "Info",
-                iconIndicatorPath: nil,
-                duration: "2:00",
-                isVideoIconHidden: true,
-                hasThumbnail: true,
-                thumbnailImageData: { .init() },
-                propertiesData: { [] },
-                downloadVisibilityData: { false }
-            )
+            properties: [],
+            thumbnailImageData: { UIImage(systemName: "scribble")!.pngData()! }
         )
     }
     public static func resultWith(id: ResultId) -> Self {

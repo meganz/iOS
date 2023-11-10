@@ -47,6 +47,18 @@ struct ContentView: View {
             SearchResultsView(
                 viewModel: viewModel
             )
+            .toolbar {
+                Button(
+                    action: {
+                        viewModel.changeMode()
+                    },
+                    label: {
+                        viewModel.layout == .list ?
+                        Text("Thumbnails") :
+                        Text("List")
+                    }
+                )
+            }
             .onChange(of: text, initial: true, { _, newValue in
                 viewModel.bridge.queryChanged(newValue)
             })

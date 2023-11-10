@@ -204,7 +204,7 @@
       "location" : "https://code.developers.mega.co.nz/mobile/kmm/mobile-analytics-ios.git",
       "state" : {
         "branch" : "main",
-        "revision" : "94963602538893373a9458c408c9d8f226b039b0"
+        "revision" : "27ae6689a09314181c2364657356979796913693"
       }
     },
     {
@@ -276,6 +276,15 @@
       "state" : {
         "revision" : "19f05f16b30eed2ed398df30353ec52844e329e5",
         "version" : "2.0.0"
+      }
+    },
+    {
+      "identity" : "swift-snapshot-testing",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pointfreeco/swift-snapshot-testing",
+      "state" : {
+        "revision" : "bb0ea08db8e73324fe6c3727f755ca41a23ff2f4",
+        "version" : "1.14.2"
       }
     },
     {
