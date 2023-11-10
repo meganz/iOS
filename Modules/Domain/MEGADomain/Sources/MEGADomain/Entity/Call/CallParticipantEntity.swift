@@ -34,6 +34,7 @@ public final class CallParticipantEntity {
     public var hasScreenShare: Bool
     public var isLowResScreenShare: Bool
     public var isHiResScreenShare: Bool
+    public var audioDetected: Bool
     
     public init(
         chatId: HandleEntity,
@@ -56,7 +57,8 @@ public final class CallParticipantEntity {
         isHiResCamera: Bool,
         hasScreenShare: Bool,
         isLowResScreenShare: Bool,
-        isHiResScreenShare: Bool
+        isHiResScreenShare: Bool,
+        audioDetected: Bool
     ) {
         self.chatId = chatId
         self.participantId = participantId
@@ -79,6 +81,7 @@ public final class CallParticipantEntity {
         self.hasScreenShare = hasScreenShare
         self.isLowResScreenShare = isLowResScreenShare
         self.isHiResScreenShare = isHiResScreenShare
+        self.audioDetected = audioDetected
     }
     
     public func remoteVideoFrame(width: Int, height: Int, buffer: Data!, isHiRes: Bool) {

@@ -32,10 +32,6 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
         self.nodeActionListener = nodeActionListener
     }
     
-    deinit {
-        print("deinit NodeActionViewControllerGenericDelegate")
-    }
-    
     func nodeAction(
         _ nodeAction: NodeActionViewController,
         didSelect action: MegaNodeActionType,

@@ -16,7 +16,7 @@ enum CallViewAction: ActionType {
     case setNewTitle(String)
     case discardChangeTitle
     case renameTitleDidChange(String)
-    case tapParticipantToPinAsSpeaker(CallParticipantEntity, IndexPath)
+    case tapParticipantToPinAsSpeaker(CallParticipantEntity)
     case fetchAvatar(participant: CallParticipantEntity)
     case fetchSpeakerAvatar
     case participantIsVisible(_ participant: CallParticipantEntity, index: Int)
@@ -76,7 +76,6 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case showWaitingForOthersMessage
         case hideEmptyRoomMessage
         case updateHasLocalAudio(Bool)
-        case selectPinnedCellAt(IndexPath?)
         case shouldHideSpeakerView(Bool)
         case ownPrivilegeChangedToModerator
         case showBadNetworkQuality
@@ -93,7 +92,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private var call: CallEntity
     private var timer: Timer?
     
-    private var callParticipants = [CallParticipantEntity]() {
+    private(set) var callParticipants = [CallParticipantEntity]() {
         didSet {
             if let myself = CallParticipantEntity.myself(chatId: call.chatId) {
                 requestAvatarChanges(forParticipants: callParticipants + [myself], chatId: call.chatId)
@@ -105,26 +104,27 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     }
     private var indexOfVisibleParticipants = [Int]()
     private var hasParticipantJoinedBefore = false
-    private var speakerParticipant: CallParticipantEntity? {
+    private(set) var speakerParticipant: CallParticipantEntity? {
         willSet {
             speakerParticipant?.speakerVideoDataDelegate = nil
-            speakerParticipant?.isSpeakerPinned = false
         }
         didSet {
-            guard let speaker = speakerParticipant else { return }
-            speaker.isSpeakerPinned = true
-            invokeCommand?(.updateSpeakerViewFor(speaker))
-            containerViewModel?.dispatch(.didDisplayParticipantInMainView(speaker))
+            guard let speakerParticipant else { return }
+            invokeCommand?(.updateSpeakerViewFor(speakerParticipant))
+            containerViewModel?.dispatch(.didDisplayParticipantInMainView(speakerParticipant))
         }
     }
-    private var isSpeakerParticipantPinned: Bool = false
+    private(set) var isSpeakerParticipantPinned: Bool = false
     internal var layoutMode: ParticipantsLayoutMode = .grid {
         didSet {
             if layoutMode == .grid {
                 isSpeakerParticipantPinned = false
+                callParticipants.forEach { $0.isSpeakerPinned = false }
                 containerViewModel?.dispatch(.didSwitchToGridView)
                 speakerParticipant = nil
             } else if speakerParticipant == nil {
+                callParticipants.first?.isSpeakerPinned = true
+                isSpeakerParticipantPinned = true
                 speakerParticipant = callParticipants.first
             }
         }
@@ -249,11 +249,6 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private func reloadParticipant(_ participant: CallParticipantEntity) {
         guard let index = callParticipants.firstIndex(of: participant) else { return }
         invokeCommand?(.reloadParticipantAt(index, callParticipants))
-        
-        guard let currentSpeaker = speakerParticipant, currentSpeaker == participant else {
-            return
-        }
-        speakerParticipant = participant
     }
     
     private func enableRemoteVideo(for participant: CallParticipantEntity, isHiRes: Bool) {
@@ -471,8 +466,8 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             containerViewModel?.dispatch(.changeMenuVisibility)
         case .renameTitleDidChange(let newTitle):
             invokeCommand?(.enableRenameButton(chatRoom.title != newTitle && !newTitle.isEmpty))
-        case .tapParticipantToPinAsSpeaker(let participant, let indexPath):
-            tappedParticipant(participant, at: indexPath)
+        case .tapParticipantToPinAsSpeaker(let participant):
+            tappedParticipant(participant)
         case .fetchAvatar(let participant):
             participantName(for: participant.participantId) { [weak self] name in
                 guard let name = name else { return }
@@ -621,7 +616,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         }
     }
     
-    private func tappedParticipant(_ participant: CallParticipantEntity, at indexPath: IndexPath) {
+    func tappedParticipant(_ participant: CallParticipantEntity) {
         if speakerParticipant == participant && participant.hasScreenShare {
             containerViewModel?.dispatch(.showScreenShareWarning)
         } else if !isSpeakerParticipantPinned || (isSpeakerParticipantPinned && speakerParticipant != participant) {
@@ -629,17 +624,21 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                 if currentSpeaker.video == .on && currentSpeaker.isVideoHiRes && currentSpeaker.canReceiveVideoHiRes {
                     switchVideoResolutionHighToLow(for: currentSpeaker.clientId, in: chatRoom.chatId)
                 }
+                currentSpeaker.isSpeakerPinned = false
+                updateParticipant(currentSpeaker)
             }
             isSpeakerParticipantPinned = true
+            participant.isSpeakerPinned = true
             speakerParticipant = participant
             if participant.video == .on && participant.isVideoLowRes && participant.canReceiveVideoLowRes {
                 switchVideoResolutionLowToHigh(for: participant.clientId, in: chatRoom.chatId)
             }
-            invokeCommand?(.selectPinnedCellAt(indexPath))
+            updateParticipant(participant)
         } else {
             participant.isSpeakerPinned = false
             isSpeakerParticipantPinned = false
-            invokeCommand?(.selectPinnedCellAt(nil))
+            speakerParticipant = nil
+            updateParticipant(participant)
         }
     }
     
@@ -653,8 +652,8 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             MEGALogDebug("Participant not found \(participant) in the list")
             return
         }
-
-        tappedParticipant(callParticipants[participantIndex], at: IndexPath(item: participantIndex, section: 0))
+                
+        tappedParticipant(callParticipants[participantIndex])
     }
     
     private func switchVideoResolutionHighToLow(for clientId: HandleEntity, in chatId: HandleEntity) {
@@ -772,6 +771,14 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private func isIPhoneAndNotLandScape() -> Bool {
         UIDevice.current.userInterfaceIdiom == .phone && !UIDevice.current.orientation.isLandscape
     }
+    
+    private func updateActiveSpeakIndicator(for participant: CallParticipantEntity) {
+        if isSpeakerParticipantPinned && speakerParticipant == participant {
+            participant.isSpeakerPinned = true
+            invokeCommand?(.updateSpeakerViewFor(participant))
+        }
+        updateParticipant(participant)
+    }
 }
 
 struct CallDurationInfo {
@@ -858,6 +865,7 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
         participantUpdated.hasScreenShare = participant.hasScreenShare
         participantUpdated.isLowResScreenShare = participant.isLowResScreenShare
         participantUpdated.isHiResScreenShare = participant.isHiResScreenShare
+        participantUpdated.audioDetected = participant.audioDetected
         
         if participant.hasScreenShare {
             remoteVideoUseCase.requestHighResolutionVideo(for: chatRoom.chatId, clientId: participant.clientId, completion: nil)
@@ -898,6 +906,8 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
     }
     
     func audioLevel(for participant: CallParticipantEntity) {
+        updateActiveSpeakIndicator(for: participant)
+        
         if isSpeakerParticipantPinned || layoutMode == .grid {
             return
         }
@@ -905,9 +915,10 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
             MEGALogError("Error getting participant with audio")
             return
         }
+        
+        participantWithAudio.audioDetected = participant.audioDetected
         if let currentSpeaker = speakerParticipant {
             if currentSpeaker != participantWithAudio {
-                currentSpeaker.speakerVideoDataDelegate = nil
                 speakerParticipant = participantWithAudio
                 if currentSpeaker.video == .on && currentSpeaker.isVideoHiRes && currentSpeaker.canReceiveVideoHiRes {
                     switchVideoResolutionHighToLow(for: currentSpeaker.clientId, in: chatRoom.chatId)
@@ -915,6 +926,8 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
                 if participantWithAudio.video == .on && participantWithAudio.isVideoLowRes && participantWithAudio.canReceiveVideoLowRes {
                     switchVideoResolutionLowToHigh(for: participantWithAudio.clientId, in: chatRoom.chatId)
                 }
+            } else {
+                invokeCommand?(.updateSpeakerViewFor(currentSpeaker))
             }
         } else {
             speakerParticipant = participantWithAudio

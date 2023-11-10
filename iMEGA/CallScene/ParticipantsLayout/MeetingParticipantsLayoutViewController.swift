@@ -16,7 +16,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     
     @IBOutlet private weak var speakerAvatarImageView: UIImageView!
     @IBOutlet private weak var speakerRemoteVideoImageView: UIImageView!
-    @IBOutlet private weak var speakerMutedImageView: UIImageView!
+    @IBOutlet private weak var speakerMicImageView: UIImageView!
     @IBOutlet private weak var speakerNameLabel: UILabel!
     @IBOutlet private var speakerViews: Array<UIView>!
     @IBOutlet private weak var pageControl: UIPageControl!
@@ -205,8 +205,6 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             removeWaitingForOthersMessageViewIfNeeded()
         case .updateHasLocalAudio(let audio):
             localUserView.localAudio(enabled: audio)
-        case .selectPinnedCellAt(let indexPath):
-            callCollectionView.configurePinnedCell(at: indexPath)
         case .shouldHideSpeakerView(let hidden):
             speakerViews.forEach { $0.isHidden = hidden }
         case .ownPrivilegeChangedToModerator:
@@ -276,10 +274,15 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         viewModel.dispatch(.fetchSpeakerAvatar)
         speakerRemoteVideoImageView.isHidden = participant.video != .on
         if participant.hasScreenShare {
-            speakerMutedImageView.isHidden = true
+            speakerMicImageView.isHidden = true
             speakerNameLabel.text = Strings.Localizable.Calls.ScreenShare.MainView.presentingLabel(participant.name ?? "")
         } else {
-            speakerMutedImageView.isHidden = participant.audio == .on
+            if participant.audio == .on && !participant.audioDetected {
+                speakerMicImageView.isHidden = true
+            } else {
+                speakerMicImageView.isHidden = false
+                speakerMicImageView.image = participant.audioDetected ? .micActive : .micMuted
+            }
             speakerNameLabel.text = participant.name
         }
     }
@@ -526,7 +529,7 @@ extension MeetingParticipantsLayoutViewController: CallCollectionViewDelegate {
     }
     
     func collectionViewDidSelectParticipant(participant: CallParticipantEntity, at indexPath: IndexPath) {
-        viewModel.dispatch(.tapParticipantToPinAsSpeaker(participant, indexPath))
+        viewModel.dispatch(.tapParticipantToPinAsSpeaker(participant))
     }
     
     func fetchAvatar(for participant: CallParticipantEntity) {

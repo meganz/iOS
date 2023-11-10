@@ -4,7 +4,7 @@ class CallParticipantCell: UICollectionViewCell {
     @IBOutlet weak var videoImageView: UIImageView!
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var mutedImageView: UIImageView!
+    @IBOutlet weak var micImageView: UIImageView!
     
     private(set) var participant: CallParticipantEntity? {
         willSet {
@@ -16,10 +16,16 @@ class CallParticipantCell: UICollectionViewCell {
     func configure(for participant: CallParticipantEntity, in layoutMode: ParticipantsLayoutMode) {
         self.participant = participant
         nameLabel.text = participant.name
-        mutedImageView.isHidden = participant.audio == .on
         nameLabel.superview?.isHidden = layoutMode == .speaker
         participant.videoDataDelegate = self
 
+        if participant.audio == .on && !participant.audioDetected {
+            micImageView.isHidden = true
+        } else {
+            micImageView.isHidden = false
+            micImageView.image = participant.audioDetected ? .micActive : .micMuted
+        }
+        
         if participant.video == .on {
             if videoImageView.isHidden {
                 videoImageView.isHidden = false
@@ -37,12 +43,25 @@ class CallParticipantCell: UICollectionViewCell {
             videoImageView.isHidden = true
         }
         
-        if layoutMode == .speaker && participant.isSpeakerPinned {
+        layer.cornerRadius = 8
+        borderWidth = 0
+        
+        if participant.audioDetected {
+            borderColor = ._00_C_29_A
             borderWidth = 1
-            borderColor = .systemYellow
-        } else {
-            borderWidth = 0
-            borderColor = .clear
+        }
+        
+        switch layoutMode {
+        case .grid:
+            micImageView.superview?.layer.cornerRadius = 2
+            nameLabel.superview?.isHidden = false
+        case .speaker:
+            nameLabel.superview?.isHidden = true
+            micImageView.superview?.layer.cornerRadius = 12
+            if participant.isSpeakerPinned {
+                borderColor = .systemYellow
+                borderWidth = 1
+            }
         }
     }
     
