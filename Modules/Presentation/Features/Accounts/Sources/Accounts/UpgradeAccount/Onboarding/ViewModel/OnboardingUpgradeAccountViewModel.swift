@@ -1,4 +1,5 @@
 import Combine
+import Foundation
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
@@ -6,7 +7,9 @@ import MEGAPresentation
 public final class OnboardingUpgradeAccountViewModel: ObservableObject {
     private let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
     private let viewProPlanAction: () -> Void
+    private var subscriptions: Set<AnyCancellable> = []
     
+    @Published private(set) var shouldDismiss: Bool = false
     @Published private(set) var lowestProPlan: AccountPlanEntity = AccountPlanEntity()
     
     public init(
@@ -15,6 +18,19 @@ public final class OnboardingUpgradeAccountViewModel: ObservableObject {
     ) {
         self.purchaseUseCase = purchaseUseCase
         self.viewProPlanAction = viewProPlanAction
+        
+        setupSubscriptions()
+    }
+    
+    func setupSubscriptions() {
+        NotificationCenter.default
+            .publisher(for: .dismissOnboardingProPlanDialog)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self else { return }
+                shouldDismiss = true
+            }
+            .store(in: &subscriptions)
     }
     
     @MainActor

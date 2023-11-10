@@ -31,6 +31,11 @@ public struct OnboardingUpgradeAccountView: View, DismissibleContentView {
         }
         .padding(.horizontal, 16)
         .frame(maxWidth: 390)
+        .onChange(of: viewModel.shouldDismiss) { newValue in
+            if newValue {
+                dismiss()
+            }
+        }
         .task {
             await viewModel.setUpLowestProPlan()
         }
