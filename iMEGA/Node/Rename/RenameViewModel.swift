@@ -49,7 +49,7 @@ struct RenameViewModel {
     func isNewNameWithinMaxLength(_ newName: String) -> Bool {
         switch type {
         case .device(let renameEntity):
-            return newName.count < renameEntity.maxCharacters
+            return newName.count <= renameEntity.maxCharacters
         }
     }
     
