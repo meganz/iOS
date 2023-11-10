@@ -6,21 +6,25 @@ import SwiftUI
 
 final public class AdsSlotViewModel: ObservableObject {
     private var adsUseCase: any AdsUseCaseProtocol
+    private var accountUseCase: any AccountUseCaseProtocol
     private var featureFlagProvider: any FeatureFlagProviderProtocol
     private var adsSlotChangeStream: any AdsSlotChangeStreamProtocol
     private var adsSlotConfig: AdsSlotConfig?
     
     @Published var adsUrl: URL?
     @Published var displayAds: Bool = false
+    private(set) var closedAds: Set<AdsSlotEntity> = []
     
     private(set) var monitorAdsSlotChangesTask: Task<Void, Never>?
     
     public init(
         adsUseCase: some AdsUseCaseProtocol,
+        accountUseCase: some AccountUseCaseProtocol,
         adsSlotChangeStream: some AdsSlotChangeStreamProtocol,
         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
         self.adsUseCase = adsUseCase
+        self.accountUseCase = accountUseCase
         self.adsSlotChangeStream = adsSlotChangeStream
         self.featureFlagProvider = featureFlagProvider
     }
@@ -50,6 +54,12 @@ final public class AdsSlotViewModel: ObservableObject {
         guard isFeatureFlagForInAppAdsEnabled else {
             adsSlotConfig = nil
             await configureAds(url: nil)
+            return
+        }
+
+        if let newAdsSlot = newAdsSlotConfig?.adsSlot, closedAds.contains(newAdsSlot) {
+            self.adsSlotConfig = nil
+            await displayAds(false)
             return
         }
         
@@ -88,6 +98,21 @@ final public class AdsSlotViewModel: ObservableObject {
         } catch {
             await configureAds(url: nil)
         }
+    }
+    
+    func didTapAdsContent() async {
+        guard accountUseCase.isNewAccount else {
+            // For existing users, new ads will be loaded for the current ads slot
+            await loadNewAds()
+            return
+        }
+    
+        // For new users, the ads will not show again on this ads slot
+        guard let adsSlotConfig else { return }
+        closedAds.insert(adsSlotConfig.adsSlot)
+
+        self.adsSlotConfig = nil
+        await displayAds(false)
     }
     
     @MainActor

@@ -10,6 +10,7 @@ extension AppDelegate {
 
     @objc func adsMainTabBarController(_ tabBar: MainTabBarController) -> UIViewController {
         AdsSlotRouter(
+            accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             adsSlotViewController: tabBar,
             contentView: MainTabBarWrapper(mainTabBar: tabBar)
         ).build()
