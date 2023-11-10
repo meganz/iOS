@@ -831,10 +831,8 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
     
     func testEnableRemoteVideo_forParticipantHasScreenShareAndCanReceiveVideoInHighResolution_shouldCallEnabledRemoteVideoWithHighResolution() {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.presenterVideoAndSharedScreen: true])
         let sut = makeMeetingParticipantsLayoutViewModel(
-            remoteVideoUseCase: remoteVideoUseCase,
-            featureFlagProvider: featureFlagProvider
+            remoteVideoUseCase: remoteVideoUseCase
         )
         
         let participant = CallParticipantEntity(participantId: 100, isVideoHiRes: true, canReceiveVideoHiRes: false, hasScreenShare: true)
@@ -845,28 +843,22 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         XCTAssertEqual(remoteVideoUseCase.enableRemoteVideo_CalledTimes, 1)
     }
     
-    func testEnableRemoteVideo_forParticipantHasScreenShareAndCanNotReceiveVideoInHighResolution_shouldCallRequestHighResolutionVideo() {
+    func testRequestRemoteScreenShareVideo_forParticipantHasScreenShareAndHasHighResVideo_shouldCallRequestHighResolutionVideo() {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.presenterVideoAndSharedScreen: true])
         let sut = makeMeetingParticipantsLayoutViewModel(
-            remoteVideoUseCase: remoteVideoUseCase,
-            featureFlagProvider: featureFlagProvider
+            remoteVideoUseCase: remoteVideoUseCase
         )
         
-        let participant = CallParticipantEntity(participantId: 100, isVideoHiRes: true, canReceiveVideoHiRes: false, hasScreenShare: true)
-        sut.participantJoined(participant: participant)
-        participant.canReceiveVideoLowRes = true
-        sut.lowResolutionChanged(for: participant)
+        let participant = CallParticipantEntity(participantId: 100, video: .on, isVideoHiRes: true, hasScreenShare: true)
+        sut.dispatch(.participantIsVisible(participant, index: 0))
         
         XCTAssertEqual(remoteVideoUseCase.requestHighResolutionVideo_calledTimes, 1)
     }
     
     func testEnableRemoteVideo_forParticipantHasScreenShareAndCanReceiveVideoInLowResolution_shouldCallEnabledRemoteVideoWithLowResolution() {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.presenterVideoAndSharedScreen: true])
         let sut = makeMeetingParticipantsLayoutViewModel(
-            remoteVideoUseCase: remoteVideoUseCase,
-            featureFlagProvider: featureFlagProvider
+            remoteVideoUseCase: remoteVideoUseCase
         )
         
         let participant = CallParticipantEntity(participantId: 100, isVideoLowRes: true, canReceiveVideoLowRes: false, hasScreenShare: true)
@@ -877,20 +869,32 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         XCTAssertEqual(remoteVideoUseCase.enableRemoteVideo_CalledTimes, 1)
     }
     
-    func testEnableRemoteVideo_forParticipantHasScreenShareAndCanNotReceiveVideoInLowResolution_shouldCallRequestLowResolutionVideo() {
+    func testRequestRemoteScreenShareVideo_forParticipantHasScreenShareAndHasLowResVideoAndHasCamera_shouldCallRequestLowResolutionVideo() {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.presenterVideoAndSharedScreen: true])
         let sut = makeMeetingParticipantsLayoutViewModel(
-            remoteVideoUseCase: remoteVideoUseCase,
-            featureFlagProvider: featureFlagProvider
+            remoteVideoUseCase: remoteVideoUseCase
         )
         
-        let participant = CallParticipantEntity(participantId: 100, isVideoLowRes: true, canReceiveVideoLowRes: false, hasScreenShare: true)
-        sut.participantJoined(participant: participant)
-        participant.canReceiveVideoHiRes = true
-        sut.highResolutionChanged(for: participant)
+        let participant = CallParticipantEntity(participantId: 100, video: .on, isVideoLowRes: true, hasCamera: true, hasScreenShare: true)
+        sut.dispatch(.participantIsVisible(participant, index: 0))
         
         XCTAssertEqual(remoteVideoUseCase.requestLowResolutionVideo_calledTimes, 1)
+    }
+    
+    func testTapParticipantToPinAsSpeaker_forParticipantVideoOnAndVideoLowResAndCanReceiveViewLowResAndHasScreenShareAndHasNoCamera_shouldSwitchVideoResolutionLowToHigh() {
+        let remoteVideoUseCase = MockCallRemoteVideoUseCase()
+        remoteVideoUseCase.requestHighResolutionVideoCompletion = .success
+        let sut = makeMeetingParticipantsLayoutViewModel(
+            remoteVideoUseCase: remoteVideoUseCase
+        )
+        
+        let participant = CallParticipantEntity()
+        sut.participantJoined(participant: participant)
+        
+        let newParticipant = CallParticipantEntity(participantId: 100, video: .on, isVideoLowRes: true, canReceiveVideoLowRes: true, hasCamera: false, hasScreenShare: true)
+        sut.dispatch(.tapParticipantToPinAsSpeaker(newParticipant))
+        
+        XCTAssertEqual(remoteVideoUseCase.requestHighResolutionVideo_calledTimes, 1)
     }
     
     func testAction_switchToSpeakerView_shouldPinFirstParticipantAsSpeaker() {

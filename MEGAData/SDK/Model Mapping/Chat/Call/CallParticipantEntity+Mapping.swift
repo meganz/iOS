@@ -154,4 +154,35 @@ extension CallParticipantEntity {
         
         return participant
     }
+    
+    static func createScreenShareParticipant(
+        _ participant: CallParticipantEntity
+    ) -> CallParticipantEntity {
+        let callParticipant = CallParticipantEntity(
+            chatId: participant.chatId,
+            participantId: participant.participantId,
+            clientId: participant.clientId,
+            email: participant.email,
+            isModerator: participant.isModerator,
+            isInContactList: participant.isInContactList,
+            video: participant.video,
+            audio: participant.audio,
+            isVideoHiRes: participant.isVideoHiRes,
+            isVideoLowRes: participant.isVideoLowRes,
+            canReceiveVideoHiRes: participant.canReceiveVideoHiRes,
+            canReceiveVideoLowRes: participant.canReceiveVideoLowRes,
+            name: participant.name,
+            sessionRecoverable: participant.sessionRecoverable,
+            isSpeakerPinned: participant.isSpeakerPinned,
+            hasCamera: participant.hasCamera,
+            isLowResCamera: participant.isLowResCamera,
+            isHiResCamera: participant.isHiResCamera,
+            hasScreenShare: participant.hasScreenShare,
+            isLowResScreenShare: participant.isLowResScreenShare,
+            isHiResScreenShare: participant.isHiResScreenShare,
+            audioDetected: false
+        )
+        callParticipant.isScreenShareCell = true
+        return callParticipant
+    }
 }

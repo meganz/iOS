@@ -105,7 +105,7 @@ public final class CallRemoteVideoRepository: NSObject, CallRemoteVideoRepositor
 final class RemoteVideoData: NSObject, MEGAChatVideoDelegate {
     let chatId: HandleEntity
     let clientId: HandleEntity
-    var hiRes: Bool = false
+    let hiRes: Bool
     var remoteVideoListener: (any CallRemoteVideoListenerRepositoryProtocol)?
     
     init(
@@ -121,7 +121,6 @@ final class RemoteVideoData: NSObject, MEGAChatVideoDelegate {
     }
     
     func onChatVideoData(_ api: MEGAChatSdk, chatId: UInt64, width: Int, height: Int, buffer: Data) {
-        print("onChatVideoData: \(chatId) clientId: \(clientId) hiRes: \(hiRes)")
         remoteVideoListener?.remoteVideoFrameData(clientId: clientId, width: width, height: height, buffer: buffer, isHiRes: hiRes)
     }
 }
