@@ -9,4 +9,5 @@ public extension Notification.Name {
     static let setShouldRefreshAccountDetails = Notification.Name("nz.mega.setShouldRefreshAccountDetails")
     static let refreshAccountDetails = Notification.Name("nz.mega.refreshAccountDetails")
     static let sortingPreferenceChanged = Notification.Name("MEGASortingPreference")
+    static let dismissOnboardingProPlanDialog = Notification.Name("nz.mega.dismissOnboardingProPlanDialog")
 }

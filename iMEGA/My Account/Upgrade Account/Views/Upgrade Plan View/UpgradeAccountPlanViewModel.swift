@@ -115,6 +115,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
                         guard let self else { return }
+                        postDismissOnboardingProPlanDialog()
                         isDismiss = true
                     }
                 case .failure(let error):
@@ -252,6 +253,10 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     // MARK: - Private
     private func postRefreshAccountDetailsNotification() {
         NotificationCenter.default.post(name: .refreshAccountDetails, object: nil)
+    }
+    
+    private func postDismissOnboardingProPlanDialog() {
+        NotificationCenter.default.post(name: .dismissOnboardingProPlanDialog, object: nil)
     }
     
     private func setRecommendedPlan() {

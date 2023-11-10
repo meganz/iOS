@@ -225,6 +225,8 @@
 - (void)successfulPurchase:(MEGAPurchase *)megaPurchase {
     if (!isPurchased) {
         isPurchased = YES;
+                
+        [self postDismissOnboardingProPlanDialog];
         
         if (self.presentingViewController) {
             [self dismissViewControllerAnimated:YES completion:nil];

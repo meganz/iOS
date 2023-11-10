@@ -13,4 +13,8 @@ extension ProductDetailViewController {
         let error = AccountPlanErrorEntity(errorCode: errorCode, errorMessage: nil)
         return error.toPurchaseErrorStatus() == .paymentCancelled
     }
+    
+    @objc func postDismissOnboardingProPlanDialog() {
+        NotificationCenter.default.post(name: .dismissOnboardingProPlanDialog, object: nil)
+    }
 }
