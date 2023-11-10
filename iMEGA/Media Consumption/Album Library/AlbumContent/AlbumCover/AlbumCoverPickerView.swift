@@ -2,7 +2,7 @@ import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
 
-struct AlbumCoverPickerView: View, DismissibleContentView {
+struct AlbumCoverPickerView: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass: UserInterfaceSizeClass?
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.presentationMode) private var presentationMode
@@ -72,10 +72,6 @@ struct AlbumCoverPickerView: View, DismissibleContentView {
     }
     
     private func dismiss() {
-        if #available(iOS 15.0, *) {
-            presentationMode.wrappedValue.dismiss()
-        } else {
-            invokeDismiss?()
-        }
+        presentationMode.wrappedValue.dismiss()
     }
 }

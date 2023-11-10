@@ -2,7 +2,7 @@ import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
 
-struct AlbumContentPickerView: View, DismissibleContentView {
+struct AlbumContentPickerView: View {
     @StateObject var viewModel: AlbumContentPickerViewModel
     var invokeDismiss: (() -> Void)?
     
@@ -102,10 +102,6 @@ struct AlbumContentPickerView: View, DismissibleContentView {
     }
     
     private func dismiss() {
-        if #available(iOS 15.0, *) {
-            presentationMode.wrappedValue.dismiss()
-        } else {
-            invokeDismiss?()
-        }
+        presentationMode.wrappedValue.dismiss()
     }
 }

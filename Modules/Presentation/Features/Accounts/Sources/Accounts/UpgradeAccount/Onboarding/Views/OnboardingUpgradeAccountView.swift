@@ -2,7 +2,7 @@ import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
 
-public struct OnboardingUpgradeAccountView: View, DismissibleContentView {
+public struct OnboardingUpgradeAccountView: View {
     @Environment(\.presentationMode) private var presentationMode
     @StateObject var viewModel: OnboardingUpgradeAccountViewModel
     public var invokeDismiss: (() -> Void)?
@@ -42,11 +42,7 @@ public struct OnboardingUpgradeAccountView: View, DismissibleContentView {
     }
     
     private func dismiss() {
-        if #available(iOS 15.0, *) {
-            presentationMode.wrappedValue.dismiss()
-        } else {
-            invokeDismiss?()
-        }
+        presentationMode.wrappedValue.dismiss()
     }
 }
 

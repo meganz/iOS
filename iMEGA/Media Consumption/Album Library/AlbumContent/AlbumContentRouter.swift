@@ -75,7 +75,7 @@ struct AlbumContentRouter: AlbumContentRouting {
                                                         scaleFactor: UIDevice().iPadDevice ? .five : .three)
                                                     )
         let content = AlbumContentPickerView(viewModel: viewModel)
-        navigationController?.present(UIHostingController(dismissibleView: content),
+        navigationController?.present(UIHostingController(rootView: content),
                                       animated: true)
     }
     
@@ -94,7 +94,7 @@ struct AlbumContentRouter: AlbumContentRouting {
                                                   albumContentsUseCase: albumContentsUseCase, router: self,
                                                     completion: completion)
         let content = AlbumCoverPickerView(viewModel: viewModel)
-        navigationController?.present(UIHostingController(dismissibleView: content),
+        navigationController?.present(UIHostingController(rootView: content),
                                       animated: true)
     }
     
@@ -121,7 +121,7 @@ struct AlbumContentRouter: AlbumContentRouting {
                 .ignoresSafeArea(edges: .bottom)
                 .navigationBarHidden(true)
         }
-        navigationController?.present(UIHostingController(dismissibleView: view),
+        navigationController?.present(UIHostingController(rootView: view),
                                       animated: true)
     }
     
