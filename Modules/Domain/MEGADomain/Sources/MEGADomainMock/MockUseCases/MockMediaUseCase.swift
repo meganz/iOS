@@ -1,10 +1,10 @@
 import Foundation
 import MEGADomain
 
-public struct MockMediaUseCase: MediaUseCaseProtocol {
+public class MockMediaUseCase: MediaUseCaseProtocol {
     private let isURLVideo: Bool
     private let isURLImage: Bool
-    private let isStringVideo: Bool
+    public var isStringVideoToReturn: Bool
     private let isStringImage: Bool
     private let isRawImage: Bool
     private let isGifImage: Bool
@@ -37,7 +37,7 @@ public struct MockMediaUseCase: MediaUseCaseProtocol {
                 allVideos: [NodeEntity] = []) {
         self.isURLVideo = isURLVideo
         self.isURLImage = isURLImage
-        self.isStringVideo = isStringVideo
+        self.isStringVideoToReturn = isStringVideo
         self.isStringImage = isStringImage
         self.isRawImage = isRawImage
         self.isGifImage = isGifImage
@@ -62,7 +62,7 @@ public struct MockMediaUseCase: MediaUseCaseProtocol {
     }
     
     public func isVideo(_ name: FileNameEntity) -> Bool {
-        videoFileNames?.contains(name) ?? isStringVideo
+        videoFileNames?.contains(name) ?? isStringVideoToReturn
     }
     
     public func isImage(_ name: FileNameEntity) -> Bool {

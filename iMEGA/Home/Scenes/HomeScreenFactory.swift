@@ -222,7 +222,8 @@ final class HomeScreenFactory: NSObject {
                 nodeDetailUseCase: makeNodeDetailUseCase(),
                 nodeUseCase: makeNodeUseCase(),
                 mediaUseCase: makeMediaUseCase(),
-                nodeRepository: makeNodeRepo()
+                nodeRepository: makeNodeRepo(),
+                sdk: sdk
             ),
             bridge: searchBridge,
             config: .searchConfig(

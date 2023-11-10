@@ -2,11 +2,11 @@ import MEGADomain
 
 public final class MockNodeDataUseCase: NodeUseCaseProtocol {
     private let nodeAccessLevelVariable: NodeAccessTypeEntity
-    private let labelString: String
+    public var labelStringToReturn: String
     private let filesAndFolders: (Int, Int)
-    private let versions: Bool
-    private let downloaded: Bool
-    private let inRubbishBin: Bool
+    public var versions: Bool
+    public var downloadedToReturn: Bool
+    public var inRubbishBinToReturn: Bool
     private var multimediaNodes: [NodeEntity]
     
     public var isMultimediaFileNode_CalledTimes = 0
@@ -19,11 +19,11 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
                 inRubbishBin: Bool = false,
                 multimediaNodes: [NodeEntity] = []) {
         self.nodeAccessLevelVariable = nodeAccessLevelVariable
-        self.labelString = labelString
+        self.labelStringToReturn = labelString
         self.filesAndFolders = filesAndFolders
         self.versions = versions
-        self.downloaded = downloaded
-        self.inRubbishBin = inRubbishBin
+        self.downloadedToReturn = downloaded
+        self.inRubbishBinToReturn = inRubbishBin
         self.multimediaNodes = multimediaNodes
     }
     
@@ -38,7 +38,7 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
     public func downloadToOffline(nodeHandle: HandleEntity) { }
     
     public func labelString(label: NodeLabelTypeEntity) -> String {
-        labelString
+        labelStringToReturn
     }
     
     public func getFilesAndFolders(nodeHandle: HandleEntity) -> (childFileCount: Int, childFolderCount: Int) {
@@ -50,11 +50,11 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
     }
     
     public func isDownloaded(nodeHandle: HandleEntity) -> Bool {
-        downloaded
+        downloadedToReturn
     }
     
     public func isInRubbishBin(nodeHandle: HandleEntity) -> Bool {
-        inRubbishBin
+        inRubbishBinToReturn
     }
     
     public func nodeForHandle(_ handle: MEGADomain.HandleEntity) -> NodeEntity? {

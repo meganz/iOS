@@ -1,31 +1,44 @@
 import Foundation
+import UIKit
 
 public struct SearchResult: Identifiable, Sendable {
-    public let id: ResultId
-    public let title: String
-    public let description: String
-    public let properties: [Property]
-    public let thumbnailImageData: @Sendable () async -> Data
-    public let type: ResultType
-    public let thumbnailPreviewInfo: SearchResultThumbnailInfo
-
     public init(
         id: ResultId,
+        /// result need to specify what mode it needs to be presented in
+        /// in thumbnail layout, for list layout all nodes are presented the same way
+        thumbnailDisplayMode: ResultCellLayout.ThumbnailMode,
+        /// encodes if background of the vertical cell should present
+        /// a preview or a solid background with an icon
+        backgroundDisplayMode: VerticalBackgroundViewMode,
         title: String,
         description: String,
-        properties: [Property],
-        thumbnailImageData: @Sendable @escaping () async -> Data,
         type: ResultType,
-        thumbnailPreviewInfo: SearchResultThumbnailInfo
+        /// represents various properties such as labek color, offline status, versioning etc;
+        /// elements in the array define how they should be rendered (icon, text ..) and where
+        /// they should be placed. Placement is encoded in a semantic way 
+        properties: [ResultProperty],
+        thumbnailImageData: @escaping @Sendable () async -> Data
     ) {
         self.id = id
+        self.thumbnailDisplayMode = thumbnailDisplayMode
+        self.backgroundDisplayMode = backgroundDisplayMode
         self.title = title
         self.description = description
+        self.type = type
         self.properties = properties
         self.thumbnailImageData = thumbnailImageData
-        self.type = type
-        self.thumbnailPreviewInfo = thumbnailPreviewInfo
     }
+    
+    public let id: ResultId
+    /// this is needed to know in the thumbnail grid mode if given result should
+    /// be rendered as horizontal (folder) or vertical (file) layout
+    public let thumbnailDisplayMode: ResultCellLayout.ThumbnailMode
+    public let backgroundDisplayMode: VerticalBackgroundViewMode
+    public let title: String
+    public let description: String
+    public let type: ResultType
+    public let properties: [ResultProperty]
+    public let thumbnailImageData: @Sendable () async -> Data
 }
 
 public typealias ResultId = UInt64
@@ -37,11 +50,5 @@ extension SearchResult: Equatable {
         lhs.description == rhs.description &&
         lhs.properties == rhs.properties &&
         lhs.type == rhs.type
-    }
-}
-
-extension Property: Equatable {
-    public static func == (lhs: Property, rhs: Property) -> Bool {
-        lhs.icon == rhs.icon
     }
 }

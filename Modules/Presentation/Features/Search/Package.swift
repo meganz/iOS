@@ -21,7 +21,11 @@ let package = Package(
     dependencies: [
         .package(path: "../../../Infrastructure/MEGASwift"),
         .package(path: "../../../Localization/MEGAL10n"),
-        .package(path: "../../../UI/MEGASwiftUI")
+        .package(path: "../../../UI/MEGASwiftUI"),
+        .package(
+            url: "https://github.com/pointfreeco/swift-snapshot-testing",
+            from: "1.12.0"
+        )
     ],
     targets: [
         .target(
@@ -40,7 +44,15 @@ let package = Package(
         ),
         .testTarget(
             name: "SearchTests",
-            dependencies: ["Search", "SearchMock"],
+            dependencies: [
+                "Search", 
+                "SearchMock",
+                .product(name: "SnapshotTesting", package: "swift-snapshot-testing")
+            ],
+            resources: [
+                .process("folder.png"),
+                .process("scenery.png")
+            ],
             swiftSettings: [.enableUpcomingFeature("ExistentialAny")]
         )
     ]

@@ -17,13 +17,14 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
     
     @Published var thumbnailImage: UIImage = UIImage()
 
-    @Published var properties: [UIImage] = []
-
-    @Published var isDownloadHidden: Bool = true
-
     var title: String {
         result.title
     }
+    
+    var hasVibrantTitle: Bool {
+        result.properties.first { $0.vibrancyEnabled } != nil
+    }
+    
     var id: String {
         result.id.description
     }
@@ -35,42 +36,45 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
     var selectedCheckmarkImage: UIImage {
         rowAssets.itemSelected
     }
+    
     var unselectedCheckmarkImage: UIImage {
         rowAssets.itemUnselected
     }
 
-    var thumbnailInfo: SearchResultThumbnailInfo {
-        result.thumbnailPreviewInfo
+    var contextButtonImage: UIImage {
+        rowAssets.contextImage
+    }
+    
+    var playImage: UIImage {
+        rowAssets.playImage
+    }
+    
+    var downloadedImage: UIImage {
+        rowAssets.downloadedImage
+    }
+    
+    var moreList: UIImage {
+        rowAssets.moreList
+    }
+    
+    var moreGrid: UIImage {
+        rowAssets.moreGrid
     }
 
     let result: SearchResult
-
-    let contextButtonImage: UIImage
-    let playImage: UIImage
-    let downloadedImage: UIImage
-    let moreList: UIImage
-    let moreGrid: UIImage
-
     let colorAssets: SearchConfig.ColorAssets
     let previewContent: PreviewContent
     let actions: UserActions
     let rowAssets: SearchConfig.RowAssets
 
     init(
-        with result: SearchResult,
+        result: SearchResult,
         rowAssets: SearchConfig.RowAssets,
         colorAssets: SearchConfig.ColorAssets,
         previewContent: PreviewContent,
         actions: UserActions
     ) {
         self.result = result
-
-        self.contextButtonImage = rowAssets.contextImage
-        self.playImage = rowAssets.playImage
-        self.downloadedImage = rowAssets.downloadedImage
-        self.moreList = rowAssets.moreList
-        self.moreGrid = rowAssets.moreGrid
-
         self.colorAssets = colorAssets
         self.previewContent = previewContent
         self.actions = actions
@@ -84,15 +88,5 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
         if let image = UIImage(data: data) {
             self.thumbnailImage = image
         }
-    }
-
-    @MainActor
-    func loadProperties() async {
-        properties = await thumbnailInfo.propertiesData()
-    }
-
-    @MainActor
-    func chekDownloadVisibility() async {
-        isDownloadHidden = await thumbnailInfo.downloadVisibilityData()
     }
 }
