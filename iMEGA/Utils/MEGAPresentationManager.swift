@@ -1,4 +1,4 @@
-import PureLayout
+import UIKit
 
 /// This class is intended to manage custom animations for presenting view controllers.
 /// The current custom animation has a dimmed view as background and the view controller is presented from the bottom. In future designs could be needed more animations and should adapt the code.
@@ -14,7 +14,11 @@ class MEGAPresentationManager: NSObject, UIViewControllerTransitioningDelegate {
 
 class MEGAPresentationController: UIPresentationController {
 
-    lazy private var dimmingView = UIView.newAutoLayout()
+    private lazy var dimmingView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     
     override init(presentedViewController: UIViewController, presenting presentingViewController: UIViewController?) {
         
@@ -29,8 +33,15 @@ class MEGAPresentationController: UIPresentationController {
     }
     
     override func presentationTransitionWillBegin() {
-        containerView?.insertSubview(dimmingView, at: 0)
-        dimmingView.autoPinEdgesToSuperviewEdges()
+        guard let containerView else { return }
+        containerView.insertSubview(dimmingView, at: 0)
+        
+        NSLayoutConstraint.activate([
+            dimmingView.topAnchor.constraint(equalTo: containerView.topAnchor),
+            dimmingView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            dimmingView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            dimmingView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
+        ])
         
         guard let coordinator = presentedViewController.transitionCoordinator else {
             dimmingView.alpha = 1.0

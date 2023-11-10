@@ -24,7 +24,6 @@
 #import "UIView+MNZCategory.h"
 
 @import MEGAL10nObjc;
-@import PureLayout;
 
 @interface PreviewDocumentViewController () <QLPreviewControllerDataSource, QLPreviewControllerDelegate, MEGATransferDelegate, UICollectionViewDelegate, UICollectionViewDataSource, NodeActionViewControllerDelegate, NodeInfoViewControllerDelegate, SearchInPdfViewControllerProtocol, UIGestureRecognizerDelegate, PDFViewDelegate> {
     MEGATransfer *previewDocumentTransfer;
@@ -209,12 +208,7 @@
 }
 
 - (void)loadTextView {
-    UITextView *textView = [[UITextView alloc] init];
-    textView.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
-    textView.adjustsFontForContentSizeCategory = YES;
-    [self.view addSubview:textView];
-    [textView autoPinEdgesToSuperviewSafeArea];
-    [textView setEditable:NO];
+    UITextView *textView = [self setupTextView];
     textView.text = self.textContent;
 }
 
@@ -263,17 +257,8 @@
 }
 
 - (void)createOpenZipButton {
-    UIButton *openZipButton = [UIButton newAutoLayoutView];
-    [openZipButton setTitle:LocalizedString(@"openButton", @"Button title to trigger the action of opening the file without downloading or opening it.") forState:UIControlStateNormal];
-    [openZipButton mnz_setupBasic:self.traitCollection];
-    [self.view addSubview:openZipButton];
-    [openZipButton autoSetDimension:ALDimensionWidth toSize:300];
-    [openZipButton autoSetDimension:ALDimensionHeight toSize:60];
-    [openZipButton autoAlignAxisToSuperviewAxis:ALAxisVertical];
-    [openZipButton autoPinEdgeToSuperviewSafeArea:ALEdgeBottom withInset:UIDevice.currentDevice.iPad ? 32 : 16];
-    [openZipButton addTarget:self action:@selector(openZipInQLViewController) forControlEvents:UIControlEventTouchUpInside];
-    
-    self.openZipButton = openZipButton;
+    self.openZipButton = [self setupOpenZipButton];
+    [self.openZipButton addTarget:self action:@selector(openZipInQLViewController) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)presentActivityVC:(NSArray *)activityItems barButtonItem:(id)sender {

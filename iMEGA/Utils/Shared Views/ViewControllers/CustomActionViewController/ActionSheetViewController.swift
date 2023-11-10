@@ -1,9 +1,18 @@
-import PureLayout
 import UIKit
 
 class ActionSheetViewController: UIViewController {
 
-    var tableView = UITableView.newAutoLayout()
+    lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.bounces = true
+        tableView.layer.cornerRadius = 16
+        tableView.tableFooterView = UIView()
+        return tableView
+    }()
+    
     var headerView: UIView?
 
     var actions: [BaseAction] = []
@@ -12,11 +21,32 @@ class ActionSheetViewController: UIViewController {
 
     // MARK: - Private properties
     private var isPresenting = false
-    private var indicator = UIView(frame: CGRect(x: 0, y: 0, width: 36, height: 6))
-    private var backgroundView = UIView.newAutoLayout()
+
+    private lazy var indicator: UIView = {
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 36, height: 6))
+        view.layer.cornerRadius = 3
+        view.clipsToBounds = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private lazy var backgroundView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     private var top: NSLayoutConstraint?
     private var layoutThreshold: CGFloat { self.view.bounds.height * CGFloat(0.3) }
-    private let titleLabel = UILabel()
+    
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .preferredFont(style: .subheadline, weight: .medium)
+        label.adjustsFontForContentSizeCategory = true
+        label.sizeToFit()
+        return label
+    }()
 
     // MARK: - ActionController initializers
 
@@ -173,52 +203,54 @@ class ActionSheetViewController: UIViewController {
     }
 }
 
-// MARK: PureLayout Implementation
 extension ActionSheetViewController {
     override func loadView() {
         super.loadView()
         view.backgroundColor = .clear
-
+        
         backgroundView.backgroundColor = .init(white: 0, alpha: 0.4)
-        view.addSubview(backgroundView)
-
-        indicator.layer.cornerRadius = 3
-        indicator.clipsToBounds = true
+        
         indicator.isHidden = true
+        
         if headerView == nil {
             headerView = UIView(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
         }
+        
         headerView?.addSubview(indicator)
-        indicator.autoAlignAxis(toSuperviewAxis: .vertical)
-        indicator.autoSetDimension(.height, toSize: 6)
-        indicator.autoSetDimension(.width, toSize: 36)
-        indicator.autoPinEdge(toSuperviewEdge: .top, withInset: CGFloat(6))
-
+        
+        NSLayoutConstraint.activate([
+            indicator.centerXAnchor.constraint(equalTo: headerView!.centerXAnchor),
+            indicator.heightAnchor.constraint(equalToConstant: 6),
+            indicator.widthAnchor.constraint(equalToConstant: 36),
+            indicator.topAnchor.constraint(equalTo: headerView!.topAnchor, constant: 6)
+        ])
+        
         titleLabel.text = headerTitle
-        titleLabel.font = .preferredFont(style: .subheadline, weight: .medium)
-        titleLabel.adjustsFontForContentSizeCategory = true
-        titleLabel.sizeToFit()
+        
         headerView?.addSubview(titleLabel)
-        titleLabel.autoCenterInSuperview()
-
+        
+        titleLabel.centerXAnchor.constraint(equalTo: headerView!.centerXAnchor).isActive = true
+        titleLabel.centerYAnchor.constraint(equalTo: headerView!.centerYAnchor).isActive = true
+        
         if headerTitle == nil {
             headerView?.frame = CGRect(x: 0, y: 0, width: 320, height: 10)
         }
+        
+        view.wrap(backgroundView)
+        
         tableView.tableHeaderView = headerView
-        tableView.tableFooterView = UIView()
         tableView.isScrollEnabled = true
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.bounces = true
-        tableView.layer.cornerRadius = 16
+        
         view.addSubview(tableView)
-
-        backgroundView.autoPinEdgesToSuperviewEdges()
-
-        tableView.autoPinEdge(toSuperviewEdge: .bottom)
-        tableView.autoPinEdge(toSuperviewEdge: .left)
-        tableView.autoPinEdge(toSuperviewEdge: .right)
-        top = tableView.autoPinEdge(toSuperviewSafeArea: .top, withInset: CGFloat(view.bounds.height))
+        
+        NSLayoutConstraint.activate([
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
+        
+        top = tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: view.bounds.height)
+        top!.isActive = true
     }
 }
 

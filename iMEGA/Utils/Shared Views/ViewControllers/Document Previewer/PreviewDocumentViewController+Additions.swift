@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAL10n
 
 extension PreviewDocumentViewController {
     @objc func createNodeInfoViewModel(withNode node: MEGANode) -> NodeInfoViewModel {
@@ -27,5 +28,45 @@ extension PreviewDocumentViewController {
     @objc func presentGetLink(for nodes: [MEGANode]) {
         GetLinkRouter(presenter: UIApplication.mnz_presentingViewController(),
                       nodes: nodes).start()
+    }
+    
+    @objc func setupTextView() -> UITextView {
+        let textView = UITextView()
+        textView.font = UIFont.preferredFont(forTextStyle: .body)
+        textView.adjustsFontForContentSizeCategory = true
+        view.addSubview(textView)
+        
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            textView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            textView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            textView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            textView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+        
+        textView.isEditable = false
+        return textView
+    }
+    
+    @objc func setupOpenZipButton() -> UIButton {
+        let openZipButton = UIButton(type: .custom)
+        
+        openZipButton.translatesAutoresizingMaskIntoConstraints = false
+        openZipButton.setTitle(Strings.Localizable.openButton, for: .normal)
+        openZipButton.mnz_setupBasic(traitCollection)
+        
+        view.addSubview(openZipButton)
+        
+        let bottomInset: CGFloat = UIDevice.current.userInterfaceIdiom == .pad ? 32 : 16
+        
+        NSLayoutConstraint.activate([
+            openZipButton.widthAnchor.constraint(equalToConstant: 300),
+            openZipButton.heightAnchor.constraint(equalToConstant: 60),
+            openZipButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            openZipButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -bottomInset)
+        ])
+        
+        return openZipButton
     }
 }

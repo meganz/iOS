@@ -22,11 +22,37 @@ class NodeActionViewController: ActionSheetViewController {
     
     private var viewMode: ViewModePreference?
     
-    let nodeImageView = UIImageView.newAutoLayout()
-    let titleLabel = UILabel.newAutoLayout()
-    let subtitleLabel = UILabel.newAutoLayout()
-    let downloadImageView = UIImageView.newAutoLayout()
-    let separatorLineView = UIView.newAutoLayout()
+    let nodeImageView = UIImageView()
+    
+    lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .preferredFont(style: .subheadline, weight: .medium)
+        label.adjustsFontForContentSizeCategory = true
+        return label
+    }()
+    
+    lazy var subtitleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .preferredFont(forTextStyle: .caption1)
+        label.adjustsFontForContentSizeCategory = true
+        return label
+    }()
+
+    lazy var downloadImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    lazy var separatorLineView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = tableView.separatorColor
+        return view
+    }()
+    
     private var isUndecryptedFolder = false
     
     // MARK: - NodeActionViewController initializers
@@ -256,36 +282,43 @@ class NodeActionViewController: ActionSheetViewController {
         headerView?.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 80)
         
         headerView?.addSubview(nodeImageView)
-        nodeImageView.autoSetDimensions(to: CGSize(width: 40, height: 40))
-        nodeImageView.autoPinEdge(toSuperviewSafeArea: .leading, withInset: 8)
-        nodeImageView.autoAlignAxis(toSuperviewAxis: .horizontal)
+        nodeImageView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            nodeImageView.widthAnchor.constraint(equalToConstant: 40),
+            nodeImageView.heightAnchor.constraint(equalToConstant: 40),
+            nodeImageView.leadingAnchor.constraint(equalTo: headerView!.safeAreaLayoutGuide.leadingAnchor, constant: 8),
+            nodeImageView.centerYAnchor.constraint(equalTo: headerView!.centerYAnchor)
+        ])
         nodeImageView.mnz_setThumbnail(by: node)
         
         headerView?.addSubview(titleLabel)
-        titleLabel.autoPinEdge(.leading, to: .trailing, of: nodeImageView, withOffset: 8)
-        titleLabel.autoPinEdge(.trailing, to: .trailing, of: headerView!, withOffset: -8)
-        titleLabel.autoAlignAxis(.horizontal, toSameAxisOf: headerView!, withOffset: -10)
+        NSLayoutConstraint.activate([
+            titleLabel.leadingAnchor.constraint(equalTo: nodeImageView.trailingAnchor, constant: 8),
+            titleLabel.trailingAnchor.constraint(equalTo: headerView!.trailingAnchor, constant: -8),
+            titleLabel.centerYAnchor.constraint(equalTo: headerView!.centerYAnchor, constant: -10)
+        ])
+        
         titleLabel.text = isUndecryptedFolder ? Strings.Localizable.SharedItems.Tab.Incoming.undecryptedFolderName : node.name
-        titleLabel.font = .preferredFont(style: .subheadline, weight: .medium)
-        titleLabel.adjustsFontForContentSizeCategory = true
         
         headerView?.addSubview(subtitleLabel)
-        subtitleLabel.autoPinEdge(.leading, to: .trailing, of: nodeImageView, withOffset: 8)
+        subtitleLabel.leadingAnchor.constraint(equalTo: nodeImageView.trailingAnchor, constant: 8).isActive = true
         
         if node.isFile() && MEGAStore.shareInstance().offlineNode(with: node) != nil {
             headerView?.addSubview(downloadImageView)
-            downloadImageView.autoSetDimensions(to: CGSize(width: 12, height: 12))
-            downloadImageView.autoAlignAxis(.horizontal, toSameAxisOf: headerView!, withOffset: 10)
-            downloadImageView.autoPinEdge(.leading, to: .trailing, of: subtitleLabel, withOffset: 4)
-            downloadImageView.autoPinEdge(toSuperviewSafeArea: .trailing, withInset: 10, relation: .greaterThanOrEqual)
+            NSLayoutConstraint.activate([
+                downloadImageView.widthAnchor.constraint(equalToConstant: 12),
+                downloadImageView.heightAnchor.constraint(equalToConstant: 12),
+                downloadImageView.centerYAnchor.constraint(equalTo: headerView!.centerYAnchor, constant: 10),
+                downloadImageView.leadingAnchor.constraint(equalTo: subtitleLabel.trailingAnchor, constant: 4),
+                downloadImageView.trailingAnchor.constraint(lessThanOrEqualTo: headerView!.safeAreaLayoutGuide.trailingAnchor, constant: -10)
+            ])
+            
             downloadImageView.image = Asset.Images.Generic.downloaded.image
         } else {
-            subtitleLabel.autoPinEdge(.trailing, to: .trailing, of: headerView!, withOffset: -8)
+            subtitleLabel.trailingAnchor.constraint(equalTo: headerView!.trailingAnchor, constant: -8).isActive = true
         }
         
-        subtitleLabel.autoAlignAxis(.horizontal, toSameAxisOf: headerView!, withOffset: 10)
-        subtitleLabel.font = .preferredFont(forTextStyle: .caption1)
-        subtitleLabel.adjustsFontForContentSizeCategory = true
+        subtitleLabel.centerYAnchor.constraint(equalTo: headerView!.centerYAnchor, constant: 10).isActive = true
                 
         if node.isFile() {
             subtitleLabel.text = sizeAndModicationDate(node.toNodeEntity())
@@ -294,11 +327,12 @@ class NodeActionViewController: ActionSheetViewController {
         }
         
         headerView?.addSubview(separatorLineView)
-        separatorLineView.autoPinEdge(toSuperviewEdge: .leading)
-        separatorLineView.autoPinEdge(toSuperviewEdge: .trailing)
-        separatorLineView.autoPinEdge(toSuperviewEdge: .bottom)
-        separatorLineView.autoSetDimension(.height, toSize: 1/UIScreen.main.scale)
-        separatorLineView.backgroundColor = tableView.separatorColor
+        NSLayoutConstraint.activate([
+            separatorLineView.leadingAnchor.constraint(equalTo: headerView!.leadingAnchor),
+            separatorLineView.trailingAnchor.constraint(equalTo: headerView!.trailingAnchor),
+            separatorLineView.bottomAnchor.constraint(equalTo: headerView!.bottomAnchor),
+            separatorLineView.heightAnchor.constraint(equalToConstant: 1 / UIScreen.main.scale)
+        ])
     }
     
     private func sizeAndModicationDate(_ nodeModel: NodeEntity) -> String {
