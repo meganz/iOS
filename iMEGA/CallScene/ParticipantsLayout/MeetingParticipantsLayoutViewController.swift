@@ -517,7 +517,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
 // MARK: - CallParticipantVideoDelegate
 
 extension MeetingParticipantsLayoutViewController: CallParticipantVideoDelegate {
-    func videoFrameData(width: Int, height: Int, buffer: Data!) {
+    func videoFrameData(width: Int, height: Int, buffer: Data!, type: VideoFrameType) {
         speakerRemoteVideoImageView.image = UIImage.mnz_convert(toUIImage: buffer, withWidth: width, withHeight: height)
     }
 }

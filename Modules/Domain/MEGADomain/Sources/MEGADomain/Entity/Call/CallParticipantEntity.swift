@@ -1,7 +1,12 @@
 import Foundation
 
+public enum VideoFrameType {
+    case cameraVideo
+    case screenShare
+}
+
 public protocol CallParticipantVideoDelegate: AnyObject {
-    func videoFrameData(width: Int, height: Int, buffer: Data!)
+    func videoFrameData(width: Int, height: Int, buffer: Data!, type: VideoFrameType)
 }
 
 public final class CallParticipantEntity {
@@ -35,7 +40,8 @@ public final class CallParticipantEntity {
     public var isLowResScreenShare: Bool
     public var isHiResScreenShare: Bool
     public var audioDetected: Bool
-    
+    public var isScreenShareCell: Bool = false
+
     public init(
         chatId: HandleEntity,
         participantId: HandleEntity,
@@ -85,22 +91,18 @@ public final class CallParticipantEntity {
     }
     
     public func remoteVideoFrame(width: Int, height: Int, buffer: Data!, isHiRes: Bool) {
-        if isVideoHiRes && isVideoLowRes {
-            if isHiRes {
-                speakerVideoDataDelegate?.videoFrameData(width: width, height: height, buffer: buffer)
-            }
-            if hasScreenShare {
-                if !isHiRes {
-                    videoDataDelegate?.videoFrameData(width: width, height: height, buffer: buffer)
-                }
-            } else {
-                if isHiRes {
-                    videoDataDelegate?.videoFrameData(width: width, height: height, buffer: buffer)
-                }
+        if hasScreenShare {
+            if (isHiRes && isHiResCamera) || (!isHiRes && isLowResCamera) {
+                videoDataDelegate?.videoFrameData(width: width, height: height, buffer: buffer, type: .cameraVideo)
+            } else if (isHiRes && isHiResScreenShare) || (!isHiRes && isLowResScreenShare) {
+                videoDataDelegate?.videoFrameData(width: width, height: height, buffer: buffer, type: .screenShare)
+                speakerVideoDataDelegate?.videoFrameData(width: width, height: height, buffer: buffer, type: .screenShare)
             }
         } else {
-            videoDataDelegate?.videoFrameData(width: width, height: height, buffer: buffer)
-            speakerVideoDataDelegate?.videoFrameData(width: width, height: height, buffer: buffer)
+            if (isHiRes && isHiResCamera) || (!isHiRes && isLowResCamera) {
+                videoDataDelegate?.videoFrameData(width: width, height: height, buffer: buffer, type: .cameraVideo)
+                speakerVideoDataDelegate?.videoFrameData(width: width, height: height, buffer: buffer, type: .cameraVideo)
+            }
         }
     }
 }

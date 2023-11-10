@@ -46,10 +46,12 @@ class CallCollectionView: UICollectionView {
                 }
                 
                 let participant = callParticipants[indexPath.item]
-                if let image = avatars[participant.participantId] {
+                if let image = avatars[participant.participantId], !participant.isScreenShareCell {
                     cell.setAvatar(image: image)
                 }
-                callCollectionViewDelegate.fetchAvatar(for: participant)
+                if !participant.isScreenShareCell {
+                    callCollectionViewDelegate.fetchAvatar(for: participant)
+                }
                 cell.configure(for: participant, in: layoutMode)
                 return cell
             }
