@@ -2,7 +2,6 @@ import AVFoundation
 import CoreServices
 import Foundation
 import MEGASwift
-import UniformTypeIdentifiers
 
 public protocol GetFileExtensionUseCaseProtocol {
     func fileExtension(for type: MediaTypeEntity, url: URL?, uti: UTType?) -> FileExtension
@@ -42,32 +41,32 @@ public struct GetFileExtensionUseCase: GetFileExtensionUseCaseProtocol {
     }
     
     private func fileExtension(forUTI uti: String?) -> FileExtension? {
-        guard let uti = uti else { return nil }
-        
-        let utiCFString = uti as CFString
-        if UTTypeConformsTo(utiCFString, AVFileType.jpg as CFString) {
+        guard let uti, let utiType = UTType(uti) else { return nil }
+
+        switch utiType {
+        case UTType.jpeg:
             return FileExtensionEntity.jpg.rawValue
-        } else if UTTypeConformsTo(utiCFString, AVFileType.heic as CFString) {
+        case UTType.heic:
             return FileExtensionEntity.heic.rawValue
-        } else if UTTypeConformsTo(utiCFString, AVFileType.heif as CFString) {
+        case UTType.heif:
             return FileExtensionEntity.heif.rawValue
-        } else if UTTypeConformsTo(utiCFString, AVFileType.dng as CFString) {
+        case UTType(AVFileType.dng.rawValue):
             return FileExtensionEntity.dng.rawValue
-        } else if UTTypeConformsTo(utiCFString, kUTTypePNG) {
+        case UTType.png:
             return FileExtensionEntity.png.rawValue
-        } else if UTTypeConformsTo(utiCFString, AVFileType.mov as CFString) {
+        case UTType.quickTimeMovie:
             return FileExtensionEntity.mov.rawValue
-        } else if UTTypeConformsTo(utiCFString, AVFileType.mp4 as CFString) {
+        case UTType.mpeg4Movie:
             return FileExtensionEntity.mp4.rawValue
-        } else if UTTypeConformsTo(utiCFString, kUTTypeGIF as CFString) {
+        case UTType.gif:
             return FileExtensionEntity.gif.rawValue
-        } else if UTTypeConformsTo(utiCFString, "org.webmproject.webp" as CFString) {
+        case UTType.webP:
             return FileExtensionEntity.webp.rawValue
+        default:
+            return nil
         }
-        
-        return nil
     }
-    
+
     private func fileExtension(for type: MediaTypeEntity) -> FileExtension {
         switch type {
         case .image:

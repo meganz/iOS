@@ -7,7 +7,7 @@ let settings: [SwiftSetting] = [.unsafeFlags(["-warnings-as-errors"]), .enableEx
 let package = Package(
     name: "MEGAAssets",
     platforms: [
-        .macOS(.v10_15), .iOS(.v14)
+        .macOS(.v10_15), .iOS(.v15)
     ],
     products: [
         .library(

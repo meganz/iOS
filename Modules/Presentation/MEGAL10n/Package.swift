@@ -5,7 +5,7 @@ let package = Package(
     name: "MEGAL10n",
     defaultLocalization: "en",
     platforms: [
-        .macOS(.v10_15), .iOS(.v14)
+        .macOS(.v10_15), .iOS(.v15)
     ],
     products: [
         .library(

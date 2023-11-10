@@ -4,7 +4,7 @@ import PackageDescription
 let package = Package(
     name: "LogRepo",
     platforms: [
-        .macOS(.v10_15), .iOS(.v14)
+        .macOS(.v10_15), .iOS(.v15)
     ],
     products: [
         .library(
