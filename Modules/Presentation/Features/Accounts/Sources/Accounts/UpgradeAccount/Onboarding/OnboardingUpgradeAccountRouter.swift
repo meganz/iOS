@@ -17,7 +17,7 @@ public struct OnboardingUpgradeAccountRouter {
             fatalError("[Onboarding] No viewModel OnboardingUpgradeAccountViewModel")
         }
         let onboardingView = OnboardingUpgradeAccountView(viewModel: viewModel)
-        return UIHostingController(dismissibleView: onboardingView)
+        return UIHostingController(rootView: onboardingView)
     }
     
     public func start() {

@@ -4,7 +4,7 @@ import MEGASwiftUI
 import Settings
 import SwiftUI
 
-struct UpgradeAccountPlanView: View, DismissibleContentView {
+struct UpgradeAccountPlanView: View {
     @StateObject var viewModel: UpgradeAccountPlanViewModel
     @Environment(\.presentationMode) private var presentationMode
     var invokeDismiss: (() -> Void)?
@@ -148,10 +148,6 @@ struct UpgradeAccountPlanView: View, DismissibleContentView {
     }
     
     private func dismiss() {
-        if #available(iOS 15.0, *) {
-            presentationMode.wrappedValue.dismiss()
-        } else {
-            invokeDismiss?()
-        }
+        presentationMode.wrappedValue.dismiss()
     }
 }

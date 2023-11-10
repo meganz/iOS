@@ -76,7 +76,7 @@ extension MEGALinkManager {
             tracker: DIContainer.tracker,
             monitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo))
         
-        let viewController = UIHostingController(dismissibleView: ImportAlbumView(
+        let viewController = UIHostingController(rootView: ImportAlbumView(
             viewModel: vm))
         viewController.modalPresentationStyle = .fullScreen
         UIApplication.mnz_visibleViewController().present(viewController, animated: true)

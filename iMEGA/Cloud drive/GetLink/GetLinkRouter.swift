@@ -26,7 +26,7 @@ struct GetLinkRouter: Routing {
                 .ignoresSafeArea(edges: .bottom)
                 .navigationBarHidden(true)
         }
-        return UIHostingController(dismissibleView: view)
+        return UIHostingController(rootView: view)
     }
     
     func start() {

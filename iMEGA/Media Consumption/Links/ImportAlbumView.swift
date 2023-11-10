@@ -2,7 +2,7 @@ import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
 
-struct ImportAlbumView: View, DismissibleContentView {
+struct ImportAlbumView: View {
     private enum Constants {
         static let toolbarButtonVerticalPadding = 11.0
         static let toolbarButtonHorizontalPadding = 16.0
@@ -159,11 +159,7 @@ struct ImportAlbumView: View, DismissibleContentView {
     
     private func dismissImportAlbumScreen() {
         viewModel.publicLinkStatus = .none
-        if #available(iOS 15.0, *) {
-            presentationMode.wrappedValue.dismiss()
-        } else {
-            invokeDismiss?()
-        }
+        presentationMode.wrappedValue.dismiss()
     }
     
     private var bottomToolbar: some View {

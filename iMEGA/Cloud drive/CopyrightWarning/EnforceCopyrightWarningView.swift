@@ -2,7 +2,7 @@ import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
 
-struct EnforceCopyrightWarningView<T: View>: View, DismissibleContentView {
+struct EnforceCopyrightWarningView<T: View>: View {
     @Environment(\.presentationMode) private var presentationMode
     @StateObject var viewModel: EnforceCopyrightWarningViewModel
     let termsAgreedView: () -> T
@@ -29,11 +29,7 @@ struct EnforceCopyrightWarningView<T: View>: View, DismissibleContentView {
             }
             .onReceive(viewModel.$isTermsAgreed.dropFirst()) {
                 guard !$0 else { return }
-                if #available(iOS 15.0, *) {
-                    presentationMode.wrappedValue.dismiss()
-                } else {
-                    invokeDismiss?()
-                }
+                presentationMode.wrappedValue.dismiss()
             }
             .navigationBarTitleDisplayMode(.inline)
         }
