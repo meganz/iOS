@@ -25,7 +25,7 @@ extension NotificationsTableViewController {
             return contentForRecurringNewScheduledMeeting(scheduledMeeting, chatId: alert.nodeHandle, email: alert.email ?? "")
         }
         
-        return NSAttributedString(string: alert.title)
+        return NSAttributedString(string: alert.title ?? "")
     }
     
     @objc func contentForUpdatedScheduledMeeting(
@@ -68,7 +68,7 @@ extension NotificationsTableViewController {
                 )
             }
         } else if alert.hasScheduledMeetingChangeType(.title) {
-            let titleList = alert.titleList.toArray()
+            let titleList = alert.titleList?.toArray() ?? []
             return contentForScheduledMeetingTitleUpdate(
                 withScheduleMeetingId: alert.scheduledMeetingId,
                 chatId: alert.nodeHandle,
@@ -101,7 +101,7 @@ extension NotificationsTableViewController {
             }
         }
         
-        return useDefaultMessage ? NSAttributedString(string: alert.title) : nil
+        return useDefaultMessage ? NSAttributedString(string: alert.title ?? "") : nil
     }
     
     @objc func scheduledMeeting(withScheduleMeetingId meetingId: ChatIdEntity, chatId: ChatIdEntity) -> MEGAChatScheduledMeeting? {
@@ -425,7 +425,7 @@ extension NotificationsTableViewController {
             withScheduleMeetingId: alert.scheduledMeetingId,
             chatId: alert.nodeHandle
         )?.toScheduledMeetingEntity() else {
-            return NSAttributedString(string: alert.title)
+            return NSAttributedString(string: alert.title ?? "")
         }
         
         let startDateList = alert.startDateList
