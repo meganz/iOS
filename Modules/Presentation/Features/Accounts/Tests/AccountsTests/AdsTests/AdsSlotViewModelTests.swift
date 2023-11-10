@@ -159,19 +159,62 @@ final class AdsSlotViewModelTests: XCTestCase {
         XCTAssertNotNil(sut.adsUrl)
     }
     
+    func testDidTapAdsContent_withNewAccount_closeAdsThenChangedTab_shouldNotShowAdsSlotAgainOnPreviousTab() async {
+        let adsSlotConfigTabOne = AdsSlotConfig(adsSlot: .home, displayAds: true)
+        let adsSlotConfigTabTwo = AdsSlotConfig(adsSlot: .files, displayAds: true)
+        let stream = makeMockAdsSlotChangeStream(adsSlotConfigs: [adsSlotConfigTabOne])
+        let sut = makeSUT(adsSlotChangeStream: stream, adsList: adsList, isNewAccount: true)
+        sut.monitorAdsSlotChanges()
+        await sut.monitorAdsSlotChangesTask?.value
+        
+        XCTAssertTrue(sut.closedAds.isEmpty)
+        
+        await sut.didTapAdsContent()
+        XCTAssertTrue(sut.closedAds.contains(adsSlotConfigTabOne.adsSlot))
+        XCTAssertFalse(sut.displayAds)
+        
+        await sut.updateAdsSlot(adsSlotConfigTabTwo)
+        XCTAssertTrue(sut.closedAds.contains(adsSlotConfigTabOne.adsSlot))
+        XCTAssertFalse(sut.closedAds.contains(adsSlotConfigTabTwo.adsSlot))
+        XCTAssertTrue(sut.displayAds)
+        
+        await sut.updateAdsSlot(adsSlotConfigTabOne)
+        XCTAssertTrue(sut.closedAds.contains(adsSlotConfigTabOne.adsSlot))
+        XCTAssertFalse(sut.closedAds.contains(adsSlotConfigTabTwo.adsSlot))
+        XCTAssertFalse(sut.displayAds)
+    }
+    
+    func testDidTapAdsContent_withExistingAccount_shouldLoadNewAdsAndDontCloseAdsSlot() async {
+        let adsSlotConfigCurrentTab = AdsSlotConfig(adsSlot: .home, displayAds: true)
+        let stream = makeMockAdsSlotChangeStream(adsSlotConfigs: [adsSlotConfigCurrentTab])
+        let sut = makeSUT(adsSlotChangeStream: stream, adsList: adsList, isNewAccount: false)
+        sut.monitorAdsSlotChanges()
+        await sut.monitorAdsSlotChangesTask?.value
+        
+        XCTAssertTrue(sut.closedAds.isEmpty)
+        
+        await sut.didTapAdsContent()
+        XCTAssertTrue(sut.closedAds.isEmpty)
+        XCTAssertTrue(sut.displayAds)
+        XCTAssertNotNil(sut.adsUrl)
+    }
+    
     // MARK: Helper
     private func makeSUT(
         adsSlotChangeStream: any AdsSlotChangeStreamProtocol = MockAdsSlotChangeStream(),
         adsList: [String: String] = [:],
         featureFlags: [FeatureFlagKey: Bool] = [FeatureFlagKey.inAppAds: true],
+        isNewAccount: Bool = false,
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> AdsSlotViewModel {
         
         let adsUseCase = MockAdsUseCase(adsList: adsList)
+        let accountUseCase = MockAccountUseCase(isNewAccount: isNewAccount)
         let featureFlagProvider = MockFeatureFlagProvider(list: featureFlags)
         
-        let sut = AdsSlotViewModel(adsUseCase: adsUseCase,
+        let sut = AdsSlotViewModel(adsUseCase: adsUseCase, 
+                                   accountUseCase: accountUseCase,
                                    adsSlotChangeStream: adsSlotChangeStream,
                                    featureFlagProvider: featureFlagProvider)
         trackForMemoryLeaks(on: sut, file: file, line: line)
