@@ -5,7 +5,14 @@ import MEGAPresentation
 final class TextEditorViewController: UIViewController {
     private var viewModel: TextEditorViewModel
     
-    private lazy var textView: UITextView = UITextView()
+    private lazy var textView: UITextView = {
+        let textView = UITextView()
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.font = UIFont.preferredFont(forTextStyle: .body)
+        textView.adjustsFontForContentSizeCategory = true
+        return textView
+    }()
+
     private weak var activityIndicator: UIActivityIndicatorView?
     private weak var progressView: UIProgressView?
     private weak var imageView: UIImageView?
@@ -35,9 +42,14 @@ final class TextEditorViewController: UIViewController {
     
     private func setupTextView() {
         view.addSubview(textView)
-        textView.font = UIFont.preferredFont(forTextStyle: .body)
-        textView.adjustsFontForContentSizeCategory = true
-        textView.autoPinEdgesToSuperviewSafeArea()
+        
+        NSLayoutConstraint.activate([
+            textView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            textView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            textView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            textView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+        
         registerForNotifications()
     }
     
@@ -163,22 +175,38 @@ extension TextEditorViewController: ViewType {
     
     private func setUpLoadViews() {
         let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(activityIndicator)
-        activityIndicator.autoCenterInSuperview()
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+
         self.activityIndicator = activityIndicator
         
         let progressView = UIProgressView()
+        progressView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(progressView)
-        progressView.autoSetDimension(.width, toSize: 150)
-        progressView.autoCenterInSuperview()
+        
+        NSLayoutConstraint.activate([
+            progressView.widthAnchor.constraint(equalToConstant: 150),
+            progressView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            progressView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+
         self.progressView = progressView
         
         let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(imageView)
-        imageView.autoSetDimension(.height, toSize: 80)
-        imageView.autoSetDimension(.width, toSize: 80)
-        imageView.autoAlignAxis(toSuperviewMarginAxis: .vertical)
-        imageView.autoPinEdge(.bottom, to: .top, of: activityIndicator, withOffset: -20)
+
+        NSLayoutConstraint.activate([
+            imageView.heightAnchor.constraint(equalToConstant: 80),
+            imageView.widthAnchor.constraint(equalToConstant: 80),
+            imageView.centerXAnchor.constraint(equalTo: view.layoutMarginsGuide.centerXAnchor),
+            imageView.bottomAnchor.constraint(equalTo: activityIndicator.topAnchor, constant: -20)
+        ])
+        
         self.imageView = imageView
     }
     
