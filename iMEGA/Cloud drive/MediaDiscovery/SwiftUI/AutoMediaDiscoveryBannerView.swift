@@ -47,8 +47,8 @@ struct AutoMediaDiscoveryBannerView: View {
     }
     
     private var closeImageColor: Color {
-        Color(colorScheme == .dark ? Colors.General.Gray.d1D1D1.color :
-                Colors.General.Gray._515151.color)
+        Color(colorScheme == .dark ? UIColor.grayD1D1D1 :
+                UIColor.gray515151)
     }
     
     private var bannerBackgroundColor: Color {

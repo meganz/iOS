@@ -46,7 +46,7 @@ class CallParticipantCell: UICollectionViewCell {
             }
             
             if participant.audioDetected {
-                borderColor = ._00_C_29_A
+                borderColor = UIColor.green00C29A
                 borderWidth = 1
             }
             

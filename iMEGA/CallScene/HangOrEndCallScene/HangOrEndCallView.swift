@@ -24,7 +24,7 @@ struct HangOrEndCallView: View {
                     }, label: {
                         Text(Strings.Localizable.Meetings.LeaveCall.buttonTitle)
                             .font(.headline)
-                            .foregroundColor(Color(Colors.General.Green._00C29A.name))
+                            .foregroundColor(Color(.green00C29A))
                             .padding()
                             .frame(maxWidth: .infinity, maxHeight: Constants.buttonsHeight)
                             .background(Color(Colors.General.Gray._363638.name))
@@ -40,7 +40,7 @@ struct HangOrEndCallView: View {
                             .foregroundColor(Color.white)
                             .padding()
                             .frame(maxWidth: .infinity, maxHeight: Constants.buttonsHeight)
-                            .background(Color(Colors.General.Red.ff453A.name))
+                            .background(Color(.redFF453A))
                             .cornerRadius(Constants.cornerRadius)
                             .shadow(color: Color.black.opacity(Constants.shadowOpacity), radius: Constants.cornerRadius, x: 0, y: Constants.shadowOffsetY)
                     })
@@ -48,7 +48,7 @@ struct HangOrEndCallView: View {
                 .padding(Constants.buttonsPadding)
             }
             .cornerRadius(Constants.cornerRadius, corners: [.topLeft, .topRight])
-            .background(Color(Colors.General.Black._1c1c1e.name).edgesIgnoringSafeArea(.bottom))
+            .background(Color(.black1C1C1E).edgesIgnoringSafeArea(.bottom))
         }
     }
 }

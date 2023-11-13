@@ -40,6 +40,6 @@ struct ChatTabsSelectorView: View {
             }
         }
         .frame(maxHeight: 44)
-        .background(colorScheme == .dark ?  Color(Colors.General.Black._161616.name) : Color(Colors.General.White.f7F7F7.name))
+        .background(colorScheme == .dark ?  Color(Colors.General.Black._161616.name) : Color(.whiteF7F7F7))
     }
 }

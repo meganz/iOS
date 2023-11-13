@@ -6,16 +6,16 @@ extension LightColorThemeFactory {
 
     struct LightPrimaryThemeButtonTextColorFactory: ButtonColorFactory {
 
-        func normalColor() -> ThemeColor {
-            ThemeColor(red: 255, green: 255, blue: 255, alpha: 255)
+        func normalColor() -> UIColor {
+            return .white
         }
 
-        func disabledColor() -> ThemeColor {
-            ThemeColor(red: 153, green: 153, blue: 153)
+        func disabledColor() -> UIColor {
+            return UIColor.gray999999
         }
 
-        func highlightedColor() -> ThemeColor {
-            ThemeColor(red: 255, green: 255, blue: 255, alpha: 77)
+        func highlightedColor() -> UIColor {
+            return UIColor.whiteFFFFFF30
         }
     }
 
@@ -23,16 +23,16 @@ extension LightColorThemeFactory {
 
     struct LightPrimaryThemeButtonBackgroundColorFactory: ButtonColorFactory {
 
-        func normalColor() -> ThemeColor {
-            ThemeColor(red: 0, green: 168, blue: 134, alpha: 255)
+        func normalColor() -> UIColor {
+            return UIColor.green00A886
         }
 
-        func disabledColor() -> ThemeColor {
-            ThemeColor(red: 153, green: 153, blue: 153, alpha: 255)
+        func disabledColor() -> UIColor {
+            return UIColor.gray999999
         }
 
-        func highlightedColor() -> ThemeColor {
-            ThemeColor(red: 0, green: 168, blue: 134, alpha: 255)
+        func highlightedColor() -> UIColor {
+            return UIColor.green00A886
         }
     }
 }
@@ -43,16 +43,16 @@ extension DarkColorThemeFactory {
 
     struct DarkPrimaryThemeButtonTextColorFactory: ButtonColorFactory {
 
-        func normalColor() -> ThemeColor {
-            ThemeColor(red: 255, green: 255, blue: 255)
+        func normalColor() -> UIColor {
+            return .white
         }
 
-        func disabledColor() -> ThemeColor {
-            ThemeColor(red: 153, green: 153, blue: 153)
+        func disabledColor() -> UIColor {
+            return UIColor.gray999999
         }
 
-        func highlightedColor() -> ThemeColor {
-            ThemeColor(red: 255, green: 255, blue: 255, alpha: 77)
+        func highlightedColor() -> UIColor {
+            return UIColor.whiteFFFFFF30
         }
     }
 
@@ -60,16 +60,16 @@ extension DarkColorThemeFactory {
 
     struct DarkPrimaryThemeButtonBackgroundColorFactory: ButtonColorFactory {
 
-        func normalColor() -> ThemeColor {
-            ThemeColor(red: 0, green: 194, blue: 154, alpha: 255)
+        func normalColor() -> UIColor {
+            return UIColor.green00C29A
         }
 
-        func disabledColor() -> ThemeColor {
-            ThemeColor(red: 153, green: 153, blue: 153, alpha: 255)
+        func disabledColor() -> UIColor {
+            return UIColor.gray999999
         }
 
-        func highlightedColor() -> ThemeColor {
-            ThemeColor(red: 0, green: 194, blue: 154, alpha: 255)
+        func highlightedColor() -> UIColor {
+            return UIColor.green00C29A
         }
     }
 }

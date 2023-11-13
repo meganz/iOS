@@ -60,13 +60,13 @@ extension ButtonStatedStyle where T == BackgroundStyle {
     func applied<Button: UIButton>(on button: Button) -> Button {
         if let megaButton = (button as? (any ButtonBackgroundStateAware)) {
             for buttonState in ButtonState.allCases {
-                if let backgroundColor = stated[buttonState]?.backgroundColor.uiColor {
+                if let backgroundColor = stated[buttonState]?.backgroundColor {
                     megaButton.setBackgroundColor(backgroundColor, for: buttonState.uiButtonState)
                 }
             }
         } else {
             for buttonState in ButtonState.allCases {
-                if let backgroundColor = stated[buttonState]?.backgroundColor.uiColor {
+                if let backgroundColor = stated[buttonState]?.backgroundColor {
                     button.setBackgroundColorImage(backgroundColor, for: buttonState.uiButtonState)
                 }
             }

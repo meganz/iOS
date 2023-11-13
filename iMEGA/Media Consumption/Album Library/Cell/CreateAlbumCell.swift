@@ -6,7 +6,7 @@ struct CreateAlbumCell: View {
     @ObservedObject var viewModel: CreateAlbumCellViewModel
     
     private var plusIconColor: Color {
-        colorScheme == .light ? Color(Colors.General.Gray._515151.color) : Color(Colors.General.White.fcfcfc.color)
+        colorScheme == .light ? Color(UIColor.gray515151) : Color(Colors.General.White.fcfcfc.color)
     }
     
     var body: some View {

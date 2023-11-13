@@ -6,14 +6,14 @@ public struct ActionSheetHeaderView: View {
     let title: String
     let detailImageName: String?
     let subtitle: String
-    let subtitleColorName: String
+    let subtitleColor: UIColor
     
-    public init(iconName: String? = nil, title: String, detailImageName: String? = nil, subtitle: String, subtitleColorName: String) {
+    public init(iconName: String? = nil, title: String, detailImageName: String? = nil, subtitle: String, subtitleColor: UIColor) {
         self.iconName = iconName
         self.title = title
         self.detailImageName = detailImageName
         self.subtitle = subtitle
-        self.subtitleColorName = subtitleColorName
+        self.subtitleColor = subtitleColor
     }
 
     public var body: some View {
@@ -34,12 +34,12 @@ public struct ActionSheetHeaderView: View {
                     if let detailImageName, !detailImageName.isEmpty {
                         Image(detailImageName)
                             .renderingMode(.template)
-                            .foregroundColor(Color(subtitleColorName))
+                            .foregroundColor(Color(subtitleColor))
                             .frame(width: 12, height: 12)
                     }
                     Text(subtitle)
                         .font(.caption)
-                        .foregroundColor(Color(subtitleColorName))
+                        .foregroundColor(Color(subtitleColor))
                 }
             }
             Spacer()

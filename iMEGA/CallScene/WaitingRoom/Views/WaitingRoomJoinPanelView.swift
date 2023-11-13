@@ -36,14 +36,14 @@ struct WaitingRoomJoinPanelView: View {
                     .foregroundColor(.white)
                     .font(.system(size: 17, weight: .bold))
                     .frame(width: 288, height: 50)
-                    .background(Color(Colors.General.Green._00C29A.name))
+                    .background(Color(.green00C29A))
             }
             .cornerRadius(8)
             .disabled(disableJoinButton)
             .opacity(disableJoinButton ? 0.3 : 1)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color(Colors.General.Black._1c1c1e.name))
+        .background(Color(.black1C1C1E))
     }
     
     struct FocusableNameTextFieldView: View {

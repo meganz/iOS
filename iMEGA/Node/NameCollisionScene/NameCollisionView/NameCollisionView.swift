@@ -44,7 +44,7 @@ struct NameCollisionView: View {
                 }
             }
         }
-        .background(colorScheme == .dark ? Color(Colors.General.Black._1c1c1e.name) : Color(Colors.General.White.f7F7F7.name))
+        .background(colorScheme == .dark ? Color(UIColor.black1C1C1E) : Color(UIColor.whiteF7F7F7))
         .onAppear {
             viewModel.onViewAppeared()
         }

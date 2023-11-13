@@ -131,7 +131,7 @@ class RenameViewModelTests: XCTestCase {
 
         let result = viewModel.alertTextsColor(text: invalidText)
 
-        XCTAssertEqual(result, Colors.General.Red.ff3B30.color)
+        XCTAssertEqual(result, UIColor.redFF3B30)
     }
 
     func testAlertTextsColor_isDuplicated_returnsRedColor() {
@@ -140,7 +140,7 @@ class RenameViewModelTests: XCTestCase {
 
         let result = viewModel.alertTextsColor(text: duplicatedText)
 
-        XCTAssertEqual(result, Colors.General.Red.ff3B30.color)
+        XCTAssertEqual(result, UIColor.redFF3B30)
     }
 
     func testAlertTextsColor_defaultCase_returnsLabelColor() {
@@ -158,7 +158,7 @@ class RenameViewModelTests: XCTestCase {
 
         let result = viewModel.alertTextsColor(text: invalidName)
 
-        XCTAssertEqual(result, Colors.General.Red.ff3B30.color)
+        XCTAssertEqual(result, UIColor.redFF3B30)
     }
 
     func testIsActionButtonEnabled_textIsEmpty_returnsFalse() {

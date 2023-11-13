@@ -13,7 +13,7 @@ struct MeetingInfoWaitingRoomSettingView: View {
                 text: Strings.Localizable.Meetings.ScheduleMeeting.waitingRoom,
                 enabled: shouldAllowEditingWaitingRoom,
                 isOn: $isWaitingRoomOn)
-            .background(colorScheme == .dark ? Color(Colors.General.Black._1c1c1e.name) : .white)
+            .background(colorScheme == .dark ? Color(.black1C1C1E) : .white)
             
             Text(Strings.Localizable.Meetings.ScheduleMeeting.WaitingRoom.description)
                 .font(.footnote)
@@ -33,9 +33,9 @@ struct MeetingInfoWaitingRoomSettingView_Previews: PreviewProvider {
         var body: some View {
             VStack {
                 MeetingInfoWaitingRoomSettingView(isWaitingRoomOn: .constant(true), shouldAllowEditingWaitingRoom: true)
-                    .background(colorScheme == .dark ? .black : Color(Colors.General.White.f7F7F7.name))
+                    .background(colorScheme == .dark ? .black : Color(.whiteF7F7F7))
                 MeetingInfoWaitingRoomSettingView(isWaitingRoomOn: .constant(true), shouldAllowEditingWaitingRoom: false)
-                    .background(colorScheme == .dark ? .black : Color(Colors.General.White.f7F7F7.name))
+                    .background(colorScheme == .dark ? .black : Color(.whiteF7F7F7))
             }
         }
     }

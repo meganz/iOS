@@ -21,7 +21,7 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
     @Published var iconName: String?
     @Published var statusIconName: String?
     @Published var statusTitle: String = ""
-    @Published var statusColorName: String = ""
+    @Published var statusColor: UIColor = .clear
     @Published var shouldShowBackupPercentage: Bool = false
     @Published var backupPercentage: String = ""
     
@@ -60,7 +60,7 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
         iconName = assets.iconName
         statusTitle = assets.backupStatus.title
         statusIconName = assets.backupStatus.iconName
-        statusColorName = assets.backupStatus.colorName
+        statusColor = assets.backupStatus.color
         
         calculateProgress()
     }

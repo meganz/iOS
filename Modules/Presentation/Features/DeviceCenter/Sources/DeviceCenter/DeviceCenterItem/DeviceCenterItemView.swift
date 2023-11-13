@@ -26,19 +26,19 @@ struct DeviceCenterItemView: View {
                             .foregroundColor(.white)
                             .padding(.horizontal, 8)
                             .padding(.vertical, 2)
-                            .background(Color(viewModel.statusColorName))
+                            .background(Color(viewModel.statusColor))
                             .clipShape(Capsule())
                     } else {
                         if let statusIcon = viewModel.statusIconName {
                             Image(statusIcon)
                                 .renderingMode(.template)
-                                .foregroundColor(Color(viewModel.statusColorName))
+                                .foregroundColor(Color(viewModel.statusColor))
                                 .frame(width: 12, height: 12)
                         }
                     }
                     Text(viewModel.statusTitle)
                         .font(.caption)
-                        .foregroundColor(Color(viewModel.statusColorName))
+                        .foregroundColor(Color(viewModel.statusColor))
                     Spacer()
                 }
             }

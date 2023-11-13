@@ -23,6 +23,6 @@ struct LeaveChatButtonView: View {
             Divider()
         }
         .frame(minHeight: Constants.viewHeight)
-        .background(colorScheme == .dark ? Color(Colors.General.Black._1c1c1e.name) : .white)
+        .background(colorScheme == .dark ? Color(.black1C1C1E) : .white)
     }
 }

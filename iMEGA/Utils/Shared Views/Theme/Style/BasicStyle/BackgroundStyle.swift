@@ -1,7 +1,7 @@
 import UIKit
 
-struct BackgroundStyle: Codable {
-    let backgroundColor: ThemeColor
+struct BackgroundStyle {
+    let backgroundColor: UIColor
 }
 
 extension BackgroundStyle {
@@ -15,7 +15,7 @@ extension BackgroundStyle {
 @discardableResult
 private func apply(style: BackgroundStyle) -> (UIView) -> UIView {
     return { view in
-        view.backgroundColor = style.backgroundColor.uiColor
+        view.backgroundColor = style.backgroundColor
         return view
     }
 }

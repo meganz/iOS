@@ -43,7 +43,7 @@ struct SnackBarView: View {
                     }, label: {
                         Text(viewModel.snackBar.title ?? "")
                             .font(.footnote).bold()
-                            .foregroundColor(Color(Colors.General.Green._00A886.name))
+                            .foregroundColor(Color(UIColor.green00A886))
                     })
                     .padding([.trailing, .bottom], Constants.padding)
                 }

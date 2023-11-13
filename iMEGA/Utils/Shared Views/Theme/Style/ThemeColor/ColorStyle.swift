@@ -7,43 +7,43 @@ enum ColorStyleType: String, Codable {
     case selectedTint
 }
 
-struct ColorStyle: Codable {
-    let color: ThemeColor
+struct ColorStyle {
+    let color: UIColor
     let type: ColorStyleType
 }
 
 extension ColorStyle {
-
+    
     // MARK: - UILabel Applier
-
+    
     @discardableResult
     func applied(on label: UILabel) -> UILabel {
         apply(style: self)(label)
     }
-
+    
     // MARK: - UIButton Applier
-
+    
     @discardableResult
     func applied(on button: UIButton, state: ButtonState) -> UIButton {
         apply(style: self, state: state)(button)
     }
-
+    
     // MARK: - AttributedString Applier
-
+    
     @discardableResult
     func applied(on attributes: TextAttributes) -> TextAttributes {
         apply(style: self)(attributes)
     }
-
+    
     // MARK: - UITextField Applier
-
+    
     @discardableResult
     func applied(on textField: UITextField) -> UITextField {
         apply(style: self)(textField)
     }
-
+    
     // MARK: - UIPageControl Applier
-
+    
     @discardableResult
     func applied(on pageControl: UIPageControl) -> UIPageControl {
         apply(style: self)(pageControl)
@@ -53,8 +53,8 @@ extension ColorStyle {
 private func apply(style: ColorStyle) -> (UILabel) -> UILabel {
     return { label in
         switch style.type {
-        case .foreground: label.textColor = style.color.uiColor
-        case .background: label.backgroundColor = style.color.uiColor
+        case .foreground: label.textColor = style.color
+        case .background: label.backgroundColor = style.color
         default: break
         }
         return label
@@ -65,7 +65,7 @@ private func apply(style: ColorStyle, state: ButtonState) -> (UIButton) -> UIBut
     return { button in
         switch style.type {
         case .foreground:
-            button.setTitleColor(style.color.uiColor, for: state.uiButtonState)
+            button.setTitleColor(style.color, for: state.uiButtonState)
         default: break
         }
         return button
@@ -76,8 +76,8 @@ private func apply(style: ColorStyle) -> (TextAttributes) -> TextAttributes {
     return { attributes in
         var copyAttributes = attributes
         switch style.type {
-        case .foreground: copyAttributes[.foregroundColor] = style.color.uiColor
-        case .background: copyAttributes[.backgroundColor] = style.color.uiColor
+        case .foreground: copyAttributes[.foregroundColor] = style.color
+        case .background: copyAttributes[.backgroundColor] = style.color
         default: break
         }
         return copyAttributes
@@ -87,8 +87,8 @@ private func apply(style: ColorStyle) -> (TextAttributes) -> TextAttributes {
 private func apply(style: ColorStyle) -> (UITextField) -> UITextField {
     return { textField in
         switch style.type {
-        case .foreground: textField.textColor = style.color.uiColor
-        case .background: textField.backgroundColor = style.color.uiColor
+        case .foreground: textField.textColor = style.color
+        case .background: textField.backgroundColor = style.color
         default: break
         }
         return textField
@@ -98,11 +98,30 @@ private func apply(style: ColorStyle) -> (UITextField) -> UITextField {
 private func apply(style: ColorStyle) -> (UIPageControl) -> UIPageControl {
     return { pageControl in
         switch style.type {
-        case .background: pageControl.backgroundColor = style.color.uiColor
-        case .tint: pageControl.pageIndicatorTintColor = style.color.uiColor
-        case .selectedTint: pageControl.currentPageIndicatorTintColor = style.color.uiColor
+        case .background: pageControl.backgroundColor = style.color
+        case .tint: pageControl.pageIndicatorTintColor = style.color
+        case .selectedTint: pageControl.currentPageIndicatorTintColor = style.color
         default: break
         }
         return pageControl
+    }
+}
+
+extension UIColor {
+    
+    var asTextColorStyle: ColorStyle {
+        ColorStyle(color: self, type: .foreground)
+    }
+    
+    var asBackgroundColorStyle: ColorStyle {
+        ColorStyle(color: self, type: .background)
+    }
+    
+    var asTintColorStyle: ColorStyle {
+        ColorStyle(color: self, type: .tint)
+    }
+    
+    var asSelectedTintColorStyle: ColorStyle {
+        ColorStyle(color: self, type: .selectedTint)
     }
 }
