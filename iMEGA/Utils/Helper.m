@@ -212,7 +212,7 @@
     
     MEGATransferList *transferList = [[MEGASdkManager sharedMEGASdk] uploadTransfers];
     
-    for (int i = 0; i < transferList.size; i++) {
+    for (int i = 0; i < [transferList.size intValue]; i++) {
         MEGATransfer *transfer = [transferList transferAtIndex:i];
         
         if (transfer.state == MEGATransferStateActive) {

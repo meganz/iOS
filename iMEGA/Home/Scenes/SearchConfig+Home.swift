@@ -47,6 +47,30 @@ extension SearchConfig {
                         title: Strings.Localizable.Home.Search.Empty.noImages,
                         foregroundColor: textColor
                     )
+                case SearchChipEntity.folders.id:
+                    return .init(
+                        image: Asset.Images.Home.SearchResults.noResultsFolders.swiftUIImage,
+                        title: Strings.Localizable.Home.Search.Empty.noFolders,
+                        foregroundColor: textColor
+                    )
+                case SearchChipEntity.pdf.id:
+                    return .init(
+                        image: Asset.Images.Home.SearchResults.noResultsDocuments.swiftUIImage,
+                        title: Strings.Localizable.Home.Search.Empty.noPdfs,
+                        foregroundColor: textColor
+                    )
+                case SearchChipEntity.presentation.id:
+                    return .init(
+                        image: Asset.Images.Home.SearchResults.noResultsPresentations.swiftUIImage,
+                        title: Strings.Localizable.Home.Search.Empty.noPresentations,
+                        foregroundColor: textColor
+                    )
+                case SearchChipEntity.archives.id:
+                    return .init(
+                        image: Asset.Images.Home.SearchResults.noResultsArchives.swiftUIImage,
+                        title: Strings.Localizable.Home.Search.Empty.noArchives,
+                        foregroundColor: textColor
+                    )
                 default:
                     return defaultEmptyContent
                     

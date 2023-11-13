@@ -7,9 +7,10 @@ extension SearchChipEntity {
         title: Strings.Localizable.Home.Search.Filter.images,
         icon: nil
     )
-    public static let docs = SearchChipEntity(
-        id: ChipId(MEGANodeFormatType.document.rawValue),
-        title: Strings.Localizable.Home.Search.Filter.docs,
+    public static let folders = SearchChipEntity(
+        // We set id to -1 because the filtering for folders is done locally, not on SDK side
+        id: ChipId.folder,
+        title: Strings.Localizable.Home.Search.Filter.folders,
         icon: nil
     )
     public static let audio = SearchChipEntity(
@@ -22,13 +23,37 @@ extension SearchChipEntity {
         title: Strings.Localizable.Home.Search.Filter.video,
         icon: nil
     )
-    
+    public static let pdf = SearchChipEntity(
+        id: MEGANodeFormatType.pdf.rawValue,
+        title: Strings.Localizable.Home.Search.Filter.pdfs,
+        icon: nil
+    )
+    public static let docs = SearchChipEntity(
+        id: ChipId(MEGANodeFormatType.document.rawValue),
+        title: Strings.Localizable.Home.Search.Filter.docs,
+        icon: nil
+    )
+    public static let presentation = SearchChipEntity(
+        id: ChipId(MEGANodeFormatType.presentation.rawValue),
+        title: Strings.Localizable.Home.Search.Filter.presentations,
+        icon: nil
+    )
+    public static let archives = SearchChipEntity(
+        id: ChipId(MEGANodeFormatType.archive.rawValue),
+        title: Strings.Localizable.Home.Search.Filter.archives,
+        icon: nil
+    )
+
+    // We should include .folders chip also after we migrate SDK to MegaFilter in FM-1403
     public static var allChips: [Self] {
         [
             .images,
-            .docs,
             .audio,
-            .video
+            .video,
+            .pdf,
+            .docs,
+            .presentation,
+            .archives
         ]
     }
 }
