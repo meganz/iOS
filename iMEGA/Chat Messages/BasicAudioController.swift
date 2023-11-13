@@ -125,8 +125,8 @@ open class BasicAudioController: NSObject, AVAudioPlayerDelegate {
         
         var path = ""
         
-        if let transfer = chatMessage.transfer, transfer.transferChatMessageType() == .voiceClip {
-            path = transfer.path
+        if let transfer = chatMessage.transfer, transfer.transferChatMessageType() == .voiceClip, let transferPath = transfer.path {
+            path = transferPath
         } else if chatMessage.message.type == .voiceClip, let node = chatMessage.message.nodeList?.node(at: 0) {
             path = node.mnz_voiceCachePath()
         } else {

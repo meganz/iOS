@@ -10,7 +10,7 @@ extension MEGASdk {
                 return
             }
             
-            completion(self.transfers.size.intValue > 0 || self.transfers.size.intValue > 0)
+            completion(self.transfers.size > 0)
         }
     }
     

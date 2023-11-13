@@ -959,7 +959,7 @@
 #pragma mark - MEGATransferDelegate
 
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
-    self.progress += (transfer.deltaSize.floatValue / transfer.totalBytes.floatValue) / self.totalAssets;
+    self.progress += ((float)transfer.deltaSize / (float)transfer.totalBytes) / self.totalAssets;
     if (self.progress >= 0.01 && self.progress < 1.0) {
         NSDate *now = [NSDate new];
         if (!UIAccessibilityIsVoiceOverRunning() || [now timeIntervalSinceDate:self.lastProgressChange] > 2) {

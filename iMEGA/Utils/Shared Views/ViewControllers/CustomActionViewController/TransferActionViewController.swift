@@ -18,10 +18,11 @@ class TransferActionViewController: NodeActionViewController {
     }
     
     func configureTransferHeaderView() {
-        guard let transfer = transfer else {
+        guard let transfer = transfer, let transferFileName = transfer.fileName else {
             return
         }
-        let pathExtension = (transfer.fileName as NSString).pathExtension
+
+        let pathExtension = transferFileName.pathExtension
         nodeImageView.image = NodeAssetsManager.shared.image(for: pathExtension)
         titleLabel.text = transfer.fileName
         switch transfer.state {

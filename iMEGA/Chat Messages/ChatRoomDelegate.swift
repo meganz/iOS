@@ -292,8 +292,8 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
                         let receivedMessage = ChatMessage(message: message, chatRoom: chatRoom)
                         chatMessages.append(receivedMessage)
                         transfers.remove(at: index)
-                        if let transfer = oldMessage.transfer, let node = MEGASdk.shared.node(forHandle: transfer.nodeHandle) {
-                            let path = NSHomeDirectory().append(pathComponent: transfer.path)
+                        if let transfer = oldMessage.transfer, let node = MEGASdk.shared.node(forHandle: transfer.nodeHandle), let transferPath = transfer.path {
+                            let path = NSHomeDirectory().append(pathComponent: transferPath)
                             let originalImagePath = Helper.pathWithOriginalName(for: node, inSharedSandboxCacheDirectory: "originalV3")
                             try? FileManager.default.copyItem(atPath: path, toPath: originalImagePath)
                         }
@@ -597,12 +597,14 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
         chatViewController?.checkTransferPauseStatus()
         let transfers = allTransfers.filter { (transfer) -> Bool in
             
-            guard let appData = transfer.appData,
-                  appData.contains("attachToChatID")
-                    || appData.contains("attachVoiceClipToChatID") else {
+            guard 
+                let appData = transfer.appData,
+                appData.contains("attachToChatID") || appData.contains("attachVoiceClipToChatID") 
+            else {
                 return false
             }
-            let appDataComponentsArray = transfer.appData.components(separatedBy: ">")
+
+            let appDataComponentsArray = appData.components(separatedBy: ">")
             if appDataComponentsArray.isNotEmpty {
                 for appDataComponent in appDataComponentsArray {
                     let appDataComponentComponentsArray = appDataComponent.components(separatedBy: "=")

@@ -5,17 +5,17 @@ public final class MockTransfer: MEGATransfer {
     private let _type: MEGATransferType
     private let _nodeHandle: UInt64
     private let _parentHandle: UInt64
-    private let _startPos: NSNumber
-    private let _endPos: NSNumber
-    private let _deltaSize: NSNumber
+    private let _startPos: Int64
+    private let _endPos: Int64
+    private let _deltaSize: Int64
     private let _lastErrorExtended: MEGAError
     
     public init(type: MEGATransferType = .download,
                 nodeHandle: UInt64 = 0,
                 parentHandle: UInt64 = 0,
-                startPos: NSNumber = 0,
-                endPos: NSNumber = 0,
-                deltaSize: NSNumber = 0,
+                startPos: Int64 = 0,
+                endPos: Int64 = 0,
+                deltaSize: Int64 = 0,
                 lastErrorExtended: MEGAError = MEGAError()) {
         self._type = type
         self._nodeHandle = nodeHandle
@@ -38,15 +38,15 @@ public final class MockTransfer: MEGATransfer {
         _parentHandle
     }
     
-    public override var startPos: NSNumber {
+    public override var startPos: Int64 {
         _startPos
     }
     
-    public override var endPos: NSNumber {
+    public override var endPos: Int64 {
         _endPos
     }
     
-    public override var deltaSize: NSNumber {
+    public override var deltaSize: Int64 {
         _deltaSize
     }
     
