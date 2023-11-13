@@ -105,12 +105,10 @@ extension PhotosViewController {
         }
         children.append(testingOptionsAction)
         let menuItem = UIMenu(title: original.title,
+                              subtitle: original.subtitle,
                               image: original.image,
                               options: original.options,
                               children: children)
-        if #available(iOS 15.0, *) {
-            menuItem.subtitle = original.subtitle
-        }
         return menuItem
     }
     
