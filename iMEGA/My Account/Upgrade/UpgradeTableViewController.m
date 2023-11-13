@@ -156,6 +156,14 @@
     }
 }
 
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        [self.tableView reloadData];
+    } completion:nil];
+}
+
 #pragma mark - Private
 
 - (UpgradeAccountViewModel *)viewModel {
@@ -477,6 +485,7 @@
         [superscriptOneAttributedString appendAttributedString:subjectToYourParticipationAttributedString];
         
         cell.subjectToYourParticipationLabel.attributedText = superscriptOneAttributedString;
+        [cell layoutIfNeeded];
     } else {
         cell = [tableView dequeueReusableCellWithIdentifier:@"productCell" forIndexPath:indexPath];
     }
