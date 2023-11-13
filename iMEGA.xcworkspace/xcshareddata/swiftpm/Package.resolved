@@ -261,15 +261,6 @@
       }
     },
     {
-      "identity" : "purelayout",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/PureLayout/PureLayout.git",
-      "state" : {
-        "revision" : "5561683c96dc49b023c1299bfe4f6fbeed5f8199",
-        "version" : "3.1.9"
-      }
-    },
-    {
       "identity" : "samkeychain",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/meganz/SAMKeychain.git",
