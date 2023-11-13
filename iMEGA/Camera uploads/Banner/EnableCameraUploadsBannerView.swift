@@ -50,10 +50,7 @@ struct EnableCameraUploadsBannerView_Preview: PreviewProvider {
     static var previews: some View {
         
         EnableCameraUploadsBannerView()
-        
-        if #available(iOS 15.0, *) {
-            EnableCameraUploadsBannerView()
-                .previewInterfaceOrientation(.landscapeLeft)
-        }
+        EnableCameraUploadsBannerView()
+            .previewInterfaceOrientation(.landscapeLeft)
     }
 }
