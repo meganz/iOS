@@ -10,15 +10,10 @@ public struct TextEditorView: View {
     }
     
     public var body: some View {
-        if #available(iOS 15.0, *) {
-            FocusableTextEditorView(text: $text, placeholder: placeholder)
-        } else {
-            BasicTextEditorView(text: $text, placeholder: placeholder)
-        }
+        FocusableTextEditorView(text: $text, placeholder: placeholder)
     }
 }
 
-@available(iOS 15.0, *)
 struct FocusableTextEditorView: View {
     @Binding var text: String
     var placeholder: String?
@@ -37,25 +32,6 @@ struct FocusableTextEditorView: View {
                 PlaceholderView(text: placeholder)
                     .allowsHitTesting(false)
             }
-        }
-    }
-}
-
-struct BasicTextEditorView: View {
-    @Binding var text: String
-    var placeholder: String?
-    
-    var body: some View {
-        ZStack(alignment: .topLeading) {
-            TextEditorInputView(text: $text)
-                
-            if text.isEmpty {
-                PlaceholderView(text: placeholder)
-                    .allowsHitTesting(false)
-            }
-        }
-        .onDisappear {
-            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         }
     }
 }

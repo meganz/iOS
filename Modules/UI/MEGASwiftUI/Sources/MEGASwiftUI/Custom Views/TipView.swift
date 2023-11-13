@@ -61,16 +61,9 @@ struct TipContentView: View {
                 .foregroundColor(colorScheme == .dark ? .black : .white)
                 .fixedSize(horizontal: false, vertical: true)
             Spacer().frame(height: 8)
-            if #available(iOS 15.0, *) {
-                Text(attributedBold(text: tip.message, boldText: tip.boldMessage))
-                    .foregroundColor(colorScheme == .dark ? .black : .white)
-                    .fixedSize(horizontal: false, vertical: true)
-            } else {
-                Text(tip.message)
-                    .font(.caption)
-                    .foregroundColor(colorScheme == .dark ? .black : .white)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
+            Text(attributedBold(text: tip.message, boldText: tip.boldMessage))
+                .foregroundColor(colorScheme == .dark ? .black : .white)
+                .fixedSize(horizontal: false, vertical: true)
             Spacer().frame(height: 12)
             Button {
                 withAnimation {
@@ -108,7 +101,6 @@ struct TipArrowShape: Shape {
     }
 }
 
-@available(iOS 15.0, *)
 extension View {
     func attributedBold(text: String, boldText: String?, font: Font = .caption) -> AttributedString {
         var result = AttributedString(text)
