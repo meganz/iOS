@@ -49,9 +49,13 @@ public struct NonProductionTestResultsProvider: SearchResultsProviding {
         let id = TestChip(rawValue: chip.id)
         switch id {
         case .images: return SearchResult.imageResults
-        case .docs:   return SearchResult.docsResults
-        case .audio:  return SearchResult.audioResults
-        case .video:  return SearchResult.videoResults
+        case .folders: return SearchResult.folderResults
+        case .audio: return SearchResult.audioResults
+        case .video: return SearchResult.videoResults
+        case .pdf: return SearchResult.pdfResults
+        case .docs: return SearchResult.docsResults
+        case .presentations: return SearchResult.presentationResults
+        case .archives: return SearchResult.archiveResults
         default:
             fatalError("unhandled scenario in this mock")
         }
@@ -75,21 +79,32 @@ public struct NonProductionTestResultsProvider: SearchResultsProviding {
     
     enum TestChip: Int, CaseIterable {
         case images
-        case docs
+        case folders
         case audio
         case video
-        
+        case pdf
+        case docs
+        case presentations
+        case archives
+
         var title: String {
             switch self {
-                
             case .images:
                 return Strings.Localizable.Home.Search.Filter.images
-            case .docs:
-                return Strings.Localizable.Home.Search.Filter.docs
+            case .folders:
+                return Strings.Localizable.Home.Search.Filter.folders
             case .audio:
                 return Strings.Localizable.Home.Search.Filter.audio
             case .video:
                 return Strings.Localizable.Home.Search.Filter.video
+            case .pdf:
+                return Strings.Localizable.Home.Search.Filter.pdfs
+            case .docs:
+                return Strings.Localizable.Home.Search.Filter.docs
+            case .presentations:
+                return Strings.Localizable.Home.Search.Filter.presentations
+            case .archives:
+                return Strings.Localizable.Home.Search.Filter.archives
             }
         }
     }
@@ -161,6 +176,38 @@ fileprivate extension SearchResult {
             test(idx: 7, prefix: "Video", image: image("video")),
             test(idx: 17, prefix: "Video", image: image("video")),
             test(idx: 77, prefix: "Video", image: image("video"))
+        ]
+    }
+
+    static var folderResults: [Self] {
+        [
+            test(idx: 100, prefix: "Folder", image: image("folder")),
+            test(idx: 101, prefix: "Folder", image: image("folder")),
+            test(idx: 102, prefix: "Folder", image: image("folder"))
+        ]
+    }
+
+    static var pdfResults: [Self] {
+        [
+            test(idx: 103, prefix: "PDF", image: image("doc.on.doc.fill")),
+            test(idx: 104, prefix: "PDF", image: image("doc.on.doc.fill")),
+            test(idx: 105, prefix: "PDF", image: image("doc.on.doc.fill"))
+        ]
+    }
+
+    static var presentationResults: [Self] {
+        [
+            test(idx: 104, prefix: "Presentation", image: image("videoprojector")),
+            test(idx: 105, prefix: "Presentation", image: image("videoprojector")),
+            test(idx: 106, prefix: "Presentation", image: image("videoprojector"))
+        ]
+    }
+
+    static var archiveResults: [Self] {
+        [
+            test(idx: 107, prefix: "Archive", image: image("archivebox")),
+            test(idx: 108, prefix: "Archive", image: image("archivebox")),
+            test(idx: 109, prefix: "Archive", image: image("archivebox"))
         ]
     }
 }

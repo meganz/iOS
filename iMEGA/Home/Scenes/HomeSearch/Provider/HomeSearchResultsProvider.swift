@@ -92,20 +92,35 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         // SDK does not support empty query and MEGANodeFormatType.unknown
         assert(!(queryRequest.query == "" && queryRequest.chips == []))
         MEGALogInfo("[search] full search \(queryRequest.query)")
-        return await withAsyncValue(in: { completion in
-            searchFileUseCase.searchFiles(
-                withName: queryRequest.query,
-                recursive: true,
-                nodeFormat: nodeFormatFrom(chip: queryRequest.chips.first),
-                sortOrder: .defaultAsc,
-                searchPath: .root,
-                completion: { nodeList in
-                    completion(.success(nodeList))
-                }
-            )
-        })
+        // For Folders chip, we don't have support for filtering in SDK by using SearchOperation
+        // Instead, we use children() method and filter for folder nodes
+        if queryRequest.isFolderChipSelected {
+            return try await childrenFolders()
+        } else {
+            return await withAsyncValue(in: { completion in
+                searchFileUseCase.searchFiles(
+                    withName: queryRequest.query,
+                    recursive: true,
+                    nodeFormat: nodeFormatFrom(chip: queryRequest.chips.first),
+                    sortOrder: .defaultAsc,
+                    searchPath: .root,
+                    completion: { nodeList in
+                        completion(.success(nodeList))
+                    }
+                )
+            })
+        }
     }
-    
+
+    private func childrenFolders() async throws -> NodeListEntity? {
+        guard let root = nodeRepository.rootNode() else { return nil }
+        guard let nodeList = await nodeRepository.children(of: root) else { return nil }
+
+        let nodes = nodeList.toNodeEntities().filter { $0.isFolder }
+
+        return .init(nodesCount: nodes.count, nodeAt: { nodes[$0] })
+    }
+
     private func shouldShowRoot(for queryRequest: SearchQueryEntity) -> Bool {
         if queryRequest == .initialRootQuery {
             return true
@@ -139,7 +154,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         for i in firstItemIndex...lastItemIndex-1 {
             results.append(mapNodeToSearchResult(nodeList.nodeAt(i)))
         }
-        
+
         return .init(
             results: results,
             availableChips: SearchChipEntity.allChips,

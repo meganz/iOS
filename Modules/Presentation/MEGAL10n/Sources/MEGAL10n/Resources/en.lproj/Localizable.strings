@@ -3822,6 +3822,14 @@
 "home.search.filter.audio"="Audio";
 /* Filter name for searching on the home screen */
 "home.search.filter.video"="Video";
+/* Filter name for searching on the home screen */
+"home.search.filter.folders"="Folders";
+/* Filter name for searching on the home screen */
+"home.search.filter.pdfs"="PDF";
+/* Filter name for searching on the home screen */
+"home.search.filter.presentations"="Presentations";
+/* Filter name for searching on the home screen */
+"home.search.filter.archives"="Archives";
 /* Empty screen copy when no filter is selected on the home screen search */
 "home.search.empty.no-chip-selected"="No results";
 /* Empty screen copy when Images filter is selected on the home screen search */
@@ -3832,6 +3840,14 @@
 "home.search.empty.no-audio"="No audio files";
 /* Empty screen copy when Video filter is selected on the home screen search */
 "home.search.empty.no-videos"="No video files";
+/* Empty screen copy when Folders filter is selected on the home screen search */
+"home.search.empty.no-folders"="No folders";
+/* Empty screen copy when PDF filter is selected on the home screen search */
+"home.search.empty.no-pdfs"="No PDFs";
+/* Empty screen copy when Presentations filter is selected on the home screen search */
+"home.search.empty.no-presentations"="No presentations";
+/* Empty screen copy when Archives filter is selected on the home screen search */
+"home.search.empty.no-archives"="No archives";
 /* A title label for waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.title"="Waiting room";
 /* A button label to close the waiting room participants list view. */

@@ -89,8 +89,8 @@ final class ChatUploader: NSObject {
         
         context.performAndWait {
             let transferList = MEGASdk.shared.transfers
-            MEGALogDebug("[ChatUploader] transfer list count : \(transferList.size)")
-            let sdkTransfers = (0..<transferList.size).compactMap { transferList.transfer(at: $0) }
+            MEGALogDebug("[ChatUploader] transfer list count : \(transferList.size.intValue)")
+            let sdkTransfers = (0..<transferList.size.intValue).compactMap { transferList.transfer(at: $0) }
             self.store.fetchAllChatUploadTransfer(context: context).forEach { transfer in
                 if transfer.nodeHandle == nil {
                     MEGALogDebug("[ChatUploader] transfer task not completed \(transfer.index) : \(transfer.filepath)")
