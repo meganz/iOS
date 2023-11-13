@@ -35,9 +35,6 @@ final class UIActionTests: XCTestCase {
     }
     
     func testCompareUIActionWith_differentSubtitle_notEqual() throws {
-        guard #available(iOS 15.0, *) else {
-            throw XCTSkip("Required API is not available for this test.")
-        }
         let actionA = UIAction(title: "UIAction.A.Title", subtitle: "UIAction.A.Subtitle", image: nil, attributes: .hidden) { _ in }
         let actionB = UIAction(title: "UIAction.A.Title", subtitle: "UIAction.B.Subtitle", image: nil, attributes: .hidden, state: .on) { _ in }
         XCTAssertFalse(actionA ~~ actionB)

@@ -95,7 +95,7 @@ struct UpgradeAccountPlanView: View {
                 dismissButton: .default(Text(Strings.Localizable.ok))
             )
         }
-        .modalView(isPresented: $viewModel.isTermsAndPoliciesPresented, content: {
+        .sheet(isPresented: $viewModel.isTermsAndPoliciesPresented, content: {
             termsAndPoliciesView()
         })
     }

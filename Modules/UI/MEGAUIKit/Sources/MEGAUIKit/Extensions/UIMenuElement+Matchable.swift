@@ -13,10 +13,6 @@ extension UIMenuElement: Matchable {
         }
         
         let status = lhs.title == rhs.title && lhs.image ~~ rhs.image
-        if #available(iOS 15.0, *) {
-            return  status && (lhs.subtitle == rhs.subtitle)
-        } else {
-            return status
-        }
+        return status && (lhs.subtitle == rhs.subtitle)
     }
 }

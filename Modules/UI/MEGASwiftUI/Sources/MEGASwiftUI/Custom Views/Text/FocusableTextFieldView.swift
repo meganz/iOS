@@ -17,19 +17,12 @@ public struct FocusableTextFieldView: View {
     }
     
     public var body: some View {
-        if #available(iOS 15.0, *) {
-            FocusableTextField(placeholder: placeholder,
-                                   text: $text,
-                                   appearFocused: appearFocused,
-                                   clearButtonMode: clearButtonMode)
-        } else {
-            TextFieldView(placeholder: placeholder,
-                          text: $text,
-                          clearButtonMode: clearButtonMode)
-        }
+        FocusableTextField(placeholder: placeholder,
+                           text: $text,
+                           appearFocused: appearFocused,
+                           clearButtonMode: clearButtonMode)
     }
     
-    @available(iOS 15.0, *)
     struct FocusableTextField: View {
         let placeholder: String
         @Binding var text: String
@@ -46,21 +39,6 @@ public struct FocusableTextFieldView: View {
                 }
                 focused = appearFocused
             }
-        }
-    }
-    
-    struct TextFieldView: View {
-        let placeholder: String
-        @Binding var text: String
-        let clearButtonMode: UITextField.ViewMode
-        
-        var body: some View {
-            TextField(placeholder, text: $text)
-                .onAppear {
-                    if clearButtonMode != .never {
-                        UITextField.appearance().clearButtonMode = clearButtonMode
-                    }
-                }
         }
     }
 }
