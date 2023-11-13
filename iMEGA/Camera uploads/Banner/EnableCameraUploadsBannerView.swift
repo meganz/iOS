@@ -18,13 +18,17 @@ struct EnableCameraUploadsBannerView: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack(alignment: .center, spacing: Constants.contentHorizontalSpacing) {
-                Image(.cuStatusEnable)
+                Image(.enableCameraUploadsBannerIcon)
                 
                 VStack(alignment: .leading) {
                     Text(Strings.Localizable.CameraUploads.Banner.EnableState.title)
-                        .font(Font.system(size: 13, weight: .semibold, design: .default))
+                        .font(.system(.footnote).bold())
+                        .foregroundColor(.primary)
+                    
                     Text(Strings.Localizable.CameraUploads.Banner.EnableState.description)
-                        .font(Font.system(size: 11, weight: .regular, design: .default))
+                        .font(.caption2)
+                        .multilineTextAlignment(.leading)
+                        .foregroundColor(.primary)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                
