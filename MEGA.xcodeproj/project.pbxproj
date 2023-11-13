@@ -1987,8 +1987,6 @@
 		BF1164B027F68EC500E5C5A4 /* SDWebImageWebPCoder in Frameworks */ = {isa = PBXBuildFile; productRef = BF1164AF27F68EC500E5C5A4 /* SDWebImageWebPCoder */; };
 		BF1164B827F6908500E5C5A4 /* SDWebImageWebPCoder in Frameworks */ = {isa = PBXBuildFile; productRef = BF1164B727F6908500E5C5A4 /* SDWebImageWebPCoder */; };
 		BF1164BB27F692DB00E5C5A4 /* KeyboardLayoutGuide in Frameworks */ = {isa = PBXBuildFile; productRef = BF1164BA27F692DB00E5C5A4 /* KeyboardLayoutGuide */; };
-		BF1164C027F6A74D00E5C5A4 /* PureLayout in Frameworks */ = {isa = PBXBuildFile; productRef = BF1164BF27F6A74D00E5C5A4 /* PureLayout */; };
-		BF1164CA27F6A81F00E5C5A4 /* PureLayout in Frameworks */ = {isa = PBXBuildFile; productRef = BF1164C927F6A81F00E5C5A4 /* PureLayout */; };
 		BF121D672A09FF1700DA3633 /* ScheduleMeetingNotificationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF121D662A09FF1700DA3633 /* ScheduleMeetingNotificationInfo.swift */; };
 		BF121D692A09FF3F00DA3633 /* UNNotificationContent+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF121D682A09FF3F00DA3633 /* UNNotificationContent+Additions.swift */; };
 		BF121D792A0B566900DA3633 /* ScheduleMeetingCreationRecurrenceOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF121D782A0B566900DA3633 /* ScheduleMeetingCreationRecurrenceOption.swift */; };
@@ -5126,7 +5124,6 @@
 				BF11647D27F6734C00E5C5A4 /* PhoneNumberKit in Frameworks */,
 				BFD2ED4D281228B30018C05A /* PieChart in Frameworks */,
 				A8ECD8CB27F34BB0008D75B8 /* PinLayout in Frameworks */,
-				BF1164C027F6A74D00E5C5A4 /* PureLayout in Frameworks */,
 				BF0CB9362803AEAE00C21F11 /* SAMKeychain in Frameworks */,
 				BFA275E327ED315E00E15B92 /* SDAVAssetExportSession in Frameworks */,
 				BF1164B027F68EC500E5C5A4 /* SDWebImageWebPCoder in Frameworks */,
@@ -5213,7 +5210,6 @@
 				B63D341A2898A9E20059DE66 /* MEGASwift in Frameworks */,
 				B63995442898D03400EA88F1 /* MEGASwiftUI in Frameworks */,
 				B65D17D12899E19600D5AD33 /* MEGAUIKit in Frameworks */,
-				BF1164CA27F6A81F00E5C5A4 /* PureLayout in Frameworks */,
 				BF0CB93E2803AF4A00C21F11 /* SAMKeychain in Frameworks */,
 				BFA275E727ED317600E15B92 /* SDAVAssetExportSession in Frameworks */,
 				BF1164B827F6908500E5C5A4 /* SDWebImageWebPCoder in Frameworks */,
@@ -12418,7 +12414,6 @@
 				BF11647C27F6734C00E5C5A4 /* PhoneNumberKit */,
 				BFD2ED4C281228B30018C05A /* PieChart */,
 				A8ECD8CA27F34BB0008D75B8 /* PinLayout */,
-				BF1164BF27F6A74D00E5C5A4 /* PureLayout */,
 				BF0CB9352803AEAE00C21F11 /* SAMKeychain */,
 				BFA275E227ED315E00E15B92 /* SDAVAssetExportSession */,
 				BF1164AF27F68EC500E5C5A4 /* SDWebImageWebPCoder */,
@@ -12579,7 +12574,6 @@
 				B63D34192898A9E20059DE66 /* MEGASwift */,
 				B63995432898D03400EA88F1 /* MEGASwiftUI */,
 				B65D17D02899E19600D5AD33 /* MEGAUIKit */,
-				BF1164C927F6A81F00E5C5A4 /* PureLayout */,
 				BF0CB93D2803AF4A00C21F11 /* SAMKeychain */,
 				BFA275E627ED317600E15B92 /* SDAVAssetExportSession */,
 				BF1164B727F6908500E5C5A4 /* SDWebImageWebPCoder */,
@@ -12804,7 +12798,6 @@
 				BF11647B27F6734C00E5C5A4 /* XCRemoteSwiftPackageReference "PhoneNumberKit" */,
 				BFD2ED4B281228B30018C05A /* XCRemoteSwiftPackageReference "PieChart" */,
 				A8ECD8C927F34BB0008D75B8 /* XCRemoteSwiftPackageReference "PinLayout" */,
-				BF1164BE27F6A74D00E5C5A4 /* XCRemoteSwiftPackageReference "PureLayout" */,
 				BF0CB9342803AEAE00C21F11 /* XCRemoteSwiftPackageReference "SAMKeychain" */,
 				BFA275E127ED313500E15B92 /* XCRemoteSwiftPackageReference "SDAVAssetExportSession" */,
 				BF1164AE27F68EC400E5C5A4 /* XCRemoteSwiftPackageReference "SDWebImageWebPCoder" */,
@@ -17350,14 +17343,6 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		BF1164BE27F6A74D00E5C5A4 /* XCRemoteSwiftPackageReference "PureLayout" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/PureLayout/PureLayout.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.0.0;
-			};
-		};
 		BF1CEA3227FA737200C1A2E5 /* XCRemoteSwiftPackageReference "GKContactImage" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/meganz/GKContactImage.git";
@@ -17786,16 +17771,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BF1164B927F692DB00E5C5A4 /* XCRemoteSwiftPackageReference "KeyboardLayoutGuide" */;
 			productName = KeyboardLayoutGuide;
-		};
-		BF1164BF27F6A74D00E5C5A4 /* PureLayout */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BF1164BE27F6A74D00E5C5A4 /* XCRemoteSwiftPackageReference "PureLayout" */;
-			productName = PureLayout;
-		};
-		BF1164C927F6A81F00E5C5A4 /* PureLayout */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = BF1164BE27F6A74D00E5C5A4 /* XCRemoteSwiftPackageReference "PureLayout" */;
-			productName = PureLayout;
 		};
 		BF1CEA3327FA737200C1A2E5 /* GKContactImage */ = {
 			isa = XCSwiftPackageProductDependency;
