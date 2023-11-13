@@ -169,7 +169,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private var meetingParticipantStatusPipelineSubscription: AnyCancellable?
     private let meetingParticipantStatusPipeline = MeetingParticipantStatusPipeline(
         collectionDuration: 1.0,
-        resetCollectionDurationUptoCount: 2
+        resetCollectionDurationUpToCount: 2
     )
     
     private let tonePlayer = TonePlayer()
@@ -254,6 +254,13 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private func reloadParticipant(_ participant: CallParticipantEntity) {
         guard let index = callParticipants.firstIndex(where: {$0 == participant && $0.isScreenShareCell == participant.isScreenShareCell}) else { return }
         invokeCommand?(.reloadParticipantAt(index, callParticipants))
+        
+        guard let currentSpeaker = speakerParticipant,
+              currentSpeaker == participant,
+              currentSpeaker.isScreenShareCell == participant.isScreenShareCell else {
+            return
+        }
+        speakerParticipant = participant
     }
     
     private func requestRemoteScreenShareVideo(for participant: CallParticipantEntity) {
@@ -261,7 +268,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         if participant.isVideoHiRes && !participant.isReceivingHiResVideo {
             remoteVideoUseCase.requestHighResolutionVideo(for: chatRoom.chatId, clientId: participant.clientId, completion: nil)
         }
-        if participant.isVideoLowRes && participant.hasCamera && !participant.isReceivingLowResVideo {
+        if participant.isVideoLowRes && !participant.isReceivingLowResVideo {
             remoteVideoUseCase.requestLowResolutionVideos(for: chatRoom.chatId, clientId: participant.clientId, completion: nil)
         }
         if participant.hasCamera && participant.isLowResCamera && participant.canReceiveVideoLowRes && !participant.canReceiveVideoHiRes && !participant.isReceivingHiResVideo {
@@ -702,7 +709,10 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         indexOfVisibleParticipants.forEach {
             if !visibleIndex.contains($0),
                let participant = callParticipants[safe: $0] {
-                if participant.video == .on && participant.speakerVideoDataDelegate == nil {
+                if participant.video == .on &&
+                    participant.speakerVideoDataDelegate == nil &&
+                    !participant.isScreenShareCell &&
+                    !remoteVideoUseCase.isNotReceivingBothBothHighAndLowResVideo(for: participant) {
                     stopVideoForParticipant(participant)
                 }
             }
@@ -711,10 +721,10 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     }
     
     private func stopVideoForParticipant(_ participant: CallParticipantEntity) {
-        if participant.canReceiveVideoLowRes {
+        if participant.isReceivingLowResVideo {
             stopRemoteVideo(for: participant, isHiRes: false)
         }
-        if participant.canReceiveVideoHiRes {
+        if participant.isReceivingHiResVideo {
             stopRemoteVideo(for: participant, isHiRes: true)
         }
     }
@@ -965,7 +975,8 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
         configScreenShareParticipants()
         participantName(for: participant.participantId) { [weak self] in
             guard let self else { return }
-            updateNameForParticipant(participant, name: $0)
+            participant.name = $0
+            updateParticipant(participant)
             invokeCommand?(.updateParticipants(callParticipants))
             if callParticipants.count == 1 && layoutMode == .speaker {
                 invokeCommand?(.shouldHideSpeakerView(false))
@@ -978,12 +989,6 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
                 invokeCommand?(.updatePageControl(callParticipants.count))
             }
             invokeCommand?(.hideEmptyRoomMessage)
-        }
-    }
-    
-    private func updateNameForParticipant(_ participant: CallParticipantEntity, name: String?) {
-        for callParticipant in callParticipants where callParticipant == participant {
-            callParticipant.name = name
         }
     }
     
@@ -1022,12 +1027,12 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
     }
     
     func updateParticipant(_ participant: CallParticipantEntity) {
-        guard let participateToUpdate = callParticipants.first(where: {$0 == participant && !$0.isScreenShareCell}) else {
+        guard let participantToUpdate = callParticipants.first(where: {$0 == participant && !$0.isScreenShareCell}) else {
             MEGALogError("Error getting participant updated")
             return
         }
         
-        let onStartScreenShare = !participateToUpdate.hasScreenShare && participant.hasScreenShare
+        let onStartScreenShare = !participantToUpdate.hasScreenShare && participant.hasScreenShare
         
         for callParticipant in callParticipants where callParticipant == participant {
             callParticipant.video = participant.video
@@ -1044,16 +1049,14 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
         }
         
         if onStartScreenShare {
-           updateSpeakerForNewScreenShareParticipant(participant)
+           updateSpeakerForNewScreenShareParticipant(participantToUpdate)
         }
         
         configScreenShareParticipants()
         invokeCommand?(.updateParticipants(callParticipants))
         updateLayoutModeAccordingScreenSharingParticipant()
         
-        for callParticipant in callParticipants where callParticipant == participant {
-            reloadParticipant(callParticipant)
-        }
+        reloadParticipant(participantToUpdate)
     }
     
     private func updateSpeakerForNewScreenShareParticipant(_ participant: CallParticipantEntity) {

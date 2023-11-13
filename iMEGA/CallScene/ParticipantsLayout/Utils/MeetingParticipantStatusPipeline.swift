@@ -14,13 +14,13 @@ final class MeetingParticipantStatusPipeline {
     private var timerSubscription: AnyCancellable?
     
     private let collectionDuration: TimeInterval
-    private let resetCollectionDurationUptoCount: UInt
+    private let resetCollectionDurationUpToCount: UInt
     
-    private var resetCollectionDurationUptoCountCurrentValue = 0
+    private var resetCollectionDurationUpToCountCurrentValue = 0
     
-    init(collectionDuration: TimeInterval, resetCollectionDurationUptoCount: UInt) {
+    init(collectionDuration: TimeInterval, resetCollectionDurationUpToCount: UInt) {
         self.collectionDuration = collectionDuration
-        self.resetCollectionDurationUptoCount = resetCollectionDurationUptoCount
+        self.resetCollectionDurationUpToCount = resetCollectionDurationUpToCount
     }
     
     func addParticipant(withHandle handle: HandleEntity) {
@@ -30,7 +30,7 @@ final class MeetingParticipantStatusPipeline {
             return
         }
         
-        resetCollectionDurationUptoCountCurrentValue += 1
+        resetCollectionDurationUpToCountCurrentValue += 1
         handlerCollectionType.addedHandlers.append(handle)
         
         resetTimerSubscriptionIfNeeded()
@@ -43,14 +43,14 @@ final class MeetingParticipantStatusPipeline {
             return
         }
         
-        resetCollectionDurationUptoCountCurrentValue += 1
+        resetCollectionDurationUpToCountCurrentValue += 1
         handlerCollectionType.removedHandlers.append(handle)
         
         resetTimerSubscriptionIfNeeded()
     }
     
     private func resetTimerSubscriptionIfNeeded() {
-        guard resetCollectionDurationUptoCountCurrentValue <= resetCollectionDurationUptoCount else { return }
+        guard resetCollectionDurationUpToCountCurrentValue <= resetCollectionDurationUpToCount else { return }
         
         timerSubscription?.cancel()
         timerSubscription = Timer
@@ -61,7 +61,7 @@ final class MeetingParticipantStatusPipeline {
                 
                 self.statusPublisher.send(self.handlerCollectionType)
                 
-                self.resetCollectionDurationUptoCountCurrentValue = 0
+                self.resetCollectionDurationUpToCountCurrentValue = 0
                 self.handlerCollectionType = HandlerCollectionType()
                 self.timerSubscription?.cancel()
                 self.timerSubscription = nil
