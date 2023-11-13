@@ -138,14 +138,14 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
         let megaMessage = chatMessage.message
         currentTransfer = chatMessage.transfer
         progressView.progress = 0
-        if let transfer = chatMessage.transfer {
+        if let transfer = chatMessage.transfer, let transferPath = transfer.path {
             loadingIndicator.isHidden = false
             loadingIndicator.startAnimating()
             progressView.isHidden = false
             durationLabel.isHidden = true
             playIconView.isHidden = true
             downloadGifIcon.isHidden = true
-            let path = NSHomeDirectory().append(pathComponent: transfer.path)
+            let path = NSHomeDirectory().append(pathComponent: transferPath)
             imageView.sd_setImage(with: URL(fileURLWithPath: path))
             return
         }
@@ -217,14 +217,14 @@ class ChatMediaCollectionViewCell: MessageContentCell, MEGATransferDelegate {
 
     func onTransferUpdate(_ api: MEGASdk, transfer: MEGATransfer) {
         if currentTransfer?.tag == transfer.tag {
-            progressView.setProgress(transfer.transferredBytes.floatValue / transfer.totalBytes.floatValue, animated: true)
+            progressView.setProgress( Float(transfer.transferredBytes) / Float(transfer.totalBytes), animated: true)
         }
     }
     
     func onTransferFinish(_: MEGASdk, transfer: MEGATransfer, error _: MEGAError) {
         if currentNode?.handle == transfer.nodeHandle {
-            if transfer.path != nil, FileManager.default.fileExists(atPath: transfer.path) {
-                imageView.sd_setImage(with: URL(fileURLWithPath: transfer.path))
+            if let transferPath = transfer.path, FileManager.default.fileExists(atPath: transferPath) {
+                imageView.sd_setImage(with: URL(fileURLWithPath: transferPath))
                 downloadGifIcon.isHidden = true
 
             }
@@ -256,8 +256,8 @@ open class ChatMediaCollectionViewSizeCalculator: MessageSizeCalculator {
             var width: CGFloat = 200
             var height: CGFloat = 200
 
-            if chatMessage.transfer != nil {
-                let path = NSHomeDirectory().append(pathComponent: chatMessage.transfer!.path)
+            if let transfer = chatMessage.transfer, let transferPath = transfer.path {
+                let path = NSHomeDirectory().append(pathComponent: transferPath)
 
                 if FileManager.default.fileExists(atPath: path) {
                     guard let previewImage = UIImage(contentsOfFile: path) else {

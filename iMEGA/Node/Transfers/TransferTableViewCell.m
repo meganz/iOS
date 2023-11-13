@@ -51,7 +51,7 @@
     
     self.nameLabel.text = [[MEGASdkManager sharedMEGASdk] unescapeFsIncompatible:transfer.fileName destinationPath:[NSHomeDirectory() stringByAppendingString:@"/"]];
     self.pauseButton.hidden = self.cancelButton.hidden = NO;
-    float percentage = (transfer.transferredBytes.floatValue / transfer.totalBytes.floatValue);
+    float percentage = ((float)transfer.transferredBytes / (float)transfer.totalBytes);
     self.progressView.progress = percentage;
     switch (transfer.type) {
         case MEGATransferTypeDownload: {
@@ -169,14 +169,14 @@
         return NSMutableAttributedString.new;
     }
     UIColor *percentageColor = (transfer.type == MEGATransferTypeDownload) ? UIColor.systemGreenColor : [UIColor mnz_blueForTraitCollection:self.traitCollection];
-    float percentage = (transfer.transferredBytes.floatValue / transfer.totalBytes.floatValue);
+    float percentage = ((float)transfer.transferredBytes / (float)transfer.totalBytes);
     self.progressView.progress = percentage;
-    NSString *fileSize = [NSString memoryStyleStringFromByteCount:transfer.totalBytes.longLongValue];
+    NSString *fileSize = [NSString memoryStyleStringFromByteCount:transfer.totalBytes];
     NSString *percentageCompleted = [NSString stringWithFormat:@"%.f %% of %@ ", percentage  * 100, fileSize];
     NSMutableAttributedString *percentageAttributedString = [NSMutableAttributedString.alloc initWithString:percentageCompleted attributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1], NSForegroundColorAttributeName:percentageColor}];
     
     if (transfer.state == MEGATransferStateActive && ![[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
-        NSString *speed = [NSString stringWithFormat:@"%@/s ", [NSString memoryStyleStringFromByteCount:transfer.speed.longLongValue]];
+        NSString *speed = [NSString stringWithFormat:@"%@/s ", [NSString memoryStyleStringFromByteCount:transfer.speed]];
         NSAttributedString *speedAttributedString = [NSAttributedString.alloc initWithString:speed attributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
         [percentageAttributedString appendAttributedString:speedAttributedString];
     }
@@ -187,7 +187,7 @@
     if (![[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
         if (self.transfer.state != transfer.state) {
             self.transfer = transfer;
-            float percentage = (transfer.transferredBytes.floatValue / transfer.totalBytes.floatValue);
+            float percentage = ((float)transfer.transferredBytes / (float)transfer.totalBytes);
             self.progressView.progress = percentage;
             [self configureCellWithTransferState:self.transfer.state];
         }

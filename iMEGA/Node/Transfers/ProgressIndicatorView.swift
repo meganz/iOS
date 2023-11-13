@@ -243,7 +243,9 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
     }
     
     private func filterUserManualDownloads(_ transfers: [MEGATransfer]) -> [MEGATransfer] {
-        return transfers.filter { $0.path.hasPrefix(FileSystemRepository.newRepo.documentsDirectory().path) }
+        transfers.filter {
+            $0.path?.hasPrefix(FileSystemRepository.newRepo.documentsDirectory().path) ?? false
+        }
     }
     
     private func addBackgroundLayer() {

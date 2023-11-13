@@ -377,7 +377,7 @@
 - (void)onTransferUpdate:(MEGASdk *)api transfer:(MEGATransfer *)transfer {
     [self.activityIndicator stopAnimating];
     [self.progressView setHidden:NO];
-    float percentage = (transfer.transferredBytes.floatValue / transfer.totalBytes.floatValue);
+    float percentage = ((float)transfer.transferredBytes / (float)transfer.totalBytes);
     [self.progressView setProgress:percentage];
 }
 

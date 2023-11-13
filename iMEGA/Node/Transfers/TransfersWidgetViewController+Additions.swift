@@ -137,7 +137,9 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
     
     @objc
     func shouldShowTransferCancelledMessage(for transfer: MEGATransfer) -> Bool {
-        !transfer.path.hasPrefix(FileManager.default.temporaryDirectory.path) || transfer.appData != nil
+        let transferHasPrefix = transfer.path?.hasPrefix(FileManager.default.temporaryDirectory.path) ?? false
+
+        return !transferHasPrefix || transfer.appData != nil
     }
     
     // MARK: - NavigationBarButtons

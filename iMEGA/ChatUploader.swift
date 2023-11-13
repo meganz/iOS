@@ -89,8 +89,8 @@ final class ChatUploader: NSObject {
         
         context.performAndWait {
             let transferList = MEGASdk.shared.transfers
-            MEGALogDebug("[ChatUploader] transfer list count : \(transferList.size.intValue)")
-            let sdkTransfers = (0..<transferList.size.intValue).compactMap { transferList.transfer(at: $0) }
+            MEGALogDebug("[ChatUploader] transfer list count : \(transferList.size)")
+            let sdkTransfers = (0..<transferList.size).compactMap { transferList.transfer(at: $0) }
             self.store.fetchAllChatUploadTransfer(context: context).forEach { transfer in
                 if transfer.nodeHandle == nil {
                     MEGALogDebug("[ChatUploader] transfer task not completed \(transfer.index) : \(transfer.filepath)")
@@ -168,11 +168,13 @@ extension ChatUploader: MEGATransferDelegate {
             
             context.performAndWait {
                 let allTransfers = self.store.fetchAllChatUploadTransfer(withChatRoomId: chatRoomIdString, context: context)
-                if let transferTask = allTransfers.first(where: { $0.filepath == transfer.path && ($0.transferTag == nil || $0.transferTag == String(transfer.tag))}) {
+                if let transferTask = allTransfers.first(
+                    where: { $0.filepath == transfer.path && ($0.transferTag == nil || $0.transferTag == String(transfer.tag))}
+                ) {
                     transferTask.transferTag = String(transfer.tag)
                     MEGALogInfo("[ChatUploader] updating existing row for \(transfer.path ?? "no path") with tag \(transfer.tag)")
-                } else {
-                    self.store.insertChatUploadTransfer(withFilepath: transfer.path,
+                } else if let transferPath = transfer.path {
+                    self.store.insertChatUploadTransfer(withFilepath: transferPath,
                                                         chatRoomId: chatRoomIdString,
                                                         transferTag: String(transfer.tag),
                                                         allowDuplicateFilePath: true,
@@ -187,29 +189,34 @@ extension ChatUploader: MEGATransferDelegate {
     
     func onTransferFinish(_ api: MEGASdk, transfer: MEGATransfer, error: MEGAError) {
         uploaderQueue.async {
-            guard transfer.type == .upload,
-                  let chatRoomIdString = transfer.mnz_extractChatIDFromAppData(),
-                  let context = self.store.stack.newBackgroundContext() else {
+            guard 
+                transfer.type == .upload,
+                let chatRoomIdString = transfer.mnz_extractChatIDFromAppData(),
+                let context = self.store.stack.newBackgroundContext(),
+                let transferPath = transfer.path,
+                let transferAppData = transfer.appData
+            else {
                 return
             }
             
             if error.type == .apiEExist {
                 self.store.deleteChatUploadTransfer(withChatRoomId: chatRoomIdString,
-                                               transferTag: String(transfer.tag),
-                                               context: context)
-                MEGALogInfo("[ChatUploader] transfer has started with exactly the same data (local path and target parent). File: %@", transfer.fileName)
+                                                    transferTag: String(transfer.tag),
+                                                    context: context)
+                let fileName = transfer.fileName ?? "no file"
+                MEGALogInfo("[ChatUploader] transfer has started with exactly the same data (local path and target parent). File: %@", fileName)
                 return
             }
             
-            MEGALogInfo("[ChatUploader] upload complete File path \(transfer.path ?? "No file path found")")
-            
+            MEGALogInfo("[ChatUploader] upload complete File path \(transferPath)")
+
             transfer.mnz_moveFileToDestinationIfVoiceClipData()
             context.performAndWait {
-                self.store.updateChatUploadTransfer(filepath: transfer.path,
+                self.store.updateChatUploadTransfer(filepath: transferPath,
                                                     chatRoomId: chatRoomIdString,
                                                     nodeHandle: String(transfer.nodeHandle),
                                                     transferTag: String(transfer.tag),
-                                                    appData: transfer.appData,
+                                                    appData: transferAppData,
                                                     context: context)
                 self.updateDatabase(withChatRoomIdString: chatRoomIdString, context: context)
             }

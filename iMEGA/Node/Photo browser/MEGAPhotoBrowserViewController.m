@@ -643,7 +643,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     
     void (^transferProgress)(MEGATransfer *transfer) = ^(MEGATransfer *transfer) {
         if (self.dataProvider.currentIndex == index) {
-            self.transferProgress = transfer.transferredBytes.doubleValue / transfer.totalBytes.doubleValue;
+            self.transferProgress = (double)transfer.transferredBytes / (double)transfer.totalBytes;
             [self.pieChartView reloadData];
             [self hideSlideShowButtonWithBarButtonItem:[self slideshowButton]];
             if (self.pieChartView.alpha < 1.0f) {
