@@ -12,7 +12,7 @@ struct CallsSettingsView: View {
             }
             .edgesIgnoringSafeArea(.horizontal)
             .padding(.top)
-            .background(colorScheme == .dark ? Color.black.edgesIgnoringSafeArea([.horizontal, .bottom]) : Color(Colors.General.White.f7F7F7.name).edgesIgnoringSafeArea([.horizontal, .bottom]))
+            .background(colorScheme == .dark ? Color.black.edgesIgnoringSafeArea([.horizontal, .bottom]) : Color(.whiteF7F7F7).edgesIgnoringSafeArea([.horizontal, .bottom]))
         }
     }
 }

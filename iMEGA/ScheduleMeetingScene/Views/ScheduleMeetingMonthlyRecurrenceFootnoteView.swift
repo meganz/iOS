@@ -12,7 +12,7 @@ struct ScheduleMeetingMonthlyRecurrenceFootnoteView: View {
             .padding(.horizontal)
             .padding(.top, 6)
             .padding(.bottom, 20)
-            .background(colorScheme == .dark ? .black : Color(Colors.General.White.f7F7F7.name))
+            .background(colorScheme == .dark ? .black : Color(.whiteF7F7F7))
 
     }
 }

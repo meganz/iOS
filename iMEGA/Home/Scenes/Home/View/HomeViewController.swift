@@ -350,8 +350,8 @@ final class HomeViewController: UIViewController {
     private func setupBackgroundColor(with trait: UITraitCollection) {
         switch trait.theme {
         case .light:
-            slidePanelView.backgroundColor = Colors.General.White.f7F7F7.color
-            view.backgroundColor = Colors.General.White.f7F7F7.color
+            slidePanelView.backgroundColor = UIColor.whiteF7F7F7
+            view.backgroundColor = UIColor.whiteF7F7F7
         case .dark:
             slidePanelView.backgroundColor = UIColor.black
             view.backgroundColor = UIColor.black
@@ -362,7 +362,7 @@ final class HomeViewController: UIViewController {
         let color: UIColor
         switch trait.theme {
         case .light:
-            color = constraintToTopPosition.isActive ? .white : Colors.General.White.f7F7F7.color
+            color = constraintToTopPosition.isActive ? .white : UIColor.whiteF7F7F7
         case .dark:
             color = constraintToTopPosition.isActive ? .mnz_black1C1C1E() : .black
         }
@@ -398,7 +398,7 @@ extension HomeViewController: SlidePanelAnimationControllerDelegate {
         case .dark:
             return (.mnz_black1C1C1E(), .black)
         default:
-            return (.white, Colors.General.White.f7F7F7.color)
+            return (.white, UIColor.whiteF7F7F7)
         }
     }
 

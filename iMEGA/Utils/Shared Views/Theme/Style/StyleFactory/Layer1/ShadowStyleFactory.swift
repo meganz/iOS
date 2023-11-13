@@ -8,7 +8,7 @@ extension InterfaceStyle {
 }
 
 enum MEGAShadowStyle {
-    case themeButton(color: ThemeColor)
+    case themeButton(color: UIColor)
 }
 
 protocol ShadowStyleFactory {

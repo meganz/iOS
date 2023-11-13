@@ -1,46 +1,52 @@
 import Foundation
 
 struct LightColorThemeFactory: ColorFactory {
-
-    func textColor(_ style: MEGAColor.Text) -> ThemeColor {
+    
+    func textColor(_ style: MEGAColor.Text) -> UIColor {
         switch style {
-        case .primary: return ThemeColor(red: 0, green: 0, blue: 0)
-        case .secondary: return ThemeColor(red: 153, green: 153, blue: 153)
-        case .tertiary: return ThemeColor(red: 81, green: 81, blue: 81)
-        case .quaternary: return ThemeColor(red: 132, green: 132, blue: 132)
-        case .warning: return ThemeColor(red: 255, green: 59, blue: 48)
+        case .primary: return UIColor.black00000032
+        case .secondary: return UIColor.gray999999
+        case .tertiary: return UIColor.gray515151
+        case .quaternary: return UIColor.gray848484
+        case .warning: return UIColor.redFF3B30
         }
     }
-
-    func backgroundColor(_ style: MEGAColor.Background) -> ThemeColor {
+    
+    func backgroundColor(_ style: MEGAColor.Background) -> UIColor {
         switch style {
-        case .primary: return ThemeColor(red: 255, green: 255, blue: 255)
-        case .secondary: return ThemeColor(red: 196, green: 204, blue: 204, alpha: 255)
-
-        case .warning: return ThemeColor(red: 255, green: 204, blue: 0, alpha: 8)
-        case .enabled: return ThemeColor(red: 0, green: 168, blue: 134, alpha: 255)
-        case .disabled: return ThemeColor(red: 153, green: 153, blue: 153, alpha: 255)
-        case .highlighted: return ThemeColor(red: 0, green: 168, blue: 134, alpha: 204)
-
-        case .searchTextField: return ThemeColor(red: 232, green: 232, blue: 232)
-        case .homeTopSide: return ThemeColor(red: 247, green: 247, blue: 247)
+        case .primary: return .white
+        case .secondary: return UIColor.grayC4CCCC
+            
+        case .warning: return UIColor.yellowFFCC0003
+        case .enabled: return UIColor.green00A886
+        case .disabled: return UIColor.gray999999
+        case .highlighted: return UIColor.green00A88680
+            
+        case .searchTextField: return UIColor.grayE8E8E8
+        case .homeTopSide: return UIColor.whiteF7F7F7
         }
     }
-
-    func tintColor(_ style: MEGAColor.Tint) -> ThemeColor {
+    
+    func tintColor(_ style: MEGAColor.Tint) -> UIColor {
         switch style {
-        case .primary: return ThemeColor(red: 81, green: 81, blue: 81)
-        case .secondary: return ThemeColor(red: 196, green: 196, blue: 196)
+        case .primary: return UIColor.gray515151
+        case .secondary: return UIColor.grayC4C4C4
         }
     }
-
-    func borderColor(_ style: MEGAColor.Border) -> ThemeColor {
+    
+    func borderColor(_ style: MEGAColor.Border) -> UIColor {
         switch style {
-        case .primary: return ThemeColor(red: 0, green: 0, blue: 0, alpha: 38)
-        case .warning: return ThemeColor(red: 255, green: 204, blue: 0)
+        case .primary: return UIColor.black00000015
+        case .warning: return UIColor.yellowFFCC00
         }
     }
-
+    
+    func shadowColor(_ style: MEGAColor.Shadow) -> UIColor {
+        switch style {
+        case .primary: return .black
+        }
+    }
+    
     func themeButtonTextFactory(_ style: MEGAColor.ThemeButton) -> any ButtonColorFactory {
         switch style {
         case .primary:
@@ -49,7 +55,7 @@ struct LightColorThemeFactory: ColorFactory {
             return LightSecondaryThemeButtonTextColorFactory()
         }
     }
-
+    
     func themeButtonBackgroundFactory(_ style: MEGAColor.ThemeButton) -> any ButtonColorFactory {
         switch style {
         case .primary:
@@ -58,16 +64,10 @@ struct LightColorThemeFactory: ColorFactory {
             return LightSecondaryThemeButtonBackgroundColorFactory()
         }
     }
-
-    func customViewBackgroundFactory(_ style: MEGAColor.CustomViewBackground) -> ThemeColor {
+    
+    func customViewBackgroundFactory(_ style: MEGAColor.CustomViewBackground) -> UIColor {
         switch style {
         case .warning: return backgroundColor(.warning)
-        }
-    }
-
-    func shadowColor(_ style: MEGAColor.Shadow) -> ThemeColor {
-        switch style {
-        case .primary: return ThemeColor(red: 0, green: 0, blue: 0)
         }
     }
 }

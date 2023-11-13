@@ -1,10 +1,10 @@
 import UIKit
 
-struct BorderStyle: Codable {
+struct BorderStyle {
     typealias BorderWidth = CGFloat
     
     let width: BorderWidth
-    let color: ThemeColor
+    let color: UIColor
 }
 
 extension BorderStyle {
@@ -20,7 +20,7 @@ extension BorderStyle {
 @discardableResult
 private func apply(style: BorderStyle) -> (UIView) -> UIView {
     return { view in
-        view.layer.borderColor = style.color.uiColor.cgColor
+        view.layer.borderColor = style.color.cgColor
         view.layer.borderWidth = style.width
         return view
     }

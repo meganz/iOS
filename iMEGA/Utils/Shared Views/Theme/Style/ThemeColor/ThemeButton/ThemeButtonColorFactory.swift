@@ -2,9 +2,9 @@ import Foundation
 
 protocol ButtonColorFactory {
 
-    func normalColor() -> ThemeColor
+    func normalColor() -> UIColor
 
-    func disabledColor() -> ThemeColor
+    func disabledColor() -> UIColor
 
-    func highlightedColor() -> ThemeColor
+    func highlightedColor() -> UIColor
 }

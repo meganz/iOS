@@ -42,7 +42,7 @@ struct WaitingRoomParticipantsListView: View {
                     viewModel.closeTapped()
                 }
                 .padding(.trailing, 24)
-                .foregroundColor(Color(Colors.General.Gray.d1D1D1.name))
+                .foregroundColor(Color(UIColor.grayD1D1D1))
                 .font(.body.bold())
             }
         }
@@ -55,7 +55,7 @@ struct WaitingRoomParticipantsListView: View {
                 viewModel.admitAllTapped()
             }
             .font(.body.bold())
-            .foregroundColor(Color(Colors.General.Green._00C29A.name))
+            .foregroundColor(Color(.green00C29A))
             .frame(width: 288, height: 50, alignment: .center)
             .background(Color(Colors.General.Gray._363638.name))
             .cornerRadius(8)

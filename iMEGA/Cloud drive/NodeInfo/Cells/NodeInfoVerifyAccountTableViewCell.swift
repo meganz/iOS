@@ -10,7 +10,7 @@ struct NodeInfoVerifyAccountTableViewCell: View {
             label: {
                 Text(Strings.Localizable.verifyCredentials)
                     .frame(maxWidth: .infinity, alignment: .center)
-                    .foregroundColor(Color(Colors.General.Green._00A886.name))
+                    .foregroundColor(Color(UIColor.green00A886))
             }
         )
     }

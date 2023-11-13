@@ -27,7 +27,7 @@ struct OccurrenceView: View {
                 Divider()
                     .background(colorScheme == .dark ? Color(Colors.General.Gray._545458.color) : Color(Colors.General.Gray._3C3C43.color))
             }
-            .background(colorScheme == .dark ? Color(Colors.General.Gray._1D1D1D.color).opacity(Constants.headerBackgroundOpacity) : Color(Colors.General.White.f7F7F7.color).opacity(Constants.headerBackgroundOpacity))
+            .background(colorScheme == .dark ? Color(Colors.General.Gray._1D1D1D.color).opacity(Constants.headerBackgroundOpacity) : Color(UIColor.whiteF7F7F7).opacity(Constants.headerBackgroundOpacity))
             .frame(height: Constants.headerHeight)
 
             HStack(alignment: .center) {
@@ -39,7 +39,7 @@ struct OccurrenceView: View {
                         .font(.subheadline)
                     Text(occurrence.time)
                         .font(.caption)
-                        .foregroundColor(colorScheme == .dark ? Color(Colors.General.Gray.d1D1D1.color) : Color(Colors.General.Gray._515151.color))
+                        .foregroundColor(colorScheme == .dark ? Color(UIColor.grayD1D1D1) : Color(UIColor.gray515151))
                 }
             }
             .frame(height: Constants.rowHeight)

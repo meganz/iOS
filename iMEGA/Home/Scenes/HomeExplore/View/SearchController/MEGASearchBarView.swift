@@ -114,8 +114,8 @@ final class MEGASearchBarView: UIView, NibOwnerLoadable {
             backgroundColor = .black
             subviews.first?.backgroundColor = .black
         default:
-            backgroundColor = Colors.General.White.f7F7F7.color
-            subviews.first?.backgroundColor = Colors.General.White.f7F7F7.color
+            backgroundColor = UIColor.whiteF7F7F7
+            subviews.first?.backgroundColor = UIColor.whiteF7F7F7
         }
     }
     

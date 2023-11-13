@@ -40,7 +40,7 @@ extension UITraitCollection {
     func backgroundStyler(of style: MEGAColor.Background) -> ViewStyler {
         let theme = self.theme
         return { view in
-            view.backgroundColor = theme.colorFactory.backgroundColor(style).uiColor
+            view.backgroundColor = theme.colorFactory.backgroundColor(style)
         }
     }
 }

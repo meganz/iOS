@@ -12,7 +12,7 @@ extension SearchConfig {
                 normalBackground: Colors.Photos.filterTypeNormalBackground.swiftUIColor
             ),
             emptyViewAssetFactory: { chip in
-                let textColor = Colors.General.Gray._515151.swiftUIColor
+                let textColor = Color(.gray515151)
                 let defaultEmptyContent = EmptyViewAssets(
                     image: Asset.Images.EmptyStates.searchEmptyState.swiftUIImage,
                     title: Strings.Localizable.Home.Search.Empty.noChipSelected,
@@ -86,14 +86,14 @@ extension SearchConfig {
                 moreGrid: Asset.Images.Generic.moreGrid.image
             ), 
             colorAssets: .init(
-                F7F7F7: Colors.General.White.f7F7F7.swiftUIColor,
+                F7F7F7: Color(.whiteF7F7F7),
                 _161616: Colors.General.Black._161616.swiftUIColor,
                 _545458: Colors.General.Gray._545458.swiftUIColor,
                 CE0A11: Colors.General.Red.ce0A11.swiftUIColor,
                 F30C14: Colors.General.Red.f30C14.swiftUIColor,
                 F95C61: Colors.General.Red.f95C61.swiftUIColor,
                 F7363D: Colors.General.Red.f7363D.swiftUIColor,
-                _1C1C1E: Colors.General.Black._1c1c1e.swiftUIColor
+                _1C1C1E: Color(.black1C1C1E)
             ),
             contextPreviewFactory: contextPreviewFactory
         )

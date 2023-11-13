@@ -48,7 +48,7 @@ struct MeetingInfoView: View {
                                     await viewModel.allowNonHostToAddParticipantsValueChanged(to: enabled)
                                 }
                             })
-                        .background(colorScheme == .dark ? Color(Colors.General.Black._1c1c1e.name) : .white)
+                        .background(colorScheme == .dark ? Color(.black1C1C1E) : .white)
                     }
                     
                     DisclosureView(
@@ -56,7 +56,7 @@ struct MeetingInfoView: View {
                         text: Strings.Localizable.Meetings.Info.sharedFiles) {
                             viewModel.sharedFilesViewTapped()
                         }
-                        .background(colorScheme == .dark ? Color(Colors.General.Black._1c1c1e.name) : .white)
+                        .background(colorScheme == .dark ? Color(.black1C1C1E) : .white)
                     
                     if viewModel.isModerator {
                         DisclosureView(
@@ -64,7 +64,7 @@ struct MeetingInfoView: View {
                             text: Strings.Localizable.Meetings.Info.manageMeetingHistory) {
                                 viewModel.manageChatHistoryViewTapped()
                             }
-                            .background(colorScheme == .dark ? Color(Colors.General.Black._1c1c1e.name) : .white)
+                            .background(colorScheme == .dark ? Color(.black1C1C1E) : .white)
                         
                         KeyRotationView(
                             title: Strings.Localizable.Meetings.Info.KeyRotation.title,
@@ -94,6 +94,6 @@ struct MeetingInfoView: View {
             }
         }
         .padding(.vertical)
-        .background(colorScheme == .dark ? .black : Color(Colors.General.White.f7F7F7.name))
+        .background(colorScheme == .dark ? .black : Color(.whiteF7F7F7))
     }
 }

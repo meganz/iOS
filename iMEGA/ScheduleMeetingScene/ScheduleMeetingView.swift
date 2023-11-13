@@ -50,7 +50,7 @@ struct ScheduleMeetingView: View {
             }
         }
         .padding(.vertical)
-        .background(colorScheme == .dark ? .black : Color(Colors.General.White.f7F7F7.name))
+        .background(colorScheme == .dark ? .black : Color(.whiteF7F7F7))
         .ignoresSafeArea(.container, edges: [.top, .bottom])
         .onAppear {
             viewModel.updateRightBarButtonState()

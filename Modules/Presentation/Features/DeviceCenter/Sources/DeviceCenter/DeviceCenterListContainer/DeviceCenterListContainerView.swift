@@ -48,7 +48,7 @@ struct ListViewContainer<Content>: View where Content: View {
                     title: selectedItem.name,
                     detailImageName: selectedItem.hasErrorStatus ? "" : selectedItem.statusIconName ?? "",
                     subtitle: selectedItem.isBackup && selectedItem.hasErrorStatus ? selectedItem.statusSubtitle ?? "" : selectedItem.statusTitle,
-                    subtitleColorName: selectedItem.statusColorName
+                    subtitleColor: selectedItem.statusColor
                 ),
             actionButtons: {
                 selectedItem.availableActions.compactMap { action in

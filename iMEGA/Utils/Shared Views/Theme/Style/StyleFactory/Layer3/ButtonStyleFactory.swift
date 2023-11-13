@@ -19,7 +19,6 @@ protocol ButtonStyleFactory {
 }
 
 private struct ButtonStyleFactoryImpl: ButtonStyleFactory {
-
     let colorFactory: any ColorFactory
     let textStyleFactory: any TextStyleFactory
 
@@ -47,7 +46,7 @@ private struct ButtonStyleFactoryImpl: ButtonStyleFactory {
     func buttonColorStyle(of buttonStyle: MEGAButtonStyle) -> ButtonStatedStyle<ColorStyle> {
         switch buttonStyle {
         case .segmentTitleButton:
-            let normalTextColor = colorFactory.textColor(.primary).altering(alpha: 82).asTextColorStyle
+            let normalTextColor = colorFactory.textColor(.primary).asTextColorStyle
             let selectedTextColor = colorFactory.textColor(.primary).asTextColorStyle
             return ButtonStatedStyle<ColorStyle>(stated: [
                 .normal: normalTextColor,

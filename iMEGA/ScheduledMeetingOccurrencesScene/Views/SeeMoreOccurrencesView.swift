@@ -19,7 +19,7 @@ struct SeeMoreOccurrencesView: View {
                 .background(colorScheme == .dark ? Color(Colors.General.Gray._545458.color) : Color(Colors.General.Gray._3C3C43.color))
             HStack {
                 Image(systemName: Constants.discolureIndicator)
-                    .foregroundColor(colorScheme == .dark ? Color(Colors.General.Gray.d1D1D1.color) : Color(Colors.General.Gray._515151.color))
+                    .foregroundColor(colorScheme == .dark ? Color(UIColor.grayD1D1D1) : Color(UIColor.gray515151))
                     .rotationEffect(.degrees(Constants.rotationRight))
                     .padding(.horizontal)
                 Text(Strings.Localizable.Meetings.Scheduled.Recurring.Occurrences.List.seeMoreOccurrences)

@@ -43,7 +43,7 @@ struct ActionView: View {
                     VStack(alignment: .leading, spacing: Constants.textSpacing) {
                         Text(viewModel.actionTitle)
                             .font(.body.bold())
-                            .foregroundColor(Color(Colors.General.Green._00C29A.name))
+                            .foregroundColor(Color(UIColor.green00C29A))
                         if let description = viewModel.actionDescription {
                             Text(description)
                                 .multilineTextAlignment(.leading)

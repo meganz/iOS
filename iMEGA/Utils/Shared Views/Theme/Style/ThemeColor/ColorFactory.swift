@@ -1,7 +1,7 @@
 import Foundation
 
 extension InterfaceStyle {
-
+    
     var colorFactory: any ColorFactory {
         switch self {
         case .light: return LightColorThemeFactory()
@@ -11,62 +11,62 @@ extension InterfaceStyle {
 }
 
 protocol ColorFactory {
-
-    func textColor(_ style: MEGAColor.Text) -> ThemeColor
-
-    func backgroundColor(_ style: MEGAColor.Background) -> ThemeColor
-
-    func tintColor(_ style: MEGAColor.Tint) -> ThemeColor
-
-    func borderColor(_ style: MEGAColor.Border) -> ThemeColor
-
-    func shadowColor(_ style: MEGAColor.Shadow) -> ThemeColor
-
-    func customViewBackgroundFactory(_ style: MEGAColor.CustomViewBackground) -> ThemeColor
-
+    
+    func textColor(_ style: MEGAColor.Text) -> UIColor
+    
+    func backgroundColor(_ style: MEGAColor.Background) -> UIColor
+    
+    func tintColor(_ style: MEGAColor.Tint) -> UIColor
+    
+    func borderColor(_ style: MEGAColor.Border) -> UIColor
+    
+    func shadowColor(_ style: MEGAColor.Shadow) -> UIColor
+    
+    func customViewBackgroundFactory(_ style: MEGAColor.CustomViewBackground) -> UIColor
+    
     // MARK: - Theme Button Factory
-
+    
     func themeButtonTextFactory(_ style: MEGAColor.ThemeButton) -> any ButtonColorFactory
-
+    
     func themeButtonBackgroundFactory(_ style: MEGAColor.ThemeButton) -> any ButtonColorFactory
-
+    
     // MARK: - Independent
-
-    func independent(_ style: MEGAColor.Independent) -> ThemeColor
+    
+    func independent(_ style: MEGAColor.Independent) -> UIColor
 }
 
 extension ColorFactory {
-
-    func independent(_ style: MEGAColor.Independent) -> ThemeColor {
+    
+    func independent(_ style: MEGAColor.Independent) -> UIColor {
         switch style {
-        case .bright: return ThemeColor(red: 255, green: 255, blue: 255)
-        case .dark: return ThemeColor(red: 0, green: 0, blue: 0)
-        case .clear: return ThemeColor(red: 255, green: 255, blue: 255, alpha: 0)
-        case .warning: return ThemeColor(red: 255, green: 59, blue: 48)
+        case .bright: return .white
+        case .dark: return .black
+        case .clear: return UIColor.whiteFFFFFF00
+        case .warning: return UIColor.redFF3B30
         }
     }
     
-    func gradient(_ style: MEGAColor.Gradient) -> ThemeColor {
+    func gradient(_ style: MEGAColor.Gradient) -> UIColor {
         switch style {
         case .exploreImagesStart:
-            return ThemeColor(red: 249, green: 179, blue: 95)
+            return UIColor.orangeF9B35F
         case .exploreImagesEnd:
-            return ThemeColor(red: 230, green: 143, blue: 77)
+            return UIColor.orangeE68F4D
             
         case .exploreDocumentsStart:
-            return ThemeColor(red: 2, green: 162, blue: 255)
+            return UIColor.blue02A2FF
         case .exploreDocumentsEnd:
-            return ThemeColor(red: 2, green: 116, blue: 204)
+            return UIColor.blue0274CC
             
         case .exploreAudioStart:
-            return ThemeColor(red: 0, green: 172, blue: 191)
+            return UIColor.blue00ACBF
         case .exploreAudioEnd:
-            return ThemeColor(red: 0, green: 149, blue: 166)
+            return UIColor.blue0095A6
             
         case .exploreVideoStart:
-            return ThemeColor(red: 242, green: 136, blue: 194)
+            return UIColor.redF288C2
         case .exploreVideoEnd:
-            return ThemeColor(red: 202, green: 117, blue: 209)
+            return UIColor.redCA75D1
         }
     }
 }

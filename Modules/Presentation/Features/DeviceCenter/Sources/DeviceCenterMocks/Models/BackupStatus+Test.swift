@@ -1,15 +1,16 @@
 import DeviceCenter
 import MEGADomain
+import UIKit
 
 public extension BackupStatus {
     init(status: BackupStatusEntity,
          title: String = "",
-         colorName: String = "",
+         color: UIColor = .black,
          iconName: String = "",
          isTesting: Bool = true) {
         self.init(status: status,
                   title: title,
-                  colorName: colorName,
+                  color: color,
                   iconName: iconName)
     }
 }
