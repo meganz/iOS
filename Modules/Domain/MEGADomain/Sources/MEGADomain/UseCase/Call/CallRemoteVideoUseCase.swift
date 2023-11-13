@@ -12,6 +12,10 @@ public protocol CallRemoteVideoUseCaseProtocol {
     func stopHighResolutionVideo(for chatId: HandleEntity, clientId: HandleEntity, completion: ResolutionVideoChangeCompletion?)
     func requestLowResolutionVideos(for chatId: HandleEntity, clientId: HandleEntity, completion: ResolutionVideoChangeCompletion?)
     func stopLowResolutionVideo(for chatId: HandleEntity, clientId: HandleEntity, completion: ResolutionVideoChangeCompletion?)
+    func isReceivingBothHighAndLowResVideo(for participant: CallParticipantEntity) -> Bool
+    func isNotReceivingBothBothHighAndLowResVideo(for participant: CallParticipantEntity) -> Bool
+    func isOnlyReceivingHighResVideo(for participant: CallParticipantEntity) -> Bool
+    func isOnlyReceivingLowResVideo(for participant: CallParticipantEntity) -> Bool
 }
 
 public protocol CallRemoteVideoListenerUseCaseProtocol: AnyObject {
@@ -72,6 +76,11 @@ public final class CallRemoteVideoUseCase<T: CallRemoteVideoRepositoryProtocol>:
     }
     
     public func enableRemoteVideo(for participant: CallParticipantEntity, isHiRes: Bool) {
+        if isHiRes {
+            participant.isReceivingHiResVideo = true
+        } else {
+            participant.isReceivingLowResVideo = true
+        }
         videoRequestSubject.send(.enableVideo(participant, isHiRes: isHiRes))
     }
     
@@ -97,6 +106,21 @@ public final class CallRemoteVideoUseCase<T: CallRemoteVideoRepositoryProtocol>:
     
     public func stopLowResolutionVideo(for chatId: HandleEntity, clientId: HandleEntity, completion: ResolutionVideoChangeCompletion?) {
         videoRequestSubject.send(.stopLowResolutionVideo(chatId: chatId, clientId: clientId, completion: completion))
+    }
+    
+    public func isReceivingBothHighAndLowResVideo(for participant: CallParticipantEntity) -> Bool {
+        participant.isReceivingHiResVideo && participant.isReceivingLowResVideo
+    }
+    public func isNotReceivingBothBothHighAndLowResVideo(for participant: CallParticipantEntity) -> Bool {
+        !participant.isReceivingHiResVideo && !participant.isReceivingLowResVideo
+    }
+    
+    public func isOnlyReceivingHighResVideo(for participant: CallParticipantEntity) -> Bool {
+        participant.isReceivingHiResVideo && !participant.isReceivingLowResVideo
+    }
+    
+    public func isOnlyReceivingLowResVideo(for participant: CallParticipantEntity) -> Bool {
+        !participant.isReceivingHiResVideo && participant.isReceivingLowResVideo
     }
 }
 

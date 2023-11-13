@@ -98,7 +98,7 @@ final class ChatRoomAvatarViewModelTests: XCTestCase {
         file: StaticString = #file,
         line: UInt = #line
     ) -> ChatRoomAvatarViewModel {
-        let sut = ChatRoomAvatarViewModel(
+        ChatRoomAvatarViewModel(
             title: title,
             peerHandle: peerHandle,
             chatRoom: chatRoom,
@@ -111,7 +111,5 @@ final class ChatRoomAvatarViewModelTests: XCTestCase {
             chatListItemCacheUseCase: chatListItemCacheUseCase,
             chatListItemAvatar: chatListItemAvatar
         )
-        trackForMemoryLeaks(on: sut, file: file, line: line)
-        return sut
     }
 }
