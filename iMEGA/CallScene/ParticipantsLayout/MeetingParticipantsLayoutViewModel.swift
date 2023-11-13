@@ -85,7 +85,12 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case updateMyAvatar(UIImage)
         case updateCallEndDurationRemainingString(String)
         case removeCallEndDurationView
-        case configureSpeakerView(isSpeakerMode: Bool, leadingAndTrailingConstraint: CGFloat)
+        case configureSpeakerView(
+            isSpeakerMode: Bool,
+            leadingAndTrailingConstraint: CGFloat,
+            topConstraint: CGFloat,
+            bottomConstraint: CGFloat
+        )
     }
     
     private var chatRoom: ChatRoomEntity
@@ -110,10 +115,10 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         }
         didSet {
             guard let speakerParticipant else { return }
-            invokeCommand?(.updateSpeakerViewFor(speakerParticipant))
-            containerViewModel?.dispatch(.didDisplayParticipantInMainView(speakerParticipant))
+            didSetSpeakerParticipant(speakerParticipant)
         }
     }
+
     private(set) var isSpeakerParticipantPinned: Bool = false
     internal var layoutMode: ParticipantsLayoutMode = .grid {
         didSet {
@@ -253,60 +258,55 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     
     private func requestRemoteScreenShareVideo(for participant: CallParticipantEntity) {
         guard participant.hasScreenShare else { return }
-        if participant.isVideoHiRes {
+        if participant.isVideoHiRes && !participant.isReceivingHiResVideo {
             remoteVideoUseCase.requestHighResolutionVideo(for: chatRoom.chatId, clientId: participant.clientId, completion: nil)
         }
-        if participant.isVideoLowRes && participant.hasCamera {
+        if participant.isVideoLowRes && participant.hasCamera && !participant.isReceivingLowResVideo {
             remoteVideoUseCase.requestLowResolutionVideos(for: chatRoom.chatId, clientId: participant.clientId, completion: nil)
         }
-        if participant.hasCamera && participant.isLowResCamera && participant.canReceiveVideoLowRes && !participant.canReceiveVideoHiRes {
+        if participant.hasCamera && participant.isLowResCamera && participant.canReceiveVideoLowRes && !participant.canReceiveVideoHiRes && !participant.isReceivingHiResVideo {
             remoteVideoUseCase.requestHighResolutionVideo(for: chatRoom.chatId, clientId: participant.clientId, completion: nil)
         }
-        if participant.hasCamera && participant.isHiResCamera && participant.canReceiveVideoHiRes && !participant.canReceiveVideoLowRes {
+        if participant.hasCamera && participant.isHiResCamera && participant.canReceiveVideoHiRes && !participant.canReceiveVideoLowRes && !participant.isReceivingLowResVideo {
             remoteVideoUseCase.requestLowResolutionVideos(for: chatRoom.chatId, clientId: participant.clientId, completion: nil)
         }
     }
     
     private func enableRemoteVideo(for participant: CallParticipantEntity) {
         guard !participant.hasScreenShare else {
-            if participant.isVideoHiRes && participant.canReceiveVideoHiRes {
-                remoteVideoUseCase.enableRemoteVideo(for: participant, isHiRes: true)
-            }
-            if participant.isVideoLowRes && participant.canReceiveVideoLowRes {
-                remoteVideoUseCase.enableRemoteVideo(for: participant, isHiRes: false)
-            }
-            if !participant.hasScreenShare ||
-                (participant.hasScreenShare && !participant.hasCamera) {
-                if participant == speakerParticipant {
-                    switchVideoResolutionLowToHigh(for: participant.clientId, in: chatRoom.chatId)
-                } else {
-                    switchVideoResolutionHighToLow(for: participant.clientId, in: chatRoom.chatId)
-                }
-            }
+            enableRemoteScreenShareVideo(for: participant)
             return
         }
+        let canEnableHiResVideo = participant.isVideoHiRes && participant.canReceiveVideoHiRes
+        let canEnableLowResVideo = participant.isVideoLowRes && participant.canReceiveVideoLowRes
         switch layoutMode {
         case .grid:
-            if participant.isVideoHiRes && participant.canReceiveVideoHiRes {
+            if remoteVideoUseCase.isReceivingBothHighAndLowResVideo(for: participant) {
+                stopRemoteVideo(for: participant, isHiRes: false)
+            } else if canEnableHiResVideo {
                 remoteVideoUseCase.enableRemoteVideo(for: participant, isHiRes: true)
-            } else if participant.isVideoLowRes && participant.canReceiveVideoLowRes {
+            } else if canEnableLowResVideo {
                 switchVideoResolutionLowToHigh(for: participant.clientId, in: chatRoom.chatId)
             } else if participant.isVideoHiRes {
                 remoteVideoUseCase.requestHighResolutionVideo(for: chatRoom.chatId, clientId: participant.clientId, completion: nil)
             }
         case .speaker:
             if participant.speakerVideoDataDelegate == nil {
-                if participant.isVideoLowRes && participant.canReceiveVideoLowRes {
+                if remoteVideoUseCase.isReceivingBothHighAndLowResVideo(for: participant) {
+                    stopRemoteVideo(for: participant, isHiRes: true)
+                } else if canEnableLowResVideo {
                     remoteVideoUseCase.enableRemoteVideo(for: participant, isHiRes: false)
-                } else if participant.isVideoHiRes && participant.canReceiveVideoHiRes {
+                } else if canEnableHiResVideo {
                     switchVideoResolutionHighToLow(for: participant.clientId, in: chatRoom.chatId)
                 } else if participant.isVideoLowRes {
                     remoteVideoUseCase.requestLowResolutionVideos(for: chatRoom.chatId, clientId: participant.clientId, completion: nil)
                 }
             } else {
-                if participant.isVideoHiRes && participant.canReceiveVideoHiRes {
+                if remoteVideoUseCase.isReceivingBothHighAndLowResVideo(for: participant) {
+                    stopRemoteVideo(for: participant, isHiRes: false)
+                } else if canEnableHiResVideo {
                     remoteVideoUseCase.enableRemoteVideo(for: participant, isHiRes: true)
-                } else if participant.isVideoLowRes && participant.canReceiveVideoLowRes {
+                } else if canEnableLowResVideo {
                     switchVideoResolutionLowToHigh(for: participant.clientId, in: chatRoom.chatId)
                 } else if participant.isVideoHiRes {
                     remoteVideoUseCase.requestHighResolutionVideo(for: chatRoom.chatId, clientId: participant.clientId, completion: nil)
@@ -315,8 +315,58 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         }
     }
     
+    private func enableRemoteScreenShareVideo(for participant: CallParticipantEntity) {
+        let canEnableHiResVideo = participant.isVideoHiRes && participant.canReceiveVideoHiRes
+        let canEnableLowResVideo = participant.isVideoLowRes && participant.canReceiveVideoLowRes
+        let isNotReceivingBothBothHighAndLowResVideo = remoteVideoUseCase.isNotReceivingBothBothHighAndLowResVideo(for: participant)
+        if participant.hasCamera {
+            if canEnableHiResVideo && !participant.isReceivingHiResVideo {
+                remoteVideoUseCase.enableRemoteVideo(for: participant, isHiRes: true)
+            }
+            if canEnableLowResVideo && !participant.isReceivingLowResVideo {
+                remoteVideoUseCase.enableRemoteVideo(for: participant, isHiRes: false)
+            }
+        } else {
+            if participant == speakerParticipant && canEnableHiResVideo && isNotReceivingBothBothHighAndLowResVideo {
+                remoteVideoUseCase.enableRemoteVideo(for: participant, isHiRes: true)
+            } else if participant != speakerParticipant && canEnableLowResVideo && isNotReceivingBothBothHighAndLowResVideo {
+                remoteVideoUseCase.enableRemoteVideo(for: participant, isHiRes: false)
+            } else if participant == speakerParticipant && canEnableHiResVideo && remoteVideoUseCase.isOnlyReceivingLowResVideo(for: participant) {
+                switchVideoResolutionLowToHigh(for: participant.clientId, in: chatRoom.chatId)
+            } else if participant == speakerParticipant && remoteVideoUseCase.isReceivingBothHighAndLowResVideo(for: participant) {
+                stopRemoteVideo(for: participant, isHiRes: false)
+            } else if participant != speakerParticipant && remoteVideoUseCase.isReceivingBothHighAndLowResVideo(for: participant) {
+                stopRemoteVideo(for: participant, isHiRes: true)
+            }
+        }
+    }
+    
     private func disableRemoteVideo(for participant: CallParticipantEntity, isHiRes: Bool) {
         remoteVideoUseCase.disableRemoteVideo(for: participant, isHiRes: isHiRes)
+    }
+    
+    private func stopRemoteVideo(for participant: CallParticipantEntity, isHiRes: Bool) {
+        if isHiRes {
+            remoteVideoUseCase.stopHighResolutionVideo(for: chatRoom.chatId, clientId: participant.clientId) { [weak self] result in
+                guard let self, case .success = result else { return }
+                onStopVideoReceiving(for: participant.clientId, isHiRes: true)
+            }
+        } else {
+            remoteVideoUseCase.stopLowResolutionVideo(for: chatRoom.chatId, clientId: participant.clientId) { [weak self] result in
+                guard let self, case .success = result else { return }
+                onStopVideoReceiving(for: participant.clientId, isHiRes: false)
+            }
+        }
+    }
+    
+    private func onStopVideoReceiving(for clientId: HandleEntity, isHiRes: Bool) {
+        for callParticipant in callParticipants where callParticipant.clientId == clientId {
+            if isHiRes {
+                callParticipant.isReceivingHiResVideo = false
+            } else {
+                callParticipant.isReceivingLowResVideo = false
+            }
+        }
     }
     
     private func fetchAvatar(for participant: CallParticipantEntity, name: String, completion: @escaping ((UIImage) -> Void)) {
@@ -436,7 +486,9 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             callUseCase.startListeningForCallInChat(chatRoom.chatId, callbacksDelegate: self)
             remoteVideoUseCase.addRemoteVideoListener(self)
             if isActiveCall() {
-                callUseCase.createActiveSessions()
+                DispatchQueue.main.async {
+                    self.callUseCase.createActiveSessions()
+                }
             } else {
                 if (chatRoom.chatType == .meeting || chatRoom.chatType == .group) && (call.numberOfParticipants == 0 || call.numberOfParticipants == 1 && call.status == .inProgress) {
                     invokeCommand?(.showWaitingForOthersMessage)
@@ -533,13 +585,43 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             invokeCommand?(.switchMenusVisibility)
         case .orientationOrModeChange(let isIPhoneLandscape, let isSpeakerMode):
             if isIPhoneLandscape && isSpeakerMode {
-                invokeCommand?(.configureSpeakerView(isSpeakerMode: isSpeakerMode, leadingAndTrailingConstraint: 180))
+                invokeCommand?(
+                    .configureSpeakerView(
+                        isSpeakerMode: isSpeakerMode,
+                        leadingAndTrailingConstraint: 180,
+                        topConstraint: 0,
+                        bottomConstraint: 0
+                    )
+                )
+            } else if !isIPhoneLandscape && isSpeakerMode {
+                invokeCommand?(
+                    .configureSpeakerView(
+                        isSpeakerMode: isSpeakerMode,
+                        leadingAndTrailingConstraint: 0,
+                        topConstraint: 160,
+                        bottomConstraint: 200
+                    )
+                )
             } else {
-                invokeCommand?(.configureSpeakerView(isSpeakerMode: isSpeakerMode, leadingAndTrailingConstraint: 0))
+                invokeCommand?(
+                    .configureSpeakerView(
+                        isSpeakerMode: isSpeakerMode,
+                        leadingAndTrailingConstraint: 0,
+                        topConstraint: 0,
+                        bottomConstraint: 0
+                    )
+                )
             }
         case .onOrientationChanged:
             updateLayoutModeAccordingScreenSharingParticipant()
         }
+    }
+    
+    // MARK: - Private
+    
+    private func didSetSpeakerParticipant(_ speakerParticipant: CallParticipantEntity) {
+        invokeCommand?(.updateSpeakerViewFor(speakerParticipant))
+        containerViewModel?.dispatch(.didDisplayParticipantInMainView(speakerParticipant))
     }
     
     private func showEmptyCallMessageIfNeeded() {
@@ -630,10 +712,10 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     
     private func stopVideoForParticipant(_ participant: CallParticipantEntity) {
         if participant.canReceiveVideoLowRes {
-            remoteVideoUseCase.stopLowResolutionVideo(for: chatRoom.chatId, clientId: participant.clientId, completion: nil)
+            stopRemoteVideo(for: participant, isHiRes: false)
         }
         if participant.canReceiveVideoHiRes {
-            remoteVideoUseCase.stopHighResolutionVideo(for: chatRoom.chatId, clientId: participant.clientId, completion: nil)
+            stopRemoteVideo(for: participant, isHiRes: true)
         }
     }
     
@@ -642,28 +724,21 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             containerViewModel?.dispatch(.showScreenShareWarning)
         } else if !isSpeakerParticipantPinned || (isSpeakerParticipantPinned && speakerParticipant != participant) {
             if let currentSpeaker = speakerParticipant, currentSpeaker != participant {
-                if currentSpeaker.video == .on &&
-                    currentSpeaker.isVideoHiRes &&
-                    currentSpeaker.canReceiveVideoHiRes &&
-                    !currentSpeaker.hasScreenShare {
-                    switchVideoResolutionHighToLow(for: currentSpeaker.clientId, in: chatRoom.chatId)
+                if currentSpeaker.video == .on {
+                    if currentSpeaker.hasScreenShare {
+                        configScreenShareForNonSpeaker(participant)
+                    } else if currentSpeaker.isVideoHiRes && currentSpeaker.canReceiveVideoHiRes {
+                        switchVideoResolutionHighToLow(for: currentSpeaker.clientId, in: chatRoom.chatId)
+                    }
                 }
                 currentSpeaker.isSpeakerPinned = false
                 updateParticipant(currentSpeaker)
             }
-            isSpeakerParticipantPinned = true
-            participant.isSpeakerPinned = true
-            speakerParticipant = participant
-            if participant.video == .on && 
-                participant.isVideoLowRes &&
-                participant.canReceiveVideoLowRes {
+            assignSpeakerParticipant(participant)
+            if participant.video == .on {
                 if participant.hasScreenShare {
-                    if participant.hasCamera {
-                        requestRemoteScreenShareVideo(for: participant)
-                    } else {
-                        switchVideoResolutionLowToHigh(for: participant.clientId, in: chatRoom.chatId)
-                    }
-                } else {
+                    configScreenShareForSpeaker(participant)
+                } else if participant.isVideoLowRes && participant.canReceiveVideoLowRes {
                     switchVideoResolutionLowToHigh(for: participant.clientId, in: chatRoom.chatId)
                 }
             }
@@ -683,6 +758,43 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         }
     }
     
+    private func configScreenShareForSpeaker(_ participant: CallParticipantEntity) {
+        guard participant.hasScreenShare else { return }
+        if remoteVideoUseCase.isOnlyReceivingLowResVideo(for: participant) {
+            switchVideoResolutionLowToHigh(for: participant.clientId, in: chatRoom.chatId)
+        } else {
+            requestRemoteScreenShareVideo(for: participant)
+        }
+    }
+    
+    private func configScreenShareForNonSpeaker(_ participant: CallParticipantEntity) {
+        guard participant.hasScreenShare else { return }
+        if participant.hasCamera {
+            if !remoteVideoUseCase.isReceivingBothHighAndLowResVideo(for: participant) {
+                requestRemoteScreenShareVideo(for: participant)
+            }
+        } else {
+            if remoteVideoUseCase.isReceivingBothHighAndLowResVideo(for: participant) {
+                stopRemoteVideo(for: participant, isHiRes: true)
+            } else if remoteVideoUseCase.isNotReceivingBothBothHighAndLowResVideo(for: participant) {
+                requestRemoteScreenShareVideo(for: participant)
+            }
+        }
+    }
+    
+    private func assignSpeakerParticipant(_ participant: CallParticipantEntity) {
+        for callParticipant in callParticipants where callParticipant == participant && !callParticipant.isScreenShareCell {
+            isSpeakerParticipantPinned = true
+            callParticipant.isSpeakerPinned = true
+            if speakerParticipant != callParticipant {
+                speakerParticipant = callParticipant
+            } else {
+                didSetSpeakerParticipant(callParticipant)
+            }
+            break
+        }
+    }
+    
     private func pinParticipantAsSpeaker(_ participant: CallParticipantEntity) {
         if layoutMode == .grid {
             switchLayout()
@@ -698,32 +810,18 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     }
     
     private func switchVideoResolutionHighToLow(for clientId: HandleEntity, in chatId: HandleEntity) {
-        remoteVideoUseCase.requestLowResolutionVideos(for: chatId, clientId: clientId) { [weak self] result in
-            guard let self else { return }
-            switch result {
-            case .success:
-                remoteVideoUseCase.stopHighResolutionVideo(for: chatRoom.chatId, clientId: clientId, completion: nil)
-            case .failure:
-                remoteVideoUseCase.stopHighResolutionVideo(for: chatRoom.chatId, clientId: clientId) { [weak self] _ in
-                    guard let self else { return }
-                    remoteVideoUseCase.requestLowResolutionVideos(for: chatId, clientId: clientId, completion: nil)
-                }
-            }
+        remoteVideoUseCase.stopHighResolutionVideo(for: chatId, clientId: clientId) { [weak self] result in
+            guard let self, case .success = result else { return }
+            onStopVideoReceiving(for: clientId, isHiRes: true)
+            remoteVideoUseCase.requestLowResolutionVideos(for: chatRoom.chatId, clientId: clientId, completion: nil)
         }
     }
     
     private func switchVideoResolutionLowToHigh(for clientId: HandleEntity, in chatId: HandleEntity) {
-        remoteVideoUseCase.requestHighResolutionVideo(for: chatId, clientId: clientId) { [weak self] result in
-            guard let self else { return }
-            switch result {
-            case .success:
-                remoteVideoUseCase.stopLowResolutionVideo(for: chatRoom.chatId, clientId: clientId, completion: nil)
-            case .failure:
-                remoteVideoUseCase.stopLowResolutionVideo(for: chatRoom.chatId, clientId: clientId) { [weak self] _ in
-                    guard let self else { return }
-                    remoteVideoUseCase.requestHighResolutionVideo(for: chatId, clientId: clientId, completion: nil)
-                }
-            }
+        remoteVideoUseCase.stopLowResolutionVideo(for: chatId, clientId: clientId) { [weak self] result in
+            guard let self, case .success = result else { return }
+            onStopVideoReceiving(for: clientId, isHiRes: false)
+            remoteVideoUseCase.requestHighResolutionVideo(for: chatRoom.chatId, clientId: clientId, completion: nil)
         }
     }
     
@@ -867,16 +965,25 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
         configScreenShareParticipants()
         participantName(for: participant.participantId) { [weak self] in
             guard let self else { return }
-            participant.name = $0
+            updateNameForParticipant(participant, name: $0)
             invokeCommand?(.updateParticipants(callParticipants))
             if callParticipants.count == 1 && layoutMode == .speaker {
                 invokeCommand?(.shouldHideSpeakerView(false))
-                speakerParticipant = callParticipants.first
+                speakerParticipant = participant
+            }
+            if speakerParticipant == participant {
+                invokeCommand?(.updateSpeakerViewFor(participant))
             }
             if layoutMode == .grid {
                 invokeCommand?(.updatePageControl(callParticipants.count))
             }
             invokeCommand?(.hideEmptyRoomMessage)
+        }
+    }
+    
+    private func updateNameForParticipant(_ participant: CallParticipantEntity, name: String?) {
+        for callParticipant in callParticipants where callParticipant == participant {
+            callParticipant.name = name
         }
     }
     
@@ -915,10 +1022,12 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
     }
     
     func updateParticipant(_ participant: CallParticipantEntity) {
-        guard callParticipants.first(where: {$0 == participant}) != nil else {
+        guard let participateToUpdate = callParticipants.first(where: {$0 == participant && !$0.isScreenShareCell}) else {
             MEGALogError("Error getting participant updated")
             return
         }
+        
+        let onStartScreenShare = !participateToUpdate.hasScreenShare && participant.hasScreenShare
         
         for callParticipant in callParticipants where callParticipant == participant {
             callParticipant.video = participant.video
@@ -934,6 +1043,10 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
             callParticipant.audioDetected = participant.audioDetected
         }
         
+        if onStartScreenShare {
+           updateSpeakerForNewScreenShareParticipant(participant)
+        }
+        
         configScreenShareParticipants()
         invokeCommand?(.updateParticipants(callParticipants))
         updateLayoutModeAccordingScreenSharingParticipant()
@@ -943,16 +1056,25 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
         }
     }
     
+    private func updateSpeakerForNewScreenShareParticipant(_ participant: CallParticipantEntity) {
+        guard let index = callParticipants.firstIndex(where: {$0 == participant && !$0.isScreenShareCell}),
+              let newSpeakerParticipant = callParticipants[safe: index] else { return }
+        callParticipants.move(at: index, to: 0)
+        if let currentSpeaker = speakerParticipant, currentSpeaker != newSpeakerParticipant {
+            currentSpeaker.isSpeakerPinned = false
+        }
+        assignSpeakerParticipant(newSpeakerParticipant)
+        configScreenShareForSpeaker(newSpeakerParticipant)
+    }
+    
     func highResolutionChanged(for participant: CallParticipantEntity) {
         guard let participantUpdated = callParticipants.first(where: {$0 == participant}) else {
             MEGALogError("Error getting participant updated with video high resolution")
             return
         }
         
-        participantUpdated.canReceiveVideoHiRes = participant.canReceiveVideoHiRes
-        
-        if let screenShareParticipant = callParticipants.first(where: {$0 == participant && $0.isScreenShareCell}) {
-            screenShareParticipant.canReceiveVideoHiRes = participant.canReceiveVideoHiRes
+        for callParticipant in callParticipants where callParticipant == participant {
+            callParticipant.canReceiveVideoHiRes = participant.canReceiveVideoHiRes
         }
         
         if participantUpdated.canReceiveVideoHiRes {
@@ -968,10 +1090,8 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
             return
         }
         
-        participantUpdated.canReceiveVideoLowRes = participant.canReceiveVideoLowRes
-        
-        if let screenShareParticipant = callParticipants.first(where: {$0 == participant && $0.isScreenShareCell}) {
-            screenShareParticipant.canReceiveVideoHiRes = participant.canReceiveVideoHiRes
+        for callParticipant in callParticipants where callParticipant == participant {
+            callParticipant.canReceiveVideoLowRes = participant.canReceiveVideoLowRes
         }
         
         if participantUpdated.canReceiveVideoLowRes {

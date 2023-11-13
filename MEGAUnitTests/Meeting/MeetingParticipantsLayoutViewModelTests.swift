@@ -66,7 +66,11 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
              ])
         XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
         XCTAssert(remoteVideoUseCase.addRemoteVideoListener_CalledTimes == 1)
-        XCTAssert(callUseCase.createActiveSessions_calledTimes == 1)
+        if XCTWaiter.wait(for: [expectation(description: "Wait for response")], timeout: 0.5) == .timedOut {
+            XCTAssert(callUseCase.createActiveSessions_calledTimes == 1)
+        } else {
+            XCTFail("Expected to time out!")
+        }
     }
     
     func testAction_onViewReady() {
@@ -192,7 +196,15 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         )
         test(viewModel: viewModel,
              action: .orientationOrModeChange(isIPhoneLandscape: true, isSpeakerMode: true),
-             expectedCommands: [.configureSpeakerView(isSpeakerMode: true, leadingAndTrailingConstraint: 180)])
+             expectedCommands: [
+                .configureSpeakerView(
+                    isSpeakerMode: true,
+                    leadingAndTrailingConstraint: 180,
+                    topConstraint: 0,
+                    bottomConstraint: 0
+                )
+             ]
+        )
     }
     
     func testAction_orientationOrModeChange_noIPhoneLandscape_inSpeakerMode() {
@@ -216,7 +228,15 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         )
         test(viewModel: viewModel,
              action: .orientationOrModeChange(isIPhoneLandscape: false, isSpeakerMode: true),
-             expectedCommands: [.configureSpeakerView(isSpeakerMode: true, leadingAndTrailingConstraint: 0)])
+             expectedCommands: [
+                .configureSpeakerView(
+                    isSpeakerMode: true,
+                    leadingAndTrailingConstraint: 0,
+                    topConstraint: 160,
+                    bottomConstraint: 200
+                )
+             ]
+        )
     }
     
     func testAction_orientationOrModeChange_noIPhoneLandscape_noSpeakerMode() {
@@ -240,7 +260,15 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         )
         test(viewModel: viewModel,
              action: .orientationOrModeChange(isIPhoneLandscape: false, isSpeakerMode: false),
-             expectedCommands: [.configureSpeakerView(isSpeakerMode: false, leadingAndTrailingConstraint: 0)])
+             expectedCommands: [
+                .configureSpeakerView(
+                    isSpeakerMode: false,
+                    leadingAndTrailingConstraint: 0,
+                    topConstraint: 0,
+                    bottomConstraint: 0
+                )
+             ]
+        )
     }
     
     func testAction_orientationOrModeChange_isIPhoneLandscape_noSpeakerMode() {
@@ -264,7 +292,15 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         )
         test(viewModel: viewModel,
              action: .orientationOrModeChange(isIPhoneLandscape: true, isSpeakerMode: false),
-             expectedCommands: [.configureSpeakerView(isSpeakerMode: false, leadingAndTrailingConstraint: 0)])
+             expectedCommands: [
+                .configureSpeakerView(
+                    isSpeakerMode: false,
+                    leadingAndTrailingConstraint: 0,
+                    topConstraint: 0,
+                    bottomConstraint: 0
+                )
+             ]
+        )
     }
     
     func testAction_singleParticipantsAdded() async throws {
@@ -829,18 +865,45 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         XCTAssertEqual(sut.layoutMode, .grid)
     }
     
-    func testEnableRemoteVideo_forParticipantHasScreenShareAndCanReceiveVideoInHighResolution_shouldCallEnabledRemoteVideoWithHighResolution() {
+    func testEnableRemoteScreenShareVideo_forParticipantHasScreenShareAndCanReceiveVideoInHighResolutionAndHasCamera_shouldCallEnabledRemoteVideoWithHighResolution() {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let sut = makeMeetingParticipantsLayoutViewModel(
             remoteVideoUseCase: remoteVideoUseCase
         )
         
-        let participant = CallParticipantEntity(participantId: 100, isVideoHiRes: true, canReceiveVideoHiRes: false, hasScreenShare: true)
+        let participant = CallParticipantEntity(
+            participantId: 100,
+            isVideoHiRes: true,
+            canReceiveVideoHiRes: false,
+            hasCamera: true,
+            hasScreenShare: true
+        )
         sut.participantJoined(participant: participant)
         participant.canReceiveVideoHiRes = true
         sut.highResolutionChanged(for: participant)
         
         XCTAssertEqual(remoteVideoUseCase.enableRemoteVideo_CalledTimes, 1)
+    }
+    
+    func testEnableRemoteScreenShareVideo_forParticipantHasScreenShareAndCanReceiveVideoInHighResolutionAndHasCameraAndIsReceivingHiResVideo_shouldNotCallEnabledRemoteVideoWithHighResolution() {
+        let remoteVideoUseCase = MockCallRemoteVideoUseCase()
+        let sut = makeMeetingParticipantsLayoutViewModel(
+            remoteVideoUseCase: remoteVideoUseCase
+        )
+        
+        let participant = CallParticipantEntity(
+            participantId: 100,
+            isVideoHiRes: true,
+            canReceiveVideoHiRes: false,
+            hasCamera: true,
+            hasScreenShare: true
+        )
+        sut.participantJoined(participant: participant)
+        participant.canReceiveVideoHiRes = true
+        participant.isReceivingHiResVideo = true
+        sut.highResolutionChanged(for: participant)
+        
+        XCTAssertEqual(remoteVideoUseCase.enableRemoteVideo_CalledTimes, 0)
     }
     
     func testRequestRemoteScreenShareVideo_forParticipantHasScreenShareAndHasHighResVideo_shouldCallRequestHighResolutionVideo() {
@@ -855,18 +918,39 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         XCTAssertEqual(remoteVideoUseCase.requestHighResolutionVideo_calledTimes, 1)
     }
     
-    func testEnableRemoteVideo_forParticipantHasScreenShareAndCanReceiveVideoInLowResolution_shouldCallEnabledRemoteVideoWithLowResolution() {
+    func testEnableRemoteScreenShareVideo_forParticipantHasScreenShareAndCanReceiveVideoInLowResolution_shouldCallEnabledRemoteVideoWithLowResolution() {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let sut = makeMeetingParticipantsLayoutViewModel(
             remoteVideoUseCase: remoteVideoUseCase
         )
         
-        let participant = CallParticipantEntity(participantId: 100, isVideoLowRes: true, canReceiveVideoLowRes: false, hasScreenShare: true)
+        let participant = CallParticipantEntity(participantId: 100, isVideoLowRes: true, canReceiveVideoLowRes: false, hasCamera: true, hasScreenShare: true)
         sut.participantJoined(participant: participant)
         participant.canReceiveVideoLowRes = true
         sut.lowResolutionChanged(for: participant)
         
         XCTAssertEqual(remoteVideoUseCase.enableRemoteVideo_CalledTimes, 1)
+    }
+    
+    func testEnableRemoteScreenShareVideo_forParticipantHasScreenShareAndCanReceiveVideoInLowResolutionAndIsReceivingLowResVideo_shouldNotCallEnabledRemoteVideoWithLowResolution() {
+        let remoteVideoUseCase = MockCallRemoteVideoUseCase()
+        let sut = makeMeetingParticipantsLayoutViewModel(
+            remoteVideoUseCase: remoteVideoUseCase
+        )
+        
+        let participant = CallParticipantEntity(
+            participantId: 100,
+            isVideoLowRes: true,
+            canReceiveVideoLowRes: false,
+            hasCamera: true,
+            hasScreenShare: true
+        )
+        sut.participantJoined(participant: participant)
+        participant.canReceiveVideoLowRes = true
+        participant.isReceivingLowResVideo = true
+        sut.lowResolutionChanged(for: participant)
+        
+        XCTAssertEqual(remoteVideoUseCase.enableRemoteVideo_CalledTimes, 0)
     }
     
     func testRequestRemoteScreenShareVideo_forParticipantHasScreenShareAndHasLowResVideoAndHasCamera_shouldCallRequestLowResolutionVideo() {
@@ -881,19 +965,24 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         XCTAssertEqual(remoteVideoUseCase.requestLowResolutionVideo_calledTimes, 1)
     }
     
-    func testTapParticipantToPinAsSpeaker_forParticipantVideoOnAndVideoLowResAndCanReceiveViewLowResAndHasScreenShareAndHasNoCamera_shouldSwitchVideoResolutionLowToHigh() {
-        let remoteVideoUseCase = MockCallRemoteVideoUseCase()
-        remoteVideoUseCase.requestHighResolutionVideoCompletion = .success
+    func testTapParticipantToPinAsSpeaker_forParticipantVideoOnAndHasScreenShareAndIsOnlyReceivingLowResVideo_shouldSwitchVideoResolutionLowToHigh() {
+        let remoteVideoUseCase = MockCallRemoteVideoUseCase(
+            stopLowResolutionVideoCompletion: .success,
+            isOnlyReceivingLowResVideo: true
+        )
         let sut = makeMeetingParticipantsLayoutViewModel(
             remoteVideoUseCase: remoteVideoUseCase
         )
         
-        let participant = CallParticipantEntity()
-        sut.participantJoined(participant: participant)
+        let participant1 = CallParticipantEntity(participantId: 101, hasScreenShare: true)
+        let participant2 = CallParticipantEntity(participantId: 102, hasScreenShare: true)
+        sut.participantJoined(participant: participant1)
+        sut.participantJoined(participant: participant2)
         
-        let newParticipant = CallParticipantEntity(participantId: 100, video: .on, isVideoLowRes: true, canReceiveVideoLowRes: true, hasCamera: false, hasScreenShare: true)
+        let newParticipant = CallParticipantEntity(participantId: 102, video: .on, hasScreenShare: true)
         sut.dispatch(.tapParticipantToPinAsSpeaker(newParticipant))
         
+        XCTAssertEqual(remoteVideoUseCase.stopLowResolutionVideo_calledTimes, 1)
         XCTAssertEqual(remoteVideoUseCase.requestHighResolutionVideo_calledTimes, 1)
     }
     
@@ -1053,5 +1142,12 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         _ = await XCTWaiter.fulfillment(of: [nameExpectation], timeout: 2)
         await viewModel.namesFetchingTask?.value
         await fulfillment(of: [commandExpectation], timeout: 1.0)
+    }
+    
+    private func evaluate(isInverted: Bool = false, expression: @escaping () -> Bool) {
+        let predicate = NSPredicate { _, _ in expression() }
+        let expectation = expectation(for: predicate, evaluatedWith: nil)
+        expectation.isInverted = isInverted
+        wait(for: [expectation], timeout: 5)
     }
 }

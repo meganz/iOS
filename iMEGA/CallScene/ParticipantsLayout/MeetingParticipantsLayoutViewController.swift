@@ -66,10 +66,6 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     // MARK: - View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        stackViewTopConstraint.constant = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0
-        stackViewBottomConstraint.constant = UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0
-        
         navigationController?.navigationBar.isTranslucent = true
         overrideUserInterfaceStyle = .dark
         
@@ -227,9 +223,18 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             updateCallEndDurationRemaining(string: durationRemainingString)
         case .removeCallEndDurationView:
             removeCallEndDurationView()
-        case .configureSpeakerView(let isSpeakerMode, let constraintValue):
+        case .configureSpeakerView(
+            let isSpeakerMode,
+            let leadingAndTrailingConstraint,
+            let topConstraint,
+            let bottomConstraint
+        ):
             callCollectionViewSpeakerModeHeight.isActive = isSpeakerMode
-            configureLeadingAndTrailingConstraint(to: constraintValue)
+            configureConstraint(
+                leadingAndTrailing: leadingAndTrailingConstraint,
+                top: topConstraint,
+                bottom: bottomConstraint
+            )
         }
     }
     
@@ -508,9 +513,18 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         return message
     }
     
-    private func configureLeadingAndTrailingConstraint(to constant: CGFloat) {
-        stackViewLeadingConstraint.constant = constant
-        stackViewTrailingConstraint.constant = -constant
+    private func configureConstraint(
+        leadingAndTrailing: CGFloat,
+        top: CGFloat,
+        bottom: CGFloat
+    ) {
+        stackViewLeadingConstraint.constant = leadingAndTrailing
+        stackViewTrailingConstraint.constant = -leadingAndTrailing
+        
+        let safeInsetTop = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0
+        let safeInsetBottom = UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0
+        stackViewTopConstraint.constant = top + safeInsetTop
+        stackViewBottomConstraint.constant = bottom + safeInsetBottom
     }
 }
 

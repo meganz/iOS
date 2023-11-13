@@ -35,6 +35,9 @@ class CallParticipantCell: UICollectionViewCell {
                     videoImageView.isHidden = false
                     avatarImageView.isHidden = true
                 }
+            } else {
+                videoImageView.isHidden = true
+                avatarImageView.isHidden = false
             }
             
             if participant.hasScreenShare && !participant.hasCamera {
@@ -77,6 +80,8 @@ class CallParticipantCell: UICollectionViewCell {
         participant = nil
     }
 }
+
+// MARK: - CallParticipantVideoDelegate
 
 extension CallParticipantCell: CallParticipantVideoDelegate {
     func videoFrameData(width: Int, height: Int, buffer: Data!, type: VideoFrameType) {

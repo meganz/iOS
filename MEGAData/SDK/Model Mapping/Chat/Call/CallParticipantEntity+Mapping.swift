@@ -182,7 +182,10 @@ extension CallParticipantEntity {
             isHiResScreenShare: participant.isHiResScreenShare,
             audioDetected: false
         )
+        callParticipant.name = participant.name
         callParticipant.isScreenShareCell = true
+        callParticipant.isReceivingHiResVideo = participant.isReceivingHiResVideo
+        callParticipant.isReceivingLowResVideo = participant.isReceivingLowResVideo
         return callParticipant
     }
 }

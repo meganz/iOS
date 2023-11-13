@@ -41,6 +41,8 @@ public final class CallParticipantEntity {
     public var isHiResScreenShare: Bool
     public var audioDetected: Bool
     public var isScreenShareCell: Bool = false
+    public var isReceivingHiResVideo: Bool = false
+    public var isReceivingLowResVideo: Bool = false
 
     public init(
         chatId: HandleEntity,
