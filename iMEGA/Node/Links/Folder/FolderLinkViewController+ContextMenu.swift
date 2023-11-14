@@ -34,7 +34,7 @@ extension FolderLinkViewController: FolderLinkContextMenuDelegate {
         navigationItem.rightBarButtonItem = editing ? editBarButtonItem : moreBarButtonItem
     }
 
-    private func setMoreButton() {
+    @objc func setMoreButton() {
         guard let config = contextMenuConfiguration() else { return }
         moreBarButtonItem.menu = contextMenuManager?.contextMenu(with: config)
     }

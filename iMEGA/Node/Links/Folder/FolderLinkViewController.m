@@ -544,11 +544,17 @@
     if (editing) {
         self.moreBarButtonItem.title = LocalizedString(@"cancel", @"Button title to cancel something");
         self.moreBarButtonItem.image = nil;
+        self.moreBarButtonItem.menu = nil;
+        self.moreBarButtonItem.action = @selector(editAction:);
+        self.moreBarButtonItem.target = self;
 
         [self.navigationItem setLeftBarButtonItem:self.selectAllBarButtonItem];
     } else {
         self.moreBarButtonItem.title = nil;
+        self.moreBarButtonItem.action = nil;
+        self.moreBarButtonItem.target = nil;
         self.moreBarButtonItem.image = [UIImage imageNamed:@"moreNavigationBar"];
+        [self setMoreButton];
 
         [self setAllNodesSelected:NO];
         self.selectedNodesArray = nil;
