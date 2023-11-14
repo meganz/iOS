@@ -9,7 +9,7 @@ protocol MeetingParticpiantInfoViewRouting: Routing {
     func showInfo()
     func openChatRoom(withChatId chatId: UInt64)
     func makeParticipantAsModerator()
-    func removeModeratorPrivilage()
+    func removeModeratorPrivilege()
     func removeParticipant()
     func displayInMainView()
 }
@@ -83,7 +83,7 @@ struct MeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRouting {
         meetingFloatingPanelModel?.dispatch(.makeModerator(participant: participant))
     }
     
-    func removeModeratorPrivilage() {
+    func removeModeratorPrivilege() {
         meetingFloatingPanelModel?.dispatch(.removeModeratorPrivilege(forParticipant: participant))
     }
     

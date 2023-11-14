@@ -1088,6 +1088,38 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         XCTAssertEqual(sut.speakerParticipant, secondParticipant)
     }
     
+    func testConfigScreenShareParticipants_forFirstParticipantIsSharingScreenAndSecondParticipantIsSpeakerAndNotSharingScreen_shouldCreateScreenShareParticipantForTheFirstParticipantAfterPresenterView() {
+        let sut = makeMeetingParticipantsLayoutViewModel()
+        let firstParticipant = CallParticipantEntity(participantId: 101, clientId: 1, hasScreenShare: true)
+        let secondParticipant = CallParticipantEntity(participantId: 102, clientId: 2, hasScreenShare: false)
+        sut.participantJoined(participant: firstParticipant)
+        sut.participantJoined(participant: secondParticipant)
+        sut.layoutMode = .speaker
+        sut.tappedParticipant(secondParticipant)
+        
+        XCTAssertEqual(sut.callParticipants.count, 3)
+        XCTAssertEqual(sut.callParticipants[0], firstParticipant)
+        XCTAssertFalse(sut.callParticipants[0].isScreenShareCell)
+        XCTAssertEqual(sut.callParticipants[1], firstParticipant)
+        XCTAssertTrue(sut.callParticipants[1].isScreenShareCell)
+    }
+    
+    func testConfigScreenShareParticipants_forFirstParticipantIsSharingScreenAndSecondParticipantIsSpeakerAndIsSharingScreen_shouldCreateScreenShareParticipantForTheFirstParticipantBeforePresenterView() {
+        let sut = makeMeetingParticipantsLayoutViewModel()
+        let firstParticipant = CallParticipantEntity(participantId: 101, clientId: 1, hasScreenShare: true)
+        let secondParticipant = CallParticipantEntity(participantId: 102, clientId: 2, hasScreenShare: true)
+        sut.participantJoined(participant: firstParticipant)
+        sut.participantJoined(participant: secondParticipant)
+        sut.layoutMode = .speaker
+        sut.tappedParticipant(secondParticipant)
+        
+        XCTAssertEqual(sut.callParticipants.count, 3)
+        XCTAssertEqual(sut.callParticipants[1], firstParticipant)
+        XCTAssertTrue(sut.callParticipants[1].isScreenShareCell)
+        XCTAssertEqual(sut.callParticipants[2], firstParticipant)
+        XCTAssertFalse(sut.callParticipants[2].isScreenShareCell)
+    }
+    
     // MARK: - Private functions
     
     private func makeMeetingParticipantsLayoutViewModel(
