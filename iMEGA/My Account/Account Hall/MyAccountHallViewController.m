@@ -148,7 +148,7 @@
         [MEGASdkManager.sharedMEGASdk isAccountType:MEGAAccountTypeProFlexi]) {
         self.accountTypeLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
         
-        self.tableFooterContainerView.backgroundColor = [UIColor mnz_tertiaryBackgroundGrouped:self.traitCollection];
+        self.tableFooterContainerView.backgroundColor = [UIColor mnz_secondaryBackgroundElevated:self.traitCollection];
         self.tableFooterLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     }
     
