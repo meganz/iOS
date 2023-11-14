@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		0D0B54622627A92D00E9BB16 /* MockUploadFileUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D0B54612627A92D00E9BB16 /* MockUploadFileUseCase.swift */; };
 		0D213D222638DF9300B43723 /* CHTCollectionViewWaterfallLayout+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D213D212638DF9300B43723 /* CHTCollectionViewWaterfallLayout+Additions.swift */; };
-		0D213E8E263A613500B43723 /* NodeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D213E8D263A613500B43723 /* NodeRepository.swift */; };
 		0D2E4B0E2623B2EB00F4804A /* TextEditorViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D2E4B0D2623B2EB00F4804A /* TextEditorViewModelTests.swift */; };
 		0D2E4BDE26241C8900F4804A /* UIAlertController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8395FE3024E2C1FC00B1C952 /* UIAlertController+Additions.swift */; };
 		0D30D86225BFA14A00C26367 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D30D86125BFA14A00C26367 /* Tab.swift */; };
@@ -893,7 +892,6 @@
 		8342CB0128EB3B830078D35F /* ChatRoomsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8342CAFE28EB3B820078D35F /* ChatRoomsListViewController.swift */; };
 		8342CB0228EB3B830078D35F /* ChatRoomsListViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8342CAFF28EB3B830078D35F /* ChatRoomsListViewController+ContextMenu.swift */; };
 		8342CB0B28EB3DEC0078D35F /* ChatTabsSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8342CB0A28EB3DEC0078D35F /* ChatTabsSelectorView.swift */; };
-		83438A6B281AB03E006C9285 /* NodeRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D213E8D263A613500B43723 /* NodeRepository.swift */; };
 		8346CA6E283CDA0F00462F50 /* NameCollisionRouterOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8346CA6D283CDA0F00462F50 /* NameCollisionRouterOCWrapper.swift */; };
 		8346CA6F283CDA0F00462F50 /* NameCollisionRouterOCWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8346CA6D283CDA0F00462F50 /* NameCollisionRouterOCWrapper.swift */; };
 		8348A8D82901902B00B66463 /* ActiveCallViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8348A8D72901902B00B66463 /* ActiveCallViewModel.swift */; };
@@ -2532,7 +2530,6 @@
 /* Begin PBXFileReference section */
 		0D0B54612627A92D00E9BB16 /* MockUploadFileUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUploadFileUseCase.swift; sourceTree = "<group>"; };
 		0D213D212638DF9300B43723 /* CHTCollectionViewWaterfallLayout+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CHTCollectionViewWaterfallLayout+Additions.swift"; sourceTree = "<group>"; };
-		0D213E8D263A613500B43723 /* NodeRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeRepository.swift; sourceTree = "<group>"; };
 		0D2E4B0D2623B2EB00F4804A /* TextEditorViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorViewModelTests.swift; sourceTree = "<group>"; };
 		0D30D86125BFA14A00C26367 /* Tab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
 		0D4A123A2689921E0024997E /* GlobalDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalDelegate.swift; sourceTree = "<group>"; };
@@ -5261,7 +5258,6 @@
 				8396AB4027BBDD5600C71291 /* ImportNodeRepository.swift */,
 				943092F32913E26D0092B99A /* NodeActionsRepository.swift */,
 				943092F6291438200092B99A /* NodeDataRepository.swift */,
-				0D213E8D263A613500B43723 /* NodeRepository.swift */,
 				943092F9291440010092B99A /* NodeValidationRepository.swift */,
 				94485B5329B9F8BE006B919E /* SearchNodeRepository.swift */,
 			);
@@ -14202,7 +14198,6 @@
 				5BC609E226B9475D002F12A4 /* NodeOpener.swift in Sources */,
 				C4575F34265FEC3100D527DC /* NodeOwnerInfoTableViewCell.swift in Sources */,
 				832E1032202D8E6900BDD30F /* NodePropertyTableViewCell.m in Sources */,
-				0D213E8E263A613500B43723 /* NodeRepository.swift in Sources */,
 				5D4244D22512005500EE544D /* NodeSearchRepository.swift in Sources */,
 				83BFA3AC27CFC2FB00BDF997 /* NodeSelectionType.swift in Sources */,
 				B6031EE52202A6BF00F7EAA1 /* NodesFetchListenerOperation.m in Sources */,
@@ -15072,7 +15067,6 @@
 				9419E0482A50175F00813577 /* NodeLoadOperation+NodeAccessConfiguration.swift in Sources */,
 				C42C357A2743D96E004D8BA9 /* NodeLoadOperation.swift in Sources */,
 				C4E78E9D272B4F9200DBF926 /* NodeLoadOperationProtocol.swift in Sources */,
-				83438A6B281AB03E006C9285 /* NodeRepository.swift in Sources */,
 				B55C1A8A298260DB006A0205 /* NodeTableViewCell+Additions.swift in Sources */,
 				5BAC7CAC2677BF9800F8C305 /* NodeTableViewCell.m in Sources */,
 				5B9F336624448FA400E2A15B /* NSDate+MNZCategory.m in Sources */,

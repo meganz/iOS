@@ -4,7 +4,6 @@ public protocol NodeRepositoryProtocol: RepositoryProtocol {
     func nodeForHandle(_ handle: HandleEntity) -> NodeEntity?
     func nodeFor(fileLink: FileLinkEntity, completion: @escaping (Result<NodeEntity, NodeErrorEntity>) -> Void)
     func nodeFor(fileLink: FileLinkEntity) async throws -> NodeEntity
-    func chatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity) -> NodeEntity?
     func childNodeNamed(name: String, in parentHandle: HandleEntity) -> NodeEntity?
     /// Get the child node with provided name and type
     /// - Parameters:

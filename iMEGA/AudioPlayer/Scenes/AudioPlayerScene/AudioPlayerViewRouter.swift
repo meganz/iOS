@@ -2,6 +2,7 @@ import Accounts
 import Foundation
 import MEGADomain
 import MEGAPresentation
+import MEGASDKRepo
 
 final class AudioPlayerViewRouter: NSObject, AudioPlayerViewRouting {
     private let configEntity: AudioPlayerConfigEntity

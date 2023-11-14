@@ -1,3 +1,4 @@
+import ChatRepo
 import Foundation
 import MEGADomain
 import MEGASDKRepo
@@ -178,7 +179,8 @@ extension PhotoBrowserDataProvider {
                 sharedFolderSdk: displayMode == .nodeInsideFolderLink ? sdk : nil,
                 nodeProvider: nodeProvider),
             fileCacheRepository: FileCacheRepository.newRepo,
-            nodeRepository: NodeRepository.newRepo)
+            nodeRepository: NodeRepository.newRepo,
+            chatNodeRepository: ChatNodeRepository.newRepo)
     }
     
     private func isValid(index: Int) -> Bool {

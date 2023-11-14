@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGAL10n
+import MEGASDKRepo
 
 extension CloudDriveViewController {
     private func contextMenuBackupConfiguration() -> CMConfigEntity? {

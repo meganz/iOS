@@ -1,5 +1,6 @@
 import Foundation
 import MEGADomain
+import MEGASDKRepo
 
 final class HomeSearchResultRouter {
 

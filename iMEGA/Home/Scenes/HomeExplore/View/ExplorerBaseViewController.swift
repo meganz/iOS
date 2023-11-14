@@ -1,3 +1,4 @@
+import ChatRepo
 import MEGADomain
 import MEGASDKRepo
 import MEGAUIKit
@@ -116,7 +117,7 @@ class ExplorerBaseViewController: UIViewController {
               !selectedNodes.isEmpty else {
             return
         }
-        let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: .shared), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+        let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: .shared), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo, chatNodeRepository: ChatNodeRepository.newRepo)
         Task { @MainActor in
             do {
                 try await saveMediaUseCase.saveToPhotos(nodes: selectedNodes.toNodeEntities())

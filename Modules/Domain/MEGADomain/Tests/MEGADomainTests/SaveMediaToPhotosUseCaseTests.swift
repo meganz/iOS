@@ -20,7 +20,8 @@ final class SaveMediaToPhotosUseCaseTests: XCTestCase {
         
         let sut = SaveMediaToPhotosUseCase(downloadFileRepository: mockDownloadFileRepo,
                                            fileCacheRepository: MockFileCacheRepository.newRepo,
-                                           nodeRepository: mockNodeRepo)
+                                           nodeRepository: mockNodeRepo,
+                                           chatNodeRepository: MockChatNodeRepository())
         try await sut.saveToPhotos(nodes: [nodeEntity])
     }
     
@@ -29,7 +30,8 @@ final class SaveMediaToPhotosUseCaseTests: XCTestCase {
         
         let sut = SaveMediaToPhotosUseCase(downloadFileRepository: mockDownloadFileRepo,
                                            fileCacheRepository: MockFileCacheRepository.newRepo,
-                                           nodeRepository: mockNodeRepo)
+                                           nodeRepository: mockNodeRepo,
+                                           chatNodeRepository: MockChatNodeRepository())
         do {
             try await sut.saveToPhotos(nodes: [nodeEntity])
         } catch let errorEntity as SaveMediaToPhotosErrorEntity {
@@ -42,7 +44,8 @@ final class SaveMediaToPhotosUseCaseTests: XCTestCase {
         
         let sut = SaveMediaToPhotosUseCase(downloadFileRepository: mockDownloadFileRepo,
                                            fileCacheRepository: MockFileCacheRepository.newRepo,
-                                           nodeRepository: mockNodeRepo)
+                                           nodeRepository: mockNodeRepo,
+                                           chatNodeRepository: MockChatNodeRepository())
         try await sut.saveToPhotos(nodes: [nodeEntity, nodeEntity2])
     }
     
@@ -51,7 +54,8 @@ final class SaveMediaToPhotosUseCaseTests: XCTestCase {
         
         let sut = SaveMediaToPhotosUseCase(downloadFileRepository: mockDownloadFileRepo,
                                            fileCacheRepository: MockFileCacheRepository.newRepo,
-                                           nodeRepository: mockNodeRepo)
+                                           nodeRepository: mockNodeRepo,
+                                           chatNodeRepository: MockChatNodeRepository())
         do {
             try await sut.saveToPhotos(nodes: [nodeEntity, nodeEntity2])
         } catch let errorEntity as SaveMediaToPhotosErrorEntity {

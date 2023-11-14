@@ -1,3 +1,4 @@
+import ChatRepo
 import Foundation
 import MEGADomain
 import MEGARepo
@@ -63,7 +64,8 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Tra
                 fileCacheRepository: FileCacheRepository.newRepo,
                 mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo),
                 preferenceRepository: PreferenceRepository.newRepo,
-                offlineFileFetcherRepository: OfflineFileFetcherRepository.newRepo),
+                offlineFileFetcherRepository: OfflineFileFetcherRepository.newRepo,
+                chatNodeRepository: ChatNodeRepository.newRepo),
             mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo),
             analyticsEventUseCase: AnalyticsEventUseCase(repository: AnalyticsRepository.newRepo),
             transfers: transfers,

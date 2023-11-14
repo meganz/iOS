@@ -2,6 +2,7 @@ import ChatRepoMock
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
+import MEGASDKRepo
 import MEGASDKRepoMock
 import XCTest
 
@@ -24,8 +25,7 @@ final class NodeRepositoryTests: XCTestCase {
             
             sut = NodeRepository(
                 sdk: sdk,
-                sharedFolderSdk: sharedFolderSdk,
-                chatSdk: MockChatSDK()
+                sharedFolderSdk: sharedFolderSdk
             )
             sdk.setNodes(nodes)
         }

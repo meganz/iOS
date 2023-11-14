@@ -61,10 +61,6 @@ public struct MockNodeRepository: NodeRepositoryProtocol {
         return node
     }
     
-    public func chatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity) -> NodeEntity? {
-        node
-    }
-    
     public func childNodeNamed(name: String, in parentHandle: HandleEntity) -> NodeEntity? {
         childNode
     }

@@ -1,10 +1,11 @@
+import ChatRepo
 import MEGADomain
 import MEGAPermissions
 import MEGASDKRepo
 
 @objc final class SaveMediaToPhotosUseCaseOCWrapper: NSObject {
     @objc func saveToPhotos(node: MEGANode, isFolderLink: Bool = false) {
-        let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdkManager.sharedMEGASdk(), sharedFolderSdk: isFolderLink ? MEGASdkManager.sharedMEGASdkFolder() : nil), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+        let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdk.sharedSdk, sharedFolderSdk: isFolderLink ? MEGASdk.sharedFolderLinkSdk : nil), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo, chatNodeRepository: ChatNodeRepository.newRepo)
         let permissionHandler = DevicePermissionsHandler.makeHandler()
         
         permissionHandler.photosPermissionWithCompletionHandler { granted in

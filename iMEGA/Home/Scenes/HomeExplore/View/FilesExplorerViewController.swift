@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGASDKRepo
 
 protocol FilesExplorerViewControllerDelegate: AnyObject {
     func updateSearchResults()

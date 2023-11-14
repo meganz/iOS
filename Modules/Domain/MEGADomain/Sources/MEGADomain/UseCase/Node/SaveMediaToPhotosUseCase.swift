@@ -4,19 +4,22 @@ public protocol SaveMediaToPhotosUseCaseProtocol {
     func saveToPhotos(fileLink: FileLinkEntity, completion: @escaping (Result<Void, SaveMediaToPhotosErrorEntity>) -> Void)
 }
         
-public struct SaveMediaToPhotosUseCase<T: DownloadFileRepositoryProtocol, U: FileCacheRepositoryProtocol, V: NodeRepositoryProtocol>: SaveMediaToPhotosUseCaseProtocol {
+public struct SaveMediaToPhotosUseCase<T: DownloadFileRepositoryProtocol, U: FileCacheRepositoryProtocol, V: NodeRepositoryProtocol, W: ChatNodeRepositoryProtocol>: SaveMediaToPhotosUseCaseProtocol {
     private let downloadFileRepository: T
     private let fileCacheRepository: U
     private let nodeRepository: V
+    private let chatNodeRepository: W
 
     public init(
         downloadFileRepository: T,
         fileCacheRepository: U,
-        nodeRepository: V
+        nodeRepository: V,
+        chatNodeRepository: W
     ) {
         self.downloadFileRepository = downloadFileRepository
         self.fileCacheRepository = fileCacheRepository
         self.nodeRepository = nodeRepository
+        self.chatNodeRepository = chatNodeRepository
     }
     
     private func saveToPhotos(node: NodeEntity) async throws {
@@ -49,7 +52,7 @@ public struct SaveMediaToPhotosUseCase<T: DownloadFileRepositoryProtocol, U: Fil
     }
     
     public func saveToPhotosChatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity, completion: @escaping (Result<Void, SaveMediaToPhotosErrorEntity>) -> Void) {
-        guard let node = nodeRepository.chatNode(handle: handle, messageId: messageId, chatId: chatId) else {
+        guard let node = chatNodeRepository.chatNode(handle: handle, messageId: messageId, chatId: chatId) else {
             completion(.failure(.nodeNotFound))
             return
         }
