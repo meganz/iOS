@@ -22,7 +22,6 @@ struct TextDescriptionView: View {
     }
 }
 
-@available(iOS 15.0, *)
 struct FocusableTextDescriptionView: View {
     @Environment(\.colorScheme) private var colorScheme
 

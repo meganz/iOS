@@ -11,13 +11,7 @@ struct ScheduleMeetingCreationDescriptionView: View {
             VStack {
                 Divider()
                 
-                Group {
-                    if #available(iOS 15.0, *) {
-                        FocusableTextDescriptionView(descriptionText: $viewModel.meetingDescription) { isBottomViewInFocus = $0 }
-                    } else {
-                        TextDescriptionView(descriptionText: $viewModel.meetingDescription)
-                    }
-                }
+                FocusableTextDescriptionView(descriptionText: $viewModel.meetingDescription) { isBottomViewInFocus = $0 }
                 .opacity(viewModel.shouldAllowEditingMeetingDescription ? 1.0 : 0.3)
                 .disabled(!viewModel.shouldAllowEditingMeetingDescription)
                
