@@ -929,6 +929,13 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         for callParticipant in cameraParticipants {
             if let firstParticipant = cameraParticipants.first, callParticipant == firstParticipant {
                 newParticipants.append(callParticipant)
+                if callParticipant.hasScreenShare,
+                    let speakerParticipant,
+                    callParticipant != speakerParticipant &&
+                    !speakerParticipant.hasScreenShare {
+                    let screenShareParticipant = CallParticipantEntity.createScreenShareParticipant(callParticipant)
+                    newParticipants.append(screenShareParticipant)
+                }
             } else if callParticipant.hasScreenShare {
                 if let screenShareParticipant = screenShareParticipants.first(where: { $0.participantId == callParticipant.participantId && $0.clientId == callParticipant.clientId}) {
                     newParticipants.append(screenShareParticipant)

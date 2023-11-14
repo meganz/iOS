@@ -57,7 +57,7 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
         case .makeModerator:
             router.makeParticipantAsModerator()
         case .removeModerator:
-            router.removeModeratorPrivilage()
+            router.removeModeratorPrivilege()
         case .removeParticipant:
             router.removeParticipant()
         case .displayInMainView:

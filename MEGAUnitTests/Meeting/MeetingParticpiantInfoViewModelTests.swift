@@ -361,7 +361,7 @@ final class MockMeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRout
         makeParticipantAsModerator_calledTimes += 1
     }
         
-    func removeModeratorPrivilage() {
+    func removeModeratorPrivilege() {
         removeParticipantAsModerator_calledTimes += 1
     }
     

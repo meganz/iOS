@@ -93,7 +93,7 @@ class CallCollectionView: UICollectionView {
     
     func updateAvatar(image: UIImage, for participant: CallParticipantEntity) {
         avatars[participant.participantId] = image
-        guard let index = callParticipants.firstIndex(where: { $0 == participant }),
+        guard let index = callParticipants.firstIndex(where: { $0 == participant && !$0.isScreenShareCell }),
               case let indexPath = IndexPath(item: index, section: 0),
               let cell = cellForItem(at: indexPath) as? CallParticipantCell,
               cell.participant == participant else {
