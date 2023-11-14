@@ -90,7 +90,7 @@
     self.passwordTextField.textColor = UIColor.mnz_label;
     
     if (self.backgroundColor != nil && !self.isUsingDefaultBackgroundColor) {
-        self.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
+        self.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
     } else {
         self.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
         self.usingDefaultBackgroundColor = YES;

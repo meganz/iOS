@@ -111,7 +111,7 @@ extension FolderLinkTableViewController: UITableViewDataSource {
             fatalError("Could not instantiate NodeCollectionViewCell")
         }
         
-        cell.backgroundColor = UIColor.mnz_secondaryBackgroundGroupedElevated(traitCollection)
+        cell.backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
         cell.infoLabel.textColor = UIColor.mnz_label()
         
         if let node = getNode(at: indexPath) {

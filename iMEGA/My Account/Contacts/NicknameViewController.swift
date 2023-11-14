@@ -143,12 +143,12 @@ class NicknameViewController: UIViewController {
     private func updateAppearance() {
         view.backgroundColor = UIColor.mnz_backgroundGroupedElevated(traitCollection)
         
-        nicknameView.backgroundColor = UIColor.mnz_secondaryBackgroundGroupedElevated(traitCollection)
+        nicknameView.backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
         nicknameLabel.textColor = UIColor.mnz_secondaryGray(for: traitCollection)
         nicknameTopSeparatorView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
         nicknameBottomSeparatorView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
         
-        removeNicknameButton.backgroundColor = UIColor.mnz_secondaryBackgroundGroupedElevated(traitCollection)
+        removeNicknameButton.backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
         removeNicknameButton.setTitleColor(UIColor.mnz_red(for: traitCollection), for: .normal)
         removeNicknameButtonTopSeparatorView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
         removeNicknameButtonBottomSeparatorView.backgroundColor = UIColor.mnz_separator(for: traitCollection)

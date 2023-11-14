@@ -135,10 +135,6 @@ extension UIColor {
         return mnz_secondaryBackground(for: traitCollection)
     }
     
-    @objc class func mnz_secondaryBackgroundGroupedElevated(_ traitCollection: UITraitCollection) -> UIColor {
-        return mnz_tertiaryBackground(traitCollection)
-    }
-    
     @objc(mnz_secondaryBackgroundForTraitCollection:)
     class func mnz_secondaryBackground(for traitCollection: UITraitCollection) -> UIColor {
         switch traitCollection.userInterfaceStyle {

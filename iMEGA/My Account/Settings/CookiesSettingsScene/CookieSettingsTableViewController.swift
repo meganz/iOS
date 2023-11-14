@@ -150,7 +150,7 @@ class CookieSettingsTableViewController: UITableViewController {
     // MARK: - UITableViewDelegate
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.backgroundColor = .mnz_secondaryBackgroundGroupedElevated(traitCollection)
+        cell.backgroundColor = .mnz_tertiaryBackground(traitCollection)
     }
     
     // MARK: - UITableViewDataSource
