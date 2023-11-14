@@ -73,7 +73,7 @@ struct VerticalThumbnailView: View {
                     .result
                     .properties
                     .propertyViewsFor(
-                        mode: layout,
+                        layout: layout,
                         placement: .secondary(.trailingEdge)
                     )
             }
@@ -153,7 +153,7 @@ struct VerticalThumbnailView: View {
                 .result
                 .properties
                 .propertyViewsFor(
-                    mode: layout,
+                    layout: layout,
                     placement: .prominent
                 )
         }
@@ -170,7 +170,7 @@ struct VerticalThumbnailView: View {
                 .result
                 .properties
                 .propertyViewsFor(
-                    mode: layout,
+                    layout: layout,
                     placement: .secondary(.trailing)
                 )
         }

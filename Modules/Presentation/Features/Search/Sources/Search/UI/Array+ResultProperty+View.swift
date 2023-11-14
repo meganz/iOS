@@ -11,14 +11,15 @@ extension Array where Element == ResultProperty {
             // and if it matches the filtered for value, we return it
             resultProperty.placement(mode) == placement
         }
+        .sorted()
     }
     
     @ViewBuilder func propertyViewsFor(
-        mode: ResultCellLayout,
+        layout: ResultCellLayout,
         placement: PropertyPlacement
     ) -> some View {
         Group {
-            ForEach(propertiesFor(mode: mode, placement: placement)) { resultProperty in
+            ForEach(propertiesFor(mode: layout, placement: placement)) { resultProperty in
                 propertyView(for: resultProperty.content)
             }
         }
