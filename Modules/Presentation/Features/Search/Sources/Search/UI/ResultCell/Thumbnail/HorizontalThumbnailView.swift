@@ -62,7 +62,7 @@ struct HorizontalThumbnailView: View {
             viewModel
                 .result
                 .properties
-                .propertyViewsFor(mode: layout, placement: .prominent)
+                .propertyViewsFor(layout: layout, placement: .prominent)
         }
         .frame(height: 12)
     }
@@ -76,17 +76,17 @@ struct HorizontalThumbnailView: View {
             viewModel
                 .result
                 .properties
-                .propertyViewsFor(mode: layout, placement: .secondary(.leading))
+                .propertyViewsFor(layout: layout, placement: .secondary(.leading))
             
             viewModel
                 .result
                 .properties
-                .propertyViewsFor(mode: layout, placement: .secondary(.trailing))
+                .propertyViewsFor(layout: layout, placement: .secondary(.trailing))
             
             viewModel
                 .result
                 .properties
-                .propertyViewsFor(mode: layout, placement: .secondary(.trailingEdge))
+                .propertyViewsFor(layout: layout, placement: .secondary(.trailingEdge))
             
         }
     }

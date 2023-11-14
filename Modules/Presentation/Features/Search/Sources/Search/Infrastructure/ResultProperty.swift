@@ -4,7 +4,24 @@ import UIKit
 /// it can specify a property of a result and be rendered as icon, text or a spacer element in swiftUI
 /// support dynamic positioning (single property can be differently placed depending on the layout in which the result view is shown) via
 /// placement closure
-public struct ResultProperty: Identifiable, Equatable, Sendable {
+public struct ResultProperty: Identifiable, Equatable, Comparable, Sendable {
+    
+    // Comparable implementation is used for placement of properties within a single
+    // location (line) to decide which one should go first, we place
+    // vibrant properties as first in the line
+    public static func < (lhs: ResultProperty, rhs: ResultProperty) -> Bool {
+        
+        switch (lhs.vibrancyEnabled, rhs.vibrancyEnabled) {
+        case (true, true):
+            return true
+        case (true, false):
+            return true
+        case (false, true):
+            return false
+        case (false, false):
+            return false
+        }
+    }
     
     public static func == (lhs: ResultProperty, rhs: ResultProperty) -> Bool {
         guard
@@ -28,6 +45,8 @@ public struct ResultProperty: Identifiable, Equatable, Sendable {
     public let content: Content
     /// if any result property has this enabled, title will be vibrantly rendered, used now for taken down nodes
     /// for taken down noes in MEGA, it means a red title text label
+    /// additionally, vibrancy enabled result properties, will be shown a the first positions (leading) in the requested placement [FM-1405]
+    /// if there are multiple ones, they are not sorted further, and just keep ordering on the containing collection
     public let vibrancyEnabled: Bool
     public let placement: @Sendable (ResultCellLayout) -> PropertyPlacement
     

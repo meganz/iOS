@@ -132,7 +132,7 @@ struct SearchResultRowView: View {
     }
     
     @ViewBuilder func propertyViewsFor(placement: PropertyPlacement) -> some View {
-        viewModel.result.properties.propertyViewsFor(mode: layout, placement: placement)
+        viewModel.result.properties.propertyViewsFor(layout: layout, placement: placement)
     }
     
     private var subtitleLine: some View {
