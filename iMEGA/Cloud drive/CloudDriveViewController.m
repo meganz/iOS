@@ -89,7 +89,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     self.definesPresentationContext = YES;
     
     [self configureContextMenuManagerIfNeeded];
-    [self setUpInvokeCommands];
+
     
     switch (self.displayMode) {
         case DisplayModeCloudDrive: {
@@ -156,6 +156,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     self.wasSelectingFavoriteUnfavoriteNodeActionOption = NO;
 
     [self setupContactNotVerifiedBanner];
+    [self setUpInvokeCommands];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
