@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGASDKRepo
 
 final class NodeOpener {
 
@@ -9,7 +10,7 @@ final class NodeOpener {
     }
 
     func openNode(_ nodeHandle: HandleEntity) {
-        guard let node = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeHandle) else { return }
+        guard let node = MEGASdk.sharedSdk.node(forHandle: nodeHandle) else { return }
         switch node.isFolder() {
         case true: openFolderNode(node)
         case false: openFileNode(node, allNodes: nil)
@@ -25,7 +26,7 @@ final class NodeOpener {
     
     func openNodeActions(_ nodeHandle: HandleEntity, sender: Any) {
         guard let navigationController = navigationController else { return }
-        guard let node = MEGASdkManager.sharedMEGASdk().node(forHandle: nodeHandle) else { return }
+        guard let node = MEGASdk.sharedSdk.node(forHandle: nodeHandle) else { return }
         
         let backupsUC = BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
         let isBackupNode = backupsUC.isBackupNode(node.toNodeEntity())
@@ -52,7 +53,7 @@ final class NodeOpener {
         let mediaNodes = NSMutableArray(array: nodes)
         let photoBrowserForMediaNode = MEGAPhotoBrowserViewController.photoBrowser(
             withMediaNodes: mediaNodes,
-            api: MEGASdkManager.sharedMEGASdk(),
+            api: MEGASdk.sharedSdk,
             displayMode: .cloudDrive,
             preferredIndex: UInt(truncatingIfNeeded: index)
         )

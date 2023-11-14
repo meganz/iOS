@@ -1,4 +1,5 @@
 import Accounts
+import ChatRepo
 import Combine
 import Foundation
 import MEGADomain
@@ -115,7 +116,8 @@ extension FolderLinkViewController {
                 sharedFolderSdk: MEGASdk.sharedFolderLinkSdk
             ),
             fileCacheRepository: FileCacheRepository.newRepo,
-            nodeRepository: NodeRepository.newRepo
+            nodeRepository: NodeRepository.newRepo,
+            chatNodeRepository: ChatNodeRepository.newRepo
         )
 
         let permissionHandler = DevicePermissionsHandler.makeHandler()

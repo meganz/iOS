@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGARepo
+import MEGASDKRepo
 
 @objc final class NodeAssetsManager: NSObject {
     @objc static var shared = NodeAssetsManager()

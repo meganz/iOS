@@ -1,3 +1,4 @@
+import ChatRepo
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
@@ -20,7 +21,8 @@ extension SharedItemsViewController {
                                                         videoMediaUseCase: VideoMediaUseCase(videoMediaRepository: VideoMediaRepository.newRepo)),
                              saveMediaToPhotosUseCase: SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository.newRepo,
                                                                                 fileCacheRepository: FileCacheRepository.newRepo,
-                                                                                nodeRepository: NodeRepository.newRepo))
+                                                                                nodeRepository: NodeRepository.newRepo,
+                                                                                chatNodeRepository: ChatNodeRepository.newRepo))
     }
     
     @objc func createNodeInfoViewModel(withNode node: MEGANode,

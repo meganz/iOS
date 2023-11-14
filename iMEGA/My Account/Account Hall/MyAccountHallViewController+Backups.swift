@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGASDKRepo
 
 extension MyAccountHallViewController {
     @objc func checkIfBackupRootNodeExistsAndIsNotEmpty() {
@@ -6,7 +7,7 @@ extension MyAccountHallViewController {
             guard let self else { return }
             let backupsUseCase = BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
             
-            self.backupsRootNode = try await backupsUseCase.backupsRootNode().toMEGANode(in: MEGASdkManager.sharedMEGASdk())
+            self.backupsRootNode = try await backupsUseCase.backupsRootNode().toMEGANode(in: MEGASdk.sharedSdk)
             
             if self.backupsRootNode != nil, await !backupsUseCase.isBackupsRootNodeEmpty() {
                 self.isBackupSectionVisible = true

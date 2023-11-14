@@ -1,3 +1,4 @@
+import ChatRepo
 import Foundation
 import MEGADomain
 import MEGAL10n
@@ -161,7 +162,7 @@ extension ChatViewController {
                     node = authorizedNode
                 }
                 
-                let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: .shared), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+                let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: .shared), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo, chatNodeRepository: ChatNodeRepository.newRepo)
                 TransfersWidgetViewController.sharedTransfer().setProgressViewInKeyWindow()
                 TransfersWidgetViewController.sharedTransfer().progressView?.showWidgetIfNeeded()
                 TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()

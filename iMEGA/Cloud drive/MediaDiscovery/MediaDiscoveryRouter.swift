@@ -1,3 +1,4 @@
+import ChatRepo
 import MEGADomain
 import MEGAPresentation
 import MEGASDKRepo
@@ -38,7 +39,8 @@ protocol MediaDiscoveryRouting: Routing {
                                                             sharedFolderSdk: isFolderLink ? MEGASdk.sharedFolderLink : nil)
         let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: downloadFileRepository,
                                                         fileCacheRepository: FileCacheRepository.newRepo,
-                                                        nodeRepository: NodeRepository.newRepo)
+                                                        nodeRepository: NodeRepository.newRepo, 
+                                                        chatNodeRepository: ChatNodeRepository.newRepo)
         let viewModel = MediaDiscoveryViewModel(parentNode: parentNode,
                                                 router: self,
                                                 analyticsUseCase: analyticsUseCase,

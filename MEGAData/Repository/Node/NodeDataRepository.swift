@@ -1,18 +1,20 @@
+import ChatRepo
 import MEGADomain
 
 struct NodeDataRepository: NodeDataRepositoryProtocol {
     static var newRepo: NodeDataRepository {
-        NodeDataRepository(sdk: MEGASdk.shared, sharedFolderSdk: MEGASdk.sharedFolderLink, nodeRepository: NodeRepository.newRepo)
+        NodeDataRepository(
+            sdk: MEGASdk.shared, sharedFolderSdk: MEGASdk.sharedFolderLink, chatNodeRepository: ChatNodeRepository.newRepo)
     }
     
     private let sdk: MEGASdk
     private let sharedFolderSdk: MEGASdk
-    private let nodeRepository: any NodeRepositoryProtocol
+    private let chatNodeRepository: any ChatNodeRepositoryProtocol
     
-    init(sdk: MEGASdk, sharedFolderSdk: MEGASdk, nodeRepository: any NodeRepositoryProtocol) {
+    init(sdk: MEGASdk, sharedFolderSdk: MEGASdk, chatNodeRepository: any ChatNodeRepositoryProtocol) {
         self.sdk = sdk
         self.sharedFolderSdk = sharedFolderSdk
-        self.nodeRepository = nodeRepository
+        self.chatNodeRepository = chatNodeRepository
     }
     
     func nodeAccessLevel(nodeHandle: HandleEntity) -> NodeAccessTypeEntity {
@@ -53,7 +55,7 @@ struct NodeDataRepository: NodeDataRepositoryProtocol {
     }
     
     func nameForChatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity) -> String? {
-        nodeRepository.chatNode(handle: handle, messageId: messageId, chatId: chatId)?.name
+        chatNodeRepository.chatNode(handle: handle, messageId: messageId, chatId: chatId)?.name
     }
     
     func sizeForNode(handle: HandleEntity) -> UInt64? {
@@ -74,7 +76,7 @@ struct NodeDataRepository: NodeDataRepositoryProtocol {
     }
     
     func sizeForChatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity) -> UInt64? {
-        nodeRepository.chatNode(handle: handle, messageId: messageId, chatId: chatId)?.size
+        chatNodeRepository.chatNode(handle: handle, messageId: messageId, chatId: chatId)?.size
     }
     
     func base64ForNode(handle: HandleEntity) -> String? {
@@ -86,7 +88,7 @@ struct NodeDataRepository: NodeDataRepositoryProtocol {
     }
     
     func base64ForChatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity) -> String? {
-        nodeRepository.chatNode(handle: handle, messageId: messageId, chatId: chatId)?.base64Handle
+        chatNodeRepository.chatNode(handle: handle, messageId: messageId, chatId: chatId)?.base64Handle
     }
     
     func fingerprintForFile(at path: String) -> String? {

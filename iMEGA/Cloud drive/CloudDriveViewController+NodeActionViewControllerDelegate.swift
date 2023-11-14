@@ -1,6 +1,7 @@
+import ChatRepo
 import MEGADomain
-import MEGASDKRepo
 import MEGAPermissions
+import MEGASDKRepo
 
 extension CloudDriveViewController: NodeActionViewControllerDelegate {
     func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, forNodes nodes: [MEGANode], from sender: Any) {
@@ -136,7 +137,7 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
                 return
             }
             
-            let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdk.shared), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+            let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdk.shared), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo, chatNodeRepository: ChatNodeRepository.newRepo)
             Task { @MainActor in
                 do {
                     try await saveMediaUseCase.saveToPhotos(nodes: nodes)

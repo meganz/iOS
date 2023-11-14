@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGAL10n
+import MEGASDKRepo
 
 extension NodeVersionsViewController {
     @objc func setToolbarActionsEnabled(_ boolValue: Bool) {

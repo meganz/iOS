@@ -1,3 +1,4 @@
+import ChatRepo
 import Foundation
 import MEGAAnalyticsiOS
 import MEGADomain
@@ -72,7 +73,8 @@ final class HomeScreenFactory: NSObject {
             saveMediaToPhotosUseCase: SaveMediaToPhotosUseCase(
                 downloadFileRepository: DownloadFileRepository(sdk: sdk),
                 fileCacheRepository: FileCacheRepository.newRepo,
-                nodeRepository: makeNodeRepo()
+                nodeRepository: makeNodeRepo(),
+                chatNodeRepository: ChatNodeRepository.newRepo
             )
         )
         homeViewController.bannerViewModel = HomeBannerViewModel(

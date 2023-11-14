@@ -1,3 +1,4 @@
+import ChatRepo
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
@@ -200,7 +201,8 @@ extension AlbumContentViewController: AlbumToolbarProvider {
             
             let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdk.shared),
                                                             fileCacheRepository: FileCacheRepository.newRepo,
-                                                            nodeRepository: NodeRepository.newRepo)
+                                                            nodeRepository: NodeRepository.newRepo,
+                                                            chatNodeRepository: ChatNodeRepository.newRepo)
             
             TransfersWidgetViewController.sharedTransfer().setProgressViewInKeyWindow()
             TransfersWidgetViewController.sharedTransfer().progressView?.showWidgetIfNeeded()

@@ -1,6 +1,7 @@
 import Combine
 import MEGADomain
 import MEGAL10n
+import MEGASDKRepo
 
 final class BackupNodesValidator {
     private let backupsUseCase: any BackupsUseCaseProtocol

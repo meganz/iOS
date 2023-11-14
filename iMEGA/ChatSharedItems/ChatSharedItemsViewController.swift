@@ -1,7 +1,8 @@
+import ChatRepo
 import MEGADomain
 import MEGAL10n
-import MEGASDKRepo
 import MEGAPermissions
+import MEGASDKRepo
 import UIKit
 
 class ChatSharedItemsViewController: UIViewController {
@@ -524,7 +525,7 @@ extension ChatSharedItemsViewController: NodeActionViewControllerDelegate {
                 return
             }
             
-            let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdk.shared), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+            let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdk.shared), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo, chatNodeRepository: ChatNodeRepository.newRepo)
             TransfersWidgetViewController.sharedTransfer().bringProgressToFrontKeyWindowIfNeeded()
             
             saveMediaUseCase.saveToPhotosChatNode(handle: node.handle, messageId: message.messageId, chatId: chatRoom.chatId, completion: { result in
@@ -534,8 +535,6 @@ extension ChatSharedItemsViewController: NodeActionViewControllerDelegate {
                 }
             })
         }
-        
-
     }
 }
 

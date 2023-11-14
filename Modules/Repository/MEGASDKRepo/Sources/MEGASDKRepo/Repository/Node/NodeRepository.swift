@@ -1,23 +1,21 @@
 import MEGADomain
-import MEGASDKRepo
+import MEGASdk
 
-struct NodeRepository: NodeRepositoryProtocol {
-    static var newRepo: NodeRepository {
-        NodeRepository(sdk: MEGASdk.shared, sharedFolderSdk: MEGASdk.sharedFolderLink, chatSdk: MEGAChatSdk.shared)
+public struct NodeRepository: NodeRepositoryProtocol {
+    public static var newRepo: NodeRepository {
+        NodeRepository(sdk: MEGASdk.sharedSdk, sharedFolderSdk: MEGASdk.sharedFolderLinkSdk)
     }
     
     private let sdk: MEGASdk
     private let sharedFolderSdk: MEGASdk
-    private let chatSdk: MEGAChatSdk
 
-    init(sdk: MEGASdk, sharedFolderSdk: MEGASdk, chatSdk: MEGAChatSdk) {
+    public init(sdk: MEGASdk, sharedFolderSdk: MEGASdk) {
         self.sdk = sdk
         self.sharedFolderSdk = sharedFolderSdk
-        self.chatSdk = chatSdk
     }
     
     // MARK: - Node
-    func nodeForHandle(_ handle: HandleEntity) -> NodeEntity? {
+    public func nodeForHandle(_ handle: HandleEntity) -> NodeEntity? {
         if let node = sdk.node(forHandle: handle) {
             return node.toNodeEntity()
         } else if let node = sharedFolderSdk.node(forHandle: handle) {
@@ -27,7 +25,7 @@ struct NodeRepository: NodeRepositoryProtocol {
         return nil
     }
 
-    func nodeFor(fileLink: FileLinkEntity, completion: @escaping (Result<NodeEntity, NodeErrorEntity>) -> Void) {
+    public func nodeFor(fileLink: FileLinkEntity, completion: @escaping (Result<NodeEntity, NodeErrorEntity>) -> Void) {
         sdk.publicNode(forMegaFileLink: fileLink.linkURL.absoluteString, delegate: RequestDelegate { (result) in
             switch result {
             case .success(let request):
@@ -42,7 +40,7 @@ struct NodeRepository: NodeRepositoryProtocol {
         })
     }
     
-    func nodeFor(fileLink: FileLinkEntity) async throws -> NodeEntity {
+    public func nodeFor(fileLink: FileLinkEntity) async throws -> NodeEntity {
         try await withCheckedThrowingContinuation { continuation in
             nodeFor(fileLink: fileLink) { result in
                 switch result {
@@ -55,17 +53,7 @@ struct NodeRepository: NodeRepositoryProtocol {
         }
     }
     
-    func chatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity) -> NodeEntity? {
-        if let message = chatSdk.message(forChat: chatId, messageId: messageId), let node = message.nodeList?.node(at: 0), handle == node.handle {
-            return node.toNodeEntity()
-        } else if let messageForNodeHistory = chatSdk.messageFromNodeHistory(forChat: chatId, messageId: messageId), let node = messageForNodeHistory.nodeList?.node(at: 0), handle == node.handle {
-            return node.toNodeEntity()
-        } else {
-            return nil
-        }
-    }
-    
-    func childNodeNamed(name: String, in parentHandle: HandleEntity) -> NodeEntity? {
+    public func childNodeNamed(name: String, in parentHandle: HandleEntity) -> NodeEntity? {
         guard let parent = sdk.node(forHandle: parentHandle), let node = sdk.childNode(forParent: parent, name: name) else {
             return nil
         }
@@ -73,9 +61,9 @@ struct NodeRepository: NodeRepositoryProtocol {
         return node.toNodeEntity()
     }
     
-    func childNode(parent node: NodeEntity,
-                   name: String,
-                   type: NodeTypeEntity) async -> NodeEntity? {
+    public func childNode(parent node: NodeEntity,
+                          name: String,
+                          type: NodeTypeEntity) async -> NodeEntity? {
         guard let parent = node.toMEGANode(in: sdk) else {
             return nil
         }
@@ -84,27 +72,27 @@ struct NodeRepository: NodeRepositoryProtocol {
                              type: type.rawValue)?.toNodeEntity()
     }
     
-    func images(for parentNode: NodeEntity) -> [NodeEntity] {
+    public func images(for parentNode: NodeEntity) -> [NodeEntity] {
         guard let parent = parentNode.toMEGANode(in: sdk) else { return [] }
         
         return images(forParentNode: parent)
     }
     
-    func images(for parentHandle: HandleEntity) -> [NodeEntity] {
+    public func images(for parentHandle: HandleEntity) -> [NodeEntity] {
         guard let parent = sdk.node(forHandle: parentHandle) else { return [] }
         
         return images(forParentNode: parent)
     }
     
-    func rubbishNode() -> NodeEntity? {
+    public func rubbishNode() -> NodeEntity? {
         sdk.rubbishNode?.toNodeEntity()
     }
     
-    func rootNode() -> NodeEntity? {
+    public func rootNode() -> NodeEntity? {
         sdk.rootNode?.toNodeEntity()
     }
     
-    func parents(of node: NodeEntity) async -> [NodeEntity] {
+    public func parents(of node: NodeEntity) async -> [NodeEntity] {
         let parentTreeTask = Task.detached { () -> [NodeEntity] in
             guard let node = node.toMEGANode(in: sdk) else { return [] }
             var parentTreeArray = [NodeEntity]()
@@ -142,7 +130,7 @@ struct NodeRepository: NodeRepositoryProtocol {
         return await parentTreeTask.value
     }
 
-    func children(of node: NodeEntity) async -> NodeListEntity? {
+    public func children(of node: NodeEntity) async -> NodeListEntity? {
         guard let node = node.toMEGANode(in: sdk) else { return nil }
         return sdk.children(forParent: node).toNodeListEntity()
     }
@@ -150,7 +138,7 @@ struct NodeRepository: NodeRepositoryProtocol {
     // MARK: - Private
     private func images(forParentNode node: MEGANode) -> [NodeEntity] {
         let nodeList = sdk.children(forParent: node)
-        let mediaNodes = (nodeList.mnz_mediaNodesMutableArrayFromNodeList() as? [MEGANode]) ?? []
+        let mediaNodes = nodeList.toNodeArray().filter { $0.name?.fileExtensionGroup.isMultiMedia == true }
         let imageNodes = mediaNodes.filter { $0.name?.fileExtensionGroup.isImage == true }
         
         return imageNodes.toNodeEntities()

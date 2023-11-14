@@ -1,3 +1,4 @@
+import ChatRepo
 import MEGADomain
 import MEGARepo
 import MEGASDKRepo
@@ -68,7 +69,8 @@ extension TextEditorViewRouter: TextEditorViewRouting {
             fileCacheRepository: FileCacheRepository.newRepo,
             mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo),
             preferenceRepository: PreferenceRepository.newRepo,
-            offlineFileFetcherRepository: OfflineFileFetcherRepository.newRepo)
+            offlineFileFetcherRepository: OfflineFileFetcherRepository.newRepo, 
+            chatNodeRepository: ChatNodeRepository.newRepo)
         let nodeDataUC = NodeUseCase(nodeDataRepository: NodeDataRepository.newRepo, nodeValidationRepository: NodeValidationRepository.newRepo, nodeRepository: NodeRepository.newRepo)
         let backupsUC = BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
         let vm = TextEditorViewModel(

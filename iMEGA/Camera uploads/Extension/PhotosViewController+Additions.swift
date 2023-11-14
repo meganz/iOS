@@ -1,3 +1,4 @@
+import ChatRepo
 import MEGADomain
 import MEGAPermissions
 import MEGASDKRepo
@@ -90,7 +91,7 @@ extension PhotosViewController {
             }
             
             let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdk.sharedSdk),
-                                                            fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+                                                            fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo, chatNodeRepository: ChatNodeRepository.newRepo)
             Task { @MainActor in
                 do {
                     try await saveMediaUseCase.saveToPhotos(nodes: nodes.toNodeEntities())

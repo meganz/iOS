@@ -1,9 +1,9 @@
+import ChatRepo
 import Foundation
 import MEGADomain
 import MEGASDKRepo
 
 class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate {
-    
     private weak var viewController: UIViewController?
     private(set) var isNodeFromFolderLink: Bool
     private(set) var messageId: HandleEntity?
@@ -15,7 +15,8 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
             sdk: MEGASdk.shared
         ),
         fileCacheRepository: FileCacheRepository.newRepo,
-        nodeRepository: NodeRepository.newRepo
+        nodeRepository: NodeRepository.newRepo, 
+        chatNodeRepository: ChatNodeRepository.newRepo
     )
 
     init(
