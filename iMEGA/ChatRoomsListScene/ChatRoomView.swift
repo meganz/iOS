@@ -8,36 +8,29 @@ struct ChatRoomView: View {
     
     var body: some View {
         Group {
-            if #available(iOS 15.0, *) {
-                ChatRoomContentView()
-                    .swipeActions {
-                        ForEach(swipeActionLabels()) { label in
-                            if let image = UIImage(named: label.imageName)?
-                                .withRenderingMode(.alwaysTemplate)
-                                .withTintColor(.white) {
-                                Button {
-                                    label.action()
-                                } label: {
-                                    Image(uiImage: image)
-                                }
-                                .tint(label.backgroundColor)
+            ChatRoomContentView()
+                .swipeActions {
+                    ForEach(swipeActionLabels()) { label in
+                        if let image = UIImage(named: label.imageName)?
+                            .withRenderingMode(.alwaysTemplate)
+                            .withTintColor(.white) {
+                            Button {
+                                label.action()
+                            } label: {
+                                Image(uiImage: image)
                             }
+                            .tint(label.backgroundColor)
                         }
                     }
-                    .confirmationDialog("", isPresented: $viewModel.showDNDTurnOnOptions) {
-                        ForEach(viewModel.dndTurnOnOptions(), id: \.self) { dndOption in
-                            Button(dndOption.localizedTitle) {
-                                viewModel.turnOnDNDOption(dndOption)
-                            }
+                }
+                .confirmationDialog("", isPresented: $viewModel.showDNDTurnOnOptions) {
+                    ForEach(viewModel.dndTurnOnOptions(), id: \.self) { dndOption in
+                        Button(dndOption.localizedTitle) {
+                            viewModel.turnOnDNDOption(dndOption)
                         }
                     }
-            } else {
-                ChatRoomContentView()
-                    .swipeLeftActions(labels: swipeActionLabels().reversed(), buttonWidth: 65)
-                    .actionSheet(isPresented: $viewModel.showDNDTurnOnOptions) {
-                        ActionSheet(title: Text(""), buttons: actionSheetButtons())
-                    }
-            }
+                }
+            
         }
         .environmentObject(viewModel)
     }

@@ -26,16 +26,10 @@ struct ScheduledMeetingOccurrencesView: View {
                 }
             }
             if viewModel.seeMoreOccurrencesVisible {
-                if #available(iOS 15.0, *) {
-                    SeeMoreOccurrencesView {
-                        viewModel.seeMoreTapped()
-                    }
-                    .listRowSeparator(.hidden)
-                } else {
-                    SeeMoreOccurrencesView {
-                        viewModel.seeMoreTapped()
-                    }
+                SeeMoreOccurrencesView {
+                    viewModel.seeMoreTapped()
                 }
+                .listRowSeparator(.hidden)
             }
         }
         .listStyle(.plain)
@@ -57,11 +51,7 @@ struct ScheduledMeetingOccurrencesContentView: View {
     let chatRoomAvatarViewModel: ChatRoomAvatarViewModel?
     
     var body: some View {
-        if #available(iOS 15.0, *) {
-            OccurrenceView(occurrence: occurrence, chatRoomAvatarViewModel: chatRoomAvatarViewModel)
-                .listRowSeparator(.hidden)
-        } else {
-            OccurrenceView(occurrence: occurrence, chatRoomAvatarViewModel: chatRoomAvatarViewModel)
-        }
+        OccurrenceView(occurrence: occurrence, chatRoomAvatarViewModel: chatRoomAvatarViewModel)
+            .listRowSeparator(.hidden)
     }
 }

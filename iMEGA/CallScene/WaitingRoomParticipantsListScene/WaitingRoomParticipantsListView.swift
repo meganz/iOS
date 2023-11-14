@@ -66,19 +66,11 @@ struct WaitingRoomParticipantsListView: View {
     
     @ViewBuilder
     private func searchBarView() -> some View {
-        if #available(iOS 15.0, *) {
-            SearchBarView(
-                text: $viewModel.searchText,
-                isEditing: $viewModel.isSearchActive,
-                placeholder: Strings.Localizable.search,
-                cancelTitle: Strings.Localizable.cancel)
-            .listRowSeparator(.hidden)
-        } else {
-            SearchBarView(
-                text: $viewModel.searchText,
-                isEditing: $viewModel.isSearchActive,
-                placeholder: Strings.Localizable.search,
-                cancelTitle: Strings.Localizable.cancel)
-        }
+        SearchBarView(
+            text: $viewModel.searchText,
+            isEditing: $viewModel.isSearchActive,
+            placeholder: Strings.Localizable.search,
+            cancelTitle: Strings.Localizable.cancel)
+        .listRowSeparator(.hidden)
     }
 }
