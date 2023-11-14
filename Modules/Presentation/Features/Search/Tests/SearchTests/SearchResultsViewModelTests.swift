@@ -270,7 +270,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         await harness.sut.queryChanged(to: "query")
         let result = harness.resultVM(at: 0)
         XCTAssertEqual(result.title, "title")
-        XCTAssertEqual(result.subtitle, "Desc")
+        XCTAssertEqual(result.result.description(.list), "Desc")
     }
     
     func testChipItems_byDefault_noChipsSelected() async {

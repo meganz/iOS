@@ -19,6 +19,8 @@ struct SearchResultRowView: View {
     @Binding var selected: Set<ResultId>
     @Binding var selectionMode: Bool
     
+    private let layout = ResultCellLayout.list
+    
     var body: some View {
         content
             .listRowInsets(
@@ -130,13 +132,13 @@ struct SearchResultRowView: View {
     }
     
     @ViewBuilder func propertyViewsFor(placement: PropertyPlacement) -> some View {
-        viewModel.result.properties.propertyViewsFor(mode: .list, placement: placement)
+        viewModel.result.properties.propertyViewsFor(mode: layout, placement: placement)
     }
     
     private var subtitleLine: some View {
         HStack(spacing: 4) {
             propertyViewsFor(placement: .secondary(.leading))
-            Text(viewModel.subtitle)
+            Text(viewModel.result.description(layout))
                 .font(.caption)
                 .lineLimit(1)
                 .foregroundColor(.primary)
@@ -210,7 +212,7 @@ extension SearchResult {
             thumbnailDisplayMode: thumbnailDisplayMode,
             backgroundDisplayMode: backgroundDisplayMode,
             title: "title\(idx)",
-            description: "desc\(idx)",
+            description: { _ in "desc\(idx)" },
             type: .node,
             properties: properties,
             thumbnailImageData: { UIImage(systemName: "rectangle")!.pngData()! }

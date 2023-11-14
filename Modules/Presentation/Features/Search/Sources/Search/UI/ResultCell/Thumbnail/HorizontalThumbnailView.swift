@@ -18,7 +18,7 @@ struct HorizontalThumbnailView: View {
     @Environment(\.colorSchemeContrast) private var colorSchemeContrast
     
     @ObservedObject var viewModel: SearchResultRowViewModel
-    private let mode: ResultCellLayout = .thumbnail(.horizontal)
+    private let layout: ResultCellLayout = .thumbnail(.horizontal)
     
     var body: some View {
         HStack(spacing: .zero) {
@@ -62,31 +62,31 @@ struct HorizontalThumbnailView: View {
             viewModel
                 .result
                 .properties
-                .propertyViewsFor(mode: mode, placement: .prominent)
+                .propertyViewsFor(mode: layout, placement: .prominent)
         }
         .frame(height: 12)
     }
     
     private var infoAndIcons: some View {
         HStack(spacing: 4) {
-            Text(viewModel.result.description)
+            Text(viewModel.result.description(layout))
                 .font(.caption)
                 .foregroundColor(.primary)
             
             viewModel
                 .result
                 .properties
-                .propertyViewsFor(mode: mode, placement: .secondary(.leading))
+                .propertyViewsFor(mode: layout, placement: .secondary(.leading))
             
             viewModel
                 .result
                 .properties
-                .propertyViewsFor(mode: mode, placement: .secondary(.trailing))
+                .propertyViewsFor(mode: layout, placement: .secondary(.trailing))
             
             viewModel
                 .result
                 .properties
-                .propertyViewsFor(mode: mode, placement: .secondary(.trailingEdge))
+                .propertyViewsFor(mode: layout, placement: .secondary(.trailingEdge))
             
         }
     }

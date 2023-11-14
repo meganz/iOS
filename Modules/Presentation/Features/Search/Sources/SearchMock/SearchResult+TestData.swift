@@ -13,7 +13,7 @@ extension SearchResult {
             thumbnailDisplayMode: thumbnailDisplayMode,
             backgroundDisplayMode: backgroundDisplayMode,
             title: title,
-            description: "Desc",
+            description: { _ in "Desc" },
             type: .node,
             properties: [],
             thumbnailImageData: { UIImage(systemName: "scribble")!.pngData()! }

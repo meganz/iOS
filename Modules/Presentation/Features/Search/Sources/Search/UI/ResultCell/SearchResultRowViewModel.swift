@@ -28,10 +28,6 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
     var id: String {
         result.id.description
     }
-
-    var subtitle: String {
-        result.description
-    }
     
     var selectedCheckmarkImage: UIImage {
         rowAssets.itemSelected

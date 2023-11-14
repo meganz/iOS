@@ -140,7 +140,7 @@ fileprivate extension SearchResult {
             thumbnailDisplayMode: thumbnailDisplayMode,
             backgroundDisplayMode: backgroundDisplayMode,
             title: "\(prefix) \(idx)",
-            description: "Parent folder",
+            description: { _ in "Parent folder" },
             type: .node,
             properties: [],
             thumbnailImageData: { image }

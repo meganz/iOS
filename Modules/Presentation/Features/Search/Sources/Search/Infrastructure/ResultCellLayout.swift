@@ -7,10 +7,10 @@ import Foundation
 /// if node is rendered in vertical or horizontal mode (file vs folder)
 /// For ResultProperties, they need to make decision where they want to be placed
 /// without particular cell layout, hence the distinction
-public enum ResultCellLayout: Equatable, Sendable {
+public enum ResultCellLayout: Equatable, Sendable, Hashable {
     
     // for grid layout, decides if it's shown a small, horizontal cell for folders, or bigger vertical with a preview
-    public enum ThumbnailMode: Sendable {
+    public enum ThumbnailMode: Sendable, Hashable {
         case horizontal
         case vertical
     }

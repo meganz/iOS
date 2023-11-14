@@ -11,7 +11,7 @@ public struct SearchResult: Identifiable, Sendable {
         /// a preview or a solid background with an icon
         backgroundDisplayMode: VerticalBackgroundViewMode,
         title: String,
-        description: String,
+        description: @escaping @Sendable (ResultCellLayout) -> String,
         type: ResultType,
         /// represents various properties such as labek color, offline status, versioning etc;
         /// elements in the array define how they should be rendered (icon, text ..) and where
@@ -35,7 +35,7 @@ public struct SearchResult: Identifiable, Sendable {
     public let thumbnailDisplayMode: ResultCellLayout.ThumbnailMode
     public let backgroundDisplayMode: VerticalBackgroundViewMode
     public let title: String
-    public let description: String
+    public let description: @Sendable (ResultCellLayout) -> String
     public let type: ResultType
     public let properties: [ResultProperty]
     public let thumbnailImageData: @Sendable () async -> Data
@@ -47,7 +47,9 @@ extension SearchResult: Equatable {
     public static func == (lhs: SearchResult, rhs: SearchResult) -> Bool {
         lhs.id == rhs.id &&
         lhs.title == rhs.title &&
-        lhs.description == rhs.description &&
+        lhs.description(.list) == rhs.description(.list) &&
+        lhs.description(.thumbnail(.horizontal)) == rhs.description(.thumbnail(.horizontal)) &&
+        lhs.description(.thumbnail(.vertical)) == rhs.description(.thumbnail(.vertical)) &&
         lhs.properties == rhs.properties &&
         lhs.type == rhs.type
     }
