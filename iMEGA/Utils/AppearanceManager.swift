@@ -102,9 +102,7 @@ class AppearanceManager: NSObject {
         appearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)]
 
         toolbar.standardAppearance = appearance
-        if #available(iOS 15.0, *) {
-            toolbar.scrollEdgeAppearance = appearance
-        }
+        toolbar.scrollEdgeAppearance = appearance
 
         let numberOfBarButtonItems: Int = toolbar.items?.count ?? 0
         for i in 0..<numberOfBarButtonItems {
@@ -134,7 +132,7 @@ class AppearanceManager: NSObject {
         
         tabBar.standardAppearance = appearance
 
-        if #available(iOS 15.0, *), ProcessInfo.processInfo.operatingSystemVersion.majorVersion >= 15 {
+        if ProcessInfo.processInfo.operatingSystemVersion.majorVersion >= 15 {
             tabBar.scrollEdgeAppearance = appearance
         }
     }
@@ -173,9 +171,7 @@ class AppearanceManager: NSObject {
         let toolbarAppearance = makeUIToolbarAppearance(traitCollection)
 
         UIToolbar.appearance().standardAppearance = toolbarAppearance
-        if #available(iOS 15.0, *) {
-            UIToolbar.appearance().scrollEdgeAppearance = toolbarAppearance
-        }
+        UIToolbar.appearance().scrollEdgeAppearance = toolbarAppearance
     }
 
     private class func makeUIToolbarAppearance(_ traitCollection: UITraitCollection) -> UIToolbarAppearance {
