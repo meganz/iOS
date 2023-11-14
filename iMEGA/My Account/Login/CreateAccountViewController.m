@@ -341,21 +341,21 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 - (void)updateAppearance {
     self.view.backgroundColor = [UIColor mnz_backgroundGroupedElevated:self.traitCollection];
     
-    self.firstNameInputView.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
+    self.firstNameInputView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
     [self.firstNameInputView updateAppearance];
     
-    self.lastNameInputView.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
+    self.lastNameInputView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
     [self.lastNameInputView updateAppearance];
     
-    self.emailInputView.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
+    self.emailInputView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
     [self.emailInputView updateAppearance];
     
-    self.passwordView.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
+    self.passwordView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
     [self.passwordView updateAppearance];
     
-    self.passwordStrengthIndicatorContainerView.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
+    self.passwordStrengthIndicatorContainerView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
     
-    self.retypePasswordView.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
+    self.retypePasswordView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
     [self.retypePasswordView updateAppearance];
     
     [self setTermsOfServiceAttributedText];

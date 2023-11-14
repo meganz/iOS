@@ -174,10 +174,10 @@
 - (void)updateAppearance {
     self.view.backgroundColor = [UIColor mnz_backgroundGroupedElevated:self.traitCollection];
     
-    self.emailInputView.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
+    self.emailInputView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
     [self.emailInputView updateAppearance];
     
-    self.passwordView.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
+    self.passwordView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
     [self.passwordView updateAppearance];
     
     if (self.urlType == URLTypeCancelAccountLink) {

@@ -248,16 +248,16 @@
         case ContactsModeChatNamingGroup: {
             self.chatNamingGroupTableViewHeader.backgroundColor = [UIColor mnz_backgroundGroupedElevated:self.traitCollection];
             
-            self.enterGroupNameView.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
+            self.enterGroupNameView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
             self.enterGroupNameBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
             
-            self.encryptedKeyRotationView.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
+            self.encryptedKeyRotationView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
             self.encryptedKeyRotationTopSeparatorView.backgroundColor = self.encryptedKeyRotationBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
             
-            self.getChatLinkView.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
+            self.getChatLinkView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
             self.getChatLinkTopSeparatorView.backgroundColor = self.getChatLinkBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
             
-            self.allowNonHostToAddParticipantsView.backgroundColor = [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
+            self.allowNonHostToAddParticipantsView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
             self.allowNonHostToAddParticipantsTopSeparatorView.backgroundColor = self.allowNonHostToAddParticipantsBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
             break;
         }
@@ -1453,7 +1453,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MEGAUser *user;
     ContactTableViewCell *cell;
-    cell.backgroundColor = (self.contactsMode == ContactsModeDefault) ? [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection] : [UIColor mnz_secondaryBackgroundGroupedElevated:self.traitCollection];
+    cell.backgroundColor = (self.contactsMode == ContactsModeDefault) ? [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection] : [UIColor mnz_tertiaryBackground:self.traitCollection];
     switch (self.contactsMode) {
         case ContactsModeDefault: {
             cell = [self dequeueOrInitCellWithIdentifier:@"contactCell" indexPath:indexPath];
