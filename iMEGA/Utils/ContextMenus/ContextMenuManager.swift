@@ -243,12 +243,10 @@ final class ContextMenuManager: NSObject {
     private func convertToMenu(menu: CMEntity) -> UIMenu {
         var menuModel = menu.toContextMenuModel()
         let menuItem = UIMenu(title: menuModel.data?.title ?? "",
-                          image: menuModel.data?.image,
-                          options: menuModel.displayInline ? [.displayInline] : [],
-                          children: convertToMenuElements(items: menu.children))
-        if #available(iOS 15.0, *) {
-            menuItem.subtitle = menuModel.data?.subtitle ?? ""
-        }
+                              subtitle: menuModel.data?.subtitle ?? "",
+                              image: menuModel.data?.image,
+                              options: menuModel.displayInline ? [.displayInline] : [],
+                              children: convertToMenuElements(items: menu.children))
         return menuItem
     }
     
