@@ -192,7 +192,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
             thumbnailDisplayMode: node.isFile ? .vertical : .horizontal,
             backgroundDisplayMode: node.hasThumbnail ? .preview : .icon,
             title: node.name,
-            description: info(for: node) ?? "",
+            description: info(for: node),
             type: .node,
             properties: properties(for: node),
             thumbnailImageData: { await self.loadThumbnail(for: node.handle) }
@@ -210,13 +210,38 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         })
     }
     
-    private func info(for node: NodeEntity) -> String? {
-        guard let megaNode = node.toMEGANode(in: sdk) else { return nil }
+    private func info(for node: NodeEntity) -> @Sendable (ResultCellLayout) -> String {
+        guard let megaNode = node.toMEGANode(in: sdk) else { return {_ in ""} }
+        // Because of the [FM-1406] description is layout dependent, we need
+        // to provide a way to customise what is shown for example for files
+        // independently for list layout (we show size and creation date)
+        // and for thumbnail-vertical where there's no space and we only
+        // show the size. Dictionary carries all possible strings for all layouts
+        // without retaining nodes or SDK
+        let mapping: [ResultCellLayout: String] = {
+            if node.isFile {
+                return [
+                    .list: Helper.sizeAndCreationDate(for: megaNode, api: sdk),
+                    .thumbnail(.horizontal): "", // we do not show files in thumbnail horizontal layout
+                    .thumbnail(.vertical): Helper.size(for: megaNode, api: sdk)
+                ]
+                
+            } else {
+                let value = Helper.filesAndFolders(inFolderNode: megaNode, api: sdk)
+                return [
+                    .list: value,
+                    .thumbnail(.horizontal): value,
+                    .thumbnail(.vertical): "" // we do not show folder in thumbnail vertical layout
+                ]
+            }
+        }()
         
-        if node.isFile {
-            return Helper.size(for: megaNode, api: sdk)
-        } else {
-            return Helper.filesAndFolders(inFolderNode: megaNode, api: sdk)
+        return { layout in
+            guard let description = mapping[layout] else {
+                MEGALogError("requested invalid description for unhandled layout \(layout)")
+                return ""
+            }
+            return description
         }
     }
     

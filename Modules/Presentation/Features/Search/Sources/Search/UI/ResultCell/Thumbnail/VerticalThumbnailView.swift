@@ -37,7 +37,7 @@ struct VerticalThumbnailView: View {
     
     @ObservedObject var viewModel: SearchResultRowViewModel
     
-    private let mode: ResultCellLayout = .thumbnail(.vertical)
+    private let layout: ResultCellLayout = .thumbnail(.vertical)
     
     var body: some View {
         VStack(spacing: .zero) {
@@ -73,7 +73,7 @@ struct VerticalThumbnailView: View {
                     .result
                     .properties
                     .propertyViewsFor(
-                        mode: mode,
+                        mode: layout,
                         placement: .secondary(.trailingEdge)
                     )
             }
@@ -91,7 +91,7 @@ struct VerticalThumbnailView: View {
             .result
             .properties
             .propertiesFor(
-                mode: mode,
+                mode: layout,
                 placement: .secondary(.trailingEdge)
             ).isNotEmpty
     }
@@ -101,7 +101,7 @@ struct VerticalThumbnailView: View {
     private var backgroundFooter: some View {
         HStack(spacing: 1) {
             
-            ForEach(viewModel.result.properties.propertiesFor(mode: mode, placement: .secondary(.leading))) { property in
+            ForEach(viewModel.result.properties.propertiesFor(mode: layout, placement: .secondary(.leading))) { property in
                 switch property.content {
                 case .icon(image: let image, scalable: let scalable):
                     resultPropertyImage(image: image, scalable: scalable)
@@ -153,7 +153,7 @@ struct VerticalThumbnailView: View {
                 .result
                 .properties
                 .propertyViewsFor(
-                    mode: mode,
+                    mode: layout,
                     placement: .prominent
                 )
         }
@@ -162,7 +162,7 @@ struct VerticalThumbnailView: View {
     // hosts subtitle and .secondary(.trailing) properties
     private var bottomLine: some View {
         HStack(spacing: 4) {
-            Text(viewModel.result.description)
+            Text(viewModel.result.description(layout))
                 .foregroundColor(.primary)
                 .font(.caption)
             
@@ -170,7 +170,7 @@ struct VerticalThumbnailView: View {
                 .result
                 .properties
                 .propertyViewsFor(
-                    mode: mode,
+                    mode: layout,
                     placement: .secondary(.trailing)
                 )
         }
