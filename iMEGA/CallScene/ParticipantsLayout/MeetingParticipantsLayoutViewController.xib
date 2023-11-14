@@ -56,15 +56,8 @@
                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="6bw-X5-gQJ">
                                     <rect key="frame" x="4" y="-32" width="93.5" height="24"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="userMutedBig" translatesAutoresizingMaskIntoConstraints="NO" id="C0Z-bC-2l6">
-                                            <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="24" id="QKY-Ve-urf"/>
-                                            </constraints>
-                                        </imageView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gHs-wa-Yzr">
-                                            <rect key="frame" x="24" y="0.0" width="69.5" height="24"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="69.5" height="24"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Participant" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ae0-ne-geK">
                                                     <rect key="frame" x="4" y="4.5" width="61.5" height="14.5"/>
@@ -80,6 +73,13 @@
                                                 <constraint firstAttribute="height" constant="24" id="pr3-Uk-rGN"/>
                                             </constraints>
                                         </view>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="userMutedBig" translatesAutoresizingMaskIntoConstraints="NO" id="C0Z-bC-2l6">
+                                            <rect key="frame" x="69.5" y="0.0" width="24" height="24"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="24" id="QKY-Ve-urf"/>
+                                            </constraints>
+                                        </imageView>
                                     </subviews>
                                     <viewLayoutGuide key="safeArea" id="1Bx-BE-Jy1"/>
                                     <color key="backgroundColor" red="0.086274509799999996" green="0.086274509799999996" blue="0.086274509799999996" alpha="0.5025197401" colorSpace="custom" customColorSpace="calibratedRGB"/>
