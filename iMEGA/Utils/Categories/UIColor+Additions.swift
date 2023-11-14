@@ -129,10 +129,6 @@ extension UIColor {
         return mnz_backgroundElevated(traitCollection)
     }
     
-    @objc class func mnz_tertiaryBackgroundGrouped(_ traitCollection: UITraitCollection) -> UIColor {
-        return mnz_secondaryBackgroundElevated(traitCollection)
-    }
-    
     // MARK: Background grouped elevated
     
     @objc class func mnz_backgroundGroupedElevated(_ traitCollection: UITraitCollection) -> UIColor {

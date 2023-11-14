@@ -61,7 +61,7 @@ class PhoneNumberViewController: UITableViewController {
     // MARK: - Private
     
     private func updateAppearance() {
-        tableView.backgroundColor = .mnz_tertiaryBackgroundGrouped(traitCollection)
+        tableView.backgroundColor = .mnz_secondaryBackgroundElevated(traitCollection)
         tableView.separatorColor = .mnz_separator(for: traitCollection)
         tableView.reloadData()
     }

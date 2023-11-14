@@ -98,7 +98,7 @@ final class ProfileTableViewDataSource {
             return cell
         case .recoveryKey:
             let cell = tableView.dequeueReusableCell(withIdentifier: "RecoveryKeyID", for: indexPath) as! RecoveryKeyTableViewCell
-            cell.recoveryKeyContainerView.backgroundColor = UIColor.mnz_tertiaryBackgroundGrouped(traitCollection)
+            cell.recoveryKeyContainerView.backgroundColor = UIColor.mnz_secondaryBackgroundElevated(traitCollection)
             cell.recoveryKeyLabel.text = Strings.Localizable.General.Security.recoveryKeyFile
             cell.backupRecoveryKeyLabel.text = Strings.Localizable.backupRecoveryKey
             cell.backupRecoveryKeyLabel.textColor = UIColor.mnz_turquoise(for: traitCollection)
