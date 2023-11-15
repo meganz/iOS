@@ -45,11 +45,6 @@ class CallParticipantCell: UICollectionViewCell {
                 videoImageView.isHidden = true
             }
             
-            if participant.audioDetected {
-                borderColor = UIColor.green00C29A
-                borderWidth = 1
-            }
-            
             switch layoutMode {
             case .grid:
                 micImageView.superview?.layer.cornerRadius = 2
@@ -61,6 +56,11 @@ class CallParticipantCell: UICollectionViewCell {
                     borderColor = .systemYellow
                     borderWidth = 1
                 }
+            }
+            
+            if participant.audioDetected {
+                borderColor = UIColor.green00C29A
+                borderWidth = 1
             }
         } else {
             nameLabel.isHidden = true
