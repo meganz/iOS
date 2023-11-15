@@ -30,7 +30,8 @@ struct PhotoLibraryPicker: View {
             }
         }
         .pickerStyle(.segmented)
-        .blurryBackground(radius: 7, singleColorTheme: true)
+        .background(RoundedRectangle(cornerRadius: 7).fill(Color.white).background(.thinMaterial))
+        .cornerRadius(7)
         .padding(16)
     }
     
