@@ -49,6 +49,8 @@
 		0E826BDF2AF07FDE00501677 /* CameraUploadStatusButtonViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E826BDE2AF07FDE00501677 /* CameraUploadStatusButtonViewModelTests.swift */; };
 		0E847F852A68E27D00AFE051 /* MEGALinkManager+AdditionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E847F842A68E27D00AFE051 /* MEGALinkManager+AdditionsTests.swift */; };
 		0E8A38222A720A3C00F216FA /* AlbumNameUseCase+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8A38212A720A3C00F216FA /* AlbumNameUseCase+Additions.swift */; };
+		0E9301E02B044C1A000306D9 /* EnableCameraUploadsEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9301DF2B044C1A000306D9 /* EnableCameraUploadsEmptyView.swift */; };
+		0E9301E22B044C62000306D9 /* PhotoTimelineEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E9301E12B044C62000306D9 /* PhotoTimelineEmptyView.swift */; };
 		0E9561602A64C451002EF903 /* PhotoLibraryContentViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E95615F2A64C451002EF903 /* PhotoLibraryContentViewModelTests.swift */; };
 		0E96EAD32ACBC29600782D88 /* AutoMediaDiscoveryBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E96EAD22ACBC29600782D88 /* AutoMediaDiscoveryBannerView.swift */; };
 		0EA150D729B810D2005C6486 /* AlbumType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EA150D629B810D2005C6486 /* AlbumType.swift */; };
@@ -2568,6 +2570,8 @@
 		0E847F842A68E27D00AFE051 /* MEGALinkManager+AdditionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGALinkManager+AdditionsTests.swift"; sourceTree = "<group>"; };
 		0E8A38212A720A3C00F216FA /* AlbumNameUseCase+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlbumNameUseCase+Additions.swift"; sourceTree = "<group>"; };
 		0E8C7E772AE2166900D408EB /* EnableCameraUploadsBannerButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnableCameraUploadsBannerButtonView.swift; sourceTree = "<group>"; };
+		0E9301DF2B044C1A000306D9 /* EnableCameraUploadsEmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnableCameraUploadsEmptyView.swift; sourceTree = "<group>"; };
+		0E9301E12B044C62000306D9 /* PhotoTimelineEmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoTimelineEmptyView.swift; sourceTree = "<group>"; };
 		0E95615F2A64C451002EF903 /* PhotoLibraryContentViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryContentViewModelTests.swift; sourceTree = "<group>"; };
 		0E96EAD22ACBC29600782D88 /* AutoMediaDiscoveryBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoMediaDiscoveryBannerView.swift; sourceTree = "<group>"; };
 		0EA150D629B810D2005C6486 /* AlbumType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumType.swift; sourceTree = "<group>"; };
@@ -6580,6 +6584,7 @@
 				B658D3BD218F939C004C0D64 /* UploadOperations */,
 				B6D11ADC219CE60E00446B86 /* UploadUtils */,
 				6DB163EE2880F91F004EFBC7 /* ViewModel */,
+				0E9301DF2B044C1A000306D9 /* EnableCameraUploadsEmptyView.swift */,
 				41AC33A61A926C27005118AF /* HeaderCollectionReusableView.h */,
 				41AC33A71A926C27005118AF /* HeaderCollectionReusableView.m */,
 				411E712D1D461E1D00DD7EF8 /* MEGACollectionViewFlowLayout.h */,
@@ -6590,6 +6595,7 @@
 				122B956D287CC7AA00860FE1 /* PhotosFilterOptions.swift */,
 				41BADDB41A8E2E92008408B3 /* PhotosViewController.h */,
 				41BADDB51A8E2E92008408B3 /* PhotosViewController.m */,
+				0E9301E12B044C62000306D9 /* PhotoTimelineEmptyView.swift */,
 				B6E6726A277D4E4B00158FA0 /* PhotoUpdatePublisher.swift */,
 			);
 			path = "Camera uploads";
@@ -13688,6 +13694,7 @@
 				12FF88EE2846F03100D99BED /* EmptyStateView+Timeline.swift in Sources */,
 				12FF88E82846EE2800D99BED /* EmptyStateView.m in Sources */,
 				25B529412AE765B8004503FD /* EnableCameraUploadsBannerButtonView.swift in Sources */,
+				0E9301E02B044C1A000306D9 /* EnableCameraUploadsEmptyView.swift in Sources */,
 				5B64D4EE2111D5DE004CD155 /* EnabledTwoFactorAuthenticationViewController.m in Sources */,
 				5B50DE0720AC1BDD00F2CB09 /* EnablingTwoFactorAuthenticationViewController.m in Sources */,
 				2F879C6D2629291C00D2FA78 /* EncourageGuestUserToJoinMegaRouter.swift in Sources */,
@@ -14395,6 +14402,7 @@
 				41BADDB61A8E2E92008408B3 /* PhotosViewController.m in Sources */,
 				6DB163F02880F953004EFBC7 /* PhotosViewModel+Filter.swift in Sources */,
 				3293D8092845B4380013EA72 /* PhotosViewModel.swift in Sources */,
+				0E9301E22B044C62000306D9 /* PhotoTimelineEmptyView.swift in Sources */,
 				B6E6726B277D4E4B00158FA0 /* PhotoUpdatePublisher.swift in Sources */,
 				B658D3B8218F9357004C0D64 /* PhotoUploadOperation.m in Sources */,
 				B6ADE4D927320C3300C19F36 /* PhotoYearCard.swift in Sources */,
