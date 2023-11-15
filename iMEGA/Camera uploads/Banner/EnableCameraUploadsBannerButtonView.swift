@@ -1,7 +1,7 @@
 import MEGAL10n
 import SwiftUI
 
-struct EnableCameraUploadsBannerView: View {
+struct EnableCameraUploadsBannerButtonView: View {
     private enum Constants {
         static let contentHorizontalSpacing: CGFloat = 8
         static let contentVerticalPadding: CGFloat = 12
@@ -15,7 +15,18 @@ struct EnableCameraUploadsBannerView: View {
     
     @Environment(\.colorScheme) private var colorScheme
     
+    private let onTapHandler: (() -> Void)?
+    
+    init(_ onTapHandler: (() -> Void)? = nil) {
+        self.onTapHandler = onTapHandler
+    }
+    
     var body: some View {
+        Button(action: onTapHandler ?? { }, label: content)
+            .buttonStyle(.plain)
+    }
+    
+    func content() -> some View {
         VStack(spacing: 0) {
             HStack(alignment: .center, spacing: Constants.contentHorizontalSpacing) {
                 Image(.enableCameraUploadsBannerIcon)
@@ -50,11 +61,12 @@ struct EnableCameraUploadsBannerView: View {
     }
 }
 
-struct EnableCameraUploadsBannerView_Preview: PreviewProvider {
+struct EnableCameraUploadsBannerButtonView_Preview: PreviewProvider {
     static var previews: some View {
         
-        EnableCameraUploadsBannerView()
-        EnableCameraUploadsBannerView()
+        EnableCameraUploadsBannerButtonView()
+        
+        EnableCameraUploadsBannerButtonView()
             .previewInterfaceOrientation(.landscapeLeft)
     }
 }

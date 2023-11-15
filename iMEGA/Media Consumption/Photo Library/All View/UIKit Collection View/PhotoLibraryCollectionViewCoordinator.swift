@@ -28,6 +28,10 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
         layoutChangesMonitor.photoLibraryDataSource
     }
     
+    private var viewModel: PhotoLibraryModeAllCollectionViewModel {
+        representer.viewModel
+    }
+    
     init(_ representer: PhotoLibraryCollectionViewRepresenter) {
         self.representer = representer
         router = PhotoLibraryContentViewRouter(contentMode: representer.contentMode)
@@ -47,13 +51,15 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
         
         bannerRegistration =  UICollectionView.SupplementaryRegistration<UICollectionViewCell>(elementKind: PhotoLibrarySupplementaryElementKind.layoutHeader.elementKind) { [unowned self] header, _, _ in
             header.contentConfiguration = UIHostingConfiguration {
-                EnableCameraUploadsBannerView()
-                    .determineViewSize { [weak self] size in
-                        self?.representer
-                            .viewModel
-                            .photoZoomControlPositionTracker
-                            .update(viewSpace: size.height)
-                    }
+                EnableCameraUploadsBannerButtonView { [weak self] in
+                    guard let self else { return }
+                    router.openCameraUploadSettings(viewModel: viewModel)
+                }
+                .determineViewSize { [weak self] size in
+                    self?.viewModel
+                        .photoZoomControlPositionTracker
+                        .update(viewSpace: size.height)
+                }
             }
             .margins(.all, 0)
         }
@@ -61,7 +67,7 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
         photoCellRegistration = UICollectionView.CellRegistration { [unowned self] cell, _, photo in
             let viewModel = PhotoCellViewModel(
                 photo: photo,
-                viewModel: representer.viewModel,
+                viewModel: viewModel,
                 thumbnailUseCase: ThumbnailUseCase.makeThumbnailUseCase(mode: representer.contentMode)
             )
             cell.viewModel = viewModel
@@ -83,14 +89,14 @@ final class PhotoLibraryCollectionViewCoordinator: NSObject {
     }
         
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        representer.viewModel
+        viewModel
             .photoZoomControlPositionTracker
             .trackContentOffset(scrollView.contentOffset.y)
     }
     
     private func configureScrollTracker(for collectionView: UICollectionView) {
         scrollTracker = PhotoLibraryCollectionViewScrollTracker(
-            libraryViewModel: representer.viewModel.libraryViewModel,
+            libraryViewModel: viewModel.libraryViewModel,
             collectionView: collectionView,
             delegate: self
         )
