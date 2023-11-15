@@ -93,9 +93,7 @@ class NodeInfoViewController: UIViewController {
         
         sdk.add(self)
         
-        if #available(iOS 15.0, *) {
-            tableView.sectionHeaderTopPadding = 0
-        }
+        tableView.sectionHeaderTopPadding = 0
         tableView.register(UINib(nibName: "GenericHeaderFooterView", bundle: nil), forHeaderFooterViewReuseIdentifier: "GenericHeaderFooterViewID")
         tableView.register(HostingTableViewCell<NodeInfoVerifyAccountTableViewCell>.self,
                                  forCellReuseIdentifier: "NodeInfoVerifyAccountTableViewCell")

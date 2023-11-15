@@ -70,10 +70,6 @@ private struct CopyrightWarningView: View {
                             .foregroundColor(textColor)
                     }
                     
-                    if #unavailable(iOS 15) {
-                        Spacer()
-                    }
-                    
                     Button {
                         isTermsAgreed = true
                     } label: {

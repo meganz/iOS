@@ -28,20 +28,12 @@ public extension String {
     /// - Parameter plurals: An array of `Plural` instances.
     /// - Returns: A string containing the localized strings of the `Plural` instances, concatenated in a list format.
     ///
-    /// If the current iOS version is 15.0 or later, the `formatted(_:)` method is used for concatenation;
-    /// otherwise, `ListFormatter.localizedString(byJoining:)` is used.
     static func concatenate(plurals: [Plural], locale: Locale = .autoupdatingCurrent) -> String {
         let formattedPlurals = plurals
             .filter { $0.count > 0 }
             .map(\.localizedString)
             
-        if #available(iOS 15.0, *) {
-            return formattedPlurals.formatted(.list(type: .and).locale(locale))
-        } else {
-            let formatter = ListFormatter()
-            formatter.locale = locale
-            return formatter.string(from: formattedPlurals) ?? ListFormatter.localizedString(byJoining: formattedPlurals)
-        }
+        return formattedPlurals.formatted(.list(type: .and).locale(locale))
     }
     
     /// Injects an array of `Plural` instances into a localized string generator.

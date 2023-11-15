@@ -82,11 +82,7 @@ extension MEGANode {
         let newName = textFieldText as NSString
         let isNewNameWithoutExtension = !newName.contains(".") || newName.pathExtension.mnz_isEmpty()
         var newNameIsEmpty = false
-        if #available(iOS 15.0, *) {
-            newNameIsEmpty = textFieldText.formatted(.filePath(extensionStyle: nil)) == ""
-        } else {
-            newNameIsEmpty = FileExtension.FormatStyle(extensionStyle: nil).format(textFieldText) == ""
-        }
+        newNameIsEmpty = textFieldText.formatted(.filePath(extensionStyle: nil)) == ""
         
         var enableRightButton = false
 
