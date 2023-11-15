@@ -833,7 +833,7 @@
         NSString *applicationSupportDirectoryString = applicationSupportDirectoryURL.path;
         NSArray *applicationSupportContent = [fileManager contentsOfDirectoryAtPath:applicationSupportDirectoryString error:&error];
         for (NSString *filename in applicationSupportContent) {
-            if ([filename containsString:@"megaclient_statecache13"] || [filename containsString:@"karere"]) {
+            if ([filename containsString:@"megaclient_statecache"] || [filename containsString:@"karere"]) {
                 NSString *destinationPath = [groupSupportPath stringByAppendingPathComponent:filename];
                 [NSFileManager.defaultManager mnz_removeItemAtPath:destinationPath];
                 if ([fileManager copyItemAtPath:[applicationSupportDirectoryString stringByAppendingPathComponent:filename] toPath:destinationPath error:&error]) {
