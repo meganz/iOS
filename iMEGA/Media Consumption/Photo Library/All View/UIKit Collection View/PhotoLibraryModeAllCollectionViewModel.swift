@@ -3,28 +3,17 @@ import MEGAPresentation
 import SwiftUI
 
 final class PhotoLibraryModeAllCollectionViewModel: PhotoLibraryModeAllViewModel {
-    let contentMode: PhotoLibraryContentMode
-    @Published private(set) var showEnableCameraUpload: Bool = false
     
     private(set) lazy var photoZoomControlPositionTracker = PhotoZoomControlPositionTracker(
         shouldTrackScrollOffsetPublisher: $showEnableCameraUpload,
         baseOffset: 0)
     
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
-    
-    @PreferenceWrapper(key: .isCameraUploadsEnabled, defaultValue: false)
-    private var isCameraUploadsEnabled: Bool
-
-    init(libraryViewModel: PhotoLibraryContentViewModel,
-         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
-         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
+    override init(libraryViewModel: PhotoLibraryContentViewModel,
+                  preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
+                  featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
         
-        self.contentMode = libraryViewModel.contentMode
-        self.featureFlagProvider = featureFlagProvider
+        super.init(libraryViewModel: libraryViewModel, preferenceUseCase: preferenceUseCase, featureFlagProvider: featureFlagProvider)
         
-        super.init(libraryViewModel: libraryViewModel)
-        
-        $isCameraUploadsEnabled.useCase = preferenceUseCase
         zoomState = PhotoLibraryZoomState(
             scaleFactor: libraryViewModel.configuration?.scaleFactor ?? zoomState.scaleFactor,
             maximumScaleFactor: .thirteen
@@ -44,20 +33,6 @@ final class PhotoLibraryModeAllCollectionViewModel: PhotoLibraryModeAllViewModel
             }
             .receive(on: DispatchQueue.main)
             .assign(to: &$photoCategoryList)
-        
-        if libraryViewModel.contentMode == .library {
-            libraryViewModel
-                .$library
-                .map { [weak self] _ in
-                    guard let self else {
-                        return false
-                    }
-                    return featureFlagProvider.isFeatureFlagEnabled(for: .timelineCameraUploadStatus) && !isCameraUploadsEnabled
-                }
-                .removeDuplicates()
-                .receive(on: DispatchQueue.main)
-                .assign(to: &$showEnableCameraUpload)
-        }
     }
     
     private func subscribeToZoomStateChange() {

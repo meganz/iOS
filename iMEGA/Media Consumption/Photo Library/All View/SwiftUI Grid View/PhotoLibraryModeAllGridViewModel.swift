@@ -5,9 +5,7 @@ import SwiftUI
 final class PhotoLibraryModeAllGridViewModel: PhotoLibraryModeAllViewModel {
     private var lastCardPosition: PhotoScrollPosition?
     private var lastPhotoPosition: PhotoScrollPosition?
-    
-    @Published var showEnableCameraUpload: Bool = false
-    
+
     private(set) lazy var photoZoomControlPositionTracker = PhotoZoomControlPositionTracker(
         shouldTrackScrollOffsetPublisher: $showEnableCameraUpload,
         baseOffset: 5)
@@ -28,20 +26,12 @@ final class PhotoLibraryModeAllGridViewModel: PhotoLibraryModeAllViewModel {
         calculateCurrentScrollPosition()
     }
     
-    @PreferenceWrapper(key: .isCameraUploadsEnabled, defaultValue: false)
-    private var isCameraUploadsEnabled: Bool
-    
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
-    
-    init(libraryViewModel: PhotoLibraryContentViewModel,
-         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
-         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
+    override init(libraryViewModel: PhotoLibraryContentViewModel,
+                  preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
+                  featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
         
-        self.featureFlagProvider = featureFlagProvider
-    
-        super.init(libraryViewModel: libraryViewModel)
-
-        $isCameraUploadsEnabled.useCase = preferenceUseCase
+        super.init(libraryViewModel: libraryViewModel, preferenceUseCase: preferenceUseCase, featureFlagProvider: featureFlagProvider)
+        
         zoomState.scaleFactor = libraryViewModel.configuration?.scaleFactor ?? zoomState.scaleFactor
         
         subscribeToLibraryChange()
@@ -62,20 +52,6 @@ final class PhotoLibraryModeAllGridViewModel: PhotoLibraryModeAllViewModel {
             }
             .receive(on: DispatchQueue.main)
             .assign(to: &$photoCategoryList)
-        
-        if libraryViewModel.contentMode == .library {
-            libraryViewModel
-                .$library
-                .map { [weak self] _ in
-                    guard let self else {
-                        return false
-                    }
-                    return featureFlagProvider.isFeatureFlagEnabled(for: .timelineCameraUploadStatus) && !isCameraUploadsEnabled
-                }
-                .removeDuplicates()
-                .receive(on: DispatchQueue.main)
-                .assign(to: &$showEnableCameraUpload)
-        }
     }
     
     private func shouldRefreshTo(_ categories: [PhotoDateSection]) -> Bool {

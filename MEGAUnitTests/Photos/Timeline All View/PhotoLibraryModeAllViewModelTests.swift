@@ -1,6 +1,7 @@
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
+import MEGAPresentationMock
 import MEGASwift
 import SwiftUI
 import XCTest
@@ -145,5 +146,52 @@ final class PhotoLibraryModeAllViewModelTests: XCTestCase {
         XCTAssertFalse(libraryViewModel.selection.isHidden)
         viewModel.zoomState.scaleFactor = .thirteen
         XCTAssertTrue(libraryViewModel.selection.isHidden)
+    }
+    
+    func testInvalidateCameraUploadEnabledSetting_whenIsCameraUploadsEnabledHasChanged_shouldTriggerShowEnableCameraUploadToEqualFalse() async {
+        
+        // Arrange
+        let mockPreferences = MockPreferenceUseCase(dict: [.isCameraUploadsEnabled: false])
+        let libraryViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary())
+        let sut = PhotoLibraryModeAllViewModel(
+            libraryViewModel: libraryViewModel,
+            preferenceUseCase: mockPreferences,
+            featureFlagProvider: MockFeatureFlagProvider(list: [.timelineCameraUploadStatus: true]))
+        
+        // Act
+        mockPreferences.dict[.isCameraUploadsEnabled] = true
+        sut.invalidateCameraUploadEnabledSetting()
+
+        let results: Bool? = await sut.$showEnableCameraUpload
+            .timeout(.seconds(1), scheduler: DispatchQueue.main)
+            .last()
+            .values
+            .first(where: { _ in true })
+        
+        // Assert
+        XCTAssertEqual(results, false)
+    }
+    
+    func testInvalidateCameraUploadEnabledSetting_whenIsCameraUploadsEnabledHasNotChanged_shouldTriggerShowEnableCameraUploadToEqualTrue() async {
+        
+        // Arrange
+        let mockPreferences = MockPreferenceUseCase(dict: [.isCameraUploadsEnabled: false])
+        let libraryViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary())
+        let sut = PhotoLibraryModeAllViewModel(
+            libraryViewModel: libraryViewModel,
+            preferenceUseCase: mockPreferences,
+            featureFlagProvider: MockFeatureFlagProvider(list: [.timelineCameraUploadStatus: true]))
+        
+        // Act
+        sut.invalidateCameraUploadEnabledSetting()
+
+        let results: Bool? = await sut.$showEnableCameraUpload
+            .timeout(.seconds(1), scheduler: DispatchQueue.main)
+            .last()
+            .values
+            .first(where: { _ in true })
+        
+        // Assert
+        XCTAssertEqual(results, true)
     }
 }

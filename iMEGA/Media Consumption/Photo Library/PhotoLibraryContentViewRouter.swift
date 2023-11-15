@@ -9,6 +9,7 @@ protocol PhotoLibraryContentViewRouting {
     func card(for photoByDay: PhotoByDay) -> PhotoDayCard
     func card(for photo: NodeEntity, viewModel: PhotoLibraryModeAllGridViewModel) -> PhotoCell
     func openPhotoBrowser(for photo: NodeEntity, allPhotos: [NodeEntity])
+    func openCameraUploadSettings(viewModel: PhotoLibraryModeAllViewModel)
 }
 
 struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
@@ -73,6 +74,13 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
         
         topController.modalPresentationStyle = .popover
         topController.present(photoBrowser, animated: true)
+    }
+    
+    func openCameraUploadSettings(viewModel: PhotoLibraryModeAllViewModel) {
+        CameraUploadsSettingsViewRouter(
+            presenter: UIApplication.mnz_visibleViewController().navigationController,
+            closure: { viewModel.invalidateCameraUploadEnabledSetting() })
+        .start()
     }
     
     private func makeThumnailUseCase() -> some ThumbnailUseCaseProtocol {

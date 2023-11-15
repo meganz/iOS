@@ -11,13 +11,13 @@ struct PhotoLibraryModeAllGridView: View {
             GeometryReader { geoProxy in
                 ScrollViewReader { scrollProxy in
                     PhotoLibraryModeView(viewModel: viewModel) {
-                            EnableCameraUploadsBannerView()
-                                .determineViewSize { size in
-                                    viewModel.photoZoomControlPositionTracker.update(viewSpace: size.height + 8)
-                                }
-                                .opacity(viewModel.showEnableCameraUpload ? 1 : 0)
-                                .frame(maxHeight: viewModel.showEnableCameraUpload ? .infinity : 0)
-                                .animation(.default, value: viewModel.showEnableCameraUpload)
+                        EnableCameraUploadsBannerButtonView { router.openCameraUploadSettings(viewModel: viewModel) }
+                            .determineViewSize { size in
+                                viewModel.photoZoomControlPositionTracker.update(viewSpace: size.height + 8)
+                            }
+                            .opacity(viewModel.showEnableCameraUpload ? 1 : 0)
+                            .frame(maxHeight: viewModel.showEnableCameraUpload ? .infinity : 0)
+                            .animation(.default, value: viewModel.showEnableCameraUpload)
                         
                         LazyVGrid(columns: viewModel.columns, spacing: 4, pinnedViews: .sectionHeaders) {
                             ForEach(viewModel.photoCategoryList) { section in
