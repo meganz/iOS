@@ -242,7 +242,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
 }
 
 - (void)applicationDidEnterBackground {
-    if (![NSStringFromClass([UIApplication sharedApplication].windows.firstObject.class) isEqualToString:@"UIWindow"]) {
+    if (![NSStringFromClass([UIApplication mnz_keyWindow].class) isEqualToString:@"UIWindow"]) {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"presentPasscodeLater"];
     }
 }
