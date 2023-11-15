@@ -67,7 +67,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA не может безопасно подключиться через SSL. Возможно, вы используете общедоступный Wi-Fi с дополнительными требованиями.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Please try to log in with same account as in the mobile browser.";
+"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to log in with same account as in the mobile browser.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="Процесс длится дольше ожидаемого. Пожалуйста, подождите…";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -1047,7 +1047,7 @@
 /* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
 "account.storageQuota"="%@ на диске";
 /* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
-"account.storage.freePlan"="[B]20+ ГБ[/B] на диске";
+"account.storage.freePlan"="[B]20 ГБ[/B] на диске";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="Передача данных";
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
@@ -2737,7 +2737,7 @@
 /* Dialog button title which triggers the action to visit Huawei app gallery */
 "account.delete.subscription.huaweiAppGallery.visit"="Открыть AppGallery";
 /* Dialog message shown before deleting an account with active webclient subscription */
-"account.delete.subscription.webClient"="Остался один шаг перед удалением аккаунта. Ваш аккаунт и подписка будут удалены, и вы навсегда потеряете все данные, хранящиеся в облаке. Пожалуйста, введите пароль.";
+"account.delete.subscription.webClient"="Остался один шаг перед удалением аккаунта. Ваш аккаунт и подписка будут удалены, и вы навсегда потеряете все данные, хранящиеся в аккаунте. Пожалуйста, введите пароль.";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
 "account.profile.avatar.uploadPhoto"="Загрузить фото";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
@@ -2986,6 +2986,10 @@
 "help.reportIssue.success.message"="Спасибо. Мы рассмотрим этот вопрос, и член нашей команды свяжется с вами.";
 /* Error message shown when some error occurs during uploading a bug report. */
 "help.reportIssue.fail.message"="Не удалось отправить сообщение. Пожалуйста, попробуйте ещё раз.";
+/* Error title shown when the user try to send more than one report in less than 10 minutes */
+"help.reportIssue.fail.too.many.request.title"="Должно пройти 10 минут, прежде чем вы сможете сообщить о новой проблеме.";
+/* Error message shown when the user try to send more than one report in less than 10 minutes */
+"help.reportIssue.fail.too.many.request.message"="Пожалуйста, повторите попытку позже или напишите в нашу команду поддержки на support@mega.nz, если проблема не исчезнет.";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.title"="Вы уверены, что хотите отменить загрузку сообщения об ошибке?";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
@@ -3530,6 +3534,8 @@
 "device.center.rename.device.duplicated.name"="Устройство с таким названием уже существует.";
 /* Device Center rename device action enter a different name message */
 "device.center.rename.device.different.name"="Введите другое название";
+/* Device Center rename device action invalid long name message */
+"device.center.rename.device.invalid.long.name"="Название устройства не может быть длиннее 32 символов";
 /* Device Center camera upload status enabled */
 "device.center.camera.uploads.action.status.enabled"="Включено";
 /* Device Center camera upload status disabled */
@@ -3615,7 +3621,7 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Особенности планов Pro";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• Защищённые паролем ссылки\n\n• Ссылки со сроком действия\n\n• Обмен квотой передач\n\n• Автоматическое резервное копирование\n\n• Перемотка на период до 90 дней на Pro Lite и до 365 дней на Pro I, II и III (скоро)\n\n• Срок очистки корзины от 7 дней до 10 лет";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• Защищённые паролем ссылки\n\n• Ссылки со сроком действия\n\n• Обмен квотой передач\n\n• Автоматическое резервное копирование\n\n• Перемотка на период до 90 дней на Pro Lite и до 180 дней на Pro I, II и III (скоро)\n\n• Срок очистки корзины от 7 дней до 10 лет";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Подробная информация о подписке";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3816,6 +3822,14 @@
 "home.search.filter.audio"="Аудио";
 /* Filter name for searching on the home screen */
 "home.search.filter.video"="Видео";
+/* Filter name for searching on the home screen */
+"home.search.filter.folders"="Папки";
+/* Filter name for searching on the home screen */
+"home.search.filter.pdfs"="PDFs";
+/* Filter name for searching on the home screen */
+"home.search.filter.presentations"="Presentations";
+/* Filter name for searching on the home screen */
+"home.search.filter.archives"="Archives";
 /* Empty screen copy when no filter is selected on the home screen search */
 "home.search.empty.no-chip-selected"="Нет результатов";
 /* Empty screen copy when Images filter is selected on the home screen search */
@@ -3826,6 +3840,14 @@
 "home.search.empty.no-audio"="Нет аудиофайлов";
 /* Empty screen copy when Video filter is selected on the home screen search */
 "home.search.empty.no-videos"="Нет видеофайлов";
+/* Empty screen copy when Folders filter is selected on the home screen search */
+"home.search.empty.no-folders"="No folders";
+/* Empty screen copy when PDF filter is selected on the home screen search */
+"home.search.empty.no-pdfs"="No PDFs";
+/* Empty screen copy when Presentations filter is selected on the home screen search */
+"home.search.empty.no-presentations"="No presentations";
+/* Empty screen copy when Archives filter is selected on the home screen search */
+"home.search.empty.no-archives"="No archives";
 /* A title label for waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.title"="Комната ожидания";
 /* A button label to close the waiting room participants list view. */
@@ -3858,3 +3880,9 @@
 "cameraUploads.banner.enableState.title"="Включить Загрузки из камеры";
 /* Camera uploads banner enable state description */
 "cameraUploads.banner.enableState.description"="Автоматически загружать фото и видео на облачный диск.";
+/* In app notification description for Shared Items when user left a shared folder. [A] will be replaced by the user's email who left. [B] will be replaced by shared folder name. */
+"inapp.notifications.sharedItems.userLeftTheSharedFolder.message"="Пользователь [A] покинул общую папку [B]";
+/* Shared Screen label in the main view when one user is sharing screen */
+"calls.screenShare.mainView.presentingLabel"="%@ is presenting";
+/* A warning HUB to show in the call UI when the user A try to tap user B who is sharing screen and the shared screen is in the main view */
+"calls.screenShare.waring.title"="This person is screen sharing";

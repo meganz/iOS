@@ -1047,7 +1047,7 @@
 /* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
 "account.storageQuota"="%@のストレージ";
 /* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
-"account.storage.freePlan"="[B]20 GB以上[/B]のストレージ";
+"account.storage.freePlan"="[B]20 GB[/B]のストレージ";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="転送";
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
@@ -2551,7 +2551,7 @@
 /* Title of the button to open Settings */
 "dialog.turnOnNotifications.button.primary"="設定を開く";
 /* Dialog title for the change launch tab screen */
-"Change Launch Tab"="起動タブの変更";
+"Change Launch Tab"="起動セクションの変更";
 /* Dialog description for the change launch tab screen */
 "You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="アプリの起動時に開くセクションを選択できるようになりました。チャット、クラウドドライブ、ホームなど、よりご自分のニーズに合ったものを選ぶことができます。";
 /* Dialog button text for the change launch tab screen */
@@ -2737,7 +2737,7 @@
 /* Dialog button title which triggers the action to visit Huawei app gallery */
 "account.delete.subscription.huaweiAppGallery.visit"="AppGalleryにアクセス";
 /* Dialog message shown before deleting an account with active webclient subscription */
-"account.delete.subscription.webClient"="これがアカウント削除の最後のステップです。アカウントとサブスクリプションの両方が削除され、クラウドに保存されているすべてのデータを恒久的に失うことになります。以下にパスワードを入力してください。";
+"account.delete.subscription.webClient"="これがアカウント削除の最後のステップです。アカウントとサブスクリプションの両方が削除され、アカウントに保存されているすべてのデータを恒久的に失うことになります。以下にパスワードを入力してください。";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
 "account.profile.avatar.uploadPhoto"="写真をアップロード";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
@@ -2986,6 +2986,10 @@
 "help.reportIssue.success.message"="ありがとうございます。この問題を調査し、担当者からご連絡させていただきます。";
 /* Error message shown when some error occurs during uploading a bug report. */
 "help.reportIssue.fail.message"="報告を送信できません。もう一度やり直してください。";
+/* Error title shown when the user try to send more than one report in less than 10 minutes */
+"help.reportIssue.fail.too.many.request.title"="別の問題を送信する前に10分待つ必要があります";
+/* Error message shown when the user try to send more than one report in less than 10 minutes */
+"help.reportIssue.fail.too.many.request.message"="後でもう一度お試しになるか、問題が解決しない場合はsupport@mega.nzから当社サポートチームにご連絡ください。";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.title"="ご報告された問題のアップロードをキャンセルしてもよろしいですか？";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
@@ -3530,6 +3534,8 @@
 "device.center.rename.device.duplicated.name"="この名前のデバイスはすでに存在します";
 /* Device Center rename device action enter a different name message */
 "device.center.rename.device.different.name"="別の名前を入力してください";
+/* Device Center rename device action invalid long name message */
+"device.center.rename.device.invalid.long.name"="デバイス名は最大32文字までです";
 /* Device Center camera upload status enabled */
 "device.center.camera.uploads.action.status.enabled"="有効になっています";
 /* Device Center camera upload status disabled */
@@ -3615,7 +3621,7 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Proプランの各機能";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="・パスワードで保護されたリンク\n\n・有効期限のあるリンク\n\n・転送容量の共有\n\n・自動バックアップ\n\n・Pro Liteでは最大90日、Pro I、II、IIIでは最大365日の巻き戻し（近日公開予定）\n\n・7日から10年の間でごみ箱を空にするようにスケジュール";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="・パスワードで保護されたリンク\n\n・有効期限のあるリンク\n\n・転送容量の共有\n\n・自動バックアップ\n\n・Pro Liteでは最大90日、Pro I、II、IIIでは最大180日の巻き戻し（近日公開予定）\n\n・7日から10年の間でごみ箱を空にするようにスケジュール";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="サブスクリプションの詳細";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3816,6 +3822,14 @@
 "home.search.filter.audio"="音声";
 /* Filter name for searching on the home screen */
 "home.search.filter.video"="ビデオ";
+/* Filter name for searching on the home screen */
+"home.search.filter.folders"="フォルダ";
+/* Filter name for searching on the home screen */
+"home.search.filter.pdfs"="PDF";
+/* Filter name for searching on the home screen */
+"home.search.filter.presentations"="プレゼンテーション";
+/* Filter name for searching on the home screen */
+"home.search.filter.archives"="アーカイブ";
 /* Empty screen copy when no filter is selected on the home screen search */
 "home.search.empty.no-chip-selected"="結果なし";
 /* Empty screen copy when Images filter is selected on the home screen search */
@@ -3826,6 +3840,14 @@
 "home.search.empty.no-audio"="音声ファイルがありません";
 /* Empty screen copy when Video filter is selected on the home screen search */
 "home.search.empty.no-videos"="動画ファイルがありません";
+/* Empty screen copy when Folders filter is selected on the home screen search */
+"home.search.empty.no-folders"="フォルダがありません";
+/* Empty screen copy when PDF filter is selected on the home screen search */
+"home.search.empty.no-pdfs"="PDFがありません";
+/* Empty screen copy when Presentations filter is selected on the home screen search */
+"home.search.empty.no-presentations"="プレゼンテーションがありません";
+/* Empty screen copy when Archives filter is selected on the home screen search */
+"home.search.empty.no-archives"="アーカイブがありません";
 /* A title label for waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.title"="待合室";
 /* A button label to close the waiting room participants list view. */
@@ -3858,3 +3880,9 @@
 "cameraUploads.banner.enableState.title"="カメラアップロードを有効にする";
 /* Camera uploads banner enable state description */
 "cameraUploads.banner.enableState.description"="あなたの写真や動画をあなたのクラウドドライブに自動的にバックアップします。";
+/* In app notification description for Shared Items when user left a shared folder. [A] will be replaced by the user's email who left. [B] will be replaced by shared folder name. */
+"inapp.notifications.sharedItems.userLeftTheSharedFolder.message"="ユーザー[A]さんが共有フォルダ[B]から去りました";
+/* Shared Screen label in the main view when one user is sharing screen */
+"calls.screenShare.mainView.presentingLabel"="%@さんがプレゼン中です";
+/* A warning HUB to show in the call UI when the user A try to tap user B who is sharing screen and the shared screen is in the main view */
+"calls.screenShare.waring.title"="この方は画面共有中です";

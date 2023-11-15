@@ -67,7 +67,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA無法透過SSL安全的連線，您可能在使用有額外要求的公共Wi-Fi。";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Please try to log in with same account as in the mobile browser.";
+"theContentIsNotAvailableForThisAccount"="此帳戶無法使用您嘗試存取的內容。嘗試使用與行動瀏覽器所登入的相同帳戶進行登入。";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="此處理過程比預期的要長。請稍候⋯";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -1047,7 +1047,7 @@
 /* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
 "account.storageQuota"="%@儲存空間";
 /* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
-"account.storage.freePlan"="[B]20 GB+[/B]儲存空間";
+"account.storage.freePlan"="[B]20 GB[/B]儲存空間";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="傳輸";
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
@@ -1119,7 +1119,7 @@
 /* Label to indicate that the current user has a Free account. */
 "Free"="免費";
 /* Text that shows the expiry date of the account PRO level */
-"expiresOn"="到期日期%@";
+"expiresOn"="%@到期";
 /* Label for the ‘Renews on’ text into the my account page, indicating the renewal date of a subscription - (String as short as possible). */
 "Renews on"="更新於";
 /* Title of the Incoming Shares section. Here you can see the folders that your contacts have shared with you */
@@ -1885,7 +1885,7 @@
 /* When somebody denied your contact request */
 "Denied your contact request"="拒絕您的聯絡人邀請";
 /* notification text */
-"A user has left the shared folder {0}"="用戶已經離開共享資料夾{0}";
+"A user has left the shared folder {0}"="使用者已經離開共享資料夾{0}";
 /* This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal). */
 "Access to folders was removed."="資料夾存取已移除。";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
@@ -2381,7 +2381,7 @@
 /* Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible). */
 "Learn more"="瞭解更多";
 /* Text indicating the date until a link will be valid */
-"Link expires %@"="連結到期日期%@";
+"Link expires %@"="連結到期%@";
 /* Text hint to let the user know that tapping something will be copied into the pasteboard */
 "Tap to Copy"="點擊複製";
 /* Caption of the button that will copy multiple files or folders export links to his clipboard */
@@ -2551,7 +2551,7 @@
 /* Title of the button to open Settings */
 "dialog.turnOnNotifications.button.primary"="開啟設定";
 /* Dialog title for the change launch tab screen */
-"Change Launch Tab"="更改載入分頁";
+"Change Launch Tab"="更改啟動頁面";
 /* Dialog description for the change launch tab screen */
 "You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="您現在可以選擇在啟動時打開應用程式的哪個部分功能。選擇最適合您需求的，例如對話、雲端硬碟、或首頁。";
 /* Dialog button text for the change launch tab screen */
@@ -2737,7 +2737,7 @@
 /* Dialog button title which triggers the action to visit Huawei app gallery */
 "account.delete.subscription.huaweiAppGallery.visit"="造訪華為應用程式商店";
 /* Dialog message shown before deleting an account with active webclient subscription */
-"account.delete.subscription.webClient"="這是刪除帳戶最後一個步驟。您的帳戶和訂閱都將被刪除，而且您將永久遺失所有儲存在雲端空間的資料。請在下方輸入您的密碼。";
+"account.delete.subscription.webClient"="這是刪除帳戶的最後一個步驟。您的帳戶和訂閱都將被刪除，而且您將永久遺失帳戶中儲存的所有資料。請在下方輸入您的密碼。";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
 "account.profile.avatar.uploadPhoto"="上傳照片";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
@@ -2986,6 +2986,10 @@
 "help.reportIssue.success.message"="謝謝。我們將調查此問題並儘快回覆您。";
 /* Error message shown when some error occurs during uploading a bug report. */
 "help.reportIssue.fail.message"="無法提交您的問題回報。請再試一次。";
+/* Error title shown when the user try to send more than one report in less than 10 minutes */
+"help.reportIssue.fail.too.many.request.title"="您必須等待10分鐘才能提交另一個問題";
+/* Error message shown when the user try to send more than one report in less than 10 minutes */
+"help.reportIssue.fail.too.many.request.message"="如果問題仍然存在，請稍後再試，或聯繫我們的客服團隊support@mega.nz";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.title"="您確定要取消正在上傳的問題回報嗎？";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
@@ -3530,6 +3534,8 @@
 "device.center.rename.device.duplicated.name"="已存在相同名稱的裝置";
 /* Device Center rename device action enter a different name message */
 "device.center.rename.device.different.name"="輸入不同名稱";
+/* Device Center rename device action invalid long name message */
+"device.center.rename.device.invalid.long.name"="裝置名稱最多只能包含32個字元（16個中文字）";
 /* Device Center camera upload status enabled */
 "device.center.camera.uploads.action.status.enabled"="啟用";
 /* Device Center camera upload status disabled */
@@ -3615,7 +3621,7 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Pro方案功能";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• 受密碼保護的連結\n\n• 連結可設定到期日期\n\n• 傳輸配額共享\n\n• 自動備份\n\n• Pro Lite最多可回溯90天，Pro I、II、III最多可回溯365天（即將推出）\n\n• 可設定7天到10年之間垃圾筒清理自動排程";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• 受密碼保護的連結\n\n• 連結可設定到期日期\n\n• 傳輸配額共享\n\n• 自動備份\n\n• Pro Lite最多可回溯90天，Pro I、II、III最多可回溯180天（即將推出）\n\n• 可安排7天到10年之間的垃圾筒自動清理排程";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="訂閱詳情";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3816,6 +3822,14 @@
 "home.search.filter.audio"="語音";
 /* Filter name for searching on the home screen */
 "home.search.filter.video"="影片";
+/* Filter name for searching on the home screen */
+"home.search.filter.folders"="資料夾";
+/* Filter name for searching on the home screen */
+"home.search.filter.pdfs"="PDF";
+/* Filter name for searching on the home screen */
+"home.search.filter.presentations"="簡報";
+/* Filter name for searching on the home screen */
+"home.search.filter.archives"="封存檔案";
 /* Empty screen copy when no filter is selected on the home screen search */
 "home.search.empty.no-chip-selected"="沒有搜尋結果";
 /* Empty screen copy when Images filter is selected on the home screen search */
@@ -3826,6 +3840,14 @@
 "home.search.empty.no-audio"="沒有音訊檔案";
 /* Empty screen copy when Video filter is selected on the home screen search */
 "home.search.empty.no-videos"="沒有影片檔案";
+/* Empty screen copy when Folders filter is selected on the home screen search */
+"home.search.empty.no-folders"="沒有資料夾";
+/* Empty screen copy when PDF filter is selected on the home screen search */
+"home.search.empty.no-pdfs"="沒有PDF";
+/* Empty screen copy when Presentations filter is selected on the home screen search */
+"home.search.empty.no-presentations"="沒有簡報";
+/* Empty screen copy when Archives filter is selected on the home screen search */
+"home.search.empty.no-archives"="沒有封存檔案";
 /* A title label for waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.title"="等候室";
 /* A button label to close the waiting room participants list view. */
@@ -3835,7 +3857,7 @@
 /* Auto media discovery banner title */
 "photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="由於此資料夾僅包含圖片和影片，我們已經自動在媒體探索檢視中開啟它。您可以透過更身臨其境的佈局享受您的視覺內容。您可以在設定中停用此功能。";
 /* Upgrade account screen header title after user onboarding */
-"onboarding.upgradeAccount.header.title"="使用Pro方案擁有更多";
+"onboarding.upgradeAccount.header.title"="透過Pro方案獲得更多功能";
 /* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
 "onboarding.upgradeAccount.header.subTitle"="升級到Pro方案獲得更多儲存空間和許多額外的功能。我們的方案從每月%@起。";
 /* Upgrade account screen content header for pro plan feature list */
@@ -3858,3 +3880,9 @@
 "cameraUploads.banner.enableState.title"="啟用相機上傳";
 /* Camera uploads banner enable state description */
 "cameraUploads.banner.enableState.description"="自動將您的相片與影片備份到您的雲端硬碟。";
+/* In app notification description for Shared Items when user left a shared folder. [A] will be replaced by the user's email who left. [B] will be replaced by shared folder name. */
+"inapp.notifications.sharedItems.userLeftTheSharedFolder.message"="使用者[A]已經離開共享資料夾[B]";
+/* Shared Screen label in the main view when one user is sharing screen */
+"calls.screenShare.mainView.presentingLabel"="%@正在展示";
+/* A warning HUB to show in the call UI when the user A try to tap user B who is sharing screen and the shared screen is in the main view */
+"calls.screenShare.waring.title"="此人正在螢幕共享";

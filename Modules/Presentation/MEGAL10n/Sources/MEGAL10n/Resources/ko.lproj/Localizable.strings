@@ -67,7 +67,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA가 SSL을 통하여 안전하게 연결할 수 없습니다. 추가적인 요구 사항이 있는 공개 Wi-Fi에 접속했을 수 있습니다.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Please try to log in with same account as in the mobile browser.";
+"theContentIsNotAvailableForThisAccount"="접근하려는 항목은 이 계정에서 이용할 수 없습니다. 모바일 브라우저와 같은 계정으로 로그인하세요.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="과정이 예상보다 오래 걸립니다. 잠시 기다려주세요…";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -1047,7 +1047,7 @@
 /* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
 "account.storageQuota"="%@ 저장소";
 /* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
-"account.storage.freePlan"="[B]20GB 이상[/B]의 저장소";
+"account.storage.freePlan"="[B]20GB[/B]의 저장소";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="전송";
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
@@ -1885,7 +1885,7 @@
 /* When somebody denied your contact request */
 "Denied your contact request"="당신의 연락처 요청이 거절되었습니다";
 /* notification text */
-"A user has left the shared folder {0}"="이용자가 공유된 폴더 {0}을/를 떠났습니다";
+"A user has left the shared folder {0}"="이용자가 공유된 {0} 폴더를 떠났습니다";
 /* This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal). */
 "Access to folders was removed."="폴더에 대한 접근이 제거됨.";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
@@ -2551,7 +2551,7 @@
 /* Title of the button to open Settings */
 "dialog.turnOnNotifications.button.primary"="설정 열기";
 /* Dialog title for the change launch tab screen */
-"Change Launch Tab"="시작 탭 변경";
+"Change Launch Tab"="시작 섹션 변경";
 /* Dialog description for the change launch tab screen */
 "You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="이제 앱을 시작할 때 열릴 섹션을 선택할 수 있습니다. 대화, 클라우드 드라이브, 또는 홈 중 어떠한 것이든 당신에게 필요한 것을 선택할 수 있습니다.";
 /* Dialog button text for the change launch tab screen */
@@ -2737,7 +2737,7 @@
 /* Dialog button title which triggers the action to visit Huawei app gallery */
 "account.delete.subscription.huaweiAppGallery.visit"="AppGallery 방문";
 /* Dialog message shown before deleting an account with active webclient subscription */
-"account.delete.subscription.webClient"="계정을 삭제하는 마지막 단계입니다. 당신의 계정과 구독 모두 삭제되며 클라우드에 저장된 모든 데이터를 영구적으로 잃게 됩니다. 아래에 암호를 입력하세요.";
+"account.delete.subscription.webClient"="계정을 삭제하는 마지막 단계입니다. 당신의 계정과 구독 모두 삭제되며 계정에 저장된 모든 데이터를 영구적으로 잃게 됩니다. 아래에 암호를 입력하세요.";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
 "account.profile.avatar.uploadPhoto"="사진 업로드";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
@@ -2986,6 +2986,10 @@
 "help.reportIssue.success.message"="고맙습니다. 이 문제를 확인해보고 우리 팀원이 연락을 드리겠습니다.";
 /* Error message shown when some error occurs during uploading a bug report. */
 "help.reportIssue.fail.message"="보고를 접수할 수 없습니다. 다시 시도하세요.";
+/* Error title shown when the user try to send more than one report in less than 10 minutes */
+"help.reportIssue.fail.too.many.request.title"="다른 문제를 접수하기 전에 10분을 기다려야 합니다";
+/* Error message shown when the user try to send more than one report in less than 10 minutes */
+"help.reportIssue.fail.too.many.request.message"="문제가 계속 되면 나중에 다시 시도하거나 support@mega.nz를 통해 지원 팀에 연락주세요";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.title"="문제 보고 업로드를 취소하시겠습니까?";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
@@ -3530,6 +3534,8 @@
 "device.center.rename.device.duplicated.name"="이 이름을 가진 장치가 이미 존재합니다";
 /* Device Center rename device action enter a different name message */
 "device.center.rename.device.different.name"="다른 이름을 입력하세요";
+/* Device Center rename device action invalid long name message */
+"device.center.rename.device.invalid.long.name"="장치 이름은 최대 32자입니다";
 /* Device Center camera upload status enabled */
 "device.center.camera.uploads.action.status.enabled"="활성화됨";
 /* Device Center camera upload status disabled */
@@ -3615,7 +3621,7 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Pro 요금제의 기능";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• 암호로 보호된 링크\n\n• 만료일이 있는 링크\n\n• 전송 할당량 공유\n\n• 자동 백업\n\n• Pro Lite는 최대 90일, Pro I, II, 그리고 III은 최대 365일 되돌리기 기능 (출시 예정)\n\n• 7일과 10년 사이의 휴지통 비우기 예약";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• 암호로 보호된 링크\n\n• 만료일이 있는 링크\n\n• 전송 할당량 공유\n\n• 자동 백업\n\n• Pro Lite는 최대 90일, Pro I, II, 그리고 III은 최대 180일 되돌리기 기능 (출시 예정)\n\n• 7일과 10년 사이의 휴지통 비우기 예약";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="구독 세부정보";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3816,6 +3822,14 @@
 "home.search.filter.audio"="음성";
 /* Filter name for searching on the home screen */
 "home.search.filter.video"="동영상";
+/* Filter name for searching on the home screen */
+"home.search.filter.folders"="폴더";
+/* Filter name for searching on the home screen */
+"home.search.filter.pdfs"="PDFs";
+/* Filter name for searching on the home screen */
+"home.search.filter.presentations"="Presentations";
+/* Filter name for searching on the home screen */
+"home.search.filter.archives"="Archives";
 /* Empty screen copy when no filter is selected on the home screen search */
 "home.search.empty.no-chip-selected"="결과 없음";
 /* Empty screen copy when Images filter is selected on the home screen search */
@@ -3826,6 +3840,14 @@
 "home.search.empty.no-audio"="오디오 파일 없음";
 /* Empty screen copy when Video filter is selected on the home screen search */
 "home.search.empty.no-videos"="동영상 파일 없음";
+/* Empty screen copy when Folders filter is selected on the home screen search */
+"home.search.empty.no-folders"="No folders";
+/* Empty screen copy when PDF filter is selected on the home screen search */
+"home.search.empty.no-pdfs"="No PDFs";
+/* Empty screen copy when Presentations filter is selected on the home screen search */
+"home.search.empty.no-presentations"="No presentations";
+/* Empty screen copy when Archives filter is selected on the home screen search */
+"home.search.empty.no-archives"="No archives";
 /* A title label for waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.title"="대기실";
 /* A button label to close the waiting room participants list view. */
@@ -3858,3 +3880,9 @@
 "cameraUploads.banner.enableState.title"="카메라 업로드 활성화";
 /* Camera uploads banner enable state description */
 "cameraUploads.banner.enableState.description"="자동으로 당신의 사진과 동영상을 클라우드 드라이브에 백업합니다.";
+/* In app notification description for Shared Items when user left a shared folder. [A] will be replaced by the user's email who left. [B] will be replaced by shared folder name. */
+"inapp.notifications.sharedItems.userLeftTheSharedFolder.message"="이용자 [A] 님이 공유된 [B] 폴더를 떠났습니다";
+/* Shared Screen label in the main view when one user is sharing screen */
+"calls.screenShare.mainView.presentingLabel"="%@ 님이 발표 중입니다";
+/* A warning HUB to show in the call UI when the user A try to tap user B who is sharing screen and the shared screen is in the main view */
+"calls.screenShare.waring.title"="이 사람이 화면을 공유 중입니다";

@@ -67,7 +67,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA no puede conectarse de forma segura a través de SSL. Es posible que estés conectado a una Wi-Fi pública con requisitos adicionales.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Please try to log in with same account as in the mobile browser.";
+"theContentIsNotAvailableForThisAccount"="El contenido al que estás intentando acceder no pertenece a esta cuenta. Inicia sesión con la misma cuenta que tienes abierta en el navegador móvil.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="Tardando más de lo previsto. Por favor, espera…";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -1047,7 +1047,7 @@
 /* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
 "account.storageQuota"="%@ de almacenamiento ";
 /* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
-"account.storage.freePlan"="[B]20 GB+[/B] de almacenamiento";
+"account.storage.freePlan"="[B]20 GB[/B] de almacenamiento";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="Transferencia";
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
@@ -2381,7 +2381,7 @@
 /* Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible). */
 "Learn more"="Más información";
 /* Text indicating the date until a link will be valid */
-"Link expires %@"="Los enlaces caducan el %@";
+"Link expires %@"="El enlace caduca el %@";
 /* Text hint to let the user know that tapping something will be copied into the pasteboard */
 "Tap to Copy"="Toca para copiar";
 /* Caption of the button that will copy multiple files or folders export links to his clipboard */
@@ -2551,7 +2551,7 @@
 /* Title of the button to open Settings */
 "dialog.turnOnNotifications.button.primary"="Abre Configuración";
 /* Dialog title for the change launch tab screen */
-"Change Launch Tab"="Cambiar la pestaña de inicio";
+"Change Launch Tab"="Cambiar la sección de inicio";
 /* Dialog description for the change launch tab screen */
 "You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="Selecciona la sección que quieres que se abra al iniciarse la aplicación. Elige la que mejor se adapte a tus necesidades, ya sea el chat, la Nube o la pestaña de inicio.";
 /* Dialog button text for the change launch tab screen */
@@ -2737,7 +2737,7 @@
 /* Dialog button title which triggers the action to visit Huawei app gallery */
 "account.delete.subscription.huaweiAppGallery.visit"="Ir a AppGallery";
 /* Dialog message shown before deleting an account with active webclient subscription */
-"account.delete.subscription.webClient"="Este es el último paso para eliminar tu cuenta. Tu suscripción se eliminará junto con tu cuenta y perderás de forma permanente todos los datos almacenados en la nube. Por favor, introduce tu contraseña a continuación.";
+"account.delete.subscription.webClient"="Este es el último paso para eliminar tu cuenta. Tu suscripción se eliminará junto con tu cuenta y perderás de forma permanente todos los datos almacenados allí. Por favor, introduce tu contraseña a continuación.";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
 "account.profile.avatar.uploadPhoto"="Subir foto";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
@@ -2986,6 +2986,10 @@
 "help.reportIssue.success.message"="Gracias. Analizaremos el problema y un miembro de nuestro equipo se pondrá en contacto contigo.";
 /* Error message shown when some error occurs during uploading a bug report. */
 "help.reportIssue.fail.message"="No se ha podido enviar el informe. Inténtalo de nuevo.";
+/* Error title shown when the user try to send more than one report in less than 10 minutes */
+"help.reportIssue.fail.too.many.request.title"="Debes esperar 10 minutos antes de enviar otro problema";
+/* Error message shown when the user try to send more than one report in less than 10 minutes */
+"help.reportIssue.fail.too.many.request.message"="Vuelve a intentarlo más tarde o ponte en contacto con nuestro equipo de soporte a través de support@mega.nz si el problema persiste";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.title"="¿Confirma que quieres cancelar la subida del informe de error?";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
@@ -3530,6 +3534,8 @@
 "device.center.rename.device.duplicated.name"="Ya existe un dispositivo con este nombre";
 /* Device Center rename device action enter a different name message */
 "device.center.rename.device.different.name"="Introduce un nombre diferente";
+/* Device Center rename device action invalid long name message */
+"device.center.rename.device.invalid.long.name"="El nombre del dispositivo solo puede tener un máximo de 32 caracteres";
 /* Device Center camera upload status enabled */
 "device.center.camera.uploads.action.status.enabled"="Activado";
 /* Device Center camera upload status disabled */
@@ -3615,7 +3621,7 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Características de los planes Pro";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• Enlaces protegidos con contraseña\n\n• Enlaces con fechas de caducidad\n\n• Posibilidad de compartir cuota de transferencia\n\n• Copias de seguridad automáticas\n\n• Rebobinado hasta 90 días en Pro Lite y hasta 365 días en Pro I, II y III (próximamente)\n\n• Limpieza automática de la papelera entre 7 días y 10 años";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• Enlaces protegidos con contraseña\n\n• Enlaces con fechas de caducidad\n\n• Posibilidad de compartir cuota de transferencia\n\n• Copias de seguridad automáticas\n\n• Rebobinado hasta 90 días en Pro Lite y hasta 180 días en Pro I, II y III (próximamente)\n\n• Limpieza automática de la papelera entre 7 días y 10 años";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Información sobre la suscripción";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3816,6 +3822,14 @@
 "home.search.filter.audio"="Audio";
 /* Filter name for searching on the home screen */
 "home.search.filter.video"="Vídeo";
+/* Filter name for searching on the home screen */
+"home.search.filter.folders"="Carpetas";
+/* Filter name for searching on the home screen */
+"home.search.filter.pdfs"="PDF";
+/* Filter name for searching on the home screen */
+"home.search.filter.presentations"="Presentaciones";
+/* Filter name for searching on the home screen */
+"home.search.filter.archives"="Archivos";
 /* Empty screen copy when no filter is selected on the home screen search */
 "home.search.empty.no-chip-selected"="No hay resultados";
 /* Empty screen copy when Images filter is selected on the home screen search */
@@ -3826,6 +3840,14 @@
 "home.search.empty.no-audio"="No hay archivos de audio";
 /* Empty screen copy when Video filter is selected on the home screen search */
 "home.search.empty.no-videos"="No hay archivos de vídeo";
+/* Empty screen copy when Folders filter is selected on the home screen search */
+"home.search.empty.no-folders"="No hay carpetas";
+/* Empty screen copy when PDF filter is selected on the home screen search */
+"home.search.empty.no-pdfs"="No hay PDF";
+/* Empty screen copy when Presentations filter is selected on the home screen search */
+"home.search.empty.no-presentations"="No hay presentaciones";
+/* Empty screen copy when Archives filter is selected on the home screen search */
+"home.search.empty.no-archives"="No hay archivos";
 /* A title label for waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.title"="Sala de espera";
 /* A button label to close the waiting room participants list view. */
@@ -3858,3 +3880,9 @@
 "cameraUploads.banner.enableState.title"="Activar las Subidas de la cámara";
 /* Camera uploads banner enable state description */
 "cameraUploads.banner.enableState.description"="Realizar backups automáticos de fotos y vídeos en la Nube.";
+/* In app notification description for Shared Items when user left a shared folder. [A] will be replaced by the user's email who left. [B] will be replaced by shared folder name. */
+"inapp.notifications.sharedItems.userLeftTheSharedFolder.message"="El usuario [A] ha abandonado la carpeta compartida [B]";
+/* Shared Screen label in the main view when one user is sharing screen */
+"calls.screenShare.mainView.presentingLabel"="%@ está presentando";
+/* A warning HUB to show in the call UI when the user A try to tap user B who is sharing screen and the shared screen is in the main view */
+"calls.screenShare.waring.title"="Esta persona está compartiendo pantalla";
