@@ -382,7 +382,7 @@
         
         NSArray *groupSupportPathContent = [fileManager contentsOfDirectoryAtPath:groupSupportURL.path error:&error];
         for (NSString *filename in groupSupportPathContent) {
-            if ([filename containsString:@"megaclient_statecache13"] || [filename containsString:@"karere"]) {
+            if ([filename containsString:@"megaclient_statecache"] || [filename containsString:@"karere"]) {
                 if ([fileManager copyItemAtURL:[groupSupportURL URLByAppendingPathComponent:filename] toURL:[applicationSupportDirectoryURL URLByAppendingPathComponent:filename] error:&error]) {
                     MEGALogDebug(@"Copy item at URL: %@ to URL: %@", [groupSupportURL URLByAppendingPathComponent:filename], [applicationSupportDirectoryURL URLByAppendingPathComponent:filename]);
                 } else {
