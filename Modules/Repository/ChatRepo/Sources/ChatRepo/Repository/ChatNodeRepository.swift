@@ -21,4 +21,8 @@ public struct ChatNodeRepository: ChatNodeRepositoryProtocol {
             return nil
         }
     }
+    
+    public func sizeForChatNode(handle: HandleEntity, messageId: HandleEntity, chatId: HandleEntity) -> UInt64? {
+        chatNode(handle: handle, messageId: messageId, chatId: chatId)?.size
+    }
 }
