@@ -125,7 +125,7 @@
             case NodeTableViewCellFlavorCloudDrive: {
                 self.infoLabel.text =
                     self.recentActionBucket ? [Helper sizeAndCreationHourAndMininuteForNode:node api:megaSDK] :
-                    [Helper sizeAndModicationDateForNode:node api:megaSDK];
+                    [Helper sizeAndModificationDateForNode:node api:megaSDK];
                 [MEGASdkManager.sharedMEGASdk hasVersionsForNode:node completion:^(BOOL hasVersions) {
                     dispatch_async(dispatch_get_main_queue(), ^{
                         self.versionedImageView.hidden = !hasVersions;

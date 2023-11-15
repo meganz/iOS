@@ -221,7 +221,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         let mapping: [ResultCellLayout: String] = {
             if node.isFile {
                 return [
-                    .list: Helper.sizeAndCreationDate(for: megaNode, api: sdk),
+                    .list: Helper.sizeAndModificationDate(for: megaNode, api: sdk),
                     .thumbnail(.horizontal): "", // we do not show files in thumbnail horizontal layout
                     .thumbnail(.vertical): Helper.size(for: megaNode, api: sdk)
                 ]

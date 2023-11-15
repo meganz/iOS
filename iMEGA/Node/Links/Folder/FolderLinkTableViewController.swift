@@ -1,4 +1,3 @@
-
 import Foundation
 import MEGADomain
 import MEGAL10n
@@ -131,7 +130,7 @@ extension FolderLinkTableViewController: UITableViewDataSource {
             } else {
                 cell.thumbnailImageView.image = NodeAssetsManager.shared.icon(for: node)
             }
-            cell.infoLabel.text = Helper.sizeAndModicationDate(for: node, api: MEGASdk.sharedFolderLink)
+            cell.infoLabel.text = Helper.sizeAndModificationDate(for: node, api: MEGASdk.sharedFolderLink)
         } else if node.isFolder() {
             cell.thumbnailImageView.image = NodeAssetsManager.shared.icon(for: node)
             cell.infoLabel.text = Helper.filesAndFolders(inFolderNode: node, api: MEGASdk.sharedFolderLink)

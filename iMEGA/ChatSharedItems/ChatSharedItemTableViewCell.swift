@@ -32,7 +32,7 @@ class ChatSharedItemTableViewCell: UITableViewCell {
         nameLabel.text = node.name
         ownerNameLabel.text = chatRoom.userDisplayName(forUserHandle: ownerHandle)
         ownerNameLabel.textColor = .mnz_subtitles(for: traitCollection)
-        infoLabel.text = Helper.sizeAndModicationDate(for: node, api: .shared)
+        infoLabel.text = Helper.sizeAndModificationDate(for: node, api: .shared)
         infoLabel.textColor = .mnz_subtitles(for: traitCollection)
         if node.hasThumbnail() {
             let thumbnailFilePath = Helper.path(for: node, inSharedSandboxCacheDirectory: "thumbnailsV3")
