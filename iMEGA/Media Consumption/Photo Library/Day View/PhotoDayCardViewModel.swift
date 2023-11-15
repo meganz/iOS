@@ -10,7 +10,6 @@ final class PhotoDayCardViewModel: PhotoCardViewModel {
         return photoByDay.contentList.count > 1 ? "+\(photoByDay.contentList.count - 1)": nil
     }
     
-    @available(iOS 15.0, *)
     var attributedTitle: AttributedString {
         var attr = photoByDay.categoryDate.formatted(.dateTime.locale(.current).year().month(.wide).day().attributed)
         let bold = AttributeContainer.font(.title2.bold())

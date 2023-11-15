@@ -14,15 +14,7 @@ struct PhotoLibraryContentView: View {
                     .scaleEffect(1.5)
             } else {
                 Group {
-                    if #available(iOS 15.0, *) {
-                        content()
-                    } else {
-                        ZStack(alignment: .bottom) {
-                            photoContent()
-                            PhotoLibraryPicker(selectedMode: $viewModel.selectedMode)
-                                .opacity(viewModel.contentMode == .library ? 1 : 0)
-                        }
-                    }
+                    content()
                 }
                 .environment(\.editMode, $editMode)
                 .onReceive(viewModel.selection.$editMode) {
@@ -38,7 +30,6 @@ struct PhotoLibraryContentView: View {
     }
     
     @ViewBuilder
-    @available(iOS 15.0, *)
     private func content() -> some View {
         if viewModel.shouldShowPhotoLibraryPicker {
             photoContent()

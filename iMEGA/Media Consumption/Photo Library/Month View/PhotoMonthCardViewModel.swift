@@ -6,7 +6,6 @@ final class PhotoMonthCardViewModel: PhotoCardViewModel {
     
     let title: String
     
-    @available(iOS 15.0, *)
     var attributedTitle: AttributedString {
         var attr = photoByMonth.categoryDate.formatted(.dateTime.locale(.current).year().month(.wide).attributed)
         let month = AttributeContainer.dateField(.month)

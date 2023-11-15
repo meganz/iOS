@@ -8,7 +8,6 @@ final class PhotoMonthSection: PhotoDateSection {
                    title: DateFormatter.monthTemplate().localisedString(from: photoByMonth.categoryDate))
     }
     
-    @available(iOS 15.0, *)
     override var attributedTitle: AttributedString {
         var attr = categoryDate.formatted(.dateTime.locale(.current).year().month(.wide).attributed)
         let month = AttributeContainer.dateField(.month)
