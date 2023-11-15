@@ -674,7 +674,7 @@ extension NodeInfoViewController: MEGAGlobalDelegate {
     func onNodesUpdate(_ api: MEGASdk, nodeList: MEGANodeList?) {
         guard let nodeList else { return }
             
-        for nodeIndex in 0..<nodeList.size.intValue {
+        for nodeIndex in 0..<nodeList.size {
             guard let nodeUpdated = nodeList.node(at: nodeIndex) else {
                 continue
             }

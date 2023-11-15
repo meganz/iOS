@@ -200,7 +200,7 @@ extension ChatViewController {
                 hasText = true
             }
             if chatMessage.message.type == .attachment || chatMessage.message.type == .voiceClip {
-                if chatMessage.message.nodeList?.size?.intValue ?? 0 == 1,
+                if chatMessage.message.nodeList?.size ?? 0 == 1,
                    let name = chatMessage.message.nodeList?.node(at: 0)?.name, name.fileExtensionGroup.isVisualMedia {
                     hasPhoto = true
                 } else {

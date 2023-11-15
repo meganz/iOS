@@ -188,7 +188,7 @@ extension CloudDriveViewController {
                 
             case .recents:
                 if let nodes {
-                    navigationTitle = Strings.Localizable.Recents.Section.Title.items(nodes.size.intValue)
+                    navigationTitle = Strings.Localizable.Recents.Section.Title.items(nodes.size)
                 }
                 
             default: break
@@ -312,12 +312,12 @@ extension CloudDriveViewController {
     }
     
     @objc func mapNodeListToArray(_ nodeList: MEGANodeList) -> NSArray {
-        guard let size = nodeList.size, size.intValue > 0 else {
+        guard nodeList.size > 0 else {
             return []
         }
         
-        let tempNodes = NSMutableArray(capacity: nodeList.size.intValue)
-        for i in 0..<nodeList.size.intValue {
+        let tempNodes = NSMutableArray(capacity: nodeList.size)
+        for i in 0..<nodeList.size {
             if let node = nodeList.node(at: i) {
                 tempNodes.add(node)
             }

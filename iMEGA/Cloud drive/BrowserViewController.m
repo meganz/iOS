@@ -287,7 +287,7 @@
     
     [self setNavigationBarTitle];
     
-    (self.nodes.size.unsignedIntegerValue == 0 || !MEGAReachabilityManager.isReachable) ? [self hideSearchBarIfNotActive] : [self addSearchBar];
+    (self.nodes.size == 0 || !MEGAReachabilityManager.isReachable) ? [self hideSearchBarIfNotActive] : [self addSearchBar];
 
     [self setToolbarItemsEnabled:enableToolbarItems];
     
@@ -643,7 +643,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger numberOfRows = 0;
     if ([MEGAReachabilityManager isReachable]) {
-        numberOfRows = self.searchController.isActive ? self.searchNodesArray.count : self.nodes.size.integerValue;
+        numberOfRows = self.searchController.isActive ? self.searchNodesArray.count : self.nodes.size;
     }
     
     return numberOfRows;

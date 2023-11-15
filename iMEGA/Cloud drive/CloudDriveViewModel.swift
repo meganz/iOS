@@ -118,12 +118,12 @@ enum CloudDriveAction: ActionType {
 }
 
 private extension MEGANodeList {
-    var nodeCount: Int { size?.intValue ?? 0 }
+    var nodeCount: Int { size }
     
     func containsOnlyVisualMedia() -> Bool {
         guard nodeCount > 0 else { return false }
         return (0..<nodeCount).notContains {
-            guard let nodeName = node(at: $0).name else {
+            guard let nodeName = node(at: $0)?.name else {
                 return false
             }
             return !nodeName.fileExtensionGroup.isVisualMedia
@@ -133,7 +133,7 @@ private extension MEGANodeList {
     func containsVisualMedia() -> Bool {
         guard nodeCount > 0 else { return false }
         return (0..<nodeCount).contains {
-            node(at: $0).name?.fileExtensionGroup.isVisualMedia ?? false
+            node(at: $0)?.name?.fileExtensionGroup.isVisualMedia ?? false
         }
     }
 }

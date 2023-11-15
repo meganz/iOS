@@ -72,7 +72,7 @@ extension ChatViewController: MessagesDisplayDelegate {
                 containerView.layer.borderColor = #colorLiteral(red: 0.8941176471, green: 0.9215686275, blue: 0.9176470588, alpha: 0).cgColor
             }
             
-            if chatMessage.message.type == .attachment && (chatMessage.message.nodeList?.size?.intValue ?? 0 == 1) {
+            if chatMessage.message.type == .attachment && (chatMessage.message.nodeList?.size ?? 0 == 1) {
                 if let node = chatMessage.message.nodeList?.node(at: 0), (node.name?.fileExtensionGroup.isVisualMedia ?? false) {
                     containerView.layer.borderColor = #colorLiteral(red: 0.8941176471, green: 0.9215686275, blue: 0.9176470588, alpha: 0).cgColor
                 }

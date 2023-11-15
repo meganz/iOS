@@ -142,7 +142,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             guard let nodeList = message.nodeList else {
                 return readyToPost
             }
-            if nodeList.size?.intValue != 1 {
+            if nodeList.size != 1 {
                 return readyToPost
             }
             guard let node = nodeList.node(at: 0) else {

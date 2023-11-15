@@ -55,19 +55,19 @@ class ChatViewAttachmentCellViewModel {
     // MARK: - Private methods.
     
     private func titleForAttachment() -> String {
-        if message.nodeList?.size.uintValue == 1 {
+        if message.nodeList?.size == 1 {
             return message.nodeList?.node(at: 0)?.name ?? ""
         } else {
-            return Strings.Localizable.General.Format.Count.file(message.nodeList?.size.intValue ?? 0)
+            return Strings.Localizable.General.Format.Count.file(message.nodeList?.size ?? 0)
         }
     }
     
     private func subtitleForAttachment() -> String {
-        if message.nodeList?.size.uintValue == 1 {
+        if message.nodeList?.size == 1 {
             let size = message.nodeList?.node(at: 0)?.size ?? 0
             return String.memoryStyleString(fromByteCount: size.int64Value)
         } else {
-            let totalSize = (0..<(message.nodeList?.size.intValue ?? 0))
+            let totalSize = (0..<(message.nodeList?.size ?? 0))
                 .compactMap({ message.nodeList?.node(at: $0)?.size?.int64Value })
                 .reduce(0, +)
             return String.memoryStyleString(fromByteCount: totalSize)
@@ -75,7 +75,7 @@ class ChatViewAttachmentCellViewModel {
     }
     
     private func setImageForAttachment(imageView: UIImageView) {
-        if message.nodeList?.size.uintValue == 1, let node = message.nodeList?.node(at: 0) {
+        if message.nodeList?.size == 1, let node = message.nodeList?.node(at: 0) {
             imageView.mnz_setThumbnail(by: node)
         }
     }

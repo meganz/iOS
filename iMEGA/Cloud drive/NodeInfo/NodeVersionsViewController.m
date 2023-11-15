@@ -453,7 +453,7 @@
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onNodesUpdate:(MEGASdk *)api nodeList:(MEGANodeList *)nodeList {
-    NSUInteger size = nodeList.size.unsignedIntegerValue;
+    NSUInteger size = nodeList.size;
     for (NSUInteger i = 0; i < size; i++) {
         MEGANode *nodeUpdated = [nodeList nodeAtIndex:i];
         if ([nodeUpdated hasChangedType:MEGANodeChangeTypeRemoved]) {

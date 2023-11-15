@@ -139,7 +139,7 @@
         if (self.cloudDrive.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch) {
             numberOfRows = self.cloudDrive.searchNodesArray.count;
         } else {
-            numberOfRows = self.cloudDrive.nodes.size.integerValue;
+            numberOfRows = self.cloudDrive.nodes.size;
         }
     }
     
@@ -215,7 +215,7 @@
         
         [self.cloudDrive setToolbarActionsEnabled:YES];
         
-        if (self.cloudDrive.selectedNodesArray.count == self.cloudDrive.nodes.size.integerValue) {
+        if (self.cloudDrive.selectedNodesArray.count == self.cloudDrive.nodes.size) {
             self.cloudDrive.allNodesSelected = YES;
         } else {
             self.cloudDrive.allNodesSelected = NO;
@@ -230,7 +230,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row > self.cloudDrive.nodes.size.integerValue) {
+    if (indexPath.row > self.cloudDrive.nodes.size) {
         return;
     }
     MEGANode *node = [self.cloudDrive nodeAtIndexPath:indexPath];

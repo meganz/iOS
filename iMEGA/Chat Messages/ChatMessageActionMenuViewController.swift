@@ -217,7 +217,7 @@ class ChatMessageActionMenuViewController: ActionSheetViewController {
     private func configureActionsForAttachment(_ chatMessage: ChatMessage) {
         actions = [saveForOfflineAction, forwardAction, exportMessagesAction, selectAction]
         
-        if chatMessage.message.nodeList?.size.uintValue == 1,
+        if chatMessage.message.nodeList?.size == 1,
            let name = chatMessage.message.nodeList?.node(at: 0)?.name,
            name.fileExtensionGroup.isVisualMedia {
             actions.append(saveToPhotosAction)

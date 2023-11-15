@@ -813,7 +813,7 @@ static NSString* const B = @"[B]";
         }
         
         MEGANodeList *nameNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:parentNode searchString:[nameWithoutExtension stringByAppendingPathExtension:extension]];
-        listSize = nameNodeList.size.intValue;
+        listSize = (int)nameNodeList.size;
         index++;
     } while (listSize != 0);
     

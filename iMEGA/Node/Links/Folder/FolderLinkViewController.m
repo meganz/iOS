@@ -212,14 +212,14 @@
     [self setNavigationBarTitleLabel];
     
     self.nodeList = [[MEGASdkManager sharedMEGASdkFolder] childrenForParent:self.parentNode order:[Helper sortTypeFor:self.parentNode]];
-    if (_nodeList.size.unsignedIntegerValue == 0) {
+    if (_nodeList.size == 0) {
         [self setActionButtonsEnabled:NO];
     } else {
         [self setActionButtonsEnabled:YES];
     }
     
-    NSMutableArray *tempArray = [[NSMutableArray alloc] initWithCapacity:self.nodeList.size.integerValue];
-    for (NSUInteger i = 0; i < self.nodeList.size.integerValue ; i++) {
+    NSMutableArray *tempArray = [[NSMutableArray alloc] initWithCapacity:self.nodeList.size];
+    for (NSUInteger i = 0; i < self.nodeList.size ; i++) {
         [tempArray addObject:[self.nodeList nodeAtIndex:i]];
     }
     
@@ -227,7 +227,7 @@
 
     [self reloadData];
 
-    if (self.nodeList.size.unsignedIntegerValue == 0) {
+    if (self.nodeList.size == 0) {
         [self.flTableView.tableView setTableHeaderView:nil];
     } else {
         [self addSearchBar];

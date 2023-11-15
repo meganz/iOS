@@ -44,7 +44,9 @@ final class MockSearchFileUseCase: SearchFileUseCaseProtocol {
 
         var nodes: [NodeEntity] = []
         for i in 0...nodeList.nodesCount-1 {
-            nodes.append(nodeList.nodeAt(i))
+            if let nodeAt = nodeList.nodeAt(i) {
+                nodes.append(nodeAt)
+            }
         }
 
         let filteredNodes = nodes.filter { $0.name.contains(name) }

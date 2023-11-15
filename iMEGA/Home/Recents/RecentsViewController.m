@@ -129,7 +129,7 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 3.0;
     if (!recentActionBucket) {
         return UITableViewCell.new;
     }
-    if (recentActionBucket.nodesList.size.integerValue > 1) {
+    if (recentActionBucket.nodesList.size > 1) {
         if (recentActionBucket.isMedia) {
             return [self thumbnailViewerTableViewCellForIndexPath:indexPath recentActionBucket:recentActionBucket];
         } else {

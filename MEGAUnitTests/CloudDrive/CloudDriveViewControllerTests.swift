@@ -287,7 +287,7 @@ final class CloudDriveViewControllerTests: XCTestCase {
         
         let result = sut.mapNodeListToArray(emptyItems)
         
-        XCTAssertEqual(result.count, emptyItems.size.intValue)
+        XCTAssertEqual(result.count, emptyItems.size)
     }
     
     func testMapNodeListToArray_whenHasSingleItem_sucessfullyMapItems() {
@@ -297,7 +297,7 @@ final class CloudDriveViewControllerTests: XCTestCase {
         
         let result = sut.mapNodeListToArray(emptyItems)
         
-        XCTAssertEqual(result.count, emptyItems.size.intValue)
+        XCTAssertEqual(result.count, emptyItems.size)
     }
     
     func testMapNodeListToArray_whenHasMoreThanOneItem_sucessfullyMapItems() {
@@ -307,7 +307,7 @@ final class CloudDriveViewControllerTests: XCTestCase {
         
         let result = sut.mapNodeListToArray(emptyItems)
         
-        XCTAssertEqual(result.count, emptyItems.size.intValue)
+        XCTAssertEqual(result.count, emptyItems.size)
     }
     
     // MARK: - Helpers

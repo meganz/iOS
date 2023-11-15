@@ -107,7 +107,7 @@
     [self updatePromptTitle];
     
     NSString *navigationTitle = LocalizedString(@"attachedXFiles", @"A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files.");
-    navigationTitle = [navigationTitle stringByReplacingOccurrencesOfString:@"%s" withString:self.message.nodeList.size.stringValue];
+    navigationTitle = [navigationTitle stringByReplacingOccurrencesOfString:@"%s" withString:[NSString stringWithFormat:@"%lu", (unsigned long)self.message.nodeList.size]];
     self.navigationItem.title = navigationTitle;
 }
 
@@ -162,7 +162,7 @@
 
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {
     NSUInteger selectedNodesCount = self.selectedNodesMutableArray.count;
-    if (self.message.nodeList.size.unsignedIntegerValue != selectedNodesCount) {
+    if (self.message.nodeList.size != selectedNodesCount) {
         [self.selectedNodesMutableArray removeAllObjects];
         
         NSArray *nodesArray = [self.message.nodeList mnz_nodesArrayFromNodeList];
@@ -204,7 +204,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSInteger numberOfRows = 0;
     if ([MEGAReachabilityManager isReachable]) {
-        numberOfRows = self.message.nodeList.size.unsignedIntegerValue;
+        numberOfRows = self.message.nodeList.size;
     }
     
     return numberOfRows;
