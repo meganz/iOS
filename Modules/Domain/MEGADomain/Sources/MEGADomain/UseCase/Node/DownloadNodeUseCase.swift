@@ -109,7 +109,7 @@ public struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineF
             }
         }
         
-        guard let nodeSize = nodeDataRepository.sizeForChatNode(handle: handle, messageId: messageId, chatId: chatId), fileSystemRepository.systemVolumeAvailability() > nodeSize else {
+        guard let nodeSize = chatNodeRepository.sizeForChatNode(handle: handle, messageId: messageId, chatId: chatId), fileSystemRepository.systemVolumeAvailability() > nodeSize else {
             completion?(.failure(.notEnoughSpace))
             return
         }

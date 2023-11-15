@@ -1214,8 +1214,6 @@
 		942F4FD81F500A8F001FC4AC /* MEGASdk+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 942F4FD71F500A8F001FC4AC /* MEGASdk+MNZCategory.m */; };
 		943092F42913E26D0092B99A /* NodeActionsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943092F32913E26D0092B99A /* NodeActionsRepository.swift */; };
 		943092F52914376A0092B99A /* NodeActionsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943092F32913E26D0092B99A /* NodeActionsRepository.swift */; };
-		943092F7291438200092B99A /* NodeDataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943092F6291438200092B99A /* NodeDataRepository.swift */; };
-		943092F829143DE60092B99A /* NodeDataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943092F6291438200092B99A /* NodeDataRepository.swift */; };
 		943092FA291440010092B99A /* NodeValidationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943092F9291440010092B99A /* NodeValidationRepository.swift */; };
 		94312E5029352329005F0F1C /* AudioSessionUseCase+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94312E4F29352329005F0F1C /* AudioSessionUseCase+Additions.swift */; };
 		943270612A66CEB60080D687 /* FolderLinkViewController+NodeActionViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943270602A66CEB60080D687 /* FolderLinkViewController+NodeActionViewControllerDelegate.swift */; };
@@ -3788,7 +3786,6 @@
 		942F4FD71F500A8F001FC4AC /* MEGASdk+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MEGASdk+MNZCategory.m"; sourceTree = "<group>"; };
 		942FD07A1EF3EEA000E99FB1 /* MEGAShare.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = MEGAShare.entitlements; path = iMEGA/Extensions/MEGAShare/MEGAShare.entitlements; sourceTree = SOURCE_ROOT; };
 		943092F32913E26D0092B99A /* NodeActionsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeActionsRepository.swift; sourceTree = "<group>"; };
-		943092F6291438200092B99A /* NodeDataRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeDataRepository.swift; sourceTree = "<group>"; };
 		943092F9291440010092B99A /* NodeValidationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeValidationRepository.swift; sourceTree = "<group>"; };
 		94312E4F29352329005F0F1C /* AudioSessionUseCase+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioSessionUseCase+Additions.swift"; sourceTree = "<group>"; };
 		9432290A1EDD8271007DB542 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -5257,7 +5254,6 @@
 				94FABD142ADE95A9003E8894 /* CameraUploadsRepository.swift */,
 				8396AB4027BBDD5600C71291 /* ImportNodeRepository.swift */,
 				943092F32913E26D0092B99A /* NodeActionsRepository.swift */,
-				943092F6291438200092B99A /* NodeDataRepository.swift */,
 				943092F9291440010092B99A /* NodeValidationRepository.swift */,
 				94485B5329B9F8BE006B919E /* SearchNodeRepository.swift */,
 			);
@@ -14175,7 +14171,6 @@
 				C48AED412710922D00DD9F85 /* NodeCollectionViewCell+Nib.swift in Sources */,
 				83E076F52179D7BC00058409 /* NodeCollectionViewCell.m in Sources */,
 				B5FC636229E8F53400EE4C8E /* NodeCollectionViewCellViewModel.swift in Sources */,
-				943092F7291438200092B99A /* NodeDataRepository.swift in Sources */,
 				5DF44CCC251369E000E9F0BC /* NodeDetailsUseCase.swift in Sources */,
 				B616D8342550C16700712012 /* NodeHandle+Additions.swift in Sources */,
 				833003A624DAFF7F00053B23 /* NodeInfoActionTableViewCell.swift in Sources */,
@@ -15062,7 +15057,6 @@
 				C42C35782743D924004D8BA9 /* NodeAccess.swift in Sources */,
 				943092F52914376A0092B99A /* NodeActionsRepository.swift in Sources */,
 				94C85E6F28B9405F00007A38 /* NodeAssetsManager.swift in Sources */,
-				943092F829143DE60092B99A /* NodeDataRepository.swift in Sources */,
 				C460506B27282D7200D67A44 /* NodeHandle+Additions.swift in Sources */,
 				9419E0482A50175F00813577 /* NodeLoadOperation+NodeAccessConfiguration.swift in Sources */,
 				C42C357A2743D96E004D8BA9 /* NodeLoadOperation.swift in Sources */,
