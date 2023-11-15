@@ -32,7 +32,7 @@ extension PhotosViewController {
     @objc func makeContextMenuBarButton() -> UIBarButtonItem? {
         guard let config = contextMenuConfiguration(), let menu = contextMenuManager?.contextMenu(with: config) else { return nil }
         if viewModel.timelineCameraUploadStatusFeatureEnabled {
-            return UIBarButtonItem(image: UIImage(resource: .moreNavigationBar),
+            return UIBarButtonItem(image: UIImage(resource: viewModel.isFilterActive ? .moreActionActiveNavigationBar : .moreNavigationBar),
                                    menu: makeTestingMenuItems(from: menu))
         }
         return UIBarButtonItem(image: UIImage(resource: .moreNavigationBar), menu: menu)
