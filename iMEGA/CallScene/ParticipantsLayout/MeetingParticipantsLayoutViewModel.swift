@@ -137,6 +137,8 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private var localVideoEnabled: Bool = false
     private var reconnecting: Bool = false
     private var switchingCamera: Bool = false
+    private var hasScreenSharingParticipant: Bool = false
+    
     private weak var containerViewModel: MeetingContainerViewModel?
 
     private let callUseCase: any CallUseCaseProtocol
@@ -914,9 +916,14 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     }
     
     private func updateLayoutModeAccordingScreenSharingParticipant() {
-        let hasScreenSharingParticipant = callParticipants.contains { $0.hasScreenShare }
+        let newHasScreenSharingParticipant = callParticipants.contains { $0.hasScreenShare }
+        let shouldChangeToThumbnailView = hasScreenSharingParticipant && !newHasScreenSharingParticipant
+        hasScreenSharingParticipant = newHasScreenSharingParticipant
+        
         if hasScreenSharingParticipant {
             layoutMode = .speaker
+        } else if shouldChangeToThumbnailView {
+            layoutMode = .grid
         }
         invokeCommand?(.switchLayoutMode(layout: layoutMode, participantsCount: callParticipants.count))
         invokeCommand?(.disableSwitchLayoutModeButton(disable: hasScreenSharingParticipant))
@@ -928,7 +935,6 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         let screenShareParticipants = callParticipants.filter { $0.isScreenShareCell}
         for callParticipant in cameraParticipants {
             if let firstParticipant = cameraParticipants.first, callParticipant == firstParticipant {
-                newParticipants.append(callParticipant)
                 if callParticipant.hasScreenShare,
                     let speakerParticipant,
                     callParticipant != speakerParticipant &&
@@ -936,6 +942,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                     let screenShareParticipant = CallParticipantEntity.createScreenShareParticipant(callParticipant)
                     newParticipants.append(screenShareParticipant)
                 }
+                newParticipants.append(callParticipant)
             } else if callParticipant.hasScreenShare {
                 if let screenShareParticipant = screenShareParticipants.first(where: { $0.participantId == callParticipant.participantId && $0.clientId == callParticipant.clientId}) {
                     newParticipants.append(screenShareParticipant)
