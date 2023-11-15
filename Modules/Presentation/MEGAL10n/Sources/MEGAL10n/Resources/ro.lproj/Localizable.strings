@@ -67,7 +67,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA nu se poate conecta securizat prin SSL. S-ar putea să fii pe o rețea Wi-Fi publică cu cerințe suplimentare.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Please try to log in with same account as in the mobile browser.";
+"theContentIsNotAvailableForThisAccount"="Conținutul pe care încercați să îl accesați nu este disponibil pentru acest cont. Încercați să vă conectați cu același cont ca în browserul mobil.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="Procesul durează mai mult decât era de așteptat. Te rugăm să aștepți…";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -1047,7 +1047,7 @@
 /* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
 "account.storageQuota"="%@ spațiu de stocare";
 /* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
-"account.storage.freePlan"="[B]20 GB+[/B] spațiu de stocare";
+"account.storage.freePlan"="[B]20 GB[/B] spațiu de stocare";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="Transfer";
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
@@ -2381,7 +2381,7 @@
 /* Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible). */
 "Learn more"="Află mai multe";
 /* Text indicating the date until a link will be valid */
-"Link expires %@"="Linkul expiră (în) %@";
+"Link expires %@"="Link-ul expiră pe %@";
 /* Text hint to let the user know that tapping something will be copied into the pasteboard */
 "Tap to Copy"="Atinge pentru a copia";
 /* Caption of the button that will copy multiple files or folders export links to his clipboard */
@@ -2551,7 +2551,7 @@
 /* Title of the button to open Settings */
 "dialog.turnOnNotifications.button.primary"="Deschide Configurări";
 /* Dialog title for the change launch tab screen */
-"Change Launch Tab"="Modifică secțiunea Lansare";
+"Change Launch Tab"="Modifică secțiunea lansare";
 /* Dialog description for the change launch tab screen */
 "You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="Acum puteți selecta ce secțiune se deschide aplicația la lansare. Alegeți-l pe cel care se potrivește mai bine nevoilor dvs., fie că este vorba de Chat, Unitatea cloud sau Start.";
 /* Dialog button text for the change launch tab screen */
@@ -2737,7 +2737,7 @@
 /* Dialog button title which triggers the action to visit Huawei app gallery */
 "account.delete.subscription.huaweiAppGallery.visit"="Vizitează AppGallery";
 /* Dialog message shown before deleting an account with active webclient subscription */
-"account.delete.subscription.webClient"="Acesta este ultimul pas pentru a-ți șterge contul. Atât contul, cât și abonamentul vor fi șterse și vei pierde definitiv toate datele stocate în unitatea cloud. Te rugăm să introduci parola mai jos.";
+"account.delete.subscription.webClient"="Acesta este ultimul pas pentru a vă șterge contul. Atât contul, cât și abonamentul dvs. vor fi șterse și veți pierde definitiv toate datele stocate în cont. Vă rugăm să introduceți parola mai jos.";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
 "account.profile.avatar.uploadPhoto"="Încarcă o fotografie";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
@@ -2986,6 +2986,10 @@
 "help.reportIssue.success.message"="Multumesc. Vom analiza această problemă și un membru al echipei noastre vă va răspunde.";
 /* Error message shown when some error occurs during uploading a bug report. */
 "help.reportIssue.fail.message"="Imposibil de trimis raportul. Vă rugăm să încercați din nou.";
+/* Error title shown when the user try to send more than one report in less than 10 minutes */
+"help.reportIssue.fail.too.many.request.title"="Trebuie să așteptați 10 minute înainte de a trimite o altă problemă";
+/* Error message shown when the user try to send more than one report in less than 10 minutes */
+"help.reportIssue.fail.too.many.request.message"="Încercați din nou mai târziu sau contactați echipa noastră de asistență prin support@mega.nz dacă problema persistă";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.title"="Sigur vrei să anulezi încărcarea problemei raportate?";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
@@ -3530,6 +3534,8 @@
 "device.center.rename.device.duplicated.name"="Un dispozitiv cu acest nume există deja";
 /* Device Center rename device action enter a different name message */
 "device.center.rename.device.different.name"="Introduceți un alt nume";
+/* Device Center rename device action invalid long name message */
+"device.center.rename.device.invalid.long.name"="Numele dispozitivului poate fi de până la 32 de caractere";
 /* Device Center camera upload status enabled */
 "device.center.camera.uploads.action.status.enabled"="Activată";
 /* Device Center camera upload status disabled */
@@ -3615,7 +3621,7 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Caracteristicile planurilor Pro";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• Link-uri protejate prin parolă\n\n• Link-uri cu datele de expirare\n\n• Partajarea cotelor de transfer\n\n• Backup-uri automate\n\n• Derulați înapoi până la 90 de zile pe Pro Lite și până la 365 de zile pe Pro I, II și III (în curând)\n\n• Programați curățarea coșurilor de gunoi între 7 zile și 10 ani.";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• Link-uri protejate prin parolă\n\n• Link-uri cu date de expirare\n\n• Împărțirea cotelor de transfer\n\n• Copii de rezervă automate\n\n• Derulați înapoi până la 90 de zile pe Pro Lite și până la 180 de zile pe Pro I, II și III (în curând)\n\n• Programați curățarea coșului de gunoi între 7 zile și 10 ani";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Detaliile abonamentului";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3816,6 +3822,14 @@
 "home.search.filter.audio"="Audio";
 /* Filter name for searching on the home screen */
 "home.search.filter.video"="Video";
+/* Filter name for searching on the home screen */
+"home.search.filter.folders"="Foldere";
+/* Filter name for searching on the home screen */
+"home.search.filter.pdfs"="PDF";
+/* Filter name for searching on the home screen */
+"home.search.filter.presentations"="Prezentări";
+/* Filter name for searching on the home screen */
+"home.search.filter.archives"="Arhive";
 /* Empty screen copy when no filter is selected on the home screen search */
 "home.search.empty.no-chip-selected"="Niciun rezultat";
 /* Empty screen copy when Images filter is selected on the home screen search */
@@ -3826,6 +3840,14 @@
 "home.search.empty.no-audio"="Nicio fișier audio";
 /* Empty screen copy when Video filter is selected on the home screen search */
 "home.search.empty.no-videos"="Nicio fișier video";
+/* Empty screen copy when Folders filter is selected on the home screen search */
+"home.search.empty.no-folders"="Niciun folder";
+/* Empty screen copy when PDF filter is selected on the home screen search */
+"home.search.empty.no-pdfs"="Nicio PDF";
+/* Empty screen copy when Presentations filter is selected on the home screen search */
+"home.search.empty.no-presentations"="Nicio prezentare";
+/* Empty screen copy when Archives filter is selected on the home screen search */
+"home.search.empty.no-archives"="Nicio arhivă";
 /* A title label for waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.title"="Sala de asteptare";
 /* A button label to close the waiting room participants list view. */
@@ -3858,3 +3880,9 @@
 "cameraUploads.banner.enableState.title"="Activează Încărcări cameră";
 /* Camera uploads banner enable state description */
 "cameraUploads.banner.enableState.description"="Fă backup automat fotografiilor și videoclipurilor în Unitatea cloud.";
+/* In app notification description for Shared Items when user left a shared folder. [A] will be replaced by the user's email who left. [B] will be replaced by shared folder name. */
+"inapp.notifications.sharedItems.userLeftTheSharedFolder.message"="Utilizatorul [A]a părăsit folderul partajat [B]";
+/* Shared Screen label in the main view when one user is sharing screen */
+"calls.screenShare.mainView.presentingLabel"="%@ prezintă";
+/* A warning HUB to show in the call UI when the user A try to tap user B who is sharing screen and the shared screen is in the main view */
+"calls.screenShare.waring.title"="Această persoană partajează ecranul";

@@ -67,7 +67,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA无法通过SSL进行安全连接。您可能正在使用受限制的公共网络。";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Please try to log in with same account as in the mobile browser.";
+"theContentIsNotAvailableForThisAccount"="您尝试访问的内容不适用于此帐户。请尝试使用与移动浏览器相同的帐户登录。";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="加载时间较长，请稍后…";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -1047,7 +1047,7 @@
 /* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
 "account.storageQuota"="%@存储空间";
 /* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
-"account.storage.freePlan"="[B]20 GB+[/B]存储空间";
+"account.storage.freePlan"="[B]20 GB[/B]存储空间";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="传输";
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
@@ -1885,7 +1885,7 @@
 /* When somebody denied your contact request */
 "Denied your contact request"="已拒绝您的联系人请求";
 /* notification text */
-"A user has left the shared folder {0}"="一位用户已离开共享文件夹{0}";
+"A user has left the shared folder {0}"="用户已离开共享文件夹{0}";
 /* This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal). */
 "Access to folders was removed."="移除了对文件夹的访问权限。";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
@@ -2551,7 +2551,7 @@
 /* Title of the button to open Settings */
 "dialog.turnOnNotifications.button.primary"="打开设置";
 /* Dialog title for the change launch tab screen */
-"Change Launch Tab"="更改启动窗口";
+"Change Launch Tab"="更改启动界面";
 /* Dialog description for the change launch tab screen */
 "You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="您现在可以从云盘、相机上传、聊天、共享文件或主页中任选其一作为您的启动窗口。";
 /* Dialog button text for the change launch tab screen */
@@ -2737,7 +2737,7 @@
 /* Dialog button title which triggers the action to visit Huawei app gallery */
 "account.delete.subscription.huaweiAppGallery.visit"="访问华为应用商店";
 /* Dialog message shown before deleting an account with active webclient subscription */
-"account.delete.subscription.webClient"="这是删除帐户的最后一步。您的帐户和订阅都将被删除，您将永久丢失存储在云盘中的所有数据。请在下方输入您的密码。";
+"account.delete.subscription.webClient"="这是删除您帐户的最后一步。您的帐户和订阅都将被删除，您将永久丢失该帐户中存储的所有数据。请在下方输入您的密码。";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
 "account.profile.avatar.uploadPhoto"="上传照片";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
@@ -2986,6 +2986,10 @@
 "help.reportIssue.success.message"="谢谢。我们将调查此问题并尽快与您取得联系。";
 /* Error message shown when some error occurs during uploading a bug report. */
 "help.reportIssue.fail.message"="无法提交您的问题。请再试一次。";
+/* Error title shown when the user try to send more than one report in less than 10 minutes */
+"help.reportIssue.fail.too.many.request.title"="您必须等待10分钟才能提交另一个问题";
+/* Error message shown when the user try to send more than one report in less than 10 minutes */
+"help.reportIssue.fail.too.many.request.message"="如果问题仍然存在，请稍后再试或联系我们的客服团队support@mega.nz";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.title"="您确定要取消上传您报告的问题吗？";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
@@ -3530,6 +3534,8 @@
 "device.center.rename.device.duplicated.name"="已存在有该名称的设备。";
 /* Device Center rename device action enter a different name message */
 "device.center.rename.device.different.name"="输入一个不同的名称";
+/* Device Center rename device action invalid long name message */
+"device.center.rename.device.invalid.long.name"="设备名称最多只能包含32个字符（16个中文字）";
 /* Device Center camera upload status enabled */
 "device.center.camera.uploads.action.status.enabled"="已开启";
 /* Device Center camera upload status disabled */
@@ -3615,7 +3621,7 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Pro方案的功能";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• 有密码保护的共享链接\n\n• 有到期日期的共享链接\n\n• 传输流量共享\n\n• 自动备份\n\n• 在Pro Lite上可还原长达90天，在Pro I、II和III上可还原长达365天（即将推出）\n\n• 安排在7天到10年之间自动清理回收站";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• 受密码保护的共享链接\n\n• 共享链接可设置到期日期\n\n• 传输流量共享\n\n• 自动备份\n\n• Pro Lite方案可还原长达90天，Pro I、II和III方案可还原长达180天（即将推出）\n\n• 可安排在7天到10年之间自动清理回收站";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="订阅详情";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3816,6 +3822,14 @@
 "home.search.filter.audio"="语音";
 /* Filter name for searching on the home screen */
 "home.search.filter.video"="视频";
+/* Filter name for searching on the home screen */
+"home.search.filter.folders"="文件夹";
+/* Filter name for searching on the home screen */
+"home.search.filter.pdfs"="PDF";
+/* Filter name for searching on the home screen */
+"home.search.filter.presentations"="演示文稿";
+/* Filter name for searching on the home screen */
+"home.search.filter.archives"="封存档案";
 /* Empty screen copy when no filter is selected on the home screen search */
 "home.search.empty.no-chip-selected"="没有符合搜索的项目";
 /* Empty screen copy when Images filter is selected on the home screen search */
@@ -3826,6 +3840,14 @@
 "home.search.empty.no-audio"="无音频文件";
 /* Empty screen copy when Video filter is selected on the home screen search */
 "home.search.empty.no-videos"="无视频文件";
+/* Empty screen copy when Folders filter is selected on the home screen search */
+"home.search.empty.no-folders"="没有文件夹";
+/* Empty screen copy when PDF filter is selected on the home screen search */
+"home.search.empty.no-pdfs"="没有PDF";
+/* Empty screen copy when Presentations filter is selected on the home screen search */
+"home.search.empty.no-presentations"="没有演示文稿";
+/* Empty screen copy when Archives filter is selected on the home screen search */
+"home.search.empty.no-archives"="没有封存档案";
 /* A title label for waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.title"="正在等候室";
 /* A button label to close the waiting room participants list view. */
@@ -3858,3 +3880,9 @@
 "cameraUploads.banner.enableState.title"="启用相机上传";
 /* Camera uploads banner enable state description */
 "cameraUploads.banner.enableState.description"="自动备份您的照片和视频到您的云盘。";
+/* In app notification description for Shared Items when user left a shared folder. [A] will be replaced by the user's email who left. [B] will be replaced by shared folder name. */
+"inapp.notifications.sharedItems.userLeftTheSharedFolder.message"="用户[A]已离开共享文件夹[B]";
+/* Shared Screen label in the main view when one user is sharing screen */
+"calls.screenShare.mainView.presentingLabel"="%@正在展示";
+/* A warning HUB to show in the call UI when the user A try to tap user B who is sharing screen and the shared screen is in the main view */
+"calls.screenShare.waring.title"="此人正在屏幕共享";

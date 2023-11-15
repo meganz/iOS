@@ -67,7 +67,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA không tạo được liên kết an ninh tới SSL. Thiết bị bạn đang sử dụng có thể đang dùng mạng WiFi công cộng có yêu cầu một số điều kiện khi kết nối.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Please try to log in with same account as in the mobile browser.";
+"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to log in with same account as in the mobile browser.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="Quá trình diễn ra lâu hơn dự kiến. Xin kiên nhẫn chờ…";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -1047,7 +1047,7 @@
 /* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
 "account.storageQuota"="%@ Lưu trữ";
 /* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
-"account.storage.freePlan"="[B]20 GB+[/B] Lưu Trữ";
+"account.storage.freePlan"="[B]20 GB[/B] lưu trữ";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="Truyền Tải";
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
@@ -2381,7 +2381,7 @@
 /* Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible). */
 "Learn more"="Tìm hiểu thêm";
 /* Text indicating the date until a link will be valid */
-"Link expires %@"="Sẽ hết hạn vào ngày %@";
+"Link expires %@"="Link expires on %@";
 /* Text hint to let the user know that tapping something will be copied into the pasteboard */
 "Tap to Copy"="Chạm vào để sao chép";
 /* Caption of the button that will copy multiple files or folders export links to his clipboard */
@@ -2551,7 +2551,7 @@
 /* Title of the button to open Settings */
 "dialog.turnOnNotifications.button.primary"="Đi tới Cài đặt";
 /* Dialog title for the change launch tab screen */
-"Change Launch Tab"="Đổi tab mở ra khi khởi động";
+"Change Launch Tab"="Change launch section";
 /* Dialog description for the change launch tab screen */
 "You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="Giờ bạn có thể chọn lựa phần trong app muốn được hiển thị mỗi khi khởi động. Chọn phần phù hợp với cách sử dụng cá nhân, như Chát, Ổ mây, hoặc Trang chủ.";
 /* Dialog button text for the change launch tab screen */
@@ -2737,7 +2737,7 @@
 /* Dialog button title which triggers the action to visit Huawei app gallery */
 "account.delete.subscription.huaweiAppGallery.visit"="Truy cập trang AppGallery";
 /* Dialog message shown before deleting an account with active webclient subscription */
-"account.delete.subscription.webClient"="Đây là bước cuối cùng để hoàn tất việc xóa bỏ tài khoản. Tất cả dữ liệu bạn đã lưu trên ổ mây MEGA sẽ bị xóa và gói đăng ký dịch vụ mà quý khách đã mua sẽ bị hủy bỏ hoàn toàn. Để tiến hành, xin nhập mật khẩu ở dưới đây.";
+"account.delete.subscription.webClient"="This is the last step to delete your account. Both your account and subscription will be deleted and you will permanently lose all the data stored in the account. Please enter your password below.";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
 "account.profile.avatar.uploadPhoto"="Tải lên ảnh đại diện";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
@@ -2986,6 +2986,10 @@
 "help.reportIssue.success.message"="Xin cảm ơn bạn. Chúng tôi sẽ xem xét vấn đề và một người từ bộ phận trợ giúp sẽ liên lạc với bạn.";
 /* Error message shown when some error occurs during uploading a bug report. */
 "help.reportIssue.fail.message"="Không gửi được báo cáo. Xin thử lại.";
+/* Error title shown when the user try to send more than one report in less than 10 minutes */
+"help.reportIssue.fail.too.many.request.title"="You must wait 10 minutes before submitting another issue";
+/* Error message shown when the user try to send more than one report in less than 10 minutes */
+"help.reportIssue.fail.too.many.request.message"="Please try again later or contact our support team via support@mega.nz if the problem persists";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.title"="Bạn có chắc chắn muốn hủy bỏ việc gửi đăng tải lên báo cáo?";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
@@ -3530,6 +3534,8 @@
 "device.center.rename.device.duplicated.name"="Đã có một thiết bị với tên này rồi.";
 /* Device Center rename device action enter a different name message */
 "device.center.rename.device.different.name"="Đặt một cái tên khác";
+/* Device Center rename device action invalid long name message */
+"device.center.rename.device.invalid.long.name"="Device name can only be up to 32 characters";
 /* Device Center camera upload status enabled */
 "device.center.camera.uploads.action.status.enabled"="Được kích hoạt";
 /* Device Center camera upload status disabled */
@@ -3615,7 +3621,7 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Các tính năng của gói Pro";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• Liên kết được bảo vệ bằng mật khẩu\n\n • Liên kết có ngày hết hạn\n\n • Chia sẻ băng thông truyền tải\n\n • Sao lưu tự động\n\n • Tua lại phiên bản tối đa 90 ngày với Pro Lite và 365 ngày với Pro I, II và III (sắp ra mắt)\n\n• Lên lịch dọn rác trong khoảng thời gian từ 7 ngày đến 10 năm";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Automatic backups\n\n• Rewind up to 90 days on Pro Lite and up to 180 days on Pro I, II, and III (coming soon)\n\n• Schedule rubbish bin clearing between 7 days and 10 years";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Chi tiết gói đăng ký";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3816,6 +3822,14 @@
 "home.search.filter.audio"="Âm thanh";
 /* Filter name for searching on the home screen */
 "home.search.filter.video"="Video";
+/* Filter name for searching on the home screen */
+"home.search.filter.folders"="Thư mục";
+/* Filter name for searching on the home screen */
+"home.search.filter.pdfs"="PDFs";
+/* Filter name for searching on the home screen */
+"home.search.filter.presentations"="Presentations";
+/* Filter name for searching on the home screen */
+"home.search.filter.archives"="Archives";
 /* Empty screen copy when no filter is selected on the home screen search */
 "home.search.empty.no-chip-selected"="Không có kết quả";
 /* Empty screen copy when Images filter is selected on the home screen search */
@@ -3826,6 +3840,14 @@
 "home.search.empty.no-audio"="Không có tệp tin âm thanh";
 /* Empty screen copy when Video filter is selected on the home screen search */
 "home.search.empty.no-videos"="Không có tệp tin video";
+/* Empty screen copy when Folders filter is selected on the home screen search */
+"home.search.empty.no-folders"="No folders";
+/* Empty screen copy when PDF filter is selected on the home screen search */
+"home.search.empty.no-pdfs"="No PDFs";
+/* Empty screen copy when Presentations filter is selected on the home screen search */
+"home.search.empty.no-presentations"="No presentations";
+/* Empty screen copy when Archives filter is selected on the home screen search */
+"home.search.empty.no-archives"="No archives";
 /* A title label for waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.title"="Phòng chờ";
 /* A button label to close the waiting room participants list view. */
@@ -3835,11 +3857,11 @@
 /* Auto media discovery banner title */
 "photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="Vì thư mục này chỉ có chứa hoàn toàn là hình ảnh và videos, chúng tôi tự động đặt theo kiểu quan sát phương tiện số. Giúp bạn trải nghiệm nội dung hình ảnh của mình với bố cục sống động hơn. Tính năng này có thể tắt đi trong Thiết Đặt.";
 /* Upgrade account screen header title after user onboarding */
-"onboarding.upgradeAccount.header.title"="Get more with a Pro plan";
+"onboarding.upgradeAccount.header.title"="Nhận được nhiều hơn với gói Pro";
 /* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
 "onboarding.upgradeAccount.header.subTitle"="Upgrade to a Pro plan for more storage and lots of extra features. Our plans start at %@ a month.";
 /* Upgrade account screen content header for pro plan feature list */
-"onboarding.upgradeAccount.content.proPlanFeatureHeader"="Some features to look forward to are:";
+"onboarding.upgradeAccount.content.proPlanFeatureHeader"="Một số tính năng được mong đợi là:";
 /* Upgrade account screen content title about pro plan featuring as Generous Storage */
 "onboarding.upgradeAccount.content.generousStorage.title"="Không gian hào phóng";
 /* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Store unlimited data, starting from 400 GB. */
@@ -3847,14 +3869,20 @@
 /* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
 "onboarding.upgradeAccount.content.transferSharing.title"="Chia sẻ lượng truyền tải";
 /* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
-"onboarding.upgradeAccount.content.transferSharing.message"="The people you share data with can use your transfer quota to download and stream the items you shared.";
+"onboarding.upgradeAccount.content.transferSharing.message"="Những người bạn chia sẻ dữ liệu có thể sử dụng băng thông truyền tải của bạn để tải xuống và truyền trực tuyến các mục bạn đã chia sẻ.";
 /* Upgrade account screen content title about pro plan featuring the Additional security when sharing */
-"onboarding.upgradeAccount.content.additionalSecurity.title"="Additional security when sharing";
+"onboarding.upgradeAccount.content.additionalSecurity.title"="Lớp bảo mật bổ sung khi chia sẻ";
 /* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
-"onboarding.upgradeAccount.content.additionalSecurity.message"="Set passwords and expiry dates for file and folder links.";
+"onboarding.upgradeAccount.content.additionalSecurity.message"="Đặt mật khẩu và ngày hết hạn cho các đường liên kết tệp tin và thư mục.";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
 "onboarding.upgradeAccount.button.viewProPlans"="Xem các gói Pro";
 /* Camera uploads banner enable state title */
 "cameraUploads.banner.enableState.title"="Bật Đăng Tải Camêra";
 /* Camera uploads banner enable state description */
 "cameraUploads.banner.enableState.description"="Tự động hóa sao lưu các hình ảnh và videos lên Ổ Mây của bạn.";
+/* In app notification description for Shared Items when user left a shared folder. [A] will be replaced by the user's email who left. [B] will be replaced by shared folder name. */
+"inapp.notifications.sharedItems.userLeftTheSharedFolder.message"="User [A] has left the shared folder [B]";
+/* Shared Screen label in the main view when one user is sharing screen */
+"calls.screenShare.mainView.presentingLabel"="%@ is presenting";
+/* A warning HUB to show in the call UI when the user A try to tap user B who is sharing screen and the shared screen is in the main view */
+"calls.screenShare.waring.title"="Người này đang chiếu chia sẻ màn hình";

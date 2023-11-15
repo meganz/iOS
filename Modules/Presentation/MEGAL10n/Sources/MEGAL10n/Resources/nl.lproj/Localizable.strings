@@ -67,7 +67,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA kan geen veilige verbinding maken via SSL. Mogelijk gebruikt u openbare wifi met aanvullende vereisten.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="De inhoud die u probeert te openen, is niet beschikbaar voor dit account. Probeer in te loggen met hetzelfde account als in de mobiele webclient.";
+"theContentIsNotAvailableForThisAccount"="De inhoud die u probeert te openen, is niet beschikbaar voor dit account. Probeer in te loggen met hetzelfde account als in de mobiele browser.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="Het proces duurt langer dan verwacht. Wacht alstublieft…";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -1047,7 +1047,7 @@
 /* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
 "account.storageQuota"="%@ Opslag";
 /* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
-"account.storage.freePlan"="[B]20 GB+[/B] Opslag";
+"account.storage.freePlan"="[B]20 GB[/B] opslag";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="Overdracht";
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
@@ -2381,7 +2381,7 @@
 /* Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible). */
 "Learn more"="Meer informatie";
 /* Text indicating the date until a link will be valid */
-"Link expires %@"="Link Verloopt %@";
+"Link expires %@"="Link verloopt op %@";
 /* Text hint to let the user know that tapping something will be copied into the pasteboard */
 "Tap to Copy"="Tik om te kopiëren";
 /* Caption of the button that will copy multiple files or folders export links to his clipboard */
@@ -2551,7 +2551,7 @@
 /* Title of the button to open Settings */
 "dialog.turnOnNotifications.button.primary"="Instellingen openen";
 /* Dialog title for the change launch tab screen */
-"Change Launch Tab"="Wijzig Lanceer Tab";
+"Change Launch Tab"="Wijzig lanceer sectie";
 /* Dialog description for the change launch tab screen */
 "You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="U kunt nu selecteren welk gedeelte de applicatie opent bij het starten. Kies degene die het beste bij u past, of het nu Chat, Cloud drive of Home is.";
 /* Dialog button text for the change launch tab screen */
@@ -2986,6 +2986,10 @@
 "help.reportIssue.success.message"="Bedankt. We zullen dit probleem onderzoeken en een lid van ons team zal contact met u opnemen.";
 /* Error message shown when some error occurs during uploading a bug report. */
 "help.reportIssue.fail.message"="Kan uw melding niet indienen. Probeer het opnieuw.";
+/* Error title shown when the user try to send more than one report in less than 10 minutes */
+"help.reportIssue.fail.too.many.request.title"="U moet 10 minuten wachten voordat u een nieuw probleem indient";
+/* Error message shown when the user try to send more than one report in less than 10 minutes */
+"help.reportIssue.fail.too.many.request.message"="Probeer het later opnieuw of neem contact op met ons ondersteuningsteam via support@mega.nz als het probleem zich blijft voordoen";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.title"="Weet u zeker dat u het uploaden van uw gemelde probleem wilt annuleren?";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
@@ -3530,6 +3534,8 @@
 "device.center.rename.device.duplicated.name"="Een apparaat met deze naam bestaat al";
 /* Device Center rename device action enter a different name message */
 "device.center.rename.device.different.name"="Voer een andere naam in";
+/* Device Center rename device action invalid long name message */
+"device.center.rename.device.invalid.long.name"="De apparaatnaam mag maximaal 32 tekens lang zijn";
 /* Device Center camera upload status enabled */
 "device.center.camera.uploads.action.status.enabled"="Ingeschakkeld";
 /* Device Center camera upload status disabled */
@@ -3615,7 +3621,7 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Kenmerken van Pro abonnementen";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• Met een wachtwoord beveiligde koppelingen\n\n• Koppelingen met vervaldatums\n\n• Het delen van overdrachtstegoed\n\n• Automatische back-ups\n\n• Terugspoelen tot 90 dagen met Pro Lite en tot 365 dagen op Pro I, II en III (binnenkort beschikbaar)\n\n• Plan het opruimen van de vuilnisbak tussen 7 dagen en 10 jaar";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• Met wachtwoord beveiligde koppelingen\n\n • Koppelingen met vervaldata • \n\nHet delen van quota's •\n\n Automatische back-ups • \n\nTerugspoelen tot 90 dagen met ProLite en tot 180 dagen met Pro I, II en III (binnenkort beschikbaar) •\n\n Plan het opruimen van de prullenbak tussen 7 dagen en 10 jaar";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Abonnement details";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3816,6 +3822,14 @@
 "home.search.filter.audio"="Audio";
 /* Filter name for searching on the home screen */
 "home.search.filter.video"="Video";
+/* Filter name for searching on the home screen */
+"home.search.filter.folders"="Mappen";
+/* Filter name for searching on the home screen */
+"home.search.filter.pdfs"="PDFs";
+/* Filter name for searching on the home screen */
+"home.search.filter.presentations"="Presentaties";
+/* Filter name for searching on the home screen */
+"home.search.filter.archives"="Archieven";
 /* Empty screen copy when no filter is selected on the home screen search */
 "home.search.empty.no-chip-selected"="Geen resultaten";
 /* Empty screen copy when Images filter is selected on the home screen search */
@@ -3826,6 +3840,14 @@
 "home.search.empty.no-audio"="Geen audio bestanden";
 /* Empty screen copy when Video filter is selected on the home screen search */
 "home.search.empty.no-videos"="Geen video bestanden";
+/* Empty screen copy when Folders filter is selected on the home screen search */
+"home.search.empty.no-folders"="Geen mappen";
+/* Empty screen copy when PDF filter is selected on the home screen search */
+"home.search.empty.no-pdfs"="Geen PDFs";
+/* Empty screen copy when Presentations filter is selected on the home screen search */
+"home.search.empty.no-presentations"="Geen presentaties";
+/* Empty screen copy when Archives filter is selected on the home screen search */
+"home.search.empty.no-archives"="Geen archiven";
 /* A title label for waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.title"="Wachtkamer";
 /* A button label to close the waiting room participants list view. */
@@ -3858,3 +3880,9 @@
 "cameraUploads.banner.enableState.title"="Camera uploads inschakelen";
 /* Camera uploads banner enable state description */
 "cameraUploads.banner.enableState.description"="Automatisch een backup maken van uw foto's en video's naar uw Cloud Schijf.";
+/* In app notification description for Shared Items when user left a shared folder. [A] will be replaced by the user's email who left. [B] will be replaced by shared folder name. */
+"inapp.notifications.sharedItems.userLeftTheSharedFolder.message"="Gebruiker [A] heeft de gedeelde map verlaten [B]";
+/* Shared Screen label in the main view when one user is sharing screen */
+"calls.screenShare.mainView.presentingLabel"="%@ is aan het presenteren";
+/* A warning HUB to show in the call UI when the user A try to tap user B who is sharing screen and the shared screen is in the main view */
+"calls.screenShare.waring.title"="Deze persoon is aan het scherm delen";

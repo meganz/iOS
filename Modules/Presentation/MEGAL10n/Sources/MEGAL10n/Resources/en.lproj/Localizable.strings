@@ -67,7 +67,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA is unable to connect securely through SSL. You might be on public Wi-Fi with additional requirements.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Please try to log in with same account as in the mobile browser.";
+"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to log in with same account as in the mobile browser.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="The process is taking longer than expected. Please wait…";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -1047,7 +1047,7 @@
 /* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
 "account.storageQuota"="%@ storage";
 /* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
-"account.storage.freePlan"="[B]20 GB+[/B] Storage";
+"account.storage.freePlan"="[B]20 GB[/B] storage";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="Transfer";
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
@@ -1717,7 +1717,7 @@
 /* Description shown in a page of the onboarding screens explaining contacts */
 "Add contacts, create a network, colaborate, make voice and video calls without ever leaving MEGA"="Add contacts, create a network, collaborate, and make voice and video calls without ever leaving MEGA";
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
-"Your Photos in the Cloud"="Your photos in the Cloud";
+"Your Photos in the Cloud"="Your photos in the cloud";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
 "Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Camera uploads is an essential feature for any mobile device and we have got you covered. Create your account now.";
 /* Button which triggers the initial setup */
@@ -2381,7 +2381,7 @@
 /* Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible). */
 "Learn more"="Learn more";
 /* Text indicating the date until a link will be valid */
-"Link expires %@"="Link expires %@";
+"Link expires %@"="Link expires on %@";
 /* Text hint to let the user know that tapping something will be copied into the pasteboard */
 "Tap to Copy"="Tap to copy";
 /* Caption of the button that will copy multiple files or folders export links to his clipboard */
@@ -2551,7 +2551,7 @@
 /* Title of the button to open Settings */
 "dialog.turnOnNotifications.button.primary"="Open Settings";
 /* Dialog title for the change launch tab screen */
-"Change Launch Tab"="Change launch tab";
+"Change Launch Tab"="Change launch section";
 /* Dialog description for the change launch tab screen */
 "You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud drive, or Home.";
 /* Dialog button text for the change launch tab screen */
@@ -2737,7 +2737,7 @@
 /* Dialog button title which triggers the action to visit Huawei app gallery */
 "account.delete.subscription.huaweiAppGallery.visit"="Visit AppGallery";
 /* Dialog message shown before deleting an account with active webclient subscription */
-"account.delete.subscription.webClient"="This is the last step to delete your account. Both your account and subscription will be deleted and you will permanently lose all the data stored in the cloud. Please enter your password below.";
+"account.delete.subscription.webClient"="This is the last step to delete your account. Both your account and subscription will be deleted and you will permanently lose all the data stored in the account. Please enter your password below.";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
 "account.profile.avatar.uploadPhoto"="Upload photo";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
@@ -3621,7 +3621,7 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Features of Pro plans";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Automatic backups\n\n• Rewind up to 90 days on Pro Lite and up to 365 days on Pro I, II, and III (coming soon)\n\n• Schedule rubbish bin clearing between 7 days and 10 years";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Automatic backups\n\n• Rewind up to 90 days on Pro Lite and up to 180 days on Pro I, II, and III (coming soon)\n\n• Schedule rubbish bin clearing between 7 days and 10 years";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Subscription details";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3825,7 +3825,7 @@
 /* Filter name for searching on the home screen */
 "home.search.filter.folders"="Folders";
 /* Filter name for searching on the home screen */
-"home.search.filter.pdfs"="PDF";
+"home.search.filter.pdfs"="PDFs";
 /* Filter name for searching on the home screen */
 "home.search.filter.presentations"="Presentations";
 /* Filter name for searching on the home screen */
@@ -3883,6 +3883,6 @@
 /* In app notification description for Shared Items when user left a shared folder. [A] will be replaced by the user's email who left. [B] will be replaced by shared folder name. */
 "inapp.notifications.sharedItems.userLeftTheSharedFolder.message"="User [A] has left the shared folder [B]";
 /* Shared Screen label in the main view when one user is sharing screen */
-"calls.screenShare.mainView.presentingLabel" = "%@ is presenting";
-/* A warning HUB to show in the call UI when the user A try to tap user B who is sharing screen and the shared screen is in the main view*/
+"calls.screenShare.mainView.presentingLabel"="%@ is presenting";
+/* A warning HUB to show in the call UI when the user A try to tap user B who is sharing screen and the shared screen is in the main view */
 "calls.screenShare.waring.title"="This person is screen sharing";

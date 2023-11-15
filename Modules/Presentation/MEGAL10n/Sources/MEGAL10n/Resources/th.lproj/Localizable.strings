@@ -67,7 +67,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA ไม่สามารถเชื่อมต่อผ่าน SSL ได้อย่างปลอดภัย คุณอาจใช้ Wi-Fi สาธารณะที่มาพร้อมกับข้อกำหนดเพิ่มเติม";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Please try to log in with same account as in the mobile browser.";
+"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to log in with same account as in the mobile browser.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="กระบวนการนี้ใช้เวลานานกว่าที่คาดไว้ กรุณารอ…";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -1047,7 +1047,7 @@
 /* Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'. */
 "account.storageQuota"="พื้นที่เก็บข้อมูล %@";
 /* Text listed that includes the amount of storage that a free user gets: '20GB+ Storage' */
-"account.storage.freePlan"="พื้นที่เก็บข้อมูล [B]20 GB+[/B]";
+"account.storage.freePlan"="พื้นที่เก็บข้อมูล [B]20 GB[/B]";
 /* Some text listed after the amount of transfer quota a user gets with a certain package. For example: '8 TB Transfer quota'. */
 "Transfer Quota"="ถ่ายโอน";
 /* Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'. */
@@ -2551,7 +2551,7 @@
 /* Title of the button to open Settings */
 "dialog.turnOnNotifications.button.primary"="เปิดการตั้งค่า";
 /* Dialog title for the change launch tab screen */
-"Change Launch Tab"="เปลี่ยนแท็บเปิดขึ้นมาครั้งแรก";
+"Change Launch Tab"="เปลี่ยนส่วนที่จะเปิดขึ้นมาครั้งแรก";
 /* Dialog description for the change launch tab screen */
 "You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="ตอนนี้คุณสามารถเลือกได้ว่า จะให้เมนูอะไรของแอปเปิดขึ้นมาครั้งแรกเวลาเปิดแอป เลือกสิ่งที่เหมาะกับความต้องการของคุณ ไม่ว่าจะเป็นแชท คลาวด์ไดรฟ์หรือหน้าแรก";
 /* Dialog button text for the change launch tab screen */
@@ -2737,7 +2737,7 @@
 /* Dialog button title which triggers the action to visit Huawei app gallery */
 "account.delete.subscription.huaweiAppGallery.visit"="เยี่ยมชม AppGallery";
 /* Dialog message shown before deleting an account with active webclient subscription */
-"account.delete.subscription.webClient"="นี่เป็นขั้นตอนสุดท้ายในการลบบัญชีของคุณ ทั้งบัญชีและการสมัครใช้งานของคุณจะถูกลบด้วย พร้อมทั้งคุณจะสูญเสียข้อมูลทั้งหมดที่จัดเก็บไว้ในระบบคลาวด์อย่างถาวร กรุณากรอกรหัสผ่านของคุณด้านล่าง";
+"account.delete.subscription.webClient"="นี่เป็นขั้นตอนสุดท้ายในการลบบัญชีของคุณ ทั้งบัญชีและการสมัครใช้งานของคุณจะถูกลบออก พร้อมทั้งคุณจะสูญเสียข้อมูลทั้งหมดที่เก็บไว้ในบัญชีอย่างถาวร กรุณากรอกรหัสผ่านของคุณด้านล่าง";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
 "account.profile.avatar.uploadPhoto"="อัปโหลดรูปถ่าย";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
@@ -2986,6 +2986,10 @@
 "help.reportIssue.success.message"="ขอบคุณ เราจะตรวจสอบปัญหานี้และสมาชิกในทีมของเราจะติดต่อกลับหาคุณ";
 /* Error message shown when some error occurs during uploading a bug report. */
 "help.reportIssue.fail.message"="ไม่สามารถส่งรายงานของคุณได้ กรุณาลองอีกครั้ง";
+/* Error title shown when the user try to send more than one report in less than 10 minutes */
+"help.reportIssue.fail.too.many.request.title"="คุณต้องทิ้งช่วงการส่งรายงานปัญหาอย่างน้อย 10 นาที";
+/* Error message shown when the user try to send more than one report in less than 10 minutes */
+"help.reportIssue.fail.too.many.request.message"="กรุณาลองอีกครั้งในภายหลังหรือติดต่อทีมสนับสนุนของเราผ่านทาง support@mega.nz หากคุณยังประสบปัญหาอยู่";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.title"="คุณแน่ใจหรือไม่ว่าต้องการยกเลิกการอัปโหลดรายงานปัญหาของคุณ";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
@@ -3530,6 +3534,8 @@
 "device.center.rename.device.duplicated.name"="มีอุปกรณ์ชื่อนี้อยู่แล้ว";
 /* Device Center rename device action enter a different name message */
 "device.center.rename.device.different.name"="กรอกชื่ออื่น";
+/* Device Center rename device action invalid long name message */
+"device.center.rename.device.invalid.long.name"="Device name can only be up to 32 characters";
 /* Device Center camera upload status enabled */
 "device.center.camera.uploads.action.status.enabled"="เปิดใช้งาน";
 /* Device Center camera upload status disabled */
@@ -3615,7 +3621,7 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="ฟีเจอร์สำหรับแผน Pro";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• ป้องกันลิงก์ด้วยการกำหนดรหัสผ่านได้\n\n• ตั้งค่าวันหมดอายุลิงก์ได้\n\n• แชร์โควต้าการถ่ายโอนได้\n\n• ตั้งค่าการสำรองข้อมูลอัตโนมัติได้\n\n• ใช้ฟีเจอร์ย้อนกลับไฟล์ได้ โดย Pro Lite ย้อนกลับได้ถึง 90 วัน ส่วน Pro I, II และ III ย้อนกลับได้ถึง 365 วัน (จะมาในเร็ว ๆ นี้)\n\n• สร้างกำหนดการล้างถังขยะได้ตั้งแต่ 7 วันถึง 10 ปี";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• ป้องกันลิงก์ด้วยการกำหนดรหัสผ่านได้\n\n• ตั้งค่าวันหมดอายุลิงก์ได้\n\n• แชร์โควต้าการถ่ายโอนได้\n\n• ตั้งค่าการสำรองข้อมูลอัตโนมัติได้\n\n• ใช้ฟีเจอร์ย้อนกลับไฟล์ได้ โดย Pro Lite ย้อนกลับได้ถึง 90 วัน ส่วน Pro I, II และ III ย้อนกลับได้ถึง 180 วัน (จะมาในเร็ว ๆ นี้)\n\n• สร้างกำหนดการล้างถังขยะได้ตั้งแต่ 7 วันถึง 10 ปี";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="รายละเอียดการสมัครใช้งาน";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3816,6 +3822,14 @@
 "home.search.filter.audio"="เสียง";
 /* Filter name for searching on the home screen */
 "home.search.filter.video"="วิดีโอ";
+/* Filter name for searching on the home screen */
+"home.search.filter.folders"="โฟลเดอร์";
+/* Filter name for searching on the home screen */
+"home.search.filter.pdfs"="PDFs";
+/* Filter name for searching on the home screen */
+"home.search.filter.presentations"="Presentations";
+/* Filter name for searching on the home screen */
+"home.search.filter.archives"="Archives";
 /* Empty screen copy when no filter is selected on the home screen search */
 "home.search.empty.no-chip-selected"="ไม่พบรายการค้นหา";
 /* Empty screen copy when Images filter is selected on the home screen search */
@@ -3826,6 +3840,14 @@
 "home.search.empty.no-audio"="ไม่มีไฟล์เสียง";
 /* Empty screen copy when Video filter is selected on the home screen search */
 "home.search.empty.no-videos"="ไม่มีไฟล์วิดีโอ";
+/* Empty screen copy when Folders filter is selected on the home screen search */
+"home.search.empty.no-folders"="No folders";
+/* Empty screen copy when PDF filter is selected on the home screen search */
+"home.search.empty.no-pdfs"="No PDFs";
+/* Empty screen copy when Presentations filter is selected on the home screen search */
+"home.search.empty.no-presentations"="No presentations";
+/* Empty screen copy when Archives filter is selected on the home screen search */
+"home.search.empty.no-archives"="No archives";
 /* A title label for waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.title"="ห้องนั่งรอ";
 /* A button label to close the waiting room participants list view. */
@@ -3858,3 +3880,9 @@
 "cameraUploads.banner.enableState.title"="เปิดใช้งานอัปโหลดกล้อง";
 /* Camera uploads banner enable state description */
 "cameraUploads.banner.enableState.description"="สำรองรูปภาพและวิดีโอของคุณไปยังคลาวด์ไดร์ฟโดยอัตโนมัติ";
+/* In app notification description for Shared Items when user left a shared folder. [A] will be replaced by the user's email who left. [B] will be replaced by shared folder name. */
+"inapp.notifications.sharedItems.userLeftTheSharedFolder.message"="ผู้ใช้ [A] ออกจากโฟลเดอร์ [B] ที่ใช้ร่วมกันแล้ว";
+/* Shared Screen label in the main view when one user is sharing screen */
+"calls.screenShare.mainView.presentingLabel"="%@ is presenting";
+/* A warning HUB to show in the call UI when the user A try to tap user B who is sharing screen and the shared screen is in the main view */
+"calls.screenShare.waring.title"="This person is screen sharing";
