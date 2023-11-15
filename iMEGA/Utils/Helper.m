@@ -429,7 +429,7 @@
     return [NSString stringWithFormat:@"%@ • %@", [self sizeForNode:node api:api], node.creationTime.mnz_formattedDateMediumTimeShortStyle];
 }
 
-+ (NSString *)sizeAndModicationDateForNode:(MEGANode *)node api:(MEGASdk *)api {
++ (NSString *)sizeAndModificationDateForNode:(MEGANode *)node api:(MEGASdk *)api {
     return [NSString stringWithFormat:@"%@ • %@", [self sizeForNode:node api:api], node.modificationTime.mnz_formattedDateMediumTimeShortStyle];
 }
 

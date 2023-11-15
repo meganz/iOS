@@ -699,7 +699,7 @@
     cell.infoLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     if (self.cloudDriveButton.selected) {
         if (node.isFile) {
-            cell.infoLabel.text = [Helper sizeAndModicationDateForNode:node api:[MEGASdkManager sharedMEGASdk]];
+            cell.infoLabel.text = [Helper sizeAndModificationDateForNode:node api:[MEGASdkManager sharedMEGASdk]];
         } else {
             cell.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdk]];
         }
