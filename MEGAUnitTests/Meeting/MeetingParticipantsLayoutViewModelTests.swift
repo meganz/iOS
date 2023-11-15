@@ -865,6 +865,22 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         XCTAssertEqual(sut.layoutMode, .grid)
     }
     
+    func testUpdateLayoutModeAccordingScreenSharingParticipant_onHasScreenShareAndThenUpdateToHasNoScreenShareParticipant_shouldSwitchToGridMode() {
+        let sut = makeMeetingParticipantsLayoutViewModel()
+        
+        XCTAssertEqual(sut.layoutMode, .grid)
+        
+        let participant = CallParticipantEntity(participantId: 100, hasScreenShare: true)
+        sut.participantJoined(participant: participant)
+        
+        XCTAssertEqual(sut.layoutMode, .speaker)
+        
+        participant.hasScreenShare = false
+        sut.updateParticipant(participant)
+        
+        XCTAssertEqual(sut.layoutMode, .grid)
+    }
+    
     func testEnableRemoteScreenShareVideo_forParticipantHasScreenShareAndCanReceiveVideoInHighResolutionAndHasCamera_shouldCallEnabledRemoteVideoWithHighResolution() {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let sut = makeMeetingParticipantsLayoutViewModel(
@@ -1088,7 +1104,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         XCTAssertEqual(sut.speakerParticipant, secondParticipant)
     }
     
-    func testConfigScreenShareParticipants_forFirstParticipantIsSharingScreenAndSecondParticipantIsSpeakerAndNotSharingScreen_shouldCreateScreenShareParticipantForTheFirstParticipantAfterPresenterView() {
+    func testConfigScreenShareParticipants_forFirstParticipantIsSharingScreenAndSecondParticipantIsSpeakerAndNotSharingScreen_shouldCreateScreenShareParticipantForTheFirstParticipantBeforePresenterView() {
         let sut = makeMeetingParticipantsLayoutViewModel()
         let firstParticipant = CallParticipantEntity(participantId: 101, clientId: 1, hasScreenShare: true)
         let secondParticipant = CallParticipantEntity(participantId: 102, clientId: 2, hasScreenShare: false)
@@ -1099,9 +1115,9 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         
         XCTAssertEqual(sut.callParticipants.count, 3)
         XCTAssertEqual(sut.callParticipants[0], firstParticipant)
-        XCTAssertFalse(sut.callParticipants[0].isScreenShareCell)
+        XCTAssertTrue(sut.callParticipants[0].isScreenShareCell)
         XCTAssertEqual(sut.callParticipants[1], firstParticipant)
-        XCTAssertTrue(sut.callParticipants[1].isScreenShareCell)
+        XCTAssertFalse(sut.callParticipants[1].isScreenShareCell)
     }
     
     func testConfigScreenShareParticipants_forFirstParticipantIsSharingScreenAndSecondParticipantIsSpeakerAndIsSharingScreen_shouldCreateScreenShareParticipantForTheFirstParticipantBeforePresenterView() {
