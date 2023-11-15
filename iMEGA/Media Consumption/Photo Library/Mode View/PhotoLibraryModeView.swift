@@ -13,22 +13,12 @@ struct PhotoLibraryModeView<Category, VM: PhotoLibraryModeViewModel<Category>, C
     
     var body: some View {
         ScrollView {
-            contentView()
+            content
                 .offset(in: .named(PhotoLibraryConstants.scrollViewCoordinateSpaceName))
                 .onPreferenceChange(OffsetPreferenceKey.self) {
                     viewModel.scrollTracker.trackContentOffset($0)
                 }
         }
         .coordinateSpace(name: PhotoLibraryConstants.scrollViewCoordinateSpaceName)
-    }
-    
-    @ViewBuilder
-    private func contentView() -> some View {
-        if #available(iOS 15.0, *) {
-            content
-        } else {
-            content
-                .padding(.bottom, 60)
-        }
     }
 }

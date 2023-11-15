@@ -11,11 +11,7 @@ final class PhotoYearCardViewModel: PhotoCardViewModel {
          thumbnailUseCase: any ThumbnailUseCaseProtocol) {
         self.photoByYear = photoByYear
         
-        if #available(iOS 15.0, *) {
-            title = photoByYear.categoryDate.formatted(.dateTime.year().locale(.current))
-        } else {
-            title = DateFormatter.yearTemplate().localisedString(from: photoByYear.categoryDate)
-        }
+        title = photoByYear.categoryDate.formatted(.dateTime.year().locale(.current))
         
         super.init(coverPhoto: photoByYear.coverPhoto, thumbnailUseCase: thumbnailUseCase)
     }

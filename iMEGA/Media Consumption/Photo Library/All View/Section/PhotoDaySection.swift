@@ -15,7 +15,6 @@ final class PhotoDaySection: PhotoDateSection {
                    title: title)
     }
     
-    @available(iOS 15.0, *)
     override var attributedTitle: AttributedString {
         var attr: AttributedString
         let bold = AttributeContainer.font(.body.bold())

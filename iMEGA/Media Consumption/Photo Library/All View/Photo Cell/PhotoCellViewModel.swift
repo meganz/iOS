@@ -84,17 +84,12 @@ class PhotoCellViewModel: ObservableObject {
             .removeDuplicates()
         
         do {
-            if #available(iOS 15.0, *) {
-                try await startLoadingThumbnailAsyncPublisher(thumbnailTypePublisher: thumbnailTypePublisher)
-            } else {
-                try await startLoadingThumbnailAsyncStream(thumbnailTypePublisher: thumbnailTypePublisher)
-            }
+            try await startLoadingThumbnailAsyncPublisher(thumbnailTypePublisher: thumbnailTypePublisher)
         } catch {
             MEGALogDebug("[PhotoCellViewModel] Cancelled loading thumbnail for \(photo.handle)")
         }
     }
     
-    @available(iOS 15.0, *)
     private func startLoadingThumbnailAsyncPublisher(thumbnailTypePublisher: some Publisher<ThumbnailTypeEntity, Never>) async throws {
         for await thumbnailType in thumbnailTypePublisher.values {
             try Task.checkCancellation()
@@ -105,30 +100,6 @@ class PhotoCellViewModel: ObservableObject {
                 try await loadThumbnail(for: thumbnailType)
             }
         }
-    }
-    
-    private func startLoadingThumbnailAsyncStream(thumbnailTypePublisher: some Publisher<ThumbnailTypeEntity, Never>) async throws {
-        
-        var subscription: AnyCancellable?
-        let thumbnailTypeStream = AsyncStream(ThumbnailTypeEntity.self) { continuation in
-            subscription = thumbnailTypePublisher
-                .sink(
-                    receiveCompletion: { _ in continuation.finish() },
-                    receiveValue: { thumbnailType in continuation.yield(thumbnailType) })
-        }
-        
-        for await thumbnailType in thumbnailTypeStream {
-            try Task.checkCancellation()
-            switch (thumbnailType, thumbnailContainer.type) {
-            case (.thumbnail, .thumbnail), (.preview, .preview):
-                break
-            default:
-                try await loadThumbnail(for: thumbnailType)
-            }
-        }
-        
-        subscription?.cancel()
-        subscription = nil
     }
 
     private func loadThumbnail(for type: ThumbnailTypeEntity) async throws {
@@ -153,11 +124,7 @@ class PhotoCellViewModel: ObservableObject {
                     .replaceError(with: nil)
                     .compactMap { $0 }
                 
-                if #available(iOS 15.0, *) {
-                    try await requestPreviewAsyncPublisher(requestPreviewPublisher: requestPreviewPublisher)
-                } else {
-                    try await requestPreviewAsyncStream(requestPreviewPublisher: requestPreviewPublisher)
-                }
+                try await requestPreviewAsyncPublisher(requestPreviewPublisher: requestPreviewPublisher)
             }
         }
     }
@@ -172,31 +139,11 @@ class PhotoCellViewModel: ObservableObject {
         thumbnailContainer = container
     }
     
-    @available(iOS 15.0, *)
     private func requestPreviewAsyncPublisher(requestPreviewPublisher: some Publisher<URLImageContainer, Never>) async throws {
         for await container in requestPreviewPublisher.values {
             try Task.checkCancellation()
             await updateThumbnailContainerIfNeeded(container)
         }
-    }
-    
-    private func requestPreviewAsyncStream(requestPreviewPublisher: some Publisher<URLImageContainer, Never>) async throws {
-        
-        var subscription: AnyCancellable?
-        let values = AsyncStream { continuation in
-            subscription = requestPreviewPublisher
-                .sink(
-                    receiveCompletion: { _ in continuation.finish() },
-                    receiveValue: { container in continuation.yield(container) })
-        }
-        
-        for await container in values {
-            try Task.checkCancellation()
-            await updateThumbnailContainerIfNeeded(container)
-        }
-        
-        subscription?.cancel()
-        subscription = nil
     }
         
     private func isShowingThumbnail(_ container: some ImageContaining) -> Bool {

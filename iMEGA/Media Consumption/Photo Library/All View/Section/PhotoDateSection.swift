@@ -4,7 +4,6 @@ import MEGADomain
 protocol PhotoSection: PhotoChronologicalCategory where Content == NodeEntity {
     var title: String { get }
 
-    @available(iOS 15.0, *)
     var attributedTitle: AttributedString { get }
 }
 
@@ -28,7 +27,6 @@ class PhotoDateSection: PhotoSection {
         self.title = title
     }
 
-    @available(iOS 15.0, *)
     var attributedTitle: AttributedString {
         AttributedString()
     }
