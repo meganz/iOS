@@ -157,11 +157,8 @@
     
     [self updateAppearance];
     
-    // available check will work if it's the only condition here; should define macro later.
-    if (@available(iOS 15.0, *)) {
-        if ([[NSProcessInfo processInfo] operatingSystemVersion].majorVersion >= 15) {
-            self.tableView.sectionHeaderTopPadding = 0.0f;
-        }
+    if ([[NSProcessInfo processInfo] operatingSystemVersion].majorVersion >= 15) {
+        self.tableView.sectionHeaderTopPadding = 0.0f;
     }
 }
 

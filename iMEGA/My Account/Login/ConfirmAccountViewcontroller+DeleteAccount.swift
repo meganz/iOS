@@ -12,11 +12,7 @@ extension ConfirmAccountViewController {
             showSubscriptionDialog(
                 message: Strings.Localizable.Account.Delete.Subscription.itunes,
                 additionalOptionTitle: Strings.Localizable.Account.Delete.Subscription.Itunes.manage) {
-                    if #available(iOS 15.0, *) {
-                        UIApplication.showManageSubscriptions()
-                    } else {
-                        UIApplication.openAppleIDSubscriptionsPage()
-                    }
+                    UIApplication.showManageSubscriptions()
                 }
 
         case .googleWallet:

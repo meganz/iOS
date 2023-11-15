@@ -153,7 +153,6 @@ public struct SearchResultsView: View {
     }
 }
 
-@available(iOS 15.0, *)
 struct SearchResultsViewPreviews: PreviewProvider {
 
     struct Wrapper: View {

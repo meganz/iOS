@@ -181,10 +181,7 @@ class GetLinkViewController: UIViewController {
         }
         
         updateAppearance()
-        if #available(iOS 15.0, *) {
-            tableView.sectionHeaderTopPadding = 0
-        }
-        
+        tableView.sectionHeaderTopPadding = 0
     }
 
     private func loadNodes() {

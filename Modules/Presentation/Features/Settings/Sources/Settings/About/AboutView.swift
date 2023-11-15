@@ -76,25 +76,21 @@ private struct AppVersionView: View {
 
 private struct ChatSdkVersionView: View {
     @ObservedObject var viewModel: AboutViewModel
-
+    
     var body: some View {
-        if #available(iOS 15.0, *) {
-            AboutItemView(title: Strings.Localizable.megachatSdkVersion, subtitle: viewModel.chatSdkVersion)
-                .onTapGesture(count: 5) {
-                    viewModel.refreshToggleSfuServerAlertStatus()
+        AboutItemView(title: Strings.Localizable.megachatSdkVersion, subtitle: viewModel.chatSdkVersion)
+            .onTapGesture(count: 5) {
+                viewModel.refreshToggleSfuServerAlertStatus()
+            }
+            .alert(Strings.Localizable.Settings.About.Sfu.ChangeAlert.title, isPresented: $viewModel.showSfuServerChangeAlert) {
+                TextField(Strings.Localizable.Settings.About.Sfu.ChangeAlert.placeholder, text: $viewModel.sfuServerId)
+                    .keyboardType(.numbersAndPunctuation)
+                Button(Strings.Localizable.Settings.About.Sfu.ChangeAlert.changeButton) {
+                    viewModel.changeSfuServer()
                 }
-                .alert(Strings.Localizable.Settings.About.Sfu.ChangeAlert.title, isPresented: $viewModel.showSfuServerChangeAlert) {
-                    TextField(Strings.Localizable.Settings.About.Sfu.ChangeAlert.placeholder, text: $viewModel.sfuServerId)
-                        .keyboardType(.numbersAndPunctuation)
-                    Button(Strings.Localizable.Settings.About.Sfu.ChangeAlert.changeButton) {
-                        viewModel.changeSfuServer()
-                    }
-                    Button(Strings.Localizable.Settings.About.Sfu.ChangeAlert.cancelButton, role: .cancel) { }
-                } message: {
-                    Text(Strings.Localizable.Settings.About.Sfu.ChangeAlert.message)
-                }
-        } else {
-            AboutItemView(title: Strings.Localizable.sdkVersion, subtitle: viewModel.chatSdkVersion)
-        }
+                Button(Strings.Localizable.Settings.About.Sfu.ChangeAlert.cancelButton, role: .cancel) { }
+            } message: {
+                Text(Strings.Localizable.Settings.About.Sfu.ChangeAlert.message)
+            }
     }
 }

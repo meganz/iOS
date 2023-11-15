@@ -113,20 +113,12 @@ struct UpgradeAccountPlanView: View {
     private func termsAndPoliciesView() -> some View {
         @ViewBuilder
         func contentView() -> some View {
-            if #available(iOS 15.0, *) {
-                TermsAndPoliciesView(
-                    privacyPolicyText: Strings.Localizable.privacyPolicyLabel,
-                    cookiePolicyText: Strings.Localizable.General.cookiePolicy,
-                    termsOfServicesText: Strings.Localizable.termsOfServicesLabel
-                )
-                .interactiveDismissDisabled()
-            } else {
-                TermsAndPoliciesView(
-                    privacyPolicyText: Strings.Localizable.privacyPolicyLabel,
-                    cookiePolicyText: Strings.Localizable.General.cookiePolicy,
-                    termsOfServicesText: Strings.Localizable.termsOfServicesLabel
-                )
-            }
+            TermsAndPoliciesView(
+                privacyPolicyText: Strings.Localizable.privacyPolicyLabel,
+                cookiePolicyText: Strings.Localizable.General.cookiePolicy,
+                termsOfServicesText: Strings.Localizable.termsOfServicesLabel
+            )
+            .interactiveDismissDisabled()
         }
         
         return NavigationStackView(content: {

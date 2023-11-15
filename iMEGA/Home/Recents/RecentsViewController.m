@@ -61,9 +61,7 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 3.0;
     RecentsPreferenceManager.delegate = self;
     [MEGASdkManager.sharedMEGASdk addMEGADelegate:self];
     
-    if (@available(iOS 15.0, *)) {
-        self.tableView.sectionHeaderTopPadding = 0.0f;
-    }
+    self.tableView.sectionHeaderTopPadding = 0.0f;
 }
 
 - (void)removeFromParentViewController {

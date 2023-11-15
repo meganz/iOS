@@ -1,7 +1,6 @@
 @testable import MEGASwift
 import XCTest
 
-@available(iOS 15.0, *)
 final class FileExtensionFormatStyleTests: XCTestCase {
     // MARK: - Capitalization -
     
