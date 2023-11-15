@@ -11,21 +11,8 @@ struct SearchableView<WrappedView: View>: View {
     var emptyStateAssets: EmptyStateAssets
     
     private var contentView: some View {
-        if #available(iOS 15.0, *) {
-            return wrappedView
-                .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
-        } else {
-            return VStack(spacing: 5.0) {
-                SearchBarView(
-                    text: $searchText,
-                    isEditing: $isEditing,
-                    placeholder: searchAssets.placeHolder,
-                    cancelTitle: searchAssets.cancelTitle
-                )
-                .padding(8)
-                wrappedView
-            }
-        }
+        wrappedView
+            .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
     }
     
     public init(wrappedView: WrappedView, searchText: Binding<String>, isEditing: Binding<Bool>, isFilteredListEmpty: Bool, searchAssets: SearchAssets, emptyStateAssets: EmptyStateAssets) {
