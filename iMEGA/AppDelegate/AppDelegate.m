@@ -309,7 +309,7 @@
     
     [self application:application shouldHideWindows:YES];
     
-    if (UIApplication.sharedApplication.windows.count > 0 && ![NSStringFromClass(UIApplication.sharedApplication.windows.firstObject.class) isEqualToString:@"UIWindow"]) {
+    if (![NSStringFromClass([UIApplication mnz_keyWindow].class) isEqualToString:@"UIWindow"]) {
         [[LTHPasscodeViewController sharedUser] disablePasscodeWhenApplicationEntersBackground];
     }
 }
@@ -349,7 +349,7 @@
     
     [MEGAChatSdk.shared signalPresenceActivity];
     
-    if (![NSStringFromClass([UIApplication sharedApplication].windows.firstObject.class) isEqualToString:@"UIWindow"]) {
+    if (![NSStringFromClass([UIApplication mnz_keyWindow].class) isEqualToString:@"UIWindow"]) {
         [[LTHPasscodeViewController sharedUser] enablePasscodeWhenApplicationEntersBackground];
     }
     
@@ -885,9 +885,17 @@
 }
 
 - (void)application:(UIApplication *)application shouldHideWindows:(BOOL)shouldHide {
-    for (UIWindow *window in application.windows) {
-        if ([NSStringFromClass(window.class) isEqualToString:@"UIRemoteKeyboardWindow"] || [NSStringFromClass(window.class) isEqualToString:@"UITextEffectsWindow"]) {
-            window.hidden = shouldHide;
+    NSSet<UIScene *> *connectedScenes = application.connectedScenes;
+
+    for (UIScene *scene in connectedScenes) {
+        if ([scene isKindOfClass:[UIWindowScene class]]) {
+            UIWindowScene *windowScene = (UIWindowScene *)scene;
+            
+            for (UIWindow *window in windowScene.windows) {
+                if ([NSStringFromClass(window.class) isEqualToString:@"UIRemoteKeyboardWindow"] || [NSStringFromClass(window.class) isEqualToString:@"UITextEffectsWindow"]) {
+                    window.hidden = shouldHide;
+                }
+            }
         }
     }
 }
