@@ -2035,7 +2035,7 @@
         return;
     }
     
-    NSUInteger size = nodeList.size.unsignedIntegerValue;
+    NSUInteger size = nodeList.size;
     for (NSUInteger i = 0; i < size; i++) {
         MEGANode *nodeUpdated = [nodeList nodeAtIndex:i];
         if (nodeUpdated.handle == self.node.handle) {

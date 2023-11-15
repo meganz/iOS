@@ -192,7 +192,7 @@ extension ChatViewController: MessageCellDelegate, MessageLabelDelegate {
         in cell: MessageCollectionViewCell
     ) {
         let megaMessage = chatMessage.message
-        if megaMessage.nodeList?.size.uintValue == 1 {
+        if megaMessage.nodeList?.size == 1 {
             var node = megaMessage.nodeList?.node(at: 0)
             if chatRoom.isPreview {
                 node = MEGASdk.shared.authorizeChatNode(node!, cauth: chatRoom.authorizationToken)
@@ -206,7 +206,7 @@ extension ChatViewController: MessageCellDelegate, MessageLabelDelegate {
                 let mediaNodesArray = messages.compactMap { message -> MEGANode? in
                     guard let localChatMessage = message as? ChatMessage,
                           localChatMessage.message.type == .attachment,
-                          localChatMessage.message.nodeList?.size.intValue ?? 0 > 0,
+                          localChatMessage.message.nodeList?.size ?? 0 > 0,
                           let node = localChatMessage.message.nodeList?.node(at: 0),
                           name.fileExtensionGroup.isVisualMedia else {
                               return nil

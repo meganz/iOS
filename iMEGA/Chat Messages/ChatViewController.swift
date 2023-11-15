@@ -574,7 +574,7 @@ class ChatViewController: MessagesViewController {
         _ chatMessage: ChatMessage,
         in indexPath: IndexPath
     ) -> UICollectionViewCell {
-        if chatMessage.message.nodeList?.size?.intValue ?? 0 == 1 {
+        if chatMessage.message.nodeList?.size ?? 0 == 1 {
             if let node = chatMessage.message.nodeList?.node(at: 0),
                node.name?.fileExtensionGroup.isVisualMedia ?? false {
                 let cell = messagesCollectionView.dequeueReusableCell(withReuseIdentifier: ChatMediaCollectionViewCell.reuseIdentifier, for: indexPath) as! ChatMediaCollectionViewCell

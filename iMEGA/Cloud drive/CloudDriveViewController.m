@@ -282,7 +282,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         NSInteger nodesWithThumbnail = 0;
         NSInteger nodesWithoutThumbnail = 0;
         
-        for (int i = 0; i < nodes.size.intValue; i++) {
+        for (int i = 0; i < nodes.size; i++) {
             MEGANode *node = [nodes nodeAtIndex:i];
             if (node.hasThumbnail) {
                 nodesWithThumbnail = nodesWithThumbnail + 1;
@@ -440,7 +440,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [self prepareForReloadUI];
     
     if (nodeList) {
-        if (self.displayMode == DisplayModeCloudDrive && nodeList.size.intValue == 1 && self.viewModePreference == ViewModePreferenceThumbnail && self.wasSelectingFavoriteUnfavoriteNodeActionOption) {
+        if (self.displayMode == DisplayModeCloudDrive && nodeList.size == 1 && self.viewModePreference == ViewModePreferenceThumbnail && self.wasSelectingFavoriteUnfavoriteNodeActionOption) {
             MEGANode *updatedNode = [nodeList nodeAtIndex:0];
             NSIndexPath *indexPath = [self findIndexPathFor:updatedNode source:_nodesArray];
             [self reloadDataAtIndexPaths:@[indexPath]];
@@ -470,7 +470,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         return;
     }
     
-    if(self.nodes.size.unsignedIntegerValue > 0
+    if(self.nodes.size > 0
        && self.viewModePreference == ViewModePreferenceMediaDiscovery
        && !self.hasMediaFiles) {
         self.shouldDetermineViewMode = YES;
@@ -497,7 +497,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         case DisplayModeRubbishBin: {
             [self updateNavigationBarTitle];
             self.nodes = [MEGASdkManager.sharedMEGASdk childrenForParent:self.parentNode order:[Helper sortTypeFor:self.parentNode]];
-            self.moreMinimizedBarButtonItem.enabled = self.nodes.size.integerValue > 0;
+            self.moreMinimizedBarButtonItem.enabled = self.nodes.size > 0;
             self.navigationItem.searchController = self.searchController;
             break;
         }

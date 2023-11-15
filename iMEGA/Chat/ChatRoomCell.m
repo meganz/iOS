@@ -286,7 +286,7 @@
             
             MEGAChatMessage *lastMessage = [[MEGASdkManager sharedMEGAChatSdk] messageForChat:item.chatId messageId:item.lastMessageId];
             NSString *durationString;
-            if (lastMessage.nodeList && lastMessage.nodeList.size.integerValue == 1) {
+            if (lastMessage.nodeList && lastMessage.nodeList.size == 1) {
                 MEGANode *node = [lastMessage.nodeList nodeAtIndex:0];
                 NSTimeInterval duration = node.duration > 0 ? node.duration : 0;
                 durationString = [NSString mnz_stringFromTimeInterval:duration];

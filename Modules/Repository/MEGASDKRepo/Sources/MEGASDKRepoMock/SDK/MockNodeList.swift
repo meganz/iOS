@@ -8,11 +8,11 @@ public final class MockNodeList: MEGANodeList {
         super.init()
     }
     
-    public override var size: NSNumber! {
-        NSNumber(value: nodes.count)
+    public override var size: Int {
+        nodes.count
     }
     
-    public override func node(at index: Int) -> MEGANode! {
-        nodes[index]
+    public override func node(at index: Int) -> MEGANode? {
+        nodes[safe: index]
     }
 }

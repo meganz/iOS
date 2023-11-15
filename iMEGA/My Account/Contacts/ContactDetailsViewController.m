@@ -822,7 +822,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     NSMutableArray *sections = NSMutableArray.new;
     [sections addObjectsFromArray:inputSections];
     
-    if (self.incomingNodeListForUser.size.integerValue != 0) {
+    if (self.incomingNodeListForUser.size != 0) {
         [sections addObject:@(ContactDetailsSectionSharedFolders)];
     }
     
@@ -892,7 +892,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     NSInteger rowsInSection;
     ContactDetailsSection contactDetailsSection = self.contactDetailsSections[section].unsignedIntValue;
     if (contactDetailsSection == ContactDetailsSectionSharedFolders) {
-        rowsInSection = self.incomingNodeListForUser.size.integerValue;
+        rowsInSection = self.incomingNodeListForUser.size;
     } else if (contactDetailsSection == ContactDetailsSectionNicknameVerifyCredentials) {
         rowsInSection = self.rowsForNicknameAndVerify.count;
     } else {

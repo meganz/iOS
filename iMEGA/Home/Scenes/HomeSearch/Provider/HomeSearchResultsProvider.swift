@@ -152,7 +152,9 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         
         var results: [SearchResult] = []
         for i in firstItemIndex...lastItemIndex-1 {
-            results.append(mapNodeToSearchResult(nodeList.nodeAt(i)))
+            if let nodeAt = nodeList.nodeAt(i) {
+                results.append(mapNodeToSearchResult(nodeAt))
+            }
         }
 
         return .init(

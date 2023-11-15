@@ -89,7 +89,7 @@
                 if (self.message.type == MEGAChatMessageTypeAttachment) {
                     MEGANodeList *nodeList = self.message.nodeList;
                     if (nodeList) {
-                        if (nodeList.size.integerValue == 1) {
+                        if (nodeList.size == 1) {
                             MEGANode *node = [nodeList nodeAtIndex:0];
                             if (node.hasThumbnail) {
                                 waitForThumbnail = YES;
@@ -149,7 +149,7 @@
         case MEGAChatMessageTypeAttachment: {
             MEGANodeList *nodeList = self.message.nodeList;
             if (nodeList) {
-                if (nodeList.size.integerValue == 1) {
+                if (nodeList.size == 1) {
                     MEGANode *node = [nodeList nodeAtIndex:0];
                     
                     if (node.hasThumbnail) {
@@ -165,7 +165,7 @@
                     }
                 } else {
                     MEGALogWarning(@"[Notification] Attachment message wiht nodelist with more than one node is not expected");
-                    body = [NSString stringWithFormat:LocalizedString(@"files", @""), nodeList.size.integerValue];
+                    body = [NSString stringWithFormat:LocalizedString(@"files", @""), nodeList.size];
                 }
             } else {
                 MEGALogError(@"[Notification] Attachment message without nodelist");
@@ -176,7 +176,7 @@
             
         case MEGAChatMessageTypeVoiceClip: {
             NSString *durationString;
-            if (self.message.nodeList && self.message.nodeList.size.integerValue == 1) {
+            if (self.message.nodeList && self.message.nodeList.size == 1) {
                 MEGANode *node = [self.message.nodeList nodeAtIndex:0];
                 NSTimeInterval duration = node.duration > 0 ? node.duration : 0;
                 durationString = [NSString mnz_stringFromTimeInterval:duration];

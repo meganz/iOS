@@ -124,7 +124,7 @@
         
         [self.cloudDrive setToolbarActionsEnabled:YES];
         
-        self.cloudDrive.allNodesSelected = (self.cloudDrive.selectedNodesArray.count == self.cloudDrive.nodes.size.integerValue);
+        self.cloudDrive.allNodesSelected = (self.cloudDrive.selectedNodesArray.count == self.cloudDrive.nodes.size);
         
         return;
     } else {
@@ -135,7 +135,7 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row > self.cloudDrive.nodes.size.integerValue) {
+    if (indexPath.row > self.cloudDrive.nodes.size) {
         return;
     }
     
@@ -276,7 +276,7 @@ willPerformPreviewActionForMenuWithConfiguration:(UIContextMenuConfiguration *)c
             }
         }
     } else {
-        for (int index = 0; index < [self.cloudDrive.nodes.size intValue]; index++) {
+        for (int index = 0; index < self.cloudDrive.nodes.size; index++) {
             MEGANode *tempNode = [self.cloudDrive.nodes nodeAtIndex:index];
             if ((fileOrFolder == FileTypeFile && tempNode.isFile) || (fileOrFolder == FileTypeFolder && tempNode.isFolder)) {
                 [list addObject:tempNode];

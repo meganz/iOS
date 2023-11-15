@@ -13,7 +13,7 @@ extension ChatViewController {
                 UIPasteboard.general.string = content
             }
         } else if megaMessage.type == .attachment {
-            if megaMessage.nodeList?.size.uintValue == 1,
+            if megaMessage.nodeList?.size == 1,
                let node = megaMessage.nodeList?.node(at: 0),
                let name = node.name,
                name.fileExtensionGroup.isImage {
@@ -95,10 +95,12 @@ extension ChatViewController {
         for message in messages {
             guard let nodelist = message.message.nodeList else { return }
 
-            for index in 0..<nodelist.size.intValue {
+            for index in 0..<nodelist.size {
                 var node = nodelist.node(at: index)
                 if chatRoom.isPreview {
-                    node = sdk.authorizeNode(nodelist.node(at: index))
+                    if let nodeAt = nodelist.node(at: index) {
+                        node = sdk.authorizeNode(nodeAt)
+                    }
                 }
                 if let node = node {
                     transfers.append(CancellableTransfer(handle: node.handle, messageId: message.message.messageId, chatId: chatRoom.chatId, name: nil, appData: nil, priority: false, isFile: node.isFile(), type: .downloadChat))
@@ -117,10 +119,12 @@ extension ChatViewController {
             
             guard let nodelist = megaMessage.nodeList else { return }
             
-            for index in 0..<nodelist.size.intValue {
+            for index in 0..<nodelist.size {
                 var node = nodelist.node(at: index)
                 if chatRoom.isPreview {
-                    node = sdk.authorizeNode(nodelist.node(at: index))
+                    if let nodeAt = nodelist.node(at: index) {
+                        node = sdk.authorizeNode(nodeAt)
+                    }
                 }
                 if let node = node {
                     nodes.append(node)
@@ -154,7 +158,7 @@ extension ChatViewController {
     func saveToPhotos(_ messages: [ChatMessage]) {
         for chatMessage in messages {
             guard let nodelist = chatMessage.message.nodeList else { return }
-            if nodelist.size.uintValue == 1,
+            if nodelist.size == 1,
                var node = nodelist.node(at: 0),
                node.name?.fileExtensionGroup.isVisualMedia == true {
                 if chatRoom.isPreview,

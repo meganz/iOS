@@ -15,7 +15,7 @@
 - (NSArray *)mnz_numberOfFilesAndFolders {
     NSUInteger numberOfFiles = 0;
     NSUInteger numberOfFolders = 0;
-    for (NSUInteger i = 0; i < self.size.unsignedIntegerValue; i++) {
+    for (NSUInteger i = 0; i < self.size; i++) {
         MEGANode *node = [self nodeAtIndex:i];
         if (node.isFile) {
             numberOfFiles++;
@@ -29,7 +29,7 @@
 
 - (BOOL)mnz_existsFolderWithName:(NSString *)name {
     BOOL folderAlreadyExists = NO;
-    for (NSUInteger i = 0; i < self.size.unsignedIntegerValue; i++) {
+    for (NSUInteger i = 0; i < self.size; i++) {
         MEGANode *node = [self nodeAtIndex:i];
         if (node.isFolder && [node.name isEqualToString:name]) {
             folderAlreadyExists = YES;
@@ -41,7 +41,7 @@
 }
 
 - (NSArray<MEGANode*> *)mnz_nodesArrayFromNodeList {
-    NSUInteger nodeListCount = self.size.unsignedIntegerValue;
+    NSUInteger nodeListCount = self.size;
     NSMutableArray *nodesMutableArray = [[NSMutableArray alloc] initWithCapacity:nodeListCount];
     for (NSUInteger i = 0; i < nodeListCount; i++) {
         MEGANode *node = [self nodeAtIndex:i];
@@ -52,7 +52,7 @@
 }
 
 - (NSMutableArray *)mnz_mediaNodesMutableArrayFromNodeList {
-    NSUInteger nodeListCount = self.size.unsignedIntegerValue;
+    NSUInteger nodeListCount = self.size;
     NSMutableArray *mediaNodesMutableArray = [[NSMutableArray alloc] initWithCapacity:nodeListCount];
     for (NSUInteger i = 0; i < nodeListCount; i++) {
         MEGANode *node = [self nodeAtIndex:i];
@@ -65,7 +65,7 @@
 }
 
 - (NSMutableArray<MEGANode *> *)mnz_mediaAuthorizeNodesMutableArrayFromNodeListWithSdk:(MEGASdk *)sdk {
-    NSUInteger nodeListCount = self.size.unsignedIntegerValue;
+    NSUInteger nodeListCount = self.size;
     NSMutableArray *mediaNodesMutableArray = [[NSMutableArray alloc] initWithCapacity:nodeListCount];
     for (NSUInteger i = 0; i < nodeListCount; i++) {
         MEGANode *node = [self nodeAtIndex:i];
