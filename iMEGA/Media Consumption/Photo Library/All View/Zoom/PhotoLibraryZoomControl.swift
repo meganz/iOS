@@ -22,7 +22,7 @@ struct PhotoLibraryZoomControl: View {
         }
         .frame(width: 80, height: 40)
         .padding(EdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 12))
-        .blurryBackground(radius: 18)
+        .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 18))
         .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
     }
     

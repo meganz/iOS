@@ -8,7 +8,7 @@ struct PhotoSectionHeader<T: PhotoDateSection>: View {
         HStack {
             headerTitle(for: section)
                 .padding(EdgeInsets(top: 5, leading: 12, bottom: 5, trailing: 12))
-                .blurryBackground(radius: 20)
+                .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 20))
                 .padding(EdgeInsets(top: 15, leading: 8, bottom: 20, trailing: 8))
 
             Spacer()
