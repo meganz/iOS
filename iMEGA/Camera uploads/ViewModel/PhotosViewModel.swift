@@ -2,6 +2,13 @@ import Combine
 import MEGADomain
 import MEGAPresentation
 
+enum PhotosEmptyScreenViewType {
+    case noMediaFound
+    case noImagesFound
+    case noVideosFound
+    case enableCameraUploads
+}
+
 @MainActor
 final class PhotosViewModel: NSObject {
     var mediaNodes: [NodeEntity] = [NodeEntity]() {
@@ -17,6 +24,9 @@ final class PhotosViewModel: NSObject {
     
     @Published private(set) var cameraUploadExplorerSortOrderType: SortOrderType = .newest
     
+    @PreferenceWrapper(key: .isCameraUploadsEnabled, defaultValue: false)
+    private var isCameraUploadsEnabled: Bool
+    
     private var filterOptions: PhotosFilterOptions = [.allMedia, .allLocations]
     
     var filterType: PhotosFilterOptions = .allMedia
@@ -31,6 +41,7 @@ final class PhotosViewModel: NSObject {
     private var photoLibraryUseCase: any PhotoLibraryUseCaseProtocol
     private let userAttributeUseCase: any UserAttributeUseCaseProtocol
     private let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
+    private let cameraUploadsSettingsViewRouter: any Routing
     private var subscriptions = Set<AnyCancellable>()
     
     init(
@@ -38,14 +49,18 @@ final class PhotosViewModel: NSObject {
         photoLibraryUseCase: some PhotoLibraryUseCaseProtocol,
         userAttributeUseCase: some UserAttributeUseCaseProtocol,
         sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
+        preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
+        cameraUploadsSettingsViewRouter: some Routing,
         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
         self.photoUpdatePublisher = photoUpdatePublisher
         self.photoLibraryUseCase = photoLibraryUseCase
         self.userAttributeUseCase = userAttributeUseCase
         self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
+        self.cameraUploadsSettingsViewRouter = cameraUploadsSettingsViewRouter
         self.timelineCameraUploadStatusFeatureEnabled = featureFlagProvider.isFeatureFlagEnabled(for: .timelineCameraUploadStatus)
         super.init()
+        $isCameraUploadsEnabled.useCase = preferenceUseCase
         
         monitorSortOrderSubscription()
     }
@@ -125,6 +140,36 @@ final class PhotosViewModel: NSObject {
             for: .cameraUploadExplorerFeed)
     }
     
+    // MARK: - Empty Screen
+    func emptyScreenTypeToShow() -> PhotosEmptyScreenViewType {
+        guard !isCameraUploadsEnabled else {
+            return .noMediaFound
+        }
+        switch [filterType, filterLocation] {
+        case [.images, .cloudDrive]:
+            return .noImagesFound
+        case [.videos, .cloudDrive]:
+            return .noVideosFound
+        case [.allMedia, .allLocations], [.allMedia, .cameraUploads],
+            [.images, .allLocations], [.images, .cameraUploads],
+            [.videos, .allLocations], [.videos, .cameraUploads]:
+            return .enableCameraUploads
+        default:
+            return .noMediaFound
+        }
+    }
+    
+    func enableCameraUploadsBannerAction() -> (() -> Void)? {
+        guard shouldShowEnableCameraUploadsBanner() else {
+            return nil
+        }
+        return navigateToCameraUploadSettings
+    }
+    
+    func navigateToCameraUploadSettings() {
+        cameraUploadsSettingsViewRouter.start()
+    }
+    
     // MARK: - Private
     private func loadFilteredPhotos() async throws -> [NodeEntity] {
         let filterOptions: PhotosFilterOptions = [filterType, filterLocation]
@@ -183,6 +228,13 @@ final class PhotosViewModel: NSObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak photoUpdatePublisher] _ in photoUpdatePublisher?.updatePhotoLibrary() }
             .store(in: &subscriptions)
+    }
+    
+    private func shouldShowEnableCameraUploadsBanner() -> Bool {
+        guard !isCameraUploadsEnabled else {
+            return false
+        }
+        return filterLocation == .cloudDrive
     }
 }
 

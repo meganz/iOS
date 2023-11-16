@@ -37,6 +37,7 @@ typedef NS_ENUM(NSUInteger, MEGACameraUploadsState) {
 @property (nonatomic, strong) PhotosViewModel *viewModel;
 @property (strong, nonatomic) PhotoUpdatePublisher *photoUpdatePublisher;
 @property (nonatomic, strong, nullable) ContextMenuManager * contextMenuManager;
+@property (nonatomic, strong, nullable) UIView *emptyStateView;
 
 - (void)reloadHeader;
 - (void)reloadPhotos;

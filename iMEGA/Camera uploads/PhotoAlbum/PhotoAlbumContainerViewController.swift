@@ -161,7 +161,8 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnvironmen
                 userAttributeUseCase: UserAttributeUseCase(repo: UserAttributeRepository.newRepo), 
                 sortOrderPreferenceUseCase: SortOrderPreferenceUseCase(
                     preferenceUseCase: PreferenceUseCase.default,
-                    sortOrderPreferenceRepository: SortOrderPreferenceRepository.newRepo)
+                    sortOrderPreferenceRepository: SortOrderPreferenceRepository.newRepo),
+                cameraUploadsSettingsViewRouter: CameraUploadsSettingsViewRouter(presenter: navigationController) { }
             )
             photoViewController.viewModel = viewModel
             photoViewController.photoUpdatePublisher = photoUpdatePublisher
