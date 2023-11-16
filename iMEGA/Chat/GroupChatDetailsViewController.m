@@ -132,7 +132,7 @@
 - (void)updateAppearance {
     self.view.backgroundColor = self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
     
-    self.groupInfoView.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
+    self.groupInfoView.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
     self.participantsLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     self.groupInfoBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
 }
@@ -489,7 +489,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     GroupChatDetailsViewTableViewCell *cell;
-    cell.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
+    cell.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
     
     if (self.groupDetailsSections[indexPath.section].unsignedIntegerValue != GroupChatDetailsSectionParticipants
         && self.groupDetailsSections[indexPath.section].unsignedIntegerValue != GroupChatDetailsSectionObservers

@@ -24,7 +24,7 @@ class DocScannerFileNameTableCell: UITableViewCell {
     }
     
     func configure(filename: String, fileType: String?) {
-        backgroundColor = .mnz_secondaryBackgroundGrouped(traitCollection)
+        backgroundColor = .mnz_backgroundElevated(traitCollection)
         
         self.originalFilename = filename
         self.currentFilename = filename

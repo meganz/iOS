@@ -106,7 +106,7 @@ class EnterEmailViewController: UIViewController {
     private func updateAppearance(shouldClearExistingText: Bool = true) {
         view.backgroundColor = (presentingViewController == nil) ? .mnz_backgroundGrouped(for: traitCollection) : .mnz_backgroundGroupedElevated(traitCollection)
         
-        tagsFieldView.backgroundColor = (presentingViewController == nil) ? .mnz_secondaryBackgroundGrouped(traitCollection) : .mnz_secondaryBackgroundElevated(traitCollection)
+        tagsFieldView.backgroundColor = (presentingViewController == nil) ? .mnz_backgroundElevated(traitCollection) : .mnz_secondaryBackgroundElevated(traitCollection)
         
         customizeTagsField(shouldClearExistingText: shouldClearExistingText)
         tagsFieldButton.tintColor = UIColor.mnz_primaryGray(for: traitCollection)

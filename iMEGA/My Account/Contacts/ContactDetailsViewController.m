@@ -405,7 +405,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     self.messageLabel.textColor = self.callLabel.textColor = self.videoLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
     self.avatarBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     
-    self.actionsView.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
+    self.actionsView.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
     self.nameOrNicknameLabel.textColor = self.optionalNameLabel.textColor = self.statusLabel.textColor = self.emailLabel.textColor = UIColor.whiteColor;
     self.actionsBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
 }
@@ -904,7 +904,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ContactTableViewCell *cell;
-    cell.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
+    cell.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
     
     switch (self.contactDetailsSections[indexPath.section].intValue) {
         case ContactDetailsSectionDonotDisturb:
@@ -936,7 +936,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
             
         case ContactDetailsSectionSharedFolders: {
             SharedItemsTableViewCell *cell = [self cellForSharedFoldersWithIndexPath:indexPath];
-            cell.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
+            cell.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
             cell.delegate = self;
             return cell;
         }

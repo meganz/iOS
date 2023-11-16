@@ -328,7 +328,7 @@ import UIKit
 
 extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.backgroundColor = UIColor.mnz_secondaryBackgroundGrouped(traitCollection)
+        cell.backgroundColor = UIColor.mnz_backgroundElevated(traitCollection)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

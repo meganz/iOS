@@ -207,7 +207,7 @@
         [self setCurrentPlanMaxQuotaData];
     }
 
-    self.currentPlanCellView.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
+    self.currentPlanCellView.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
     self.currentPlanBottomLineCellView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
 }
 

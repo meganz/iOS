@@ -17,7 +17,7 @@ class DocScannerActionTableViewCell: UITableViewCell {
     }
     
     private func configure() {
-        backgroundColor = .mnz_secondaryBackgroundGrouped(traitCollection)
+        backgroundColor = .mnz_backgroundElevated(traitCollection)
         
         switch cellType {
         case .upload:

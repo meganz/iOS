@@ -142,7 +142,7 @@
     self.qrCodeImageView.image = [UIImage imageNamed:@"qrCodeIcon"].imageFlippedForRightToLeftLayoutDirection;
     self.profileBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     
-    self.addPhoneNumberView.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
+    self.addPhoneNumberView.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
     
     if ([MEGASdkManager.sharedMEGASdk isAccountType:MEGAAccountTypeBusiness] ||
         [MEGASdkManager.sharedMEGASdk isAccountType:MEGAAccountTypeProFlexi]) {
