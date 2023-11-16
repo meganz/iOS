@@ -23,7 +23,8 @@ final class PhotosViewModelTests: XCTestCase {
             userAttributeUseCase: MockUserAttributeUseCase(
                 contentConsumption: ContentConsumptionEntity(
                     ios: ContentConsumptionIos(timeline: ContentConsumptionTimeline(mediaType: .images, location: .cloudDrive, usePreference: true)))),
-            sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc))
+            sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc),
+            cameraUploadsSettingsViewRouter: MockCameraUploadsSettingsViewRouter())
     }
     
     func testCameraUploadExplorerSortOrderType_whenGivenValueEqualsModificationDesc_shouldReturnNewest() async throws {
@@ -91,7 +92,8 @@ final class PhotosViewModelTests: XCTestCase {
             photoUpdatePublisher: publisher,
             photoLibraryUseCase: usecase,
             userAttributeUseCase: MockUserAttributeUseCase(),
-            sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc))
+            sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc),
+            cameraUploadsSettingsViewRouter: MockCameraUploadsSettingsViewRouter())
         
         sut.filterType = .allMedia
         sut.filterLocation = . allLocations
@@ -210,6 +212,68 @@ final class PhotosViewModelTests: XCTestCase {
         XCTAssertFalse(sut.timelineCameraUploadStatusFeatureEnabled)
     }
     
+    func testEmptyScreenTypeToShow_cameraUploadsOn_shouldReturnNoMedia() {
+        let sut = makePhotosViewModel(preferenceUseCase: MockPreferenceUseCase(dict: [.isCameraUploadsEnabled: true]))
+        
+        XCTAssertEqual(sut.emptyScreenTypeToShow(), .noMediaFound)
+    }
+    
+    func testEmptyScreenTypeToShow_forFilterTypeAndLocationCameraUploadsOff_shouldReturnCorrectEmptyScreenTypeToDisplay() {
+        let expectations = [(filterType: PhotosFilterOptions.allMedia,
+                             filterLocation: PhotosFilterOptions.allLocations, expectedViewType: PhotosEmptyScreenViewType.enableCameraUploads),
+                            (filterType: .allMedia, filterLocation: .cloudDrive, expectedViewType: .noMediaFound),
+                            (filterType: .allMedia, filterLocation: .cameraUploads, expectedViewType: .enableCameraUploads),
+                            (filterType: .images, filterLocation: .allLocations, expectedViewType: .enableCameraUploads),
+                            (filterType: .images, filterLocation: .cloudDrive, expectedViewType: .noImagesFound),
+                            (filterType: .images, filterLocation: .cameraUploads, expectedViewType: .enableCameraUploads),
+                            (filterType: .videos, filterLocation: .allLocations, expectedViewType: .enableCameraUploads),
+                            (filterType: .videos, filterLocation: .cloudDrive, expectedViewType: .noVideosFound),
+                            (filterType: .videos, filterLocation: .cameraUploads, expectedViewType: .enableCameraUploads)
+        ]
+        
+        for (index, value) in expectations.enumerated() {
+            let sut = makePhotosViewModel(preferenceUseCase: MockPreferenceUseCase(dict: [.isCameraUploadsEnabled: false]))
+            sut.updateFilter(filterType: value.filterType, filterLocation: value.filterLocation)
+            
+            XCTAssertEqual(sut.emptyScreenTypeToShow(), value.expectedViewType,
+                           "Failed at index: \(index) with value: \(value)")
+        }
+    }
+    
+    func testEnableCameraUploadsBannerAction_cameraUploadsOn_shouldReturnNil() {
+        let sut = makePhotosViewModel(preferenceUseCase: MockPreferenceUseCase(dict: [.isCameraUploadsEnabled: true]))
+        
+        XCTAssertNil(sut.enableCameraUploadsBannerAction())
+    }
+    
+    func testEnableCameraUploadsBannerAction_cameraUploadsOffForFilterLocation_shouldReturnCorrectly() throws {
+        let cameraUploadsSettingsViewRouter = MockCameraUploadsSettingsViewRouter()
+        let sut = makePhotosViewModel(preferenceUseCase: MockPreferenceUseCase(dict: [.isCameraUploadsEnabled: false]),
+                                      cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter)
+        
+        for (index, value) in [PhotosFilterOptions.allLocations, .cameraUploads].enumerated() {
+            sut.updateFilter(filterType: .allMedia, filterLocation: value)
+            XCTAssertNil(sut.enableCameraUploadsBannerAction(), "Failed at index: \(index) with value: \(value)")
+        }
+        
+        sut.updateFilter(filterType: .allMedia, filterLocation: .cloudDrive)
+        
+        let action = try XCTUnwrap(sut.enableCameraUploadsBannerAction())
+        action()
+        
+        XCTAssertEqual(cameraUploadsSettingsViewRouter.startCalled, 1)
+    }
+    
+    func testNavigateToCameraUploadSettings_called_shouldStartNavigation() {
+        let cameraUploadsSettingsViewRouter = MockCameraUploadsSettingsViewRouter()
+        let sut = makePhotosViewModel(preferenceUseCase: MockPreferenceUseCase(dict: [.isCameraUploadsEnabled: false]),
+                                      cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter)
+        
+        sut.navigateToCameraUploadSettings()
+        
+        XCTAssertEqual(cameraUploadsSettingsViewRouter.startCalled, 1)
+    }
+    
     private func sampleNodesForAllLocations() -> [NodeEntity] {
         let node1 = NodeEntity(nodeType: .file, name: "TestImage1.png", handle: 1, parentHandle: 0, hasThumbnail: true)
         let node2 = NodeEntity(nodeType: .file, name: "TestImage2.png", handle: 2, parentHandle: 1, hasThumbnail: true)
@@ -244,6 +308,8 @@ final class PhotosViewModelTests: XCTestCase {
     private func makePhotosViewModel(
         userAttributeUseCase: some UserAttributeUseCaseProtocol = MockUserAttributeUseCase(),
         sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol = MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc),
+        preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(),
+        cameraUploadsSettingsViewRouter: some Routing = MockCameraUploadsSettingsViewRouter(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> PhotosViewModel {
         let publisher = PhotoUpdatePublisher(photosViewController: PhotosViewController())
@@ -254,6 +320,16 @@ final class PhotosViewModelTests: XCTestCase {
                                photoLibraryUseCase: usecase,
                                userAttributeUseCase: userAttributeUseCase,
                                sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
+                               preferenceUseCase: preferenceUseCase,
+                               cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter,
                                featureFlagProvider: featureFlagProvider)
+    }
+}
+
+private class MockCameraUploadsSettingsViewRouter: Routing {
+    private(set) var startCalled = 0
+    
+    func start() {
+        startCalled += 1
     }
 }

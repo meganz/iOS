@@ -135,7 +135,9 @@
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        if (self.photosByMonthYearArray.count == 0) {
+        if (self.viewModel.timelineCameraUploadStatusFeatureEnabled) {
+            [self handleEmptyStateReload];
+        } else if (self.photosByMonthYearArray.count == 0) {
             [self.photosCollectionView reloadEmptyDataSet];
         }
     } completion:nil];
@@ -348,11 +350,22 @@
     [self setupNavigationBarButtons];
     dispatch_async(dispatch_get_main_queue(), ^{
         [self objcWrapper_updatePhotoLibrary];
-        if ([self.viewModel hasNoPhotos]) {
+        if (self.viewModel.timelineCameraUploadStatusFeatureEnabled) {
+            [self handleEmptyStateReload];
+        } else if ([self.viewModel hasNoPhotos]) {
             [self.photosCollectionView reloadEmptyDataSet];
         }
         [self setupNavigationBarButtons];
     });
+}
+
+- (void)handleEmptyStateReload {
+    if (MEGAReachabilityManager.isReachable && self.viewModel.hasNoPhotos) {
+        [self showEmptyViewForAppliedFilters];
+    } else {
+        [self removeEmptyView];
+        [self.photosCollectionView reloadEmptyDataSet];
+    }
 }
 
 - (void)updateNavigationTitleBar {
@@ -375,7 +388,11 @@
     }
     
     [self reloadHeader];
-    [self.photosCollectionView reloadEmptyDataSet];
+    if (self.viewModel.timelineCameraUploadStatusFeatureEnabled) {
+        [self handleEmptyStateReload];
+    } else {
+        [self.photosCollectionView reloadEmptyDataSet];
+    }
 }
 
 #pragma mark - IBAction
