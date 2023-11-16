@@ -80,8 +80,5 @@ private struct SearchBarCancelButton: View {
         })
         .buttonStyle(BorderlessButtonStyle())
         .foregroundColor(.secondary)
-        .padding(.trailing, 10)
-        .transition(.move(edge: .trailing))
-        .animation(.default)
     }
 }
