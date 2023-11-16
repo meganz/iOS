@@ -151,7 +151,7 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.view.backgroundColor = self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedElevated:self.traitCollection];
+    self.view.backgroundColor = self.tableView.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
     self.searchView.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
 }
 

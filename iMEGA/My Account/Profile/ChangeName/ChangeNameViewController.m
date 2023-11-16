@@ -74,7 +74,7 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.view.backgroundColor = [UIColor mnz_backgroundGroupedElevated:self.traitCollection];
+    self.view.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
     
     self.firstNameView.backgroundColor = self.lastNameView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
     self.firstNameLabel.textColor = self.lastNameLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];

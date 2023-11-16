@@ -141,7 +141,7 @@ class NicknameViewController: UIViewController {
     }
     
     private func updateAppearance() {
-        view.backgroundColor = UIColor.mnz_backgroundGroupedElevated(traitCollection)
+        view.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
         
         nicknameView.backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
         nicknameLabel.textColor = UIColor.mnz_secondaryGray(for: traitCollection)
