@@ -4,6 +4,8 @@ import MEGAAnalyticsiOS
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
+import MEGAPresentationMock
+import MEGATest
 import XCTest
 
 final class WaitingRoomViewModelTests: XCTestCase {
@@ -518,7 +520,8 @@ final class WaitingRoomViewModelTests: XCTestCase {
         
         sut.tapJoinAction(firstName: "First", lastName: "Last")
         
-        tracker.assertTrackAnalyticsEventCalled(
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
             with: [
                 ScheduledMeetingJoinGuestButtonEvent()
             ]
@@ -549,7 +552,8 @@ final class WaitingRoomViewModelTests: XCTestCase {
         
         wait(for: [exp], timeout: 0.5)
         
-        tracker.assertTrackAnalyticsEventCalled(
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
             with: [
                 WaitingRoomTimeoutEvent()
             ]

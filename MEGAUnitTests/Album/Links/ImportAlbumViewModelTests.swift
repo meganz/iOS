@@ -7,6 +7,7 @@ import MEGAL10n
 import MEGAPermissions
 import MEGAPermissionsMock
 import MEGAPresentation
+import MEGAPresentationMock
 import MEGATest
 import XCTest
 
@@ -39,7 +40,13 @@ final class ImportAlbumViewModelTests: XCTestCase {
         
         XCTAssertEqual(sut.publicLinkStatus, .requireDecryptionKey)
         
-        tracker.assertTrackAnalyticsEventCalled(with: [AlbumImportScreenEvent(), AlbumImportInputDecryptionKeyDialogEvent()])
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [
+                AlbumImportScreenEvent(),
+                AlbumImportInputDecryptionKeyDialogEvent()
+            ]
+        )
     }
     
     func testLoadPublicAlbum_onFullAlbumLink_shouldChangeLinkStatusSetAlbumNameAndLoadPhotos() async throws {
@@ -79,7 +86,13 @@ final class ImportAlbumViewModelTests: XCTestCase {
                        photos.toPhotoLibrary(withSortType: .newest))
         XCTAssertTrue(sut.isPhotosLoaded)
         
-        tracker.assertTrackAnalyticsEventCalled(with: [AlbumImportScreenEvent(), ImportAlbumContentLoadedEvent()])
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [
+                AlbumImportScreenEvent(),
+                ImportAlbumContentLoadedEvent()
+            ]
+        )
     }
     
     func testLoadPublicAlbum_onSharedAlbumError_shouldShowCannotAccessAlbumAlert() async throws {
@@ -110,7 +123,10 @@ final class ImportAlbumViewModelTests: XCTestCase {
         
         XCTAssertEqual(linkStatusResults, [.inProgress, .invalid])
         XCTAssertTrue(sut.showCannotAccessAlbumAlert)
-        tracker.assertTrackAnalyticsEventCalled(with: [AlbumImportScreenEvent()])
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [AlbumImportScreenEvent()]
+        )
     }
     
     func testLoadPublicAlbum_onTaskCancellationError_shouldNotSetStatusToInvalid() async throws {
@@ -152,7 +168,13 @@ final class ImportAlbumViewModelTests: XCTestCase {
         
         await fulfillment(of: [exp], timeout: 1.0)
         
-        tracker.assertTrackAnalyticsEventCalled(with: [AlbumImportInputDecryptionKeyDialogEvent(), ImportAlbumContentLoadedEvent()])
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [
+                AlbumImportInputDecryptionKeyDialogEvent(),
+                ImportAlbumContentLoadedEvent()
+            ]
+        )
         
         XCTAssertEqual(linkStatusResults, [.inProgress, .loaded])
         XCTAssertEqual(sut.publicAlbumName, albumName)

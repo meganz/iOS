@@ -6,6 +6,7 @@ import MEGADomainMock
 import MEGAL10n
 import MEGAPresentation
 import MEGAPresentationMock
+import MEGATest
 import XCTest
 
 final class AlbumContentViewModelTests: XCTestCase {
@@ -22,7 +23,8 @@ final class AlbumContentViewModelTests: XCTestCase {
         
         test(viewModel: sut, action: .onViewReady, expectedCommands: [.showAlbumPhotos(photos: expectedNodes, sortOrder: .newest)])
         
-        tracker.assertTrackAnalyticsEventCalled(
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
             with: [
                 AlbumContentScreenEvent()
             ]
@@ -705,7 +707,8 @@ final class AlbumContentViewModelTests: XCTestCase {
         sut.dispatch(.shareLink)
         XCTAssertEqual(router.showShareLinkCalled, 1)
         
-        tracker.assertTrackAnalyticsEventCalled(
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
             with: [
                 AlbumContentShareLinkMenuToolbarEvent()
             ]

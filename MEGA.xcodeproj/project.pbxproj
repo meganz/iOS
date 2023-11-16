@@ -132,7 +132,6 @@
 		137361931A6664C300B740E8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 137361921A6664C300B740E8 /* AppDelegate.m */; };
 		160711542A558DED00970A19 /* PagerTabViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160711532A558DED00970A19 /* PagerTabViewModelTests.swift */; };
 		160711652A5594AD00970A19 /* PhotoAlbumContainerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160711642A5594AD00970A19 /* PhotoAlbumContainerViewModelTests.swift */; };
-		160CEA832A5BB98E0051541F /* MockAnalyticsTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160CEA822A5BB98E0051541F /* MockAnalyticsTracker.swift */; };
 		1678D7F22A45487E00336C52 /* MEGATest in Frameworks */ = {isa = PBXBuildFile; productRef = 1678D7F12A45487E00336C52 /* MEGATest */; };
 		2400A7E02ACB135F0023C015 /* AudioPlayerItemDataSourceCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2400A7DF2ACB135F0023C015 /* AudioPlayerItemDataSourceCommand.swift */; };
 		240380542A30687500C06E61 /* ReportIssueMessageViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240380532A30687500C06E61 /* ReportIssueMessageViewModelTests.swift */; };
@@ -2654,7 +2653,6 @@
 		137361921A6664C300B740E8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AppDelegate.m; sourceTree = "<group>"; wrapsLines = 1; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		160711532A558DED00970A19 /* PagerTabViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagerTabViewModelTests.swift; sourceTree = "<group>"; };
 		160711642A5594AD00970A19 /* PhotoAlbumContainerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbumContainerViewModelTests.swift; sourceTree = "<group>"; };
-		160CEA822A5BB98E0051541F /* MockAnalyticsTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAnalyticsTracker.swift; sourceTree = "<group>"; };
 		167845462A172AAA00568FBE /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		1678D7F02A45474E00336C52 /* MEGATest */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGATest; sourceTree = "<group>"; };
 		167F6A242A41507D00D0A6F9 /* MEGAPlugins */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAPlugins; sourceTree = "<group>"; };
@@ -5668,22 +5666,6 @@
 				BFC9685A278CDA080098C523 /* TestingAppDelegate.swift */,
 			);
 			path = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		160CEA802A5BB96B0051541F /* Analytics */ = {
-			isa = PBXGroup;
-			children = (
-				160CEA812A5BB97F0051541F /* TestHelpers */,
-			);
-			path = Analytics;
-			sourceTree = "<group>";
-		};
-		160CEA812A5BB97F0051541F /* TestHelpers */ = {
-			isa = PBXGroup;
-			children = (
-				160CEA822A5BB98E0051541F /* MockAnalyticsTracker.swift */,
-			);
-			path = TestHelpers;
 			sourceTree = "<group>";
 		};
 		167F6A232A41502500D0A6F9 /* BuildTools */ = {
@@ -10970,7 +10952,6 @@
 			children = (
 				B6D5482E283E2AF000D7302F /* Account */,
 				328FDCF629121D2200E5990A /* Album */,
-				160CEA802A5BB96B0051541F /* Analytics */,
 				E7EE7CCD2AC6DC9E00DBABCD /* AppDelegate */,
 				C452B66225CD4E550073B22C /* AudioPlayer */,
 				C46D4A7B26557AB900748BD3 /* BannerContainer */,
@@ -15293,7 +15274,6 @@
 				5D52C74A250C4F4100286A43 /* mock-function.swift in Sources */,
 				B58050C12A823A6100D377D1 /* MockABTestProvider.swift in Sources */,
 				BFBB888B28B8421B00E8B482 /* MockAnalyticsEventUseCase.swift in Sources */,
-				160CEA832A5BB98E0051541F /* MockAnalyticsTracker.swift in Sources */,
 				C47E7C4025D1AC3400DB6FF5 /* MockAudioPlayerHandler.swift in Sources */,
 				24C577F62AC1872F00302849 /* MockAudioPlayerRepository.swift in Sources */,
 				24C577FF2AC18A9F00302849 /* MockAudioPlayerUseCase.swift in Sources */,

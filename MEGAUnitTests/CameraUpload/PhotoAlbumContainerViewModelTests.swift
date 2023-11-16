@@ -1,5 +1,7 @@
 @testable import MEGA
 import MEGAAnalyticsiOS
+import MEGAPresentationMock
+import MEGATest
 import XCTest
 
 final class PhotoAlbumContainerViewModelTests: XCTestCase {
@@ -10,7 +12,10 @@ final class PhotoAlbumContainerViewModelTests: XCTestCase {
         
         sut.didAppear()
 
-        mockTracker.assertTrackAnalyticsEventCalled(with: [PhotoScreenEvent()])
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: mockTracker.trackedEventIdentifiers,
+            with: [PhotoScreenEvent()]
+        )
     }
     
     func testShareLinksTapped_shouldSetShowShareAlbumLinksToTrueAndTrackEvent() {
@@ -20,6 +25,9 @@ final class PhotoAlbumContainerViewModelTests: XCTestCase {
         sut.shareLinksTapped()
         
         XCTAssertTrue(sut.showShareAlbumLinks)
-        mockTracker.assertTrackAnalyticsEventCalled(with: [AlbumListShareLinkMenuItemEvent()])
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: mockTracker.trackedEventIdentifiers,
+            with: [AlbumListShareLinkMenuItemEvent()]
+        )
     }
 }

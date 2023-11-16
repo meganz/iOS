@@ -5,6 +5,7 @@ import MEGADomainMock
 import MEGAPresentation
 import MEGAPresentationMock
 import MEGASwiftUI
+import MEGATest
 import SwiftUI
 import XCTest
 
@@ -256,7 +257,8 @@ final class AlbumCellViewModelTests: XCTestCase {
         
         XCTAssertFalse(sut.isSelected)
         
-        tracker.assertTrackAnalyticsEventCalled(
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
             with: [
                 album.makeAlbumSelectedEvent(selectionType: .multiadd),
                 album.makeAlbumSelectedEvent(selectionType: .multiremove)

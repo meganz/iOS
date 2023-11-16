@@ -5,6 +5,7 @@ import MEGADomainMock
 import MEGAL10n
 import MEGAPresentation
 import MEGAPresentationMock
+import MEGATest
 import XCTest
 
 final class FutureMeetingRoomViewModelTests: XCTestCase {
@@ -290,7 +291,8 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
         
         sut.contextMenuOptions?[safe: 1]?.action()
         
-        tracker.assertTrackAnalyticsEventCalled(
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
             with: [
                 ScheduledMeetingEditMenuItemEvent()
             ]
@@ -317,7 +319,8 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
         
         sut.contextMenuOptions?.last?.action()
         
-        tracker.assertTrackAnalyticsEventCalled(
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
             with: [
                 ScheduledMeetingCancelMenuItemEvent()
             ]

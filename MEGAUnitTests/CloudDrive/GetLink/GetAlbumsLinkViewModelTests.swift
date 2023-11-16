@@ -4,6 +4,8 @@ import MEGADomain
 import MEGADomainMock
 import MEGAL10n
 import MEGAPresentation
+import MEGAPresentationMock
+import MEGATest
 import XCTest
 
 final class GetAlbumsLinkViewModelTests: XCTestCase {
@@ -79,7 +81,8 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
             .dismissHud
         ])
         
-        tracker.assertTrackAnalyticsEventCalled(
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
             with: [
                 MultipleAlbumLinksScreenEvent()
             ]

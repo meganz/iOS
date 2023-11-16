@@ -1,5 +1,7 @@
 @testable import MEGA
 import MEGAAnalyticsiOS
+import MEGAPresentationMock
+import MEGATest
 import XCTest
 
 @MainActor
@@ -112,7 +114,10 @@ final class MEGAAVViewControllerTests: XCTestCase {
         
         sut.trackAnalytics(for: .playing, tracker: tracker)
         
-        tracker.assertTrackAnalyticsEventCalled(with: [VideoPlayerIsActivatedEvent()])
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [VideoPlayerIsActivatedEvent()]
+        )
     }
     
     func testTrackAnalyticsOnStatus_playingWhenVideoHasPlayedOnceBefore_DoesNotTrackskAnalyticsEvent() throws {
@@ -122,7 +127,10 @@ final class MEGAAVViewControllerTests: XCTestCase {
         
         sut.trackAnalytics(for: .playing, tracker: tracker)
         
-        tracker.assertTrackAnalyticsEventCalled(with: [])
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: []
+        )
     }
     
     func testTrackAnalyticsOnStatus_OtherThanPlaying_shouldNotTracksAnalyticsEvent() throws {
@@ -136,7 +144,10 @@ final class MEGAAVViewControllerTests: XCTestCase {
                 
                 sut.trackAnalytics(for: status, tracker: tracker)
                 
-                tracker.assertTrackAnalyticsEventCalled(with: [])
+                assertTrackAnalyticsEventCalled(
+                    trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+                    with: []
+                )
             }
     }
     

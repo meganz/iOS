@@ -2,6 +2,8 @@ import Combine
 @testable import MEGA
 import MEGAAnalyticsiOS
 import MEGADomain
+import MEGAPresentationMock
+import MEGATest
 import XCTest
 
 final class ChatRoomLinkViewModelTests: XCTestCase {
@@ -49,7 +51,8 @@ final class ChatRoomLinkViewModelTests: XCTestCase {
         
         sut.shareMeetingLinkTapped()
         
-        tracker.assertTrackAnalyticsEventCalled(
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
             with: [
                 ScheduledMeetingShareMeetingLinkButtonEvent()
             ]

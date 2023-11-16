@@ -4,6 +4,8 @@ import MEGADomain
 import MEGADomainMock
 import MEGAPermissions
 import MEGAPermissionsMock
+import MEGAPresentationMock
+import MEGATest
 import XCTest
 
 final class MeetingCreatingViewModelTests: XCTestCase {
@@ -158,7 +160,8 @@ final class MeetingCreatingViewModelTests: XCTestCase {
              ]
         )
                 
-        tracker.assertTrackAnalyticsEventCalled(
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
             with: [
                 ScheduledMeetingJoinGuestButtonEvent()
             ]
