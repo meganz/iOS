@@ -1,17 +1,9 @@
 import MEGAAnalyticsiOS
-import MEGAPresentation
 import XCTest
 
-final class MockTracker: AnalyticsTracking {
-    private(set) var trackedEventIdentifiers: [EventIdentifier] = []
-    
-    init() {}
-    
-    func trackAnalyticsEvent(with eventIdentifier: EventIdentifier) {
-        trackedEventIdentifiers.append(eventIdentifier)
-    }
-    
+public extension XCTestCase {
     func assertTrackAnalyticsEventCalled(
+        trackedEventIdentifiers: [EventIdentifier],
         with expectedEventIdentifiers: [EventIdentifier],
         file: StaticString = #file, line: UInt = #line
     ) {

@@ -1,5 +1,7 @@
 @testable import MEGA
 import MEGAAnalyticsiOS
+import MEGAPresentationMock
+import MEGATest
 import XCTest
 
 final class PagerTabViewModelTests: XCTestCase {
@@ -8,7 +10,8 @@ final class PagerTabViewModelTests: XCTestCase {
         
         sut.didAppear()
 
-        mockTracker.assertTrackAnalyticsEventCalled(
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: mockTracker.trackedEventIdentifiers,
             with: [sut.selectedTab.eventIdentifier]
         )
     }
@@ -18,11 +21,15 @@ final class PagerTabViewModelTests: XCTestCase {
         
         sut.selectedTab = .album
 
-        mockTracker.assertTrackAnalyticsEventCalled(with: [AlbumsTabEvent()])
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: mockTracker.trackedEventIdentifiers,
+            with: [AlbumsTabEvent()]
+        )
         
         sut.selectedTab = .timeline
 
-        mockTracker.assertTrackAnalyticsEventCalled(
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: mockTracker.trackedEventIdentifiers,
             with: [
                 AlbumsTabEvent(),
                 TimelineTabEvent()
@@ -35,13 +42,19 @@ final class PagerTabViewModelTests: XCTestCase {
         
         sut.selectedTab = .album
 
-        mockTracker.assertTrackAnalyticsEventCalled(with: [AlbumsTabEvent()])
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: mockTracker.trackedEventIdentifiers,
+            with: [AlbumsTabEvent()]
+        )
         
         sut.selectedTab = .album
         sut.selectedTab = .album
         sut.selectedTab = .album
 
-        mockTracker.assertTrackAnalyticsEventCalled(with: [AlbumsTabEvent()])
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: mockTracker.trackedEventIdentifiers,
+            with: [AlbumsTabEvent()]
+        )
     }
     
     // MARK: - Test Helpers

@@ -4,6 +4,8 @@ import MEGADomain
 import MEGADomainMock
 import MEGAL10n
 import MEGAPresentation
+import MEGAPresentationMock
+import MEGATest
 import XCTest
 
 final class GetAlbumLinkViewModelTests: XCTestCase {
@@ -75,7 +77,8 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
                            shareButtonTitle: Strings.Localizable.General.MenuAction.ShareLink.title(1))
         ])
         
-        tracker.assertTrackAnalyticsEventCalled(
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
             with: [
                 SingleAlbumLinkScreenEvent()
             ]

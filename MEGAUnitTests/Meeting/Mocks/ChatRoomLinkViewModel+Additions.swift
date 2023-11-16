@@ -1,6 +1,7 @@
 @testable import MEGA
 import MEGADomain
 import MEGAPresentation
+import MEGAPresentationMock
 
 extension ChatRoomLinkViewModel {
     convenience init(

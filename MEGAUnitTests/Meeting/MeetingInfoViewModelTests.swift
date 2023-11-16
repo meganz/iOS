@@ -4,6 +4,7 @@ import MEGAAnalyticsiOS
 import MEGADomain
 import MEGADomainMock
 import MEGAPresentationMock
+import MEGATest
 import XCTest
 
 final class MeetingInfoViewModelTests: XCTestCase {
@@ -135,7 +136,8 @@ final class MeetingInfoViewModelTests: XCTestCase {
                 
         await sut.allowNonHostToAddParticipantsValueChanged(to: true)
                 
-        tracker.assertTrackAnalyticsEventCalled(
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
             with: [
                 ScheduledMeetingSettingEnableOpenInviteButtonEvent()
             ]
@@ -151,7 +153,8 @@ final class MeetingInfoViewModelTests: XCTestCase {
                 
         await sut.allowNonHostToAddParticipantsValueChanged(to: false)
                 
-        tracker.assertTrackAnalyticsEventCalled(
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
             with: []
         )
     }
@@ -165,7 +168,8 @@ final class MeetingInfoViewModelTests: XCTestCase {
                 
         await sut.waitingRoomValueChanged(to: true)
                 
-        tracker.assertTrackAnalyticsEventCalled(
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
             with: [
                 WaitingRoomEnableButtonEvent()
             ]
@@ -181,7 +185,8 @@ final class MeetingInfoViewModelTests: XCTestCase {
                 
         await sut.waitingRoomValueChanged(to: false)
                 
-        tracker.assertTrackAnalyticsEventCalled(
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
             with: []
         )
     }

@@ -38,8 +38,10 @@ let package = Package(
             swiftSettings: settings),
         .target(
             name: "MEGAPresentationMock",
-            dependencies: ["MEGAPresentation"]
-        ),
+            dependencies: ["MEGAPresentation", 
+                            .product(name: "MEGAAnalyticsiOS", package: "mobile-analytics-ios")
+            ],
+            swiftSettings: settings),
         .testTarget(
             name: "MEGAPresentationTests",
             dependencies: ["MEGAPresentation",

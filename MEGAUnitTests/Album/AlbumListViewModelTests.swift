@@ -5,6 +5,8 @@ import MEGADomain
 import MEGADomainMock
 import MEGAL10n
 import MEGAPresentation
+import MEGAPresentationMock
+import MEGATest
 import XCTest
 
 @MainActor
@@ -303,7 +305,8 @@ final class AlbumListViewModelTests: XCTestCase {
         XCTAssertNil(sut.albumCreationAlertMsg)
         XCTAssertEqual(sut.album, gifAlbum)
         
-        tracker.assertTrackAnalyticsEventCalled(
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
             with: [
                 gifAlbum.makeAlbumSelectedEvent(selectionType: .single)
             ]
@@ -320,7 +323,8 @@ final class AlbumListViewModelTests: XCTestCase {
         
         sut.onAlbumTap(userAlbum)
         
-        tracker.assertTrackAnalyticsEventCalled(
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
             with: [
                 userAlbum.makeAlbumSelectedEvent(selectionType: .single)
             ]

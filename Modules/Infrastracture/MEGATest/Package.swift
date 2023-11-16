@@ -14,10 +14,15 @@ let package = Package(
             name: "MEGATest",
             targets: ["MEGATest"])
     ],
+    dependencies: [
+        .package(url: "https://code.developers.mega.co.nz/mobile/kmm/mobile-analytics-ios.git", branch: "main")
+    ],
     targets: [
         .target(
             name: "MEGATest",
-            dependencies: [],
+            dependencies: [
+                .product(name: "MEGAAnalyticsiOS", package: "mobile-analytics-ios")
+            ],
             swiftSettings: settings
         )
     ]

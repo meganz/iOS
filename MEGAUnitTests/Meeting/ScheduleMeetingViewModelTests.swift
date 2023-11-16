@@ -5,6 +5,7 @@ import MEGADomain
 import MEGADomainMock
 import MEGAL10n
 import MEGAPresentationMock
+import MEGATest
 import XCTest
 
 final class ScheduleMeetingViewModelTests: XCTestCase {
@@ -640,7 +641,8 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
         
         sut.submitButtonTapped()
         
-        tracker.assertTrackAnalyticsEventCalled(
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
             with: [
                 ScheduledMeetingCreateConfirmButtonEvent()
             ]
@@ -654,7 +656,8 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
         
         sut.submitButtonTapped()
         
-        tracker.assertTrackAnalyticsEventCalled(
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
             with: []
         )
     }
@@ -665,7 +668,8 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
         
         sut.showRecurrenceOptionsView()
         
-        tracker.assertTrackAnalyticsEventCalled(
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
             with: [
                 ScheduledMeetingSettingRecurrenceButtonEvent()
             ]
@@ -678,7 +682,8 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
         
         sut.onMeetingLinkEnabledChange(true)
         
-        tracker.assertTrackAnalyticsEventCalled(
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
             with: [
                 ScheduledMeetingSettingEnableMeetingLinkButtonEvent()
             ]
@@ -691,7 +696,8 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
         
         sut.onMeetingLinkEnabledChange(false)
         
-        tracker.assertTrackAnalyticsEventCalled(
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
             with: []
         )
     }
@@ -702,7 +708,8 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
         
         sut.onCalendarInviteEnabledChange(true)
         
-        tracker.assertTrackAnalyticsEventCalled(
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
             with: [
                 ScheduledMeetingSettingSendCalendarInviteButtonEvent()
             ]
@@ -715,7 +722,8 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
         
         sut.onCalendarInviteEnabledChange(false)
         
-        tracker.assertTrackAnalyticsEventCalled(
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
             with: []
         )
     }
@@ -726,7 +734,8 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
         
         sut.onWaitingRoomEnabledChange(true)
         
-        tracker.assertTrackAnalyticsEventCalled(
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
             with: [
                 WaitingRoomEnableButtonEvent()
             ]
@@ -739,7 +748,8 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
         
         sut.onWaitingRoomEnabledChange(false)
         
-        tracker.assertTrackAnalyticsEventCalled(
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
             with: []
         )
     }
@@ -750,7 +760,8 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
         
         sut.onAllowNonHostsToAddParticipantsEnabledChange(true)
         
-        tracker.assertTrackAnalyticsEventCalled(
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
             with: [
                 ScheduledMeetingSettingEnableOpenInviteButtonEvent()
             ]
@@ -763,7 +774,8 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
         
         sut.onAllowNonHostsToAddParticipantsEnabledChange(false)
         
-        tracker.assertTrackAnalyticsEventCalled(
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
             with: []
         )
     }
