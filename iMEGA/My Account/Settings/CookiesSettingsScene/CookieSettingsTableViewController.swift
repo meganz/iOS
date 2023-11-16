@@ -137,7 +137,7 @@ class CookieSettingsTableViewController: UITableViewController {
     }
     
     private func updateAppearance() {
-        tableView.backgroundColor = .mnz_backgroundGroupedElevated(traitCollection)
+        tableView.backgroundColor = .mnz_secondaryBackground(for: traitCollection)
         tableView.separatorColor = .mnz_separator(for: traitCollection)
         
         saveBarButtonItem.tintColor = .mnz_primaryGray(for: traitCollection)

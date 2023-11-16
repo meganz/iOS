@@ -78,7 +78,7 @@
 
 - (void)updateAppearance {
     self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
-    self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedElevated:self.traitCollection];
+    self.tableView.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
 }
 
 - (void)hideKeyboard {

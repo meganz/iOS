@@ -233,17 +233,17 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.view.backgroundColor = self.tableView.backgroundColor = (self.contactsMode == ContactsModeDefault) ? [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection] : [UIColor mnz_backgroundGroupedElevated:self.traitCollection];
+    self.view.backgroundColor = self.tableView.backgroundColor = (self.contactsMode == ContactsModeDefault) ? [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection] : [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
     
     switch (self.contactsMode) {
         case ContactsModeChatAddParticipant:
         case ContactsModeInviteParticipants:
         case ContactsModeScheduleMeeting:
-            self.itemListView.backgroundColor = [UIColor mnz_backgroundGroupedElevated:self.traitCollection];
+            self.itemListView.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
             break;
             
         case ContactsModeChatNamingGroup: {
-            self.chatNamingGroupTableViewHeader.backgroundColor = [UIColor mnz_backgroundGroupedElevated:self.traitCollection];
+            self.chatNamingGroupTableViewHeader.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
             
             self.enterGroupNameView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
             self.enterGroupNameBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
@@ -1550,7 +1550,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     static NSString *reuseIdentifier = @"GenericHeaderFooterViewID";
     GenericHeaderFooterView *headerView = [self.tableView dequeueReusableHeaderFooterViewWithIdentifier:reuseIdentifier];
-    headerView.contentView.backgroundColor = (self.contactsMode == ContactsModeDefault) ? [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection] : [UIColor mnz_backgroundGroupedElevated:self.traitCollection];
+    headerView.contentView.backgroundColor = (self.contactsMode == ContactsModeDefault) ? [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection] : [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
 
     if (self.contactsMode == ContactsModeDefault) {
         if (section == 0) {

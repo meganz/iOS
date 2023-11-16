@@ -75,7 +75,7 @@ final class GenericHeaderFooterView: UITableViewHeaderFooterView {
     
     private func updateAppearance() {
         if self.contentView.backgroundColor != nil && !usingDefaultBackgroundColor {
-            self.contentView.backgroundColor = .mnz_backgroundGroupedElevated(traitCollection)
+            self.contentView.backgroundColor = .mnz_secondaryBackground(for: traitCollection)
         } else {
             self.contentView.backgroundColor = .mnz_backgroundGrouped(for: traitCollection)
             usingDefaultBackgroundColor = true
