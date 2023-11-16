@@ -12,7 +12,7 @@ public final class MockUserAlertList: MEGAUserAlertList {
     
     public override var size: Int { alerts.count }
     
-    public override func usertAlert(at index: Int) -> MEGAUserAlert! {
+    public override func usertAlert(at index: Int) -> MEGAUserAlert? {
         alerts[index]
     }
 }
