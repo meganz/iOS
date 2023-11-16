@@ -28,7 +28,7 @@ final class DefaultTabTableViewController: UITableViewController {
             cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .body)
         }
         cell.accessoryView = UIImageView(image: Asset.Images.Generic.turquoiseCheckmark.image)
-        cell.backgroundColor = UIColor.mnz_secondaryBackgroundGrouped(traitCollection)
+        cell.backgroundColor = UIColor.mnz_backgroundElevated(traitCollection)
         cell.accessoryView?.isHidden = TabManager.getPreferenceTab().tabType.rawValue != indexPath.row
         
         return cell

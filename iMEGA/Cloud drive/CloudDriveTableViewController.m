@@ -85,7 +85,7 @@
     bucketHeaderView.uploadOrVersionImageView.image = self.cloudDrive.recentActionBucket.isUpdate ? [UIImage imageNamed:@"versioned"] : [UIImage imageNamed:@"recentUpload"];
     bucketHeaderView.dateLabel.text = dateString.uppercaseString;
     
-    bucketHeaderView.backgroundColor = [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection];
+    bucketHeaderView.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
     bucketHeaderView.parentFolderNameLabel.textColor = bucketHeaderView.dateLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
     
     return bucketHeaderView;

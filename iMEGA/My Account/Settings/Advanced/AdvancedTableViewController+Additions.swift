@@ -57,6 +57,6 @@ extension AdvancedTableViewController {
     // MARK: - UITableViewDelegate
     
     open override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.backgroundColor = .mnz_secondaryBackgroundGrouped(self.traitCollection)
+        cell.backgroundColor = .mnz_backgroundElevated(self.traitCollection)
     }
 }

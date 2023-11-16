@@ -164,12 +164,12 @@ final class SMSVerificationViewController: UIViewController, ViewType {
         cancelButton.setTitleColor(.white, for: .normal)
         
         countryTopSeparatorView.backgroundColor = .mnz_separator(for: traitCollection)
-        countryContainerView.backgroundColor = .mnz_secondaryBackgroundGrouped(traitCollection)
+        countryContainerView.backgroundColor = .mnz_backgroundElevated(traitCollection)
         countryLabel.textColor = .mnz_secondaryGray(for: traitCollection)
         countryBottomSeparatorView.backgroundColor = .mnz_separator(for: traitCollection)
         
         phoneNumberTopSeparatorView.backgroundColor = .mnz_separator(for: traitCollection)
-        phoneNumberContainerView.backgroundColor = .mnz_secondaryBackgroundGrouped(traitCollection)
+        phoneNumberContainerView.backgroundColor = .mnz_backgroundElevated(traitCollection)
         phoneNumberLabel.textColor = .mnz_secondaryGray(for: traitCollection)
         phoneNumberBottomSeparatorView.backgroundColor = .mnz_separator(for: traitCollection)
         

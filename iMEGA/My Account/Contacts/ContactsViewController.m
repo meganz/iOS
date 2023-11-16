@@ -1450,7 +1450,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MEGAUser *user;
     ContactTableViewCell *cell;
-    cell.backgroundColor = (self.contactsMode == ContactsModeDefault) ? [UIColor mnz_secondaryBackgroundGrouped:self.traitCollection] : [UIColor mnz_tertiaryBackground:self.traitCollection];
+    cell.backgroundColor = (self.contactsMode == ContactsModeDefault) ? [UIColor mnz_backgroundElevated:self.traitCollection] : [UIColor mnz_tertiaryBackground:self.traitCollection];
     switch (self.contactsMode) {
         case ContactsModeDefault: {
             cell = [self dequeueOrInitCellWithIdentifier:@"contactCell" indexPath:indexPath];

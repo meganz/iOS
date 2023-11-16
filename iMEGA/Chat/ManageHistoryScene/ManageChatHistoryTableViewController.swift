@@ -308,7 +308,7 @@ final class ManageChatHistoryTableViewController: UITableViewController, ViewTyp
     }
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.backgroundColor = .mnz_secondaryBackgroundGrouped(traitCollection)
+        cell.backgroundColor = .mnz_backgroundElevated(traitCollection)
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
