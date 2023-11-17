@@ -2,25 +2,18 @@
 
 @available(iOS 16.0, *)
 final class LiveTextImageView: SDAnimatedImageView {
-    private let interaction = ImageAnalysisInteraction()
+    private lazy var interaction = {
+        let interaction = ImageAnalysisInteraction()
+        return interaction
+    }()
+    
     private let imageAnalyzer = ImageAnalyzer()
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        guard ImageAnalyzer.isSupported else { return }
-        self.addInteraction(interaction)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     @MainActor
     func startAnalysis() {
-        guard let image = image, ImageAnalyzer.isSupported else {
-            return
-        }
+        guard let image else { return }
+        
+        addInteraction(interaction)
         
         Task {
             let configuration = ImageAnalyzer.Configuration([.text, .machineReadableCode])

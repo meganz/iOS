@@ -1,7 +1,9 @@
+import VisionKit
+
 extension MEGAPhotoBrowserViewController {
     
     @objc func imageView(frame: CGRect) -> UIImageView {
-        guard #available(iOS 16, *) else {
+        guard #available(iOS 16, *), ImageAnalyzer.isSupported else {
             return SDAnimatedImageView(frame: frame)
         }
         return LiveTextImageView(frame: frame)
