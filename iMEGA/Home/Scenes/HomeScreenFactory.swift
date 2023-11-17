@@ -121,7 +121,11 @@ final class HomeScreenFactory: NSObject {
     private func makeNodeRepo() -> some NodeRepositoryProtocol {
         NodeRepository.newRepo
     }
-    
+
+    private func makeFeatureFlagProvider() -> some FeatureFlagProviderProtocol {
+        DIContainer.featureFlagProvider
+    }
+
     func makeSearchResultViewController(
         with navigationController: UINavigationController,
         bridge: SearchResultsBridge,
@@ -225,6 +229,7 @@ final class HomeScreenFactory: NSObject {
                 nodeUseCase: makeNodeUseCase(),
                 mediaUseCase: makeMediaUseCase(),
                 nodeRepository: makeNodeRepo(),
+                featureFlagProvider: makeFeatureFlagProvider(),
                 sdk: sdk
             ),
             bridge: searchBridge,
@@ -234,6 +239,7 @@ final class HomeScreenFactory: NSObject {
                 )
             ),
             isThumbnailPreviewEnabled: DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .thumbnailSearchPreview),
+            areChipsGroupsEnabled: DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .chipsGroups),
             keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: .default)
         )
         return UIHostingController(rootView: SearchResultsView(viewModel: vm))

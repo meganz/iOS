@@ -26,6 +26,7 @@ extension SearchConfig.ContextPreviewFactory {
 
 extension SearchConfig.ChipAssets {
     static let example: Self = .init(
+        selectionIndicatorImage: UIImage(systemName: "ellipsis")!, 
         selectedForeground: .white,
         selectedBackground: .green,
         normalForeground: .black,

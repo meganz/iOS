@@ -3,7 +3,7 @@ import SwiftUI
 public struct PillViewModel {
     public init(
         title: String,
-        icon: Image? = nil,
+        icon: PillView.Icon,
         foreground: Color,
         background: Color
     ) {
@@ -14,13 +14,18 @@ public struct PillViewModel {
     }
     
     public let title: String
-    public let icon: Image?
+    public let icon: PillView.Icon
     public let foreground: Color
     public let background: Color
 }
 
 public struct PillView: View {
-    
+    public enum Icon {
+        case leading(Image)
+        case trailing(Image)
+        case none
+    }
+
     let viewModel: PillViewModel
     
     public init(viewModel: PillViewModel) {
@@ -29,10 +34,16 @@ public struct PillView: View {
     
     public var body: some View {
         HStack(spacing: 4) {
-            if let icon = viewModel.icon {
-                icon
+            if case let .leading(image) = viewModel.icon {
+                image
             }
             Text(viewModel.title)
+            if case let .trailing(image) = viewModel.icon {
+                image
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 10, height: 22)
+            }
         }
         .foregroundColor(viewModel.foreground)
         .padding(.horizontal, 12)
@@ -50,7 +61,7 @@ struct PillView_Previews: PreviewProvider {
                 PillView(
                     viewModel: .init(
                         title: "Videos",
-                        icon: Image(systemName: "checkmark"),
+                        icon: .trailing(Image(systemName: "checkmark")),
                         foreground: .white,
                         background: Color(red: 64.0/255.0, green: 155.0/255.0, blue: 125.0/255.0)
                     )
@@ -58,7 +69,7 @@ struct PillView_Previews: PreviewProvider {
                 PillView(
                     viewModel: .init(
                         title: "Videos",
-                        icon: nil,
+                        icon: .trailing(Image(systemName: "checkmark")),
                         foreground: .white,
                         background: Color(red: 64.0/255.0, green: 155.0/255.0, blue: 125.0/255.0)
                     )
@@ -68,7 +79,7 @@ struct PillView_Previews: PreviewProvider {
                 PillView(
                     viewModel: .init(
                         title: "Images",
-                        icon: Image(systemName: "checkmark"),
+                        icon: .trailing(Image(systemName: "checkmark")),
                         foreground: Color(red: 76.0/255.0, green: 76.0/255.0, blue: 76.0/255.0),
                         background: Color(red: 233.0/255.0, green: 233.0/255.0, blue: 233.0/255.0)
                     )
@@ -76,7 +87,7 @@ struct PillView_Previews: PreviewProvider {
                 PillView(
                     viewModel: .init(
                         title: "GIFs",
-                        icon: nil,
+                        icon: .trailing(Image(systemName: "checkmark")),
                         foreground: Color(red: 76.0/255.0, green: 76.0/255.0, blue: 76.0/255.0),
                         background: Color(red: 233.0/255.0, green: 233.0/255.0, blue: 233.0/255.0)
                     )

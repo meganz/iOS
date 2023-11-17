@@ -5,15 +5,17 @@ import SwiftUI
 
 public class SearchResultsViewModel: ObservableObject {
     @Published var listItems: [SearchResultRowViewModel]  = []
-    @Published var chipsItems: [ChipViewModel] = []
     @Published var bottomInset: CGFloat = 0.0
     @Published var emptyViewModel: ContentUnavailableView_iOS16ViewModel?
     @Published var isLoadingPlaceholderShown = false
-    
+
     // this will need to be to exposed outside when parent will need to know exactly what is selected
     @Published var selected: Set<ResultId> = []
 
     @Published public var layout: PageLayout = .list
+
+    @Published var chipsItems: [ChipViewModel] = []
+    @Published var presentedChipsPickerViewModel: ChipViewModel?
 
     var fileListItems: [SearchResultRowViewModel] {
         listItems.filter { $0.result.thumbnailDisplayMode == .vertical }
@@ -27,12 +29,12 @@ public class SearchResultsViewModel: ObservableObject {
 
     // this is needed to be able to construct new query after receiving new query string from SearchBar
     private var currentQuery: SearchQuery = .initial
-    
+
     // keep information what were the available chips received with latest
     // results so that we know how to modify the list of chips after
     // selection was changed but we don't have new results
     private var lastAvailableChips: [SearchChipEntity] = []
-    
+
     // do not load when coming back from the pushed vc
     private var initialLoadDone = false
 
@@ -75,6 +77,7 @@ public class SearchResultsViewModel: ObservableObject {
         showLoadingPlaceholderDelay: Double = 1,
         searchInputDebounceDelay: Double = 0.5,
         isThumbnailPreviewEnabled: Bool = false,
+        areChipsGroupsEnabled: Bool = false,
         keyboardVisibilityHandler: any KeyboardVisibilityHandling
     ) {
         self.resultsProvider = resultsProvider
@@ -176,7 +179,6 @@ public class SearchResultsViewModel: ObservableObject {
         editing = false
         currentQuery = .initial
         listItems = []
-        chipsItems = []
         lastAvailableChips = []
         selected = []
         await defaultSearchQuery()
@@ -394,23 +396,89 @@ public class SearchResultsViewModel: ObservableObject {
         await queryChanged(to: query)
         bridge.chip(tapped: chip, isSelected: query.chips.contains(chip))
     }
-    
-    private func updateChipsFrom(
-        appliedChips: [SearchChipEntity]
-    ) {
+
+    private func updateChipsFrom(appliedChips: [SearchChipEntity]) {
         chipsItems = lastAvailableChips.map { chip in
-            ChipViewModel(
+            let subchips = subchipsFrom(appliedChips: appliedChips, allChips: chip.subchips)
+            let selected = selected(for: chip, appliedChips: appliedChips)
+
+            return ChipViewModel(
+                chipId: chip.id,
+                pill: .init(
+                    title: title(for: chip, appliedChips: appliedChips),
+                    selected: selected,
+                    icon: icon(for: chip, selected: selected),
+                    config: config.chipAssets
+                ),
+                subchips: subchips,
+                subchipsPickerTitle: chip.subchipsPickerTitle,
+                selectionIndicatorImage: selected ? config.chipAssets.selectionIndicatorImage : nil,
+                select: { [weak self] in
+                    if chip.subchips.isEmpty {
+                        self?.dismissChipGroupPicker()
+                        await self?.tapped(chip)
+                    } else {
+                        self?.showChipsGroupPicker(with: chip.id.description)
+                    }
+                }
+            )
+        }
+    }
+
+    private func subchipsFrom(
+        appliedChips: [SearchChipEntity],
+        allChips: [SearchChipEntity]
+    ) -> [ChipViewModel] {
+        allChips.map { chip in
+            let selected = appliedChips.contains(chip)
+            return ChipViewModel(
                 chipId: chip.id,
                 pill: .init(
                     title: chip.title,
-                    selected: appliedChips.contains(chip),
+                    selected: selected,
+                    icon: selected ? .leading(Image(systemName: "checkmark")) : .none,
                     config: config.chipAssets
                 ),
-                select: {[weak self] in
+                selectionIndicatorImage: selected ? config.chipAssets.selectionIndicatorImage : nil,
+                select: { [weak self] in
+                    self?.dismissChipGroupPicker()
                     await self?.tapped(chip)
                 }
             )
         }
+    }
+
+    private func title(for chip: SearchChipEntity, appliedChips: [SearchChipEntity]) -> String {
+        if chip.subchips.isNotEmpty {
+            return appliedChips.isEmpty ? chip.title : (appliedChips.first?.title ?? "")
+        } else {
+            return chip.title
+        }
+    }
+
+    private func selected(for chip: SearchChipEntity, appliedChips: [SearchChipEntity]) -> Bool {
+        if chip.subchips.isNotEmpty {
+            return chip.subchips.contains(where: { $0.id == appliedChips.first?.id })
+        } else {
+            return appliedChips.contains(chip)
+        }
+    }
+
+    private func icon(for chip: SearchChipEntity, selected: Bool) -> PillView.Icon {
+        if chip.subchips.isNotEmpty {
+            return .trailing(Image(systemName: "chevron.down"))
+        } else {
+            return selected ? .leading(Image(systemName: "checkmark")) : .none
+        }
+    }
+
+    func showChipsGroupPicker(with id: String) {
+        guard let index = chipsItems.firstIndex(where: { $0.id == id }) else { return }
+        presentedChipsPickerViewModel = chipsItems[index]
+    }
+
+    func dismissChipGroupPicker() {
+        presentedChipsPickerViewModel = nil
     }
 
     private func updateLoadingPlaceholderVisibility(_ shown: Bool) {

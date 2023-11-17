@@ -18,15 +18,11 @@ struct PhotoLibraryFilterTypeView: View {
         selected ? Colors.Photos.filterTypeSelectionBackground.swiftUIColor : Colors.Photos.filterTypeNormalBackground.swiftUIColor
     }
     
-    private var icon: Image? {
-        selected ? Image(systemName: "checkmark") : nil
-    }
-    
     var body: some View {
         PillView(
             viewModel: .init(
                 title: type.localization,
-                icon: icon,
+                icon: selected ? .leading(Image(systemName: "checkmark")) : .none,
                 foreground: foreground,
                 background: background
             )
