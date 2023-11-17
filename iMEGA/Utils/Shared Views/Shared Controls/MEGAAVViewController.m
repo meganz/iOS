@@ -17,11 +17,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
 
 @interface MEGAAVViewController () <AVPlayerViewControllerDelegate>
 
-@property (nonatomic, strong, nonnull) NSURL *fileUrl;
-@property (nonatomic, strong) MEGANode *node;
 @property (nonatomic, assign, getter=isFolderLink) BOOL folderLink;
-@property (nonatomic, assign, getter=isEndPlaying) BOOL endPlaying;
-@property (nonatomic, strong) MEGASdk *apiForStreaming;
 @property (nonatomic, assign, getter=isViewDidAppearFirstTime) BOOL viewDidAppearFirstTime;
 @property (nonatomic, strong) NSMutableSet *subscriptions;
 
@@ -33,9 +29,9 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
     self = [super init];
     
     if (self) {
-        _fileUrl    = fileUrl;
-        _node       = nil;
-        _folderLink = NO;
+        self.fileUrl    = fileUrl;
+        self.node       = nil;
+        self.folderLink = NO;
         _subscriptions = [[NSMutableSet alloc] init];
         _hasPlayedOnceBefore = NO;
     }
@@ -48,9 +44,9 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
     
     if (self) {
         _apiForStreaming = apiForStreaming;
-        _node            = folderLink ? [[MEGASdkManager sharedMEGASdkFolder] authorizeNode:node] : node;
-        _folderLink      = folderLink;
-        _fileUrl         = [apiForStreaming httpServerIsLocalOnly] ? [apiForStreaming httpServerGetLocalLink:_node] : [[apiForStreaming httpServerGetLocalLink:_node] mnz_updatedURLWithCurrentAddress];
+        self.node            = folderLink ? [[MEGASdkManager sharedMEGASdkFolder] authorizeNode:node] : node;
+        self.folderLink      = folderLink;
+        self.fileUrl         = [self streamingPathWithNode:node];
         _hasPlayedOnceBefore = NO;
     }
         
@@ -68,13 +64,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
 
     self.viewDidAppearFirstTime = YES;
     
-    self.subscriptions = [self bindToSubscriptionsWithMovieFinished:^{
-        [self movieFinishedCallback];
-    } checkNetworkChanges:^{
-        [self checkNetworkChanges];
-    } applicationDidEnterBackground:^{
-        [self applicationDidEnterBackground];
-    } movieStalled:^{
+    self.subscriptions = [self bindToSubscriptionsWithMovieStalled:^{
         [self movieStalledCallback];
     }];
     
@@ -198,7 +188,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
     if (self.player) {
         [self.player seekToTime:kCMTimeZero];
         [self.player play];
-        self.endPlaying = NO;
+        self.isEndPlaying = NO;
     }
 }
 
@@ -232,37 +222,6 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
     }
     
     return fingerprint;
-}
-
-#pragma mark - Notifications
-
-- (void)movieFinishedCallback {
-    self.endPlaying = YES;
-    [self replayVideo];
-}
-
-- (void)applicationDidEnterBackground {
-    if (![NSStringFromClass([UIApplication mnz_keyWindow].class) isEqualToString:@"UIWindow"]) {
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"presentPasscodeLater"];
-    }
-}
-
-- (void)checkNetworkChanges {
-    if (!self.apiForStreaming || !MEGAReachabilityManager.isReachable) {
-        return;
-    }
-
-    NSURL *oldFileURL = self.fileUrl;
-    self.fileUrl = [self.apiForStreaming httpServerIsLocalOnly] ? [self.apiForStreaming httpServerGetLocalLink:self.node] : [[self.apiForStreaming httpServerGetLocalLink:self.node] mnz_updatedURLWithCurrentAddress];
-    if (![oldFileURL isEqual:self.fileUrl]) {
-        CMTime currentTime = self.player.currentTime;
-        AVPlayerItem *newPlayerItem = [AVPlayerItem playerItemWithURL:self.fileUrl];
-        [self setPlayerItemMetadataWithPlayerItem:newPlayerItem node:self.node];
-        [self.player replaceCurrentItemWithPlayerItem:newPlayerItem];
-        if (CMTIME_IS_VALID(currentTime)) {
-            [self.player seekToTime:currentTime];
-        }
-    }
 }
 
 @end

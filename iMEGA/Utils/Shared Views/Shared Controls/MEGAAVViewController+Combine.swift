@@ -3,13 +3,12 @@ import Foundation
 import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAPresentation
+import MEGASdk
+import MEGASwift
 
 extension MEGAAVViewController {
     
     @objc func bindToSubscriptions(
-        movieFinished: (() -> Void)?,
-        checkNetworkChanges: (() -> Void)?,
-        applicationDidEnterBackground: (() -> Void)?,
         movieStalled: (() -> Void)?
     ) -> NSMutableSet {
         var subscriptions = Set<AnyCancellable>()
@@ -18,7 +17,7 @@ extension MEGAAVViewController {
         notificationCenter
             .publisher(for: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player?.currentItem)
             .receive(on: DispatchQueue.main)
-            .sink { _ in movieFinished?() }
+            .sink { [weak self] _ in self?.movieFinishedCallback() }
             .store(in: &subscriptions)
         
         Publishers
@@ -26,13 +25,13 @@ extension MEGAAVViewController {
                 notificationCenter.publisher(for: .reachabilityChanged),
                 notificationCenter.publisher(for: UIApplication.willEnterForegroundNotification))
             .throttle(for: 0.3, scheduler: DispatchQueue.main, latest: false)
-            .sink(receiveValue: { _ in checkNetworkChanges?() })
+            .sink(receiveValue: { [weak self] _ in self?.checkNetworkChanges() })
             .store(in: &subscriptions)
         
         notificationCenter
             .publisher(for: UIApplication.didEnterBackgroundNotification)
             .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { _ in applicationDidEnterBackground?() })
+            .sink(receiveValue: { [weak self] _ in self?.applicationDidEnterBackground() })
             .store(in: &subscriptions)
         
         notificationCenter
@@ -184,5 +183,63 @@ extension MEGAAVViewController {
             let command = SetVideoPlayerItemMetadataCommand(playerItem: playerItem, node: node)
             await command.execute()
         }
+    }
+    
+    // MARK: - Notifications
+    
+    private func movieFinishedCallback() {
+        isEndPlaying = true
+        replayVideo()
+    }
+    
+    private func replayVideo() {
+        guard let player else { return }
+        player.seek(to: CMTime.zero)
+        player.play()
+        isEndPlaying = false
+    }
+    
+    private func applicationDidEnterBackground() {
+        if
+            let keyWindow = UIApplication.mnz_keyWindow(),
+            NSStringFromClass(type(of: keyWindow)) != "UIWindow" {
+            UserDefaults.standard.set(true, forKey: "presentPasscodeLater")
+        }
+    }
+    
+    private func checkNetworkChanges() {
+        guard let apiForStreaming,
+              MEGAReachabilityManager.isReachable(), let node, let fileUrl else { return }
+        
+        let oldFileURL = fileUrl
+        setFileUrl(apiForStreaming: apiForStreaming, node: node)
+        
+        if oldFileURL != fileUrl {
+            let currentTime = self.player?.currentTime()
+            let newPlayerItem = AVPlayerItem(url: fileUrl)
+            setPlayerItemMetadata(playerItem: newPlayerItem, node: node)
+            self.player?.replaceCurrentItem(with: newPlayerItem)
+            
+            guard let currentTime, currentTime.isValid else { return }
+            self.player?.seek(to: currentTime)
+        }
+    }
+    
+    private func setFileUrl(apiForStreaming: MEGASdk, node: MEGANode) {
+        if apiForStreaming.httpServerIsLocalOnly() {
+            guard let url = apiForStreaming.httpServerGetLocalLink(node) else { return }
+            fileUrl = url
+        } else {
+            guard let url = apiForStreaming.httpServerGetLocalLink(node)?.updatedURLWithCurrentAddress() else { return }
+            fileUrl = url
+        }
+    }
+    
+    @objc func streamingPath(node: MEGANode) -> URL? {
+        guard let apiForStreaming else { return nil }
+        let streamingInfoRepository = StreamingInfoRepository(sdk: apiForStreaming)
+        let streamingInfoUseCase = StreamingInfoUseCase(streamingInfoRepository: streamingInfoRepository)
+        let path = streamingInfoUseCase.path(fromNode: node)
+        return path
     }
 }

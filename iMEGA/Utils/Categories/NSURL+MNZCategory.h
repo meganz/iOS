@@ -7,7 +7,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)mnz_presentSafariViewController;
 
 - (NSString *)mnz_MEGAURL;
-- (NSURL *)mnz_updatedURLWithCurrentAddress;
 
 /**
  Move a file to a new directory with the ability to rename.

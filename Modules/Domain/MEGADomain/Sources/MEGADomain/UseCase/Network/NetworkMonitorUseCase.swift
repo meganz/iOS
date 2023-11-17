@@ -6,6 +6,7 @@ public protocol NetworkMonitorUseCaseProtocol {
     var connectionChangedStream: AsyncStream<Bool> { get }
     func networkPathChanged(completion: @escaping (Bool) -> Void)
     func isConnected() -> Bool
+    func isConnectedViaWiFi() -> Bool
 }
 
 public struct NetworkMonitorUseCase: NetworkMonitorUseCaseProtocol {
@@ -23,5 +24,9 @@ public struct NetworkMonitorUseCase: NetworkMonitorUseCaseProtocol {
     
     public func isConnected() -> Bool {
         repo.isConnected()
+    }
+    
+    public func isConnectedViaWiFi() -> Bool {
+        repo.isConnectedViaWiFi()
     }
 }

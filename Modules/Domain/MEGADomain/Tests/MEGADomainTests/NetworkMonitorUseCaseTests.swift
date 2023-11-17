@@ -61,4 +61,22 @@ final class NetworkMonitorUseCaseTests: XCTestCase {
             XCTAssertEqual(isConnected, expectedResults.removeFirst())
         }
     }
+    
+    func testIsConnectedViaWiFi_whenConnectedViaWiFi_returnsTrue() {
+        let repository = MockNetworkMonitorRepository(connectedViaWiFi: true)
+        let sut = NetworkMonitorUseCase(repo: repository)
+        
+        let isConnected = sut.isConnectedViaWiFi()
+        
+        XCTAssertTrue(isConnected)
+    }
+    
+    func testIsConnectedViaWiFi_whenConnectedViaWiFi_returnsFalse() {
+        let repository = MockNetworkMonitorRepository(connectedViaWiFi: false)
+        let sut = NetworkMonitorUseCase(repo: repository)
+        
+        let isConnected = sut.isConnectedViaWiFi()
+        
+        XCTAssertFalse(isConnected)
+    }
 }
