@@ -65,6 +65,9 @@ final class SegmentTitleView: UIView {
     private func setSelected(at index: Int, of buttons: [UIButton]) {
         deselect(buttons: buttons)
         select(index: index, in: buttons)
+        
+        let titleButtonStyler = traitCollection.theme.buttonStyle.styler(of: .segmentTitleButton)
+        buttons.forEach(titleButtonStyler)
     }
 
     private func deselect(buttons: [UIButton]) {
@@ -81,8 +84,6 @@ final class SegmentTitleView: UIView {
     @objc private func didTap(button: UIButton) {
         guard let index = buttons.firstIndex(of: button) else { return }
         setSelected(at: index, of: buttons)
-        let titleButtonStyler = traitCollection.theme.buttonStyle.styler(of: .segmentTitleButton)
-        buttons.forEach(titleButtonStyler)
 
         if let titles = model?.titles {
             selectAction?(titles[index])
