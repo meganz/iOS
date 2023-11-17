@@ -46,6 +46,7 @@ final class UpgradeAccountRouter {
         if featureFlagProvider.isFeatureFlagEnabled(for: .onboardingProPlan) {
             let viewModel = OnboardingUpgradeAccountViewModel(
                 purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo), 
+                tracker: DIContainer.tracker, 
                 viewProPlanAction: {
                     UpgradeAccountRouter(purchase: self.purchase).presentUpgradeTVC()
                 }

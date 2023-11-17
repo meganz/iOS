@@ -1,11 +1,13 @@
 import Combine
 import Foundation
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
 
 public final class OnboardingUpgradeAccountViewModel: ObservableObject {
     private let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
+    private let tracker: any AnalyticsTracking
     private let viewProPlanAction: () -> Void
     private var subscriptions: Set<AnyCancellable> = []
     
@@ -14,9 +16,11 @@ public final class OnboardingUpgradeAccountViewModel: ObservableObject {
     
     public init(
         purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
+        tracker: some AnalyticsTracking,
         viewProPlanAction: @escaping () -> Void
     ) {
         self.purchaseUseCase = purchaseUseCase
+        self.tracker = tracker
         self.viewProPlanAction = viewProPlanAction
         
         setupSubscriptions()
@@ -53,6 +57,8 @@ public final class OnboardingUpgradeAccountViewModel: ObservableObject {
     }
     
     func showProPlanView() {
+        tracker.trackAnalyticsEvent(with: OnboardingUpsellingDialogVariantAViewProPlansButtonEvent())
+        
         viewProPlanAction()
     }
 }
