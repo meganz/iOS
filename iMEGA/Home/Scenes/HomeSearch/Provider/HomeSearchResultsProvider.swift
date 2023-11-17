@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGAL10n
+import MEGAPresentation
 import MEGASdk
 import MEGASDKRepo
 import MEGASwift
@@ -12,6 +13,8 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
     private let nodeUseCase: any NodeUseCaseProtocol
     private let mediaUseCase: any MediaUseCaseProtocol
     private let nodeRepository: any NodeRepositoryProtocol
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
+
     private let sdk: MEGASdk
     // We only initially fetch the node list when the user triggers search
     // Concrete nodes are then loaded one by one in the pagination
@@ -21,13 +24,19 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
     private var pageSize = 100
     private var loadMorePagesOffset = 20
     private var isLastPageReached = false
-    
+    private var availableChips: [SearchChipEntity] {
+        SearchChipEntity.allChips(
+            areChipsGroupEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .chipsGroups)
+        )
+    }
+
     init(
         searchFileUseCase: some SearchFileUseCaseProtocol,
         nodeDetailUseCase: some NodeDetailUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
         mediaUseCase: some MediaUseCaseProtocol,
         nodeRepository: some NodeRepositoryProtocol,
+        featureFlagProvider: some FeatureFlagProviderProtocol,
         sdk: MEGASdk
     ) {
         self.searchFileUseCase = searchFileUseCase
@@ -35,6 +44,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         self.nodeUseCase = nodeUseCase
         self.mediaUseCase = mediaUseCase
         self.nodeRepository = nodeRepository
+        self.featureFlagProvider = featureFlagProvider
         self.sdk = sdk
     }
     
@@ -135,7 +145,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         guard let nodeList, nodeList.nodesCount > 0, !isLastPageReached else {
             return .init(
                 results: [],
-                availableChips: SearchChipEntity.allChips,
+                availableChips: availableChips,
                 appliedChips: query != nil ? chipsFor(query: query!) : []
             )
         }
@@ -159,7 +169,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
 
         return .init(
             results: results,
-            availableChips: SearchChipEntity.allChips,
+            availableChips: availableChips,
             appliedChips: query != nil ? chipsFor(query: query!) : []
         )
     }

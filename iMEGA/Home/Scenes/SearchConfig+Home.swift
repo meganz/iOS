@@ -6,6 +6,7 @@ extension SearchConfig {
     static func searchConfig(contextPreviewFactory: ContextPreviewFactory) -> SearchConfig {
         .init(
             chipAssets: .init(
+                selectionIndicatorImage: Asset.Images.Generic.turquoiseCheckmark.image,
                 selectedForeground: .white,
                 selectedBackground: Colors.Photos.filterTypeSelectionBackground.swiftUIColor,
                 normalForeground: Colors.Photos.filterNormalTextForeground.swiftUIColor,

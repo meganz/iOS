@@ -5,7 +5,7 @@ public struct SearchResultsEntity: Sendable {
     public let results: [SearchResult]
     public let availableChips: [SearchChipEntity] // represents all chips that can be selected
     public let appliedChips: [SearchChipEntity] // which chips where applied in the given results
-    
+
     public init(
         results: [SearchResult],
         availableChips: [SearchChipEntity],

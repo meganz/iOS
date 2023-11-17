@@ -11,7 +11,7 @@ public struct SearchResultsView: View {
 
     public var body: some View {
         VStack(spacing: .zero) {
-            chipsView
+            chips
             if viewModel.isThumbnailPreviewEnabled {
                 changeModeButton
             }
@@ -32,9 +32,21 @@ public struct SearchResultsView: View {
         .task {
             await viewModel.task()
         }
+        .sheet(item: $viewModel.presentedChipsPickerViewModel) { item in
+            if #available(iOS 16, *) {
+                chipsPickerView(for: item)
+                    .presentationDetents([
+                        .height(440)
+                    ])
+                    .presentationDragIndicator(.visible)
+            } else {
+                chipsPickerView(for: item)
+            }
+        }
     }
 
-    private var chipsView: some View {
+    @ViewBuilder
+    private var chips: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack {
                 ForEach(viewModel.chipsItems) { chip in
@@ -50,6 +62,18 @@ public struct SearchResultsView: View {
         }
         .padding([.leading, .trailing, .bottom])
         .padding(.top, 6)
+    }
+
+    private func chipsPickerView(for item: ChipViewModel) -> some View {
+        ChipsPickerView(
+            title: item.subchipsPickerTitle ?? "",
+            chips: item.subchips,
+            chipSelection: { chip in
+                Task { @MainActor in
+                    await chip.select()
+                }
+            }
+        )
     }
 
     @ViewBuilder

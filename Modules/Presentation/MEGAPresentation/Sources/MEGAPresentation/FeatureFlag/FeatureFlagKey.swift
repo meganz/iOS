@@ -9,4 +9,5 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable {
     case onboardingProPlan = "Onboarding Pro Plan Upselling Dialog"
     case thumbnailSearchPreview = "Thumbnail preview in Search"
     case presenterVideoAndSharedScreen = "Presenter video and shared screen"
+    case chipsGroups = "Chips groups and dropdown chips picker"
 }

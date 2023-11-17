@@ -37,17 +37,21 @@ public struct SearchConfig {
     
     public struct ChipAssets {
         public init(
+            selectionIndicatorImage: UIImage,
             selectedForeground: Color,
             selectedBackground: Color,
             normalForeground: Color,
             normalBackground: Color
         ) {
+            self.selectionIndicatorImage = selectionIndicatorImage
             self.selectedForeground = selectedForeground
             self.selectedBackground = selectedBackground
             self.normalForeground = normalForeground
             self.normalBackground = normalBackground
         }
-        
+
+        let selectionIndicatorImage: UIImage
+
         let selectedForeground: Color
         let selectedBackground: Color
         

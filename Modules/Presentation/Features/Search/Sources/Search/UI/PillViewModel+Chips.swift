@@ -7,11 +7,12 @@ extension PillViewModel {
     init(
         title: String,
         selected: Bool,
+        icon: PillView.Icon,
         config: SearchConfig.ChipAssets
     ) {
         self.init(
             title: title,
-            icon: selected ? Image(systemName: "checkmark") : nil,
+            icon: icon,
             foreground: selected ? config.selectedForeground : config.normalForeground,
             background: selected ? config.selectedBackground : config.normalBackground
         )

@@ -114,7 +114,7 @@ public struct NonProductionTestResultsProvider: SearchResultsProviding {
             .init(id: $0.rawValue, title: $0.title)
         }
     }
-    
+
     private func chipsFor(query: SearchQuery) -> [SearchChipEntity] {
         query.chips
     }

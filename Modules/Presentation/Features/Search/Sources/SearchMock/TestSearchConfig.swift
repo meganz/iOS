@@ -6,6 +6,7 @@ extension SearchConfig {
     public static var testConfig: Self {
         .init(
             chipAssets: .init(
+                selectionIndicatorImage: UIImage(systemName: "ellipsis")!,
                 selectedForeground: .white,
                 selectedBackground: .green,
                 normalForeground: .black,

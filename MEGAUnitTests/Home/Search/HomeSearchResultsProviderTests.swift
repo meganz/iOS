@@ -1,6 +1,7 @@
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
+import MEGAPresentationMock
 import MEGASdk
 import MEGASDKRepoMock
 import Search
@@ -52,6 +53,7 @@ class HomeSearchProviderTests: XCTestCase {
                 nodeUseCase: nodeDataUseCase,
                 mediaUseCase: mediaUseCase,
                 nodeRepository: nodeRepo,
+                featureFlagProvider: MockFeatureFlagProvider(list: [:]),
                 sdk: MockSdk()
             )
             

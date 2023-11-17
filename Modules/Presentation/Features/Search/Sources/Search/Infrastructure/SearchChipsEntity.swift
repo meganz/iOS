@@ -14,19 +14,25 @@
 /// https://code.developers.mega.co.nz/sdk/sdk/-/blame/develop/include/megaapi.h?page=16#L15824
 
 public struct SearchChipEntity: Equatable, Sendable {
-    
+
     public let id: ChipId
     public let title: String
     public let icon: String?
-    
+    public let subchipsPickerTitle: String?
+    public let subchips: [SearchChipEntity]
+
     public init(
         id: ChipId,
         title: String,
-        icon: String? = nil
+        icon: String? = nil,
+        subchipsPickerTitle: String? = nil,
+        subchips: [SearchChipEntity] = []
     ) {
         self.id = id
         self.title = title
         self.icon = icon
+        self.subchipsPickerTitle = subchipsPickerTitle
+        self.subchips = subchips
     }
 }
 
@@ -34,4 +40,5 @@ public typealias ChipId = Int
 
 public extension ChipId {
     static var folder: Self { -1 }
+    static var nodeType: Self { -2 }
 }
