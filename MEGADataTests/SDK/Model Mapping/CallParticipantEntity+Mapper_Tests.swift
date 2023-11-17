@@ -16,7 +16,7 @@ final class CallParticipantEntity_Mapper_Tests: XCTestCase {
             clientId: 1,
             audioDetected: true,
             isOnHold: true,
-            changes: 1,
+            changeType: .status,
             isHighResolution: true,
             isLowResolution: true,
             canReceiveVideoHiRes: true,

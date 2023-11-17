@@ -9,7 +9,7 @@ public final class MockMEGAChatSession: MEGAChatSession {
     private let _clientId: UInt64
     private let _audioDetected: Bool
     private let _isOnHold: Bool
-    private let _changes: Int
+    private let _changes: MEGAChatSessionChange
     private let _isHighResVideo: Bool
     private let _isLowResVideo: Bool
     private let _canReceiveVideoHiRes: Bool
@@ -30,7 +30,7 @@ public final class MockMEGAChatSession: MEGAChatSession {
         clientId: UInt64 = 1,
         audioDetected: Bool = false,
         isOnHold: Bool = false,
-        changes: Int = 0,
+        changes: MEGAChatSessionChange = .noChanges,
         isHighResVideo: Bool = false,
         isLowResVideo: Bool = false,
         canReceiveVideoHiRes: Bool = false,
@@ -88,7 +88,7 @@ public final class MockMEGAChatSession: MEGAChatSession {
         _clientId
     }
     
-    public override var audioDetected: Bool {
+    public override var isAudioDetected: Bool {
         _audioDetected
     }
     
@@ -96,7 +96,7 @@ public final class MockMEGAChatSession: MEGAChatSession {
         _isOnHold
     }
     
-    public override var changes: Int {
+    public override var changes: MEGAChatSessionChange {
         _changes
     }
     

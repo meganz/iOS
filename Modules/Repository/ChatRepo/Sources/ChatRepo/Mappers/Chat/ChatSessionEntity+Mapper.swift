@@ -16,9 +16,9 @@ fileprivate extension ChatSessionEntity {
             hasVideo: session.hasVideo,
             peerId: session.peerId,
             clientId: session.clientId,
-            audioDetected: session.audioDetected,
+            audioDetected: session.isAudioDetected,
             isOnHold: session.isOnHold,
-            changes: session.changes,
+            changeType: session.changes.toChatSessionChange(),
             isHighResolution: session.isHighResVideo,
             isLowResolution: session.isLowResVideo,
             canReceiveVideoHiRes: session.canReceiveVideoHiRes,
@@ -28,7 +28,9 @@ fileprivate extension ChatSessionEntity {
             isHiResCamera: session.isHiResCamera,
             hasScreenShare: session.hasScreenShare,
             isLowResScreenShare: session.isLowResScreenShare,
-            isHiResScreenShare: session.isHiResScreenShare
+            isHiResScreenShare: session.isHiResScreenShare,
+            isModerator: session.isModerator,
+            onRecording: session.isRecording
         )
     }
 }
@@ -59,6 +61,37 @@ extension MEGAChatSessionTermCode {
             return .nonRecoverable
         @unknown default:
             return .invalid
+        }
+    }
+}
+
+extension MEGAChatSessionChange {
+    func toChatSessionChange() -> ChatSessionEntity.ChangeType {
+        switch self {
+        case .noChanges:
+            return .noChanges
+        case .status:
+            return .status
+        case .remoteAvFlags:
+            return .remoteAvFlags
+        case .speakRequested:
+            return .speakRequested
+        case .onLowRes:
+            return .onLowRes
+        case .onHiRes:
+            return .onHiRes
+        case .onHold:
+            return .onHold
+        case .audioLevel:
+            return .audioLevel
+        case .permissions:
+            return .permission
+        case .speakPermission:
+            return .speakPermission
+        case .onRecording:
+            return .onRecording
+        @unknown default:
+            return .noChanges
         }
     }
 }

@@ -11,6 +11,20 @@ public struct ChatSessionEntity: Sendable {
         case nonRecoverable
     }
     
+    public enum ChangeType: Sendable {
+        case noChanges
+        case status
+        case remoteAvFlags
+        case speakRequested
+        case onLowRes
+        case onHiRes
+        case onHold
+        case audioLevel
+        case permission
+        case speakPermission
+        case onRecording
+    }
+    
     public let statusType: StatusType?
     public let termCode: ChatSessionTermCode?
     public let hasAudio: Bool
@@ -19,7 +33,7 @@ public struct ChatSessionEntity: Sendable {
     public let clientId: HandleEntity
     public let audioDetected: Bool
     public let isOnHold: Bool
-    public let changes: Int
+    public let changeType: ChangeType
     public let isHighResolution: Bool
     public let isLowResolution: Bool
     public let canReceiveVideoHiRes: Bool
@@ -30,6 +44,8 @@ public struct ChatSessionEntity: Sendable {
     public let hasScreenShare: Bool
     public let isLowResScreenShare: Bool
     public let isHiResScreenShare: Bool
+    public let isModerator: Bool
+    public let onRecording: Bool
     
     public init(
         statusType: StatusType?,
@@ -40,7 +56,7 @@ public struct ChatSessionEntity: Sendable {
         clientId: HandleEntity,
         audioDetected: Bool,
         isOnHold: Bool,
-        changes: Int,
+        changeType: ChangeType,
         isHighResolution: Bool,
         isLowResolution: Bool,
         canReceiveVideoHiRes: Bool,
@@ -50,7 +66,9 @@ public struct ChatSessionEntity: Sendable {
         isHiResCamera: Bool,
         hasScreenShare: Bool,
         isLowResScreenShare: Bool,
-        isHiResScreenShare: Bool
+        isHiResScreenShare: Bool,
+        isModerator: Bool,
+        onRecording: Bool
     ) {
         self.statusType = statusType
         self.termCode = termCode
@@ -60,7 +78,7 @@ public struct ChatSessionEntity: Sendable {
         self.clientId = clientId
         self.audioDetected = audioDetected
         self.isOnHold = isOnHold
-        self.changes = changes
+        self.changeType = changeType
         self.isHighResolution = isHighResolution
         self.isLowResolution = isLowResolution
         self.canReceiveVideoHiRes = canReceiveVideoHiRes
@@ -71,5 +89,7 @@ public struct ChatSessionEntity: Sendable {
         self.hasScreenShare = hasScreenShare
         self.isLowResScreenShare = isLowResScreenShare
         self.isHiResScreenShare = isHiResScreenShare
+        self.isModerator = isModerator
+        self.onRecording = onRecording
     }
 }
