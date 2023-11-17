@@ -1,7 +1,7 @@
 #import "ImageExporter.h"
 #import "NSFileManager+MNZCategory.h"
 @import AVFoundation;
-@import CoreServices;
+@import UniformTypeIdentifiers;
 
 @implementation ImageExporter
 
@@ -127,12 +127,11 @@
 }
 
 - (BOOL)isHEVCOutputForImageSource:(CGImageSourceRef)source outputImageUTIType:(NSString *)UTIType {
-    CFStringRef sourceType = CGImageSourceGetType(source);
-    CFStringRef newType = (__bridge CFStringRef)UTIType;
     if (UTIType.length == 0) {
-        return UTTypeConformsTo(sourceType, (__bridge CFStringRef)AVFileTypeHEIC);
+        NSString *sourceType = (__bridge NSString *)CGImageSourceGetType(source);
+        return [[UTType typeWithIdentifier:sourceType] conformsToType: UTTypeHEIC];
     } else {
-        return UTTypeConformsTo(newType, (__bridge CFStringRef)AVFileTypeHEIC);
+        return [[UTType typeWithIdentifier:UTIType] conformsToType: UTTypeHEIC];
     }
 }
 

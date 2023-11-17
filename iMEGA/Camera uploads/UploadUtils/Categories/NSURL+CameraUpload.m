@@ -4,8 +4,8 @@
 #import "Helper.h"
 #import "NSURL+MNZCategory.h"
 @import AVFoundation;
-@import CoreServices;
 @import Firebase;
+@import UniformTypeIdentifiers;
 
 static NSString * const CameraUploadsDirectoryName = @"CameraUploads";
 static NSString * const AssetsDirectoryName = @"Assets";
@@ -58,7 +58,7 @@ static NSString * const AssetsDirectoryName = @"Assets";
     NSError *error;
     CGImageRef imageRef = [generator copyCGImageAtTime:requestedTime actualTime:NULL error:&error];
     if (imageRef) {
-        CGImageDestinationRef destination = CGImageDestinationCreateWithURL((__bridge CFURLRef)imageURL, kUTTypeJPEG, 1, NULL);
+        CGImageDestinationRef destination = CGImageDestinationCreateWithURL((__bridge CFURLRef)imageURL, (__bridge CFStringRef)UTTypeJPEG.identifier, 1, NULL);
         if (destination) {
             CGImageDestinationAddImage(destination, imageRef, NULL);
             isExportedSuccessfully = CGImageDestinationFinalize(destination);

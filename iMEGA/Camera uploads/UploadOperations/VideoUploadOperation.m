@@ -2,7 +2,6 @@
 #import "NSFileManager+MNZCategory.h"
 #import "CameraUploadManager+Settings.h"
 #import "AVAsset+CameraUpload.h"
-#import "AVURLAsset+CameraUpload.h"
 #import "CameraUploadOperation+Utils.h"
 #import "MEGA-Swift.h"
 @import FirebaseCrashlytics;
