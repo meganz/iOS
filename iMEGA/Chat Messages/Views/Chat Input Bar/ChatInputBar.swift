@@ -244,7 +244,16 @@ class ChatInputBar: UIView {
         }
         
         messageInputBar.delegate = self
-        self.wrap(messageInputBar)
+        
+        addSubview(messageInputBar)
+        messageInputBar.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            messageInputBar.topAnchor.constraint(equalTo: topAnchor),
+            messageInputBar.leadingAnchor.constraint(equalTo: leadingAnchor),
+            messageInputBar.trailingAnchor.constraint(equalTo: trailingAnchor),
+            messageInputBar.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
     }
     
     private func voiceInputBarToTextInputSwitch(completionBlock: (() -> Void)? = nil) {
