@@ -15,6 +15,10 @@
 @implementation NSURL (MNZCategory)
 
 - (void)mnz_presentSafariViewController {
+    if ([self.scheme.lowercaseString isEqualToString:@"mega"]) {
+        MEGALogWarning(@"Link %@ is not supported by the app", self);
+        return;
+    }
     if (!([self.scheme.lowercaseString isEqualToString:@"http"] || [self.scheme.lowercaseString isEqualToString:@"https"])) {
         [UIApplication.sharedApplication openURL:self options:@{} completionHandler:^(BOOL success) {
             if (success) {
