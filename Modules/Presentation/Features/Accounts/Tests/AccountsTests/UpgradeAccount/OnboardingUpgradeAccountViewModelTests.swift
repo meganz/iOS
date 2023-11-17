@@ -1,7 +1,10 @@
 @testable import Accounts
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
+import MEGAPresentation
+import MEGAPresentationMock
 import MEGATest
 import XCTest
 
@@ -39,15 +42,34 @@ final class OnboardingUpgradeAccountViewModelTests: XCTestCase {
         XCTAssertEqual(sut.storageContentMessage, expectedStorageMessage)
     }
     
+    func testViewProPlans_onButtonTapped_shouldTrackEvent() {
+        let tracker = MockTracker()
+        let sut = makeSUT(planList: [], tracker: tracker)
+        
+        sut.showProPlanView()
+        
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [
+                OnboardingUpsellingDialogVariantAViewProPlansButtonEvent()
+            ]
+        )
+    }
+    
     // MARK: Helper
 
     private func makeSUT(
         planList: [AccountPlanEntity],
+        tracker: AnalyticsTracking = MockTracker(),
         file: StaticString = #file,
         line: UInt = #line
     ) -> OnboardingUpgradeAccountViewModel {
         let mockPurchaseUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
-        let sut = OnboardingUpgradeAccountViewModel(purchaseUseCase: mockPurchaseUseCase, viewProPlanAction: {})
+        let sut = OnboardingUpgradeAccountViewModel(
+            purchaseUseCase: mockPurchaseUseCase,
+            tracker: tracker,
+            viewProPlanAction: {}
+        )
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
     }
