@@ -4,8 +4,8 @@
 #import "ImageExportManager.h"
 #import "CameraUploadOperation+Utils.h"
 #import "MEGA-Swift.h"
-@import CoreServices;
 @import FirebaseCrashlytics;
+@import UniformTypeIdentifiers;
 
 static const NSInteger PhotoExportDiskSizeScalingFactor = 2;
 static NSString * const PhotoExportTempName = @"photoExportTemp";
@@ -123,7 +123,7 @@ static NSString * const PhotoExportTempName = @"photoExportTemp";
     NSError *error;
     if ([self shouldConvertToJPGForUTI:dataUTI]) {
         self.uploadInfo.fileName = [self mnz_generateLocalFileNamewithExtension:MEGAJPGFileExtension error:&error];
-        outputTypeUTI = (__bridge NSString *)kUTTypeJPEG;
+        outputTypeUTI = UTTypeJPEG.identifier;
     } else {
         NSString *fileExtension = [self.uploadInfo.asset mnz_fileExtensionFromAssetInfo:dataInfo uniformTypeIdentifier:dataUTI];
         self.uploadInfo.fileName = [self mnz_generateLocalFileNamewithExtension:fileExtension error:&error];
@@ -155,7 +155,7 @@ static NSString * const PhotoExportTempName = @"photoExportTemp";
 }
 
 - (BOOL)shouldConvertToJPGForUTI:(NSString *)dataUTI {
-    return [CameraUploadManager shouldConvertHEICPhoto] && UTTypeConformsTo((__bridge CFStringRef)dataUTI, (__bridge CFStringRef)AVFileTypeHEIC);
+    return [CameraUploadManager shouldConvertHEICPhoto] && [[UTType typeWithIdentifier:dataUTI] conformsToType: UTTypeHEIC];
 }
 
 - (UploadQueueType)uploadQueueType {

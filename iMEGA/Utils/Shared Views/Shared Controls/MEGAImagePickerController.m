@@ -108,7 +108,7 @@
 
 - (NSArray<NSString *> *)mediaTypes {
     if (self.toChangeAvatar || MEGAChatSdk.shared.mnz_existsActiveCall ) {
-        return [NSArray.alloc initWithObjects:(NSString *)kUTTypeImage, nil];
+        return [NSArray.alloc initWithObjects:UTTypeImage.identifier, nil];
     } else {
         return [UIImagePickerController availableMediaTypesForSourceType:self.sourceType];
     }
@@ -210,9 +210,9 @@
 #pragma mark - UIImagePickerControllerDelegate
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
+    UTType *mediaType = [UTType typeWithIdentifier:[info objectForKey:UIImagePickerControllerMediaType]];
     
-    if ([mediaType isEqualToString:(__bridge NSString *)kUTTypeImage]) {
+    if ([mediaType isEqual:UTTypeImage]) {
         NSString *imageName = [NSString stringWithFormat:@"%@.jpg", NSDate.date.mnz_formattedDefaultNameForMedia];
         NSString *imagePath = (self.toUploadSomething || self.toShareThroughChat) ? [[[NSFileManager defaultManager] uploadsDirectory] stringByAppendingPathComponent:imageName] : [NSTemporaryDirectory() stringByAppendingPathComponent:imageName];
         UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
@@ -230,7 +230,7 @@
         } else {
             [self actionForImagePath:imagePath];
         }
-    } else if ([mediaType isEqualToString:(__bridge NSString *)kUTTypeMovie]) {
+    } else if ([mediaType isEqual:UTTypeMovie]) {
         NSURL *videoUrl = (NSURL *)[info objectForKey:UIImagePickerControllerMediaURL];
         NSDictionary *attributesDictionary = [[NSFileManager defaultManager] attributesOfItemAtPath:videoUrl.path error:nil];
         NSDate *modificationDate = [attributesDictionary objectForKey:NSFileModificationDate];

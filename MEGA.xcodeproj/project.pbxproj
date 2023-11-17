@@ -1871,7 +1871,6 @@
 		B6C444D5274A282500268D9A /* PhotoLibraryModeAllGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C444D4274A282500268D9A /* PhotoLibraryModeAllGridView.swift */; };
 		B6C444D7274A283300268D9A /* PhotoLibraryModeAllGridViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C444D6274A283300268D9A /* PhotoLibraryModeAllGridViewModel.swift */; };
 		B6C524DD21E2BC9900AE3575 /* AVAsset+CameraUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = B6C524DC21E2BC9900AE3575 /* AVAsset+CameraUpload.m */; };
-		B6C524E021E3E00C00AE3575 /* AVURLAsset+CameraUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = B6C524DF21E3E00C00AE3575 /* AVURLAsset+CameraUpload.m */; };
 		B6C5D09C2718D19B004FB105 /* PhotoLibraryContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C5D09B2718D19B004FB105 /* PhotoLibraryContentViewModel.swift */; };
 		B6C5D0A02718DAAA004FB105 /* PhotoLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C5D09F2718DAAA004FB105 /* PhotoLibrary.swift */; };
 		B6C95969268561EF00CF73A8 /* RatingRequestMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C95966268561EF00CF73A8 /* RatingRequestMonitor.swift */; };
@@ -4485,8 +4484,6 @@
 		B6C444DC274A287A00268D9A /* PhotoLibraryMonthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryMonthViewModel.swift; sourceTree = "<group>"; };
 		B6C524DB21E2BC9900AE3575 /* AVAsset+CameraUpload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AVAsset+CameraUpload.h"; sourceTree = "<group>"; };
 		B6C524DC21E2BC9900AE3575 /* AVAsset+CameraUpload.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AVAsset+CameraUpload.m"; sourceTree = "<group>"; };
-		B6C524DE21E3E00C00AE3575 /* AVURLAsset+CameraUpload.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AVURLAsset+CameraUpload.h"; sourceTree = "<group>"; };
-		B6C524DF21E3E00C00AE3575 /* AVURLAsset+CameraUpload.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "AVURLAsset+CameraUpload.m"; sourceTree = "<group>"; };
 		B6C5D09B2718D19B004FB105 /* PhotoLibraryContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryContentViewModel.swift; sourceTree = "<group>"; };
 		B6C5D09F2718DAAA004FB105 /* PhotoLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibrary.swift; sourceTree = "<group>"; };
 		B6C95966268561EF00CF73A8 /* RatingRequestMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingRequestMonitor.swift; sourceTree = "<group>"; };
@@ -10697,8 +10694,6 @@
 			children = (
 				B6C524DB21E2BC9900AE3575 /* AVAsset+CameraUpload.h */,
 				B6C524DC21E2BC9900AE3575 /* AVAsset+CameraUpload.m */,
-				B6C524DE21E3E00C00AE3575 /* AVURLAsset+CameraUpload.h */,
-				B6C524DF21E3E00C00AE3575 /* AVURLAsset+CameraUpload.m */,
 				B6A4A11821A404DC007E7EEC /* NSError+CameraUpload.h */,
 				B6A4A11921A404DC007E7EEC /* NSError+CameraUpload.m */,
 				B6BD012321B71FB500E97086 /* NSURL+CameraUpload.h */,
@@ -13368,7 +13363,6 @@
 				C4F31ED025C1914800E15146 /* AVAsset+Additions.swift in Sources */,
 				B6C524DD21E2BC9900AE3575 /* AVAsset+CameraUpload.m in Sources */,
 				25E2717D2A3FE96800DDB678 /* AVPlayerManager.swift in Sources */,
-				B6C524E021E3E00C00AE3575 /* AVURLAsset+CameraUpload.m in Sources */,
 				5B1F74D42126E30C00F09A16 /* AwaitingEmailConfirmationView.m in Sources */,
 				5D8DC6A9248CB0390067A4F9 /* BackgroundStyle.swift in Sources */,
 				5D1B240524AF60AD00ACE1C5 /* BackgroundStyleFactory.swift in Sources */,
