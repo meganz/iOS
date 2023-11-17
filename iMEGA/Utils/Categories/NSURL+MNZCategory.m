@@ -59,17 +59,6 @@
     return [component.URL absoluteString];
 }
 
-- (NSURL *)mnz_updatedURLWithCurrentAddress {
-    if (!MEGAReachabilityManager.isReachableViaWiFi) {
-        return self;
-    }
-    
-    // @see MegaTCPServer::getLink
-    NSString *loopbackAddress = @"[::1]";
-    NSString *currentAddress = MEGAReachabilityManager.sharedManager.currentAddress;
-    return currentAddress ? [NSURL URLWithString:[self.absoluteString stringByReplacingOccurrencesOfString:loopbackAddress withString:currentAddress]] : self;
-}
-
 - (BOOL)mnz_moveToDirectory:(NSURL *)directoryURL renameTo:(NSString *)fileName error:(NSError * _Nullable __autoreleasing * _Nullable)error {
     if (![NSFileManager.defaultManager fileExistsAtPath:self.path]) {
         if (error != NULL) {

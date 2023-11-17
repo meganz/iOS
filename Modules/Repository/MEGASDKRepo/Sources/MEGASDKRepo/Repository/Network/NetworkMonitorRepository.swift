@@ -45,4 +45,11 @@ public final class NetworkMonitorRepository: NetworkMonitorRepositoryProtocol {
         }
         monitor.start(queue: queue)
     }
+    
+    public func isConnectedViaWiFi() -> Bool {
+        guard let wifiInterface = monitor.currentPath.availableInterfaces.first(where: { $0.type == .wifi }) else {
+            return false
+        }
+        return monitor.currentPath.usesInterfaceType(wifiInterface.type)
+    }
 }

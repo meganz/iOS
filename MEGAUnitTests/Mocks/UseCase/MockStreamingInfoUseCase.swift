@@ -33,4 +33,8 @@ final class MockStreamingInfoUseCase: StreamingInfoUseCaseProtocol {
         infoNode = node
     }
     
+    func path(fromNode: MEGANode) -> URL? {
+        nil
+    }
+    
 }

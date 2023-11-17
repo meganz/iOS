@@ -6,4 +6,5 @@ public protocol NetworkMonitorRepositoryProtocol: RepositoryProtocol {
     var connectionChangedStream: AsyncStream<Bool> { get }
     func networkPathChanged(completion: @escaping (Bool) -> Void)
     func isConnected() -> Bool
+    func isConnectedViaWiFi() -> Bool
 }

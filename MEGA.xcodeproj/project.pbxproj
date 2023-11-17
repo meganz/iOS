@@ -136,6 +136,7 @@
 		2400A7E02ACB135F0023C015 /* AudioPlayerItemDataSourceCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2400A7DF2ACB135F0023C015 /* AudioPlayerItemDataSourceCommand.swift */; };
 		240380542A30687500C06E61 /* ReportIssueMessageViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240380532A30687500C06E61 /* ReportIssueMessageViewModelTests.swift */; };
 		240380562A306B8B00C06E61 /* ReportIssueMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240380552A306B8B00C06E61 /* ReportIssueMessageViewModel.swift */; };
+		2407FDA62B05C73C00F26248 /* URL+MNZCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2407FDA52B05C73C00F26248 /* URL+MNZCategory.swift */; };
 		240D80FB2AB1A1DC00FBD2C4 /* AudioPlayerItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240D80FA2AB1A1DC00FBD2C4 /* AudioPlayerItemTests.swift */; };
 		2412B5352A414EC7000EB46E /* MEGANode+initAudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2412B5342A414EC7000EB46E /* MEGANode+initAudioPlayer.swift */; };
 		24189DCE2AA705C70071F160 /* MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24189DCD2AA705C70071F160 /* MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift */; };
@@ -2659,6 +2660,7 @@
 		2400A7DF2ACB135F0023C015 /* AudioPlayerItemDataSourceCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerItemDataSourceCommand.swift; sourceTree = "<group>"; };
 		240380532A30687500C06E61 /* ReportIssueMessageViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportIssueMessageViewModelTests.swift; sourceTree = "<group>"; };
 		240380552A306B8B00C06E61 /* ReportIssueMessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportIssueMessageViewModel.swift; sourceTree = "<group>"; };
+		2407FDA52B05C73C00F26248 /* URL+MNZCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+MNZCategory.swift"; sourceTree = "<group>"; };
 		240D80FA2AB1A1DC00FBD2C4 /* AudioPlayerItemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerItemTests.swift; sourceTree = "<group>"; };
 		2412B5342A414EC7000EB46E /* MEGANode+initAudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANode+initAudioPlayer.swift"; sourceTree = "<group>"; };
 		24189DCD2AA705C70071F160 /* MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift"; sourceTree = "<group>"; };
@@ -6747,6 +6749,7 @@
 				83DC30CD25F247CA00A82F30 /* UIViewController+Additions.swift */,
 				BF0BBEFC230627BE001FD542 /* UIViewController+MNZCategory.h */,
 				BF0BBEFD230627BE001FD542 /* UIViewController+MNZCategory.m */,
+				2407FDA52B05C73C00F26248 /* URL+MNZCategory.swift */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -14744,6 +14747,7 @@
 				5D2AF57F24F4A711000B2F29 /* UploadPhotoAssetsRepository.swift in Sources */,
 				B6BD012221B7123B00E97086 /* UploadRecordsCollator.m in Sources */,
 				B645165322320C23001680BC /* UploadStats.m in Sources */,
+				2407FDA62B05C73C00F26248 /* URL+MNZCategory.swift in Sources */,
 				B51C55C52824AA04004E3FA8 /* UsageViewController+Additions.swift in Sources */,
 				E889C9E91B566EC400ECEFDF /* UsageViewController.m in Sources */,
 				32A2AA062A283BB3007FC630 /* UserAttributeUseCase+Additions.swift in Sources */,
