@@ -12,7 +12,7 @@ public extension ChatSessionEntity {
         clientId: HandleEntity = .invalid,
         audioDetected: Bool = false,
         isOnHold: Bool = false,
-        changes: Int = 0,
+        changeType: ChatSessionEntity.ChangeType = .noChanges,
         isHighResolution: Bool = false,
         isLowResolution: Bool = false,
         canReceiveVideoHiRes: Bool = false,
@@ -23,6 +23,8 @@ public extension ChatSessionEntity {
         hasScreenShare: Bool = false,
         isLowResScreenShare: Bool = false,
         isHiResScreenShare: Bool = false,
+        isModerator: Bool = false,
+        onRecording: Bool = false,
         isTesting: Bool = true
     ) {
         self.init(
@@ -34,7 +36,7 @@ public extension ChatSessionEntity {
             clientId: clientId,
             audioDetected: audioDetected,
             isOnHold: isOnHold,
-            changes: changes,
+            changeType: changeType,
             isHighResolution: isHighResolution,
             isLowResolution: isLowResolution,
             canReceiveVideoHiRes: canReceiveVideoHiRes,
@@ -44,7 +46,9 @@ public extension ChatSessionEntity {
             isHiResCamera: isHiResCamera,
             hasScreenShare: hasScreenShare,
             isLowResScreenShare: isLowResScreenShare,
-            isHiResScreenShare: isHiResScreenShare
+            isHiResScreenShare: isHiResScreenShare,
+            isModerator: isModerator,
+            onRecording: onRecording
         )
     }
 }
