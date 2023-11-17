@@ -3886,3 +3886,17 @@
 "calls.screenShare.mainView.presentingLabel"="%@ is presenting";
 /* A warning HUB to show in the call UI when the user A try to tap user B who is sharing screen and the shared screen is in the main view */
 "calls.screenShare.waring.title"="This person is screen sharing";
+/* Alert title informing user that call screen is being recorded */
+"calls.screenRecording.alert.title"="This call is being recorded";
+/* Alert message for user confirmation that agrees on call screen recording */
+"calls.screenRecording.alert.message"="By staying in the call, you're giving permission to be recorded.";
+/* Alert button for user not accepting call screen recording and therefor leaving the call */
+"calls.screenRecording.alert.action.leave"="Leave call";
+/* Alert button for user accepting call screen recording */
+"calls.screenRecording.alert.action.accept"="Ok, got it";
+/* Notification message about someone started to record call screen */
+"calls.screenRecording.notification.recording.started"="%@ started recording";
+/* Notification message about someone stopped to record call screen */
+"calls.screenRecording.notification.recording.stopped"="%@ stopped recording";
+/* Text for a UI label indicating that the call screen is being recorded */
+"calls.screenRecording.screenIndicator.label"="REC";
