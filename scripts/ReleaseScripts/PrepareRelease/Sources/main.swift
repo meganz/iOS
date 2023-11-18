@@ -1,3 +1,5 @@
+import SharedReleaseScript
+
 do {
     log("Started execution")
 
@@ -37,18 +39,6 @@ do {
     exit(ProcessResult.success)
 } catch {
     exitWithError(error)
-}
-
-private func exitWithError(_ error: Error) -> Never {
-    let prefix = "finished with error\n"
-
-    if let shellError = error as? ShellError {
-        log("\(prefix)Shell error: \(shellError.description)")
-        exit(shellError.code)
-    } else {
-        log("\(prefix)Error: \(String(describing: error))\n description: \(error.localizedDescription)")
-        exit(ProcessResult.error)
-    }
 }
 
 private func log(_ message: String) {
