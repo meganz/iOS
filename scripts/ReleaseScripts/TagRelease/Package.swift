@@ -3,13 +3,13 @@
 import PackageDescription
 
 let package = Package(
-    name: "PrepareRelease",
+    name: "TagRelease",
     dependencies: [
         .package(path: "../../ReleaseScripts/SharedReleaseScript")
     ],
     targets: [
         .executableTarget(
-            name: "PrepareRelease",
+            name: "TagRelease",
             dependencies: ["SharedReleaseScript"]
         )
     ]

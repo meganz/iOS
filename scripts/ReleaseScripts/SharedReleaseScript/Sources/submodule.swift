@@ -1,8 +1,8 @@
-enum Submodule {
+public enum Submodule {
     case sdk
     case chatSDK
 
-    var description: String {
+    public var description: String {
         switch self {
         case .sdk:
             return "MEGASDK"
@@ -11,7 +11,7 @@ enum Submodule {
         }
     }
 
-    var path: String {
+    public var path: String {
         switch self {
         case .sdk:
             return "./Modules/DataSource/MEGASDK/Sources/MEGASDK"

@@ -1,4 +1,4 @@
-import Foundation
+import SharedReleaseScript
 
 struct UserInput {
     let version: String
@@ -20,14 +20,12 @@ func userInput() throws -> UserInput {
 }
 
 private func versionInput() throws -> String {
-    let versionPattern = "^(\\d+)\\.(\\d+)$" // Regex pattern for 'major.minor'
-    let regex = try NSRegularExpression(pattern: versionPattern, options: [])
-
     while true {
         print("Enter the version number (format: '[major].[minor]'):", terminator: " ")
-        if let versionInput = readLine() {
-            if regex.firstMatch(in: versionInput, options: [], range: NSRange(location: 0, length: versionInput.utf16.count)) != nil {
-                return versionInput
+        if let input = readLine() {
+            let matches = try matchesMajorMinorRelease(input)
+            if matches {
+                return input
             } else {
                 print("Invalid format. Please make sure to follow the '[major].[minor]' format.")
             }
@@ -38,18 +36,15 @@ private func versionInput() throws -> String {
 private func commitHashFromUser(submodule: Submodule) throws -> String {
     print("Enter the commit hash for the \(submodule.description) release:", terminator: " ")
 
-    guard let hash = readLine()?.trimmingCharacters(in: .whitespacesAndNewlines) else {
+    guard let input = readLine() else {
         throw InputError.missingReleaseCommitHash(submodule: submodule)
     }
 
-    // Regex pattern for git-style commit hashes with 7 and a maximum of 40 hexadecimal characters
-    let commitHashPattern = "^[0-9a-f]{7,40}$"
-    let regex = try NSRegularExpression(pattern: commitHashPattern, options: [.caseInsensitive])
-    let matches = regex.firstMatch(in: hash, options: [], range: NSRange(location: 0, length: hash.utf16.count)) != nil
+    let matches = try matchesGitCommitHash(input)
 
     guard matches else {
         throw InputError.invalidCommitHash(submodule: submodule)
     }
 
-    return hash
+    return input
 }

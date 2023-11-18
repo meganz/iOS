@@ -1,4 +1,4 @@
-import Foundation
+import SharedReleaseScript
 
 private let pathToTransifexScript = "./transifex/iosTransifex.py"
 
