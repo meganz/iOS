@@ -881,6 +881,23 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         XCTAssertEqual(sut.layoutMode, .grid)
     }
     
+    func testUpdateLayoutModeAccordingScreenSharingParticipant_forTwoParticipantsAndOneHasScreenShareAndThenLeft_shouldSwitchToGridMode() {
+        let sut = makeMeetingParticipantsLayoutViewModel()
+        
+        XCTAssertEqual(sut.layoutMode, .grid)
+        
+        let participant1 = CallParticipantEntity(participantId: 101, hasScreenShare: false)
+        let participant2 = CallParticipantEntity(participantId: 102, hasScreenShare: true)
+        sut.participantJoined(participant: participant1)
+        sut.participantJoined(participant: participant2)
+        
+        XCTAssertEqual(sut.layoutMode, .speaker)
+        
+        sut.participantLeft(participant: participant2)
+        
+        XCTAssertEqual(sut.layoutMode, .grid)
+    }
+    
     func testEnableRemoteScreenShareVideo_forParticipantHasScreenShareAndCanReceiveVideoInHighResolutionAndHasCamera_shouldCallEnabledRemoteVideoWithHighResolution() {
         let remoteVideoUseCase = MockCallRemoteVideoUseCase()
         let sut = makeMeetingParticipantsLayoutViewModel(
@@ -1082,7 +1099,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         XCTAssertEqual(secondParticipant.audioDetected, true)
         XCTAssertEqual(sut.speakerParticipant, secondParticipant)
     }
-    
+
     func testCallBack_participantPinnedAndAudioLevelDetectedInSpeakerMode_shouldUpdateAudioDetectedAndKeepAsSpeakerPartipant() {
         let sut = makeMeetingParticipantsLayoutViewModel()
         let firstParticipant = CallParticipantEntity(participantId: 100, clientId: 1)
@@ -1134,6 +1151,40 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         XCTAssertTrue(sut.callParticipants[1].isScreenShareCell)
         XCTAssertEqual(sut.callParticipants[2], firstParticipant)
         XCTAssertFalse(sut.callParticipants[2].isScreenShareCell)
+    }
+    
+    func testUpdateParticipant_onStopScreenShareAndThereIsScreenSharingParticipent_theNextScreenSharingParticipantShouldBecomeSpeaker() {
+        let sut = makeMeetingParticipantsLayoutViewModel()
+        let firstParticipant = CallParticipantEntity(participantId: 101, clientId: 1, hasScreenShare: true)
+        let secondParticipant = CallParticipantEntity(participantId: 102, clientId: 2, hasScreenShare: true)
+        sut.participantJoined(participant: firstParticipant)
+        sut.participantJoined(participant: secondParticipant)
+        sut.layoutMode = .speaker
+        sut.tappedParticipant(secondParticipant)
+        
+        XCTAssertEqual(sut.speakerParticipant, secondParticipant)
+        
+        let updatedParticipant = CallParticipantEntity(participantId: 102, clientId: 2, hasScreenShare: false)
+        sut.updateParticipant(updatedParticipant)
+        
+        XCTAssertEqual(sut.speakerParticipant, firstParticipant)
+    }
+    
+    func testUpdateParticipant_onStopScreenShareAndThereIsNoScreenSharingParticipent_theSpeakerShouldBeNil() {
+        let sut = makeMeetingParticipantsLayoutViewModel()
+        let firstParticipant = CallParticipantEntity(participantId: 101, clientId: 1, hasScreenShare: false)
+        let secondParticipant = CallParticipantEntity(participantId: 102, clientId: 2, hasScreenShare: true)
+        sut.participantJoined(participant: firstParticipant)
+        sut.participantJoined(participant: secondParticipant)
+        sut.layoutMode = .speaker
+        sut.tappedParticipant(secondParticipant)
+        
+        XCTAssertEqual(sut.speakerParticipant, secondParticipant)
+        
+        let updatedParticipant = CallParticipantEntity(participantId: 102, clientId: 2, hasScreenShare: false)
+        sut.updateParticipant(updatedParticipant)
+        
+        XCTAssertNil(sut.speakerParticipant)
     }
     
     // MARK: - Private functions

@@ -85,8 +85,8 @@ class CallCollectionView: UICollectionView {
         guard let cell = cellForItem(at: IndexPath(item: index, section: 0)) as? CallParticipantCell, let participant = cell.participant else {
             return
         }
+        cell.configure(for: participant, in: layoutMode)
         if visibleCells.contains(cell) {
-            cell.configure(for: participant, in: layoutMode)
             callCollectionViewDelegate?.participantCellIsVisible(participant, at: IndexPath(item: index, section: 0))
         }
     }
