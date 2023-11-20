@@ -1,10 +1,10 @@
 import Foundation
 
-enum FileSystemError: Error {
+public enum FileSystemError: Error {
     case cannotChangeToRootDirectory
 }
 
-func changeCurrentWorkDirectoryToRootDirectory() throws {
+public func changeCurrentWorkDirectoryToRootDirectory() throws {
     let rootDirectoryPath = "../../../"
     let fileManager = FileManager.default
 
