@@ -1,7 +1,10 @@
 import MEGASwiftUI
 import SwiftUI
 
-public struct ChipViewModel: Identifiable {
+public struct ChipViewModel: Identifiable, Equatable {
+    public static func == (lhs: ChipViewModel, rhs: ChipViewModel) -> Bool {
+        lhs.id == rhs.id && lhs.selected == rhs.selected
+    }
 
     public var id: String {
         chipId.description
@@ -11,6 +14,7 @@ public struct ChipViewModel: Identifiable {
     let subchipsPickerTitle: String?
     let subchips: [ChipViewModel]
     let selectionIndicatorImage: UIImage?
+    let selected: Bool
     let select: () async -> Void
 
     init(
@@ -19,6 +23,7 @@ public struct ChipViewModel: Identifiable {
         subchips: [ChipViewModel] = [],
         subchipsPickerTitle: String? = nil,
         selectionIndicatorImage: UIImage? = nil,
+        selected: Bool = false,
         select: @escaping () async -> Void
     ) {
         self.chipId = chipId
@@ -26,6 +31,7 @@ public struct ChipViewModel: Identifiable {
         self.subchipsPickerTitle = subchipsPickerTitle
         self.subchips = subchips
         self.selectionIndicatorImage = selectionIndicatorImage
+        self.selected = selected
         self.select = select
     }
 }

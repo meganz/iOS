@@ -47,21 +47,28 @@ public struct SearchResultsView: View {
 
     @ViewBuilder
     private var chips: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack {
-                ForEach(viewModel.chipsItems) { chip in
-                    PillView(viewModel: chip.pill)
-                        .onTapGesture {
-                            Task { @MainActor in
-                                await chip.select()
+        ScrollViewReader { proxy in
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack {
+                    ForEach(viewModel.chipsItems) { chip in
+                        PillView(viewModel: chip.pill)
+                            .id(chip.id)
+                            .onTapGesture {
+                                Task { @MainActor in
+                                    await chip.select()
+                                }
                             }
-                        }
+                    }
+                    Spacer()
                 }
-                Spacer()
+            }
+            .padding([.leading, .trailing, .bottom])
+            .padding(.top, 6)
+            .onChange(of: viewModel.chipsItems) { updatedChips in
+                guard let selectedChip = updatedChips.first(where: { $0.selected }) else { return }
+                proxy.scrollTo(selectedChip.id)
             }
         }
-        .padding([.leading, .trailing, .bottom])
-        .padding(.top, 6)
     }
 
     private func chipsPickerView(for item: ChipViewModel) -> some View {

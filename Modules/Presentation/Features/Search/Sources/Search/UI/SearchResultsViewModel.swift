@@ -77,7 +77,6 @@ public class SearchResultsViewModel: ObservableObject {
         showLoadingPlaceholderDelay: Double = 1,
         searchInputDebounceDelay: Double = 0.5,
         isThumbnailPreviewEnabled: Bool = false,
-        areChipsGroupsEnabled: Bool = false,
         keyboardVisibilityHandler: any KeyboardVisibilityHandling
     ) {
         self.resultsProvider = resultsProvider
@@ -413,6 +412,7 @@ public class SearchResultsViewModel: ObservableObject {
                 subchips: subchips,
                 subchipsPickerTitle: chip.subchipsPickerTitle,
                 selectionIndicatorImage: selected ? config.chipAssets.selectionIndicatorImage : nil,
+                selected: selected,
                 select: { [weak self] in
                     if chip.subchips.isEmpty {
                         self?.dismissChipGroupPicker()
@@ -440,6 +440,7 @@ public class SearchResultsViewModel: ObservableObject {
                     config: config.chipAssets
                 ),
                 selectionIndicatorImage: selected ? config.chipAssets.selectionIndicatorImage : nil,
+                selected: selected,
                 select: { [weak self] in
                     self?.dismissChipGroupPicker()
                     await self?.tapped(chip)
