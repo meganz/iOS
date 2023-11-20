@@ -1,10 +1,10 @@
 import MEGASwiftUI
 import SwiftUI
 
-struct PlanHeaderView: View {
-    var viewModel: AccountPlanViewModel
+public struct PlanHeaderView: View {
+    public var viewModel: AccountPlanViewModel
     
-    var body: some View {
+    public var body: some View {
         HStack {
             Text(viewModel.plan.name)
                 .font(.headline)
@@ -16,17 +16,17 @@ struct PlanHeaderView: View {
             if viewModel.isSelectionEnabled {
                 CheckMarkView(
                     markedSelected: viewModel.isSelected,
-                    foregroundColor: viewModel.isSelected ? Color(Colors.Views.turquoise.color) : Color(Colors.UpgradeAccount.Plan.unselectedTint.color),
+                    foregroundColor: viewModel.isSelected ? Color("turquoise") : Color("unselectedTint"),
                     showBorder: false
                 )
             }
         }
         .padding(.vertical, 10)
         .padding(.horizontal, 15)
-        .background(Color(Colors.UpgradeAccount.Plan.headerBackground.color))
+        .background(Color("headerBackground"))
         .overlay(
             Rectangle()
-                .stroke(Color(Colors.UpgradeAccount.Plan.borderTint.color), lineWidth: 0.5)
+                .stroke(Color("borderTint"), lineWidth: 0.5)
         )
     }
 }

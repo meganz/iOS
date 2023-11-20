@@ -1,9 +1,13 @@
 import SwiftUI
 
-struct AccountPlanView: View {
-    var viewModel: AccountPlanViewModel
+public struct AccountPlanView: View {
+    private var viewModel: AccountPlanViewModel
     
-    var body: some View {
+    public init(viewModel: AccountPlanViewModel) {
+        self.viewModel = viewModel
+    }
+    
+    public var body: some View {
         VStack {
             PlanHeaderView(viewModel: viewModel)
             
@@ -15,7 +19,7 @@ struct AccountPlanView: View {
             .padding()
             .padding(.bottom, 5)
         }
-        .background(Color(Colors.UpgradeAccount.Plan.bodyBackground.color))
+        .background(Color("bodyBackground"))
         .overlay(
             roundedRectangle
                 .stroke(borderColor, lineWidth: viewModel.isSelected ? 3 : 1.5)
@@ -30,6 +34,6 @@ struct AccountPlanView: View {
     }
     
     private var borderColor: Color {
-        viewModel.isSelected ? Color(Colors.Views.turquoise.color) : Color(Colors.UpgradeAccount.Plan.borderTint.color)
+        viewModel.isSelected ? Color("turquoise") : Color("borderTint")
     }
 }

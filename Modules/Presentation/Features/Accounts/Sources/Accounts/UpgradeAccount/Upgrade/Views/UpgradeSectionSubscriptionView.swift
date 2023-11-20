@@ -1,8 +1,11 @@
 import MEGAL10n
 import SwiftUI
 
-struct UpgradeSectionSubscriptionView: View {
-    var body: some View {
+public struct UpgradeSectionSubscriptionView: View {
+    
+    public init() {}
+    
+    public var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text(Strings.Localizable.UpgradeAccountPlan.Header.Title.subscriptionDetails)
                 .font(.footnote.weight(.bold))

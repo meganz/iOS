@@ -1573,12 +1573,6 @@
 		A8F515B127F7548A00AEE4D6 /* ShareViewController+OpenAppRequiredView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F515B027F7548A00AEE4D6 /* ShareViewController+OpenAppRequiredView.swift */; };
 		A8F5D67A1ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A8F5D6791ED58F940087DA40 /* CheckEmailAndFollowTheLinkViewController.m */; };
 		A8F6A9982A336BB2008528C6 /* FileAttributeGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F6A9972A336BB2008528C6 /* FileAttributeGeneratorTests.swift */; };
-		B5000FA52A1DB01500E06478 /* AccountPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5000F9E2A1DB00B00E06478 /* AccountPlanView.swift */; };
-		B5000FA62A1DB01500E06478 /* AccountPlanViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5000F9F2A1DB00D00E06478 /* AccountPlanViewModel.swift */; };
-		B5000FA72A1DB01600E06478 /* PlanHeaderTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5000FA02A1DB00F00E06478 /* PlanHeaderTagView.swift */; };
-		B5000FA82A1DB01600E06478 /* PlanStorageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5000FA12A1DB01100E06478 /* PlanStorageView.swift */; };
-		B5000FA92A1DB01600E06478 /* PlanHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5000FA22A1DB01200E06478 /* PlanHeaderView.swift */; };
-		B5000FAA2A1DB01600E06478 /* PlanPricingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5000FA32A1DB01500E06478 /* PlanPricingView.swift */; };
 		B5099D962758D0DB00553AA9 /* AlbumsSelectionActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5099D952758D0DB00553AA9 /* AlbumsSelectionActionType.swift */; };
 		B511CE6E2AA745E800445877 /* AppDelegate+Ads.swift in Sources */ = {isa = PBXBuildFile; fileRef = B511CE6D2AA745E800445877 /* AppDelegate+Ads.swift */; };
 		B5120F4A2A16050A00A56354 /* ShareAttachmentCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5120F492A16050A00A56354 /* ShareAttachmentCellView.swift */; };
@@ -1593,7 +1587,6 @@
 		B53B02BE2A96135200550A69 /* MEGAPurchase+PromotedPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53B02BD2A96135200550A69 /* MEGAPurchase+PromotedPlan.swift */; };
 		B54081142AD8F5DF004392E8 /* MainTabBarAdsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54081132AD8F5DF004392E8 /* MainTabBarAdsViewModel.swift */; };
 		B54081172AD91471004392E8 /* MainTabBarAdsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54081162AD91471004392E8 /* MainTabBarAdsViewModelTests.swift */; };
-		B541CD302A6AAF53004B4CCC /* PlanSelectionSnackBarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B541CD2F2A6AAF53004B4CCC /* PlanSelectionSnackBarType.swift */; };
 		B5430FCE2AB97629003F8C34 /* UIApplication+TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A8CA002AB96442001F9B83 /* UIApplication+TabBar.swift */; };
 		B544E5DB2AB4610C006EB65C /* MainTabBarController+Ads.swift in Sources */ = {isa = PBXBuildFile; fileRef = B544E5DA2AB4610C006EB65C /* MainTabBarController+Ads.swift */; };
 		B547025228B8AFB6005F7F71 /* MEGAPhotoBrowserViewController+LiveText.swift in Sources */ = {isa = PBXBuildFile; fileRef = B547025128B8AFB6005F7F71 /* MEGAPhotoBrowserViewController+LiveText.swift */; };
@@ -1601,7 +1594,6 @@
 		B5488B732A8DBB8600A069DF /* CustomModalAlertViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5488B722A8DBB8600A069DF /* CustomModalAlertViewController+Additions.swift */; };
 		B5488B742A8DBB8600A069DF /* CustomModalAlertViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5488B722A8DBB8600A069DF /* CustomModalAlertViewController+Additions.swift */; };
 		B5488B7A2A8DBFAD00A069DF /* CountdownTimerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5488B792A8DBFAD00A069DF /* CountdownTimerTests.swift */; };
-		B558B1E42A551F3E006FB3A4 /* UpgradeAccountPlanAlertType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B558B1E32A551F3E006FB3A4 /* UpgradeAccountPlanAlertType.swift */; };
 		B55C1A8829825E4B006A0205 /* NodeTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55C1A8729825E4B006A0205 /* NodeTableViewCell+Additions.swift */; };
 		B55C1A8A298260DB006A0205 /* NodeTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55C1A8729825E4B006A0205 /* NodeTableViewCell+Additions.swift */; };
 		B55C1B7129890C91006A0205 /* MainTabBarController+SharedItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55C1B7029890C91006A0205 /* MainTabBarController+SharedItems.swift */; };
@@ -1629,7 +1621,6 @@
 		B59580A82A1478D400E5FC1C /* UpgradeAccountPlanRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59580A52A1478D300E5FC1C /* UpgradeAccountPlanRouter.swift */; };
 		B59580A92A1478D400E5FC1C /* UpgradeAccountPlanViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59580A62A1478D400E5FC1C /* UpgradeAccountPlanViewModel.swift */; };
 		B59580AA2A1478D400E5FC1C /* UpgradeAccountPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59580A72A1478D400E5FC1C /* UpgradeAccountPlanView.swift */; };
-		B59580B22A1478E800E5FC1C /* UpgradeSectionSubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59580AD2A1478E600E5FC1C /* UpgradeSectionSubscriptionView.swift */; };
 		B59580B32A1478E800E5FC1C /* UpgradeSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59580AE2A1478E700E5FC1C /* UpgradeSectionHeaderView.swift */; };
 		B59580B42A1478E800E5FC1C /* UpgradeSectionFeatureOfProView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59580AF2A1478E700E5FC1C /* UpgradeSectionFeatureOfProView.swift */; };
 		B5967A0829403AE500AD4E61 /* VerifyCredentialsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5967A0729403AE500AD4E61 /* VerifyCredentialsViewController+Additions.swift */; };
@@ -4167,12 +4158,6 @@
 		A8F6A9972A336BB2008528C6 /* FileAttributeGeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileAttributeGeneratorTests.swift; sourceTree = "<group>"; };
 		A8F6E8901F9E75C20087859C /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		A8F6E8921F9E75D50087859C /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
-		B5000F9E2A1DB00B00E06478 /* AccountPlanView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountPlanView.swift; sourceTree = "<group>"; };
-		B5000F9F2A1DB00D00E06478 /* AccountPlanViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountPlanViewModel.swift; sourceTree = "<group>"; };
-		B5000FA02A1DB00F00E06478 /* PlanHeaderTagView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlanHeaderTagView.swift; sourceTree = "<group>"; };
-		B5000FA12A1DB01100E06478 /* PlanStorageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlanStorageView.swift; sourceTree = "<group>"; };
-		B5000FA22A1DB01200E06478 /* PlanHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlanHeaderView.swift; sourceTree = "<group>"; };
-		B5000FA32A1DB01500E06478 /* PlanPricingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlanPricingView.swift; sourceTree = "<group>"; };
 		B5099D952758D0DB00553AA9 /* AlbumsSelectionActionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsSelectionActionType.swift; sourceTree = "<group>"; };
 		B511CE6D2AA745E800445877 /* AppDelegate+Ads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Ads.swift"; sourceTree = "<group>"; };
 		B5120F492A16050A00A56354 /* ShareAttachmentCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareAttachmentCellView.swift; sourceTree = "<group>"; };
@@ -4187,13 +4172,11 @@
 		B53B02BD2A96135200550A69 /* MEGAPurchase+PromotedPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPurchase+PromotedPlan.swift"; sourceTree = "<group>"; };
 		B54081132AD8F5DF004392E8 /* MainTabBarAdsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarAdsViewModel.swift; sourceTree = "<group>"; };
 		B54081162AD91471004392E8 /* MainTabBarAdsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarAdsViewModelTests.swift; sourceTree = "<group>"; };
-		B541CD2F2A6AAF53004B4CCC /* PlanSelectionSnackBarType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanSelectionSnackBarType.swift; sourceTree = "<group>"; };
 		B544E5DA2AB4610C006EB65C /* MainTabBarController+Ads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabBarController+Ads.swift"; sourceTree = "<group>"; };
 		B547025128B8AFB6005F7F71 /* MEGAPhotoBrowserViewController+LiveText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAPhotoBrowserViewController+LiveText.swift"; sourceTree = "<group>"; };
 		B547C0E529FB716C0008BEF2 /* SortOrderType+Mapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SortOrderType+Mapper.swift"; sourceTree = "<group>"; };
 		B5488B722A8DBB8600A069DF /* CustomModalAlertViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+Additions.swift"; sourceTree = "<group>"; };
 		B5488B792A8DBFAD00A069DF /* CountdownTimerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownTimerTests.swift; sourceTree = "<group>"; };
-		B558B1E32A551F3E006FB3A4 /* UpgradeAccountPlanAlertType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeAccountPlanAlertType.swift; sourceTree = "<group>"; };
 		B55C1A8729825E4B006A0205 /* NodeTableViewCell+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeTableViewCell+Additions.swift"; sourceTree = "<group>"; };
 		B55C1B7029890C91006A0205 /* MainTabBarController+SharedItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabBarController+SharedItems.swift"; sourceTree = "<group>"; };
 		B55EC7142A08A515000F19DA /* SendFeedbackViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendFeedbackViewModelTests.swift; sourceTree = "<group>"; };
@@ -4221,7 +4204,6 @@
 		B59580A52A1478D300E5FC1C /* UpgradeAccountPlanRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeAccountPlanRouter.swift; sourceTree = "<group>"; };
 		B59580A62A1478D400E5FC1C /* UpgradeAccountPlanViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeAccountPlanViewModel.swift; sourceTree = "<group>"; };
 		B59580A72A1478D400E5FC1C /* UpgradeAccountPlanView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeAccountPlanView.swift; sourceTree = "<group>"; };
-		B59580AD2A1478E600E5FC1C /* UpgradeSectionSubscriptionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeSectionSubscriptionView.swift; sourceTree = "<group>"; };
 		B59580AE2A1478E700E5FC1C /* UpgradeSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeSectionHeaderView.swift; sourceTree = "<group>"; };
 		B59580AF2A1478E700E5FC1C /* UpgradeSectionFeatureOfProView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpgradeSectionFeatureOfProView.swift; sourceTree = "<group>"; };
 		B5967A0729403AE500AD4E61 /* VerifyCredentialsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VerifyCredentialsViewController+Additions.swift"; sourceTree = "<group>"; };
@@ -10000,27 +9982,6 @@
 			path = "Report Issue";
 			sourceTree = "<group>";
 		};
-		B5000F9C2A1DAFCD00E06478 /* Plan View */ = {
-			isa = PBXGroup;
-			children = (
-				B5000FAB2A1DB19300E06478 /* Sections */,
-				B5000F9E2A1DB00B00E06478 /* AccountPlanView.swift */,
-				B5000F9F2A1DB00D00E06478 /* AccountPlanViewModel.swift */,
-			);
-			path = "Plan View";
-			sourceTree = "<group>";
-		};
-		B5000FAB2A1DB19300E06478 /* Sections */ = {
-			isa = PBXGroup;
-			children = (
-				B5000FA02A1DB00F00E06478 /* PlanHeaderTagView.swift */,
-				B5000FA22A1DB01200E06478 /* PlanHeaderView.swift */,
-				B5000FA32A1DB01500E06478 /* PlanPricingView.swift */,
-				B5000FA12A1DB01100E06478 /* PlanStorageView.swift */,
-			);
-			path = Sections;
-			sourceTree = "<group>";
-		};
 		B5000FC32A1E219400E06478 /* Plan */ = {
 			isa = PBXGroup;
 			children = (
@@ -10056,15 +10017,6 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		B558B1E12A551F1A006FB3A4 /* Data */ = {
-			isa = PBXGroup;
-			children = (
-				B541CD2F2A6AAF53004B4CCC /* PlanSelectionSnackBarType.swift */,
-				B558B1E32A551F3E006FB3A4 /* UpgradeAccountPlanAlertType.swift */,
-			);
-			path = Data;
-			sourceTree = "<group>";
-		};
 		B5663EDE29F8F3C20080FFDA /* MEGAPurchase */ = {
 			isa = PBXGroup;
 			children = (
@@ -10095,7 +10047,6 @@
 		B59580A32A1478AE00E5FC1C /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				B5000F9C2A1DAFCD00E06478 /* Plan View */,
 				B59580A42A1478C300E5FC1C /* Upgrade Plan View */,
 			);
 			path = Views;
@@ -10104,7 +10055,6 @@
 		B59580A42A1478C300E5FC1C /* Upgrade Plan View */ = {
 			isa = PBXGroup;
 			children = (
-				B558B1E12A551F1A006FB3A4 /* Data */,
 				B59580AB2A1478DC00E5FC1C /* Sections */,
 				B59580A52A1478D300E5FC1C /* UpgradeAccountPlanRouter.swift */,
 				B59580A72A1478D400E5FC1C /* UpgradeAccountPlanView.swift */,
@@ -10118,7 +10068,6 @@
 			children = (
 				B59580AF2A1478E700E5FC1C /* UpgradeSectionFeatureOfProView.swift */,
 				B59580AE2A1478E700E5FC1C /* UpgradeSectionHeaderView.swift */,
-				B59580AD2A1478E600E5FC1C /* UpgradeSectionSubscriptionView.swift */,
 			);
 			path = Sections;
 			sourceTree = "<group>";
@@ -13221,8 +13170,6 @@
 				A8DE32CB22FC14CC006BAC7A /* AccountExpiredViewController.swift in Sources */,
 				6D64B70D2A09BCB1002ECBD1 /* AccountHallViewModel.swift in Sources */,
 				B5EF0A7729F0EE2100B166B1 /* AccountPlanPurchaseRepository.swift in Sources */,
-				B5000FA52A1DB01500E06478 /* AccountPlanView.swift in Sources */,
-				B5000FA62A1DB01500E06478 /* AccountPlanViewModel.swift in Sources */,
 				B6FD6506268B39D800988A17 /* AccountRepository.swift in Sources */,
 				94F2DD8029EFED3200718176 /* AchievementsDetailsViewController+Additions.swift in Sources */,
 				5B40AB321F7A512E0034C3B3 /* AchievementsDetailsViewController.m in Sources */,
@@ -14387,11 +14334,6 @@
 				B6ADE4D52731E54E00C19F36 /* PhotoYearCardViewModel.swift in Sources */,
 				251B07BB2AC4D4B2008B7380 /* PhotoZoomControlPositionTracker.swift in Sources */,
 				5D79B52224986A4F0070FECD /* PlanAdviser.swift in Sources */,
-				B5000FA72A1DB01600E06478 /* PlanHeaderTagView.swift in Sources */,
-				B5000FA92A1DB01600E06478 /* PlanHeaderView.swift in Sources */,
-				B5000FAA2A1DB01600E06478 /* PlanPricingView.swift in Sources */,
-				B541CD302A6AAF53004B4CCC /* PlanSelectionSnackBarType.swift in Sources */,
-				B5000FA82A1DB01600E06478 /* PlanStorageView.swift in Sources */,
 				C4CBDD82256EDD1200835CF5 /* PlayerCurrentStateEntity.swift in Sources */,
 				C450470125794A2800EE510E /* PlaylistHeaderFooterView.swift in Sources */,
 				C480AF422570F0F400898D48 /* PlaylistItemTableViewCell.swift in Sources */,
@@ -14731,7 +14673,6 @@
 				E8CD19871A9266D600CB8B2A /* UnavailableLinkView.m in Sources */,
 				B6990164262F879400176FFC /* UncaughtExceptionHandler.swift in Sources */,
 				5B76EBA325DE8D9000CE77F2 /* UpgradeAccountFactory.swift in Sources */,
-				B558B1E42A551F3E006FB3A4 /* UpgradeAccountPlanAlertType.swift in Sources */,
 				B59580A82A1478D400E5FC1C /* UpgradeAccountPlanRouter.swift in Sources */,
 				B59580AA2A1478D400E5FC1C /* UpgradeAccountPlanView.swift in Sources */,
 				B59580A92A1478D400E5FC1C /* UpgradeAccountPlanViewModel.swift in Sources */,
@@ -14739,7 +14680,6 @@
 				B5AD33C529D136A600707496 /* UpgradeAccountViewModel.swift in Sources */,
 				B59580B42A1478E800E5FC1C /* UpgradeSectionFeatureOfProView.swift in Sources */,
 				B59580B32A1478E800E5FC1C /* UpgradeSectionHeaderView.swift in Sources */,
-				B59580B22A1478E800E5FC1C /* UpgradeSectionSubscriptionView.swift in Sources */,
 				C4709A9926B05DA2008FB0C8 /* UpgradeTableViewController+Additions.swift in Sources */,
 				41A66D071AE7900F007D7E20 /* UpgradeTableViewController.m in Sources */,
 				A889B2E727E20DB7002B4E7F /* UploadLogFileView.swift in Sources */,

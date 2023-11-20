@@ -1,9 +1,9 @@
 import MEGAL10n
 
-enum PlanSelectionSnackBarType {
+public enum PlanSelectionSnackBarType {
     case currentRecurringPlanSelected, none
     
-    var title: String {
+    public var title: String {
         switch self {
         case .currentRecurringPlanSelected:
             return Strings.Localizable.UpgradeAccountPlan.Selection.Message.alreadyHaveRecurringSubscriptionOfPlan
