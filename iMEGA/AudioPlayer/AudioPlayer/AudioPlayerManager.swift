@@ -290,11 +290,16 @@ import MEGAPresentation
                         audioPlayerUseCase: AudioPlayerUseCase(repository: AudioPlayerRepository(sdk: .shared))
                     )
                 } else {
+                    let makeStreamingInfoRepository: () -> some StreamingInfoRepositoryProtocol = {
+                        let defaultSetupStreamingRepositorySdk: MEGASdk = (MEGASdk.isLoggedIn ? .shared : .sharedFolderLink)
+                        let streamingInfoSdk = configEntity.isFolderLink ? .sharedFolderLink : defaultSetupStreamingRepositorySdk
+                        return StreamingInfoRepository(sdk: streamingInfoSdk)
+                    }
                     return AudioPlayerViewModel(
                         configEntity: configEntity,
                         router: router,
                         nodeInfoUseCase: NodeInfoUseCase(nodeInfoRepository: NodeInfoRepository()),
-                        streamingInfoUseCase: StreamingInfoUseCase(streamingInfoRepository: StreamingInfoRepository()),
+                        streamingInfoUseCase: StreamingInfoUseCase(streamingInfoRepository: makeStreamingInfoRepository()),
                         playbackContinuationUseCase: DIContainer.playbackContinuationUseCase,
                         audioPlayerUseCase: AudioPlayerUseCase(repository: AudioPlayerRepository(sdk: .shared))
                     )
