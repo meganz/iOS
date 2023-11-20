@@ -239,7 +239,6 @@ final class HomeScreenFactory: NSObject {
                 )
             ),
             isThumbnailPreviewEnabled: DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .thumbnailSearchPreview),
-            areChipsGroupsEnabled: DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .chipsGroups),
             keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: .default)
         )
         return UIHostingController(rootView: SearchResultsView(viewModel: vm))
