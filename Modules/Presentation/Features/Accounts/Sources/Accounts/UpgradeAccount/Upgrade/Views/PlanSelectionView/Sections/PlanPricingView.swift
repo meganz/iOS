@@ -2,15 +2,15 @@ import MEGADomain
 import MEGAL10n
 import SwiftUI
 
-struct PlanPricingView: View {
-    var plan: AccountPlanEntity
+public struct PlanPricingView: View {
+    public var plan: AccountPlanEntity
     
-    var body: some View {
+    public var body: some View {
         VStack {
             Text(plan.formattedPrice)
                 .font(.title2)
                 .bold()
-                .foregroundColor(Color(Colors.UpgradeAccount.primaryText.color))
+                .foregroundColor(Color("primaryText"))
             
             Text(currencyPerTermString)
                 .font(.subheadline)

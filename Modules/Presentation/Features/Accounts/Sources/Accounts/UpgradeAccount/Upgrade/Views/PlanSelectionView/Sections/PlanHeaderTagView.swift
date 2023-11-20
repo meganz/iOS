@@ -2,10 +2,10 @@ import MEGADomain
 import MEGAL10n
 import SwiftUI
 
-struct PlanHeaderTagView: View {
-    var planTag: AccountPlanTagEntity
+public struct PlanHeaderTagView: View {
+    public var planTag: AccountPlanTagEntity
     
-    var body: some View {
+    public var body: some View {
         Text(planTagName)
             .font(.caption2)
             .bold()
@@ -28,9 +28,9 @@ struct PlanHeaderTagView: View {
     private var planTagColor: Color {
         switch planTag {
         case .currentPlan:
-            return Color(Colors.UpgradeAccount.Plan.currentPlan.color)
+            return Color("currentPlan")
         case .recommended:
-            return Color(Colors.UpgradeAccount.Plan.recommended.color)
+            return Color("recommended")
         case .none:
             return .clear
         }

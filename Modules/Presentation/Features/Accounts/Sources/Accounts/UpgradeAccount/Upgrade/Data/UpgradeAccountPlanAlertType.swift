@@ -1,14 +1,14 @@
 import MEGAL10n
 
-enum UpgradeAccountPlanAlertType {
+public enum UpgradeAccountPlanAlertType {
     case restore(_ status: AlertStatus)
     case purchase(_ status: AlertStatus)
     
-    enum AlertStatus {
+    public enum AlertStatus {
         case success, incomplete, failed
     }
     
-    var title: String {
+    public var title: String {
         switch self {
         case .restore(let status):
             switch status {
@@ -24,7 +24,7 @@ enum UpgradeAccountPlanAlertType {
         }
     }
     
-    var message: String {
+    public var message: String {
         switch self {
         case .restore(let status):
             switch status {
@@ -37,7 +37,6 @@ enum UpgradeAccountPlanAlertType {
             case .failed: return Strings.Localizable.failedPurchaseMessage
             default: return ""
             }
-
         }
     }
 }
