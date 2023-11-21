@@ -296,7 +296,6 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
     @objc func dismissWidget() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
             guard self.transfers.isEmpty else {
-                self.showWidgetIfNeeded()
                 return
             }
             
@@ -304,6 +303,7 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
                 self.alpha = 0
             }, completion: { _ in
                 self.progress = 0
+                self.hideWidget()
             })
         }
     }
