@@ -1089,7 +1089,7 @@
 - (void)onUsersUpdate:(MEGASdk *)api userList:(MEGAUserList *)userList {
     [self setParticipants];
     BOOL reloadData = NO;
-    for (NSInteger i = 0 ; i < userList.size.integerValue; i++) {
+    for (NSInteger i = 0 ; i < userList.size; i++) {
         MEGAUser *user = [userList userAtIndex:i];
         if (user.isOwnChange == 0) {
             reloadData = YES;

@@ -8,11 +8,11 @@ public final class MockUserList: MEGAUserList {
         super.init()
     }
     
-    public override var size: NSNumber! {
-        NSNumber(value: users.count)
+    public override var size: Int {
+        users.count
     }
     
-    public override func user(at index: Int) -> MEGAUser! {
+    public override func user(at index: Int) -> MEGAUser? {
         users[index]
     }
 }

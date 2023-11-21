@@ -2049,7 +2049,7 @@
     NSMutableArray *updateContactsIndexPathMutableArray = [[NSMutableArray alloc] init];
     NSMutableDictionary *deleteContactsIndexPathMutableDictionary = [[NSMutableDictionary alloc] init];
     
-    NSInteger count = userList.size.integerValue;
+    NSInteger count = userList.size;
     for (NSInteger i = 0 ; i < count; i++) {
         MEGAUser *user = [userList userAtIndex:i];
         NSString *base64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
