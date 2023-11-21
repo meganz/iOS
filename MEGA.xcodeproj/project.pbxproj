@@ -1353,6 +1353,7 @@
 		9911BA922A8B216900B88F28 /* WaitingRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9911BA912A8B216900B88F28 /* WaitingRoomViewModel.swift */; };
 		9911BA9C2A8B949200B88F28 /* WaitingRoomMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9911BA9B2A8B949200B88F28 /* WaitingRoomMessageView.swift */; };
 		991C87062A53F2B900BF940B /* ScheduleMeetingOnboardingRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991C87052A53F2B900BF940B /* ScheduleMeetingOnboardingRecord.swift */; };
+		992003582B0C09620058FF5F /* CallParticipantCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992003572B0C09620058FF5F /* CallParticipantCellTests.swift */; };
 		992453F02A8DF8FF00ADB76B /* WaitingRoomJoinPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992453EF2A8DF8FF00ADB76B /* WaitingRoomJoinPanelView.swift */; };
 		99487BCC2A8F328D00BE4685 /* WaitingRoomViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FF30D12A8F16E6006CE3DB /* WaitingRoomViewModelTests.swift */; };
 		9949C3622A72421F000C299B /* ChatRoomAvatarInitialsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9949C3612A72421F000C299B /* ChatRoomAvatarInitialsGenerator.swift */; };
@@ -3920,6 +3921,7 @@
 		9911BA912A8B216900B88F28 /* WaitingRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomViewModel.swift; sourceTree = "<group>"; };
 		9911BA9B2A8B949200B88F28 /* WaitingRoomMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomMessageView.swift; sourceTree = "<group>"; };
 		991C87052A53F2B900BF940B /* ScheduleMeetingOnboardingRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingOnboardingRecord.swift; sourceTree = "<group>"; };
+		992003572B0C09620058FF5F /* CallParticipantCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallParticipantCellTests.swift; sourceTree = "<group>"; };
 		992453EF2A8DF8FF00ADB76B /* WaitingRoomJoinPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomJoinPanelView.swift; sourceTree = "<group>"; };
 		9949C3612A72421F000C299B /* ChatRoomAvatarInitialsGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoomAvatarInitialsGenerator.swift; sourceTree = "<group>"; };
 		9949C3652A72424C000C299B /* ChatRoomAvatarInitialsGeneratorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoomAvatarInitialsGeneratorTest.swift; sourceTree = "<group>"; };
@@ -11796,6 +11798,7 @@
 			children = (
 				BF8895AA2630F1AB002A18CA /* Mocks */,
 				BFC060F428A0C2DB00BA2AD7 /* Utils */,
+				992003572B0C09620058FF5F /* CallParticipantCellTests.swift */,
 				990AC4EC2A4A77EC008E298F /* ChatRoomLinkViewModelTests.swift */,
 				998299052ADCA02E001F9BED /* ChatRoomParticipantsListViewModelTests.swift */,
 				998379302ACA408800A9A439 /* ChatRoomParticipantViewModelTests.swift */,
@@ -15125,6 +15128,7 @@
 				2546EE052A4149B300CBB82E /* AVPlayerManagerTests.swift in Sources */,
 				99E1A9292A383EC000974FC9 /* BadgeButtonTests.swift in Sources */,
 				C46D4A8126557B1200748BD3 /* BannerContainerViewModelTests.swift in Sources */,
+				992003582B0C09620058FF5F /* CallParticipantCellTests.swift in Sources */,
 				BFE5570027E183B40028EF1F /* CallParticipantEntity+Mapper_Tests.swift in Sources */,
 				8330A99F2888479B003E80DB /* CallsSettingsViewModelTests.swift in Sources */,
 				B6CED49622B8AFC3009C4861 /* CameraUploadConcurrentCountCalculatorTests.m in Sources */,

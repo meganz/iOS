@@ -525,6 +525,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         let safeInsetBottom = UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0
         stackViewTopConstraint.constant = top + safeInsetTop
         stackViewBottomConstraint.constant = bottom + safeInsetBottom
+        callCollectionView.reloadData()
     }
 }
 
