@@ -1180,7 +1180,7 @@
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onUsersUpdate:(MEGASdk *)sdk userList:(MEGAUserList *)userList {
-    NSInteger userListCount = userList.size.integerValue;
+    NSInteger userListCount = userList.size;
     for (NSInteger i = 0 ; i < userListCount; i++) {
         MEGAUser *user = [userList userAtIndex:i];
         

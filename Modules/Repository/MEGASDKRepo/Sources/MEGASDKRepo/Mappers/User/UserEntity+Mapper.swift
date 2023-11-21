@@ -48,9 +48,8 @@ extension MEGAUser {
 
 extension MEGAUserList {
     public func toUserEntities() -> [UserEntity] {
-        let count = size?.intValue ?? 0
-        guard count > 0 else { return [] }
-        return (0..<count).compactMap { user(at: $0)?.toUserEntity() }
+        guard size > 0 else { return [] }
+        return (0..<size).compactMap { user(at: $0)?.toUserEntity() }
     }
 }
 

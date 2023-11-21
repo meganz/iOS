@@ -175,7 +175,7 @@
     self.users = [[MEGASdkManager sharedMEGASdk] contacts];
     self.visibleUsersMutableArray = [[NSMutableArray alloc] init];
     self.selectedUsersMutableArray = [[NSMutableArray alloc] init];
-    NSInteger count = self.users.size.integerValue;
+    NSInteger count = self.users.size;
     for (NSInteger i = 0; i < count; i++) {
         MEGAUser *user = [self.users userAtIndex:i];
         if (user.visibility == MEGAUserVisibilityVisible) {

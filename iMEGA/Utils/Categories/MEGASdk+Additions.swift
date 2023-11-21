@@ -3,7 +3,7 @@ import MEGASDKRepo
 extension MEGASdk {    
     @objc func visibleContacts() -> [MEGAUser] {
         let contactsArray = contacts()
-        let contactsArraySize = contactsArray.size.intValue
+        let contactsArraySize = contactsArray.size
         var visibleContactsArray: [MEGAUser] = []
         var i = 0
         while i < contactsArraySize {

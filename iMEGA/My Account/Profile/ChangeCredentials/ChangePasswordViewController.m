@@ -537,7 +537,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
 #pragma mark - MEGAGlobalDelegate
 
 - (void)onUsersUpdate:(MEGASdk *)api userList:(MEGAUserList *)userList {
-    NSInteger count = userList.size.integerValue;
+    NSInteger count = userList.size;
     for (NSInteger i = 0 ; i < count; i++) {
         MEGAUser *user = [userList userAtIndex:i];
         if (user.handle == MEGASdk.currentUserHandle.unsignedLongLongValue && user.changes == MEGAUserChangeTypeEmail) {

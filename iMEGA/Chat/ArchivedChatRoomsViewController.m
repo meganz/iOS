@@ -91,7 +91,7 @@
     
     MEGAUserList *users = [[MEGASdkManager sharedMEGASdk] contacts];
     self.usersWithoutChatArray = [[NSMutableArray alloc] init];
-    NSInteger count = users.size.integerValue;
+    NSInteger count = users.size;
     for (NSInteger i = 0; i < count; i++) {
         MEGAUser *user = [users userAtIndex:i];
         if (![MEGAChatSdk.shared chatRoomByUser:user.handle] && user.visibility == MEGAUserVisibilityVisible) {
