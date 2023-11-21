@@ -18,9 +18,6 @@ struct PageTabView: View {
     private var tabTextColor: Color {
         colorScheme == .dark ? .white : .black
     }
-
-    private let defaultTabFont = Font.system(.subheadline, design: .default).weight(.regular)
-    private let selectedTabFont = Font.system(.subheadline, design: .default).weight(.medium)
     
     init(viewModel: PagerTabViewModel) {
         self.viewModel = viewModel
@@ -37,7 +34,7 @@ struct PageTabView: View {
                         }
                     } label: {
                         Text(viewModel.timeLineTitle)
-                            .font(viewModel.selectedTab == .timeline ? selectedTabFont : defaultTabFont)
+                            .font(Font.system(.subheadline, design: .default).weight(.medium))
                             .frame(maxWidth: proxy.size.width, alignment: .center)
                             .foregroundColor(viewModel.selectedTab == .timeline ? textForgroundRedColor : tabForgroundColor)
                     }
@@ -50,7 +47,7 @@ struct PageTabView: View {
                         
                     } label: {
                         Text(viewModel.albumsTitle)
-                            .font(viewModel.selectedTab == .album ? selectedTabFont : defaultTabFont)
+                            .font(Font.system(.subheadline, design: .default).weight(.medium))
                             .frame(maxWidth: proxy.size.width, alignment: .center)
                             .foregroundColor(viewModel.selectedTab == .album ? textForgroundRedColor : tabForgroundColor)
                     }
@@ -60,7 +57,7 @@ struct PageTabView: View {
             .frame(height: 40)
             .background(Color(Colors.Photos.pageTabForeground.color))
             .overlay(
-                BottomIndicator(width: proxy.size.width, height: 2, offset: viewModel.tabOffset, color: textForgroundRedColor),
+                BottomIndicator(width: proxy.size.width, height: 1, offset: viewModel.tabOffset, color: textForgroundRedColor),
                 alignment: .bottom
             )
         }
