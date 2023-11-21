@@ -1,10 +1,11 @@
 import MEGADomain
+import MEGASdk
 
-protocol NodesUpdateProtocol {
+public protocol NodesUpdateProtocol {
     func shouldProcessOnNodeEntitiesUpdate(with nodeList: MEGANodeList, childNodes: [NodeEntity], parentNode: NodeEntity?) -> Bool
 }
 
-extension NodesUpdateProtocol {
+public extension NodesUpdateProtocol {
     func shouldProcessOnNodeEntitiesUpdate(with nodeList: MEGANodeList, childNodes: [NodeEntity], parentNode: NodeEntity?) -> Bool {
         guard let parentNode = parentNode else { return false }
         

@@ -715,7 +715,6 @@
 		6D60255B28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D60255A28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift */; };
 		6D60255D28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D60255A28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift */; };
 		6D60255F28F8934100FF9767 /* FolderLinkViewController+NodesUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D60255E28F8934100FF9767 /* FolderLinkViewController+NodesUpdate.swift */; };
-		6D60256428F8946E00FF9767 /* NodesUpdateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D60256328F8946E00FF9767 /* NodesUpdateProtocol.swift */; };
 		6D60256628F8999A00FF9767 /* CloudDriveViewController+NodesUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D60256528F8999A00FF9767 /* CloudDriveViewController+NodesUpdate.swift */; };
 		6D64B70D2A09BCB1002ECBD1 /* AccountHallViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D64B70C2A09BCB1002ECBD1 /* AccountHallViewModel.swift */; };
 		6D6749402AF84C410023FAC0 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D67493F2AF84C410023FAC0 /* Colors.xcassets */; };
@@ -3310,7 +3309,6 @@
 		6D5A19AF2A10D33E00FDD5B3 /* AccountHallViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountHallViewModelTests.swift; sourceTree = "<group>"; };
 		6D60255A28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BrowserViewController+NodesUpdate.swift"; sourceTree = "<group>"; };
 		6D60255E28F8934100FF9767 /* FolderLinkViewController+NodesUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FolderLinkViewController+NodesUpdate.swift"; sourceTree = "<group>"; };
-		6D60256328F8946E00FF9767 /* NodesUpdateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodesUpdateProtocol.swift; sourceTree = "<group>"; };
 		6D60256528F8999A00FF9767 /* CloudDriveViewController+NodesUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+NodesUpdate.swift"; sourceTree = "<group>"; };
 		6D64B70C2A09BCB1002ECBD1 /* AccountHallViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountHallViewModel.swift; sourceTree = "<group>"; };
 		6D67493F2AF84C410023FAC0 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Colors.xcassets; path = Modules/Presentation/MEGAAssets/Sources/MEGAAssets/Resources/Colors.xcassets; sourceTree = SOURCE_ROOT; };
@@ -7971,14 +7969,6 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		6D60256228F8945D00FF9767 /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-				6D60256328F8946E00FF9767 /* NodesUpdateProtocol.swift */,
-			);
-			path = Protocols;
-			sourceTree = "<group>";
-		};
 		6D64B70B2A09BC95002ECBD1 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -10202,7 +10192,6 @@
 			children = (
 				B616D82C2550C12E00712012 /* Extensions */,
 				B662B86F24F331D50089376A /* Model Mapping */,
-				6D60256228F8945D00FF9767 /* Protocols */,
 			);
 			path = SDK;
 			sourceTree = "<group>";
@@ -14135,7 +14124,6 @@
 				83BFA3AC27CFC2FB00BDF997 /* NodeSelectionType.swift in Sources */,
 				B6031EE52202A6BF00F7EAA1 /* NodesFetchListenerOperation.m in Sources */,
 				5DD4D71525076802004C0CFE /* NodeShareRouter.swift in Sources */,
-				6D60256428F8946E00FF9767 /* NodesUpdateProtocol.swift in Sources */,
 				B55C1A8829825E4B006A0205 /* NodeTableViewCell+Additions.swift in Sources */,
 				4152268F1A692ECC00EC7BB6 /* NodeTableViewCell.m in Sources */,
 				832E1035202DE10500BDD30F /* NodeTappablePropertyTableViewCell.m in Sources */,
