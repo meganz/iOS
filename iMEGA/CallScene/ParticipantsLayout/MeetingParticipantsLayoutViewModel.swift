@@ -178,10 +178,6 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
 
     private var reconnecting1on1Subscription: AnyCancellable?
     
-    var isPresenterVideoAndSharedScreenFeatureFlagEnabled: Bool {
-        featureFlagProvider.isFeatureFlagEnabled(for: .presenterVideoAndSharedScreen)
-    }
-
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
     

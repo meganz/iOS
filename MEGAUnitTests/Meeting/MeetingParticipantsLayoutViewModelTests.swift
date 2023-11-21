@@ -797,25 +797,8 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         waitForExpectations(timeout: 20)
     }
     
-    func testIsPresenterVideoAndSharedScreenFeatureFlagEabled_onEnabled_shouldReturnTrue() {
-        let sut = makeMeetingParticipantsLayoutViewModel(
-            featureFlagProvider: MockFeatureFlagProvider(list: [.presenterVideoAndSharedScreen: true])
-        )
-        XCTAssertTrue(sut.isPresenterVideoAndSharedScreenFeatureFlagEnabled)
-    }
-    
-    func testIsPresenterVideoAndSharedScreenFeatureFlagEabled_onDisabled_shouldReturnFalse() {
-        let sut = makeMeetingParticipantsLayoutViewModel(
-            featureFlagProvider: MockFeatureFlagProvider(list: [.presenterVideoAndSharedScreen: false])
-        )
-        XCTAssertFalse(sut.isPresenterVideoAndSharedScreenFeatureFlagEnabled)
-    }
-    
     func testUpdateLayoutModeAccordingScreenSharingParticipant_onUpdateParticipantAndHasScreenSharingParticipant_shouldSwitchToSpeakerLayoutModeAndDisableSwitchLayoutModeButton() {
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.presenterVideoAndSharedScreen: true])
-        let sut = makeMeetingParticipantsLayoutViewModel(
-            featureFlagProvider: featureFlagProvider
-        )
+        let sut = makeMeetingParticipantsLayoutViewModel()
         
         XCTAssertEqual(sut.layoutMode, .grid)
         
@@ -826,10 +809,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
     }
     
     func testUpdateLayoutModeAccordingScreenSharingParticipant_onParticipantJoinedAndHasScreenSharingParticipant_shouldSwitchToSpeakerLayoutModeAndDisableSwitchLayoutModeButton() {
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.presenterVideoAndSharedScreen: true])
-        let sut = makeMeetingParticipantsLayoutViewModel(
-            featureFlagProvider: featureFlagProvider
-        )
+        let sut = makeMeetingParticipantsLayoutViewModel()
         
         XCTAssertEqual(sut.layoutMode, .grid)
         
@@ -839,10 +819,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
     }
     
     func testUpdateLayoutModeAccordingScreenSharingParticipant_onUpdateParticipantAndHasNoScreenSharingParticipant_shouldKeepCurrentLayoutModeAndEnableSwitchLayoutModeButton() {
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.presenterVideoAndSharedScreen: true])
-        let sut = makeMeetingParticipantsLayoutViewModel(
-            featureFlagProvider: featureFlagProvider
-        )
+        let sut = makeMeetingParticipantsLayoutViewModel()
         
         XCTAssertEqual(sut.layoutMode, .grid)
         
@@ -853,10 +830,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
     }
     
     func testUpdateLayoutModeAccordingScreenSharingParticipant_onParticipantJoinedndHasScreenSharingParticipant_shouldKeepCurrentLayoutModeAndEnableSwitchLayoutModeButton() {
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.presenterVideoAndSharedScreen: true])
-        let sut = makeMeetingParticipantsLayoutViewModel(
-            featureFlagProvider: featureFlagProvider
-        )
+        let sut = makeMeetingParticipantsLayoutViewModel()
         
         XCTAssertEqual(sut.layoutMode, .grid)
         

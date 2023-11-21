@@ -20,6 +20,7 @@ class CallParticipantCell: UICollectionViewCell {
         borderWidth = 0
         
         if !participant.isScreenShareCell {
+            nameLabel.isHidden = false
             nameLabel.text = participant.name
             nameLabel.superview?.isHidden = layoutMode == .speaker
             
@@ -30,15 +31,9 @@ class CallParticipantCell: UICollectionViewCell {
                 micImageView.image = participant.audioDetected ? .micActive : .micMuted
             }
             
-            if participant.video == .on {
-                if videoImageView.isHidden {
-                    videoImageView.isHidden = false
-                    avatarImageView.isHidden = true
-                }
-            } else {
-                videoImageView.isHidden = true
-                avatarImageView.isHidden = false
-            }
+            let isVideoOn = participant.video == .on
+            videoImageView.isHidden = !isVideoOn
+            avatarImageView.isHidden = isVideoOn
             
             if participant.hasScreenShare && !participant.hasCamera {
                 avatarImageView.isHidden = false
