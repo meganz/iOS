@@ -38,7 +38,7 @@ final class SearchResultsViewModelTests: XCTestCase {
                 resignKeyboard: { keyboardResigned() },
                 chipTapped: { chipTapped($0, $1) }
             )
-            
+
             var askedForEmptyContent: (SearchChipEntity?) -> SearchConfig.EmptyViewAssets = { SearchConfig.testConfig.emptyViewAssetFactory($0) }
             let base = SearchConfig.testConfig
             let config = SearchConfig(
@@ -272,7 +272,33 @@ final class SearchResultsViewModelTests: XCTestCase {
         XCTAssertEqual(result.title, "title")
         XCTAssertEqual(result.result.description(.list), "Desc")
     }
-    
+
+    func testListItems_shouldBeUpdated_whenNodeChanges() async throws {
+        let harness = Harness(self).withResultsPrepared(5)
+        await harness.sut.task()
+        let initialProperties = harness.resultVM(at: 1).result.properties
+        let property: ResultProperty = .init(
+            id: "1",
+            content: .icon(
+                image: UIImage(systemName: "ellipsis")!
+                , scalable: false
+            ),
+            vibrancyEnabled: false,
+            placement: { _  in
+                return .prominent
+            }
+        )
+        harness.bridge.searchResultChanged(
+            .resultWith(
+                id: 2,
+                title: "2",
+                properties: [property]
+            )
+        )
+        let updatedProperties = harness.resultVM(at: 1).result.properties
+        XCTAssertNotEqual(initialProperties, updatedProperties)
+    }
+
     func testChipItems_byDefault_noChipsSelected() async {
         let harness = Harness(self).withChipsPrepared(4)
         await harness.sut.task()

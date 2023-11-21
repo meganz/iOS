@@ -98,6 +98,10 @@ public class SearchResultsViewModel: ObservableObject {
             }
         }
 
+        self.bridge.searchResultChanged = { [weak self] result in
+            self?.searchResultUpdated(result)
+        }
+
         self.bridge.queryCleaned = { [weak self] in
             let _self = self
             Task { await _self?.queryCleaned() }
@@ -115,7 +119,7 @@ public class SearchResultsViewModel: ObservableObject {
 
         setupKeyboardVisibilityHandling()
     }
-    
+
     /// meant called to be called in the SwiftUI View's .task modifier
     /// which means task is called on the appearance and cancelled on disappearance
     @MainActor
@@ -264,29 +268,33 @@ public class SearchResultsViewModel: ObservableObject {
     func prepareResults(_ results: SearchResultsEntity, query: SearchQuery) async {
 
         let items = results.results.map { result in
-            let content = config.contextPreviewFactory.previewContentForResult(result)
-            return SearchResultRowViewModel(
-                result: result,
-                rowAssets: config.rowAssets,
-                colorAssets: config.colorAssets,
-                previewContent: .init(
-                    actions: content.actions.map({ action in
-                        return .init(
-                            title: action.title,
-                            imageName: action.imageName,
-                            handler: { [weak self] in
-                                self?.actionPressedOn(result)
-                                action.handler()
-                            }
-                        )
-                    }),
-                    previewMode: content.previewMode
-                ),
-                actions: rowActions(for: result)
-            )
+            mapSearchResultToViewModel(result)
         }
 
         consume(results, items: items, query: query)
+    }
+
+    private func mapSearchResultToViewModel(_ result: SearchResult) -> SearchResultRowViewModel {
+        let content = config.contextPreviewFactory.previewContentForResult(result)
+        return SearchResultRowViewModel(
+            result: result,
+            rowAssets: config.rowAssets,
+            colorAssets: config.colorAssets,
+            previewContent: .init(
+                actions: content.actions.map({ action in
+                    return .init(
+                        title: action.title,
+                        imageName: action.imageName,
+                        handler: { [weak self] in
+                            self?.actionPressedOn(result)
+                            action.handler()
+                        }
+                    )
+                }),
+                previewMode: content.previewMode
+            ),
+            actions: rowActions(for: result)
+        )
     }
 
     func actionPressedOn(_ result: SearchResult) {
@@ -496,6 +504,11 @@ public class SearchResultsViewModel: ObservableObject {
         $areNewSearchResultsLoaded.mutate { currentValue in
             currentValue = loaded
         }
+    }
+
+    private func searchResultUpdated(_ result: SearchResult) {
+        guard let index = listItems.firstIndex(where: { $0.result.id == result.id  }) else { return }
+        listItems[index].reload(with: result)
     }
 
     // when keyboard is shown we shouldn't add any additional bottom inset

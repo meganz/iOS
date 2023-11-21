@@ -125,6 +125,10 @@ final class HomeScreenFactory: NSObject {
     private func makeFeatureFlagProvider() -> some FeatureFlagProviderProtocol {
         DIContainer.featureFlagProvider
     }
+    
+    private func makeNodesUpdateListenerRepo() -> some NodesUpdateListenerProtocol {
+        SDKNodesUpdateListenerRepository(sdk: sdk)
+    }
 
     func makeSearchResultViewController(
         with navigationController: UINavigationController,
@@ -230,7 +234,11 @@ final class HomeScreenFactory: NSObject {
                 mediaUseCase: makeMediaUseCase(),
                 nodeRepository: makeNodeRepo(),
                 featureFlagProvider: makeFeatureFlagProvider(),
-                sdk: sdk
+                nodesUpdateListenerRepo: makeNodesUpdateListenerRepo(),
+                sdk: sdk,
+                onSearchResultUpdated: { [weak searchBridge] searchResult in
+                    searchBridge?.searchResultChanged(searchResult)
+                }
             ),
             bridge: searchBridge,
             config: .searchConfig(

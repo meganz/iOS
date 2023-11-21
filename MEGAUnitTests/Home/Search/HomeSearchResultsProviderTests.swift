@@ -15,6 +15,7 @@ class HomeSearchProviderTests: XCTestCase {
         let nodeDataUseCase: MockNodeDataUseCase
         let mediaUseCase: MockMediaUseCase
         let nodeRepo: MockNodeRepository
+        let nodesUpdateListenerRepo: NodesUpdateListenerProtocol
         let sut: HomeSearchResultsProvider
         
         init(
@@ -46,7 +47,9 @@ class HomeSearchProviderTests: XCTestCase {
                 nodeRoot: rootNode,
                 childrenNodes: childrenNodes
             )
-            
+
+            nodesUpdateListenerRepo = MockSDKNodesUpdateListenerRepository.newRepo
+
             sut = HomeSearchResultsProvider(
                 searchFileUseCase: searchFile,
                 nodeDetailUseCase: nodeDetails,
@@ -54,7 +57,9 @@ class HomeSearchProviderTests: XCTestCase {
                 mediaUseCase: mediaUseCase,
                 nodeRepository: nodeRepo,
                 featureFlagProvider: MockFeatureFlagProvider(list: [:]),
-                sdk: MockSdk()
+                nodesUpdateListenerRepo: nodesUpdateListenerRepo,
+                sdk: MockSdk(), 
+                onSearchResultUpdated: {_ in}
             )
             
             testCase.trackForMemoryLeaks(on: sut, file: file, line: line)
