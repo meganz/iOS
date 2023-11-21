@@ -10,7 +10,7 @@ enum DeeplinkPathKey: String {
     case incomingPendingContacts = "/fm/ipc"
     case changeEmail = "/verify"
     case cancelAccount = "/cancel"
-    case recover = "/recover"
+    case recover = "/recover" // when parking an account
     case contact = "/C"
     case openChatSection = "/fm/chat"
     case publicChat = "/chat"
@@ -22,6 +22,7 @@ enum DeeplinkPathKey: String {
     case cookiePolicy = "/cookie"
     case termsOfService = "/terms"
     case collection = "/collection"
+    case recovery = "/recovery" // whe tapping forgot password
 }
 
 enum DeeplinkFragmentKey: String {
@@ -164,6 +165,10 @@ extension NSURL {
             return .default
         }
         
+        if path.hasPrefix(DeeplinkPathKey.recovery.rawValue) && path.count > DeeplinkPathKey.recovery.rawValue.count {
+            return .recoverLink
+        }
+        
         let prefixes: [(key: DeeplinkPathKey, urlType: URLType)] = [
             (DeeplinkPathKey.fileRequest, .fileRequestLink),
             (DeeplinkPathKey.file, .fileLink),
@@ -174,6 +179,7 @@ extension NSURL {
             (DeeplinkPathKey.incomingPendingContacts, .incomingPendingContactsLink),
             (DeeplinkPathKey.changeEmail, .changeEmailLink),
             (DeeplinkPathKey.cancelAccount, .cancelAccountLink),
+            (DeeplinkPathKey.recovery, .default), // need to be added before "recover", otherwise link will be identifier ad recover
             (DeeplinkPathKey.recover, .recoverLink),
             (DeeplinkPathKey.contact, .contactLink),
             (DeeplinkPathKey.openChatSection, .openChatSectionLink),

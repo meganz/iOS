@@ -282,4 +282,14 @@
     XCTAssertEqual([schemeUrl mnz_type], URLTypeCollection);
 }
 
+- (void)testDeepLink_pathIsOnlyRecovery_shouldReturnDefatult {
+    NSURL *url = [NSURL URLWithString:@"https://mega.nz/recovery"];
+    XCTAssertEqual([url mnz_type], URLTypeDefault);
+}
+
+- (void)testDeepLink_pathContainsRecoveryFromRecover_shouldReturnURLTypeRecoverLink {
+    NSURL *url = [NSURL URLWithString:@"https://mega.nz/recoveryxqwefdsfd"];
+    XCTAssertEqual([url mnz_type], URLTypeRecoverLink);
+}
+
 @end
