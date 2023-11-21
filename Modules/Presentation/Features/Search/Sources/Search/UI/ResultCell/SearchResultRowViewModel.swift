@@ -57,7 +57,8 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
         rowAssets.moreGrid
     }
 
-    let result: SearchResult
+    var result: SearchResult
+    
     let colorAssets: SearchConfig.ColorAssets
     let previewContent: PreviewContent
     let actions: UserActions
@@ -84,5 +85,10 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
         if let image = UIImage(data: data) {
             self.thumbnailImage = image
         }
+    }
+
+    func reload(with result: SearchResult) {
+        self.result = result
+        objectWillChange.send()
     }
 }

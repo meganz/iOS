@@ -31,4 +31,5 @@ public class SearchBridge {
     public var queryCleaned: () -> Void = { }
     public var searchCancelled: () -> Void = { }
     public var updateBottomInset: (CGFloat) -> Void = { _ in  }
+    public var searchResultChanged: (SearchResult) -> Void = { _ in  }
 }

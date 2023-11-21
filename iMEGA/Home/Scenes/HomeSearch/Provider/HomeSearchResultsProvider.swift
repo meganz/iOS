@@ -14,8 +14,10 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
     private let mediaUseCase: any MediaUseCaseProtocol
     private let nodeRepository: any NodeRepositoryProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private var nodesUpdateListenerRepo: any NodesUpdateListenerProtocol
 
     private let sdk: MEGASdk
+
     // We only initially fetch the node list when the user triggers search
     // Concrete nodes are then loaded one by one in the pagination
     private var nodeList: NodeListEntity?
@@ -30,6 +32,8 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         )
     }
 
+    private let onSearchResultUpdated: (SearchResult) -> Void
+
     init(
         searchFileUseCase: some SearchFileUseCaseProtocol,
         nodeDetailUseCase: some NodeDetailUseCaseProtocol,
@@ -37,7 +41,9 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         mediaUseCase: some MediaUseCaseProtocol,
         nodeRepository: some NodeRepositoryProtocol,
         featureFlagProvider: some FeatureFlagProviderProtocol,
-        sdk: MEGASdk
+        nodesUpdateListenerRepo: any NodesUpdateListenerProtocol,
+        sdk: MEGASdk,
+        onSearchResultUpdated: @escaping (SearchResult) -> Void
     ) {
         self.searchFileUseCase = searchFileUseCase
         self.nodeDetailUseCase = nodeDetailUseCase
@@ -45,7 +51,11 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         self.mediaUseCase = mediaUseCase
         self.nodeRepository = nodeRepository
         self.featureFlagProvider = featureFlagProvider
+        self.nodesUpdateListenerRepo = nodesUpdateListenerRepo
         self.sdk = sdk
+
+        self.onSearchResultUpdated = onSearchResultUpdated
+        addNodesUpdateHandler()
     }
     
     func search(queryRequest: SearchQuery, lastItemIndex: Int? = nil) async throws -> SearchResultsEntity? {
@@ -324,5 +334,13 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
     
     private func nodeLinked(_ node: NodeEntity) -> Bool {
         node.isExported && !nodeUseCase.isInRubbishBin(nodeHandle: node.handle)
+    }
+
+    private func addNodesUpdateHandler() {
+        nodesUpdateListenerRepo.onNodesUpdateHandler = { [weak self] nodes in
+            // After update, the first node in nodeList is always the updated one
+            guard let self, let node = nodes.first else { return }
+            self.onSearchResultUpdated(self.mapNodeToSearchResult(node))
+        }
     }
 }

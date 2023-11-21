@@ -5,6 +5,7 @@ extension SearchResult {
     public static func resultWith(
         id: ResultId,
         title: String,
+        properties: [ResultProperty] = [],
         thumbnailDisplayMode: ResultCellLayout.ThumbnailMode = .vertical,
         backgroundDisplayMode: VerticalBackgroundViewMode = .preview
     ) -> Self {
@@ -15,7 +16,7 @@ extension SearchResult {
             title: title,
             description: { _ in "Desc" },
             type: .node,
-            properties: [],
+            properties: properties,
             thumbnailImageData: { UIImage(systemName: "scribble")!.pngData()! }
         )
     }
