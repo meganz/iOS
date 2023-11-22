@@ -15,6 +15,10 @@ final class MeetingContainerViewController: UINavigationController {
         viewModel.dispatch(.onViewReady)
     }
     
+    func leaveCallFromScreenRecordingAlert() {
+        viewModel.dispatch(.leaveCallFromRecordingAlert)
+    }
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         .lightContent
     }

@@ -3898,6 +3898,8 @@
 "calls.screenRecording.alert.action.leave"="Leave call";
 /* Alert button for user accepting call screen recording */
 "calls.screenRecording.alert.action.accept"="Ok, got it";
+/* Alert button for user accepting call screen recording */
+"calls.screenRecording.alert.action.learnMore"="Learn more";
 /* Notification message about someone started to record call screen */
 "calls.screenRecording.notification.recording.started"="%@ started recording";
 /* Notification message about someone stopped to record call screen */
