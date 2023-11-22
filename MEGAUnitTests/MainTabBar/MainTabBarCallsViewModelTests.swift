@@ -54,6 +54,50 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         evaluate { self.router.showScreenRecordingAlert_calledTimes == 1 }
     }
     
+    func testJoinCall_onSessionInProgressIsRecording_alertShouldBeShown() {
+        let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity())
+        let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("User name"))
+        let callUseCase = MockCallUseCase()
+        let callSessionUseCase = MockCallSessionUseCase()
+        
+        let viewModel = makeMainTabBarCallsViewModel(
+            callUseCase: callUseCase,
+            chatRoomUseCase: chatRoomUseCase,
+            chatRoomUserUseCase: userUseCase,
+            callSessionUseCase: callSessionUseCase
+        )
+        
+        callUseCase.callUpdateSubject.send(CallEntity(status: .joining))
+        
+        evaluate { viewModel.callSessionUpdateSubscription != nil }
+        
+        callSessionUseCase.callSessionUpdateSubject.send(ChatSessionEntity(statusType: .inProgress, changeType: .status, onRecording: true))
+        
+        evaluate { self.router.showScreenRecordingAlert_calledTimes == 1 }
+    }
+    
+    func testJoinCall_onSessionInProgressIsRecording_alertShouldNotBeShown() {
+        let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity())
+        let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("User name"))
+        let callUseCase = MockCallUseCase()
+        let callSessionUseCase = MockCallSessionUseCase()
+        
+        let viewModel = makeMainTabBarCallsViewModel(
+            callUseCase: callUseCase,
+            chatRoomUseCase: chatRoomUseCase,
+            chatRoomUserUseCase: userUseCase,
+            callSessionUseCase: callSessionUseCase
+        )
+        
+        callUseCase.callUpdateSubject.send(CallEntity(status: .joining))
+        
+        evaluate { viewModel.callSessionUpdateSubscription != nil }
+        
+        callSessionUseCase.callSessionUpdateSubject.send(ChatSessionEntity(statusType: .inProgress, changeType: .status, onRecording: false))
+        
+        evaluate { self.router.showScreenRecordingAlert_calledTimes == 0 }
+    }
+    
     func testCallUpdate_onSessionUpdateRecordingStop_recordingNotificationShouldBeShown() {
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .moderator, isWaitingRoomEnabled: true), peerPrivilege: .standard)
         let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("User name"))

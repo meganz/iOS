@@ -86,8 +86,16 @@ enum MainTabBarCallsAction: ActionType { }
         guard callSessionUpdateSubscription == nil else { return }
         callSessionUpdateSubscription = callSessionUseCase.onCallSessionUpdate()
             .sink { [weak self] session in
-                guard session.changeType == .onRecording else { return }
-                self?.manageOnRecordingSession(session: session, in: call)
+                switch session.changeType {
+                case .status:
+                    if session.statusType == .inProgress && session.onRecording {
+                        self?.manageOnRecordingSession(session: session, in: call)
+                    }
+                case .onRecording:
+                    self?.manageOnRecordingSession(session: session, in: call)
+                default:
+                    break
+                }
             }
     }
     

@@ -1068,6 +1068,9 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
                 invokeCommand?(.updatePageControl(callParticipants.count))
             }
             invokeCommand?(.hideEmptyRoomMessage)
+            if participant.isRecording {
+                invokeCommand?(.hideRecording(!participant.isRecording))
+            }
         }
     }
     
