@@ -10,6 +10,10 @@ protocol MainTabBarCallsRouting: AnyObject {
     func showConfirmDenyAction(for username: String, isCallUIVisible: Bool, confirmDenyAction: @escaping () -> Void, cancelDenyAction: @escaping () -> Void)
     func showParticipantsJoinedTheCall(message: String)
     func showWaitingRoomListFor(call: CallEntity, in chatRoom: ChatRoomEntity)
+    func showScreenRecordingAlert(isCallUIVisible: Bool, acceptAction: @escaping () -> Void, learnMoreAction: @escaping () -> Void, leaveCallAction: @escaping () -> Void)
+    func showScreenRecordingNotification(started: Bool, username: String)
+    func navigateToPrivacyPolice()
+    func dismissCallUI()
 }
 
 enum MainTabBarCallsAction: ActionType { }
@@ -29,10 +33,12 @@ enum MainTabBarCallsAction: ActionType { }
     private let callUseCase: any CallUseCaseProtocol
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol
+    private var callSessionUseCase: any CallSessionUseCaseProtocol
 
     private var callUpdateSubscription: AnyCancellable?
-    private (set) var callWaitingRoomUsersUpdateSubscription: AnyCancellable?
-    
+    private(set) var callWaitingRoomUsersUpdateSubscription: AnyCancellable?
+    private(set) var callSessionUpdateSubscription: AnyCancellable?
+
     private var currentWaitingRoomUserHandles: [HandleEntity] = []
     
     @PreferenceWrapper(key: .isCallUIVisible, defaultValue: false, useCase: PreferenceUseCase.default)
@@ -40,18 +46,22 @@ enum MainTabBarCallsAction: ActionType { }
     @PreferenceWrapper(key: .isWaitingRoomListVisible, defaultValue: false, useCase: PreferenceUseCase.default)
     var isWaitingRoomListVisible: Bool
     
+    private(set) var screenRecordingAlertShownForCall: Bool = false
+
     init(
         router: some MainTabBarCallsRouting,
         chatUseCase: some ChatUseCaseProtocol,
         callUseCase: some CallUseCaseProtocol,
         chatRoomUseCase: some ChatRoomUseCaseProtocol,
-        chatRoomUserUseCase: some ChatRoomUserUseCaseProtocol
+        chatRoomUserUseCase: some ChatRoomUserUseCaseProtocol,
+        callSessionUseCase: some CallSessionUseCaseProtocol
     ) {
         self.router = router
         self.chatUseCase = chatUseCase
         self.callUseCase = callUseCase
         self.chatRoomUseCase = chatRoomUseCase
         self.chatRoomUserUseCase = chatRoomUserUseCase
+        self.callSessionUseCase = callSessionUseCase
         
         super.init()
         
@@ -72,6 +82,45 @@ enum MainTabBarCallsAction: ActionType { }
             }
     }
     
+    private func configureCallSessionsListener(forCall call: CallEntity) {
+        guard callSessionUpdateSubscription == nil else { return }
+        callSessionUpdateSubscription = callSessionUseCase.onCallSessionUpdate()
+            .sink { [weak self] session in
+                guard session.changeType == .onRecording else { return }
+                self?.manageOnRecordingSession(session: session, in: call)
+            }
+    }
+    
+    private func manageOnRecordingSession(session: ChatSessionEntity, in call: CallEntity) {
+        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId) else { return }
+        Task { @MainActor in
+            guard let username = try? await chatRoomUserUseCase.userDisplayName(forPeerId: session.peerId, in: chatRoom) else { return }
+            if session.onRecording {
+                guard screenRecordingAlertShownForCall == false else { return }
+                screenRecordingAlertShownForCall = true
+                showRecordingAlert(username, call)
+            } else {
+                router.showScreenRecordingNotification(started: false, username: username)
+            }
+        }
+    }
+    
+    private func showRecordingAlert(_ username: String, _ call: CallEntity) {
+        router.showScreenRecordingAlert(isCallUIVisible: isCallUIVisible) { [weak self] in
+            self?.router.showScreenRecordingNotification(started: true, username: username)
+        } learnMoreAction: { [weak self] in
+            self?.router.navigateToPrivacyPolice()
+            self?.showRecordingAlert(username, call)
+        } leaveCallAction: { [weak self] in
+            guard let self else { return }
+            if isCallUIVisible {
+                router.dismissCallUI()
+            } else {
+                callUseCase.hangCall(for: call.callId)
+            }
+        }
+    }
+    
     private func configureWaitingRoomListener(forCall call: CallEntity) {
         callWaitingRoomUsersUpdateSubscription = callUseCase.callWaitingRoomUsersUpdate(forCall: call)
             .debounce(for: 1, scheduler: DispatchQueue.main)
@@ -80,13 +129,17 @@ enum MainTabBarCallsAction: ActionType { }
             }
     }
     
-    private func removeWaitingRoomListener() {
+    private func removeCallListeners() {
         callWaitingRoomUsersUpdateSubscription?.cancel()
         callWaitingRoomUsersUpdateSubscription = nil
+        callSessionUpdateSubscription?.cancel()
+        callSessionUpdateSubscription = nil
     }
     
     private func onCallUpdate(_ call: CallEntity) {
         switch call.status {
+        case .joining:
+            configureCallSessionsListener(forCall: call)
         case .inProgress:
             invokeCommand?(.showActiveCallIcon)
             guard callWaitingRoomUsersUpdateSubscription == nil, let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId) else { return }
@@ -101,7 +154,8 @@ enum MainTabBarCallsAction: ActionType { }
             if !chatUseCase.existsActiveCall() {
                 invokeCommand?(.hideActiveCallIcon)
             }
-            removeWaitingRoomListener()
+            screenRecordingAlertShownForCall = false
+            removeCallListeners()
             
         default:
             break

@@ -1166,6 +1166,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
     private func makeMeetingParticipantsLayoutViewModel(
         containerViewModel: MeetingContainerViewModel = MeetingContainerViewModel(),
         callUseCase: some CallUseCaseProtocol = MockCallUseCase(),
+        callSessionUseCase: some CallSessionUseCaseProtocol = MockCallSessionUseCase(),
         captureDeviceUseCase: some CaptureDeviceUseCaseProtocol = MockCaptureDeviceUseCase(),
         localVideoUseCase: some CallLocalVideoUseCaseProtocol = MockCallLocalVideoUseCase(),
         remoteVideoUseCase: some CallRemoteVideoUseCaseProtocol = MockCallRemoteVideoUseCase(),
@@ -1182,7 +1183,8 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
     ) -> MeetingParticipantsLayoutViewModel {
         MeetingParticipantsLayoutViewModel(
             containerViewModel: containerViewModel,
-            callUseCase: callUseCase,
+            callUseCase: callUseCase, 
+            callSessionUseCase: callSessionUseCase,
             captureDeviceUseCase: captureDeviceUseCase,
             localVideoUseCase: localVideoUseCase,
             remoteVideoUseCase: remoteVideoUseCase,

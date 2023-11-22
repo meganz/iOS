@@ -5,75 +5,124 @@ import XCTest
 
 final class MainTabBarCallsViewModelTests: XCTestCase {
     private let router = MockMainTabBarCallsRouter()
-    private var viewModel: MainTabBarCallsViewModel!
-    private let chatUseCase = MockChatUseCase()
-    private let callUseCase = MockCallUseCase()
 
     func testCallUpdate_onCallUpdateInProgressAndBeingModerator_waitingRoomListenerExists() {
-        let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .moderator, isWaitingRoomEnabled: true), peerPrivilege: .standard)
-        let userUseCase = MockChatRoomUserUseCase()
-        
-        viewModel = MainTabBarCallsViewModel(router: router,
-                                             chatUseCase: chatUseCase,
-                                             callUseCase: callUseCase,
-                                             chatRoomUseCase: chatRoomUseCase,
-                                             chatRoomUserUseCase: userUseCase)
+        let callUseCase = MockCallUseCase()
+        let viewModel = makeMainTabBarCallsViewModel(
+            callUseCase: callUseCase,
+            chatRoomUseCase: MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .moderator, isWaitingRoomEnabled: true), peerPrivilege: .standard)
+        )
         
         callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress))
 
         evaluate {
-            self.viewModel.callWaitingRoomUsersUpdateSubscription != nil
+            viewModel.callWaitingRoomUsersUpdateSubscription != nil
         }
     }
     
+    func testCallUpdate_onCallUpdateJoining_callSessionListenerExists() {
+        let callUseCase = MockCallUseCase()
+        let viewModel = makeMainTabBarCallsViewModel(
+            callUseCase: callUseCase,
+            chatRoomUseCase: MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity())
+        )
+        
+        callUseCase.callUpdateSubject.send(CallEntity(status: .joining))
+
+        evaluate { viewModel.callSessionUpdateSubscription != nil }
+    }
+    
+    func testCallUpdate_onSessionUpdateRecordingStart_alertShouldBeShown() {
+        let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity())
+        let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("User name"))
+        let callUseCase = MockCallUseCase()
+        let callSessionUseCase = MockCallSessionUseCase()
+        
+        let viewModel = makeMainTabBarCallsViewModel(
+            callUseCase: callUseCase,
+            chatRoomUseCase: chatRoomUseCase,
+            chatRoomUserUseCase: userUseCase,
+            callSessionUseCase: callSessionUseCase
+        )
+        
+        callUseCase.callUpdateSubject.send(CallEntity(status: .joining))
+        
+        evaluate { viewModel.callSessionUpdateSubscription != nil }
+        
+        callSessionUseCase.callSessionUpdateSubject.send(ChatSessionEntity(changeType: .onRecording, onRecording: true))
+        
+        evaluate { self.router.showScreenRecordingAlert_calledTimes == 1 }
+    }
+    
+    func testCallUpdate_onSessionUpdateRecordingStop_recordingNotificationShouldBeShown() {
+        let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .moderator, isWaitingRoomEnabled: true), peerPrivilege: .standard)
+        let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("User name"))
+        let callUseCase = MockCallUseCase()
+        let callSessionUseCase = MockCallSessionUseCase()
+        
+        let viewModel = makeMainTabBarCallsViewModel(
+            callUseCase: callUseCase,
+            chatRoomUseCase: chatRoomUseCase,
+            chatRoomUserUseCase: userUseCase,
+            callSessionUseCase: callSessionUseCase
+        )
+        
+        callUseCase.callUpdateSubject.send(CallEntity(status: .joining))
+        
+        evaluate { viewModel.callSessionUpdateSubscription != nil }
+        
+        callSessionUseCase.callSessionUpdateSubject.send(ChatSessionEntity(changeType: .onRecording, onRecording: false))
+        
+        evaluate { self.router.showScreenRecordingNotification_calledTimes == 1 }
+    }
+
     func testCallUpdate_onCallUpdateInProgressAndNotBeingModerator_waitingRoomListenerNotExists() {
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .standard, isWaitingRoomEnabled: true), peerPrivilege: .standard)
-        let userUseCase = MockChatRoomUserUseCase()
-        
-        viewModel = MainTabBarCallsViewModel(router: router,
-                                             chatUseCase: chatUseCase,
-                                             callUseCase: callUseCase,
-                                             chatRoomUseCase: chatRoomUseCase,
-                                             chatRoomUserUseCase: userUseCase)
+        let callUseCase = MockCallUseCase()
+
+        let viewModel = makeMainTabBarCallsViewModel(
+            callUseCase: callUseCase,
+            chatRoomUseCase: chatRoomUseCase
+        )
         
         callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress))
 
         evaluate {
-            self.viewModel.callWaitingRoomUsersUpdateSubscription == nil
+            viewModel.callWaitingRoomUsersUpdateSubscription == nil
         }
     }
     
     func testCallUpdate_onCallUpdateInProgressAndWaitingRoomNotEnabled_waitingRoomListenerNotExists() {
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .moderator, isWaitingRoomEnabled: false), peerPrivilege: .standard)
-        let userUseCase = MockChatRoomUserUseCase()
-        
-        viewModel = MainTabBarCallsViewModel(router: router,
-                                             chatUseCase: chatUseCase,
-                                             callUseCase: callUseCase,
-                                             chatRoomUseCase: chatRoomUseCase,
-                                             chatRoomUserUseCase: userUseCase)
+        let callUseCase = MockCallUseCase()
+
+        let viewModel = makeMainTabBarCallsViewModel(
+            callUseCase: callUseCase,
+            chatRoomUseCase: chatRoomUseCase
+        )
         
         callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress))
 
         evaluate {
-            self.viewModel.callWaitingRoomUsersUpdateSubscription == nil
+            viewModel.callWaitingRoomUsersUpdateSubscription == nil
         }
     }
     
     func testCallUpdate_oneUserOnWaitingRoomAndBeingModerator_showOneUserAlert() {
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .moderator, isWaitingRoomEnabled: true), peerPrivilege: .standard)
         let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("User name"))
+        let callUseCase = MockCallUseCase()
 
-        viewModel = MainTabBarCallsViewModel(router: router,
-                                             chatUseCase: chatUseCase,
-                                             callUseCase: callUseCase,
-                                             chatRoomUseCase: chatRoomUseCase,
-                                             chatRoomUserUseCase: userUseCase)
+        let viewModel = makeMainTabBarCallsViewModel(
+            callUseCase: callUseCase,
+            chatRoomUseCase: chatRoomUseCase,
+            chatRoomUserUseCase: userUseCase
+        )
         
         callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress))
         
         evaluate {
-            self.viewModel.callWaitingRoomUsersUpdateSubscription != nil
+            viewModel.callWaitingRoomUsersUpdateSubscription != nil
         }
         
         callUseCase.callWaitingRoomUsersUpdateSubject.send(CallEntity(waitingRoom: WaitingRoomEntity(sessionClientIds: [100])))
@@ -85,18 +134,17 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
     
     func testCallUpdate_severalUsersOnWaitingAndRoomBeingModerator_showSeveralUsersAlert() {
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .moderator, isWaitingRoomEnabled: true), peerPrivilege: .standard)
-        let userUseCase = MockChatRoomUserUseCase()
+        let callUseCase = MockCallUseCase()
 
-        viewModel = MainTabBarCallsViewModel(router: router,
-                                             chatUseCase: chatUseCase,
-                                             callUseCase: callUseCase,
-                                             chatRoomUseCase: chatRoomUseCase,
-                                             chatRoomUserUseCase: userUseCase)
+        let viewModel = makeMainTabBarCallsViewModel(
+            callUseCase: callUseCase,
+            chatRoomUseCase: chatRoomUseCase
+        )
         
         callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress))
         
         evaluate {
-            self.viewModel.callWaitingRoomUsersUpdateSubscription != nil
+            viewModel.callWaitingRoomUsersUpdateSubscription != nil
         }
         
         callUseCase.callWaitingRoomUsersUpdateSubject.send(CallEntity(waitingRoom: WaitingRoomEntity(sessionClientIds: [100, 101])))
@@ -108,18 +156,17 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
     
     func testCallUpdate_noUsersOnWaitingRoomAndBeingModerator_dismissAlert() {
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .moderator, isWaitingRoomEnabled: true), peerPrivilege: .standard)
-        let userUseCase = MockChatRoomUserUseCase()
+        let callUseCase = MockCallUseCase()
 
-        viewModel = MainTabBarCallsViewModel(router: router,
-                                             chatUseCase: chatUseCase,
-                                             callUseCase: callUseCase,
-                                             chatRoomUseCase: chatRoomUseCase,
-                                             chatRoomUserUseCase: userUseCase)
+        let viewModel = makeMainTabBarCallsViewModel(
+            callUseCase: callUseCase,
+            chatRoomUseCase: chatRoomUseCase
+        )
         
         callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress))
         
         evaluate {
-            self.viewModel.callWaitingRoomUsersUpdateSubscription != nil
+            viewModel.callWaitingRoomUsersUpdateSubscription != nil
         }
         
         callUseCase.callWaitingRoomUsersUpdateSubject.send(CallEntity(waitingRoom: WaitingRoomEntity(sessionClientIds: [])))
@@ -131,20 +178,17 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
     
     func testCallUpdate_severalUsersOnWaitingAndRoomBeingModeratorAndCallChangeTypeWaitingRoomUsersAllow_shouldNotShowSeveralUsersAlert() {
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .moderator, isWaitingRoomEnabled: true), peerPrivilege: .standard)
-        let userUseCase = MockChatRoomUserUseCase()
+        let callUseCase = MockCallUseCase()
 
-        viewModel = MainTabBarCallsViewModel(
-            router: router,
-            chatUseCase: chatUseCase,
+        let viewModel = makeMainTabBarCallsViewModel(
             callUseCase: callUseCase,
-            chatRoomUseCase: chatRoomUseCase,
-            chatRoomUserUseCase: userUseCase
+            chatRoomUseCase: chatRoomUseCase
         )
         
         callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress))
         
         evaluate {
-            self.viewModel.callWaitingRoomUsersUpdateSubscription != nil
+            viewModel.callWaitingRoomUsersUpdateSubscription != nil
         }
         
         callUseCase.callWaitingRoomUsersUpdateSubject.send(CallEntity(changeType: .waitingRoomUsersAllow, waitingRoom: WaitingRoomEntity(sessionClientIds: [100, 101])))
@@ -157,10 +201,9 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
     func testCallUpdate_oneUserOnWaitingRoomAndBeingModeratorAndCallChangeTypeWaitingRoomUsersAllow_shouldNotShowOneUserAlert() {
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .moderator, isWaitingRoomEnabled: true), peerPrivilege: .standard)
         let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("User name"))
+        let callUseCase = MockCallUseCase()
 
-        viewModel = MainTabBarCallsViewModel(
-            router: router,
-            chatUseCase: chatUseCase,
+        let viewModel = makeMainTabBarCallsViewModel( 
             callUseCase: callUseCase,
             chatRoomUseCase: chatRoomUseCase,
             chatRoomUserUseCase: userUseCase
@@ -169,7 +212,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress))
         
         evaluate {
-            self.viewModel.callWaitingRoomUsersUpdateSubscription != nil
+            viewModel.callWaitingRoomUsersUpdateSubscription != nil
         }
         
         callUseCase.callWaitingRoomUsersUpdateSubject.send(CallEntity(changeType: .waitingRoomUsersAllow, waitingRoom: WaitingRoomEntity(sessionClientIds: [100])))
@@ -186,6 +229,23 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         let expectation = expectation(for: predicate, evaluatedWith: nil)
         wait(for: [expectation], timeout: 5)
     }
+    
+    private func makeMainTabBarCallsViewModel(
+        chatUseCase: some ChatUseCaseProtocol = MockChatUseCase(),
+        callUseCase: some CallUseCaseProtocol =  MockCallUseCase(),
+        chatRoomUseCase: some ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
+        chatRoomUserUseCase: some ChatRoomUserUseCaseProtocol = MockChatRoomUserUseCase(),
+        callSessionUseCase: some CallSessionUseCaseProtocol = MockCallSessionUseCase()
+    ) -> MainTabBarCallsViewModel {
+        MainTabBarCallsViewModel(
+            router: router,
+            chatUseCase: chatUseCase,
+            callUseCase: callUseCase,
+            chatRoomUseCase: chatRoomUseCase,
+            chatRoomUserUseCase: chatRoomUserUseCase,
+            callSessionUseCase: callSessionUseCase
+        )
+    }
 }
 
 final class MockMainTabBarCallsRouter: MainTabBarCallsRouting {
@@ -196,6 +256,10 @@ final class MockMainTabBarCallsRouter: MainTabBarCallsRouting {
     var showConfirmDenyAction_calledTimes = 0
     var showParticipantsJoinedTheCall_calledTimes = 0
     var showWaitingRoomListFor_calledTimes = 0
+    var showScreenRecordingAlert_calledTimes = 0
+    var showScreenRecordingNotification_calledTimes = 0
+    var navigateToPrivacyPolice_calledTimes = 0
+    var dismissCallUI_calledTimes = 0
     
     func showOneUserWaitingRoomDialog(for username: String, chatName: String, isCallUIVisible: Bool, shouldUpdateDialog: Bool, admitAction: @escaping () -> Void, denyAction: @escaping () -> Void) {
         showOneUserWaitingRoomDialog_calledTimes += 1
@@ -219,5 +283,21 @@ final class MockMainTabBarCallsRouter: MainTabBarCallsRouting {
     
     func showWaitingRoomListFor(call: CallEntity, in chatRoom: ChatRoomEntity) {
         showWaitingRoomListFor_calledTimes += 1
+    }
+    
+    func showScreenRecordingAlert(isCallUIVisible: Bool, acceptAction: @escaping () -> Void, learnMoreAction: @escaping () -> Void, leaveCallAction: @escaping () -> Void) {
+        showScreenRecordingAlert_calledTimes += 1
+    }
+    
+    func showScreenRecordingNotification(started: Bool, username: String) {
+        showScreenRecordingNotification_calledTimes += 1
+    }
+    
+    func navigateToPrivacyPolice() {
+        navigateToPrivacyPolice_calledTimes += 1
+    }
+    
+    func dismissCallUI() {
+        dismissCallUI_calledTimes += 1
     }
 }

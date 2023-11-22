@@ -25,6 +25,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     @IBOutlet private weak var stackViewLeadingConstraint: NSLayoutConstraint!
     @IBOutlet private weak var stackViewTrailingConstraint: NSLayoutConstraint!
     @IBOutlet private weak var callCollectionViewSpeakerModeHeight: NSLayoutConstraint!
+    @IBOutlet private weak var recordingImageView: UIImageView!
     
     private var reconnectingNotificationView: CallNotificationView?
     private var poorConnectionNotificationView: CallNotificationView?
@@ -235,6 +236,9 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
                 top: topConstraint,
                 bottom: bottomConstraint
             )
+        case .hideRecording(let hidden):
+            titleView.hideRecordingIndicator(hidden)
+            recordingImageView.isHidden = hidden
         }
     }
     

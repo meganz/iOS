@@ -91,6 +91,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             topConstraint: CGFloat,
             bottomConstraint: CGFloat
         )
+        case hideRecording(Bool)
     }
     
     private var chatRoom: ChatRoomEntity
@@ -141,6 +142,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private weak var containerViewModel: MeetingContainerViewModel?
 
     private let callUseCase: any CallUseCaseProtocol
+    private var callSessionUseCase: any CallSessionUseCaseProtocol
     private let captureDeviceUseCase: any CaptureDeviceUseCaseProtocol
     private let localVideoUseCase: any CallLocalVideoUseCaseProtocol
     private let remoteVideoUseCase: any CallRemoteVideoUseCaseProtocol
@@ -178,12 +180,15 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
 
     private var reconnecting1on1Subscription: AnyCancellable?
     
+    private(set) var callSessionUpdateSubscription: AnyCancellable?
+
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
     
     init(
         containerViewModel: MeetingContainerViewModel,
         callUseCase: some CallUseCaseProtocol,
+        callSessionUseCase: some CallSessionUseCaseProtocol,
         captureDeviceUseCase: some CaptureDeviceUseCaseProtocol,
         localVideoUseCase: some CallLocalVideoUseCaseProtocol,
         remoteVideoUseCase: some CallRemoteVideoUseCaseProtocol,
@@ -201,6 +206,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         
         self.containerViewModel = containerViewModel
         self.callUseCase = callUseCase
+        self.callSessionUseCase = callSessionUseCase
         self.captureDeviceUseCase = captureDeviceUseCase
         self.localVideoUseCase = localVideoUseCase
         self.remoteVideoUseCase = remoteVideoUseCase
@@ -468,6 +474,15 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             }
     }
     
+    private func configureCallSessionsListener() {
+        guard callSessionUpdateSubscription == nil else { return }
+        callSessionUpdateSubscription = callSessionUseCase.onCallSessionUpdate()
+            .sink { [weak self] session in
+                guard let self, session.changeType == .onRecording else { return }
+                invokeCommand?(.hideRecording(!session.onRecording))
+            }
+    }
+    
     // MARK: - Dispatch action
     func dispatch(_ action: CallViewAction) {
         switch action {
@@ -492,6 +507,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                 )
             }
             callUseCase.startListeningForCallInChat(chatRoom.chatId, callbacksDelegate: self)
+            configureCallSessionsListener()
             remoteVideoUseCase.addRemoteVideoListener(self)
             if isActiveCall() {
                 DispatchQueue.main.async {
