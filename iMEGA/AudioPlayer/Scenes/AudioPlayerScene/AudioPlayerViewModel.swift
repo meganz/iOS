@@ -84,6 +84,7 @@ final class AudioPlayerViewModel: ViewModelType {
     private let offlineInfoUseCase: (any OfflineFileInfoUseCaseProtocol)?
     private let playbackContinuationUseCase: any PlaybackContinuationUseCaseProtocol
     private let audioPlayerUseCase: any AudioPlayerUseCaseProtocol
+    private let accountUseCase: any AccountUseCaseProtocol
     private let dispatchQueue: any DispatchQueueProtocol
     private let sdk: MEGASdk
     private var repeatItemsState: RepeatMode {
@@ -120,6 +121,7 @@ final class AudioPlayerViewModel: ViewModelType {
          offlineInfoUseCase: (any OfflineFileInfoUseCaseProtocol)? = nil,
          playbackContinuationUseCase: any PlaybackContinuationUseCaseProtocol,
          audioPlayerUseCase: some AudioPlayerUseCaseProtocol,
+         accountUseCase: some AccountUseCaseProtocol,
          dispatchQueue: some DispatchQueueProtocol = DispatchQueue.global(),
          sdk: MEGASdk = MEGASdk.shared
     ) {
@@ -130,6 +132,7 @@ final class AudioPlayerViewModel: ViewModelType {
         self.offlineInfoUseCase = offlineInfoUseCase
         self.playbackContinuationUseCase = playbackContinuationUseCase
         self.audioPlayerUseCase = audioPlayerUseCase
+        self.accountUseCase = accountUseCase
         self.repeatItemsState = configEntity.playerHandler.currentRepeatMode()
         self.speedModeState = configEntity.playerHandler.currentSpeedMode()
         self.dispatchQueue = dispatchQueue
@@ -272,7 +275,7 @@ final class AudioPlayerViewModel: ViewModelType {
             }
             initialize(tracks: [track], currentTrack: track)
         } else {
-            if let allNodes = configEntity.allNodes, allNodes.isNotEmpty {
+            if let allNodes = configEntity.allNodes, allNodes.isNotEmpty, isCurrentUserNode(node) {
                 initializeTracksForAllAudioFilesAsPlaylist(from: node, allNodes)
             } else {
                 guard let (currentTrack, children) = getTracks(from: node) else {
@@ -286,6 +289,10 @@ final class AudioPlayerViewModel: ViewModelType {
                 initialize(tracks: children, currentTrack: currentTrack)
             }
         }
+    }
+    
+    private func isCurrentUserNode(_ node: MEGANode) -> Bool {
+        accountUseCase.currentUserHandle == node.owner
     }
     
     private func initializeTracksForAllAudioFilesAsPlaylist(from node: MEGANode, _ allNodes: [MEGANode]) {

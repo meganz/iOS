@@ -253,6 +253,7 @@ final class AudioPlayerViewModelTests: XCTestCase {
     ) -> (sut: AudioPlayerViewModel, playbackContinuationUseCase: MockPlaybackContinuationUseCase) {
         let mockPlaybackContinuationUseCase = MockPlaybackContinuationUseCase()
         let mockAudioPlayerUseCase = MockAudioPlayerUseCase()
+        let mockAccountUseCase = MockAccountUseCase()
         let sut = AudioPlayerViewModel(
             configEntity: configEntity,
             router: router,
@@ -261,6 +262,7 @@ final class AudioPlayerViewModelTests: XCTestCase {
             offlineInfoUseCase: offlineInfoUseCase,
             playbackContinuationUseCase: mockPlaybackContinuationUseCase,
             audioPlayerUseCase: mockAudioPlayerUseCase,
+            accountUseCase: mockAccountUseCase,
             dispatchQueue: MockDispatchQueue()
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)

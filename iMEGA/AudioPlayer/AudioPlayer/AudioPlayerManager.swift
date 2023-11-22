@@ -287,21 +287,18 @@ import MEGAPresentation
                         router: router,
                         offlineInfoUseCase: OfflineFileInfoUseCase(offlineInfoRepository: OfflineInfoRepository()),
                         playbackContinuationUseCase: DIContainer.playbackContinuationUseCase, 
-                        audioPlayerUseCase: AudioPlayerUseCase(repository: AudioPlayerRepository(sdk: .shared))
+                        audioPlayerUseCase: AudioPlayerUseCase(repository: AudioPlayerRepository(sdk: .shared)),
+                        accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)
                     )
                 } else {
-                    let makeStreamingInfoRepository: () -> some StreamingInfoRepositoryProtocol = {
-                        let defaultSetupStreamingRepositorySdk: MEGASdk = (MEGASdk.isLoggedIn ? .shared : .sharedFolderLink)
-                        let streamingInfoSdk = configEntity.isFolderLink ? .sharedFolderLink : defaultSetupStreamingRepositorySdk
-                        return StreamingInfoRepository(sdk: streamingInfoSdk)
-                    }
                     return AudioPlayerViewModel(
                         configEntity: configEntity,
                         router: router,
                         nodeInfoUseCase: NodeInfoUseCase(nodeInfoRepository: NodeInfoRepository()),
-                        streamingInfoUseCase: StreamingInfoUseCase(streamingInfoRepository: makeStreamingInfoRepository()),
+                        streamingInfoUseCase: StreamingInfoUseCase(streamingInfoRepository: StreamingInfoRepository()),
                         playbackContinuationUseCase: DIContainer.playbackContinuationUseCase,
-                        audioPlayerUseCase: AudioPlayerUseCase(repository: AudioPlayerRepository(sdk: .shared))
+                        audioPlayerUseCase: AudioPlayerUseCase(repository: AudioPlayerRepository(sdk: .shared)),
+                        accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)
                     )
                 }
             }
