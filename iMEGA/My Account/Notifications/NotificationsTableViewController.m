@@ -481,7 +481,7 @@
         case MEGAUserAlertTypeTakedown:
         case MEGAUserAlertTypeTakedownReinstated: {
             MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:userAlert.nodeHandle];
-            if (node) {
+            if (!node.isTakenDown) {
                 [node navigateToParentAndPresent];
             }
             break;
