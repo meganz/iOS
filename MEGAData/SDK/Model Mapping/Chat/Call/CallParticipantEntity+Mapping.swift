@@ -41,7 +41,8 @@ extension CallParticipantEntity {
             hasScreenShare: session.hasScreenShare,
             isLowResScreenShare: session.isLowResScreenShare,
             isHiResScreenShare: session.isHiResScreenShare,
-            audioDetected: session.audioDetected
+            audioDetected: session.audioDetected,
+            isRecording: session.onRecording
         )
     }
     
@@ -78,7 +79,8 @@ extension CallParticipantEntity {
             hasScreenShare: false,
             isLowResScreenShare: false,
             isHiResScreenShare: false,
-            audioDetected: false
+            audioDetected: false,
+            isRecording: false
         )
     }
     
@@ -114,7 +116,8 @@ extension CallParticipantEntity {
             hasScreenShare: false,
             isLowResScreenShare: false,
             isHiResScreenShare: false,
-            audioDetected: false
+            audioDetected: false,
+            isRecording: false
         )
     }
     
@@ -149,7 +152,8 @@ extension CallParticipantEntity {
             hasScreenShare: false,
             isLowResScreenShare: false,
             isHiResScreenShare: false,
-            audioDetected: false
+            audioDetected: false,
+            isRecording: false
         )
         
         return participant
@@ -180,7 +184,8 @@ extension CallParticipantEntity {
             hasScreenShare: participant.hasScreenShare,
             isLowResScreenShare: participant.isLowResScreenShare,
             isHiResScreenShare: participant.isHiResScreenShare,
-            audioDetected: false
+            audioDetected: false,
+            isRecording: false
         )
         callParticipant.name = participant.name
         callParticipant.isScreenShareCell = true
