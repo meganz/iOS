@@ -3906,3 +3906,13 @@
 "calls.screenRecording.notification.recording.stopped"="%@ stopped recording";
 /* Text for a UI label indicating that the call screen is being recorded */
 "calls.screenRecording.screenIndicator.label"="REC";
+/* Camera uploads status banner - uploads in progress title*/
+"cameraUploads.banner.status.uploadInProgress.title"="Upload in progress";
+/* Camera uploads status banner - uploads complete title */
+"cameraUploads.banner.status.uploadsComplete.title"="Camera uploads complete";
+/* Camera uploads status banner - uploads paused due to no wifi connection title */
+"cameraUploads.banner.status.uploadsPausedDueToWifi.title"="Upload paused due to no Wi-Fi connection";
+/* Camera uploads status banner - uploads complete description*/
+"cameraUploads.banner.status.uploadsComplete.subHeading"="All items backed up";
+/* Camera uploads status banner - uploads partially completed due to limited access to photo library*/
+"cameraUploads.banner.status.uploadsPartialComplete.limitedPhotoLibraryAccess.subHeading"="MEGA has limited access to photo library and cannot backup all your photos. Tap to change permissions.";
