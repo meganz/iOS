@@ -2506,6 +2506,10 @@
 "settings.cookies.performanceAndAnalytics"="Performance and analytics Cookies";
 /* Cookie settings dialog text. */
 "settings.cookies.performanceAndAnalytics.footer"="Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements.";
+/* Cookie settings dialog title label for Advertising Cookies */
+"settings.cookies.advertisingCookies"="Advertising Cookies";
+/* Cookie settings dialog footer text for Advertising Cookies */
+"settings.cookies.advertisingCookies.footer"="Used by our approved advertising partners to collect data about your browsing activities and customise the ads you see on our services and on other websites. Not accepting these Cookies means you will still see ads but they will be less relevant.";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="Version was created as a new file";
 /* Text shown for the action create new file */
