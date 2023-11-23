@@ -104,7 +104,10 @@ enum MainTabBarCallsAction: ActionType { }
         Task { @MainActor in
             guard let username = try? await chatRoomUserUseCase.userDisplayName(forPeerId: session.peerId, in: chatRoom) else { return }
             if session.onRecording {
-                guard screenRecordingAlertShownForCall == false else { return }
+                guard screenRecordingAlertShownForCall == false else {
+                    router.showScreenRecordingNotification(started: true, username: username)
+                    return
+                }
                 screenRecordingAlertShownForCall = true
                 showRecordingAlert(username, call)
             } else {

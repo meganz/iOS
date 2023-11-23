@@ -238,7 +238,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             )
         case .hideRecording(let hidden):
             titleView.hideRecordingIndicator(hidden)
-            recordingImageView.isHidden = hidden
+            recordingImageView.isHidden = hidden && statusBarHidden
         }
     }
     
