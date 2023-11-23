@@ -111,7 +111,7 @@ final class MainTabBarCallsRouter: MainTabBarCallsRouting {
     }
     
     func navigateToPrivacyPolice() {
-        if let url = URL(string: "https://mega.io/privacy ") {
+        if let url = URL(string: "https://mega.io/privacy") {
             UIApplication.shared.open(url)
         }
     }
