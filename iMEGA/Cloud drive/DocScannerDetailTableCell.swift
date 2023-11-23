@@ -16,7 +16,7 @@ class DocScannerDetailTableCell: UITableViewCell {
     
     private func configure() {
         backgroundColor = .mnz_backgroundElevated(traitCollection)
-        detailTextLabel?.textColor = .mnz_secondaryLabel()
+        detailTextLabel?.textColor = UIColor.secondaryLabel
         
         switch cellType {
         case .fileType:

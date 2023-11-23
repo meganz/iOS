@@ -106,7 +106,7 @@ typedef NS_ENUM(NSUInteger, VideoUploadsSectionFormatRow) {
 }
 
 - (void)updateAppearance {
-    self.videoQualityRightDetailLabel.textColor = UIColor.mnz_secondaryLabel;
+    self.videoQualityRightDetailLabel.textColor = UIColor.secondaryLabelColor;
     
     self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];

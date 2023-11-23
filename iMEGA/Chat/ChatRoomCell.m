@@ -114,7 +114,7 @@
 #pragma mark - Public
 
 - (void)configureCellForArchivedChat {
-    self.chatLastMessage.textColor = UIColor.mnz_secondaryLabel;
+    self.chatLastMessage.textColor = UIColor.secondaryLabelColor;
     
     self.unreadView.hidden = NO;
     self.unreadView.backgroundColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];

@@ -163,7 +163,7 @@ class CookieSettingsTableViewController: UITableViewController {
         
         saveBarButtonItem.tintColor = .mnz_primaryGray(for: traitCollection)
         
-        essentialCookiesDetailLabel.textColor = .mnz_secondaryLabel()
+        essentialCookiesDetailLabel.textColor = UIColor.secondaryLabel
         
         tableView.reloadData()
     }

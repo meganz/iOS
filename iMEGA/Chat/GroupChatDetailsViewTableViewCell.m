@@ -63,7 +63,7 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.enableLabel.textColor = self.rightLabel.textColor = UIColor.mnz_secondaryLabel;
+    self.enableLabel.textColor = self.rightLabel.textColor = UIColor.secondaryLabelColor;
     self.emailLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     self.nameLabel.textColor = self.isDestructive ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : UIColor.mnz_label;
 }

@@ -107,7 +107,7 @@ extension FileVersioningTableViewController: TraitEnvironmentAware {
     func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
         tableView.backgroundColor = UIColor.mnz_backgroundGrouped(for: currentTrait)
         tableView.separatorColor = UIColor.mnz_separator(for: currentTrait)
-        detailLabel.textColor = UIColor.mnz_secondaryLabel()
+        detailLabel.textColor = UIColor.secondaryLabel
         deleteOldVersionsLabel.textColor = UIColor.mnz_red(for: currentTrait)
     }
     

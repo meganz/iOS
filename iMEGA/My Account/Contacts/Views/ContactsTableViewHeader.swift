@@ -43,7 +43,7 @@ class ContactsTableViewHeader: UIView {
     private func updateAppearance() {
         backgroundColor = .mnz_backgroundElevated(traitCollection)
         
-        requestsDetailLabel.textColor = .mnz_secondaryLabel()
+        requestsDetailLabel.textColor = UIColor.secondaryLabel
         requestsSeparatorView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
     }
     

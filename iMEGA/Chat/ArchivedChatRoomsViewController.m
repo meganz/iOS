@@ -455,7 +455,7 @@
     self.view.backgroundColor = UIColor.mnz_background;
     self.navigationController.view.backgroundColor = UIColor.mnz_background;
 
-    self.archivedChatEmptyStateCount.textColor = UIColor.mnz_secondaryLabel;
+    self.archivedChatEmptyStateCount.textColor = UIColor.secondaryLabelColor;
     
     self.topBannerView.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
     self.topBannerLabel.textColor = UIColor.whiteColor;

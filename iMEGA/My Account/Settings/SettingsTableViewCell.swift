@@ -9,7 +9,7 @@ class SettingsTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        displayValueLabel.textColor = UIColor.mnz_secondaryLabel()
+        displayValueLabel.textColor = UIColor.secondaryLabel
     }
 
     func update(viewModel: SettingCellViewModel) {
