@@ -51,6 +51,7 @@ public final class MockSdk: MEGASdk {
     public private(set) var nodeForHandleCallCount = 0
     public private(set) var messages = [Message]()
     public private(set) var searchQueryParameters: SearchQueryParameters?
+    public private(set) var nodeListSearchCallCount = 0
     
     public enum Message: Equatable {
         case publicNodeForMegaFileLink(String)
@@ -246,6 +247,7 @@ public final class MockSdk: MEGASdk {
                                                       recursive: recursive,
                                                       sortOrderType: orderType,
                                                       formatType: nodeFormatType)
+        nodeListSearchCallCount += 1
         return MockNodeList(nodes: nodes)
     }
     

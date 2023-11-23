@@ -1,7 +1,7 @@
 import Foundation
 import MEGADomain
 
-final actor PhotosInMemoryCache: PhotoSourceProtocol {
+final actor PhotosInMemoryCache: PhotoLocalSourceProtocol {
     public static let shared = PhotosInMemoryCache()
     
     private let cache = NSCache<NSNumber, PhotoNodeEntityEntryProxy>()

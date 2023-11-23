@@ -1,6 +1,6 @@
 import MEGADomain
 
-public protocol PhotoSourceProtocol: Actor {
+public protocol PhotoLocalSourceProtocol: Actor {
     /// Retrieve all photos
     var photos: [NodeEntity] { get }
     /// Store photos in source location
