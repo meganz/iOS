@@ -437,10 +437,6 @@ extension UIColor {
     
     // MARK: - Text
     
-    @objc class func mnz_label() -> UIColor {
-        .label
-    }
-    
     @objc(mnz_subtitlesForTraitCollection:)
     class func mnz_subtitles(for traitCollection: UITraitCollection) -> UIColor {
         switch traitCollection.userInterfaceStyle {

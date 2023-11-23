@@ -16,7 +16,7 @@ final class CustomTitleView: UIView {
     
     private func updateAppearance() {
         titleLabel.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
-        titleLabel.textColor = UIColor.mnz_label()
+        titleLabel.textColor = UIColor.label
         
         subtitleLabel.font = UIFont.systemFont(ofSize: 12)
         subtitleLabel.textColor = UIColor.mnz_subtitles(for: traitCollection)

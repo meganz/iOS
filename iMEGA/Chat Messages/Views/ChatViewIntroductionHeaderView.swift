@@ -107,7 +107,7 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
         statusLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
         chattingWithTextLabel.textColor = UIColor.mnz_red(for: traitCollection)
         descriptionLabel.textColor = UIColor.mnz_primaryGray(for: traitCollection)
-        participantsLabel.textColor = UIColor.mnz_label()
+        participantsLabel.textColor = UIColor.label
         statusLabel.textColor = UIColor.label
 
         chattingWithTextLabel.text = Strings.Localizable.chattingWith

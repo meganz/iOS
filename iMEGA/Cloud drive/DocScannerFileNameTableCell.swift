@@ -41,7 +41,7 @@ extension DocScannerFileNameTableCell: UITextFieldDelegate {
                 return true
             }
             textField.text = originalFileName
-            textField.textColor = .mnz_label()
+            textField.textColor = UIColor.label
         }
         
         return true

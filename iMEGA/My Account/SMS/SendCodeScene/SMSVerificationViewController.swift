@@ -102,7 +102,7 @@ final class SMSVerificationViewController: UIViewController, ViewType {
     @IBAction private func didEditingChangedInPhoneNumberField() {
         nextButton.isEnabled = !(phoneNumberTextField.text?.isEmpty ?? true)
         phoneNumberLabel.textColor = UIColor.mnz_secondaryGray(for: self.traitCollection)
-        phoneNumberTextField.textColor = UIColor.mnz_label()
+        phoneNumberTextField.textColor = UIColor.label
         errorView.isHidden = true
     }
 

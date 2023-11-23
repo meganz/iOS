@@ -20,7 +20,7 @@ final class TurnOnNotificationsViewController: UIViewController, ViewType {
         label.numberOfLines = 0
         label.font = .preferredFont(forTextStyle: .headline)
         label.textAlignment = .center
-        label.textColor = UIColor.mnz_label()
+        label.textColor = UIColor.label
         return label
     }()
     
@@ -30,7 +30,7 @@ final class TurnOnNotificationsViewController: UIViewController, ViewType {
         label.textAlignment = .center
         label.numberOfLines = 0
         label.font = .preferredFont(forTextStyle: .body)
-        label.textColor = UIColor.mnz_label()
+        label.textColor = UIColor.label
         return label
     }()
     
@@ -44,7 +44,7 @@ final class TurnOnNotificationsViewController: UIViewController, ViewType {
         let label = UILabel()
         label.adjustsFontForContentSizeCategory = true
         label.numberOfLines = 0
-        label.textColor = UIColor.mnz_label()
+        label.textColor = UIColor.label
         label.font = .preferredFont(forTextStyle: .body)
         return label
     }()
@@ -59,7 +59,7 @@ final class TurnOnNotificationsViewController: UIViewController, ViewType {
         let label = UILabel()
         label.adjustsFontForContentSizeCategory = true
         label.numberOfLines = 0
-        label.textColor = UIColor.mnz_label()
+        label.textColor = UIColor.label
         label.font = .preferredFont(forTextStyle: .body)
         return label
     }()
@@ -74,7 +74,7 @@ final class TurnOnNotificationsViewController: UIViewController, ViewType {
         let label = UILabel()
         label.adjustsFontForContentSizeCategory = true
         label.numberOfLines = 0
-        label.textColor = UIColor.mnz_label()
+        label.textColor = UIColor.label
         label.font = .preferredFont(forTextStyle: .body)
         return label
     }()
@@ -89,7 +89,7 @@ final class TurnOnNotificationsViewController: UIViewController, ViewType {
         let label = UILabel()
         label.adjustsFontForContentSizeCategory = true
         label.numberOfLines = 0
-        label.textColor = UIColor.mnz_label()
+        label.textColor = UIColor.label
         label.font = .preferredFont(forTextStyle: .body)
         return label
     }()

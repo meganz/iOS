@@ -7,7 +7,7 @@ class NodeInfoDetailTableViewCell: UITableViewCell {
     
     func configure(forNode node: MEGANode, rowType: DetailsSectionRow, folderInfo: MEGAFolderInfo?) {
         backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
-        valueLabel.textColor = UIColor.mnz_label()
+        valueLabel.textColor = UIColor.label
         
         switch rowType {
         case .location:

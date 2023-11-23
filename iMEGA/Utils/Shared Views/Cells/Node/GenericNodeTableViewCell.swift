@@ -91,7 +91,7 @@ final class GenericNodeTableViewCell: UITableViewCell {
             mainLabel.textColor = .mnz_red(for: traitCollection)
         } else {
             mainLabel.text = nodeModel.name
-            mainLabel.textColor = .mnz_label()
+            mainLabel.textColor = .label
             secondaryLabel.textColor = .mnz_subtitles(for: traitCollection)
         }
         

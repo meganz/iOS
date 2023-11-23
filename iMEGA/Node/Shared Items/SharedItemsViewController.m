@@ -440,7 +440,7 @@
     cell.thumbnailImageView.image = UIImage.mnz_incomingFolderImage;
     
     cell.nameLabel.text = node.name;
-    cell.nameLabel.textColor = UIColor.mnz_label;
+    cell.nameLabel.textColor = UIColor.labelColor;
     [self setupLabelAndFavouriteForNode:node cell:cell];
     
     MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:userEmail];
@@ -482,7 +482,7 @@
     self.outgoingIndexPathsMutableDictionary[node.base64Handle] = indexPath;
     
     cell.thumbnailImageView.image = UIImage.mnz_outgoingFolderImage;
-    cell.nameLabel.textColor = UIColor.mnz_label;
+    cell.nameLabel.textColor = UIColor.labelColor;
     cell.nameLabel.text = node.name;
     [self setupLabelAndFavouriteForNode:node cell:cell];
     

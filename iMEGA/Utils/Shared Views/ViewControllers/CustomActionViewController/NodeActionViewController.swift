@@ -252,7 +252,7 @@ class NodeActionViewController: ActionSheetViewController {
             titleLabel.attributedText = node.attributedTakenDownName()
             titleLabel.textColor = UIColor.mnz_red(for: traitCollection)
         } else {
-            titleLabel.textColor = UIColor.mnz_label()
+            titleLabel.textColor = UIColor.label
         }
         subtitleLabel.textColor = UIColor.mnz_subtitles(for: traitCollection)
         separatorLineView.backgroundColor = UIColor.mnz_separator(for: traitCollection)

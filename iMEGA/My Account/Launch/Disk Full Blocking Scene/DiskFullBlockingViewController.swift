@@ -11,7 +11,7 @@ final class DiskFullBlockingViewController: UIViewController, ViewType {
         label.numberOfLines = 0
         label.font = .preferredFont(forTextStyle: .headline)
         label.textAlignment = .center
-        label.textColor = UIColor.mnz_label()
+        label.textColor = UIColor.label
         label.setContentCompressionResistancePriority(.defaultHigh + 2, for: .vertical)
         return label
     }()
@@ -20,7 +20,7 @@ final class DiskFullBlockingViewController: UIViewController, ViewType {
         let label = UILabel()
         label.textAlignment = .center
         label.numberOfLines = 0
-        label.textColor = UIColor.mnz_label()
+        label.textColor = UIColor.label
         label.setContentCompressionResistancePriority(.defaultHigh + 1, for: .vertical)
         return label
     }()

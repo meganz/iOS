@@ -36,7 +36,7 @@ class ChatBottomNewMessageIndicatorView: UIView {
                 badgeLabel.isHidden = false
                 var attributed = AttributedString((unreadNewMessagesCount > 99) ? "99+" : "\(unreadNewMessagesCount)")
                 attributed.font = .systemFont(ofSize: 11, weight: .medium)
-                attributed.foregroundColor = .mnz_label()
+                attributed.foregroundColor = UIColor.label
                 badgeLabel.configuration?.attributedTitle = attributed
                 badgeLabel.flex.markDirty()
                 rootFlexContainer.flex.layout()

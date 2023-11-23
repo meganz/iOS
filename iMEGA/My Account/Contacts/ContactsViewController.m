@@ -1563,7 +1563,7 @@
         } else {
             if (self.visibleUsersIndexedMutableArray[[self currentIndexedSection:section]].count > 0) {
                 headerView.titleLabel.font = [UIFont mnz_preferredFontWithStyle:UIFontTextStyleBody weight:UIFontWeightSemibold];
-                headerView.titleLabel.textColor = UIColor.mnz_label;
+                headerView.titleLabel.textColor = UIColor.labelColor;
                 [headerView configureWithTitle:[UILocalizedIndexedCollation.currentCollation.sectionTitles objectAtIndex:[self currentIndexedSection:section]] topDistance:10.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:YES];
                 
                 return headerView;

@@ -45,7 +45,7 @@
         numberOfFiles = @"";
     }
     
-    UILabel *titleLabel = [UILabel.new customNavigationBarLabelWithTitle:folderName subtitle:numberOfFiles color:UIColor.mnz_label];
+    UILabel *titleLabel = [UILabel.new customNavigationBarLabelWithTitle:folderName subtitle:numberOfFiles color:UIColor.labelColor];
     titleLabel.adjustsFontSizeToFitWidth = YES;
     titleLabel.minimumScaleFactor = 0.8f;
     self.navigationItem.titleView = titleLabel;

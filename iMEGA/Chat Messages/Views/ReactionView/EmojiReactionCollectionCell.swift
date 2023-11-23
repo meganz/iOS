@@ -37,7 +37,7 @@ class EmojiReactionCollectionCell: UICollectionViewCell {
     }
         
     private func updateAppearance() {
-        let color = isSelected ?  UIColor.mnz_emojiLabelSelectedState(traitCollection) : UIColor.mnz_label()
+        let color = isSelected ?  UIColor.mnz_emojiLabelSelectedState(traitCollection) : UIColor.label
         numberOfUsersReactedLabel.textColor = color
         selectedMarkerView.backgroundColor = color
     }

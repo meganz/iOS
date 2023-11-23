@@ -112,7 +112,7 @@
         self.nameLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
     } else {
         self.nameLabel.text = node.name;
-        self.nameLabel.textColor = UIColor.mnz_label;
+        self.nameLabel.textColor = UIColor.labelColor;
         self.subtitleLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     }
     

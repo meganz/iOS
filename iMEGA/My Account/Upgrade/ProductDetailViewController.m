@@ -67,7 +67,7 @@
     }
     
     if (self.currentAccountType == self.megaAccountType) {
-        UILabel *label = [UILabel.new customNavigationBarLabelWithTitle:LocalizedString(@"inAppPurchase.productDetail.navigation.currentPlan", @"A label which shows the user's current PRO plan.") subtitle:title color:UIColor.mnz_label];
+        UILabel *label = [UILabel.new customNavigationBarLabelWithTitle:LocalizedString(@"inAppPurchase.productDetail.navigation.currentPlan", @"A label which shows the user's current PRO plan.") subtitle:title color:UIColor.labelColor];
         label.adjustsFontSizeToFitWidth = YES;
         label.minimumScaleFactor = 0.8f;
         label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);

@@ -15,7 +15,7 @@ class ChatViewAttachmentCell: MessageContentCell {
     public lazy var titleLabel: MEGALabel = {
         let titleLabel = MEGALabel(frame: .zero)
         titleLabel.apply(style: .footnote, weight: .medium)
-        titleLabel.textColor = UIColor.mnz_label()
+        titleLabel.textColor = UIColor.label
         titleLabel.lineBreakMode = .byTruncatingMiddle
         return titleLabel
     }()
@@ -91,7 +91,7 @@ class ChatViewAttachmentCell: MessageContentCell {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
-        titleLabel.textColor = UIColor.mnz_label()
+        titleLabel.textColor = UIColor.label
         detailLabel.textColor = UIColor.mnz_subtitles(for: UIScreen.main.traitCollection)
     }
     

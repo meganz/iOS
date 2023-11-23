@@ -64,7 +64,7 @@
     [self setupFirstSectionLabelTextAndImage];
     
     NSString *qrString = [NSString stringWithFormat:@"otpauth://totp/MEGA:%@?secret=%@&issuer=MEGA", MEGASdkManager.sharedMEGASdk.myEmail, self.seed];
-    self.seedQrImageView.image = [UIImage mnz_qrImageFromString:qrString withSize:self.seedQrImageView.frame.size color:UIColor.mnz_label backgroundColor:UIColor.clearColor];
+    self.seedQrImageView.image = [UIImage mnz_qrImageFromString:qrString withSize:self.seedQrImageView.frame.size color:UIColor.labelColor backgroundColor:UIColor.clearColor];
     
     self.seedTextViewView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
     self.seedTextViewView.layer.borderColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection].CGColor;

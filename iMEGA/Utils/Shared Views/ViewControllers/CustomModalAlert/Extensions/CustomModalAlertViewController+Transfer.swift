@@ -75,7 +75,7 @@ extension CustomModalAlertViewController {
         
         let paragraph = NSMutableParagraphStyle()
         paragraph.alignment = .center
-        let regularAttributes = [NSAttributedString.Key.foregroundColor: UIColor.mnz_label(),
+        let regularAttributes = [NSAttributedString.Key.foregroundColor: UIColor.label,
                                  NSAttributedString.Key.font: UIFont.preferredFont(style: .subheadline, weight: .regular),
                                  NSAttributedString.Key.paragraphStyle: paragraph]
         let delayAttributes = [NSAttributedString.Key.font: UIFont.preferredFont(style: .subheadline, weight: .bold)]

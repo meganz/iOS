@@ -425,7 +425,7 @@
                 text = [text stringByReplacingOccurrencesOfString:@"%1$s" withString:fullNameDidAction];
                 
                 NSString *retentionTimeString = [NSString mnz_hoursDaysWeeksMonthsOrYearFrom:chatRoom.retentionTime];
-                NSString *lastMessage = [NSAttributedString mnz_attributedStringFromMessage:retentionTimeString font:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1] color:UIColor.mnz_label].string;
+                NSString *lastMessage = [NSAttributedString mnz_attributedStringFromMessage:retentionTimeString font:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1] color:UIColor.labelColor].string;
                 text = [text stringByReplacingOccurrencesOfString:@"%2$s" withString:lastMessage];
             }
             
@@ -506,7 +506,7 @@
                 }
             }
             
-            NSString *lastMessage = [NSAttributedString mnz_attributedStringFromMessage:item.lastMessage font:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1] color:UIColor.mnz_label].string;
+            NSString *lastMessage = [NSAttributedString mnz_attributedStringFromMessage:item.lastMessage font:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1] color:UIColor.labelColor].string;
             self.chatLastMessage.text = senderString ? [NSString stringWithFormat:@"%@: %@",senderString, lastMessage] : lastMessage;
             break;
         }

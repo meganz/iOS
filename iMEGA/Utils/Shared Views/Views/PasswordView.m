@@ -77,7 +77,7 @@
         self.passwordTextField.textColor = UIColor.systemRedColor;
     } else {
         self.topLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
-        self.passwordTextField.textColor = UIColor.mnz_label;
+        self.passwordTextField.textColor = UIColor.labelColor;
     }
 }
 
@@ -87,7 +87,7 @@
     self.topLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
     
     self.leftImageView.tintColor = self.topLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
-    self.passwordTextField.textColor = UIColor.mnz_label;
+    self.passwordTextField.textColor = UIColor.labelColor;
     
     if (self.backgroundColor != nil && !self.isUsingDefaultBackgroundColor) {
         self.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];

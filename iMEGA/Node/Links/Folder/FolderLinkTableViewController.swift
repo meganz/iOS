@@ -112,7 +112,7 @@ extension FolderLinkTableViewController: UITableViewDataSource {
         }
         
         cell.backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
-        cell.infoLabel.textColor = UIColor.mnz_label()
+        cell.infoLabel.textColor = UIColor.label
         
         if let node = getNode(at: indexPath) {
             config(cell, by: node, at: indexPath)
@@ -138,7 +138,7 @@ extension FolderLinkTableViewController: UITableViewDataSource {
         
         cell.thumbnailPlayImageView.isHidden = node.name?.fileExtensionGroup.isVideo != true
         cell.nameLabel.text = node.name
-        cell.nameLabel.textColor = UIColor.mnz_label()
+        cell.nameLabel.textColor = UIColor.label
         cell.node = node
         
         if tableView.isEditing {

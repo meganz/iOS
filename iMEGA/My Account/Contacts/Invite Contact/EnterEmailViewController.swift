@@ -142,18 +142,18 @@ class EnterEmailViewController: UIViewController {
         tagsField.spaceBetweenTags = 10.0
         tagsField.font = .preferredFont(forTextStyle: .body)
         tagsField.tintColor = .mnz_tertiaryBackgroundGroupedElevated(traitCollection)
-        tagsField.textColor = .mnz_label()
+        tagsField.textColor = .label
         tagsField.selectedColor = .mnz_tertiaryBackgroundGroupedElevated(traitCollection)
-        tagsField.selectedTextColor = .mnz_label()
+        tagsField.selectedTextColor = .label
         
-        tagsField.textField.textColor = .mnz_label()
+        tagsField.textField.textColor = .label
         tagsField.textField.keyboardType = .emailAddress
         tagsField.textField.returnKeyType = .next
         tagsField.acceptTagOption = .space
         
         tagsField.cornerRadius = 16
         
-        tagsField.placeholderColor = .mnz_label().withAlphaComponent(0.2)
+        tagsField.placeholderColor = .label.withAlphaComponent(0.2)
         tagsField.placeholder = Strings.Localizable.insertYourFriendsEmails
         
         configureTagFieldEvents()
@@ -175,7 +175,7 @@ class EnterEmailViewController: UIViewController {
     // MARK: Actions
     @IBAction func inviteContactsTapped(_ sender: UIButton) {
         if let text = tagsField.text, text.mnz_isValidEmail() {
-            tagsField.textField.textColor = .mnz_label()
+            tagsField.textField.textColor = .label
             instructionsLabel.text = Strings.Localizable.tapSpaceToEnterMultipleEmails
             instructionsLabel.textColor = UIColor.mnz_secondaryGray(for: self.traitCollection)
             tagsField.addTag(text)
@@ -253,7 +253,7 @@ extension EnterEmailViewController {
 
         tagsField.onDidChangeText = { _, text in
             if text!.mnz_isValidEmail() || self.tagsField.tags.isNotEmpty {
-                self.tagsField.textField.textColor = .mnz_label()
+                self.tagsField.textField.textColor = .label
                 self.instructionsLabel.text = Strings.Localizable.tapSpaceToEnterMultipleEmails
                 self.instructionsLabel.textColor = UIColor.mnz_secondaryGray(for: self.traitCollection)
                 self.enableInviteContactsButton()
@@ -271,7 +271,7 @@ extension EnterEmailViewController {
                 return false
             }
             if text.mnz_isValidEmail() {
-                self.tagsField.textField.textColor = .mnz_label()
+                self.tagsField.textField.textColor = .label
                 self.instructionsLabel.text = Strings.Localizable.tapSpaceToEnterMultipleEmails
                 self.instructionsLabel.textColor = UIColor.mnz_secondaryGray(for: self.traitCollection)
                 

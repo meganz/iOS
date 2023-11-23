@@ -121,7 +121,7 @@ class ActionSheetViewController: UIViewController {
     
     func updateAppearance() {
         tableView.backgroundColor = .mnz_backgroundElevated(traitCollection)
-        titleLabel.textColor = UIColor.mnz_label()
+        titleLabel.textColor = UIColor.label
         indicator.backgroundColor = UIColor.mnz_handlebar(for: traitCollection)
     }
     
