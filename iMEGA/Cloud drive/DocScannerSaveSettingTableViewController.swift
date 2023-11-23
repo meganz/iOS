@@ -206,7 +206,7 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
                     filenameCell.filenameTextField.text = currentFileName
                 }
                 let containsInvalidChars = filenameCell.filenameTextField.text?.mnz_containsInvalidChars() ?? false
-                filenameCell.filenameTextField.textColor = containsInvalidChars ? .mnz_redError() : .mnz_label()
+                filenameCell.filenameTextField.textColor = containsInvalidChars ? .systemRed : .label
             }
         } else if section == .settings {
             if let detailCell = tableView.dequeueReusableCell(withIdentifier: DocScannerDetailTableCell.reuseIdentifier, for: indexPath) as? DocScannerDetailTableCell,

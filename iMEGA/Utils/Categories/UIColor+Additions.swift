@@ -935,10 +935,6 @@ extension UIColor {
         return UIColor.redFF453A
     }
     
-    @objc class func mnz_redError() -> UIColor {
-        .systemRed
-    }
-    
     @objc(mnz_redForTraitCollection:)
     class func mnz_red(for traitCollection: UITraitCollection) -> UIColor {
         switch traitCollection.userInterfaceStyle {

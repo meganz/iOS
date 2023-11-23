@@ -88,8 +88,8 @@
 - (void)setErrorState:(BOOL)error {
     if (error) {
         self.emailInputView.topLabel.text = LocalizedString(@"emailInvalidFormat", @"Message shown when the user writes an invalid format in the email field");
-        self.emailInputView.topLabel.textColor = UIColor.mnz_redError;
-        self.emailInputView.inputTextField.textColor = UIColor.mnz_redError;
+        self.emailInputView.topLabel.textColor = UIColor.systemRedColor;
+        self.emailInputView.inputTextField.textColor = UIColor.systemRedColor;
     } else {
         self.emailInputView.topLabel.text = LocalizedString(@"emailPlaceholder", @"");
         self.emailInputView.topLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];

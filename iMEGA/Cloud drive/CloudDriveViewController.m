@@ -643,7 +643,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         UIAlertAction *rightButtonAction = newFolderAlertController.actions.lastObject;
         BOOL containsInvalidChars = textField.text.mnz_containsInvalidChars;
         newFolderAlertController.title = [self newFolderNameAlertTitleWithInvalidChars:containsInvalidChars];
-        textField.textColor = containsInvalidChars ? UIColor.mnz_redError : UIColor.mnz_label;
+        textField.textColor = containsInvalidChars ? UIColor.systemRedColor : UIColor.labelColor;
         rightButtonAction.enabled = (!textField.text.mnz_isEmpty && !containsInvalidChars);
     }
 }

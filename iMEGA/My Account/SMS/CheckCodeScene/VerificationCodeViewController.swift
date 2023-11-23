@@ -84,7 +84,7 @@ final class VerificationCodeViewController: UIViewController, ViewType {
     
     private func showCheckCodeErrorMessage(_ message: String) {
         errorMessageLabel.text = message
-        errorMessageLabel.textColor = UIColor.mnz_redError()
+        errorMessageLabel.textColor = UIColor.systemRed
         errorView.isHidden = false
     }
     
@@ -93,8 +93,8 @@ final class VerificationCodeViewController: UIViewController, ViewType {
         
         updateCodeFieldsAppearance()
         
-        errorImageView.tintColor = UIColor.mnz_redError()
-        errorMessageLabel.textColor = UIColor.mnz_redError()
+        errorImageView.tintColor = UIColor.systemRed
+        errorMessageLabel.textColor = UIColor.systemRed
         
         didnotReceiveCodeLabel.textColor = UIColor.mnz_primaryGray(for: traitCollection)
         resendButton.tintColor = UIColor.mnz_turquoise(for: self.traitCollection)
@@ -107,7 +107,7 @@ final class VerificationCodeViewController: UIViewController, ViewType {
             $0.backgroundColor = .mnz_secondaryBackgroundElevated(traitCollection)
             $0.layer.cornerRadius = 4
             $0.layer.borderWidth = 0.5
-            $0.layer.borderColor = errorView.isHidden ? UIColor.mnz_separator(for: traitCollection).cgColor : UIColor.mnz_redError().cgColor
+            $0.layer.borderColor = errorView.isHidden ? UIColor.mnz_separator(for: traitCollection).cgColor : UIColor.systemRed.cgColor
         }
     }
 

@@ -97,15 +97,15 @@ extension MEGANode {
             
             if isNewNameWithoutExtension, let name = self.name, self.isFile() {
                 renameAlertController.title = Strings.Localizable.Rename.fileWithoutExtension((name as NSString).pathExtension)
-                renameAlertController.textFields?.first?.textColor = UIColor.mnz_redError()
+                renameAlertController.textFields?.first?.textColor = UIColor.systemRed
                 
                 let textFieldView = renameAlertController.textFields?.first?.superview
                 textFieldView?.layer.borderWidth = 1
-                textFieldView?.layer.borderColor = UIColor.mnz_redError().cgColor
+                textFieldView?.layer.borderColor = UIColor.systemRed.cgColor
             } else {
                 renameAlertController.title = self.fileFolderRenameAlertTitle(invalidChars: containsInvalidCharacters)
                 renameAlertController.textFields?.first?.superview?.layer.borderWidth = 0
-                textField.textColor = containsInvalidCharacters ? UIColor.mnz_redError() : UIColor.mnz_label()
+                textField.textColor = containsInvalidCharacters ? UIColor.systemRed : UIColor.label
             }
         }
         

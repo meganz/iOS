@@ -173,15 +173,15 @@ final class SMSVerificationViewController: UIViewController, ViewType {
         phoneNumberLabel.textColor = .mnz_secondaryGray(for: traitCollection)
         phoneNumberBottomSeparatorView.backgroundColor = .mnz_separator(for: traitCollection)
         
-        errorImageView.tintColor = UIColor.mnz_redError()
-        errorMessageLabel.textColor = UIColor.mnz_redError()
+        errorImageView.tintColor = UIColor.systemRed
+        errorMessageLabel.textColor = UIColor.systemRed
         
         nextButton.mnz_setupPrimary(traitCollection)
     }
 
     private func showSendCodeErrorMessage(_ message: String?) {
-        phoneNumberLabel.textColor = UIColor.mnz_redError()
-        phoneNumberTextField.textColor = UIColor.mnz_redError()
+        phoneNumberLabel.textColor = UIColor.systemRed
+        phoneNumberTextField.textColor = UIColor.systemRed
         errorMessageLabel.text = message
         errorView.isHidden = false
     }

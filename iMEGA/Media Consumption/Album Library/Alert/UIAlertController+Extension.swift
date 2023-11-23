@@ -32,7 +32,7 @@ extension UIAlertController {
                     alert.title = errorItem.title.isEmpty ? viewModel.title : errorItem.title
                     if errorItem.description.isNotEmpty {
                         alert.message = errorItem.description
-                        textField.textColor = UIColor.mnz_redError()
+                        textField.textColor = UIColor.systemRed
                     } else {
                         alert.message = viewModel.message
                     }

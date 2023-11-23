@@ -77,7 +77,7 @@
     
     self.firstDigitContainerView.layer.borderColor = self.secondDigitContainerView.layer.borderColor = self.thirdDigitContainerView.layer.borderColor = self.fourthDigitContainerView.layer.borderColor = self.fifthDigitContainerView.layer.borderColor = self.sixthDigitContainerView.layer.borderColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection].CGColor;
     
-    self.invalidCodeLabel.textColor = UIColor.mnz_redError;
+    self.invalidCodeLabel.textColor = UIColor.systemRedColor;
     
     [self.lostYourAuthenticatorDeviceButton setTitleColor:UIColor.mnz_label forState:UIControlStateNormal];
 }
@@ -149,7 +149,7 @@
 }
 
 - (void)showInvalidCode {
-    [self tintCodeWithColor:UIColor.mnz_redError];
+    [self tintCodeWithColor:UIColor.systemRedColor];
     self.invalidCodeImageView.hidden = self.invalidCodeLabel.hidden = NO;
 }
 
