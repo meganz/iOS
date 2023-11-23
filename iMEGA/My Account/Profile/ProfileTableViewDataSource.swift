@@ -86,7 +86,7 @@ final class ProfileTableViewDataSource {
                 } catch {
                     cell.detailLabel.text = phoneNumber
                 }
-                cell.detailLabel.textColor = UIColor.mnz_secondaryLabel()
+                cell.detailLabel.textColor = UIColor.secondaryLabel
             }
             return cell
         case .changePassword(let isLoading):
@@ -118,7 +118,7 @@ final class ProfileTableViewDataSource {
             switch accountType {
             case .free:
                 cell.detailLabel.text = Strings.Localizable.free
-                cell.detailLabel.textColor = UIColor.mnz_secondaryLabel()
+                cell.detailLabel.textColor = UIColor.secondaryLabel
             case .proI:
                 cell.detailLabel.text = "Pro I"
                 cell.detailLabel.textColor = UIColor.mnz_redProI()
@@ -137,7 +137,7 @@ final class ProfileTableViewDataSource {
                 } else {
                     cell.detailLabel.text = Strings.Localizable.paymentOverdue
                 }
-                cell.detailLabel.textColor = UIColor.mnz_secondaryLabel()
+                cell.detailLabel.textColor = UIColor.secondaryLabel
                 cell.nameLabel.text = Strings.Localizable.business
                 cell.accessoryType = .none
             case .proFlexi:
@@ -159,7 +159,7 @@ final class ProfileTableViewDataSource {
             } else {
                 cell.detailLabel.text = Strings.Localizable.user
             }
-            cell.detailLabel.textColor = UIColor.mnz_secondaryLabel()
+            cell.detailLabel.textColor = UIColor.secondaryLabel
             cell.nameLabel.text = Strings.Localizable.role.replacingOccurrences(of: ":", with: "")
             cell.accessoryType = .none
             return cell

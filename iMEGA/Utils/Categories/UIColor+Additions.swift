@@ -441,10 +441,6 @@ extension UIColor {
         .label
     }
     
-    @objc class func mnz_secondaryLabel() -> UIColor {
-        return UIColor.secondaryLabel
-    }
-    
     @objc(mnz_subtitlesForTraitCollection:)
     class func mnz_subtitles(for traitCollection: UITraitCollection) -> UIColor {
         switch traitCollection.userInterfaceStyle {

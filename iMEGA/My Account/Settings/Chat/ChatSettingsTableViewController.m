@@ -163,7 +163,7 @@ typedef NS_ENUM(NSInteger, ChatSettingsNotificationRow) {
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.statusRightDetailLabel.textColor = self.imageQualityRightDetailLabel.textColor = self.videoQualityRightDetailLabel.textColor = UIColor.mnz_secondaryLabel;
+    self.statusRightDetailLabel.textColor = self.imageQualityRightDetailLabel.textColor = self.videoQualityRightDetailLabel.textColor = UIColor.secondaryLabelColor;
     
     self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];

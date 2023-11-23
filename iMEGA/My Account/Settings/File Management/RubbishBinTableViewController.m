@@ -95,7 +95,7 @@
     self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
     
     self.clearRubbishBinLabel.textColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
-    self.clearRubbishBinDetailLabel.textColor = self.removeFilesOlderThanDetailLabel.textColor = UIColor.mnz_secondaryLabel;
+    self.clearRubbishBinDetailLabel.textColor = self.removeFilesOlderThanDetailLabel.textColor = UIColor.secondaryLabelColor;
     
     [self setupTableViewHeaderAndFooter];
     

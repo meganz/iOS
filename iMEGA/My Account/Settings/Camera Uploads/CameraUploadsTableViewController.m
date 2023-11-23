@@ -138,7 +138,7 @@
 }
 
 - (void)updateAppearance {
-    self.uploadVideosInfoRightDetailLabel.textColor = UIColor.mnz_secondaryLabel;
+    self.uploadVideosInfoRightDetailLabel.textColor = UIColor.secondaryLabelColor;
     
     self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];

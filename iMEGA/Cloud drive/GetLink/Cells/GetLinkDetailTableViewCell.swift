@@ -45,7 +45,7 @@ class GetLinkDetailTableViewCell: UITableViewCell {
         }
         proImageView.isHidden = true
         detailLabel.isHidden = false
-        detailLabel.textColor = dateSelected ? UIColor.mnz_turquoise(for: traitCollection) : UIColor.mnz_secondaryLabel()
+        detailLabel.textColor = dateSelected ? UIColor.mnz_turquoise(for: traitCollection) : UIColor.secondaryLabel
         activityIndicatorContainerView.isHidden = true
         accessoryType = .none
     }

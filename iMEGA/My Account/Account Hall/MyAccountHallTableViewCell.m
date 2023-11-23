@@ -22,7 +22,7 @@
     self.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
     
     self.detailLabel.text = @"";
-    self.detailLabel.textColor = UIColor.mnz_secondaryLabel;
+    self.detailLabel.textColor = UIColor.secondaryLabelColor;
     
     self.pendingView.backgroundColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
     self.pendingLabel.textColor = UIColor.whiteColor;

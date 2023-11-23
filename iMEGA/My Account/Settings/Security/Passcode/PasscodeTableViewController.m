@@ -93,7 +93,7 @@
 }
 
 - (void)updateAppearance {
-    self.requirePasscodeDetailLabel.textColor = UIColor.mnz_secondaryLabel;
+    self.requirePasscodeDetailLabel.textColor = UIColor.secondaryLabelColor;
     
     self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];

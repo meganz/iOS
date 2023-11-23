@@ -79,8 +79,8 @@
     self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
     
-    self.twoFactorAuthenticationRightDetailLabel.textColor = UIColor.mnz_secondaryLabel;
-    self.passcodeDetailLabel.textColor = UIColor.mnz_secondaryLabel;
+    self.twoFactorAuthenticationRightDetailLabel.textColor = UIColor.secondaryLabelColor;
+    self.passcodeDetailLabel.textColor = UIColor.secondaryLabelColor;
     
     self.closeOtherSessionsLabel.textColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
 }
