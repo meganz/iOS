@@ -233,7 +233,7 @@ static NSString *kPath = @"kPath";
         }];
     }];
     deleteAction.image = [[UIImage imageNamed:@"delete"] imageWithTintColor:UIColor.whiteColor];
-    deleteAction.backgroundColor = UIColor.mnz_redError;
+    deleteAction.backgroundColor = UIColor.systemRedColor;
     return [UISwipeActionsConfiguration configurationWithActions:@[deleteAction]];
 }
 

@@ -72,7 +72,7 @@ extension DocAndAudioListSource {
         }
                 
         cell?.cellFlavor = .explorerView
-        cell?.configureCell(for: node, api: MEGASdkManager.sharedMEGASdk())
+        cell?.configureCell(for: node, api: MEGASdk.shared)
         cell?.setSelectedBackgroundView(withColor: .clear)
         
         if tableView.isEditing,
@@ -130,7 +130,7 @@ extension DocAndAudioListSource {
             }
             let RubbishBinActionEntity = contextualAction(
                 withImageName: Asset.Images.NodeActions.rubbishBin.name,
-                backgroundColor: .mnz_redError()
+                backgroundColor: .systemRed
             ) { [weak self] in
                 self?.moveToRubbishBin(node: nodeCell.node)
             }
@@ -196,14 +196,14 @@ extension DocAndAudioListSource {
     }
     
     private func isOwner(ofNode node: MEGANode) -> Bool {
-        return MEGASdkManager.sharedMEGASdk().accessLevel(for: node) == .accessOwner
+        MEGASdk.shared.accessLevel(for: node) == .accessOwner
     }
 
     private func isNodeInRubbishBin(_ node: MEGANode) -> Bool {
-        return MEGASdkManager.sharedMEGASdk().isNode(inRubbish: node)
+        MEGASdk.shared.isNode(inRubbish: node)
     }
 
     private func restorationNode(forNode node: MEGANode) -> MEGANode? {
-        return MEGASdkManager.sharedMEGASdk().node(forHandle: node.restoreHandle)
+        MEGASdk.shared.node(forHandle: node.restoreHandle)
     }
 }

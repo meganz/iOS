@@ -416,7 +416,7 @@
     UIAlertController *alertController = (UIAlertController *)self.presentedViewController;
     if ([alertController isKindOfClass:UIAlertController.class]) {
         BOOL containsInvalidChars = textField.text.mnz_containsInvalidChars;
-        textField.textColor = containsInvalidChars ? UIColor.mnz_redError : UIColor.mnz_label;
+        textField.textColor = containsInvalidChars ? UIColor.systemRedColor : UIColor.labelColor;
         UIAlertAction *rightButtonAction = alertController.actions.lastObject;
         rightButtonAction.enabled = !textField.text.mnz_isEmpty && !containsInvalidChars;
     }

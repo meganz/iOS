@@ -73,8 +73,8 @@
 - (void)setErrorState:(BOOL)error withText:(NSString *)text {
     self.topLabel.text = text;
     if (error) {
-        self.topLabel.textColor = UIColor.mnz_redError;
-        self.passwordTextField.textColor = UIColor.mnz_redError;
+        self.topLabel.textColor = UIColor.systemRedColor;
+        self.passwordTextField.textColor = UIColor.systemRedColor;
     } else {
         self.topLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
         self.passwordTextField.textColor = UIColor.mnz_label;

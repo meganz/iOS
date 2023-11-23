@@ -31,7 +31,7 @@ final class CreateTextFileAlertViewController: UIAlertController {
         if let newFileAC = UIApplication.mnz_visibleViewController() as? UIAlertController {
             let rightButtonAction = newFileAC.actions.last
             let containsInvalidChars = textField.text?.mnz_containsInvalidChars() ?? false
-            textField.textColor = containsInvalidChars ? UIColor.mnz_redError() : UIColor.mnz_label()
+            textField.textColor = containsInvalidChars ? UIColor.systemRed : UIColor.label
             newFileAC.title = newFileNameAlertTitle(invalidChars: containsInvalidChars)
             let empty = textField.text?.mnz_isEmpty() ?? true
             rightButtonAction?.isEnabled = (!empty && !containsInvalidChars)
