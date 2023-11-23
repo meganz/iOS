@@ -33,6 +33,7 @@ enum CookieSettingsAction: ActionType {
     
     case acceptCookiesSwitchValueChanged(Bool)
     case performanceAndAnalyticsSwitchValueChanged(Bool)
+    case advertisingSwitchValueChanged(Bool)
     
     case save
 }
@@ -54,12 +55,14 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
     
     private let cookieSettingsUseCase: any CookieSettingsUseCaseProtocol
     private let router: any CookieSettingsRouting
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
     
     var invokeCommand: ((Command) -> Void)?
     
     private var cookiesConfigArray: [Cookie] = .default
     private var currentCookiesConfigArray: [Cookie] = .default
     private var cookieSettingsSet: Bool = true
+    private(set) var numberOfSection: Int = 0
     
     private let cookieSettingToPosition: [CookiesBitmap: CookiesBitPosition] = [
         .essential: .essential,
@@ -71,9 +74,14 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
     
     // MARK: - Init
     
-    init(cookieSettingsUseCase: any CookieSettingsUseCaseProtocol, router: some CookieSettingsRouting) {
+    init(
+        cookieSettingsUseCase: any CookieSettingsUseCaseProtocol,
+        router: some CookieSettingsRouting,
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
+    ) {
         self.cookieSettingsUseCase = cookieSettingsUseCase
         self.router = router
+        self.featureFlagProvider = featureFlagProvider
     }
         
     func dispatch(_ action: CookieSettingsAction) {
@@ -81,6 +89,7 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
         case .configView:
             Task { @MainActor in
                 await cookieSettings()
+                setNumberOfSections()
                 setFooters()
             }
             
@@ -89,9 +98,19 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
             
         case .performanceAndAnalyticsSwitchValueChanged(let isOn):
             cookiesConfigArray[CookiesBitPosition.performanceAndAnalytics.rawValue].value = isOn
+            
+        case .advertisingSwitchValueChanged(let isOn):
+            guard isFeatureFlagForInAppAdsEnabled else { return }
+            cookiesConfigArray[CookiesBitPosition.advertising.rawValue].value = isOn
+
         case .save:
             save()
         }
+    }
+    
+    // MARK: Feature Flag
+    var isFeatureFlagForInAppAdsEnabled: Bool {
+        featureFlagProvider.isFeatureFlagEnabled(for: .inAppAds)
     }
     
     // MARK: - Private
@@ -136,7 +155,15 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
         footersArray.append(Strings.Localizable.Settings.Cookies.Essential.footer)
         footersArray.append(Strings.Localizable.Settings.Cookies.PerformanceAndAnalytics.footer)
         
+        if isFeatureFlagForInAppAdsEnabled {
+            footersArray.append(Strings.Localizable.Settings.Cookies.AdvertisingCookies.footer)
+        }
+        
         self.invokeCommand?(.updateFooters(footersArray))
+    }
+    
+    private func setNumberOfSections() {
+        numberOfSection = isFeatureFlagForInAppAdsEnabled ? 4 : 3
     }
     
     private func save() {

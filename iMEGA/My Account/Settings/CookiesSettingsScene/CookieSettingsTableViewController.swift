@@ -5,6 +5,7 @@ enum CookieSettingsSection: Int {
     case acceptCookies
     case essentialCookies
     case performanceAndAnalyticsCookies
+    case advertisingCookies
 }
 
 class CookieSettingsTableViewController: UITableViewController {
@@ -19,6 +20,9 @@ class CookieSettingsTableViewController: UITableViewController {
     
     @IBOutlet weak var performanceAndAnalyticsCookiesLabel: UILabel!
     @IBOutlet weak var performanceAndAnalyticsSwitch: UISwitch!
+    
+    @IBOutlet weak var advertisingCookiesLabel: UILabel!
+    @IBOutlet weak var advertisingCookiesSwitch: UISwitch!
     
     @IBOutlet var cookiePolicyBarButtonItem: UIBarButtonItem!
     @IBOutlet var privacyPolicyBarButtonItem: UIBarButtonItem!
@@ -54,10 +58,16 @@ class CookieSettingsTableViewController: UITableViewController {
     func executeCommand(_ command: CookieSettingsViewModel.Command) {
         switch command {
         case .configCookieSettings(let cookiesBitmap):
-            performanceAndAnalyticsSwitch.setOn(cookiesBitmap.contains(.analytics), animated: false)
+            guard viewModel.isFeatureFlagForInAppAdsEnabled else {
+                performanceAndAnalyticsSwitch.setOn(cookiesBitmap.contains(.analytics), animated: false)
+                acceptCookiesSwitch.isOn = performanceAndAnalyticsSwitch.isOn
+                return
+            }
             
-            acceptCookiesSwitch.isOn = performanceAndAnalyticsSwitch.isOn
-        
+            performanceAndAnalyticsSwitch.setOn(cookiesBitmap.contains(.analytics), animated: false)
+            advertisingCookiesSwitch.setOn(cookiesBitmap.contains(.ads), animated: false)
+            acceptCookiesSwitch.isOn = performanceAndAnalyticsSwitch.isOn && advertisingCookiesSwitch.isOn
+            
         case .updateFooters(let array):
             footersArray = array
             tableView.reloadData()
@@ -80,7 +90,7 @@ class CookieSettingsTableViewController: UITableViewController {
         }
     }
     
-    // MARK: - IBAActions
+    // MARK: - IBActions
     
     @IBAction func saveTouchUpInside(_ sender: UIBarButtonItem) {
         viewModel.dispatch(.save)
@@ -90,10 +100,18 @@ class CookieSettingsTableViewController: UITableViewController {
         viewModel.dispatch(.acceptCookiesSwitchValueChanged(sender.isOn))
         
         performanceAndAnalyticsSwitch.setOn(sender.isOn, animated: true)
+        
+        if viewModel.isFeatureFlagForInAppAdsEnabled {
+            advertisingCookiesSwitch.setOn(sender.isOn, animated: true)
+        }
     }
     
     @IBAction func performanceAndAnalyticsSwitchValueChanged(_ sender: UISwitch) {
         viewModel.dispatch(.performanceAndAnalyticsSwitchValueChanged(sender.isOn))
+    }
+    
+    @IBAction func advertisingSwitchValueChanged(_ sender: UISwitch) {
+        viewModel.dispatch(.advertisingSwitchValueChanged(sender.isOn))
     }
     
     @IBAction func cookiePolicyTouchUpInside(_ sender: UIBarButtonItem) {
@@ -117,8 +135,11 @@ class CookieSettingsTableViewController: UITableViewController {
         acceptCookiesLabel.text = Strings.Localizable.Dialog.Cookies.accept
         essentialCookiesLabel.text = Strings.Localizable.Settings.Cookies.essential
         essentialCookiesDetailLabel.text = Strings.Localizable.Settings.Cookies.Essential.alwaysOn
-        
         performanceAndAnalyticsCookiesLabel.text = Strings.Localizable.Settings.Cookies.performanceAndAnalytics
+        
+        if viewModel.isFeatureFlagForInAppAdsEnabled {
+            advertisingCookiesLabel.text = Strings.Localizable.Settings.Cookies.advertisingCookies
+        }
         
         configToolbar()
         
@@ -155,16 +176,23 @@ class CookieSettingsTableViewController: UITableViewController {
     
     // MARK: - UITableViewDataSource
     
-    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {        
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        viewModel.numberOfSection
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         switch section {
         case CookieSettingsSection.acceptCookies.rawValue:
-            return footersArray[CookieSettingsSection.acceptCookies.rawValue]
+            return viewModel.isFeatureFlagForInAppAdsEnabled ? "" : footersArray[CookieSettingsSection.acceptCookies.rawValue]
             
         case CookieSettingsSection.essentialCookies.rawValue:
             return footersArray[CookieSettingsSection.essentialCookies.rawValue]
             
         case CookieSettingsSection.performanceAndAnalyticsCookies.rawValue:
             return footersArray[CookieSettingsSection.performanceAndAnalyticsCookies.rawValue]
+            
+        case CookieSettingsSection.advertisingCookies.rawValue:
+            return viewModel.isFeatureFlagForInAppAdsEnabled ? footersArray[CookieSettingsSection.advertisingCookies.rawValue] : ""
             
         default:
             return ""

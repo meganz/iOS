@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,14 +20,14 @@
                             <tableViewSection id="DM1-6i-sd4">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="Eni-If-96i">
-                                        <rect key="frame" x="0.0" y="18" width="414" height="44"/>
+                                        <rect key="frame" x="0.0" y="18" width="414" height="48"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="Eni-If-96i" id="KYo-6x-TTS">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="48"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="K6C-ga-zqF">
-                                                    <rect key="frame" x="345" y="6.5" width="51" height="31"/>
+                                                    <rect key="frame" x="345" y="8.5" width="51" height="31"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="49" id="9Dx-wH-fyT"/>
                                                     </constraints>
@@ -36,7 +36,7 @@
                                                     </connections>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Accept Cookies" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xd4-xW-2Pe">
-                                                    <rect key="frame" x="20" y="13.5" width="101.5" height="17.5"/>
+                                                    <rect key="frame" x="20" y="13.5" width="119.5" height="21.5"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -55,8 +55,8 @@
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
-                                                    <exclude reference="bXm-bE-NQW"/>
                                                     <exclude reference="txX-4u-vW3"/>
+                                                    <exclude reference="bXm-bE-NQW"/>
                                                     <exclude reference="Nxh-UV-8hU"/>
                                                 </mask>
                                             </variation>
@@ -69,21 +69,21 @@
                                 <string key="footerTitle">Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent.</string>
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" textLabel="zTK-5B-dCd" detailTextLabel="flH-7k-eOO" style="IBUITableViewCellStyleValue1" id="w7x-qq-TUi">
-                                        <rect key="frame" x="0.0" y="98" width="414" height="43.5"/>
+                                        <rect key="frame" x="0.0" y="102" width="414" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="w7x-qq-TUi" id="np7-eH-9Tq">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Essential Cookies" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" id="zTK-5B-dCd">
-                                                    <rect key="frame" x="20" y="14" width="113.5" height="17"/>
+                                                    <rect key="frame" x="20" y="12" width="133.5" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Always on" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" id="flH-7k-eOO">
-                                                    <rect key="frame" x="333" y="15" width="61" height="16"/>
+                                                    <rect key="frame" x="321" y="13" width="73" height="19.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <nil key="textColor"/>
@@ -99,14 +99,14 @@
                                 <string key="footerTitle">Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements. </string>
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="WxE-fY-4YZ">
-                                        <rect key="frame" x="0.0" y="214" width="414" height="44.5"/>
+                                        <rect key="frame" x="0.0" y="225.5" width="414" height="48"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="WxE-fY-4YZ" id="a9I-Zw-tfK">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="48"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Rhg-kL-7jv">
-                                                    <rect key="frame" x="345" y="7" width="51" height="31"/>
+                                                    <rect key="frame" x="345" y="8.5" width="51" height="31"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="49" id="Sd7-W2-vxs"/>
                                                     </constraints>
@@ -115,7 +115,7 @@
                                                     </connections>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Performance &amp; Analytics Cookies" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bcm-kQ-mo0">
-                                                    <rect key="frame" x="20" y="13.5" width="215.5" height="17.5"/>
+                                                    <rect key="frame" x="20" y="13.5" width="253.5" height="21"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -134,9 +134,58 @@
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
-                                                    <exclude reference="VEC-E9-H7o"/>
                                                     <exclude reference="zYx-zY-b7G"/>
+                                                    <exclude reference="VEC-E9-H7o"/>
                                                     <exclude reference="gbn-23-yst"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" systemColor="tableCellGroupedBackgroundColor"/>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection id="Tfp-BD-of8">
+                                <string key="footerTitle">Used by our approved advertising partners to collect data about your browsing activities and customise the ads you see on our services and on other websites. Not accepting these Cookies means you will still see ads but they will be less relevant.</string>
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" id="qQj-d9-4jI">
+                                        <rect key="frame" x="0.0" y="369.5" width="414" height="48"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="qQj-d9-4jI" id="w72-OH-hwu">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="48"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="1sm-xl-2na">
+                                                    <rect key="frame" x="345" y="8.5" width="51" height="31"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="49" id="dw8-UZ-JmP"/>
+                                                    </constraints>
+                                                    <connections>
+                                                        <action selector="advertisingSwitchValueChanged:" destination="oqn-M7-ZsL" eventType="valueChanged" id="PED-1s-uiE"/>
+                                                    </connections>
+                                                </switch>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Advertising Cookies" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sur-6l-Bez">
+                                                    <rect key="frame" x="20" y="13.5" width="151.5" height="21"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Sur-6l-Bez" firstAttribute="trailing" secondItem="w72-OH-hwu" secondAttribute="trailingMargin" id="Kno-8F-Tax"/>
+                                                <constraint firstItem="Sur-6l-Bez" firstAttribute="leading" secondItem="w72-OH-hwu" secondAttribute="leadingMargin" id="LNA-VZ-eg4"/>
+                                                <constraint firstItem="Sur-6l-Bez" firstAttribute="leading" secondItem="w72-OH-hwu" secondAttribute="leadingMargin" constant="15" id="Sg6-0m-0Tz"/>
+                                                <constraint firstAttribute="bottom" secondItem="Sur-6l-Bez" secondAttribute="bottom" constant="13.5" id="alb-Wh-Nwu"/>
+                                                <constraint firstItem="1sm-xl-2na" firstAttribute="trailing" secondItem="w72-OH-hwu" secondAttribute="trailingMargin" id="gfT-wg-R2d"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="1sm-xl-2na" secondAttribute="trailing" id="gfc-K6-gcd"/>
+                                                <constraint firstItem="1sm-xl-2na" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Sur-6l-Bez" secondAttribute="trailing" constant="8" id="lER-0Q-QMv"/>
+                                                <constraint firstItem="1sm-xl-2na" firstAttribute="centerY" secondItem="w72-OH-hwu" secondAttribute="centerY" id="w6F-Vp-hb5"/>
+                                                <constraint firstItem="Sur-6l-Bez" firstAttribute="top" secondItem="w72-OH-hwu" secondAttribute="top" constant="13.5" id="yac-8R-qQM"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="Kno-8F-Tax"/>
+                                                    <exclude reference="Sg6-0m-0Tz"/>
+                                                    <exclude reference="gfT-wg-R2d"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -161,6 +210,8 @@
                     <connections>
                         <outlet property="acceptCookiesLabel" destination="xd4-xW-2Pe" id="ffd-5G-c5s"/>
                         <outlet property="acceptCookiesSwitch" destination="K6C-ga-zqF" id="f8U-Qw-s87"/>
+                        <outlet property="advertisingCookiesLabel" destination="Sur-6l-Bez" id="SdZ-w3-Pvw"/>
+                        <outlet property="advertisingCookiesSwitch" destination="1sm-xl-2na" id="20d-oo-S49"/>
                         <outlet property="cookiePolicyBarButtonItem" destination="RuF-TW-7PV" id="qig-nE-pJH"/>
                         <outlet property="essentialCookiesDetailLabel" destination="flH-7k-eOO" id="083-Hv-Exo"/>
                         <outlet property="essentialCookiesLabel" destination="zTK-5B-dCd" id="Pr9-xR-g8N"/>

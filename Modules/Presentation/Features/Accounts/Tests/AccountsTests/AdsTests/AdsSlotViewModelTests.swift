@@ -23,7 +23,7 @@ final class AdsSlotViewModelTests: XCTestCase {
         XCTAssertTrue(sut.isFeatureFlagForInAppAdsEnabled)
     }
     
-    func testIsFeatureFlagForInAppAdsEnabled_inAppAdsDisabled_shouldBeEnabled() {
+    func testIsFeatureFlagForInAppAdsEnabled_inAppAdsDisabled_shouldBeDisabled() {
         let sut = makeSUT(featureFlags: [.inAppAds: false])
         XCTAssertFalse(sut.isFeatureFlagForInAppAdsEnabled)
     }
