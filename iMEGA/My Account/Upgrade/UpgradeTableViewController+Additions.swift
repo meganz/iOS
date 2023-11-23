@@ -34,7 +34,7 @@ extension UpgradeTableViewController {
         
         if let maxQuotaRange = fullQuotaString.range(of: maxQuota) {
             attributedQuota.addAttributes(
-                [.foregroundColor: UIColor.mnz_label()],
+                [.foregroundColor: UIColor.label],
                 range: NSRange(maxQuotaRange, in: fullQuotaString)
             )
         }

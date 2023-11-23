@@ -14,7 +14,7 @@ class NodeOwnerInfoTableViewCell: UITableViewCell {
         shouldDisplayUserVerifiedIcon: Bool
     ) {
         backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
-        emailLabel.textColor = UIColor.mnz_label()
+        emailLabel.textColor = UIColor.label
         emailLabel.text = user.email
         
         let userDisplayName = user.mnz_displayName ?? ""
@@ -22,7 +22,7 @@ class NodeOwnerInfoTableViewCell: UITableViewCell {
                                                                highligthedString: userDisplayName,
                                                                normalAttributes: [.foregroundColor: UIColor.mnz_secondaryGray(for: traitCollection),
                                                                                   .font: UIFont.preferredFont(style: .body, weight: .bold)],
-                                                               highlightedAttributes: [.foregroundColor: UIColor.mnz_label(),
+                                                               highlightedAttributes: [.foregroundColor: UIColor.label,
                                                                                        .font: UIFont.preferredFont(style: .body, weight: .semibold)])
         
         avatarImageView.mnz_setImage(forUserHandle: user.handle, name: userDisplayName)

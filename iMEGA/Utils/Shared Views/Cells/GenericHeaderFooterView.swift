@@ -82,7 +82,7 @@ final class GenericHeaderFooterView: UITableViewHeaderFooterView {
         }
         
         self.titleLabel.textColor = UIColor.mnz_secondaryGray(for: self.traitCollection)
-        self.detailLabel.textColor = UIColor.mnz_label()
+        self.detailLabel.textColor = UIColor.label
         
         self.topSeparatorView.backgroundColor = UIColor.mnz_separator(for: self.traitCollection)
         self.bottomSeparatorView.backgroundColor = UIColor.mnz_separator(for: self.traitCollection)

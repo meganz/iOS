@@ -139,7 +139,7 @@ typedef NS_ENUM(NSInteger, QRSection) {
         case QRSectionMyCode: {
             self.view.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
             self.backButton.tintColor = self.moreButton.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
-            [self.segmentedControl setTitleTextColor:UIColor.mnz_label selectedColor:UIColor.mnz_label];
+            [self.segmentedControl setTitleTextColor:UIColor.labelColor selectedColor:UIColor.labelColor];
             
             //The SVProgressHUD appearance is not updated when enabling/disabling dark mode. By updating the appearance and dismissing the HUD, it will have the correct configuration the next time is shown.
             [AppearanceManager configureSVProgressHUD:self.traitCollection];

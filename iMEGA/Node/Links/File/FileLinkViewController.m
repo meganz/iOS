@@ -197,7 +197,7 @@
 
 - (void)setNavigationBarTitleLabel {
     if (self.node.name != nil) {
-        UILabel *label = [UILabel.new customNavigationBarLabelWithTitle:self.node.name subtitle:LocalizedString(@"fileLink", @"") color:UIColor.mnz_label];
+        UILabel *label = [UILabel.new customNavigationBarLabelWithTitle:self.node.name subtitle:LocalizedString(@"fileLink", @"") color:UIColor.labelColor];
         label.frame = CGRectMake(0, 0, self.navigationItem.titleView.bounds.size.width, 44);
         self.navigationBarLabel = label;
         self.navigationItem.titleView = self.navigationBarLabel;
@@ -213,7 +213,7 @@
 
 - (void)showUnavailableLinkViewWithError:(UnavailableLinkError)error {
     self.moreBarButtonItem.enabled = self.shareLinkBarButtonItem.enabled = self.sendToBarButtonItem.enabled = NO;
-    self.navigationBarLabel = [UILabel.new customNavigationBarLabelWithTitle:LocalizedString(@"fileLink", @"") subtitle:LocalizedString(@"Unavailable", @"Text used to show the user that some resource is not available") color:UIColor.mnz_label];
+    self.navigationBarLabel = [UILabel.new customNavigationBarLabelWithTitle:LocalizedString(@"fileLink", @"") subtitle:LocalizedString(@"Unavailable", @"Text used to show the user that some resource is not available") color:UIColor.labelColor];
     self.navigationItem.titleView = self.navigationBarLabel;
     UnavailableLinkView *unavailableLinkView = [[[NSBundle mainBundle] loadNibNamed:@"UnavailableLinkView" owner:self options: nil] firstObject];
     switch (error) {

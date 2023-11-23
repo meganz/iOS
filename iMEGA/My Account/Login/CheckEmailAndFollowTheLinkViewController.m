@@ -93,7 +93,7 @@
     } else {
         self.emailInputView.topLabel.text = LocalizedString(@"emailPlaceholder", @"");
         self.emailInputView.topLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
-        self.emailInputView.inputTextField.textColor = UIColor.mnz_label;
+        self.emailInputView.inputTextField.textColor = UIColor.labelColor;
     }
 }
 

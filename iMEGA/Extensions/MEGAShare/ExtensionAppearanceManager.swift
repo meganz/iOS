@@ -6,12 +6,12 @@ class ExtensionAppearanceManager: NSObject {
         setupNavigationBarAppearance(traitCollection)
         
         // To tint the color of the prompt.
-        UILabel.appearance(whenContainedInInstancesOf: [UINavigationBar.self]).textColor = UIColor.mnz_label()
+        UILabel.appearance(whenContainedInInstancesOf: [UINavigationBar.self]).textColor = UIColor.label
         
         UISearchBar.appearance().isTranslucent = false
         UISearchBar.appearance().tintColor = UIColor.mnz_primaryGray(for: traitCollection)
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor.mnz_background()
-        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = UIColor.mnz_label()
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = UIColor.label
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.regular)
         
         let segmentedControlFont = UIFont.systemFont(ofSize: 13, weight: UIFont.Weight.regular)

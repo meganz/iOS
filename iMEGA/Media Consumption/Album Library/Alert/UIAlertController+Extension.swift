@@ -40,7 +40,7 @@ extension UIAlertController {
                 } else {
                     alert.title = viewModel.title
                     alert.message = viewModel.message
-                    textField.textColor = UIColor.mnz_label()
+                    textField.textColor = UIColor.label
                     isEnabled = true
                 }
                 alert.actions.last?.isEnabled = isEnabled

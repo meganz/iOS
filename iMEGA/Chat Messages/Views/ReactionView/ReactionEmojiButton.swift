@@ -38,7 +38,7 @@ class ReactionEmojiButton: UIButton {
         attributedString.append(attributedCount)
 
         var attributed = AttributedString(attributedString)
-        attributed.foregroundColor = .mnz_label()
+        attributed.foregroundColor = UIColor.label
         
         var config = UIButton.Configuration.plain()
         config.attributedTitle = attributed

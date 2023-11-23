@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGASDKRepo
 import UIKit
 
 final class PlaylistItemTableViewCell: UITableViewCell {
@@ -17,7 +18,7 @@ final class PlaylistItemTableViewCell: UITableViewCell {
     
     // MARK: - Private functions
     private func style(with trait: UITraitCollection) {
-        titleLabel.textColor = UIColor.mnz_label()
+        titleLabel.textColor = UIColor.label
         artistLabel.textColor = UIColor.mnz_subtitles(for: trait)
     }
     
@@ -30,9 +31,11 @@ final class PlaylistItemTableViewCell: UITableViewCell {
                 if FileManager.default.fileExists(atPath: thumbnailFilePath) {
                     thumbnailImageView.image = UIImage(contentsOfFile: thumbnailFilePath)
                 } else {
-                    MEGASdk.shared.getThumbnailNode(node, destinationFilePath: thumbnailFilePath, delegate: MEGAGenericRequestDelegate { [weak self] request, error in
-                        if request.nodeHandle == node.handle && error.type == .apiOk {
-                            self?.thumbnailImageView.image = UIImage(contentsOfFile: request.file)
+                    MEGASdk.shared.getThumbnailNode(node, destinationFilePath: thumbnailFilePath, delegate: RequestDelegate { [weak self] result in
+                        if case let .success(request) = result {
+                            if request.nodeHandle == node.handle {
+                                self?.thumbnailImageView.image = UIImage(contentsOfFile: request.file)
+                            }
                         }
                     })
                 }

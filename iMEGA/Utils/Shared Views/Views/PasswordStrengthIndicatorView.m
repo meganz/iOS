@@ -35,7 +35,7 @@
     self.customView = [[[NSBundle mainBundle] loadNibNamed:@"PasswordStrengthIndicatorView" owner:self options:nil] firstObject];
     [self addSubview:self.customView];
     self.customView.frame = self.bounds;
-    self.strengthLabel.textColor = UIColor.mnz_label;
+    self.strengthLabel.textColor = UIColor.labelColor;
     [self.strengthLabel sizeToFit];
 }
 

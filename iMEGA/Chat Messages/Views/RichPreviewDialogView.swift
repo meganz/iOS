@@ -123,7 +123,7 @@ class RichPreviewDialogView: UIView {
     
     private func updateAppearance() {
         rootFlexContainer.backgroundColor = .mnz_chatRichLinkContentBubble(traitCollection)
-        titleLabel.textColor = .mnz_label()
+        titleLabel.textColor = UIColor.label
         descriptionLabel.textColor = .mnz_subtitles(for: traitCollection)
     }
     

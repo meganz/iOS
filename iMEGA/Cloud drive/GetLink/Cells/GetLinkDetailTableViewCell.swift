@@ -18,7 +18,7 @@ class GetLinkDetailTableViewCell: UITableViewCell {
         } else {
             nameLabel.text = Strings.Localizable.setPassword
         }
-        nameLabel.textColor = UIColor.mnz_label()
+        nameLabel.textColor = UIColor.label
         proImageView.isHidden = justUpgraded ? true : isPro
         detailLabel.isHidden = true
         
@@ -37,7 +37,7 @@ class GetLinkDetailTableViewCell: UITableViewCell {
     
     func configureExpiryDateCell(date: Date?, dateSelected: Bool) {
         nameLabel.text =  Strings.Localizable.setExpiryDate
-        nameLabel.textColor = UIColor.mnz_label()
+        nameLabel.textColor = UIColor.label
         if let date = date {
             detailLabel.text = dateFormatter.localisedString(from: date)
         } else {

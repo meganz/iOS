@@ -15,7 +15,7 @@ class GiphyCategoryView: UIView {
     private let gifButton: UIButton = {
         let button = UIButton(type: .custom)
         button.titleLabel?.font = .boldSystemFont(ofSize: 15)
-        button.setTitleColor(.mnz_label(), for: .selected)
+        button.setTitleColor(UIColor.label, for: .selected)
         button.setTitleColor(.systemGray, for: .normal)
         button.setTitle("GIFs", for: .normal)
         button.isSelected = true
@@ -26,7 +26,7 @@ class GiphyCategoryView: UIView {
     private let stickersButton: UIButton = {
         let button = UIButton(type: .custom)
         button.titleLabel?.font = .boldSystemFont(ofSize: 15)
-        button.setTitleColor(.mnz_label(), for: .selected)
+        button.setTitleColor(UIColor.label, for: .selected)
         button.setTitleColor(.systemGray, for: .normal)
         button.setTitle("Stickers", for: .normal)
         button.isSelected = false
@@ -37,7 +37,7 @@ class GiphyCategoryView: UIView {
     private let textButton: UIButton = {
         let button = UIButton(type: .custom)
         button.titleLabel?.font = .boldSystemFont(ofSize: 15)
-        button.setTitleColor(.mnz_label(), for: .selected)
+        button.setTitleColor(UIColor.label, for: .selected)
         button.setTitleColor(.systemGray, for: .normal)
         button.setTitle("Text", for: .normal)
         button.isSelected = false
@@ -48,7 +48,7 @@ class GiphyCategoryView: UIView {
     private let emojiButton: UIButton = {
         let button = UIButton(type: .custom)
         button.titleLabel?.font = .boldSystemFont(ofSize: 15)
-        button.setTitleColor(.mnz_label(), for: .selected)
+        button.setTitleColor(UIColor.label, for: .selected)
         button.setTitleColor(.systemGray, for: .normal)
         button.setTitle("Emoji", for: .normal)
         button.isSelected = false

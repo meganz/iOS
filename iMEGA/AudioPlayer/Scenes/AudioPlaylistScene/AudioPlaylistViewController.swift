@@ -168,7 +168,7 @@ final class AudioPlaylistViewController: UIViewController {
         
         toolbarBlurView.effect = UIBlurEffect(style: .systemUltraThinMaterial)
         
-        titleLabel.textColor = UIColor.mnz_label()
+        titleLabel.textColor = UIColor.label
         
         tableView.separatorColor = UIColor.mnz_separator(for: traitCollection)
     }

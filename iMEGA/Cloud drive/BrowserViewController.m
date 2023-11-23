@@ -726,7 +726,7 @@
         cell.thumbnailImageView.alpha = node.isFolder ? 1.0 : 0.5;
     } else {
         cell.infoLabel.enabled = YES;
-        cell.nameLabel.textColor = UIColor.mnz_label;
+        cell.nameLabel.textColor = UIColor.labelColor;
         cell.subtitleLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
         cell.userInteractionEnabled = YES;
         cell.thumbnailImageView.alpha = 1.0;

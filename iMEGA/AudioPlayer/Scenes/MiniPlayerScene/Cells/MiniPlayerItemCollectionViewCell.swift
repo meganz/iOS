@@ -15,7 +15,7 @@ final class MiniPlayerItemCollectionViewCell: UICollectionViewCell {
     private func style(with trait: UITraitCollection) {
         contentView.backgroundColor = .clear
         
-        titleLabel.textColor = UIColor.mnz_label()
+        titleLabel.textColor = UIColor.label
         subtitleLabel.textColor = UIColor.mnz_subtitles(for: trait)
     }
     

@@ -24,7 +24,7 @@ extension BrowserViewController {
             let label = UILabel().customNavigationBarLabel(
                 title: parentNode.name ?? "",
                 subtitle: title,
-                color: UIColor.mnz_label()
+                color: UIColor.label
             )
         
             if let titleView = navigationItem.titleView {

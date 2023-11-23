@@ -79,7 +79,7 @@
     
     self.invalidCodeLabel.textColor = UIColor.systemRedColor;
     
-    [self.lostYourAuthenticatorDeviceButton setTitleColor:UIColor.mnz_label forState:UIControlStateNormal];
+    [self.lostYourAuthenticatorDeviceButton setTitleColor:UIColor.labelColor forState:UIControlStateNormal];
 }
 
 - (void)previousTextViewShouldBecomeFirstResponder:(UITextView *)textView {
@@ -228,7 +228,7 @@
         textView.selectedTextRange = [textView textRangeFromPosition:end toPosition:end];
     });
     
-    [self tintCodeWithColor:UIColor.mnz_label];
+    [self tintCodeWithColor:UIColor.labelColor];
     self.invalidCodeImageView.hidden = self.invalidCodeLabel.hidden = YES;
 }
 

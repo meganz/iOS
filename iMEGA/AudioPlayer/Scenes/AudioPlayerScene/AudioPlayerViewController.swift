@@ -294,9 +294,9 @@ final class AudioPlayerViewController: UIViewController {
     }
     
     private func style(with trait: UITraitCollection) {
-        titleLabel.textColor = UIColor.mnz_label()
-        subtitleLabel.textColor = UIColor.mnz_label()
-        detailLabel.textColor = UIColor.mnz_label()
+        titleLabel.textColor = UIColor.label
+        subtitleLabel.textColor = UIColor.label
+        detailLabel.textColor = UIColor.label
         currentTimeLabel.textColor = UIColor.mnz_secondaryGray(for: trait)
         remainingTimeLabel.textColor = UIColor.mnz_secondaryGray(for: trait)
         timeSliderView.tintColor = UIColor.mnz_gray848484()

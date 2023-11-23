@@ -26,7 +26,7 @@ class AppearanceManager: NSObject {
         UISearchBar.appearance().tintColor = UIColor.mnz_primaryGray(for: traitCollection)
         UISearchBar.appearance().backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor.mnz_background()
-        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = UIColor.mnz_label()
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = UIColor.label
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.regular)
         
         let segmentedControlFont = UIFont.systemFont(ofSize: 13, weight: UIFont.Weight.regular)
@@ -34,7 +34,7 @@ class AppearanceManager: NSObject {
         
         UISwitch.appearance().onTintColor = UIColor.mnz_turquoise(for: traitCollection)
         
-        UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = UIColor.mnz_label()
+        UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = UIColor.label
         
         UIBarButtonItem.appearance(whenContainedInInstancesOf: [UIToolbar.self]).tintColor = UIColor.mnz_primaryGray(for: traitCollection)
         

@@ -338,7 +338,7 @@
     
     SKProduct *product = [[MEGAPurchase sharedInstance].products objectOrNilAtIndex:index];
     NSString *storageValueString = [self storageAndUnitsByProduct:product];
-    NSMutableAttributedString *storageValueMutableAttributedString = [NSMutableAttributedString.alloc initWithString:storageValueString attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:UIColor.mnz_label}];
+    NSMutableAttributedString *storageValueMutableAttributedString = [NSMutableAttributedString.alloc initWithString:storageValueString attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:UIColor.labelColor}];
     NSRange storageValueRange = [storageString rangeOfString:@"%@"];
     [storageMutableAttributedString replaceCharactersInRange:storageValueRange withAttributedString:storageValueMutableAttributedString];
     
@@ -351,7 +351,7 @@
     
     SKProduct *product = [[MEGAPurchase sharedInstance].products objectOrNilAtIndex:index];
     NSString *transferQuotaValueString = [self transferAndUnitsByProduct:product];
-    NSMutableAttributedString *transferQuotaValueMutableAttributedString = [NSMutableAttributedString.alloc initWithString:transferQuotaValueString attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:UIColor.mnz_label}];
+    NSMutableAttributedString *transferQuotaValueMutableAttributedString = [NSMutableAttributedString.alloc initWithString:transferQuotaValueString attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:UIColor.labelColor}];
     NSRange transferQuotaValueRange = [transferQuotaString rangeOfString:@"%@"];
     [transferQuotaMutableAttributedString replaceCharactersInRange:transferQuotaValueRange withAttributedString:transferQuotaValueMutableAttributedString];
     
@@ -364,7 +364,7 @@
     freeStorageString = freeStorageString.mnz_removeWebclientFormatters;
     NSMutableAttributedString *freeStorageMutableAttributedString = [NSMutableAttributedString.alloc initWithString:freeStorageString attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
     
-    NSMutableAttributedString *storageMutableAttributedString = [NSMutableAttributedString.alloc initWithString:freeStorageValueString attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:UIColor.mnz_label}];
+    NSMutableAttributedString *storageMutableAttributedString = [NSMutableAttributedString.alloc initWithString:freeStorageValueString attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:UIColor.labelColor}];
     NSRange freeStorageValueRange = [freeStorageString rangeOfString:freeStorageValueString];
     [freeStorageMutableAttributedString replaceCharactersInRange:freeStorageValueRange withAttributedString:storageMutableAttributedString];
     
@@ -380,7 +380,7 @@
     transferQuotaString = transferQuotaString.mnz_removeWebclientFormatters;
     NSMutableAttributedString *transferQuotaMutableAttributedString = [NSMutableAttributedString.alloc initWithString:transferQuotaString attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
     
-    NSMutableAttributedString *limitedTransferQuotaMutableAttributedString = [NSMutableAttributedString.alloc initWithString:limitedString attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:UIColor.mnz_label}];
+    NSMutableAttributedString *limitedTransferQuotaMutableAttributedString = [NSMutableAttributedString.alloc initWithString:limitedString attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:UIColor.labelColor}];
     NSRange limitedStringRange = [transferQuotaString rangeOfString:limitedString];
     [transferQuotaMutableAttributedString replaceCharactersInRange:limitedStringRange withAttributedString:limitedTransferQuotaMutableAttributedString];
     
