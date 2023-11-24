@@ -179,7 +179,7 @@ final class SlideShowViewController: UIViewController, ViewType {
 
         setVisibility(true)
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut) {
-            self.collectionView.backgroundColor = UIColor.mnz_background()
+            self.collectionView.backgroundColor = UIColor.systemBackground
             self.view.backgroundColor = self.backgroundColor
         }
         slideShowTimer.invalidate()
@@ -187,7 +187,7 @@ final class SlideShowViewController: UIViewController, ViewType {
     }
     
     private func finish() {
-        collectionView.backgroundColor = UIColor.mnz_background()
+        collectionView.backgroundColor = UIColor.systemBackground
         slideShowTimer.invalidate()
         hideLoader()
         viewModel?.dispatch(.finish)

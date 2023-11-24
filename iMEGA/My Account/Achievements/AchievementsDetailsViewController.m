@@ -74,7 +74,7 @@
 }
 
 - (void)updateAppearance {
-    self.view.backgroundColor = UIColor.mnz_background;
+    self.view.backgroundColor = UIColor.systemBackgroundColor;
     
     self.subtitleView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
     

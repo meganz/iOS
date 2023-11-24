@@ -10,7 +10,7 @@ class ExtensionAppearanceManager: NSObject {
         
         UISearchBar.appearance().isTranslucent = false
         UISearchBar.appearance().tintColor = UIColor.mnz_primaryGray(for: traitCollection)
-        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor.mnz_background()
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor.systemBackground
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = UIColor.label
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.regular)
         
@@ -23,11 +23,11 @@ class ExtensionAppearanceManager: NSObject {
         
         UIProgressView.appearance().tintColor = UIColor.mnz_turquoise(for: traitCollection)
         
-        UITableView.appearance().backgroundColor = UIColor.mnz_background()
+        UITableView.appearance().backgroundColor = UIColor.systemBackground
         UIButton.appearance(whenContainedInInstancesOf: [UITableViewCell.self]).tintColor = UIColor.mnz_tertiaryGray(for: traitCollection)
         UITableViewCell.appearance().tintColor = UIColor.mnz_turquoise(for: traitCollection)
         
-        UICollectionView.appearance().backgroundColor = UIColor.mnz_background()
+        UICollectionView.appearance().backgroundColor = UIColor.systemBackground
         UIButton.appearance(whenContainedInInstancesOf: [UICollectionViewCell.self]).tintColor = UIColor.mnz_tertiaryGray(for: traitCollection)
         
         UIToolbar.appearance().barTintColor = UIColor.mnz_mainBars(for: traitCollection)
@@ -54,7 +54,7 @@ class ExtensionAppearanceManager: NSObject {
         SVProgressHUD.setFont(UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold))
         SVProgressHUD.setForegroundColor(UIColor.mnz_primaryGray(for: traitCollection))
         SVProgressHUD.setForegroundImageColor(UIColor.mnz_primaryGray(for: traitCollection))
-        SVProgressHUD.setBackgroundColor(UIColor.mnz_background())
+        SVProgressHUD.setBackgroundColor(UIColor.systemBackground)
         SVProgressHUD.setHapticsEnabled(true)
         
         SVProgressHUD.setSuccessImage(Asset.Images.Hud.hudSuccess.image)

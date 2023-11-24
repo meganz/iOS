@@ -302,7 +302,7 @@
     
     if (self.privacyView == nil) {
         UIViewController *privacyVC = [[UIStoryboard storyboardWithName:@"Launch" bundle:nil] instantiateViewControllerWithIdentifier:@"PrivacyViewControllerID"];
-        privacyVC.view.backgroundColor = UIColor.mnz_background;
+        privacyVC.view.backgroundColor = UIColor.systemBackgroundColor;
         self.privacyView = privacyVC.view;
     }
     [self.window addSubview:self.privacyView];

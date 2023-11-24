@@ -576,7 +576,7 @@ static NSString *kisDirectory = @"kisDirectory";
 }
 
 - (void)reloadData {
-    self.view.backgroundColor = UIColor.mnz_background;
+    self.view.backgroundColor = UIColor.systemBackgroundColor;
     
     if (self.viewModePreference == ViewModePreferenceList) {
         [self.offlineTableView.tableView reloadData];

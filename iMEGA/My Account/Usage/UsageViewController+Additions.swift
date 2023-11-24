@@ -12,9 +12,9 @@ extension UsageViewController {
     }
     
     @objc func updateAppearance() {
-        view.backgroundColor = UIColor.mnz_background()
+        view.backgroundColor = UIColor.systemBackground
         
-        pieChartView?.backgroundColor = UIColor.mnz_background()
+        pieChartView?.backgroundColor = UIColor.systemBackground
         
         pieChartMainLabel?.textColor = storageColor(traitCollection: traitCollection,
                                                    isStorageFull: isStorageFull(),
@@ -39,7 +39,7 @@ extension UsageViewController {
         rubbishBinBottomSeparatorView?.backgroundColor = UIColor.mnz_separator(for: traitCollection)
         incomingSharesBottomSeparatorView?.backgroundColor = UIColor.mnz_separator(for: traitCollection)
         
-        usageStorageView?.backgroundColor = UIColor.mnz_background()
+        usageStorageView?.backgroundColor = UIColor.systemBackground
         usageTitleLabel?.textColor = UIColor.mnz_primaryGray(for: traitCollection)
         usageSizeLabel?.textColor = UIColor.mnz_turquoise(for: traitCollection)
     }

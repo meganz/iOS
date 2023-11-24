@@ -169,11 +169,11 @@
 }
 
 - (void)updateAppearance {
-    self.view.backgroundColor = self.scrollView.backgroundColor = UIColor.mnz_background;
+    self.view.backgroundColor = self.scrollView.backgroundColor = UIColor.systemBackgroundColor;
     
     self.pageControl.currentPageIndicatorTintColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
     self.pageControl.pageIndicatorTintColor = [UIColor mnz_tertiaryGrayForTraitCollection:self.traitCollection];
-    self.pageControl.backgroundColor = UIColor.mnz_background;
+    self.pageControl.backgroundColor = UIColor.systemBackgroundColor;
     
     [self.primaryButton mnz_setupPrimary:self.traitCollection];
     [self.secondaryButton mnz_setupBasic:self.traitCollection];

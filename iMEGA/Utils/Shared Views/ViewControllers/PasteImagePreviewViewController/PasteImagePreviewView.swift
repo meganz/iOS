@@ -46,7 +46,7 @@ class PasteImagePreviewView: UIView {
         self.viewModel = viewModel
      
         containerView.flex.alignItems(.center).justifyContent(.center).define { flex in
-            flex.addItem(contentView).width(90%).maxHeight(85%).padding(20).backgroundColor(.mnz_background()).define { flex in
+            flex.addItem(contentView).width(90%).maxHeight(85%).padding(20).backgroundColor(UIColor.systemBackground).define { flex in
                 flex.addItem(imageView).marginBottom(23).maxHeight(350).shrink(1)
                 
                 flex.addItem(buttonContainer).width(100%).direction(UIDevice.current.orientation.isLandscape ? .row : .column).define { flex in

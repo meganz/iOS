@@ -304,8 +304,8 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 }
 
 - (void)toggleTransparentInterfaceForDismissal:(BOOL)transparent {
-    self.view.backgroundColor = transparent ? UIColor.clearColor : UIColor.mnz_background;
-    self.view.superview.superview.backgroundColor = transparent ? UIColor.clearColor : UIColor.mnz_background;
+    self.view.backgroundColor = transparent ? UIColor.clearColor : UIColor.systemBackgroundColor;
+    self.view.superview.superview.backgroundColor = transparent ? UIColor.clearColor : UIColor.systemBackgroundColor;
     self.statusBarBackground.layer.opacity = self.navigationBar.layer.opacity = self.toolbar.layer.opacity = transparent ? 0.0f : 1.0f;
     
     MEGANode *node = self.dataProvider.currentPhoto;
@@ -353,7 +353,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     
     [self reloadTitleWithCompletionHandler:^{}];
     
-    self.view.backgroundColor = UIColor.mnz_background;
+    self.view.backgroundColor = UIColor.systemBackgroundColor;
 }
 
 - (CGFloat)maximumZoomScaleWith:(MEGANode *)node zoomableView:(UIScrollView *)zoomableView imageView:(UIView *)imageView {
@@ -946,7 +946,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     [UIView animateWithDuration:0.3 animations:^{
         if (self.isInterfaceHidden) {
             self.statusBarBackground.layer.opacity = self.navigationBar.layer.opacity = self.toolbar.layer.opacity = 1.0f;
-            self.view.backgroundColor = UIColor.mnz_background;
+            self.view.backgroundColor = UIColor.systemBackgroundColor;
             self.interfaceHidden = NO;
         } else {
             self.view.backgroundColor = UIColor.blackColor;
