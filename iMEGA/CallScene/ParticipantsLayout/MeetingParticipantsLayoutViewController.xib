@@ -209,7 +209,7 @@
                     </connections>
                 </view>
                 <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Rec indicator big" translatesAutoresizingMaskIntoConstraints="NO" id="I9f-xX-bs6">
-                    <rect key="frame" x="348" y="16" width="50" height="24"/>
+                    <rect key="frame" x="344" y="20" width="50" height="24"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="50" id="a1O-JI-86C"/>
                         <constraint firstAttribute="height" constant="24" id="kT3-Tt-Tx6"/>
@@ -221,8 +221,8 @@
             <gestureRecognizers/>
             <constraints>
                 <constraint firstItem="wEF-YB-JwX" firstAttribute="top" secondItem="pkd-uI-bDa" secondAttribute="top" id="5dl-sw-vq3"/>
-                <constraint firstAttribute="trailing" secondItem="I9f-xX-bs6" secondAttribute="trailing" constant="16" id="GUs-Bn-0ZB"/>
-                <constraint firstItem="I9f-xX-bs6" firstAttribute="top" secondItem="pkd-uI-bDa" secondAttribute="top" constant="16" id="IGK-IG-iJ6"/>
+                <constraint firstAttribute="trailing" secondItem="I9f-xX-bs6" secondAttribute="trailing" constant="20" id="GUs-Bn-0ZB"/>
+                <constraint firstItem="I9f-xX-bs6" firstAttribute="top" secondItem="pkd-uI-bDa" secondAttribute="top" constant="20" id="IGK-IG-iJ6"/>
                 <constraint firstItem="wEF-YB-JwX" firstAttribute="leading" secondItem="pkd-uI-bDa" secondAttribute="leading" id="JEh-18-lQw"/>
                 <constraint firstAttribute="bottom" secondItem="wEF-YB-JwX" secondAttribute="bottom" id="LNy-wp-ml8"/>
                 <constraint firstItem="wEF-YB-JwX" firstAttribute="trailing" secondItem="pkd-uI-bDa" secondAttribute="trailing" id="Xmg-dt-nAE"/>

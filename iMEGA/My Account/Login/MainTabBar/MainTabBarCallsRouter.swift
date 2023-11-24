@@ -55,59 +55,75 @@ final class MainTabBarCallsRouter: MainTabBarCallsRouting {
         .start()
     }
     
+    private func dismissAlertController(completion: @escaping () -> Void) {
+        guard let presentedViewController = baseViewController.presenterViewController()?.presentedViewController,
+              presentedViewController.isKind(of: UIAlertController.self) else {
+            completion()
+            return
+        }
+        presentedViewController.dismiss(animated: true) {
+            completion()
+        }
+    }
+    
     func showScreenRecordingAlert(isCallUIVisible: Bool, acceptAction: @escaping () -> Void, learnMoreAction: @escaping () -> Void, leaveCallAction: @escaping () -> Void) {
         guard let presenter = baseViewController.presenterViewController() else { return }
 
-        let alert = UIAlertController(
-            title: Strings.Localizable.Calls.ScreenRecording.Alert.title,
-            message: Strings.Localizable.Calls.ScreenRecording.Alert.message,
-            preferredStyle: .alert
-        )
-        
-        let preferredAction = UIAlertAction(
-            title: Strings.Localizable.Calls.ScreenRecording.Alert.Action.accept,
-            style: .default
-        ) { _ in
-            acceptAction()
-        }
-        
-        alert.addAction(preferredAction)
-        
-        alert.preferredAction = preferredAction
-        
-        alert.addAction(
-            UIAlertAction(
-                title: Strings.Localizable.Calls.ScreenRecording.Alert.Action.learnMore,
+        dismissAlertController { [weak self] in
+            let alert = UIAlertController(
+                title: Strings.Localizable.Calls.ScreenRecording.Alert.title,
+                message: Strings.Localizable.Calls.ScreenRecording.Alert.message,
+                preferredStyle: .alert
+            )
+            
+            let preferredAction = UIAlertAction(
+                title: Strings.Localizable.Calls.ScreenRecording.Alert.Action.accept,
                 style: .default
-            ) { _ in
-               learnMoreAction()
+            ) { [weak self] _ in
+                acceptAction()
+                self?.screenRecordingAlert = nil
             }
-        )
-        
-        alert.addAction(
-            UIAlertAction(
-                title: Strings.Localizable.Calls.ScreenRecording.Alert.Action.leave,
-                style: .default
-            ) { _ in
-                leaveCallAction()
+            
+            alert.addAction(preferredAction)
+            
+            alert.preferredAction = preferredAction
+            
+            alert.addAction(
+                UIAlertAction(
+                    title: Strings.Localizable.Calls.ScreenRecording.Alert.Action.learnMore,
+                    style: .default
+                ) { [weak self] _ in
+                    learnMoreAction()
+                    self?.screenRecordingAlert = nil
+                }
+            )
+            
+            alert.addAction(
+                UIAlertAction(
+                    title: Strings.Localizable.Calls.ScreenRecording.Alert.Action.leave,
+                    style: .default
+                ) { [weak self] _ in
+                    leaveCallAction()
+                    self?.screenRecordingAlert = nil
+                }
+            )
+            
+            if isCallUIVisible {
+                alert.overrideUserInterfaceStyle = .dark
             }
-        )
-        
-        if isCallUIVisible {
-            alert.overrideUserInterfaceStyle = .dark
-        }
 
-        screenRecordingAlert = alert
-        
-        presenter.present(alert, animated: true)
+            self?.screenRecordingAlert = alert
+            
+            presenter.present(alert, animated: true)
+        }
     }
     
     func showScreenRecordingNotification(started: Bool, username: String) {
-        if started {
-            SVProgressHUD.showInfo(withStatus: Strings.Localizable.Calls.ScreenRecording.Notification.Recording.started(username))
-        } else {
-            SVProgressHUD.showInfo(withStatus: Strings.Localizable.Calls.ScreenRecording.Notification.Recording.stopped(username))
-        }
+        let statusMessage = started ?
+        Strings.Localizable.Calls.ScreenRecording.Notification.Recording.started(username) :
+        Strings.Localizable.Calls.ScreenRecording.Notification.Recording.stopped(username)
+        
+        SVProgressHUD.showSuccess(withStatus: statusMessage)
     }
     
     func navigateToPrivacyPolice() {

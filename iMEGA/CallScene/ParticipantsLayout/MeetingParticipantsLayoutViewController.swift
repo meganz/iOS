@@ -140,6 +140,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             statusBarHidden.toggle()
             navigationController?.setNavigationBarHidden(!(navigationController?.navigationBar.isHidden ?? false), animated: true)
             localUserView.updateOffsetWithNavigation(hidden: statusBarHidden)
+            recordingImageView.isHidden = titleView.recordingImageView.isHidden || !titleView.recordingImageView.isHidden && !statusBarHidden
             forceDarkNavigationUI()
         case .switchLayoutMode(let layoutMode, let participantsCount):
             configureLayout(mode: layoutMode, participantsCount: participantsCount)
@@ -238,7 +239,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             )
         case .hideRecording(let hidden):
             titleView.hideRecordingIndicator(hidden)
-            recordingImageView.isHidden = hidden && statusBarHidden
+            recordingImageView.isHidden = statusBarHidden ? hidden : true
         }
     }
     
