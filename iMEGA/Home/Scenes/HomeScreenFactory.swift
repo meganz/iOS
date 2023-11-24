@@ -5,6 +5,7 @@ import MEGADomain
 import MEGAL10n
 import MEGAPermissions
 import MEGAPresentation
+import MEGARepo
 import MEGASDKRepo
 import MEGASwift
 import MEGASwiftUI
@@ -15,6 +16,10 @@ final class HomeScreenFactory: NSObject {
     
     private var sdk: MEGASdk {
         MEGASdk.sharedSdk
+    }
+    
+    private var megaStore: MEGAStore {
+        MEGAStore.shareInstance()
     }
 
     func createHomeScreen(
@@ -48,7 +53,7 @@ final class HomeScreenFactory: NSObject {
         
         let uploadViewModel = HomeUploadingViewModel(
             uploadFilesUseCase: UploadPhotoAssetsUseCase(
-                uploadPhotoAssetsRepository: UploadPhotoAssetsRepository(store: MEGAStore.shareInstance())
+                uploadPhotoAssetsRepository: UploadPhotoAssetsRepository(store: megaStore)
             ),
             permissionHandler: permissionHandler,
             networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
@@ -91,6 +96,13 @@ final class HomeScreenFactory: NSObject {
         )
         
         navigationController.tabBarItem = UITabBarItem(title: nil, image: Asset.Images.TabBarIcons.home.image, selectedImage: nil)
+        
+        homeViewController.ViewModeStore = ViewModeStore(
+            preferenceRepo: PreferenceRepository(userDefaults: .standard),
+            megaStore: megaStore,
+            sdk: sdk,
+            notificationCenter: notificationCenter
+        )
         
         let bridge = SearchResultsBridge()
         homeViewController.searchResultsBridge = bridge
@@ -214,6 +226,10 @@ final class HomeScreenFactory: NSObject {
             searchBridge?.queryChanged(text)
         }
         
+        bridge.didChangeLayoutTrampoline = {[weak searchBridge] layout in
+            searchBridge?.layoutChanged(layout)
+        }
+        
         bridge.didClearTrampoline = { [weak searchBridge] in
             searchBridge?.queryCleaned()
         }
@@ -247,9 +263,14 @@ final class HomeScreenFactory: NSObject {
                 )
             ),
             isThumbnailPreviewEnabled: DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .thumbnailSearchPreview),
-            keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: .default)
+            keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: notificationCenter)
+
         )
         return UIHostingController(rootView: SearchResultsView(viewModel: vm))
+    }
+    
+    var notificationCenter: NotificationCenter {
+        .default
     }
     
     func previewViewController(for node: MEGANode) -> UIViewController? {

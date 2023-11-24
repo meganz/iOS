@@ -1,3 +1,5 @@
+import MEGADomain
+
 final class NodeActionBuilder {
     private var displayMode: DisplayMode = .unknown
     private var accessLevel: MEGAShareType = .accessUnknown
@@ -18,7 +20,7 @@ final class NodeActionBuilder {
     private var isChildVersion = false
     private var isInVersionsView = false
     private var selectedNodeCount = 1
-    private var viewMode: ViewModePreference = .list
+    private var viewMode: ViewModePreferenceEntity = .list
     private var nodeSelectionType: NodeSelectionType = .single
     private var isBackupNode: Bool = false
     private var isTakedown = false
@@ -118,7 +120,7 @@ final class NodeActionBuilder {
         return self
     }
 
-    func setViewMode(_ viewMode: ViewModePreference?) -> NodeActionBuilder {
+    func setViewMode(_ viewMode: ViewModePreferenceEntity?) -> NodeActionBuilder {
         self.viewMode = viewMode ?? .list
         return self
     }

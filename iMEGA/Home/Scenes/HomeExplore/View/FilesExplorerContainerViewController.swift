@@ -46,7 +46,7 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
         self.viewModel = viewModel
         self.viewPreference = viewPreference
         super.init(nibName: nil, bundle: nil)
-        if self.viewModel.getExplorerType() == .document, UserDefaults.standard.integer(forKey: MEGAExplorerViewModePreference) == ViewModePreference.thumbnail.rawValue, viewPreference != .list {
+        if self.viewModel.getExplorerType() == .document, UserDefaults.standard.integer(forKey: MEGAExplorerViewModePreference) == ViewModePreferenceEntity.thumbnail.rawValue, viewPreference != .list {
             currentState = states[FilesExplorerContainerGridViewState.identifier]!
         } else {
             currentState = states[FilesExplorerContainerListViewState.identifier]!
@@ -114,7 +114,7 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
         navigationItem.backBarButtonItem = BackBarButtonItem(menuTitle: currentState.title ?? "")
     }
     
-    func setViewModePreference(_ preference: ViewModePreference) {
+    func setViewModePreference(_ preference: ViewModePreferenceEntity) {
         assert(preference != .perFolder, "Preference cannot be per folder")
         UserDefaults.standard.setValue(preference.rawValue, forKey: MEGAExplorerViewModePreference)
         viewModel.dispatch(.didChangeViewMode(preference.rawValue))

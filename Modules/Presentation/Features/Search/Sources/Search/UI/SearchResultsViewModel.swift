@@ -112,6 +112,10 @@ public class SearchResultsViewModel: ObservableObject {
             Task { await _self?.searchCancelled() }
         }
         
+        self.bridge.layoutChanged = { [weak self] layout in
+            self?.layout = layout
+        }
+        
         self.bridge.updateBottomInset = { [weak self] inset in
             self?.miniPlayerBottomInset = inset
             self?.bottomInset = inset
@@ -162,14 +166,6 @@ public class SearchResultsViewModel: ObservableObject {
     func scrolled() {
         if searchingTask == nil {
             bridge.resignKeyboard()
-        }
-    }
-
-    public func changeMode() {
-        if layout == .list {
-            layout = .thumbnail
-        } else {
-            layout = .list
         }
     }
 

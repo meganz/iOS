@@ -12,9 +12,6 @@ public struct SearchResultsView: View {
     public var body: some View {
         VStack(spacing: .zero) {
             chips
-            if viewModel.isThumbnailPreviewEnabled {
-                changeModeButton
-            }
             PlaceholderContainerView(
                 isLoading: $viewModel.isLoadingPlaceholderShown,
                 content: content,
@@ -151,15 +148,6 @@ public struct SearchResultsView: View {
                 .padding(.horizontal, 8)
             }
         }
-    }
-
-    private var changeModeButton: some View {
-        Button(action: {
-            viewModel.changeMode()
-        }, label: {
-            // This is debug only, triggered by feature flag, so we don't need it localized
-            Text("Toggle thumbnail view on/off")
-        })
     }
 
     private var placeholderRowView: some View {

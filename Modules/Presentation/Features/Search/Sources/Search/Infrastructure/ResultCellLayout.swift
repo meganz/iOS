@@ -28,4 +28,13 @@ public enum PageLayout: Equatable, Sendable {
     /// * files in bigger rectangle and vertical layout
     /// folders are show on the top of the list and files are shown below
     case thumbnail
+    
+    public mutating func toggle() {
+        switch self {
+        case .list:
+            self = .thumbnail
+        case .thumbnail:
+            self = .list
+        }
+    }
 }

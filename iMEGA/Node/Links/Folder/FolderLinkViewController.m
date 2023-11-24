@@ -29,7 +29,7 @@
 #import "LinkOption.h"
 #import "SendToViewController.h"
 #import "UnavailableLinkView.h"
-
+@import MEGADomain;
 @import MEGAL10nObjc;
 @import MEGAUIKit;
 
@@ -53,7 +53,7 @@
 
 @property (weak, nonatomic) IBOutlet UIView *containerView;
 
-@property (nonatomic, assign) ViewModePreference viewModePreference;
+@property (nonatomic, assign) ViewModePreferenceEntity viewModePreference;
 
 @property (nonatomic, strong) MEGAGenericRequestDelegate* requestDelegate;
 @property (nonatomic, strong) GlobalDelegate* globalDelegate;
@@ -272,7 +272,7 @@
             [unavailableLinkView configureInvalidFolderLinkByUserCopyrightSuspension];
             break;
     }
-    if (self.viewModePreference == ViewModePreferenceList && self.flTableView.tableView != nil) {
+    if (self.viewModePreference == ViewModePreferenceEntityList && self.flTableView.tableView != nil) {
         [self.flTableView.tableView setBackgroundView:unavailableLinkView];
     } else if (self.flCollectionView.collectionView != nil){
         [self.flCollectionView.collectionView setBackgroundView:unavailableLinkView];
@@ -413,7 +413,7 @@
 }
 
 - (void)reloadData {
-    if (self.viewModePreference == ViewModePreferenceList) {
+    if (self.viewModePreference == ViewModePreferenceEntityList) {
         [self.flTableView.tableView reloadData];
     } else {
         [self.flCollectionView reloadData];
@@ -470,7 +470,7 @@
     [self.flCollectionView removeFromParentViewController];
     self.flCollectionView = nil;
     
-    self.viewModePreference = ViewModePreferenceList;
+    self.viewModePreference = ViewModePreferenceEntityList;
     
     self.flTableView = [FolderLinkTableViewController instantiateWithFolderLink:self];
     [self addChildViewController:self.flTableView];
@@ -488,7 +488,7 @@
     [self.flTableView removeFromParentViewController];
     self.flTableView = nil;
 
-    self.viewModePreference = ViewModePreferenceThumbnail;
+    self.viewModePreference = ViewModePreferenceEntityThumbnail;
 
     self.flCollectionView = [FolderLinkCollectionViewController instantiateWithFolderLink:self];
     [self addChildViewController:self.flCollectionView];
@@ -501,16 +501,16 @@
 }
     
 - (void)changeViewModePreference {
-    self.viewModePreference = (self.viewModePreference == ViewModePreferenceList) ? ViewModePreferenceThumbnail : ViewModePreferenceList;
+    self.viewModePreference = (self.viewModePreference == ViewModePreferenceEntityList) ? ViewModePreferenceEntityThumbnail : ViewModePreferenceEntityList;
     
-    if (self.viewModePreference == ViewModePreferenceThumbnail) {
+    if (self.viewModePreference == ViewModePreferenceEntityThumbnail) {
         [self initCollection];
     } else {
         [self initTable];
     }
 }
 - (void)didDownloadTransferFinish:(MEGANode *)node {
-    if (self.viewModePreference == ViewModePreferenceList) {
+    if (self.viewModePreference == ViewModePreferenceEntityList) {
         [self.flTableView reloadWithNode:node];
     } else {
         [self.flCollectionView reloadWithNode:node];
@@ -532,7 +532,7 @@
 }
 
 - (IBAction)editAction:(UIBarButtonItem *)sender {
-    BOOL enableEditing = self.viewModePreference == ViewModePreferenceList ? !self.flTableView.tableView.isEditing : !self.flCollectionView.collectionView.allowsMultipleSelection;
+    BOOL enableEditing = self.viewModePreference == ViewModePreferenceEntityList ? !self.flTableView.tableView.isEditing : !self.flCollectionView.collectionView.allowsMultipleSelection;
     [self setEditMode:enableEditing];
 }
 
@@ -634,7 +634,7 @@
 #pragma mark - Public
 
 - (BOOL)isListViewModeSelected {
-    return self.viewModePreference == ViewModePreferenceList;
+    return self.viewModePreference == ViewModePreferenceEntityList;
 }
     
 - (void)didSelectNode:(MEGANode *)node {
@@ -660,7 +660,7 @@
 }
 
 - (void)setEditMode:(BOOL)editMode {
-    if (self.viewModePreference == ViewModePreferenceList) {
+    if (self.viewModePreference == ViewModePreferenceEntityList) {
         [self.flTableView setTableViewEditing:editMode animated:YES];
     } else {
         [self.flCollectionView setCollectionViewEditing:editMode animated:YES];
@@ -928,7 +928,7 @@
 #pragma mark - AudioPlayerPresenterProtocol
 
 - (void)updateContentView:(CGFloat)height {
-    if (self.viewModePreference == ViewModePreferenceList) {
+    if (self.viewModePreference == ViewModePreferenceEntityList) {
         self.flTableView.tableView.contentInset = UIEdgeInsetsMake(0, 0, height, 0);
     } else {
         self.flCollectionView.collectionView.contentInset = UIEdgeInsetsMake(0, 0, height, 0);

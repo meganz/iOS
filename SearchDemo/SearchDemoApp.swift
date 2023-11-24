@@ -50,7 +50,7 @@ struct ContentView: View {
             .toolbar {
                 Button(
                     action: {
-                        viewModel.changeMode()
+                        viewModel.layout.toggle()
                     },
                     label: {
                         viewModel.layout == .list ?

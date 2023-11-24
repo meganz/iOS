@@ -20,7 +20,7 @@ class NodeActionViewController: ActionSheetViewController {
     var sender: Any
     var delegate: any NodeActionViewControllerDelegate
     
-    private var viewMode: ViewModePreference?
+    private var viewMode: ViewModePreferenceEntity?
     
     let nodeImageView = UIImageView()
     
@@ -177,7 +177,7 @@ class NodeActionViewController: ActionSheetViewController {
                           isBackupNode: isBackupNode)
     }
     
-    @objc init(node: MEGANode, delegate: any NodeActionViewControllerDelegate, displayMode: DisplayMode, viewMode: ViewModePreference,
+    @objc init(node: MEGANode, delegate: any NodeActionViewControllerDelegate, displayMode: DisplayMode, viewMode: ViewModePreferenceEntity,
                isBackupNode: Bool, containsMediaFiles: Bool, sender: Any) {
         self.nodes = [node]
         self.displayMode = displayMode

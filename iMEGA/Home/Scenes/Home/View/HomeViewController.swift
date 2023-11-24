@@ -1,7 +1,9 @@
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
+import MEGASDKRepo
 import MEGAUIKit
+import Search
 import UIKit
 
 @objc(HomeRouting)
@@ -18,7 +20,7 @@ protocol HomeRouting: NSObjectProtocol {
     func showFavouritesNode(_ base64Handle: Base64HandleEntity)
 }
 
-final class HomeViewController: UIViewController {
+final class HomeViewController: UIViewController, DisplayMenuDelegate {
 
     @objc var homeQuickActionSearch: Bool = false
 
@@ -33,6 +35,8 @@ final class HomeViewController: UIViewController {
     var recentsViewModel: (any HomeRecentActionViewModelType)?
 
     var bannerViewModel: (any HomeBannerViewModelType)?
+    
+    var ViewModeStore: (any ViewModeStoring)?
 
     var quickAccessWidgetViewModel: QuickAccessWidgetViewModel?
     
@@ -99,14 +103,69 @@ final class HomeViewController: UIViewController {
 
     var searchResultViewController: UIViewController!
     var searchResultsBridge: SearchResultsBridge!
+    
+    var contextMenuManager: ContextMenuManager?
 
     // MARK: - ViewController Lifecycles
-
+    func currentViewMode() -> ViewModePreferenceEntity {
+        return ViewModeStore?
+            .viewMode(for: .init(customLocation: CustomHomeSearch)) ?? .list
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
         refreshView(with: traitCollection)
         setupViewModelEventListening()
+        contextMenuManager = .init(
+            displayMenuDelegate: self,
+            createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo)
+        )
+    }
+    
+    func configureViewMode() {
+        let currentViewMode = currentViewMode()
+        
+        updateContextMenuButtonMenu(viewMode: currentViewMode)
+        
+        if currentViewMode == .list {
+            changeLayout(to: .list)
+        } else if currentViewMode == .thumbnail {
+            changeLayout(to: .thumbnail)
+        }
+    }
+    
+    func updateContextMenuButtonMenu(viewMode: ViewModePreferenceEntity) {
+        let config = CMConfigEntity(
+            menuType: .menu(type: .home),
+            viewMode: viewMode
+        )
+        let menu = contextMenuManager!.contextMenu(with: config)
+        
+        if let menu {
+            searchBarView.setMenu(
+                menu: menu
+            )
+        }
+    }
+    
+    func displayMenu(didSelect action: DisplayActionEntity, needToRefreshMenu: Bool) {
+        switch action {
+        case .listView:
+            changeLayout(to: .list)
+            ViewModeStore?.save(viewMode: .list, for: .init(customLocation: CustomHomeSearch))
+            updateContextMenuButtonMenu(viewMode: .list)
+        case .thumbnailView:
+            changeLayout(to: .thumbnail)
+            ViewModeStore?.save(viewMode: .thumbnail, for: .init(customLocation: CustomHomeSearch))
+            updateContextMenuButtonMenu(viewMode: .thumbnail)
+        default:
+            break
+        }
+    }
+    
+    func sortMenu(didSelect sortType: SortOrderType) {
+        // not used in this screen
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -116,6 +175,7 @@ final class HomeViewController: UIViewController {
         }
         AudioPlayerManager.shared.addDelegate(self)
         TransfersWidgetViewController.sharedTransfer().progressView?.showWidgetIfNeeded()
+        configureViewMode()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -201,6 +261,10 @@ final class HomeViewController: UIViewController {
         searchResultsBridge.hideKeyboardTrampoline = { [weak self] in
             self?.hideKeyboard()
         }
+    }
+    
+    func changeLayout(to layout: PageLayout) {
+        searchResultsBridge.didChangeLayoutTrampoline?(layout)
     }
 
     private func toggleBannerCollectionView(isOn: Bool) {

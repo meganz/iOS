@@ -68,4 +68,8 @@ extension OfflineViewController {
             self.reloadUI()
         }
     }
+    
+    @objc func observeViewMode() {
+        NotificationCenter.default.addObserver(self, selector: #selector(determineViewMode), name: .MEGAViewModePreferenceDidChange, object: nil)
+    }
 }

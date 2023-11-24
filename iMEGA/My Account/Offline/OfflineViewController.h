@@ -52,6 +52,7 @@ static NSString *notificationServiceExtensionLog = @"MEGAiOS.NSE.log";
 - (void)changeEditingModeStatus;
 - (void)nodesSortTypeHasChanged;
 - (void)reloadUI;
+- (void)determineViewMode;
 @end
 
 NS_ASSUME_NONNULL_END

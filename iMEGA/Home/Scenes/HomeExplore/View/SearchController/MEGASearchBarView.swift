@@ -37,7 +37,9 @@ protocol MEGASearchBarViewEditingDelegate: AnyObject {
 final class MEGASearchBarView: UIView, NibOwnerLoadable {
 
     @IBOutlet private weak var searchField: UITextField!
-
+    
+    @IBOutlet private weak var contextButton: UIButton!
+    
     @IBOutlet private weak var cancelButton: UIButton!
 
     private weak var contentView: UIView!
@@ -48,6 +50,10 @@ final class MEGASearchBarView: UIView, NibOwnerLoadable {
 
     weak var editingDelegate: (any MEGASearchBarViewEditingDelegate)?
 
+    func setMenu(menu: UIMenu) {
+        contextButton.menu = menu
+    }
+    
     // MARK: - Initialization
 
     override init(frame: CGRect) {
@@ -87,12 +93,15 @@ final class MEGASearchBarView: UIView, NibOwnerLoadable {
         initialise(contentView: contentView)
         initialise(cancelButton: cancelButton)
         initialise(searchField: searchField)
+        contextButton.isHidden = true
+        contextButton.setImage(Asset.Images.NavigationBar.moreNavigationBar.image, for: .normal)
     }
 
     @objc private func didTapCancelButton() {
         searchField.text = nil
         searchField.resignFirstResponder()
         cancelButton.isHidden = true
+        contextButton.isHidden = true
         delegate?.didFinishSearchSessionOnSearchController(self)
     }
 
@@ -106,6 +115,7 @@ final class MEGASearchBarView: UIView, NibOwnerLoadable {
 
         let cancelButtonStyler = trait.theme.buttonStyle.styler(of: .searchControllerCancel)
         cancelButtonStyler(cancelButton)
+        cancelButtonStyler(contextButton)
     }
 
     private func setupBackgroundColor(with trait: UITraitCollection) {
@@ -151,6 +161,7 @@ extension MEGASearchBarView: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         guard let textFieldText = textField.text, !textFieldText.isEmpty else {
             cancelButton.isHidden = false
+            contextButton.isHidden = false
             delegate?.didStartSearchSessionOnSearchController(self)
             editingDelegate?.didHighlightSearchBar()
             return

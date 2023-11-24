@@ -27,13 +27,12 @@ public enum CMElementTypeEntity: Equatable {
     case qr(actionType: MyQRActionEntity)
     case meeting(actionType: MeetingActionEntity)
     case album(actionType: AlbumActionEntity)
-    
     case unknown
 }
 
 // MARK: - Context Menu types
 public enum ContextMenuTypeEntity {
-    case uploadAdd, display, quickActions, sort, rubbishBin, chat, chatStatus, chatDoNotDisturb, qr, meeting, unknown, album, timeline, folderLink, fileLink
+    case uploadAdd, display, quickActions, sort, rubbishBin, chat, chatStatus, chatDoNotDisturb, qr, meeting, unknown, album, timeline, folderLink, fileLink, home
 }
 
 // MARK: - Context Menu grouped actions

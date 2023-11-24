@@ -13,14 +13,14 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
            displayMode == .rubbishBin,
            parentNode.handle != MEGASdk.sharedSdk.rubbishNode?.handle {
             return CMConfigEntity(menuType: .menu(type: .rubbishBin),
-                                  viewMode: currentViewModePreference.toViewModePreferenceEntity(),
+                                  viewMode: currentViewModePreference,
                                   sortType: SortOrderType(megaSortOrderType: Helper.sortType(for: parentNode)).megaSortOrderType.toSortOrderEntity(),
                                   isRubbishBinFolder: true,
                                   isRestorable: parentNode.mnz_isRestorable())
         } else {
             let isIncomingSharedRootChild = parentAccessLevel != .owner && MEGASdk.sharedSdk.parentNode(for: parentNode) == nil
             return CMConfigEntity(menuType: .menu(type: .display),
-                                  viewMode: currentViewModePreference.toViewModePreferenceEntity(),
+                                  viewMode: currentViewModePreference,
                                   accessLevel: parentAccessLevel.toShareAccessLevel(),
                                   sortType: viewModel.sortOrder(for: currentViewModePreference).megaSortOrderType.toSortOrderEntity(),
                                   isAFolder: parentNode.type != .root,
@@ -37,7 +37,7 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
     func uploadAddMenuConfiguration() -> CMConfigEntity? {
         CMConfigEntity(
             menuType: .menu(type: .uploadAdd),
-            viewMode: currentViewModePreference.toViewModePreferenceEntity())
+            viewMode: currentViewModePreference)
     }
     
     @objc func configureContextMenuManagerIfNeeded() {
