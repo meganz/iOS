@@ -286,13 +286,11 @@ final class SearchResultsViewModelTests: XCTestCase {
             vibrancyEnabled: false,
             placement: { _  in return .prominent }
         )
-        harness.bridge.searchResultChanged(
-            .resultWith(
-                id: 2,
-                title: "2",
-                properties: [property]
-            )
-        )
+        await harness.sut.searchResultUpdated(.resultWith(
+            id: 2,
+            title: "2",
+            properties: [property]
+        ))
         let updatedProperties = harness.resultVM(at: 1).result.properties
         XCTAssertNotEqual(initialProperties, updatedProperties)
     }

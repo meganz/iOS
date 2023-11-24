@@ -99,7 +99,8 @@ public class SearchResultsViewModel: ObservableObject {
         }
 
         self.bridge.searchResultChanged = { [weak self] result in
-            self?.searchResultUpdated(result)
+            let _self = self
+            Task { await _self?.searchResultUpdated(result) }
         }
 
         self.bridge.queryCleaned = { [weak self] in
@@ -502,9 +503,10 @@ public class SearchResultsViewModel: ObservableObject {
         }
     }
 
-    private func searchResultUpdated(_ result: SearchResult) {
+    @MainActor
+    func searchResultUpdated(_ result: SearchResult) async {
         guard let index = listItems.firstIndex(where: { $0.result.id == result.id  }) else { return }
-        listItems[index].reload(with: result)
+        await listItems[index].reload(with: result)
     }
 
     // when keyboard is shown we shouldn't add any additional bottom inset

@@ -142,6 +142,10 @@ final class HomeScreenFactory: NSObject {
         SDKNodesUpdateListenerRepository(sdk: sdk)
     }
 
+    private func makeTransferListenerRepo() -> SDKTransferListenerRepository {
+        SDKTransferListenerRepository(sdk: sdk)
+    }
+
     func makeSearchResultViewController(
         with navigationController: UINavigationController,
         bridge: SearchResultsBridge,
@@ -251,6 +255,7 @@ final class HomeScreenFactory: NSObject {
                 nodeRepository: makeNodeRepo(),
                 featureFlagProvider: makeFeatureFlagProvider(),
                 nodesUpdateListenerRepo: makeNodesUpdateListenerRepo(),
+                transferListenerRepo: makeTransferListenerRepo(),
                 sdk: sdk,
                 onSearchResultUpdated: { [weak searchBridge] searchResult in
                     searchBridge?.searchResultChanged(searchResult)

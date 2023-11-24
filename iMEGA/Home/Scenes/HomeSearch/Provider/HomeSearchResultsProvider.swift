@@ -15,6 +15,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
     private let nodeRepository: any NodeRepositoryProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     private var nodesUpdateListenerRepo: any NodesUpdateListenerProtocol
+    private var transferListenerRepo: SDKTransferListenerRepository
 
     private let sdk: MEGASdk
 
@@ -42,6 +43,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         nodeRepository: some NodeRepositoryProtocol,
         featureFlagProvider: some FeatureFlagProviderProtocol,
         nodesUpdateListenerRepo: any NodesUpdateListenerProtocol,
+        transferListenerRepo: SDKTransferListenerRepository,
         sdk: MEGASdk,
         onSearchResultUpdated: @escaping (SearchResult) -> Void
     ) {
@@ -52,10 +54,12 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         self.nodeRepository = nodeRepository
         self.featureFlagProvider = featureFlagProvider
         self.nodesUpdateListenerRepo = nodesUpdateListenerRepo
+        self.transferListenerRepo = transferListenerRepo
         self.sdk = sdk
 
         self.onSearchResultUpdated = onSearchResultUpdated
         addNodesUpdateHandler()
+        addTransferCompletedHandler()
     }
     
     func search(queryRequest: SearchQuery, lastItemIndex: Int? = nil) async throws -> SearchResultsEntity? {
@@ -340,6 +344,22 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         nodesUpdateListenerRepo.onNodesUpdateHandler = { [weak self] nodes in
             // After update, the first node in nodeList is always the updated one
             guard let self, let node = nodes.first else { return }
+            self.onSearchResultUpdated(self.mapNodeToSearchResult(node))
+        }
+    }
+
+    private func addTransferCompletedHandler() {
+        transferListenerRepo.endHandler = { [weak self] megaNode, isStreamingTransfer, transferType in
+            guard let self else { return }
+
+            let node = megaNode.toNodeEntity()
+
+            guard nodeList?.toNodeEntities().contains(node) != nil,
+                  !isStreamingTransfer,
+                  transferType == .download else {
+                return
+            }
+
             self.onSearchResultUpdated(self.mapNodeToSearchResult(node))
         }
     }

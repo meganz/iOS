@@ -58,7 +58,8 @@ class HomeSearchProviderTests: XCTestCase {
                 nodeRepository: nodeRepo,
                 featureFlagProvider: MockFeatureFlagProvider(list: [:]),
                 nodesUpdateListenerRepo: nodesUpdateListenerRepo,
-                sdk: MockSdk(), 
+                transferListenerRepo: SDKTransferListenerRepository(sdk: MockSdk()),
+                sdk: MockSdk(),
                 onSearchResultUpdated: {_ in}
             )
             
