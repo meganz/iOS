@@ -25,7 +25,7 @@ class AppearanceManager: NSObject {
         UISearchBar.appearance().isTranslucent = false
         UISearchBar.appearance().tintColor = UIColor.mnz_primaryGray(for: traitCollection)
         UISearchBar.appearance().backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
-        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor.mnz_background()
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor.systemBackground
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = UIColor.label
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.regular)
         
@@ -45,12 +45,12 @@ class AppearanceManager: NSObject {
         UIProgressView.appearance().backgroundColor = UIColor.clear
         UIProgressView.appearance().tintColor = UIColor.mnz_turquoise(for: traitCollection)
         
-        UITableView.appearance().backgroundColor = UIColor.mnz_background()
+        UITableView.appearance().backgroundColor = UIColor.systemBackground
         UITableView.appearance().separatorColor = UIColor.mnz_separator(for: traitCollection)
         UIButton.appearance(whenContainedInInstancesOf: [UITableViewCell.self]).tintColor = UIColor.mnz_tertiaryGray(for: traitCollection)
         UITableViewCell.appearance().tintColor = UIColor.mnz_turquoise(for: traitCollection)
         
-        UICollectionView.appearance().backgroundColor = UIColor.mnz_background()
+        UICollectionView.appearance().backgroundColor = UIColor.systemBackground
         UIButton.appearance(whenContainedInInstancesOf: [UICollectionViewCell.self]).tintColor = UIColor.mnz_tertiaryGray(for: traitCollection)
         
         self.setupActivityIndicatorAppearance(traitCollection)

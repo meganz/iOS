@@ -71,7 +71,7 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.view.backgroundColor = UIColor.mnz_background;
+    self.view.backgroundColor = UIColor.systemBackgroundColor;
     
     self.firstDigitContainerView.backgroundColor = self.secondDigitContainerView.backgroundColor = self.thirdDigitContainerView.backgroundColor = self.fourthDigitContainerView.backgroundColor = self.fifthDigitContainerView.backgroundColor = self.sixthDigitContainerView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
     

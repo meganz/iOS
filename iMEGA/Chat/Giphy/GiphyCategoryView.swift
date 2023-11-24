@@ -61,7 +61,7 @@ class GiphyCategoryView: UIView {
     init() {
         super.init(frame: CGRect(x: 0, y: 0, width: 320, height: 48))
         
-        backgroundColor = .mnz_background()
+        backgroundColor = UIColor.systemBackground
         
         gifButton.addTarget(self, action: #selector(GiphyCategoryView.didTapButton), for: .touchUpInside)
         stickersButton.addTarget(self, action: #selector(GiphyCategoryView.didTapButton), for: .touchUpInside)

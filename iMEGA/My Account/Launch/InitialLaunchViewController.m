@@ -45,7 +45,7 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.view.backgroundColor = UIColor.mnz_background;
+    self.view.backgroundColor = UIColor.systemBackgroundColor;
     
     self.descriptionLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     

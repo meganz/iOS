@@ -4,10 +4,6 @@ extension UIColor {
     
     // MARK: - Background
     
-    @objc class func mnz_background() -> UIColor {
-        .systemBackground
-    }
-    
     @objc class func mnz_tertiaryBackground(_ traitCollection: UITraitCollection) -> UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:

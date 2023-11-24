@@ -17,7 +17,7 @@ class GiphyPreviewViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: Strings.Localizable.send, style: .plain, target: self, action: #selector(send(sender:)))
         navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.preferredFont(style: .body, weight: .medium)], for: .normal)
         
-        view.backgroundColor = .mnz_background()
+        view.backgroundColor = UIColor.systemBackground
         view.addSubview(previewImageView)
         configurePreviewImage()
     }

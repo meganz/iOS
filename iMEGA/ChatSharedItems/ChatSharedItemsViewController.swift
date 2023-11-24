@@ -166,7 +166,7 @@ class ChatSharedItemsViewController: UIViewController {
     // MARK: - Private methods
 
     func updateAppearance() {
-        view.backgroundColor = UIColor.mnz_background()
+        view.backgroundColor = UIColor.systemBackground
         
         tableView.separatorColor = UIColor.mnz_separator(for: traitCollection)
         

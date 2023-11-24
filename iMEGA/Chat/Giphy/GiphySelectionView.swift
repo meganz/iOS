@@ -81,7 +81,7 @@ class GiphySelectionView: UIView {
         self.controller = controller
         super.init(frame: .zero)
 
-        backgroundColor = .mnz_background()
+        backgroundColor = UIColor.systemBackground
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.keyboardDismissMode = .onDrag

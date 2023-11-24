@@ -84,7 +84,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = UIColor.mnz_background;
+    self.view.backgroundColor = UIColor.systemBackgroundColor;
 
     self.definesPresentationContext = YES;
     

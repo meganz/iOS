@@ -19,7 +19,7 @@ class LoadingMessageReusableView: MessageReusableView {
      }
     
     func updateAppearance() {
-        loadingView.backgroundColor = UIColor.mnz_background()
+        loadingView.backgroundColor = UIColor.systemBackground
         loadingBubbles.forEach { (view) in
             view.backgroundColor = UIColor.mnz_chatLoadingBubble(traitCollection)
         }

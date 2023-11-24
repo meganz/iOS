@@ -251,7 +251,7 @@
 }
 
 - (void)updateAppearance {
-    self.view.backgroundColor = UIColor.mnz_background;
+    self.view.backgroundColor = UIColor.systemBackgroundColor;
     
     [self.openZipButton mnz_setupBasic:self.traitCollection];
 }

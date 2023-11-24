@@ -452,8 +452,8 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.view.backgroundColor = UIColor.mnz_background;
-    self.navigationController.view.backgroundColor = UIColor.mnz_background;
+    self.view.backgroundColor = UIColor.systemBackgroundColor;
+    self.navigationController.view.backgroundColor = UIColor.systemBackgroundColor;
 
     self.archivedChatEmptyStateCount.textColor = UIColor.secondaryLabelColor;
     

@@ -56,7 +56,7 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.view.backgroundColor = UIColor.mnz_background;
+    self.view.backgroundColor = UIColor.systemBackgroundColor;
     
     self.inviteYourFriendsView.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
     self.inviteYourFriendsSubtitleLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];

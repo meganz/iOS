@@ -337,7 +337,7 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.view.backgroundColor = UIColor.mnz_background;
+    self.view.backgroundColor = UIColor.systemBackgroundColor;
     
     self.stateView.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
     
