@@ -686,7 +686,6 @@
 		5DAC09DC24CFE20E001B6476 /* BannerCarouselCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAC09DA24CFE20E001B6476 /* BannerCarouselCollectionViewCell.swift */; };
 		5DAC09DD24CFE20E001B6476 /* BannerCarouselCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DAC09DB24CFE20E001B6476 /* BannerCarouselCollectionViewCell.xib */; };
 		5DAC09DF24CFE832001B6476 /* MEGABannerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DAC09DE24CFE832001B6476 /* MEGABannerView.xib */; };
-		5DB1F47A2489461E001C1D5D /* UIColor+Generate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB1F4792489461E001C1D5D /* UIColor+Generate.swift */; };
 		5DB1F47C2489E5CC001C1D5D /* ParagraphStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB1F47B2489E5CC001C1D5D /* ParagraphStyle.swift */; };
 		5DBAC841248778DA0050996E /* OverDiskQuotaWarningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DBAC840248778DA0050996E /* OverDiskQuotaWarningView.swift */; };
 		5DBAC8442487B8A10050996E /* OverDiskQuotaWarningView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DBAC8432487B8A10050996E /* OverDiskQuotaWarningView.xib */; };
@@ -3286,7 +3285,6 @@
 		5DAC09DA24CFE20E001B6476 /* BannerCarouselCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerCarouselCollectionViewCell.swift; sourceTree = "<group>"; };
 		5DAC09DB24CFE20E001B6476 /* BannerCarouselCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BannerCarouselCollectionViewCell.xib; sourceTree = "<group>"; };
 		5DAC09DE24CFE832001B6476 /* MEGABannerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MEGABannerView.xib; sourceTree = "<group>"; };
-		5DB1F4792489461E001C1D5D /* UIColor+Generate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Generate.swift"; sourceTree = "<group>"; };
 		5DB1F47B2489E5CC001C1D5D /* ParagraphStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParagraphStyle.swift; sourceTree = "<group>"; };
 		5DBAC840248778DA0050996E /* OverDiskQuotaWarningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverDiskQuotaWarningView.swift; sourceTree = "<group>"; };
 		5DBAC8432487B8A10050996E /* OverDiskQuotaWarningView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OverDiskQuotaWarningView.xib; sourceTree = "<group>"; };
@@ -7303,7 +7301,6 @@
 			children = (
 				5D31674324FC9A4D0032492F /* DevicePermission */,
 				5D31673E24FC97410032492F /* ErrorHandling */,
-				5DB1F4792489461E001C1D5D /* UIColor+Generate.swift */,
 				B65D17D6289A233C00D5AD33 /* UIImage+Doc.swift */,
 				B65D17D4289A226900D5AD33 /* UINavigationViewController+Additions.swift */,
 				A8A715C126307B0A00DDC8E2 /* UIPasteboard+WebP.swift */,
@@ -14670,7 +14667,6 @@
 				83B906BB249A29CA0088F15C /* UIButton+Additions.swift in Sources */,
 				77F43DD92034637300AE4F42 /* UICollectionView+MNZCategory.m in Sources */,
 				5BC3D060242A36240048123A /* UIColor+Additions.swift in Sources */,
-				5DB1F47A2489461E001C1D5D /* UIColor+Generate.swift in Sources */,
 				E88E6D801CF355FA00C9AD9E /* UIColor+MNZCategory.m in Sources */,
 				E879DFDA1D12A31D009B74FD /* UIDevice+MNZCategory.m in Sources */,
 				5B5B4FFF1E681BAC00DBEB3B /* UIFont+MNZCategory.m in Sources */,
