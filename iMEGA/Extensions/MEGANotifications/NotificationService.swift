@@ -161,7 +161,7 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
                 }
                 
                 if let base64Handle = node.base64Handle,
-                   let notificationAttachment = notificationManager.notificationAttachment(for: request.file, withIdentifier: base64Handle) {
+                   let notificationAttachment = notificationManager.notificationAttachment(for: request.file ?? "", withIdentifier: base64Handle) {
                     self?.bestAttemptContent?.attachments = [notificationAttachment]
                     self?.waitingForThumbnail = false
                     if !(self?.waitingForUserAttributes ?? true) {

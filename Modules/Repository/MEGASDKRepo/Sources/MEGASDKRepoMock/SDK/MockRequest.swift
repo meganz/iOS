@@ -7,7 +7,7 @@ public final class MockRequest: MEGARequest {
     private let _text: String?
     private let _parentHandle: UInt64
     private let _elementsInSet: [MEGASetElement]
-    private let _number: NSNumber
+    private let _number: Int64
     private let _link: String?
     private let _flag: Bool
     private let _publicNode: MEGANode?
@@ -22,7 +22,7 @@ public final class MockRequest: MEGARequest {
                 text: String? = nil,
                 parentHandle: MEGAHandle = .invalidHandle,
                 elementInSet: [MEGASetElement] = [],
-                number: NSNumber = 0,
+                number: Int64 = 0,
                 link: String? = nil,
                 flag: Bool = false,
                 publicNode: MEGANode? = nil,
@@ -53,7 +53,7 @@ public final class MockRequest: MEGARequest {
     public override var text: String? { _text }
     public override var parentHandle: UInt64 { _parentHandle }
     public override var elementsInSet: [MEGASetElement] { _elementsInSet }
-    public override var number: NSNumber { _number }
+    public override var number: Int64 { _number }
     public override var link: String? { _link }
     public override var flag: Bool { _flag }
     public override var publicNode: MEGANode? { _publicNode }

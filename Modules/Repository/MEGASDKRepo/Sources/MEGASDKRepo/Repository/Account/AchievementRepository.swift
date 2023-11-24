@@ -29,7 +29,11 @@ public struct AchievementRepository: AchievementRepositoryProtocol {
             sdk.getAccountAchievements(with: RequestDelegate(completion: { result in
                 switch result {
                 case .success(let request):
-                    completion(.success(request.megaAchievementsDetails.toAchievementDetailsEntity()))
+                    guard let megaAchievementsDetails = request.megaAchievementsDetails else {
+                        completion(.failure(AchievementErrorEntity.generic))
+                        return
+                    }
+                    completion(.success(megaAchievementsDetails.toAchievementDetailsEntity()))
                 case .failure:
                     completion(.failure(AchievementErrorEntity.generic))
                 }

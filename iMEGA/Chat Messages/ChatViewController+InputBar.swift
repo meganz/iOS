@@ -474,14 +474,14 @@ extension ChatViewController: ChatInputBarDelegate {
         if let content = message.content, MEGAChatSdk.hasUrl(content) {
             MEGASdk.shared.shouldShowRichLinkWarning(with: MEGAGetAttrUserRequestDelegate(completion: { (request) in
                 if let request = request, request.flag {
-                    message.warningDialog = (request.number.intValue >= 3 ? MEGAChatMessageWarningDialog.standard : MEGAChatMessageWarningDialog.initial)
-                    self.richLinkWarningCounterValue = request.number.uintValue
+                    message.warningDialog = (request.number >= 3 ? MEGAChatMessageWarningDialog.standard : MEGAChatMessageWarningDialog.initial)
+                    self.richLinkWarningCounterValue = Int(request.number)
                     self.chatRoomDelegate.updateMessage(message)
                 }
             }, error: { (request, _) in
                 if let request = request, request.flag {
-                    message.warningDialog = (request.number.intValue >= 3 ? MEGAChatMessageWarningDialog.standard : MEGAChatMessageWarningDialog.initial)
-                    self.richLinkWarningCounterValue = request.number.uintValue
+                    message.warningDialog = (request.number >= 3 ? MEGAChatMessageWarningDialog.standard : MEGAChatMessageWarningDialog.initial)
+                    self.richLinkWarningCounterValue = Int(request.number)
                     self.chatRoomDelegate.updateMessage(message)
 
                 }

@@ -432,7 +432,11 @@ extension ProfileViewController: MEGARequestDelegate {
             let paramType = MEGAUserAttribute(rawValue: request.paramType)
             if paramType == .avatar {
                 if error.type != .apiOk {
-                    SVProgressHUD.showError(withStatus: request.requestString + " " + Strings.localized(error.name, comment: ""))
+                    guard let requestString = request.requestString else {
+                        SVProgressHUD.showError(withStatus: Strings.localized(error.name, comment: ""))
+                        return
+                    }
+                    SVProgressHUD.showError(withStatus: requestString + " " + Strings.localized(error.name, comment: ""))
                     return
                 }
                 

@@ -29,6 +29,6 @@ public struct PSARepository: PSARepositoryProtocol {
     }
     
     public func markAsSeenForPSA(withIdentifier identifier: PSAIdentifier) {
-        sdk.setPSAWithIdentifier(identifier)
+        sdk.setPSAWithIdentifier(Int(identifier))
     }
 }

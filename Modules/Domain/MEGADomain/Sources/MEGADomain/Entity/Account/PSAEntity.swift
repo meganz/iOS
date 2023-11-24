@@ -1,15 +1,15 @@
-public typealias PSAIdentifier = Int
+public typealias PSAIdentifier = Int64
 
 public struct PSAEntity {
     public let identifier: PSAIdentifier
-    public let title: String
-    public let description: String
+    public let title: String?
+    public let description: String?
     public let imageURL: String?
     public let positiveText: String?
     public let positiveLink: String?
     public let URLString: String?
     
-    public init(identifier: PSAIdentifier, title: String, description: String, imageURL: String?, positiveText: String?, positiveLink: String?, URLString: String?) {
+    public init(identifier: PSAIdentifier, title: String?, description: String?, imageURL: String?, positiveText: String?, positiveLink: String?, URLString: String?) {
         self.identifier = identifier
         self.title = title
         self.description = description

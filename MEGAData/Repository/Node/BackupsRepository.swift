@@ -6,7 +6,7 @@ struct BackupsRepository: BackupsRepositoryProtocol {
     private let sdk: MEGASdk
     
     static var newRepo: BackupsRepository {
-        BackupsRepository(sdk: MEGASdkManager.sharedMEGASdk())
+        BackupsRepository(sdk: MEGASdk.sharedSdk)
     }
     
     init(sdk: MEGASdk) {
@@ -67,7 +67,11 @@ struct BackupsRepository: BackupsRepositoryProtocol {
                 case .failure:
                     completion(.failure(FolderInfoErrorEntity.notFound))
                 case .success(let request):
-                    completion(.success(request.megaFolderInfo))
+                    guard let megaFolderInfo = request.megaFolderInfo else {
+                        completion(.failure(FolderInfoErrorEntity.notFound))
+                        return
+                    }
+                    completion(.success(megaFolderInfo))
                 }
             })
         })

@@ -15,7 +15,7 @@ struct SDKAvatarClient {
 extension SDKAvatarClient {
 
     static var live: Self {
-        let api: MEGASdk? = MEGASdkManager.sharedMEGASdk()
+        let api: MEGASdk? = MEGASdk.sharedSdk
 
         return Self(
             loadUserAvatar: { [weak api] userHandle, cachingDestinationPathURL, completion in
@@ -25,8 +25,8 @@ extension SDKAvatarClient {
                 }
 
                 let delegate = MEGAGetThumbnailRequestDelegate { request in
-                    if request.file.contains(userBase64Handle) {
-                        completion(UIImage(contentsOfFile: request.file))
+                    if let file = request.file, file.contains(userBase64Handle) {
+                        completion(UIImage(contentsOfFile: file))
                     }
                 }
                 api?.getAvatarUser(

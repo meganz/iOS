@@ -3,7 +3,7 @@ import MEGASDKRepo
 extension RecentsViewController {
     
     @objc func showContactVerificationView(forUserEmail userEmail: String) {
-        guard let user = MEGASdkManager.sharedMEGASdk().contact(forEmail: userEmail),
+        guard let user = MEGASdk.sharedSdk.contact(forEmail: userEmail),
               let verifyCredentialsVC = UIStoryboard(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "VerifyCredentialsViewControllerID") as? VerifyCredentialsViewController else {
             return
         }
@@ -22,8 +22,9 @@ extension RecentsViewController {
     
     @objc func getRecentActions() {
         MEGASdk.shared.getRecentActionsAsync(sinceDays: 30, maxNodes: 500, delegate: RequestDelegate { [weak self] result in
-            if case let .success(request) = result {
-                self?.recentActionBucketArray = request.recentActionsBuckets
+            if case let .success(request) = result,
+               let recentActionsBuckets = request.recentActionsBuckets {
+                self?.recentActionBucketArray = recentActionsBuckets
                 self?.getRecentActionsActivityIndicatorView?.stopAnimating()
                 self?.tableView?.isHidden = false
                 self?.tableView?.reloadData()

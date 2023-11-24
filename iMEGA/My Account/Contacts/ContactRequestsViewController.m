@@ -381,7 +381,7 @@ typedef NS_ENUM(NSInteger, Segment) {
         }
             
         case MEGARequestTypeInviteContact:
-            switch (request.number.integerValue) {                    
+            switch (request.number) {
                 case 1:
                     [SVProgressHUD showErrorWithStatus:LocalizedString(@"requestCancelled", @"")];
                     break;
@@ -393,7 +393,7 @@ typedef NS_ENUM(NSInteger, Segment) {
             
             
         case MEGARequestTypeReplyContactRequest:
-            switch (request.number.integerValue) {
+            switch (request.number) {
                 case 0:
                     [SVProgressHUD showSuccessWithStatus:LocalizedString(@"requestAccepted", @"")];
                     break;

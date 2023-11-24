@@ -114,7 +114,7 @@
     if (request.type == MEGARequestTypeFetchNodes) {
         [self invalidateTimerAPI_EAGAIN];
         
-        float progress = request.transferredBytes.floatValue / request.totalBytes.floatValue;
+        float progress = request.transferredBytes / request.totalBytes;
         if (progress > 0 && progress <= 1.0) {
             //Avoid that the stroke goes back and forward.
             if (progress < self.circularShapeLayer.strokeEnd) {

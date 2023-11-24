@@ -24,7 +24,7 @@ public struct RecentNodesRepository: RecentNodesRepositoryProtocol {
             sdk.getRecentActionsAsync(sinceDays: Constants.maxRecommendedDays, maxNodes: limitCount, delegate: RequestDelegate { result in
                 switch result {
                 case .success(let request):
-                    completion(.success(request.recentActionsBuckets.compactMap { RecentActionBucketEntity(with: $0) }))
+                    completion(.success(request.recentActionsBuckets?.compactMap { RecentActionBucketEntity(with: $0) } ?? []))
                 case .failure:
                     completion(.failure(GenericErrorEntity()))
                 }

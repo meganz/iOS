@@ -284,11 +284,11 @@
             }
         } else {
             // Zero means that the rubbish-bin cleaning scheduler is disabled (only if the account is PRO). Any negative value means that the configured value is invalid.
-            if (request.number.integerValue < 0) {
+            if (request.number < 0) {
                 return;
             }
             
-            self.rubbishBinAutopurgePeriod = request.number.integerValue;
+            self.rubbishBinAutopurgePeriod = request.number;
             if (self.rubbishBinAutopurgePeriod == 0) {
                 self.rubbishBinCleaningSchedulerSwitch.on = NO;
             } else {

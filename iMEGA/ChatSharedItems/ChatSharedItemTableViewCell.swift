@@ -40,8 +40,10 @@ class ChatSharedItemTableViewCell: UITableViewCell {
                 thumbnailImage.image = UIImage(contentsOfFile: thumbnailFilePath)
             } else {
                 MEGASdk.shared.getThumbnailNode(node, destinationFilePath: thumbnailFilePath, delegate: RequestDelegate { [weak self] result in
-                    if case .success(let request) = result, request.nodeHandle == node.handle {
-                        self?.thumbnailImage.image = UIImage(contentsOfFile: request.file)
+                    if case .success(let request) = result,
+                       request.nodeHandle == node.handle,
+                       let file = request.file {
+                        self?.thumbnailImage.image = UIImage(contentsOfFile: file)
                     }
                 })
             }

@@ -4,7 +4,7 @@ import MEGASdk
 extension MEGARequest {
     public func toPSAEntity() -> PSAEntity {
         PSAEntity(
-            identifier: number.intValue,
+            identifier: number,
             title: name,
             description: text,
             imageURL: file,

@@ -63,11 +63,12 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
                 
                 MEGASdk.shared.publicNode(forMegaFileLink: megaLink.mnz_MEGAURL(), delegate: MEGAGetPublicNodeRequestDelegate(completion: { (request, error) in
                     let visibleIndexPaths = messagesCollectionView.indexPathsForVisibleItems
-                    guard visibleIndexPaths.contains(indexPath), error?.type == .apiOk else {
+                    guard visibleIndexPaths.contains(indexPath), error?.type == .apiOk,
+                          let publicNode = request?.publicNode else {
                         return
                     }
-                    megaMessage.richNumber = request?.publicNode.size
-                    megaMessage.node = request?.publicNode
+                    megaMessage.richNumber = publicNode.size
+                    megaMessage.node = publicNode
                     
                     if self.isLastSectionVisible(collectionView: messagesCollectionView) {
                         messagesCollectionView.reloadDataAndKeepOffset()
@@ -89,13 +90,14 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
                         return
                     }
                     
-                    let totalNumberOfFiles = request.megaFolderInfo.files
-                    let numOfVersionedFiles = request.megaFolderInfo.versions
-                    let totalFileSize = request.megaFolderInfo.currentSize
-                    let versionsSize = request.megaFolderInfo.versionsSize
+                    let totalNumberOfFiles = request.megaFolderInfo?.files ?? 0
+                    let totalNumberOfFolders = request.megaFolderInfo?.folders ?? 0
+                    let numOfVersionedFiles = request.megaFolderInfo?.versions ?? 0
+                    let totalFileSize = request.megaFolderInfo?.currentSize ?? 0
+                    let versionsSize = request.megaFolderInfo?.versionsSize ?? 0
                     let sizeWithoutIncludingVersionsSize = totalFileSize - versionsSize
                     
-                    megaMessage.richString = NSString.mnz_string(byFiles: totalNumberOfFiles - numOfVersionedFiles, andFolders: request.megaFolderInfo.folders)
+                    megaMessage.richString = NSString.mnz_string(byFiles: totalNumberOfFiles - numOfVersionedFiles, andFolders: totalNumberOfFolders)
                     megaMessage.richNumber = NSNumber(floatLiteral: Double(sizeWithoutIncludingVersionsSize > 0 ? sizeWithoutIncludingVersionsSize : -1))
                     megaMessage.richTitle = request.text
                     
