@@ -21,9 +21,9 @@ public struct SMSRepository: SMSRepositoryProtocol {
         sdk.getCountryCallingCodes(with: RequestDelegate { result in
             switch result {
             case .success(let request):
-                completion(.success(request.megaStringListDictionary.map {
+                completion(.success(request.megaStringListDictionary?.map {
                     RegionEntity(regionCode: $0.key, regionName: nil, callingCodes: $0.value.toArray())
-                }))
+                } ?? []))
             case .failure:
                 completion(.failure(GetSMSErrorEntity.failedToGetCallingCodes))
             }
@@ -34,7 +34,7 @@ public struct SMSRepository: SMSRepositoryProtocol {
         sdk.checkSMSVerificationCode(code, delegate: RequestDelegate { result in
             switch result {
             case .success(let request):
-                completion(.success(request.text))
+                completion(.success(request.text ?? ""))
             case .failure(let error):
                 let smsError: CheckSMSErrorEntity
                 switch error.type {
@@ -57,7 +57,7 @@ public struct SMSRepository: SMSRepositoryProtocol {
         sdk.sendSMSVerificationCode(toPhoneNumber: toPhoneNumber, delegate: RequestDelegate { result in
             switch result {
             case .success(let request):
-                completion(.success(request.text))
+                completion(.success(request.text ?? ""))
             case .failure(let error):
                 let smsError: CheckSMSErrorEntity
                 switch error.type {

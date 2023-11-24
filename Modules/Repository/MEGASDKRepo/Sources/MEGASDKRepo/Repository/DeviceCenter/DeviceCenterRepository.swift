@@ -45,7 +45,7 @@ public struct DeviceCenterRepository: DeviceCenterRepositoryProtocol {
         await withAsyncValue(in: { completion in
             sdk.getBackupInfo(RequestDelegate(completion: { result in
                 if case let .success(request) = result {
-                    completion(.success(request.backupInfoList.toBackupInfoEntities()))
+                    completion(.success(request.backupInfoList?.toBackupInfoEntities() ?? []))
                 } else {
                     completion(.success([]))
                 }

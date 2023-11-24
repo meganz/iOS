@@ -22,7 +22,7 @@ public struct BannerRepository: BannerRepositoryProtocol {
         }
 
         func mapValue(request: MEGARequest) -> [BannerEntity] {
-            request.bannerList.bannerEntities
+            request.bannerList?.bannerEntities ?? []
         }
 
         sdk.getBanners(RequestDelegate { result in
@@ -30,7 +30,7 @@ public struct BannerRepository: BannerRepositoryProtocol {
             case .failure(let error):
                 completion(.failure(mapError(sdkError: error.type)))
             case .success(let request):
-                completion(.success(request.bannerList.bannerEntities))
+                completion(.success(request.bannerList?.bannerEntities ?? []))
             }
         })
     }

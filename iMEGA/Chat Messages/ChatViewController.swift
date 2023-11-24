@@ -78,7 +78,7 @@ class ChatViewController: MessagesViewController {
     
     var sendTypingTimer: Timer?
     var keyboardVisible = false
-    var richLinkWarningCounterValue: UInt = 0
+    var richLinkWarningCounterValue: Int = 0
     var isVoiceRecordingInProgress = false
     var shouldDisableAudioVideoCalling = false
     var unreadNewMessagesCount = 0 {

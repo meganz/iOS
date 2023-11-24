@@ -32,10 +32,10 @@ final class PlaylistItemTableViewCell: UITableViewCell {
                     thumbnailImageView.image = UIImage(contentsOfFile: thumbnailFilePath)
                 } else {
                     MEGASdk.shared.getThumbnailNode(node, destinationFilePath: thumbnailFilePath, delegate: RequestDelegate { [weak self] result in
-                        if case let .success(request) = result {
-                            if request.nodeHandle == node.handle {
-                                self?.thumbnailImageView.image = UIImage(contentsOfFile: request.file)
-                            }
+                        if case let .success(request) = result,
+                           request.nodeHandle == node.handle,
+                           let  file = request.file {
+                            self?.thumbnailImageView.image = UIImage(contentsOfFile: file)
                         }
                     })
                 }

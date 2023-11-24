@@ -47,7 +47,7 @@ class ChatRichPreviewDialogCollectionViewCell: TextMessageCell {
             } else if richPreviewDialogView.notNowButton.frame.contains(touchLocation) {
                 megaMessage.warningDialog = .dismiss
                 chatVC.richLinkWarningCounterValue += 1
-                MEGASdk.shared.setRichLinkWarningCounterValue(chatVC.richLinkWarningCounterValue)
+                MEGASdk.shared.setRichLinkWarningCounterValue(UInt(chatVC.richLinkWarningCounterValue))
             } else if  richPreviewDialogView.neverButton.frame.contains(touchLocation) {
                 megaMessage.warningDialog = .confirmation
             }

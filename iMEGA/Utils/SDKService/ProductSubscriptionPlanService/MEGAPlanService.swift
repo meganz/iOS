@@ -70,7 +70,12 @@ private final class MEGAPlanLoadTask {
                 case .failure:
                     completion(.failure(.unableToFetchMEGAPlan))
                 case .success(let request):
-                    let fetchedMEGAPlans = self.setupCache(with: request.pricing, currencyName: request.currency.currencyName)
+                    guard let pricing = request.pricing,
+                        let currency = request.currency else {
+                        completion(.failure(.unableToFetchMEGAPlan))
+                        return
+                    }
+                    let fetchedMEGAPlans = self.setupCache(with: pricing, currencyName: currency.currencyName)
                     completion(.success(fetchedMEGAPlans))
                 }
             })

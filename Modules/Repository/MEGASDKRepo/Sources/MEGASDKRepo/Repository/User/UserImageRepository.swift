@@ -19,12 +19,12 @@ public struct UserImageRepository: UserImageRepositoryProtocol {
                               completion: @escaping (Result<ImageFilePathEntity, UserImageLoadErrorEntity>) -> Void) {
 
         let thumbnailRequestDelegate = RequestDelegate { result in
-            guard case .success(let request) = result else {
+            guard case .success(let request) = result, let file = request.file else {
                 completion(.failure(.unableToFetch))
                 return
             }
 
-            completion(.success(request.file))
+            completion(.success(file))
         }
 
         sdk.getAvatarUser(withEmailOrHandle: handle,

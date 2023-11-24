@@ -15,5 +15,5 @@ public struct MockPSARepository: PSARepositoryProtocol {
         completion(psaResult)
     }
     
-    public func markAsSeenForPSA(withIdentifier identifier: Int) { }
+    public func markAsSeenForPSA(withIdentifier identifier: PSAIdentifier) { }
 }

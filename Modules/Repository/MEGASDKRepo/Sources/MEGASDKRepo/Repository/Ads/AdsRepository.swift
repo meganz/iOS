@@ -21,7 +21,7 @@ public struct AdsRepository: AdsRepositoryProtocol {
             sdk.fetchAds(flag, adUnits: adsSlots, publicHandle: publicHandle, delegate: RequestDelegate { result in
                 switch result {
                 case .success(let request):
-                    completion(.success(request.megaStringDictionary))
+                    completion(.success(request.megaStringDictionary ?? [:]))
                 case .failure(let error):
                     print(error)
                     completion(.failure(error))

@@ -69,8 +69,8 @@ struct SetVideoPlayerItemMetadataCommand {
                 let getThumbnailRequestDelegate = RequestDelegate { requestResult in
                     switch requestResult {
                     case .success(let request):
-                        guard request.nodeHandle == node.handle else { return result(.success(nodeAssetManager.icon(for: node))) }
-                        result(.success(UIImage(contentsOfFile: request.file)))
+                        guard request.nodeHandle == node.handle, let file = request.file else { return result(.success(nodeAssetManager.icon(for: node))) }
+                        result(.success(UIImage(contentsOfFile: file)))
                     case .failure:
                         result(.success(nodeAssetManager.icon(for: node)))
                     }

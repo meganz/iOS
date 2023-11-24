@@ -114,7 +114,10 @@ final class AccountRepository: NSObject, AccountRepositoryProtocol {
                 guard let self else { return }
                 switch result {
                 case .success(let request):
-                    let accountDetails = request.megaAccountDetails.toAccountDetailsEntity()
+                    guard let accountDetails = request.megaAccountDetails?.toAccountDetailsEntity() else {
+                        completion(.failure(AccountDetailsErrorEntity.generic))
+                        return
+                    }
                     currentUserSource.setAccountDetails(accountDetails)
                     completion(.success(accountDetails))
                 case .failure:

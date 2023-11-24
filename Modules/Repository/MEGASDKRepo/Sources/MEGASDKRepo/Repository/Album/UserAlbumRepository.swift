@@ -139,7 +139,7 @@ final public class UserAlbumRepository: NSObject, UserAlbumRepositoryProtocol {
                 
                 switch result {
                 case .success(let request):
-                    continuation.resume(returning: request.number.int64Value)
+                    continuation.resume(returning: request.number)
                 case .failure:
                     continuation.resume(throwing: AlbumErrorEntity.generic)
                 }

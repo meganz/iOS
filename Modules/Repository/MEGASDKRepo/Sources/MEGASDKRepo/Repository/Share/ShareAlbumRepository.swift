@@ -63,8 +63,12 @@ public struct ShareAlbumRepository: ShareAlbumRepositoryProtocol {
             sdk.fetchPublicSet(link, delegate: RequestDelegate { result in
                 switch result {
                 case .success(let request):
-                    let sharedAlbum = SharedAlbumEntity(set: request.set.toSetEntity(),
-                                                        setElements: request.elementsInSet.toSetElementsEntities())
+                    guard let set = request.set else {
+                        completion(.failure(GenericErrorEntity()))
+                        return
+                    }
+                    let sharedAlbum = SharedAlbumEntity(set: set.toSetEntity(),
+                                                        setElements: request.elementsInSet?.toSetElementsEntities() ?? [])
                     completion(.success(sharedAlbum))
                 case .failure(let error):
                     let errorEntity: Error

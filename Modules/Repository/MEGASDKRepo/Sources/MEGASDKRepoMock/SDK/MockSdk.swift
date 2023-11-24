@@ -314,7 +314,7 @@ public final class MockSdk: MEGASdk {
     }
     
     public override func updateSetElementOrder(_ sid: MEGAHandle, eid: MEGAHandle, order: Int64, delegate: any MEGARequestDelegate) {
-        let mockRequest = MockRequest(handle: 1, number: NSNumber(value: order))
+        let mockRequest = MockRequest(handle: 1, number: order)
         
         delegate.onRequestFinish?(self, request: mockRequest, error: MEGAError())
     }
