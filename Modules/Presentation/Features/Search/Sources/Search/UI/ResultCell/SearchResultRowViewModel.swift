@@ -87,8 +87,9 @@ class SearchResultRowViewModel: Identifiable, ObservableObject {
         }
     }
 
-    func reload(with result: SearchResult) {
+    @MainActor
+    func reload(with result: SearchResult) async {
         self.result = result
-        objectWillChange.send()
+        await loadThumbnail()
     }
 }
