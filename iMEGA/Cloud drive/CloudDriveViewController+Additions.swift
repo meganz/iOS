@@ -4,6 +4,23 @@ import MEGASDKRepo
 import SwiftUI
 
 extension CloudDriveViewController {
+    @objc func determineViewMode() {
+        guard
+            let viewModeStore,
+            let node = parentNode
+        else { return }
+        
+        let viewMode = viewModeStore.viewMode(for: .init(node: node))
+        
+        if viewMode == .list {
+            initTable()
+            shouldDetermineViewMode = false
+        } else if viewMode == .thumbnail {
+            initCollection()
+            shouldDetermineViewMode = false
+        }
+    }
+    
     @objc func createNodeInfoViewModel(withNode node: MEGANode) -> NodeInfoViewModel {
         NodeInfoViewModel(
             withNode: node,

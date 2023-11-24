@@ -18,7 +18,7 @@ extension CloudDriveViewController: MediaDiscoveryContentDelegate {
     
     @objc func configureMediaDiscoveryViewMode(isShowingAutomatically: Bool) {
         clearViewModeChildren()
-        updateSearchAppearance(for: .mediaDiscovery)
+        updateSearchAppearance(for: ViewModePreferenceEntity.mediaDiscovery.rawValue)
         
         guard let containerStackView, let parentNode else {
             return

@@ -44,6 +44,7 @@
 #import "UIViewController+MNZCategory.h"
 
 @import Photos;
+@import MEGADomain;
 @import MEGAL10nObjc;
 @import MEGAUIKit;
 @import MEGASDKRepo;
@@ -67,8 +68,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 @property (nonatomic, strong) NSMutableArray *cloudImages;
 
-@property (nonatomic, assign) ViewModePreference viewModePreference;
-@property (nonatomic, assign) BOOL shouldDetermineViewMode;
+
 @property (strong, nonatomic) NSOperationQueue *searchQueue;
 @property (strong, nonatomic) MEGACancelToken *cancelToken;
 
@@ -83,6 +83,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self assignViewModeStore];
     
     self.view.backgroundColor = UIColor.systemBackgroundColor;
 
@@ -164,7 +166,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(reloadUI) name:MEGASortingPreference object:nil];
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(determineViewMode) name:MEGAViewModePreference object:nil];
+    
+    [self observeViewModeNotification];
     
     [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
@@ -242,69 +245,10 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 #pragma mark - Layout
 
-- (void)determineViewMode {
-    ViewModePreference viewModePreference = [NSUserDefaults.standardUserDefaults integerForKey:MEGAViewModePreference];
-    switch (viewModePreference) {
-        case ViewModePreferencePerFolder:
-            //Check Core Data or determine according to the number of nodes with or without thumbnail
-            break;
-            
-        case ViewModePreferenceList:
-            [self initTable];
-            self.shouldDetermineViewMode = NO;
-            return;
-            
-        case ViewModePreferenceThumbnail:
-            [self initCollection];
-            self.shouldDetermineViewMode = NO;
-            return;
-        case ViewModePreferenceMediaDiscovery:
-            break;
-    }
-    
-    CloudAppearancePreference *cloudAppearancePreference = [MEGAStore.shareInstance fetchCloudAppearancePreferenceWithHandle:self.parentNode.handle];
-    if (cloudAppearancePreference) {
-        switch (cloudAppearancePreference.viewMode.integerValue) {
-            case ViewModePreferenceList:
-                [self initTable];
-                break;
-                
-            case ViewModePreferenceThumbnail:
-                [self initCollection];
-                break;
-                
-            default:
-                [self initTable];
-                break;
-        }
-    } else {
-        MEGANodeList *nodes = [[MEGASdkManager sharedMEGASdk] childrenForParent:self.parentNode];
-        NSInteger nodesWithThumbnail = 0;
-        NSInteger nodesWithoutThumbnail = 0;
-        
-        for (int i = 0; i < nodes.size; i++) {
-            MEGANode *node = [nodes nodeAtIndex:i];
-            if (node.hasThumbnail) {
-                nodesWithThumbnail = nodesWithThumbnail + 1;
-            } else {
-                nodesWithoutThumbnail = nodesWithoutThumbnail + 1;
-            }
-        }
-        
-        if (nodesWithThumbnail > nodesWithoutThumbnail) {
-            [self initCollection];
-        } else {
-            [self initTable];
-        }
-    }
-    
-    self.shouldDetermineViewMode = NO;
-}
-
 - (void)initTable {
     [self clearViewModeChildren];
-    self.viewModePreference = ViewModePreferenceList;
-    [self updateSearchAppearanceFor:self.viewModePreference];
+    self.viewModePreference_ObjC = ViewModePreferenceEntityList;
+    [self updateSearchAppearanceFor:self.viewModePreference_ObjC];
     
     self.cdTableView = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveTableID"];
     [self addChildViewController:self.cdTableView];
@@ -319,8 +263,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 - (void)initCollection {
     [self clearViewModeChildren];
-    self.viewModePreference = ViewModePreferenceThumbnail;
-    [self updateSearchAppearanceFor:self.viewModePreference];
+    self.viewModePreference_ObjC = ViewModePreferenceEntityThumbnail;
+    [self updateSearchAppearanceFor:self.viewModePreference_ObjC];
     
     self.cdCollectionView = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveCollectionID"];
     self.cdCollectionView.cloudDrive = self;
@@ -353,7 +297,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 - (nullable MEGANode *)nodeAtIndexPath:(NSIndexPath *)indexPath {
     BOOL isInSearch = self.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch;
     MEGANode *node;
-    if (self.viewModePreference == ViewModePreferenceList) {
+    if (self.viewModePreference_ObjC == ViewModePreferenceEntityList) {
         node = isInSearch ? [self.searchNodesArray objectOrNilAtIndex:indexPath.row] : [self.nodes nodeAtIndex:indexPath.row];
     } else {
         node = [self.cdCollectionView thumbnailNodeAtIndexPath:indexPath];
@@ -368,54 +312,27 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 }
 
 - (BOOL)isListViewModeSelected {
-    return self.viewModePreference == ViewModePreferenceList;
+    return self.viewModePreference_ObjC == ViewModePreferenceEntityList;
 }
 
 - (BOOL)isThumbnailViewModeSelected {
-    return self.viewModePreference == ViewModePreferenceThumbnail;
+    return self.viewModePreference_ObjC == ViewModePreferenceEntityThumbnail;
 }
 
 - (BOOL)isMediaDiscoveryViewModeSelected {
-    return self.viewModePreference == ViewModePreferenceMediaDiscovery;
+    return self.viewModePreference_ObjC == ViewModePreferenceEntityMediaDiscovery;
 }
 
 -(void)changeModeToListView {
-    [self change: ViewModePreferenceList];
+    [self change: ViewModePreferenceEntityList];
 }
 
 -(void)changeModeToThumbnail {
-    [self change: ViewModePreferenceThumbnail];
+    [self change: ViewModePreferenceEntityThumbnail];
 }
 
 -(void)changeModeToMediaDiscovery {
-    [self change: ViewModePreferenceMediaDiscovery];
-}
-
-/// With the passed in viewMode, this function will attempt to update and change the viewMode for the screen.
-/// If the viewMode is the same as it was previously, no change will be made, and exit early
-/// - If the passed in viewMode change is of type ViewModePreferenceMediaDiscovery, this function will not save this preference to the device to be used with parent nodes and future sub folder viewModes
-///   therefore current parent nodes in the view stack will not receive a change notification.
-/// - If the current accounts viewMode preference is set to ViewModePreferencePerFolder, this function will update the viewModePreference at this parent node level to be  used again in the future reentry to this screen for this parent node.
-/// - All other cases will save the changed viewModePreference to the user storage, and post a notification to listeners that viewMode change has occurred. The posting of ViewModePreferenceMediaDiscovery is skipped, as no change should occur outside this parent node.
-/// - Parameter viewModePreference: The viewMode this screen would like to transition to.
-- (void)change:(ViewModePreference) viewModePreference {
-    
-    if(self.viewModePreference == viewModePreference) {
-        return;
-    }
-    
-    self.viewModePreference = viewModePreference;
-    
-    if(viewModePreference == ViewModePreferenceMediaDiscovery) {
-        [self configureMediaDiscoveryViewModeWithIsShowingAutomatically:NO];
-        self.shouldDetermineViewMode = NO;
-    } else if ([NSUserDefaults.standardUserDefaults integerForKey:MEGAViewModePreference] == ViewModePreferencePerFolder) {
-        [MEGAStore.shareInstance insertOrUpdateCloudViewModeWithHandle:self.parentNode.handle viewMode:self.viewModePreference];
-        [NSNotificationCenter.defaultCenter postNotificationName:MEGAViewModePreference object:self userInfo:@{MEGAViewModePreference : @(self.viewModePreference)}];
-    } else {
-        [NSUserDefaults.standardUserDefaults setInteger:self.viewModePreference forKey:MEGAViewModePreference];
-        [NSNotificationCenter.defaultCenter postNotificationName:MEGAViewModePreference object:self userInfo:@{MEGAViewModePreference : @(self.viewModePreference)}];
-    }
+    [self change: ViewModePreferenceEntityMediaDiscovery];
 }
 
 - (void)nodesSortTypeHasChanged {
@@ -440,7 +357,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [self prepareForReloadUI];
     
     if (nodeList) {
-        if (self.displayMode == DisplayModeCloudDrive && nodeList.size == 1 && self.viewModePreference == ViewModePreferenceThumbnail && self.wasSelectingFavoriteUnfavoriteNodeActionOption) {
+        if (self.displayMode == DisplayModeCloudDrive && nodeList.size == 1 && self.viewModePreference_ObjC == ViewModePreferenceEntityThumbnail && self.wasSelectingFavoriteUnfavoriteNodeActionOption) {
             MEGANode *updatedNode = [nodeList nodeAtIndex:0];
             NSIndexPath *indexPath = [self findIndexPathFor:updatedNode source:_nodesArray];
             [self reloadDataAtIndexPaths:@[indexPath]];
@@ -464,14 +381,14 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         !self.didShowMediaDiscoveryAutomatically &&
         [self.viewModel shouldShowMediaDiscoveryAutomaticallyForNodes:self.nodes]) {
         self.didShowMediaDiscoveryAutomatically = YES;
-        self.viewModePreference = ViewModePreferenceMediaDiscovery;
+        self.viewModePreference_ObjC = ViewModePreferenceEntityMediaDiscovery;
         [self configureMediaDiscoveryViewModeWithIsShowingAutomatically:YES];
         self.shouldDetermineViewMode = NO;
         return;
     }
     
     if(self.nodes.size > 0
-       && self.viewModePreference == ViewModePreferenceMediaDiscovery
+       && self.viewModePreference_ObjC == ViewModePreferenceEntityMediaDiscovery
        && !self.hasMediaFiles) {
         self.shouldDetermineViewMode = YES;
     }
@@ -490,7 +407,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             [self updateNavigationBarTitle];
             self.nodes = [MEGASdkManager.sharedMEGASdk childrenForParent:self.parentNode order:[Helper sortTypeFor:self.parentNode]];
             self.hasMediaFiles = [self.viewModel hasMediaFilesWithNodes:self.nodes];
-            [self updateSearchAppearanceFor:self.viewModePreference];
+            [self updateSearchAppearanceFor:self.viewModePreference_ObjC];
             break;
         }
             
@@ -720,7 +637,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 }
 
 - (void)reloadList {
-    if (self.viewModePreference == ViewModePreferenceList) {
+    if (self.viewModePreference_ObjC == ViewModePreferenceEntityList) {
         [self.cdTableView.tableView reloadData];
     } else {
         [self.cdCollectionView reloadData];
@@ -728,7 +645,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 }
 
 - (void)reloadListAt:(NSArray<NSIndexPath *> *)indexPaths {
-    if (self.viewModePreference == ViewModePreferenceList) {
+    if (self.viewModePreference_ObjC == ViewModePreferenceEntityList) {
         [self.cdTableView.tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
     } else {
         [self.cdCollectionView reloadDataAtIndexPaths:indexPaths];
@@ -761,17 +678,17 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 - (void)setEditMode:(BOOL)editMode {
     
-    switch (self.viewModePreference) {
-        case ViewModePreferenceList:
+    switch (self.viewModePreference_ObjC) {
+        case ViewModePreferenceEntityList:
             [self.cdTableView setTableViewEditing:editMode animated:YES];
             break;
-        case ViewModePreferenceThumbnail:
+        case ViewModePreferenceEntityThumbnail:
             [self.cdCollectionView setCollectionViewEditing:editMode animated:YES];
             break;
-        case ViewModePreferenceMediaDiscovery:
+        case ViewModePreferenceEntityMediaDiscovery:
             [self.mdHostedController setEditing:editMode animated:YES];
             break;
-        case ViewModePreferencePerFolder:
+        case ViewModePreferenceEntityPerFolder:
             return;
     }
     
@@ -854,13 +771,13 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {
     [self.selectedNodesArray removeAllObjects];
     
-    switch (self.viewModePreference) {
-        case ViewModePreferenceMediaDiscovery:
+    switch (self.viewModePreference_ObjC) {
+        case ViewModePreferenceEntityMediaDiscovery:
             [self mediaDiscoveryToggleAllSelected];
             return;
-        case ViewModePreferencePerFolder:
-        case ViewModePreferenceList:
-        case ViewModePreferenceThumbnail:
+        case ViewModePreferenceEntityPerFolder:
+        case ViewModePreferenceEntityList:
+        case ViewModePreferenceEntityThumbnail:
             break;
     }
     
@@ -1020,13 +937,13 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 }
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
-    if (self.viewModePreference == ViewModePreferenceThumbnail) {
+    if (self.viewModePreference_ObjC == ViewModePreferenceEntityThumbnail) {
         self.cdCollectionView.collectionView.clipsToBounds = YES;
     }
 }
 
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {
-    if (self.viewModePreference == ViewModePreferenceThumbnail) {
+    if (self.viewModePreference_ObjC == ViewModePreferenceEntityThumbnail) {
         self.cdCollectionView.collectionView.clipsToBounds = NO;
     }
 }
@@ -1081,11 +998,11 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     }
     
     if (transfer.type == MEGATransferTypeDownload && [transfer.path hasPrefix:[[FileSystemHelperOCWrapper new] documentsDirectory].path]) {
-        switch (self.viewModePreference) {
-            case ViewModePreferenceList:
+        switch (self.viewModePreference_ObjC) {
+            case ViewModePreferenceEntityList:
                 [self.cdTableView.tableView reloadData];
                 break;
-            case ViewModePreferenceThumbnail:
+            case ViewModePreferenceEntityThumbnail:
                 [self.cdCollectionView reloadData];
                 break;
             default:

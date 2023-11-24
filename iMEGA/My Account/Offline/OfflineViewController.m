@@ -24,6 +24,7 @@
 #import "UIViewController+MNZCategory.h"
 #import "NSArray+MNZCategory.h"
 @import ChatRepo;
+@import MEGADomain;
 @import MEGAL10nObjc;
 @import MEGAUIKit;
 
@@ -53,7 +54,7 @@ static NSString *kisDirectory = @"kisDirectory";
 
 @property (nonatomic, strong) OfflineTableViewViewController *offlineTableView;
 @property (nonatomic, strong) OfflineCollectionViewController *offlineCollectionView;
-@property (nonatomic, assign) ViewModePreference viewModePreference;
+@property (nonatomic, assign) ViewModePreferenceEntity viewModePreference;
 
 @property (nonatomic, copy) void (^openFileWhenViewReady)(void);
 
@@ -89,8 +90,8 @@ static NSString *kisDirectory = @"kisDirectory";
     [super viewWillAppear:animated];
     
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(reloadUI) name:MEGASortingPreference object:nil];
-    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(determineViewMode) name:MEGAViewModePreference object:nil];
-
+    
+    [self observeViewMode];
     [self addSubscriptions];
     
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
@@ -183,20 +184,20 @@ static NSString *kisDirectory = @"kisDirectory";
         return;
     }
 
-    ViewModePreference viewModePreference = [NSUserDefaults.standardUserDefaults integerForKey:MEGAViewModePreference];
+    ViewModePreferenceEntity viewModePreference = [NSUserDefaults.standardUserDefaults integerForKey:MEGAViewModePreference];
     switch (viewModePreference) {
-        case ViewModePreferencePerFolder:
+        case ViewModePreferenceEntityPerFolder:
             //Check Core Data or determine according to the number of nodes with or without thumbnail
             break;
 
-        case ViewModePreferenceList:
+        case ViewModePreferenceEntityList:
             [self initTable];
             return;
 
-        case ViewModePreferenceThumbnail:
+        case ViewModePreferenceEntityThumbnail:
             [self initCollection];
             return;
-        case ViewModePreferenceMediaDiscovery:
+        case ViewModePreferenceEntityMediaDiscovery:
             break;
     }
 
@@ -205,11 +206,11 @@ static NSString *kisDirectory = @"kisDirectory";
 
     if (offlineAppearancePreference) {
         switch (offlineAppearancePreference.viewMode.integerValue) {
-            case ViewModePreferenceList:
+            case ViewModePreferenceEntityList:
                 [self initTable];
                 break;
 
-            case ViewModePreferenceThumbnail:
+            case ViewModePreferenceEntityThumbnail:
                 [self initCollection];
                 break;
 
@@ -262,7 +263,7 @@ static NSString *kisDirectory = @"kisDirectory";
     [self.offlineCollectionView removeFromParentViewController];
     self.offlineCollectionView = nil;
     
-    self.viewModePreference = ViewModePreferenceList;
+    self.viewModePreference = ViewModePreferenceEntityList;
     
     self.offlineTableView = [self.storyboard instantiateViewControllerWithIdentifier:@"OfflineTableID"];
     self.offlineTableView.offline = self;
@@ -286,7 +287,7 @@ static NSString *kisDirectory = @"kisDirectory";
     [self.offlineTableView removeFromParentViewController];
     self.offlineTableView = nil;
     
-    self.viewModePreference = ViewModePreferenceThumbnail;
+    self.viewModePreference = ViewModePreferenceEntityThumbnail;
     
     self.offlineCollectionView = [self.storyboard instantiateViewControllerWithIdentifier:@"OfflineCollectionID"];
     self.offlineCollectionView.offline = self;
@@ -299,8 +300,8 @@ static NSString *kisDirectory = @"kisDirectory";
 }
 
 - (void)changeViewModePreference {
-    self.viewModePreference = (self.viewModePreference == ViewModePreferenceList) ? ViewModePreferenceThumbnail : ViewModePreferenceList;
-    if ([NSUserDefaults.standardUserDefaults integerForKey:MEGAViewModePreference] == ViewModePreferencePerFolder) {
+    self.viewModePreference = (self.viewModePreference == ViewModePreferenceEntityList) ? ViewModePreferenceEntityThumbnail : ViewModePreferenceEntityList;
+    if ([NSUserDefaults.standardUserDefaults integerForKey:MEGAViewModePreference] == ViewModePreferenceEntityPerFolder) {
         NSString *relativePath = [self.currentOfflinePath stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@/Documents/", NSHomeDirectory()] withString:@""];
         [MEGAStore.shareInstance insertOrUpdateOfflineViewModeWithPath:relativePath viewMode:self.viewModePreference];
     } else {
@@ -311,7 +312,7 @@ static NSString *kisDirectory = @"kisDirectory";
 }
 
 - (BOOL)isListViewModeSelected {
-    return self.viewModePreference == ViewModePreferenceList;
+    return self.viewModePreference == ViewModePreferenceEntityList;
 }
 
 #pragma mark - Private
@@ -549,7 +550,7 @@ static NSString *kisDirectory = @"kisDirectory";
 
 - (nullable MEGAQLPreviewController *)qlPreviewControllerForIndexPath:(NSIndexPath *)indexPath {
     MEGAQLPreviewController *previewController = [[MEGAQLPreviewController alloc] initWithArrayOfFiles:self.offlineFiles];
-    NSMutableArray *items = self.viewModePreference == ViewModePreferenceThumbnail ? self.offlineSortedFileItems : self.offlineSortedItems;
+    NSMutableArray *items = self.viewModePreference == ViewModePreferenceEntityThumbnail ? self.offlineSortedFileItems : self.offlineSortedItems;
     NSDictionary *item = [items objectOrNilAtIndex:indexPath.row];
     if (item == nil) {
         return nil;
@@ -558,17 +559,17 @@ static NSString *kisDirectory = @"kisDirectory";
     previewController.currentPreviewItemIndex = selectedIndexFile;
     
     switch (self.viewModePreference) {
-        case ViewModePreferencePerFolder:
+        case ViewModePreferenceEntityPerFolder:
             break;
             
-        case ViewModePreferenceList:
+        case ViewModePreferenceEntityList:
             [self.offlineTableView.tableView deselectRowAtIndexPath:indexPath animated:YES];
             break;
             
-        case ViewModePreferenceThumbnail:
+        case ViewModePreferenceEntityThumbnail:
             [self.offlineCollectionView.collectionView deselectItemAtIndexPath:indexPath animated:YES];
             break;
-        case ViewModePreferenceMediaDiscovery:
+        case ViewModePreferenceEntityMediaDiscovery:
             break;
     }
     
@@ -578,7 +579,7 @@ static NSString *kisDirectory = @"kisDirectory";
 - (void)reloadData {
     self.view.backgroundColor = UIColor.systemBackgroundColor;
     
-    if (self.viewModePreference == ViewModePreferenceList) {
+    if (self.viewModePreference == ViewModePreferenceEntityList) {
         [self.offlineTableView.tableView reloadData];
     } else {
         [self.offlineCollectionView reloadData];
@@ -586,7 +587,7 @@ static NSString *kisDirectory = @"kisDirectory";
 }
 
 - (void)setEditMode:(BOOL)editMode {
-    if (self.viewModePreference == ViewModePreferenceList) {
+    if (self.viewModePreference == ViewModePreferenceEntityList) {
         [self.offlineTableView setTableViewEditing:editMode animated:YES];
     } else {
         [self.offlineCollectionView setCollectionViewEditing:editMode animated:YES];
@@ -595,7 +596,7 @@ static NSString *kisDirectory = @"kisDirectory";
 
 - (NSInteger)numberOfRows {
     NSInteger numberOfRows = 0;
-    if (self.viewModePreference == ViewModePreferenceList) {
+    if (self.viewModePreference == ViewModePreferenceEntityList) {
         numberOfRows = [self.offlineTableView.tableView numberOfRowsInSection:0];
     } else {
         numberOfRows = [self.offlineCollectionView.collectionView mnz_totalRows];
@@ -611,17 +612,17 @@ static NSString *kisDirectory = @"kisDirectory";
     navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
     
     switch (self.viewModePreference) {
-        case ViewModePreferencePerFolder:
+        case ViewModePreferenceEntityPerFolder:
             break;
             
-        case ViewModePreferenceList:
+        case ViewModePreferenceEntityList:
             [self.offlineTableView.tableView deselectRowAtIndexPath:indexPath animated:YES];
             break;
             
-        case ViewModePreferenceThumbnail:
+        case ViewModePreferenceEntityThumbnail:
             [self.offlineCollectionView.collectionView deselectItemAtIndexPath:indexPath animated:YES];
             break;
-        case ViewModePreferenceMediaDiscovery:
+        case ViewModePreferenceEntityMediaDiscovery:
             break;
     }
     return navigationController;
@@ -1000,13 +1001,13 @@ static NSString *kisDirectory = @"kisDirectory";
 }
 
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
-    if (self.viewModePreference == ViewModePreferenceThumbnail) {
+    if (self.viewModePreference == ViewModePreferenceEntityThumbnail) {
         self.offlineCollectionView.collectionView.clipsToBounds = YES;
     }
 }
 
 - (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {
-    if (self.viewModePreference == ViewModePreferenceThumbnail) {
+    if (self.viewModePreference == ViewModePreferenceEntityThumbnail) {
         self.offlineCollectionView.collectionView.clipsToBounds = NO;
     }
 }
@@ -1076,7 +1077,7 @@ static NSString *kisDirectory = @"kisDirectory";
 #pragma mark - AudioPlayer
 
 - (void)updateContentView:(CGFloat)height {
-    if (self.viewModePreference == ViewModePreferenceList) {
+    if (self.viewModePreference == ViewModePreferenceEntityList) {
         self.offlineTableView.tableView.contentInset = UIEdgeInsetsMake(0, 0, height, 0);
     } else {
         self.offlineCollectionView.collectionView.contentInset = UIEdgeInsetsMake(0, 0, height, 0);

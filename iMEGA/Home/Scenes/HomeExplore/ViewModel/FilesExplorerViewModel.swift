@@ -145,7 +145,7 @@ final class FilesExplorerViewModel {
         case .didSelectNode(let node, let allNodes):
             didSelect(node: node, allNodes: allNodes)
         case .didChangeViewMode(let viewType):
-            viewTypePreference = ViewModePreference(rawValue: viewType) == .thumbnail ? .grid : .list
+            viewTypePreference = ViewModePreferenceEntity(rawValue: viewType) == .thumbnail ? .grid : .list
             configureContextMenus()
         case .downloadNode(let node):
             router.showDownloadTransfer(node: node)

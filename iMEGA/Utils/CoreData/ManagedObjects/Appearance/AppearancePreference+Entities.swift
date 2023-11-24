@@ -16,6 +16,6 @@ extension AppearancePreference {
             return nil
         }
         
-        return ViewModePreference(rawValue: viewModeRawValue)?.toViewModePreferenceEntity()
+        return ViewModePreferenceEntity(rawValue: viewModeRawValue)
     }
 }

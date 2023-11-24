@@ -56,7 +56,7 @@ class FilesExplorerContainerViewState: FilesExplorerViewControllerDelegate {
         containerViewController.children.forEach { remove(content: $0)}
     }
     
-    func setViewModePreference(_ preference: ViewModePreference) {
+    func setViewModePreference(_ preference: ViewModePreferenceEntity) {
         containerViewController.setViewModePreference(preference)
     }
     

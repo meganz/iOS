@@ -260,6 +260,8 @@ public final class ContextMenuBuilder {
                 return folderLinkMenu()
             case .fileLink:
                 return fileLinkMenu()
+            case .home:
+                return homeMenu()
             default:
                 return nil
             }
@@ -648,6 +650,13 @@ public final class ContextMenuBuilder {
         return CMEntity(
             displayInline: true,
             children: fileLinkActions
+        )
+    }
+    
+    // used in the home search results screen
+    private func homeMenu() -> CMEntity {
+        CMEntity(
+            children: [thumbnailView, listView]
         )
     }
 }

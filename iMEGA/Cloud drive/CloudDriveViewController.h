@@ -1,5 +1,4 @@
 #import <UIKit/UIKit.h>
-
 #import "DisplayMode.h"
 #import "BrowserViewController.h"
 #import "ContactsViewController.h"
@@ -11,7 +10,7 @@
 static const NSUInteger kMinimumLettersToStartTheSearch = 1;
 
 NS_ASSUME_NONNULL_BEGIN
-
+@protocol ViewModeStoring;
 @interface CloudDriveViewController : UIViewController <BrowserViewControllerDelegate, ContatctsViewControllerDelegate, UIDocumentPickerDelegate>
 
 @property (nonatomic, strong, nullable) MEGANode *parentNode;
@@ -56,12 +55,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *restoreBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *actionsBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
-
+@property (nonatomic, assign) BOOL shouldDetermineViewMode;
 @property (nonatomic, strong, nullable) ContextMenuManager * contextMenuManager;
-
+@property (nonatomic, strong, nullable) id<ViewModeStoring> viewModeStore;
 @property (strong, nonatomic) CloudDriveViewModel *viewModel;
 @property (weak, nonatomic) IBOutlet UIStackView *containerStackView;
-
+@property (nonatomic, assign) NSInteger viewModePreference_ObjC;
 - (void)presentScanDocument;
 - (void)setViewEditing:(BOOL)editing;
 - (void)setToolbarActionsEnabled:(BOOL)boolValue;
@@ -85,7 +84,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)createNewFolderAction;
 - (void)reloadUI:(MEGANodeList * _Nullable)nodeList;
 - (void)loadPhotoAlbumBrowser;
-
+- (void)initTable;
+- (void)initCollection;
 @end
 
 NS_ASSUME_NONNULL_END

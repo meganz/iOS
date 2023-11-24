@@ -1,3 +1,4 @@
+import MEGADomain
 import MEGAL10n
 import UIKit
 
@@ -49,7 +50,7 @@ class SortingAndViewModeTableViewController: UITableViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(processSortingPreferenceNotification(_:)), name: Notification.Name(MEGASortingPreference), object: nil)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(processViewModePreferenceNotification(_:)), name: Notification.Name(MEGAViewModePreference), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(processViewModePreferenceNotification(_:)), name: .MEGAViewModePreferenceDidChange, object: nil)
         
         setupUI()
     }
@@ -107,7 +108,9 @@ class SortingAndViewModeTableViewController: UITableViewController {
         let previousSelectedViewModePreferenceCell = tableView.cellForRow(at: IndexPath.init(row: viewModePreference, section: SortingAndViewSection.viewModePreference.rawValue)) as! SelectableTableViewCell
         previousSelectedViewModePreferenceCell.redCheckmarkImageView.isHidden = true
         
-        viewModePreference = notification.userInfo?[MEGAViewModePreference] as! Int
+        if let preference = notification.userInfo?[MEGAViewModePreference] as? ViewModePreferenceEntity {
+            viewModePreference = preference.rawValue
+        }
         let selectedViewModePreferenceCell = tableView.cellForRow(at: IndexPath.init(row: viewModePreference, section: SortingAndViewSection.viewModePreference.rawValue)) as! SelectableTableViewCell
         selectedViewModePreferenceCell.redCheckmarkImageView.isHidden = false
     }
@@ -237,7 +240,9 @@ class SortingAndViewModeTableViewController: UITableViewController {
             
             UserDefaults.standard.set(indexPath.row, forKey: MEGAViewModePreference)
             
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: MEGAViewModePreference), object: nil, userInfo: [MEGAViewModePreference: indexPath.row])
+            if let viewMode = ViewModePreferenceEntity(rawValue: indexPath.row) {
+                NotificationCenter.default.post(viewMode: viewMode)
+            }
             
         default:
             return

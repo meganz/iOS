@@ -280,13 +280,11 @@ final class SearchResultsViewModelTests: XCTestCase {
         let property: ResultProperty = .init(
             id: "1",
             content: .icon(
-                image: UIImage(systemName: "ellipsis")!
-                , scalable: false
+                image: UIImage(systemName: "ellipsis")!,
+                scalable: false
             ),
             vibrancyEnabled: false,
-            placement: { _  in
-                return .prominent
-            }
+            placement: { _  in return .prominent }
         )
         harness.bridge.searchResultChanged(
             .resultWith(

@@ -1,43 +1,58 @@
 @testable import MEGA
+import MEGADomain
 @testable import MEGASDKRepoMock
 import XCTest
 
 final class CloudDriveViewControllerTests: XCTestCase {
     
-    override func setUp() {
-        super.setUp()
-        cleanTestArtifacts()
-    }
-    
-    override func tearDown() {
-        super.tearDown()
-        cleanTestArtifacts()
+    class MockViewModeStore: ViewModeStoring {
+        
+        var viewModeToReturn: ViewModePreferenceEntity = .list
+        func viewMode(
+            for location: ViewModeLocation_ObjWrapper
+        ) -> ViewModePreferenceEntity {
+            viewModeToReturn
+        }
+        
+        var viewModesPassedIn = [ViewModePreferenceEntity]()
+        func save(
+            viewMode: ViewModePreferenceEntity,
+            for location: ViewModeLocation_ObjWrapper
+        ) {
+            viewModesPassedIn.append(viewMode)
+        }
+        
+        init() {}
     }
     
     // MARK: - NodeAction favorite
     
-    func testNodeAction_whenSelectFavoriteOnViewModePreferenceThumbnailAndHasFolderTypeOnly_reloadCollectionAtIndexPath() {
-        simulateUserHasThumbnailViewModePreference()
+    func testNodeAction_whenSelectFavoriteOnViewModePreferenceEntityThumbnailAndHasFolderTypeOnly_reloadCollectionAtIndexPath() {
+        let ViewModeStore = MockViewModeStore()
+        ViewModeStore.viewModeToReturn = .thumbnail
         let displayMode = cloudDriveDisplayMode()
         let selectedNode = anyNode(handle: .min, nodeType: .folder)
         let mockNodeActionViewController = makeNodeActionViewController(nodes: [selectedNode], displayMode: displayMode)
         let sut = makeSUT(nodes: [selectedNode], displayMode: displayMode)
+        sut.viewModePreference_ObjC = ViewModePreferenceEntity.thumbnail.rawValue
         setNoEditingState(on: sut)
-        
+        sut.viewModeStore = ViewModeStore
         sut.simulateUserSelectFavorite(mockNodeActionViewController, selectedNode)
         sut.simulateOnNodesUpdateReloadUI(nodeList: sut.nodes)
         
         XCTAssertEqual(sut.collectionView().messages, [ .reloadDataAt([ IndexPath(item: 0, section: 0) ]) ])
     }
     
-    func testNodeAction_whenSelectFavoriteOnViewModePreferenceThumbnailAndHasFileTypeOnly_reloadCollectionAtIndexPath() {
-        simulateUserHasThumbnailViewModePreference()
+    func testNodeAction_whenSelectFavoriteOnViewModePreferenceEntityThumbnailAndHasFileTypeOnly_reloadCollectionAtIndexPath() {
+        let ViewModeStore = MockViewModeStore()
+        ViewModeStore.viewModeToReturn = .thumbnail
         let displayMode = cloudDriveDisplayMode()
         let selectedNode = anyNode(handle: .min, nodeType: .file)
         let mockNodeActionViewController = makeNodeActionViewController(nodes: [selectedNode], displayMode: displayMode)
         let sut = makeSUT(nodes: [selectedNode], displayMode: displayMode)
+        sut.viewModePreference_ObjC = ViewModePreferenceEntity.thumbnail.rawValue
         setNoEditingState(on: sut)
-        
+        sut.viewModeStore = ViewModeStore
         sut.simulateUserSelectFavorite(mockNodeActionViewController, selectedNode)
         sut.simulateOnNodesUpdateReloadUI(nodeList: sut.nodes)
         
@@ -47,13 +62,14 @@ final class CloudDriveViewControllerTests: XCTestCase {
     // MARK: - NodeAction Remove
     
     func testNodeAction_whenSelectRubbishBinOnRubbishBinPage_reloadCollection() {
-        simulateUserHasThumbnailViewModePreference()
+        let ViewModeStore = MockViewModeStore()
+        ViewModeStore.viewModeToReturn = .thumbnail
         let displayMode = rubbishBinDisplayMode()
         let selectedNode = anyNode(handle: .min, nodeType: .file)
         let mockNodeActionViewController = makeNodeActionViewController(nodes: [selectedNode], displayMode: displayMode)
         let sut = makeSUT(nodes: [selectedNode], displayMode: displayMode)
         setNoEditingState(on: sut)
-        
+        sut.viewModeStore = ViewModeStore
         sut.simulateUserSelectDelete(mockNodeActionViewController, selectedNode)
         sut.simulateOnNodesUpdateReloadUI(nodeList: sut.nodes)
         
@@ -62,28 +78,31 @@ final class CloudDriveViewControllerTests: XCTestCase {
     
     // MARK: - ReloadUI
     
-    func testReloadUI_whenUpdatesOnOneNodeOnViewModePreferenceThumbnailHasFileTypeOnlyAndSelectFavoriteAction_reloadCollectionAtIndexPath() {
-        simulateUserHasThumbnailViewModePreference()
+    func testReloadUI_whenUpdatesOnOneNodeOnViewModePreferenceEntityThumbnailHasFileTypeOnlyAndSelectFavoriteAction_reloadCollectionAtIndexPath() {
+        let ViewModeStore = MockViewModeStore()
+        ViewModeStore.viewModeToReturn = .thumbnail
         let displayMode = cloudDriveDisplayMode()
         let sampleNode = anyNode(handle: anyHandle(), nodeType: .file)
         let sut = makeSUT(nodes: [sampleNode], displayMode: displayMode)
         setNoEditingState(on: sut)
-        
+        sut.viewModePreference_ObjC = ViewModePreferenceEntity.thumbnail.rawValue
+        sut.viewModeStore = ViewModeStore
         sut.wasSelectingFavoriteUnfavoriteNodeActionOption = true
         sut.simulateOnNodesUpdateReloadUI(nodeList: sut.nodes)
         
         XCTAssertEqual(sut.collectionView().messages, [ .reloadDataAt([ IndexPath(item: 0, section: 1) ]) ])
     }
     
-    func testReloadUI_whenUpdatesMoreThanOneNodeOnViewModePreferenceThumbnail_reloadCollection() {
-        simulateUserHasThumbnailViewModePreference()
+    func testReloadUI_whenUpdatesMoreThanOneNodeOnViewModePreferenceEntityThumbnail_reloadCollection() {
+        let ViewModeStore = MockViewModeStore()
+        ViewModeStore.viewModeToReturn = .thumbnail
         let displayMode = cloudDriveDisplayMode()
         let firstNode = anyNode(handle: anyHandle(), nodeType: .file)
         let secondNode = anyNode(handle: anyHandle() + 1, nodeType: .file)
         let thirdNode = anyNode(handle: anyHandle() + 2, nodeType: .file)
         let sut = makeSUT(nodes: [firstNode, secondNode, thirdNode], displayMode: displayMode)
         setNoEditingState(on: sut)
-        
+        sut.viewModeStore = ViewModeStore
         sut.simulateOnNodesUpdateReloadUI(nodeList: sut.nodes)
         
         XCTAssertEqual(sut.collectionView().messages, [ .reloadData ])
@@ -268,12 +287,13 @@ final class CloudDriveViewControllerTests: XCTestCase {
     // MARK: - CloudDriveViewController+ContextMenu
     
     func testSortMenu_whenSortFromRubbishBinOnThumbnailView_reloadData() {
-        simulateUserHasThumbnailViewModePreference()
+        let ViewModeStore = MockViewModeStore()
+        ViewModeStore.viewModeToReturn = .thumbnail
         let displayMode = rubbishBinDisplayMode()
         let selectedNode = anyNode(handle: .min, nodeType: .file)
         let sut = makeSUT(nodes: [selectedNode], displayMode: displayMode)
         sut.viewWillAppear(true)
-        
+        sut.viewModeStore = ViewModeStore
         SortOrderType.allCases.enumerated().forEach { (index, sortOption) in
             sut.simulateUserOpenContextMenuThen(select: sortOption)
             
@@ -343,18 +363,6 @@ final class CloudDriveViewControllerTests: XCTestCase {
         sut.nodes = MockNodeList(nodes: nodes)
         sut.displayMode = displayMode
         return (sut)
-    }
-    
-    private func simulateUserHasThumbnailViewModePreference() {
-        UserDefaults.standard.setValue(ViewModePreference.thumbnail.rawValue, forKey: MEGAViewModePreference)
-    }
-    
-    private func cleanTestArtifacts() {
-        clearViewModePreference()
-    }
-    
-    private func clearViewModePreference() {
-        UserDefaults.standard.removeObject(forKey: MEGAViewModePreference)
     }
     
     private func anyHandle() -> MEGAHandle {

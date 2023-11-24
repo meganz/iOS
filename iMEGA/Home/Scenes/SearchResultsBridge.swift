@@ -4,6 +4,7 @@
 /// As we want to hide the new feature behind a flag, we need this intermediate layer to
 /// not have to change too much in the existing implementation of search results which will go away eventually
 
+import Search 
 class SearchResultsBridge: MEGASearchBarViewEditingDelegate, HomeSearchControllerDelegate {
     func didSelect(searchText: String) {
         didSelectTextTrampoline?(searchText)
@@ -41,4 +42,5 @@ class SearchResultsBridge: MEGASearchBarViewEditingDelegate, HomeSearchControlle
     var didInputTextTrampoline: ((String) -> Void)?
     var didClearTrampoline: (() -> Void)?
     var updateBottomInsetTrampoline: ((CGFloat) -> Void)?
+    var didChangeLayoutTrampoline: ((PageLayout) -> Void)?
 }

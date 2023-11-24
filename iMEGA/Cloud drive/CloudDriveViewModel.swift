@@ -97,7 +97,7 @@ enum CloudDriveAction: ActionType {
         invokeCommand?(.updateSortedData)
     }
     
-    func sortOrder(for viewMode: ViewModePreference) -> SortOrderType {
+    func sortOrder(for viewMode: ViewModePreferenceEntity) -> SortOrderType {
         let sortType = sortOrderPreferenceUseCase.sortOrder(for: parentNode?.toNodeEntity()).toSortOrderType()
         switch viewMode {
         case .perFolder, .list, .thumbnail:
