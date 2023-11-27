@@ -81,7 +81,7 @@ extension CameraUploadBannerStatusPartiallyCompletedReason: CameraUploadBannerSt
         case .videoUploadIsNotEnabled:
             return Color.primary.toAnyShapeStyle()
         case .photoLibraryLimitedAccess:
-            return ColorSchemeDesiredColor(lightMode: ._9_D_8319, darkMode: .yellowFFD60A).toAnyShapeStyle()
+            return ColorSchemeDesiredColor(lightMode: .yellow9D8319, darkMode: .yellowFFD60A).toAnyShapeStyle()
         }
     }
     
@@ -90,7 +90,7 @@ extension CameraUploadBannerStatusPartiallyCompletedReason: CameraUploadBannerSt
         case .videoUploadIsNotEnabled:
             return ColorSchemeDesiredColor(lightMode: .white, darkMode: ._1_D_1_D_1_D).toAnyShapeStyle()
         case .photoLibraryLimitedAccess:
-            return Color.FED_429_26.toAnyShapeStyle()
+            return Color.yellowFED42926.toAnyShapeStyle()
         }
     }
 }

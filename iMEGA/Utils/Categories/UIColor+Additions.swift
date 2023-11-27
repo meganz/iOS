@@ -970,15 +970,15 @@ extension UIColor {
     // MARK: Yellow
     
     class func mnz_yellowFED429() -> UIColor {
-        return Colors.General.Yellow.fed429.color
+        UIColor.yellowFED429
     }
     
     class func mnz_yellow9D8319() -> UIColor {
-        return Colors.General.Yellow._9D8319.color
+        UIColor.yellow9D8319
     }
     
     class func mnz_yellowF8D552() -> UIColor {
-        return Colors.General.Yellow.f8D552.color
+        UIColor.yellowF8D552
     }
 
     @objc class func mnz_yellowFFCC00() -> UIColor {
