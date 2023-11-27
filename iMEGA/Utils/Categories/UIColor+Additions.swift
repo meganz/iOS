@@ -988,6 +988,6 @@ extension UIColor {
     // MARK: Brown
     
     class func mnz_brown544b27() -> UIColor {
-        return Colors.General.Brown._544b27.color
+        UIColor.brown544B27
     }
 }
