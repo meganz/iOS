@@ -6,12 +6,18 @@ final class MainTabBarCallsRouter: MainTabBarCallsRouting {
     private lazy var callWaitingRoomDialog = CallWaitingRoomUsersDialog()
     private var screenRecordingAlert: UIAlertController?
     private var baseViewController: UIViewController
+    private var shouldCheckPendingWaitingRoomNotification: Bool = false
 
     init(baseViewController: UIViewController) {
         self.baseViewController = baseViewController
     }
     
     func showOneUserWaitingRoomDialog(for username: String, chatName: String, isCallUIVisible: Bool, shouldUpdateDialog: Bool, admitAction: @escaping () -> Void, denyAction: @escaping () -> Void) {
+        guard screenRecordingAlert == nil else {
+            shouldCheckPendingWaitingRoomNotification = true
+            return
+        }
+        
         guard screenRecordingAlert == nil, let presenter = baseViewController.presenterViewController() else { return }
 
         callWaitingRoomDialog.showAlertForOneUser(isCallUIVisible: isCallUIVisible, named: username, chatName: chatName, presenterViewController: presenter, isDialogUpdateMandatory: shouldUpdateDialog) {
@@ -22,6 +28,11 @@ final class MainTabBarCallsRouter: MainTabBarCallsRouting {
     }
     
     func showSeveralUsersWaitingRoomDialog(for participantsCount: Int, chatName: String, isCallUIVisible: Bool, shouldUpdateDialog: Bool, admitAction: @escaping () -> Void, seeWaitingRoomAction: @escaping () -> Void) {
+        guard screenRecordingAlert == nil else {
+            shouldCheckPendingWaitingRoomNotification = true
+            return
+        }
+        
         guard screenRecordingAlert == nil, let presenter = baseViewController.presenterViewController() else { return }
                         
         callWaitingRoomDialog.showAlertForSeveralUsers(isCallUIVisible: isCallUIVisible, count: participantsCount, chatName: chatName, presenterViewController: presenter, isDialogUpdateMandatory: shouldUpdateDialog) {
@@ -61,12 +72,13 @@ final class MainTabBarCallsRouter: MainTabBarCallsRouting {
             completion()
             return
         }
+        shouldCheckPendingWaitingRoomNotification = true
         presentedViewController.dismiss(animated: true) {
             completion()
         }
     }
     
-    func showScreenRecordingAlert(isCallUIVisible: Bool, acceptAction: @escaping () -> Void, learnMoreAction: @escaping () -> Void, leaveCallAction: @escaping () -> Void) {
+    func showScreenRecordingAlert(isCallUIVisible: Bool, acceptAction: @escaping (Bool) -> Void, learnMoreAction: @escaping () -> Void, leaveCallAction: @escaping () -> Void) {
         guard let presenter = baseViewController.presenterViewController() else { return }
 
         dismissAlertController { [weak self] in
@@ -80,8 +92,10 @@ final class MainTabBarCallsRouter: MainTabBarCallsRouting {
                 title: Strings.Localizable.Calls.ScreenRecording.Alert.Action.accept,
                 style: .default
             ) { [weak self] _ in
-                acceptAction()
-                self?.screenRecordingAlert = nil
+                guard let self else { return }
+                acceptAction(shouldCheckPendingWaitingRoomNotification)
+                screenRecordingAlert = nil
+                shouldCheckPendingWaitingRoomNotification = false
             }
             
             alert.addAction(preferredAction)

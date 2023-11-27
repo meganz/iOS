@@ -329,7 +329,7 @@ final class MockMainTabBarCallsRouter: MainTabBarCallsRouting {
         showWaitingRoomListFor_calledTimes += 1
     }
     
-    func showScreenRecordingAlert(isCallUIVisible: Bool, acceptAction: @escaping () -> Void, learnMoreAction: @escaping () -> Void, leaveCallAction: @escaping () -> Void) {
+    func showScreenRecordingAlert(isCallUIVisible: Bool, acceptAction: @escaping (Bool) -> Void, learnMoreAction: @escaping () -> Void, leaveCallAction: @escaping () -> Void) {
         showScreenRecordingAlert_calledTimes += 1
     }
     
