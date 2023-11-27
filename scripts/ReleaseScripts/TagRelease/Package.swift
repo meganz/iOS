@@ -4,6 +4,9 @@ import PackageDescription
 
 let package = Package(
     name: "TagRelease",
+    platforms: [
+        .macOS(.v13)
+    ],
     dependencies: [
         .package(path: "../../ReleaseScripts/SharedReleaseScript")
     ],

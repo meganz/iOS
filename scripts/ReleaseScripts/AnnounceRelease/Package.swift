@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "PrepareRelease",
+    name: "AnnounceRelease",
     platforms: [
         .macOS(.v13)
     ],
@@ -12,7 +12,7 @@ let package = Package(
     ],
     targets: [
         .executableTarget(
-            name: "PrepareRelease",
+            name: "AnnounceRelease",
             dependencies: ["SharedReleaseScript"]
         )
     ]

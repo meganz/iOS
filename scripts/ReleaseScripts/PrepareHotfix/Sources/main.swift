@@ -1,6 +1,8 @@
 import Foundation
 import SharedReleaseScript
 
+setVerbose()
+
 do {
     log("Started execution")
 

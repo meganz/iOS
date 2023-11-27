@@ -6,31 +6,12 @@ struct UserInput {
     let chatHash: String
 }
 
-enum InputError: Error {
-    case missingReleaseCommitHash(submodule: Submodule)
-    case invalidCommitHash(submodule: Submodule)
-}
-
 func userInput() throws -> UserInput {
-    let version = try versionInput()
+    let version = try majorMinorInput("Enter the version number you're releasing (format: '[major].[minor]'):")
     let sdkHash = try commitHashFromUser(submodule: .sdk)
     let chatHash = try commitHashFromUser(submodule: .chatSDK)
 
     return .init(version: version, sdkHash: sdkHash, chatHash: chatHash)
-}
-
-private func versionInput() throws -> String {
-    while true {
-        print("Enter the version number (format: '[major].[minor]'):", terminator: " ")
-        if let input = readLine() {
-            let matches = try matchesMajorMinorRelease(input)
-            if matches {
-                return input
-            } else {
-                print("Invalid format. Please make sure to follow the '[major].[minor]' format.")
-            }
-        }
-    }
 }
 
 private func commitHashFromUser(submodule: Submodule) throws -> String {
