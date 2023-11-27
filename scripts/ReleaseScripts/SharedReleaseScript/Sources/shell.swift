@@ -45,7 +45,13 @@ public func runInShell(_ args: String, cwd: URL? = nil) throws -> String {
         throw ShellError(code: process.terminationStatus, description: stderrString)
     }
 
-    return pipeString(stdout)
+    let stdoutString = pipeString(stdout)
+
+    if verbose {
+        print(stdoutString)
+    }
+
+    return stdoutString
 }
 
 private func pipeString(_ pipe: Pipe) -> String {

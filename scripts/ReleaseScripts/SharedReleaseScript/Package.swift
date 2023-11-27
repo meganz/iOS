@@ -4,6 +4,9 @@ import PackageDescription
 
 let package = Package(
     name: "SharedReleaseScript",
+    platforms: [
+        .macOS(.v13)
+    ],
     products: [
         .library(
             name: "SharedReleaseScript",

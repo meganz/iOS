@@ -1,5 +1,7 @@
 import SharedReleaseScript
 
+setVerbose()
+
 do {
     log("Started execution")
     let userInput = try userInput()
@@ -32,6 +34,9 @@ do {
 
     log("Pushing master to GitHub")
     try pushToPublicMaster(userInput.version)
+
+    log("Marking version \(userInput.version) as released in Jira projects")
+    try await markCurrentVersionAsReleasedInAllProjects(version: userInput.version)
 
     log("Finished successfully")
     exit(ProcessResult.success)

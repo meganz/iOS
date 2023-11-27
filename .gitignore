@@ -30,6 +30,7 @@ transifex/transifexConfig.json
 transifex/Translations*
 transifex/download/*
 
-## PrepareRelease script
-scripts/ReleaseScripts/PrepareRelease/.build
-scripts/ReleaseScripts/PrepareRelease/.swiftpm
+## Release scripts
+scripts/ReleaseScripts/*/.build
+scripts/ReleaseScripts/*/.swiftpm
+scripts/ReleaseScripts/Resources/values.env

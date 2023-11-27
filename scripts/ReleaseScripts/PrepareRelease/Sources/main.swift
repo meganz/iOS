@@ -1,5 +1,7 @@
 import SharedReleaseScript
 
+setVerbose()
+
 do {
     log("Started execution")
 
