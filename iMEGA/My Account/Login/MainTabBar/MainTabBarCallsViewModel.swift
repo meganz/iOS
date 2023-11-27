@@ -10,7 +10,7 @@ protocol MainTabBarCallsRouting: AnyObject {
     func showConfirmDenyAction(for username: String, isCallUIVisible: Bool, confirmDenyAction: @escaping () -> Void, cancelDenyAction: @escaping () -> Void)
     func showParticipantsJoinedTheCall(message: String)
     func showWaitingRoomListFor(call: CallEntity, in chatRoom: ChatRoomEntity)
-    func showScreenRecordingAlert(isCallUIVisible: Bool, acceptAction: @escaping () -> Void, learnMoreAction: @escaping () -> Void, leaveCallAction: @escaping () -> Void)
+    func showScreenRecordingAlert(isCallUIVisible: Bool, acceptAction: @escaping (Bool) -> Void, learnMoreAction: @escaping () -> Void, leaveCallAction: @escaping () -> Void)
     func showScreenRecordingNotification(started: Bool, username: String)
     func navigateToPrivacyPolice()
     func dismissCallUI()
@@ -117,8 +117,11 @@ enum MainTabBarCallsAction: ActionType { }
     }
     
     private func showRecordingAlert(_ username: String, _ call: CallEntity) {
-        router.showScreenRecordingAlert(isCallUIVisible: isCallUIVisible) { [weak self] in
+        router.showScreenRecordingAlert(isCallUIVisible: isCallUIVisible) { [weak self] shouldCheckWaitingRoom in
             self?.router.showScreenRecordingNotification(started: true, username: username)
+            if shouldCheckWaitingRoom {
+                self?.showPendingWaitingRoomNotification(for: call)
+            }
         } learnMoreAction: { [weak self] in
             self?.router.navigateToPrivacyPolice()
             self?.showRecordingAlert(username, call)
@@ -130,6 +133,12 @@ enum MainTabBarCallsAction: ActionType { }
                 callUseCase.hangCall(for: call.callId)
             }
         }
+    }
+    
+    private func showPendingWaitingRoomNotification(for call: CallEntity) {
+        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId),
+              let call = callUseCase.call(for: chatRoom.chatId) else { return }
+        showWaitingRoomAlert(chatRoom, call)
     }
     
     private func configureWaitingRoomListener(forCall call: CallEntity) {
@@ -190,7 +199,11 @@ enum MainTabBarCallsAction: ActionType { }
         
         currentWaitingRoomUserHandles = waitingRoomNonModeratorUserHandles
         
-        if waitingRoomUserHandles.count == 1 {
+        showWaitingRoomAlert(chatRoom, call)
+    }
+    
+    private func showWaitingRoomAlert(_ chatRoom: ChatRoomEntity, _ call: CallEntity) {
+        if currentWaitingRoomUserHandles.count == 1 {
             guard let userHandle = currentWaitingRoomUserHandles.first else { return }
             showOneUserWaitingRoomAlert(withUserHandle: userHandle, inChatRoom: chatRoom, forCall: call)
         } else {
