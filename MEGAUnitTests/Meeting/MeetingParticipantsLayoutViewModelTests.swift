@@ -1161,6 +1161,28 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         XCTAssertNil(sut.speakerParticipant)
     }
     
+    func testTappedParticipant_onFirstScreenShareParticipantAndTapSecondAndThirdNonScreenSareParticipant_shouldNotUpdateFirstScreenShareParticipant() {
+        let sut = makeMeetingParticipantsLayoutViewModel()
+        let firstParticipant = CallParticipantEntity(participantId: 101, clientId: 1, hasScreenShare: true)
+        let secondParticipant = CallParticipantEntity(participantId: 102, clientId: 2, hasScreenShare: false)
+        let thirdParticipant = CallParticipantEntity(participantId: 103, clientId: 3, hasScreenShare: false)
+        sut.participantJoined(participant: firstParticipant)
+        sut.participantJoined(participant: secondParticipant)
+        sut.participantJoined(participant: thirdParticipant)
+        
+        sut.tappedParticipant(secondParticipant)
+        
+        XCTAssertEqual(sut.speakerParticipant, secondParticipant)
+        XCTAssertEqual(sut.callParticipants[0], firstParticipant)
+        XCTAssertTrue(sut.callParticipants[0].isScreenShareCell)
+        
+        sut.tappedParticipant(thirdParticipant)
+        
+        XCTAssertEqual(sut.speakerParticipant, thirdParticipant)
+        XCTAssertEqual(sut.callParticipants[0], firstParticipant)
+        XCTAssertTrue(sut.callParticipants[0].isScreenShareCell)
+    }
+    
     // MARK: - Private functions
     
     private func makeMeetingParticipantsLayoutViewModel(
