@@ -18,7 +18,7 @@ struct LeaveChatButtonView: View {
             } label: {
                 Text(text)
                     .padding(.horizontal)
-                    .foregroundColor(Color(UIColor.mnz_redF30C14()))
+                    .foregroundColor(Color(UIColor.redF30C14))
             }
             Divider()
         }
