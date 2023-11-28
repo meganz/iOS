@@ -24,6 +24,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     @IBOutlet private weak var stackViewTopConstraint: NSLayoutConstraint!
     @IBOutlet private weak var stackViewLeadingConstraint: NSLayoutConstraint!
     @IBOutlet private weak var stackViewTrailingConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var speakerViewSpeakerModeHeight: NSLayoutConstraint!
     @IBOutlet private weak var callCollectionViewSpeakerModeHeight: NSLayoutConstraint!
     @IBOutlet private weak var recordingImageView: UIImageView!
     
@@ -35,19 +36,28 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     // MARK: - Internal properties
     private let viewModel: MeetingParticipantsLayoutViewModel
     private var titleView: CallTitleView
-    lazy private var layoutModeBarButton = UIBarButtonItem(image: UIImage(resource: .speakerView),
-                                               style: .plain,
-                                               target: self,
-                                               action: #selector(MeetingParticipantsLayoutViewController.didTapLayoutModeButton))
-    lazy private var optionsMenuButton = UIBarButtonItem(image: UIImage(resource: .moreGrid),
-                                                     style: .plain,
-                                                     target: self,
-                                                     action: #selector(MeetingParticipantsLayoutViewController.didTapOptionsButton))
+    lazy private var layoutModeBarButton = UIBarButtonItem(
+        image: UIImage(resource: .speakerView),
+        style: .plain,
+        target: self,
+        action: #selector(MeetingParticipantsLayoutViewController.didTapLayoutModeButton)
+    )
+    lazy private var optionsMenuButton = UIBarButtonItem(
+        image: UIImage(resource: .moreGrid),
+        style: .plain,
+        target: self,
+        action: #selector(MeetingParticipantsLayoutViewController.didTapOptionsButton)
+    )
     
     private var statusBarHidden = false {
       didSet(newValue) {
         setNeedsStatusBarAppearanceUpdate()
       }
+    }
+    private var isIPhoneLandscape: Bool {
+        UIDevice.current.iPhoneDevice &&
+        (UIDevice.current.orientation.isLandscape ||
+         UIScreen.main.bounds.width > UIScreen.main.bounds.height)
     }
     
     private var isUserAGuest: Bool?
@@ -93,7 +103,12 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             callCollectionView.collectionViewLayout.invalidateLayout()
             localUserView.repositionView()
             emptyMeetingMessageView?.invalidateIntrinsicContentSize()
-            viewModel.dispatch(.orientationOrModeChange(isIPhoneLandscape: UIDevice.current.iPhoneDevice && UIDevice.current.orientation.isLandscape, isSpeakerMode: callCollectionView.layoutMode == .speaker))
+            viewModel.dispatch(
+                .orientationOrModeChange(
+                    isIPhoneLandscape: isIPhoneLandscape,
+                    isSpeakerMode: callCollectionView.layoutMode == .speaker
+                )
+            )
             viewModel.dispatch(.onOrientationChanged)
         })
     }
@@ -231,6 +246,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             let topConstraint,
             let bottomConstraint
         ):
+            speakerViewSpeakerModeHeight.isActive = isSpeakerMode
             callCollectionViewSpeakerModeHeight.isActive = isSpeakerMode
             configureConstraint(
                 leadingAndTrailing: leadingAndTrailingConstraint,
@@ -269,7 +285,12 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     
     private func configureLayout(mode: ParticipantsLayoutMode, participantsCount: Int) {
         layoutModeBarButton.image = mode == .speaker ? UIImage(resource: .galleryView) : UIImage(resource: .speakerView)
-        viewModel.dispatch(.orientationOrModeChange(isIPhoneLandscape: UIDevice.current.iPhoneDevice && UIDevice.current.orientation.isLandscape, isSpeakerMode: mode == .speaker))
+        viewModel.dispatch(
+            .orientationOrModeChange(
+                isIPhoneLandscape: isIPhoneLandscape,
+                isSpeakerMode: mode == .speaker
+            )
+        )
         speakerViews.forEach { $0.isHidden = mode == .grid || participantsCount == 0 }
         pageControl.isHidden = mode == .speaker || participantsCount <= 6
         callCollectionView.changeLayoutMode(mode)
@@ -378,8 +399,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         if !(isUserAGuest ?? false) {
             navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(resource: .backArrow), style: .plain, target: self, action: #selector(self.didTapBackButton))
         }
-        navigationItem.rightBarButtonItems = [optionsMenuButton,
-                                              layoutModeBarButton]
+        navigationItem.rightBarButtonItems = [optionsMenuButton, layoutModeBarButton]
     }
     
     private func showReconnectingNotification() {

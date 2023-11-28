@@ -968,7 +968,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         if handle == myself.participantId {
             invokeCommand?(.updateMyAvatar(image))
         } else {
-            if let participant = callParticipants.first(where: { $0.participantId == handle }) {
+            if let participant = callParticipants.first(where: { $0.participantId == handle && !$0.isScreenShareCell }) {
                 invokeCommand?(.updateAvatar(image, participant))
             }
         }
@@ -1002,12 +1002,16 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                     let speakerParticipant,
                     callParticipant != speakerParticipant &&
                     !speakerParticipant.hasScreenShare {
-                    let screenShareParticipant = CallParticipantEntity.createScreenShareParticipant(callParticipant)
-                    newParticipants.append(screenShareParticipant)
+                    if let screenShareParticipant = firstCallParticipant(callParticipant, in: screenShareParticipants) {
+                        newParticipants.append(screenShareParticipant)
+                    } else {
+                        let screenShareParticipant = CallParticipantEntity.createScreenShareParticipant(callParticipant)
+                        newParticipants.append(screenShareParticipant)
+                    }
                 }
                 newParticipants.append(callParticipant)
             } else if callParticipant.hasScreenShare {
-                if let screenShareParticipant = screenShareParticipants.first(where: { $0.participantId == callParticipant.participantId && $0.clientId == callParticipant.clientId}) {
+                if let screenShareParticipant = firstCallParticipant(callParticipant, in: screenShareParticipants) {
                     newParticipants.append(screenShareParticipant)
                 } else {
                     let screenShareParticipant = CallParticipantEntity.createScreenShareParticipant(callParticipant)
@@ -1021,6 +1025,18 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         callParticipants = newParticipants
         invokeCommand?(.updateParticipants(callParticipants))
         updateLayoutModeAccordingScreenSharingParticipant()
+    }
+    
+    private func firstCallParticipant(
+        _ participant: CallParticipantEntity,
+        in callParticipants: [CallParticipantEntity],
+        shouldCheckScreenShareCell: Bool = false
+    ) -> CallParticipantEntity? {
+        if shouldCheckScreenShareCell {
+            return callParticipants.first(where: {$0 == participant && $0.isScreenShareCell == participant.isScreenShareCell})
+        } else {
+            return callParticipants.first(where: {$0 == participant})
+        }
     }
     
     private func updateActiveSpeakIndicator(for participant: CallParticipantEntity) {

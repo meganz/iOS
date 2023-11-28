@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,6 +19,7 @@
                 <outlet property="speakerMicImageView" destination="C0Z-bC-2l6" id="7VA-GM-hvA"/>
                 <outlet property="speakerNameLabel" destination="Ae0-ne-geK" id="chS-Q8-VSy"/>
                 <outlet property="speakerRemoteVideoImageView" destination="fDl-Bh-v8H" id="kFT-VQ-JMo"/>
+                <outlet property="speakerViewSpeakerModeHeight" destination="azD-Ck-dbP" id="7eC-8A-S6b"/>
                 <outlet property="stackViewBottomConstraint" destination="LNy-wp-ml8" id="Pvp-kt-d3R"/>
                 <outlet property="stackViewLeadingConstraint" destination="JEh-18-lQw" id="1tx-d2-TP4"/>
                 <outlet property="stackViewTopConstraint" destination="5dl-sw-vq3" id="Q0A-bR-zZC"/>
@@ -36,10 +37,10 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                     <subviews>
                         <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cBL-OH-Rsv" userLabel="SpeakerView">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="0.0"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="788"/>
                             <subviews>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aFk-YE-N4v">
-                                    <rect key="frame" x="167" y="0.0" width="80" height="0.0"/>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aFk-YE-N4v" userLabel="Avatar View">
+                                    <rect key="frame" x="167" y="354" width="80" height="80"/>
                                     <constraints>
                                         <constraint firstAttribute="height" relation="lessThanOrEqual" constant="80" id="DZn-dd-mHW"/>
                                         <constraint firstAttribute="width" constant="80" id="Y2b-m9-jyi"/>
@@ -50,18 +51,18 @@
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                 </imageView>
-                                <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fDl-Bh-v8H">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="0.0"/>
+                                <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fDl-Bh-v8H" userLabel="Video View">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="788"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </imageView>
                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="6bw-X5-gQJ">
-                                    <rect key="frame" x="4" y="-32" width="93.5" height="24"/>
+                                    <rect key="frame" x="4" y="756" width="93.5" height="24"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gHs-wa-Yzr">
                                             <rect key="frame" x="0.0" y="0.0" width="69.5" height="24"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Participant" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ae0-ne-geK">
-                                                    <rect key="frame" x="4" y="4.5" width="61.5" height="14.5"/>
+                                                    <rect key="frame" x="4" y="5" width="61.5" height="14.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -105,7 +106,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="112" id="24m-pV-ZUr"/>
+                                <constraint firstAttribute="height" constant="108" id="24m-pV-ZUr"/>
                             </constraints>
                             <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="1" minimumInteritemSpacing="1" id="Fxa-fy-aa1">
                                 <size key="itemSize" width="150" height="150"/>
@@ -126,19 +127,11 @@
                     </subviews>
                     <constraints>
                         <constraint firstItem="cBL-OH-Rsv" firstAttribute="width" secondItem="wEF-YB-JwX" secondAttribute="width" priority="750" id="Ea0-3l-4KU"/>
-                        <constraint firstItem="cBL-OH-Rsv" firstAttribute="height" secondItem="wEF-YB-JwX" secondAttribute="height" multiplier="0.4" id="azD-Ck-dbP"/>
-                        <constraint firstItem="cBL-OH-Rsv" firstAttribute="height" secondItem="wEF-YB-JwX" secondAttribute="height" multiplier="0.7" id="rf7-j3-jrt"/>
+                        <constraint firstItem="cBL-OH-Rsv" firstAttribute="height" secondItem="wEF-YB-JwX" secondAttribute="height" constant="-108" id="azD-Ck-dbP"/>
                     </constraints>
                     <variation key="default">
                         <mask key="constraints">
                             <exclude reference="Ea0-3l-4KU"/>
-                            <exclude reference="azD-Ck-dbP"/>
-                            <exclude reference="rf7-j3-jrt"/>
-                        </mask>
-                    </variation>
-                    <variation key="heightClass=regular-widthClass=compact">
-                        <mask key="constraints">
-                            <exclude reference="azD-Ck-dbP"/>
                         </mask>
                     </variation>
                 </stackView>
