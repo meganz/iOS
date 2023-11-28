@@ -251,7 +251,7 @@ extension UIColor {
             if traitCollection.accessibilityContrast == .high {
                 return UIColor.whiteF7F7F7
             } else {
-                return Colors.General.White.fafafa.color
+                return UIColor.whiteFAFAFA
             }
             
         case .dark:
@@ -271,9 +271,9 @@ extension UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.mnz_whiteF2F2F2()
+                return UIColor.whiteF2F2F2
             } else {
-                return UIColor.mnz_whiteEEEEEE()
+                return UIColor.whiteEEEEEE
             }
             
         case .dark:
@@ -284,7 +284,7 @@ extension UIColor {
             }
             
         @unknown default:
-            return UIColor.mnz_whiteEEEEEE()
+            return UIColor.whiteEEEEEE
         }
     }
     
@@ -414,7 +414,7 @@ extension UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.mnz_whiteF2F2F2()
+                return UIColor.whiteF2F2F2
             } else {
                 return UIColor.mnz_whiteF7F7F7()
             }
@@ -573,7 +573,7 @@ extension UIColor {
     class func mnz_voiceRecordingViewBackground(_ traitCollection: UITraitCollection) -> UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
-            return mnz_whiteFCFCFC()
+            return UIColor.whiteFCFCFC
             
         case .dark:
             if traitCollection.accessibilityContrast == .high {
@@ -583,7 +583,7 @@ extension UIColor {
             }
             
         @unknown default:
-            return mnz_whiteFCFCFC()
+            return UIColor.whiteFCFCFC
         }
     }
     
@@ -948,15 +948,15 @@ extension UIColor {
     // MARK: White
     
     class func mnz_whiteEEEEEE() -> UIColor {
-        return Colors.General.White.eeeeee.color
+        UIColor.whiteEEEEEE
     }
     
     class func mnz_whiteF2F2F2() -> UIColor {
-        return Colors.General.White.f2F2F2.color
+        UIColor.whiteF2F2F2
     }
     
     class func mnz_whiteFCFCFC() -> UIColor {
-        return Colors.General.White.fcfcfc.color
+        UIColor.whiteFCFCFC
     }
     
     @objc class func mnz_whiteF7F7F7() -> UIColor {
@@ -964,7 +964,7 @@ extension UIColor {
     }
     
     class func mnz_whiteEFEFEF() -> UIColor {
-        return Colors.General.White.efefef.color
+        UIColor.whiteEFEFEF
     }
     
     // MARK: Yellow
