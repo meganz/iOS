@@ -904,19 +904,19 @@ extension UIColor {
     // MARK: Red
     
     class func mnz_redF30C14() -> UIColor {
-        return Colors.General.Red.f30C14.color
+        UIColor.redF30C14
     }
     
     class func mnz_redCE0A11() -> UIColor {
-        return Colors.General.Red.ce0A11.color
+        UIColor.redCE0A11
     }
     
     class func mnz_redF7363D() -> UIColor {
-        return Colors.General.Red.f7363D.color
+        UIColor.redF7363D
     }
     
     class func mnz_redF95C61() -> UIColor {
-        return Colors.General.Red.f95C61.color
+        UIColor.redF95C61
     }
     
     class func mnz_redFF453A() -> UIColor {
@@ -928,16 +928,16 @@ extension UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
             if traitCollection.accessibilityContrast == .high {
-                return Colors.General.Red.ce0A11.color
+                return UIColor.redCE0A11
             } else {
-                return Colors.General.Red.f30C14.color
+                return UIColor.redF30C14
             }
             
         case .dark:
             if traitCollection.accessibilityContrast == .high {
-                return Colors.General.Red.f95C61.color
+                return UIColor.redF95C61
             } else {
-                return Colors.General.Red.f7363D.color
+                return UIColor.redF7363D
             }
             
         @unknown default:

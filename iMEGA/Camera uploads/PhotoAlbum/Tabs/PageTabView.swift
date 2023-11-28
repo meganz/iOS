@@ -6,7 +6,7 @@ struct PageTabView: View {
     @ObservedObject private var viewModel: PagerTabViewModel
     @Environment(\.colorScheme) var colorScheme
     
-    private let textForgroundRedColor = Color(Colors.General.Red.f7363D.color)
+    private let textForgroundRedColor = Color(UIColor.redF7363D)
     private var tabForgroundColor: Color {
         if !viewModel.isEditing {
             return tabTextColor
