@@ -292,20 +292,20 @@ extension UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.mnz_green007B62()
+                return UIColor.green007B62
             } else {
-                return UIColor.mnz_green009476()
+                return UIColor.green009476
             }
             
         case .dark:
             if traitCollection.accessibilityContrast == .high {
                 return UIColor.mnz_green00C29A()
             } else {
-                return UIColor.mnz_green00A382()
+                return UIColor.green00A382
             }
             
         @unknown default:
-            return UIColor.mnz_green009476()
+            return UIColor.green009476
         }
     }
     
@@ -393,7 +393,7 @@ extension UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.mnz_green007B62()
+                return UIColor.green007B62
             } else {
                 return UIColor.mnz_green00A886()
             }
@@ -402,7 +402,7 @@ extension UIColor {
             if traitCollection.accessibilityContrast == .high {
                 return UIColor.mnz_green00C29A()
             } else {
-                return UIColor.mnz_green00A382()
+                return UIColor.green00A382
             }
             
         @unknown default:
@@ -860,7 +860,7 @@ extension UIColor {
     }
     
     class func mnz_green00E9B9() -> UIColor {
-        return Colors.General.Green._00E9B9.color
+        UIColor.green00E9B9
     }
     
     class func mnz_green347467() -> UIColor {
@@ -868,15 +868,15 @@ extension UIColor {
     }
     
     class func mnz_green009476() -> UIColor {
-        return Colors.General.Green._009476.color
+        UIColor.green009476
     }
     
     class func mnz_green007B62() -> UIColor {
-        return Colors.General.Green._007B62.color
+        UIColor.green007B62
     }
     
     class func mnz_green00A382() -> UIColor {
-        return Colors.General.Green._00A382.color
+        UIColor.green00A382
     }
     
     @objc(mnz_turquoiseForTraitCollection:)
@@ -891,7 +891,7 @@ extension UIColor {
             
         case .dark:
             if traitCollection.accessibilityContrast == .high {
-                return Colors.General.Green._00E9B9.color
+                return UIColor.green00E9B9
             } else {
                 return UIColor.green00C29A
             }
