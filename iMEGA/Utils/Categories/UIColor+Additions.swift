@@ -812,19 +812,19 @@ extension UIColor {
     // MARK: Blue
     
     class func mnz_blue0089C7() -> UIColor {
-        return Colors.General.Blue._0089C7.color
+        UIColor.blue0089C7
     }
     
     class func mnz_blue009AE0() -> UIColor {
-        return Colors.General.Blue._009Ae0.color
+        UIColor.blue009AE0
     }
     
     class func mnz_blue059DE2() -> UIColor {
-        return Colors.General.Blue._059De2.color
+        UIColor.blue059DE2
     }
     
     class func mnz_blue38C1FF() -> UIColor {
-        return Colors.General.Blue._38C1Ff.color
+        UIColor.blue38C1FF
     }
     
     @objc(mnz_blueForTraitCollection:)
@@ -832,16 +832,16 @@ extension UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
             if traitCollection.accessibilityContrast == .high {
-                return Colors.General.Blue._0089C7.color
+                return UIColor.blue0089C7
             } else {
-                return Colors.General.Blue._009Ae0.color
+                return UIColor.blue009AE0
             }
             
         case .dark:
             if traitCollection.accessibilityContrast == .high {
-                return Colors.General.Blue._38C1Ff.color
+                return UIColor.blue38C1FF
             } else {
-                return Colors.General.Blue._059De2.color
+                return UIColor.blue059DE2
             }
             
         @unknown default:
