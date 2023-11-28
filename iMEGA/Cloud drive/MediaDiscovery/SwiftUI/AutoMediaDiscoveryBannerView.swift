@@ -53,7 +53,7 @@ struct AutoMediaDiscoveryBannerView: View {
     
     private var bannerBackgroundColor: Color {
         Color(colorScheme == .dark ? Colors.General.Black._2c2c2e.color :
-                Colors.General.White.ffffff.color)
+                UIColor.whiteFFFFFF)
     }
     
     private var bannerBorderColor: Color {
