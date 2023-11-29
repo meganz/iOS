@@ -57,6 +57,7 @@ enum DeeplinkHostKey: String {
     case shortcutRecent = "widget.quickaccess.recents"
     case shortcutFavourites = "widget.quickaccess.favourites"
     case shortcutOffline = "widget.quickaccess.offline"
+    case upgrade
     case presentNode = "presentNode"
     // https://mega.nz/# + Base64Handle
     case handle
@@ -121,7 +122,7 @@ extension NSURL {
         } else if !fragment.isEmpty {
             return .handleLink
         }
-        
+
         return .default
     }
     
@@ -151,6 +152,8 @@ extension NSURL {
             return .presentOfflineFile
         } else if host == DeeplinkHostKey.presentNode.rawValue {
             return .presentNode
+        } else if host == DeeplinkHostKey.upgrade.rawValue {
+            return .upgrade
         }
 
         if fragment != nil {
