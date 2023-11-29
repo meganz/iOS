@@ -7,8 +7,8 @@ do {
     log("Started execution")
     let input = try userInput()
 
-    log("Creating release version iOS \(input.version) for all Main Application Jira projects")
-    try await createReleaseVersion(version: input.version)
+    log("Creating release version iOS \(input.nextVersion) for all Main Application Jira projects")
+    try await createReleaseVersion(version: input.nextVersion)
 
     log("Sending release candidate message to Slack")
     try await sendReleaseCandidateMessage(input: input)
