@@ -16,7 +16,7 @@ public struct OnboardingUpgradeAccountRouter {
         guard let viewModel else {
             fatalError("[Onboarding] No viewModel OnboardingUpgradeAccountViewModel")
         }
-        let onboardingView = OnboardingUpgradeAccountView(viewModel: viewModel)
+        let onboardingView = OnboardingWithViewProPlansView(viewModel: viewModel)
         return UIHostingController(rootView: onboardingView)
     }
     
