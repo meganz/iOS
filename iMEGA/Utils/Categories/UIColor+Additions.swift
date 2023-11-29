@@ -13,7 +13,7 @@ extension UIColor {
             if traitCollection.accessibilityContrast == .high {
                 return UIColor.gray3A3A3C
             } else {
-                return UIColor.mnz_black2C2C2E()
+                return UIColor.black2C2C2E
             }
             
         @unknown default:
@@ -30,7 +30,7 @@ extension UIColor {
             
         case .dark:
             if traitCollection.accessibilityContrast == .high {
-                return mnz_black2C2C2E()
+                return UIColor.black2C2C2E
             } else {
                 return mnz_black1C1C1E()
             }
@@ -53,7 +53,7 @@ extension UIColor {
             if traitCollection.accessibilityContrast == .high {
                 return UIColor.gray3A3A3C
             } else {
-                return mnz_black2C2C2E()
+                return UIColor.black2C2C2E
             }
             
         @unknown default:
@@ -93,7 +93,7 @@ extension UIColor {
             if traitCollection.accessibilityContrast == .high {
                 return .black
             } else {
-                return Colors.General.Black._161616.color
+                return UIColor.black161616
             }
             
         @unknown default:
@@ -135,7 +135,7 @@ extension UIColor {
             
         case .dark:
             if traitCollection.accessibilityContrast == .high {
-                return Colors.General.Black._2c2c2e.color
+                return UIColor.black2C2C2E
             } else {
                 return UIColor.black1C1C1E
             }
@@ -256,7 +256,7 @@ extension UIColor {
             
         case .dark:
             if traitCollection.accessibilityContrast == .high {
-                return Colors.General.Black._2c2c2e.color
+                return UIColor.black2C2C2E
             } else {
                 return UIColor.black1C1C1E
             }
@@ -280,7 +280,7 @@ extension UIColor {
             if traitCollection.accessibilityContrast == .high {
                 return UIColor.gray3F3F42
             } else {
-                return UIColor.mnz_black2C2C2E()
+                return UIColor.black2C2C2E
             }
             
         @unknown default:
@@ -380,7 +380,7 @@ extension UIColor {
             }
             
         case .dark:
-            return UIColor.mnz_black2C2C2E()
+            return UIColor.black2C2C2E
             
         @unknown default:
             return UIColor.whiteF7F7F7
@@ -423,7 +423,7 @@ extension UIColor {
             if traitCollection.accessibilityContrast == .high {
                 return UIColor.gray3F3F42
             } else {
-                return UIColor.mnz_black2C2C2E()
+                return UIColor.black2C2C2E
             }
             
         @unknown default:
@@ -622,7 +622,7 @@ extension UIColor {
     // MARK: Black
     
     class func mnz_black161616() -> UIColor {
-        return Colors.General.Black._161616.color
+        UIColor.black161616
     }
     
     @objc class func mnz_black1C1C1E() -> UIColor {
@@ -630,11 +630,11 @@ extension UIColor {
     }
     
     class func mnz_black2C2C2E() -> UIColor {
-        return Colors.General.Black._2c2c2e.color
+        UIColor.black2C2C2E
     }
     
     class func mnz_black252525() -> UIColor {
-        return Colors.General.Black._252525.color
+        UIColor.black252525
     }
     
     // MARK: Gray

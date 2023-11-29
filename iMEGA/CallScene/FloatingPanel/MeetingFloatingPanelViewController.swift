@@ -62,7 +62,7 @@ final class MeetingFloatingPanelViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        backgroundView.backgroundColor = Colors.General.Black._2c2c2e.color
+        backgroundView.backgroundColor = UIColor.black2C2C2E
         backgroundView.layer.cornerRadius = Constants.backgroundViewCornerRadius
         dragIndicatorView.layer.cornerRadius = Constants.dragIndicatorCornerRadius
         endQuickActionView.icon = UIImage(resource: .hangCallMeetingAction)
