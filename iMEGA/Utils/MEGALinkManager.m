@@ -492,7 +492,9 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             [MEGALinkManager showCollectionLinkView];
             [MEGALinkManager resetLinkAndURLType];
             break;
-            
+        case URLTypeUpgrade:
+            [MEGALinkManager presentUpgradeVC];
+            break;
         default:
             break;
     }

@@ -292,4 +292,9 @@
     XCTAssertEqual([url mnz_type], URLTypeRecoverLink);
 }
 
+- (void)testDeepLink_pathIsUpgrade_shouldReturnURLTypeUpgrade {
+    NSURL *url = [NSURL URLWithString:@"mega://upgrade"];
+    XCTAssertEqual([url mnz_type], URLTypeUpgrade);
+}
+
 @end
