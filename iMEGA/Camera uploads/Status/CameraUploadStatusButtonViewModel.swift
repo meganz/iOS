@@ -11,6 +11,8 @@ final class CameraUploadStatusButtonViewModel: NSObject, ObservableObject {
     
     private let monitorCameraUploadUseCase: any MonitorCameraUploadUseCaseProtocol
     
+    var onTappedHandler: (() -> Void)?
+    
     init(idleWaitTimeNanoSeconds: UInt64 = 3 * 1_000_000_000,
          monitorCameraUploadUseCase: some MonitorCameraUploadUseCaseProtocol,
          preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default) {
@@ -47,6 +49,8 @@ final class CameraUploadStatusButtonViewModel: NSObject, ObservableObject {
     func onViewDisappear() {
         cancelUploadCompleteIdleTask()
     }
+    
+    func onTapped() { onTappedHandler?() }
     
     // MARK: - Private Functions
     

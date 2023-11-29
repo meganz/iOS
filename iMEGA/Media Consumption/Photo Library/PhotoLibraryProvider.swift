@@ -8,7 +8,7 @@ protocol PhotoLibraryProvider: UIViewController {
     var photoLibraryContentViewModel: PhotoLibraryContentViewModel { get }
     
     func configPhotoLibraryView(in container: UIView, onFilterUpdate: ((PhotosFilterOptions, PhotosFilterOptions) -> Void)?)
-    func updatePhotoLibrary(by nodes: [NodeEntity], withSortType type: SortOrderType)
+    func updatePhotoLibrary(by nodes: [NodeEntity], withSortType type: SortOrderType, in hostControllerType: UIViewController.Type)
     func hideNavigationEditBarButton(_ hide: Bool)
     func enablePhotoLibraryEditMode(_ enable: Bool)
     func configPhotoLibrarySelectAll()
@@ -51,8 +51,9 @@ extension PhotoLibraryProvider {
         navigationItem.title = message
     }
     
-    func updatePhotoLibrary(by nodes: [NodeEntity], withSortType type: SortOrderType = .newest) {
-        guard let host = children.first(where: { $0 is UIHostingController<PhotoLibraryContentView> }) else {
+    func updatePhotoLibrary(by nodes: [NodeEntity], withSortType type: SortOrderType = .newest, in hostControllerType: UIViewController.Type = UIHostingController<PhotoLibraryContentView>.self) {
+        
+        guard let host = children.first(where: { Swift.type(of: $0) === hostControllerType }) else {
             return
         }
         

@@ -118,8 +118,14 @@ extension PhotosViewController {
         alertController.addAction(UIAlertAction(title: "Upload Photos", style: .default, handler: { [weak self] _ in
             self?.reloadCUBarButtonWithUseCase(FakeCameraUploadSuccessfulUseCase())
         }))
+        alertController.addAction(UIAlertAction(title: "Upload paused", style: .default, handler: { [weak self] _ in
+            self?.reloadCUBarButtonWithUseCase(FakeCameraUploadPausedUseCase())
+        }))
         alertController.addAction(UIAlertAction(title: "Upload already completed", style: .default, handler: { [weak self] _ in
             self?.reloadCUBarButtonWithUseCase(FakeNoItemsToUploadUseCase())
+        }))
+        alertController.addAction(UIAlertAction(title: "Upload already completed with video upload disabled", style: .default, handler: { [weak self] _ in
+            self?.reloadCUBarButtonWithUseCase(FakeCameraUploadSuccessfulUseCase(pendingVideosCount: 15))
         }))
         alertController.addAction(UIAlertAction(title: "Upload Warning / Error", style: .default, handler: { [weak self] _ in
             self?.reloadCUBarButtonWithUseCase(FakeCameraUploadFailedUseCase())
@@ -135,8 +141,7 @@ extension PhotosViewController {
     
     // Reload CU button with new use case to view different testing options
     private func reloadCUBarButtonWithUseCase(_ useCase: some MonitorCameraUploadUseCaseProtocol) {
-        viewModel.cameraUploadStatusButtonViewModel = CameraUploadStatusButtonViewModel(
-            monitorCameraUploadUseCase: useCase)
+        viewModel.change(monitorCameraUploadUseCase: useCase)
         cameraUploadStatusBarButtonItem = makeCameraUploadStatusBarButton()
         setupRightNavigationBarButtons()
     }

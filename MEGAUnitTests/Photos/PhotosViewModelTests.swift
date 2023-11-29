@@ -1,6 +1,7 @@
 @testable import MEGA
 @testable import MEGADomain
 import MEGADomainMock
+import MEGAPermissionsMock
 import MEGAPresentation
 import MEGAPresentationMock
 import XCTest
@@ -24,6 +25,8 @@ final class PhotosViewModelTests: XCTestCase {
                 contentConsumption: ContentConsumptionEntity(
                     ios: ContentConsumptionIos(timeline: ContentConsumptionTimeline(mediaType: .images, location: .cloudDrive, usePreference: true)))),
             sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc),
+            networkMonitorUseCase: MockNetworkMonitorUseCase(),
+            devicePermissionHandler: MockDevicePermissionHandler(),
             cameraUploadsSettingsViewRouter: MockCameraUploadsSettingsViewRouter())
     }
     
@@ -93,6 +96,8 @@ final class PhotosViewModelTests: XCTestCase {
             photoLibraryUseCase: usecase,
             userAttributeUseCase: MockUserAttributeUseCase(),
             sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc),
+            networkMonitorUseCase: MockNetworkMonitorUseCase(),
+            devicePermissionHandler: MockDevicePermissionHandler(),
             cameraUploadsSettingsViewRouter: MockCameraUploadsSettingsViewRouter())
         
         sut.filterType = .allMedia
@@ -321,6 +326,8 @@ final class PhotosViewModelTests: XCTestCase {
                                userAttributeUseCase: userAttributeUseCase,
                                sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
                                preferenceUseCase: preferenceUseCase,
+                               networkMonitorUseCase: MockNetworkMonitorUseCase(),
+                               devicePermissionHandler: MockDevicePermissionHandler(),
                                cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter,
                                featureFlagProvider: featureFlagProvider)
     }

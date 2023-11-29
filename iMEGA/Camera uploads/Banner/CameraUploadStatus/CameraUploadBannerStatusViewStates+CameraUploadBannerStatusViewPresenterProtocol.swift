@@ -29,7 +29,7 @@ extension CameraUploadBannerStatusViewStates: CameraUploadBannerStatusViewPresen
     var subheading: String {
         switch self {
         case .uploadInProgress(let numberOfFilesPending):
-            return Strings.Localizable.CameraUploads.Banner.Status.FilesPending.subHeading(numberOfFilesPending)
+            return Strings.Localizable.CameraUploads.Banner.Status.FilesPending.subHeading(Int(numberOfFilesPending))
         case .uploadCompleted:
             return Strings.Localizable.CameraUploads.Banner.Status.UploadsComplete.subHeading
         case .uploadPaused(let reason as any CameraUploadBannerStatusViewPresenterProtocol),
@@ -70,7 +70,7 @@ extension CameraUploadBannerStatusPartiallyCompletedReason: CameraUploadBannerSt
     var subheading: String {
         switch self {
         case .videoUploadIsNotEnabled(let pendingVideoUploadCount):
-            return Strings.Localizable.CameraUploads.Banner.Status.UploadsPartialComplete.VideosNotUploaded.subHeading(pendingVideoUploadCount)
+            return Strings.Localizable.CameraUploads.Banner.Status.UploadsPartialComplete.VideosNotUploaded.subHeading(Int(pendingVideoUploadCount))
         case .photoLibraryLimitedAccess:
             return Strings.Localizable.CameraUploads.Banner.Status.UploadsPartialComplete.LimitedPhotoLibraryAccess.subHeading
         }
@@ -106,7 +106,7 @@ extension CameraUploadBannerStatusUploadPausedReason: CameraUploadBannerStatusVi
     var subheading: String {
         switch self {
         case .noWifiConnection(let numberOfFilesPending):
-            return Strings.Localizable.CameraUploads.Banner.Status.FilesPending.subHeading(numberOfFilesPending)
+            return Strings.Localizable.CameraUploads.Banner.Status.FilesPending.subHeading(Int(numberOfFilesPending))
         }
     }
     

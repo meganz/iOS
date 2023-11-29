@@ -9,11 +9,11 @@ final class FakeCameraUploadSuccessfulUseCaseTests: XCTestCase {
         
         var iterator = sut.monitorUploadStatus.makeAsyncIterator()
         
-        let expectedValues = [CameraUploadStatsEntity(progress: 0, pendingFilesCount: 4),
-                              CameraUploadStatsEntity(progress: 0.25, pendingFilesCount: 3),
-                              CameraUploadStatsEntity(progress: 0.5, pendingFilesCount: 2),
-                              CameraUploadStatsEntity(progress: 0.75, pendingFilesCount: 1),
-                              CameraUploadStatsEntity(progress: 1.0, pendingFilesCount: 0)
+        let expectedValues = [CameraUploadStatsEntity(progress: 0, pendingFilesCount: 4, pendingVideosCount: 0),
+                              CameraUploadStatsEntity(progress: 0.25, pendingFilesCount: 3, pendingVideosCount: 0),
+                              CameraUploadStatsEntity(progress: 0.5, pendingFilesCount: 2, pendingVideosCount: 0),
+                              CameraUploadStatsEntity(progress: 0.75, pendingFilesCount: 1, pendingVideosCount: 0),
+                              CameraUploadStatsEntity(progress: 1.0, pendingFilesCount: 0, pendingVideosCount: 0)
         ]
         for (index, expected) in expectedValues.enumerated() {
             guard let result = await iterator.next() else {

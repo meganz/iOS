@@ -21,6 +21,7 @@ struct CameraUploadBannerStatusView: View {
                 Text(previewEntity.subheading)
                     .font(.caption2)
                     .multilineTextAlignment(.leading)
+                    .monospacedDigit()
             }
             .foregroundStyle(previewEntity.textColor)
             .frame(maxWidth: .infinity, alignment: .leading)
