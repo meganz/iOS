@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 struct SlideShowOptionDetailCellView: View {
     @Environment(\.colorScheme) private var colorScheme
@@ -8,7 +9,7 @@ struct SlideShowOptionDetailCellView: View {
         VStack(spacing: 0) {
             HStack {
                 if let icon = viewModel.image {
-                    Image(uiImage: icon.image)
+                    Image(uiImage: icon)
                         .scaledToFit()
                         .frame(width: 28, height: 28)
                 }
@@ -18,7 +19,7 @@ struct SlideShowOptionDetailCellView: View {
                     .padding(.vertical, 13)
                 
                 Spacer()
-                Image(uiImage: Asset.Images.Generic.turquoiseCheckmark.image)
+                Image(uiImage: UIImage.turquoiseCheckmark)
                     .scaledToFit()
                     .opacity(viewModel.isSelcted ? 1 : 0)
             }
