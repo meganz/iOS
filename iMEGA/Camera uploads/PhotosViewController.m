@@ -98,7 +98,9 @@
     [self.viewModel loadAllPhotosWithSavedFilters];
     [self refreshMyAvatar];
     
-    [self updateLimitedAccessBannerVisibility];
+    if(!self.viewModel.timelineCameraUploadStatusFeatureEnabled) {
+        [self updateLimitedAccessBannerVisibility];
+    }
     
     [self setupNavigationBarButtons];
 }
@@ -331,6 +333,8 @@
             break;
     }
     
+    self.stateView.hidden = self.viewModel.timelineCameraUploadStatusFeatureEnabled;
+
     _currentState = currentState;
 }
 

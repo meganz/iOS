@@ -6,9 +6,7 @@ struct CameraUploadStatusButtonView: View {
     @ObservedObject var viewModel: CameraUploadStatusButtonViewModel
     
     var body: some View {
-        Button {
-            // Handle pressed in CC-5455
-        } label: {
+        Button(action: viewModel.onTapped) {
             CameraUploadStatusImageView(viewModel: viewModel.imageViewModel)
                 .task {
                     await viewModel.monitorCameraUpload()

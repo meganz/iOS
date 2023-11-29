@@ -5,10 +5,12 @@ public struct FakeCameraUploadSuccessfulUseCase: MonitorCameraUploadUseCaseProto
     public let monitorUploadStatus: AnyAsyncSequence<Result<CameraUploadStatsEntity, Error>>
     
     public init(photoUploadCount: UInt = 100,
+                pendingVideosCount: UInt = 0,
                 initialDelayInNanoSeconds: UInt64 = 1_000_000_000,
                 delayBetweenItemsInNanoSeconds: UInt64 = 100_000_000) {
         monitorUploadStatus = UploadPhotosAsyncSequence(
-            uploadCount: photoUploadCount,
+            uploadCount: photoUploadCount, 
+            pendingVideosCount: pendingVideosCount,
             initialDelayInNanoSeconds: initialDelayInNanoSeconds,
             delayBetweenItemsInNanoSeconds: delayBetweenItemsInNanoSeconds
         ).eraseToAnyAsyncSequence()
@@ -17,13 +19,16 @@ public struct FakeCameraUploadSuccessfulUseCase: MonitorCameraUploadUseCaseProto
     private struct UploadPhotosAsyncSequence: AsyncSequence {
         typealias Element = Result<CameraUploadStatsEntity, Error>
         private let uploadCount: UInt
+        private let pendingVideosCount: UInt
         private let initialDelayInNanoSeconds: UInt64
         private let delayBetweenItemsInNanoSeconds: UInt64
         
         init(uploadCount: UInt,
+             pendingVideosCount: UInt,
              initialDelayInNanoSeconds: UInt64,
              delayBetweenItemsInNanoSeconds: UInt64) {
             self.uploadCount = uploadCount
+            self.pendingVideosCount = pendingVideosCount
             self.initialDelayInNanoSeconds = initialDelayInNanoSeconds
             self.delayBetweenItemsInNanoSeconds = delayBetweenItemsInNanoSeconds
         }
@@ -32,14 +37,17 @@ public struct FakeCameraUploadSuccessfulUseCase: MonitorCameraUploadUseCaseProto
             typealias Element = Result<CameraUploadStatsEntity, Error>
             
             private let uploadCount: UInt
+            private let pendingVideosCount: UInt
             private let initialDelayInNanoSeconds: UInt64
             private let delayBetweenItemsInNanoSeconds: UInt64
             private var currentCount: UInt = 0
             
             init(uploadCount: UInt,
+                 pendingVideosCount: UInt,
                  initialDelayInNanoSeconds: UInt64,
                  delayBetweenItemsInNanoSeconds: UInt64) {
                 self.uploadCount = uploadCount
+                self.pendingVideosCount = pendingVideosCount
                 self.initialDelayInNanoSeconds = initialDelayInNanoSeconds
                 self.delayBetweenItemsInNanoSeconds = delayBetweenItemsInNanoSeconds
             }
@@ -54,17 +62,30 @@ public struct FakeCameraUploadSuccessfulUseCase: MonitorCameraUploadUseCaseProto
                 
                 let nextValue = CameraUploadStatsEntity(
                     progress: Float(currentCount) / Float(uploadCount),
-                    pendingFilesCount: uploadCount - currentCount)
+                    pendingFilesCount: uploadCount - currentCount, 
+                    pendingVideosCount: pendingVideosCount)
                 currentCount += 1
                 return .success(nextValue)
             }
         }
         
         func makeAsyncIterator() -> UploadPhotosAsyncIterator {
-            UploadPhotosAsyncIterator(uploadCount: uploadCount,
+            UploadPhotosAsyncIterator(uploadCount: uploadCount, 
+                                      pendingVideosCount: pendingVideosCount,
                                       initialDelayInNanoSeconds: initialDelayInNanoSeconds,
                                       delayBetweenItemsInNanoSeconds: delayBetweenItemsInNanoSeconds)
         }
+    }
+}
+
+/// Simulate upload paused. This is for testing purposes only until actual upload use case is implemented.
+public struct FakeCameraUploadPausedUseCase: MonitorCameraUploadUseCaseProtocol {
+    public let monitorUploadStatus: AnyAsyncSequence<Result<CameraUploadStatsEntity, Error>>
+    
+    public init() {
+        monitorUploadStatus = SingleItemAsyncSequence(
+            item: .success(.init(
+                progress: 0.5, pendingFilesCount: 12, pendingVideosCount: 0))).eraseToAnyAsyncSequence()
     }
 }
 

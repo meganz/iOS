@@ -1,5 +1,6 @@
 import Combine
 import MEGADomain
+import MEGAPermissions
 import MEGAPresentation
 import MEGASDKRepo
 
@@ -18,7 +19,11 @@ final class PhotosViewModel: NSObject {
         }
     }
     
-    var cameraUploadStatusButtonViewModel = CameraUploadStatusButtonViewModel(monitorCameraUploadUseCase: FakeCameraUploadSuccessfulUseCase())
+    var cameraUploadStatusButtonViewModel = CameraUploadStatusButtonViewModel(monitorCameraUploadUseCase: FakeCameraUploadSuccessfulUseCase()) {
+        didSet {
+            monitorCameraUploadStatusButtonTapHandler()
+        }
+    }
     
     @objc let timelineCameraUploadStatusFeatureEnabled: Bool
     var contentConsumptionAttributeLoadingTask: Task<Void, Never>?
@@ -38,6 +43,8 @@ final class PhotosViewModel: NSObject {
     }
     var isSelectHidden: Bool = false
     
+    let timelineViewModel: CameraUploadStatusBannerViewModel
+    
     private var photoUpdatePublisher: PhotoUpdatePublisher
     private var photoLibraryUseCase: any PhotoLibraryUseCaseProtocol
     private let userAttributeUseCase: any UserAttributeUseCaseProtocol
@@ -45,25 +52,34 @@ final class PhotosViewModel: NSObject {
     private let cameraUploadsSettingsViewRouter: any Routing
     private var subscriptions = Set<AnyCancellable>()
     
-    init(
-        photoUpdatePublisher: PhotoUpdatePublisher,
-        photoLibraryUseCase: some PhotoLibraryUseCaseProtocol,
-        userAttributeUseCase: some UserAttributeUseCaseProtocol,
-        sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
-        preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
-        cameraUploadsSettingsViewRouter: some Routing,
-        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
-    ) {
+    init(photoUpdatePublisher: PhotoUpdatePublisher,
+         photoLibraryUseCase: some PhotoLibraryUseCaseProtocol,
+         userAttributeUseCase: some UserAttributeUseCaseProtocol,
+         sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
+         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
+         networkMonitorUseCase: some NetworkMonitorUseCaseProtocol,
+         devicePermissionHandler: some DevicePermissionsHandling,
+         cameraUploadsSettingsViewRouter: some Routing,
+         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
+        
         self.photoUpdatePublisher = photoUpdatePublisher
         self.photoLibraryUseCase = photoLibraryUseCase
         self.userAttributeUseCase = userAttributeUseCase
         self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
         self.cameraUploadsSettingsViewRouter = cameraUploadsSettingsViewRouter
         self.timelineCameraUploadStatusFeatureEnabled = featureFlagProvider.isFeatureFlagEnabled(for: .timelineCameraUploadStatus)
+        self.timelineViewModel = CameraUploadStatusBannerViewModel(
+            monitorCameraUploadUseCase: FakeCameraUploadSuccessfulUseCase(),
+            networkMonitorUseCase: networkMonitorUseCase,
+            preferenceUseCase: preferenceUseCase,
+            devicePermissionHandler: devicePermissionHandler,
+            featureFlagProvider: featureFlagProvider)
+        
         super.init()
         $isCameraUploadsEnabled.useCase = preferenceUseCase
         
         monitorSortOrderSubscription()
+        monitorCameraUploadStatusButtonTapHandler()
     }
     
     @objc func onCameraAndMediaNodesUpdate(nodeList: MEGANodeList) {
@@ -171,6 +187,12 @@ final class PhotosViewModel: NSObject {
         cameraUploadsSettingsViewRouter.start()
     }
     
+    func change(monitorCameraUploadUseCase: some MonitorCameraUploadUseCaseProtocol) {
+        cameraUploadStatusButtonViewModel = CameraUploadStatusButtonViewModel(
+            monitorCameraUploadUseCase: monitorCameraUploadUseCase)
+        timelineViewModel.change(monitorCameraUploadUseCase: monitorCameraUploadUseCase)
+    }
+    
     // MARK: - Private
     private func loadFilteredPhotos() async throws -> [NodeEntity] {
         let filterOptions: PhotosFilterOptions = [filterType, filterLocation]
@@ -206,6 +228,12 @@ final class PhotosViewModel: NSObject {
         }
         
         return false
+    }
+    
+    private func monitorCameraUploadStatusButtonTapHandler() {
+        cameraUploadStatusButtonViewModel.onTappedHandler = { [weak timelineViewModel] in 
+            timelineViewModel?.cameraUploadStatusShown = true
+        }
     }
     
     private func monitorSortOrderSubscription() {

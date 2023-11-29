@@ -5,14 +5,28 @@ import SwiftUI
 extension PhotosViewController: PhotoLibraryProvider {
     // MARK: - config views
     @objc func objcWrapper_configPhotoLibraryView(in container: UIView) {
-        configPhotoLibraryView(in: container) { [weak self] type, location in
-            self?.viewModel.updateFilter(filterType: type, filterLocation: location)
-            self?.setupNavigationBarButtons()
-        }
+        let content = TimelineView(
+            cameraUploadStatusBannerViewModel: viewModel.timelineViewModel,
+            photoLibraryContentViewModel: photoLibraryContentViewModel,
+            router: PhotoLibraryContentViewRouter(contentMode: photoLibraryContentViewModel.contentMode),
+            onFilterUpdate: { [weak self] type, location in
+                self?.viewModel.updateFilter(filterType: type, filterLocation: location)
+                self?.setupNavigationBarButtons()
+            })
+        
+        let host = UIHostingController(rootView: content)
+        addChild(host)
+        container.wrap(host.view)
+        host.view.setContentHuggingPriority(.fittingSizeLevel, for: .vertical)
+        host.didMove(toParent: self)
     }
     
     @objc func objcWrapper_updatePhotoLibrary() {
-        updatePhotoLibrary(by: viewModel.mediaNodes, withSortType: viewModel.cameraUploadExplorerSortOrderType)
+        updatePhotoLibrary(
+            by: viewModel.mediaNodes,
+            withSortType: viewModel.cameraUploadExplorerSortOrderType,
+            in: UIHostingController<TimelineView>.self
+        )
     }
     
     @objc func createPhotoLibraryContentViewModel() -> PhotoLibraryContentViewModel {

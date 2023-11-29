@@ -1,18 +1,18 @@
 import Foundation
 import SwiftUI
 
-enum CameraUploadBannerStatusViewStates {
-    case uploadInProgress(numberOfFilesPending: Int)
+enum CameraUploadBannerStatusViewStates: Equatable {
+    case uploadInProgress(numberOfFilesPending: UInt)
     case uploadPaused(reason: CameraUploadBannerStatusUploadPausedReason)
     case uploadPartialCompleted(reason: CameraUploadBannerStatusPartiallyCompletedReason)
     case uploadCompleted
 }
 
-enum CameraUploadBannerStatusPartiallyCompletedReason {
-    case videoUploadIsNotEnabled(pendingVideoUploadCount: Int)
+enum CameraUploadBannerStatusPartiallyCompletedReason: Equatable {
+    case videoUploadIsNotEnabled(pendingVideoUploadCount: UInt)
     case photoLibraryLimitedAccess
 }
 
-enum CameraUploadBannerStatusUploadPausedReason {
-    case noWifiConnection(numberOfFilesPending: Int)
+enum CameraUploadBannerStatusUploadPausedReason: Equatable {
+    case noWifiConnection(numberOfFilesPending: UInt)
 }

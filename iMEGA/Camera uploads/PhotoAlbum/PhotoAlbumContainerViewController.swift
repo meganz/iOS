@@ -1,6 +1,7 @@
 import Combine
 import MEGADomain
 import MEGAL10n
+import MEGAPermissions
 import MEGAPresentation
 import MEGASDKRepo
 import MEGAUIKit
@@ -162,6 +163,8 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnvironmen
                 sortOrderPreferenceUseCase: SortOrderPreferenceUseCase(
                     preferenceUseCase: PreferenceUseCase.default,
                     sortOrderPreferenceRepository: SortOrderPreferenceRepository.newRepo),
+                networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
+                devicePermissionHandler: DevicePermissionsHandler.makeHandler(),
                 cameraUploadsSettingsViewRouter: CameraUploadsSettingsViewRouter(presenter: navigationController) { }
             )
             photoViewController.viewModel = viewModel
