@@ -2506,6 +2506,10 @@
 "settings.cookies.performanceAndAnalytics"="パフォーマンスとアナリティクスのクッキー";
 /* Cookie settings dialog text. */
 "settings.cookies.performanceAndAnalytics.footer"="お客様が当社サービスをどのようにご使用になられているのかを理解し、改善に使用できるデータをご提供いただくのに役立つクッキーです。これらのクッキーを受け入れない場合、当社が設計を改善するのに役立つデータが少なくなります。";
+/* Cookie settings dialog title label for Advertising Cookies */
+"settings.cookies.advertisingCookies"="広告クッキー";
+/* Cookie settings dialog footer text for Advertising Cookies */
+"settings.cookies.advertisingCookies.footer"="お客様の閲覧活動に関するデータを収集し、当社のサービスや他のウェブサイトで表示される広告をカスタマイズするために、当社の承認された広告パートナーによって使用されます。これらのCookieを受け入れない場合、広告は引き続き表示される一方で、広告の関連性は低くなります。";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="バージョンは新しいファイルとして作成されました";
 /* Text shown for the action create new file */
@@ -3830,6 +3834,10 @@
 "home.search.filter.presentations"="プレゼンテーション";
 /* Filter name for searching on the home screen */
 "home.search.filter.archives"="アーカイブ";
+/* Type chips group title which is displayed in chips group pill */
+"home.search.chipsGroup.nodeType.pillTitle"="タイプ";
+/* Type chips group picker title which is displayed in the picker shown when user taps on the chips group pill */
+"home.search.chipsGroup.nodeType.pickerTitle"="タイプを選択";
 /* Empty screen copy when no filter is selected on the home screen search */
 "home.search.empty.no-chip-selected"="結果なし";
 /* Empty screen copy when Images filter is selected on the home screen search */
@@ -3886,3 +3894,29 @@
 "calls.screenShare.mainView.presentingLabel"="%@さんがプレゼン中です";
 /* A warning HUB to show in the call UI when the user A try to tap user B who is sharing screen and the shared screen is in the main view */
 "calls.screenShare.waring.title"="この方は画面共有中です";
+/* Alert title informing user that call screen is being recorded */
+"calls.screenRecording.alert.title"="この通話は録音されています";
+/* Alert message for user confirmation that agrees on call screen recording */
+"calls.screenRecording.alert.message"="通話を続けることで、録音を許可したことになります。";
+/* Alert button for user not accepting call screen recording and therefor leaving the call */
+"calls.screenRecording.alert.action.leave"="通話から離れる";
+/* Alert button for user accepting call screen recording */
+"calls.screenRecording.alert.action.accept"="はい、わかりました。";
+/* Alert button for user accepting call screen recording */
+"calls.screenRecording.alert.action.learnMore"="さらに詳しく";
+/* Notification message about someone started to record call screen */
+"calls.screenRecording.notification.recording.started"="%@さんが録音を開始しました";
+/* Notification message about someone stopped to record call screen */
+"calls.screenRecording.notification.recording.stopped"="%@さんが録音を停止しました";
+/* Text for a UI label indicating that the call screen is being recorded */
+"calls.screenRecording.screenIndicator.label"="録画";
+/* Camera uploads status banner - uploads in progress title */
+"cameraUploads.banner.status.uploadInProgress.title"="アップロード中です";
+/* Camera uploads status banner - uploads complete title */
+"cameraUploads.banner.status.uploadsComplete.title"="カメラアップロードが完了しました";
+/* Camera uploads status banner - uploads paused due to no wifi connection title */
+"cameraUploads.banner.status.uploadsPausedDueToWifi.title"="Wi-Fi接続がないためアップロードが一時停止されました";
+/* Camera uploads status banner - uploads complete description */
+"cameraUploads.banner.status.uploadsComplete.subHeading"="すべての項目がバックアップされました";
+/* Camera uploads status banner - uploads partially completed due to limited access to photo library */
+"cameraUploads.banner.status.uploadsPartialComplete.limitedPhotoLibraryAccess.subHeading"="MEGAはフォトライブラリへのアクセスに制限があり、すべての写真をバックアップすることはできません。タップすると、権限が変更されます。";

@@ -1142,6 +1142,46 @@
         <string>Dodano %d elementów do “[A]”</string>
       </dict>
     </dict>
+    <key>cameraUploads.banner.status.uploadsPartialComplete.videosNotUploaded.subHeading</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Zdjęcia przesłane. Przesyłanie wideo jest wyłączone: wideo nie zostało przesłane</string>
+        <key>few</key>
+        <string>Zdjęcia przesłane. Przesyłanie wideo jest wyłączone: %d filmów nie zostało przesłanych</string>
+        <key>many</key>
+        <string>Zdjęcia przesłane. Przesyłanie wideo jest wyłączone: %d filmów nie zostało przesłanych</string>
+        <key>other</key>
+        <string>Zdjęcia przesłane. Przesyłanie wideo jest wyłączone: %d filmów nie zostało przesłanych</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.banner.status.filesPending.subHeading</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d plik oczekujący</string>
+        <key>few</key>
+        <string>%d plików oczekujących</string>
+        <key>many</key>
+        <string>%d plików oczekujących</string>
+        <key>other</key>
+        <string>%d plików oczekujących</string>
+      </dict>
+    </dict>
     <key>cameraUploads.albums.delete</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>

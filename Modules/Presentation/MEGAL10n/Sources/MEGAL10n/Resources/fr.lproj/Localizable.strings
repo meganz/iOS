@@ -2506,6 +2506,10 @@
 "settings.cookies.performanceAndAnalytics"="Témoins de performance et d’analyse";
 /* Cookie settings dialog text. */
 "settings.cookies.performanceAndAnalytics.footer"="Nous permettent de comprendre comment vous utilisez nos services et nous fournissent des données que nous pouvons utiliser pour apporter des améliorations. Le refus de ces Témoins signifierait que moins de données seraient à notre disposition pour faciliter les améliorations conceptionnelles.";
+/* Cookie settings dialog title label for Advertising Cookies */
+"settings.cookies.advertisingCookies"="Témoins publicitaires";
+/* Cookie settings dialog footer text for Advertising Cookies */
+"settings.cookies.advertisingCookies.footer"="Utilisés par nos partenaires publicitaires agréés pour collecter des données sur vos activités de navigation et personnaliser les publicités que vous voyez sur nos services et sur d’autres sites web. Ne pas accepter ces témoins implique que vous continuerez à voir des publicités, mais elles seront moins pertinentes.";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="La version a été créée en tant que nouveau fichier";
 /* Text shown for the action create new file */
@@ -3830,6 +3834,10 @@
 "home.search.filter.presentations"="Présentations";
 /* Filter name for searching on the home screen */
 "home.search.filter.archives"="Archives";
+/* Type chips group title which is displayed in chips group pill */
+"home.search.chipsGroup.nodeType.pillTitle"="Type";
+/* Type chips group picker title which is displayed in the picker shown when user taps on the chips group pill */
+"home.search.chipsGroup.nodeType.pickerTitle"="Sélectionner le type";
 /* Empty screen copy when no filter is selected on the home screen search */
 "home.search.empty.no-chip-selected"="Aucun résultat";
 /* Empty screen copy when Images filter is selected on the home screen search */
@@ -3886,3 +3894,29 @@
 "calls.screenShare.mainView.presentingLabel"="%@ présente";
 /* A warning HUB to show in the call UI when the user A try to tap user B who is sharing screen and the shared screen is in the main view */
 "calls.screenShare.waring.title"="Cette personne partage son écran";
+/* Alert title informing user that call screen is being recorded */
+"calls.screenRecording.alert.title"="Cet appel est enregistré";
+/* Alert message for user confirmation that agrees on call screen recording */
+"calls.screenRecording.alert.message"="En restant dans l’appel, vous autorisez l’enregistrement.";
+/* Alert button for user not accepting call screen recording and therefor leaving the call */
+"calls.screenRecording.alert.action.leave"="Quitter l’appel";
+/* Alert button for user accepting call screen recording */
+"calls.screenRecording.alert.action.accept"="D’accord, j’ai compris";
+/* Alert button for user accepting call screen recording */
+"calls.screenRecording.alert.action.learnMore"="En apprendre davantage";
+/* Notification message about someone started to record call screen */
+"calls.screenRecording.notification.recording.started"="%@ a commencé l’enregistrement";
+/* Notification message about someone stopped to record call screen */
+"calls.screenRecording.notification.recording.stopped"="%@ a mis fin à l’enregistrement";
+/* Text for a UI label indicating that the call screen is being recorded */
+"calls.screenRecording.screenIndicator.label"="Enregistrement";
+/* Camera uploads status banner - uploads in progress title */
+"cameraUploads.banner.status.uploadInProgress.title"="Téléversement en cours";
+/* Camera uploads status banner - uploads complete title */
+"cameraUploads.banner.status.uploadsComplete.title"="Les téléversements de l’appareil photo sont terminés";
+/* Camera uploads status banner - uploads paused due to no wifi connection title */
+"cameraUploads.banner.status.uploadsPausedDueToWifi.title"="Les téléversements ont été mis en pause, car il n’y a pas de connexion Wi-Fi.";
+/* Camera uploads status banner - uploads complete description */
+"cameraUploads.banner.status.uploadsComplete.subHeading"="Tous les éléments ont été sauvegardés";
+/* Camera uploads status banner - uploads partially completed due to limited access to photo library */
+"cameraUploads.banner.status.uploadsPartialComplete.limitedPhotoLibraryAccess.subHeading"="MEGA a un accès limité à votre photothèque et ne peut pas sauvegarder toutes les photos. Touchez pour changer les autorisations.";

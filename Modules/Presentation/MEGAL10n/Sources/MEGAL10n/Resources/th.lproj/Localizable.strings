@@ -67,7 +67,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA ไม่สามารถเชื่อมต่อผ่าน SSL ได้อย่างปลอดภัย คุณอาจใช้ Wi-Fi สาธารณะที่มาพร้อมกับข้อกำหนดเพิ่มเติม";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to log in with same account as in the mobile browser.";
+"theContentIsNotAvailableForThisAccount"="คุณไม่สามารถเข้าถึงเนื้อหานี้ด้วยบัญชีนี้ได้ กรุณาลงชื่อเข้าใช้ด้วยบัญชีเดียวกับที่ลงชื่อเข้าใช้ในเบราว์เซอร์มือถือ";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="กระบวนการนี้ใช้เวลานานกว่าที่คาดไว้ กรุณารอ…";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -2506,6 +2506,10 @@
 "settings.cookies.performanceAndAnalytics"="คุกกี้สำหรับประสิทธิภาพและการวิเคราะห์";
 /* Cookie settings dialog text. */
 "settings.cookies.performanceAndAnalytics.footer"="ช่วยให้เราเข้าใจว่าคุณใช้บริการของเราอย่างไร และให้ข้อมูลที่เราสามารถใช้เพื่อปรับปรุง การไม่ยอมรับคุกกี้เหล่านี้จะทำให้เรามีข้อมูลเพื่อช่วยในการออกแบบการปรับปรุงผลิตภัณฑ์ของเราน้อยลง";
+/* Cookie settings dialog title label for Advertising Cookies */
+"settings.cookies.advertisingCookies"="คุกกี้สำหรับโฆษณา";
+/* Cookie settings dialog footer text for Advertising Cookies */
+"settings.cookies.advertisingCookies.footer"="คุกกี้เหล่านี้ใช้โดยพันธมิตรโฆษณาที่ได้รับอนุมัติจากเราเพื่อรวบรวมข้อมูลเกี่ยวกับกิจกรรมการท่องเว็บของคุณและปรับแต่งโฆษณาที่คุณเห็นในบริการของเราและบนเว็บไซต์อื่น ๆ การไม่ยอมรับคุกกี้เหล่านี้หมายความว่าคุณจะยังคงเห็นโฆษณา แต่โฆษณาเหล่านั้นจะไม่เกี่ยวข้องกับคุณมากนัก";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="สร้างเวอร์ชันเป็นไฟล์ใหม่แล้ว";
 /* Text shown for the action create new file */
@@ -3535,7 +3539,7 @@
 /* Device Center rename device action enter a different name message */
 "device.center.rename.device.different.name"="กรอกชื่ออื่น";
 /* Device Center rename device action invalid long name message */
-"device.center.rename.device.invalid.long.name"="Device name can only be up to 32 characters";
+"device.center.rename.device.invalid.long.name"="ชื่ออุปกรณ์มีความยาวได้สูงสุด 32 อักขระเท่านั้น";
 /* Device Center camera upload status enabled */
 "device.center.camera.uploads.action.status.enabled"="เปิดใช้งาน";
 /* Device Center camera upload status disabled */
@@ -3825,11 +3829,15 @@
 /* Filter name for searching on the home screen */
 "home.search.filter.folders"="โฟลเดอร์";
 /* Filter name for searching on the home screen */
-"home.search.filter.pdfs"="PDFs";
+"home.search.filter.pdfs"="ไฟล์ PDF";
 /* Filter name for searching on the home screen */
-"home.search.filter.presentations"="Presentations";
+"home.search.filter.presentations"="ไฟล์นำเสนอ";
 /* Filter name for searching on the home screen */
-"home.search.filter.archives"="Archives";
+"home.search.filter.archives"="ไฟล์บีบอัด";
+/* Type chips group title which is displayed in chips group pill */
+"home.search.chipsGroup.nodeType.pillTitle"="ประเภท";
+/* Type chips group picker title which is displayed in the picker shown when user taps on the chips group pill */
+"home.search.chipsGroup.nodeType.pickerTitle"="เลือกประเภทไฟล์";
 /* Empty screen copy when no filter is selected on the home screen search */
 "home.search.empty.no-chip-selected"="ไม่พบรายการค้นหา";
 /* Empty screen copy when Images filter is selected on the home screen search */
@@ -3841,13 +3849,13 @@
 /* Empty screen copy when Video filter is selected on the home screen search */
 "home.search.empty.no-videos"="ไม่มีไฟล์วิดีโอ";
 /* Empty screen copy when Folders filter is selected on the home screen search */
-"home.search.empty.no-folders"="No folders";
+"home.search.empty.no-folders"="ไม่มีโฟลเดอร์";
 /* Empty screen copy when PDF filter is selected on the home screen search */
-"home.search.empty.no-pdfs"="No PDFs";
+"home.search.empty.no-pdfs"="ไม่มีไฟล์ PDF";
 /* Empty screen copy when Presentations filter is selected on the home screen search */
-"home.search.empty.no-presentations"="No presentations";
+"home.search.empty.no-presentations"="ไม่มีไฟล์นำเสนอ";
 /* Empty screen copy when Archives filter is selected on the home screen search */
-"home.search.empty.no-archives"="No archives";
+"home.search.empty.no-archives"="ไม่มีไฟล์บีบอัด";
 /* A title label for waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.title"="ห้องนั่งรอ";
 /* A button label to close the waiting room participants list view. */
@@ -3883,6 +3891,32 @@
 /* In app notification description for Shared Items when user left a shared folder. [A] will be replaced by the user's email who left. [B] will be replaced by shared folder name. */
 "inapp.notifications.sharedItems.userLeftTheSharedFolder.message"="ผู้ใช้ [A] ออกจากโฟลเดอร์ [B] ที่ใช้ร่วมกันแล้ว";
 /* Shared Screen label in the main view when one user is sharing screen */
-"calls.screenShare.mainView.presentingLabel"="%@ is presenting";
+"calls.screenShare.mainView.presentingLabel"="%@ กำลังนำเสนออยู่";
 /* A warning HUB to show in the call UI when the user A try to tap user B who is sharing screen and the shared screen is in the main view */
-"calls.screenShare.waring.title"="This person is screen sharing";
+"calls.screenShare.waring.title"="บุคคลนี้กำลังแชร์หน้าจออยู่";
+/* Alert title informing user that call screen is being recorded */
+"calls.screenRecording.alert.title"="การสนทนานี้กำลังถูกบันทึก";
+/* Alert message for user confirmation that agrees on call screen recording */
+"calls.screenRecording.alert.message"="หากคุณอยู่ในการสนทนานี้ต่อ แสดงว่าคุณยินยอมให้บันทึกเสียงการสนทนา";
+/* Alert button for user not accepting call screen recording and therefor leaving the call */
+"calls.screenRecording.alert.action.leave"="วางสาย";
+/* Alert button for user accepting call screen recording */
+"calls.screenRecording.alert.action.accept"="โอเค เข้าใจแล้ว";
+/* Alert button for user accepting call screen recording */
+"calls.screenRecording.alert.action.learnMore"="เรียนรู้เพิ่มเติม";
+/* Notification message about someone started to record call screen */
+"calls.screenRecording.notification.recording.started"="%@ เริ่มบันทึกการสนทนาแล้ว";
+/* Notification message about someone stopped to record call screen */
+"calls.screenRecording.notification.recording.stopped"="%@ หยุดบันทึกการสนทนาแล้ว";
+/* Text for a UI label indicating that the call screen is being recorded */
+"calls.screenRecording.screenIndicator.label"="บันทึก";
+/* Camera uploads status banner - uploads in progress title */
+"cameraUploads.banner.status.uploadInProgress.title"="กำลังอยู่ในระหว่างอัปโหลด";
+/* Camera uploads status banner - uploads complete title */
+"cameraUploads.banner.status.uploadsComplete.title"="การอัปโหลดกล้องเสร็จสมบูรณ์";
+/* Camera uploads status banner - uploads paused due to no wifi connection title */
+"cameraUploads.banner.status.uploadsPausedDueToWifi.title"="การอัปโหลดถูกหยุดชั่วคราวเนื่องจากการเชื่อมต่อ Wi-Fi ขาดหายไป";
+/* Camera uploads status banner - uploads complete description */
+"cameraUploads.banner.status.uploadsComplete.subHeading"="สำรองข้อมูลทุกรายการแล้ว";
+/* Camera uploads status banner - uploads partially completed due to limited access to photo library */
+"cameraUploads.banner.status.uploadsPartialComplete.limitedPhotoLibraryAccess.subHeading"="MEGA ถูกจำกัดการเข้าถึงไลบรารีรูปภาพของคุณ และไม่สามารถสำรองรูปภาพทั้งหมดของคุณได้ แตะเพื่อเปลี่ยนการอนุญาต";

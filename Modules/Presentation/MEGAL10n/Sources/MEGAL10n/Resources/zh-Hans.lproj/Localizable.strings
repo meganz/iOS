@@ -2506,6 +2506,10 @@
 "settings.cookies.performanceAndAnalytics"="性能与分析Cookies";
 /* Cookie settings dialog text. */
 "settings.cookies.performanceAndAnalytics.footer"="帮助我们了解您如何使用我们的服务，并向我们提供可用于改进的数据。不接受这些Cookies意味着我们无法获得较多的数据以帮助改进设计。";
+/* Cookie settings dialog title label for Advertising Cookies */
+"settings.cookies.advertisingCookies"="广告Cookies";
+/* Cookie settings dialog footer text for Advertising Cookies */
+"settings.cookies.advertisingCookies.footer"="由我们认可的广告合作伙伴用于收集有关您的浏览活动的数据，并自定义您在我们的服务和其它网站上看到的广告。不接受这些cookies意味着您仍然会看到广告，但它们的相关性会降低。";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="该版本已被创建为新文件";
 /* Text shown for the action create new file */
@@ -3830,6 +3834,10 @@
 "home.search.filter.presentations"="演示文稿";
 /* Filter name for searching on the home screen */
 "home.search.filter.archives"="封存档案";
+/* Type chips group title which is displayed in chips group pill */
+"home.search.chipsGroup.nodeType.pillTitle"="类型";
+/* Type chips group picker title which is displayed in the picker shown when user taps on the chips group pill */
+"home.search.chipsGroup.nodeType.pickerTitle"="选择类型";
 /* Empty screen copy when no filter is selected on the home screen search */
 "home.search.empty.no-chip-selected"="没有符合搜索的项目";
 /* Empty screen copy when Images filter is selected on the home screen search */
@@ -3886,3 +3894,29 @@
 "calls.screenShare.mainView.presentingLabel"="%@正在展示";
 /* A warning HUB to show in the call UI when the user A try to tap user B who is sharing screen and the shared screen is in the main view */
 "calls.screenShare.waring.title"="此人正在屏幕共享";
+/* Alert title informing user that call screen is being recorded */
+"calls.screenRecording.alert.title"="此通话正在录音";
+/* Alert message for user confirmation that agrees on call screen recording */
+"calls.screenRecording.alert.message"="继续通话即表示您允许录音。";
+/* Alert button for user not accepting call screen recording and therefor leaving the call */
+"calls.screenRecording.alert.action.leave"="离开通话";
+/* Alert button for user accepting call screen recording */
+"calls.screenRecording.alert.action.accept"="好的，明白了";
+/* Alert button for user accepting call screen recording */
+"calls.screenRecording.alert.action.learnMore"="了解更多";
+/* Notification message about someone started to record call screen */
+"calls.screenRecording.notification.recording.started"="%@已开始录制";
+/* Notification message about someone stopped to record call screen */
+"calls.screenRecording.notification.recording.stopped"="%@已停止录制";
+/* Text for a UI label indicating that the call screen is being recorded */
+"calls.screenRecording.screenIndicator.label"="REC";
+/* Camera uploads status banner - uploads in progress title */
+"cameraUploads.banner.status.uploadInProgress.title"="正在上传";
+/* Camera uploads status banner - uploads complete title */
+"cameraUploads.banner.status.uploadsComplete.title"="相机上传完成";
+/* Camera uploads status banner - uploads paused due to no wifi connection title */
+"cameraUploads.banner.status.uploadsPausedDueToWifi.title"="由于没有Wi-Fi连接，上传已暂停";
+/* Camera uploads status banner - uploads complete description */
+"cameraUploads.banner.status.uploadsComplete.subHeading"="已备份所有项目";
+/* Camera uploads status banner - uploads partially completed due to limited access to photo library */
+"cameraUploads.banner.status.uploadsPartialComplete.limitedPhotoLibraryAccess.subHeading"="MEGA对您的照片库的访问权限受限，无法备份所有照片。点按更改权限。";

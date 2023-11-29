@@ -1028,6 +1028,42 @@
         <string>%d de elemente au fost adăugate în „[A]”</string>
       </dict>
     </dict>
+    <key>cameraUploads.banner.status.uploadsPartialComplete.videosNotUploaded.subHeading</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Fotografii încărcate. Încărcările video sunt dezactivate: videoclipul nu a fost încărcat</string>
+        <key>few</key>
+        <string>Fotografii încărcate. Încărcările video sunt dezactivate: %d videoclipuri nu au fost încărcate</string>
+        <key>other</key>
+        <string>Fotografii încărcate. Încărcările video sunt dezactivate: %d de videoclipuri nu au fost încărcate</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.banner.status.filesPending.subHeading</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d fișier în așteptare</string>
+        <key>few</key>
+        <string>%d fișiere în așteptare</string>
+        <key>other</key>
+        <string>%d de fișiere în așteptare</string>
+      </dict>
+    </dict>
     <key>cameraUploads.albums.delete</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>

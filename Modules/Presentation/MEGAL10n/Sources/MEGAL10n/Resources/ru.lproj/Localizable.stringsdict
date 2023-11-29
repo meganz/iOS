@@ -1142,6 +1142,46 @@
         <string>В «[A]» добавлено %d элемента</string>
       </dict>
     </dict>
+    <key>cameraUploads.banner.status.uploadsPartialComplete.videosNotUploaded.subHeading</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Фото загружены. Загрузка видео отключена: видео не загружено</string>
+        <key>few</key>
+        <string>Фото загружены. Загрузка видео отключена: %d видео не загружено</string>
+        <key>many</key>
+        <string>Фото загружены. Загрузка видео отключена: %d видео не загружено</string>
+        <key>other</key>
+        <string>Фото загружены. Загрузка видео отключена: %d видео не загружено</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.banner.status.filesPending.subHeading</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d файл в ожидании</string>
+        <key>few</key>
+        <string>%d файла в ожидании</string>
+        <key>many</key>
+        <string>%d файлов в ожидании</string>
+        <key>other</key>
+        <string>%d файла в ожидании</string>
+      </dict>
+    </dict>
     <key>cameraUploads.albums.delete</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>

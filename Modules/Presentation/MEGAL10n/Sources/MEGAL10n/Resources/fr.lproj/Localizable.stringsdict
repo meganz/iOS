@@ -1028,6 +1028,42 @@
         <string>%d éléments ont été ajoutés dans « [A] »</string>
       </dict>
     </dict>
+    <key>cameraUploads.banner.status.uploadsPartialComplete.videosNotUploaded.subHeading</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Les photos ont été téléversées. Le téléversement des vidéos est désactivé : la vidéo n’a pas été téléversée</string>
+        <key>many</key>
+        <string>Les photos ont été téléversées. Le téléversement des vidéos est désactivé : %d de vidéos n’ont pas été téléversées</string>
+        <key>other</key>
+        <string>Les photos ont été téléversées. Le téléversement des vidéos est désactivé : %d vidéos n’ont pas été téléversées</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.banner.status.filesPending.subHeading</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d fichier est en attente.</string>
+        <key>many</key>
+        <string>%d de fichiers sont en attente.</string>
+        <key>other</key>
+        <string>%d fichiers sont en attente.</string>
+      </dict>
+    </dict>
     <key>cameraUploads.albums.delete</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>

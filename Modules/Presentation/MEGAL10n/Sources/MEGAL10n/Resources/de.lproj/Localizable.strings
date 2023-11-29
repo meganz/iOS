@@ -67,7 +67,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="Ihre SSL-Verbindung zu den MEGA-Servern wurde manipuliert. Bitte prüfen Sie, ob Ihr WLAN-Hotspot einen Login erfordert.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to log in with same account as in the mobile browser.";
+"theContentIsNotAvailableForThisAccount"="Der Inhalt, auf den Sie zugreifen möchten, ist mit diesem Account nicht zugänglich. Melden Sie sich mit demselben Account wie im Mobilbrowser an.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="Der Vorgang dauert ungewöhnlich lange. Bitte haben Sie Geduld…";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -1017,7 +1017,7 @@
 /* Message of the alert shown when you try to cancel transfers where {%@} = {ALL, UPLOAD or DOWNLOAD} + {tranfers} */
 "cancelTransfersText"="Alle Transfers stornieren?";
 /* Caption of a button to upgrade the account to Pro status */
-"upgrade"="Pro-Status";
+"upgrade"="Upgrade";
 /* Title show on the hall of My Account section that describes a place where you can view, edit and upgrade your account and profile */
 "viewAndEditProfile"="Profil anzeigen/bearbeiten";
 /* Label for any 'Profile' button, link, text, title, etc. - (String as short as possible). */
@@ -2381,7 +2381,7 @@
 /* Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible). */
 "Learn more"="Mehr erfahren";
 /* Text indicating the date until a link will be valid */
-"Link expires %@"="Link expires on %@";
+"Link expires %@"="Der Link läuft am %@ ab";
 /* Text hint to let the user know that tapping something will be copied into the pasteboard */
 "Tap to Copy"="Zum Kopieren antippen";
 /* Caption of the button that will copy multiple files or folders export links to his clipboard */
@@ -2506,6 +2506,10 @@
 "settings.cookies.performanceAndAnalytics"="Leistungs- und Analyse-Cookies";
 /* Cookie settings dialog text. */
 "settings.cookies.performanceAndAnalytics.footer"="Sie können uns dabei helfen, unsere Produkte zu verbessern, indem Sie diese Cookies zulassen.";
+/* Cookie settings dialog title label for Advertising Cookies */
+"settings.cookies.advertisingCookies"="Cookies zu Werbezwecken";
+/* Cookie settings dialog footer text for Advertising Cookies */
+"settings.cookies.advertisingCookies.footer"="Used by our approved advertising partners to collect data about your browsing activities and customise the ads you see on our services and on other websites. Not accepting these cookies means you will still see ads but they will be less relevant.";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="Version wurde als neue Datei gespeichert";
 /* Text shown for the action create new file */
@@ -2551,7 +2555,7 @@
 /* Title of the button to open Settings */
 "dialog.turnOnNotifications.button.primary"="Einstellungen öffnen";
 /* Dialog title for the change launch tab screen */
-"Change Launch Tab"="Change launch section";
+"Change Launch Tab"="Startbereich ändern";
 /* Dialog description for the change launch tab screen */
 "You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="Sie können jetzt auswählen, welcher Bereich der App beim Starten geöffnet werden soll. Wählen Sie den Bereich aus, der Ihren Bedürfnissen am besten entspricht, egal ob Chat, Cloud Drive oder die Startseite.";
 /* Dialog button text for the change launch tab screen */
@@ -2737,7 +2741,7 @@
 /* Dialog button title which triggers the action to visit Huawei app gallery */
 "account.delete.subscription.huaweiAppGallery.visit"="Zur AppGallery";
 /* Dialog message shown before deleting an account with active webclient subscription */
-"account.delete.subscription.webClient"="This is the last step to delete your account. Both your account and subscription will be deleted and you will permanently lose all the data stored in the account. Please enter your password below.";
+"account.delete.subscription.webClient"="Dies ist der letzte Schritt zum Löschen Ihres Accounts. Sowohl Ihr Account als auch Ihr Abonnement werden gelöscht und Sie verlieren unwiderruflich alle im Account gespeicherten Daten. Bitte geben Sie unten Ihr Passwort ein.";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
 "account.profile.avatar.uploadPhoto"="Foto hochladen";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
@@ -2987,9 +2991,9 @@
 /* Error message shown when some error occurs during uploading a bug report. */
 "help.reportIssue.fail.message"="Ihr Bericht konnte nicht übermittelt werden. Bitte versuchen Sie es noch einmal.";
 /* Error title shown when the user try to send more than one report in less than 10 minutes */
-"help.reportIssue.fail.too.many.request.title"="You must wait 10 minutes before submitting another issue";
+"help.reportIssue.fail.too.many.request.title"="Sie müssen 10 Minuten warten, bevor Sie eine weitere Problemmeldung einreichen können";
 /* Error message shown when the user try to send more than one report in less than 10 minutes */
-"help.reportIssue.fail.too.many.request.message"="Please try again later or contact our support team via support@mega.nz if the problem persists";
+"help.reportIssue.fail.too.many.request.message"="Bitte versuchen Sie es später noch einmal oder kontaktieren Sie unser Supportteam unter support@mega.nz, falls das Problem weiterhin besteht.";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.title"="Möchten Sie den Upload Ihres Problemberichts wirklich abbrechen?";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
@@ -3535,7 +3539,7 @@
 /* Device Center rename device action enter a different name message */
 "device.center.rename.device.different.name"="Bitte anderen Namen eingeben";
 /* Device Center rename device action invalid long name message */
-"device.center.rename.device.invalid.long.name"="Device name can only be up to 32 characters";
+"device.center.rename.device.invalid.long.name"="Der Gerätename darf maximal 32 Zeichen betragen";
 /* Device Center camera upload status enabled */
 "device.center.camera.uploads.action.status.enabled"="Aktiv";
 /* Device Center camera upload status disabled */
@@ -3621,7 +3625,7 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Leistungsmerkmale der Pro-Pakete";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Automatic backups\n\n• Rewind up to 90 days on Pro Lite and up to 180 days on Pro I, II, and III (coming soon)\n\n• Schedule rubbish bin clearing between 7 days and 10 years";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• Passwortgeschützte Links\n\n• Links mit Ablaufdatum\n\n• Teilen des Transfervolumens\n\n• Automatische Backups\n\n• Rewind – bis zu 90 Tage für Pro Lite und bis zu 180 Tage für Pro I, II und III (demnächst)\n\n• Planmäßige Leerung des Papierkorbs alle 7 Tage bis 10 Jahre";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Abonnementdetails";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3827,9 +3831,13 @@
 /* Filter name for searching on the home screen */
 "home.search.filter.pdfs"="PDFs";
 /* Filter name for searching on the home screen */
-"home.search.filter.presentations"="Presentations";
+"home.search.filter.presentations"="Präsentationen";
 /* Filter name for searching on the home screen */
-"home.search.filter.archives"="Archives";
+"home.search.filter.archives"="Archive";
+/* Type chips group title which is displayed in chips group pill */
+"home.search.chipsGroup.nodeType.pillTitle"="Typ";
+/* Type chips group picker title which is displayed in the picker shown when user taps on the chips group pill */
+"home.search.chipsGroup.nodeType.pickerTitle"="Typ auswählen";
 /* Empty screen copy when no filter is selected on the home screen search */
 "home.search.empty.no-chip-selected"="Keine Treffer";
 /* Empty screen copy when Images filter is selected on the home screen search */
@@ -3841,13 +3849,13 @@
 /* Empty screen copy when Video filter is selected on the home screen search */
 "home.search.empty.no-videos"="Keine Videodateien";
 /* Empty screen copy when Folders filter is selected on the home screen search */
-"home.search.empty.no-folders"="No folders";
+"home.search.empty.no-folders"="Keine Ordner";
 /* Empty screen copy when PDF filter is selected on the home screen search */
-"home.search.empty.no-pdfs"="No PDFs";
+"home.search.empty.no-pdfs"="Keine PDFs";
 /* Empty screen copy when Presentations filter is selected on the home screen search */
-"home.search.empty.no-presentations"="No presentations";
+"home.search.empty.no-presentations"="Keine Präsentationen";
 /* Empty screen copy when Archives filter is selected on the home screen search */
-"home.search.empty.no-archives"="No archives";
+"home.search.empty.no-archives"="Keine Archive";
 /* A title label for waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.title"="Warteraum";
 /* A button label to close the waiting room participants list view. */
@@ -3881,8 +3889,34 @@
 /* Camera uploads banner enable state description */
 "cameraUploads.banner.enableState.description"="Automatisches Backup Ihrer Fotos und Videos in Ihr Cloud Drive.";
 /* In app notification description for Shared Items when user left a shared folder. [A] will be replaced by the user's email who left. [B] will be replaced by shared folder name. */
-"inapp.notifications.sharedItems.userLeftTheSharedFolder.message"="User [A] has left the shared folder [B]";
+"inapp.notifications.sharedItems.userLeftTheSharedFolder.message"="[A] hat die Ordnerfreigabe [B] verlassen";
 /* Shared Screen label in the main view when one user is sharing screen */
-"calls.screenShare.mainView.presentingLabel"="%@ is presenting";
+"calls.screenShare.mainView.presentingLabel"="%@ moderiert";
 /* A warning HUB to show in the call UI when the user A try to tap user B who is sharing screen and the shared screen is in the main view */
-"calls.screenShare.waring.title"="This person is screen sharing";
+"calls.screenShare.waring.title"="Diese Person gibt ihren Bildschirm frei";
+/* Alert title informing user that call screen is being recorded */
+"calls.screenRecording.alert.title"="Dieses Gespräch wird aufgezeichnet";
+/* Alert message for user confirmation that agrees on call screen recording */
+"calls.screenRecording.alert.message"="Durch Ihre weitere Teilnahme am Gespräch geben Sie Ihr Einverständnis zur Aufzeichnung.";
+/* Alert button for user not accepting call screen recording and therefor leaving the call */
+"calls.screenRecording.alert.action.leave"="Konferenz verlassen";
+/* Alert button for user accepting call screen recording */
+"calls.screenRecording.alert.action.accept"="Alles klar";
+/* Alert button for user accepting call screen recording */
+"calls.screenRecording.alert.action.learnMore"="Mehr erfahren";
+/* Notification message about someone started to record call screen */
+"calls.screenRecording.notification.recording.started"="%@ hat die Aufzeichnung gestartet";
+/* Notification message about someone stopped to record call screen */
+"calls.screenRecording.notification.recording.stopped"="%@ hat die Aufzeichnung beendet";
+/* Text for a UI label indicating that the call screen is being recorded */
+"calls.screenRecording.screenIndicator.label"="REC";
+/* Camera uploads status banner - uploads in progress title */
+"cameraUploads.banner.status.uploadInProgress.title"="Upload läuft";
+/* Camera uploads status banner - uploads complete title */
+"cameraUploads.banner.status.uploadsComplete.title"="Kamera-Uploads beendet";
+/* Camera uploads status banner - uploads paused due to no wifi connection title */
+"cameraUploads.banner.status.uploadsPausedDueToWifi.title"="Upload mangels WLAN-Verbindung angehalten";
+/* Camera uploads status banner - uploads complete description */
+"cameraUploads.banner.status.uploadsComplete.subHeading"="Alle Inhalte wurden gesichert";
+/* Camera uploads status banner - uploads partially completed due to limited access to photo library */
+"cameraUploads.banner.status.uploadsPartialComplete.limitedPhotoLibraryAccess.subHeading"="MEGA hat nur eingeschränkten Zugriff auf Ihre Fotobibliothek und kann nicht alle Fotos sichern. Antippen, um die Berechtigungen zu ändern.";

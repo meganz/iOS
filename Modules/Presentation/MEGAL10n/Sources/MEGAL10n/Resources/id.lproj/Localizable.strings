@@ -2506,6 +2506,10 @@
 "settings.cookies.performanceAndAnalytics"="Cookie Kinerja dan Analisis";
 /* Cookie settings dialog text. */
 "settings.cookies.performanceAndAnalytics.footer"="Bantu kami untuk memahami bagaimana anda menggunakan layanan kami dan memberikan kami data yang dapat kami gunakan untuk melakukan perbaikan. Tidak menerima Cookies ini berarti kami akan memiliki lebih sedikit data yang tersedia bagi kami untuk membantu peningkatan desain.";
+/* Cookie settings dialog title label for Advertising Cookies */
+"settings.cookies.advertisingCookies"="Cookie Iklan";
+/* Cookie settings dialog footer text for Advertising Cookies */
+"settings.cookies.advertisingCookies.footer"="Used by our approved advertising partners to collect data about your browsing activities and customise the ads you see on our services and on other websites. Not accepting these cookies means you will still see ads but they will be less relevant.";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="Versi dibuat sebagai file baru";
 /* Text shown for the action create new file */
@@ -3830,6 +3834,10 @@
 "home.search.filter.presentations"="Presentations";
 /* Filter name for searching on the home screen */
 "home.search.filter.archives"="Archives";
+/* Type chips group title which is displayed in chips group pill */
+"home.search.chipsGroup.nodeType.pillTitle"="Tipe";
+/* Type chips group picker title which is displayed in the picker shown when user taps on the chips group pill */
+"home.search.chipsGroup.nodeType.pickerTitle"="Select type";
 /* Empty screen copy when no filter is selected on the home screen search */
 "home.search.empty.no-chip-selected"="Tidak ada hasil";
 /* Empty screen copy when Images filter is selected on the home screen search */
@@ -3886,3 +3894,29 @@
 "calls.screenShare.mainView.presentingLabel"="%@ is presenting";
 /* A warning HUB to show in the call UI when the user A try to tap user B who is sharing screen and the shared screen is in the main view */
 "calls.screenShare.waring.title"="This person is screen sharing";
+/* Alert title informing user that call screen is being recorded */
+"calls.screenRecording.alert.title"="This call is being recorded";
+/* Alert message for user confirmation that agrees on call screen recording */
+"calls.screenRecording.alert.message"="By staying in the call you give permission to be recorded.";
+/* Alert button for user not accepting call screen recording and therefor leaving the call */
+"calls.screenRecording.alert.action.leave"="Tinggalkan panggilan";
+/* Alert button for user accepting call screen recording */
+"calls.screenRecording.alert.action.accept"="OK, mengerti";
+/* Alert button for user accepting call screen recording */
+"calls.screenRecording.alert.action.learnMore"="Belajar lagi";
+/* Notification message about someone started to record call screen */
+"calls.screenRecording.notification.recording.started"="%@ started recording";
+/* Notification message about someone stopped to record call screen */
+"calls.screenRecording.notification.recording.stopped"="%@ stopped recording";
+/* Text for a UI label indicating that the call screen is being recorded */
+"calls.screenRecording.screenIndicator.label"="REC";
+/* Camera uploads status banner - uploads in progress title */
+"cameraUploads.banner.status.uploadInProgress.title"="Upload in progress";
+/* Camera uploads status banner - uploads complete title */
+"cameraUploads.banner.status.uploadsComplete.title"="Unggahan kamera selesai";
+/* Camera uploads status banner - uploads paused due to no wifi connection title */
+"cameraUploads.banner.status.uploadsPausedDueToWifi.title"="Upload paused due to no Wi-Fi connection";
+/* Camera uploads status banner - uploads complete description */
+"cameraUploads.banner.status.uploadsComplete.subHeading"="All items backed up";
+/* Camera uploads status banner - uploads partially completed due to limited access to photo library */
+"cameraUploads.banner.status.uploadsPartialComplete.limitedPhotoLibraryAccess.subHeading"="MEGA memiliki akses terbatas ke perpustakaan foto anda dan tidak dapat mencadangkan semua foto. Ketuk untuk mengubah izin.";

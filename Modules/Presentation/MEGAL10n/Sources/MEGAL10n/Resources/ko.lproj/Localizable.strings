@@ -1885,7 +1885,7 @@
 /* When somebody denied your contact request */
 "Denied your contact request"="당신의 연락처 요청이 거절되었습니다";
 /* notification text */
-"A user has left the shared folder {0}"="이용자가 공유된 {0} 폴더를 떠났습니다";
+"A user has left the shared folder {0}"="A user has left the shared folder {0}";
 /* This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal). */
 "Access to folders was removed."="폴더에 대한 접근이 제거됨.";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
@@ -2506,6 +2506,10 @@
 "settings.cookies.performanceAndAnalytics"="성능과 분석 쿠키";
 /* Cookie settings dialog text. */
 "settings.cookies.performanceAndAnalytics.footer"="당신이 우리의 서비스를 어떻게 이용하는지 이해할 수 있도록 도와주시고 향상할 수 있도록 데이터를 제공해주세요. 이러한 쿠키들을 허용하지 않는 것은 우리가 설계를 개선하는 데에 쓸 수 있는 데이터가 적어진다는 뜻입니다.";
+/* Cookie settings dialog title label for Advertising Cookies */
+"settings.cookies.advertisingCookies"="광고 쿠키";
+/* Cookie settings dialog footer text for Advertising Cookies */
+"settings.cookies.advertisingCookies.footer"="당신의 브라우징 활동과 관련한 데이터를 수집하고 당신이 우리 서비스와 다른 웹사이트에서 보는 광고를 개인화하기 위해 우리의 승인된 광고 파트너들에 의해 쓰입니다. 이러한 쿠키를 허용하지 않는 것은 당신은 여전히 광고를 보게 되지만 관련성이 떨어진다는 것을 뜻합니다.";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="버전을 새 파일로 생성하였습니다";
 /* Text shown for the action create new file */
@@ -3825,11 +3829,15 @@
 /* Filter name for searching on the home screen */
 "home.search.filter.folders"="폴더";
 /* Filter name for searching on the home screen */
-"home.search.filter.pdfs"="PDFs";
+"home.search.filter.pdfs"="PDF";
 /* Filter name for searching on the home screen */
-"home.search.filter.presentations"="Presentations";
+"home.search.filter.presentations"="프레젠테이션";
 /* Filter name for searching on the home screen */
-"home.search.filter.archives"="Archives";
+"home.search.filter.archives"="압축 파일";
+/* Type chips group title which is displayed in chips group pill */
+"home.search.chipsGroup.nodeType.pillTitle"="형식";
+/* Type chips group picker title which is displayed in the picker shown when user taps on the chips group pill */
+"home.search.chipsGroup.nodeType.pickerTitle"="유형 선택";
 /* Empty screen copy when no filter is selected on the home screen search */
 "home.search.empty.no-chip-selected"="결과 없음";
 /* Empty screen copy when Images filter is selected on the home screen search */
@@ -3841,13 +3849,13 @@
 /* Empty screen copy when Video filter is selected on the home screen search */
 "home.search.empty.no-videos"="동영상 파일 없음";
 /* Empty screen copy when Folders filter is selected on the home screen search */
-"home.search.empty.no-folders"="No folders";
+"home.search.empty.no-folders"="폴더 없음";
 /* Empty screen copy when PDF filter is selected on the home screen search */
-"home.search.empty.no-pdfs"="No PDFs";
+"home.search.empty.no-pdfs"="PDF 없음";
 /* Empty screen copy when Presentations filter is selected on the home screen search */
-"home.search.empty.no-presentations"="No presentations";
+"home.search.empty.no-presentations"="프레젠테이션 없음";
 /* Empty screen copy when Archives filter is selected on the home screen search */
-"home.search.empty.no-archives"="No archives";
+"home.search.empty.no-archives"="압축 파일 없음";
 /* A title label for waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.title"="대기실";
 /* A button label to close the waiting room participants list view. */
@@ -3886,3 +3894,29 @@
 "calls.screenShare.mainView.presentingLabel"="%@ 님이 발표 중입니다";
 /* A warning HUB to show in the call UI when the user A try to tap user B who is sharing screen and the shared screen is in the main view */
 "calls.screenShare.waring.title"="이 사람이 화면을 공유 중입니다";
+/* Alert title informing user that call screen is being recorded */
+"calls.screenRecording.alert.title"="이 통화는 녹화되고 있습니다";
+/* Alert message for user confirmation that agrees on call screen recording */
+"calls.screenRecording.alert.message"="통화에 남는 것은 녹화될 권한을 주는 것입니다.";
+/* Alert button for user not accepting call screen recording and therefor leaving the call */
+"calls.screenRecording.alert.action.leave"="통화 떠나기";
+/* Alert button for user accepting call screen recording */
+"calls.screenRecording.alert.action.accept"="알겠습니다";
+/* Alert button for user accepting call screen recording */
+"calls.screenRecording.alert.action.learnMore"="더 알아보기";
+/* Notification message about someone started to record call screen */
+"calls.screenRecording.notification.recording.started"="%@ 님이 녹화를 시작하였습니다";
+/* Notification message about someone stopped to record call screen */
+"calls.screenRecording.notification.recording.stopped"="%@ 님이 녹화를 멈췄습니다";
+/* Text for a UI label indicating that the call screen is being recorded */
+"calls.screenRecording.screenIndicator.label"="REC";
+/* Camera uploads status banner - uploads in progress title */
+"cameraUploads.banner.status.uploadInProgress.title"="업로드 진행 중";
+/* Camera uploads status banner - uploads complete title */
+"cameraUploads.banner.status.uploadsComplete.title"="카메라 업로드 완료";
+/* Camera uploads status banner - uploads paused due to no wifi connection title */
+"cameraUploads.banner.status.uploadsPausedDueToWifi.title"="Wi-Fi 연결이 없어서 업로드가 일시정지 되었습니다";
+/* Camera uploads status banner - uploads complete description */
+"cameraUploads.banner.status.uploadsComplete.subHeading"="모든 항목이 백업 되었습니다";
+/* Camera uploads status banner - uploads partially completed due to limited access to photo library */
+"cameraUploads.banner.status.uploadsPartialComplete.limitedPhotoLibraryAccess.subHeading"="MEGA가 당신의 사진 라이브러리에 제한된 접근 권한을 가지고 있으며 모든 사진을 백업할 수 없습니다. 권한을 변경하려면 탭 하세요.";

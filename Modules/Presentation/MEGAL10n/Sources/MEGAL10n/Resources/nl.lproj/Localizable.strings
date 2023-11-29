@@ -2506,6 +2506,10 @@
 "settings.cookies.performanceAndAnalytics"="Prestatie- en Analyse Cookies";
 /* Cookie settings dialog text. */
 "settings.cookies.performanceAndAnalytics.footer"="Help ons te begrijpen hoe u onze diensten gebruikt en verstrek ons ​​gegevens die we kunnen gebruiken om verbeteringen aan te brengen. Als u deze Cookies niet accepteert, hebben we minder gegevens tot onze beschikking om het ontwerp te verbeteren.";
+/* Cookie settings dialog title label for Advertising Cookies */
+"settings.cookies.advertisingCookies"="Advertentie Cookies";
+/* Cookie settings dialog footer text for Advertising Cookies */
+"settings.cookies.advertisingCookies.footer"="Gebruikt door onze goedgekeurde advertentiepartners om gegevens over uw browse-activiteiten te verzamelen en de advertenties die u op onze diensten en op andere websites ziet, aan te passen. Als u deze cookies niet accepteert, krijgt u nog steeds advertenties te zien, maar zijn deze minder relevant.";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="Versie was gecreëerd als nieuw bestand";
 /* Text shown for the action create new file */
@@ -3830,6 +3834,10 @@
 "home.search.filter.presentations"="Presentaties";
 /* Filter name for searching on the home screen */
 "home.search.filter.archives"="Archieven";
+/* Type chips group title which is displayed in chips group pill */
+"home.search.chipsGroup.nodeType.pillTitle"="Type";
+/* Type chips group picker title which is displayed in the picker shown when user taps on the chips group pill */
+"home.search.chipsGroup.nodeType.pickerTitle"="Selecteer type";
 /* Empty screen copy when no filter is selected on the home screen search */
 "home.search.empty.no-chip-selected"="Geen resultaten";
 /* Empty screen copy when Images filter is selected on the home screen search */
@@ -3886,3 +3894,29 @@
 "calls.screenShare.mainView.presentingLabel"="%@ is aan het presenteren";
 /* A warning HUB to show in the call UI when the user A try to tap user B who is sharing screen and the shared screen is in the main view */
 "calls.screenShare.waring.title"="Deze persoon is aan het scherm delen";
+/* Alert title informing user that call screen is being recorded */
+"calls.screenRecording.alert.title"="Deze oproep wordt opgenomen";
+/* Alert message for user confirmation that agrees on call screen recording */
+"calls.screenRecording.alert.message"="Door in het gesprek te blijven geeft u toestemming om opgenomen te worden.";
+/* Alert button for user not accepting call screen recording and therefor leaving the call */
+"calls.screenRecording.alert.action.leave"="Oproep verlaten";
+/* Alert button for user accepting call screen recording */
+"calls.screenRecording.alert.action.accept"="OK, ik snap het";
+/* Alert button for user accepting call screen recording */
+"calls.screenRecording.alert.action.learnMore"="Meer leren";
+/* Notification message about someone started to record call screen */
+"calls.screenRecording.notification.recording.started"="%@ is gestart met opnemen";
+/* Notification message about someone stopped to record call screen */
+"calls.screenRecording.notification.recording.stopped"="%@ is gestopt met opnemen";
+/* Text for a UI label indicating that the call screen is being recorded */
+"calls.screenRecording.screenIndicator.label"="REC";
+/* Camera uploads status banner - uploads in progress title */
+"cameraUploads.banner.status.uploadInProgress.title"="Upload in behandeling";
+/* Camera uploads status banner - uploads complete title */
+"cameraUploads.banner.status.uploadsComplete.title"="Camera uploads voltooid";
+/* Camera uploads status banner - uploads paused due to no wifi connection title */
+"cameraUploads.banner.status.uploadsPausedDueToWifi.title"="Upload gepauzeerd omdat er geen Wi-Fi verbinding is";
+/* Camera uploads status banner - uploads complete description */
+"cameraUploads.banner.status.uploadsComplete.subHeading"="Van alle items is een back-up gemaakt";
+/* Camera uploads status banner - uploads partially completed due to limited access to photo library */
+"cameraUploads.banner.status.uploadsPartialComplete.limitedPhotoLibraryAccess.subHeading"="MEGA heeft  beperkt toegang tot uw foto bibliotheek en kan geen back-up maken van uw foto’s. Tik om de toestemmingen te wijzigen.";

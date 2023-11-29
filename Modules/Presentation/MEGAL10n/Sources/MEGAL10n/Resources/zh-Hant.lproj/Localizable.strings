@@ -611,7 +611,7 @@
 /* Message shown the pending video file when photos uploaded and video upload is not enabled. Singular. */
 "Photos uploaded, video uploads are off, 1 video not uploaded"="相片已上傳，影片上傳關閉；1個影片未上傳";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
-"Photos uploaded, video uploads are off, %lu videos not uploaded"="相片已上傳，影片上傳關閉；%lu個影片未上傳";
+"Photos uploaded, video uploads are off, %lu videos not uploaded"="照片已上傳，影片上傳關閉；%lu個影片未上傳";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
 "oneItemSelected"="已選擇%lu項目";
 /* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
@@ -1925,7 +1925,7 @@
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
 "This action can not be completed as it would take you over your current storage limit"="因將超出您目前儲存空間限制，此操作無法完成";
 /* uploads over storage quota warning dialog title */
-"Your upload(s) cannot proceed because your account is full"="由於您的雲端儲存已滿，您的上傳無法繼續，";
+"Your upload(s) cannot proceed because your account is full"="由於您的雲端空間已滿，您的上傳無法繼續，";
 /* Footer text to explain the meaning of the functionaly 'Last seen' of your chat status. */
 "Allow your contacts to see the last time you were active on MEGA."="允許您的聯絡人查看您上次在MEGA活動是什麼時候。";
 /* Label shown next to a feature name that can be enabled or disabled, like in 'Show Last seen...' */
@@ -2506,6 +2506,10 @@
 "settings.cookies.performanceAndAnalytics"="性能與分析Cookies";
 /* Cookie settings dialog text. */
 "settings.cookies.performanceAndAnalytics.footer"="協助我們瞭解您如何使用我們的服務，並提供我們可用來改進的資訊。不接受這些Cookies將意謂著我們將缺少可用來幫助我們改進設計的資訊。";
+/* Cookie settings dialog title label for Advertising Cookies */
+"settings.cookies.advertisingCookies"="廣告Cookies";
+/* Cookie settings dialog footer text for Advertising Cookies */
+"settings.cookies.advertisingCookies.footer"="由我們認可的廣告合作伙伴用於收集有關您的瀏覽活動的資料，並自訂您在我們的服務和其它網站上看到的廣告。不接受這些cookie意味著您仍然會看到廣告，但它們的相關性會降低。";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="該版本以新檔案建立";
 /* Text shown for the action create new file */
@@ -3830,6 +3834,10 @@
 "home.search.filter.presentations"="簡報";
 /* Filter name for searching on the home screen */
 "home.search.filter.archives"="封存檔案";
+/* Type chips group title which is displayed in chips group pill */
+"home.search.chipsGroup.nodeType.pillTitle"="類型";
+/* Type chips group picker title which is displayed in the picker shown when user taps on the chips group pill */
+"home.search.chipsGroup.nodeType.pickerTitle"="選擇類型";
 /* Empty screen copy when no filter is selected on the home screen search */
 "home.search.empty.no-chip-selected"="沒有搜尋結果";
 /* Empty screen copy when Images filter is selected on the home screen search */
@@ -3886,3 +3894,29 @@
 "calls.screenShare.mainView.presentingLabel"="%@正在展示";
 /* A warning HUB to show in the call UI when the user A try to tap user B who is sharing screen and the shared screen is in the main view */
 "calls.screenShare.waring.title"="此人正在螢幕共享";
+/* Alert title informing user that call screen is being recorded */
+"calls.screenRecording.alert.title"="此通話正在錄音";
+/* Alert message for user confirmation that agrees on call screen recording */
+"calls.screenRecording.alert.message"="留在通話中即表示您允許錄影。";
+/* Alert button for user not accepting call screen recording and therefor leaving the call */
+"calls.screenRecording.alert.action.leave"="離開通話";
+/* Alert button for user accepting call screen recording */
+"calls.screenRecording.alert.action.accept"="好的，明白了";
+/* Alert button for user accepting call screen recording */
+"calls.screenRecording.alert.action.learnMore"="瞭解更多";
+/* Notification message about someone started to record call screen */
+"calls.screenRecording.notification.recording.started"="%@已開始錄影";
+/* Notification message about someone stopped to record call screen */
+"calls.screenRecording.notification.recording.stopped"="%@已停止錄影";
+/* Text for a UI label indicating that the call screen is being recorded */
+"calls.screenRecording.screenIndicator.label"="錄影中";
+/* Camera uploads status banner - uploads in progress title */
+"cameraUploads.banner.status.uploadInProgress.title"="正在上傳";
+/* Camera uploads status banner - uploads complete title */
+"cameraUploads.banner.status.uploadsComplete.title"="相機上傳完成";
+/* Camera uploads status banner - uploads paused due to no wifi connection title */
+"cameraUploads.banner.status.uploadsPausedDueToWifi.title"="由於沒有Wi-Fi連線，上傳已暫停";
+/* Camera uploads status banner - uploads complete description */
+"cameraUploads.banner.status.uploadsComplete.subHeading"="已備份所有項目";
+/* Camera uploads status banner - uploads partially completed due to limited access to photo library */
+"cameraUploads.banner.status.uploadsPartialComplete.limitedPhotoLibraryAccess.subHeading"="MEGA對您照片的存取權限受到限制，無法備份所有照片。點擊更改權限。";

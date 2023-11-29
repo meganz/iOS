@@ -1028,6 +1028,42 @@
         <string>Se han añadido %d elementos a “[A]”</string>
       </dict>
     </dict>
+    <key>cameraUploads.banner.status.uploadsPartialComplete.videosNotUploaded.subHeading</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Fotos subidas. La subida de vídeos está desactivada: el vídeo no se ha subido</string>
+        <key>many</key>
+        <string>Fotos subidas. Las subidas de vídeos están desactivadas: %d vídeos no subidos</string>
+        <key>other</key>
+        <string>Fotos subidas. Las subidas de vídeos están desactivadas: %d vídeos no subidos</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.banner.status.filesPending.subHeading</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d archivo pendiente</string>
+        <key>many</key>
+        <string>%d archivos pendientes</string>
+        <key>other</key>
+        <string>%d archivos pendientes</string>
+      </dict>
+    </dict>
     <key>cameraUploads.albums.delete</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
