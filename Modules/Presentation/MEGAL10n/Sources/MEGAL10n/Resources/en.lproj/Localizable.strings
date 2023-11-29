@@ -2509,7 +2509,7 @@
 /* Cookie settings dialog title label for Advertising Cookies */
 "settings.cookies.advertisingCookies"="Advertising Cookies";
 /* Cookie settings dialog footer text for Advertising Cookies */
-"settings.cookies.advertisingCookies.footer"="Used by our approved advertising partners to collect data about your browsing activities and customise the ads you see on our services and on other websites. Not accepting these Cookies means you will still see ads but they will be less relevant.";
+"settings.cookies.advertisingCookies.footer"="Used by our approved advertising partners to collect data about your browsing activities and customise the ads you see on our services and on other websites. Not accepting these cookies means you will still see ads but they will be less relevant.";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="Version was created as a new file";
 /* Text shown for the action create new file */
@@ -3837,7 +3837,7 @@
 /* Type chips group title which is displayed in chips group pill */
 "home.search.chipsGroup.nodeType.pillTitle"="Type";
 /* Type chips group picker title which is displayed in the picker shown when user taps on the chips group pill */
-"home.search.chipsGroup.nodeType.pickerTitle"="Select Type";
+"home.search.chipsGroup.nodeType.pickerTitle"="Select type";
 /* Empty screen copy when no filter is selected on the home screen search */
 "home.search.empty.no-chip-selected"="No results";
 /* Empty screen copy when Images filter is selected on the home screen search */
@@ -3897,11 +3897,11 @@
 /* Alert title informing user that call screen is being recorded */
 "calls.screenRecording.alert.title"="This call is being recorded";
 /* Alert message for user confirmation that agrees on call screen recording */
-"calls.screenRecording.alert.message"="By staying in the call, you're giving permission to be recorded.";
+"calls.screenRecording.alert.message"="By staying in the call you give permission to be recorded.";
 /* Alert button for user not accepting call screen recording and therefor leaving the call */
 "calls.screenRecording.alert.action.leave"="Leave call";
 /* Alert button for user accepting call screen recording */
-"calls.screenRecording.alert.action.accept"="Ok, got it";
+"calls.screenRecording.alert.action.accept"="OK, got it";
 /* Alert button for user accepting call screen recording */
 "calls.screenRecording.alert.action.learnMore"="Learn more";
 /* Notification message about someone started to record call screen */
@@ -3910,13 +3910,13 @@
 "calls.screenRecording.notification.recording.stopped"="%@ stopped recording";
 /* Text for a UI label indicating that the call screen is being recorded */
 "calls.screenRecording.screenIndicator.label"="REC";
-/* Camera uploads status banner - uploads in progress title*/
+/* Camera uploads status banner - uploads in progress title */
 "cameraUploads.banner.status.uploadInProgress.title"="Upload in progress";
 /* Camera uploads status banner - uploads complete title */
 "cameraUploads.banner.status.uploadsComplete.title"="Camera uploads complete";
 /* Camera uploads status banner - uploads paused due to no wifi connection title */
 "cameraUploads.banner.status.uploadsPausedDueToWifi.title"="Upload paused due to no Wi-Fi connection";
-/* Camera uploads status banner - uploads complete description*/
+/* Camera uploads status banner - uploads complete description */
 "cameraUploads.banner.status.uploadsComplete.subHeading"="All items backed up";
-/* Camera uploads status banner - uploads partially completed due to limited access to photo library*/
-"cameraUploads.banner.status.uploadsPartialComplete.limitedPhotoLibraryAccess.subHeading"="MEGA has limited access to photo library and cannot backup all your photos. Tap to change permissions.";
+/* Camera uploads status banner - uploads partially completed due to limited access to photo library */
+"cameraUploads.banner.status.uploadsPartialComplete.limitedPhotoLibraryAccess.subHeading"="MEGA has limited access to your photo library and cannot back up all photos. Tap to change permissions.";

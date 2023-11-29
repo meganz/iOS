@@ -67,7 +67,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA nie może połączyć się bezpiecznie przez SSL. Być może korzystasz z publicznej sieci Wi-Fi z dodatkowymi wymaganiami.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to log in with same account as in the mobile browser.";
+"theContentIsNotAvailableForThisAccount"="Zawartość, do której próbujesz uzyskać dostęp, nie jest dostępna dla tego konta. Spróbuj zalogować się przy użyciu tego samego konta, co w przeglądarce mobilnej.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="Operacja zajmuję więcej czasu niż zwykle. Proszę czekać…";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -2506,6 +2506,10 @@
 "settings.cookies.performanceAndAnalytics"="Pliki cookie dotyczące wydajności i analizy";
 /* Cookie settings dialog text. */
 "settings.cookies.performanceAndAnalytics.footer"="Pomóż nam zrozumieć, w jaki sposób korzystasz z naszych usług i podaj nam dane, których możemy użyć do wprowadzenia ulepszeń. Brak akceptacji tych plików cookie oznacza, że będziemy mieć mniej dostępnych danych, aby pomóc w projektowaniu ulepszeń.";
+/* Cookie settings dialog title label for Advertising Cookies */
+"settings.cookies.advertisingCookies"="Reklamowe pliki cookie";
+/* Cookie settings dialog footer text for Advertising Cookies */
+"settings.cookies.advertisingCookies.footer"="Używane przez naszych zatwierdzonych partnerów reklamowych do zbierania danych o aktywności użytkownika podczas przeglądania stron internetowych i dostosowywania reklam wyświetlanych w naszych usługach i na innych stronach internetowych. Brak akceptacji tych plików cookie oznacza, że nadal będziesz widzieć reklamy, ale będą one mniej trafne.";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="Wersja została utworzona jako nowy plik";
 /* Text shown for the action create new file */
@@ -3825,11 +3829,15 @@
 /* Filter name for searching on the home screen */
 "home.search.filter.folders"="Katalogi";
 /* Filter name for searching on the home screen */
-"home.search.filter.pdfs"="PDFs";
+"home.search.filter.pdfs"="PDFy";
 /* Filter name for searching on the home screen */
-"home.search.filter.presentations"="Presentations";
+"home.search.filter.presentations"="Prezentacje";
 /* Filter name for searching on the home screen */
-"home.search.filter.archives"="Archives";
+"home.search.filter.archives"="Archiwa";
+/* Type chips group title which is displayed in chips group pill */
+"home.search.chipsGroup.nodeType.pillTitle"="Rodzaj";
+/* Type chips group picker title which is displayed in the picker shown when user taps on the chips group pill */
+"home.search.chipsGroup.nodeType.pickerTitle"="Wybierz rodzaj";
 /* Empty screen copy when no filter is selected on the home screen search */
 "home.search.empty.no-chip-selected"="Brak wyników";
 /* Empty screen copy when Images filter is selected on the home screen search */
@@ -3841,13 +3849,13 @@
 /* Empty screen copy when Video filter is selected on the home screen search */
 "home.search.empty.no-videos"="Brak plików wideo";
 /* Empty screen copy when Folders filter is selected on the home screen search */
-"home.search.empty.no-folders"="No folders";
+"home.search.empty.no-folders"="Brak katalogów";
 /* Empty screen copy when PDF filter is selected on the home screen search */
-"home.search.empty.no-pdfs"="No PDFs";
+"home.search.empty.no-pdfs"="Brak plików PDF";
 /* Empty screen copy when Presentations filter is selected on the home screen search */
-"home.search.empty.no-presentations"="No presentations";
+"home.search.empty.no-presentations"="Brak prezentacji";
 /* Empty screen copy when Archives filter is selected on the home screen search */
-"home.search.empty.no-archives"="No archives";
+"home.search.empty.no-archives"="Brak archiwów";
 /* A title label for waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.title"="Poczekalnia";
 /* A button label to close the waiting room participants list view. */
@@ -3883,6 +3891,32 @@
 /* In app notification description for Shared Items when user left a shared folder. [A] will be replaced by the user's email who left. [B] will be replaced by shared folder name. */
 "inapp.notifications.sharedItems.userLeftTheSharedFolder.message"="Użytkownik [A] opuścił katalog współdzielony [B]";
 /* Shared Screen label in the main view when one user is sharing screen */
-"calls.screenShare.mainView.presentingLabel"="%@ is presenting";
+"calls.screenShare.mainView.presentingLabel"="%@ prezentuje";
 /* A warning HUB to show in the call UI when the user A try to tap user B who is sharing screen and the shared screen is in the main view */
-"calls.screenShare.waring.title"="This person is screen sharing";
+"calls.screenShare.waring.title"="Ta osoba udostępnia ekran";
+/* Alert title informing user that call screen is being recorded */
+"calls.screenRecording.alert.title"="Ta rozmowa jest nagrywana";
+/* Alert message for user confirmation that agrees on call screen recording */
+"calls.screenRecording.alert.message"="Pozostając w trakcie rozmowy wyrażasz zgodę na nagrywanie.";
+/* Alert button for user not accepting call screen recording and therefor leaving the call */
+"calls.screenRecording.alert.action.leave"="Opuść połączenie";
+/* Alert button for user accepting call screen recording */
+"calls.screenRecording.alert.action.accept"="OK, rozumiem";
+/* Alert button for user accepting call screen recording */
+"calls.screenRecording.alert.action.learnMore"="Dowiedz się więcej";
+/* Notification message about someone started to record call screen */
+"calls.screenRecording.notification.recording.started"="%@ rozpoczął nagrywanie";
+/* Notification message about someone stopped to record call screen */
+"calls.screenRecording.notification.recording.stopped"="%@ zatrzymał nagrywanie";
+/* Text for a UI label indicating that the call screen is being recorded */
+"calls.screenRecording.screenIndicator.label"="REC";
+/* Camera uploads status banner - uploads in progress title */
+"cameraUploads.banner.status.uploadInProgress.title"="Przesyłanie w toku";
+/* Camera uploads status banner - uploads complete title */
+"cameraUploads.banner.status.uploadsComplete.title"="Przesyłanie z kamery zakończone";
+/* Camera uploads status banner - uploads paused due to no wifi connection title */
+"cameraUploads.banner.status.uploadsPausedDueToWifi.title"="Przesyłanie wstrzymane z powodu braku połączenia Wi-Fi";
+/* Camera uploads status banner - uploads complete description */
+"cameraUploads.banner.status.uploadsComplete.subHeading"="Kopia zapasowa wszystkich elementów";
+/* Camera uploads status banner - uploads partially completed due to limited access to photo library */
+"cameraUploads.banner.status.uploadsPartialComplete.limitedPhotoLibraryAccess.subHeading"="MEGA ma ograniczony dostęp do biblioteki zdjęć i nie może utworzyć kopii zapasowej wszystkich zdjęć. Wybierz, aby zmienić uprawnienia.";

@@ -2381,7 +2381,7 @@
 /* Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible). */
 "Learn more"="Tìm hiểu thêm";
 /* Text indicating the date until a link will be valid */
-"Link expires %@"="Link expires on %@";
+"Link expires %@"="Đường liên kết hết hạn vào ngày %@";
 /* Text hint to let the user know that tapping something will be copied into the pasteboard */
 "Tap to Copy"="Chạm vào để sao chép";
 /* Caption of the button that will copy multiple files or folders export links to his clipboard */
@@ -2506,6 +2506,10 @@
 "settings.cookies.performanceAndAnalytics"="Cookies hiệu suất và phân tích";
 /* Cookie settings dialog text. */
 "settings.cookies.performanceAndAnalytics.footer"="Giúp chúng tôi hiểu cách quý khách sử dụng dịch vụ và cung cấp cho chúng tôi dữ liệu có thể sử dụng để cải tiến. Việc không chấp nhận những Cookies này có nghĩa là chúng tôi sẽ nhận ít dữ liệu để giúp cải tiến thiết kế sau này.";
+/* Cookie settings dialog title label for Advertising Cookies */
+"settings.cookies.advertisingCookies"="Cookies Quảng Cáo";
+/* Cookie settings dialog footer text for Advertising Cookies */
+"settings.cookies.advertisingCookies.footer"="Used by our approved advertising partners to collect data about your browsing activities and customise the ads you see on our services and on other websites. Not accepting these cookies means you will still see ads but they will be less relevant.";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="Phiên bản đã được chuyển thành một tệp tin mới toàn vẹn";
 /* Text shown for the action create new file */
@@ -2987,7 +2991,7 @@
 /* Error message shown when some error occurs during uploading a bug report. */
 "help.reportIssue.fail.message"="Không gửi được báo cáo. Xin thử lại.";
 /* Error title shown when the user try to send more than one report in less than 10 minutes */
-"help.reportIssue.fail.too.many.request.title"="You must wait 10 minutes before submitting another issue";
+"help.reportIssue.fail.too.many.request.title"="Bạn phải đợi 10 phút trước khi gửi vấn đề khác";
 /* Error message shown when the user try to send more than one report in less than 10 minutes */
 "help.reportIssue.fail.too.many.request.message"="Please try again later or contact our support team via support@mega.nz if the problem persists";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
@@ -3825,11 +3829,15 @@
 /* Filter name for searching on the home screen */
 "home.search.filter.folders"="Thư mục";
 /* Filter name for searching on the home screen */
-"home.search.filter.pdfs"="PDFs";
+"home.search.filter.pdfs"="PDF";
 /* Filter name for searching on the home screen */
-"home.search.filter.presentations"="Presentations";
+"home.search.filter.presentations"="Trình chiếu";
 /* Filter name for searching on the home screen */
-"home.search.filter.archives"="Archives";
+"home.search.filter.archives"="Nén";
+/* Type chips group title which is displayed in chips group pill */
+"home.search.chipsGroup.nodeType.pillTitle"="Dạng";
+/* Type chips group picker title which is displayed in the picker shown when user taps on the chips group pill */
+"home.search.chipsGroup.nodeType.pickerTitle"="Chọn loại";
 /* Empty screen copy when no filter is selected on the home screen search */
 "home.search.empty.no-chip-selected"="Không có kết quả";
 /* Empty screen copy when Images filter is selected on the home screen search */
@@ -3841,13 +3849,13 @@
 /* Empty screen copy when Video filter is selected on the home screen search */
 "home.search.empty.no-videos"="Không có tệp tin video";
 /* Empty screen copy when Folders filter is selected on the home screen search */
-"home.search.empty.no-folders"="No folders";
+"home.search.empty.no-folders"="Không có thư mục";
 /* Empty screen copy when PDF filter is selected on the home screen search */
-"home.search.empty.no-pdfs"="No PDFs";
+"home.search.empty.no-pdfs"="Không có tệp PDF";
 /* Empty screen copy when Presentations filter is selected on the home screen search */
-"home.search.empty.no-presentations"="No presentations";
+"home.search.empty.no-presentations"="Không có tệp trình chiếu";
 /* Empty screen copy when Archives filter is selected on the home screen search */
-"home.search.empty.no-archives"="No archives";
+"home.search.empty.no-archives"="Không có tệp nén";
 /* A title label for waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.title"="Phòng chờ";
 /* A button label to close the waiting room participants list view. */
@@ -3881,8 +3889,34 @@
 /* Camera uploads banner enable state description */
 "cameraUploads.banner.enableState.description"="Tự động hóa sao lưu các hình ảnh và videos lên Ổ Mây của bạn.";
 /* In app notification description for Shared Items when user left a shared folder. [A] will be replaced by the user's email who left. [B] will be replaced by shared folder name. */
-"inapp.notifications.sharedItems.userLeftTheSharedFolder.message"="User [A] has left the shared folder [B]";
+"inapp.notifications.sharedItems.userLeftTheSharedFolder.message"="Người dùng [A] đã rời khỏi thư mục chia sẻ: [B]";
 /* Shared Screen label in the main view when one user is sharing screen */
-"calls.screenShare.mainView.presentingLabel"="%@ is presenting";
+"calls.screenShare.mainView.presentingLabel"="%@ hiện đang trình bày";
 /* A warning HUB to show in the call UI when the user A try to tap user B who is sharing screen and the shared screen is in the main view */
 "calls.screenShare.waring.title"="Người này đang chiếu chia sẻ màn hình";
+/* Alert title informing user that call screen is being recorded */
+"calls.screenRecording.alert.title"="Cuộc gọi này đang được ghi lại";
+/* Alert message for user confirmation that agrees on call screen recording */
+"calls.screenRecording.alert.message"="Với việc tiếp tục tham gia cuộc gọi, bạn cho phép quyền được ghi âm.";
+/* Alert button for user not accepting call screen recording and therefor leaving the call */
+"calls.screenRecording.alert.action.leave"="Rời khỏi cuộc gọi";
+/* Alert button for user accepting call screen recording */
+"calls.screenRecording.alert.action.accept"="OK, hiểu rồi";
+/* Alert button for user accepting call screen recording */
+"calls.screenRecording.alert.action.learnMore"="Tìm hiểu thêm";
+/* Notification message about someone started to record call screen */
+"calls.screenRecording.notification.recording.started"="%@ đã bắt đầu ghi âm";
+/* Notification message about someone stopped to record call screen */
+"calls.screenRecording.notification.recording.stopped"="%@ đã chấm dứt ghi âm";
+/* Text for a UI label indicating that the call screen is being recorded */
+"calls.screenRecording.screenIndicator.label"="QUAY";
+/* Camera uploads status banner - uploads in progress title */
+"cameraUploads.banner.status.uploadInProgress.title"="Phiên tải lên đang diễn ra";
+/* Camera uploads status banner - uploads complete title */
+"cameraUploads.banner.status.uploadsComplete.title"="Đăng tải camêra đã hoàn tất";
+/* Camera uploads status banner - uploads paused due to no wifi connection title */
+"cameraUploads.banner.status.uploadsPausedDueToWifi.title"="Upload paused due to no Wi-Fi connection";
+/* Camera uploads status banner - uploads complete description */
+"cameraUploads.banner.status.uploadsComplete.subHeading"="All items backed up";
+/* Camera uploads status banner - uploads partially completed due to limited access to photo library */
+"cameraUploads.banner.status.uploadsPartialComplete.limitedPhotoLibraryAccess.subHeading"="MEGA có quyền truy cập hạn chế vào thư viện ảnh của bạn và không thể sao lưu tất cả ảnh. Chạm để thay đổi quyền hạn.";

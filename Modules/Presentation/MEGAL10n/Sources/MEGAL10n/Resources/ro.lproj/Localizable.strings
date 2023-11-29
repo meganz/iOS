@@ -2506,6 +2506,10 @@
 "settings.cookies.performanceAndAnalytics"="Cookie-uri de performanță și analiză";
 /* Cookie settings dialog text. */
 "settings.cookies.performanceAndAnalytics.footer"="Ajută-ne să înțelegem modul în care folosești serviciile noastre și furnizează-ne date pe care le putem folosi pentru a face îmbunătățiri. Neacceptarea acestor cookie-uri va însemna că vom avea mai puține date disponibile pentru a ajuta la îmbunătățiri ale designului.";
+/* Cookie settings dialog title label for Advertising Cookies */
+"settings.cookies.advertisingCookies"="Cookie-uri de publicitate";
+/* Cookie settings dialog footer text for Advertising Cookies */
+"settings.cookies.advertisingCookies.footer"="Utilizate de partenerii noștri de publicitate aprobați pentru a colecta date despre activitățile dvs. de navigare și pentru a personaliza anunțurile pe care le vedeți în serviciile noastre și pe alte site-uri web. Dacă nu acceptați aceste cookie-uri, veți vedea în continuare anunțuri, dar acestea vor fi mai puțin relevante.";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="Versiunea a fost creată ca un fișier nou.";
 /* Text shown for the action create new file */
@@ -3830,6 +3834,10 @@
 "home.search.filter.presentations"="Prezentări";
 /* Filter name for searching on the home screen */
 "home.search.filter.archives"="Arhive";
+/* Type chips group title which is displayed in chips group pill */
+"home.search.chipsGroup.nodeType.pillTitle"="Tip";
+/* Type chips group picker title which is displayed in the picker shown when user taps on the chips group pill */
+"home.search.chipsGroup.nodeType.pickerTitle"="Selectați tipul";
 /* Empty screen copy when no filter is selected on the home screen search */
 "home.search.empty.no-chip-selected"="Niciun rezultat";
 /* Empty screen copy when Images filter is selected on the home screen search */
@@ -3886,3 +3894,29 @@
 "calls.screenShare.mainView.presentingLabel"="%@ prezintă";
 /* A warning HUB to show in the call UI when the user A try to tap user B who is sharing screen and the shared screen is in the main view */
 "calls.screenShare.waring.title"="Această persoană partajează ecranul";
+/* Alert title informing user that call screen is being recorded */
+"calls.screenRecording.alert.title"="Acest apel este înregistrat";
+/* Alert message for user confirmation that agrees on call screen recording */
+"calls.screenRecording.alert.message"="Dacă rămâneți în convorbire, autorizați înregistrarea.";
+/* Alert button for user not accepting call screen recording and therefor leaving the call */
+"calls.screenRecording.alert.action.leave"="Părăsește apelul";
+/* Alert button for user accepting call screen recording */
+"calls.screenRecording.alert.action.accept"="OK, am înțeles";
+/* Alert button for user accepting call screen recording */
+"calls.screenRecording.alert.action.learnMore"="Află mai multe";
+/* Notification message about someone started to record call screen */
+"calls.screenRecording.notification.recording.started"="%@ a început înregistrarea";
+/* Notification message about someone stopped to record call screen */
+"calls.screenRecording.notification.recording.stopped"="%@ a oprit înregistrarea";
+/* Text for a UI label indicating that the call screen is being recorded */
+"calls.screenRecording.screenIndicator.label"="Înregistrare";
+/* Camera uploads status banner - uploads in progress title */
+"cameraUploads.banner.status.uploadInProgress.title"="Încărcare în curs";
+/* Camera uploads status banner - uploads complete title */
+"cameraUploads.banner.status.uploadsComplete.title"="Încărcări cameră încheiate";
+/* Camera uploads status banner - uploads paused due to no wifi connection title */
+"cameraUploads.banner.status.uploadsPausedDueToWifi.title"="Încărcarea întreruptă din cauza lipsei conexiunii Wi-Fi";
+/* Camera uploads status banner - uploads complete description */
+"cameraUploads.banner.status.uploadsComplete.subHeading"="Toate elementele au fost backup-te";
+/* Camera uploads status banner - uploads partially completed due to limited access to photo library */
+"cameraUploads.banner.status.uploadsPartialComplete.limitedPhotoLibraryAccess.subHeading"="MEGA are acces limitat la biblioteca dvs. foto și nu poate face copii de rezervă pentru toate fotografiile. Atingeți pentru a modifica permisiunile.";

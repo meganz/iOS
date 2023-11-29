@@ -1370,6 +1370,54 @@
         <string>تمت إضافة %d عنصر إلى ”[A]“</string>
       </dict>
     </dict>
+    <key>cameraUploads.banner.status.uploadsPartialComplete.videosNotUploaded.subHeading</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>تم ترفيع الصور، ترفيعات الفيديو متوقفة؛ لم يتم ترفيع %d فيديو</string>
+        <key>one</key>
+        <string>تم ترفيع الصور، ترفيعات الفيديو متوقفة؛ لم يتم ترفيع فيديو واحد</string>
+        <key>two</key>
+        <string>تم ترفيع الصور، ترفيعات الفيديو متوقفة؛ لم يتم ترفيع %d فيديو</string>
+        <key>few</key>
+        <string>تم ترفيع الصور، ترفيعات الفيديو متوقفة؛ لم يتم ترفيع %d فيديو</string>
+        <key>many</key>
+        <string>تم ترفيع الصور، ترفيعات الفيديو متوقفة؛ لم يتم ترفيع %d فيديو</string>
+        <key>other</key>
+        <string>تم ترفيع الصور. ترفيعات الفيديو متوقفة؛ لم يتم ترفيع %d فيديو</string>
+      </dict>
+    </dict>
+    <key>cameraUploads.banner.status.filesPending.subHeading</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>zero</key>
+        <string>%d ملف قيد الانتظار.</string>
+        <key>one</key>
+        <string>%d ملف قيد الانتظار.</string>
+        <key>two</key>
+        <string>%d ملفان قيد الانتظار.</string>
+        <key>few</key>
+        <string>%d ملفات قيد الانتظار.</string>
+        <key>many</key>
+        <string>%d ملفاً قيد الانتظار.</string>
+        <key>other</key>
+        <string>%d ملف قيد الانتظار.</string>
+      </dict>
+    </dict>
     <key>cameraUploads.albums.delete</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
