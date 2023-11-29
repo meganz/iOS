@@ -8,4 +8,5 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable {
     case timelineCameraUploadStatus = "Timeline Camera Upload Status"
     case onboardingProPlan = "Onboarding Pro Plan Upselling Dialog"
     case chipsGroups = "Chips groups and dropdown chips picker"
+    case unreadMessageCounter = "Unread message counter for chats and meetings"
 }

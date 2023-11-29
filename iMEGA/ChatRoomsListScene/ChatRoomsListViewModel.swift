@@ -33,6 +33,7 @@ final class ChatRoomsListViewModel: ObservableObject {
     private let chatListItemCacheUseCase: any ChatListItemCacheUseCaseProtocol
     private let retryPendingConnectionsUseCase: any RetryPendingConnectionsUseCaseProtocol
     private let tracker: any AnalyticsTracking
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let chatViewType: ChatViewType
     
     lazy var contextMenuManager = ContextMenuManager(
@@ -122,6 +123,10 @@ final class ChatRoomsListViewModel: ObservableObject {
     }
     
     var refreshContextMenuBarButton: (@MainActor () -> Void)?
+    
+    var isUnreadMessageCounterFeatureFlagEnabled: Bool {
+        featureFlagProvider.isFeatureFlagEnabled(for: .unreadMessageCounter)
+    }
 
     init(
         router: some ChatRoomsListRouting,
@@ -137,7 +142,8 @@ final class ChatRoomsListViewModel: ObservableObject {
         permissionAlertRouter: some PermissionAlertRouting,
         chatListItemCacheUseCase: some ChatListItemCacheUseCaseProtocol,
         retryPendingConnectionsUseCase: some RetryPendingConnectionsUseCaseProtocol,
-        tracker: some AnalyticsTracking = DIContainer.tracker
+        tracker: some AnalyticsTracking = DIContainer.tracker,
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
         self.router = router
         self.chatUseCase = chatUseCase
@@ -155,6 +161,7 @@ final class ChatRoomsListViewModel: ObservableObject {
         self.chatListItemCacheUseCase = chatListItemCacheUseCase
         self.retryPendingConnectionsUseCase = retryPendingConnectionsUseCase
         self.tracker = tracker
+        self.featureFlagProvider = featureFlagProvider
         self.isSearchActive = false
         self.isFirstMeetingsLoad = true
         
