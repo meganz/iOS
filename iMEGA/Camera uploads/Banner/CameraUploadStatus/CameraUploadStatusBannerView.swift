@@ -28,7 +28,7 @@ struct CameraUploadBannerStatusView: View {
             .padding(.horizontal, 16)
             
             Divider()
-                .background(ColorSchemeDesiredColor(lightMode: ._3_C_3_C_43.opacity(0.65), darkMode: ._545458.opacity(0.3)))
+                .background(ColorSchemeDesiredColor(lightMode: .gray3C3C43.opacity(0.65), darkMode: .gray545458.opacity(0.3)))
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(previewEntity.backgroundColor)

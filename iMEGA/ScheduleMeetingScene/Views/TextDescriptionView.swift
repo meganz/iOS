@@ -60,7 +60,7 @@ struct FocusableTextDescriptionView: View {
             onChange(isFocused)
         }
         .foregroundColor(focused ? .primary : colorScheme == .dark ?
-            .white.opacity(Constants.titleOpacity) : Color(Colors.General.Gray._3C3C43.color).opacity(Constants.titleOpacity))
+            .white.opacity(Constants.titleOpacity) : Color(UIColor.gray3C3C43).opacity(Constants.titleOpacity))
         .padding(.top, !focused && $descriptionText.wrappedValue.isNotEmpty ? Constants.titleHeight : 0)
         .overlay(
             VStack(spacing: Constants.spacing) {

@@ -49,7 +49,7 @@ struct SnackBarView: View {
                 }
             }
         }
-        .background(colorScheme == .light ? Color(Colors.General.Gray._3A3A3C.name) : .white)
+        .background(colorScheme == .light ? Color(UIColor.gray3A3A3C) : .white)
         .cornerRadius(Constants.cornerRadius)
         .shadow(color: Color.black.opacity(0.1), radius: 4, x: 0, y: 1)
         .padding(Constants.padding)

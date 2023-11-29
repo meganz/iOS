@@ -27,7 +27,7 @@ struct HangOrEndCallView: View {
                             .foregroundColor(Color(.green00C29A))
                             .padding()
                             .frame(maxWidth: .infinity, maxHeight: Constants.buttonsHeight)
-                            .background(Color(Colors.General.Gray._363638.name))
+                            .background(Color(UIColor.gray363638))
                             .cornerRadius(Constants.cornerRadius)
                             .shadow(color: Color.black.opacity(Constants.shadowOpacity), radius: Constants.cornerRadius, x: 0, y: Constants.shadowOffsetY)
                     })

@@ -126,7 +126,7 @@ struct UpgradeAccountPlanView: View {
             contentView()
                 .navigationTitle(Strings.Localizable.Settings.Section.termsAndPolicies)
                 .navigationBarTitleDisplayMode(.inline)
-                .navigationBarColor(Colors.General.Gray.navigationBgColor.color)
+                .navigationBarColor(UIColor.navigationBg)
                 .toolbar {
                     ToolbarItem(placement: ToolbarItemPlacement.navigationBarLeading) {
                         Button {

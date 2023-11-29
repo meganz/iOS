@@ -57,7 +57,7 @@ struct WaitingRoomParticipantsListView: View {
             .font(.body.bold())
             .foregroundColor(Color(.green00C29A))
             .frame(width: 288, height: 50, alignment: .center)
-            .background(Color(Colors.General.Gray._363638.name))
+            .background(Color(UIColor.gray363638))
             .cornerRadius(8)
             .shadow(color: .black.opacity(0.15), radius: 2, x: 0, y: 1)
         }

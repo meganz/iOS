@@ -16,7 +16,7 @@ struct SeeMoreOccurrencesView: View {
     var body: some View {
         VStack(spacing: Constants.spacing) {
             Divider()
-                .background(colorScheme == .dark ? Color(Colors.General.Gray._545458.color) : Color(Colors.General.Gray._3C3C43.color))
+                .background(colorScheme == .dark ? Color(UIColor.gray545458) : Color(UIColor.gray3C3C43))
             HStack {
                 Image(systemName: Constants.discolureIndicator)
                     .foregroundColor(colorScheme == .dark ? Color(UIColor.grayD1D1D1) : Color(UIColor.gray515151))
@@ -28,7 +28,7 @@ struct SeeMoreOccurrencesView: View {
             }
             .frame(height: Constants.viewHeight)
             Divider()
-                .background(colorScheme == .dark ? Color(Colors.General.Gray._545458.color) : Color(Colors.General.Gray._3C3C43.color))
+                .background(colorScheme == .dark ? Color(UIColor.gray545458) : Color(UIColor.gray3C3C43))
         }
         .contentShape(Rectangle())
         .listRowInsets(EdgeInsets())

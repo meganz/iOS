@@ -14,7 +14,7 @@ struct MeetingDescriptionView: View {
                 .padding(.horizontal)
             Text(description)
                 .font(.body)
-                .foregroundColor(Color(colorScheme == .dark ? UIColor.mnz_grayEBEBF5() : UIColor.mnz_gray3C3C43()).opacity(0.6))
+                .foregroundColor(Color(colorScheme == .dark ? UIColor.grayEBEBF5 : UIColor.gray3C3C43).opacity(0.6))
                 .padding(.horizontal)
             Divider()
         }

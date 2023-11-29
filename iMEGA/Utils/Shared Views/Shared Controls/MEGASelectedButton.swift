@@ -35,7 +35,7 @@ class MEGAPlayerButton: UIButton {
                               animations: {
                                 switch self.traitCollection.userInterfaceStyle {
                                 case .dark:
-                                    self.backgroundColor = self.isHighlighted ? .mnz_gray333333() : UIColor.clear
+                                    self.backgroundColor = self.isHighlighted ? UIColor.gray333333 : UIColor.clear
                                 case .light:
                                     self.backgroundColor = self.isHighlighted ? UIColor.whiteEFEFEF : UIColor.clear
                                 default: break

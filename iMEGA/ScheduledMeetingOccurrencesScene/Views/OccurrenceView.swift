@@ -23,11 +23,11 @@ struct OccurrenceView: View {
                 Text(occurrence.date)
                     .padding(.horizontal)
                     .font(.footnote)
-                    .foregroundColor(colorScheme == .dark ? Color(Colors.General.Gray.ebebf5.color).opacity(Constants.headerTitleOpacity) : Color(Colors.General.Gray._3C3C43.color).opacity(Constants.headerTitleOpacity))
+                    .foregroundColor(colorScheme == .dark ? Color(UIColor.grayEBEBF5).opacity(Constants.headerTitleOpacity) : Color(UIColor.gray3C3C43).opacity(Constants.headerTitleOpacity))
                 Divider()
-                    .background(colorScheme == .dark ? Color(Colors.General.Gray._545458.color) : Color(Colors.General.Gray._3C3C43.color))
+                    .background(colorScheme == .dark ? Color(UIColor.gray545458) : Color(UIColor.gray3C3C43))
             }
-            .background(colorScheme == .dark ? Color(Colors.General.Gray._1D1D1D.color).opacity(Constants.headerBackgroundOpacity) : Color(UIColor.whiteF7F7F7).opacity(Constants.headerBackgroundOpacity))
+            .background(colorScheme == .dark ? Color(UIColor.gray1D1D1D).opacity(Constants.headerBackgroundOpacity) : Color(UIColor.whiteF7F7F7).opacity(Constants.headerBackgroundOpacity))
             .frame(height: Constants.headerHeight)
 
             HStack(alignment: .center) {

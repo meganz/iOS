@@ -51,7 +51,7 @@ struct DetailDisclosureView: View {
             Spacer()
             if let detail {
                 Text(detail)
-                    .foregroundColor(colorScheme == .dark ? Color(UIColor.mnz_grayEBEBF5()).opacity(Constants.disclosureOpacity) : Color(UIColor.mnz_gray3C3C43()).opacity(Constants.disclosureOpacity))
+                    .foregroundColor(colorScheme == .dark ? Color(UIColor.grayEBEBF5).opacity(Constants.disclosureOpacity) : Color(UIColor.gray3C3C43).opacity(Constants.disclosureOpacity))
             }
             Image(systemName: Constants.discolureIndicator)
                 .foregroundColor(.gray.opacity(Constants.disclosureOpacity))

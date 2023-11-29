@@ -49,7 +49,7 @@ struct WaitingRoomParticipantView: View {
                 .padding(.trailing, Constants.viewPadding)
                 Spacer()
                 Divider()
-                    .background(Color(Colors.General.Gray._545458.name).opacity(0.65))
+                    .background(Color(UIColor.gray545458).opacity(0.65))
             }
         }
         .frame(height: Constants.viewHeight)

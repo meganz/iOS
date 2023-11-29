@@ -1,4 +1,4 @@
-
+import ChatRepo
 import GKContactImage
 import MEGADomain
 import UIKit
@@ -62,7 +62,7 @@ class MegaAvatarView: UIView {
             avatarImageView.image = UIImage.init(forName: chatRoom.title?.uppercased(),
                                                  size: avatarImageView.frame.size,
                                                  backgroundColor: UIColor.mnz_secondaryGray(for: traitCollection),
-                                                 backgroundGradientColor: UIColor.mnz_grayDBDBDB(),
+                                                 backgroundGradientColor: UIColor.grayDBDBDB,
                                                  textColor: UIColor.white,
                                                  font: font)
             configure(mode: .single)
@@ -70,7 +70,7 @@ class MegaAvatarView: UIView {
             let firstPeerHandle = chatRoom.peerHandle(at: 0)
             userFullName(forPeerId: firstPeerHandle,
                          chatId: chatRoom.chatId,
-                         sdk: MEGASdkManager.sharedMEGAChatSdk()) { [weak self] result in
+                         sdk: MEGAChatSdk.shared) { [weak self] result in
                 guard let self else { return }
                 switch result {
                 case .success(let name):
@@ -85,7 +85,7 @@ class MegaAvatarView: UIView {
                 let secondPeerHandle = chatRoom.peerHandle(at: 1)
                 userFullName(forPeerId: secondPeerHandle,
                              chatId: chatRoom.chatId,
-                             sdk: MEGASdkManager.sharedMEGAChatSdk()) { [weak self] result in
+                             sdk: MEGAChatSdk.shared) { [weak self] result in
                     switch result {
                     case .success(let name):
                         self?.secondPeerAvatarImageView.mnz_setImage(forUserHandle: secondPeerHandle, name: name)
@@ -108,19 +108,22 @@ class MegaAvatarView: UIView {
             return
         }
         
-        let delegate = MEGAChatGenericRequestDelegate { (_, error) in
-            guard error.type == .MEGAChatErrorTypeOk,
-                  let name = sdk.userFullnameFromCache(byUserHandle: peerId) else {
+        MEGALogDebug("Load user attributes for \(MEGASdk.base64Handle(forUserHandle: peerId) ?? "No name")")
+        sdk.loadUserAttributes(forChatId: chatId, usersHandles: [NSNumber(value: peerId)], delegate: ChatRequestDelegate { result in
+            switch result {
+            case .success:
+                guard let name = sdk.userFullnameFromCache(byUserHandle: peerId) else {
+                    MEGALogDebug("Error fetching name for \(MEGASdk.base64Handle(forUserHandle: peerId) ?? "No name")")
+                    completion(.failure(.generic))
+                    return
+                }
+                completion(.success(name))
+                
+            case .failure(let error):
                 MEGALogDebug("error fetching attributes for \(MEGASdk.base64Handle(forUserHandle: peerId) ?? "No name") attributes \(error.type) : \(error.name ?? "")")
                 completion(.failure(.generic))
-                return
             }
-            
-            completion(.success(name))
-        }
-        
-        MEGALogDebug("Load user attributes for \(MEGASdk.base64Handle(forUserHandle: peerId) ?? "No name")")
-        sdk.loadUserAttributes(forChatId: chatId, usersHandles: [NSNumber(value: peerId)], delegate: delegate)
+        })
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

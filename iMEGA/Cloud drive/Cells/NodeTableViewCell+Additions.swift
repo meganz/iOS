@@ -29,6 +29,6 @@ extension NodeTableViewCell {
     }
     
     @objc func configureMoreButtonUI() {
-        moreButton.tintColor = .mnz_grayBBBBBB()
+        moreButton.tintColor = UIColor.grayBBBBBB
     }
 }
