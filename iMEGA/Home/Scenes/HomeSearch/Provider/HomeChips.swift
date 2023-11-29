@@ -50,7 +50,8 @@ extension SearchChipEntity {
             .video,
             .pdf,
             .docs,
-            .presentation,
+// disable Presentations chip until [FM-1403] is finished
+//            .presentation, [FM-1427]
             .archives
         ]
     }
