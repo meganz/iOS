@@ -182,7 +182,7 @@ final class ChatRoomAvatarViewModel: ObservableObject {
             forInitials: initials,
             size: size,
             backgroundColor: Colors.Chat.Avatar.background.color,
-            backgroundGradientColor: UIColor.mnz_grayDBDBDB(),
+            backgroundGradientColor: UIColor.grayDBDBDB,
             textColor: .white,
             font: UIFont.systemFont(ofSize: min(size.width, size.height)/2.0),
             isRightToLeftLanguage: isRightToLeftLanguage

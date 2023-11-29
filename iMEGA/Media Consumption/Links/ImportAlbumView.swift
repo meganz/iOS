@@ -102,7 +102,7 @@ struct ImportAlbumView: View {
                 .frame(maxHeight: 44)
         }, center: {
             navigationTitle
-        }, backgroundColor: Color(Colors.General.Gray.navigationBgColor.color))
+        }, backgroundColor: Color(UIColor.navigationBg))
     }
     
     @ViewBuilder
@@ -173,7 +173,7 @@ struct ImportAlbumView: View {
             shareLinkButton()
         }
         .frame(maxHeight: 64)
-        .background(Color(Colors.General.Gray.navigationBgColor.color)
+        .background(Color(UIColor.navigationBg)
             .edgesIgnoringSafeArea(.bottom))
     }
     

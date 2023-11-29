@@ -11,7 +11,7 @@ struct AlbumCell: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             ZStack(alignment: viewModel.isLoading ? .center : .bottomTrailing) {
-                PhotoCellImage(container: viewModel.thumbnailContainer, bgColor: Color(Colors.General.Gray.ebebeb.color))
+                PhotoCellImage(container: viewModel.thumbnailContainer, bgColor: Color(UIColor.grayEBEBEB))
                     .cornerRadius(6)
                 
                 GeometryReader { geo in

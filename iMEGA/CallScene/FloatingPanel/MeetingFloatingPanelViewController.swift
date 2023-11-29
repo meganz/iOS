@@ -74,7 +74,7 @@ final class MeetingFloatingPanelViewController: UIViewController {
         
         let quickActionProperties = MeetingQuickActionView.Properties(
             iconTintColor: MeetingQuickActionView.Properties.StateColor(normal: .white, selected: .black),
-            backgroundColor: MeetingQuickActionView.Properties.StateColor(normal: .mnz_gray474747(), selected: .white)
+            backgroundColor: MeetingQuickActionView.Properties.StateColor(normal: UIColor.gray474747, selected: .white)
         )
         let quickActions = [cameraQuickActionView, muteQuickActionView, speakerQuickActionView, flipQuickActionView]
         quickActions.forEach { $0?.properties = quickActionProperties }

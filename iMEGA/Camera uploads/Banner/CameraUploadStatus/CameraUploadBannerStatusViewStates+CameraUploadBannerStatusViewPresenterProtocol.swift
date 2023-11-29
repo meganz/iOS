@@ -51,7 +51,7 @@ extension CameraUploadBannerStatusViewStates: CameraUploadBannerStatusViewPresen
     var backgroundColor: AnyShapeStyle {
         switch self {
         case .uploadInProgress, .uploadCompleted:
-            return ColorSchemeDesiredColor(lightMode: .white, darkMode: ._1_D_1_D_1_D).toAnyShapeStyle()
+            return ColorSchemeDesiredColor(lightMode: .white, darkMode: .gray1D1D1D).toAnyShapeStyle()
         case .uploadPaused(let reason as any CameraUploadBannerStatusViewPresenterProtocol),
                 .uploadPartialCompleted(let reason as any CameraUploadBannerStatusViewPresenterProtocol):
             return reason.backgroundColor
@@ -88,7 +88,7 @@ extension CameraUploadBannerStatusPartiallyCompletedReason: CameraUploadBannerSt
     var backgroundColor: AnyShapeStyle {
         switch self {
         case .videoUploadIsNotEnabled:
-            return ColorSchemeDesiredColor(lightMode: .white, darkMode: ._1_D_1_D_1_D).toAnyShapeStyle()
+            return ColorSchemeDesiredColor(lightMode: .white, darkMode: .gray1D1D1D).toAnyShapeStyle()
         case .photoLibraryLimitedAccess:
             return Color.yellowFED42926.toAnyShapeStyle()
         }
@@ -113,7 +113,7 @@ extension CameraUploadBannerStatusUploadPausedReason: CameraUploadBannerStatusVi
     var textColor: AnyShapeStyle { Color.primary.toAnyShapeStyle() }
     
     var backgroundColor: AnyShapeStyle {
-        ColorSchemeDesiredColor(lightMode: .white, darkMode: ._1_D_1_D_1_D)
+        ColorSchemeDesiredColor(lightMode: .white, darkMode: .gray1D1D1D)
             .toAnyShapeStyle()
     }
 }

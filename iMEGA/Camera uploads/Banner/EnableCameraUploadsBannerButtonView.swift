@@ -56,8 +56,8 @@ struct EnableCameraUploadsBannerButtonView: View {
     }
     
     private var bannerBorderColor: Color {
-        colorScheme == .dark ? Color(Colors.General.Gray._545458.color).opacity(Constants.bannerBorderOpacityDarkMode) :
-        Color(Colors.General.Gray._3C3C43.color).opacity(Constants.bannerBorderOpacityLightMode)
+        colorScheme == .dark ? Color(UIColor.gray545458).opacity(Constants.bannerBorderOpacityDarkMode) :
+        Color(UIColor.gray3C3C43).opacity(Constants.bannerBorderOpacityLightMode)
     }
 }
 

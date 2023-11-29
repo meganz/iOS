@@ -36,7 +36,7 @@ struct ItemView: View {
         .padding(10)
         .background(colorScheme == .dark ? Color(Colors.General.Black._2c2c2e.name) : Color.white)
         .overlay(RoundedRectangle(cornerRadius: 8)
-            .stroke(colorScheme == .dark ? Color(Colors.General.Gray.ebebf5.name).opacity(0.2) : Color.black.opacity(0.1), lineWidth: 1)
+            .stroke(colorScheme == .dark ? Color(UIColor.grayEBEBF5).opacity(0.2) : Color.black.opacity(0.1), lineWidth: 1)
         )
     }
 }

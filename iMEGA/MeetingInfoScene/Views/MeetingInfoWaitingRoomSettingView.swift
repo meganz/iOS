@@ -17,7 +17,7 @@ struct MeetingInfoWaitingRoomSettingView: View {
             
             Text(Strings.Localizable.Meetings.ScheduleMeeting.WaitingRoom.description)
                 .font(.footnote)
-                .foregroundColor(colorScheme == .dark ? Color.white.opacity(0.6) : Color(UIColor.mnz_gray3C3C43()).opacity(0.6))
+                .foregroundColor(colorScheme == .dark ? Color.white.opacity(0.6) : Color(UIColor.gray3C3C43).opacity(0.6))
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal)
                 .padding(.bottom, 5)
