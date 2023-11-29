@@ -63,15 +63,15 @@ extension SlideShowOptionRouter {
     @SlideShowOptionChildrenBuilder
     private func makeChildrenForSlideShowOrder(withConfiguration config: SlideShowConfigurationEntity) -> [SlideShowOptionDetailCellViewModel] {
         SlideShowOptionDetailCellViewModel(name: .orderShuffle,
-                                           image: Asset.Images.AudioPlayer.shuffleAudio,
+                                           image: UIImage.shuffleAudio,
                                            title: Strings.Localizable.Slideshow.PreferenceSetting.Order.shuffle,
                                            isSelcted: config.playingOrder == .shuffled)
         SlideShowOptionDetailCellViewModel(name: .orderNewest,
-                                           image: Asset.Images.ActionSheetIcons.SortBy.newest,
+                                           image: UIImage.newest,
                                            title: Strings.Localizable.newest,
                                            isSelcted: config.playingOrder == .newest)
         SlideShowOptionDetailCellViewModel(name: .orderOldest,
-                                           image: Asset.Images.ActionSheetIcons.SortBy.oldest,
+                                           image: UIImage.oldest,
                                            title: Strings.Localizable.oldest,
                                            isSelcted: config.playingOrder == .oldest)
     }

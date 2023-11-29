@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 struct SlideShowOptionCellView: View {
     @Environment(\.colorScheme) private var colorScheme
@@ -25,7 +26,7 @@ struct SlideShowOptionCellView: View {
                         HStack {
                             Text(cellModel.detail)
                                 .font(.subheadline)
-                            Image(uiImage: Asset.Images.Generic.standardDisclosureIndicator.image)
+                            Image(uiImage: UIImage.standardDisclosureIndicator)
                                 .scaledToFit()
                                 .frame(width: 12, height: 12)
                         }
