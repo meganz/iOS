@@ -88,7 +88,7 @@ extension SearchConfig {
             ), 
             colorAssets: .init(
                 F7F7F7: Color(.whiteF7F7F7),
-                _161616: Colors.General.Black._161616.swiftUIColor,
+                _161616: Color.black161616,
                 _545458: Color.gray545458,
                 CE0A11: Color.redCE0A11,
                 F30C14: Color.redF30C14,

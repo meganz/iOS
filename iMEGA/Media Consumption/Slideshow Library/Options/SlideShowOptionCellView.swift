@@ -41,7 +41,7 @@ struct SlideShowOptionCellView: View {
             Divider().padding(.leading, 16)
         }
         .background(
-            Color(colorScheme == .dark ? UIColor.mnz_black2C2C2E() : UIColor.white)
+            Color(colorScheme == .dark ? UIColor.black2C2C2E : UIColor.white)
         )
     }
 }

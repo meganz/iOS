@@ -37,6 +37,6 @@ struct ChatTabsSelectorView: View {
             }
         }
         .frame(maxHeight: 44)
-        .background(colorScheme == .dark ?  Color(Colors.General.Black._161616.name) : Color(.whiteF7F7F7))
+        .background(colorScheme == .dark ?  Color(UIColor.black161616) : Color(.whiteF7F7F7))
     }
 }

@@ -34,7 +34,7 @@ struct ItemView: View {
             Spacer()
         }
         .padding(10)
-        .background(colorScheme == .dark ? Color(Colors.General.Black._2c2c2e.name) : Color.white)
+        .background(colorScheme == .dark ? Color(UIColor.black2C2C2E) : Color.white)
         .overlay(RoundedRectangle(cornerRadius: 8)
             .stroke(colorScheme == .dark ? Color(UIColor.grayEBEBF5).opacity(0.2) : Color.black.opacity(0.1), lineWidth: 1)
         )
