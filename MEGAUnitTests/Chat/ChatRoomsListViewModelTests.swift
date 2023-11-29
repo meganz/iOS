@@ -354,6 +354,20 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         XCTAssertEqual(retryPendingConnectionsUseCase.retryPendingConnections_calledTimes, 1)
     }
     
+    func testIsUnreadMessageCounterFeatureFlagEnabled_onFeatureFlagEnabled_shouldReturnTrue() {
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.unreadMessageCounter: true])
+        let sut = makeChatRoomsListViewModel(featureFlagProvider: featureFlagProvider)
+        
+        XCTAssertTrue(sut.isUnreadMessageCounterFeatureFlagEnabled)
+    }
+    
+    func testIsUnreadMessageCounterFeatureFlagEnabled_onFeatureFlagNotEnabled_shouldReturnFalse() {
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.unreadMessageCounter: false])
+        let sut = makeChatRoomsListViewModel(featureFlagProvider: featureFlagProvider)
+        
+        XCTAssertFalse(sut.isUnreadMessageCounterFeatureFlagEnabled)
+    }
+    
     // MARK: - Private methods
     
     private func assertContactsOnMegaViewStateWhenSelectedChatMode(description: String, line: UInt = #line) {
@@ -404,7 +418,8 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         permissionAlertRouter: some PermissionAlertRouting = MockPermissionAlertRouter(),
         chatListItemCacheUseCase: some ChatListItemCacheUseCaseProtocol = MockChatListItemCacheUseCase(),
         retryPendingConnectionsUseCase: some RetryPendingConnectionsUseCaseProtocol = MockRetryPendingConnectionsUseCase(),
-        tracker: some AnalyticsTracking = DIContainer.tracker
+        tracker: some AnalyticsTracking = DIContainer.tracker,
+        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> ChatRoomsListViewModel {
         let sut = ChatRoomsListViewModel(
             router: router,
@@ -420,7 +435,8 @@ final class ChatRoomsListViewModelTests: XCTestCase {
             permissionAlertRouter: permissionAlertRouter,
             chatListItemCacheUseCase: chatListItemCacheUseCase,
             retryPendingConnectionsUseCase: retryPendingConnectionsUseCase,
-            tracker: tracker
+            tracker: tracker,
+            featureFlagProvider: featureFlagProvider
         )
         return sut
     }
