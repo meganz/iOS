@@ -2,6 +2,7 @@ import MEGADomain
 import MEGASdk
 import MEGASDKRepo
 import MEGASDKRepoMock
+import MEGASwift
 import XCTest
 
 final class PhotosRepositoryTests: XCTestCase {
@@ -84,10 +85,107 @@ final class PhotosRepositoryTests: XCTestCase {
         XCTAssertEqual(photo, expectedNode)
     }
     
+    func testPhotosUpdate_onNodeUpdate_shouldUpdateCacheAndYieldUpdatedPhotos() async {
+        let (stream, continuation) = AsyncStream
+            .makeStream(of: [NodeEntity].self)
+        let expectedPhotos = [MockNode(handle: 45),
+                              MockNode(handle: 65)]
+        let sdk = MockSdk(nodes: expectedPhotos,
+                          megaRootNode: MockNode(handle: 1))
+        let photoLocalSource = MockPhotoLocalSource(photos: [NodeEntity(handle: 4)])
+        let nodeUpdatesProvider = MockNodeUpdatesProvider(nodeUpdates: stream.eraseToAnyAsyncSequence())
+        let sut = makeSUT(sdk: sdk,
+                          photoLocalSource: photoLocalSource,
+                          nodeUpdatesProvider: nodeUpdatesProvider)
+        [[NodeEntity(name: "3.pdf", handle: 54)], [], [NodeEntity(name: "1.jpg", handle: 76)]].forEach {
+            continuation.yield($0)
+        }
+        continuation.finish()
+        
+        let iterated = expectation(description: "iterated")
+        let finished = expectation(description: "finished")
+        let task = Task {
+            for await updatedPhotos in await sut.photosUpdated {
+                XCTAssertEqual(Set(updatedPhotos), Set(expectedPhotos.toNodeEntities()))
+                let photoSourcePhotos = await photoLocalSource.photos
+                XCTAssertEqual(Set(photoSourcePhotos), Set(expectedPhotos.toNodeEntities()))
+                iterated.fulfill()
+            }
+            finished.fulfill()
+        }
+        await fulfillment(of: [iterated], timeout: 0.5)
+        task.cancel()
+        await fulfillment(of: [finished], timeout: 0.5)
+    }
+    
+    func testPhotosUpdate_onUpdatePhotoRetrievalEmpty_shouldNotEmitAnything() async {
+        let (stream, continuation) = AsyncStream
+            .makeStream(of: [NodeEntity].self)
+        let sdk = MockSdk(megaRootNode: MockNode(handle: 1))
+        let nodeUpdatesProvider = MockNodeUpdatesProvider(nodeUpdates: stream.eraseToAnyAsyncSequence())
+        let sut = makeSUT(sdk: sdk,
+                          nodeUpdatesProvider: nodeUpdatesProvider)
+        
+        continuation.yield([NodeEntity(name: "1.jpg", handle: 76)])
+        continuation.finish()
+        
+        let shouldNotIterate = expectation(description: "should not iterate")
+        shouldNotIterate.isInverted = true
+        let finished = expectation(description: "finished")
+        let task = Task {
+            for await _ in await sut.photosUpdated {
+                shouldNotIterate.fulfill()
+            }
+            finished.fulfill()
+        }
+        await fulfillment(of: [shouldNotIterate], timeout: 0.5)
+        task.cancel()
+        await fulfillment(of: [finished], timeout: 0.5)
+    }
+    
+    func testPhotosUpdate_onMonitorSequenceAgain_shouldReceiveUpdates() async {
+        let (stream, continuation) = AsyncStream
+            .makeStream(of: [NodeEntity].self)
+        let expectedPhotos = [MockNode(handle: 7)]
+        let sdk = MockSdk(nodes: expectedPhotos,
+                          megaRootNode: MockNode(handle: 1))
+        let nodeUpdatesProvider = MockNodeUpdatesProvider(nodeUpdates: stream.eraseToAnyAsyncSequence())
+        let sut = makeSUT(sdk: sdk,
+                          nodeUpdatesProvider: nodeUpdatesProvider)
+        let firstTask = Task {
+            for await _ in await sut.photosUpdated {}
+        }
+        firstTask.cancel()
+        try? await Task.sleep(nanoseconds: 100_000_000)
+        
+        let iterated = expectation(description: "iterated")
+        let finished = expectation(description: "finished")
+        let secondTask = Task {
+            for await updatedPhotos in await sut.photosUpdated {
+                XCTAssertEqual(Set(updatedPhotos),
+                               Set(expectedPhotos.toNodeEntities()))
+                iterated.fulfill()
+            }
+            finished.fulfill()
+        }
+        continuation.yield([NodeEntity(name: "6.jpg", handle: 76)])
+        continuation.finish()
+        
+        await fulfillment(of: [iterated], timeout: 0.5)
+        secondTask.cancel()
+        await fulfillment(of: [finished], timeout: 0.5)
+    }
+    
     private func makeSUT(sdk: MEGASdk = MockSdk(),
-                         photoLocalSource: some PhotoLocalSourceProtocol = MockPhotoLocalSource()
+                         photoLocalSource: some PhotoLocalSourceProtocol = MockPhotoLocalSource(),
+                         nodeUpdatesProvider: some NodeUpdatesProviderProtocol = MockNodeUpdatesProvider(),
+                         file: StaticString = #file,
+                         line: UInt = #line
     ) -> PhotosRepository {
-        PhotosRepository(sdk: sdk,
-                         photoLocalSource: photoLocalSource)
+        let sut = PhotosRepository(sdk: sdk,
+                                   photoLocalSource: photoLocalSource,
+                                   nodeUpdatesProvider: nodeUpdatesProvider)
+        trackForMemoryLeaks(on: sut, file: file, line: line)
+        return sut
     }
 }

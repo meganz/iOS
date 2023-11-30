@@ -67,6 +67,7 @@ public final class MockSdk: MEGASdk {
     public var shareAccessLevel: MEGAShareType = .accessUnknown
     public var stopPublicSetPreviewCalled = 0
     public var authorizeNodeCalled = 0
+    public var delegateQueueType: ListenerQueueType?
     
     public init(nodes: [MEGANode] = [],
                 rubbishNodes: [MEGANode] = [],
@@ -201,6 +202,11 @@ public final class MockSdk: MEGASdk {
     
     public override func add(_ delegate: any MEGAGlobalDelegate) {
         hasGlobalDelegate = true
+    }
+    
+    public override func add(_ delegate: MEGAGlobalDelegate, queueType: ListenerQueueType) {
+        hasGlobalDelegate = true
+        delegateQueueType = queueType
     }
     
     public override func remove(_ delegate: any MEGAGlobalDelegate) {
