@@ -21,7 +21,8 @@ let package = Package(
         .package(path: "../../MEGAPresentation"),
         .package(path: "../../../UI/MEGASwiftUI"),
         .package(path: "../../Repository/MEGASDKRepo"),
-        .package(path: "../../../Infrastracture/MEGATest")
+        .package(path: "../../../Infrastracture/MEGATest"),
+        .package(path: "../../../MEGAAssets")
     ],
     targets: [
         .target(
@@ -29,7 +30,8 @@ let package = Package(
             dependencies: ["MEGADomain",
                            "MEGAL10n",
                            "MEGAPresentation",
-                           "MEGASwiftUI"]
+                           "MEGASwiftUI",
+                           "MEGAAssets"]
         ),
         .target(
             name: "AccountsMock",

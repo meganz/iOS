@@ -6,6 +6,7 @@ public struct OnboardingWithViewProPlansView: View {
     @Environment(\.presentationMode) private var presentationMode
     @StateObject var viewModel: OnboardingUpgradeAccountViewModel
     public var invokeDismiss: (() -> Void)?
+    let accountsConfig: AccountsConfig
     
     public var body: some View {
         ZStack {
@@ -14,11 +15,12 @@ public struct OnboardingWithViewProPlansView: View {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 30) {
                     OnboardingProPlanHeaderView(
-                        lowestPlanPrice: viewModel.lowestProPlan.formattedPrice
+                        lowestPlanPrice: viewModel.lowestProPlan.formattedPrice,
+                        accountsConfig: accountsConfig
                     )
                     .padding(.top, 30)
                     
-                    OnboardingProPlanContentView(viewModel: viewModel)
+                    OnboardingProPlanContentView(viewModel: viewModel, accountsConfig: accountsConfig)
                     
                     VStack(spacing: 15) {
                         PrimaryActionButtonView(title: Strings.Localizable.Onboarding.UpgradeAccount.Button.viewProPlans) {
@@ -52,10 +54,11 @@ public struct OnboardingWithViewProPlansView: View {
 
 private struct OnboardingProPlanHeaderView: View {
     let lowestPlanPrice: String
+    let accountsConfig: AccountsConfig
     
     var body: some View {
         VStack(spacing: 10) {
-            Image("onboardingHeader")
+            Image(uiImage: accountsConfig.onboardingViewAssets.onboardingHeaderImage)
             
             Text(Strings.Localizable.Onboarding.UpgradeAccount.Header.title)
                 .font(.title3)

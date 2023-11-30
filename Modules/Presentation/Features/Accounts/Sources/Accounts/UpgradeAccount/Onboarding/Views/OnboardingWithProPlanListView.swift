@@ -6,6 +6,7 @@ import SwiftUI
 public struct OnboardingWithProPlanListView: View {
     @Environment(\.presentationMode) private var presentationMode
     @StateObject var viewModel: OnboardingUpgradeAccountViewModel
+    let accountsConfig: AccountsConfig
     
     public var body: some View {
         ZStack {
@@ -18,7 +19,7 @@ public struct OnboardingWithProPlanListView: View {
                     )
                     .padding(.vertical, 15)
                     
-                    OnboardingProPlanContentView(viewModel: viewModel)
+                    OnboardingProPlanContentView(viewModel: viewModel, accountsConfig: accountsConfig)
                     
                     AccountPlanCyclePickerView(selectedCycleTab: $viewModel.selectedCycleTab)
                     

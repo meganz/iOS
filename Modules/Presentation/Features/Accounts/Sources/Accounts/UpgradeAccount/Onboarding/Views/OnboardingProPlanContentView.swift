@@ -1,8 +1,10 @@
+import MEGAAssets
 import MEGAL10n
 import SwiftUI
 
 struct OnboardingProPlanContentView: View {
     @ObservedObject var viewModel: OnboardingUpgradeAccountViewModel
+    let accountsConfig: AccountsConfig
     
     var body: some View {
         VStack(spacing: 30) {
@@ -12,19 +14,19 @@ struct OnboardingProPlanContentView: View {
                 .bold()
             
             ProPlanView(
-                imageName: "cloud",
+                image: accountsConfig.onboardingViewAssets.cloudImage,
                 title: Strings.Localizable.Onboarding.UpgradeAccount.Content.GenerousStorage.title,
                 message: viewModel.storageContentMessage
             )
             
             ProPlanView(
-                imageName: "pieChart",
+                image: accountsConfig.onboardingViewAssets.pieChartImage,
                 title: Strings.Localizable.Onboarding.UpgradeAccount.Content.TransferSharing.title,
                 message: Strings.Localizable.Onboarding.UpgradeAccount.Content.TransferSharing.message
             )
             
             ProPlanView(
-                imageName: "securityLock",
+                image: accountsConfig.onboardingViewAssets.securityLockImage,
                 title: Strings.Localizable.Onboarding.UpgradeAccount.Content.AdditionalSecurity.title,
                 message: Strings.Localizable.Onboarding.UpgradeAccount.Content.AdditionalSecurity.message
             )
@@ -33,13 +35,13 @@ struct OnboardingProPlanContentView: View {
 }
 
 private struct ProPlanView: View {
-    var imageName: String
+    var image: UIImage?
     var title: String
     var message: String
     
     var body: some View {
         HStack(spacing: 20) {
-            Image(imageName)
+            Image(uiImage: image)
             
             VStack(alignment: .leading) {
                 Text(title)
@@ -53,5 +55,11 @@ private struct ProPlanView: View {
             
             Spacer()
         }
+    }
+}
+
+struct ProPlanView_Previews: PreviewProvider {
+    static var previews: some View {
+        ProPlanView(image: MEGAAssetsPreviewImageProvider.image(named: "cloud"), title: "Title", message: "Message")
     }
 }
