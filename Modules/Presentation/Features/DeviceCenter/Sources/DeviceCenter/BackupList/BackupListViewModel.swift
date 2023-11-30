@@ -242,17 +242,12 @@ public final class BackupListViewModel: ObservableObject {
     }
     
     func actionsForBackup(_ backup: BackupEntity) -> [DeviceCenterAction]? {
-        var actionTypes = [DeviceCenterActionType]()
+        guard let nodeEntity = nodeUseCase.parentForHandle(backup.rootHandle) else { return nil }
         
-        actionTypes.append(.info)
-        
-        if backup.type == .cameraUpload || backup.type == .mediaUpload {
-            actionTypes.append(.showInCloudDrive)
-        }
-        
-        return actionTypes.compactMap { type in
-            sortedAvailableActions[type]?.first
-        }
+        return DeviceCenterActionBuilder()
+            .setActionType(.backup(backup))
+            .setNode(nodeEntity)
+            .build()
     }
     
     func actionsForDevice() -> [DeviceCenterAction] {
@@ -305,7 +300,7 @@ public final class BackupListViewModel: ObservableObject {
             guard let nodeHandle = backups?.first?.rootHandle,
                   let nodeEntity = nodeUseCase.parentForHandle(nodeHandle) else { return }
             
-            deviceCenterBridge.infoActionTapped(nodeEntity)
+            deviceCenterBridge.nodeActionTapped(nodeEntity, .info)
         default: break
         }
     }

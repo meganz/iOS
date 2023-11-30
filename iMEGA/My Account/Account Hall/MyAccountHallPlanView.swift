@@ -2,7 +2,7 @@ import MEGAL10n
 import SwiftUI
 
 struct MyAccountHallPlanView: View {
-    @ObservedObject var viewModel: AccountHallViewModel
+    @ObservedObject var viewModel: MyAccountHallViewModel
     
     var body: some View {
         HStack {

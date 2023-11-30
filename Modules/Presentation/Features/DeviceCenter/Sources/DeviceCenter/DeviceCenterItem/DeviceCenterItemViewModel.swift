@@ -55,6 +55,7 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
             
         case .device(let device):
             name = device.name.isNotEmpty ? device.name : assets.defaultName ?? ""
+        default: break
         }
         
         iconName = assets.iconName
@@ -78,6 +79,7 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
                 }).flatMap {
                     Int($0.progress)
                 } ?? 0
+            default: break
             }
             progress = min(progress, 100)
             
@@ -96,8 +98,7 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
         case .backup(let backup):
             guard let nodeEntity = nodeForEntityType(),
                     backup.type != .cameraUpload && backup.type != .mediaUpload else { return }
-            
-            deviceCenterBridge.showInBackupsActionTapped(nodeEntity)
+            deviceCenterBridge.nodeActionTapped(nodeEntity, .showInBackups)
         case .device(let device):
             guard let router else { return }
             let currentDeviceUUID = UIDevice.current.identifierForVendor?.uuidString ?? ""
@@ -110,6 +111,7 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
                     isCurrentDevice: device.id == currentDeviceUUID || (device.id == currentDeviceId)
                 )
             }
+        default: break
         }
     }
     
@@ -122,17 +124,9 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
                 deviceCenterBridge.cameraUploadActionTapped { [weak self] in
                     self?.refreshDevicesPublisher?.send()
                 }
-            case .info:
+            case .info, .copy, .offline, .shareLink, .shareFolder, .showInCloudDrive:
                 guard let node = nodeForEntityType() else { return }
-                deviceCenterBridge.infoActionTapped(node)
-            case .showInCloudDrive:
-                guard let nodeEntity = nodeForEntityType() else { return }
-                
-                deviceCenterBridge.showInCloudDriveActionTapped(nodeEntity)
-            case .showInBackups:
-                guard let nodeEntity = nodeForEntityType() else { return }
-                
-                deviceCenterBridge.showInBackupsActionTapped(nodeEntity)
+                deviceCenterBridge.nodeActionTapped(node, type)
             default: break
             }
         case .device(let device):
@@ -154,6 +148,7 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
                 deviceCenterBridge.renameActionTapped(renameEntity)
             default: break
             }
+        default: break
         }
     }
     

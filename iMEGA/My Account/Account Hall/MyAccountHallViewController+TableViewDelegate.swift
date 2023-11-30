@@ -71,7 +71,7 @@ extension MyAccountHallViewController: UITableViewDelegate {
             navigationController?.pushViewController(transferVC, animated: true)
             
         case MyAccountMegaSection.deviceCenter.rawValue:
-            navigateToDeviceCenter()
+            viewModel.dispatch(.didTapDeviceCenterButton)
             
         case MyAccountMegaSection.offline.rawValue:
             let offlineVC = UIStoryboard(name: "Offline", bundle: nil).instantiateViewController(withIdentifier: "OfflineViewControllerID")

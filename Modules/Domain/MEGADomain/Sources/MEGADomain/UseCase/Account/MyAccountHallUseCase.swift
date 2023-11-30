@@ -1,6 +1,6 @@
 import Combine
 
-public protocol AccountHallUseCaseProtocol {
+public protocol MyAccountHallUseCaseProtocol {
     var currentUserHandle: HandleEntity? { get }
     var isMasterBusinessAccount: Bool { get }
     func incomingContactsRequestsCount() async -> Int
@@ -19,7 +19,7 @@ public protocol AccountHallUseCaseProtocol {
     func deRegisterMEGAGlobalDelegate() async
 }
 
-public struct AccountHallUseCase<T: AccountRepositoryProtocol>: AccountHallUseCaseProtocol {
+public struct MyAccountHallUseCase<T: AccountRepositoryProtocol>: MyAccountHallUseCaseProtocol {
     private let repository: T
     
     public init(repository: T) {

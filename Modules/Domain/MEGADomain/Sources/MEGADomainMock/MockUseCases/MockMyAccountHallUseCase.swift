@@ -1,7 +1,7 @@
 import Combine
 import MEGADomain
 
-final public class MockAccountHallUseCase: AccountHallUseCaseProtocol {
+final public class MockMyAccountHallUseCase: MyAccountHallUseCaseProtocol {
     private let contactRequestsCount: Int
     private let unseenUserAlertsCount: UInt
     private let _currentAccountDetails: AccountDetailsEntity
