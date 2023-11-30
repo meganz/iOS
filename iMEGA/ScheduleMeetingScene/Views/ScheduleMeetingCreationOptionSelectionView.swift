@@ -10,7 +10,7 @@ struct ScheduleMeetingCreationOptionSelectionView: View {
             Text(name)
             Spacer()
             Image(systemName: "checkmark")
-                .foregroundColor(Color(Colors.Chat.Meeting.frequencySelectionTickMark.color))
+                .foregroundColor(Color.chatMeetingFrequencySelectionTickMark)
                 .font(.system(.footnote).bold())
                 .opacity(isSelected ? 1.0 : 0.0)
         }

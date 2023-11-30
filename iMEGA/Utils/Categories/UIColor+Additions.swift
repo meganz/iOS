@@ -209,23 +209,23 @@ extension UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
             if selected {
-                return Colors.Chat.ReactionBubble.selectedLight.color
+                return UIColor.chatReactionBubbleSelectedLight
             } else {
                 return  UIColor.mnz_secondaryBackground(for: traitCollection)
             }
             
         case .dark:
             if selected {
-                return Colors.Chat.ReactionBubble.selectedDark.color
+                return UIColor.chatReactionBubbleSelectedDark
             } else {
                 return  UIColor.mnz_secondaryBackground(for: traitCollection)
             }
             
         @unknown default:
             if selected {
-                return Colors.Chat.ReactionBubble.selectedLight.color
+                return UIColor.chatReactionBubbleSelectedLight
             } else {
-                return Colors.Chat.ReactionBubble.unselectedDefault.color
+                return UIColor.chatReactionBubbleUnselectedDefault
             }
         }
     }

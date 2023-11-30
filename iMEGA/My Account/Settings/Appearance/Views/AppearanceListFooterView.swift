@@ -9,7 +9,7 @@ struct AppearanceListFooterWithLinkView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(message)
-                .foregroundColor(Color.sectionTitle)
+                .foregroundColor(Color.chatListSectionTitle)
             Link(destination: linkUrl) {
                 Text(linkMessage)
                     .foregroundColor(Colors.Views.turquoise.swiftUIColor)

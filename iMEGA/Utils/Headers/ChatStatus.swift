@@ -30,13 +30,13 @@ enum ChatStatus: Int, CaseIterable {
     var color: UIColor? {
         switch self {
         case .online:
-            return Colors.Chat.Status.online.color
+            return UIColor.chatStatusOnline
         case .offline:
-            return Colors.Chat.Status.offline.color
+            return UIColor.chatStatusOffline
         case .away:
-            return Colors.Chat.Status.away.color
+            return UIColor.chatStatusAway
         case .busy:
-            return Colors.Chat.Status.busy.color
+            return UIColor.chatStatusBusy
         default:
             return nil
         }

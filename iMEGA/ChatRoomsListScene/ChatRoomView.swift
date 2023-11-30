@@ -49,14 +49,14 @@ struct ChatRoomView: View {
         [
             SwipeActionLabel(
                 imageName: "archiveChatSwipeActionButton",
-                backgroundColor: Color(Colors.Chat.Listing.archiveSwipeActionBackground.color),
+                backgroundColor: Color.chatListArchiveSwipeActionBackground,
                 action: {
                     viewModel.archiveChat()
                 }
             ),
             SwipeActionLabel(
                 imageName: "moreListChatSwipeActionButton",
-                backgroundColor: Color(Colors.Chat.Listing.moreSwipeActionBackground.color),
+                backgroundColor: Color.chatListMoreSwipeActionBackground,
                 action: {
                     viewModel.presentMoreOptionsForChat()
                 }
@@ -203,13 +203,13 @@ private struct ChatRoomContentDescriptionView: View {
                 : Strings.Localizable.Meetings.Scheduled.Listing.InProgress.description
             )
             .font(.caption)
-            .foregroundColor(Color(Colors.Chat.Listing.subtitleText.color))
+            .foregroundColor(Color.chatListSubtitleText)
         } else if let hybridDescription = viewModel.hybridDescription {
             HStack(spacing: 0) {
                 if let sender = hybridDescription.sender {
                     Text(sender)
                         .font(viewModel.shouldShowUnreadCount ? .caption.bold(): .caption)
-                        .foregroundColor(Color(Colors.Chat.Listing.subtitleText.color))
+                        .foregroundColor(Color.chatListSubtitleText)
                 }
                 
                 Image(uiImage: hybridDescription.image)
@@ -219,12 +219,12 @@ private struct ChatRoomContentDescriptionView: View {
                 
                 Text(hybridDescription.duration)
                     .font(viewModel.shouldShowUnreadCount ? .caption.bold(): .caption)
-                    .foregroundColor(Color(Colors.Chat.Listing.subtitleText.color))
+                    .foregroundColor(Color.chatListSubtitleText)
             }
         } else if let description = viewModel.description {
             Text(description)
                 .font(viewModel.shouldShowUnreadCount ? .caption.bold(): .caption)
-                .foregroundColor(Color(Colors.Chat.Listing.subtitleText.color))
+                .foregroundColor(Color.chatListSubtitleText)
                 .lineLimit(1)
         } else {
             Text("Placeholder")
