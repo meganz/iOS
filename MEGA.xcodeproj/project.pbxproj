@@ -2687,6 +2687,7 @@
 		2488EBC22A13B503005F910E /* NodeActionViewControllerGenericDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeActionViewControllerGenericDelegateTests.swift; sourceTree = "<group>"; };
 		248A031A2A79026800F183A2 /* MEGAAVViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAAVViewControllerTests.swift; sourceTree = "<group>"; };
 		249B71D92ACD14C20090607F /* SetVideoPlayerItemMetadataCommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetVideoPlayerItemMetadataCommandTests.swift; sourceTree = "<group>"; };
+		249BF9D12B0DBA6F00419CD9 /* Video */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Video; sourceTree = "<group>"; };
 		24A619DE2A52735600EBB863 /* QASettingsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QASettingsViewModelTests.swift; sourceTree = "<group>"; };
 		24A6ADD52A81E87D0035C7B0 /* AudioPlayerDefaultPlaylistShiftStrategyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerDefaultPlaylistShiftStrategyTests.swift; sourceTree = "<group>"; };
 		24A6ADD82A81EBDA0035C7B0 /* AudioPlayerAllAudioAsPlaylistShiftStrategyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerAllAudioAsPlaylistShiftStrategyTests.swift; sourceTree = "<group>"; };
@@ -9778,6 +9779,7 @@
 				94F568C12A56E7A6005CE9F2 /* DeviceCenter */,
 				945928F22AA23B1A0037694C /* Search */,
 				94F568BD2A56E412005CE9F2 /* Settings */,
+				249BF9D12B0DBA6F00419CD9 /* Video */,
 			);
 			path = Features;
 			sourceTree = "<group>";

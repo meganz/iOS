@@ -264,6 +264,14 @@
         "identifier" : "ChatRepoTests",
         "name" : "ChatRepoTests"
       }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "VideoTests",
+        "name" : "VideoTests"
+      }
     }
   ],
   "version" : 1
