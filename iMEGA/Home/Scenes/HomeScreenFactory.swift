@@ -97,7 +97,7 @@ final class HomeScreenFactory: NSObject {
         
         navigationController.tabBarItem = UITabBarItem(title: nil, image: Asset.Images.TabBarIcons.home.image, selectedImage: nil)
         
-        homeViewController.ViewModeStore = ViewModeStore(
+        homeViewController.viewModeStore = ViewModeStore(
             preferenceRepo: PreferenceRepository(userDefaults: .standard),
             megaStore: megaStore,
             sdk: sdk,
@@ -267,7 +267,6 @@ final class HomeScreenFactory: NSObject {
                 enableItemMultiSelection: enableItemMultiSelection
                 )
             ),
-            isThumbnailPreviewEnabled: DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .thumbnailSearchPreview),
             keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: notificationCenter)
 
         )

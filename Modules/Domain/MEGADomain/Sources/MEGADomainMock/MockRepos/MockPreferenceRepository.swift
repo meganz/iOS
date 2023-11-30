@@ -20,4 +20,8 @@ public struct MockPreferenceRepository<U>: PreferenceRepositoryProtocol {
             userDefaults[key] = newValue as? U
         }
     }
+    
+    public var isEmpty: Bool {
+        userDefaults.isEmpty
+    }
 }

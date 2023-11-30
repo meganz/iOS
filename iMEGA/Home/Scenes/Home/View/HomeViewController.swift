@@ -36,13 +36,11 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
 
     var bannerViewModel: (any HomeBannerViewModelType)?
     
-    var ViewModeStore: (any ViewModeStoring)?
+    var viewModeStore: (any ViewModeStoring)?
 
     var quickAccessWidgetViewModel: QuickAccessWidgetViewModel?
     
     var homeViewModel: HomeViewModel?
-    
-    private var featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     
     // MARK: - Router
 
@@ -67,6 +65,8 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
     private weak var badgeButton: BadgeButton!
 
     private var searchResultContainerView: UIView!
+    
+    private var newSearchEnabled = false
 
     // MARK: - SlidePanel Related Properties
     
@@ -108,8 +108,11 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
 
     // MARK: - ViewController Lifecycles
     func currentViewMode() -> ViewModePreferenceEntity {
-        return ViewModeStore?
-            .viewMode(for: .init(customLocation: CustomHomeSearch)) ?? .list
+        viewModeStore!.viewMode(for: viewModeLocation)
+    }
+    
+    var viewModeLocation: ViewModeLocation_ObjWrapper {
+        .init(customLocation: CustomHomeSearch)
     }
     
     override func viewDidLoad() {
@@ -121,6 +124,16 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
             displayMenuDelegate: self,
             createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo)
         )
+        searchBarView.shouldShowContextButton = newSearchEnabled
+    }
+    
+    func updateIsNewSearchEnabled(_ enabled: Bool) {
+        // we should show the context menu that can switch the
+        // layout only when new home search is enabled
+        newSearchEnabled = enabled
+        if searchBarView != nil {
+            searchBarView.shouldShowContextButton = newSearchEnabled
+        }
     }
     
     func configureViewMode() {
@@ -149,16 +162,20 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
         }
     }
     
+    func updateViewModeState(viewMode: ViewModePreferenceEntity) {
+        if let layout = viewMode.pageLayout {
+            changeLayout(to: layout)
+        }
+        viewModeStore?.save(viewMode: viewMode, for: viewModeLocation)
+        updateContextMenuButtonMenu(viewMode: viewMode)
+    }
+    
     func displayMenu(didSelect action: DisplayActionEntity, needToRefreshMenu: Bool) {
         switch action {
         case .listView:
-            changeLayout(to: .list)
-            ViewModeStore?.save(viewMode: .list, for: .init(customLocation: CustomHomeSearch))
-            updateContextMenuButtonMenu(viewMode: .list)
+            updateViewModeState(viewMode: .list)
         case .thumbnailView:
-            changeLayout(to: .thumbnail)
-            ViewModeStore?.save(viewMode: .thumbnail, for: .init(customLocation: CustomHomeSearch))
-            updateContextMenuButtonMenu(viewMode: .thumbnail)
+            updateViewModeState(viewMode: .thumbnail)
         default:
             break
         }
@@ -814,5 +831,22 @@ extension HomeViewController {
     func configureAdsVisibility() {
         guard let mainTabBar = UIApplication.mainTabBarRootViewController() as? MainTabBarController else { return }
         mainTabBar.configureAdsVisibility()
+    }
+}
+
+extension ViewModePreferenceEntity {
+    var pageLayout: PageLayout? {
+        switch self {
+        // only two of the viewModes can actually be mapped to page layout that
+        // search results view support
+        case .perFolder:
+            return nil
+        case .list:
+            return .list
+        case .thumbnail:
+            return .thumbnail
+        case .mediaDiscovery:
+            return nil
+        }
     }
 }

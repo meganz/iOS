@@ -42,14 +42,19 @@ extension MainTabBarController {
         showPSAViewIfNeeded()
         updateUI()
     }
-
-    @objc func setupHomeSearchForABTesting() async {
+    
+    @MainActor
+    func newSearchEnabled() async -> Bool {
         let isNewHomeSearchABTestEnabled = await DIContainer.abTestProvider.abTestVariant(for: .newSearch) == .variantA
         
         let isNewHomeSearchFeatureFlagEnabled = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .newHomeSearch)
         
+        return isNewHomeSearchABTestEnabled || isNewHomeSearchFeatureFlagEnabled
+    }
+
+    @objc func setupHomeSearchForABTesting() async {
         await updateHomeSearchForABTesting(
-            isNewHomeSearchEnabled: isNewHomeSearchABTestEnabled || isNewHomeSearchFeatureFlagEnabled
+            isNewHomeSearchEnabled: newSearchEnabled()
         )
     }
 
@@ -71,6 +76,7 @@ extension MainTabBarController {
             enableItemMultiSelection: false // not enabled in the home search results
         )
         homeVC.searchResultViewController = searchResultVC
+        homeVC.updateIsNewSearchEnabled(isNewHomeSearchEnabled)
     }
 
     @objc func showPSAViewIfNeeded() {

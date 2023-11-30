@@ -25,8 +25,6 @@ public class SearchResultsViewModel: ObservableObject {
         listItems.filter { $0.result.thumbnailDisplayMode == .horizontal }
     }
 
-    let isThumbnailPreviewEnabled: Bool
-
     // this is needed to be able to construct new query after receiving new query string from SearchBar
     private var currentQuery: SearchQuery = .initial
 
@@ -76,7 +74,6 @@ public class SearchResultsViewModel: ObservableObject {
         config: SearchConfig,
         showLoadingPlaceholderDelay: Double = 1,
         searchInputDebounceDelay: Double = 0.5,
-        isThumbnailPreviewEnabled: Bool = false,
         keyboardVisibilityHandler: any KeyboardVisibilityHandling
     ) {
         self.resultsProvider = resultsProvider
@@ -85,7 +82,6 @@ public class SearchResultsViewModel: ObservableObject {
         self.showLoadingPlaceholderDelay = showLoadingPlaceholderDelay
         self.searchInputDebounceDelay = searchInputDebounceDelay
         self.keyboardVisibilityHandler = keyboardVisibilityHandler
-        self.isThumbnailPreviewEnabled = isThumbnailPreviewEnabled
 
         self.bridge.queryChanged = { [weak self] query  in
             let _self = self
