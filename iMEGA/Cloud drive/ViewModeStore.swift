@@ -10,24 +10,24 @@ extension Notification.Name {
 
 let CustomHomeSearch = "HomeSearchResults"
 
-// This struct is used to describe a screen that can switch layouts
-// between per location/list/thumbnails that is not offline or cloud drive
-struct CustomLocation {
-    let name: String
-    
-    static let homeSearch = CustomLocation(name: CustomHomeSearch)
-    
-    // use this getter to get a CoreData path parameter to save and read
-    // user preferences from the data base, reusing Offline preference storage mechanism
-    fileprivate var path: String {
-        "mega-custom-view-mode-location-\(name)"
-    }
-}
-
 enum ViewModeLocation {
     case node(NodeEntity) // per folder preference in cloud drive
     case offlinePath(String) // future use for offline view controller
-    case customLocation(CustomLocation) // other situations like home screen search results
+    case customLocation(Custom) // other situations like home screen search results
+    
+    // This struct is used to describe a screen that can switch layouts
+    // between per location/list/thumbnails that is not offline or cloud drive
+    struct Custom {
+        let name: String
+        
+        static let homeSearch = Custom(name: CustomHomeSearch)
+        
+        // use this getter to get a CoreData path parameter to save and read
+        // user preferences from the data base, reusing Offline preference storage mechanism
+        var path: String {
+            "mega-custom-view-mode-location-\(name)"
+        }
+    }
 }
 
 // this is a wrapper to use Swift enum with associated value inside ObjC code
@@ -120,6 +120,16 @@ class ViewModeStore: ViewModeStoring {
     
     func viewMode(for location: ViewModeLocation) -> ViewModePreferenceEntity {
         
+        // for custom locations such as home (offline in the future,
+        // we store the view mode in core data per each location path and read it
+        // it has a higher priority when saved than the preferences (which apply globally unless
+        // layout is changed for given custom location)
+        if case .customLocation(let customLocation) = location {
+            if let viewMode = perCustom(location: customLocation) {
+                return viewMode
+            }
+        }
+        
         if let preferenceFromSettings = savedPreference {
             // when we have a saved preference that is a list or thumbnail, we simply respect that
             // and return
@@ -170,7 +180,7 @@ class ViewModeStore: ViewModeStoring {
         return nil
     }
     
-    private func perCustom(location: CustomLocation) -> ViewModePreferenceEntity? {
+    private func perCustom(location: ViewModeLocation.Custom) -> ViewModePreferenceEntity? {
         
         // here we are reusing a mechanism for storing view mode preference per offline path,
         // do this instead of creating another NSManagedObject subclass to store simple int in CD
@@ -234,17 +244,23 @@ class ViewModeStore: ViewModeStoring {
             return
         }
         
-        // when user selected 'per folder' option in the settings, we will
-        // store view mode for each location in Core Data separately
-        if
-            let preference = savedPreference,
-            preference == .perFolder
-        {
+        // for custom locations such as home, we store the setting in core data and read it when requested
+        // we do not store that in the preferences
+        if case .customLocation = location {
             savePerLocation(viewMode, location: location)
         } else {
-            // if user in the settings had selected thumbnail or list,
-            // then we just override that here
-            savePreference(preference: viewMode)
+            // when user selected 'per folder' option in the settings, we will
+            // store view mode for each location in Core Data separately
+            if
+                let preference = savedPreference,
+                preference == .perFolder
+            {
+                savePerLocation(viewMode, location: location)
+            } else {
+                // if user in the settings had selected thumbnail or list,
+                // then we just override that here
+                savePreference(preference: viewMode)
+            }
         }
         
         notificationCenter.post(viewMode: viewMode)
