@@ -51,7 +51,8 @@ final class UpgradeAccountRouter {
                     UpgradeAccountRouter(purchase: self.purchase).presentUpgradeTVC()
                 }
             )
-            OnboardingUpgradeAccountRouter(viewModel: viewModel, presenter: UIApplication.mnz_presentingViewController()).start()
+            let accountsConfig = AccountsConfig(onboardingViewAssets: AccountsConfig.OnboardingViewAssets(cloudImage: .cloud, pieChartImage: .pieChart, securityLockImage: .securityLock, onboardingHeaderImage: .onboardingHeader))
+            OnboardingUpgradeAccountRouter(viewModel: viewModel, presenter: UIApplication.mnz_presentingViewController(), accountsConfig: accountsConfig).start()
         } else {
             let upgradeAccountNC = UpgradeAccountFactory().createUpgradeAccountChooseAccountType()
             UIApplication.mnz_presentingViewController().present(upgradeAccountNC, animated: true, completion: nil)
