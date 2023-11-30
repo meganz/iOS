@@ -7,7 +7,6 @@ extension SearchChipEntity {
         title: Strings.Localizable.Home.Search.Filter.images
     )
     public static let folders = SearchChipEntity(
-        // We set id to -1 because the filtering for folders is done locally, not on SDK side
         id: ChipId.folder,
         title: Strings.Localizable.Home.Search.Filter.folders
     )
@@ -48,6 +47,7 @@ extension SearchChipEntity {
             .images,
             .audio,
             .video,
+            .folders,
             .pdf,
             .docs,
 // disable Presentations chip until [FM-1403] is finished
@@ -65,4 +65,16 @@ extension SearchChipEntity {
     public static func allChips(areChipsGroupEnabled: Bool) -> [Self] {
         areChipsGroupEnabled ? allChipsGrouped : allChips
     }
+}
+
+extension SearchQueryEntity {
+    var isFolderChipSelected: Bool {
+        chips.first?.id == ChipId.folder
+    }
+}
+
+// "Special" chipses which don't rely on MEGANodeFormatType to trigger filter based search once tapped on them
+private extension ChipId {
+    static var folder: Self { -1 }
+    static var nodeType: Self { -2 }
 }

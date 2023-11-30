@@ -116,24 +116,20 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         // SDK does not support empty query and MEGANodeFormatType.unknown
         assert(!(queryRequest.query == "" && queryRequest.chips == []))
         MEGALogInfo("[search] full search \(queryRequest.query)")
-        // For Folders chip, we don't have support for filtering in SDK by using SearchOperation
-        // Instead, we use children() method and filter for folder nodes
-        if queryRequest.isFolderChipSelected {
-            return try await childrenFolders()
-        } else {
-            return await withAsyncValue(in: { completion in
-                searchFileUseCase.searchFiles(
-                    withName: queryRequest.query,
-                    recursive: true,
-                    nodeFormat: nodeFormatFrom(chip: queryRequest.chips.first),
-                    sortOrder: .defaultAsc,
-                    searchPath: .root,
-                    completion: { nodeList in
-                        completion(.success(nodeList))
-                    }
-                )
-            })
-        }
+
+        return await withAsyncValue(in: { completion in
+            searchFileUseCase.searchFiles(
+                withName: queryRequest.query,
+                recursive: true,
+                nodeType: queryRequest.isFolderChipSelected ? .folder : .unknown,
+                nodeFormat: nodeFormatFrom(chip: queryRequest.chips.first),
+                sortOrder: .defaultAsc,
+                searchPath: .root,
+                completion: { nodeList in
+                    completion(.success(nodeList))
+                }
+            )
+        })
     }
 
     private func childrenFolders() async throws -> NodeListEntity? {

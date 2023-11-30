@@ -21,6 +21,7 @@ protocol SearchFileUseCaseProtocol {
     func searchFiles(
         withName name: String,
         recursive: Bool,
+        nodeType: MEGANodeType?,
         nodeFormat: MEGANodeFormatType?,
         sortOrder: MEGASortOrderType?,
         searchPath: SearchFileRootPath,
@@ -30,6 +31,7 @@ protocol SearchFileUseCaseProtocol {
     func searchFiles(
         withName name: String,
         recursive: Bool,
+        nodeType: MEGANodeType?,
         nodeFormat: MEGANodeFormatType?,
         sortOrder: MEGASortOrderType?,
         searchPath: SearchFileRootPath,
@@ -68,6 +70,7 @@ final class SearchFileUseCase: SearchFileUseCaseProtocol {
     func searchFiles(
         withName fileName: String,
         recursive: Bool,
+        nodeType: MEGANodeType?,
         nodeFormat: MEGANodeFormatType?,
         sortOrder: MEGASortOrderType?,
         searchPath: SearchFileRootPath,
@@ -79,6 +82,7 @@ final class SearchFileUseCase: SearchFileUseCaseProtocol {
             self.startSearchingFiles(
                 withName: fileName,
                 recursive: recursive,
+                nodeType: nodeType ?? .unknown,
                 nodeFormat: nodeFormat ?? .unknown,
                 sortOrder: sortOrder,
                 searchPath: searchPath,
@@ -90,6 +94,7 @@ final class SearchFileUseCase: SearchFileUseCaseProtocol {
     private func startSearchingFiles(
         withName fileName: String,
         recursive: Bool,
+        nodeType: MEGANodeType,
         nodeFormat: MEGANodeFormatType,
         sortOrder: MEGASortOrderType?,
         searchPath: SearchFileRootPath,
@@ -100,6 +105,7 @@ final class SearchFileUseCase: SearchFileUseCaseProtocol {
         let searchParameters = NodeSearchRepository.Parameter(
             searchText: fileName,
             recursive: recursive,
+            nodeType: nodeType,
             nodeFormat: nodeFormat,
             sortOrder: sortOrder,
             rootNodeHandle: searchPath.rootHandle,
@@ -112,6 +118,7 @@ final class SearchFileUseCase: SearchFileUseCaseProtocol {
     func searchFiles(
         withName name: String,
         recursive: Bool,
+        nodeType: MEGANodeType?,
         nodeFormat: MEGANodeFormatType?,
         sortOrder: MEGASortOrderType?,
         searchPath: SearchFileRootPath,
@@ -123,6 +130,7 @@ final class SearchFileUseCase: SearchFileUseCaseProtocol {
             self.startSearchingFiles(
                 withName: name,
                 recursive: recursive,
+                nodeType: nodeType ?? .unknown,
                 nodeFormat: nodeFormat ?? .unknown,
                 sortOrder: sortOrder,
                 searchPath: searchPath,
@@ -134,6 +142,7 @@ final class SearchFileUseCase: SearchFileUseCaseProtocol {
     private func startSearchingFiles(
         withName fileName: String,
         recursive: Bool,
+        nodeType: MEGANodeType,
         nodeFormat: MEGANodeFormatType,
         sortOrder: MEGASortOrderType?,
         searchPath: SearchFileRootPath,
@@ -144,6 +153,7 @@ final class SearchFileUseCase: SearchFileUseCaseProtocol {
         let searchParameters = NodeSearchRepository.Parameter(
             searchText: fileName,
             recursive: recursive,
+            nodeType: nodeType,
             nodeFormat: nodeFormat,
             sortOrder: sortOrder,
             rootNodeHandle: searchPath.rootHandle,

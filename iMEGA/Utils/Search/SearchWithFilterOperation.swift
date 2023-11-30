@@ -1,10 +1,7 @@
-// We should move completely to using SearchOperationWithFilter globally in the app as a part of https://jira.developers.mega.co.nz/browse/FM-1488
-class SearchOperation: MEGAOperation {
+class SearchWithFilterOperation: MEGAOperation {
     let sdk: MEGASdk
-    let parentNode: MEGANode
-    let text: String
+    let filter: MEGASearchFilter
     let recursive: Bool
-    let nodeFormat: MEGANodeFormatType
     let sortOrder: MEGASortOrderType
     let cancelToken: MEGACancelToken
 
@@ -12,19 +9,15 @@ class SearchOperation: MEGAOperation {
 
     @objc init(
         sdk: MEGASdk,
-        parentNode: MEGANode,
-        text: String,
+        filter: MEGASearchFilter,
         recursive: Bool,
-        nodeFormat: MEGANodeFormatType,
         sortOrder: MEGASortOrderType,
         cancelToken: MEGACancelToken,
         completion: @escaping (_ results: MEGANodeList?, _ isCanceled: Bool) -> Void
     ) {
         self.sdk = sdk
-        self.parentNode = parentNode
-        self.text = text
+        self.filter = filter
         self.recursive = recursive
-        self.nodeFormat = nodeFormat
         self.sortOrder = sortOrder
         self.cancelToken = cancelToken
         self.completion = completion
@@ -32,14 +25,10 @@ class SearchOperation: MEGAOperation {
 
     override func start() {
         startExecuting()
-        let nodeList = sdk.nodeListSearch(
-            for: parentNode,
-            search: text,
-            cancelToken: cancelToken,
-            recursive: recursive,
+        let nodeList = sdk.search(
+            with: filter,
             orderType: sortOrder,
-            nodeFormatType: nodeFormat,
-            folderTargetType: .all
+            cancelToken: cancelToken
         )
 
         guard !isCancelled else {

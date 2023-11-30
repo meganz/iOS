@@ -84,6 +84,7 @@ extension HomeSearchResultViewModel: HomeAccountSearchResultViewModelInputs {
         searchFileUseCase.searchFiles(
             withName: text,
             recursive: true,
+            nodeType: .unknown,
             nodeFormat: .unknown,
             sortOrder: nil,
             searchPath: .root

@@ -6,6 +6,7 @@ struct NodeSearchRepository {
     struct Parameter {
         let searchText: String
         let recursive: Bool
+        let nodeType: MEGANodeType
         let nodeFormat: MEGANodeFormatType
         let sortOrder: MEGASortOrderType?
         let rootNodeHandle: HandleEntity?
@@ -44,12 +45,20 @@ extension NodeSearchRepository {
 
                 let cancelToken = MEGACancelToken()
 
-                let searchOperation = SearchOperation(
-                    sdk: sdk, 
-                    parentNode: rootNode,
-                    text: parameter.searchText,
+                // When we are applying nodeType we can not at the same time apply category, otherwise, sdk crashes
+                let nodeFormat: MEGANodeFormatType = parameter.nodeType == .folder ? .unknown : parameter.nodeFormat
+
+                let searchOperation = SearchWithFilterOperation(
+                    sdk: sdk,
+                    filter: .init(
+                        term: parameter.searchText,
+                        parentNodeHandle: rootNode.handle,
+                        nodeType: Int32(parameter.nodeType.rawValue),
+                        category: Int32(nodeFormat.rawValue),
+                        sensitivity: false,
+                        timeFrame: nil
+                    ),
                     recursive: parameter.recursive,
-                    nodeFormat: parameter.nodeFormat,
                     sortOrder: parameter.sortOrder ?? .creationAsc,
                     cancelToken: cancelToken
                 ) { (nodeList, _) -> Void in
