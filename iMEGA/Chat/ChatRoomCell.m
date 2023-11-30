@@ -137,7 +137,8 @@
     if (chatListItem.isGroup) {
         self.onlineStatusView.hidden = YES;
     } else {
-        UIColor *statusColor = [UIColor mnz_colorForChatStatus:[MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:chatListItem.peerHandle]];
+        UIColor *statusColor = [UIColor colorWithChatStatus: [MEGAChatSdk.shared userOnlineStatus:chatListItem.peerHandle]];
+        
         if (statusColor) {
             self.onlineStatusView.backgroundColor = statusColor;
             self.onlineStatusView.hidden = NO;
@@ -206,7 +207,8 @@
     
     [self.avatarView.avatarImageView mnz_setImageForUserHandle:user.handle name:[user mnz_fullName]];
     [self.avatarView configureWithMode:MegaAvatarViewModeSingle];
-    UIColor *statusColor = [UIColor mnz_colorForChatStatus:[MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:user.handle]];
+    UIColor *statusColor = [UIColor colorWithChatStatus: [MEGAChatSdk.shared userOnlineStatus:user.handle]];
+    
     if (statusColor) {
         self.onlineStatusView.backgroundColor = statusColor;
         self.onlineStatusView.hidden = NO;

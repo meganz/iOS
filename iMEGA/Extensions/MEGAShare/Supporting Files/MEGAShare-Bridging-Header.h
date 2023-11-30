@@ -9,7 +9,6 @@
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
-#import "UIColor+MNZCategory.h"
 #import "UIDevice+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 

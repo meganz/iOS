@@ -24,7 +24,6 @@
 #import "NSString+MNZCategory.h"
 #import "NSURL+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
-#import "UIColor+MNZCategory.h"
 #import "UIDevice+MNZCategory.h"
 #import "UIFont+MNZCategory.h"
 #import "UIView+MNZCategory.h"

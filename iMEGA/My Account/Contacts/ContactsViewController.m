@@ -1501,7 +1501,7 @@
                     cell.nameLabel.text = [chatRoom userDisplayNameForUserHandle:peerHandle];
                     MEGAChatStatus userStatus = [MEGAChatSdk.shared userOnlineStatus:peerHandle];
                     cell.shareLabel.text = [NSString chatStatusString:userStatus];
-                    cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForChatStatus:userStatus];
+                    cell.onlineStatusView.backgroundColor =  [UIColor colorWithChatStatus: userStatus];
                     [cell.avatarImageView mnz_setImageForUserHandle:peerHandle name:cell.nameLabel.text];
                     NSString *peerEmail = [MEGAChatSdk.shared userEmailFromCacheByUserHandle:peerHandle];
                     if (peerEmail) {
@@ -2181,7 +2181,7 @@
         NSIndexPath *indexPath = [self.indexPathsMutableDictionary objectForKey:base64Handle];
         if ([self.tableView.indexPathsForVisibleRows containsObject:indexPath]) {
             ContactTableViewCell *cell = (ContactTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-            cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForChatStatus:onlineStatus];
+            cell.onlineStatusView.backgroundColor = [UIColor colorWithChatStatus: onlineStatus];
             cell.shareLabel.text = [NSString chatStatusString:onlineStatus];
             if (onlineStatus < MEGAChatStatusOnline) {
                 [MEGAChatSdk.shared requestLastGreen:userHandle];
