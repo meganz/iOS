@@ -22,7 +22,7 @@ class ReactionContainerView: UIView {
         let addMoreView = UIButton()
         addMoreView.setImage(UIImage(resource: .addReactionSmall), for: .normal)
         addMoreView.imageView?.contentMode = .scaleAspectFit
-        addMoreView.layer.borderColor = Colors.Chat.ReactionBubble.border.color.cgColor
+        addMoreView.layer.borderColor = UIColor.chatReactionBubbleBorder.cgColor
         addMoreView.layer.borderWidth = 1
         addMoreView.layer.cornerRadius = 12
         addMoreView.backgroundColor = UIColor.mnz_secondaryBackground(for: addMoreView.traitCollection)
@@ -95,7 +95,7 @@ class ReactionContainerView: UIView {
     
     private func updateAppearance() {
         addMoreView.backgroundColor = UIColor.mnz_secondaryBackground(for: self.traitCollection)
-        addMoreView.layer.borderColor = Colors.Chat.ReactionBubble.border.color.cgColor
+        addMoreView.layer.borderColor = UIColor.chatReactionBubbleBorder.cgColor
 
     }
     

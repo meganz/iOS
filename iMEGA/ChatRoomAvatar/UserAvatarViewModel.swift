@@ -113,7 +113,7 @@ final class UserAvatarViewModel: ObservableObject {
         return UIImage.drawImage(
             forInitials: initials,
             size: size,
-            backgroundColor: Colors.Chat.Avatar.background.color,
+            backgroundColor: UIColor.chatAvatarBackground,
             backgroundGradientColor: UIColor.grayDBDBDB,
             textColor: .white,
             font: UIFont.systemFont(ofSize: min(size.width, size.height)/2.0),

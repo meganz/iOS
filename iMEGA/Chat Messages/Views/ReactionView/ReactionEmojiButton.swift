@@ -53,7 +53,7 @@ class ReactionEmojiButton: UIButton {
         if emojiSelected {
             layer.borderColor = UIColor.green009476.cgColor
         } else {
-            layer.borderColor = Colors.Chat.ReactionBubble.border.color.cgColor 
+            layer.borderColor = UIColor.chatReactionBubbleBorder.cgColor 
         }
         backgroundColor = UIColor.mnz_reactionBubbleBackgroundColor(self.traitCollection, selected: emojiSelected)
 
