@@ -112,7 +112,7 @@
     
     MEGAChatStatus userStatus = [MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:user.handle];
     self.shareLabel.text = [NSString chatStatusString:userStatus];
-    self.onlineStatusView.backgroundColor = [UIColor mnz_colorForChatStatus:userStatus];
+    self.onlineStatusView.backgroundColor = [UIColor colorWithChatStatus: userStatus];
     if (userStatus < MEGAChatStatusOnline) {
         [MEGASdkManager.sharedMEGAChatSdk requestLastGreen:user.handle];
     }

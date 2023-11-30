@@ -82,7 +82,7 @@ class ChatTitleView: UIView {
         
         if let status = chatRoom.onlineStatus {
             statusView.isHidden = (status == .invalid)
-            statusView.backgroundColor = UIColor.mnz_color(for: status)
+            statusView.backgroundColor = UIColor.color(withChatStatus: status)
         }
     }
     

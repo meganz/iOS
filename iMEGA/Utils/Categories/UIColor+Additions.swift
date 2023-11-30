@@ -2,6 +2,25 @@ import Foundation
 
 extension UIColor {
     
+    // MARK: Chat
+    @objc class func color(withChatStatus status: MEGAChatStatus) -> UIColor? {
+        var color: UIColor?
+        
+        switch status {
+        case .offline:
+            color = mnz_primaryGray(for: UIScreen.main.traitCollection)
+        case .away:
+            color = .systemOrange
+        case .online:
+            color = systemGreen
+        case .busy:
+            color = mnz_red(for: UIScreen.main.traitCollection)
+        default: break
+        }
+        
+        return color
+    }
+    
     // MARK: - Background
     
     @objc class func mnz_tertiaryBackground(_ traitCollection: UITraitCollection) -> UIColor {
@@ -77,7 +96,7 @@ extension UIColor {
             return UIColor.white
         }
     }
-        
+    
     // MARK: - Main Bar
     @objc(mnz_mainBarsForTraitCollection:)
     class func mnz_mainBars(for traitCollection: UITraitCollection) -> UIColor {
@@ -980,11 +999,11 @@ extension UIColor {
     class func mnz_yellowF8D552() -> UIColor {
         UIColor.yellowF8D552
     }
-
+    
     @objc class func mnz_yellowFFCC00() -> UIColor {
         return UIColor.yellowFFCC00
     }
-
+    
     // MARK: Brown
     
     class func mnz_brown544b27() -> UIColor {

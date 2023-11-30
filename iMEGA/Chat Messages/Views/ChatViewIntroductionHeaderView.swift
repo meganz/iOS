@@ -71,7 +71,7 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
         if chatRoom.isOneToOne {
             if let status = chatRoom.onlineStatus {
                 statusView.isHidden = (status == .invalid)
-                statusView.backgroundColor = UIColor.mnz_color(for: status)
+                statusView.backgroundColor = UIColor.color(withChatStatus: status)
                 
                 statusLabel.isHidden = (status == .invalid)
                 statusLabel.text = NSString.chatStatusString(status)
@@ -122,7 +122,7 @@ class ChatViewIntroductionHeaderView: MessageReusableView {
         guard let status = chatRoom?.onlineStatus else {
             return
         }
-        statusView.backgroundColor = UIColor.mnz_color(for: status)
+        statusView.backgroundColor = UIColor.color(withChatStatus: status)
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

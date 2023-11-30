@@ -632,7 +632,8 @@
         ContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"contactCell" forIndexPath:indexPath];
         cell.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
         
-        UIColor *color = [UIColor mnz_colorForChatStatus:[MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:user.handle]];
+        UIColor *color = [UIColor colorWithChatStatus: [MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:user.handle]];
+        
         if (color) {
             cell.onlineStatusView.backgroundColor = color;
             cell.onlineStatusView.hidden = NO;

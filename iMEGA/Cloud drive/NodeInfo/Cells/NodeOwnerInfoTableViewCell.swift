@@ -27,7 +27,7 @@ class NodeOwnerInfoTableViewCell: UITableViewCell {
         
         avatarImageView.mnz_setImage(forUserHandle: user.handle, name: userDisplayName)
         
-        onlineStatusView.backgroundColor = UIColor.mnz_color(for: MEGAChatSdk.shared.userOnlineStatus(user.handle))
+        onlineStatusView.backgroundColor = UIColor.color(withChatStatus: MEGAChatSdk.shared.userOnlineStatus(user.handle))
         onlineStatusView.layer.cornerRadius = onlineStatusView.frame.height / 2
 
         contactVerifiedImageView.isHidden = !shouldDisplayUserVerifiedIcon

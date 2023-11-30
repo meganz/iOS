@@ -1310,7 +1310,7 @@
         NSIndexPath *indexPath = [self.chatIdIndexPathDictionary objectForKey:@(chatId)];
         if ([self.tableView.indexPathsForVisibleRows containsObject:indexPath]) {
             ChatRoomCell *cell = (ChatRoomCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-            cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForChatStatus:[MEGAChatSdk.shared userOnlineStatus:userHandle]];
+            cell.onlineStatusView.backgroundColor = [UIColor colorWithChatStatus:[MEGAChatSdk.shared userOnlineStatus:userHandle]];
         }
     }
 }

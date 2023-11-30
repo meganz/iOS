@@ -653,7 +653,7 @@
                 [cell.leftImageView mnz_setImageForUserHandle:handle];
             }
             
-            cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForChatStatus:[MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:handle]];
+            cell.onlineStatusView.backgroundColor = [UIColor colorWithChatStatus: [MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:handle]];
             
             cell.emailLabel.text = peerEmail;
             
@@ -1079,7 +1079,7 @@
         NSIndexPath *indexPath = [self.indexPathsMutableDictionary objectForKey:base64Handle];
         if ([self.tableView.indexPathsForVisibleRows containsObject:indexPath]) {
             GroupChatDetailsViewTableViewCell *cell = (GroupChatDetailsViewTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-            cell.onlineStatusView.backgroundColor = [UIColor mnz_colorForChatStatus:onlineStatus];
+            cell.onlineStatusView.backgroundColor = [UIColor colorWithChatStatus: onlineStatus];
         }
     }
 }

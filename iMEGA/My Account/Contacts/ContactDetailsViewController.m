@@ -172,7 +172,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
         self.statusLabel.text = [NSString chatStatusString:userStatus];
         [self configureShadowInLayer:self.statusLabel.layer];
         
-        self.onlineStatusView.backgroundColor = [UIColor mnz_colorForChatStatus:[MEGAChatSdk.shared userOnlineStatus:self.user.handle]];
+        self.onlineStatusView.backgroundColor = [UIColor colorWithChatStatus: [MEGAChatSdk.shared userOnlineStatus:self.user.handle]];
         [self configureShadowInLayer:self.onlineStatusView.layer];
         self.onlineStatusView.layer.borderWidth = 1;
         self.onlineStatusView.layer.borderColor = UIColor.whiteColor.CGColor;
@@ -1126,7 +1126,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     }
     
     if (userHandle == self.user.handle) {
-        self.onlineStatusView.backgroundColor = [UIColor mnz_colorForChatStatus:onlineStatus];
+        self.onlineStatusView.backgroundColor =  [UIColor colorWithChatStatus: onlineStatus];
         self.statusLabel.text = [NSString chatStatusString:onlineStatus];
         if (onlineStatus < MEGAChatStatusOnline) {
             [MEGAChatSdk.shared requestLastGreen:self.user.handle];
