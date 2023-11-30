@@ -43,6 +43,8 @@ final class MEGASearchBarView: UIView, NibOwnerLoadable {
     @IBOutlet private weak var cancelButton: UIButton!
 
     private weak var contentView: UIView!
+    
+    var shouldShowContextButton = false
 
     private weak var searchIconImageView: UIImageView!
 
@@ -161,7 +163,9 @@ extension MEGASearchBarView: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         guard let textFieldText = textField.text, !textFieldText.isEmpty else {
             cancelButton.isHidden = false
-            contextButton.isHidden = false
+            if shouldShowContextButton {
+                contextButton.isHidden = false
+            }
             delegate?.didStartSearchSessionOnSearchController(self)
             editingDelegate?.didHighlightSearchBar()
             return
