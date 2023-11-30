@@ -7,6 +7,5 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable {
     case albumPhotoCache = "Album and Photo Cache"
     case timelineCameraUploadStatus = "Timeline Camera Upload Status"
     case onboardingProPlan = "Onboarding Pro Plan Upselling Dialog"
-    case thumbnailSearchPreview = "Thumbnail preview in Search"
     case chipsGroups = "Chips groups and dropdown chips picker"
 }
