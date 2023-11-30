@@ -3,22 +3,45 @@ import MEGASdk
 import MEGASwift
 
 public actor PhotosRepository: PhotosRepositoryProtocol {
-    public static let sharedRepo = PhotosRepository(sdk: .sharedSdk,
-                                                    photoLocalSource: PhotosInMemoryCache.shared)
+    public static let sharedRepo = {
+        let sdk = MEGASdk.sharedSdk
+        return PhotosRepository(sdk: sdk,
+                                photoLocalSource: PhotosInMemoryCache.shared,
+                                nodeUpdatesProvider: NodeUpdatesProvider(sdk: sdk))
+    }()
     
     private let sdk: MEGASdk
     private let photoLocalSource: any PhotoLocalSourceProtocol
+    private let nodeUpdatesProvider: any NodeUpdatesProviderProtocol
     
     private var searchAllPhotosTask: Task<[NodeEntity], Error>?
+    private var monitorNodeUpdatesTask: Task<Void, Error>?
+    private var photosUpdatedContinuations: [UUID: AsyncStream<[NodeEntity]>.Continuation] = [:]
+    
+    public var photosUpdated: AnyAsyncSequence<[NodeEntity]> {
+        let (stream, continuation) = AsyncStream
+            .makeStream(of: [NodeEntity].self, bufferingPolicy: .bufferingNewest(1))
+        let id = UUID()
+        photosUpdatedContinuations[id] = continuation
+        continuation.onTermination = { [weak self] _ in
+            guard let self else { return }
+            Task { await self.photoContinuationTerminated(id: id) }
+        }
+        return stream.eraseToAnyAsyncSequence()
+    }
     
     public init(sdk: MEGASdk,
-                photoLocalSource: some PhotoLocalSourceProtocol) {
+                photoLocalSource: some PhotoLocalSourceProtocol,
+                nodeUpdatesProvider: some NodeUpdatesProviderProtocol) {
         self.sdk = sdk
         self.photoLocalSource = photoLocalSource
+        self.nodeUpdatesProvider = nodeUpdatesProvider
+        Task { await monitorNodeUpdates() }
     }
     
     deinit {
         searchAllPhotosTask?.cancel()
+        monitorNodeUpdatesTask?.cancel()
     }
     
     public func allPhotos() async throws -> [NodeEntity] {
@@ -93,6 +116,41 @@ public actor PhotosRepository: PhotosRepositoryProtocol {
             if !cancelToken.isCancelled {
                 cancelToken.cancel()
             }
+        }
+    }
+    
+    private func monitorNodeUpdates() {
+        monitorNodeUpdatesTask = Task {
+            for await nodeUpdates in nodeUpdatesProvider.nodeUpdates {
+                guard !Task.isCancelled else {
+                    terminatePhotoContinuations()
+                    break
+                }
+                guard nodeUpdates.contains(where: { $0.fileExtensionGroup.isVisualMedia }) else { continue }
+                
+                await photoLocalSource.removeAllPhotos()
+                guard let allPhotos = try? await loadAllPhotos(),
+                      allPhotos.isNotEmpty else {
+                    continue
+                }
+                yieldPhotosToContinuations(allPhotos)
+            }
+        }
+    }
+    
+    private func yieldPhotosToContinuations(_ photos: [NodeEntity]) {
+        for continuation in photosUpdatedContinuations.values {
+            continuation.yield(photos)
+        }
+    }
+    
+    private func photoContinuationTerminated(id: UUID) {
+        photosUpdatedContinuations[id] = nil
+    }
+    
+    private func terminatePhotoContinuations() {
+        for continuation in photosUpdatedContinuations.values {
+            continuation.finish()
         }
     }
 }
