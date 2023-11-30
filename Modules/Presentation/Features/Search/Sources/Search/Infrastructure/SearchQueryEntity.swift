@@ -13,12 +13,6 @@ public struct SearchQueryEntity: Equatable, Sendable {
     }
 }
 
-public extension SearchQueryEntity {
-    var isFolderChipSelected: Bool {
-        chips.first?.id == ChipId.folder
-    }
-}
-
 /// default value, iteration one of search project does not allow specifying sort order but that can come in next stages
 public enum SortOrderEntity: Sendable {
     case automatic

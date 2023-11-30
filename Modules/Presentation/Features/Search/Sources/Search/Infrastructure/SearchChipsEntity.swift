@@ -37,8 +37,3 @@ public struct SearchChipEntity: Equatable, Sendable {
 }
 
 public typealias ChipId = Int
-
-public extension ChipId {
-    static var folder: Self { -1 }
-    static var nodeType: Self { -2 }
-}
