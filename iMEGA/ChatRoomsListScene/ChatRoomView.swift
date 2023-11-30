@@ -135,12 +135,10 @@ private struct ChatRoomContentDetailsView: View {
                         }
                         
                         if viewModel.shouldShowUnreadCount {
-                            Text(viewModel.unreadCountString)
-                                .font(.caption2)
-                                .foregroundColor(.white)
-                                .padding(4)
-                                .background(Color.red)
-                                .clipShape(Circle())
+                            UnreadCountView(
+                                isUnreadCountClipShapeCircle: viewModel.isUnreadCountClipShapeCircle,
+                                unreadCountString: viewModel.unreadCountString
+                            )
                         }
                     }
                 }

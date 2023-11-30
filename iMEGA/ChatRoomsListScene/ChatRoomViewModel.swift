@@ -42,6 +42,10 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
     let shouldShowUnreadCount: Bool
     let unreadCountString: String
     
+    var isUnreadCountClipShapeCircle: Bool {
+        unreadCountString.count == 1
+    }
+    
     var callDurationTotal: TimeInterval?
     var callDurationCapturedTime: TimeInterval?
     var timerSubscription: AnyCancellable?
@@ -79,7 +83,11 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
         self.description = chatListItemDescription?.description
         self.isMuted = chatNotificationControl.isChatDNDEnabled(chatId: chatListItem.chatId)
         self.shouldShowUnreadCount = chatListItem.unreadCount != 0
-        self.unreadCountString = chatListItem.unreadCount > 0 ? "\(chatListItem.unreadCount)" : "\(-chatListItem.unreadCount)+"
+        if chatListItem.unreadCount > 0 {
+            self.unreadCountString = chatListItem.unreadCount > 99 ? "99+" : "\(chatListItem.unreadCount)"
+        } else {
+            self.unreadCountString = "\(-chatListItem.unreadCount)+"
+        }
         
         if let chatRoomEntity = chatRoomUseCase.chatRoom(forChatId: chatListItem.chatId) {
             self.chatRoomAvatarViewModel = ChatRoomAvatarViewModel(

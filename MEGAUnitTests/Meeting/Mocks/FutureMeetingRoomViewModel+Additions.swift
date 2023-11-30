@@ -46,5 +46,3 @@ extension FutureMeetingRoomViewModel {
         )
     }
 }
-
-private final class MockPushNotificationControl: PushNotificationControlProtocol {}

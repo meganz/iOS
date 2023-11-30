@@ -1,4 +1,5 @@
 import MEGAL10n
+import MEGASwiftUI
 import SwiftUI
 
 struct FutureMeetingRoomView: View {
@@ -69,12 +70,10 @@ struct FutureMeetingRoomView: View {
                         }
                         
                         if viewModel.shouldShowUnreadCount {
-                            Text(viewModel.unreadCountString)
-                                .font(.caption2)
-                                .foregroundColor(.white)
-                                .padding(4)
-                                .background(Color.red)
-                                .clipShape(Circle())
+                            UnreadCountView(
+                                isUnreadCountClipShapeCircle: viewModel.isUnreadCountClipShapeCircle,
+                                unreadCountString: viewModel.unreadCountString
+                            )
                         }
                     }
                 }

@@ -1370,6 +1370,7 @@
 		9949C3662A72424C000C299B /* ChatRoomAvatarInitialsGeneratorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9949C3652A72424C000C299B /* ChatRoomAvatarInitialsGeneratorTest.swift */; };
 		9959F75D2A93460B00225D71 /* WeekNumberInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9959F75C2A93460B00225D71 /* WeekNumberInformation.swift */; };
 		9961E7262A283030004FB05F /* VideoExplorerTableCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9961E7252A283030004FB05F /* VideoExplorerTableCellViewModelTests.swift */; };
+		9968B43C2B16E96500305DD2 /* MockPushNotificationControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9968B43B2B16E96500305DD2 /* MockPushNotificationControl.swift */; };
 		996A48FF2A8CBD9600264298 /* MeetingInfoViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996A48FE2A8CBD9600264298 /* MeetingInfoViewModelTests.swift */; };
 		996A49022A8CBDAE00264298 /* MeetingInfoViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996A49012A8CBDAE00264298 /* MeetingInfoViewModel+Additions.swift */; };
 		996F742C2A794B9D007209F0 /* MeetingInfoWaitingRoomSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996F74242A794219007209F0 /* MeetingInfoWaitingRoomSettingView.swift */; };
@@ -2120,7 +2121,6 @@
 		BF8895E82631213C002A18CA /* MockCallCoordinatorUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8895E72631213C002A18CA /* MockCallCoordinatorUseCase.swift */; };
 		BF8895F226312EA1002A18CA /* MockCallUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8895F126312EA1002A18CA /* MockCallUseCase.swift */; };
 		BF89C8A22947254B00710FD1 /* ChatRoomViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF89C8A12947254B00710FD1 /* ChatRoomViewModelTests.swift */; };
-		BF89C8A42947259B00710FD1 /* ChatRoomViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF89C8A32947259B00710FD1 /* ChatRoomViewModel+Additions.swift */; };
 		BF8B02EE28359EDD009AC794 /* callEnded.wav in Resources */ = {isa = PBXBuildFile; fileRef = BF8B02EB28359EDD009AC794 /* callEnded.wav */; };
 		BF8B02F32835A09E009AC794 /* MEGAProviderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8B02F22835A09E009AC794 /* MEGAProviderDelegate.swift */; };
 		BF90C795260406FC006061F8 /* UserImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF90C794260406FC006061F8 /* UserImageUseCase.swift */; };
@@ -3949,6 +3949,7 @@
 		9959F75C2A93460B00225D71 /* WeekNumberInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekNumberInformation.swift; sourceTree = "<group>"; };
 		9961E7252A283030004FB05F /* VideoExplorerTableCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoExplorerTableCellViewModelTests.swift; sourceTree = "<group>"; };
 		996309C52A78A61300382C38 /* SendToViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SendToViewController+Additions.swift"; path = "Chat/SendToViewController+Additions.swift"; sourceTree = "<group>"; };
+		9968B43B2B16E96500305DD2 /* MockPushNotificationControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPushNotificationControl.swift; sourceTree = "<group>"; };
 		996A48FE2A8CBD9600264298 /* MeetingInfoViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingInfoViewModelTests.swift; sourceTree = "<group>"; };
 		996A49012A8CBDAE00264298 /* MeetingInfoViewModel+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MeetingInfoViewModel+Additions.swift"; sourceTree = "<group>"; };
 		996F74242A794219007209F0 /* MeetingInfoWaitingRoomSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingInfoWaitingRoomSettingView.swift; sourceTree = "<group>"; };
@@ -4734,7 +4735,6 @@
 		BF8895E72631213C002A18CA /* MockCallCoordinatorUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCallCoordinatorUseCase.swift; sourceTree = "<group>"; };
 		BF8895F126312EA1002A18CA /* MockCallUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCallUseCase.swift; sourceTree = "<group>"; };
 		BF89C8A12947254B00710FD1 /* ChatRoomViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomViewModelTests.swift; sourceTree = "<group>"; };
-		BF89C8A32947259B00710FD1 /* ChatRoomViewModel+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatRoomViewModel+Additions.swift"; sourceTree = "<group>"; };
 		BF8B02EB28359EDD009AC794 /* callEnded.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = callEnded.wav; sourceTree = "<group>"; };
 		BF8B02F22835A09E009AC794 /* MEGAProviderDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MEGAProviderDelegate.swift; path = Chat/MEGAProviderDelegate.swift; sourceTree = "<group>"; };
 		BF90C794260406FC006061F8 /* UserImageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserImageUseCase.swift; sourceTree = "<group>"; };
@@ -11501,7 +11501,6 @@
 			children = (
 				990AC4EF2A4ABEB7008E298F /* ChatRoomLinkViewModel+Additions.swift */,
 				998379332ACA417100A9A439 /* ChatRoomParticipantViewModel+Additions.swift */,
-				BF89C8A32947259B00710FD1 /* ChatRoomViewModel+Additions.swift */,
 				BFD4E22A2935F73C0011392C /* FutureMeetingRoomViewModel+Additions.swift */,
 				BFE3B9F1285838A7003949FF /* MeetingContainerViewModel+Additions.swift */,
 				99F7043C2AD3A7E600A774DB /* MeetingCreatingViewModel+Additions.swift */,
@@ -11515,6 +11514,7 @@
 				8394EB8C2643E5080064F741 /* MockLocalVideoUseCase.swift */,
 				2FE5438C264E2BF400FF4955 /* MockMeetingCreatingUseCase.swift */,
 				BFE3B9DD2856A8A1003949FF /* MockNoUserJoinedUseCase.swift */,
+				9968B43B2B16E96500305DD2 /* MockPushNotificationControl.swift */,
 				8394EB962643E5200064F741 /* MockRemoteVideoUseCase.swift */,
 				83669E8B2987BF6B003E8F74 /* MockScheduledMeetingUseCase.swift */,
 				BFCA570E2A5525DD0033BEE2 /* MockScheduleMeetingViewConfiguration.swift */,
@@ -13446,7 +13446,6 @@
 				83CBA3E627A81B2F005F0FD5 /* CancellableTransfer.swift in Sources */,
 				83CBA3E227A81A85005F0FD5 /* CancellableTransferControllerWrapper.swift in Sources */,
 				83CBA3E127A81A85005F0FD5 /* CancellableTransferRouter.swift in Sources */,
-				94B4A0462B160DC10089FC94 /* SearchWithFilterOperation.swift in Sources */,
 				83C8372827D788B600AACDE1 /* CancellableTransferRouterOCWrapper.swift in Sources */,
 				831CDAFC27E0F2DE00A9D367 /* CancellableTransferType.swift in Sources */,
 				83CBA3E327A81A85005F0FD5 /* CancellableTransferViewModel.swift in Sources */,
@@ -14550,6 +14549,7 @@
 				94CD25A92ACD7A1C0079FABD /* SearchOperation.swift in Sources */,
 				5D4244E0251305BD00EE544D /* SearchResultFileTableViewCell.swift in Sources */,
 				947381BA2A9626D000C4E8EC /* SearchResultsBridge.swift in Sources */,
+				94B4A0462B160DC10089FC94 /* SearchWithFilterOperation.swift in Sources */,
 				5D1B23F324AF335000ACE1C5 /* SecondaryThemeButtonTextColorFactory.swift in Sources */,
 				41AA1A1C1AC081C600D32691 /* SecurityOptionsTableViewController.m in Sources */,
 				9D3563D228B5506A00CB3365 /* SecuritySettingsViewRouter.swift in Sources */,
@@ -15207,7 +15207,6 @@
 				998379342ACA417100A9A439 /* ChatRoomParticipantViewModel+Additions.swift in Sources */,
 				998379312ACA408800A9A439 /* ChatRoomParticipantViewModelTests.swift in Sources */,
 				8336E3F92906B449000F1E9F /* ChatRoomsListViewModelTests.swift in Sources */,
-				BF89C8A42947259B00710FD1 /* ChatRoomViewModel+Additions.swift in Sources */,
 				BF89C8A22947254B00710FD1 /* ChatRoomViewModelTests.swift in Sources */,
 				94A518EF2A6ED0E700728730 /* ChatViewControllerTests.swift in Sources */,
 				24575FEF2A499A62003EAE79 /* CloudDriveViewControllerTests.swift in Sources */,
@@ -15301,6 +15300,7 @@
 				C47E7C1C25D1A84200DB6FF5 /* MockOfflineFileInfoRepository.swift in Sources */,
 				9422B9F22A41A55C007AA5D1 /* MockPermissionAlertRouter.swift in Sources */,
 				32A9DECE28D198FF00ABC3F6 /* MockPhotoBrowserDataProvider.swift in Sources */,
+				9968B43C2B16E96500305DD2 /* MockPushNotificationControl.swift in Sources */,
 				8394EB972643E5200064F741 /* MockRemoteVideoUseCase.swift in Sources */,
 				949704B72AB427BE00B2CA3A /* MockRenameViewRouter.swift in Sources */,
 				83669E8C2987BF6B003E8F74 /* MockScheduledMeetingUseCase.swift in Sources */,
