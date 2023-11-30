@@ -327,6 +327,41 @@ final class FutureMeetingRoomViewModelTests: XCTestCase {
         )
     }
     
+    func testUnreadCountString_forChatListItemUnreadCountLessThanZero_shouldBePositiveWithPlus() {
+        let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(unreadCount: -1))
+        let sut = FutureMeetingRoomViewModel(chatRoomUseCase: chatRoomUseCase)
+
+        XCTAssertEqual(sut.unreadCountString, "1+")
+    }
+    
+    func testUnreadCountString_forChatListItemUnreadCountGreaterThanZeroAndLessThan100_shouldBePositiveWithoutPlus() {
+        let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(unreadCount: 50))
+        let sut = FutureMeetingRoomViewModel(chatRoomUseCase: chatRoomUseCase)
+        
+        XCTAssertEqual(sut.unreadCountString, "50")
+    }
+    
+    func testUnreadCountString_forChatListItemUnreadCountGreaterThan99_shouldBe99WithPlu() {
+        let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(unreadCount: 123))
+        let sut = FutureMeetingRoomViewModel(chatRoomUseCase: chatRoomUseCase)
+
+        XCTAssertEqual(sut.unreadCountString, "99+")
+    }
+    
+    func testIsUnreadCountClipShapeCircle_forUnreadCountNumberCountEqualOne_shouldBeTrue() {
+        let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(unreadCount: 5))
+        let sut = FutureMeetingRoomViewModel(chatRoomUseCase: chatRoomUseCase)
+
+        XCTAssertTrue(sut.isUnreadCountClipShapeCircle)
+    }
+    
+    func testIsUnreadCountClipShapeCircle_forUnreadCountNumberCountGreaterThanOne_shouldBeFalse() {
+        let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(unreadCount: 15))
+        let sut = FutureMeetingRoomViewModel(chatRoomUseCase: chatRoomUseCase)
+
+        XCTAssertFalse(sut.isUnreadCountClipShapeCircle)
+    }
+    
     // MARK: - Private methods
     
     private func evaluate(expression: @escaping () -> Bool) {

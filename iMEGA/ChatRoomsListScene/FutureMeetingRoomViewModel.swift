@@ -53,7 +53,10 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
     }
     
     var shouldShowUnreadCount = false
-    var unreadCountString = ""
+    private(set) var unreadCountString = ""
+    var isUnreadCountClipShapeCircle: Bool {
+        unreadCountString.count == 1
+    }
     var isRecurring: Bool
     var chatHasMessages = false
     
@@ -127,7 +130,12 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
                 chatListItemAvatar: chatListItemAvatar
             )
             self.shouldShowUnreadCount = chatRoomEntity.unreadCount != 0
-            self.unreadCountString = chatRoomEntity.unreadCount > 0 ? "\(chatRoomEntity.unreadCount)" : "\(-chatRoomEntity.unreadCount)+"
+            if chatRoomEntity.unreadCount > 0 {
+                self.unreadCountString = chatRoomEntity.unreadCount > 99 ? "99+" : "\(chatRoomEntity.unreadCount)"
+            } else {
+                self.unreadCountString = "\(-chatRoomEntity.unreadCount)+"
+            }
+            
         } else {
             self.chatRoomAvatarViewModel = nil
         }

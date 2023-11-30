@@ -79,7 +79,7 @@ final class ChatRoomsListViewModelTests: XCTestCase {
             .$displayChatRooms
             .dropFirst()
             .sink {
-                XCTAssert(mockList.map { ChatRoomViewModel(chatListItem: $0) } == $0)
+                XCTAssert(mockList.map { ChatRoomViewModelFactory.make(chatListItem: $0) } == $0)
                 expectation.fulfill()
             }
         
@@ -106,7 +106,7 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         
         viewModel.selectChatMode(.meetings)
         wait(for: [expectation], timeout: 10)
-        XCTAssertEqual(mockList.map { ChatRoomViewModel(chatListItem: $0) }, viewModel.displayPastMeetings)
+        XCTAssertEqual(mockList.map { ChatRoomViewModelFactory.make(chatListItem: $0) }, viewModel.displayPastMeetings)
     }
     
     func test_EmptyChatsList() {
