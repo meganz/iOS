@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "9C09C3EB-8566-41C3-9A52-ABDBEBDC7375",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "VideoTests",
+        "name" : "VideoTests"
+      }
+    }
+  ],
+  "version" : 1
+}
