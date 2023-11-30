@@ -11,11 +11,11 @@ struct PhotoLibraryFilterTypeView: View {
     }
     
     private var foreground: Color {
-        selected ? .white : Colors.Photos.filterNormalTextForeground.swiftUIColor
+        selected ? .white : Color.photosFilterNormalTextForeground
     }
     
     private var background: Color {
-        selected ? Colors.Photos.filterTypeSelectionBackground.swiftUIColor : Colors.Photos.filterTypeNormalBackground.swiftUIColor
+        selected ? Color.photosFilterTypeSelectionBackground : Color.photosFilterTypeNormalBackground
     }
     
     var body: some View {

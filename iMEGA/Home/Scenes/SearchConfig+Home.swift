@@ -8,9 +8,9 @@ extension SearchConfig {
             chipAssets: .init(
                 selectionIndicatorImage: Asset.Images.Generic.turquoiseCheckmark.image,
                 selectedForeground: .white,
-                selectedBackground: Colors.Photos.filterTypeSelectionBackground.swiftUIColor,
-                normalForeground: Colors.Photos.filterNormalTextForeground.swiftUIColor,
-                normalBackground: Colors.Photos.filterTypeNormalBackground.swiftUIColor
+                selectedBackground: Color.photosFilterTypeSelectionBackground,
+                normalForeground: Color.photosFilterNormalTextForeground,
+                normalBackground: Color.photosFilterTypeNormalBackground
             ),
             emptyViewAssetFactory: { chip in
                 let textColor = Color(.gray515151)
