@@ -1,6 +1,6 @@
 NS_ASSUME_NONNULL_BEGIN
 
-@class AccountHallViewModel, MEGALabel;
+@class MyAccountHallViewModel, MEGALabel;
 
 @interface MyAccountHallViewController : UIViewController
 
@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet MEGALabel *nameLabel;
 @property (nonatomic, strong, nullable) MEGANode *backupsRootNode;
 @property (nonatomic, assign) BOOL isBackupSectionVisible;
-@property (nonatomic, strong) AccountHallViewModel *viewModel;
+@property (nonatomic, strong) MyAccountHallViewModel *viewModel;
 
 @end
 

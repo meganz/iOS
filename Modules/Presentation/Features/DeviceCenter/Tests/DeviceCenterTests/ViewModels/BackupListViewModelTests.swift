@@ -201,7 +201,7 @@ final class BackupListViewModelTests: XCTestCase {
             id: 1,
             name: "backup1",
             deviceId: mockCurrentDeviceId,
-            type: .downSync
+            type: .backupUpload
         )
         
         let backups = [backup]
@@ -212,12 +212,14 @@ final class BackupListViewModelTests: XCTestCase {
             currentDeviceId: mockCurrentDeviceId,
             currentDeviceName: mockCurrentDeviceName,
             backups: userGroupedBackups[mockCurrentDeviceId] ?? [],
-            deviceCenterUseCase: mockUseCase
+            deviceCenterUseCase: mockUseCase,
+            isOutShared: true,
+            isExported: true
         )
         
         let actions = viewModel.actionsForBackup(backup)
         let actionsType = actions?.compactMap {$0.type}
-        let expectedActions: [DeviceCenterActionType] = [.info]
+        let expectedActions: [DeviceCenterActionType] = [.info, .offline, .manageLink, .removeLink, .manageFolder, .copy]
         
         XCTAssertEqual(actionsType, expectedActions, "Actions for backup are incorrect")
     }
@@ -379,6 +381,8 @@ final class BackupListViewModelTests: XCTestCase {
         backups: [BackupEntity],
         deviceCenterUseCase: MockDeviceCenterUseCase = MockDeviceCenterUseCase(),
         updateInterval: UInt64 = 1,
+        isOutShared: Bool = false,
+        isExported: Bool = false,
         file: StaticString = #file,
         line: UInt = #line
     ) -> BackupListViewModel {
@@ -393,7 +397,13 @@ final class BackupListViewModelTests: XCTestCase {
             devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>(),
             updateInterval: updateInterval,
             deviceCenterUseCase: deviceCenterUseCase,
-            nodeUseCase: MockNodeDataUseCase(), 
+            nodeUseCase: MockNodeDataUseCase(
+                node: NodeEntity(
+                    handle: 1,
+                    isOutShare: isOutShared,
+                    isExported: isExported
+                )
+            ),
             networkMonitorUseCase: networkMonitorUseCase,
             router: MockBackupListViewRouter(),
             deviceCenterBridge: DeviceCenterBridge(),
@@ -422,9 +432,6 @@ final class BackupListViewModelTests: XCTestCase {
                 ),
                 DeviceCenterAction(
                     type: .rename
-                ),
-                DeviceCenterAction(
-                    type: .showInBackups
                 ),
                 DeviceCenterAction(
                     type: .showInCloudDrive

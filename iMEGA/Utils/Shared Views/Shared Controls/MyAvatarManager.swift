@@ -52,16 +52,13 @@ import MEGASDKRepo
     }
     
     @objc private func navigateToMyAccount() {
-        guard let myAccountViewController = UIStoryboard(name: "MyAccount", bundle: nil)
-                .instantiateViewController(withIdentifier: "MyAccountHall") as? MyAccountHallViewController else {
-            return
-        }
+        guard let navigationController else { return }
         
-        let viewModel = AccountHallViewModel(accountHallUsecase: AccountHallUseCase(repository: AccountRepository.newRepo),
-                                             purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo))
-        myAccountViewController.viewModel = viewModel
-        
-        navigationController?.pushViewController(myAccountViewController, animated: true)
+        MyAccountHallRouter(
+            myAccountHallUseCase: MyAccountHallUseCase(repository: AccountRepository.newRepo),
+            purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
+            navigationController: navigationController
+        ).start()
     }
     
     func setupBarButtonItems() {

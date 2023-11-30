@@ -92,7 +92,7 @@ extension MyAccountHallViewController {
     
     // MARK: - Private
     
-    private func excuteCommand(_ command: AccountHallViewModel.Command) {
+    private func excuteCommand(_ command: MyAccountHallViewModel.Command) {
         switch command {
         case .reloadCounts:
             tableView?.reloadData()

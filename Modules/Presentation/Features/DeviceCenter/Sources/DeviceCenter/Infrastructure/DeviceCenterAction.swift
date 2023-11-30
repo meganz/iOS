@@ -1,7 +1,14 @@
 public enum DeviceCenterActionType {
     case cameraUploads
+    case copy
     case info
     case rename
+    case offline
+    case shareLink
+    case manageLink
+    case removeLink
+    case shareFolder
+    case manageFolder
     case showInCloudDrive
     case showInBackups
     case sort

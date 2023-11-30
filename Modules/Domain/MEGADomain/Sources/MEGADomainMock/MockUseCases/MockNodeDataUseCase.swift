@@ -8,6 +8,7 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
     public var downloadedToReturn: Bool
     public var inRubbishBinToReturn: Bool
     private var multimediaNodes: [NodeEntity]
+    private var nodeEntity: NodeEntity?
     
     public var isMultimediaFileNode_CalledTimes = 0
     
@@ -17,7 +18,8 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
                 versions: Bool = false,
                 downloaded: Bool = false,
                 inRubbishBin: Bool = false,
-                multimediaNodes: [NodeEntity] = []) {
+                multimediaNodes: [NodeEntity] = [],
+                node: NodeEntity? = nil) {
         self.nodeAccessLevelVariable = nodeAccessLevelVariable
         self.labelStringToReturn = labelString
         self.filesAndFolders = filesAndFolders
@@ -25,6 +27,7 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
         self.downloadedToReturn = downloaded
         self.inRubbishBinToReturn = inRubbishBin
         self.multimediaNodes = multimediaNodes
+        self.nodeEntity = node
     }
     
     public func nodeAccessLevel(nodeHandle: HandleEntity) -> NodeAccessTypeEntity {
@@ -57,15 +60,15 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
         inRubbishBinToReturn
     }
     
-    public func nodeForHandle(_ handle: MEGADomain.HandleEntity) -> NodeEntity? {
-        nil
+    public func nodeForHandle(_ handle: HandleEntity) -> NodeEntity? {
+        nodeEntity
     }
     
-    public func parentForHandle(_ handle: MEGADomain.HandleEntity) -> NodeEntity? {
-        nil
+    public func parentForHandle(_ handle: HandleEntity) -> NodeEntity? {
+        nodeEntity
     }
     
-    public func parentsForHandle(_ handle: MEGADomain.HandleEntity) async -> [NodeEntity]? {
+    public func parentsForHandle(_ handle: HandleEntity) async -> [NodeEntity]? {
         nil
     }
 }

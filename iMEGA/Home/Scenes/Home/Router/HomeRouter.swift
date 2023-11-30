@@ -198,16 +198,15 @@ final class HomeRouter: HomeRouterProtocol {
     // MARK: - Show Account View Controller
 
     private func routeToAccount(with navigationController: UINavigationController?) {
-        guard let myAccountViewController = UIStoryboard(name: "MyAccount", bundle: nil)
-                .instantiateViewController(withIdentifier: "MyAccountHall") as? MyAccountHallViewController else {
+        guard let navigationController else {
             return
         }
         
-        let viewModel = AccountHallViewModel(accountHallUsecase: AccountHallUseCase(repository: AccountRepository.newRepo),
-                                             purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo))
-        myAccountViewController.viewModel = viewModel
-        
-        navigationController?.pushViewController(myAccountViewController, animated: true)
+        MyAccountHallRouter(
+            myAccountHallUseCase: MyAccountHallUseCase(repository: AccountRepository.newRepo),
+            purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
+            navigationController: navigationController
+        ).start()
     }
 
     // MARK: - Display Upload Source Selection Action Sheet
@@ -226,16 +225,15 @@ final class HomeRouter: HomeRouterProtocol {
     // MARK: - Display Application Event
 
     private func presentAchievement() {
-        guard let myAccountViewController = UIStoryboard(name: "MyAccount", bundle: nil)
-                .instantiateViewController(withIdentifier: "MyAccountHall") as? MyAccountHallViewController else {
+        guard let navigationController else {
             return
         }
         
-        let viewModel = AccountHallViewModel(accountHallUsecase: AccountHallUseCase(repository: AccountRepository.newRepo),
-                                             purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo))
-        myAccountViewController.viewModel = viewModel
-        
-        navigationController?.pushViewController(myAccountViewController, animated: true)
-        myAccountViewController.openAchievements()
+        MyAccountHallRouter(
+            myAccountHallUseCase: MyAccountHallUseCase(repository: AccountRepository.newRepo),
+            purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
+            shouldOpenAchievements: true,
+            navigationController: navigationController
+        ).start()
     }
 }

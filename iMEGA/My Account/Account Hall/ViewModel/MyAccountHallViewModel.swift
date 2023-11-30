@@ -1,23 +1,25 @@
 import Combine
+import DeviceCenter
 import Foundation
 import MEGADomain
 import MEGAPresentation
 import MEGASDKRepo
 import MEGASwift
 
-enum AccountHallLoadTarget {
+enum MyAccountHallLoadTarget {
     case planList, accountDetails, contentCounts
 }
 
-enum AccountHallAction: ActionType {
+enum MyAccountHallAction: ActionType {
     case reloadUI
-    case load(_ target: AccountHallLoadTarget)
+    case load(_ target: MyAccountHallLoadTarget)
     case didTapUpgradeButton
     case addSubscriptions
     case removeSubscriptions
+    case didTapDeviceCenterButton
 }
 
-final class AccountHallViewModel: ViewModelType, ObservableObject {
+final class MyAccountHallViewModel: ViewModelType, ObservableObject {
     
     enum Command: CommandType, Equatable {
         case reloadCounts
@@ -38,8 +40,10 @@ final class AccountHallViewModel: ViewModelType, ObservableObject {
     private(set) var planList: [AccountPlanEntity] = []
     private var featureFlagProvider: any FeatureFlagProviderProtocol
     private var abTestProvider: any ABTestProviderProtocol
-    private let accountHallUsecase: any AccountHallUseCaseProtocol
+    private let myAccountHallUseCase: any MyAccountHallUseCaseProtocol
     private let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
+    let deviceCenterBridge: DeviceCenterBridge
+    let router: any MyAccountHallRouting
     
     private var subscriptions = Set<AnyCancellable>()
     var loadContentTask: Task<Void, Never>?
@@ -50,17 +54,22 @@ final class AccountHallViewModel: ViewModelType, ObservableObject {
     
     // MARK: - Init
     
-    init(accountHallUsecase: some AccountHallUseCaseProtocol,
+    init(myAccountHallUseCase: some MyAccountHallUseCaseProtocol,
          purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
-         abTestProvider: some ABTestProviderProtocol = DIContainer.abTestProvider) {
-        self.accountHallUsecase = accountHallUsecase
+         abTestProvider: some ABTestProviderProtocol = DIContainer.abTestProvider,
+         deviceCenterBridge: DeviceCenterBridge,
+         router: some MyAccountHallRouting) {
+        self.myAccountHallUseCase = myAccountHallUseCase
         self.purchaseUseCase = purchaseUseCase
         self.featureFlagProvider = featureFlagProvider
         self.abTestProvider = abTestProvider
+        self.deviceCenterBridge = deviceCenterBridge
+        self.router = router
         
         setupABTestVariant()
-        setAccountDetails(accountHallUsecase.currentAccountDetails)
+        setAccountDetails(myAccountHallUseCase.currentAccountDetails)
+        makeDeviceCenterBridge()
     }
     
     deinit {
@@ -85,7 +94,7 @@ final class AccountHallViewModel: ViewModelType, ObservableObject {
 
     // MARK: - Dispatch actions
     
-    func dispatch(_ action: AccountHallAction) {
+    func dispatch(_ action: MyAccountHallAction) {
         switch action {
         case .reloadUI:
             invokeCommand?(.reloadUIContent)
@@ -100,6 +109,11 @@ final class AccountHallViewModel: ViewModelType, ObservableObject {
             registerRequestDelegates()
         case .removeSubscriptions:
             deRegisterRequestDelegates()
+        case .didTapDeviceCenterButton:
+            router.navigateToDeviceCenter(
+                deviceCenterBridge: deviceCenterBridge,
+                deviceCenterAssets: makeDeviceCenterAssetData()
+            )
         }
     }
     
@@ -112,7 +126,7 @@ final class AccountHallViewModel: ViewModelType, ObservableObject {
     
     // MARK: - Public
     var currentUserHandle: HandleEntity? {
-        accountHallUsecase.currentUserHandle
+        myAccountHallUseCase.currentUserHandle
     }
     
     var userFullName: String? {
@@ -121,7 +135,7 @@ final class AccountHallViewModel: ViewModelType, ObservableObject {
     }
     
     var isMasterBusinessAccount: Bool {
-        accountHallUsecase.isMasterBusinessAccount
+        myAccountHallUseCase.isMasterBusinessAccount
     }
     
     // MARK: - Private
@@ -134,7 +148,7 @@ final class AccountHallViewModel: ViewModelType, ObservableObject {
         }
     }
     
-    private func loadContent(_ target: AccountHallLoadTarget) async {
+    private func loadContent(_ target: MyAccountHallLoadTarget) async {
         switch target {
         case .planList:
             await fetchPlanList()
@@ -155,7 +169,7 @@ final class AccountHallViewModel: ViewModelType, ObservableObject {
         await setIsUpdatingAccountDetails(showActivityIndicator)
         
         do {
-            let accountDetails = try await accountHallUsecase.refreshCurrentAccountDetails()
+            let accountDetails = try await myAccountHallUseCase.refreshCurrentAccountDetails()
             setAccountDetails(accountDetails)
             await setIsUpdatingAccountDetails(false)
             await configPlanDisplay()
@@ -166,8 +180,8 @@ final class AccountHallViewModel: ViewModelType, ObservableObject {
     }
     
     private func fetchCounts() async {
-        incomingContactRequestsCount = await accountHallUsecase.incomingContactsRequestsCount()
-        let relevantUnseenUserAlertsCount = await accountHallUsecase.relevantUnseenUserAlertsCount()
+        incomingContactRequestsCount = await myAccountHallUseCase.incomingContactsRequestsCount()
+        let relevantUnseenUserAlertsCount = await myAccountHallUseCase.relevantUnseenUserAlertsCount()
         $relevantUnseenUserAlertsCount.mutate { currentValue in
             currentValue = relevantUnseenUserAlertsCount
         }
@@ -194,21 +208,21 @@ final class AccountHallViewModel: ViewModelType, ObservableObject {
     // MARK: Subscriptions
     private func registerRequestDelegates() {
         Task {
-            await accountHallUsecase.registerMEGARequestDelegate()
-            await accountHallUsecase.registerMEGAGlobalDelegate()
+            await myAccountHallUseCase.registerMEGARequestDelegate()
+            await myAccountHallUseCase.registerMEGAGlobalDelegate()
             setupSubscriptions()
         }
     }
     
     private func deRegisterRequestDelegates() {
         Task.detached { [weak self] in
-            await self?.accountHallUsecase.deRegisterMEGARequestDelegate()
-            await self?.accountHallUsecase.deRegisterMEGAGlobalDelegate()
+            await self?.myAccountHallUseCase.deRegisterMEGARequestDelegate()
+            await self?.myAccountHallUseCase.deRegisterMEGAGlobalDelegate()
         }
     }
     
     private func setupSubscriptions() {
-        accountHallUsecase.requestResultPublisher()
+        myAccountHallUseCase.requestResultPublisher()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] result in
                 guard let self else { return }
@@ -216,7 +230,7 @@ final class AccountHallViewModel: ViewModelType, ObservableObject {
             }
             .store(in: &subscriptions)
         
-        accountHallUsecase.contactRequestPublisher()
+        myAccountHallUseCase.contactRequestPublisher()
             .map { $0.count }
             .removeDuplicates()
             .receive(on: DispatchQueue.main)
@@ -227,7 +241,7 @@ final class AccountHallViewModel: ViewModelType, ObservableObject {
             }
             .store(in: &subscriptions)
         
-        accountHallUsecase.userAlertUpdatePublisher()
+        myAccountHallUseCase.userAlertUpdatePublisher()
             .map { UInt($0.count) }
             .removeDuplicates()
             .receive(on: DispatchQueue.main)

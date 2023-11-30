@@ -424,9 +424,6 @@ final class DeviceListViewModelTests: XCTestCase {
                     type: .rename
                 ),
                 DeviceCenterAction(
-                    type: .showInBackups
-                ),
-                DeviceCenterAction(
                     type: .showInCloudDrive
                 ),
                 DeviceCenterAction(
