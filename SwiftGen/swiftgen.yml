@@ -2,13 +2,6 @@ input_dir: ../iMEGA/
 output_dir: ${DERIVED_SOURCES_DIR}
 
 xcassets:
-  - inputs: ../Modules/Presentation/MEGAAssets/Sources/MEGAAssets/Resources/Colors.xcassets
-    outputs:
-      - templateName: swift5
-        output: Colors+Generated.swift
-        params:
-            forceProvidesNamespaces: true
-            enumName: Colors
   - inputs: ../Modules/Presentation/MEGAAssets/Sources/MEGAAssets/Resources/Images.xcassets
     outputs:
       - templateName: swift5
