@@ -94,7 +94,7 @@ final class PSAView: UIView, ViewType {
         backgroundColor = .mnz_notificationSeenBackground(for: trait)
         topBorderView.backgroundColor = .mnz_separator(for: trait)
         bottomBorderView.backgroundColor = .mnz_separator(for: trait)
-        imageView.backgroundColor = Colors.Psa.imageBackground.color
+        imageView.backgroundColor = UIColor.psaImageBackground
     }
     
     @IBAction func leftButtonTapped(_ sender: UIButton) {

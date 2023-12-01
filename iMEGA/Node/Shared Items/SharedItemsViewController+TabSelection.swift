@@ -14,14 +14,14 @@ extension SharedItemsViewController {
     }
     
     private func setSelectedTab(forTabButton button: UIButton, lineView: UIView) {
-        lineView.backgroundColor = Colors.SharedItems.Tabs.sharedItemsTabSelectedBackground.color
-        button.tintColor = Colors.SharedItems.Tabs.sharedItemsTabSelectedIconTint.color
-        button.setTitleColor(Colors.SharedItems.Tabs.sharedItemsTabSelectedText.color, for: .selected)
+        lineView.backgroundColor = UIColor.sharedItemsTabSelectedBackground
+        button.tintColor = UIColor.sharedItemsTabSelectedIconTint
+        button.setTitleColor(UIColor.sharedItemsTabSelectedText, for: .selected)
     }
     
     private func setNormalTab(forTabButton button: UIButton, lineView: UIView) {
-        lineView.backgroundColor = Colors.SharedItems.Tabs.sharedItemsTabNormalBackground.color
-        button.tintColor = Colors.SharedItems.Tabs.sharedItemsTabNormalIconTint.color
-        button.setTitleColor(Colors.SharedItems.Tabs.sharedItemsTabNormalText.color, for: .normal)
+        lineView.backgroundColor = UIColor.sharedItemsTabNormalBackground
+        button.tintColor = UIColor.sharedItemsTabNormalIconTint
+        button.setTitleColor(UIColor.sharedItemsTabNormalText, for: .normal)
     }
 }

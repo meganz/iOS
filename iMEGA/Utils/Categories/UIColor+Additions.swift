@@ -469,7 +469,7 @@ extension UIColor {
      - Returns: The color associated with the PRO LITE trademark.
      */
     @objc class func mnz_proLITE() -> UIColor {
-        return UIColor.proLITE
+        UIColor.proAccountLITE
     }
     
     /**
@@ -478,7 +478,7 @@ extension UIColor {
      - Returns: The color associated with the PRO I trademark.
      */
     @objc class func mnz_redProI() -> UIColor {
-        return UIColor.redProI
+        UIColor.proAccountRedProI
     }
     
     /**
@@ -487,7 +487,7 @@ extension UIColor {
      - Returns: The color associated with the PRO II trademark.
      */
     @objc class func mnz_redProII() -> UIColor {
-        return UIColor.redProII
+        UIColor.proAccountRedProII
     }
     
     /**
@@ -496,7 +496,7 @@ extension UIColor {
      - Returns: The color associated with the PRO III trademark.
      */
     @objc class func mnz_redProIII() -> UIColor {
-        return UIColor.redProIII
+        UIColor.proAccountRedProIII
     }
     
     @objc class func mnz_color(proLevel: MEGAAccountType) -> UIColor? {

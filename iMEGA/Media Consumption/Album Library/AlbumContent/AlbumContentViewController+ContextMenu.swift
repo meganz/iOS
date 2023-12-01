@@ -28,7 +28,7 @@ extension AlbumContentViewController {
                 target: self,
                 action: #selector(cancelButtonPressed(_:))
             )
-            cancelBarButtonItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Colors.MediaDiscovery.exitButtonTint.color], for: .normal)
+            cancelBarButtonItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.mediaDiscoveryExitButtonTint], for: .normal)
             navigationItem.rightBarButtonItems = [cancelBarButtonItem]
         } else {
             var rightBarButtonItems = [UIBarButtonItem]()

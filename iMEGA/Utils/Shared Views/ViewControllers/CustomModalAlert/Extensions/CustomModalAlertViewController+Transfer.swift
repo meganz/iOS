@@ -88,7 +88,7 @@ extension CustomModalAlertViewController {
             return attributedString
         }
         let urlRange = NSString(string: fullMessage).range(of: tappableString)
-        attributedString.addAttributes([.foregroundColor: Colors.Views.turquoise.color, .link: urlLink], range: urlRange)
+        attributedString.addAttributes([.foregroundColor: UIColor.turquoise, .link: urlLink], range: urlRange)
         return attributedString
     }
     

@@ -15,11 +15,11 @@ struct ChatTabsSelectorView: View {
                 }, label: {
                     Text(Strings.Localizable.Chat.Selector.chat)
                         .font(Font.system(.subheadline, design: .default).weight(.medium))
-                        .foregroundColor(Color(chatViewMode == .chats ? Colors.Chat.Tabs.chatTabSelectedText.color : Colors.Chat.Tabs.chatTabNormalText.color))
+                        .foregroundColor(Color(chatViewMode == .chats ? UIColor.chatTabSelectedText : UIColor.chatTabNormalText))
                 })
                 Divider()
                     .frame(maxHeight: 1)
-                    .background(Color(chatViewMode == .chats ? Colors.Chat.Tabs.chatTabSelectedBackground.color : Colors.Chat.Tabs.chatTabNormalBackground.color))
+                    .background(Color(chatViewMode == .chats ? UIColor.chatTabSelectedBackground : UIColor.chatTabNormalBackground))
             }
             
             VStack {
@@ -29,11 +29,11 @@ struct ChatTabsSelectorView: View {
                 }, label: {
                     Text(Strings.Localizable.Chat.Selector.meeting)
                         .font(Font.system(.subheadline, design: .default).weight(.medium))
-                        .foregroundColor(Color(chatViewMode == .meetings ? Colors.Chat.Tabs.chatTabSelectedText.color : Colors.Chat.Tabs.chatTabNormalText.color))
+                        .foregroundColor(Color(chatViewMode == .meetings ? UIColor.chatTabSelectedText : UIColor.chatTabNormalText))
                 })
                 Divider()
                     .frame(maxHeight: 1)
-                    .background(Color(chatViewMode == .meetings ? Colors.Chat.Tabs.chatTabSelectedBackground.color : Colors.Chat.Tabs.chatTabNormalBackground.color))
+                    .background(Color(chatViewMode == .meetings ? UIColor.chatTabSelectedBackground : UIColor.chatTabNormalBackground))
             }
         }
         .frame(maxHeight: 44)
