@@ -38,23 +38,23 @@ extension CameraUploadBannerStatusViewStates: CameraUploadBannerStatusViewPresen
         }
     }
 
-    var textColor: AnyShapeStyle {
+    func textColor(for scheme: ColorScheme) -> Color {
         switch self {
         case .uploadInProgress, .uploadCompleted:
-            return Color.primary.toAnyShapeStyle()
+            return Color.primary
         case .uploadPaused(let reason as any CameraUploadBannerStatusViewPresenterProtocol),
                 .uploadPartialCompleted(let reason as any CameraUploadBannerStatusViewPresenterProtocol):
-            return reason.textColor
+            return reason.textColor(for: scheme)
         }
     }
     
-    var backgroundColor: AnyShapeStyle {
+    func backgroundColor(for scheme: ColorScheme) -> Color {
         switch self {
         case .uploadInProgress, .uploadCompleted:
-            return ColorSchemeDesiredColor(lightMode: .white, darkMode: .gray1D1D1D).toAnyShapeStyle()
+            return scheme == .dark ? .gray1D1D1D : .white
         case .uploadPaused(let reason as any CameraUploadBannerStatusViewPresenterProtocol),
                 .uploadPartialCompleted(let reason as any CameraUploadBannerStatusViewPresenterProtocol):
-            return reason.backgroundColor
+            return reason.backgroundColor(for: scheme)
         }
     }
 }
@@ -75,22 +75,22 @@ extension CameraUploadBannerStatusPartiallyCompletedReason: CameraUploadBannerSt
             return Strings.Localizable.CameraUploads.Banner.Status.UploadsPartialComplete.LimitedPhotoLibraryAccess.subHeading
         }
     }
-    
-    var textColor: AnyShapeStyle {
+        
+    func textColor(for scheme: ColorScheme) -> Color {
         switch self {
         case .videoUploadIsNotEnabled:
-            return Color.primary.toAnyShapeStyle()
+            return .primary
         case .photoLibraryLimitedAccess:
-            return ColorSchemeDesiredColor(lightMode: .yellow9D8319, darkMode: .yellowFFD60A).toAnyShapeStyle()
+            return scheme == .dark ? .yellowFFD60A : .yellow9D8319
         }
     }
-    
-    var backgroundColor: AnyShapeStyle {
+        
+    func backgroundColor(for scheme: ColorScheme) -> Color {
         switch self {
         case .videoUploadIsNotEnabled:
-            return ColorSchemeDesiredColor(lightMode: .white, darkMode: .gray1D1D1D).toAnyShapeStyle()
+            return scheme == .dark ? .gray1D1D1D : .white
         case .photoLibraryLimitedAccess:
-            return Color.yellowFED42926.toAnyShapeStyle()
+            return .yellowFED42926
         }
     }
 }
@@ -110,10 +110,9 @@ extension CameraUploadBannerStatusUploadPausedReason: CameraUploadBannerStatusVi
         }
     }
     
-    var textColor: AnyShapeStyle { Color.primary.toAnyShapeStyle() }
+    func textColor(for scheme: ColorScheme) -> Color { .primary }
     
-    var backgroundColor: AnyShapeStyle {
-        ColorSchemeDesiredColor(lightMode: .white, darkMode: .gray1D1D1D)
-            .toAnyShapeStyle()
+    func backgroundColor(for scheme: ColorScheme) -> Color {
+        scheme == .dark ? .gray1D1D1D : .white
     }
 }
