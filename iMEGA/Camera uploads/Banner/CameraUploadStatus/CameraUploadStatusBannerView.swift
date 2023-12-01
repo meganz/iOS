@@ -6,6 +6,8 @@ struct CameraUploadBannerStatusView: View {
     let previewEntity: any CameraUploadBannerStatusViewPresenterProtocol
     let onTapHandler: (() -> Void)
     
+    @Environment(\.colorScheme) private var colorScheme
+
     var body: some View {
         Button(action: onTapHandler, label: content)
             .buttonStyle(.plain)
@@ -23,16 +25,15 @@ struct CameraUploadBannerStatusView: View {
                     .multilineTextAlignment(.leading)
                     .monospacedDigit()
             }
-            .foregroundStyle(previewEntity.textColor)
+            .foregroundStyle(previewEntity.textColor(for: colorScheme))
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.vertical, 12)
             .padding(.horizontal, 16)
-            
             Divider()
-                .background(ColorSchemeDesiredColor(lightMode: .gray3C3C43.opacity(0.65), darkMode: .gray545458.opacity(0.3)))
+                .background(previewEntity.bottomBorder(for: colorScheme))
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(previewEntity.backgroundColor)
+        .background(previewEntity.backgroundColor(for: colorScheme))
     }
 }
 
@@ -77,6 +78,6 @@ struct CameraUploadBannerStatusView_Preview: PreviewProvider {
             previewGroup(for: "Uploads Partially Completed", statuses: uploadPartialCompletedStatuses)
         }
         .frame(maxHeight: .infinity, alignment: .center)
-        .background(ColorSchemeDesiredColor(lightMode: .red, darkMode: .green))
+        .background(.background)
     }
 }

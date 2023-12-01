@@ -10,6 +10,8 @@ class CameraUploadBannerStatusViewStatesToPreviewEntityTests: XCTestCase {
     func testToPreviewEntitty_ForAllUploadCompletedStates_shouldReturnCorrectStrings() {
         performPreviewComparisonTest(
             status: .uploadCompleted,
+            textColor: (.primary, .primary),
+            backgroundColor: (.white, .gray1D1D1D),
             expectedTitle: Strings.Localizable.CameraUploads.Banner.Status.UploadsComplete.title,
             expectedSubheading: Strings.Localizable.CameraUploads.Banner.Status.UploadsComplete.subHeading
         )
@@ -18,12 +20,16 @@ class CameraUploadBannerStatusViewStatesToPreviewEntityTests: XCTestCase {
     func testToPreviewEntity_ForAllInProgressStates_shouldReturnCorrectStrings() {
         performPreviewComparisonTest(
             status: .uploadInProgress(numberOfFilesPending: 1),
+            textColor: (.primary, .primary),
+            backgroundColor: (.white, .gray1D1D1D),
             expectedTitle: Strings.Localizable.CameraUploads.Banner.Status.UploadInProgress.title,
             expectedSubheading: Strings.Localizable.CameraUploads.Banner.Status.FilesPending.subHeading(1)
         )
         
         performPreviewComparisonTest(
             status: .uploadInProgress(numberOfFilesPending: 12),
+            textColor: (.primary, .primary),
+            backgroundColor: (.white, .gray1D1D1D),
             expectedTitle: Strings.Localizable.CameraUploads.Banner.Status.UploadInProgress.title,
             expectedSubheading: Strings.Localizable.CameraUploads.Banner.Status.FilesPending.subHeading(12)
         )
@@ -32,12 +38,16 @@ class CameraUploadBannerStatusViewStatesToPreviewEntityTests: XCTestCase {
     func testToPreviewEntity_ForAllInUploadPausedStates_shouldReturnCorrectStrings() {
         performPreviewComparisonTest(
             status: .uploadPaused(reason: .noWifiConnection(numberOfFilesPending: 1)),
+            textColor: (.primary, .primary),
+            backgroundColor: (.white, .gray1D1D1D),
             expectedTitle: Strings.Localizable.CameraUploads.Banner.Status.UploadsPausedDueToWifi.title,
             expectedSubheading: Strings.Localizable.CameraUploads.Banner.Status.FilesPending.subHeading(1)
         )
         
         performPreviewComparisonTest(
             status: .uploadPaused(reason: .noWifiConnection(numberOfFilesPending: 13)),
+            textColor: (.primary, .primary),
+            backgroundColor: (.white, .gray1D1D1D),
             expectedTitle: Strings.Localizable.CameraUploads.Banner.Status.UploadsPausedDueToWifi.title,
             expectedSubheading: Strings.Localizable.CameraUploads.Banner.Status.FilesPending.subHeading(13)
         )
@@ -46,18 +56,24 @@ class CameraUploadBannerStatusViewStatesToPreviewEntityTests: XCTestCase {
     func testToPreviewEntity_ForAllInUploadPartiallyCompletedStates_shouldReturnCorrectStrings() {
         performPreviewComparisonTest(
             status: .uploadPartialCompleted(reason: .photoLibraryLimitedAccess),
+            textColor: (.yellow9D8319, .yellowFFD60A),
+            backgroundColor: (.yellowFED42926, .yellowFED42926),
             expectedTitle: Strings.Localizable.CameraUploads.Banner.Status.UploadsComplete.title,
             expectedSubheading: Strings.Localizable.CameraUploads.Banner.Status.UploadsPartialComplete.LimitedPhotoLibraryAccess.subHeading
         )
         
         performPreviewComparisonTest(
             status: .uploadPartialCompleted(reason: .videoUploadIsNotEnabled(pendingVideoUploadCount: 1)),
+            textColor: (.primary, .primary),
+            backgroundColor: (.white, .gray1D1D1D),
             expectedTitle: Strings.Localizable.CameraUploads.Banner.Status.UploadsComplete.title,
             expectedSubheading: Strings.Localizable.CameraUploads.Banner.Status.UploadsPartialComplete.VideosNotUploaded.subHeading(1)
         )
         
         performPreviewComparisonTest(
             status: .uploadPartialCompleted(reason: .videoUploadIsNotEnabled(pendingVideoUploadCount: 42)),
+            textColor: (.primary, .primary),
+            backgroundColor: (.white, .gray1D1D1D),
             expectedTitle: Strings.Localizable.CameraUploads.Banner.Status.UploadsComplete.title,
             expectedSubheading: Strings.Localizable.CameraUploads.Banner.Status.UploadsPartialComplete.VideosNotUploaded.subHeading(42)
         )
@@ -65,6 +81,8 @@ class CameraUploadBannerStatusViewStatesToPreviewEntityTests: XCTestCase {
     
     func performPreviewComparisonTest(
         status: CameraUploadBannerStatusViewStates,
+        textColor: ColorSchemeColors,
+        backgroundColor: ColorSchemeColors,
         expectedTitle: String,
         expectedSubheading: String,
         file: StaticString = #filePath,
@@ -76,5 +94,9 @@ class CameraUploadBannerStatusViewStatesToPreviewEntityTests: XCTestCase {
         // Assert
         XCTAssertEqual(previewEntity.title, expectedTitle, "For status: \(status)", file: file, line: line)
         XCTAssertEqual(previewEntity.subheading, expectedSubheading, "For status: \(status)", file: file, line: line)
+        XCTAssertEqual(textColor.light, previewEntity.textColor(for: .light), "For status: \(status)", file: file, line: line)
+        XCTAssertEqual(textColor.dark, previewEntity.textColor(for: .dark), "For status: \(status)", file: file, line: line)
+        XCTAssertEqual(backgroundColor.light, previewEntity.backgroundColor(for: .light), "For status: \(status)", file: file, line: line)
+        XCTAssertEqual(backgroundColor.dark, previewEntity.backgroundColor(for: .dark), "For status: \(status)", file: file, line: line)
     }
 }

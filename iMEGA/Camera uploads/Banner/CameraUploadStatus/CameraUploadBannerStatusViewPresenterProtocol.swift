@@ -3,16 +3,30 @@ import SwiftUI
 protocol CameraUploadBannerStatusViewPresenterProtocol {
     var title: String { get }
     var subheading: String { get }
-    var textColor: AnyShapeStyle { get }
-    var backgroundColor: AnyShapeStyle { get }
+    func textColor(for scheme: ColorScheme) -> Color
+    func backgroundColor(for scheme: ColorScheme) -> Color
+}
+
+extension CameraUploadBannerStatusViewPresenterProtocol {
+    func bottomBorder(for scheme: ColorScheme) -> Color {
+        scheme == .dark ? .gray545458.opacity(0.3) : .gray3C3C43.opacity(0.65)
+    }
 }
 
 struct CameraUploadBannerStatusViewPreviewEntity: CameraUploadBannerStatusViewPresenterProtocol, Hashable {
     
     let title: String
     let subheading: String
-    let textColor: AnyShapeStyle
-    let backgroundColor: AnyShapeStyle
+    let textColor: (ColorScheme) -> Color
+    let backgroundColor: (ColorScheme) -> Color
+    
+    func textColor(for scheme: ColorScheme) -> Color {
+        textColor(scheme)
+    }
+    
+    func backgroundColor(for scheme: ColorScheme) -> Color {
+        backgroundColor(scheme)
+    }
 
     func hash(into hasher: inout Hasher) {
         hasher.combine(title)
