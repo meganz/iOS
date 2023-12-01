@@ -5,14 +5,14 @@ struct WarningView: View {
     
     var body: some View {
         ZStack {
-            Color(Colors.Banner.warningBannerBackground.name)
+            Color.bannerWarningBackground
                 .edgesIgnoringSafeArea(.all)
             
             HStack {
                 Text(viewModel.warningType.description)
                     .font(.caption2.bold())
                     .fixedSize(horizontal: false, vertical: true)
-                    .foregroundColor(Color(Colors.Banner.warningTextColor.name))
+                    .foregroundColor(Color.bannerWarningText)
                     .multilineTextAlignment(.leading)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 5))

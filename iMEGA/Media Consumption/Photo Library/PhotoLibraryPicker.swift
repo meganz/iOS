@@ -54,10 +54,10 @@ struct PhotoLibraryPicker: View {
         
         UISegmentedControl
             .appearance()
-            .backgroundColor = Colors.MediaConsumption.timelineYMDATabs.color
+            .backgroundColor = UIColor.mediaConsumptionTimelineYMDATabs
         
         UISegmentedControl
             .appearance()
-            .selectedSegmentTintColor = Colors.MediaConsumption.timelineYMDATabsSelected.color
+            .selectedSegmentTintColor = UIColor.mediaConsumptionTimelineYMDATabsSelected
     }
 }

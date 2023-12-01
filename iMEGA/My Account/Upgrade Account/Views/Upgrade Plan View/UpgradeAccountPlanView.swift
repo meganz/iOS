@@ -22,7 +22,7 @@ struct UpgradeAccountPlanView: View {
             viewModel.isDismiss = true
         } label: {
             Text(Strings.Localizable.cancel)
-                .foregroundColor(Color(Colors.UpgradeAccount.primaryGrayText.color))
+                .foregroundColor(Color.upgradeAccountPrimaryGrayText)
         }
         .padding()
     }
@@ -60,7 +60,7 @@ struct UpgradeAccountPlanView: View {
                             }
                             .padding(.vertical)
                             .frame(maxWidth: .infinity)
-                            .background(Color(Colors.Background.Regular.primaryElevated.color))
+                            .background(Color.backgroundRegularPrimaryElevated)
                         }
                     }
                     
@@ -133,7 +133,7 @@ struct UpgradeAccountPlanView: View {
                             viewModel.isTermsAndPoliciesPresented = false
                         } label: {
                             Text(Strings.Localizable.close)
-                                .foregroundColor(Color(Colors.UpgradeAccount.primaryGrayText.color))
+                                .foregroundColor(Color.upgradeAccountPrimaryGrayText)
                         }
                     }
                 }

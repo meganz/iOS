@@ -165,7 +165,7 @@ final class AlbumContentViewController: UIViewController, ViewType, TraitEnviron
                 action: #selector(selectAllButtonPressed(_:))
             )
         } else {
-            leftBarButtonItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: Colors.MediaDiscovery.exitButtonTint.color], for: .normal)
+            leftBarButtonItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.mediaDiscoveryExitButtonTint], for: .normal)
             navigationItem.leftBarButtonItem = leftBarButtonItem
         }
     }

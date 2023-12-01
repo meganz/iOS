@@ -29,7 +29,7 @@ struct ImportAlbumAlertView: UIViewControllerRepresentable {
             textField.addAction(UIAction(handler: { _ in
                 guard let decryptAction = alert.actions.last else { return }
                 decryptAction.isEnabled = textField.text?.trim?.isNotEmpty ?? false
-                decryptAction.titleTextColor = decryptAction.isEnabled ? Colors.MediaConsumption.decryptTitleEnabled.color : Colors.MediaConsumption.decryptTitleDisabled.color
+                decryptAction.titleTextColor = decryptAction.isEnabled ? UIColor.mediaConsumptionDecryptTitleEnabled : UIColor.mediaConsumptionDecryptTitleDisabled
             }), for: .editingChanged)
         }
         
@@ -50,7 +50,7 @@ struct ImportAlbumAlertView: UIViewControllerRepresentable {
                 self.onTappingDecryptButton?()
             }
         }
-        decryptAction.titleTextColor = Colors.MediaConsumption.decryptTitleDisabled.color
+        decryptAction.titleTextColor = UIColor.mediaConsumptionDecryptTitleDisabled
         alert.addAction(decryptAction)
         alert.actions.last?.isEnabled = false
         

@@ -49,13 +49,13 @@ import UIKit
         
         nameLabel.text = MEGASdk.currentUserHandle().map { MEGAUser.mnz_fullName($0.uint64Value) ?? "" }
         nameLabel.layer.shadowOffset = CGSize(width: 0, height: 1)
-        nameLabel.layer.shadowColor = Colors.General.Shadow.blackAlpha20.color.cgColor
+        nameLabel.layer.shadowColor = UIColor.blackAlpha20.cgColor
         nameLabel.layer.shadowRadius = 2.0
         nameLabel.layer.shadowOpacity = 1
         
         emailLabel.text = MEGASdk.shared.myEmail
         emailLabel.layer.shadowOffset = CGSize(width: 0, height: 1)
-        emailLabel.layer.shadowColor = Colors.General.Shadow.blackAlpha20.color.cgColor
+        emailLabel.layer.shadowColor = UIColor.blackAlpha20.cgColor
         emailLabel.layer.shadowRadius = 2.0
         emailLabel.layer.shadowOpacity = 1
         

@@ -43,7 +43,7 @@ struct ExplorerCardConfiguration {
 
 extension ExplorerCardConfiguration {
     private static let foregroundColorsLight = [UIColor(white: 1.0, alpha: 0.95), UIColor.white]
-    private static let foregroundColorsDark = [Colors.SharedViews.Explorer.foregroundDark.color, UIColor.black]
+    private static let foregroundColorsDark = [UIColor.explorerForegroundDark, UIColor.black]
     
     static func favouritesExplorerCardConfiguration(forTraitCollection traitCollection: UITraitCollection) -> ExplorerCardConfiguration {
         let title = Strings.Localizable.Home.Favourites.title
@@ -63,8 +63,8 @@ extension ExplorerCardConfiguration {
     static func documentsExplorerCardConfiguration(forTraitCollection traitCollection: UITraitCollection) -> ExplorerCardConfiguration {
         let title = Strings.Localizable.docs
         let image = Asset.Images.Home.explorerCardDocs.image
-        let borderColors = [Colors.SharedViews.Explorer.documentsFirstGradient.color,
-                            Colors.SharedViews.Explorer.documentsSecondGradient.color]
+        let borderColors = [UIColor.explorerDocumentsFirstGradient,
+                            UIColor.explorerDocumentsSecondGradient]
         
         return ExplorerCardConfiguration(title: title,
                                          iconForegroundImage: image,
@@ -78,8 +78,8 @@ extension ExplorerCardConfiguration {
     static func audioExplorerCardConfiguration(forTraitCollection traitCollection: UITraitCollection) -> ExplorerCardConfiguration {
         let title = Strings.Localizable.audio
         let image = Asset.Images.Home.explorerCardAudio.image
-        let borderColors = [Colors.SharedViews.Explorer.audioFirstGradient.color,
-                            Colors.SharedViews.Explorer.audioSecondGradient.color]
+        let borderColors = [UIColor.explorerAudioFirstGradient,
+                            UIColor.explorerAudioSecondGradient]
         return ExplorerCardConfiguration(title: title,
                                          iconForegroundImage: image,
                                          iconBackgroundImage: nil,
@@ -93,8 +93,8 @@ extension ExplorerCardConfiguration {
         let title = Strings.Localizable.videos
         let iconForegroundImage = Asset.Images.Home.explorerCardVideoPlayBlue.image
         let iconBackgroundImage = Asset.Images.Home.explorerCardVideoFilmStripsBlue.image
-        let borderColors = [Colors.SharedViews.Explorer.Gradient.lightBlue.color,
-                        Colors.SharedViews.Explorer.Gradient.darkBlue.color]
+        let borderColors = [UIColor.explorerGradientLightBlue,
+                            UIColor.explorerGradientDarkBlue]
 
         return ExplorerCardConfiguration(title: title,
                                          iconForegroundImage: iconForegroundImage,
