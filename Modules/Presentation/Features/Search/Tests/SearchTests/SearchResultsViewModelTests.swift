@@ -55,6 +55,7 @@ final class SearchResultsViewModelTests: XCTestCase {
                 resultsProvider: resultsProvider,
                 bridge: bridge,
                 config: config,
+                layout: .list,
                 showLoadingPlaceholderDelay: 0.1,
                 keyboardVisibilityHandler: MockKeyboardVisibilityHandler()
             )

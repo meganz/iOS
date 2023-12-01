@@ -21,6 +21,15 @@ final class HomeScreenFactory: NSObject {
     private var megaStore: MEGAStore {
         MEGAStore.shareInstance()
     }
+    
+    private var newViewModeStore: some ViewModeStore {
+        ViewModeStore(
+            preferenceRepo: PreferenceRepository(userDefaults: .standard),
+            megaStore: megaStore,
+            sdk: sdk,
+            notificationCenter: notificationCenter
+        )
+    }
 
     func createHomeScreen(
         from tabBarController: MainTabBarController,
@@ -97,12 +106,8 @@ final class HomeScreenFactory: NSObject {
         
         navigationController.tabBarItem = UITabBarItem(title: nil, image: Asset.Images.TabBarIcons.home.image, selectedImage: nil)
         
-        homeViewController.viewModeStore = ViewModeStore(
-            preferenceRepo: PreferenceRepository(userDefaults: .standard),
-            megaStore: megaStore,
-            sdk: sdk,
-            notificationCenter: notificationCenter
-        )
+        let viewModeStore = newViewModeStore
+        homeViewController.viewModeStore = viewModeStore
         
         let bridge = SearchResultsBridge()
         homeViewController.searchResultsBridge = bridge
@@ -112,6 +117,7 @@ final class HomeScreenFactory: NSObject {
             bridge: bridge,
             newHomeSearchResultsEnabled: newHomeSearchResultsEnabled,
             tracker: tracker,
+            viewModeStore: viewModeStore,
             enableItemMultiSelection: enableItemMultiSelection
         )
         
@@ -151,6 +157,7 @@ final class HomeScreenFactory: NSObject {
         bridge: SearchResultsBridge,
         newHomeSearchResultsEnabled: Bool,
         tracker: some AnalyticsTracking,
+        viewModeStore: some ViewModeStoring,
         enableItemMultiSelection: Bool
     ) -> UIViewController {
         
@@ -159,6 +166,7 @@ final class HomeScreenFactory: NSObject {
                 with: navigationController,
                 bridge: bridge,
                 tracker: tracker,
+                viewModeStore: viewModeStore,
                 enableItemMultiSelection: enableItemMultiSelection
             )
         } else {
@@ -187,6 +195,7 @@ final class HomeScreenFactory: NSObject {
         with navigationController: UINavigationController,
         bridge: SearchResultsBridge,
         tracker: some AnalyticsTracking,
+        viewModeStore: some ViewModeStoring,
         enableItemMultiSelection: Bool
     ) -> UIViewController {
         
@@ -267,6 +276,7 @@ final class HomeScreenFactory: NSObject {
                 enableItemMultiSelection: enableItemMultiSelection
                 )
             ),
+            layout: viewModeStore.viewMode(for: .init(customLocation: CustomHomeSearch)).pageLayout ?? .list,
             keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: notificationCenter)
 
         )
