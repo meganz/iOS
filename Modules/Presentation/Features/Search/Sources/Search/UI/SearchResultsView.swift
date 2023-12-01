@@ -185,6 +185,7 @@ struct SearchResultsViewPreviews: PreviewProvider {
                 chipTapped: { _, _ in }
             ),
             config: .example,
+            layout: .list,
             keyboardVisibilityHandler: MockKeyboardVisibilityHandler()
 
         )

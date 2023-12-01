@@ -12,7 +12,7 @@ public class SearchResultsViewModel: ObservableObject {
     // this will need to be to exposed outside when parent will need to know exactly what is selected
     @Published var selected: Set<ResultId> = []
 
-    @Published public var layout: PageLayout = .list
+    @Published public var layout: PageLayout
 
     @Published var chipsItems: [ChipViewModel] = []
     @Published var presentedChipsPickerViewModel: ChipViewModel?
@@ -72,6 +72,7 @@ public class SearchResultsViewModel: ObservableObject {
         resultsProvider: any SearchResultsProviding,
         bridge: SearchBridge,
         config: SearchConfig,
+        layout: PageLayout,
         showLoadingPlaceholderDelay: Double = 1,
         searchInputDebounceDelay: Double = 0.5,
         keyboardVisibilityHandler: any KeyboardVisibilityHandling
@@ -82,7 +83,7 @@ public class SearchResultsViewModel: ObservableObject {
         self.showLoadingPlaceholderDelay = showLoadingPlaceholderDelay
         self.searchInputDebounceDelay = searchInputDebounceDelay
         self.keyboardVisibilityHandler = keyboardVisibilityHandler
-
+        self.layout = layout
         self.bridge.queryChanged = { [weak self] query  in
             let _self = self
             

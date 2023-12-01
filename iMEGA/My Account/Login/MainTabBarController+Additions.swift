@@ -63,7 +63,8 @@ extension MainTabBarController {
         isNewHomeSearchEnabled: Bool
     ) async {
         guard let nav = defaultViewControllers[2] as? MEGANavigationController,
-              let homeVC = nav.viewControllers.first as? HomeViewController
+              let homeVC = nav.viewControllers.first as? HomeViewController,
+              let viewModeStore = homeVC.viewModeStore
         else {
             return
         }
@@ -73,6 +74,7 @@ extension MainTabBarController {
             bridge: homeVC.searchResultsBridge,
             newHomeSearchResultsEnabled: isNewHomeSearchEnabled,
             tracker: DIContainer.tracker,
+            viewModeStore: viewModeStore,
             enableItemMultiSelection: false // not enabled in the home search results
         )
         homeVC.searchResultViewController = searchResultVC
