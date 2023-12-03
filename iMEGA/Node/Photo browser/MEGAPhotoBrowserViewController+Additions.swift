@@ -1,8 +1,10 @@
 import Accounts
 import Combine
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
+import MEGAPresentation
 import MEGASDKRepo
 import MEGASwiftUI
 import SwiftUI
@@ -148,6 +150,7 @@ extension MEGAPhotoBrowserViewController {
     }
 
     @objc func openSlideShow() {
+        DIContainer.tracker.trackAnalyticsEvent(with: PlaySlideshowMenuToolbarEvent())
         SlideShowRouter(dataProvider: dataProvider, presenter: self).start()
     }
     

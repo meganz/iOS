@@ -7,10 +7,12 @@ import UIKit
 struct SlideShowRouter: Routing {
     private weak var presenter: UIViewController?
     private let dataProvider: PhotoBrowserDataProvider
+    private let tracker: any AnalyticsTracking
     
-    init(dataProvider: PhotoBrowserDataProvider, presenter: UIViewController?) {
+    init(dataProvider: PhotoBrowserDataProvider, presenter: UIViewController?, tracker: some AnalyticsTracking = DIContainer.tracker) {
         self.dataProvider = dataProvider
         self.presenter = presenter
+        self.tracker = tracker
     }
     
     private func configSlideShowViewModel() -> SlideShowViewModel {
@@ -25,7 +27,8 @@ struct SlideShowRouter: Routing {
         
         return SlideShowViewModel(dataSource: slideShowDataSource(photos: photoEntities),
                                   slideShowUseCase: SlideShowUseCase(preferenceRepo: preferenceRepo),
-                                  accountUseCase: AccountUseCase(repository: AccountRepository.newRepo))
+                                  accountUseCase: AccountUseCase(repository: AccountRepository.newRepo), 
+                                  tracker: tracker)
     }
     
     private func slideShowDataSource(photos: [NodeEntity]) -> SlideShowDataSource {

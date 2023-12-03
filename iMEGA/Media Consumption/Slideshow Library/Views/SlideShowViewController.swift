@@ -60,6 +60,11 @@ final class SlideShowViewController: UIViewController, ViewType {
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        viewModel?.dispatch(.viewDidAppear)
+    }
+    
     private func setupActivityIndicator() {
         view.addSubview(activityIndicator)
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false

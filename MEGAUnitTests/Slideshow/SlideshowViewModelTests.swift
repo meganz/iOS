@@ -1,6 +1,10 @@
 @testable import MEGA
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGADomainMock
+import MEGAPresentation
+import MEGAPresentationMock
+import MEGATest
 import XCTest
 
 class SlideshowViewModelTests: XCTestCase {
@@ -13,7 +17,7 @@ class SlideshowViewModelTests: XCTestCase {
         return nodes
     }
     
-    private func makeSlideshowViewModel() throws -> SlideShowViewModel {
+    private func makeSlideshowViewModel(tracker: some AnalyticsTracking = MockTracker()) throws -> SlideShowViewModel {
         SlideShowViewModel(
             dataSource: SlideShowDataSource(
                 currentPhoto: try XCTUnwrap(nodeEntities.first),
@@ -31,7 +35,8 @@ class SlideshowViewModelTests: XCTestCase {
                     timeIntervalForSlideInSeconds: .normal,
                     isRepeat: false, includeSubfolders: false),
                 forUser: 1),
-            accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 3))
+            accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 3)),
+            tracker: tracker
         )
     }
 
@@ -108,7 +113,8 @@ class SlideshowViewModelTests: XCTestCase {
                     timeIntervalForSlideInSeconds: .normal,
                     isRepeat: false, includeSubfolders: false),
                 forUser: 100),
-            accountUseCase: MockAccountUseCase()
+            accountUseCase: MockAccountUseCase(), 
+            tracker: MockTracker()
         )
 
         let expectation = expectation(description: "Initial Photo Download Callback")
@@ -126,5 +132,12 @@ class SlideshowViewModelTests: XCTestCase {
         XCTAssertTrue(sut.currentSlideIndex == 0)
 
         wait(for: [expectation], timeout: 1.0)
+    }
+    
+    func testActionOnViewDidAppear_shouldSendScreenEvent() throws {
+        let tracker = MockTracker()
+        let sut = try makeSlideshowViewModel(tracker: tracker)
+        sut.dispatch(.viewDidAppear)
+        assertTrackAnalyticsEventCalled(trackedEventIdentifiers: tracker.trackedEventIdentifiers, with: [SlideShowScreenEvent()])
     }
 }
