@@ -109,12 +109,16 @@ xml_tag_regex = re.compile(r'<[^[sd][^>]*>')
 jira_id = ""
 
 # Call this function to create a new resource in Transifex for the current git branch and create a local file for string additions/edits
-def run_branch(resource):
+# Or call this function to create a new feature resource in Transifex with the given resource name
+def run_branch(resource, is_feature = False):
     branch = get_branch_name()
-    if branch == False:
+    if branch == False and is_feature == False:
         print("Error: Not allowed to create resources for develop/master branch")
         return False
-    resource_name = resource + "-" + branch
+    if is_feature:
+        resource_name = resource
+    else:
+        resource_name = resource + "-" + branch
     is_plurals = "Plurals" in resource
     if is_plurals:
         i18n_format = I18N_FORMAT[1]
@@ -175,9 +179,10 @@ def run_download(resource, folder = DOWNLOAD_FOLDER):
         print("Error: Resource " + resource + " not found")
 
 # Call this function to download each reserved resource to the Production folder
-def run_fetch(merge = False):
+def run_fetch(merge = False, return_values = False):
     resources = get_resources()
     branch = get_branch_name()
+    return_map = {}
     for resource in resources:
         resource_name = resources[resource]["name"]
         if resource_name in RESERVED_RESOURCES:
@@ -192,8 +197,12 @@ def run_fetch(merge = False):
                 content = resource_get_english(resource_name, is_plurals)
                 if content:
                     store_file(resource_name, process_as_download(content, is_plurals))
+                    if return_values:
+                        return_map[resource] = content
                 else:
                     print("Error: Failed to download resource " + resource_name)
+    if return_values:
+        return return_map
     return True
 
 # Call this function to download each reserved resource and each language to the Production folder
@@ -206,7 +215,7 @@ def run_export(merge = False, spec_resource = False):
         else:
             print("Error: Cannot export and merge for a branch on master/develop")
             merge = False
-    def export_resource_language(resource, language):
+    def export_resource_language(resource, language, en_file):
         if merge and does_resource_exist(resource + "-" + branch):
             run_merge(resource, resource + "-" + branch, language, languages[language]["code"])
             return
@@ -216,12 +225,15 @@ def run_export(merge = False, spec_resource = False):
             code = languages[language]["code"]
             if code in REMAPPED_CODE:
                 code = REMAPPED_CODE[code]
+            if en_file:
+                content = merge_strings(en_file, content, False, is_plurals, True)
             store_file(resource, process_as_download(content, is_plurals), code)
         else:
             print("Error: Failed to download resource " + resource + " in language " + languages[language]["name"])
 
     resources = get_resources()
     print("Exporting English")
+    en = {}
     if spec_resource:
         if branch != "" and does_resource_exist(spec_resource + "-" + branch):
             run_merge(spec_resource, spec_resource + "-" + branch)
@@ -231,7 +243,7 @@ def run_export(merge = False, spec_resource = False):
             print("Error: Resource does not exist")
             return False
     else:
-        run_fetch(merge)
+        en = run_fetch(merge, True)
     threads = []
     for resource in resources:
         if resources[resource]["name"] in RESERVED_RESOURCES:
@@ -244,7 +256,7 @@ def run_export(merge = False, spec_resource = False):
             elif not spec_resource:
                 print("Exporting languages for " + resources[resource]["name"])
                 for id in languages.keys():
-                    t = Thread(target=export_resource_language, args=(resources[resource]["name"], id))
+                    t = Thread(target=export_resource_language, args=(resources[resource]["name"], id, en[resource]))
                     threads.append(t)
                     t.start()
 
@@ -1237,11 +1249,15 @@ def verify_strings_exist():
     return True
 
 # Call this function to merge resource_content and branch_content into one file
-def merge_strings(resource_content, branch_content, upload, is_plurals):
+def merge_strings(resource_content, branch_content, upload, is_plurals, merge_different_langs = False):
     full_map = content_to_map(resource_content, upload, is_plurals)
     part_map = content_to_map(branch_content, upload, is_plurals)
     for key in part_map:
-        full_map[key] = part_map[key]
+        if merge_different_langs:
+            if is_plurals or len(part_map[key]["s"].strip()) > 0:
+                full_map[key] = part_map[key]
+        else:
+            full_map[key] = part_map[key]
     return map_to_content(full_map, is_plurals)
 
 # Call this function to check if a string mapping is equivalent to another
@@ -1667,6 +1683,11 @@ def main():
                 run_branch(args.resource[0])
             else:
                 run_branch("Localizable")
+        elif mode == "feature":
+            if args.resource:
+                run_branch(args.resource[0], True)
+            else:
+                print("Error: No name specified for feature resource")
         elif mode == "lock":
             if args.resource:
                 if args.resource[0] in RESERVED_RESOURCES:
