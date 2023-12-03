@@ -1,3 +1,4 @@
+import MEGASwiftUI
 import SwiftUI
 
 struct PhotoLibraryContentView: View {
@@ -10,8 +11,7 @@ struct PhotoLibraryContentView: View {
     var body: some View {
         Group {
             if viewModel.library.isEmpty {
-                ProgressView()
-                    .scaleEffect(1.5)
+                PhotoLibraryPlaceholderView()
             } else {
                 Group {
                     content()
@@ -22,6 +22,7 @@ struct PhotoLibraryContentView: View {
                 }
             }
         }
+        .shimmering(active: viewModel.library.isEmpty)
         .sheet(isPresented: $viewModel.showFilter) {
             PhotoLibraryFilterView(viewModel: viewModel.filterViewModel,
                                    isPresented: $viewModel.showFilter,
