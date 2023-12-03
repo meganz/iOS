@@ -8,14 +8,17 @@ final class SlideShowOptionRouter: Routing {
     private var preference: any SlideShowViewModelPreferenceProtocol
     private let currentConfiguration: SlideShowConfigurationEntity
     private var newConfiguration: SlideShowConfigurationEntity
-    
+    private let tracker: any AnalyticsTracking
+
     init(
         presenter: UIViewController?,
         preference: some SlideShowViewModelPreferenceProtocol,
+        tracker: some AnalyticsTracking = DIContainer.tracker,
         currentConfiguration: SlideShowConfigurationEntity
     ) {
         self.presenter = presenter
         self.preference = preference
+        self.tracker = tracker
         self.currentConfiguration = currentConfiguration
         newConfiguration = currentConfiguration
     }
@@ -39,9 +42,9 @@ final class SlideShowOptionRouter: Routing {
 extension SlideShowOptionRouter {
     @SlideShowOptionBuilder
     private func makeCells(withConfiguration config: SlideShowConfigurationEntity) -> [SlideShowOptionCellViewModel] {
-        SlideShowOptionCellViewModel(name: .speed, title: Strings.Localizable.Slideshow.PreferenceSetting.speed, type: .detail, children: makeChildrenForSlideShowSpeed(withConfiguration: config))
-        SlideShowOptionCellViewModel(name: .order, title: Strings.Localizable.Slideshow.PreferenceSetting.order, type: .detail, children: makeChildrenForSlideShowOrder(withConfiguration: config))
-        SlideShowOptionCellViewModel(name: .repeat, title: Strings.Localizable.Slideshow.PreferenceSetting.SlideshowOptions.repeat, type: .toggle, children: [], isOn: config.isRepeat)
+        SlideShowOptionCellViewModel(name: .speed, title: Strings.Localizable.Slideshow.PreferenceSetting.speed, type: .detail, children: makeChildrenForSlideShowSpeed(withConfiguration: config), tracker: tracker)
+        SlideShowOptionCellViewModel(name: .order, title: Strings.Localizable.Slideshow.PreferenceSetting.order, type: .detail, children: makeChildrenForSlideShowOrder(withConfiguration: config), tracker: tracker)
+        SlideShowOptionCellViewModel(name: .repeat, title: Strings.Localizable.Slideshow.PreferenceSetting.SlideshowOptions.repeat, type: .toggle, children: [], isOn: config.isRepeat, tracker: tracker)
     }
     
     @SlideShowOptionChildrenBuilder

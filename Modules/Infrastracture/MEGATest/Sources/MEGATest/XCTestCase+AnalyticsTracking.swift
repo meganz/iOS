@@ -5,6 +5,7 @@ public extension XCTestCase {
     func assertTrackAnalyticsEventCalled(
         trackedEventIdentifiers: [EventIdentifier],
         with expectedEventIdentifiers: [EventIdentifier],
+        message: String = "",
         file: StaticString = #file, line: UInt = #line
     ) {
         XCTAssertEqual(
@@ -17,6 +18,7 @@ public extension XCTestCase {
             XCTAssertEqual(
                 tracked.stringValue,
                 expected.stringValue,
+                message,
                 file: file, line: line
             )
         }

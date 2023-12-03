@@ -1,4 +1,5 @@
 import Foundation
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAPresentation
 import MEGASwiftUI
@@ -8,6 +9,7 @@ enum SlideShowAction: ActionType {
     case pause
     case finish
     case resetTimer
+    case viewDidAppear
 }
 
 protocol SlideShowViewModelPreferenceProtocol {
@@ -29,6 +31,7 @@ final class SlideShowViewModel: ViewModelType {
     private var dataSource: any SlideShowDataSourceProtocol
     private let slideShowUseCase: any SlideShowUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
+    private let tracker: any AnalyticsTracking
     
     var configuration: SlideShowConfigurationEntity
     
@@ -56,11 +59,13 @@ final class SlideShowViewModel: ViewModelType {
     
     init(dataSource: some SlideShowDataSourceProtocol,
          slideShowUseCase: any SlideShowUseCaseProtocol,
-         accountUseCase: any AccountUseCaseProtocol) {
+         accountUseCase: any AccountUseCaseProtocol,
+         tracker: some AnalyticsTracking) {
         
         self.dataSource = dataSource
         self.slideShowUseCase = slideShowUseCase
         self.accountUseCase = accountUseCase
+        self.tracker = tracker
         
         if let userHandle = accountUseCase.currentUserHandle {
             configuration = slideShowUseCase.loadConfiguration(forUser: userHandle)
@@ -116,7 +121,13 @@ final class SlideShowViewModel: ViewModelType {
             invokeCommand?(.pause)
         case .resetTimer:
             invokeCommand?(.resetTimer)
+        case .viewDidAppear:
+            sendScreenEvent()
         }
+    }
+    
+    private func sendScreenEvent() {
+        tracker.trackAnalyticsEvent(with: SlideShowScreenEvent())
     }
 }
 
