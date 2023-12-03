@@ -37,9 +37,13 @@ public struct Shimmer: ViewModifier {
 
     public func body(content: Content) -> some View {
         content
+            .animation(nil, value: isInitialState)
             .mask(LinearGradient(gradient: gradient, startPoint: startPoint, endPoint: endPoint))
+            .animation(animation, value: isInitialState)
             .onAppear {
-                withAnimation(animation) {
+                // Delay the animation until the initial layout is established
+                // to prevent animating the appearance of the view
+                DispatchQueue.main.asyncAfter(deadline: .now()) {
                     isInitialState = false
                 }
             }
