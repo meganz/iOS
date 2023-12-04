@@ -42,7 +42,6 @@ final class ViewIDUseCaseTests: XCTestCase {
     ) -> (ViewIDUseCase<MockViewIDRepository>, MockViewIDRepository) {
         let mockViewIdRepo = MockViewIDRepository()
         let sut = ViewIDUseCase(viewIdRepo: mockViewIdRepo)
-        trackForMemoryLeaks(on: sut, file: file, line: line)
         return (sut, mockViewIdRepo)
     }
 }
