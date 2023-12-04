@@ -107,12 +107,12 @@ final class SpotlightIndexer: NSObject {
         
         if node.isFile {
             attributeSet.contentDescription = ByteCountFormatter.string(fromByteCount: Int64(node.size), countStyle: .file)
-            attributeSet.thumbnailData = Asset.Images.Generic.spotlightFile.image.pngData()
+            attributeSet.thumbnailData = UIImage.spotlightFile.pngData()
         } else {
             if let n = sdk.node(forHandle: node.handle) {
                 attributeSet.contentDescription = sdk.nodePath(for: n)
             }
-            attributeSet.thumbnailData = Asset.Images.Generic.spotlightFolder.image.pngData()
+            attributeSet.thumbnailData = UIImage.spotlightFolder.pngData()
         }
         
         let item = CSSearchableItem(uniqueIdentifier: "\(node.base64Handle)", domainIdentifier: Constants.favouritesId, attributeSet: attributeSet)

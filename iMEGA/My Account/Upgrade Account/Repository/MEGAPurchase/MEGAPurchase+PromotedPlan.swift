@@ -172,7 +172,7 @@ extension MEGAPurchase {
         case .alreadyPurchasedPlan:
             SVProgressHUD.showError(withStatus: Strings.Localizable.UpgradeAccountPlan.Selection.Message.alreadyHaveRecurringSubscriptionOfPlan)
         case .noLoggedInUser:
-            SVProgressHUD.setErrorImage(Asset.Images.Hud.hudError.image)
+            SVProgressHUD.setErrorImage(UIImage.hudError)
             SVProgressHUD.showError(withStatus: Strings.Localizable.pleaseLogInToYourAccount)
         case .proFlexiOrBusinessAccount:
             SVProgressHUD.showError(withStatus: Strings.Localizable.Account.Upgrade.NotAvailableWithCurrentPlan.message)

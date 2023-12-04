@@ -13,7 +13,7 @@ class SettingsTableViewCell: UITableViewCell {
     }
 
     func update(viewModel: SettingCellViewModel) {
-        leadingIcon.image = viewModel.image?.image
+        leadingIcon.image = viewModel.image
         leadingIcon.isHidden = viewModel.image == nil
         titleLabel.text = viewModel.title
         titleLabel.textColor = viewModel.isDestructive ? UIColor.mnz_red(for: self.traitCollection) : UIColor.label
