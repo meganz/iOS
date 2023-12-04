@@ -36,9 +36,13 @@ struct ImportAlbumView: View {
                 if viewModel.isConnectedToNetworkUntilContentLoaded {
                     content()
                 } else {
-                    EmptyAlbumView(image: Asset.Images.EmptyStates.noInternetEmptyState.image,
-                                   title: Strings.Localizable.noInternetConnection)
-                    .frame(maxHeight: .infinity, alignment: .center)
+                    ContentUnavailableView_iOS16 {
+                        Image(.noInternetEmptyState)
+                    } description: {
+                        Text(Strings.Localizable.noInternetConnection)
+                            .font(.body)
+                    }
+                    .frame(maxHeight: .infinity)
                 }
                 
                 bottomToolbar
@@ -70,9 +74,13 @@ struct ImportAlbumView: View {
     private func content() -> some View {
         ZStack {
             if viewModel.shouldShowEmptyAlbumView {
-                EmptyAlbumView(image: Asset.Images.Home.allPhotosEmptyState.image,
-                               title: Strings.Localizable.CameraUploads.Albums.Empty.title)
-                .frame(maxHeight: .infinity, alignment: .center)
+                ContentUnavailableView_iOS16 {
+                    Image(.allPhotosEmptyState)
+                } description: {
+                    Text(Strings.Localizable.CameraUploads.Albums.Empty.title)
+                        .font(.body)
+                }
+                .frame(maxHeight: .infinity)
             } else {
                 PhotoLibraryContentView(
                     viewModel: viewModel.photoLibraryContentViewModel,
@@ -80,7 +88,7 @@ struct ImportAlbumView: View {
                     onFilterUpdate: nil
                 )
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-                .opacity(viewModel.isPhotosLoaded ? 1.0 : 0)
+                .opacity(viewModel.shouldShowPhotoLibraryContent ? 1.0 : 0)
             }
         }
         .alert(isPresented: $viewModel.showCannotAccessAlbumAlert) {
