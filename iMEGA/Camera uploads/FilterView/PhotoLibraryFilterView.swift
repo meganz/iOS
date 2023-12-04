@@ -12,7 +12,7 @@ struct PhotoLibraryFilterView: View {
         } label: {
             Text(viewModel.cancelTitle)
                 .font(Font.system(size: 17, weight: .regular, design: Font.Design.default))
-                .foregroundColor(Color.photosFilterNormalTextForeground)
+                .foregroundColor(MEGAAppColor.Photos.filterNormalTextForeground.color)
         }
     }
     
@@ -33,7 +33,7 @@ struct PhotoLibraryFilterView: View {
         } label: {
             Text(viewModel.doneTitle)
                 .font(Font.system(size: 17, weight: .semibold, design: Font.Design.default))
-                .foregroundColor(Color.photosFilterNormalTextForeground)
+                .foregroundColor(MEGAAppColor.Photos.filterNormalTextForeground.color)
         }
     }
     
@@ -75,7 +75,7 @@ struct PhotoLibraryFilterView: View {
                     PhotoLibraryFilterLocationView(location: location, filterViewModel: viewModel)
                 }
             }
-            .background(Color.photosFilterLocationItemBackground)
+            .background(MEGAAppColor.Photos.filterLocationItemBackground.color)
             .cornerRadius(8)
         }
     }
@@ -83,12 +83,12 @@ struct PhotoLibraryFilterView: View {
     var rememberPreferenceView: some View {
         HStack {
             Toggle(Strings.Localizable.CameraUploads.Timeline.Filter.rememberPreferences, isOn: $viewModel.selectedSavePreferences)
-                .toggleStyle(SwitchToggleStyle(tint: Color.photosFilterTypeSelectionBackground))
+                .toggleStyle(SwitchToggleStyle(tint: MEGAAppColor.Photos.filterTypeSelectionBackground.color))
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
-        .foregroundColor(Color.photosFilterLocationItemForeground)
-        .background(Color.photosFilterLocationItemBackground)
+        .foregroundColor(MEGAAppColor.Photos.filterLocationItemForeground.color)
+        .background(MEGAAppColor.Photos.filterLocationItemBackground.color)
         .cornerRadius(8)
     }
     
@@ -113,7 +113,7 @@ struct PhotoLibraryFilterView: View {
         }
         .padding(.horizontal, 10)
         .padding(.vertical, 20)
-        .background(Color.photosFilterBackground)
+        .background(MEGAAppColor.Photos.filterBackground.color)
         .edgesIgnoringSafeArea(.bottom)
         .onAppear {
             viewModel.setSelectedFiltersToAppliedFiltersIfRequired()
@@ -133,7 +133,7 @@ private struct PhotoLibraryFilterViewHeadline: View {
         HStack {
             Text(title)
                 .font(Font.system(size: 22, weight: .bold, design: Font.Design.default))
-                .foregroundColor(Color.photosFilterTextForeground)
+                .foregroundColor(MEGAAppColor.Photos.filterTextForeground.color)
                 .minimumScaleFactor(0.5)
             Spacer()
         }

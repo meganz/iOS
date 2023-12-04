@@ -731,6 +731,11 @@
 		6D6749422AF84C410023FAC0 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D67493F2AF84C410023FAC0 /* Colors.xcassets */; };
 		6D6749432AF84C410023FAC0 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D67493F2AF84C410023FAC0 /* Colors.xcassets */; };
 		6D6749442AF84C410023FAC0 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D67493F2AF84C410023FAC0 /* Colors.xcassets */; };
+		6D8820702B1B1B5B00F0BE18 /* MEGAAppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D88206F2B1B1B5B00F0BE18 /* MEGAAppColor.swift */; };
+		6D8820772B1BE50200F0BE18 /* MEGAAppColor+Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8820762B1BE50200F0BE18 /* MEGAAppColor+Chat.swift */; };
+		6D8820792B1C069500F0BE18 /* MEGAAppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D88206F2B1B1B5B00F0BE18 /* MEGAAppColor.swift */; };
+		6D88207C2B1C07C700F0BE18 /* MEGAAppColor+Photos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D88207B2B1C07C700F0BE18 /* MEGAAppColor+Photos.swift */; };
+		6D88207F2B1C0E6E00F0BE18 /* MEGADesignToken in Frameworks */ = {isa = PBXBuildFile; productRef = 6D88207E2B1C0E6E00F0BE18 /* MEGADesignToken */; };
 		6DB163F02880F953004EFBC7 /* PhotosViewModel+Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB163EF2880F953004EFBC7 /* PhotosViewModel+Filter.swift */; };
 		6DB772CE28836A8500B75A93 /* PhotosViewController+Empty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB772CD28836A8500B75A93 /* PhotosViewController+Empty.swift */; };
 		6DD7B2362A776313007EBB20 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6DD7B2352A776313007EBB20 /* Images.xcassets */; };
@@ -3332,6 +3337,9 @@
 		6D60256528F8999A00FF9767 /* CloudDriveViewController+NodesUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+NodesUpdate.swift"; sourceTree = "<group>"; };
 		6D64B70C2A09BCB1002ECBD1 /* MyAccountHallViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountHallViewModel.swift; sourceTree = "<group>"; };
 		6D67493F2AF84C410023FAC0 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Colors.xcassets; path = Modules/Presentation/MEGAAssets/Sources/MEGAAssets/Resources/Colors.xcassets; sourceTree = SOURCE_ROOT; };
+		6D88206F2B1B1B5B00F0BE18 /* MEGAAppColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAAppColor.swift; sourceTree = "<group>"; };
+		6D8820762B1BE50200F0BE18 /* MEGAAppColor+Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAAppColor+Chat.swift"; sourceTree = "<group>"; };
+		6D88207B2B1C07C700F0BE18 /* MEGAAppColor+Photos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAAppColor+Photos.swift"; sourceTree = "<group>"; };
 		6DB163EF2880F953004EFBC7 /* PhotosViewModel+Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewModel+Filter.swift"; sourceTree = "<group>"; };
 		6DB772CD28836A8500B75A93 /* PhotosViewController+Empty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewController+Empty.swift"; sourceTree = "<group>"; };
 		6DD7B2342A7761BD007EBB20 /* MEGAAssets */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAAssets; sourceTree = "<group>"; };
@@ -5204,6 +5212,7 @@
 				BF6149662A9FF38400AB051A /* MEGAL10n in Frameworks */,
 				BF6149682A9FF38400AB051A /* MEGAL10nObjc in Frameworks */,
 				946ACCC9299C0B5700E6C0F5 /* MEGAPresentation in Frameworks */,
+				6D88207F2B1C0E6E00F0BE18 /* MEGADesignToken in Frameworks */,
 				A891E8A729C1E0A70020072A /* MEGASdk in Frameworks */,
 				B63D341A2898A9E20059DE66 /* MEGASwift in Frameworks */,
 				B63995442898D03400EA88F1 /* MEGASwiftUI in Frameworks */,
@@ -6461,6 +6470,7 @@
 		415226861A692ECC00EC7BB6 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				6D88206E2B1B1B4500F0BE18 /* AppColor */,
 				A8AA4F6D1ED4295800E7BA23 /* API */,
 				940DB9122924D77F004E7349 /* AudioSession */,
 				9405E70C28A3AC43005A16D1 /* BackupNodesValidator */,
@@ -8028,6 +8038,16 @@
 				6D64B70C2A09BCB1002ECBD1 /* MyAccountHallViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		6D88206E2B1B1B4500F0BE18 /* AppColor */ = {
+			isa = PBXGroup;
+			children = (
+				6D88206F2B1B1B5B00F0BE18 /* MEGAAppColor.swift */,
+				6D8820762B1BE50200F0BE18 /* MEGAAppColor+Chat.swift */,
+				6D88207B2B1C07C700F0BE18 /* MEGAAppColor+Photos.swift */,
+			);
+			path = AppColor;
 			sourceTree = "<group>";
 		};
 		6DB163EE2880F91F004EFBC7 /* ViewModel */ = {
@@ -12565,6 +12585,7 @@
 				BF6149672A9FF38400AB051A /* MEGAL10nObjc */,
 				BF67F7F92AB4172100AC127E /* LogRepo */,
 				B5D58D572AC67D0D004ECD36 /* Accounts */,
+				6D88207E2B1C0E6E00F0BE18 /* MEGADesignToken */,
 			);
 			productName = MEGAShare;
 			productReference = 943F8B0F1EF26E9C00AFD89F /* MEGAShare.appex */;
@@ -13309,6 +13330,7 @@
 				5B1FEE28231FE4FA001271AF /* AppearanceManager.swift in Sources */,
 				5BE689A42419122C00462134 /* AppearancePreference+CoreDataClass.swift in Sources */,
 				5BE689A52419122C00462134 /* AppearancePreference+CoreDataProperties.swift in Sources */,
+				6D8820702B1B1B5B00F0BE18 /* MEGAAppColor.swift in Sources */,
 				25F932842AF476D500A63E73 /* AppearancePreference+Entities.swift in Sources */,
 				5B727383240D1570005816AB /* AppearanceTableViewController.swift in Sources */,
 				255FE6932ACCB1810077A85C /* AppearanceViewModel.swift in Sources */,
@@ -14442,6 +14464,7 @@
 				7747B2D8208625B50011814E /* Reachability.m in Sources */,
 				BFC933DA24A44C6300BC2A75 /* ReactedEmojisUsersListViewController.swift in Sources */,
 				BFC933E524A45CD600BC2A75 /* ReactedUsersListPageViewController.swift in Sources */,
+				6D88207C2B1C07C700F0BE18 /* MEGAAppColor+Photos.swift in Sources */,
 				2F9E1E2B24A5A8FE00F53FBD /* ReactionCollectionViewCell.swift in Sources */,
 				2FC4A9D524ADA40900149F06 /* ReactionContainerView.swift in Sources */,
 				2F5D0B5F24AEE347000E2AA2 /* ReactionEmojiButton.swift in Sources */,
@@ -14717,6 +14740,7 @@
 				83B906BB249A29CA0088F15C /* UIButton+Additions.swift in Sources */,
 				77F43DD92034637300AE4F42 /* UICollectionView+MNZCategory.m in Sources */,
 				5BC3D060242A36240048123A /* UIColor+Additions.swift in Sources */,
+				6D8820772B1BE50200F0BE18 /* MEGAAppColor+Chat.swift in Sources */,
 				E879DFDA1D12A31D009B74FD /* UIDevice+MNZCategory.m in Sources */,
 				5B5B4FFF1E681BAC00DBEB3B /* UIFont+MNZCategory.m in Sources */,
 				B65D17D7289A233C00D5AD33 /* UIImage+Doc.swift in Sources */,
@@ -15062,6 +15086,7 @@
 				5BE689B42419188A00462134 /* OfflineAppearancePreference+CoreDataClass.swift in Sources */,
 				5BE689B22419187F00462134 /* OfflineAppearancePreference+CoreDataProperties.swift in Sources */,
 				949CEACF1F05121D00A3A580 /* OpenAppRequiredViewController.m in Sources */,
+				6D8820792B1C069500F0BE18 /* MEGAAppColor.swift in Sources */,
 				B620C05E2845BB9A003CEEE7 /* PHAsset+CU.swift in Sources */,
 				B620C0662845BC37003CEEE7 /* PHAssetMediaSubtype+CU.swift in Sources */,
 				B620C0682845BC3B003CEEE7 /* PHAssetMediaType+Mapper.swift in Sources */,
@@ -17357,6 +17382,11 @@
 		327717B429FB82C4004DE295 /* MEGAPresentation */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAPresentation;
+		};
+		6D88207E2B1C0E6E00F0BE18 /* MEGADesignToken */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9418A7A02ACF84210014C01C /* XCRemoteSwiftPackageReference "MEGADesignToken" */;
+			productName = MEGADesignToken;
 		};
 		94004A752AA23FDB004C873B /* SearchMock */ = {
 			isa = XCSwiftPackageProductDependency;
