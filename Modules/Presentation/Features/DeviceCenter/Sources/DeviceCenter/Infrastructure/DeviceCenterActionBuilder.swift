@@ -83,6 +83,39 @@ final class DeviceCenterActionBuilder {
         return actions
     }
     
+    private func actionsForSyncBackup(_ node: NodeEntity) -> [DeviceCenterAction] {
+        var actions: [DeviceCenterAction] = [
+            .favouriteAction(isFavourite: node.isFavourite),
+            .labelAction(label: node.label),
+            .offlineAction()
+        ]
+        
+        if node.isExported {
+            actions.append(contentsOf: [
+                .manageLinkAction(),
+                .removeLinkAction()
+            ])
+        } else {
+            actions.append(.shareLinkAction())
+        }
+        
+        if node.isOutShare {
+            actions.append(.manageFolderAction())
+        } else {
+            actions.append(.shareFolderAction())
+        }
+        
+        actions.append(
+            contentsOf: [
+                .renameAction(),
+                .moveAction(),
+                .copyAction(),
+                .moveToTheRubbishBinAction()
+            ]
+        )
+        return actions
+    }
+    
     func actionsForBackup(_ backup: BackupEntity) -> [DeviceCenterAction] {
         guard let node else { return  [] }
         var actions = [DeviceCenterAction]()
@@ -93,13 +126,14 @@ final class DeviceCenterActionBuilder {
             actions.append(contentsOf: actionsForBackup(node))
         } else if backup.type == .cameraUpload || backup.type == .mediaUpload {
             actions.append(contentsOf: actionsForCUBackup(node))
+        } else if backup.type == .upSync || backup.type == .downSync || backup.type == .twoWay {
+            actions.append(contentsOf: actionsForSyncBackup(node))
         }
         
         return actions
     }
     
     func actionsForDevices(_ device: DeviceEntity) -> [DeviceCenterAction] {
-        // Will be added in future tickets
         []
     }
 }
