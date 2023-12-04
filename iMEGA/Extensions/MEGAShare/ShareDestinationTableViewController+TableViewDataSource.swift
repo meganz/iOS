@@ -22,7 +22,7 @@ extension ShareDestinationTableViewController {
               let attachment = ShareAttachment.attachmentsArray().object(at: indexPath.row) as? ShareAttachment else {
             return HostingTableViewCell<ShareAttachmentCellView>()
         }
-
+        
         let viewModel = ShareAttachmentCellViewModel(attachment: attachment, index: indexPath.row)
         let cellView = ShareAttachmentCellView(viewModel: viewModel)
         cell.host(cellView, parent: self)
@@ -38,10 +38,10 @@ extension ShareDestinationTableViewController {
         switch ShareDestinationRow(rawValue: indexPath.row) {
         case .uploadToMega:
             cell.set(name: Strings.Localizable.uploadToMega,
-                     image: Asset.Images.ActionSheetIcons.upload.image)
+                     image: UIImage.upload)
         case .sendToChats:
             cell.set(name: Strings.Localizable.General.sendToChat,
-                     image: Asset.Images.NodeActions.sendToChat.image,
+                     image: UIImage.sendToChat,
                      isEnabled: isChatReady,
                      showActivityIndicator: !isChatReady)
         default: return cell
@@ -96,7 +96,7 @@ extension ShareDestinationTableViewController {
             return ""
         }
     }
-
+    
     open override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         guard ShareDestinationSection(rawValue: section) == .attachments else { return "" }
         return Strings.Localizable.tapFileToRename

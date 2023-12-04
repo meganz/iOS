@@ -58,7 +58,7 @@ final class RecentsQuickAccessWidgetViewModel: ViewModelType {
             name: item.name,
             url: URL(string: SectionDetail.recents.link)?
                 .appendingPathComponent(item.base64Handle),
-            image: Image(item.isUpdate ? Asset.Images.Generic.versioned.name : Asset.Images.Recents.recentUpload.name),
+            image: Image(item.isUpdate ? .versioned : .recentUpload),
             description: recentStringTimestamp(item.timestamp)
         )
     }

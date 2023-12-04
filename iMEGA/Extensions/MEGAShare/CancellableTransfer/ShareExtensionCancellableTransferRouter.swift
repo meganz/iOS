@@ -16,7 +16,7 @@ final class ShareExtensionCancellableTransferRouter: NSObject, CancellableTransf
     }
     
     func build() -> UIViewController {
-        let sdk = MEGASdkManager.sharedMEGASdk()
+        let sdk = MEGASdk.shared
         let nodeRepository = NodeRepository.newRepo
         let fileSystemRepository = FileSystemRepository(fileManager: FileManager.default)
         
@@ -78,11 +78,11 @@ final class ShareExtensionCancellableTransferRouter: NSObject, CancellableTransf
     func transferCompletedWithError(error: String, dismiss: Bool) {
         if dismiss {
             presenter?.dismiss(animated: true, completion: {
-                SVProgressHUD.show(Asset.Images.Hud.hudDownload.image, status: error)
+                SVProgressHUD.show(UIImage.hudDownload, status: error)
                 self.finishShareExtensionIfNeeded()
             })
         } else {
-            SVProgressHUD.show(Asset.Images.Hud.hudDownload.image, status: error)
+            SVProgressHUD.show(UIImage.hudDownload, status: error)
             self.finishShareExtensionIfNeeded()
         }
     }

@@ -57,8 +57,8 @@ class ExtensionAppearanceManager: NSObject {
         SVProgressHUD.setBackgroundColor(UIColor.systemBackground)
         SVProgressHUD.setHapticsEnabled(true)
         
-        SVProgressHUD.setSuccessImage(Asset.Images.Hud.hudSuccess.image)
-        SVProgressHUD.setErrorImage(Asset.Images.Hud.hudError.image)
+        SVProgressHUD.setSuccessImage(UIImage.hudSuccess)
+        SVProgressHUD.setErrorImage(UIImage.hudError)
         SVProgressHUD.setMinimumDismissTimeInterval(2)
     }
     
@@ -102,7 +102,7 @@ class ExtensionAppearanceManager: NSObject {
         navigationBarAppearance.shadowImage = nil
         navigationBarAppearance.shadowColor = nil
         
-        let backArrowImage = Asset.Images.Chat.backArrow.image
+        let backArrowImage = UIImage.backArrow
         navigationBarAppearance.setBackIndicatorImage(backArrowImage, transitionMaskImage: backArrowImage)
         
         UINavigationBar.appearance().standardAppearance = navigationBarAppearance
