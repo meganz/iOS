@@ -7,7 +7,11 @@ struct ChatRoomsListView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            ChatTabsSelectorView(chatViewMode: viewModel.chatViewMode) { mode in
+            ChatTabsSelectorView(
+                chatViewMode: viewModel.chatViewMode,
+                shouldDisplayUnreadBadgeForChats: viewModel.shouldDisplayUnreadBadgeForChats,
+                shouldDisplayUnreadBadgeForMeetings: viewModel.shouldDisplayUnreadBadgeForMeetings
+            ) { mode in
                 viewModel.selectChatMode(mode)
             }
             .ignoresSafeArea()

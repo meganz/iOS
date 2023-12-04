@@ -107,6 +107,9 @@ final class ChatRoomsListViewModel: ObservableObject {
     @Published var startMeetingTipArrowDirection: TipView.TipArrowDirection = .up
     @Published var recurringMeetingTipOffsetY: CGFloat?
     @Published var recurringMeetingTipArrowDirection: TipView.TipArrowDirection = .up
+    
+    @Published private(set) var shouldDisplayUnreadBadgeForChats = false
+    @Published private(set) var shouldDisplayUnreadBadgeForMeetings = false
 
     var presentingCreateMeetingTip: Bool {
         chatViewMode == .meetings && isConnectedToNetwork && currentTip == .createMeeting
@@ -382,12 +385,23 @@ final class ChatRoomsListViewModel: ObservableObject {
         loadingTask = Task {
             defer { cancelLoadingTask() }
             
+            await updateUnreadBadgeForChatsAndMeetings()
+            
             if chatViewMode == .meetings {
                 await fetchMeetings()
             } else {
                 await fetchNonMeetingChats()
             }
         }
+    }
+    
+    @MainActor
+    private func updateUnreadBadgeForChatsAndMeetings() {
+        guard isUnreadMessageCounterFeatureFlagEnabled else { return }
+        let chats = chatUseCase.fetchNonMeetings() ?? []
+        shouldDisplayUnreadBadgeForChats = chats.contains { $0.unreadCount != 0 }
+        let meetings = chatUseCase.fetchMeetings() ?? []
+        shouldDisplayUnreadBadgeForMeetings = meetings.contains { $0.unreadCount != 0 }
     }
     
     private func createTaskToUpdateContactsOnMegaViewStateIfRequired() {
@@ -497,7 +511,6 @@ final class ChatRoomsListViewModel: ObservableObject {
     
     private func createPastMeetings(with futureScheduledMeetingsChatIds: [ChatIdEntity]) async {
         let chatListItems = chatUseCase.fetchMeetings() ?? []
-
         let pastChatListItems: [ChatListItemEntity] = chatListItems.compactMap { chatListItem in
             guard futureScheduledMeetingsChatIds.notContains(where: { $0 == chatListItem.chatId }) else {
                 return nil
@@ -815,12 +828,16 @@ final class ChatRoomsListViewModel: ObservableObject {
     
     private func onChatListItemsUpdate(_ chatListItems: [ChatListItemEntity]) {
         let chatRooms = chatListItems.compactMap { chatRoomUseCase.chatRoom(forChatId: $0.chatId) }
-        if (chatViewMode == .chats
-            && chatRooms.contains(where: { $0.chatType == .oneToOne || $0.chatType == .group }))
-            || (chatViewMode == .meetings
-                && chatRooms.contains(where: { $0.chatType == .meeting })) {
+        if (chatViewMode == .chats &&
+            chatRooms.contains(where: { $0.chatType == .oneToOne || $0.chatType == .group })) ||
+            (chatViewMode == .meetings &&
+             chatRooms.contains(where: { $0.chatType == .meeting })) {
             DispatchQueue.main.async {
                 self.fetchChats()
+            }
+        } else if chatListItems.contains(where: {$0.unreadCount != 0 }) {
+            Task { @MainActor in
+                updateUnreadBadgeForChatsAndMeetings()
             }
         }
         if chatListItems.contains(where: { $0.changeType == .archived }) {

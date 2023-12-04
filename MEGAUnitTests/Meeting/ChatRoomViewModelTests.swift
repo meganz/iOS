@@ -97,18 +97,6 @@ final class ChatRoomViewModelTests: XCTestCase {
         
         XCTAssertEqual(sut.unreadCountString, "99+")
     }
-    
-    func testIsUnreadCountClipShapeCircle_forUnreadCountNumberCountEqualOne_shouldBeTrue() {
-        let sut = ChatRoomViewModelFactory.make(chatListItem: ChatListItemEntity(unreadCount: 5))
-        
-        XCTAssertTrue(sut.isUnreadCountClipShapeCircle)
-    }
-    
-    func testIsUnreadCountClipShapeCircle_forUnreadCountNumberCountGreaterThanOne_shouldBeFalse() {
-        let sut = ChatRoomViewModelFactory.make(chatListItem: ChatListItemEntity(unreadCount: 15))
-        
-        XCTAssertFalse(sut.isUnreadCountClipShapeCircle)
-    }
 }
 
 class ChatRoomViewModelFactory {

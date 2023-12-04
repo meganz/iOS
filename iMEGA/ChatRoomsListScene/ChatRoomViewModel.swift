@@ -42,10 +42,6 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
     let shouldShowUnreadCount: Bool
     let unreadCountString: String
     
-    var isUnreadCountClipShapeCircle: Bool {
-        unreadCountString.count == 1
-    }
-    
     var callDurationTotal: TimeInterval?
     var callDurationCapturedTime: TimeInterval?
     var timerSubscription: AnyCancellable?
