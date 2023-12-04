@@ -12,7 +12,7 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
     private let deviceCenterBridge: DeviceCenterBridge
     private var itemType: DeviceCenterItemType
     var assets: ItemAssets
-    var availableActions: [DeviceCenterAction]
+    var availableActions: [DeviceCenterAction] = []
     var statusSubtitle: String?
     var isBackup: Bool = false
     var hasErrorStatus: Bool = false
@@ -31,8 +31,7 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
          nodeUseCase: (any NodeUseCaseProtocol)? = nil,
          deviceCenterBridge: DeviceCenterBridge,
          itemType: DeviceCenterItemType,
-         assets: ItemAssets,
-         availableActions: [DeviceCenterAction]) {
+         assets: ItemAssets) {
         self.router = router
         self.refreshDevicesPublisher = refreshDevicesPublisher
         self.deviceCenterUseCase = deviceCenterUseCase
@@ -40,7 +39,6 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
         self.deviceCenterBridge = deviceCenterBridge
         self.itemType = itemType
         self.assets = assets
-        self.availableActions = availableActions
         
         self.configure()
     }
@@ -93,6 +91,31 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
         return nodeUseCase?.nodeForHandle(backupEntity.rootHandle)
     }
     
+    private func loadAvailableActionsForBackup(_ backup: BackupEntity) {
+        guard let nodeEntity = nodeUseCase?.nodeForHandle(backup.rootHandle) else { return }
+        
+        availableActions = DeviceCenterActionBuilder()
+            .setActionType(.backup(backup))
+            .setNode(nodeEntity)
+            .build()
+    }
+    
+    private func loadAvailableActionsForDevice(_ device: DeviceEntity) {
+        availableActions = DeviceCenterActionBuilder()
+            .setActionType(.device(device))
+            .build()
+    }
+    
+    func loadAvailableActions() {
+        switch itemType {
+        case .backup(let backupEntity):
+            loadAvailableActionsForBackup(backupEntity)
+        case .device(let deviceEntity):
+            loadAvailableActionsForDevice(deviceEntity)
+        default: break
+        }
+    }
+    
     func showDetail() {
         switch itemType {
         case .backup(let backup):
@@ -124,7 +147,7 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
                 deviceCenterBridge.cameraUploadActionTapped { [weak self] in
                     self?.refreshDevicesPublisher?.send()
                 }
-            case .info, .copy, .offline, .shareLink, .shareFolder, .showInCloudDrive:
+            case .info, .copy, .offline, .shareLink, .shareFolder, .showInCloudDrive, .favourite, .label, .rename, .move, .moveToTheRubbishBin:
                 guard let node = nodeForEntityType() else { return }
                 deviceCenterBridge.nodeActionTapped(node, type)
             default: break

@@ -4,84 +4,62 @@ import MEGADomainMock
 import XCTest
 
 final class DeviceCenterActionBuilderTests: XCTestCase {
-    
     func testBuildActions_forUploadBackupExportedNotOutsharedNode_expectedActionsReturned() {
-        let sutActions = makeSUT(
+        testDeviceCanterActions(
             type: .backup(
                 BackupEntity(
                     type: .backupUpload
                 )
             ),
-            isOutShare: false,
-            isExported: true
-        )
-        
-        let expectedActions: [DeviceCenterAction] = [
-            .infoAction(),
-            .offlineAction(),
-            .manageLinkAction(),
-            .removeLinkAction(),
-            .shareFolderAction(),
-            .copyAction()
-        ]
-        
-        XCTAssertEqual(
-            sutActions.map(\.title),
-            expectedActions.map(\.title),
-            "The expected actions should be returned for backup upload with an exported not outshared node."
+            isExported: true,
+            expectedActions: [
+                .infoAction(),
+                .offlineAction(),
+                .manageLinkAction(),
+                .removeLinkAction(),
+                .shareFolderAction(),
+                .copyAction()
+            ],
+            message: "The expected actions should be returned for backup upload with an exported not outshared node."
         )
     }
     
     func testBuildActions_forUploadBackupNotExportedNotOutsharedNode_expectedActionsReturned() {
-        let sutActions = makeSUT(
+        testDeviceCanterActions(
             type: .backup(
                 BackupEntity(
                     type: .backupUpload
                 )
             ),
-            isOutShare: false,
-            isExported: false
-        )
-        
-        let expectedActions: [DeviceCenterAction] = [
-            .infoAction(),
-            .offlineAction(),
-            .shareLinkAction(),
-            .shareFolderAction(),
-            .copyAction()
-        ]
-        
-        XCTAssertEqual(
-            sutActions.map(\.title),
-            expectedActions.map(\.title),
-            "The expected actions should be returned for backup upload with a not exported and not outshared node."
+            expectedActions: [
+                .infoAction(),
+                .offlineAction(),
+                .shareLinkAction(),
+                .shareFolderAction(),
+                .copyAction()
+            ],
+            message: "The expected actions should be returned for backup upload with a not exported and not outshared node."
         )
     }
     
     func testBuildActions_forUploadBackupExportedOutsharedNode_expectedActionsReturned() {
-        let sutActions = makeSUT(
+        testDeviceCanterActions(
             type: .backup(
                 BackupEntity(
                     type: .backupUpload
                 )
             ),
             isOutShare: true,
-            isExported: true
-        )
-        
-        let expectedActions: [DeviceCenterAction] = [
-            .infoAction(),
-            .offlineAction(),
-            .manageLinkAction(),
-            .removeLinkAction(),
-            .manageFolderAction(),
-            .copyAction()
-        ]
-        
-        XCTAssertEqual(
-            sutActions.map(\.title),
-            expectedActions.map(\.title),
-            "The expected actions should be returned for backup upload with an exported and outshared node."
+            isExported: true,
+            expectedActions: [
+                .infoAction(),
+                .offlineAction(),
+                .manageLinkAction(),
+                .removeLinkAction(),
+                .manageFolderAction(),
+                .copyAction()
+            ],
+            message: "The expected actions should be returned for backup upload with an exported and outshared node."
         )
     }
     
@@ -93,6 +71,80 @@ final class DeviceCenterActionBuilderTests: XCTestCase {
             .build()
         
         XCTAssertTrue(actions.isEmpty, "An empty array should be returned when the node is nil.")
+    }
+    
+    func testBuildActions_forCUBackupFavouritedExportedOutsharedNode_expectedActionsReturned() {
+        testDeviceCanterActions(
+            type: .backup(
+                BackupEntity(
+                    type: .cameraUpload
+                )
+            ),
+            isFavorite: true,
+            isOutShare: true,
+            isExported: true,
+            expectedActions: [
+                .infoAction(),
+                .favouriteAction(isFavourite: false),
+                .labelAction(label: .unknown),
+                .offlineAction(),
+                .manageLinkAction(),
+                .removeLinkAction(),
+                .manageFolderAction(),
+                .renameAction(),
+                .moveAction(),
+                .copyAction(),
+                .moveToTheRubbishBinAction()
+            ],
+            message: "The expected actions should be returned for CU backup with a favourited and exported node."
+        )
+    }
+    
+    func testBuildActions_forCUBackupNonFavouritedNonExportedButOutsharedNode_expectedActionsReturned() {
+        testDeviceCanterActions(
+            type: .backup(
+                BackupEntity(
+                    type: .cameraUpload
+                )
+            ),
+            isOutShare: true,
+            expectedActions: [
+                .infoAction(),
+                .favouriteAction(isFavourite: false),
+                .labelAction(label: .unknown),
+                .offlineAction(),
+                .shareLinkAction(),
+                .manageFolderAction(),
+                .renameAction(),
+                .moveAction(),
+                .copyAction(),
+                .moveToTheRubbishBinAction()
+            ],
+            message: "The expected actions should be returned for CU backup with a outshared node."
+        )
+    }
+
+    func testBuildActions_forCUBackupNonFavouritedNonExportedNonOutsharedNode_expectedActionsReturned() {
+        testDeviceCanterActions(
+            type: .backup(
+                BackupEntity(
+                    type: .cameraUpload
+                )
+            ),
+            expectedActions: [
+                .infoAction(),
+                .favouriteAction(isFavourite: false),
+                .labelAction(label: .unknown),
+                .offlineAction(),
+                .shareLinkAction(),
+                .shareFolderAction(),
+                .renameAction(),
+                .moveAction(),
+                .copyAction(),
+                .moveToTheRubbishBinAction()
+            ],
+            message: "The expected actions should be returned for CU backup with a non favourited, non exported and non outshared node."
+        )
     }
     
     func testBuild_forDeviceTypeNotImplemented_emptyArrayReturned() {
@@ -122,10 +174,33 @@ final class DeviceCenterActionBuilderTests: XCTestCase {
         XCTAssertTrue(sutActions.isEmpty, "An empty array should be returned for an unknown type.")
     }
     
+    private func testDeviceCanterActions(
+        type: DeviceCenterItemType,
+        isFavorite: Bool = false,
+        isOutShare: Bool = false,
+        isExported: Bool = false,
+        expectedActions: [DeviceCenterAction],
+        message: String
+    ) {
+        let sutActions = makeSUT(
+            type: type,
+            isFavorite: isFavorite,
+            isOutShare: isOutShare,
+            isExported: isExported
+        )
+
+        XCTAssertEqual(
+            sutActions.map(\.title),
+            expectedActions.map(\.title),
+            message
+        )
+    }
+    
     private func makeSUT(
         type: DeviceCenterItemType,
-        isOutShare: Bool,
-        isExported: Bool
+        isFavorite: Bool = false,
+        isOutShare: Bool = false,
+        isExported: Bool = false
     ) -> [DeviceCenterAction] {
         
         let node = NodeEntity(
