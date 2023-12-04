@@ -1,3 +1,4 @@
+
 @testable import DeviceCenter
 import MEGADomain
 import MEGADomainMock
@@ -5,133 +6,150 @@ import XCTest
 
 final class DeviceCenterItemViewModelTests: XCTestCase {
     let mockCurrentDeviceId = "1"
-    let mockAuxDeviceId = "2"
-    
+
     func testActionsForBackup_cameraUploadBackupType_returnsCorrectActions() {
-        let backup = BackupEntity(
-            id: 1,
-            name: "backup1",
-            deviceId: mockCurrentDeviceId,
-            type: .cameraUpload
+        testActions(
+            backupType: .cameraUpload,
+            isExported: false,
+            isOutShared: false,
+            expectedActions: [.info, .favourite, .label, .offline, .shareLink, .shareFolder, .rename, .move, .copy, .moveToTheRubbishBin]
         )
         
-        let mockUseCase = MockNodeDataUseCase(
-            node: NodeEntity(
-                handle: 1,
-                isOutShare: false,
-                isExported: false
-            )
+        testActions(
+            backupType: .cameraUpload,
+            isExported: true,
+            isOutShared: false,
+            expectedActions: [.info, .favourite, .label, .offline, .manageLink, .removeLink, .shareFolder, .rename, .move, .copy, .moveToTheRubbishBin]
         )
         
-        let viewModel = makeSUT(
-            nodeUseCase: mockUseCase,
-            itemType: .backup(backup)
+        testActions(
+            backupType: .cameraUpload,
+            isExported: false,
+            isOutShared: true,
+            expectedActions: [.info, .favourite, .label, .offline, .shareLink, .manageFolder, .rename, .move, .copy, .moveToTheRubbishBin]
         )
         
-        viewModel.loadAvailableActions()
-        let actions = viewModel.availableActions
-        let actionsType = actions.compactMap {$0.type}
-        let expectedActions: [DeviceCenterActionType] = [.info, .favourite, .label, .offline, .shareLink, .shareFolder, .rename, .move, .copy, .moveToTheRubbishBin]
-        
-        XCTAssertEqual(actionsType, expectedActions, "Actions for camera upload backup are incorrect")
+        testActions(
+            backupType: .cameraUpload,
+            isExported: true,
+            isOutShared: true,
+            expectedActions: [.info, .favourite, .label, .offline, .manageLink, .removeLink, .manageFolder, .rename, .move, .copy, .moveToTheRubbishBin]
+        )
     }
  
-    func testActionsForBackup_otherBackupType_returnsCorrectActions() {
-        let backup = BackupEntity(
-            id: 1,
-            name: "backup1",
-            deviceId: mockCurrentDeviceId,
-            type: .backupUpload
+    func testActionsForBackup_otherBackupUploadType_returnsCorrectActions() {
+        testActions(
+            backupType: .backupUpload,
+            isExported: false,
+            isOutShared: false,
+            expectedActions: [.info, .offline, .shareLink, .shareFolder, .copy]
         )
         
-        let mockUseCase = MockNodeDataUseCase(
-            node: NodeEntity(
-                handle: 1,
-                isOutShare: true,
-                isExported: true
-            )
+        testActions(
+            backupType: .backupUpload,
+            isExported: true,
+            isOutShared: false,
+            expectedActions: [.info, .offline, .manageLink, .removeLink, .shareFolder, .copy]
         )
         
+        testActions(
+            backupType: .backupUpload,
+            isExported: false,
+            isOutShared: true,
+            expectedActions: [.info, .offline, .shareLink, .manageFolder, .copy]
+        )
+        
+        testActions(
+            backupType: .backupUpload,
+            isExported: true,
+            isOutShared: true,
+            expectedActions: [.info, .offline, .manageLink, .removeLink, .manageFolder, .copy]
+        )
+    }
+    
+    func testActionsForBackup_syncBackupType_returnsCorrectActions() {
+        testActions(
+            backupType: .upSync,
+            isExported: false,
+            isOutShared: false,
+            expectedActions: [.info, .favourite, .label, .offline, .shareLink, .shareFolder, .rename, .move, .copy, .moveToTheRubbishBin]
+        )
+        
+        testActions(
+            backupType: .upSync,
+            isExported: true,
+            isOutShared: false,
+            expectedActions: [.info, .favourite, .label, .offline, .manageLink, .removeLink, .shareFolder, .rename, .move, .copy, .moveToTheRubbishBin]
+        )
+        
+        testActions(
+            backupType: .upSync,
+            isExported: false,
+            isOutShared: true,
+            expectedActions: [.info, .favourite, .label, .offline, .shareLink, .manageFolder, .rename, .move, .copy, .moveToTheRubbishBin]
+        )
+        
+        testActions(
+            backupType: .upSync,
+            isExported: true,
+            isOutShared: true,
+            expectedActions: [.info, .favourite, .label, .offline, .manageLink, .removeLink, .manageFolder, .rename, .move, .copy, .moveToTheRubbishBin]
+        )
+    }
+    
+    private func testActions(backupType: BackupTypeEntity, isExported: Bool, isOutShared: Bool, expectedActions: [DeviceCenterActionType]) {
         let viewModel = makeSUT(
-            nodeUseCase: mockUseCase,
-            itemType: .backup(backup)
+            backupType: backupType,
+            isExported: isExported,
+            isOutShared: isOutShared
         )
-        
         viewModel.loadAvailableActions()
-        let actions = viewModel.availableActions
-        let actionsType = actions.compactMap {$0.type}
-        let expectedActions: [DeviceCenterActionType] = [.info, .offline, .manageLink, .removeLink, .manageFolder, .copy]
-        
-        XCTAssertEqual(actionsType, expectedActions, "Actions for backup are incorrect")
-    }
-    
-    private func backups() -> [BackupEntity] {
-        var backup1 = BackupEntity(
-            id: 1,
-            name: "backup1",
-            deviceId: mockCurrentDeviceId
-        )
-        
-        backup1.backupStatus = .updating
-        
-        var backup2 = BackupEntity(
-            id: 2,
-            name: "backup2",
-            deviceId: mockCurrentDeviceId
-        )
-        
-        backup2.backupStatus = .upToDate
-        
-        var backup3 = BackupEntity(
-            id: 3,
-            name: "backup3",
-            deviceId: mockAuxDeviceId
-        )
-        
-        backup3.backupStatus = .offline
-        
-        return [backup1, backup2, backup3]
-    }
-    
-    private func devices() -> [DeviceEntity] {
-        let userGroupedBackups = Dictionary(grouping: backups(), by: \.deviceId)
-        
-        let device1 = DeviceEntity(
-            id: mockCurrentDeviceId,
-            name: "device1",
-            backups: userGroupedBackups[mockCurrentDeviceId],
-            status: .upToDate
-        )
-        
-        let device2 = DeviceEntity(
-            id: "2",
-            name: "device2",
-            backups: userGroupedBackups[mockAuxDeviceId],
-            status: .upToDate
-        )
-        
-        return [device1, device2]
+        let actions = viewModel.availableActions.compactMap { $0.type }
+        XCTAssertEqual(actions, expectedActions, "Actions for \(backupType) backup [Exported: \(isExported), Outshared: \(isOutShared)] are incorrect")
     }
     
     private func makeSUT(
-        nodeUseCase: MockNodeDataUseCase,
-        itemType: DeviceCenterItemType,
+        backupType: BackupTypeEntity = .invalid,
+        isExported: Bool = false,
+        isOutShared: Bool = false,
         file: StaticString = #file,
         line: UInt = #line
     ) -> DeviceCenterItemViewModel {
-        
-        let deviceCenterUseCase = MockDeviceCenterUseCase(devices: devices(), currentDeviceId: mockCurrentDeviceId)
+        let backup = BackupEntity(
+            id: 1,
+            name: "backup1",
+            deviceId: mockCurrentDeviceId,
+            type: backupType,
+            status: .upToDate
+        )
+        let device = DeviceEntity(
+            id: mockCurrentDeviceId,
+            name: "device1",
+            backups: [backup],
+            status: .upToDate
+        )
+        let nodeUseCase = MockNodeDataUseCase(
+            node: NodeEntity(
+                handle: 1,
+                isOutShare: isOutShared,
+                isExported: isExported
+            )
+        )
+        let deviceCenterUseCase = MockDeviceCenterUseCase(
+            devices: [device],
+            currentDeviceId: mockCurrentDeviceId
+        )
         let assets = ItemAssets(
             iconName: "",
             status: BackupStatus(
-                status: .updating
+                status: .upToDate
             )
         )
         let sut = DeviceCenterItemViewModel(
             deviceCenterUseCase: deviceCenterUseCase,
             nodeUseCase: nodeUseCase,
             deviceCenterBridge: DeviceCenterBridge(),
-            itemType: itemType,
+            itemType: .backup(backup),
             assets: assets
         )
         
