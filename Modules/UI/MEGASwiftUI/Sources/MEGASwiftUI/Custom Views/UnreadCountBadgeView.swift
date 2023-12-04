@@ -1,19 +1,16 @@
 import SwiftUI
 
-public struct UnreadCountView: View {
-    private let isUnreadCountClipShapeCircle: Bool
+public struct UnreadCountBadgeView: View {
     private let unreadCountString: String
     
     public init(
-        isUnreadCountClipShapeCircle: Bool,
         unreadCountString: String
     ) {
-        self.isUnreadCountClipShapeCircle = isUnreadCountClipShapeCircle
         self.unreadCountString = unreadCountString
     }
     
     public var body: some View {
-        if isUnreadCountClipShapeCircle {
+        if unreadCountString.count <= 1 {
             Text(unreadCountString)
                 .font(.caption2)
                 .foregroundColor(.white)

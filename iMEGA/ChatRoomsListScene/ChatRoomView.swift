@@ -135,8 +135,7 @@ private struct ChatRoomContentDetailsView: View {
                         }
                         
                         if viewModel.shouldShowUnreadCount {
-                            UnreadCountView(
-                                isUnreadCountClipShapeCircle: viewModel.isUnreadCountClipShapeCircle,
+                            UnreadCountBadgeView(
                                 unreadCountString: viewModel.unreadCountString
                             )
                         }

@@ -54,9 +54,6 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
     
     var shouldShowUnreadCount = false
     private(set) var unreadCountString = ""
-    var isUnreadCountClipShapeCircle: Bool {
-        unreadCountString.count == 1
-    }
     var isRecurring: Bool
     var chatHasMessages = false
     

@@ -4,6 +4,8 @@ import SwiftUI
 struct ChatTabsSelectorView: View {
     @Environment(\.colorScheme) private var colorScheme
     var chatViewMode: ChatViewMode
+    let shouldDisplayUnreadBadgeForChats: Bool
+    let shouldDisplayUnreadBadgeForMeetings: Bool
     var action: (ChatViewMode) -> Void
 
     var body: some View {
@@ -16,6 +18,14 @@ struct ChatTabsSelectorView: View {
                     Text(Strings.Localizable.Chat.Selector.chat)
                         .font(Font.system(.subheadline, design: .default).weight(.medium))
                         .foregroundColor(Color(chatViewMode == .chats ? UIColor.chatTabSelectedText : UIColor.chatTabNormalText))
+                    
+                })
+                .overlay(alignment: .trailing, content: {
+                    Circle()
+                        .fill(Color.red)
+                        .frame(width: 5, height: 5)
+                        .offset(x: 9, y: -3)
+                        .opacity(shouldDisplayUnreadBadgeForChats ? 1 : 0)
                 })
                 Divider()
                     .frame(maxHeight: 1)
@@ -30,6 +40,13 @@ struct ChatTabsSelectorView: View {
                     Text(Strings.Localizable.Chat.Selector.meeting)
                         .font(Font.system(.subheadline, design: .default).weight(.medium))
                         .foregroundColor(Color(chatViewMode == .meetings ? UIColor.chatTabSelectedText : UIColor.chatTabNormalText))
+                })
+                .overlay(alignment: .trailing, content: {
+                    Circle()
+                        .fill(Color.red)
+                        .frame(width: 5, height: 5)
+                        .offset(x: 9, y: -3)
+                        .opacity(shouldDisplayUnreadBadgeForMeetings ? 1 : 0)
                 })
                 Divider()
                     .frame(maxHeight: 1)

@@ -368,6 +368,98 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         XCTAssertFalse(sut.isUnreadMessageCounterFeatureFlagEnabled)
     }
     
+    func testShouldDisplayUnreadBadgeForChats_onChatsHasUnreadMessage_shouldBeTrue() {
+        let chatUseCase = MockChatUseCase(
+            items: [ChatListItemEntity(unreadCount: 1)],
+            currentChatConnectionStatus: .online
+        )
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.unreadMessageCounter: true])
+        let sut = makeChatRoomsListViewModel(
+            chatUseCase: chatUseCase,
+            featureFlagProvider: featureFlagProvider
+        )
+        
+        sut.loadChatRoomsIfNeeded()
+        
+        evaluate {
+            sut.shouldDisplayUnreadBadgeForChats == true
+        }
+    }
+    
+    func testShouldDisplayUnreadBadgeForChats_onChatsHasNoUnreadMessage_shouldBeFalse() {
+        let chatUseCase = MockChatUseCase(
+            items: [ChatListItemEntity(unreadCount: 0)],
+            currentChatConnectionStatus: .online
+        )
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.unreadMessageCounter: true])
+        let sut = makeChatRoomsListViewModel(
+            chatUseCase: chatUseCase,
+            featureFlagProvider: featureFlagProvider
+        )
+        
+        sut.loadChatRoomsIfNeeded()
+        
+        evaluate {
+            sut.shouldDisplayUnreadBadgeForChats == false
+        }
+    }
+    
+    func testShouldDisplayUnreadBadgeForMeetings_onMeetingsHasUnreadMessage_shouldBeTrue() {
+        let chatUseCase = MockChatUseCase(
+            items: [ChatListItemEntity(unreadCount: 1)],
+            currentChatConnectionStatus: .online
+        )
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.unreadMessageCounter: true])
+        let sut = makeChatRoomsListViewModel(
+            chatUseCase: chatUseCase,
+            featureFlagProvider: featureFlagProvider
+        )
+        
+        sut.loadChatRoomsIfNeeded()
+        
+        evaluate {
+            sut.shouldDisplayUnreadBadgeForMeetings == true
+        }
+    }
+    
+    func testShouldDisplayUnreadBadgeForMeetings_onMeetingsHasNoUnreadMessage_shouldBeFalse() {
+        let chatUseCase = MockChatUseCase(
+            items: [ChatListItemEntity(unreadCount: 0)],
+            currentChatConnectionStatus: .online
+        )
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.unreadMessageCounter: true])
+        let sut = makeChatRoomsListViewModel(
+            chatUseCase: chatUseCase,
+            featureFlagProvider: featureFlagProvider
+        )
+        
+        sut.loadChatRoomsIfNeeded()
+        
+        evaluate {
+            sut.shouldDisplayUnreadBadgeForMeetings == false
+        }
+    }
+    
+    func testShouldDisplayUnreadBadgeForMeetings_onChatConnectionStatusUpdateForNewUnreadMeetingMessage_shouldBeTrue() {
+        let chatConnectionStatusUpdatePublisher = PassthroughSubject<ChatConnectionStatus, Never>()
+        let chatUseCase = MockChatUseCase(
+            chatConnectionStatusUpdatePublisher: chatConnectionStatusUpdatePublisher,
+            items: [ChatListItemEntity(unreadCount: 1)]
+        )
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.unreadMessageCounter: true])
+        let sut = makeChatRoomsListViewModel(
+            chatUseCase: chatUseCase,
+            featureFlagProvider: featureFlagProvider
+        )
+        
+        sut.loadChatRoomsIfNeeded()
+        chatConnectionStatusUpdatePublisher.send(.online)
+        
+        evaluate {
+            sut.shouldDisplayUnreadBadgeForMeetings == true
+        }
+    }
+    
     // MARK: - Private methods
     
     private func assertContactsOnMegaViewStateWhenSelectedChatMode(description: String, line: UInt = #line) {
@@ -439,6 +531,13 @@ final class ChatRoomsListViewModelTests: XCTestCase {
             featureFlagProvider: featureFlagProvider
         )
         return sut
+    }
+    
+    private func evaluate(isInverted: Bool = false, expression: @escaping () -> Bool) {
+        let predicate = NSPredicate { _, _ in expression() }
+        let expectation = expectation(for: predicate, evaluatedWith: nil)
+        expectation.isInverted = isInverted
+        wait(for: [expectation], timeout: 5)
     }
 }
 
