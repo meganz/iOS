@@ -26,13 +26,13 @@ extension UIColor {
     @objc class func mnz_tertiaryBackground(_ traitCollection: UITraitCollection) -> UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
-            return UIColor.white
+            return MEGAAppColor.White._FFFFFF.uiColor
             
         case .dark:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.gray3A3A3C
+                return MEGAAppColor.Gray._3A3A3C.uiColor
             } else {
-                return UIColor.black2C2C2E
+                return MEGAAppColor.Black._2C2C2E.uiColor
             }
             
         @unknown default:
@@ -640,54 +640,18 @@ extension UIColor {
     
     // MARK: Black
     
-    class func mnz_black161616() -> UIColor {
-        UIColor.black161616
-    }
-    
     @objc class func mnz_black1C1C1E() -> UIColor {
         return UIColor.black1C1C1E
     }
     
-    class func mnz_black2C2C2E() -> UIColor {
-        UIColor.black2C2C2E
-    }
-    
-    class func mnz_black252525() -> UIColor {
-        UIColor.black252525
-    }
-    
     // MARK: Gray
-    
-    class func mnz_gray363638() -> UIColor {
-        UIColor.gray363638
-    }
-    
-    class func mnz_gray3A3A3C() -> UIColor {
-        UIColor.gray3A3A3C
-    }
     
     class func mnz_gray3C3C43() -> UIColor {
         UIColor.gray3C3C43
     }
     
-    class func mnz_gray3D3D3D() -> UIColor {
-        UIColor.gray3D3D3D
-    }
-    
-    class func mnz_gray3F3F42() -> UIColor {
-        UIColor.gray3F3F42
-    }
-    
-    class func mnz_gray474747() -> UIColor {
-        UIColor.gray474747
-    }
-    
     class func mnz_gray515151() -> UIColor {
         return UIColor.gray515151
-    }
-    
-    class func mnz_gray535356() -> UIColor {
-        UIColor.gray535356
     }
     
     @objc class func mnz_gray545458() -> UIColor {
@@ -698,64 +662,16 @@ extension UIColor {
         UIColor.gray545457
     }
     
-    class func mnz_gray676767() -> UIColor {
-        UIColor.gray676767
-    }
-    
     class func mnz_gray848484() -> UIColor {
         return UIColor.gray848484
-    }
-    
-    class func mnz_gray949494() -> UIColor {
-        UIColor.gray949494
     }
     
     class func mnz_grayB5B5B5() -> UIColor {
         return UIColor.grayB5B5B5
     }
     
-    class func mnz_grayBBBBBB() -> UIColor {
-        UIColor.grayBBBBBB
-    }
-    
-    class func mnz_grayC9C9C9() -> UIColor {
-        UIColor.grayC9C9C9
-    }
-    
     class func mnz_grayD1D1D1() -> UIColor {
         return UIColor.grayD1D1D1
-    }
-    
-    class func mnz_grayE2E2E2() -> UIColor {
-        UIColor.grayE2E2E2
-    }
-    
-    class func mnz_grayE5E5E5() -> UIColor {
-        UIColor.grayE5E5E5
-    }
-    
-    class func mnz_grayE6E6E6() -> UIColor {
-        UIColor.grayE6E6E6
-    }
-    
-    class func mnz_grayF4F4F4() -> UIColor {
-        UIColor.grayF4F4F4
-    }
-    
-    class func mnz_gray04040F() -> UIColor {
-        UIColor.gray04040F
-    }
-    
-    class func mnz_grayEBEBF5() -> UIColor {
-        UIColor.grayEBEBF5
-    }
-    
-    class func mnz_gray333333() -> UIColor {
-        UIColor.gray333333
-    }
-    
-    class func mnz_grayBABABC() -> UIColor {
-        UIColor.grayBABABC
     }
     
     @objc class func mnz_grayDBDBDB() -> UIColor {
@@ -830,22 +746,6 @@ extension UIColor {
     
     // MARK: Blue
     
-    class func mnz_blue0089C7() -> UIColor {
-        UIColor.blue0089C7
-    }
-    
-    class func mnz_blue009AE0() -> UIColor {
-        UIColor.blue009AE0
-    }
-    
-    class func mnz_blue059DE2() -> UIColor {
-        UIColor.blue059DE2
-    }
-    
-    class func mnz_blue38C1FF() -> UIColor {
-        UIColor.blue38C1FF
-    }
-    
     @objc(mnz_blueForTraitCollection:)
     class func mnz_blue(for traitCollection: UITraitCollection) -> UIColor {
         switch traitCollection.userInterfaceStyle {
@@ -878,26 +778,6 @@ extension UIColor {
         return UIColor.green00C29A
     }
     
-    class func mnz_green00E9B9() -> UIColor {
-        UIColor.green00E9B9
-    }
-    
-    class func mnz_green347467() -> UIColor {
-        return UIColor.green347467
-    }
-    
-    class func mnz_green009476() -> UIColor {
-        UIColor.green009476
-    }
-    
-    class func mnz_green007B62() -> UIColor {
-        UIColor.green007B62
-    }
-    
-    class func mnz_green00A382() -> UIColor {
-        UIColor.green00A382
-    }
-    
     @objc(mnz_turquoiseForTraitCollection:)
     class func mnz_turquoise(for traitCollection: UITraitCollection) -> UIColor {
         switch traitCollection.userInterfaceStyle {
@@ -921,22 +801,6 @@ extension UIColor {
     }
     
     // MARK: Red
-    
-    class func mnz_redF30C14() -> UIColor {
-        UIColor.redF30C14
-    }
-    
-    class func mnz_redCE0A11() -> UIColor {
-        UIColor.redCE0A11
-    }
-    
-    class func mnz_redF7363D() -> UIColor {
-        UIColor.redF7363D
-    }
-    
-    class func mnz_redF95C61() -> UIColor {
-        UIColor.redF95C61
-    }
     
     class func mnz_redFF453A() -> UIColor {
         return UIColor.redFF453A
@@ -966,24 +830,8 @@ extension UIColor {
     
     // MARK: White
     
-    class func mnz_whiteEEEEEE() -> UIColor {
-        UIColor.whiteEEEEEE
-    }
-    
-    class func mnz_whiteF2F2F2() -> UIColor {
-        UIColor.whiteF2F2F2
-    }
-    
-    class func mnz_whiteFCFCFC() -> UIColor {
-        UIColor.whiteFCFCFC
-    }
-    
     @objc class func mnz_whiteF7F7F7() -> UIColor {
         return UIColor.whiteF7F7F7
-    }
-    
-    class func mnz_whiteEFEFEF() -> UIColor {
-        UIColor.whiteEFEFEF
     }
     
     // MARK: Yellow
