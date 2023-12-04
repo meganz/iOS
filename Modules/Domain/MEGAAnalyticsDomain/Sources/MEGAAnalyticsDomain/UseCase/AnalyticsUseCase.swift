@@ -2,7 +2,7 @@ public protocol AnalyticsUseCaseProtocol {
     func sendEvent(_ eventEntity: EventEntity)
 }
 
-public final class AnalyticsUseCase<
+public struct AnalyticsUseCase<
     T: AnalyticsRepositoryProtocol
 >: AnalyticsUseCaseProtocol {
     

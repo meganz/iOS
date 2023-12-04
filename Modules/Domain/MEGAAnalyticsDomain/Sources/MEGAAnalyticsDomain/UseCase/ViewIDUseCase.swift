@@ -2,7 +2,7 @@ public protocol ViewIDUseCaseProtocol {
     func generateViewId() throws -> ViewID
 }
 
-public final class ViewIDUseCase<
+public struct ViewIDUseCase<
     T: ViewIDRepositoryProtocol
 >: ViewIDUseCaseProtocol {
     public enum GenerationError: Error {

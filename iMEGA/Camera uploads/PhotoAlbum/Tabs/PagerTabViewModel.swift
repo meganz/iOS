@@ -16,8 +16,8 @@ enum PhotoLibraryTab: CaseIterable {
     
     var eventIdentifier: any TabSelectedEventIdentifier {
         switch self {
-        case .timeline: return TimelineTabEvent()
-        case .album: return AlbumsTabEvent()
+        case .timeline: return DIContainer.timelineEvent
+        case .album: return DIContainer.albumEvent
         }
     }
 }
@@ -35,9 +35,9 @@ final class PagerTabViewModel: ObservableObject {
     
     var timeLineTitle = Strings.Localizable.CameraUploads.Timeline.title
     var albumsTitle = Strings.Localizable.CameraUploads.Albums.title
-
+    
     private let tracker: any AnalyticsTracking
-
+    
     init(tracker: some AnalyticsTracking) {
         self.tracker = tracker
     }
@@ -49,5 +49,4 @@ final class PagerTabViewModel: ObservableObject {
     private func trackCurrentTab() {
         tracker.trackAnalyticsEvent(with: selectedTab.eventIdentifier)
     }
-
 }

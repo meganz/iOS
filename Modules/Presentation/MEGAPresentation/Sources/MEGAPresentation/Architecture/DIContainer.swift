@@ -43,20 +43,24 @@ extension PlaybackContinuationUseCase where T == PreviousPlaybackSessionReposito
 // MARK: - Analytics
 
 public extension DIContainer {
-    static var tracker: some AnalyticsTracking = Tracker.shared
+    static let tracker: some AnalyticsTracking = Tracker.shared
 }
 
 extension Tracker {
-    static var shared: Tracker = {
+    static let shared: Tracker = {
         Tracker(
-            viewIdProvider: ViewIdProviderAdapter(
-                viewIdUseCase: DIContainer.viewIDUseCase
-            ),
-            eventSender: EventSenderAdapter(
-                analyticsUseCase: DIContainer.analyticsUseCase
-            )
+            viewIdProvider: viewIdProvider,
+            eventSender: eventSender
         )
     }()
+    
+    static let viewIdProvider = ViewIdProviderAdapter(
+        viewIdUseCase: DIContainer.viewIDUseCase
+    )
+    
+    static let eventSender = EventSenderAdapter(
+        analyticsUseCase: DIContainer.analyticsUseCase
+    )
 }
 
 extension DIContainer {
