@@ -208,24 +208,24 @@ class SortingAndViewModeTableViewController: UITableViewController {
             } else {
                 var actions = [ActionSheetAction]()
                 let sortType = Helper.sortType(for: nil)
-                let checkmarkImageView = UIImageView(image: Asset.Images.Generic.turquoiseCheckmark.image)
+                let checkmarkImageView = UIImageView(image: UIImage.turquoiseCheckmark)
     
-                actions.append(ActionSheetAction(title: Strings.Localizable.nameAscending, detail: nil, accessoryView: sortType == .defaultAsc ? checkmarkImageView : nil, image: Asset.Images.ActionSheetIcons.SortBy.ascending.image, style: .default) {
+                actions.append(ActionSheetAction(title: Strings.Localizable.nameAscending, detail: nil, accessoryView: sortType == .defaultAsc ? checkmarkImageView : nil, image: UIImage.ascending, style: .default) {
                     Helper.save(.defaultAsc, for: nil)
                 })
-                actions.append(ActionSheetAction(title: Strings.Localizable.nameDescending, detail: nil, accessoryView: sortType == .defaultDesc ? checkmarkImageView : nil, image: Asset.Images.ActionSheetIcons.SortBy.descending.image, style: .default) {
+                actions.append(ActionSheetAction(title: Strings.Localizable.nameDescending, detail: nil, accessoryView: sortType == .defaultDesc ? checkmarkImageView : nil, image: UIImage.descending, style: .default) {
                     Helper.save(.defaultDesc, for: nil)
                 })
-                actions.append(ActionSheetAction(title: Strings.Localizable.largest, detail: nil, accessoryView: sortType == .sizeDesc ? checkmarkImageView : nil, image: Asset.Images.ActionSheetIcons.SortBy.largest.image, style: .default) {
+                actions.append(ActionSheetAction(title: Strings.Localizable.largest, detail: nil, accessoryView: sortType == .sizeDesc ? checkmarkImageView : nil, image: UIImage.largest, style: .default) {
                     Helper.save(.sizeDesc, for: nil)
                 })
-                actions.append(ActionSheetAction(title: Strings.Localizable.smallest, detail: nil, accessoryView: sortType == .sizeAsc ? checkmarkImageView : nil, image: Asset.Images.ActionSheetIcons.SortBy.smallest.image, style: .default) {
+                actions.append(ActionSheetAction(title: Strings.Localizable.smallest, detail: nil, accessoryView: sortType == .sizeAsc ? checkmarkImageView : nil, image: UIImage.smallest, style: .default) {
                     Helper.save(.sizeAsc, for: nil)
                 })
-                actions.append(ActionSheetAction(title: Strings.Localizable.newest, detail: nil, accessoryView: sortType == .modificationDesc ? checkmarkImageView : nil, image: Asset.Images.ActionSheetIcons.SortBy.newest.image, style: .default) {
+                actions.append(ActionSheetAction(title: Strings.Localizable.newest, detail: nil, accessoryView: sortType == .modificationDesc ? checkmarkImageView : nil, image: UIImage.newest, style: .default) {
                     Helper.save(.modificationDesc, for: nil)
                 })
-                actions.append(ActionSheetAction(title: Strings.Localizable.oldest, detail: nil, accessoryView: sortType == .modificationAsc ? checkmarkImageView : nil, image: Asset.Images.ActionSheetIcons.SortBy.oldest.image, style: .default) {
+                actions.append(ActionSheetAction(title: Strings.Localizable.oldest, detail: nil, accessoryView: sortType == .modificationAsc ? checkmarkImageView : nil, image: UIImage.oldest, style: .default) {
                     Helper.save(.modificationAsc, for: nil)
                 })
                 

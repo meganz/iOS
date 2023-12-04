@@ -42,7 +42,7 @@ class SettingViewRouter: Routing {
     }
     
     private func createCameraUploadCellViewModel() -> SettingCellViewModel {
-        let vm = SettingCellViewModel(image: Asset.Images.Settings.cameraUploadsSettings,
+        let vm = SettingCellViewModel(image: UIImage.cameraUploadsSettings,
                                       title: Strings.Localizable.cameraUploadsLabel,
                                       displayValue: CameraUploadManager.getCameraUploadStatus(), router: nil)
         let router = CameraUploadsSettingsViewRouter(presenter: presenter, closure: { [weak vm] in
@@ -59,54 +59,54 @@ extension SettingViewRouter {
         
         SettingSectionViewModel {
             createCameraUploadCellViewModel()
-            SettingCellViewModel(image: Asset.Images.Settings.chatSettings,
+            SettingCellViewModel(image: UIImage.chatSettings,
                                  title: Strings.Localizable.chat,
                                  router: ChatSettingsViewRouter(presenter: presenter))
             
-            SettingCellViewModel(image: Asset.Images.Settings.callsSettings,
+            SettingCellViewModel(image: UIImage.callsSettings,
                                  title: Strings.Localizable.Settings.Section.Calls.title,
                                  router: CallsSettingsViewRouter(presenter: presenter))
         }
         
         SettingSectionViewModel {
-            SettingCellViewModel(image: Asset.Images.Settings.securitySettings,
+            SettingCellViewModel(image: UIImage.securitySettings,
                                  title: Strings.Localizable.Settings.Section.security,
                                  router: SecuritySettingsViewRouter(presenter: presenter))
         }
         
         SettingSectionViewModel {
-            SettingCellViewModel(image: Asset.Images.Settings.userInterfaceSettings,
+            SettingCellViewModel(image: UIImage.userInterfaceSettings,
                                  title: Strings.Localizable.Settings.Section.userInterface,
                                  router: AppearanceViewRouter(presenter: presenter))
             
-            SettingCellViewModel(image: Asset.Images.Settings.fileManagementSettings,
+            SettingCellViewModel(image: UIImage.fileManagementSettings,
                                  title: Strings.Localizable.fileManagement,
                                  router: FileManagementSettingsViewRouter(presenter: presenter))
             
-            SettingCellViewModel(image: Asset.Images.Settings.advancedSettings,
+            SettingCellViewModel(image: UIImage.advancedSettings,
                                  title: Strings.Localizable.advanced,
                                  router: AdvancedViewRouter(presenter: presenter))
         }
         
         SettingSectionViewModel {
-            SettingCellViewModel(image: Asset.Images.Settings.helpSettings,
+            SettingCellViewModel(image: UIImage.helpSettings,
                                  title: Strings.Localizable.help,
                                  router: HelpViewRouter(presenter: presenter))
         }
         
         SettingSectionViewModel {
-            SettingCellViewModel(image: Asset.Images.Settings.aboutSettings,
+            SettingCellViewModel(image: UIImage.aboutSettings,
                                  title: Strings.Localizable.about,
                                  router: AboutViewRouter(presenter: presenter,
                                                          appBundle: .main,
                                                          systemVersion: UIDevice.current.systemVersion,
                                                          deviceName: UIDevice.current.deviceName() ?? ""))
             
-            SettingCellViewModel(image: Asset.Images.Settings.termsAndPoliciesSettings,
+            SettingCellViewModel(image: UIImage.termsAndPoliciesSettings,
                                  title: Strings.Localizable.Settings.Section.termsAndPolicies,
                                  router: TermsAndPoliciesRouter(navigationController: presenter))
             
-            SettingCellViewModel(image: Asset.Images.Settings.cookieSettings,
+            SettingCellViewModel(image: UIImage.cookieSettings,
                                  title: Strings.Localizable.General.cookieSettings,
                                  router: CookieSettingsRouter(presenter: presenter))
         }
@@ -120,7 +120,7 @@ extension SettingViewRouter {
         
 #if QA_CONFIG
         SettingSectionViewModel {
-            SettingCellViewModel(image: Asset.Images.MyAccount.iconSettings,
+            SettingCellViewModel(image: UIImage.iconSettings,
                                  title: "QA Settings",
                                  router: QASettingsRouter(presenter: presenter))
         }

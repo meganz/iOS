@@ -1,9 +1,10 @@
 import Foundation
 import MEGAPresentation
+import UIKit
 
 class SettingCellViewModel: ViewModelType {
     
-    let image: ImageAsset?
+    let image: UIImage?
     let title: String
     var displayValue: String
     let isDestructive: Bool
@@ -11,7 +12,7 @@ class SettingCellViewModel: ViewModelType {
     
     var invokeCommand: ((SettingsCommand) -> Void)?
     
-    init(image: ImageAsset?, title: String, isDestructive: Bool = false, displayValue: String = "", router: (any Routing)? = nil) {
+    init(image: UIImage?, title: String, isDestructive: Bool = false, displayValue: String = "", router: (any Routing)? = nil) {
         self.image = image
         self.title = title
         self.router = router

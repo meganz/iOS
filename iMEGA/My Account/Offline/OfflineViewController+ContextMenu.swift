@@ -14,7 +14,7 @@ extension OfflineViewController: DisplayMenuDelegate {
     @objc func setNavigationBarButtons() {
         contextMenuManager = ContextMenuManager(displayMenuDelegate: self, createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo))
         
-        contextBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.moreNavigationBar.image,
+        contextBarButtonItem = UIBarButtonItem(image: UIImage.moreNavigationBar,
                                                menu: contextMenuManager?.contextMenu(with: contextMenuConfiguration()))
         
         contextBarButtonItem.accessibilityLabel = Strings.Localizable.more
