@@ -39,7 +39,6 @@ final class ImportAlbumViewModel: ObservableObject {
         willSet {
             showingDecryptionKeyAlert = newValue == .requireDecryptionKey
             showCannotAccessAlbumAlert = newValue == .invalid
-            showLoading = newValue == .inProgress
         }
     }
     @Published var publicLinkDecryptionKey = ""
@@ -71,15 +70,15 @@ final class ImportAlbumViewModel: ObservableObject {
     }
     
     var shouldShowEmptyAlbumView: Bool {
-        isPhotosLoaded && isAlbumEmpty
+        publicLinkStatus == .loaded && isAlbumEmpty
     }
     
     var isAlbumEmpty: Bool {
         photoLibraryContentViewModel.library.isEmpty
     }
     
-    var isPhotosLoaded: Bool {
-        publicLinkStatus == .loaded
+    var shouldShowPhotoLibraryContent: Bool {
+        publicLinkStatus == .inProgress || publicLinkStatus == .loaded
     }
     
     var renameAlbumMessage: String {
@@ -239,9 +238,6 @@ final class ImportAlbumViewModel: ObservableObject {
                 break
             }
             isConnectedToNetworkUntilContentLoaded = isConnected
-            if !isConnected && showLoading {
-                showLoading.toggle()
-            }
         }
     }
     

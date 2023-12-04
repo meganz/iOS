@@ -64,7 +64,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         sut.onViewAppear()
 
         XCTAssertNil(sut.publicAlbumName)
-        XCTAssertFalse(sut.isPhotosLoaded)
+        XCTAssertFalse(sut.shouldShowPhotoLibraryContent)
         
         let exp = expectation(description: "link status should change correctly")
         exp.expectedFulfillmentCount = 2
@@ -84,7 +84,7 @@ final class ImportAlbumViewModelTests: XCTestCase {
         XCTAssertEqual(sut.publicAlbumName, albumName)
         XCTAssertEqual(sut.photoLibraryContentViewModel.library,
                        photos.toPhotoLibrary(withSortType: .newest))
-        XCTAssertTrue(sut.isPhotosLoaded)
+        XCTAssertTrue(sut.shouldShowPhotoLibraryContent)
         
         assertTrackAnalyticsEventCalled(
             trackedEventIdentifiers: tracker.trackedEventIdentifiers,
@@ -753,17 +753,6 @@ final class ImportAlbumViewModelTests: XCTestCase {
         
         await sut.loadPublicAlbum()
         await sut.monitorNetworkConnection()
-    }
-    
-    func testMonitorNetworkConnection_onConnectionChangeWhileInProgress_shouldNotShowLoadingIndicator() async throws {
-        let connectionStream = makeConnectionMonitorStream(statuses: [false])
-        let monitorUseCase = MockNetworkMonitorUseCase(connectionChangedStream: connectionStream)
-        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
-                                           monitorUseCase: monitorUseCase)
-        sut.publicLinkStatus = .inProgress
-        
-        await sut.monitorNetworkConnection()
-        XCTAssertFalse(sut.showLoading)
     }
     
     // MARK: - Private
