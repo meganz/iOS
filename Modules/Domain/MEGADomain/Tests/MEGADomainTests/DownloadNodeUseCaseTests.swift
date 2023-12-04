@@ -20,7 +20,8 @@ class DownloadNodeUseCaseTests: XCTestCase {
             mediaUseCase: MockMediaUseCase(),
             preferenceRepository: EmptyPreferenceRepository.newRepo,
             offlineFileFetcherRepository: offlineFileFetcherRepo,
-            chatNodeRepository: MockChatNodeRepository()
+            chatNodeRepository: MockChatNodeRepository(), 
+            downloadChatRepository: MockDownloadChatRepository()
         )
         sut.downloadFileToOffline(forNodeHandle: .invalid, filename: nil, appdata: nil, startFirst: false, start: nil, update: nil) { result in
             switch result {
@@ -47,7 +48,8 @@ class DownloadNodeUseCaseTests: XCTestCase {
             mediaUseCase: MockMediaUseCase(),
             preferenceRepository: EmptyPreferenceRepository.newRepo,
             offlineFileFetcherRepository: MockOfflineFileFetcherRepository.newRepo,
-            chatNodeRepository: MockChatNodeRepository()
+            chatNodeRepository: MockChatNodeRepository(),
+            downloadChatRepository: MockDownloadChatRepository()
         )
         sut.downloadFileToOffline(forNodeHandle: .invalid, filename: nil, appdata: nil, startFirst: false, start: nil, update: nil) { result in
             switch result {
@@ -73,7 +75,8 @@ class DownloadNodeUseCaseTests: XCTestCase {
             mediaUseCase: MockMediaUseCase(),
             preferenceRepository: EmptyPreferenceRepository.newRepo,
             offlineFileFetcherRepository: MockOfflineFileFetcherRepository.newRepo,
-            chatNodeRepository: MockChatNodeRepository()
+            chatNodeRepository: MockChatNodeRepository(),
+            downloadChatRepository: MockDownloadChatRepository()
         )
         sut.downloadFileToOffline(forNodeHandle: .invalid, filename: nil, appdata: nil, startFirst: false, start: nil, update: nil) { result in
             switch result {
@@ -100,7 +103,8 @@ class DownloadNodeUseCaseTests: XCTestCase {
             mediaUseCase: MockMediaUseCase(),
             preferenceRepository: EmptyPreferenceRepository.newRepo,
             offlineFileFetcherRepository: MockOfflineFileFetcherRepository.newRepo,
-            chatNodeRepository: MockChatNodeRepository()
+            chatNodeRepository: MockChatNodeRepository(),
+            downloadChatRepository: MockDownloadChatRepository()
         )
         sut.downloadFileToOffline(forNodeHandle: .invalid, filename: nil, appdata: nil, startFirst: false, start: nil, update: nil) { result in
             switch result {
@@ -128,7 +132,8 @@ class DownloadNodeUseCaseTests: XCTestCase {
             mediaUseCase: MockMediaUseCase(),
             preferenceRepository: EmptyPreferenceRepository.newRepo,
             offlineFileFetcherRepository: MockOfflineFileFetcherRepository.newRepo,
-            chatNodeRepository: MockChatNodeRepository()
+            chatNodeRepository: MockChatNodeRepository(),
+            downloadChatRepository: MockDownloadChatRepository()
         )
         sut.downloadFileToOffline(forNodeHandle: .invalid, filename: nil, appdata: nil, startFirst: false, start: nil, update: nil) { result in
             switch result {

@@ -13,12 +13,13 @@
     if (self) {
         _completion = completion;
     }
+    
     return self;
 }
 
 #pragma mark - MEGARequestDelegate
 
-- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {    
+- (void)onRequestFinish:(MEGASdk *)api request:(MEGARequest *)request error:(MEGAError *)error {
     if (self.completion) {
         self.completion(request, error);
     }

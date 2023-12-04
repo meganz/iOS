@@ -22,7 +22,8 @@ extension SharedItemsViewController {
                              saveMediaToPhotosUseCase: SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository.newRepo,
                                                                                 fileCacheRepository: FileCacheRepository.newRepo,
                                                                                 nodeRepository: NodeRepository.newRepo,
-                                                                                chatNodeRepository: ChatNodeRepository.newRepo))
+                                                                                chatNodeRepository: ChatNodeRepository.newRepo,
+                                                                                downloadChatRepository: DownloadChatRepository.newRepo))
     }
     
     @objc func createNodeInfoViewModel(withNode node: MEGANode,

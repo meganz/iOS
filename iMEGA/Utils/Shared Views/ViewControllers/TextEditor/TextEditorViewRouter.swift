@@ -70,7 +70,8 @@ extension TextEditorViewRouter: TextEditorViewRouting {
             mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo),
             preferenceRepository: PreferenceRepository.newRepo,
             offlineFileFetcherRepository: OfflineFileFetcherRepository.newRepo, 
-            chatNodeRepository: ChatNodeRepository.newRepo)
+            chatNodeRepository: ChatNodeRepository.newRepo,
+            downloadChatRepository: DownloadChatRepository.newRepo)
         let nodeDataUC = NodeUseCase(nodeDataRepository: NodeDataRepository.newRepo, nodeValidationRepository: NodeValidationRepository.newRepo, nodeRepository: NodeRepository.newRepo)
         let backupsUC = BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
         let vm = TextEditorViewModel(

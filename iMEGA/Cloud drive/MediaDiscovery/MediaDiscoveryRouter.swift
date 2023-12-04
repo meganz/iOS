@@ -40,7 +40,8 @@ protocol MediaDiscoveryRouting: Routing {
         let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: downloadFileRepository,
                                                         fileCacheRepository: FileCacheRepository.newRepo,
                                                         nodeRepository: NodeRepository.newRepo, 
-                                                        chatNodeRepository: ChatNodeRepository.newRepo)
+                                                        chatNodeRepository: ChatNodeRepository.newRepo,
+                                                        downloadChatRepository: DownloadChatRepository.newRepo)
         let viewModel = MediaDiscoveryViewModel(parentNode: parentNode,
                                                 router: self,
                                                 analyticsUseCase: analyticsUseCase,

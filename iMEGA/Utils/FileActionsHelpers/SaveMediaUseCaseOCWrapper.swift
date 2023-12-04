@@ -5,7 +5,7 @@ import MEGASDKRepo
 
 @objc final class SaveMediaToPhotosUseCaseOCWrapper: NSObject {
     @objc func saveToPhotos(node: MEGANode, isFolderLink: Bool = false) {
-        let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdk.sharedSdk, sharedFolderSdk: isFolderLink ? MEGASdk.sharedFolderLinkSdk : nil), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo, chatNodeRepository: ChatNodeRepository.newRepo)
+        let saveMediaUseCase = SaveMediaToPhotosUseCase(downloadFileRepository: DownloadFileRepository(sdk: MEGASdk.sharedSdk, sharedFolderSdk: isFolderLink ? MEGASdk.sharedFolderLinkSdk : nil), fileCacheRepository: FileCacheRepository.newRepo, nodeRepository: NodeRepository.newRepo, chatNodeRepository: ChatNodeRepository.newRepo, downloadChatRepository: DownloadChatRepository.newRepo)
         let permissionHandler = DevicePermissionsHandler.makeHandler()
         
         permissionHandler.photosPermissionWithCompletionHandler { granted in

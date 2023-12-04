@@ -3,7 +3,6 @@
 #import "SVProgressHUD.h"
 
 #import "Helper.h"
-#import "MEGAGetPublicNodeRequestDelegate.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGALinkManager.h"
 #import "MEGAPhotoBrowserViewController.h"

@@ -117,7 +117,8 @@ extension FolderLinkViewController {
             ),
             fileCacheRepository: FileCacheRepository.newRepo,
             nodeRepository: NodeRepository.newRepo,
-            chatNodeRepository: ChatNodeRepository.newRepo
+            chatNodeRepository: ChatNodeRepository.newRepo,
+            downloadChatRepository: DownloadChatRepository.newRepo
         )
 
         let permissionHandler = DevicePermissionsHandler.makeHandler()

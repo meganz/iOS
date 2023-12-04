@@ -180,7 +180,9 @@ extension PhotoBrowserDataProvider {
                 nodeProvider: nodeProvider),
             fileCacheRepository: FileCacheRepository.newRepo,
             nodeRepository: NodeRepository.newRepo,
-            chatNodeRepository: ChatNodeRepository.newRepo)
+            chatNodeRepository: ChatNodeRepository.newRepo,
+            downloadChatRepository: DownloadChatRepository.newRepo
+        )
     }
     
     private func isValid(index: Int) -> Bool {

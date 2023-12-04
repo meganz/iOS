@@ -88,7 +88,8 @@ final class HomeScreenFactory: NSObject {
                 downloadFileRepository: DownloadFileRepository(sdk: sdk),
                 fileCacheRepository: FileCacheRepository.newRepo,
                 nodeRepository: makeNodeRepo(),
-                chatNodeRepository: ChatNodeRepository.newRepo
+                chatNodeRepository: ChatNodeRepository.newRepo,
+                downloadChatRepository: DownloadChatRepository.newRepo
             )
         )
         homeViewController.bannerViewModel = HomeBannerViewModel(

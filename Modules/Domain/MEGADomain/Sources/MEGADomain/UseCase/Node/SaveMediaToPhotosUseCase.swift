@@ -4,22 +4,25 @@ public protocol SaveMediaToPhotosUseCaseProtocol {
     func saveToPhotos(fileLink: FileLinkEntity, completion: @escaping (Result<Void, SaveMediaToPhotosErrorEntity>) -> Void)
 }
         
-public struct SaveMediaToPhotosUseCase<T: DownloadFileRepositoryProtocol, U: FileCacheRepositoryProtocol, V: NodeRepositoryProtocol, W: ChatNodeRepositoryProtocol>: SaveMediaToPhotosUseCaseProtocol {
+public struct SaveMediaToPhotosUseCase<T: DownloadFileRepositoryProtocol, U: FileCacheRepositoryProtocol, V: NodeRepositoryProtocol, W: ChatNodeRepositoryProtocol, X: DownloadChatRepositoryProtocol>: SaveMediaToPhotosUseCaseProtocol {
     private let downloadFileRepository: T
     private let fileCacheRepository: U
     private let nodeRepository: V
     private let chatNodeRepository: W
+    private let downloadChatRepository: X
 
     public init(
         downloadFileRepository: T,
         fileCacheRepository: U,
         nodeRepository: V,
-        chatNodeRepository: W
+        chatNodeRepository: W,
+        downloadChatRepository: X
     ) {
         self.downloadFileRepository = downloadFileRepository
         self.fileCacheRepository = fileCacheRepository
         self.nodeRepository = nodeRepository
         self.chatNodeRepository = chatNodeRepository
+        self.downloadChatRepository = downloadChatRepository
     }
     
     private func saveToPhotos(node: NodeEntity) async throws {
@@ -56,10 +59,10 @@ public struct SaveMediaToPhotosUseCase<T: DownloadFileRepositoryProtocol, U: Fil
             completion(.failure(.nodeNotFound))
             return
         }
-
+        
         let tempUrl = fileCacheRepository.tempFileURL(for: node)
-
-        downloadFileRepository.downloadChat(nodeHandle: handle, messageId: messageId, chatId: chatId, to: tempUrl, metaData: .saveInPhotos) { result in
+        
+        downloadChatRepository.downloadChat(nodeHandle: handle, messageId: messageId, chatId: chatId, to: tempUrl, metaData: .saveInPhotos) { result in
             switch result {
             case .success:
                 completion(.success)
