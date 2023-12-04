@@ -44,6 +44,7 @@ struct DeviceCenterItemView: View {
             }
             Spacer()
             Button {
+                viewModel.loadAvailableActions()
                 selectedViewModel = viewModel
             } label: {
                 Image("moreList")

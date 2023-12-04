@@ -14,6 +14,18 @@ public enum DeviceCenterActionType {
     case sort
     case sortAscending
     case sortDescending
+    case favourite
+    case label
+    case labelRed
+    case labelOrange
+    case labelYellow
+    case labelGreen
+    case labelBlue
+    case labelPurple
+    case labelGrey
+    case exported
+    case move
+    case moveToTheRubbishBin
 }
 
 public struct DeviceCenterAction {

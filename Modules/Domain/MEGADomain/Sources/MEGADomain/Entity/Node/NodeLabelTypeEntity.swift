@@ -1,4 +1,4 @@
-public enum NodeLabelTypeEntity: Sendable {
+public enum NodeLabelTypeEntity: Sendable, CaseIterable {
     case unknown
     case red
     case orange

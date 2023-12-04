@@ -126,8 +126,7 @@ public final class DeviceListViewModel: ObservableObject {
     }
     
     private func loadDeviceViewModel(_ device: DeviceEntity) -> DeviceCenterItemViewModel? {
-        guard let deviceAssets = loadAssets(for: device),
-              let availableActions = actionsForDevice(device) else {
+        guard let deviceAssets = loadAssets(for: device) else {
             return nil
         }
         
@@ -137,8 +136,7 @@ public final class DeviceListViewModel: ObservableObject {
             deviceCenterUseCase: deviceCenterUseCase,
             deviceCenterBridge: deviceCenterBridge,
             itemType: .device(device),
-            assets: deviceAssets,
-            availableActions: availableActions
+            assets: deviceAssets
         )
     }
     

@@ -213,15 +213,13 @@ public final class BackupListViewModel: ObservableObject {
     func loadBackupsModels() {
         backupModels = backups?
             .compactMap { backup in
-                if let assets = loadAssets(for: backup),
-                   let availableActions = actionsForBackup(backup) {
+                if let assets = loadAssets(for: backup) {
                     return DeviceCenterItemViewModel(
                         deviceCenterUseCase: deviceCenterUseCase,
                         nodeUseCase: nodeUseCase,
                         deviceCenterBridge: deviceCenterBridge,
                         itemType: .backup(backup),
-                        assets: assets,
-                        availableActions: availableActions
+                        assets: assets
                     )
                 }
                 return nil
@@ -242,7 +240,7 @@ public final class BackupListViewModel: ObservableObject {
     }
     
     func actionsForBackup(_ backup: BackupEntity) -> [DeviceCenterAction]? {
-        guard let nodeEntity = nodeUseCase.parentForHandle(backup.rootHandle) else { return nil }
+        guard let nodeEntity = nodeUseCase.nodeForHandle(backup.rootHandle) else { return nil }
         
         return DeviceCenterActionBuilder()
             .setActionType(.backup(backup))

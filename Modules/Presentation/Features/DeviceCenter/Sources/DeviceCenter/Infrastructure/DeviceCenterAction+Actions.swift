@@ -1,3 +1,4 @@
+import MEGADomain
 import MEGAL10n
 
 extension DeviceCenterAction {
@@ -70,6 +71,61 @@ extension DeviceCenterAction {
             type: .showInCloudDrive,
             title: Strings.Localizable.Device.Center.Show.In.Cloud.Drive.Action.title,
             icon: "cloudDriveFolder"
+        )
+    }
+    
+    static func favouriteAction(isFavourite: Bool) -> DeviceCenterAction {
+        DeviceCenterAction(
+            type: .favourite,
+            title: isFavourite ? 
+                Strings.Localizable.removeFavourite :
+                Strings.Localizable.favourite,
+            icon: isFavourite ?
+                "removeFavourite" :
+                "favourite"
+        )
+    }
+    
+    static func labelAction(label: NodeLabelTypeEntity) -> DeviceCenterAction {
+        DeviceCenterAction(
+            type: .label,
+            title: Strings.Localizable.CloudDrive.Sort.label,
+            dynamicSubtitle: label.stringForType,
+            icon: "label",
+            subActions: {
+                NodeLabelTypeEntity.allCases.compactMap { labelType in
+                    guard let actionType = labelType.deviceCenterActionType() else { return nil }
+                    return DeviceCenterAction(
+                        type: actionType,
+                        title: labelType.stringForType(),
+                        icon: labelType.iconName()
+                    )
+                }
+            }()
+        )
+    }
+    
+    static func renameAction() -> DeviceCenterAction {
+        DeviceCenterAction(
+            type: .rename,
+            title: Strings.Localizable.rename,
+            icon: "rename"
+        )
+    }
+    
+    static func moveAction() -> DeviceCenterAction {
+        DeviceCenterAction(
+            type: .move,
+            title: Strings.Localizable.move,
+            icon: "move"
+        )
+    }
+    
+    static func moveToTheRubbishBinAction() -> DeviceCenterAction {
+        DeviceCenterAction(
+            type: .moveToTheRubbishBin,
+            title: Strings.Localizable.General.MenuAction.moveToRubbishBin,
+            icon: "rubbishBin"
         )
     }
 }
