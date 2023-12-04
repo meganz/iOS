@@ -3,7 +3,7 @@ import MEGAL10n
 
 extension CustomModalAlertViewController {
     func configureUpgradeToPro(onConfirm: @escaping () -> Void, onCancel: @escaping () -> Void) {
-        image = Asset.Images.Pro.upgradePro.image
+        image = UIImage(resource: .upgradePro)
         viewTitle = Strings.Localizable.upgradeToPro
         detail = Strings.Localizable.accessProOnlyFeaturesLikeSettingPasswordProtectionAndExpiryDatesForPublicFiles
         

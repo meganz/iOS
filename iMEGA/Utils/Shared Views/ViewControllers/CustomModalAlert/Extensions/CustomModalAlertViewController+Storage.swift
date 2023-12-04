@@ -5,12 +5,14 @@ import MEGASDKRepo
 
 extension CustomModalAlertViewController {
     func configureForStorageEvent(_ event: MEGAEvent) {
-        let imageName = event.number == StorageState.orange.rawValue ? Asset.Images.WarningStorageAlmostFull.storageAlmostFull.name : Asset.Images.WarningStorageAlmostFull.warningStorageFull.name
+        let storageStateImage = event.number == StorageState.orange.rawValue 
+        ? UIImage(resource: .storageAlmostFull)
+        : UIImage(resource: .warningStorageFull)
         
         let title = event.number == StorageState.orange.rawValue ? Strings.Localizable.upgradeAccount : Strings.Localizable.Dialog.Storage.Odq.title
         
         let detailText = storageDetailForEvent(event, pricing: MEGAPurchase.sharedInstance().pricing)
-        configureUpgradeAccountThreeButtons(title, detailText, nil, imageName)
+        configureUpgradeAccountThreeButtons(title, detailText, nil, storageStateImage)
         
         if MEGAPurchase.sharedInstance().pricing == nil {
             SVProgressHUD.show()
@@ -45,37 +47,37 @@ extension CustomModalAlertViewController {
     }
     
     func configureForStorageQuotaError(_ uploading: Bool) {
-        var imageName: String?
+        var storageStateImage: UIImage?
         if let accountDetails = MEGASdk.shared.mnz_accountDetails {
-            imageName = accountDetails.storageMax > accountDetails.storageUsed
-            ? Asset.Images.WarningStorageAlmostFull.storageAlmostFull.name
-            : Asset.Images.WarningStorageAlmostFull.warningStorageFull.name
+            storageStateImage = accountDetails.storageMax > accountDetails.storageUsed
+            ? UIImage(resource: .storageAlmostFull)
+            : UIImage(resource: .warningStorageFull)
         }
         
         let title = Strings.Localizable.upgradeAccount
         let detailText = uploading ? Strings.Localizable.yourUploadSCannotProceedBecauseYourAccountIsFull : Strings.Localizable.thisActionCanNotBeCompletedAsItWouldTakeYouOverYourCurrentStorageLimit
         
-        configureUpgradeAccountThreeButtons(title, detailText, nil, imageName)
+        configureUpgradeAccountThreeButtons(title, detailText, nil, storageStateImage)
     }
     
     func configureForStorageQuotaWillExceed(for displayMode: CustomModalAlertView.Mode.StorageQuotaWillExceedDisplayMode) {
         
         let title: String
         let detailText: String
-        let imageName: ImageAsset
+        let storageStateImage: UIImage
         
         switch displayMode {
         case .albumLink:
             title = Strings.Localizable.AlbumLink.ImportFailed.StorageQuotaWillExceed.Alert.title
             detailText = Strings.Localizable.AlbumLink.ImportFailed.StorageQuotaWillExceed.Alert.detail
-            imageName = Asset.Images.WarningStorageAlmostFull.warningStorageFull
+            storageStateImage = UIImage(resource: .warningStorageFull)
         }
         
         configureUpgradeAccountThreeButtons(
             title,
             detailText,
             nil,
-            imageName.name,
+            storageStateImage,
             hasBonusButton: false,
             firstButtonTitle: Strings.Localizable.upgrade,
             dismissTitle: Strings.Localizable.cancel)
