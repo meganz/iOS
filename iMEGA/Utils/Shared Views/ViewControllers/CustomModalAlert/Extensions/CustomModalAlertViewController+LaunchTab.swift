@@ -3,7 +3,7 @@ import MEGAL10n
 extension CustomModalAlertViewController {
     
     func configureForChangeLaunchTab() {
-        image = Asset.Images.Settings.changeLaunchTab.image
+        image = UIImage(resource: .changeLaunchTab)
         viewTitle = Strings.Localizable.changeLaunchTab
         detail = Strings.Localizable.YouCanNowSelectWhichSectionTheAppOpensAtLaunch.chooseTheOneThatBetterSuitsYourNeedsWhetherItSChatCloudDriveOrHome
         

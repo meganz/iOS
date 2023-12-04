@@ -5,7 +5,7 @@ import MEGASDKRepo
 
 extension CustomModalAlertViewController {
     func configureForCookieDialog() {
-        image = Asset.Images.Cookies.cookie.image
+        image = UIImage(resource: .cookie)
         viewTitle = Strings.Localizable.Dialog.Cookies.Title.yourPrivacy
         detailAttributed = detailTextAttributedString()
         

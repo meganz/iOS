@@ -3,7 +3,7 @@ import MEGAL10n
 
 extension CustomModalAlertViewController {
     func configureForPendingUnverifiedOutshare(for email: String) {
-        image = Asset.Images.SharedItems.verifyPendingOutshareEmail.image
+        image = UIImage(resource: .verifyPendingOutshareEmail)
         viewTitle = Strings.Localizable.SharedItems.Tab.Outgoing.Modal.CannotVerifyContact.title
         detail = Strings.Localizable.SharedItems.Tab.Outgoing.Modal.CannotVerifyContact.message(email)
         firstButtonTitle = Strings.Localizable.ok

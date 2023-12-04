@@ -4,7 +4,7 @@ import MEGAL10n
 extension CustomModalAlertViewController {
     
     func configureOutgoingContactRequest(_ email: String) {
-        image = Asset.Images.Contacts.inviteSent.image
+        image = UIImage(resource: .contactInviteSent)
         viewTitle = Strings.Localizable.inviteSent
         var detailText = Strings.Localizable.Dialog.InviteContact.outgoingContactRequest
         detailText = detailText.replacingOccurrences(of: "[X]", with: email)
@@ -21,7 +21,7 @@ extension CustomModalAlertViewController {
     }
     
     func configureContactNotInMEGA(_ email: String) {
-        image = Asset.Images.Chat.groupChat.image
+        image = UIImage(resource: .groupChat)
         viewTitle = Strings.Localizable.inviteContact
         
         var detailText = Strings.Localizable.Dialog.CallAttempt.contactNotInMEGA

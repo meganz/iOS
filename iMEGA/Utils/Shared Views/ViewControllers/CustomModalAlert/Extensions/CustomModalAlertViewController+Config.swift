@@ -2,9 +2,9 @@ import Foundation
 import MEGAL10n
 
 extension CustomModalAlertViewController {
-    func configureUpgradeAccountThreeButtons(_ titleText: String, _ detailText: String, _ monospaceText: String?, _ imageName: String?, hasBonusButton: Bool = true, firstButtonTitle: String = Strings.Localizable.seePlans, dismissTitle: String = Strings.Localizable.dismiss) {
-        if let imageName = imageName {
-            image = UIImage(named: imageName)
+    func configureUpgradeAccountThreeButtons(_ titleText: String, _ detailText: String, _ monospaceText: String?, _ image: UIImage?, hasBonusButton: Bool = true, firstButtonTitle: String = Strings.Localizable.seePlans, dismissTitle: String = Strings.Localizable.dismiss) {
+        if let image {
+            self.image = image
         }
         viewTitle = titleText
         

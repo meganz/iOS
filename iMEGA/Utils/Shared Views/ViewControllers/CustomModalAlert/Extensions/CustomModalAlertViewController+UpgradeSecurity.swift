@@ -3,7 +3,7 @@ import MEGAL10n
 
 extension CustomModalAlertViewController {
     func configureForUpgradeSecurity() {
-        image = Asset.Images.MyAccount.upgradeSecurity.image
+        image = UIImage(resource: .accountUpgradeSecurity)
         viewTitle = Strings.Localizable.Account.UpgradeSecurity.title
         detail = Strings.Localizable.Account.UpgradeSecurity.Message.upgrade
         
