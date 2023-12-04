@@ -8,6 +8,7 @@
 
 @property (nonatomic) OnboardingType type;
 
+@property (weak, nonatomic) IBOutlet UIStackView *topStackView;
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
 @property (weak, nonatomic) IBOutlet UIButton *primaryButton;
 @property (weak, nonatomic) IBOutlet UIButton *secondaryButton;
@@ -40,7 +41,7 @@
     self.secondaryButton.titleLabel.adjustsFontForContentSizeCategory = YES;
     
     DevicePermissionsHandlerObjC *permissionHandler = [[DevicePermissionsHandlerObjC alloc] init];
-    
+
     switch (self.type) {
         case OnboardingTypeDefault:
             [self.pageControl addTarget:self action:@selector(pageControlValueChanged) forControlEvents:UIControlEventValueChanged];
@@ -52,15 +53,16 @@
             [self setupTertiaryButton];
             [self.tertiaryButton setTitle:LocalizedString(@"general.joinMeetingAsGuest", @"Button title which triggers the action to join meeting as Guest") forState:UIControlStateNormal];
 
-            if (self.scrollView.subviews.firstObject.subviews.count == 4) {
-                OnboardingView *onboardingViewEncryption = self.scrollView.subviews.firstObject.subviews.firstObject;
+            if (self.topStackView.arrangedSubviews.count == 4) {
+                OnboardingView *onboardingViewEncryption = self.topStackView.arrangedSubviews.firstObject;
                 onboardingViewEncryption.type = OnboardingViewTypeEncryptionInfo;
-                OnboardingView *onboardingViewChat = self.scrollView.subviews.firstObject.subviews[1];
+                OnboardingView *onboardingViewChat = self.topStackView.arrangedSubviews[1];
                 onboardingViewChat.type = OnboardingViewTypeChatInfo;
                 OnboardingView *onboardingViewContacts = self.scrollView.subviews.firstObject.subviews[2];
                 onboardingViewContacts.type = OnboardingViewTypeContactsInfo;
                 OnboardingView *onboardingViewCameraUploads = self.scrollView.subviews.firstObject.subviews[3];
                 onboardingViewCameraUploads.type = OnboardingViewTypeCameraUploadsInfo;
+                [self.pageControl setNumberOfPages: self.topStackView.arrangedSubviews.count];
             }
             
             break;
