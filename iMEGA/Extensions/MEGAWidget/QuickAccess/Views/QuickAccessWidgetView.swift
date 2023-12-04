@@ -22,7 +22,7 @@ struct QuickAccessWidgetView: View {
     @ViewBuilder
     private func headerEntry() -> some View {
         if entry.value.status == .noSession {
-            Image(Asset.Images.Logo.megaLogoGrayscale.name)
+            Image(.megaLogoGrayscale)
                 .resizable()
                 .frame(width: 31, height: 28, alignment: .leading)
                 .padding()
@@ -39,11 +39,11 @@ struct QuickAccessWidgetView: View {
             if entry.value.items.isEmpty {
                 switch entry.link {
                 case SectionDetail.recents.link:
-                    emptyView(Asset.Images.EmptyStates.recentsEmptyState.name, Strings.Localizable.noRecentActivity)
+                    emptyView(.recentsEmptyState, Strings.Localizable.noRecentActivity)
                 case SectionDetail.favourites.link:
-                    emptyView(Asset.Images.EmptyStates.favouritesEmptyState.name, Strings.Localizable.noFavourites)
+                    emptyView(.favouritesEmptyState, Strings.Localizable.noFavourites)
                 default:
-                    emptyView(Asset.Images.EmptyStates.offlineEmptyState.name, Strings.Localizable.offlineEmptyStateTitle)
+                    emptyView(.offlineEmptyState, Strings.Localizable.offlineEmptyStateTitle)
                 }
             } else {
                 GridView(items: entry.value.items)
@@ -63,7 +63,7 @@ struct QuickAccessWidgetView: View {
         }
     }
     
-    func emptyView(_ emptyImage: String, _ emptyDescription: String) -> some View {
+    func emptyView(_ emptyImage: ImageResource, _ emptyDescription: String) -> some View {
         VStack {
             Spacer()
             Image(emptyImage)
