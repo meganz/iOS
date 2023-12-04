@@ -8,7 +8,7 @@ public protocol DownloadNodeUseCaseProtocol {
     func cancelDownloadTransfers()
 }
 
-public struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineFilesRepositoryProtocol, V: FileSystemRepositoryProtocol, W: NodeRepositoryProtocol, Y: NodeDataRepositoryProtocol, Z: FileCacheRepositoryProtocol, M: MediaUseCaseProtocol, P: PreferenceRepositoryProtocol, G: OfflineFileFetcherRepositoryProtocol, H: ChatNodeRepositoryProtocol>: DownloadNodeUseCaseProtocol {
+public struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineFilesRepositoryProtocol, V: FileSystemRepositoryProtocol, W: NodeRepositoryProtocol, Y: NodeDataRepositoryProtocol, Z: FileCacheRepositoryProtocol, M: MediaUseCaseProtocol, P: PreferenceRepositoryProtocol, G: OfflineFileFetcherRepositoryProtocol, H: ChatNodeRepositoryProtocol, I: DownloadChatRepositoryProtocol>: DownloadNodeUseCaseProtocol {
     private let downloadFileRepository: T
     private let offlineFilesRepository: U
     private let fileSystemRepository: V
@@ -19,13 +19,14 @@ public struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineF
     private let preferenceRepository: P
     private let offlineFileFetcherRepository: G
     private let chatNodeRepository: H
+    private let downloadChatRepository: I
     
     @PreferenceWrapper(key: .savePhotoToGallery, defaultValue: false)
     private var savePhotoInGallery: Bool
     @PreferenceWrapper(key: .saveVideoToGallery, defaultValue: false)
     private var saveVideoInGallery: Bool
     
-    public init(downloadFileRepository: T, offlineFilesRepository: U, fileSystemRepository: V, nodeRepository: W, nodeDataRepository: Y, fileCacheRepository: Z, mediaUseCase: M, preferenceRepository: P, offlineFileFetcherRepository: G, chatNodeRepository: H) {
+    public init(downloadFileRepository: T, offlineFilesRepository: U, fileSystemRepository: V, nodeRepository: W, nodeDataRepository: Y, fileCacheRepository: Z, mediaUseCase: M, preferenceRepository: P, offlineFileFetcherRepository: G, chatNodeRepository: H, downloadChatRepository: I) {
         self.downloadFileRepository = downloadFileRepository
         self.offlineFilesRepository = offlineFilesRepository
         self.fileSystemRepository = fileSystemRepository
@@ -36,6 +37,7 @@ public struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineF
         self.preferenceRepository = preferenceRepository
         self.offlineFileFetcherRepository = offlineFileFetcherRepository
         self.chatNodeRepository = chatNodeRepository
+        self.downloadChatRepository = downloadChatRepository
         $savePhotoInGallery.useCase = PreferenceUseCase(repository: preferenceRepository)
         $saveVideoInGallery.useCase = PreferenceUseCase(repository: preferenceRepository)
     }
@@ -114,7 +116,7 @@ public struct DownloadNodeUseCase<T: DownloadFileRepositoryProtocol, U: OfflineF
             return
         }
 
-        downloadFileRepository.downloadChatFile(forNodeHandle: handle, messageId: messageId, chatId: chatId, to: fileSystemRepository.documentsDirectory(), filename: filename, appdata: appdata, startFirst: startFirst, start: start, update: update) { result in
+        downloadChatRepository.downloadChatFile(forNodeHandle: handle, messageId: messageId, chatId: chatId, to: fileSystemRepository.documentsDirectory(), filename: filename, appdata: appdata, startFirst: startFirst, start: start, update: update) { result in
             switch result {
             case .success(let transferEntity):
                 completion?(.success(transferEntity))

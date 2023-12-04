@@ -16,7 +16,8 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
         ),
         fileCacheRepository: FileCacheRepository.newRepo,
         nodeRepository: NodeRepository.newRepo, 
-        chatNodeRepository: ChatNodeRepository.newRepo
+        chatNodeRepository: ChatNodeRepository.newRepo,
+        downloadChatRepository: DownloadChatRepository.newRepo
     )
 
     init(
