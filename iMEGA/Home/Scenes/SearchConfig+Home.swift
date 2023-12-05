@@ -94,7 +94,8 @@ extension SearchConfig {
                 F30C14: Color.redF30C14,
                 F95C61: Color.redF95C61,
                 F7363D: Color.redF7363D,
-                _1C1C1E: Color(.black1C1C1E)
+                _1C1C1E: Color(.black1C1C1E),
+                _00A886: Color(.green00A886)
             ),
             contextPreviewFactory: contextPreviewFactory
         )

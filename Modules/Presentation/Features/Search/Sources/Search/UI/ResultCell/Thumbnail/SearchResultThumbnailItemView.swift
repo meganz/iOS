@@ -8,9 +8,11 @@ import SwiftUI
 struct SearchResultThumbnailItemView: View {
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.colorSchemeContrast) private var colorSchemeContrast
-
+    
     @ObservedObject var viewModel: SearchResultRowViewModel
-
+    var selected: Binding<Set<ResultId>>
+    var selectionEnabled: Binding<Bool>
+    
     var body: some View {
         content
             .task {
@@ -33,14 +35,22 @@ struct SearchResultThumbnailItemView: View {
                 didSelect: viewModel.actions.selectionAction
             )
     }
-
+    
     @ViewBuilder
     private var content: some View {
         switch viewModel.result.thumbnailDisplayMode {
         case .horizontal:
-            HorizontalThumbnailView(viewModel: viewModel)
+            HorizontalThumbnailView(
+                viewModel: viewModel,
+                selected: selected,
+                selectionEnabled: selectionEnabled
+            )
         case .vertical:
-            VerticalThumbnailView(viewModel: viewModel)
+            VerticalThumbnailView(
+                viewModel: viewModel,
+                selected: selected,
+                selectionEnabled: selectionEnabled
+            )
         }
     }
 }
@@ -71,7 +81,9 @@ struct SearchResultThumbnailItemView_Previews: PreviewProvider {
                     selectionAction: {},
                     previewTapAction: {}
                 )
-            )
+            ),
+            selected: .constant([]),
+            selectionEnabled: .constant(false)
         )
     }
     static var previews: some View {

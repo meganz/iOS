@@ -30,7 +30,8 @@ extension SearchConfig {
                 F30C14: Color("F30C14"),
                 F95C61: Color("F95C61"),
                 F7363D: Color("F7363D"),
-                _1C1C1E: Color("1C1C1E")
+                _1C1C1E: Color("1C1C1E"),
+                _00A886: Color("00A886")
             ),
             contextPreviewFactory: .test
         )
