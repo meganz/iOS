@@ -4,6 +4,7 @@ import Combine
 import MEGADomain
 import MEGAPresentation
 import MEGASDKRepo
+import MEGAUIKit
 
 extension MainTabBarController {
     private var shouldUseNewHomeSearchResults: Bool {
@@ -185,8 +186,7 @@ extension MainTabBarController {
         
         mainTabBarCallsViewModel.invokeCommand = { [weak self] command in
             guard let self else { return }
-            
-            excuteCommand(command)
+            executeCommand(command)
         }
         
         return mainTabBarCallsViewModel
@@ -198,7 +198,7 @@ extension MainTabBarController {
         return viewModel
     }
     
-    private func excuteCommand(_ command: MainTabBarCallsViewModel.Command) {
+    private func executeCommand(_ command: MainTabBarCallsViewModel.Command) {
         switch command {
         case .showActiveCallIcon:
             phoneBadgeImageView?.isHidden = unreadMessages > 0
@@ -207,6 +207,25 @@ extension MainTabBarController {
         case .navigateToChatTab:
             selectedIndex = TabType.chat.rawValue
         }
+    }
+    
+    @objc func setBadgeValueForChats() {
+        let unreadChats = MEGAChatSdk.shared.unreadChats
+        let numCalls = MEGAChatSdk.shared.numCalls
+        
+        unreadMessages = unreadChats
+        
+        if MEGAReachabilityManager.isReachable() && numCalls > 0 {
+            let callsInProgress = MEGAChatSdk.shared.chatCalls(withState: .inProgress)?.size ?? 0
+            let shouldHidePhoneBadge = !(callsInProgress > 0) || unreadChats > 0
+            phoneBadgeImageView?.isHidden = shouldHidePhoneBadge
+        } else {
+            phoneBadgeImageView?.isHidden = true
+        }
+        
+        let unreadCountString = unreadChats > 99 ? "99+" : "\(unreadChats)"
+        let badgeValue = unreadChats > 0 ? unreadCountString : nil
+        tabBar.setBadge(value: badgeValue, at: TabType.chat.rawValue)
     }
 }
 

@@ -41,7 +41,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)showScanDocument;
 - (void)showAddContact;
 
-- (void)setBadgeValueForChats;
 - (void)shouldUpdateProgressViewLocation;
 - (void)setBadgeValue:(nullable NSString *)badgeValue tabPosition:(NSInteger)tabPosition;
 @end
