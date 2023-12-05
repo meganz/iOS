@@ -22,7 +22,7 @@ struct LightColorThemeFactory: ColorFactory {
         case .disabled: return UIColor.gray999999
         case .highlighted: return UIColor.green00A88680
             
-        case .searchTextField: return UIColor.grayE8E8E8
+        case .searchTextField: return UIColor.whiteEFEFEF
         case .homeTopSide: return UIColor.whiteF7F7F7
         }
     }
