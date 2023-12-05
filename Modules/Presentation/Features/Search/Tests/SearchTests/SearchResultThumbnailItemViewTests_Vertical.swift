@@ -13,12 +13,12 @@ final class SearchResultThumbnailItemViewTests_Vertical: XCTestCase {
     }
     
     func test_Vertical_NoPropertiesEditMode() {
-        let view = testableView(thumbnailDisplayMode: .vertical, selectionMode: true)
+        let view = testableView(thumbnailDisplayMode: .vertical, selectionEnabled: true)
         assertSnapshot(of: view, as: .image(layout: cellsSizeVertical))
     }
     
     func test_Vertical_NoPropertiesEditModeSelected() {
-        let view = testableView(thumbnailDisplayMode: .vertical, selectionMode: true, selected: true)
+        let view = testableView(thumbnailDisplayMode: .vertical, selectionEnabled: true, selected: true)
         assertSnapshot(of: view, as: .image(layout: cellsSizeVertical))
     }
     

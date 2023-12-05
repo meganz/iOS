@@ -6,7 +6,7 @@ import XCTest
 func testableView(
     thumbnailDisplayMode: ResultCellLayout.ThumbnailMode,
     properties: [ResultProperty] = [],
-    selectionMode: Bool = false,
+    selectionEnabled: Bool = false,
     selected: Bool = false
 ) -> SearchResultThumbnailItemView {
     
@@ -14,9 +14,9 @@ func testableView(
         viewModel: testableSearchResultsViewModel(
             properties: properties,
             thumbnailDisplayMode: thumbnailDisplayMode
-        )
-        //            selected: .constant(selected ? [1] : []),
-        //            selectionMode: .constant(selectionMode)
+        ),
+        selected: .constant(selected ? [1] : []),
+        selectionEnabled: .constant(selectionEnabled)
     )
 }
 
@@ -30,12 +30,12 @@ final class SearchResultThumbnailItemViewTests_Horizontal: XCTestCase {
     }
     
     func test_Horizontal_NoPropertiesEditMode() {
-        let view = testableView(thumbnailDisplayMode: .horizontal, selectionMode: true)
+        let view = testableView(thumbnailDisplayMode: .horizontal, selectionEnabled: true)
         assertSnapshot(of: view, as: .image(layout: cellSizeHorizontal))
     }
     
     func test_Horizontal_NoPropertiesEditModeSelected() {
-        let view = testableView(thumbnailDisplayMode: .horizontal, selectionMode: true, selected: true)
+        let view = testableView(thumbnailDisplayMode: .horizontal, selectionEnabled: true, selected: true)
         assertSnapshot(of: view, as: .image(layout: cellSizeHorizontal))
     }
     

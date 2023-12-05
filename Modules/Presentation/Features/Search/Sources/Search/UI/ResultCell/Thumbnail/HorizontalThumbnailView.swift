@@ -18,6 +18,9 @@ struct HorizontalThumbnailView: View {
     @Environment(\.colorSchemeContrast) private var colorSchemeContrast
     
     @ObservedObject var viewModel: SearchResultRowViewModel
+    @Binding var selected: Set<ResultId>
+    @Binding var selectionEnabled: Bool
+    
     private let layout: ResultCellLayout = .thumbnail(.horizontal)
     
     var body: some View {
@@ -32,7 +35,7 @@ struct HorizontalThumbnailView: View {
                 .padding(.vertical, 8)
             }
             Spacer()
-            moreButton
+            trailingView
         }
         .padding(.leading, 9)
         .padding(.trailing, 8)
@@ -48,6 +51,10 @@ struct HorizontalThumbnailView: View {
             .resizable()
             .scaledToFit()
             .frame(width: 24, height: 24)
+    }
+    
+    private var isSelected: Bool {
+        selected.contains(viewModel.result.id)
     }
     
     private var titleAndLabel: some View {
@@ -91,6 +98,25 @@ struct HorizontalThumbnailView: View {
         }
     }
     
+    @ViewBuilder var trailingView: some View {
+        if selectionEnabled {
+            selectionIcon
+        } else {
+            moreButton
+        }
+    }
+    
+    @ViewBuilder var selectionIcon: some View {
+        Image(
+            uiImage: isSelected ?
+            viewModel.selectedCheckmarkImage :
+                viewModel.unselectedCheckmarkImage
+        )
+        .resizable()
+        .scaledToFit()
+        .frame(width: 22, height: 22)
+    }
+    
     private var moreButton: some View {
         UIButtonWrapper(
             image: viewModel.moreList
@@ -101,6 +127,10 @@ struct HorizontalThumbnailView: View {
     }
     
     private var borderColor: Color {
-        colorScheme == .light ? viewModel.colorAssets.F7F7F7 : viewModel.colorAssets._545458
+        if selectionEnabled && isSelected {
+            viewModel.colorAssets._00A886
+        } else {
+            colorScheme == .light ? viewModel.colorAssets.F7F7F7 : viewModel.colorAssets._545458
+        }
     }
 }

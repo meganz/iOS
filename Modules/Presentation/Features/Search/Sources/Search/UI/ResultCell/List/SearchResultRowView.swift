@@ -17,7 +17,7 @@ import SwiftUI
 struct SearchResultRowView: View {
     @ObservedObject var viewModel: SearchResultRowViewModel
     @Binding var selected: Set<ResultId>
-    @Binding var selectionMode: Bool
+    @Binding var selectionEnabled: Bool
     
     private let layout = ResultCellLayout.list
     
@@ -76,7 +76,7 @@ struct SearchResultRowView: View {
     }
     
     @ViewBuilder var selectionIcon: some View {
-        if selectionMode {
+        if selectionEnabled {
             Image(
                 uiImage: isSelected ?
                 viewModel.selectedCheckmarkImage :
@@ -150,7 +150,7 @@ struct SearchResultRowView: View {
     
     @ViewBuilder
     private var moreButton: some View {
-        if !selectionMode {
+        if !selectionEnabled {
             UIButtonWrapper(
                 image: viewModel.contextButtonImage
             ) { button in
@@ -192,7 +192,7 @@ struct SearchResultRowView_Previews: PreviewProvider {
                 SearchResultRowView(
                     viewModel: $0,
                     selected: .constant([]),
-                    selectionMode: .constant(false)
+                    selectionEnabled: .constant(false)
                 )
             }
         }

@@ -36,6 +36,8 @@ struct VerticalThumbnailView: View {
     @Environment(\.colorSchemeContrast) private var colorSchemeContrast
     
     @ObservedObject var viewModel: SearchResultRowViewModel
+    @Binding var selected: Set<ResultId>
+    @Binding var selectionEnabled: Bool
     
     private let layout: ResultCellLayout = .thumbnail(.vertical)
     
@@ -53,6 +55,10 @@ struct VerticalThumbnailView: View {
         .clipped()
     }
     
+    var isSelected: Bool {
+        selected.contains(viewModel.result.id)
+    }
+    
     private var topInfoView: some View {
         BackgroundView(
             image: $viewModel.thumbnailImage,
@@ -61,6 +67,7 @@ struct VerticalThumbnailView: View {
             header: backgroundHeader,
             footer: backgroundFooter
         )
+        .clipped()
     }
     
     // hosts secondary(.trailingEdge) properties
@@ -133,9 +140,32 @@ struct VerticalThumbnailView: View {
             }
             
             Spacer()
-            moreButton
+            trailingView
+                .frame(
+                    width: 40,
+                    height: 40
+                )
         }
         .padding(.horizontal, 8)
+    }
+    
+    @ViewBuilder var trailingView: some View {
+        if selectionEnabled {
+            selectionIcon
+        } else {
+            moreButton
+        }
+    }
+    
+    @ViewBuilder var selectionIcon: some View {
+        Image(
+            uiImage: isSelected ?
+            viewModel.selectedCheckmarkImage :
+                viewModel.unselectedCheckmarkImage
+        )
+        .resizable()
+        .scaledToFit()
+        .frame(width: 22, height: 22)
     }
     
     // hosts title and .prominent properties
@@ -182,11 +212,14 @@ struct VerticalThumbnailView: View {
         ) { button in
             viewModel.actions.contextAction(button)
         }
-        .frame(width: 40, height: 40)
     }
     
     private var borderColor: Color {
-        colorScheme == .light ? viewModel.colorAssets.F7F7F7 : viewModel.colorAssets._545458
+        if selectionEnabled && isSelected {
+            viewModel.colorAssets._00A886
+        } else {
+            colorScheme == .light ? viewModel.colorAssets.F7F7F7 : viewModel.colorAssets._545458
+        }
     }
     
     private var topNodeIconsBackgroundColor: Color {
@@ -220,7 +253,9 @@ struct VerticalThumbnailView_Previews: PreviewProvider {
                     selectionAction: {},
                     previewTapAction: {}
                 )
-            )
+            ),
+            selected: .constant([]),
+            selectionEnabled: .constant(false)
         )
         .frame(width: 173, height: 214)
     }

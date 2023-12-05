@@ -110,7 +110,7 @@ public struct SearchResultsView: View {
                 SearchResultRowView(
                     viewModel: item,
                     selected: $viewModel.selected,
-                    selectionMode: $viewModel.editing
+                    selectionEnabled: $viewModel.editing
                 )
                 .task {
                     await viewModel.loadMoreIfNeeded(at: index)
@@ -127,7 +127,11 @@ public struct SearchResultsView: View {
                     columns: viewModel.columns(geo.size.width)
                 ) {
                     ForEach(Array(viewModel.folderListItems.enumerated()), id: \.element.id) { index, item in
-                        SearchResultThumbnailItemView(viewModel: item)
+                        SearchResultThumbnailItemView(
+                            viewModel: item,
+                            selected: $viewModel.selected,
+                            selectionEnabled: $viewModel.editing
+                        )
                             .task {
                                 await viewModel.loadMoreIfNeededThumbnailMode(at: index, isFile: false)
                             }
@@ -139,7 +143,11 @@ public struct SearchResultsView: View {
                     columns: viewModel.columns(geo.size.width)
                 ) {
                     ForEach(Array(viewModel.fileListItems.enumerated()), id: \.element.id) { index, item in
-                        SearchResultThumbnailItemView(viewModel: item)
+                        SearchResultThumbnailItemView(
+                            viewModel: item,
+                            selected: $viewModel.selected,
+                            selectionEnabled: $viewModel.editing
+                        )
                             .task {
                                 await viewModel.loadMoreIfNeededThumbnailMode(at: index, isFile: true)
                             }

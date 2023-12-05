@@ -8,7 +8,7 @@ final class SearchResultRowViewTests: XCTestCase {
     
     func testableView(
         properties: [ResultProperty] = [],
-        selectionMode: Bool = false,
+        selectionEnabled: Bool = false,
         selected: Bool = false
     ) -> SearchResultRowView {
         
@@ -17,7 +17,7 @@ final class SearchResultRowViewTests: XCTestCase {
                 properties: properties
             ),
             selected: .constant(selected ? [1] : []),
-            selectionMode: .constant(selectionMode)
+            selectionEnabled: .constant(selectionEnabled)
         )
     }
     
@@ -29,12 +29,12 @@ final class SearchResultRowViewTests: XCTestCase {
     }
     
     func testNoPropertiesEditMode() {
-        let view = testableView(selectionMode: true)
+        let view = testableView(selectionEnabled: true)
         assertSnapshot(of: view, as: .image(layout: rowSize))
     }
     
     func testNoPropertiesEditModeSelected() {
-        let view = testableView(selectionMode: true, selected: true)
+        let view = testableView(selectionEnabled: true, selected: true)
         assertSnapshot(of: view, as: .image(layout: rowSize))
     }
     
