@@ -13,6 +13,7 @@
 #import "NSObject+Debounce.h"
 
 @import MEGAL10nObjc;
+@import MEGAUIKit;
 
 @interface MainTabBarController () < MEGAGlobalDelegate>
 
@@ -36,6 +37,7 @@
     [self refreshBottomConstraint];
     [self refreshSnackBarViewBottomConstraint];
     [self updatePhoneImageBadgeFrame];
+    [self.tabBar updateBadgeLayoutAt:TabTypeChat];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -182,27 +184,6 @@
     }
 }
 
-- (void)setBadgeValueForChats {
-    NSInteger unreadChats = [MEGASdkManager sharedMEGAChatSdk] ? [MEGASdkManager sharedMEGAChatSdk].unreadChats : 0;
-    NSInteger numCalls = [MEGASdkManager sharedMEGAChatSdk] ? [MEGASdkManager sharedMEGAChatSdk].numCalls : 0;
-    
-    self.unreadMessages = unreadChats;
-    
-    NSString *badgeValue;
-    
-    if (MEGAReachabilityManager.isReachable && numCalls > 0) {
-        MEGAHandleList *chatRoomIDsWithCallInProgress = [MEGASdkManager.sharedMEGAChatSdk chatCallsWithState:MEGAChatCallStatusInProgress];
-        self.phoneBadgeImageView.hidden = !(chatRoomIDsWithCallInProgress.size > 0) || self.unreadMessages > 0;
-        
-        badgeValue = self.phoneBadgeImageView.hidden && unreadChats ? @"⦁" : nil;
-    } else {
-        self.phoneBadgeImageView.hidden = YES;
-        badgeValue = unreadChats ? @"⦁" : nil;
-    }
-    
-    [self setBadgeValue:badgeValue tabPosition:TabTypeChat];
-}
-
 - (void)setBadgeValue:(NSString *)badgeValue tabPosition:(NSInteger)tabPosition {
     if (tabPosition < self.tabBar.items.count) {
         [[self.viewControllers objectAtIndex:tabPosition] tabBarItem].badgeValue = badgeValue;
@@ -210,14 +191,6 @@
 }
 - (void)internetConnectionChanged {
     [self setBadgeValueForChats];
-}
-
-- (void)configurePhoneImageBadge {
-    if (!self.phoneBadgeImageView) {
-        self.phoneBadgeImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"onACall"]];
-        self.phoneBadgeImageView.hidden = YES;
-        [self.tabBar addSubview:self.phoneBadgeImageView];
-    }
 }
 
 - (UIViewController *)cloudDriveViewController {
