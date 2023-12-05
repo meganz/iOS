@@ -2,7 +2,7 @@ import SharedReleaseScript
 
 func createTagAndPushToOrigin(version: String, message: String) throws {
     try runInShell("git tag -a \(version) -m \"\(message)\"")
-    try runInShell("git push origin --tags")
+    try runInShell("git push origin \(version)")
 }
 
 func checkoutToMasterAndPull() throws {
