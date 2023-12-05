@@ -1,6 +1,8 @@
 import Foundation
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAL10n
+import MEGAPresentation
 import MEGASDKRepo
 
 extension CustomModalAlertViewController {
@@ -65,12 +67,15 @@ extension CustomModalAlertViewController {
         let title: String
         let detailText: String
         let storageStateImage: UIImage
+        let analyticsEvents: CustomModalAlertViewModel.CustomModalAlertViewAnalyticEvents?
         
         switch displayMode {
         case .albumLink:
             title = Strings.Localizable.AlbumLink.ImportFailed.StorageQuotaWillExceed.Alert.title
             detailText = Strings.Localizable.AlbumLink.ImportFailed.StorageQuotaWillExceed.Alert.detail
             storageStateImage = UIImage(resource: .warningStorageFull)
+            analyticsEvents = .init(dialogDisplayedEventIdentifier: DIContainer.albumImportStorageOverQuotaDialogEvent,
+                                    fistButtonPressedEventIdentifier: DIContainer.albumsStorageOverQuotaUpgradeAccountButtonEvent)
         }
         
         configureUpgradeAccountThreeButtons(
@@ -80,6 +85,7 @@ extension CustomModalAlertViewController {
             storageStateImage,
             hasBonusButton: false,
             firstButtonTitle: Strings.Localizable.upgrade,
-            dismissTitle: Strings.Localizable.cancel)
+            dismissTitle: Strings.Localizable.cancel,
+            analyticsEvents: analyticsEvents)
     }
 }

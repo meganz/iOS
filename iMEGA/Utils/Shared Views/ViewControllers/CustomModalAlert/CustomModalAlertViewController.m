@@ -50,6 +50,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    if (self.viewModel) {
+        [self.viewModel onViewDidLoad];
+    }
     
     [self configUIAppearance];
     
@@ -180,6 +183,7 @@
 #pragma mark - IBActions
 
 - (IBAction)firstButtonTouchUpInside:(UIButton *)sender {
+    if (self.viewModel) [self.viewModel firstButtonTapped];
     if (self.firstCompletion) self.firstCompletion();
 }
 
