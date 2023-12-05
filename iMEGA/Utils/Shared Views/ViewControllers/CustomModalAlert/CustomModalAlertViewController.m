@@ -158,7 +158,7 @@
     
 #ifdef MAIN_APP_TARGET
     if (self.detailAttributed) {
-        self.detailLabel.attributedText = [self detailTextAttributedString];
+        self.detailLabel.attributedText = self.detailAttributed;
     }
 #endif
     

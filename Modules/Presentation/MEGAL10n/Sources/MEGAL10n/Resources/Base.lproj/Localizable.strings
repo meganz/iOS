@@ -2492,6 +2492,10 @@
 "dialog.cookies.title.yourPrivacy"="Your privacy";
 /* Cookie dialog text. */
 "dialog.cookies.description"="We use cookies and similar technologies solely for the purposes of providing you with the services you request from MEGA, or for analytics and gathering performance data. We don’t use cookies for ad tracking or sharing any personal information about you with third parties.";
+/* Cookie dialog title to manage cookies */
+"dialog.cookies.title.manageCookies"="Manage Cookies";
+/* Cookie dialog description with cookie policy. */
+"dialog.cookies.description.cookiePolicy"="We use cookies and similar technologies to help us improve our services. By continuing to use MEGA you agree with the terms of our [A]Cookie Policy[/A].";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="Accept Cookies";
 /* Cookie dialog footer description */
