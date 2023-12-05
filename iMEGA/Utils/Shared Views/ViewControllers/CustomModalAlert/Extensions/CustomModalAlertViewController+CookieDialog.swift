@@ -2,16 +2,15 @@ import Foundation
 import MEGADomain
 import MEGAL10n
 import MEGASDKRepo
+import MEGASwift
 
 extension CustomModalAlertViewController {
     func configureForCookieDialog() {
         image = UIImage(resource: .cookie)
-        viewTitle = Strings.Localizable.Dialog.Cookies.Title.yourPrivacy
-        detailAttributed = detailTextAttributedString()
-        
-        let detailTapGR = UITapGestureRecognizer(target: self, action: #selector(cookiePolicyTouchUpInside))
-        detailTapGR.cancelsTouchesInView = false
-        detailTapGestureRecognizer = detailTapGR
+        viewTitle = Strings.Localizable.Dialog.Cookies.Title.manageCookies
+        detailAttributedTextWithLink = detailTextAttributedString(
+            detail: Strings.Localizable.Dialog.Cookies.Description.cookiePolicy
+        )
         
         firstButtonTitle = Strings.Localizable.Dialog.Cookies.accept
         dismissButtonStyle = MEGACustomButtonStyle.basic.rawValue
@@ -52,19 +51,33 @@ extension CustomModalAlertViewController {
         }
     }
     
-    @objc func detailTextAttributedString() -> NSAttributedString {
-        var detailText = Strings.Localizable.Dialog.Cookies.description as NSString
-        let cookiePolicy = detailText.mnz_stringBetweenString("[A]", andString: "[/A]")
-        detailText = detailText.mnz_removeWebclientFormatters() as NSString
+    private func detailTextAttributedString(detail: String) -> NSAttributedString {
+        let cookiePolicy = detail.subString(from: "[A]", to: "[/A]")
+        let detailText = detail
+            .replacingOccurrences(of: "[A]", with: "")
+            .replacingOccurrences(of: "[/A]", with: "")
+        let cookiePolicyRange = (detailText as NSString).range(of: cookiePolicy ?? "")
         
-        let cookiePolicyRange = detailText.range(of: cookiePolicy ?? "")
-        let detailTextAttributedString = NSMutableAttributedString(string: detailText as String, attributes: [NSAttributedString.Key.font: UIFont.preferredFont(style: .footnote, weight: .medium), NSAttributedString.Key.foregroundColor: UIColor.mnz_subtitles(for: traitCollection)])
-        detailTextAttributedString.addAttributes([NSAttributedString.Key.foregroundColor: UIColor.mnz_turquoise(for: traitCollection)], range: cookiePolicyRange)
+        let paragraph = NSMutableParagraphStyle()
+        paragraph.alignment = .center
+        
+        let detailTextAttributedString = NSMutableAttributedString(
+            string: detailText,
+            attributes: [
+                .font: UIFont.preferredFont(style: .callout, weight: .regular),
+                .foregroundColor: UIColor.textForeground,
+                .paragraphStyle: paragraph
+            ]
+        )
+        
+        guard let urlLink = URL(string: "https://mega.nz/cookie") else {
+            return detailTextAttributedString
+        }
+        detailTextAttributedString.addAttributes(
+            [.foregroundColor: UIColor.turquoise, .link: urlLink],
+            range: cookiePolicyRange
+        )
         
         return detailTextAttributedString
-    }
-    
-    @IBAction func cookiePolicyTouchUpInside(_ sender: UITapGestureRecognizer) {
-        NSURL.init(string: "https://mega.nz/cookie")?.mnz_presentSafariViewController()
     }
 }
