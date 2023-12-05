@@ -1,8 +1,10 @@
 import Foundation
+import MEGAAnalyticsiOS
 import MEGAL10n
+import MEGAPresentation
 
 extension CustomModalAlertViewController {
-    func configureUpgradeAccountThreeButtons(_ titleText: String, _ detailText: String, _ monospaceText: String?, _ image: UIImage?, hasBonusButton: Bool = true, firstButtonTitle: String = Strings.Localizable.seePlans, dismissTitle: String = Strings.Localizable.dismiss) {
+    func configureUpgradeAccountThreeButtons(_ titleText: String, _ detailText: String, _ monospaceText: String?, _ image: UIImage?, hasBonusButton: Bool = true, firstButtonTitle: String = Strings.Localizable.seePlans, dismissTitle: String = Strings.Localizable.dismiss, analyticsEvents: CustomModalAlertViewModel.CustomModalAlertViewAnalyticEvents? = nil) {
         if let image {
             self.image = image
         }
@@ -42,6 +44,9 @@ extension CustomModalAlertViewController {
         dismissCompletion = { [weak self] in
             self?.dismiss(animated: true, completion: nil)
         }
+        
+        viewModel = .init(tracker: DIContainer.tracker,
+                          analyticsEvents: analyticsEvents)
     }
     
     func configureUpgradeAccountDetailText(_ detailText: String) {

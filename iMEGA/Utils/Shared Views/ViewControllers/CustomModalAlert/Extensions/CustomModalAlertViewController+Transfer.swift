@@ -1,5 +1,7 @@
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAL10n
+import MEGAPresentation
 import MEGASwift
 
 extension CustomModalAlertViewController {
@@ -44,6 +46,10 @@ extension CustomModalAlertViewController {
                 UpgradeAccountRouter().presentUpgradeTVC()
             }
         }
+        
+        viewModel = .init(tracker: DIContainer.tracker,
+                          analyticsEvents: .init(dialogDisplayedEventIdentifier: DIContainer.transferOverQuotaDialogEvent,
+                                                 fistButtonPressedEventIdentifier: DIContainer.transferOverQuotaUpgradeAccountButtonEvent))
     }
     
     // MARK: - Private

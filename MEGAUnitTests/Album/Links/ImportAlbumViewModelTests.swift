@@ -379,6 +379,21 @@ final class ImportAlbumViewModelTests: XCTestCase {
         XCTAssertTrue(sut.showNoInternetConnection)
     }
     
+    func testImportAlbum_onCalled_shouldLogAnalyticsEvent() async throws {
+        let tracker = MockTracker()
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
+                                           tracker: tracker)
+        
+        await sut.importAlbum()
+        
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [
+                AlbumImportSaveToCloudDriveButtonEvent()
+            ]
+        )
+    }
+    
     func testImportFolderLocation_onFolderSelected_shouldImportAlbumPhotosAndShowSnackbar() async throws {
         let albumName = "New Album (1)"
         let publicAlbumUseCase = makePublicAlbumUseCase(handle: 24, name: albumName, nodes: try makePhotos())
@@ -689,6 +704,21 @@ final class ImportAlbumViewModelTests: XCTestCase {
         await sut.saveToPhotos()
         
         XCTAssertTrue(sut.showNoInternetConnection)
+    }
+    
+    func testSaveToPhotos_onCalled_shouldLogAnalyticsEvent() async throws {
+        let tracker = MockTracker()
+        let sut = makeImportAlbumViewModel(publicLink: try validFullAlbumLink,
+                                           tracker: tracker)
+        
+        await sut.saveToPhotos()
+        
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [
+                AlbumImportSaveToDeviceButtonEvent()
+            ]
+        )
     }
     
     func testStopAlbumLinkPreview_deinit_shouldBeCalled() async throws {

@@ -121,7 +121,7 @@ final class ImportAlbumViewModel: ObservableObject {
     }
     
     func onViewAppear() {
-        tracker.trackAnalyticsEvent(with: AlbumImportScreenEvent())
+        tracker.trackAnalyticsEvent(with: DIContainer.albumImportScreenEvent)
     }
     
     @MainActor
@@ -163,6 +163,7 @@ final class ImportAlbumViewModel: ObservableObject {
     
     @MainActor
     func importAlbum() async {
+        tracker.trackAnalyticsEvent(with: DIContainer.albumImportSaveToCloudDriveButtonEvent)
         guard monitorUseCase.isConnected() else {
             showNoInternetConnection = true
             return
@@ -189,6 +190,7 @@ final class ImportAlbumViewModel: ObservableObject {
     
     @MainActor
     func saveToPhotos() async {
+        tracker.trackAnalyticsEvent(with: DIContainer.albumImportSaveToDeviceButtonEvent)
         guard monitorUseCase.isConnected() else {
             showNoInternetConnection = true
             return
@@ -259,7 +261,7 @@ final class ImportAlbumViewModel: ObservableObject {
             try Task.checkCancellation()
             photoLibraryContentViewModel.library = photos.toPhotoLibrary(withSortType: .newest)
             publicLinkStatus = .loaded
-            tracker.trackAnalyticsEvent(with: ImportAlbumContentLoadedEvent())
+            tracker.trackAnalyticsEvent(with: DIContainer.importAlbumContentLoadedEvent)
         } catch is CancellationError {
             MEGALogError("[Import Album] loadPublicAlbumContents cancelled")
         } catch {
@@ -379,7 +381,7 @@ final class ImportAlbumViewModel: ObservableObject {
     private func subscribeToHandleAnalytics() {
         $showingDecryptionKeyAlert
             .filter { $0 }
-            .sink { [weak self] _ in self?.tracker.trackAnalyticsEvent(with: AlbumImportInputDecryptionKeyDialogEvent()) }
+            .sink { [weak self] _ in self?.tracker.trackAnalyticsEvent(with: DIContainer.albumImportInputDecryptionKeyDialogEvent) }
             .store(in: &subscriptions)
     }
     

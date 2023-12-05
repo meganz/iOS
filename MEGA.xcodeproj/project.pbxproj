@@ -60,6 +60,11 @@
 		0ECFECF72ACE0D5C00CBC420 /* AppearanceViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ECFECF52ACE0D5C00CBC420 /* AppearanceViewModelTests.swift */; };
 		0EDE0DDB2A20587E0006A9F1 /* GetAlbumsLinksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDE0DDA2A20587E0006A9F1 /* GetAlbumsLinksViewModel.swift */; };
 		0EDE0DDD2A2058DE0006A9F1 /* ShareAlbumsLinkInitialSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EDE0DDC2A2058DE0006A9F1 /* ShareAlbumsLinkInitialSections.swift */; };
+		0EE5AC162B1E932F00BCDD88 /* CustomModalAlertViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE5AC152B1E932F00BCDD88 /* CustomModalAlertViewModelTests.swift */; };
+		0EE5AC1B2B1E9EE700BCDD88 /* CustomModalAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE5AC1A2B1E9EE600BCDD88 /* CustomModalAlertViewModel.swift */; };
+		0EE5AC1C2B1E9EE700BCDD88 /* CustomModalAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE5AC1A2B1E9EE600BCDD88 /* CustomModalAlertViewModel.swift */; };
+		0EE5AC202B1EB2C200BCDD88 /* DIContainer+CustomModalAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE5AC1F2B1EB2C200BCDD88 /* DIContainer+CustomModalAlert.swift */; };
+		0EE5AC212B1EB2C200BCDD88 /* DIContainer+CustomModalAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE5AC1F2B1EB2C200BCDD88 /* DIContainer+CustomModalAlert.swift */; };
 		0EE7F8052B167E7900E41B06 /* PhotoLibraryPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE7F8042B167E7800E41B06 /* PhotoLibraryPlaceholderView.swift */; };
 		0EE990942AA55D9300D43714 /* ChatAttachedNodesViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE990932AA55D9300D43714 /* ChatAttachedNodesViewController+Additions.swift */; };
 		1208CEC527FA49EB00F514D4 /* PhotoCellVideoDurationViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1208CEC427FA49EB00F514D4 /* PhotoCellVideoDurationViewModifier.swift */; };
@@ -2587,6 +2592,9 @@
 		0ECFECF52ACE0D5C00CBC420 /* AppearanceViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceViewModelTests.swift; sourceTree = "<group>"; };
 		0EDE0DDA2A20587E0006A9F1 /* GetAlbumsLinksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAlbumsLinksViewModel.swift; sourceTree = "<group>"; };
 		0EDE0DDC2A2058DE0006A9F1 /* ShareAlbumsLinkInitialSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareAlbumsLinkInitialSections.swift; sourceTree = "<group>"; };
+		0EE5AC152B1E932F00BCDD88 /* CustomModalAlertViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomModalAlertViewModelTests.swift; sourceTree = "<group>"; };
+		0EE5AC1A2B1E9EE600BCDD88 /* CustomModalAlertViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomModalAlertViewModel.swift; sourceTree = "<group>"; };
+		0EE5AC1F2B1EB2C200BCDD88 /* DIContainer+CustomModalAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DIContainer+CustomModalAlert.swift"; sourceTree = "<group>"; };
 		0EE7F8042B167E7800E41B06 /* PhotoLibraryPlaceholderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoLibraryPlaceholderView.swift; sourceTree = "<group>"; };
 		0EE990932AA55D9300D43714 /* ChatAttachedNodesViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatAttachedNodesViewController+Additions.swift"; sourceTree = "<group>"; };
 		1208CEC427FA49EB00F514D4 /* PhotoCellVideoDurationViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCellVideoDurationViewModifier.swift; sourceTree = "<group>"; };
@@ -5346,6 +5354,14 @@
 			path = Appearance;
 			sourceTree = "<group>";
 		};
+		0EE5AC142B1E930C00BCDD88 /* Shared Views */ = {
+			isa = PBXGroup;
+			children = (
+				0EE5AC152B1E932F00BCDD88 /* CustomModalAlertViewModelTests.swift */,
+			);
+			path = "Shared Views";
+			sourceTree = "<group>";
+		};
 		0EED79E62A9C0AFF00213201 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -7332,6 +7348,8 @@
 				124667E9275DB81300C94335 /* CustomModalAlertViewController.h */,
 				A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */,
 				A819B3411EAFA844004592F9 /* CustomModalAlertViewController.xib */,
+				0EE5AC1A2B1E9EE600BCDD88 /* CustomModalAlertViewModel.swift */,
+				0EE5AC1F2B1EB2C200BCDD88 /* DIContainer+CustomModalAlert.swift */,
 			);
 			path = CustomModalAlert;
 			sourceTree = "<group>";
@@ -11009,6 +11027,7 @@
 				949704B12AB425AC00B2CA3A /* Rename */,
 				A8EE47AB27DFAEF600D37685 /* Report Issue */,
 				5B9FBDE9264925900014B7FD /* Settings */,
+				0EE5AC142B1E930C00BCDD88 /* Shared Views */,
 				32B0723128A4E3CA002BAE34 /* Slideshow */,
 				B63AEB122511F73C000B8517 /* SMSVerification */,
 				0D2E4AFC2623B2CC00F4804A /* TextEditor */,
@@ -13660,6 +13679,7 @@
 				B569F9C2295319E400C9AE40 /* CustomModalAlertViewController+UpgradeSecurity.swift in Sources */,
 				124667FD275DB82000C94335 /* CustomModalAlertViewController+UpgradeToPro.swift in Sources */,
 				A819B33F1EAFA7E2004592F9 /* CustomModalAlertViewController.m in Sources */,
+				0EE5AC1B2B1E9EE700BCDD88 /* CustomModalAlertViewModel.swift in Sources */,
 				943649D92A4D81B0006CE8B8 /* CustomModalModel+DevicePermissions.swift in Sources */,
 				C4F31EF925C1C50B00E15146 /* CustomTitleView.swift in Sources */,
 				5D1B241224AF680400ACE1C5 /* CustomViewStyleFactory.swift in Sources */,
@@ -13675,6 +13695,7 @@
 				5D31674B24FCA9330032492F /* DevicePermissionAlerting.swift in Sources */,
 				5D31674524FC9A5F0032492F /* DevicePermissionDeniedError.swift in Sources */,
 				943649DB2A4D8292006CE8B8 /* DevicePermissionsHandlerObjC.swift in Sources */,
+				0EE5AC202B1EB2C200BCDD88 /* DIContainer+CustomModalAlert.swift in Sources */,
 				6D00BD282B1E5D9600370AC7 /* DIContainer+Photos.swift in Sources */,
 				8358A6EA2925461C00EE197C /* DisclosureView.swift in Sources */,
 				B6AF22C226097C310008FF72 /* DiskFullBlockingModel.swift in Sources */,
@@ -14982,6 +15003,8 @@
 				B6F8CE17262823240074CBBF /* CoreDataErrorHandler.m in Sources */,
 				B5488B742A8DBB8600A069DF /* CustomModalAlertViewController+Additions.swift in Sources */,
 				83FF502F247E86CD00EAC08B /* CustomModalAlertViewController.m in Sources */,
+				0EE5AC1C2B1E9EE700BCDD88 /* CustomModalAlertViewModel.swift in Sources */,
+				0EE5AC212B1EB2C200BCDD88 /* DIContainer+CustomModalAlert.swift in Sources */,
 				BF943E9023553F11001C18E0 /* DNDTurnOnOption.swift in Sources */,
 				838F63CF2836778A009B41D6 /* DuplicatedItem.swift in Sources */,
 				C43817B82746924F00EA82A8 /* DynamicTypeComponentProtocol.swift in Sources */,
@@ -15249,6 +15272,7 @@
 				94CBB2C42A8A578400C62F32 /* ContactsViewModelTests.swift in Sources */,
 				A81F9BB427EA023A00D47C0D /* CookieSettingsViewModelTests.swift in Sources */,
 				B5488B7A2A8DBFAD00A069DF /* CountdownTimerTests.swift in Sources */,
+				0EE5AC162B1E932F00BCDD88 /* CustomModalAlertViewModelTests.swift in Sources */,
 				943649DF2A4D83DE006CE8B8 /* CustomModalModel+Equatable.swift in Sources */,
 				2FF3FA6B260C39A300015050 /* DeepLinkingTests.m in Sources */,
 				B6AF22DF26097F500008FF72 /* DiskFullBlockingViewModelTests.swift in Sources */,

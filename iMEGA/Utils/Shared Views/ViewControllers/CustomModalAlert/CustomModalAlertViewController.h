@@ -1,11 +1,12 @@
 #import <UIKit/UIKit.h>
 
-@class CountdownTimer;
+@class CountdownTimer, CustomModalAlertViewModel;
 @interface CustomModalAlertViewController : UIViewController
 
 @property (nonatomic, strong) void (^firstCompletion)(void);
 @property (nonatomic, strong) void (^secondCompletion)(void);
 @property (nonatomic, strong) void (^dismissCompletion)(void);
+@property (nonatomic, strong) CustomModalAlertViewModel *viewModel;
 
 @property (weak, nonatomic) IBOutlet UITextView *detailTextView;
 @property (weak, nonatomic) IBOutlet UILabel *detailLabel;
