@@ -5,13 +5,24 @@ import MEGASDKRepo
 import MEGASwift
 
 extension CustomModalAlertViewController {
-    func configureForCookieDialog() {
+    enum CookieDialogType {
+        case noAdsCookiePolicy, adsCookiePolicy
+        
+        var description: String {
+            switch self {
+            case .noAdsCookiePolicy:
+                return Strings.Localizable.Dialog.Cookies.Description.cookiePolicy
+            case .adsCookiePolicy:
+                return Strings.Localizable.Dialog.Cookies.Description.adsCookiePolicy
+            }
+        }
+    }
+    
+    func configureForCookieDialog(type: CookieDialogType) {
         image = UIImage(resource: .cookie)
         viewTitle = Strings.Localizable.Dialog.Cookies.Title.manageCookies
-        detailAttributedTextWithLink = detailTextAttributedString(
-            detail: Strings.Localizable.Dialog.Cookies.Description.cookiePolicy
-        )
-        
+        detailAttributedTextWithLink = detailTextAttributedString(detail: type.description)
+
         firstButtonTitle = Strings.Localizable.Dialog.Cookies.accept
         dismissButtonStyle = MEGACustomButtonStyle.basic.rawValue
         dismissButtonTitle = Strings.Localizable.General.cookieSettings
