@@ -105,7 +105,7 @@ extension AppDelegate {
         guard shouldPresentModal else { return }
         
         let cookieDialogCustomModalAlert = CustomModalAlertViewController()
-        cookieDialogCustomModalAlert.configureForCookieDialog()
+        cookieDialogCustomModalAlert.configureForCookieDialog(type: .noAdsCookiePolicy)
 
         UIApplication.mnz_presentingViewController().present(cookieDialogCustomModalAlert, animated: true, completion: nil)
     }
