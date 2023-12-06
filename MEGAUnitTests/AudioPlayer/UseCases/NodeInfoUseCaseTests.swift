@@ -1,10 +1,11 @@
 @testable import MEGA
 import MEGADomain
+import MEGASDKRepoMock
 import XCTest
 
 final class NodeInfoUseCaseTests: XCTestCase {
-    let nodeInfoSuccessRepository = MockNodeInfoRepository(result: .success(()))
-    let nodeInfoFailureRepository = MockNodeInfoRepository(result: .failure(.generic))
+    let nodeInfoSuccessRepository = MockNodeInfoRepository(result: .success(()), violatesTermsOfServiceResult: .success(true))
+    let nodeInfoFailureRepository = MockNodeInfoRepository(result: .failure(.generic), violatesTermsOfServiceResult: .success(true))
     
     func testGetNodeFromHandle() {
         XCTAssertNotNil(nodeInfoSuccessRepository.node(fromHandle: HandleEntity()))
@@ -43,5 +44,63 @@ final class NodeInfoUseCaseTests: XCTestCase {
         
         XCTAssertEqual(nodeInfoArray.compactMap {$0.url}, mockArray.compactMap {$0.url})
         XCTAssertNil(nodeInfoFailureRepository.info(fromNodes: [MEGANode()]))
+    }
+    
+    // MARK: - isTakenDown
+    
+    func testIsTakenDown_whenNotFolderLinkAndTakenDown_returnsTrue() async throws {
+        let sut = makeSUT(termsOfServiceViolationResult: .success(true))
+        
+        let isTakenDown = try await sut.isTakenDown(node: anyNode(isTakenDown: true), isFolderLink: false)
+        
+        XCTAssertTrue(isTakenDown)
+    }
+    
+    func testIsTakenDown_whenNotFolderLinkAndNotTakenDown_returnsFalse() async throws {
+        let sut = makeSUT(termsOfServiceViolationResult: .success(true))
+        
+        let isTakenDown = try await sut.isTakenDown(node: anyNode(isTakenDown: false), isFolderLink: false)
+        
+        XCTAssertFalse(isTakenDown)
+    }
+    
+    func testIsTakenDown_whenFolderLinkAndViolates_returnsTrue() async  throws {
+        let sut = makeSUT(termsOfServiceViolationResult: .success(true))
+        
+        let isTakenDown = try await sut.isTakenDown(node: anyNode(), isFolderLink: true)
+        
+        XCTAssertTrue(isTakenDown)
+    }
+    
+    func testIsTakenDown_whenFolderLinkAndNotViolates_returnsFalse() async throws {
+        let sut = makeSUT(termsOfServiceViolationResult: .success(false))
+        
+        let isTakenDown = try await sut.isTakenDown(node: anyNode(), isFolderLink: true)
+        
+        XCTAssertFalse(isTakenDown)
+    }
+    
+    func testIsTakenDown_whenFolderLinkAndError_returnsError() async {
+        let expectedError = NodeInfoError.generic
+        let sut = makeSUT(termsOfServiceViolationResult: .failure(expectedError))
+        
+        do {
+            let isTakenDown = try await sut.isTakenDown(node: anyNode(), isFolderLink: true)
+            XCTFail("Expect to failed but got isFolderLinkNodeTakenDown: \(isTakenDown)")
+        } catch {
+            XCTAssertEqual(error as! NodeInfoError, expectedError)
+        }
+    }
+    
+    // MARK: - Helpers
+    
+    private func makeSUT(termsOfServiceViolationResult: Result<Bool, NodeInfoError>) -> NodeInfoUseCase {
+        let nodeInfoRepository = MockNodeInfoRepository(violatesTermsOfServiceResult: termsOfServiceViolationResult)
+        let sut = NodeInfoUseCase(nodeInfoRepository: nodeInfoRepository)
+        return sut
+    }
+    
+    private func anyNode(handle: MEGAHandle = 1, name: String = "", isTakenDown: Bool = false) -> MockNode {
+        MockNode(handle: handle, name: name, isTakenDown: isTakenDown)
     }
 }

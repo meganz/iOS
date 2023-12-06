@@ -20,4 +20,8 @@ final class MockNodeInfoUseCase: NodeInfoUseCaseProtocol {
     func folderLinkLogout() {
         folderLinkLogout_callTimes += 1
     }
+    
+    func isTakenDown(node: MEGANode, isFolderLink: Bool) async throws -> Bool {
+        true
+    }
 }

@@ -2,6 +2,7 @@ import Combine
 import Foundation
 import MEGAAnalyticsiOS
 import MEGADomain
+import MEGAL10n
 import MEGAPresentation
 import MEGASdk
 import MEGASwift
@@ -241,5 +242,29 @@ extension MEGAAVViewController {
         let streamingInfoUseCase = StreamingInfoUseCase(streamingInfoRepository: streamingInfoRepository)
         let path = streamingInfoUseCase.path(fromNode: node)
         return path
+    }
+    
+    @objc func checkIsFileViolatesTermsOfService() {
+        guard let node else { return }
+        Task {
+            let nodeInfoUseCase = NodeInfoUseCase()
+            let isTakenDown = try await nodeInfoUseCase.isTakenDown(node: node, isFolderLink: isFolderLink)
+            if isTakenDown {
+                showTermsOfServiceAlert()
+            }
+        }
+    }
+    
+    @MainActor
+    private func showTermsOfServiceAlert() {
+        let alertController = UIAlertController(
+            title: Strings.Localizable.General.Alert.TermsOfServiceViolation.title,
+            message: Strings.Localizable.fileLinkUnavailableText2,
+            preferredStyle: .alert
+        )
+        alertController.addAction(UIAlertAction(title: Strings.Localizable.dismiss, style: .default, handler: { [weak self] _ in
+            self?.dismiss(animated: true)
+        }))
+        present(alertController, animated: true)
     }
 }

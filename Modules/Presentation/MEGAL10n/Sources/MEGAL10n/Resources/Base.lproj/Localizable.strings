@@ -3924,8 +3924,10 @@
 "cameraUploads.banner.status.uploadsPausedDueToWifi.title"="Upload paused due to no Wi-Fi connection";
 /* Camera uploads status banner - uploads complete description */
 "cameraUploads.banner.status.uploadsComplete.subHeading"="All items backed up";
-/* Camera uploads status banner - uploads partially completed due to limited access to photo library */
-"cameraUploads.banner.status.uploadsPartialComplete.limitedPhotoLibraryAccess.subHeading"="MEGA has limited access to your photo library and cannot back up all photos. Tap to change permissions.";
+/* Camera uploads status banner - uploads partially completed due to limited access to photo library*/
+"cameraUploads.banner.status.uploadsPartialComplete.limitedPhotoLibraryAccess.subHeading"="MEGA has limited access to photo library and cannot backup all your photos. Tap to change permissions.";
+/* Title of Terms of Violation alert */
+"general.alert.termsOfServiceViolation.title"="File no longer available";
 /* Calls: Floating panel participants not in call header to call them all */
 "calls.panel.participantsNotInCall.header.callAll"="Call all";
 /* Calls: Floating panel participants not in call label to call a participant */

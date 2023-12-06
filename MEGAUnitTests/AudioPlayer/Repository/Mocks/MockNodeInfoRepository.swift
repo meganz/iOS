@@ -8,9 +8,14 @@ enum NodeInfoError: Error {
 struct MockNodeInfoRepository: NodeInfoRepositoryProtocol {
     
     var result: Result<Void, NodeInfoError>
+    var violatesTermsOfServiceResult: Result<Bool, NodeInfoError>
     
-    init(result: Result<Void, NodeInfoError> = .success(())) {
+    init(
+        result: Result<Void, NodeInfoError> = .success,
+        violatesTermsOfServiceResult: Result<Bool, NodeInfoError> = .success(false)
+    ) {
         self.result = result
+        self.violatesTermsOfServiceResult = violatesTermsOfServiceResult
     }
     
     func path(fromHandle: HandleEntity) -> URL? {
@@ -71,4 +76,10 @@ struct MockNodeInfoRepository: NodeInfoRepositoryProtocol {
     
     func loginToFolder(link: String) {}
     func folderLinkLogout() {}
+    
+    func isFolderLinkNodeTakenDown(node: MEGANode) async throws -> Bool {
+        try await withCheckedThrowingContinuation { continuation in
+            continuation.resume(with: violatesTermsOfServiceResult)
+        }
+    }
 }

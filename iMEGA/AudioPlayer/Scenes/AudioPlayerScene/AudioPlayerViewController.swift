@@ -455,7 +455,21 @@ final class AudioPlayerViewController: UIViewController {
             nextButton.tintColor = enabled ? .black : UIColor.black.withAlphaComponent(0.25)
         case .displayPlaybackContinuationDialog(let fileName, let playbackTime):
             presentAudioPlaybackContinuation(fileName: fileName, playbackTime: playbackTime)
+        case .showTermsOfServiceViolationAlert:
+            showTermsOfServiceAlert()
         }
+    }
+    
+    private func showTermsOfServiceAlert() {
+        let alertController = UIAlertController(
+            title: Strings.Localizable.General.Alert.TermsOfServiceViolation.title,
+            message: Strings.Localizable.fileLinkUnavailableText2,
+            preferredStyle: .alert
+        )
+        alertController.addAction(UIAlertAction(title: Strings.Localizable.dismiss, style: .default, handler: { [weak viewModel] _ in
+            viewModel?.dispatch(.onTermsOfServiceViolationAlertDismissAction)
+        }))
+        present(alertController, animated: true)
     }
 }
 

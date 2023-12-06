@@ -1,5 +1,6 @@
 import Foundation
 import MEGADomain
+import MEGASDKRepo
 import MEGASwift
 
 protocol NodeInfoRepositoryProtocol {
@@ -13,6 +14,11 @@ protocol NodeInfoRepositoryProtocol {
     func folderAuthNode(fromNode: MEGANode) -> MEGANode?
     func loginToFolder(link: String)
     func folderLinkLogout()
+    
+    /// Used for check wethere a node from a non current user folder link is got take down or not.
+    /// - Parameter node: node to check
+    /// - Returns: returns a either is take down or not
+    func isFolderLinkNodeTakenDown(node: MEGANode) async throws -> Bool
 }
 
 final class NodeInfoRepository: NodeInfoRepositoryProtocol {
@@ -119,5 +125,22 @@ final class NodeInfoRepository: NodeInfoRepositoryProtocol {
      
     func folderLinkLogout() {
         folderSDK.logout()
+    }
+    
+    func isFolderLinkNodeTakenDown(node: MEGANode) async throws -> Bool {
+        try await withAsyncThrowingValue { completion in
+            folderSDK.getDownloadUrl(node, singleUrl: true, delegate: RequestDelegate { result in
+                switch result {
+                case .failure(let error):
+                    guard case .apiEBlocked = error.type else {
+                        completion(.failure(error))
+                        return
+                    }
+                    completion(.success(true))
+                case .success:
+                    completion(.success(false))
+                }
+            })
+        }
     }
 }
