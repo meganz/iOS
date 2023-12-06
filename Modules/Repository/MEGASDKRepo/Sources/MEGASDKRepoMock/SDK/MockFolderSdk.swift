@@ -60,4 +60,6 @@ public final class MockFolderSdk: MEGASdk {
         let children = nodes.filter { $0.parentHandle == parent.handle }
         return MockNodeList(nodes: children)
     }
+    
+    public override func getDownloadUrl(_ node: MEGANode, singleUrl: Bool, delegate: MEGARequestDelegate) { }
 }

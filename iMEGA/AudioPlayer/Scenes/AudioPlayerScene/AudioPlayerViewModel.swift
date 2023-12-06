@@ -30,6 +30,7 @@ enum AudioPlayerAction: ActionType {
     case onSelectResumePlaybackContinuationDialog(playbackTime: TimeInterval)
     case onSelectRestartPlaybackContinuationDialog
     case `deinit`
+    case onTermsOfServiceViolationAlertDismissAction
 }
 
 protocol AudioPlayerViewRouting: Routing {
@@ -74,6 +75,7 @@ final class AudioPlayerViewModel: ViewModelType {
         case goToPlaylistAction(enabled: Bool)
         case nextTrackAction(enabled: Bool)
         case displayPlaybackContinuationDialog(fileName: String, playbackTime: TimeInterval)
+        case showTermsOfServiceViolationAlert
     }
     
     // MARK: - Private properties
@@ -357,6 +359,13 @@ final class AudioPlayerViewModel: ViewModelType {
         switch action {
         case .onViewDidLoad:
             Task {
+                guard let node = configEntity.node, let nodeInfoUseCase else { return }
+                let isTakenDown = try await nodeInfoUseCase.isTakenDown(node: node, isFolderLink: configEntity.isFolderLink)
+                if isTakenDown {
+                    invokeCommand?(.showTermsOfServiceViolationAlert)
+                    return
+                }
+                
                 await audioPlayerUseCase.registerMEGADelegate()
             }
             if configEntity.allNodes == nil {
@@ -452,13 +461,20 @@ final class AudioPlayerViewModel: ViewModelType {
             playbackContinuationUseCase.setPreference(to: .restartFromBeginning)
             configEntity.playerHandler.playerPlay()
         case .deinit:
-            configEntity.playerHandler.removePlayer(listener: self)
-            if !configEntity.playerHandler.isPlayerDefined() {
-                streamingInfoUseCase?.stopServer()
-            }
-            Task {
-                await audioPlayerUseCase.unregisterMEGADelegate()
-            }
+            onDeinit()
+        case .onTermsOfServiceViolationAlertDismissAction:
+            configEntity.playerHandler.closePlayer()
+            router.dismiss()
+        }
+    }
+    
+    private func onDeinit() {
+        configEntity.playerHandler.removePlayer(listener: self)
+        if !configEntity.playerHandler.isPlayerDefined() {
+            streamingInfoUseCase?.stopServer()
+        }
+        Task {
+            await audioPlayerUseCase.unregisterMEGADelegate()
         }
     }
 }

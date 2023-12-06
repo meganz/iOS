@@ -17,7 +17,6 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
 
 @interface MEGAAVViewController () <AVPlayerViewControllerDelegate>
 
-@property (nonatomic, assign, getter=isFolderLink) BOOL folderLink;
 @property (nonatomic, assign, getter=isViewDidAppearFirstTime) BOOL viewDidAppearFirstTime;
 @property (nonatomic, strong) NSMutableSet *subscriptions;
 
@@ -31,7 +30,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
     if (self) {
         self.fileUrl    = fileUrl;
         self.node       = nil;
-        self.folderLink = NO;
+        _isFolderLink   = NO;
         _subscriptions = [[NSMutableSet alloc] init];
         _hasPlayedOnceBefore = NO;
     }
@@ -45,7 +44,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
     if (self) {
         _apiForStreaming = apiForStreaming;
         self.node            = folderLink ? [[MEGASdkManager sharedMEGASdkFolder] authorizeNode:node] : node;
-        self.folderLink      = folderLink;
+        _isFolderLink        = folderLink;
         self.fileUrl         = [self streamingPathWithNode:node];
         _hasPlayedOnceBefore = NO;
     }
@@ -55,7 +54,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-        
+    [self checkIsFileViolatesTermsOfService];
     [AudioSessionUseCaseOCWrapper.alloc.init configureVideoAudioSession];
     
     if ([AudioPlayerManager.shared isPlayerAlive]) {

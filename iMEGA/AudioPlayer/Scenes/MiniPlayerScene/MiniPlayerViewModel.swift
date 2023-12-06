@@ -76,6 +76,14 @@ final class MiniPlayerViewModel: ViewModelType {
         switch action {
         case .onViewDidLoad:
             Task {
+                guard let node = configEntity.node, let nodeInfoUseCase else { return }
+                let isTakenDown = try await nodeInfoUseCase.isTakenDown(node: node, isFolderLink: configEntity.isFolderLink)
+                if isTakenDown {
+                    closeMiniPlayer()
+                    deInitActions()
+                    return
+                }
+                
                 await audioPlayerUseCase.registerMEGADelegate()
             }
             invokeCommand?(.showLoading(shouldInitializePlayer))
