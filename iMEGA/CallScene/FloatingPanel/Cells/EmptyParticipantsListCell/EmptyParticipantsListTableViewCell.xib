@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="13" id="KGk-i7-Jjw" customClass="EmptyParticipantsListTableViewCell" customModule="MEGA" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="495" height="250"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="495" height="250"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="floating panel lists empty state" translatesAutoresizingMaskIntoConstraints="NO" id="Ywf-hR-2Sh">
+                        <rect key="frame" x="187.66666666666666" y="65" width="119.99999999999997" height="120"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="120" id="EfI-iy-cHO"/>
+                            <constraint firstAttribute="width" constant="120" id="R1F-43-t0A"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="All the invited participants have joined the call." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7DP-KQ-uHk">
+                        <rect key="frame" x="89" y="197" width="317" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="7DP-KQ-uHk" firstAttribute="top" secondItem="Ywf-hR-2Sh" secondAttribute="bottom" constant="12" id="7U7-7v-dYu"/>
+                    <constraint firstItem="Ywf-hR-2Sh" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="NzR-hf-axp"/>
+                    <constraint firstItem="Ywf-hR-2Sh" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="daK-uG-pee"/>
+                    <constraint firstItem="7DP-KQ-uHk" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="g1u-aA-7JV"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="emptyParticipantsListLabel" destination="7DP-KQ-uHk" id="gzO-65-dEO"/>
+            </connections>
+            <point key="canvasLocation" x="269.46564885496184" y="144.36619718309859"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="floating panel lists empty state" width="120" height="120"/>
+    </resources>
+</document>

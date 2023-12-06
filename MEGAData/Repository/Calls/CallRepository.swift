@@ -247,6 +247,10 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
             .monitor
     }
     
+    func callAbsentParticipant(inChat chatId: ChatIdEntity, userId: HandleEntity, timeout: Int) {
+        chatSdk.ringIndividual(inACall: chatId, userId: userId, timeout: timeout)
+    }
+    
     private func callUpdateListener(forCallId callId: HandleEntity, change: CallEntity.ChangeType) -> CallUpdateListener {
         guard let callUpdateListener = callUpdateListeners.filter({ $0.callId == callId && change == $0.changeType }).first else {
             let callUpdateListener = CallUpdateListener(sdk: chatSdk, callId: callId, changeType: change)

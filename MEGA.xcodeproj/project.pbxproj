@@ -858,6 +858,7 @@
 		831D61A6218738D20038F5B8 /* MOFolderLayout+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 831D61A4218738D20038F5B8 /* MOFolderLayout+CoreDataProperties.m */; };
 		831D61A8218738EC0038F5B8 /* MOFolderLayout+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 831D61A3218738D20038F5B8 /* MOFolderLayout+CoreDataClass.m */; };
 		831D61AA218738F40038F5B8 /* MOFolderLayout+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 831D61A4218738D20038F5B8 /* MOFolderLayout+CoreDataProperties.m */; };
+		831DF0242B189BF5004819B2 /* ParticipantNotInCallViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 831DF0232B189BF5004819B2 /* ParticipantNotInCallViewModel.swift */; };
 		831FBEA220EF697200AC1B91 /* MEGAArchiveChatRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 831FBEA120EF697200AC1B91 /* MEGAArchiveChatRequestDelegate.m */; };
 		8327EE21283391D400068856 /* FileVersionsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84E92E226FB5F7400606AA7 /* FileVersionsRepository.swift */; };
 		83293C5A2806CB7800369A86 /* NameCollisionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83293C592806CB7800369A86 /* NameCollisionView.swift */; };
@@ -1008,6 +1009,8 @@
 		8375B77A25EFCDAD00B70F6B /* OfflineQuickAccessWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8375B77825EFCDAD00B70F6B /* OfflineQuickAccessWidget.swift */; };
 		8375B77B25EFCDAD00B70F6B /* OfflineQuickAccessWidgetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8375B77925EFCDAD00B70F6B /* OfflineQuickAccessWidgetViewModel.swift */; };
 		8375BE96294CA712006339C0 /* ChatRoomLinkNonHostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8375BE95294CA712006339C0 /* ChatRoomLinkNonHostView.swift */; };
+		83784A1F2B1E0B3E0016410D /* EmptyParticipantsListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83784A1D2B1E0B3E0016410D /* EmptyParticipantsListTableViewCell.swift */; };
+		83784A202B1E0B3E0016410D /* EmptyParticipantsListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83784A1E2B1E0B3E0016410D /* EmptyParticipantsListTableViewCell.xib */; };
 		83792B882950A4080033ED3E /* MeetingDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83792B872950A4080033ED3E /* MeetingDescriptionView.swift */; };
 		837A88BF20B42290007B55D1 /* CloudDriveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837A88BE20B42290007B55D1 /* CloudDriveViewController.m */; };
 		837A88C220B44AA8007B55D1 /* OfflineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 837A88C120B44AA8007B55D1 /* OfflineViewController.m */; };
@@ -1142,6 +1145,7 @@
 		83D726592316903D007B2E58 /* GenericHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D726582316903D007B2E58 /* GenericHeaderFooterView.swift */; };
 		83D7265B23169067007B2E58 /* GenericHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83D7265A23169067007B2E58 /* GenericHeaderFooterView.xib */; };
 		83DA2092248522EF004C24B8 /* MEGAPresentationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8357ADE5246AED2700045137 /* MEGAPresentationManager.swift */; };
+		83DAF93C2B1F5E72004C2122 /* ParticipantNotInCallViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DAF93B2B1F5E72004C2122 /* ParticipantNotInCallViewModelTests.swift */; };
 		83DBDDD429D2DA7B00CF433B /* ScheduleMeetingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DBDDD329D2DA7B00CF433B /* ScheduleMeetingViewController.swift */; };
 		83DBDDDC29D723B300CF433B /* ScheduleMeetingRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DBDDDB29D723B300CF433B /* ScheduleMeetingRouter.swift */; };
 		83DBDDDE29D723D300CF433B /* ScheduleMeetingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DBDDDD29D723D300CF433B /* ScheduleMeetingViewModel.swift */; };
@@ -3464,6 +3468,7 @@
 		831D61A2218738D20038F5B8 /* MOFolderLayout+CoreDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MOFolderLayout+CoreDataClass.h"; sourceTree = "<group>"; };
 		831D61A3218738D20038F5B8 /* MOFolderLayout+CoreDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MOFolderLayout+CoreDataClass.m"; sourceTree = "<group>"; };
 		831D61A4218738D20038F5B8 /* MOFolderLayout+CoreDataProperties.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MOFolderLayout+CoreDataProperties.m"; sourceTree = "<group>"; };
+		831DF0232B189BF5004819B2 /* ParticipantNotInCallViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantNotInCallViewModel.swift; sourceTree = "<group>"; };
 		831FBEA020EF697200AC1B91 /* MEGAArchiveChatRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAArchiveChatRequestDelegate.h; sourceTree = "<group>"; };
 		831FBEA120EF697200AC1B91 /* MEGAArchiveChatRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAArchiveChatRequestDelegate.m; sourceTree = "<group>"; };
 		83209DF6231D05B700F5E2DB /* ContacLinkQRType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContacLinkQRType.h; sourceTree = "<group>"; };
@@ -3620,6 +3625,8 @@
 		8375B77825EFCDAD00B70F6B /* OfflineQuickAccessWidget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfflineQuickAccessWidget.swift; sourceTree = "<group>"; };
 		8375B77925EFCDAD00B70F6B /* OfflineQuickAccessWidgetViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfflineQuickAccessWidgetViewModel.swift; sourceTree = "<group>"; };
 		8375BE95294CA712006339C0 /* ChatRoomLinkNonHostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomLinkNonHostView.swift; sourceTree = "<group>"; };
+		83784A1D2B1E0B3E0016410D /* EmptyParticipantsListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyParticipantsListTableViewCell.swift; sourceTree = "<group>"; };
+		83784A1E2B1E0B3E0016410D /* EmptyParticipantsListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyParticipantsListTableViewCell.xib; sourceTree = "<group>"; };
 		83792B872950A4080033ED3E /* MeetingDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingDescriptionView.swift; sourceTree = "<group>"; };
 		837A88BD20B42290007B55D1 /* CloudDriveViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CloudDriveViewController.h; sourceTree = "<group>"; };
 		837A88BE20B42290007B55D1 /* CloudDriveViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CloudDriveViewController.m; sourceTree = "<group>"; };
@@ -3747,6 +3754,7 @@
 		83D64E2C20178A0400E24155 /* PasswordReminder.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PasswordReminder.storyboard; sourceTree = "<group>"; };
 		83D726582316903D007B2E58 /* GenericHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericHeaderFooterView.swift; sourceTree = "<group>"; };
 		83D7265A23169067007B2E58 /* GenericHeaderFooterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GenericHeaderFooterView.xib; sourceTree = "<group>"; };
+		83DAF93B2B1F5E72004C2122 /* ParticipantNotInCallViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantNotInCallViewModelTests.swift; sourceTree = "<group>"; };
 		83DBDDD329D2DA7B00CF433B /* ScheduleMeetingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingViewController.swift; sourceTree = "<group>"; };
 		83DBDDDB29D723B300CF433B /* ScheduleMeetingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingRouter.swift; sourceTree = "<group>"; };
 		83DBDDDD29D723D300CF433B /* ScheduleMeetingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingViewModel.swift; sourceTree = "<group>"; };
@@ -8769,6 +8777,15 @@
 			path = Offline;
 			sourceTree = "<group>";
 		};
+		83784A192B1E0AF80016410D /* EmptyParticipantsListCell */ = {
+			isa = PBXGroup;
+			children = (
+				83784A1D2B1E0B3E0016410D /* EmptyParticipantsListTableViewCell.swift */,
+				83784A1E2B1E0B3E0016410D /* EmptyParticipantsListTableViewCell.xib */,
+			);
+			path = EmptyParticipantsListCell;
+			sourceTree = "<group>";
+		};
 		837B179A2881811600A4D01B /* DownloadLinkOrOnboarding */ = {
 			isa = PBXGroup;
 			children = (
@@ -8931,6 +8948,7 @@
 			isa = PBXGroup;
 			children = (
 				832DEFE72AB46175004573D5 /* AllowNonHostToInvite */,
+				83784A192B1E0AF80016410D /* EmptyParticipantsListCell */,
 				839BA9DA2AB32B18001F852C /* Header */,
 				839BA9E42AB355B0001F852C /* IInviteParticipant */,
 				83B804D72ABB006E006B356F /* ParticipantInWaitingRoom */,
@@ -9029,6 +9047,7 @@
 			children = (
 				83B804C62AB8978F006B356F /* ParticipantNotInCallTableViewCell.swift */,
 				83B804C72AB8978F006B356F /* ParticipantNotInCallTableViewCell.xib */,
+				831DF0232B189BF5004819B2 /* ParticipantNotInCallViewModel.swift */,
 			);
 			path = ParticipantNotInCall;
 			sourceTree = "<group>";
@@ -11916,6 +11935,7 @@
 				BFF0EE092630E2D300FAEFF9 /* MeetingParticipantViewModelTests.swift */,
 				BF8895D32630F810002A18CA /* MeetingParticpiantInfoViewModelTests.swift */,
 				833041902AC2F7EA00DDE70A /* ParticipantInWaitingRoomViewModelTests.swift */,
+				83DAF93B2B1F5E72004C2122 /* ParticipantNotInCallViewModelTests.swift */,
 				BF418B7D2A43DE14004C5A5D /* ScheduledMeetingDateBuilderTests.swift */,
 				83522FC92A4B0A2600266D1F /* ScheduledMeetingOccurrencesViewModelTests.swift */,
 				BFB8897A2A13600400FC456A /* ScheduledMeetingRulesEntityTests.swift */,
@@ -12922,6 +12942,7 @@
 				BFC933E324A453B400BC2A75 /* EmojiReactionCollectionCell.xib in Resources */,
 				BF99A3F324AC43F70035A183 /* emojis_v3.json in Resources */,
 				8383CEFB26736B3600E6A0FF /* EmptyMeetingMessageView.xib in Resources */,
+				83784A202B1E0B3E0016410D /* EmptyParticipantsListTableViewCell.xib in Resources */,
 				5BE7BEE623745FC700BBD23F /* EmptyStateView.xib in Resources */,
 				BFAD882926911E7200CA592F /* EncourageGuestUserToJoinMegaViewController.xib in Resources */,
 				BFB33D91263B922F006E203D /* EndMeetingOptionsViewViewController.xib in Resources */,
@@ -13724,6 +13745,7 @@
 				25AF21632AB28E9400DC41AF /* EmptyMediaDiscoveryContentMenuAction.swift in Sources */,
 				25AF215E2AB263C400DC41AF /* EmptyMediaDiscoveryContentView.swift in Sources */,
 				8383CEF926736B2B00E6A0FF /* EmptyMeetingMessageView.swift in Sources */,
+				83784A1F2B1E0B3E0016410D /* EmptyParticipantsListTableViewCell.swift in Sources */,
 				5B79E88D26E6973A0070D782 /* EmptyStateType.swift in Sources */,
 				5B98624D26B1B2E600BB9945 /* EmptyStateView+Config.swift in Sources */,
 				12FF88EE2846F03100D99BED /* EmptyStateView+Timeline.swift in Sources */,
@@ -14308,6 +14330,7 @@
 				83B804DB2ABB0090006B356F /* ParticipantInWaitingRoomTableViewCell.swift in Sources */,
 				83B804DE2ABB0398006B356F /* ParticipantInWaitingRoomViewModel.swift in Sources */,
 				83B804C82AB8978F006B356F /* ParticipantNotInCallTableViewCell.swift in Sources */,
+				831DF0242B189BF5004819B2 /* ParticipantNotInCallViewModel.swift in Sources */,
 				BFC060F328A0C09900BA2AD7 /* ParticipantsAddingViewFactory.swift in Sources */,
 				8365B2A42AB8568A0057489A /* ParticipantsListSelectorTableViewCell.swift in Sources */,
 				83B804E92ABB3D97006B356F /* ParticipantsListTab.swift in Sources */,
@@ -15391,6 +15414,7 @@
 				160711542A558DED00970A19 /* PagerTabViewModelTests.swift in Sources */,
 				12B1E58328751FD100D23A58 /* PageStayTimeTrackerTests.swift in Sources */,
 				833041912AC2F7EA00DDE70A /* ParticipantInWaitingRoomViewModelTests.swift in Sources */,
+				83DAF93C2B1F5E72004C2122 /* ParticipantNotInCallViewModelTests.swift in Sources */,
 				BFC060F628A0C2FE00BA2AD7 /* participantsAddingViewFactoryTests.swift in Sources */,
 				25D840712A9EE9330026D288 /* PermissionAlertModelTests.swift in Sources */,
 				946544862A4446D50038D8FC /* PermissionAlertRouterTests.swift in Sources */,

@@ -25,9 +25,10 @@ enum MeetingFloatingPanelAction: ActionType {
     case selectParticipantsList(selectedTab: ParticipantsListTab)
     case onAdmitParticipantTap(participant: CallParticipantEntity)
     case onDenyParticipantTap(participant: CallParticipantEntity)
-    case onAdmitAllParticipantsTap
+    case onHeaderActionTap
     case seeMoreParticipantsInWaitingRoomTapped
     case panelTransitionIsLongForm(Bool)
+    case callAbsentParticipant(CallParticipantEntity)
 }
 
 final class MeetingFloatingPanelViewModel: ViewModelType {
@@ -49,6 +50,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         case transitionToLongForm
         case updateAllowNonHostToAddParticipants(enabled: Bool)
         case reloadViewData(participantsListView: ParticipantsListView)
+        case hideCallAllIcon(Bool)
     }
     
     private let router: any MeetingFloatingPanelRouting
@@ -257,13 +259,15 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             admitParticipant(participant)
         case .onDenyParticipantTap(let participant):
             denyParticipant(participant)
-        case .onAdmitAllParticipantsTap:
-            admitAllParticipants()
+        case .onHeaderActionTap:
+            headerTapped()
         case .seeMoreParticipantsInWaitingRoomTapped:
             guard let call else { return }
             router.showWaitingRoomParticipantsList(for: call)
         case .panelTransitionIsLongForm(let isLongForm):
             panelIsLongForm = isLongForm
+        case .callAbsentParticipant(let participant):
+            callAbsentParticipants([participant])
         }
     }
     
@@ -535,10 +539,38 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     
     // MARK: - Waiting room
     
+    private func headerTapped() {
+        switch selectedParticipantsListTab {
+        case .inCall:
+            break
+        case .notInCall:
+            callAbsentParticipants(callParticipantsNotInCall)
+        case .waitingRoom:
+            admitAllParticipants()
+        }
+    }
+    
     private func admitAllParticipants() {
         guard let call else { return }
         let waitingRoomParticipantHandles = callParticipantsInWaitingRoom.compactMap { $0.participantId }
         callUseCase.allowUsersJoinCall(call, users: waitingRoomParticipantHandles)
+    }
+    
+    private func callAbsentParticipants(_ participants: [CallParticipantEntity]) {
+        invokeCommand?(.hideCallAllIcon(participants.count == 1))
+        participants.forEach { participant in
+            participant.absentParticipantState = .calling
+            callUseCase.callAbsentParticipant(inChat: participant.chatId, userId: participant.participantId, timeout: 40)
+        }
+        reloadParticipantsIfNeeded()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 40.0) { [weak self] in
+            participants.forEach { participant in
+                participant.absentParticipantState = .noResponse
+            }
+            guard let self else { return }
+            invokeCommand?(.hideCallAllIcon(true))
+            reloadParticipantsIfNeeded()
+        }
     }
 
     private func admitParticipant(_ participant: CallParticipantEntity) {
@@ -564,7 +596,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     
     private func manageWaitingRoom(for call: CallEntity) {
         populateParticipantsInWaitingRoom(forCall: call)
-        populateParticipantsNotInCall()
+        updateParticipantsNotInCallWithWaitingRoom(change: call.changeType ?? .noChanges, waitingRoomList: call.waitingRoomHandleList)
         
         containerViewModel?.dispatch(.participantJoinedWaitingRoom)
         
@@ -572,6 +604,30 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             selectParticipantsListTab(.waitingRoom)
         } else {
             selectParticipantsListTab(.inCall)
+        }
+    }
+    
+    private func updateParticipantsNotInCallWithWaitingRoom(change: CallEntity.ChangeType, waitingRoomList: [HandleEntity]) {
+        if change == .waitingRoomUsersEntered {
+            let participantsJoinedWaitingRoom = waitingRoomList.compactMap {
+                CallParticipantEntity(chatId: chatRoom.chatId, userHandle: $0)
+            }
+            participantsJoinedWaitingRoom.forEach { participant in
+                callParticipantsNotInCall.remove(object: participant)
+            }
+        } else if change == .waitingRoomUsersLeave {
+            guard let call else { return }
+            waitingRoomList.forEach { participantId in
+                if call.participants.notContains(participantId) {
+                    callParticipantsNotInCall.append(
+                        CallParticipantEntity(
+                            chatId: call.chatId,
+                            userHandle: participantId,
+                            peerPrivilege: chatRoomUseCase.peerPrivilege(forUserHandle: participantId, chatRoom: chatRoom)
+                        )
+                    )
+                }
+            }
         }
     }
     
@@ -743,13 +799,12 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             callParticipantsNotInCall.remove(object: callParticipantInWaitingRoom)
         }
     }
-    
 }
 
 extension MeetingFloatingPanelViewModel: CallCallbacksUseCaseProtocol {
     func participantJoined(participant: CallParticipantEntity) {
+        callParticipantsNotInCall.remove(object: participant)
         callParticipants.append(participant)
-        populateParticipantsNotInCall()
         reloadParticipantsIfNeeded()
     }
     
@@ -758,7 +813,8 @@ extension MeetingFloatingPanelViewModel: CallCallbacksUseCaseProtocol {
             containerViewModel?.dispatch(.dismissCall(completion: nil))
         } else if let index = callParticipants.firstIndex(of: participant) {
             callParticipants.remove(at: index)
-            populateParticipantsNotInCall()
+            participant.clientId = .invalid
+            callParticipantsNotInCall.append(participant)
             reloadParticipantsIfNeeded()
         }
     }

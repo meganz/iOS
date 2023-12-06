@@ -5,6 +5,12 @@ public enum VideoFrameType {
     case screenShare
 }
 
+public enum AbsentParticipantState {
+    case notInCall
+    case calling
+    case noResponse
+}
+
 public protocol CallParticipantVideoDelegate: AnyObject {
     func videoFrameData(width: Int, height: Int, buffer: Data!, type: VideoFrameType)
 }
@@ -18,7 +24,7 @@ public final class CallParticipantEntity {
     
     public let chatId: HandleEntity
     public let participantId: HandleEntity
-    public let clientId: HandleEntity
+    public var clientId: HandleEntity
     public var name: String?
     public var email: String?
     public var isModerator: Bool
@@ -44,6 +50,7 @@ public final class CallParticipantEntity {
     public var isReceivingHiResVideo: Bool = false
     public var isReceivingLowResVideo: Bool = false
     public var isRecording: Bool = false
+    public var absentParticipantState: AbsentParticipantState = .notInCall
 
     public init(
         chatId: HandleEntity,
@@ -68,7 +75,8 @@ public final class CallParticipantEntity {
         isLowResScreenShare: Bool,
         isHiResScreenShare: Bool,
         audioDetected: Bool,
-        isRecording: Bool
+        isRecording: Bool,
+        absentParticipantState: AbsentParticipantState
     ) {
         self.chatId = chatId
         self.participantId = participantId
@@ -93,6 +101,7 @@ public final class CallParticipantEntity {
         self.isHiResScreenShare = isHiResScreenShare
         self.audioDetected = audioDetected
         self.isRecording = isRecording
+        self.absentParticipantState = absentParticipantState
     }
     
     public func remoteVideoFrame(width: Int, height: Int, buffer: Data!, isHiRes: Bool) {

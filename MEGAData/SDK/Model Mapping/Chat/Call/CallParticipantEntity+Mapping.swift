@@ -42,7 +42,8 @@ extension CallParticipantEntity {
             isLowResScreenShare: session.isLowResScreenShare,
             isHiResScreenShare: session.isHiResScreenShare,
             audioDetected: session.audioDetected,
-            isRecording: session.onRecording
+            isRecording: session.onRecording, 
+            absentParticipantState: .notInCall
         )
     }
     
@@ -80,7 +81,8 @@ extension CallParticipantEntity {
             isLowResScreenShare: false,
             isHiResScreenShare: false,
             audioDetected: false,
-            isRecording: false
+            isRecording: false, 
+            absentParticipantState: .notInCall
         )
     }
     
@@ -117,7 +119,8 @@ extension CallParticipantEntity {
             isLowResScreenShare: false,
             isHiResScreenShare: false,
             audioDetected: false,
-            isRecording: false
+            isRecording: false,
+            absentParticipantState: .notInCall
         )
     }
     
@@ -153,7 +156,8 @@ extension CallParticipantEntity {
             isLowResScreenShare: false,
             isHiResScreenShare: false,
             audioDetected: false,
-            isRecording: false
+            isRecording: false,
+            absentParticipantState: .notInCall
         )
         
         return participant
@@ -185,12 +189,26 @@ extension CallParticipantEntity {
             isLowResScreenShare: participant.isLowResScreenShare,
             isHiResScreenShare: participant.isHiResScreenShare,
             audioDetected: false,
-            isRecording: false
+            isRecording: false,
+            absentParticipantState: .notInCall
         )
         callParticipant.name = participant.name
         callParticipant.isScreenShareCell = true
         callParticipant.isReceivingHiResVideo = participant.isReceivingHiResVideo
         callParticipant.isReceivingLowResVideo = participant.isReceivingLowResVideo
         return callParticipant
+    }
+}
+
+public extension AbsentParticipantState {
+    func toParticipantNotInCallState() -> ParticipantNotInCallState {
+        switch self {
+        case .notInCall:
+            return .notInCall
+        case .calling:
+            return .calling
+        case .noResponse:
+            return .noResponse
+        }
     }
 }

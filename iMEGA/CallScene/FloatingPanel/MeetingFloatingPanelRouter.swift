@@ -94,12 +94,15 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
             fileSystemRepo: FileSystemRepository.newRepo
         )
         
-        let vc = MeetingFloatingPanelViewController(viewModel: viewModel,
-                                                    userImageUseCase: userImageUseCase,
-                                                    accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
-                                                    chatRoomUseCase: chatRoomUseCase,
-                                                    chatRoomUserUseCase: chatRoomUserUseCase,
-                                                    megaHandleUseCase: megaHandleUseCase)
+        let vc = MeetingFloatingPanelViewController(
+            viewModel: viewModel,
+            userImageUseCase: userImageUseCase,
+            accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
+            chatRoomUseCase: chatRoomUseCase,
+            chatRoomUserUseCase: chatRoomUserUseCase,
+            megaHandleUseCase: megaHandleUseCase,
+            chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo)
+        )
         baseViewController = vc
         self.viewModel = viewModel
         return vc
