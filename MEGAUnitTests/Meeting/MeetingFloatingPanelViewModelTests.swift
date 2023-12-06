@@ -977,6 +977,57 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         let router = MockMeetingFloatingPanelRouter()
         let callUseCase = MockCallUseCase(call: call)
         let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase, callCoordinatorUseCase: MockCallCoordinatorUseCase())
+        let viewModel = MeetingFloatingPanelViewModel(
+            router: router,
+            containerViewModel: containerViewModel,
+            chatRoom: chatRoom,
+            isSpeakerEnabled: false,
+            callCoordinatorUseCase: MockCallCoordinatorUseCase(),
+            callUseCase: callUseCase,
+            audioSessionUseCase: MockAudioSessionUseCase(),
+            permissionHandler: makeDevicePermissionHandler(),
+            captureDeviceUseCase: MockCaptureDeviceUseCase(),
+            localVideoUseCase: MockCallLocalVideoUseCase(),
+            accountUseCase: MockAccountUseCase()
+        )
+        
+        test(viewModel: viewModel, action: .seeMoreParticipantsInWaitingRoomTapped, expectedCommands: [])
+        XCTAssert(router.showWaitingRoomParticipantsList_calledTimes == 1)
+    }
+    
+    func testAction_callAbsentParticipant_callIndividualParticipant() {
+        let chatRoom = ChatRoomEntity(chatId: 100, ownPrivilege: .standard, chatType: .oneToOne)
+        let call = CallEntity()
+        let router = MockMeetingFloatingPanelRouter()
+        let callUseCase = MockCallUseCase(call: call)
+        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase, callCoordinatorUseCase: MockCallCoordinatorUseCase())
+        let viewModel = MeetingFloatingPanelViewModel(router: router,
+                                                      containerViewModel: containerViewModel,
+                                                      chatRoom: chatRoom,
+                                                      isSpeakerEnabled: false,
+                                                      callCoordinatorUseCase: MockCallCoordinatorUseCase(),
+                                                      callUseCase: callUseCase,
+                                                      audioSessionUseCase: MockAudioSessionUseCase(),
+                                                      permissionHandler: makeDevicePermissionHandler(),
+                                                      captureDeviceUseCase: MockCaptureDeviceUseCase(),
+                                                      localVideoUseCase: MockCallLocalVideoUseCase(),
+                                                      accountUseCase: MockAccountUseCase())
+        let participant = CallParticipantEntity(chatId: chatRoom.chatId, participantId: 1, absentParticipantState: .notInCall)
+        test(viewModel: viewModel, 
+             action: .callAbsentParticipant(participant),
+             expectedCommands: [.hideCallAllIcon(true),
+                                .reloadParticipantsList(participants: [])]
+        )
+        XCTAssert(callUseCase.callAbsentParticipant_CalledTimes == 1)
+        XCTAssert(participant.absentParticipantState == .calling)
+    }
+    
+    func testAction_AllowUsersJoinCall_usersJoin() {
+        let chatRoom = ChatRoomEntity(chatId: 100, ownPrivilege: .moderator, chatType: .meeting)
+        let call = CallEntity()
+        let router = MockMeetingFloatingPanelRouter()
+        let callUseCase = MockCallUseCase(call: call)
+        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase, callCoordinatorUseCase: MockCallCoordinatorUseCase())
         let viewModel = MeetingFloatingPanelViewModel(router: router,
                                                       containerViewModel: containerViewModel,
                                                       chatRoom: chatRoom,
@@ -989,8 +1040,17 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       localVideoUseCase: MockCallLocalVideoUseCase(),
                                                       accountUseCase: MockAccountUseCase())
         
-        test(viewModel: viewModel, action: .seeMoreParticipantsInWaitingRoomTapped, expectedCommands: [])
-        XCTAssert(router.showWaitingRoomParticipantsList_calledTimes == 1)
+        test(viewModel: viewModel,
+             action: .selectParticipantsList(selectedTab: .waitingRoom),
+             expectedCommands: [
+                .reloadViewData(participantsListView: ParticipantsListView(sections: [.hostControls, .invite, .participants], hostControlsRows: [.listSelector], inviteSectionRow: [], tabs: [.inCall, .notInCall], selectedTab: .waitingRoom, participants: [], existsWaitingRoom: false))
+             ])
+        
+        test(viewModel: viewModel,
+             action: .onHeaderActionTap,
+             expectedCommands: []
+        )
+        XCTAssert(callUseCase.allowUsersJoinCall_CalledTimes == 1)
     }
 }
 

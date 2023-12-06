@@ -38,6 +38,8 @@ final class MeetingFloatingPanelViewController: UIViewController {
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
+    private let chatUseCase: any ChatUseCaseProtocol
+
     private var isAllowNonHostToAddParticipantsEnabled = false
     private var callParticipantsListView: ParticipantsListView?
     
@@ -46,13 +48,16 @@ final class MeetingFloatingPanelViewController: UIViewController {
          accountUseCase: any AccountUseCaseProtocol,
          chatRoomUseCase: any ChatRoomUseCaseProtocol,
          chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol,
-         megaHandleUseCase: any MEGAHandleUseCaseProtocol) {
+         megaHandleUseCase: any MEGAHandleUseCaseProtocol,
+         chatUseCase: some ChatUseCaseProtocol
+    ) {
         self.viewModel = viewModel
         self.userImageUseCase = userImageUseCase
         self.accountUseCase = accountUseCase
         self.chatRoomUseCase = chatRoomUseCase
         self.chatRoomUserUseCase = chatRoomUserUseCase
         self.megaHandleUseCase = megaHandleUseCase
+        self.chatUseCase = chatUseCase
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -175,6 +180,9 @@ final class MeetingFloatingPanelViewController: UIViewController {
             callParticipantsListView = participantListView
             callParticipants = participantListView.participants
             participantsTableView.reloadData()
+        case .hideCallAllIcon(let hide):
+            guard let header = participantsTableView.headerView(forSection: 1) as? MeetingParticipantTableViewHeader else { return }
+            header.hideCallAllIcon(hide)
         }
     }
     
@@ -246,6 +254,16 @@ final class MeetingFloatingPanelViewController: UIViewController {
 
 extension MeetingFloatingPanelViewController: UITableViewDataSource, UITableViewDelegate {
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard let callParticipantsListView else { return 0 }
+        switch callParticipantsListView.sections[indexPath.section] {
+        case .participants:
+            return callParticipants.isNotEmpty ? 60 : 250
+        default:
+            return 60
+        }
+    }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         guard let callParticipantsListView else { return 0 }
         return callParticipantsListView.sections.count
@@ -259,7 +277,9 @@ extension MeetingFloatingPanelViewController: UITableViewDataSource, UITableView
         case .invite:
             return callParticipantsListView.inviteSectionRow.count
         case .participants:
-            if callParticipantsListView.selectedTab == .waitingRoom {
+            if callParticipants.isEmpty {
+                return 1
+            } else if callParticipantsListView.selectedTab == .waitingRoom {
                 return callParticipants.count <= Constants.maxParticipantsToListInWaitingRoom ? callParticipants.count : Constants.maxParticipantsToListInWaitingRoom + 1
             } else {
                 return callParticipants.count
@@ -298,8 +318,11 @@ extension MeetingFloatingPanelViewController: UITableViewDataSource, UITableView
             case .inCall:
                 return participantInCallCell(at: indexPath)
             case .notInCall:
-                return participantNotInCallCell(at: indexPath)
+                return callParticipants.isEmpty ? emptyParticipantsListCell(at: indexPath) : participantNotInCallCell(at: indexPath)
             case .waitingRoom:
+                guard callParticipants.isNotEmpty else {
+                    return emptyParticipantsListCell(at: indexPath)
+                }
                 switch indexPath.row {
                 case Constants.maxParticipantsToListInWaitingRoom:
                     guard let cell = tableView.dequeueReusableCell(withIdentifier: SeeAllParticipantsInWaitingRoomTableViewCell.reuseIdentifier, for: indexPath) as? SeeAllParticipantsInWaitingRoomTableViewCell else { return UITableViewCell() }
@@ -318,10 +341,10 @@ extension MeetingFloatingPanelViewController: UITableViewDataSource, UITableView
         guard let callParticipantsListView else { return nil }
         switch callParticipantsListView.sections[section] {
         case .invite:
-            guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: MeetingParticipantTableViewHeader.reuseIdentifier) as? MeetingParticipantTableViewHeader else { return UIView(frame: .zero) }
+            guard callParticipants.isNotEmpty, let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: MeetingParticipantTableViewHeader.reuseIdentifier) as? MeetingParticipantTableViewHeader else { return UIView(frame: .zero) }
             header.configure(for: callParticipantsListView.selectedTab, participantsCount: callParticipants.count)
             header.actionButtonTappedHandler = { [weak self] in
-                self?.viewModel.dispatch(.onAdmitAllParticipantsTap)
+                self?.viewModel.dispatch(.onHeaderActionTap)
             }
             return header
         default:
@@ -348,6 +371,7 @@ extension MeetingFloatingPanelViewController: UITableViewDataSource, UITableView
         participantsTableView.register(ParticipantInWaitingRoomTableViewCell.nib, forCellReuseIdentifier: ParticipantInWaitingRoomTableViewCell.reuseIdentifier)
         participantsTableView.register(SeeAllParticipantsInWaitingRoomTableViewCell.nib, forCellReuseIdentifier: SeeAllParticipantsInWaitingRoomTableViewCell.reuseIdentifier)
         participantsTableView.register(MeetingParticipantTableViewHeader.nib, forHeaderFooterViewReuseIdentifier: MeetingParticipantTableViewHeader.reuseIdentifier)
+        participantsTableView.register(EmptyParticipantsListTableViewCell.nib, forCellReuseIdentifier: EmptyParticipantsListTableViewCell.reuseIdentifier)
     }
     
     private func participantInCallCell(at indexPath: IndexPath) -> MeetingParticipantTableViewCell {
@@ -368,14 +392,18 @@ extension MeetingFloatingPanelViewController: UITableViewDataSource, UITableView
     
     private func participantNotInCallCell(at indexPath: IndexPath) -> ParticipantNotInCallTableViewCell {
         guard let cell = participantsTableView.dequeueReusableCell(withIdentifier: ParticipantNotInCallTableViewCell.reuseIdentifier, for: indexPath) as? ParticipantNotInCallTableViewCell else { return ParticipantNotInCallTableViewCell() }
-        cell.viewModel = MeetingParticipantViewModel(
+        cell.viewModel = ParticipantNotInCallViewModel(
             participant: callParticipants[indexPath.row],
             userImageUseCase: userImageUseCase,
             accountUseCase: accountUseCase,
             chatRoomUseCase: chatRoomUseCase,
             chatRoomUserUseCase: chatRoomUserUseCase,
-            megaHandleUseCase: megaHandleUseCase
-        ) { _, _ in }
+            megaHandleUseCase: megaHandleUseCase,
+            chatUseCase: chatUseCase
+        ) { [weak self] participant in
+            guard let self else { return }
+            viewModel.dispatch(.callAbsentParticipant(participant))
+        }
         return cell
     }
     
@@ -388,6 +416,11 @@ extension MeetingFloatingPanelViewController: UITableViewDataSource, UITableView
             }, denyButtonMenuTappedHandler: { [weak self] participant in
                 self?.viewModel.dispatch(.onDenyParticipantTap(participant: participant))
             })
+        return cell
+    }
+    
+    private func emptyParticipantsListCell(at indexPath: IndexPath) -> EmptyParticipantsListTableViewCell {
+        guard let cell = participantsTableView.dequeueReusableCell(withIdentifier: EmptyParticipantsListTableViewCell.reuseIdentifier, for: indexPath) as? EmptyParticipantsListTableViewCell else { return EmptyParticipantsListTableViewCell() }
         return cell
     }
 }

@@ -27,6 +27,7 @@ public protocol CallRepositoryProtocol {
     func callStatusChaged(forCallId callId: HandleEntity) -> AnyPublisher<CallEntity, Never>
     func callWaitingRoomUsersUpdate(forCall call: CallEntity) -> AnyPublisher<CallEntity, Never>
     func onCallUpdate() -> AnyPublisher<CallEntity, Never>
+    func callAbsentParticipant(inChat chatId: ChatIdEntity, userId: HandleEntity, timeout: Int)
 }
 
 public protocol CallCallbacksRepositoryProtocol {

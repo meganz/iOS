@@ -25,6 +25,7 @@ protocol CallUseCaseProtocol {
     func removePeerAsModerator(inCall call: CallEntity, peerId: HandleEntity)
     func callWaitingRoomUsersUpdate(forCall call: CallEntity) -> AnyPublisher<CallEntity, Never>
     func onCallUpdate() -> AnyPublisher<CallEntity, Never>
+    func callAbsentParticipant(inChat chatId: ChatIdEntity, userId: HandleEntity, timeout: Int)
 }
 
 protocol CallCallbacksUseCaseProtocol: AnyObject {
@@ -165,6 +166,10 @@ final class CallUseCase<T: CallRepositoryProtocol>: NSObject, CallUseCaseProtoco
     
     func onCallUpdate() -> AnyPublisher<CallEntity, Never> {
         repository.onCallUpdate()
+    }
+    
+    func callAbsentParticipant(inChat chatId: ChatIdEntity, userId: HandleEntity, timeout: Int) {
+        repository.callAbsentParticipant(inChat: chatId, userId: userId, timeout: timeout)
     }
 }
 

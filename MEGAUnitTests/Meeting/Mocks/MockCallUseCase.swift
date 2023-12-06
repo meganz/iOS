@@ -16,7 +16,8 @@ final class MockCallUseCase: CallUseCaseProtocol {
     var pushUsersIntoWaitingRoom_CalledTimes = 0
     var makePeerAsModerator_CalledTimes = 0
     var removePeerAsModerator_CalledTimes = 0
-    
+    var callAbsentParticipant_CalledTimes = 0
+
     var call: CallEntity?
     var callCompletion: Result<CallEntity, CallErrorEntity>
     var answerCallCompletion: Result<CallEntity, CallErrorEntity>
@@ -166,6 +167,10 @@ final class MockCallUseCase: CallUseCaseProtocol {
     
     func onCallUpdate() -> AnyPublisher<CallEntity, Never> {
         callUpdateSubject.eraseToAnyPublisher()
+    }
+    
+    func callAbsentParticipant(inChat chatId: ChatIdEntity, userId: HandleEntity, timeout: Int) {
+        callAbsentParticipant_CalledTimes += 1
     }
 }
 
