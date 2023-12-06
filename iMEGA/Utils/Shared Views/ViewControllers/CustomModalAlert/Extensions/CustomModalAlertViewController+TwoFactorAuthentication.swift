@@ -4,7 +4,7 @@ import MEGASDKRepo
 
 extension CustomModalAlertViewController {
     @objc func configureForTwoFactorAuthentication(requestedByUser: Bool) {
-        image = UIImage(resource: ._2FASetup)
+        image = UIImage._2FASetup
         viewTitle = Strings.Localizable.whyYouDoNeedTwoFactorAuthentication
         detail = Strings.Localizable.whyYouDoNeedTwoFactorAuthenticationDescription
         firstButtonTitle = Strings.Localizable.beginSetup

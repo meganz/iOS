@@ -19,7 +19,7 @@ extension CustomModalAlertViewController {
     }
     
     func configureForCookieDialog(type: CookieDialogType) {
-        image = UIImage(resource: .cookie)
+        image = UIImage.cookie
         viewTitle = Strings.Localizable.Dialog.Cookies.Title.manageCookies
         detailAttributedTextWithLink = detailTextAttributedString(detail: type.description)
 

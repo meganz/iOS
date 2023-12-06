@@ -66,9 +66,9 @@ extension CustomModalAlertViewController {
     private func transferDialogImage(for displayMode: TransferQuotaErrorMode) -> UIImage {
         switch displayMode {
         case .limitedDownload:
-            return UIImage(resource: .transferLimitedQuota)
+            return UIImage.transferLimitedQuota
         case .downloadExceeded, .streamingExceeded:
-            return UIImage(resource: .transferExceededQuota)
+            return UIImage.transferExceededQuota
         }
     }
     
