@@ -7,7 +7,7 @@ final class CameraUploadStatusButtonViewModel: NSObject, ObservableObject {
     private let idleWaitTimeNanoSeconds: UInt64
     @PreferenceWrapper(key: .isCameraUploadsEnabled, defaultValue: false)
     private var isCameraUploadsEnabled: Bool
-    private var checkIdleTask: Task<Void, Never>?
+    private var checkIdleTask: Task<Void, any Error>?
     
     private let monitorCameraUploadUseCase: any MonitorCameraUploadUseCaseProtocol
     
@@ -73,12 +73,9 @@ final class CameraUploadStatusButtonViewModel: NSObject, ObservableObject {
     private func uploadCompleteIdleCheck() {
         cancelUploadCompleteIdleTask()
         checkIdleTask = Task {
-            defer {
-                cancelUploadCompleteIdleTask()
-            }
-            try? await Task.sleep(nanoseconds: idleWaitTimeNanoSeconds)
-            guard !Task.isCancelled else { return }
+            try await Task.sleep(nanoseconds: idleWaitTimeNanoSeconds)
             await updateStatus(.idle)
+            cancelUploadCompleteIdleTask()
         }
     }
     
