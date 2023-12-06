@@ -18,7 +18,7 @@ func createHotfixBranchFromTag(_ tag: String, hotfixVersion: String) throws {
 }
 
 private func isTagInTagList(_ tag: String) throws -> Bool {
-    try runInShell("git fetch --tags")
+    try runInShell("git fetch --tags --force")
     let tagList = try runInShell("git tag")
     return tagList.contains(tag)
 }
