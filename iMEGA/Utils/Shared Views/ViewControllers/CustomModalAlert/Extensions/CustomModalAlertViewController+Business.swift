@@ -6,7 +6,7 @@ import SwiftUI
 extension CustomModalAlertViewController {
     
     func configureForBusinessGracePeriod() {
-        image = UIImage(resource: .businessPaymentOverdue)
+        image = UIImage.businessPaymentOverdue
         viewTitle = Strings.Localizable.somethingWentWrong
         detail = Strings.Localizable.ThereHasBeenAProblemWithYourLastPayment.pleaseAccessMEGAUsingADesktopBrowserForMoreInformation
         

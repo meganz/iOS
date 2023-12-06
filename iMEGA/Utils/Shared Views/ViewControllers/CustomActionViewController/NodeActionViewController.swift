@@ -313,7 +313,7 @@ class NodeActionViewController: ActionSheetViewController {
                 downloadImageView.trailingAnchor.constraint(lessThanOrEqualTo: headerView!.safeAreaLayoutGuide.trailingAnchor, constant: -10)
             ])
             
-            downloadImageView.image = Asset.Images.Generic.downloaded.image
+            downloadImageView.image = UIImage.downloaded
         } else {
             subtitleLabel.trailingAnchor.constraint(equalTo: headerView!.trailingAnchor, constant: -8).isActive = true
         }
