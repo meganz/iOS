@@ -155,7 +155,12 @@ static NSString * const PhotoExportTempName = @"photoExportTemp";
 }
 
 - (BOOL)shouldConvertToJPGForUTI:(NSString *)dataUTI {
-    return [CameraUploadManager shouldConvertHEICPhoto] && [[UTType typeWithIdentifier:dataUTI] conformsToType: UTTypeHEIC];
+    if (dataUTI != nil) {
+        UTType *type = [UTType typeWithIdentifier:dataUTI];
+        return [CameraUploadManager shouldConvertHEICPhoto] && [type conformsToType: UTTypeHEIC];
+    }
+    
+    return false;
 }
 
 - (UploadQueueType)uploadQueueType {
