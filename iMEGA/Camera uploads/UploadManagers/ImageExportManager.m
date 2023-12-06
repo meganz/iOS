@@ -74,6 +74,11 @@ static const NSUInteger HEICMaxConcurrentOperationCount = 1;
 
 - (NSOperationQueue *)exportQueueForDataUTI:(NSString *)dataUTI outputTypeUTI:(NSString *)outputUTI {
     NSOperationQueue *queue = self.generalExportOperationQueue;
+    
+    if (dataUTI == nil) {
+        return queue;
+    }
+    
     if ([[UTType typeWithIdentifier:dataUTI] conformsToType:UTTypeHEIC]) {
         if (outputUTI.length == 0 || [dataUTI isEqualToString:outputUTI]) {
             queue = self.HEICExportOperationQueue;
