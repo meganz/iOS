@@ -749,21 +749,33 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 }
 
 - (void)confirmDeleteActionFiles:(NSUInteger)numFilesAction andFolders:(NSUInteger)numFoldersAction {
-    NSString *alertTitle = [self.viewModel alertTitleForRemovedFiles:numFilesAction andFolders:numFoldersAction];
-    NSString *message = [self.viewModel alertMessageForRemovedFiles:numFilesAction andFolders:numFoldersAction];
-    UIAlertController *removeAlertController = [UIAlertController alertControllerWithTitle:alertTitle message:message preferredStyle:UIAlertControllerStyleAlert];
-    [removeAlertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     
-    [removeAlertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"Button title to cancel something") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        MEGARemoveRequestDelegate *removeRequestDelegate = [MEGARemoveRequestDelegate.alloc initWithMode:DisplayModeRubbishBin files:numFilesAction folders:numFoldersAction completion:^{
-            [self toggleWithEditModeActive:NO];
-        }];
-        for (MEGANode *node in self.selectedNodesArray) {
-            [MEGASdkManager.sharedMEGASdk removeNode:node delegate:removeRequestDelegate];
-        }
-    }]];
-    
-    [self presentViewController:removeAlertController animated:YES completion:nil];
+    // For some reason `numFilesAction` `numFoldersAction` might be both zero,
+    // we need to check for files and folder count before showing the alert.
+    if ([self.viewModel shouldShowConfirmationAlertForRemovedFiles:numFilesAction andFolders:numFoldersAction]) {
+        NSString *alertTitle = [self.viewModel alertTitleForRemovedFiles:numFilesAction andFolders:numFoldersAction];
+        NSString *message = [self.viewModel alertMessageForRemovedFiles:numFilesAction andFolders:numFoldersAction];
+        UIAlertController *removeAlertController = [UIAlertController alertControllerWithTitle:alertTitle message:message preferredStyle:UIAlertControllerStyleAlert];
+        [removeAlertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
+        
+        __weak typeof(self) weakSelf = self;
+        [removeAlertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"Button title to cancel something") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [weakSelf deleteSelectedNodesForFiles:numFilesAction andFolders:numFoldersAction];
+        }]];
+        
+        [self presentViewController:removeAlertController animated:YES completion:nil];
+    } else {
+        [self deleteSelectedNodesForFiles:numFilesAction andFolders:numFoldersAction];
+    }
+}
+
+- (void)deleteSelectedNodesForFiles:(NSUInteger)numFilesAction andFolders:(NSUInteger)numFoldersAction {
+    MEGARemoveRequestDelegate *removeRequestDelegate = [MEGARemoveRequestDelegate.alloc initWithMode:DisplayModeRubbishBin files:numFilesAction folders:numFoldersAction completion:^{
+        [self toggleWithEditModeActive:NO];
+    }];
+    for (MEGANode *node in self.selectedNodesArray) {
+        [MEGASdkManager.sharedMEGASdk removeNode:node delegate:removeRequestDelegate];
+    }
 }
 
 #pragma mark - IBActions

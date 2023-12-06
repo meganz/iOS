@@ -160,6 +160,25 @@ class CloudDriveViewModelTests: XCTestCase {
         }
     }
     
+    func testShouldShowConfirmationAlertForRemovedFiles() {
+        let sut = makeSUT()
+        
+        let inputs: [(fileCount: Int, folderCount: Int)] = [
+            (0, 0),
+            (1, 0),
+            (0, 1),
+            (1, 1)
+        ]
+        
+        let expected: [Bool] = [false, true, true, true]
+        
+        let outputs = inputs.map {
+            sut.shouldShowConfirmationAlert(forRemovedFiles: $0.fileCount, andFolders: $0.folderCount)
+        }
+        
+        XCTAssertEqual(outputs, expected)
+    }
+
     func makeSUT(
         parentNode: MEGANode = MockNode(handle: 1),
         shareUseCase: some ShareUseCaseProtocol = MockShareUseCase(),
