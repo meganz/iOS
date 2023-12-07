@@ -1,46 +1,31 @@
 import SwiftUI
 
 struct ChipsPickerView: View {
-    private let title: String
-    private let chips: [ChipViewModel]
-    private let chipSelection: (ChipViewModel) -> Void
-
-    init(
-        title: String,
-        chips: [ChipViewModel],
-        chipSelection: @escaping (ChipViewModel) -> Void
-    ) {
-        self.title = title
-        self.chips = chips
-        self.chipSelection = chipSelection
-    }
+    @Environment(\.colorScheme) private var colorScheme
+    var viewModel: ChipsPickerViewModel
 
     var body: some View {
         VStack(alignment: .leading, spacing: .zero) {
-            Text(title)
-                .font(.subheadline)
-                .fontWeight(.bold)
+            HStack {
+                Spacer()
+                Text(viewModel.title)
+                    .font(.subheadline)
+                    .fontWeight(.bold)
+                Spacer()
+            }
 
             ScrollView(.vertical) {
                 VStack(alignment: .leading, spacing: .zero) {
-                    ForEach(chips) { chip in
-                        Button(
-                            action: { chipSelection(chip) },
-                            label: {
-                                HStack {
-                                    Text(chip.pill.title)
-                                        .font(.subheadline)
-                                        .foregroundColor(Color.primary)
-
-                                    Spacer()
-
-                                    if let image = chip.selectionIndicatorImage {
-                                        Image(uiImage: image)
-                                    }
-                                }
-                                .padding(.vertical, 19)
-                            }
-                        )
+                    ForEach(viewModel.chips) { chip in
+                        if viewModel.shouldDisplayBottomSeparator(for: chip) {
+                            chipRow(for: chip)
+                                .overlay(
+                                    separator,
+                                    alignment: .bottom
+                                )
+                        } else {
+                            chipRow(for: chip)
+                        }
                     }
                 }
             }
@@ -49,6 +34,30 @@ struct ChipsPickerView: View {
         .padding(.horizontal, 16)
         .padding(.top, 32)
     }
+
+    private func chipRow(for chip: ChipViewModel) -> some View {
+        Button(
+            action: { viewModel.select(chip) },
+            label: {
+                HStack {
+                    Text(chip.pill.title)
+                        .font(.subheadline)
+                        .foregroundColor(Color.primary)
+
+                    Spacer()
+
+                    if let image = chip.selectionIndicatorImage {
+                        Image(uiImage: image)
+                    }
+                }
+                .padding(.vertical, 19)
+            }
+        )
+    }
+
+    private var separator: some View {
+        viewModel.separatorColor(for: colorScheme).frame(height: 1)
+    }
 }
 
 struct ChipsPickerViewPreviews: PreviewProvider {
@@ -56,22 +65,25 @@ struct ChipsPickerViewPreviews: PreviewProvider {
         VStack {
             Spacer()
             ChipsPickerView(
-                title: "Select Type",
-                chips: [
-                    .init(
-                        chipId: ChipId(1),
-                        pill: .init(
-                            title: "Chips 1",
-                            selected: false,
-                            icon: .trailing(Image(systemName: "ellipsis")),
-                            config: .example
-                        ),
-                        subchips: [],
-                        selectionIndicatorImage: UIImage(systemName: "ellipsis"),
-                        select: {}
-                    )
-                ],
-                chipSelection: {_ in}
+                viewModel: .init(
+                    title: "Select Type",
+                    chips: [
+                        .init(
+                            id: "Chips 1",
+                            pill: .init(
+                                title: "Chips 1",
+                                selected: false,
+                                icon: .trailing(Image(systemName: "ellipsis")),
+                                config: .example
+                            ),
+                            subchips: [],
+                            selectionIndicatorImage: UIImage(systemName: "ellipsis"),
+                            select: {}
+                        )
+                    ],
+                    colorAssets: .example,
+                    chipSelection: {_ in}
+                )
             )
             .frame(height: 440)
             .background(Color.gray)

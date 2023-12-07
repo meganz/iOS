@@ -46,7 +46,8 @@ public struct NonProductionTestResultsProvider: SearchResultsProviding {
     }
     
     func itemsToFilter(for chip: SearchChipEntity) -> [SearchResult] {
-        let id = TestChip(rawValue: chip.id)
+        // Update this test
+        let id = TestChip(rawValue: 0)
         switch id {
         case .images: return SearchResult.imageResults
         case .folders: return SearchResult.folderResults
@@ -111,7 +112,7 @@ public struct NonProductionTestResultsProvider: SearchResultsProviding {
     
     var allChips: [SearchChipEntity] {
         TestChip.allCases.map {
-            .init(id: $0.rawValue, title: $0.title)
+            .init(type: .nodeFormat($0.rawValue), title: $0.title)
         }
     }
 

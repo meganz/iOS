@@ -13,7 +13,6 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
     private let nodeUseCase: any NodeUseCaseProtocol
     private let mediaUseCase: any MediaUseCaseProtocol
     private let nodeRepository: any NodeRepositoryProtocol
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
     private var nodesUpdateListenerRepo: any NodesUpdateListenerProtocol
     private var transferListenerRepo: SDKTransferListenerRepository
 
@@ -27,11 +26,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
     private var pageSize = 100
     private var loadMorePagesOffset = 20
     private var isLastPageReached = false
-    private var availableChips: [SearchChipEntity] {
-        SearchChipEntity.allChips(
-            areChipsGroupEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .chipsGroups)
-        )
-    }
+    private var availableChips: [SearchChipEntity]
 
     private let onSearchResultUpdated: (SearchResult) -> Void
 
@@ -41,9 +36,9 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         nodeUseCase: some NodeUseCaseProtocol,
         mediaUseCase: some MediaUseCaseProtocol,
         nodeRepository: some NodeRepositoryProtocol,
-        featureFlagProvider: some FeatureFlagProviderProtocol,
         nodesUpdateListenerRepo: any NodesUpdateListenerProtocol,
         transferListenerRepo: SDKTransferListenerRepository,
+        allChips: [SearchChipEntity],
         sdk: MEGASdk,
         onSearchResultUpdated: @escaping (SearchResult) -> Void
     ) {
@@ -52,9 +47,9 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         self.nodeUseCase = nodeUseCase
         self.mediaUseCase = mediaUseCase
         self.nodeRepository = nodeRepository
-        self.featureFlagProvider = featureFlagProvider
         self.nodesUpdateListenerRepo = nodesUpdateListenerRepo
         self.transferListenerRepo = transferListenerRepo
+        self.availableChips = allChips
         self.sdk = sdk
 
         self.onSearchResultUpdated = onSearchResultUpdated
@@ -119,10 +114,8 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
 
         return await withAsyncValue(in: { completion in
             searchFileUseCase.searchFiles(
-                withName: queryRequest.query,
+                withFilter: queryRequest.searchFilter,
                 recursive: true,
-                nodeType: queryRequest.isFolderChipSelected ? .folder : .unknown,
-                nodeFormat: nodeFormatFrom(chip: queryRequest.chips.first),
                 sortOrder: .defaultAsc,
                 searchPath: .root,
                 completion: { nodeList in
@@ -185,27 +178,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
     }
     
     private func chipsFor(query: SearchQueryEntity) -> [SearchChipEntity] {
-        SearchChipEntity.allChips.filter {
-            query.chips.contains($0)
-        }
-    }
-    
-    private func nodeFormatFrom(chip: SearchChipEntity?) -> MEGANodeFormatType {
-        guard let chip else {
-            return .unknown
-        }
-        let found = SearchChipEntity.allChips.first {
-            $0.id == chip.id
-        }
-        
-        guard
-            let found,
-            let formatType = MEGANodeFormatType(rawValue: found.id)
-        else {
-            return .unknown
-        }
-        
-        return formatType
+        query.chips
     }
     
     private func mapNodeToSearchResult(_ node: NodeEntity) -> SearchResult {

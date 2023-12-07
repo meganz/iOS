@@ -8,7 +8,46 @@ import Search
 import SearchMock
 import XCTest
 
+extension Locale {
+    static var testLocale: Locale {
+        Locale(identifier: "en_US_POSIX")
+    }
+}
+
+extension TimeZone {
+    static var testTimeZone: TimeZone {
+        TimeZone(identifier: "UTC")!
+    }
+}
+
+extension Calendar {
+    static var testCalendar: Calendar {
+        .init(identifier: .gregorian)
+    }
+}
+
+extension Array where Element == NodeEntity {
+    static var anyNodes: [NodeEntity] {
+        [.init(name: "node 0", handle: 0)]
+    }
+}
+
+fileprivate extension Date {
+    static func testDate(_ string: String) -> Date {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy HH:mm"
+        dateFormatter.locale = .testLocale
+        dateFormatter.timeZone = .testTimeZone
+        dateFormatter.calendar = .testCalendar
+        return dateFormatter.date(from: string)!
+    }
+    static var testDate: Date {
+        return .testDate("06/12/2023 12:00")
+    }
+}
+
 class HomeSearchProviderTests: XCTestCase {
+    
     class Harness {
         let searchFile: MockSearchFileUseCase
         let nodeDetails: MockNodeDetailUseCase
@@ -17,7 +56,19 @@ class HomeSearchProviderTests: XCTestCase {
         let nodeRepo: MockNodeRepository
         let nodesUpdateListenerRepo: NodesUpdateListenerProtocol
         let sut: HomeSearchResultsProvider
-        
+        var receivedFilters: [MEGASearchFilter] = []
+        var receivedTimeFrames: [SearchChipEntity.TimeFrame] {
+            receivedFilters.compactMap {
+                guard let timeFrame = $0.timeFrame else { return nil }
+                let start = Date(timeIntervalSince1970: TimeInterval(timeFrame.lowerLimit))
+                let end = Date(timeIntervalSince1970: TimeInterval(timeFrame.upperLimit))
+                return .init(
+                    startDate: start,
+                    endDate: end
+                )
+            }
+        }
+        let nodes: [NodeEntity]
         init(
             _ testCase: XCTestCase,
             rootNode: NodeEntity? = nil,
@@ -27,12 +78,16 @@ class HomeSearchProviderTests: XCTestCase {
             line: UInt = #line
         ) {
             
+            self.nodes = nodes
             searchFile = MockSearchFileUseCase(
                 nodes: nodes,
                 nodeList: nodes.isNotEmpty ? .init(
                     nodesCount: nodes.count,
                     nodeAt: { nodes[$0] }
-                ) : nil
+                ) : nil,
+                nodesToReturnFactory: { _ in
+                    .init(nodesCount: 0, nodeAt: { _ in nil })
+                }
             )
             nodeDetails = MockNodeDetailUseCase(
                 owner: .init(name: "owner"),
@@ -56,14 +111,25 @@ class HomeSearchProviderTests: XCTestCase {
                 nodeUseCase: nodeDataUseCase,
                 mediaUseCase: mediaUseCase,
                 nodeRepository: nodeRepo,
-                featureFlagProvider: MockFeatureFlagProvider(list: [:]),
                 nodesUpdateListenerRepo: nodesUpdateListenerRepo,
                 transferListenerRepo: SDKTransferListenerRepository(sdk: MockSdk()),
+                allChips: SearchChipEntity.allChips(
+                    areChipsGroupEnabled: true,
+                    currentDate: { .testDate },
+                    calendar: .testCalendar
+                ),
                 sdk: MockSdk(),
                 onSearchResultUpdated: {_ in}
             )
             
             testCase.trackForMemoryLeaks(on: sut, file: file, line: line)
+            
+            searchFile.nodesToReturnFactory = {[weak self] filter in
+                self?.receivedFilters.append(filter)
+                return .init(nodesCount: nodes.count, nodeAt: {
+                    nodes[$0]
+                })
+            }
         }
         
         func propertyIdsForFoundNode() async throws -> Set<NodePropertyId> {
@@ -76,20 +142,37 @@ class HomeSearchProviderTests: XCTestCase {
             }
             return Set(props)
         }
+    
+        @discardableResult
+        func resultsFor(chip: SearchChipEntity) async throws -> [SearchResult] {
+            let results = try await sut.search(
+                queryRequest: .userSupplied(
+                    .init(query: "", sorting: .automatic, mode: .home, chips: [chip])
+                )
+            )
+            let items = try XCTUnwrap(results)
+            return items.results
+        }
+        
+        // we check that results are the same as primed on init
+        func idsMatch(_ results: [SearchResult]) {
+            XCTAssertEqual(results.map(\.id), nodes.map(\.handle))
+        }
     }
-    func testSearch_whenSuccess_returnsResults() async throws {
-        let harness = Harness(self, nodes: [
-            .init(name: "node 0", handle: 0),
-            .init(name: "node 1", handle: 1),
-            .init(name: "node 2", handle: 2),
-            .init(name: "node 10", handle: 10)
-        ])
-
-        let searchResults = try await harness.sut.search(
-            queryRequest: .userSupplied(.query("node 1")) // we should match `node 1` and `node 10`
+    
+    func testSearch_whenTimeChipApplied_searchUseReceivedTimeFrame_returnsValidNodes() async throws {
+        let harness = Harness(self, nodes: .anyNodes)
+        let timeFrame = SearchChipEntity.TimeFrame(
+            startDate: .testDate("05/12/2023 13:55"),
+            endDate: .testDate("06/12/2023 12:00")
         )
-
-        XCTAssertEqual(searchResults?.results.map(\.id), [1, 10])
+        let timeChip = SearchChipEntity(
+            type: .timeFrame(timeFrame),
+            title: "Some time chip"
+        )
+        try await harness.idsMatch(harness.resultsFor(chip: timeChip))
+        
+        XCTAssertEqual(harness.receivedTimeFrames, [timeFrame])
     }
 
     func testSearch_whenFailures_returnsNoResults() async throws {

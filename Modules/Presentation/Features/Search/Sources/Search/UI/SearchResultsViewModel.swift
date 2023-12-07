@@ -25,6 +25,10 @@ public class SearchResultsViewModel: ObservableObject {
         listItems.filter { $0.result.thumbnailDisplayMode == .horizontal }
     }
 
+    var colorAssets: SearchConfig.ColorAssets {
+        config.colorAssets
+    }
+
     // this is needed to be able to construct new query after receiving new query string from SearchBar
     private var currentQuery: SearchQuery = .initial
 
@@ -404,7 +408,7 @@ public class SearchResultsViewModel: ObservableObject {
             let selected = selected(for: chip, appliedChips: appliedChips)
 
             return ChipViewModel(
-                chipId: chip.id,
+                id: chip.title,
                 pill: .init(
                     title: title(for: chip, appliedChips: appliedChips),
                     selected: selected,
@@ -417,10 +421,10 @@ public class SearchResultsViewModel: ObservableObject {
                 selected: selected,
                 select: { [weak self] in
                     if chip.subchips.isEmpty {
-                        self?.dismissChipGroupPicker()
+                        await self?.dismissChipGroupPicker()
                         await self?.tapped(chip)
                     } else {
-                        self?.showChipsGroupPicker(with: chip.id.description)
+                        await self?.showChipsGroupPicker(with: chip.id)
                     }
                 }
             )
@@ -432,9 +436,9 @@ public class SearchResultsViewModel: ObservableObject {
         allChips: [SearchChipEntity]
     ) -> [ChipViewModel] {
         allChips.map { chip in
-            let selected = appliedChips.contains(chip)
+            let selected = appliedChips.contains(where: { $0.id == chip.id })
             return ChipViewModel(
-                chipId: chip.id,
+                id: chip.title,
                 pill: .init(
                     title: chip.title,
                     selected: selected,
@@ -444,7 +448,7 @@ public class SearchResultsViewModel: ObservableObject {
                 selectionIndicatorImage: selected ? config.chipAssets.selectionIndicatorImage : nil,
                 selected: selected,
                 select: { [weak self] in
-                    self?.dismissChipGroupPicker()
+                    await self?.dismissChipGroupPicker()
                     await self?.tapped(chip)
                 }
             )
@@ -452,8 +456,11 @@ public class SearchResultsViewModel: ObservableObject {
     }
 
     private func title(for chip: SearchChipEntity, appliedChips: [SearchChipEntity]) -> String {
-        if chip.subchips.isNotEmpty {
-            return appliedChips.isEmpty ? chip.title : (appliedChips.first?.title ?? "")
+                if chip.subchips.isNotEmpty,
+           let selectedChip = chip.subchips.first(where: { subchip in
+               appliedChips.contains(where: { subchip.id == $0.id })
+           }) {
+            return selectedChip.title
         } else {
             return chip.title
         }
@@ -461,7 +468,9 @@ public class SearchResultsViewModel: ObservableObject {
 
     private func selected(for chip: SearchChipEntity, appliedChips: [SearchChipEntity]) -> Bool {
         if chip.subchips.isNotEmpty {
-            return chip.subchips.contains(where: { $0.id == appliedChips.first?.id })
+            return chip.subchips.filter { subchip in
+                appliedChips.contains(where: { $0.type.isInSameChipGroup(as: subchip.type) })
+            }.isNotEmpty
         } else {
             return appliedChips.contains(chip)
         }
@@ -475,12 +484,14 @@ public class SearchResultsViewModel: ObservableObject {
         }
     }
 
-    func showChipsGroupPicker(with id: String) {
+    @MainActor
+    func showChipsGroupPicker(with id: String) async {
         guard let index = chipsItems.firstIndex(where: { $0.id == id }) else { return }
         presentedChipsPickerViewModel = chipsItems[index]
     }
 
-    func dismissChipGroupPicker() {
+    @MainActor
+    func dismissChipGroupPicker() async {
         presentedChipsPickerViewModel = nil
     }
 
@@ -528,12 +539,16 @@ public class SearchResultsViewModel: ObservableObject {
         
         let modifyChips: (SearchChipEntity) -> [SearchChipEntity] = { chip in
             var chips: [SearchChipEntity] = currentQuery.chips
-            if chips.contains(chip) {
-                chips.remove(object: chip)
+
+            if let existingChipIndex = chips.firstIndex(where: { $0.id == chip.id }) {
+                chips.remove(at: existingChipIndex)
             } else {
-                chips.removeAll()
+                if let index = chips.firstIndex(where: { $0.type.isInSameChipGroup(as: chip.type) }) {
+                    chips.remove(at: index)
+                }
                 chips.append(chip)
             }
+
             return chips
         }
         

@@ -3840,10 +3840,26 @@
 "home.search.filter.presentations"="Presentations";
 /* Filter name for searching on the home screen */
 "home.search.filter.archives"="Archives";
-/* Type chips group title which is displayed in chips group pill */
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.today"="Today";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.last7days"="Last 7 days";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.last30days"="Last 30 days";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.thisYear"="This year";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.lastYear"="Last year";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.older"="Older";
+/* Type chips group title which is displayed in node type chips group pill */
 "home.search.chipsGroup.nodeType.pillTitle"="Type";
-/* Type chips group picker title which is displayed in the picker shown when user taps on the chips group pill */
+/* Type chips group picker title which is displayed in the picker shown when user taps on the  node type chips group pill */
 "home.search.chipsGroup.nodeType.pickerTitle"="Select type";
+/* Type chips group title which is displayed in modified date chips group pill */
+"home.search.chipsGroup.modificationDate.pillTitle"="Modified date";
+/* Type chips group picker title which is displayed in the picker shown when user taps on the modified date chips group pill */
+"home.search.chipsGroup.modificationDate.pickerTitle"="Select modified date";
 /* Empty screen copy when no filter is selected on the home screen search */
 "home.search.empty.no-chip-selected"="No results";
 /* Empty screen copy when Images filter is selected on the home screen search */

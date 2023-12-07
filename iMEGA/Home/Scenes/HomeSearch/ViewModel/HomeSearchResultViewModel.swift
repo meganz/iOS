@@ -81,32 +81,39 @@ extension HomeSearchResultViewModel: HomeAccountSearchResultViewModelInputs {
 
     func didInputText(text: String) {
         searchingInProgressCount += 1
+
+        let filter = MEGASearchFilter()
+        filter.term = text
+        filter.nodeType = Int32(MEGANodeType.unknown.rawValue)
+        filter.category = Int32(MEGANodeFormatType.unknown.rawValue)
+        filter.sensitivity = false
+
         searchFileUseCase.searchFiles(
-            withName: text,
+            withFilter: filter,
             recursive: true,
-            nodeType: .unknown,
-            nodeFormat: .unknown,
             sortOrder: nil,
-            searchPath: .root
-        ) { [weak self] sdkNodes in
-            guard let self else { return }
+            searchPath: .root,
+            completion: { [weak self] nodeListEntity in
+                guard let self else { return }
+                let sdkNodes = nodeListEntity?.toNodeEntities() ?? []
 
-            self.searchFileHistoryUseCase.saveSearchHistoryEntry(
-                SearchFileHistoryEntryDomain(text: text,
-                                             timeWhenSearchOccur: Date()
+                self.searchFileHistoryUseCase.saveSearchHistoryEntry(
+                    SearchFileHistoryEntryDomain(text: text,
+                                                 timeWhenSearchOccur: Date()
+                                                )
                 )
-            )
 
-            let searchFilesResult = sdkNodes.map { file in
-                return self.transformeNode(file)
+                let searchFilesResult = sdkNodes.map { file in
+                    return self.transformeNode(file)
+                }
+
+                self.searchingInProgressCount -= 1
+                self.triggerUpdate(
+                    withNumberOfSearchInProgress: self.searchingInProgressCount,
+                    resultFiles: searchFilesResult
+                )
             }
-
-            self.searchingInProgressCount -= 1
-            self.triggerUpdate(
-                withNumberOfSearchInProgress: self.searchingInProgressCount,
-                resultFiles: searchFilesResult
-            )
-        }
+        )
     }
 
     fileprivate func transformeNode(_ file: NodeEntity) -> HomeSearchResultFileViewModel {

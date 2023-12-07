@@ -4,39 +4,28 @@ import MEGADomain
 import MEGAFoundation
 
 final class MockSearchFileUseCase: SearchFileUseCaseProtocol {
+    var nodesToReturnFactory: ((MEGASearchFilter) -> NodeListEntity?)?
+
     private let nodes: [NodeEntity]
     private let nodeList: NodeListEntity?
 
     init(
         nodes: [NodeEntity] = [],
-        nodeList: NodeListEntity? = nil
+        nodeList: NodeListEntity? = nil,
+        nodesToReturnFactory: ((MEGASearchFilter) -> NodeListEntity?)? = nil
     ) {
         self.nodes = nodes
         self.nodeList = nodeList
+        self.nodesToReturnFactory = nodesToReturnFactory
     }
 
     func searchFiles(
-        withName name: String,
+        withFilter filter: MEGASearchFilter,
         recursive: Bool,
-        nodeType: MEGANodeType?,
-        nodeFormat: MEGANodeFormatType?,
         sortOrder: MEGASortOrderType?,
-        searchPath: SearchFileRootPath,
-        completion: @escaping ([NodeEntity]) -> Void
-    ) {
-        passedInSortOrders.append(sortOrder)
-        completion(nodes.filter { $0.name.contains(name) })
-    }
-
-    func searchFiles(
-        withName name: String,
-        recursive: Bool,
-        nodeType: MEGANodeType?,
-        nodeFormat: MEGANodeFormatType?,
-        sortOrder: MEGASortOrderType?,
-        searchPath: SearchFileRootPath,
-        completion: @escaping (NodeListEntity?) -> Void
-    ) {
+        searchPath: MEGA.SearchFileRootPath,
+        completion: @escaping (MEGADomain.NodeListEntity?
+        ) -> Void) {
         passedInSortOrders.append(sortOrder)
 
         guard let nodeList else {
@@ -50,9 +39,12 @@ final class MockSearchFileUseCase: SearchFileUseCaseProtocol {
                 nodes.append(nodeAt)
             }
         }
-
-        let filteredNodes = nodes.filter { $0.name.contains(name) }
-        completion(.init(nodesCount: filteredNodes.count, nodeAt: { filteredNodes[$0]}))
+        guard let factory = nodesToReturnFactory else {
+            completion(nil)
+            return
+        }
+        completion(factory(filter))
+        
     }
 
     var passedInSortOrders: [MEGASortOrderType?] = []

@@ -2,12 +2,9 @@ import Foundation
 import MEGADomain
 
 struct NodeSearchRepository {
-    
     struct Parameter {
-        let searchText: String
+        let filter: MEGASearchFilter
         let recursive: Bool
-        let nodeType: MEGANodeType
-        let nodeFormat: MEGANodeFormatType
         let sortOrder: MEGASortOrderType?
         let rootNodeHandle: HandleEntity?
         let completion: (MEGANodeList?) -> Void
@@ -45,19 +42,13 @@ extension NodeSearchRepository {
 
                 let cancelToken = MEGACancelToken()
 
-                // When we are applying nodeType we can not at the same time apply category, otherwise, sdk crashes
-                let nodeFormat: MEGANodeFormatType = parameter.nodeType == .folder ? .unknown : parameter.nodeFormat
+                let filter = parameter.filter
+
+                filter.parentNodeHandle = rootNode.handle
 
                 let searchOperation = SearchWithFilterOperation(
                     sdk: sdk,
-                    filter: .init(
-                        term: parameter.searchText,
-                        parentNodeHandle: rootNode.handle,
-                        nodeType: Int32(parameter.nodeType.rawValue),
-                        category: Int32(nodeFormat.rawValue),
-                        sensitivity: false,
-                        timeFrame: nil
-                    ),
+                    filter: filter,
                     recursive: parameter.recursive,
                     sortOrder: parameter.sortOrder ?? .creationAsc,
                     cancelToken: cancelToken
@@ -74,7 +65,6 @@ extension NodeSearchRepository {
                     cancelToken.cancel()
                 }
             },
-
             cancel: { cancelAction -> Void in
                 cancelAction()
             }

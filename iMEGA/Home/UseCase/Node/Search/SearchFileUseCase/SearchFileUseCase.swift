@@ -17,22 +17,9 @@ enum SearchFileRootPath {
 }
 
 protocol SearchFileUseCaseProtocol {
-
     func searchFiles(
-        withName name: String,
+        withFilter filter: MEGASearchFilter,
         recursive: Bool,
-        nodeType: MEGANodeType?,
-        nodeFormat: MEGANodeFormatType?,
-        sortOrder: MEGASortOrderType?,
-        searchPath: SearchFileRootPath,
-        completion: @escaping ([NodeEntity]) -> Void
-    )
-
-    func searchFiles(
-        withName name: String,
-        recursive: Bool,
-        nodeType: MEGANodeType?,
-        nodeFormat: MEGANodeFormatType?,
         sortOrder: MEGASortOrderType?,
         searchPath: SearchFileRootPath,
         completion: @escaping (NodeListEntity?) -> Void
@@ -66,60 +53,10 @@ final class SearchFileUseCase: SearchFileUseCaseProtocol {
     }
 
     // MARK: - SearchFileUseCaseProtocol
-
+    
     func searchFiles(
-        withName fileName: String,
+        withFilter filter: MEGASearchFilter,
         recursive: Bool,
-        nodeType: MEGANodeType?,
-        nodeFormat: MEGANodeFormatType?,
-        sortOrder: MEGASortOrderType?,
-        searchPath: SearchFileRootPath,
-        completion: @escaping ([NodeEntity]) -> Void
-    ) {
-        debouncer.start { [weak self] in
-            guard let self else { return }
-
-            self.startSearchingFiles(
-                withName: fileName,
-                recursive: recursive,
-                nodeType: nodeType ?? .unknown,
-                nodeFormat: nodeFormat ?? .unknown,
-                sortOrder: sortOrder,
-                searchPath: searchPath,
-                completion: completion
-            )
-        }
-    }
-
-    private func startSearchingFiles(
-        withName fileName: String,
-        recursive: Bool,
-        nodeType: MEGANodeType,
-        nodeFormat: MEGANodeFormatType,
-        sortOrder: MEGASortOrderType?,
-        searchPath: SearchFileRootPath,
-        completion: @escaping ([NodeEntity]) -> Void
-    ) {
-        cancelAction?()
-        
-        let searchParameters = NodeSearchRepository.Parameter(
-            searchText: fileName,
-            recursive: recursive,
-            nodeType: nodeType,
-            nodeFormat: nodeFormat,
-            sortOrder: sortOrder,
-            rootNodeHandle: searchPath.rootHandle,
-            completion: { completion($0?.toNodeEntities() ?? []) }
-        )
-        
-        cancelAction = nodeSearchClient.search(searchParameters)
-    }
-
-    func searchFiles(
-        withName name: String,
-        recursive: Bool,
-        nodeType: MEGANodeType?,
-        nodeFormat: MEGANodeFormatType?,
         sortOrder: MEGASortOrderType?,
         searchPath: SearchFileRootPath,
         completion: @escaping (NodeListEntity?) -> Void
@@ -127,40 +64,16 @@ final class SearchFileUseCase: SearchFileUseCaseProtocol {
         debouncer.start { [weak self] in
             guard let self else { return }
 
-            self.startSearchingFiles(
-                withName: name,
+            let searchParameters = NodeSearchRepository.Parameter(
+                filter: filter,
                 recursive: recursive,
-                nodeType: nodeType ?? .unknown,
-                nodeFormat: nodeFormat ?? .unknown,
                 sortOrder: sortOrder,
-                searchPath: searchPath,
-                completion: completion
+                rootNodeHandle: searchPath.rootHandle,
+                completion: { completion($0?.toNodeListEntity()) }
             )
+
+            cancelAction = nodeSearchClient.search(searchParameters)
         }
-    }
-
-    private func startSearchingFiles(
-        withName fileName: String,
-        recursive: Bool,
-        nodeType: MEGANodeType,
-        nodeFormat: MEGANodeFormatType,
-        sortOrder: MEGASortOrderType?,
-        searchPath: SearchFileRootPath,
-        completion: @escaping (NodeListEntity?) -> Void
-    ) {
-        cancelAction?()
-
-        let searchParameters = NodeSearchRepository.Parameter(
-            searchText: fileName,
-            recursive: recursive,
-            nodeType: nodeType,
-            nodeFormat: nodeFormat,
-            sortOrder: sortOrder,
-            rootNodeHandle: searchPath.rootHandle,
-            completion: { completion($0?.toNodeListEntity()) }
-        )
-
-        cancelAction = nodeSearchClient.search(searchParameters)
     }
 
     // MARK: - SearchFileUseCaseProtocol
