@@ -113,6 +113,7 @@ public struct SearchConfig {
         public let F7363D: Color
         public let _1C1C1E: Color
         public let _00A886: Color
+        public let _3C3C43: Color
 
         public init(
             F7F7F7: Color,
@@ -123,7 +124,8 @@ public struct SearchConfig {
             F95C61: Color,
             F7363D: Color,
             _1C1C1E: Color,
-            _00A886: Color
+            _00A886: Color,
+            _3C3C43: Color
         ) {
             self.F7F7F7 = F7F7F7
             self._161616 = _161616
@@ -134,6 +136,7 @@ public struct SearchConfig {
             self.F7363D = F7363D
             self._1C1C1E = _1C1C1E
             self._00A886 = _00A886
+            self._3C3C43 = _3C3C43
         }
     }
 }

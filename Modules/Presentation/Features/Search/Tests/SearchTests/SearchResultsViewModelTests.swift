@@ -99,7 +99,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         func withChipsPrepared(_ idx: Int) -> Self {
             let results = SearchResultsEntity(
                 results: [],
-                availableChips: Array(1...idx).map { .init(id: $0, title: "chip_\($0)")},
+                availableChips: Array(1...idx).map { .init(type: .nodeFormat($0), title: "chip_\($0)")},
                 appliedChips: []
             )
             
@@ -115,8 +115,8 @@ final class SearchResultsViewModelTests: XCTestCase {
             resultsProvider.resultFactory = { _ in
                 let results = SearchResultsEntity(
                     results: [],
-                    availableChips: [.init(id: 1, title: "appliedChip")],
-                    appliedChips: [.init(id: 1, title: "appliedChip")]
+                    availableChips: [.init(type: .nodeFormat(1), title: "appliedChip")],
+                    appliedChips: [.init(type: .nodeFormat(1), title: "appliedChip")]
                 )
                 return results
             }
@@ -165,7 +165,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         }
         await harness.sut.task()
         XCTAssertEqual(harness.sut.listItems, [])
-        XCTAssertEqual(harness.sut.chipsItems.map(\.chipId), [2])
+        XCTAssertEqual(harness.sut.chipsItems.map(\.id), ["chip_2"])
     }
     
     func testChangingQuery_asksResultsProviderToPerformSearch() async {
@@ -207,7 +207,8 @@ final class SearchResultsViewModelTests: XCTestCase {
                     F95C61: Color("F95C61"),
                     F7363D: Color("F7363D"),
                     _1C1C1E: Color("1C1C1E"),
-                    _00A886: Color("00A886")
+                    _00A886: Color("00A886"),
+                    _3C3C43: Color("3C3C43")
                 ),
                 previewContent: .init(
                     actions: [],
@@ -315,7 +316,7 @@ final class SearchResultsViewModelTests: XCTestCase {
             $0.pill.background == .selectedColor
         }
         let expectedIds = [SearchResultsEntity.resultsWithSingleChipApplied.appliedChips.first!.id]
-        XCTAssertEqual(selectedChipItems.map(\.chipId), expectedIds)
+        XCTAssertEqual(selectedChipItems.map(\.id), expectedIds)
     }
     
     func testEmptyView_isNil_whenItemsNotEmpty() async {
@@ -347,7 +348,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         harness.noResultsWithSingleChipApplied()
         await harness.sut.chipsItems.first!.select()
         _ = try XCTUnwrap(harness.sut.emptyViewModel)
-        XCTAssertEqual(harness.emptyContentRequested, [nil, .some(.init(id: 1, title: "appliedChip"))])
+        XCTAssertEqual(harness.emptyContentRequested, [nil, .some(.init(type: .nodeFormat(1), title: "appliedChip"))])
     }
 
     func testOnProlongedLoading_shouldDisplayShimmerLoadingView() async {

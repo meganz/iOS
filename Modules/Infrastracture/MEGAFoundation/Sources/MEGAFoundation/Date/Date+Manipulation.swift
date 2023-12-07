@@ -60,4 +60,46 @@ public extension Date {
         let components = calendar.dateComponents([.year], from: self)
         return calendar.date(from: components)
     }
+
+    // Return a date object of the start of the day 'days' ago from current date
+    /// - Parameter days: the time zone to use to create the new date. If not provided, the system time zone will be used.
+    /// - Parameter timeZone: the time zone to use to create the new date. If not provided, the system time zone will be used.
+    /// - Returns: A new date object 'days' ago from the current date
+    func daysAgo(_ days: Int, timeZone: TimeZone? = nil) -> Date? {
+        var calendar = Calendar.current
+        if let timeZone = timeZone {
+            calendar.timeZone = timeZone
+        }
+        let date = calendar.date(byAdding: .day, value: -days, to: self)
+        return date?.startOfDay(on: calendar)
+    }
+
+    // Return a date object at the beginning of the current year
+    /// - Parameter timeZone: the time zone to use to create the new date. If not provided, the system time zone will be used.
+    /// - Returns: A new date object at the beginning of the current year
+    func currentYearStartDate(timeZone: TimeZone? = nil) -> Date? {
+        var calendar = Calendar.current
+        if let timeZone = timeZone {
+            calendar.timeZone = timeZone
+        }
+
+        let components = calendar.dateComponents([.year], from: self)
+        let currentYearStartDate = calendar.date(from: components)
+        return currentYearStartDate?.startOfDay(on: calendar)
+    }
+
+    // Return a date object at the beginning of the previous year
+    /// - Parameter timeZone: the time zone to use to create the new date. If not provided, the system time zone will be used.
+    /// - Returns: A new date object at the beginning of the previous year
+    func previousYearStartDate(timeZone: TimeZone? = nil) -> Date? {
+        var calendar = Calendar.current
+        if let timeZone = timeZone {
+            calendar.timeZone = timeZone
+        }
+
+        let components = calendar.dateComponents([.year], from: self)
+        guard let currentYearStartDate = calendar.date(from: components) else { return nil }
+        let date = calendar.date(byAdding: .year, value: -1, to: currentYearStartDate)
+        return date?.startOfDay(on: calendar)
+    }
 }

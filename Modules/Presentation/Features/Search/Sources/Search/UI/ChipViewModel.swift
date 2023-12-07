@@ -6,10 +6,7 @@ public struct ChipViewModel: Identifiable, Equatable {
         lhs.id == rhs.id && lhs.selected == rhs.selected
     }
 
-    public var id: String {
-        chipId.description
-    }
-    let chipId: ChipId
+    public let id: String
     let pill: PillViewModel
     let subchipsPickerTitle: String?
     let subchips: [ChipViewModel]
@@ -18,7 +15,7 @@ public struct ChipViewModel: Identifiable, Equatable {
     let select: () async -> Void
 
     init(
-        chipId: ChipId,
+        id: String,
         pill: PillViewModel,
         subchips: [ChipViewModel] = [],
         subchipsPickerTitle: String? = nil,
@@ -26,7 +23,7 @@ public struct ChipViewModel: Identifiable, Equatable {
         selected: Bool = false,
         select: @escaping () async -> Void
     ) {
-        self.chipId = chipId
+        self.id = id
         self.pill = pill
         self.subchipsPickerTitle = subchipsPickerTitle
         self.subchips = subchips

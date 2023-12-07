@@ -35,10 +35,12 @@ final class HomeScreenFactory: NSObject {
         from tabBarController: MainTabBarController,
         newHomeSearchResultsEnabled: Bool,
         tracker: some AnalyticsTracking,
-        enableItemMultiSelection: Bool = false // set to true to enable multiselect [not used now in the home search results]
+        enableItemMultiSelection: Bool = false // set to true to enable multi-select [not used now in the home search results]
     ) -> UIViewController {
         let homeViewController = HomeViewController()
-        let navigationController = MEGANavigationController(rootViewController: homeViewController)
+        let navigationController = MEGANavigationController(
+            rootViewController: homeViewController
+        )
         
         let myAvatarViewModel = MyAvatarViewModel(
             megaNotificationUseCase: MEGANotificationUseCase(
@@ -256,6 +258,8 @@ final class HomeScreenFactory: NSObject {
             searchBridge?.updateBottomInset(inset)
         }
         
+        let featureFlagProvider = makeFeatureFlagProvider()
+        
         let vm = SearchResultsViewModel(
             resultsProvider: HomeSearchResultsProvider(
                 searchFileUseCase: makeSearchFileUseCase(),
@@ -263,9 +267,13 @@ final class HomeScreenFactory: NSObject {
                 nodeUseCase: makeNodeUseCase(),
                 mediaUseCase: makeMediaUseCase(),
                 nodeRepository: makeNodeRepo(),
-                featureFlagProvider: makeFeatureFlagProvider(),
                 nodesUpdateListenerRepo: makeNodesUpdateListenerRepo(),
                 transferListenerRepo: makeTransferListenerRepo(),
+                allChips: Self.allChips(
+                    areChipsGroupEnabled: featureFlagProvider.isFeatureFlagEnabled(
+                        for: .chipsGroups
+                    )
+                ),
                 sdk: sdk,
                 onSearchResultUpdated: { [weak searchBridge] searchResult in
                     searchBridge?.searchResultChanged(searchResult)
@@ -282,6 +290,16 @@ final class HomeScreenFactory: NSObject {
 
         )
         return UIHostingController(rootView: SearchResultsView(viewModel: vm))
+    }
+    
+    private static func allChips(
+        areChipsGroupEnabled: Bool
+    ) -> [SearchChipEntity] {
+        SearchChipEntity.allChips(
+            areChipsGroupEnabled: areChipsGroupEnabled,
+            currentDate: { .init() },
+            calendar: .autoupdatingCurrent
+        )
     }
     
     var notificationCenter: NotificationCenter {

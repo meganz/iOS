@@ -70,13 +70,16 @@ public struct SearchResultsView: View {
 
     private func chipsPickerView(for item: ChipViewModel) -> some View {
         ChipsPickerView(
-            title: item.subchipsPickerTitle ?? "",
-            chips: item.subchips,
-            chipSelection: { chip in
-                Task { @MainActor in
-                    await chip.select()
+            viewModel: .init(
+                title: item.subchipsPickerTitle ?? "",
+                chips: item.subchips,
+                colorAssets: viewModel.colorAssets,
+                chipSelection: { chip in
+                    Task { @MainActor in
+                        await chip.select()
+                    }
                 }
-            }
+            )
         )
     }
 
