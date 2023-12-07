@@ -23,14 +23,14 @@ class GetLinkStringTableViewCell: UITableViewCell {
     
     func configureLinkCell(link: String) {
         nameLabel.text = link
-        leftImageView.image = Asset.Images.GetLinkView.linkGetLink.image
+        leftImageView.image = UIImage.linkGetLink
         rightImageView.isHidden = true
         configureAccessibility(value: link)
     }
     
     func configureKeyCell(key: String) {
         nameLabel.text = key
-        leftImageView.image = Asset.Images.Generic.iconKeyOnly.image
+        leftImageView.image = UIImage.iconKeyOnly
         rightImageView.isHidden = true
         configureAccessibility(value: key)
     }

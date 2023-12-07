@@ -64,9 +64,9 @@ private extension EmptyMediaDiscoveryContentMenuAction {
     var menuIcon: Image? {
         switch self {
         case .choosePhotoVideo:
-            return Asset.Images.NodeActions.saveToPhotos.swiftUIImage
+            return Image(.saveToPhotos)
         case .capturePhotoVideo:
-            return Asset.Images.ActionSheetIcons.capture.swiftUIImage
+            return Image(.capture)
         }
     }
 }
@@ -75,7 +75,7 @@ struct EmptyMediaDiscoveryContentView_Previews: PreviewProvider {
     
     static var previews: some View {
         EmptyMediaDiscoveryContentView(
-            image: Asset.Images.EmptyStates.folderEmptyState.image,
+            image: UIImage.folderEmptyState,
             title: Strings.Localizable.emptyFolder,
             menuActionHandler: { _ in })
             .previewLayout(.device)

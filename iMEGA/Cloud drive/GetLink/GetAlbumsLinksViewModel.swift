@@ -131,7 +131,7 @@ final class GetAlbumsLinkViewModel: GetLinkViewModelType {
         guard let albumLinks else { return }
         let joinedLinks = albumLinks.values.joined(separator: " ")
         invokeCommand?(.addToPasteBoard(joinedLinks))
-        invokeCommand?(.showHud(.custom(Asset.Images.NodeActions.copy.image,
+        invokeCommand?(.showHud(.custom(UIImage.copy,
                                         Strings.Localizable.SharedItems.GetLink.linkCopied(albumLinks.count))))
     }
     
@@ -142,7 +142,7 @@ final class GetAlbumsLinkViewModel: GetLinkViewModelType {
             return
         }
         invokeCommand?(.addToPasteBoard(link))
-        invokeCommand?(.showHud(.custom(Asset.Images.NodeActions.copy.image,
+        invokeCommand?(.showHud(.custom(UIImage.copy,
                                         Strings.Localizable.SharedItems.GetLink.linkCopied(1))))
     }
 }
