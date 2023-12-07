@@ -94,7 +94,7 @@ extension UIButton {
         layer.shadowOffset = CGSize(width: 0, height: 1)
         layer.shadowOpacity = 0.15
         layer.shadowRadius = 3
-        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowColor = MEGAAppColor.Black._000000.uiColor.cgColor
     }
     
     private func removeLayer() {

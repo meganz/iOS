@@ -49,7 +49,7 @@ class ExtensionAppearanceManager: NSObject {
         SVProgressHUD.setShadowOffset(CGSize(width: 0, height: 1))
         SVProgressHUD.setShadowOpacity(0.15)
         SVProgressHUD.setShadowRadius(8)
-        SVProgressHUD.setShadowColor(UIColor.black)
+        SVProgressHUD.setShadowColor(MEGAAppColor.Black._000000.uiColor)
         SVProgressHUD.setHudViewCustomBlurEffect(UIBlurEffect.init(style: UIBlurEffect.Style.systemChromeMaterial))
         SVProgressHUD.setFont(UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold))
         SVProgressHUD.setForegroundColor(UIColor.mnz_primaryGray(for: traitCollection))

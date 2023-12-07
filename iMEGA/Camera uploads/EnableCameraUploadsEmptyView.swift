@@ -29,7 +29,7 @@ struct EnableCameraUploadsEmptyView: View {
                     .frame(width: 288, height: 50)
                     .background(Color(UIColor.green00A886))
                     .cornerRadius(8)
-                    .shadow(color: .black.opacity(0.15), radius: 2, x: 0, y: 1)
+                    .shadow(color: MEGAAppColor.Black._000000.color.opacity(0.15), radius: 2, x: 0, y: 1)
                     .contentShape(Rectangle())
             }
         }

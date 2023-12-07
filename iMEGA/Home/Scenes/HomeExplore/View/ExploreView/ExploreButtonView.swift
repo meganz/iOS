@@ -47,7 +47,7 @@ final class ExplorerView: UIView {
         let shapeLayer = CAShapeLayer()
         shapeLayer.lineWidth = 4.0
         shapeLayer.path = UIBezierPath(roundedRect: bounds, cornerRadius: 6.0).cgPath
-        shapeLayer.strokeColor = UIColor.black.cgColor
+        shapeLayer.strokeColor = MEGAAppColor.Black._000000.uiColor.cgColor
         shapeLayer.fillColor = UIColor.clear.cgColor
         return shapeLayer
     }()

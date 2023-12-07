@@ -19,6 +19,10 @@ extension MEGAPhotoBrowserViewController {
         DateFormatter.fromTemplate("MMMM dd • HH:mm").localisedString(from: date)
     }
     
+    @objc func backgroundColor() -> UIColor {
+        MEGAAppColor.Black._000000.uiColor
+    }
+    
     @objc func freeUpSpace(
         onImageViewCache cache: NSCache<NSNumber, UIScrollView>,
         imageViewsZoomCache: NSCache<NSNumber, NSNumber>,

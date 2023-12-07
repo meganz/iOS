@@ -4,7 +4,7 @@ struct LightColorThemeFactory: ColorFactory {
     
     func textColor(_ style: MEGAColor.Text) -> UIColor {
         switch style {
-        case .primary: return UIColor.black00000032
+        case .primary: return MEGAAppColor.Black._00000032.uiColor
         case .secondary: return UIColor.gray999999
         case .tertiary: return UIColor.gray515151
         case .quaternary: return UIColor.gray848484
@@ -36,7 +36,7 @@ struct LightColorThemeFactory: ColorFactory {
     
     func borderColor(_ style: MEGAColor.Border) -> UIColor {
         switch style {
-        case .primary: return UIColor.black00000015
+        case .primary: return MEGAAppColor.Black._00000015.uiColor
         case .warning: return UIColor.yellowFFCC00
         }
     }

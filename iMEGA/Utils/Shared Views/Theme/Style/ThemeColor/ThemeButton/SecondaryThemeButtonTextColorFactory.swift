@@ -61,7 +61,7 @@ extension DarkColorThemeFactory {
     struct DarkSecondaryThemeButtonBackgroundColorFactory: ButtonColorFactory {
 
         func normalColor() -> UIColor {
-            return UIColor.black363638
+            return MEGAAppColor.Black._363638.uiColor
         }
 
         func disabledColor() -> UIColor {
@@ -69,7 +69,7 @@ extension DarkColorThemeFactory {
         }
 
         func highlightedColor() -> UIColor {
-            return UIColor.black363638
+            return MEGAAppColor.Black._363638.uiColor
         }
     }
 }

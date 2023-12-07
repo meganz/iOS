@@ -45,7 +45,7 @@ class ChatViewController: MessagesViewController {
     private(set) lazy var tonePlayer = TonePlayer()
     
     var startOrJoinButtonIsHiddenSubscription: AnyCancellable?
-
+    
     lazy var exportBarButtonItem: UIBarButtonItem = {
         let exportBarButtonItem = UIBarButtonItem(image: UIImage(resource: .export).imageFlippedForRightToLeftLayoutDirection(), style: .done, target: self, action: #selector(ChatViewController.exportSelectedMessages))
         return exportBarButtonItem
@@ -97,12 +97,12 @@ class ChatViewController: MessagesViewController {
     
     lazy var startOrJoinCallButton: UIButton = {
         let button = UIButton()
-        let textColor = traitCollection.userInterfaceStyle == .dark ? UIColor.black000000 : UIColor.whiteFFFFFF
+        let textColor = traitCollection.userInterfaceStyle == .dark ? MEGAAppColor.Black._000000.uiColor : UIColor.whiteFFFFFF
         button.setTitleColor(textColor, for: .normal)
         button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .callout)
         button.setTitle(Strings.Localizable.tapToReturnToCall, for: .normal)
         button.layer.cornerRadius = 20
-        button.backgroundColor = traitCollection.userInterfaceStyle == .dark ? UIColor.whiteFFFFFF : UIColor.black00000075
+        button.backgroundColor = traitCollection.userInterfaceStyle == .dark ? UIColor.whiteFFFFFF : MEGAAppColor.Black._00000075.uiColor
         return button
     }()
     
@@ -424,9 +424,9 @@ class ChatViewController: MessagesViewController {
         }
         messagesCollectionView.reloadData()
         
-        let textColor = traitCollection.userInterfaceStyle == .dark ? UIColor.black000000 : UIColor.whiteFFFFFF
+        let textColor = traitCollection.userInterfaceStyle == .dark ? MEGAAppColor.Black._000000.uiColor : UIColor.whiteFFFFFF
         startOrJoinCallButton.setTitleColor(textColor, for: .normal)
-        startOrJoinCallButton.backgroundColor = traitCollection.userInterfaceStyle == .dark ? UIColor.whiteFFFFFF : UIColor.black00000075
+        startOrJoinCallButton.backgroundColor = traitCollection.userInterfaceStyle == .dark ? UIColor.whiteFFFFFF : MEGAAppColor.Black._00000075.uiColor
         
         if let inputbar = inputAccessoryView as? ChatInputBar {
             inputbar.set(keyboardAppearance: traitCollection.userInterfaceStyle == .dark ? .dark : .light)
@@ -884,17 +884,17 @@ class ChatViewController: MessagesViewController {
     
     private func configurePreviewerButton() {
         view.addSubview(previewerView)
-
+        
         NSLayoutConstraint.activate([
             previewerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 12),
             previewerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             previewerView.widthAnchor.constraint(equalToConstant: 75),
             previewerView.heightAnchor.constraint(equalToConstant: 34)
         ])
-       
+        
         previewerView.isHidden = true
     }
-
+    
     private func relayoutChatInputBarIfNeeded() {
         if let inputbar = inputAccessoryView as? ChatInputBar {
             inputbar.relayout()
@@ -1092,10 +1092,10 @@ class ChatViewController: MessagesViewController {
             chatBottomInfoScreen.widthAnchor.constraint(equalToConstant: chatBottomInfoScreen.bounds.width),
             chatBottomInfoScreen.heightAnchor.constraint(equalToConstant: chatBottomInfoScreen.bounds.height)
         ])
-
+        
         chatBottomInfoScreenBottomConstraint = chatBottomInfoScreen.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -chatBottomInfoScreenBottomPadding)
         chatBottomInfoScreenBottomConstraint?.isActive = true
-
+        
         chatBottomInfoScreen.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20).isActive = true
     }
     
@@ -1290,7 +1290,7 @@ class ChatViewController: MessagesViewController {
     func openCallViewWithVideo(videoCall: Bool, shouldRing: Bool = true, isReturnToCall: Bool) {
         guard let call = MEGAChatSdk.shared.chatCall(forChatId: chatRoom.chatId) else {
             let reachable = MEGAReachabilityManager.isReachable()
- 
+            
             if chatContentViewModel.shouldOpenWaitingRoom() {
                 openWaitingRoom()
             } else if chatRoom.isMeeting && !shouldRing {

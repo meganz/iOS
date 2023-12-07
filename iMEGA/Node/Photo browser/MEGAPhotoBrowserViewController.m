@@ -949,7 +949,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             self.view.backgroundColor = UIColor.systemBackgroundColor;
             self.interfaceHidden = NO;
         } else {
-            self.view.backgroundColor = UIColor.blackColor;
+            self.view.backgroundColor = [self backgroundColor];
             self.statusBarBackground.layer.opacity = self.navigationBar.layer.opacity = self.toolbar.layer.opacity = 0.0f;
             self.interfaceHidden = YES;
         }
@@ -1039,7 +1039,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             break;
             
         default:
-            color = [UIColor.blackColor colorWithAlphaComponent:0.1];
+            color = [[self backgroundColor] colorWithAlphaComponent:0.1];
             break;
     }
     return color;

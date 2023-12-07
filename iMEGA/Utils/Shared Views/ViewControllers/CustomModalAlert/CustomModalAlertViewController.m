@@ -171,7 +171,7 @@
 }
 
 - (void)configUIAppearance {
-    self.mainView.layer.shadowColor = UIColor.blackColor.CGColor;
+    self.mainView.layer.shadowColor = [self mainViewShadowColor].CGColor;
     self.mainView.layer.shadowOffset = CGSizeMake(0, 1);
     self.mainView.layer.shadowOpacity = 0.15;
     

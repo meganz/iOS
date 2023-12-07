@@ -7,7 +7,7 @@ class PasteImagePreviewView: UIView {
     lazy var contentView: UIView = {
         let view = UIView()
         view.layer.cornerRadius = 4
-        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowColor = MEGAAppColor.Black._000000.uiColor.cgColor
         view.layer.shadowOffset = CGSize(width: 0, height: 1)
         view.layer.shadowOpacity = 0.15
         return view

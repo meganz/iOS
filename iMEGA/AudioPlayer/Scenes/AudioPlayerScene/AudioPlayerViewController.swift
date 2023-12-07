@@ -154,7 +154,7 @@ final class AudioPlayerViewController: UIViewController {
     private func updateRepeatButtonAppearance(status: RepeatMode) {
         switch status {
         case .none:
-            repeatButton.tintColor = traitCollection.userInterfaceStyle == .dark ? .white: .black
+            repeatButton.tintColor = traitCollection.userInterfaceStyle == .dark ? .white: MEGAAppColor.Black._000000.uiColor
         case .loop, .repeatOne:
             repeatButton.tintColor = UIColor.green00A382
         }
@@ -446,13 +446,13 @@ final class AudioPlayerViewController: UIViewController {
             playPauseButton.setImage(UIImage(resource: .play), for: .normal)
         case .shuffleAction(let enabled):
             shuffleButton.isEnabled = enabled
-            shuffleButton.tintColor = enabled ? .black : UIColor.black.withAlphaComponent(0.25)
+            shuffleButton.tintColor = enabled ? MEGAAppColor.Black._000000.uiColor : MEGAAppColor.Black._00000025.uiColor
         case .goToPlaylistAction(let enabled):
             gotoplaylistButton.isEnabled = enabled
-            gotoplaylistButton.tintColor = enabled ? .black : UIColor.black.withAlphaComponent(0.25)
+            gotoplaylistButton.tintColor = enabled ? MEGAAppColor.Black._000000.uiColor : MEGAAppColor.Black._00000025.uiColor
         case .nextTrackAction(let enabled):
             nextButton.isEnabled = enabled
-            nextButton.tintColor = enabled ? .black : UIColor.black.withAlphaComponent(0.25)
+            nextButton.tintColor = enabled ? MEGAAppColor.Black._000000.uiColor : MEGAAppColor.Black._00000025.uiColor
         case .displayPlaybackContinuationDialog(let fileName, let playbackTime):
             presentAudioPlaybackContinuation(fileName: fileName, playbackTime: playbackTime)
         case .showTermsOfServiceViolationAlert:

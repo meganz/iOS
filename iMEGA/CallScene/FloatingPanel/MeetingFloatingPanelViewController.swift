@@ -67,7 +67,8 @@ final class MeetingFloatingPanelViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        backgroundView.backgroundColor = UIColor.black2C2C2E
+        
+        backgroundView.backgroundColor = MEGAAppColor.Black._2C2C2E.uiColor
         backgroundView.layer.cornerRadius = Constants.backgroundViewCornerRadius
         dragIndicatorView.layer.cornerRadius = Constants.dragIndicatorCornerRadius
         endQuickActionView.icon = UIImage(resource: .hangCallMeetingAction)
@@ -78,7 +79,7 @@ final class MeetingFloatingPanelViewController: UIViewController {
         flipQuickActionView.disabled = true
         
         let quickActionProperties = MeetingQuickActionView.Properties(
-            iconTintColor: MeetingQuickActionView.Properties.StateColor(normal: .white, selected: .black),
+            iconTintColor: MeetingQuickActionView.Properties.StateColor(normal: .white, selected: MEGAAppColor.Black._000000.uiColor),
             backgroundColor: MeetingQuickActionView.Properties.StateColor(normal: UIColor.gray474747, selected: .white)
         )
         let quickActions = [cameraQuickActionView, muteQuickActionView, speakerQuickActionView, flipQuickActionView]

@@ -48,7 +48,7 @@ struct PhotoLibraryPicker: View {
             .appearance()
             .setTitleTextAttributes(
                 [.font: UIFont.systemFont(ofSize: 13, weight: .medium),
-                 .foregroundColor: UIColor.black],
+                 .foregroundColor: MEGAAppColor.Black._000000.uiColor],
                 for: .normal
             )
         

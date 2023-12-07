@@ -173,7 +173,7 @@ struct UserImageUseCase<T: UserImageRepositoryProtocol, U: UserStoreRepositoryPr
         }
         
         let avatarInitial = name.initialForAvatar()
-        let avatarBackgroundColor = UIColor.colorFromHexString(avatarBackgroundHexColor) ?? .black
+        let avatarBackgroundColor = UIColor.colorFromHexString(avatarBackgroundHexColor) ?? MEGAAppColor.Black._000000.uiColor
         let backgroundGradientColor = UIColor.colorFromHexString(backgroundGradientHexColor)
         let isRightToLeftLanguage = isRightToLeftLanguage ?? false
         let image = UIImage.drawImage(

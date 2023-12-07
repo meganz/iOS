@@ -27,7 +27,7 @@ extension MyAccountHallViewController {
         case .light:
             color = UIColor.whiteF7F7F7
         case .dark:
-            color = UIColor.black161616
+            color = MEGAAppColor.Black._161616.uiColor
         }
         
         navigationController?.navigationBar.standardAppearance.backgroundColor = color

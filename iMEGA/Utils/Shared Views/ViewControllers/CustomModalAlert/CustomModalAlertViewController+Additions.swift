@@ -4,4 +4,8 @@ extension CustomModalAlertViewController {
         detailTextView?.isHidden = false
         detailTextView?.attributedText = detail
     }
+    
+    @objc func mainViewShadowColor() -> UIColor {
+        MEGAAppColor.Black._000000.uiColor
+    }
 }
