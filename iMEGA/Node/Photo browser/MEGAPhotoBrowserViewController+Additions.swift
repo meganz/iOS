@@ -356,7 +356,9 @@ extension MEGAPhotoBrowserViewController {
                 dismiss(animated: true)
             } else {
                 dataProvider.updatePhotos(in: nodeList)
-                reloadUI()
+                if shouldReloadUI(nodes: nodeList) {
+                    reloadUI()
+                }
             }
         }
     }
@@ -368,6 +370,17 @@ extension MEGAPhotoBrowserViewController {
                 nodeEntities.hasModifiedAttributes() ||
                 nodeEntities.hasModifiedPublicLink() ||
                 nodeEntities.hasModifiedFavourites()
+    }
+    
+    ///Check if node updates require photos views to reload
+    ///
+    /// Node changes types containing anything other than `favourite`, `attributes` or `publicLink` will require reloading the image views again.
+    private func shouldReloadUI(nodes: MEGANodeList) -> Bool {
+        let nodeEntities = nodes.toNodeEntities()
+        guard nodeEntities.isNotEmpty else { return false }
+        return nodeEntities.contains {
+            $0.changeTypes.subtracting([.favourite, .attributes, .publicLink]).isNotEmpty
+        }
     }
 }
 
