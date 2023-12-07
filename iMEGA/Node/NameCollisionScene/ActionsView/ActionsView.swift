@@ -57,7 +57,7 @@ struct ActionView: View {
                     }
                 }
                 Spacer()
-                Image(Asset.Images.Generic.standardDisclosureIndicator.name)
+                Image(uiImage: UIImage.standardDisclosureIndicator)
                     .resizable()
                     .frame(width: Constants.disclosureSize.width, height: Constants.disclosureSize.height)
             }

@@ -43,7 +43,7 @@ extension FolderLinkViewController: FolderLinkContextMenuDelegate {
         if let contextMenuManager,
            let menuConfig = contextMenuConfiguration(),
            let updatedMenu = contextMenuManager.contextMenu(with: menuConfig) {
-            moreBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.moreNavigationBar.image,
+            moreBarButtonItem = UIBarButtonItem(image: UIImage.moreNavigationBar,
                                                    menu: updatedMenu)
             navigationItem.rightBarButtonItems = [moreBarButtonItem]
         }

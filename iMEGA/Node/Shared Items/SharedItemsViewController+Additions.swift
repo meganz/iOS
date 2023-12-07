@@ -55,7 +55,7 @@ extension SharedItemsViewController {
         cell.nameLabel.textColor = UIColor.mnz_red(for: self.traitCollection)
         cell.nameLabel.text = node.isNodeKeyDecrypted() ? node.name : Strings.Localizable.SharedItems.Tab.Incoming.undecryptedFolderName
         cell.nodeHandle = node.handle
-        cell.permissionsButton.setImage(Asset.Images.SharedItems.warningPermission.image, for: .normal)
+        cell.permissionsButton.setImage(UIImage.warningPermission, for: .normal)
         cell.permissionsButton.isHidden = false
         
         if let user = userContactFromShareAtIndexPath(indexPath) {
@@ -79,7 +79,7 @@ extension SharedItemsViewController {
         cell.nodeHandle = node.handle
         cell.nameLabel.text = node.name
         cell.nameLabel.textColor = UIColor.mnz_red(for: self.traitCollection)
-        cell.permissionsButton.setImage(Asset.Images.SharedItems.warningPermission.image, for: .normal)
+        cell.permissionsButton.setImage(UIImage.warningPermission, for: .normal)
         cell.permissionsButton.isHidden = false
         
         cell.infoLabel.text = ""

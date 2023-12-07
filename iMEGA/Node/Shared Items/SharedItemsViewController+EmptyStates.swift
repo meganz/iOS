@@ -39,21 +39,21 @@ extension SharedItemsViewController: DZNEmptyDataSetSource {
         if MEGAReachabilityManager.isReachable() {
             if searchController.isActive {
                 if let text = searchController.searchBar.text, !text.isEmpty {
-                    return Asset.Images.EmptyStates.searchEmptyState.image
+                    return UIImage.searchEmptyState
                 } else {
                     return nil
                 }
             } else {
                 if incomingButton?.isSelected ?? false {
-                    return Asset.Images.EmptyStates.incomingEmptyState.image
+                    return UIImage.incomingEmptyState
                 } else if outgoingButton?.isSelected ?? false {
-                    return Asset.Images.EmptyStates.outgoingEmptyState.image
+                    return UIImage.outgoingEmptyState
                 } else  if linksButton?.isSelected ?? false {
-                    return Asset.Images.EmptyStates.linksEmptyState.image
+                    return UIImage.linksEmptyState
                 }
             }
         } else {
-            return Asset.Images.EmptyStates.noInternetEmptyState.image
+            return UIImage.noInternetEmptyState
         }
         
         return nil

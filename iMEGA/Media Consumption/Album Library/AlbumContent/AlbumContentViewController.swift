@@ -13,7 +13,7 @@ final class AlbumContentViewController: UIViewController, ViewType, TraitEnviron
     lazy var selection = PhotoSelectionAdapter(sdk: .shared)
     
     lazy var rightBarButtonItem = UIBarButtonItem(
-        image: Asset.Images.NavigationBar.selectAll.image,
+        image: Asset.Images.NavigationBar.selectAllItems.image,
         style: .plain,
         target: self,
         action: #selector(editButtonPressed(_:))
@@ -159,7 +159,7 @@ final class AlbumContentViewController: UIViewController, ViewType, TraitEnviron
     private func configureLeftBarButton() {
         if isEditing {
             navigationItem.leftBarButtonItem = UIBarButtonItem(
-                image: Asset.Images.NavigationBar.selectAll.image,
+                image: Asset.Images.NavigationBar.selectAllItems.image,
                 style: .plain,
                 target: self,
                 action: #selector(selectAllButtonPressed(_:))

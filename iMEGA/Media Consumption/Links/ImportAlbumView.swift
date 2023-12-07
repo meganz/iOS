@@ -119,7 +119,7 @@ struct ImportAlbumView: View {
             Button {
                 viewModel.selectAllPhotos()
             } label: {
-                Image(uiImage: Asset.Images.NavigationBar.selectAll.image)
+                Image(uiImage: Asset.Images.NavigationBar.selectAllItems.image)
             }
         } else {
             Button(Strings.Localizable.close) {
@@ -154,7 +154,7 @@ struct ImportAlbumView: View {
             Button {
                 viewModel.enablePhotoLibraryEditMode(true)
             } label: {
-                Image(uiImage: Asset.Images.NavigationBar.selectAll.image)
+                Image(uiImage: Asset.Images.NavigationBar.selectAllItems.image)
             }
             .opacity(viewModel.selectButtonOpacity)
             .disabled(viewModel.isAlbumEmpty)

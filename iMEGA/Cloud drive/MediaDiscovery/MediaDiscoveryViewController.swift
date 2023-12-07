@@ -9,7 +9,7 @@ final class MediaDiscoveryViewController: ExplorerBaseViewController {
     private let contentMode: PhotoLibraryContentMode
     
     lazy var rightBarButtonItem = UIBarButtonItem(
-        image: Asset.Images.NavigationBar.selectAll.image,
+        image: Asset.Images.NavigationBar.selectAllItems.image,
         style: .plain,
         target: self,
         action: #selector(editButtonPressed(_:))
@@ -97,7 +97,7 @@ final class MediaDiscoveryViewController: ExplorerBaseViewController {
     private func configureLeftBarButton() {
         if isEditing {
             navigationItem.leftBarButtonItem = UIBarButtonItem(
-                image: Asset.Images.NavigationBar.selectAll.image,
+                image: Asset.Images.NavigationBar.selectAllItems.image,
                 style: .plain,
                 target: self,
                 action: #selector(selectAllButtonPressed(_:))
