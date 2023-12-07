@@ -60,7 +60,7 @@ typedef NS_ENUM(NSInteger, QRSection) {
     [self.linkCopyButton setTitle:LocalizedString(@"copyLink", @"Title for a button to copy the link to the clipboard") forState:UIControlStateNormal];
     
     self.hintLabel.text = LocalizedString(@"lineCodeWithCamera", @"Label that encourage the user to line the QR to scan with the camera");
-
+    
     if (self.scanCode) {
         self.segmentedControl.selectedSegmentIndex = QRSectionScanCode;
         [self valueChangedAtSegmentedControl:self.segmentedControl];
@@ -100,7 +100,7 @@ typedef NS_ENUM(NSInteger, QRSection) {
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-
+    
     self.avatarImageView.layer.cornerRadius = self.avatarImageView.frame.size.width / 2;
     [self setupCameraMask];
 }
@@ -146,12 +146,12 @@ typedef NS_ENUM(NSInteger, QRSection) {
             [SVProgressHUD dismiss];
             break;
         }
-        
+            
         case QRSectionScanCode: {
             self.view.backgroundColor = UIColor.clearColor;
             self.backButton.tintColor = UIColor.whiteColor;
             self.hintLabel.textColor = UIColor.whiteColor;
-            UIColor *scanCodeLabelTextColor = (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark ? UIColor.whiteColor : UIColor.blackColor);
+            UIColor *scanCodeLabelTextColor = (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark ? UIColor.whiteColor : [self scanCodeLabelTextColorInLightMode]);
             [self.segmentedControl setTitleTextColor:UIColor.whiteColor selectedColor:scanCodeLabelTextColor];
             break;
         }
@@ -244,7 +244,7 @@ typedef NS_ENUM(NSInteger, QRSection) {
         dispatch_queue_t qrDispatchQueue = dispatch_queue_create("qrDispatchQueue", NULL);
         [captureMetadataOutput setMetadataObjectsDelegate:self queue:qrDispatchQueue];
         captureMetadataOutput.metadataObjectTypes = [NSArray<AVMetadataObjectType> arrayWithObject:AVMetadataObjectTypeQRCode];
-
+        
         self.videoPreviewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:self.captureSession];
         self.videoPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
         self.videoPreviewLayer.connection.videoOrientation = (AVCaptureVideoOrientation)self.view.window.windowScene.interfaceOrientation;

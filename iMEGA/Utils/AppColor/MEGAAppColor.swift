@@ -1,5 +1,6 @@
 import MEGADesignToken
 import MEGAPresentation
+import SwiftUI
 import UIKit
 
 enum MEGAAppColor {
@@ -55,7 +56,9 @@ enum MEGAAppColor {
     
     enum Black {
         case _00000015
+        case _00000025
         case _00000032
+        case _00000060
         case _00000075
         case _000000
         case _1C1C1E
@@ -70,10 +73,16 @@ enum MEGAAppColor {
             DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) ? designTokenColor : legacyColor
         }
         
+        var color: Color {
+            DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) ? designTokenColor.swiftUI : legacyColor.swiftUI
+        }
+        
         private var designTokenColor: UIColor {
             switch self {
             case ._00000015: TokenColors.Background.blur
+            case ._00000025: TokenColors.Background.blur
             case ._00000032: TokenColors.Background.blur
+            case ._00000060: TokenColors.Background.blur
             case ._00000075: TokenColors.Background.blur
             case ._000000: TokenColors.Background.blur
             case ._1C1C1E: TokenColors.Background.blur
@@ -89,7 +98,9 @@ enum MEGAAppColor {
         private var legacyColor: UIColor {
             switch self {
             case ._00000015: UIColor.black00000015
+            case ._00000025: UIColor.black00000025
             case ._00000032: UIColor.black00000032
+            case ._00000060: UIColor.black00000060
             case ._00000075: UIColor.black00000075
             case ._000000: UIColor.black000000
             case ._1C1C1E: UIColor.black1C1C1E

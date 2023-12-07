@@ -7,7 +7,7 @@ struct WaitingRoomParticipantsListView: View {
     
     var body: some View {
         ZStack {
-            Color(UIColor.black2C2C2E).edgesIgnoringSafeArea([.all])
+            Color(MEGAAppColor.Black._2C2C2E.uiColor).edgesIgnoringSafeArea([.all])
             VStack {
                 headerView
                 searchBarView()

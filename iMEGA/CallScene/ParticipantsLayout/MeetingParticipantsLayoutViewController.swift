@@ -8,7 +8,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     private enum Constants {
         static let notificationMessageWhiteBackgroundColor = UIColor(white: 1.0, alpha: 0.95)
         static let notificationMessageWhiteTextColor = UIColor.white
-        static let notificationMessageBlackTextColor = UIColor.black
+        static let notificationMessageBlackTextColor = MEGAAppColor.Black._000000.uiColor
     }
     
     @IBOutlet private weak var callCollectionView: CallCollectionView!

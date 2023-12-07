@@ -13,13 +13,13 @@ struct DarkColorThemeFactory: ColorFactory {
     
     func backgroundColor(_ style: MEGAColor.Background) -> UIColor {
         switch style {
-        case .primary: return UIColor.black1C1C1E
+        case .primary: return MEGAAppColor.Black._1C1C1E.uiColor
         case .secondary: return UIColor.gray545A68
         case .warning: return .white
         case .enabled: return UIColor.whiteFFD60008
         case .disabled: return UIColor.gray999999
         case .highlighted: return UIColor.green00A88680
-        case .searchTextField: return UIColor.black29292C
+        case .searchTextField: return MEGAAppColor.Black._29292C.uiColor
         case .homeTopSide: return .black
         }
     }
@@ -27,13 +27,13 @@ struct DarkColorThemeFactory: ColorFactory {
     func tintColor(_ style: MEGAColor.Tint) -> UIColor {
         switch style {
         case .primary: return UIColor.grayD1D1D1
-        case .secondary: return UIColor.black404040
+        case .secondary: return MEGAAppColor.Black._404040.uiColor
         }
     }
     
     func borderColor(_ style: MEGAColor.Border) -> UIColor {
         switch style {
-        case .primary: return UIColor.black00000015
+        case .primary: return MEGAAppColor.Black._00000015.uiColor
         case .warning: return UIColor.yellowFFD600
         }
     }

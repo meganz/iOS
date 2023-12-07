@@ -434,8 +434,8 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
             slidePanelView.backgroundColor = UIColor.whiteF7F7F7
             view.backgroundColor = UIColor.whiteF7F7F7
         case .dark:
-            slidePanelView.backgroundColor = UIColor.black
-            view.backgroundColor = UIColor.black
+            slidePanelView.backgroundColor = MEGAAppColor.Black._000000.uiColor
+            view.backgroundColor = MEGAAppColor.Black._000000.uiColor
         }
     }
 

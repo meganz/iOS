@@ -25,7 +25,7 @@ struct ApplyToAllView: View {
         }
         .padding()
         .frame(maxWidth: .infinity)
-        .background(colorScheme == .dark ? Color(UIColor.black2C2C2E) : Color.white)
+        .background(colorScheme == .dark ? Color(MEGAAppColor.Black._2C2C2E.uiColor) : Color.white)
         .onTapGesture {
             applyToAllSelected.toggle()
         }

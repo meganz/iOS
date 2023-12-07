@@ -16,7 +16,7 @@ struct PageTabView: View {
     }
     
     private var tabTextColor: Color {
-        colorScheme == .dark ? .white : .black
+        colorScheme == .dark ? .white : MEGAAppColor.Black._000000.color
     }
     
     init(viewModel: PagerTabViewModel) {

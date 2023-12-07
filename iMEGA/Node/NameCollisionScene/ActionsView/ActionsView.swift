@@ -64,7 +64,7 @@ struct ActionView: View {
             .padding()
             Divider()
         }
-        .background(colorScheme == .dark ? Color(UIColor.black2C2C2E) : Color.white)
+        .background(colorScheme == .dark ? Color(MEGAAppColor.Black._2C2C2E.uiColor.cgColor) : Color.white)
         .frame(maxWidth: .infinity)
     }
 }

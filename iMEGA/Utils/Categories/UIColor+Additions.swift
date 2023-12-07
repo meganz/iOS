@@ -49,7 +49,7 @@ extension UIColor {
             
         case .dark:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.black2C2C2E
+                return MEGAAppColor.Black._2C2C2E.uiColor
             } else {
                 return mnz_black1C1C1E()
             }
@@ -72,7 +72,7 @@ extension UIColor {
             if traitCollection.accessibilityContrast == .high {
                 return UIColor.gray3A3A3C
             } else {
-                return UIColor.black2C2C2E
+                return MEGAAppColor.Black._2C2C2E.uiColor
             }
             
         @unknown default:
@@ -112,7 +112,7 @@ extension UIColor {
             if traitCollection.accessibilityContrast == .high {
                 return .black
             } else {
-                return UIColor.black161616
+                return MEGAAppColor.Black._161616.uiColor
             }
             
         @unknown default:
@@ -154,9 +154,9 @@ extension UIColor {
             
         case .dark:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.black2C2C2E
+                return MEGAAppColor.Black._2C2C2E.uiColor
             } else {
-                return UIColor.black1C1C1E
+                return MEGAAppColor.Black._1C1C1E.uiColor
             }
             
         @unknown default:
@@ -203,13 +203,12 @@ extension UIColor {
     @objc class func mnz_chatLoadingBubble(_ traitCollection: UITraitCollection) -> UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
-            return UIColor.black.withAlphaComponent(0.6)
-            
+            return MEGAAppColor.Black._00000060.uiColor
         case .dark:
             return UIColor.white.withAlphaComponent(0.15)
             
         @unknown default:
-            return UIColor.black.withAlphaComponent(0.6)
+            return MEGAAppColor.Black._00000060.uiColor
         }
     }
     
@@ -256,7 +255,7 @@ extension UIColor {
             return UIColor.white
             
         case .dark:
-            return UIColor.black1C1C1E
+            return MEGAAppColor.Black._1C1C1E.uiColor
             
         @unknown default:
             return UIColor.white
@@ -275,9 +274,9 @@ extension UIColor {
             
         case .dark:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.black2C2C2E
+                return MEGAAppColor.Black._2C2C2E.uiColor
             } else {
-                return UIColor.black1C1C1E
+                return MEGAAppColor.Black._1C1C1E.uiColor
             }
             
         @unknown default:
@@ -299,7 +298,7 @@ extension UIColor {
             if traitCollection.accessibilityContrast == .high {
                 return UIColor.gray3F3F42
             } else {
-                return UIColor.black2C2C2E
+                return MEGAAppColor.Black._2C2C2E.uiColor
             }
             
         @unknown default:
@@ -399,7 +398,7 @@ extension UIColor {
             }
             
         case .dark:
-            return UIColor.black2C2C2E
+            return MEGAAppColor.Black._2C2C2E.uiColor
             
         @unknown default:
             return UIColor.whiteF7F7F7
@@ -442,7 +441,7 @@ extension UIColor {
             if traitCollection.accessibilityContrast == .high {
                 return UIColor.gray3F3F42
             } else {
-                return UIColor.black2C2C2E
+                return MEGAAppColor.Black._2C2C2E.uiColor
             }
             
         @unknown default:
@@ -641,7 +640,7 @@ extension UIColor {
     // MARK: Black
     
     @objc class func mnz_black1C1C1E() -> UIColor {
-        return UIColor.black1C1C1E
+        return MEGAAppColor.Black._1C1C1E.uiColor
     }
     
     // MARK: Gray

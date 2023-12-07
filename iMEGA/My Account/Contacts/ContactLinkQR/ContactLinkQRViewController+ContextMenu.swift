@@ -17,6 +17,10 @@ extension ContactLinkQRViewController: QRMenuDelegate {
                                                 createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo))
     }
     
+    @objc func scanCodeLabelTextColorInLightMode() -> UIColor {
+        MEGAAppColor.Black._000000.uiColor
+    }
+    
     // MARK: - QRMenuDelegate functions
     func qrMenu(didSelect action: MyQRActionEntity) {
         switch action {
@@ -33,7 +37,7 @@ extension ContactLinkQRViewController: QRMenuDelegate {
             present(navigationController, animated: true)
         case .resetQR:
             self.qrImageView?.image = nil
-            MEGASdkManager.sharedMEGASdk().contactLinkCreateRenew(true, delegate: contactLinkCreateDelegate)
+            MEGASdk.shared.contactLinkCreateRenew(true, delegate: contactLinkCreateDelegate)
         }
     }
 }

@@ -168,7 +168,7 @@ final class SlideShowViewController: UIViewController, ViewType {
         CrashlyticsLogger.log("[SlideShow] play button tapped.")
         
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut) {
-            self.collectionView.backgroundColor = UIColor.black
+            self.collectionView.backgroundColor = MEGAAppColor.Black._000000.uiColor
             self.view.backgroundColor = .black
             cell?.resetZoomScale()
             if viewModel.currentSlideIndex >= viewModel.photos.count - 1 {
