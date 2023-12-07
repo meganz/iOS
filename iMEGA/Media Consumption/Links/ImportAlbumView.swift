@@ -65,7 +65,7 @@ struct ImportAlbumView: View {
         .onReceive(viewModel.$showNoInternetConnection.dropFirst()) {
             guard $0 else { return }
             SVProgressHUD.dismiss()
-            SVProgressHUD.show(Asset.Images.Hud.hudForbidden.image,
+            SVProgressHUD.show(UIImage.hudForbidden,
                                status: Strings.Localizable.noInternetConnection)
         }
     }
@@ -119,7 +119,7 @@ struct ImportAlbumView: View {
             Button {
                 viewModel.selectAllPhotos()
             } label: {
-                Image(uiImage: Asset.Images.NavigationBar.selectAllItems.image)
+                Image(uiImage: UIImage.selectAllItems)
             }
         } else {
             Button(Strings.Localizable.close) {
@@ -154,7 +154,7 @@ struct ImportAlbumView: View {
             Button {
                 viewModel.enablePhotoLibraryEditMode(true)
             } label: {
-                Image(uiImage: Asset.Images.NavigationBar.selectAllItems.image)
+                Image(uiImage: UIImage.selectAllItems)
             }
             .opacity(viewModel.selectButtonOpacity)
             .disabled(viewModel.isAlbumEmpty)
@@ -186,7 +186,7 @@ struct ImportAlbumView: View {
     }
     
     private func importAlbumToolbarButton() -> some View {
-        ToolbarImageButton(image: Asset.Images.InfoActions.import.image,
+        ToolbarImageButton(image: UIImage.import,
                            isDisabled: viewModel.isToolbarButtonsDisabled,
                            action: {
             Task { await viewModel.importAlbum() }
@@ -206,7 +206,7 @@ struct ImportAlbumView: View {
     }
     
     private func saveToPhotosToolbarButton() -> some View {
-        ToolbarImageButton(image: Asset.Images.NodeActions.saveToPhotos.image,
+        ToolbarImageButton(image: UIImage.saveToPhotos,
                            isDisabled: viewModel.isToolbarButtonsDisabled,
                            action: {
             Task { await viewModel.saveToPhotos() }
@@ -218,7 +218,7 @@ struct ImportAlbumView: View {
     private func shareLinkButton() -> some View {
         if #available(iOS 16.0, *) {
             ShareLink(item: viewModel.publicLink) {
-                Image(uiImage: Asset.Images.Generic.link.image)
+                Image(uiImage: UIImage.link)
                     .resizable()
                     .frame(width: 28, height: 28)
                     .opacity(viewModel.isShareLinkButtonDisabled ? ImportAlbumViewModel.Constants.disabledOpacity : 1)
@@ -227,7 +227,7 @@ struct ImportAlbumView: View {
             .padding(.horizontal, Constants.toolbarButtonHorizontalPadding)
             .disabled(viewModel.isShareLinkButtonDisabled)
         } else {
-            ToolbarImageButton(image: Asset.Images.Generic.link.image,
+            ToolbarImageButton(image: UIImage.link,
                                isDisabled: viewModel.isShareLinkButtonDisabled,
                                action: viewModel.shareLinkTapped)
             .share(isPresented: $viewModel.showShareLink, activityItems: [viewModel.publicLink])

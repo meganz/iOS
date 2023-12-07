@@ -18,7 +18,7 @@ extension AlbumContentViewController {
         guard let contextMenuConfig = viewModel.contextMenuConfiguration,
               let menu = contextMenuManager?.contextMenu(with: contextMenuConfig) else { return nil }
         
-        return UIBarButtonItem(image: Asset.Images.NavigationBar.moreNavigationBar.image, menu: menu)
+        return UIBarButtonItem(image: UIImage.moreNavigationBar, menu: menu)
     }
     
     func configureRightBarButtons() {

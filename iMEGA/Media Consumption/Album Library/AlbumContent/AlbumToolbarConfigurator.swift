@@ -5,27 +5,26 @@ final class AlbumToolbarConfigurator: ExplorerToolbarConfigurator {
     let sendToChatAction: ButtonAction
     let albumType: AlbumType
     
-    private var favouriteItemImage: ImageAsset {
-        albumType == .favourite ? Asset.Images.NodeActions.removeFavourite :
-        Asset.Images.NodeActions.favourite
+    private var favouriteItemImage: UIImage {
+        albumType == .favourite ? UIImage.removeFavourite : UIImage.favourite
     }
     
     lazy var favouriteItem = UIBarButtonItem(
-        image: favouriteItemImage.image,
+        image: favouriteItemImage,
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))
     )
     
     lazy var sendToChatItem = UIBarButtonItem(
-        image: Asset.Images.NodeActions.sendToChat.image,
+        image: UIImage.sendToChat,
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))
     )
     
     lazy var removeToRubbishBinItem = UIBarButtonItem(
-        image: Asset.Images.NodeActions.rubbishBin.image,
+        image: UIImage.rubbishBin,
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))
