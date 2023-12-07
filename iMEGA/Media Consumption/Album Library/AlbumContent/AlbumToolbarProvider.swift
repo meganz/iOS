@@ -221,7 +221,7 @@ extension AlbumContentViewController: AlbumToolbarProvider {
                     
                     await SVProgressHUD.dismiss()
                     SVProgressHUD.show(
-                        Asset.Images.NodeActions.saveToPhotos.image,
+                        UIImage.saveToPhotos,
                         status: error.localizedDescription
                     )
                 }

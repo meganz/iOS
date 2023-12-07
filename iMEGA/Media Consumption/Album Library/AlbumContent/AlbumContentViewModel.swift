@@ -372,7 +372,7 @@ final class AlbumContentViewModel: ViewModelType {
             if result.success > 0 {
                 let message = Strings.Localizable.CameraUploads.Albums.removedItemFrom(Int(result.success))
                     .replacingOccurrences(of: "[A]", with: "\(albumName)")
-                invokeCommand?(.showResultMessage(.custom(Asset.Images.Hud.hudMinus.image, message)))
+                invokeCommand?(.showResultMessage(.custom(UIImage.hudMinus, message)))
             }
         } catch {
             MEGALogError("Error occurred when deleting photos for the album. \(error.localizedDescription)")
@@ -388,7 +388,7 @@ final class AlbumContentViewModel: ViewModelType {
                 let successMsg = Strings.Localizable.CameraUploads.Albums.deleteAlbumSuccess(1)
                     .replacingOccurrences(of: "[A]", with: albumName)
                 invokeCommand?(.dismissAlbum)
-                invokeCommand?(.showResultMessage(.custom(Asset.Images.Hud.hudMinus.image, successMsg)))
+                invokeCommand?(.showResultMessage(.custom(UIImage.hudMinus, successMsg)))
             } else {
                 MEGALogError("Error occurred when deleting the album id: \(album.id)")
             }

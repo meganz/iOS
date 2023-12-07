@@ -226,7 +226,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
             hudMessage = Strings.Localizable.CameraUploads.Albums.deleteAlbumSuccess(albumIds.count)
         }
         photoAlbumContainerViewModel?.editMode = .inactive
-        albumHudMessage = AlbumHudMessage(message: hudMessage, icon: Asset.Images.Hud.hudMinus.image)
+        albumHudMessage = AlbumHudMessage(message: hudMessage, icon: UIImage.hudMinus)
     }
     
     private func onRemoveAlbumShareLinkSuccess(_ albumIds: [HandleEntity]) {
@@ -236,7 +236,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
         }
         
         let hudMessage = albumIds.count == 1 ? Strings.Localizable.CameraUploads.Albums.removeShareLinkSuccessMessage(1) : Strings.Localizable.CameraUploads.Albums.removeShareLinkSuccessMessage(albums.count)
-        albumHudMessage = AlbumHudMessage(message: hudMessage, icon: Asset.Images.Hud.hudSuccess.image)
+        albumHudMessage = AlbumHudMessage(message: hudMessage, icon: UIImage.hudSuccess)
         
         photoAlbumContainerViewModel?.editMode = .inactive
     }

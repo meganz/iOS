@@ -10,7 +10,7 @@ struct PhotoCellVideoDurationViewModifier: ViewModifier {
     
     private var videoOverlay: some View {
         HStack {
-            Image(uiImage: Asset.Images.Generic.videoList.image)
+            Image(uiImage: UIImage.videoList)
                 .resizable()
                 .frame(
                     width: viewModel.iconSize,

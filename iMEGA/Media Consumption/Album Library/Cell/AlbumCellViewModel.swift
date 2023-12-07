@@ -60,7 +60,7 @@ final class AlbumCellViewModel: ObservableObject {
            let container = thumbnailUseCase.cachedThumbnailContainer(for: coverNode, type: .thumbnail) {
             thumbnailContainer = container
         } else {
-            thumbnailContainer = ImageContainer(image: Image(Asset.Images.Album.placeholder.name), type: .placeholder)
+            thumbnailContainer = ImageContainer(image: Image(.placeholder), type: .placeholder)
         }
         
         configSelection()
