@@ -18,7 +18,7 @@ extension SharedItemsViewController: DisplayMenuDelegate {
             }
         } actionProvider: { _ in
             let selectAction = UIAction(title: Strings.Localizable.select,
-                                        image: Asset.Images.ActionSheetIcons.select.image) { _ in
+                                        image: UIImage.selectItem) { _ in
                 self.didTapSelect()
                 tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
                 tableView.delegate?.tableView?(tableView, didSelectRowAt: indexPath)
@@ -51,7 +51,7 @@ extension SharedItemsViewController: DisplayMenuDelegate {
         } else {
             contextMenuManager = ContextMenuManager(displayMenuDelegate: self, createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo))
             
-            contextBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.moreNavigationBar.image,
+            contextBarButtonItem = UIBarButtonItem(image: UIImage.moreNavigationBar,
                                                    menu: contextMenuManager?.contextMenu(with: contextMenuConfiguration()))
             
             contextBarButtonItem.accessibilityLabel = Strings.Localizable.more

@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGASDKRepo
+import UIKit
 
 @MainActor
 @objc final class SharedItemsViewModel: NSObject {
@@ -44,7 +45,7 @@ import MEGASDKRepo
         } catch {
             if let errorEntity = error as? SaveMediaToPhotosErrorEntity, errorEntity != .cancelled {
                 await SVProgressHUD.dismiss()
-                SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: error.localizedDescription)
+                SVProgressHUD.show(UIImage.saveToPhotos, status: error.localizedDescription)
             }
         }
     }

@@ -122,7 +122,7 @@ extension ContextMenuModel {
     private func dataForDisplayAction(action: DisplayActionEntity) -> ContextMenuDataModel {
         switch action {
         case .select:
-            return ContextMenuDataModel(identifier: "select", title: Strings.Localizable.select, image: Asset.Images.ActionSheetIcons.select.image)
+            return ContextMenuDataModel(identifier: "select", title: Strings.Localizable.select, image: Asset.Images.ActionSheetIcons.selectItem.image)
         case .mediaDiscovery:
             return ContextMenuDataModel(identifier: "mediaDiscovery", title: Strings.Localizable.CloudDrive.Menu.MediaDiscovery.title, image: Asset.Images.ActionSheetIcons.mediaDiscovery.image)
         case .thumbnailView:

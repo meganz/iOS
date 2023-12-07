@@ -18,7 +18,7 @@ extension OfflineTableViewViewController {
             }
         } actionProvider: { _ in
             let selectAction = UIAction(title: Strings.Localizable.select,
-                                        image: Asset.Images.ActionSheetIcons.select.image) { _ in
+                                        image: Asset.Images.ActionSheetIcons.selectItem.image) { _ in
                 self.setTableViewEditing(true, animated: true)
                 self.tableView?.delegate?.tableView?(tableView, didSelectRowAt: indexPath)
                 self.tableView?.selectRow(at: indexPath, animated: true, scrollPosition: .none)

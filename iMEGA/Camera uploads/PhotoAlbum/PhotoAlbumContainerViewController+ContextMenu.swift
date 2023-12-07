@@ -27,7 +27,7 @@ extension PhotoAlbumContainerViewController {
     }
     
     var selectBarButton: UIBarButtonItem {
-        UIBarButtonItem(image: UIImage(resource: .selectAll), style: .plain, target: self, action: #selector(toggleEditing))
+        UIBarButtonItem(image: UIImage(resource: .selectAllItems), style: .plain, target: self, action: #selector(toggleEditing))
     }
     
     var cancelBarButton: UIBarButtonItem {

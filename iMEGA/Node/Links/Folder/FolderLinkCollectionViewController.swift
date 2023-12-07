@@ -206,7 +206,7 @@ extension FolderLinkCollectionViewController: UICollectionViewDelegate {
             }
         } actionProvider: { _ in
             let selectAction = UIAction(title: Strings.Localizable.select,
-                                        image: Asset.Images.ActionSheetIcons.select.image) { _ in
+                                        image: UIImage.selectItem) { _ in
                 self.setCollectionViewEditing(true, animated: true)
                 self.collectionView?.delegate?.collectionView?(collectionView, didSelectItemAt: indexPath)
                 self.collectionView?.reloadData()

@@ -17,7 +17,7 @@ extension OfflineCollectionViewController {
             }
         } actionProvider: { _ in
             let selectAction = UIAction(title: Strings.Localizable.select,
-                                        image: UIImage.select) { _ in
+                                        image: UIImage.selectItem) { _ in
                 self.setCollectionViewEditing(true, animated: true)
                 self.collectionView?.delegate?.collectionView?(collectionView, didSelectItemAt: indexPath)
             }

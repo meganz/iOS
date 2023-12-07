@@ -17,7 +17,7 @@ struct ApplyToAllView: View {
                 Text(text)
                     .font(.body)
                 Spacer()
-                Image(applyToAllSelected ? Asset.Images.Login.checkBoxSelected.name : Asset.Images.Login.checkBoxUnselected.name)
+                Image(uiImage: applyToAllSelected ? UIImage.checkBoxSelected : UIImage.checkBoxUnselected)
                     .resizable()
                     .frame(width: Constants.applyToAllIconSize, height: Constants.applyToAllIconSize)
             }

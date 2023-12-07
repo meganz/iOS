@@ -222,7 +222,7 @@ extension FolderLinkTableViewController: UITableViewDelegate {
             }
         } actionProvider: { _ in
             let selectAction = UIAction(title: Strings.Localizable.select,
-                                        image: Asset.Images.ActionSheetIcons.select.image) { _ in
+                                        image: UIImage.selectItem) { _ in
                 self.setTableViewEditing(true, animated: true)
                 self.tableView?.delegate?.tableView?(tableView, didSelectRowAt: indexPath)
                 self.tableView?.selectRow(at: indexPath, animated: true, scrollPosition: .none)
