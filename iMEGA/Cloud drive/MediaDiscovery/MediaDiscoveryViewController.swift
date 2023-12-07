@@ -9,7 +9,7 @@ final class MediaDiscoveryViewController: ExplorerBaseViewController {
     private let contentMode: PhotoLibraryContentMode
     
     lazy var rightBarButtonItem = UIBarButtonItem(
-        image: Asset.Images.NavigationBar.selectAllItems.image,
+        image: UIImage.selectAllItems,
         style: .plain,
         target: self,
         action: #selector(editButtonPressed(_:))
@@ -97,7 +97,7 @@ final class MediaDiscoveryViewController: ExplorerBaseViewController {
     private func configureLeftBarButton() {
         if isEditing {
             navigationItem.leftBarButtonItem = UIBarButtonItem(
-                image: Asset.Images.NavigationBar.selectAllItems.image,
+                image: UIImage.selectAllItems,
                 style: .plain,
                 target: self,
                 action: #selector(selectAllButtonPressed(_:))
@@ -146,7 +146,7 @@ final class MediaDiscoveryViewController: ExplorerBaseViewController {
                 emptyView.removeFromSuperview()
             }
         case .showSaveToPhotosError(let error):
-            SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image,
+            SVProgressHUD.show(UIImage.saveToPhotos,
                                status: error)
         case .endEditingMode:
             endEditingMode()

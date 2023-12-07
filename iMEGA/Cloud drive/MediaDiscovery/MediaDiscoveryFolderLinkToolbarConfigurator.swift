@@ -15,28 +15,28 @@ final class MediaDiscoveryFolderLinkToolbarConfigurator {
     )
     
     private lazy var importItem = UIBarButtonItem(
-        image: Asset.Images.InfoActions.import.image,
+        image: UIImage.import,
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))
     )
     
     private lazy var downloadItem = UIBarButtonItem(
-        image: Asset.Images.NodeActions.offline.image,
+        image: UIImage.offline,
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))
     )
     
     private lazy var saveToPhotosItem = UIBarButtonItem(
-        image: Asset.Images.NodeActions.saveToPhotos.image,
+        image: UIImage.saveToPhotos,
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))
     )
     
     lazy var shareLinkItem = UIBarButtonItem(
-        image: Asset.Images.Generic.link.image,
+        image: UIImage.link,
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))

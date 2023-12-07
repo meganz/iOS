@@ -35,12 +35,12 @@ final class GetLinkStringCellViewModel: ViewModelType, GetLinkCellViewModelType 
 
 extension GetLinkStringCellViewModel {
     convenience init(link: String) {
-        self.init(type: .link, title: link, leftImage: Asset.Images.GetLinkView.linkGetLink.image,
+        self.init(type: .link, title: link, leftImage: UIImage.linkGetLink,
                   isRightImageViewHidden: true)
     }
     
     convenience init(key: String) {
-        self.init(type: .key, title: key, leftImage: Asset.Images.Generic.iconKeyOnly.image,
+        self.init(type: .key, title: key, leftImage: UIImage.iconKeyOnly,
                   isRightImageViewHidden: true)
     }
 }

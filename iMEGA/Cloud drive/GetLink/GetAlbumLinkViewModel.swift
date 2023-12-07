@@ -178,14 +178,14 @@ final class GetAlbumLinkViewModel: GetLinkViewModelType {
             invokeCommand?(.addToPasteBoard(shareLink))
         }
         
-        invokeCommand?(.showHud(.custom(Asset.Images.NodeActions.copy.image,
+        invokeCommand?(.showHud(.custom(UIImage.copy,
                                         Strings.Localizable.SharedItems.GetLink.linkCopied(1))))
     }
     
     private func copyKeyToPasteBoard() {
         guard let shareLink else { return }
         invokeCommand?(.addToPasteBoard(key(shareLink)))
-        invokeCommand?(.showHud(.custom(Asset.Images.NodeActions.copy.image,
+        invokeCommand?(.showHud(.custom(UIImage.copy,
                                         Strings.Localizable.keyCopiedToClipboard)))
     }
     

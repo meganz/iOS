@@ -41,7 +41,7 @@ struct MediaDiscoveryContentView: View {
     @ViewBuilder
     private var emptyStateView: some View {
         EmptyMediaDiscoveryContentView(
-            image: Asset.Images.EmptyStates.folderEmptyState.image,
+            image: UIImage.folderEmptyState,
             title: Strings.Localizable.emptyFolder) { viewModel.tapped(menuAction: $0) }
     }
 }
