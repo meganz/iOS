@@ -354,29 +354,13 @@ final class ChatRoomsListViewModelTests: XCTestCase {
         XCTAssertEqual(retryPendingConnectionsUseCase.retryPendingConnections_calledTimes, 1)
     }
     
-    func testIsUnreadMessageCounterFeatureFlagEnabled_onFeatureFlagEnabled_shouldReturnTrue() {
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.unreadMessageCounter: true])
-        let sut = makeChatRoomsListViewModel(featureFlagProvider: featureFlagProvider)
-        
-        XCTAssertTrue(sut.isUnreadMessageCounterFeatureFlagEnabled)
-    }
-    
-    func testIsUnreadMessageCounterFeatureFlagEnabled_onFeatureFlagNotEnabled_shouldReturnFalse() {
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.unreadMessageCounter: false])
-        let sut = makeChatRoomsListViewModel(featureFlagProvider: featureFlagProvider)
-        
-        XCTAssertFalse(sut.isUnreadMessageCounterFeatureFlagEnabled)
-    }
-    
     func testShouldDisplayUnreadBadgeForChats_onChatsHasUnreadMessage_shouldBeTrue() {
         let chatUseCase = MockChatUseCase(
             items: [ChatListItemEntity(unreadCount: 1)],
             currentChatConnectionStatus: .online
         )
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.unreadMessageCounter: true])
         let sut = makeChatRoomsListViewModel(
-            chatUseCase: chatUseCase,
-            featureFlagProvider: featureFlagProvider
+            chatUseCase: chatUseCase
         )
         
         sut.loadChatRoomsIfNeeded()
@@ -391,10 +375,8 @@ final class ChatRoomsListViewModelTests: XCTestCase {
             items: [ChatListItemEntity(unreadCount: 0)],
             currentChatConnectionStatus: .online
         )
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.unreadMessageCounter: true])
         let sut = makeChatRoomsListViewModel(
-            chatUseCase: chatUseCase,
-            featureFlagProvider: featureFlagProvider
+            chatUseCase: chatUseCase
         )
         
         sut.loadChatRoomsIfNeeded()
@@ -409,10 +391,8 @@ final class ChatRoomsListViewModelTests: XCTestCase {
             items: [ChatListItemEntity(unreadCount: 1)],
             currentChatConnectionStatus: .online
         )
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.unreadMessageCounter: true])
         let sut = makeChatRoomsListViewModel(
-            chatUseCase: chatUseCase,
-            featureFlagProvider: featureFlagProvider
+            chatUseCase: chatUseCase
         )
         
         sut.loadChatRoomsIfNeeded()
@@ -427,10 +407,8 @@ final class ChatRoomsListViewModelTests: XCTestCase {
             items: [ChatListItemEntity(unreadCount: 0)],
             currentChatConnectionStatus: .online
         )
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.unreadMessageCounter: true])
         let sut = makeChatRoomsListViewModel(
-            chatUseCase: chatUseCase,
-            featureFlagProvider: featureFlagProvider
+            chatUseCase: chatUseCase
         )
         
         sut.loadChatRoomsIfNeeded()
@@ -446,10 +424,8 @@ final class ChatRoomsListViewModelTests: XCTestCase {
             chatConnectionStatusUpdatePublisher: chatConnectionStatusUpdatePublisher,
             items: [ChatListItemEntity(unreadCount: 1)]
         )
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.unreadMessageCounter: true])
         let sut = makeChatRoomsListViewModel(
-            chatUseCase: chatUseCase,
-            featureFlagProvider: featureFlagProvider
+            chatUseCase: chatUseCase
         )
         
         sut.loadChatRoomsIfNeeded()

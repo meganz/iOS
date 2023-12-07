@@ -127,10 +127,6 @@ final class ChatRoomsListViewModel: ObservableObject {
     
     var refreshContextMenuBarButton: (@MainActor () -> Void)?
     
-    var isUnreadMessageCounterFeatureFlagEnabled: Bool {
-        featureFlagProvider.isFeatureFlagEnabled(for: .unreadMessageCounter)
-    }
-
     init(
         router: some ChatRoomsListRouting,
         chatUseCase: any ChatUseCaseProtocol,
@@ -397,7 +393,6 @@ final class ChatRoomsListViewModel: ObservableObject {
     
     @MainActor
     private func updateUnreadBadgeForChatsAndMeetings() {
-        guard isUnreadMessageCounterFeatureFlagEnabled else { return }
         let chats = chatUseCase.fetchNonMeetings() ?? []
         shouldDisplayUnreadBadgeForChats = chats.contains { $0.unreadCount != 0 }
         let meetings = chatUseCase.fetchMeetings() ?? []

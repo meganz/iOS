@@ -9,8 +9,8 @@ struct ChatRoomsListView: View {
         VStack(spacing: 0) {
             ChatTabsSelectorView(
                 chatViewMode: viewModel.chatViewMode,
-                shouldDisplayUnreadBadgeForChats: viewModel.shouldDisplayUnreadBadgeForChats && viewModel.isUnreadMessageCounterFeatureFlagEnabled,
-                shouldDisplayUnreadBadgeForMeetings: viewModel.shouldDisplayUnreadBadgeForMeetings && viewModel.isUnreadMessageCounterFeatureFlagEnabled
+                shouldDisplayUnreadBadgeForChats: viewModel.shouldDisplayUnreadBadgeForChats,
+                shouldDisplayUnreadBadgeForMeetings: viewModel.shouldDisplayUnreadBadgeForMeetings
             ) { mode in
                 viewModel.selectChatMode(mode)
             }
