@@ -96,14 +96,43 @@ pipeline {
                     injectEnvironments({
                         dir("${WORKSPACE}/derivedData/Build/Products/Debug-iphonesimulator"){ 
                             script {
-                              def fileName = "${env.MEGA_VERSION_NUMBER}-${env.MEGA_BUILD_NUMBER}-simulator.zip"
+                              def branchName = GIT_BRANCH.split('/').size() > 1 ? GIT_BRANCH.split('/')[1..-1].join('-') : GIT_BRANCH.replace('/', '-')
+                              echo 'Pulling from branch :' + branchName
+
+                              def fileName = "${env.MEGA_VERSION_NUMBER}-${env.MEGA_BUILD_NUMBER}-${branchName}-simulator.zip"
                               sh "zip -r ${fileName} MEGA.app"
+
                               withCredentials([string(credentialsId: 'ios-mega-artifactory-upload', variable: 'ARTIFACTORY_TOKEN')]) {
                                 env.zipPath = "${WORKSPACE}/derivedData/Build/Products/Debug-iphonesimulator/${fileName}"
-                                env.targetPath = "https://artifactory.developers.mega.co.nz/artifactory/ios-mega/simulator/${fileName}"
-                                env.targetPathLatest = "https://artifactory.developers.mega.co.nz/artifactory/ios-mega/simulator/latest/ios-mega-simulator-latest.zip"
-                                sh 'curl -H\"Authorization: Bearer $ARTIFACTORY_TOKEN\" -T ${zipPath} \"${targetPath}\"'
-                                sh 'curl -H\"Authorization: Bearer $ARTIFACTORY_TOKEN\" -T ${zipPath} \"${targetPathLatest}\"'
+                                env.targetPath = "https://artifactory.developers.mega.co.nz/artifactory/ios-mega/simulator"
+                                env.latest = "ios-mega-simulator-latest.zip"
+
+                                // Path : latest                                
+                                env.targetPathLatest = "${env.targetPath}/latest/${env.latest}"
+
+                                // Path : dailybuilds
+                                env.targetPathDailybuilds = "${env.targetPath}/dailybuilds/${fileName}"
+                                env.targetPathDailybuildsLatest = "${env.targetPath}/dailybuilds/${env.latest}"
+
+                                // Path : dailybuilds
+                                env.targetPathRelease = "${env.targetPath}/release/${fileName}"
+                                env.targetPathReleaseLatest = "${env.targetPath}/release/${env.latest}"
+                                echo 'Branch name =' + env.BRANCH_NAME
+
+                                if (env.BRANCH_NAME == 'develop') {
+                                    // dailybuilds
+                                    echo 'Pulling dailybuilds from :' + branchName
+                                    sh 'curl -H\"Authorization: Bearer $ARTIFACTORY_TOKEN\" -T ${zipPath} \"${targetPathLatest}\"'
+                                    sh 'curl -H\"Authorization: Bearer $ARTIFACTORY_TOKEN\" -T ${zipPath} \"${targetPathDailybuildsLatest}\"'
+                                    sh 'curl -H\"Authorization: Bearer $ARTIFACTORY_TOKEN\" -T ${zipPath} \"${targetPathDailybuilds}\"'
+                                }
+                                else{
+                                    // release build
+                                    echo 'Pulling release build from :' + branchName
+                                    sh 'curl -H\"Authorization: Bearer $ARTIFACTORY_TOKEN\" -T ${zipPath} \"${targetPathLatest}\"'
+                                    sh 'curl -H\"Authorization: Bearer $ARTIFACTORY_TOKEN\" -T ${zipPath} \"${targetPathReleaseLatest}\"'
+                                    sh 'curl -H\"Authorization: Bearer $ARTIFACTORY_TOKEN\" -T ${zipPath} \"${targetPathRelease}\"'
+                                }
                               }
                             }
                         }
