@@ -35,11 +35,15 @@ import UIKit
         let badgeHeight = badgeToUpdate.frame.height
 
         let itemPosition = CGFloat(index + 1)
-        let itemWidth = frame.width / CGFloat(tabBarItems.count)
+        let itemWidth = (frame.width - safeAreaInsets.left - safeAreaInsets.right) / CGFloat(tabBarItems.count)
         let itemHeight = frame.height - safeAreaInsets.bottom
+
+        let isIPhone = UIDevice.current.userInterfaceIdiom == .phone
+        let isLandScape = UIDevice.current.orientation.isLandscape || UIScreen.main.bounds.width > UIScreen.main.bounds.height
+        let isIPhoneLandscape = isIPhone && isLandScape
         
-        var x = (itemWidth * itemPosition) - (0.5 * itemWidth) + badgeWidth / 2 + 8
-        let y = (0.5 * itemHeight) - badgeHeight / 2 - 4
+        var x = safeAreaInsets.left + (itemWidth * itemPosition) - (0.5 * itemWidth) + badgeWidth / 2 + (isIPhone ? 8.0 : -16)
+        let y = (0.5 * itemHeight) - badgeHeight / 2 + (isIPhoneLandscape ? 2.0 : -4.0)
         
         if UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft {
             x = frame.width - x
