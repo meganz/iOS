@@ -130,6 +130,7 @@ extension PhotosViewController {
         alertController.addAction(UIAlertAction(title: "Upload Warning / Error", style: .default, handler: { [weak self] _ in
             self?.reloadCUBarButtonWithUseCase(FakeCameraUploadFailedUseCase())
         }))
+        alertController.addAction(UIAlertAction(title: Strings.Localizable.cancel, style: .cancel))
         
         alertController.modalPresentationStyle = .popover
         if let view = cameraUploadStatusBarButtonItem?.customView {
