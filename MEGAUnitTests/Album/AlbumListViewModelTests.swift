@@ -409,7 +409,7 @@ final class AlbumListViewModelTests: XCTestCase {
         
         let targetMsg = Strings.Localizable.CameraUploads.Albums.deleteAlbumSuccess(albums.count)
         
-        XCTAssertEqual(sut.albumHudMessage, AlbumHudMessage(message: targetMsg, icon: Asset.Images.Hud.hudMinus.image))
+        XCTAssertEqual(sut.albumHudMessage, AlbumHudMessage(message: targetMsg, icon: UIImage.hudMinus))
         XCTAssertFalse(photoAlbumContainerViewModel.editMode.isEditing)
     }
     
@@ -427,7 +427,7 @@ final class AlbumListViewModelTests: XCTestCase {
         
         let targetMsg = Strings.Localizable.CameraUploads.Albums.deleteAlbumSuccess(albums.count)
         
-        XCTAssertEqual(sut.albumHudMessage, AlbumHudMessage(message: targetMsg, icon: Asset.Images.Hud.hudMinus.image))
+        XCTAssertEqual(sut.albumHudMessage, AlbumHudMessage(message: targetMsg, icon: UIImage.hudMinus))
         XCTAssertFalse(photoAlbumContainerViewModel.editMode.isEditing)
     }
     
@@ -517,7 +517,7 @@ final class AlbumListViewModelTests: XCTestCase {
 
         let targetMsg = Strings.Localizable.CameraUploads.Albums.removeShareLinkSuccessMessage(albums.count)
 
-        XCTAssertEqual(sut.albumHudMessage, AlbumHudMessage(message: targetMsg, icon: Asset.Images.Hud.hudSuccess.image))
+        XCTAssertEqual(sut.albumHudMessage, AlbumHudMessage(message: targetMsg, icon: UIImage.hudSuccess))
         XCTAssertFalse(photoAlbumContainerViewModel.editMode.isEditing)
     }
     
@@ -537,7 +537,7 @@ final class AlbumListViewModelTests: XCTestCase {
 
         let targetMsg = Strings.Localizable.CameraUploads.Albums.removeShareLinkSuccessMessage(1)
 
-        XCTAssertEqual(sut.albumHudMessage, AlbumHudMessage(message: targetMsg, icon: Asset.Images.Hud.hudSuccess.image))
+        XCTAssertEqual(sut.albumHudMessage, AlbumHudMessage(message: targetMsg, icon: UIImage.hudSuccess))
         XCTAssertFalse(photoAlbumContainerViewModel.editMode.isEditing)
     }
     

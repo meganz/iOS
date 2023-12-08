@@ -123,7 +123,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
         
         let updatedCell = try XCTUnwrap(sut.cellViewModel(indexPath: updatedIndexPath) as? GetLinkStringCellViewModel)
         test(viewModel: updatedCell, action: .onViewReady, expectedCommands: [
-            .configView(title: link, leftImage: Asset.Images.GetLinkView.linkGetLink.image, isRightImageViewHidden: true)
+            .configView(title: link, leftImage: UIImage.linkGetLink, isRightImageViewHidden: true)
         ])
     }
     
@@ -256,7 +256,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
         test(viewModel: sut, action: .copyLink,
              expectedCommands: [
                 .addToPasteBoard(link),
-                .showHud(.custom(Asset.Images.NodeActions.copy.image,
+                .showHud(.custom(UIImage.copy,
                                  Strings.Localizable.SharedItems.GetLink.linkCopied(1)))
              ])
     }
@@ -289,7 +289,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
         test(viewModel: sut, action: .copyLink,
              expectedCommands: [
                 .addToPasteBoard(linkOnly),
-                .showHud(.custom(Asset.Images.NodeActions.copy.image,
+                .showHud(.custom(UIImage.copy,
                                  Strings.Localizable.SharedItems.GetLink.linkCopied(1)))
              ])
     }
@@ -322,7 +322,7 @@ final class GetAlbumLinkViewModelTests: XCTestCase {
         test(viewModel: sut, action: .copyKey,
              expectedCommands: [
                 .addToPasteBoard(key),
-                .showHud(.custom(Asset.Images.NodeActions.copy.image,
+                .showHud(.custom(UIImage.copy,
                                  Strings.Localizable.keyCopiedToClipboard))
              ])
     }

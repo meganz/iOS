@@ -34,7 +34,7 @@ struct DiskFullBlockingViewModel: ViewModelType {
                                                       description: description,
                                                       highlightedText: storagePath,
                                                       manageDiskSpaceTitle: Strings.Localizable.manage,
-                                                      headerImageName: Asset.Images.WarningStorageAlmostFull.blockingDiskFull.name)
+                                                      headerImage: UIImage.blockingDiskFull)
             invokeCommand?(.configView(blockingModel))
         case .manage:
             router.manageDiskSpace()

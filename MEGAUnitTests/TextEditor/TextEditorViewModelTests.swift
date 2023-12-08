@@ -37,14 +37,14 @@ final class TextEditorViewModelTests: XCTestCase {
             
             if textEditorMode == .view {
                 navbarItemsModel = TextEditorNavbarItemsModel(
-                    leftItem: NavbarItemModel(title: Strings.Localizable.close, imageName: nil),
-                    rightItem: NavbarItemModel(title: nil, imageName: Asset.Images.NavigationBar.moreNavigationBar.name),
+                    leftItem: NavbarItemModel(title: Strings.Localizable.close, image: nil),
+                    rightItem: NavbarItemModel(title: nil, image: UIImage.moreNavigationBar),
                     textEditorMode: textEditorMode
                 )
             } else {
                 navbarItemsModel = TextEditorNavbarItemsModel(
-                    leftItem: NavbarItemModel(title: Strings.Localizable.cancel, imageName: nil),
-                    rightItem: NavbarItemModel(title: Strings.Localizable.save, imageName: nil),
+                    leftItem: NavbarItemModel(title: Strings.Localizable.cancel, image: nil),
+                    rightItem: NavbarItemModel(title: Strings.Localizable.save, image: nil),
                     textEditorMode: textEditorMode
                 )
             }
@@ -90,7 +90,7 @@ final class TextEditorViewModelTests: XCTestCase {
         )
         
         let navbarItemsLoadModel = TextEditorNavbarItemsModel(
-            leftItem: NavbarItemModel(title: Strings.Localizable.close, imageName: nil),
+            leftItem: NavbarItemModel(title: Strings.Localizable.close, image: nil),
             rightItem: nil,
             textEditorMode: textEditorMode
         )
@@ -102,8 +102,8 @@ final class TextEditorViewModelTests: XCTestCase {
         )
         
         let navbarItemsViewModel = TextEditorNavbarItemsModel(
-            leftItem: NavbarItemModel(title: Strings.Localizable.close, imageName: nil),
-            rightItem: NavbarItemModel(title: nil, imageName: Asset.Images.NavigationBar.moreNavigationBar.name),
+            leftItem: NavbarItemModel(title: Strings.Localizable.close, image: nil),
+            rightItem: NavbarItemModel(title: nil, image: UIImage.moreNavigationBar),
             textEditorMode: .view
         )
         
@@ -166,7 +166,7 @@ final class TextEditorViewModelTests: XCTestCase {
         )
         
         let navbarItemsModel = TextEditorNavbarItemsModel(
-            leftItem: NavbarItemModel(title: Strings.Localizable.close, imageName: nil),
+            leftItem: NavbarItemModel(title: Strings.Localizable.close, image: nil),
             rightItem: nil,
             textEditorMode: textEditorMode
         )
@@ -218,7 +218,7 @@ final class TextEditorViewModelTests: XCTestCase {
         )
         
         let navbarItemsModel = TextEditorNavbarItemsModel(
-            leftItem: NavbarItemModel(title: Strings.Localizable.close, imageName: nil),
+            leftItem: NavbarItemModel(title: Strings.Localizable.close, image: nil),
             rightItem: nil,
             textEditorMode: textEditorMode
         )
@@ -290,8 +290,8 @@ final class TextEditorViewModelTests: XCTestCase {
         )
         
         let navbarItemsModel = TextEditorNavbarItemsModel(
-            leftItem: NavbarItemModel(title: Strings.Localizable.close, imageName: nil),
-            rightItem: NavbarItemModel(title: nil, imageName: Asset.Images.NavigationBar.moreNavigationBar.name),
+            leftItem: NavbarItemModel(title: Strings.Localizable.close, image: nil),
+            rightItem: NavbarItemModel(title: nil, image: UIImage.moreNavigationBar),
             textEditorMode: .view
         )
         
@@ -681,8 +681,8 @@ final class TextEditorViewModelTests: XCTestCase {
         )
         
         let navbarItemsModel = TextEditorNavbarItemsModel(
-            leftItem: NavbarItemModel(title: Strings.Localizable.cancel, imageName: nil),
-            rightItem: NavbarItemModel(title: Strings.Localizable.save, imageName: nil),
+            leftItem: NavbarItemModel(title: Strings.Localizable.cancel, image: nil),
+            rightItem: NavbarItemModel(title: Strings.Localizable.save, image: nil),
             textEditorMode: .edit
         )
 
@@ -755,8 +755,8 @@ final class TextEditorViewModelTests: XCTestCase {
         )
         
         let navbarItemsModel = TextEditorNavbarItemsModel(
-            leftItem: NavbarItemModel(title: Strings.Localizable.cancel, imageName: nil),
-            rightItem: NavbarItemModel(title: Strings.Localizable.save, imageName: nil),
+            leftItem: NavbarItemModel(title: Strings.Localizable.cancel, image: nil),
+            rightItem: NavbarItemModel(title: Strings.Localizable.save, image: nil),
             textEditorMode: .edit
         )
 
@@ -937,8 +937,8 @@ final class TextEditorViewModelTests: XCTestCase {
         )
         
         let navbarItemsModel = TextEditorNavbarItemsModel(
-            leftItem: NavbarItemModel(title: Strings.Localizable.close, imageName: nil),
-            rightItem: NavbarItemModel(title: nil, imageName: Asset.Images.NavigationBar.moreNavigationBar.name),
+            leftItem: NavbarItemModel(title: Strings.Localizable.close, image: nil),
+            rightItem: NavbarItemModel(title: nil, image: UIImage.moreNavigationBar),
             textEditorMode: .view
         )
         

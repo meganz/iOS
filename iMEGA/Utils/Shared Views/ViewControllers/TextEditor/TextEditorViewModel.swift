@@ -315,21 +315,21 @@ final class TextEditorViewModel: ViewModelType {
         switch textEditorMode {
         case .load:
             return TextEditorNavbarItemsModel(
-                leftItem: NavbarItemModel(title: Strings.Localizable.close, imageName: nil),
+                leftItem: NavbarItemModel(title: Strings.Localizable.close, image: nil),
                 rightItem: nil,
                 textEditorMode: textEditorMode
             )
         case .view:
             return TextEditorNavbarItemsModel(
-                leftItem: NavbarItemModel(title: Strings.Localizable.close, imageName: nil),
-                rightItem: NavbarItemModel(title: nil, imageName: Asset.Images.NavigationBar.moreNavigationBar.name),
+                leftItem: NavbarItemModel(title: Strings.Localizable.close, image: nil),
+                rightItem: NavbarItemModel(title: nil, image: UIImage.moreNavigationBar),
                 textEditorMode: textEditorMode
             )
         case .edit,
              .create:
             return TextEditorNavbarItemsModel(
-                leftItem: NavbarItemModel(title: Strings.Localizable.cancel, imageName: nil),
-                rightItem: NavbarItemModel(title: Strings.Localizable.save, imageName: nil),
+                leftItem: NavbarItemModel(title: Strings.Localizable.cancel, image: nil),
+                rightItem: NavbarItemModel(title: Strings.Localizable.save, image: nil),
                 textEditorMode: textEditorMode
             )
         }

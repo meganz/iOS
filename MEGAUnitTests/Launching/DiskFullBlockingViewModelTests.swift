@@ -13,7 +13,7 @@ final class DiskFullBlockingViewModelTests: XCTestCase {
                                                   description: description,
                                                   highlightedText: storagePath,
                                                   manageDiskSpaceTitle: Strings.Localizable.manage,
-                                                  headerImageName: Asset.Images.WarningStorageAlmostFull.blockingDiskFull.name)
+                                                  headerImage: UIImage.blockingDiskFull)
         test(viewModel: sut, action: .onViewLoaded, expectedCommands: [.configView(expectedBlockingModel)])
     }
     

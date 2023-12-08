@@ -20,7 +20,7 @@ final class VideoExplorerTableCellViewModelTests: XCTestCase {
         
         let attributedTitle = NSMutableAttributedString(string: videoName)
         let space = createSpace()
-        let favouriteIcon = createImageAttachment(by: Asset.Images.Labels.favouriteSmall.image)
+        let favouriteIcon = createImageAttachment(by: UIImage.favouriteSmall)
         attributedTitle.append(space)
         attributedTitle.append(favouriteIcon)
         
@@ -66,7 +66,7 @@ final class VideoExplorerTableCellViewModelTests: XCTestCase {
         
         let attributedTitle = NSMutableAttributedString(string: videoName)
         let label = createImageAttachment(by: labelImage)
-        let favouriteIcon = createImageAttachment(by: Asset.Images.Labels.favouriteSmall.image)
+        let favouriteIcon = createImageAttachment(by: UIImage.favouriteSmall)
         attributedTitle.append(createSpace())
         attributedTitle.append(label)
         attributedTitle.append(createSpace())

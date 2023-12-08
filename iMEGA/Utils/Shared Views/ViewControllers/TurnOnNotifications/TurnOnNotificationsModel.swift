@@ -1,14 +1,14 @@
 struct TurnOnNotificationsModel: Equatable {
-    let headerImageName: String
+    let headerImage: UIImage
     let title: String
     let description: String
-    let stepOneImageName: String
+    let stepOneImage: UIImage
     let stepOne: String
-    let stepTwoImageName: String
+    let stepTwoImage: UIImage
     let stepTwo: String
-    let stepThreeImageName: String
+    let stepThreeImage: UIImage
     let stepThree: String
-    let stepFourImageName: String
+    let stepFourImage: UIImage
     let stepFour: String
     let openSettingsTitle: String
     let dismissTitle: String

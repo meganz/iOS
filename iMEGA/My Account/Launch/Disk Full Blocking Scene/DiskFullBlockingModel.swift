@@ -5,5 +5,5 @@ struct DiskFullBlockingModel: Equatable {
     let description: String
     let highlightedText: String
     let manageDiskSpaceTitle: String
-    let headerImageName: String
+    let headerImage: UIImage
 }
