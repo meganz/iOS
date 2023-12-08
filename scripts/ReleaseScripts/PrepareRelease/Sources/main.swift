@@ -17,7 +17,7 @@ do {
     \(Submodule.chatSDK.description) release commit: \(userInput.chatHash)
     """
     )
-    try createPrepareBranch(userInput.version)
+    let prepareBranch = try createPrepareBranch(userInput.version)
 
     log("Performing Transifex operations: pruning (this might take a while)")
     try pruneTransifexStrings()
@@ -27,7 +27,7 @@ do {
 
     log("Updating project version to \(userInput.version)")
     try updateProjectVersion(userInput.version)
-    
+
     log("Checking out \(Submodule.sdk.description) to \(userInput.sdkHash)")
     try checkoutSubmoduleToCommit(submodule: .sdk, commitHash: userInput.sdkHash)
 
@@ -35,9 +35,12 @@ do {
     try checkoutSubmoduleToCommit(submodule: .chatSDK, commitHash: userInput.chatHash)
 
     log("Creating prepare branch commit and pushing the branch to GitLab")
-    try createReleaseCommitAndPushToOrigin(userInput.version)
+    try createReleaseCommitAndPushToOrigin(version: userInput.version, prepareBranch: prepareBranch)
+    
+    log("Creating the prepare MR on GitLab")
+    try await createMR(sourceBranch: prepareBranch, targetBranch: "develop", title: "Prepare v\(userInput.version)", squash: true)
 
-    log("Finished successfully - go to Gitlab and open the prepare branch MR")
+    log("Finished successfully")
     exit(ProcessResult.success)
 } catch {
     exitWithError(error)

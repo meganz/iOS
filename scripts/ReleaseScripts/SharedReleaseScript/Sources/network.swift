@@ -5,6 +5,7 @@ public enum HTTPError: Error {
     case cannotParseBody
     case cannotDecodeContentData
     case cannotParseResponse
+    case badURL
 }
 
 public enum HTTPMethod: String {
@@ -37,6 +38,20 @@ public func sendRequest(
     body: [String: Any]? = nil
 ) async throws -> Data {
     let request = try makeURLRequest(url: url, method: method, token: token, headers: headers, body: body)
+
+    if verbose {
+        print(
+        """
+        Sending request:
+            - URL: \(url.absoluteString)
+            - HTTP method: \(method.rawValue)
+            - token: \(String(describing: token))
+            - headers: \(String(describing: headers))
+            - body: \(String(describing: body))
+        """
+        )
+    }
+
     let (data, response) = try await URLSession.shared.data(for: request)
 
     guard let httpResponse = response as? HTTPURLResponse else {
@@ -49,7 +64,7 @@ public func sendRequest(
         print("Bad status code: \(httpResponse.statusCode)")
         throw HTTPError.badResponse
     }
-    
+
     if verbose {
         let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
         let jsonData = try JSONSerialization.data(withJSONObject: jsonObject, options: [.prettyPrinted, .sortedKeys])
@@ -58,7 +73,7 @@ public func sendRequest(
             throw HTTPError.cannotDecodeContentData
         }
 
-        print(jsonString)
+        print("Response:\n\(jsonString)")
     }
 
     return data
@@ -98,9 +113,18 @@ private func makeURLRequest(
     return request
 }
 
-public func makeURL(base: URL, path: String) -> URL {
-    var url = base
-    url.append(path: path)
+public func makeURL(base: URL, path: String, queryItems: [URLQueryItem]? = nil) throws -> URL {
+    var components = URLComponents(url: base, resolvingAgainstBaseURL: true)
+    components?.path = path
+
+    if let queryItems = queryItems, !queryItems.isEmpty {
+        components?.queryItems = queryItems
+    }
+
+    guard let components, let url = components.url else {
+        throw HTTPError.badURL
+    }
+
     return url
 }
 

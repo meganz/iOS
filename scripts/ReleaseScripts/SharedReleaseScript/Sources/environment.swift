@@ -2,17 +2,20 @@ import Foundation
 
 public enum EnvironmentError: Error {
     case missingEnvironmentVariable(variable: EnvironmentVariable)
-    case badJiraURL
     case badJiraProjectStrings
+    case badURL(reason: String)
 }
 
-public enum EnvironmentVariable: String {
+public enum EnvironmentVariable: String, Equatable {
     case jiraBaseURL = "JIRA_BASE_URL"
     case jiraToken = "JIRA_TOKEN"
     case jiraProjects = "JIRA_PROJECTS"
     case slackToken = "SLACK_TOKEN"
     case releaseCandidateSlackChannelIds = "RC_MESSAGE_SLACK_IDS"
     case codeFreezeSlackChannelIds = "CODE_FREEZE_MESSAGE_SLACK_IDS"
+    case gitlabBaseURL = "GITLAB_BASE_URL"
+    case gitlabProjectId = "GITLAB_PROJECT_ID"
+    case gitlabToken = "GITLAB_TOKEN"
 }
 
 public struct JiraProject: Decodable {
@@ -27,26 +30,30 @@ public struct Environment {
     public let slackToken: String
     public let releaseCandidateSlackChannelIds: [String]
     public let codeFreezeSlackChannelIds: [String]
+    public let gitlabBaseURL : URL
+    public let gitlabProjectId: String
+    public let gitlabToken: String
 }
 
 // '!' is intentional as we want the script to fail if the environment is malformed
 public let environment = try! makeEnvironment()
 
+// TODO: Create three separate and independent environments: Jira, Slack and Gitlab
 private func makeEnvironment() throws -> Environment {
-    let jiraBaseURLString = try environmentVariableString(.jiraBaseURL)
-
-    guard let jiraBaseURL = URL(string: jiraBaseURLString) else {
-        throw EnvironmentError.badJiraURL
-    }
-
+    let jiraBaseURL = try parseURL(.jiraBaseURL)
     let jiraProjectsString = try environmentVariableString(.jiraProjects)
     let jiraProjects = try parseJiraProjects(from: jiraProjectsString)
-
     let jiraToken = try environmentVariableString(.jiraToken)
-    let slackToken = try environmentVariableString(.slackToken)
 
-    let releaseCandidateSlackChannelIds = try environmentVariableString(.releaseCandidateSlackChannelIds).components(separatedBy: ",")
-    let codeFreezeSlackChannelIds = try environmentVariableString(.codeFreezeSlackChannelIds).components(separatedBy: ",")
+    let slackToken = try environmentVariableString(.slackToken)
+    let releaseCandidateSlackChannelIds = try environmentVariableString(.releaseCandidateSlackChannelIds)
+        .components(separatedBy: ",")
+    let codeFreezeSlackChannelIds = try environmentVariableString(.codeFreezeSlackChannelIds)
+        .components(separatedBy: ",")
+
+    let gitlabBaseURL = try parseURL(.gitlabBaseURL)
+    let gitlabProjectId = try environmentVariableString(.gitlabProjectId)
+    let gitlabToken = try environmentVariableString(.gitlabToken)
 
     return .init(
         jiraBaseURL: jiraBaseURL,
@@ -54,7 +61,10 @@ private func makeEnvironment() throws -> Environment {
         jiraProjects: jiraProjects,
         slackToken: slackToken,
         releaseCandidateSlackChannelIds: releaseCandidateSlackChannelIds,
-        codeFreezeSlackChannelIds: codeFreezeSlackChannelIds
+        codeFreezeSlackChannelIds: codeFreezeSlackChannelIds,
+        gitlabBaseURL: gitlabBaseURL,
+        gitlabProjectId: gitlabProjectId,
+        gitlabToken: gitlabToken
     )
 }
 
@@ -80,4 +90,18 @@ private func parseJiraProjects(from string: String) throws -> [JiraProject] {
 
         return .init(name: name, id: id)
     }
+}
+
+private func parseURL(_ variable: EnvironmentVariable) throws -> URL {
+    guard variable == .jiraBaseURL || variable == .gitlabBaseURL else {
+        throw EnvironmentError.badURL(reason: "Environment variable \(String(describing: variable)) is not a URL")
+    }
+
+    let baseURLString = try environmentVariableString(variable)
+
+    guard let baseURL = URL(string: baseURLString) else {
+        throw EnvironmentError.badURL(reason: "Bad URL formation for \(String(describing: baseURLString))")
+    }
+
+    return baseURL
 }

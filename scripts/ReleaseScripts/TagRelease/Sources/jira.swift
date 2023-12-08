@@ -24,7 +24,7 @@ func markCurrentVersionAsReleasedInAllProjects(version: String) async throws {
 private func markCurrentVersionAsReleasedInProject(project: JiraProject, version: String) async throws {
     let releaseId = try await releaseId(projectId: project.id, version: version)
     let path = "/rest/api/2/version/\(releaseId)"
-    let url = makeURL(base: environment.jiraBaseURL, path: path)
+    let url = try makeURL(base: environment.jiraBaseURL, path: path)
 
     let body: [String: Any] = [
         "id": releaseId,
@@ -50,7 +50,7 @@ private let decoder = JSONDecoder()
 
 private func releaseId(projectId: Int64, version: String) async throws -> String {
     let path = "/rest/api/2/project/\(projectId)/versions"
-    let url = makeURL(base: environment.jiraBaseURL, path: path)
+    let url = try makeURL(base: environment.jiraBaseURL, path: path)
     let data = try await sendRequest(
         url: url,
         method: .get,

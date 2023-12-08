@@ -1,10 +1,12 @@
 import Foundation
 import SharedReleaseScript
 
-func createPrepareBranch(_ versionNumber: String) throws {
+func createPrepareBranch(_ versionNumber: String) throws -> String {
     try checkIfGitIsInstalled()
     try checkoutToDevelopAndPull()
-    try runInShell("git checkout -b task/prepare-\(versionNumber)")
+    let prepareBranch = "task/prepare-\(versionNumber)"
+    try runInShell("git checkout -b \(prepareBranch)")
+    return prepareBranch
 }
 
 func checkoutSubmoduleToCommit(submodule: Submodule, commitHash: String) throws {
@@ -12,10 +14,10 @@ func checkoutSubmoduleToCommit(submodule: Submodule, commitHash: String) throws 
     try runInShell("git checkout \(commitHash)", cwd: URL(fileURLWithPath: submodule.path))
 }
 
-func createReleaseCommitAndPushToOrigin(_ versionNumber: String) throws {
+func createReleaseCommitAndPushToOrigin(version: String, prepareBranch: String) throws {
     try runInShell("git add .")
-    try runInShell("git commit -m \"Prepare v\(versionNumber)\"")
-    try runInShell("git push --set-upstream origin task/prepare-\(versionNumber)")
+    try runInShell("git commit -m \"Prepare v\(version)\"")
+    try runInShell("git push --set-upstream origin \(prepareBranch)")
 }
 
  func checkIfGitIsInstalled() throws {

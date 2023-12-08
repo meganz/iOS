@@ -21,16 +21,6 @@ func mergeMasterWithOursStrategyAndPushToOrigin() throws {
     try runInShell("git push origin")
 }
 
-func mergeMasterWithReleaseAndPushToOrigin(_ releaseBranch: String) throws {
-    try runInShell("git merge \(releaseBranch)")
-    try runInShell("git push origin")
-}
-
-func deleteReleaseBranch(_ releaseBranch: String) throws {
-    try runInShell("git branch -d \(releaseBranch)")
-    try runInShell("git push origin --delete \(releaseBranch)")
-}
-
 func pushToPublicMaster(_ tag: String) throws {
     let publicRepository = "git@github.com:meganz/iOS.git"
     let isPublicRepositoryInRemoteList = try isRepositoryInRemoteList(publicRepository)
@@ -40,7 +30,8 @@ func pushToPublicMaster(_ tag: String) throws {
     }
 
     try checkoutToMasterAndPull()
-    try runInShell("git push public master")
+    // If it's your first time pushing to master, the shell will ask for you to recognize Github's authenticity
+    try runInShell("git push public master", input: "yes")
     try runInShell("git push public \(tag)")
 }
 
