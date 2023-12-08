@@ -3,7 +3,7 @@ import SharedReleaseScript
 
 func createReleaseVersion(version: String) async throws {
     let releasePath = "/rest/api/2/version"
-    let url = makeURL(base: environment.jiraBaseURL, path: releasePath)
+    let url = try makeURL(base: environment.jiraBaseURL, path: releasePath)
 
     // Execute release creation concurrently for all projects
     await withThrowingTaskGroup(of: Void.self) { group in

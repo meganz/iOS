@@ -4,7 +4,7 @@ enum GitError: Error {
     case missingTag
 }
 
-func createHotfixBranchFromTag(_ tag: String, hotfixVersion: String) throws {
+func createHotfixBranchFromTag(_ tag: String, hotfixVersion: String) throws -> String {
     let isTagInTagList = try isTagInTagList(tag)
 
     guard isTagInTagList else {
@@ -14,7 +14,7 @@ func createHotfixBranchFromTag(_ tag: String, hotfixVersion: String) throws {
 
     try runInShell("git checkout \(tag)")
 
-    try createHotfixBranchAndPushToOrigin(hotfixVersion)
+    return try createHotfixBranchAndPushToOrigin(hotfixVersion)
 }
 
 private func isTagInTagList(_ tag: String) throws -> Bool {
@@ -23,11 +23,12 @@ private func isTagInTagList(_ tag: String) throws -> Bool {
     return tagList.contains(tag)
 }
 
-private func createHotfixBranchAndPushToOrigin(_ hotfixVersion: String) throws {
+private func createHotfixBranchAndPushToOrigin(_ hotfixVersion: String) throws -> String {
     let branchName = "release/\(hotfixVersion)"
     try runInShell("git checkout -b \(branchName)")
     try updateAndCommitNewVersionNumber(hotfixVersion)
     try runInShell("git push --set-upstream origin \(branchName)")
+    return branchName
 }
 
 private func updateAndCommitNewVersionNumber(_ hotfixVersion: String) throws {

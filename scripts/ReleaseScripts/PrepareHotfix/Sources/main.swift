@@ -12,9 +12,12 @@ do {
     let userInput = try userInput()
 
     log("Creating hotfix \(userInput.hotfixVersion) from tag \(userInput.tag) (this might take a while)")
-    try createHotfixBranchFromTag(userInput.tag, hotfixVersion: userInput.hotfixVersion)
+    let branchName = try createHotfixBranchFromTag(userInput.tag, hotfixVersion: userInput.hotfixVersion)
 
-    log("Finished successfully - go to Gitlab and open the hotfix branch MR against master")
+    log("Creating hotfix MR on GitLab")
+    try await createMR(sourceBranch: branchName, targetBranch: "master", title: "Hotfix \(userInput.hotfixVersion)", squash: false)
+
+    log("Finished successfully")
     exit(ProcessResult.success)
 } catch {
     exitWithError(error)

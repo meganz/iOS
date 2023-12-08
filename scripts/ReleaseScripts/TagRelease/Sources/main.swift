@@ -23,20 +23,17 @@ do {
     log("Merging master into \(releaseBranch) using -s ours strategy and pushing to origin")
     try mergeMasterWithOursStrategyAndPushToOrigin()
 
-    log("Checking out to master and pulling")
-    try checkoutToMasterAndPull()
-
     log("Merging \(releaseBranch) into master")
-    try mergeMasterWithReleaseAndPushToOrigin(releaseBranch)
+    try await mergeReleaseMR(userInput.version)
 
-    log("Deleting \(releaseBranch)")
-    try deleteReleaseBranch(releaseBranch)
-
-    log("Pushing master to GitHub")
-    try pushToPublicMaster(userInput.version)
+    log("Creating release in Gitlab")
+    try await createRelease(userInput)
 
     log("Marking version \(userInput.version) as released in Jira projects")
     try await markCurrentVersionAsReleasedInAllProjects(version: userInput.version)
+
+    log("Pushing master to GitHub")
+    try pushToPublicMaster(userInput.version)
 
     log("Finished successfully")
     exit(ProcessResult.success)
