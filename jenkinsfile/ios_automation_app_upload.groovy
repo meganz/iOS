@@ -117,9 +117,9 @@ pipeline {
                                 // Path : dailybuilds
                                 env.targetPathRelease = "${env.targetPath}/release/${fileName}"
                                 env.targetPathReleaseLatest = "${env.targetPath}/release/${env.latest}"
-                                echo 'Branch name =' + env.BRANCH_NAME
+                                echo 'Branch name =' + branchName
 
-                                if (env.BRANCH_NAME == 'develop') {
+                                if (branchName == 'develop') {
                                     // dailybuilds
                                     echo 'Pulling dailybuilds from :' + branchName
                                     sh 'curl -H\"Authorization: Bearer $ARTIFACTORY_TOKEN\" -T ${zipPath} \"${targetPathLatest}\"'
