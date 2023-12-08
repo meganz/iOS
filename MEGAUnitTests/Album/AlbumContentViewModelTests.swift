@@ -572,7 +572,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         let message = Strings.Localizable.CameraUploads.Albums.removedItemFrom(Int(resultEntity.success))
             .replacingOccurrences(of: "[A]", with: "\(album.name)")
         test(viewModel: sut, action: .deletePhotos(nodesToRemove),
-             expectedCommands: [.showResultMessage(.custom(Asset.Images.Hud.hudMinus.image, message))])
+             expectedCommands: [.showResultMessage(.custom(UIImage.hudMinus, message))])
         XCTAssertEqual(albumModificationUseCase.deletedPhotos, albumPhotos)
     }
     
@@ -641,7 +641,7 @@ final class AlbumContentViewModelTests: XCTestCase {
         
         test(viewModel: sut, action: .deleteAlbum, expectedCommands: [
             .dismissAlbum,
-            .showResultMessage(.custom(Asset.Images.Hud.hudMinus.image, message))
+            .showResultMessage(.custom(UIImage.hudMinus, message))
         ])
         
         XCTAssertEqual(albumModificationUseCase.deletedAlbumsIds, [album.id])

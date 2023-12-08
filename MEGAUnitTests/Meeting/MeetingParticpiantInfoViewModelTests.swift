@@ -292,49 +292,49 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
     private func infoAction() -> ActionSheetAction {
         ActionSheetAction(title: Strings.Localizable.info,
                           detail: nil,
-                          image: Asset.Images.Meetings.infoMeetings.image,
+                          image: UIImage.infoMeetings,
                           style: .default) {}
     }
     
     private func sendMessageAction() -> ActionSheetAction {
         ActionSheetAction(title: Strings.Localizable.sendMessage,
                           detail: nil,
-                          image: Asset.Images.Meetings.sendMessageMeetings.image,
+                          image: UIImage.sendMessageMeetings,
                           style: .default) {}
     }
     
     private func makeModeratorAction() -> ActionSheetAction {
         ActionSheetAction(title: Strings.Localizable.Meetings.Participant.makeModerator,
                           detail: nil,
-                          image: Asset.Images.Meetings.moderatorMeetings.image,
+                          image: UIImage.moderatorMeetings,
                           style: .default) {}
     }
     
     private func removeModeratorAction() -> ActionSheetAction {
         ActionSheetAction(title: Strings.Localizable.Meetings.Participant.removeModerator,
                           detail: nil,
-                          image: Asset.Images.Meetings.removeModerator.image,
+                          image: UIImage.removeModerator,
                           style: .default) {}
     }
     
     private func addContactAction() -> ActionSheetAction {
         ActionSheetAction(title: Strings.Localizable.addContact,
                           detail: nil,
-                          image: Asset.Images.Meetings.addContactMeetings.image,
+                          image: UIImage.addContactMeetings,
                           style: .default) {}
     }
     
     private func removeContactAction() -> ActionSheetAction {
         ActionSheetAction(title: Strings.Localizable.removeParticipant,
                           detail: nil,
-                          image: Asset.Images.NodeActions.delete.image,
+                          image: UIImage.delete,
                           style: .destructive) {}
     }
     
     private func displayInMainViewAction() -> ActionSheetAction {
         ActionSheetAction(title: Strings.Localizable.Meetings.DisplayInMainView.title,
                           detail: nil,
-                          image: Asset.Images.Chat.speakerView.image,
+                          image: UIImage.speakerView,
                           style: .default) {}
     }
 }

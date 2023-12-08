@@ -107,7 +107,7 @@ final class DiskFullBlockingViewController: UIViewController, ViewType {
         case let .configView(blockingModel):
             titleLabel.text = blockingModel.title
             manageButton.setTitle(blockingModel.manageDiskSpaceTitle, for: .normal)
-            headerImageView.image = UIImage(named: blockingModel.headerImageName)
+            headerImageView.image = blockingModel.headerImage
             descriptionLabel.attributedText = buildDescriptionText(by: blockingModel)
         }
     }

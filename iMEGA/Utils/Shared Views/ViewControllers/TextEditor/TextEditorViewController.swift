@@ -139,6 +139,7 @@ extension TextEditorViewController: ViewType {
                 target: self,
                 action: #selector(closeTapped)
             )
+            navigationItem.rightBarButtonItem = nil
         case .view:
             navigationItem.leftBarButtonItem = UIBarButtonItem(
                 title: navbarItemsModel.leftItem.title,
@@ -147,7 +148,7 @@ extension TextEditorViewController: ViewType {
                 action: #selector(closeTapped)
             )
             navigationItem.rightBarButtonItem = UIBarButtonItem(
-                image: UIImage(named: navbarItemsModel.rightItem?.imageName ?? Asset.Images.NavigationBar.moreNavigationBar.name),
+                image: navbarItemsModel.rightItem?.image ?? UIImage.moreNavigationBar,
                 style: .plain,
                 target: self,
                 action: #selector(moreTapped(button:))

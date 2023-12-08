@@ -11,7 +11,7 @@ struct TextEditorModel: Equatable {
 
 struct NavbarItemModel: Equatable {
     let title: String?
-    let imageName: String?
+    let image: UIImage?
 }
 struct TextEditorNavbarItemsModel: Equatable {
     let leftItem: NavbarItemModel

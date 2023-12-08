@@ -169,30 +169,30 @@ final class TurnOnNotificationsViewController: UIViewController, ViewType {
     func executeCommand(_ command: TurnOnNotificationsViewModel.Command) {
         switch command {
         case let .configView(turnOnNotificationsModel):
-            headerImageView.image = UIImage(named: turnOnNotificationsModel.headerImageName)
+            headerImageView.image = turnOnNotificationsModel.headerImage
             titleLabel.text = turnOnNotificationsModel.title
             descriptionLabel.text = turnOnNotificationsModel.description
             
-            openSettingsImageView.image = UIImage(named: turnOnNotificationsModel.stepOneImageName)
+            openSettingsImageView.image = turnOnNotificationsModel.stepOneImage
 
             let stepOneAttributed = turnOnNotificationsModel.stepOne.replace(tag: "b",
                                                                              withFont: .preferredFont(forTextStyle: .headline),
                                                                              originalFont: .preferredFont(forTextStyle: .body))
             openSettingsLabel.attributedText = stepOneAttributed
             
-            tapNotificationsImageView.image = UIImage(named: turnOnNotificationsModel.stepTwoImageName)
+            tapNotificationsImageView.image = turnOnNotificationsModel.stepTwoImage
             let stepTwoAttributed = turnOnNotificationsModel.stepTwo.replace(tag: "b",
                                                                              withFont: .preferredFont(forTextStyle: .headline),
                                                                              originalFont: .preferredFont(forTextStyle: .body))
             tapNotificationsLabel.attributedText = stepTwoAttributed
             
-            tapMegaImageView.image = UIImage(named: turnOnNotificationsModel.stepThreeImageName)
+            tapMegaImageView.image = turnOnNotificationsModel.stepThreeImage
             let stepThreeAttributed = turnOnNotificationsModel.stepThree.replace(tag: "b",
                                                                              withFont: .preferredFont(forTextStyle: .headline),
                                                                              originalFont: .preferredFont(forTextStyle: .body))
             tapMegaLabel.attributedText = stepThreeAttributed
 
-            turnOnAllowNotificationsImageView.image = UIImage(named: turnOnNotificationsModel.stepFourImageName)
+            turnOnAllowNotificationsImageView.image = turnOnNotificationsModel.stepFourImage
 
             let stepFourAttributed = turnOnNotificationsModel.stepFour.replace(tag: "b",
                                                                              withFont: .preferredFont(forTextStyle: .headline),

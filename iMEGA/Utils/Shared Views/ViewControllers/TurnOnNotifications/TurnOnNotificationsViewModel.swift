@@ -67,16 +67,16 @@ final class TurnOnNotificationsViewModel: ViewModelType {
             let stepThree = Strings.Localizable.Dialog.TurnOnNotifications.Label.stepThree
             let stepFour = Strings.Localizable.Dialog.TurnOnNotifications.Label.stepFour
             
-            let notificationsModel = TurnOnNotificationsModel(headerImageName: Asset.Images.Chat.groupChat.name,
+            let notificationsModel = TurnOnNotificationsModel(headerImage: UIImage.groupChat,
                                                               title: title,
                                                               description: description,
-                                                              stepOneImageName: Asset.Images.WarningTurnonNotifications.openSettings.name,
+                                                              stepOneImage: UIImage.openSettings,
                                                               stepOne: stepOne,
-                                                              stepTwoImageName: Asset.Images.WarningTurnonNotifications.tapNotifications.name,
+                                                              stepTwoImage: UIImage.tapNotifications,
                                                               stepTwo: stepTwo,
-                                                              stepThreeImageName: Asset.Images.WarningTurnonNotifications.tapMega.name,
+                                                              stepThreeImage: UIImage.tapMega,
                                                               stepThree: stepThree,
-                                                              stepFourImageName: Asset.Images.WarningTurnonNotifications.allowNotifications.name,
+                                                              stepFourImage: UIImage.allowNotifications,
                                                               stepFour: stepFour,
                                                               openSettingsTitle: Strings.Localizable.Dialog.TurnOnNotifications.Button.primary,
                                                               dismissTitle: Strings.Localizable.dismiss)

@@ -161,7 +161,7 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
         test(viewModel: sut, action: .copyLink,
              expectedCommands: [
                 .addToPasteBoard(expectedLink),
-                .showHud(.custom(Asset.Images.NodeActions.copy.image,
+                .showHud(.custom(UIImage.copy,
                                  Strings.Localizable.SharedItems.GetLink.linkCopied(links.values.count)))
              ])
     }
@@ -187,7 +187,7 @@ final class GetAlbumsLinkViewModelTests: XCTestCase {
         test(viewModel: sut, action: .didSelectRow(indexPath: linkIndexPath),
              expectedCommands: [
                 .addToPasteBoard(expectedLink),
-                .showHud(.custom(Asset.Images.NodeActions.copy.image,
+                .showHud(.custom(UIImage.copy,
                                  Strings.Localizable.SharedItems.GetLink.linkCopied(1)))
              ])
     }
