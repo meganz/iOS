@@ -10,7 +10,7 @@ struct SlideShowOptionCellView: View {
             if cellModel.type == .none {
                 Rectangle()
                     .frame(height: 24)
-                    .foregroundColor(Color(colorScheme == .dark ? UIColor.mnz_black1C1C1E() : UIColor.whiteF7F7F7))
+                    .foregroundColor(colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._F7F7F7.color)
             } else {
                 ZStack {
                     Toggle(isOn: $cellModel.isOn) {
@@ -40,8 +40,6 @@ struct SlideShowOptionCellView: View {
             }
             Divider().padding(.leading, 16)
         }
-        .background(
-            Color(colorScheme == .dark ? MEGAAppColor.Black._2C2C2E.uiColor : UIColor.white)
-        )
+        .background(colorScheme == .dark ? MEGAAppColor.Black._2C2C2E.color : MEGAAppColor.White._FFFFFF.color)
     }
 }

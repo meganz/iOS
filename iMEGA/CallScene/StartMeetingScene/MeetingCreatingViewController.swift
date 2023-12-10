@@ -8,7 +8,7 @@ class MeetingCreatingViewController: UIViewController, UITextFieldDelegate {
     private struct AvatarProperties {
         static let initials = "G"
         static let font = UIFont.preferredFont(forTextStyle: .title1).withWeight(.semibold)
-        static let textColor = UIColor.white
+        static let textColor = MEGAAppColor.White._FFFFFF.uiColor
         static let size = CGSize(width: 80, height: 80)
         static let backgroundColor = UIColor.callAvatarBackground
         static let backgroundGradientColor = UIColor.callAvatarBackgroundGradient
@@ -18,12 +18,12 @@ class MeetingCreatingViewController: UIViewController, UITextFieldDelegate {
         static let bottomBarText = UIFont.preferredFont(style: .title3, weight: .semibold)
         static let bottomBarButtonText = UIFont.preferredFont(forTextStyle: .headline)
         static let backgroundColor = #colorLiteral(red: 0.2, green: 0.1843137255, blue: 0.1843137255, alpha: 1)
-        static let iconTintColorNormal = UIColor.white
+        static let iconTintColorNormal = MEGAAppColor.White._FFFFFF.uiColor
         static let iconTintColorSelected = MEGAAppColor.Black._000000.uiColor
         static let iconBackgroundColorNormal = #colorLiteral(red: 0.1333158016, green: 0.1333456039, blue: 0.1333118975, alpha: 1)
-        static let iconBackgroundColorSelected = UIColor.white
-        static let meetingNameTextColor = UIColor.white.withAlphaComponent(0.2)
-        static let placeholderTextColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.3)
+        static let iconBackgroundColorSelected = MEGAAppColor.White._FFFFFF.uiColor
+        static let meetingNameTextColor = MEGAAppColor.White._FFFFFF.uiColor.withAlphaComponent(0.2)
+        static let placeholderTextColor = MEGAAppColor.White._FFFFFF.uiColor.withAlphaComponent(0.2)
     }
     
     @IBOutlet weak var localUserView: LocalUserView!

@@ -97,12 +97,12 @@ class ChatViewController: MessagesViewController {
     
     lazy var startOrJoinCallButton: UIButton = {
         let button = UIButton()
-        let textColor = traitCollection.userInterfaceStyle == .dark ? MEGAAppColor.Black._000000.uiColor : UIColor.whiteFFFFFF
+        let textColor = traitCollection.userInterfaceStyle == .dark ? MEGAAppColor.Black._000000.uiColor : MEGAAppColor.White._FFFFFF.uiColor
         button.setTitleColor(textColor, for: .normal)
         button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .callout)
         button.setTitle(Strings.Localizable.tapToReturnToCall, for: .normal)
         button.layer.cornerRadius = 20
-        button.backgroundColor = traitCollection.userInterfaceStyle == .dark ? UIColor.whiteFFFFFF : MEGAAppColor.Black._00000075.uiColor
+        button.backgroundColor = traitCollection.userInterfaceStyle == .dark ? MEGAAppColor.White._FFFFFF.uiColor : MEGAAppColor.Black._00000075.uiColor
         return button
     }()
     
@@ -424,9 +424,9 @@ class ChatViewController: MessagesViewController {
         }
         messagesCollectionView.reloadData()
         
-        let textColor = traitCollection.userInterfaceStyle == .dark ? MEGAAppColor.Black._000000.uiColor : UIColor.whiteFFFFFF
+        let textColor = traitCollection.userInterfaceStyle == .dark ? MEGAAppColor.Black._000000.uiColor : MEGAAppColor.White._FFFFFF.uiColor
         startOrJoinCallButton.setTitleColor(textColor, for: .normal)
-        startOrJoinCallButton.backgroundColor = traitCollection.userInterfaceStyle == .dark ? UIColor.whiteFFFFFF : MEGAAppColor.Black._00000075.uiColor
+        startOrJoinCallButton.backgroundColor = traitCollection.userInterfaceStyle == .dark ? MEGAAppColor.White._FFFFFF.uiColor : MEGAAppColor.Black._00000075.uiColor
         
         if let inputbar = inputAccessoryView as? ChatInputBar {
             inputbar.set(keyboardAppearance: traitCollection.userInterfaceStyle == .dark ? .dark : .light)

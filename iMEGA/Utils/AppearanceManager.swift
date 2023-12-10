@@ -164,7 +164,7 @@ class AppearanceManager: NSObject {
     
     private class func setupActivityIndicatorAppearance(_ traitCollection: UITraitCollection) {
         UIActivityIndicatorView.appearance().style = .medium
-        UIActivityIndicatorView.appearance().color = (traitCollection.userInterfaceStyle == UIUserInterfaceStyle.dark) ? UIColor.white : UIColor.mnz_primaryGray(for: traitCollection)
+        UIActivityIndicatorView.appearance().color = (traitCollection.userInterfaceStyle == UIUserInterfaceStyle.dark) ? MEGAAppColor.White._FFFFFF.uiColor : UIColor.mnz_primaryGray(for: traitCollection)
     }
     
     private class func setupToolbar(_ traitCollection: UITraitCollection) {

@@ -36,7 +36,7 @@ extension UIColor {
             }
             
         @unknown default:
-            return UIColor.white
+            return MEGAAppColor.White._FFFFFF.uiColor
         }
     }
     
@@ -65,7 +65,7 @@ extension UIColor {
             if traitCollection.accessibilityContrast == .high {
                 return MEGAAppColor.Gray._E6E6E6.uiColor
             } else {
-                return UIColor.whiteF7F7F7
+                return MEGAAppColor.White._F7F7F7.uiColor
             }
             
         case .dark:
@@ -76,14 +76,14 @@ extension UIColor {
             }
             
         @unknown default:
-            return UIColor.whiteF7F7F7
+            return MEGAAppColor.White._F7F7F7.uiColor
         }
     }
     
     @objc class func mnz_tertiaryBackgroundElevated(_ traitCollection: UITraitCollection) -> UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
-            return UIColor.white
+            return MEGAAppColor.White._FFFFFF.uiColor
             
         case .dark:
             if traitCollection.accessibilityContrast == .high {
@@ -93,7 +93,7 @@ extension UIColor {
             }
             
         @unknown default:
-            return UIColor.white
+            return MEGAAppColor.White._FFFFFF.uiColor
         }
     }
     
@@ -105,7 +105,7 @@ extension UIColor {
             if traitCollection.accessibilityContrast == .high {
                 return .white
             } else {
-                return UIColor.whiteF7F7F7
+                return MEGAAppColor.White._F7F7F7.uiColor
             }
             
         case .dark:
@@ -129,7 +129,7 @@ extension UIColor {
             if traitCollection.accessibilityContrast == .high {
                 return MEGAAppColor.Gray._E6E6E6.uiColor
             } else {
-                return UIColor.whiteF7F7F7
+                return MEGAAppColor.White._F7F7F7.uiColor
             }
             
         case .dark:
@@ -149,7 +149,7 @@ extension UIColor {
             if traitCollection.accessibilityContrast == .high {
                 return MEGAAppColor.Gray._E6E6E6.uiColor
             } else {
-                return UIColor.whiteF7F7F7
+                return MEGAAppColor.White._F7F7F7.uiColor
             }
             
         case .dark:
@@ -170,7 +170,7 @@ extension UIColor {
             if traitCollection.accessibilityContrast == .high {
                 return MEGAAppColor.Gray._E6E6E6.uiColor
             } else {
-                return UIColor.whiteF7F7F7
+                return MEGAAppColor.White._F7F7F7.uiColor
             }
             
         case .dark:
@@ -181,7 +181,7 @@ extension UIColor {
             }
             
         @unknown default:
-            return white
+            return MEGAAppColor.White._FFFFFF.uiColor
         }
     }
     
@@ -193,7 +193,7 @@ extension UIColor {
             return UIColor.mnz_redProIII()
             
         case .dark:
-            return UIColor.white
+            return MEGAAppColor.White._FFFFFF.uiColor
             
         @unknown default:
             return UIColor.mnz_redProIII()
@@ -205,7 +205,7 @@ extension UIColor {
         case .unspecified, .light:
             return MEGAAppColor.Black._00000060.uiColor
         case .dark:
-            return UIColor.white.withAlphaComponent(0.15)
+            return MEGAAppColor.White._FFFFFF.uiColor.withAlphaComponent(0.15)
             
         @unknown default:
             return MEGAAppColor.Black._00000060.uiColor
@@ -215,11 +215,11 @@ extension UIColor {
     @objc class func mnz_chatRichLinkContentBubble(_ traitCollection: UITraitCollection) -> UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
-            return UIColor.white
+            return MEGAAppColor.White._FFFFFF.uiColor
         case .dark:
             return mnz_black1C1C1E()
         @unknown default:
-            return UIColor.white
+            return MEGAAppColor.White._FFFFFF.uiColor
         }
     }
     
@@ -252,13 +252,13 @@ extension UIColor {
     class func mnz_homeRecentsCellBackground(for traitCollection: UITraitCollection) -> UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
-            return UIColor.white
+            return MEGAAppColor.White._FFFFFF.uiColor
             
         case .dark:
             return MEGAAppColor.Black._1C1C1E.uiColor
             
         @unknown default:
-            return UIColor.white
+            return MEGAAppColor.White._FFFFFF.uiColor
         }
     }
     
@@ -267,9 +267,9 @@ extension UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.whiteF7F7F7
+                return MEGAAppColor.White._F7F7F7.uiColor
             } else {
-                return UIColor.whiteFAFAFA
+                return MEGAAppColor.White._FAFAFA.uiColor
             }
             
         case .dark:
@@ -280,7 +280,7 @@ extension UIColor {
             }
             
         @unknown default:
-            return UIColor.white
+            return MEGAAppColor.White._FFFFFF.uiColor
         }
     }
     
@@ -289,9 +289,9 @@ extension UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.whiteF2F2F2
+                return MEGAAppColor.White._F2F2F2.uiColor
             } else {
-                return UIColor.whiteEEEEEE
+                return MEGAAppColor.White._EEEEEE.uiColor
             }
             
         case .dark:
@@ -302,7 +302,7 @@ extension UIColor {
             }
             
         @unknown default:
-            return UIColor.whiteEEEEEE
+            return MEGAAppColor.White._EEEEEE.uiColor
         }
     }
     
@@ -394,14 +394,14 @@ extension UIColor {
             if traitCollection.accessibilityContrast == .high {
                 return MEGAAppColor.Gray._E6E6E6.uiColor
             } else {
-                return UIColor.whiteF7F7F7
+                return MEGAAppColor.White._F7F7F7.uiColor
             }
             
         case .dark:
             return MEGAAppColor.Black._2C2C2E.uiColor
             
         @unknown default:
-            return UIColor.whiteF7F7F7
+            return MEGAAppColor.White._F7F7F7.uiColor
         }
     }
     
@@ -432,7 +432,7 @@ extension UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.whiteF2F2F2
+                return MEGAAppColor.White._F2F2F2.uiColor
             } else {
                 return UIColor.mnz_whiteF7F7F7()
             }
@@ -591,7 +591,7 @@ extension UIColor {
     class func mnz_voiceRecordingViewBackground(_ traitCollection: UITraitCollection) -> UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
-            return UIColor.whiteFCFCFC
+            return MEGAAppColor.White._FCFCFC.uiColor
             
         case .dark:
             if traitCollection.accessibilityContrast == .high {
@@ -601,7 +601,7 @@ extension UIColor {
             }
             
         @unknown default:
-            return UIColor.whiteFCFCFC
+            return MEGAAppColor.White._FCFCFC.uiColor
         }
     }
     
@@ -830,7 +830,7 @@ extension UIColor {
     // MARK: White
     
     @objc class func mnz_whiteF7F7F7() -> UIColor {
-        return UIColor.whiteF7F7F7
+        return MEGAAppColor.White._F7F7F7.uiColor
     }
     
     // MARK: Yellow

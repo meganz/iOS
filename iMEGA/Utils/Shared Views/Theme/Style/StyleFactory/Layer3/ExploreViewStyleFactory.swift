@@ -42,7 +42,7 @@ struct ExplorerCardConfiguration {
 }
 
 extension ExplorerCardConfiguration {
-    private static let foregroundColorsLight = [UIColor(white: 1.0, alpha: 0.95), UIColor.white]
+    private static let foregroundColorsLight = [UIColor(white: 1.0, alpha: 0.95), MEGAAppColor.White._FFFFFF.uiColor]
     private static let foregroundColorsDark = [UIColor.explorerForegroundDark, MEGAAppColor.Black._000000.uiColor]
     
     static func favouritesExplorerCardConfiguration(forTraitCollection traitCollection: UITraitCollection) -> ExplorerCardConfiguration {

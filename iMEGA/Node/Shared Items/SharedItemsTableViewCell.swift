@@ -41,6 +41,6 @@ final class SharedItemsTableViewCell: UITableViewCell {
     
     func updateAppearance() {
         infoLabel.textColor = UIColor.mnz_subtitles(for: traitCollection)
-        backgroundColor = traitCollection.userInterfaceStyle == .dark ? MEGAAppColor.Black._000000.uiColor : UIColor.whiteFFFFFF
+        backgroundColor = traitCollection.userInterfaceStyle == .dark ? MEGAAppColor.Black._000000.uiColor : MEGAAppColor.White._FFFFFF.uiColor
     }
 }

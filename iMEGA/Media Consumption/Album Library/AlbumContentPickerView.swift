@@ -94,7 +94,7 @@ struct AlbumContentPickerView: View {
     }
     
     private var backGroundColor: UIColor {
-        colorScheme == .dark ? UIColor.mnz_black1C1C1E() : UIColor.whiteF7F7F7
+        colorScheme == .dark ? UIColor.mnz_black1C1C1E() : MEGAAppColor.White._F7F7F7.uiColor
     }
     
     private var textColor: Color {

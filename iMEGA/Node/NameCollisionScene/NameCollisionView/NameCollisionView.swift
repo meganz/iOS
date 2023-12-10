@@ -44,7 +44,7 @@ struct NameCollisionView: View {
                 }
             }
         }
-        .background(colorScheme == .dark ? Color(MEGAAppColor.Black._1C1C1E.uiColor) : Color(UIColor.whiteF7F7F7))
+        .background(colorScheme == .dark ? Color(MEGAAppColor.Black._1C1C1E.uiColor) : Color(MEGAAppColor.White._F7F7F7.uiColor))
         .onAppear {
             viewModel.onViewAppeared()
         }
