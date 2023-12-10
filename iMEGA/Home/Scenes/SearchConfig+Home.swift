@@ -96,7 +96,7 @@ extension SearchConfig {
                 F7363D: Color.redF7363D,
                 _1C1C1E: Color(.black1C1C1E),
                 _00A886: Color(.green00A886),
-                _3C3C43: Color(UIColor.gray3C3C43)
+                _3C3C43: MEGAAppColor.Gray._3C3C43.color
             ),
             contextPreviewFactory: contextPreviewFactory
         )

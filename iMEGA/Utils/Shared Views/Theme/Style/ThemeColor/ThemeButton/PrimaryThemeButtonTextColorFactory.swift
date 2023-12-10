@@ -11,7 +11,7 @@ extension LightColorThemeFactory {
         }
 
         func disabledColor() -> UIColor {
-            return UIColor.gray999999
+            return MEGAAppColor.Gray._999999.uiColor
         }
 
         func highlightedColor() -> UIColor {
@@ -28,7 +28,7 @@ extension LightColorThemeFactory {
         }
 
         func disabledColor() -> UIColor {
-            return UIColor.gray999999
+            return MEGAAppColor.Gray._999999.uiColor
         }
 
         func highlightedColor() -> UIColor {
@@ -48,7 +48,7 @@ extension DarkColorThemeFactory {
         }
 
         func disabledColor() -> UIColor {
-            return UIColor.gray999999
+            return MEGAAppColor.Gray._999999.uiColor
         }
 
         func highlightedColor() -> UIColor {
@@ -65,7 +65,7 @@ extension DarkColorThemeFactory {
         }
 
         func disabledColor() -> UIColor {
-            return UIColor.gray999999
+            return MEGAAppColor.Gray._999999.uiColor
         }
 
         func highlightedColor() -> UIColor {

@@ -42,7 +42,7 @@ struct WaitingRoomParticipantsListView: View {
                     viewModel.closeTapped()
                 }
                 .padding(.trailing, 24)
-                .foregroundColor(Color(UIColor.grayD1D1D1))
+                .foregroundColor(MEGAAppColor.Gray._D1D1D1.color)
                 .font(.body.bold())
             }
         }
@@ -57,7 +57,7 @@ struct WaitingRoomParticipantsListView: View {
             .font(.body.bold())
             .foregroundColor(Color(.green00C29A))
             .frame(width: 288, height: 50, alignment: .center)
-            .background(Color(UIColor.gray363638))
+            .background(MEGAAppColor.Gray._363638.color)
             .cornerRadius(8)
             .shadow(color: .black.opacity(0.15), radius: 2, x: 0, y: 1)
         }

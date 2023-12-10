@@ -162,7 +162,7 @@ struct ImportAlbumView: View {
     }
     
     private var toolbarButtonColor: Color {
-        colorScheme == .dark ? Color(UIColor.grayD1D1D1) : Color(UIColor.gray515151)
+        colorScheme == .dark ? MEGAAppColor.Gray._D1D1D1.color : MEGAAppColor.Gray._515151.color
     }
     
     private func dismissImportAlbumScreen() {

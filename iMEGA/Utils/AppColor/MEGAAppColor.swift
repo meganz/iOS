@@ -148,10 +148,15 @@ enum MEGAAppColor {
         case _E6E6E6
         case _E8E8E8
         case _EBEBEB
+        case _EBEBF5
         case _F4F4F4
         
         var uiColor: UIColor {
             DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) ? designTokenColor : legacyColor
+        }
+        
+        var color: Color {
+            DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) ? designTokenColor.swiftUI : legacyColor.swiftUI
         }
         
         private var designTokenColor: UIColor {
@@ -189,6 +194,7 @@ enum MEGAAppColor {
             case ._E6E6E6: TokenColors.Background.blur
             case ._E8E8E8: TokenColors.Background.blur
             case ._EBEBEB: TokenColors.Background.blur
+            case ._EBEBF5: TokenColors.Background.blur
             case ._F4F4F4: TokenColors.Background.blur
             }
         }
@@ -228,6 +234,7 @@ enum MEGAAppColor {
             case ._E6E6E6: UIColor.grayE6E6E6
             case ._E8E8E8: UIColor.grayE8E8E8
             case ._EBEBEB: UIColor.grayEBEBEB
+            case ._EBEBF5: UIColor.grayEBEBF5
             case ._F4F4F4: UIColor.grayF4F4F4
             }
         }

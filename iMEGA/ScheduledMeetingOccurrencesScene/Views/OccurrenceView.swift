@@ -23,11 +23,11 @@ struct OccurrenceView: View {
                 Text(occurrence.date)
                     .padding(.horizontal)
                     .font(.footnote)
-                    .foregroundColor(colorScheme == .dark ? Color(UIColor.grayEBEBF5).opacity(Constants.headerTitleOpacity) : Color(UIColor.gray3C3C43).opacity(Constants.headerTitleOpacity))
+                    .foregroundColor(colorScheme == .dark ? MEGAAppColor.Gray._EBEBF5.color.opacity(Constants.headerTitleOpacity) : MEGAAppColor.Gray._3C3C43.color.opacity(Constants.headerTitleOpacity))
                 Divider()
-                    .background(colorScheme == .dark ? Color(UIColor.gray545458) : Color(UIColor.gray3C3C43))
+                    .background(colorScheme == .dark ? MEGAAppColor.Gray._545458.color : MEGAAppColor.Gray._3C3C43.color)
             }
-            .background(colorScheme == .dark ? Color(UIColor.gray1D1D1D).opacity(Constants.headerBackgroundOpacity) : Color(UIColor.whiteF7F7F7).opacity(Constants.headerBackgroundOpacity))
+            .background(colorScheme == .dark ? MEGAAppColor.Gray._1D1D1D.color.opacity(Constants.headerBackgroundOpacity) : Color(UIColor.whiteF7F7F7).opacity(Constants.headerBackgroundOpacity))
             .frame(height: Constants.headerHeight)
 
             HStack(alignment: .center) {
@@ -39,7 +39,7 @@ struct OccurrenceView: View {
                         .font(.subheadline)
                     Text(occurrence.time)
                         .font(.caption)
-                        .foregroundColor(colorScheme == .dark ? Color(UIColor.grayD1D1D1) : Color(UIColor.gray515151))
+                        .foregroundColor(colorScheme == .dark ? MEGAAppColor.Gray._D1D1D1.color : MEGAAppColor.Gray._515151.color)
                 }
             }
             .frame(height: Constants.rowHeight)

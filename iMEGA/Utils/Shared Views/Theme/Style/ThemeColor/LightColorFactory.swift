@@ -5,9 +5,9 @@ struct LightColorThemeFactory: ColorFactory {
     func textColor(_ style: MEGAColor.Text) -> UIColor {
         switch style {
         case .primary: return MEGAAppColor.Black._00000032.uiColor
-        case .secondary: return UIColor.gray999999
-        case .tertiary: return UIColor.gray515151
-        case .quaternary: return UIColor.gray848484
+        case .secondary: return MEGAAppColor.Gray._999999.uiColor
+        case .tertiary: return MEGAAppColor.Gray._515151.uiColor
+        case .quaternary: return MEGAAppColor.Gray._848484.uiColor
         case .warning: return UIColor.redFF3B30
         }
     }
@@ -15,11 +15,11 @@ struct LightColorThemeFactory: ColorFactory {
     func backgroundColor(_ style: MEGAColor.Background) -> UIColor {
         switch style {
         case .primary: return .white
-        case .secondary: return UIColor.grayC4CCCC
+        case .secondary: return MEGAAppColor.Gray._C4CCCC.uiColor
             
         case .warning: return UIColor.yellowFFCC0003
         case .enabled: return UIColor.green00A886
-        case .disabled: return UIColor.gray999999
+        case .disabled: return MEGAAppColor.Gray._999999.uiColor
         case .highlighted: return UIColor.green00A88680
             
         case .searchTextField: return UIColor.whiteEFEFEF
@@ -29,8 +29,8 @@ struct LightColorThemeFactory: ColorFactory {
     
     func tintColor(_ style: MEGAColor.Tint) -> UIColor {
         switch style {
-        case .primary: return UIColor.gray515151
-        case .secondary: return UIColor.grayC4C4C4
+        case .primary: return MEGAAppColor.Gray._515151.uiColor
+        case .secondary: return MEGAAppColor.Gray._C4C4C4.uiColor
         }
     }
     

@@ -63,14 +63,14 @@ extension UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.grayE6E6E6
+                return MEGAAppColor.Gray._E6E6E6.uiColor
             } else {
                 return UIColor.whiteF7F7F7
             }
             
         case .dark:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.gray3A3A3C
+                return MEGAAppColor.Gray._3A3A3C.uiColor
             } else {
                 return MEGAAppColor.Black._2C2C2E.uiColor
             }
@@ -89,7 +89,7 @@ extension UIColor {
             if traitCollection.accessibilityContrast == .high {
                 return mnz_gray545457()
             } else {
-                return UIColor.gray3A3A3C
+                return MEGAAppColor.Gray._3A3A3C.uiColor
             }
             
         @unknown default:
@@ -127,7 +127,7 @@ extension UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.grayE6E6E6
+                return MEGAAppColor.Gray._E6E6E6.uiColor
             } else {
                 return UIColor.whiteF7F7F7
             }
@@ -147,7 +147,7 @@ extension UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.grayE6E6E6
+                return MEGAAppColor.Gray._E6E6E6.uiColor
             } else {
                 return UIColor.whiteF7F7F7
             }
@@ -168,16 +168,16 @@ extension UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.grayE6E6E6
+                return MEGAAppColor.Gray._E6E6E6.uiColor
             } else {
                 return UIColor.whiteF7F7F7
             }
             
         case .dark:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.gray545458
+                return MEGAAppColor.Gray._545458.uiColor
             } else {
-                return UIColor.gray3A3A3C
+                return MEGAAppColor.Gray._3A3A3C.uiColor
             }
             
         @unknown default:
@@ -296,7 +296,7 @@ extension UIColor {
             
         case .dark:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.gray3F3F42
+                return MEGAAppColor.Gray._3F3F42.uiColor
             } else {
                 return MEGAAppColor.Black._2C2C2E.uiColor
             }
@@ -334,9 +334,9 @@ extension UIColor {
             
         case .dark:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.gray535356
+                return MEGAAppColor.Gray._535356.uiColor
             } else {
-                return UIColor.gray363638
+                return MEGAAppColor.Gray._363638.uiColor
             }
             
         @unknown default:
@@ -349,16 +349,16 @@ extension UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.gray3C3C43.withAlphaComponent(0.5)
+                return MEGAAppColor.Gray._3C3C43.uiColor.withAlphaComponent(0.5)
             } else {
-                return UIColor.gray3C3C43.withAlphaComponent(0.3)
+                return MEGAAppColor.Gray._3C3C43.uiColor.withAlphaComponent(0.3)
             }
             
         case .dark:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.gray545458
+                return MEGAAppColor.Gray._545458.uiColor
             } else {
-                return UIColor.gray545458.withAlphaComponent(0.65)
+                return MEGAAppColor.Gray._545458.uiColor.withAlphaComponent(0.65)
             }
             
         @unknown default:
@@ -371,16 +371,16 @@ extension UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.gray04040F.withAlphaComponent(0.4)
+                return MEGAAppColor.Gray._04040F.uiColor.withAlphaComponent(0.4)
             } else {
-                return UIColor.gray04040F.withAlphaComponent(0.15)
+                return MEGAAppColor.Gray._04040F.uiColor.withAlphaComponent(0.15)
             }
             
         case .dark:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.grayEBEBF5.withAlphaComponent(0.6)
+                return MEGAAppColor.Gray._EBEBF5.uiColor.withAlphaComponent(0.6)
             } else {
-                return UIColor.grayEBEBF5.withAlphaComponent(0.3)
+                return MEGAAppColor.Gray._EBEBF5.uiColor.withAlphaComponent(0.3)
             }
             
         @unknown default:
@@ -392,7 +392,7 @@ extension UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.grayE6E6E6
+                return MEGAAppColor.Gray._E6E6E6.uiColor
             } else {
                 return UIColor.whiteF7F7F7
             }
@@ -439,7 +439,7 @@ extension UIColor {
             
         case .dark:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.gray3F3F42
+                return MEGAAppColor.Gray._3F3F42.uiColor
             } else {
                 return MEGAAppColor.Black._2C2C2E.uiColor
             }
@@ -557,7 +557,7 @@ extension UIColor {
             
         case .dark:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.grayE5E5E5
+                return MEGAAppColor.Gray._E5E5E5.uiColor
             } else {
                 return mnz_grayD1D1D1()
             }
@@ -573,7 +573,7 @@ extension UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.gray3D3D3D
+                return MEGAAppColor.Gray._3D3D3D.uiColor
             } else {
                 return mnz_gray515151()
             }
@@ -595,7 +595,7 @@ extension UIColor {
             
         case .dark:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.grayE5E5E5
+                return MEGAAppColor.Gray._E5E5E5.uiColor
             } else {
                 return mnz_black1C1C1E()
             }
@@ -612,7 +612,7 @@ extension UIColor {
             
         case .dark:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.grayE5E5E5
+                return MEGAAppColor.Gray._E5E5E5.uiColor
             } else {
                 return mnz_black1C1C1E()
             }
@@ -625,13 +625,13 @@ extension UIColor {
     class func emojiDescriptionTextColor(_ traitCollection: UITraitCollection) -> UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
-            return UIColor.gray3C3C43.withAlphaComponent(0.6)
+            return MEGAAppColor.Gray._3C3C43.uiColor.withAlphaComponent(0.6)
             
         case .dark:
             return white.withAlphaComponent(0.6)
             
         @unknown default:
-            return UIColor.gray3C3C43.withAlphaComponent(0.6)
+            return MEGAAppColor.Gray._3C3C43.uiColor.withAlphaComponent(0.6)
         }
     }
     
@@ -646,35 +646,35 @@ extension UIColor {
     // MARK: Gray
     
     class func mnz_gray3C3C43() -> UIColor {
-        UIColor.gray3C3C43
+        MEGAAppColor.Gray._3C3C43.uiColor
     }
     
     class func mnz_gray515151() -> UIColor {
-        return UIColor.gray515151
+        MEGAAppColor.Gray._515151.uiColor
     }
     
     @objc class func mnz_gray545458() -> UIColor {
-        UIColor.gray545458
+        MEGAAppColor.Gray._545458.uiColor
     }
     
     class func mnz_gray545457() -> UIColor {
-        UIColor.gray545457
+        MEGAAppColor.Gray._545457.uiColor
     }
     
     class func mnz_gray848484() -> UIColor {
-        return UIColor.gray848484
+        MEGAAppColor.Gray._848484.uiColor
     }
     
     class func mnz_grayB5B5B5() -> UIColor {
-        return UIColor.grayB5B5B5
+        MEGAAppColor.Gray._B5B5B5.uiColor
     }
     
     class func mnz_grayD1D1D1() -> UIColor {
-        return UIColor.grayD1D1D1
+        MEGAAppColor.Gray._D1D1D1.uiColor
     }
     
     @objc class func mnz_grayDBDBDB() -> UIColor {
-        UIColor.grayDBDBDB
+        MEGAAppColor.Gray._DBDBDB.uiColor
     }
     
     @objc(mnz_primaryGrayForTraitCollection:)
@@ -682,16 +682,16 @@ extension UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.gray3D3D3D
+                return MEGAAppColor.Gray._3D3D3D.uiColor
             } else {
-                return UIColor.gray515151
+                return MEGAAppColor.Gray._515151.uiColor
             }
             
         case .dark:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.grayE5E5E5
+                return MEGAAppColor.Gray._E5E5E5.uiColor
             } else {
-                return UIColor.grayD1D1D1
+                return MEGAAppColor.Gray._D1D1D1.uiColor
             }
             
         @unknown default:
@@ -704,16 +704,16 @@ extension UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.gray676767
+                return MEGAAppColor.Gray._676767.uiColor
             } else {
-                return UIColor.gray848484
+                return MEGAAppColor.Gray._848484.uiColor
             }
             
         case .dark:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.grayC9C9C9
+                return MEGAAppColor.Gray._C9C9C9.uiColor
             } else {
-                return UIColor.grayB5B5B5
+                return MEGAAppColor.Gray._B5B5B5.uiColor
             }
             
         @unknown default:
@@ -726,16 +726,16 @@ extension UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.gray949494
+                return MEGAAppColor.Gray._949494.uiColor
             } else {
-                return UIColor.grayBBBBBB
+                return MEGAAppColor.Gray._BBBBBB.uiColor
             }
             
         case .dark:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.grayF4F4F4
+                return MEGAAppColor.Gray._F4F4F4.uiColor
             } else {
-                return UIColor.grayE2E2E2
+                return MEGAAppColor.Gray._E2E2E2.uiColor
             }
             
         @unknown default:

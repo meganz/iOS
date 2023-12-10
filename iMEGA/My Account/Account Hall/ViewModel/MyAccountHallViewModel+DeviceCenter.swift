@@ -112,19 +112,19 @@ extension MyAccountHallViewModel {
             BackupStatus(
                 status: .offline,
                 title: Strings.Localizable.Device.Center.Backup.Offline.Status.message,
-                color: UIColor.gray8E8E93,
+                color: MEGAAppColor.Gray._8E8E93.uiColor,
                 iconName: Asset.Images.BackupStatus.offlineStatus.name
             ),
             BackupStatus(
                 status: .backupStopped,
                 title: Strings.Localizable.Device.Center.Backup.BackupStopped.Status.message,
-                color: UIColor.gray8E8E93,
+                color: MEGAAppColor.Gray._8E8E93.uiColor,
                 iconName: Asset.Images.BackupStatus.error.name
             ),
             BackupStatus(
                 status: .paused,
                 title: Strings.Localizable.Device.Center.Backup.Paused.Status.message,
-                color: UIColor.gray8E8E93,
+                color: MEGAAppColor.Gray._8E8E93.uiColor,
                 iconName: Asset.Images.BackupStatus.paused.name
             ),
             BackupStatus(

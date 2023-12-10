@@ -7,7 +7,7 @@ struct ScheduleMeetingMonthlyRecurrenceFootnoteView: View {
     var body: some View {
         Text(text)
             .font(.footnote)
-            .foregroundColor(colorScheme == .dark ? Color.white.opacity(0.6) : Color(UIColor.gray3C3C43).opacity(0.6))
+            .foregroundColor(colorScheme == .dark ? Color.white.opacity(0.6) : MEGAAppColor.Gray._3C3C43.color.opacity(0.6))
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal)
             .padding(.top, 6)

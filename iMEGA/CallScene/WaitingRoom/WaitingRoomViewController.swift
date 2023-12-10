@@ -54,7 +54,7 @@ final class WaitingRoomViewController: UIViewController {
     }
     
     private func configureNavBarItems() {
-        leaveBarButtonItem.setTitleTextAttributes([.foregroundColor: UIColor.grayD1D1D1], for: .normal)
+        leaveBarButtonItem.setTitleTextAttributes([.foregroundColor: MEGAAppColor.Gray._D1D1D1.uiColor], for: .normal)
         navigationItem.leftBarButtonItem = leaveBarButtonItem
         navigationItem.rightBarButtonItem = infoBarButtonItem
     }

@@ -15,7 +15,7 @@ struct DatePickerView: View {
             Text(title)
             Spacer()
             Text(dateFormatted)
-                .foregroundColor(datePickerVisible ? Color(UIColor.mnz_green00A886()) : (colorScheme == .dark ? Color.white : Color(UIColor.gray3C3C43).opacity(0.6)))
+                .foregroundColor(datePickerVisible ? Color(UIColor.mnz_green00A886()) : (colorScheme == .dark ? Color.white : MEGAAppColor.Gray._3C3C43.color.opacity(0.6)))
         }
         .contentShape(Rectangle())
         .onTapGesture {
