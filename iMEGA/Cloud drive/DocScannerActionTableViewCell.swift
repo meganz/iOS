@@ -21,11 +21,11 @@ class DocScannerActionTableViewCell: UITableViewCell {
         
         switch cellType {
         case .upload:
-            actionImageView.image = Asset.Images.ActionSheetIcons.upload.image
+            actionImageView.image = UIImage.upload
             actionLabel.text = Strings.Localizable.uploadToMega
         case .sendMessage:
             actionImageView.tintColor = .mnz_primaryGray(for: self.traitCollection)
-            actionImageView.image = Asset.Images.NodeActions.sendToChat.image
+            actionImageView.image = UIImage.sendToChat
             actionLabel.text = Strings.Localizable.General.sendToChat
         }
     }
