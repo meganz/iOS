@@ -301,6 +301,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     }
     
     private func updateSpeaker(_ participant: CallParticipantEntity) {
+        speakerRemoteVideoImageView.image = nil
         participant.speakerVideoDataDelegate = self
         viewModel.dispatch(.fetchSpeakerAvatar)
         speakerRemoteVideoImageView.isHidden = participant.video != .on
