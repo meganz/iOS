@@ -16,10 +16,10 @@ struct SeeMoreOccurrencesView: View {
     var body: some View {
         VStack(spacing: Constants.spacing) {
             Divider()
-                .background(colorScheme == .dark ? Color(UIColor.gray545458) : Color(UIColor.gray3C3C43))
+                .background(colorScheme == .dark ? MEGAAppColor.Gray._545458.color : MEGAAppColor.Gray._3C3C43.color)
             HStack {
                 Image(systemName: Constants.discolureIndicator)
-                    .foregroundColor(colorScheme == .dark ? Color(UIColor.grayD1D1D1) : Color(UIColor.gray515151))
+                    .foregroundColor(colorScheme == .dark ? MEGAAppColor.Gray._D1D1D1.color : MEGAAppColor.Gray._515151.color)
                     .rotationEffect(.degrees(Constants.rotationRight))
                     .padding(.horizontal)
                 Text(Strings.Localizable.Meetings.Scheduled.Recurring.Occurrences.List.seeMoreOccurrences)
@@ -28,7 +28,7 @@ struct SeeMoreOccurrencesView: View {
             }
             .frame(height: Constants.viewHeight)
             Divider()
-                .background(colorScheme == .dark ? Color(UIColor.gray545458) : Color(UIColor.gray3C3C43))
+                .background(colorScheme == .dark ? MEGAAppColor.Gray._545458.color : MEGAAppColor.Gray._3C3C43.color)
         }
         .contentShape(Rectangle())
         .listRowInsets(EdgeInsets())

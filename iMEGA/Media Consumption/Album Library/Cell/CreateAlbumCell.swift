@@ -6,13 +6,13 @@ struct CreateAlbumCell: View {
     @ObservedObject var viewModel: CreateAlbumCellViewModel
     
     private var plusIconColor: Color {
-        colorScheme == .light ? Color(UIColor.gray515151) : Color(UIColor.whiteFCFCFC)
+        colorScheme == .light ? MEGAAppColor.Gray._515151.color : Color(UIColor.whiteFCFCFC)
     }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             ZStack(alignment: .center) {
-                Color(UIColor.grayEBEBEB)
+                MEGAAppColor.Gray._EBEBEB.color
                     .aspectRatio(contentMode: .fill)
                     .cornerRadius(6)
                 

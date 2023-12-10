@@ -47,8 +47,8 @@ struct AutoMediaDiscoveryBannerView: View {
     }
     
     private var closeImageColor: Color {
-        Color(colorScheme == .dark ? UIColor.grayD1D1D1 :
-                UIColor.gray515151)
+        Color(colorScheme == .dark ? MEGAAppColor.Gray._D1D1D1.uiColor :
+                MEGAAppColor.Gray._515151.uiColor)
     }
     
     private var bannerBackgroundColor: Color {
@@ -57,8 +57,8 @@ struct AutoMediaDiscoveryBannerView: View {
     }
     
     private var bannerBorderColor: Color {
-        colorScheme == .dark ? Color(UIColor.gray545458).opacity(Constants.bannerBorderOpacityDarkMode) :
-        Color(UIColor.gray3C3C43).opacity(Constants.bannerBorderOpacityLightMode)
+        colorScheme == .dark ? MEGAAppColor.Gray._545458.color.opacity(Constants.bannerBorderOpacityDarkMode) :
+        MEGAAppColor.Gray._3C3C43.color.opacity(Constants.bannerBorderOpacityLightMode)
     }
 }
 

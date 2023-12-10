@@ -114,7 +114,7 @@ final class UserAvatarViewModel: ObservableObject {
             forInitials: initials,
             size: size,
             backgroundColor: UIColor.chatAvatarBackground,
-            backgroundGradientColor: UIColor.grayDBDBDB,
+            backgroundGradientColor: MEGAAppColor.Gray._DBDBDB.uiColor,
             textColor: .white,
             font: UIFont.systemFont(ofSize: min(size.width, size.height)/2.0),
             isRightToLeftLanguage: isRightToLeftLanguage)

@@ -11,7 +11,7 @@ struct PageTabView: View {
         if !viewModel.isEditing {
             return tabTextColor
         } else {
-            return Color(UIColor.gray515151)
+            return MEGAAppColor.Gray._515151.color
         }
     }
     

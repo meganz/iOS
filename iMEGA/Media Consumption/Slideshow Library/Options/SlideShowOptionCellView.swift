@@ -30,7 +30,7 @@ struct SlideShowOptionCellView: View {
                                 .scaledToFit()
                                 .frame(width: 12, height: 12)
                         }
-                        .foregroundColor(Color(colorScheme == .dark ? UIColor.grayEBEBF5 : UIColor.gray3C3C43).opacity(0.6))
+                        .foregroundColor(colorScheme == .dark ? MEGAAppColor.Gray._EBEBF5.color : MEGAAppColor.Gray._3C3C43.color.opacity(0.6))
                     }
                     .opacity(cellModel.type == .detail ? 1 : 0)
                 }
