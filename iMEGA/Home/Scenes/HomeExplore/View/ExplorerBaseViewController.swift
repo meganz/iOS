@@ -125,7 +125,7 @@ class ExplorerBaseViewController: UIViewController {
                 if let errorEntity = error as? SaveMediaToPhotosErrorEntity, errorEntity != .cancelled {
                     await SVProgressHUD.dismiss()
                     SVProgressHUD.show(
-                        Asset.Images.NodeActions.saveToPhotos.image,
+                        UIImage.saveToPhotos,
                         status: error.localizedDescription
                     )
                 }

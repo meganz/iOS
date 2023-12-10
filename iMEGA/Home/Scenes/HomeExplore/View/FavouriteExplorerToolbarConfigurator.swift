@@ -2,7 +2,7 @@ final class FavouriteExplorerToolbarConfigurator: ExplorerToolbarConfigurator {
     let favouriteAction: ButtonAction
     
     lazy var favouriteItem = UIBarButtonItem(
-        image: Asset.Images.NodeActions.removeFavourite.image,
+        image: UIImage.removeFavourite,
         style: .plain,
         target: self,
         action: #selector(buttonPressed(_:))

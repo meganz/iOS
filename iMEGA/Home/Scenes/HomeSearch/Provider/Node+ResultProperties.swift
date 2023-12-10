@@ -38,7 +38,7 @@ extension ResultProperty {
     static var playIcon: Self {
         .init(
             id: NodePropertyId.playIcon.rawValue,
-            content: .icon(image: Asset.Images.Generic.videoList.image, scalable: false),
+            content: .icon(image: UIImage.videoList, scalable: false),
             vibrancyEnabled: false,
             placement: { mode in 
                 if mode == .thumbnail(.vertical) {
@@ -53,7 +53,7 @@ extension ResultProperty {
     static var downloaded: Self {
         .init(
             propertyId: .downloaded,
-            icon: Asset.Images.Generic.downloaded,
+            icon: UIImage.downloaded,
             vibrancyEnabled: false,
             placement: { mode in
                 switch mode {
@@ -70,7 +70,7 @@ extension ResultProperty {
     
     static var versioned: Self = .init(
         propertyId: .versioned,
-        icon: Asset.Images.Generic.versionedThumbnail,
+        icon: UIImage.versionedThumbnail,
         vibrancyEnabled: false,
         placement: { mode in
             switch mode {
@@ -86,7 +86,7 @@ extension ResultProperty {
     
     static var favorite: Self = .init(
         propertyId: .favorite,
-        icon: Asset.Images.Generic.favouriteThumbnail,
+        icon: UIImage.favouriteThumbnail,
         vibrancyEnabled: false,
         placement: { mode in
             switch mode {
@@ -103,7 +103,7 @@ extension ResultProperty {
     static var linked: ResultProperty {
         .init(
             propertyId: .linked,
-            icon: Asset.Images.Generic.linkedThumbnail,
+            icon: UIImage.linkedThumbnail,
             vibrancyEnabled: false,
             placement: { mode in
                 switch mode {
@@ -131,7 +131,7 @@ extension ResultProperty {
     
     static let takenDown: Self = .init(
         propertyId: .takenDown,
-        icon: Asset.Images.Generic.isTakedown,
+        icon: UIImage.isTakedown,
         vibrancyEnabled: true, // this will make title of result stand out
         placement: { _ in
                 .prominent
@@ -154,13 +154,13 @@ extension ResultProperty {
     
     init(
         propertyId: NodePropertyId,
-        icon: ImageAsset,
+        icon: UIImage,
         vibrancyEnabled: Bool,
         placement: @Sendable @escaping (Search.ResultCellLayout) -> PropertyPlacement
     ) {
         self.init(
             id: propertyId.rawValue,
-            content: .icon(image: icon.image, scalable: true),
+            content: .icon(image: icon, scalable: true),
             vibrancyEnabled: vibrancyEnabled,
             placement: placement
         )

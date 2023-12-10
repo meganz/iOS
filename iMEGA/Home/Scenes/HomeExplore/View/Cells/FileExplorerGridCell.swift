@@ -33,10 +33,7 @@ class FileExplorerGridCell: UICollectionViewCell {
         }
         
         if viewModel.isTakenDown,
-           let takenDownAttributedText = NSAttributedString.mnz_attributedString(
-            fromImageNamed: Asset.Images.Generic.isTakedown.name,
-            fontCapHeight: nameLabel.font.capHeight
-           ) {
+           let takenDownAttributedText = NSAttributedString.mnz_attributedString(from: UIImage.isTakedown, fontCapHeight: nameLabel.font.capHeight) {
             let mutableAttributedText = NSMutableAttributedString(string: viewModel.name)
             mutableAttributedText.append(takenDownAttributedText)
             nameLabel.attributedText = mutableAttributedText
@@ -61,7 +58,7 @@ class FileExplorerGridCell: UICollectionViewCell {
     
     private var markSelection: Bool = false {
         didSet {
-            selectImageView.image = markSelection ? Asset.Images.Generic.thumbnailSelected.image : Asset.Images.Login.checkBoxUnselected.image
+            selectImageView.image = markSelection ? UIImage.thumbnailSelected : UIImage.checkBoxUnselected
             if markSelection {
                 self.borderColor = #colorLiteral(red: 0, green: 0.6588235294, blue: 0.5254901961, alpha: 1)
             } else {
@@ -116,7 +113,7 @@ extension FileExplorerGridCell: TraitEnvironmentAware {
         super.traitCollectionDidChange(previousTraitCollection)
         traitCollectionChanged(to: traitCollection, from: previousTraitCollection)
     }
-
+    
     func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
         setupAppearance(with: currentTrait)
     }

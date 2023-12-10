@@ -86,7 +86,7 @@ final class MEGASearchBarView: UIView, NibOwnerLoadable {
         }
 
         func initialise(searchField: UITextField) {
-            searchField.setLeftImage(Asset.Images.Home.searchBarIcon.image)
+            searchField.setLeftImage(UIImage.searchBarIcon)
             searchField.placeholder = HomeLocalisation.searchYourFiles.rawValue
             searchField.returnKeyType = .search
             searchField.delegate = self
@@ -96,7 +96,7 @@ final class MEGASearchBarView: UIView, NibOwnerLoadable {
         initialise(cancelButton: cancelButton)
         initialise(searchField: searchField)
         contextButton.isHidden = true
-        contextButton.setImage(Asset.Images.NavigationBar.moreNavigationBar.image, for: .normal)
+        contextButton.setImage(UIImage.moreNavigationBar, for: .normal)
     }
 
     @objc private func didTapCancelButton() {

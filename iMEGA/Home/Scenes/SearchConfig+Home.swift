@@ -6,7 +6,7 @@ extension SearchConfig {
     static func searchConfig(contextPreviewFactory: ContextPreviewFactory) -> SearchConfig {
         .init(
             chipAssets: .init(
-                selectionIndicatorImage: Asset.Images.Generic.turquoiseCheckmark.image,
+                selectionIndicatorImage: UIImage.turquoiseCheckmark,
                 selectedForeground: .white,
                 selectedBackground: Color.photosFilterTypeSelectionBackground,
                 normalForeground: Color.photosFilterNormalTextForeground,
@@ -15,7 +15,7 @@ extension SearchConfig {
             emptyViewAssetFactory: { chip in
                 let textColor = Color(.gray515151)
                 let defaultEmptyContent = EmptyViewAssets(
-                    image: Asset.Images.EmptyStates.searchEmptyState.swiftUIImage,
+                    image: Image(.searchEmptyState),
                     title: Strings.Localizable.Home.Search.Empty.noChipSelected,
                     foregroundColor: textColor
                 )
@@ -26,49 +26,49 @@ extension SearchConfig {
                 switch chip.id {
                 case SearchChipEntity.docs.id:
                     return .init(
-                        image: Asset.Images.Home.SearchResults.noResultsDocuments.swiftUIImage,
+                        image: Image(.noResultsDocuments),
                         title: Strings.Localizable.Home.Search.Empty.noDocuments,
                         foregroundColor: textColor
                     )
                 case SearchChipEntity.audio.id:
                     return .init(
-                        image: Asset.Images.Home.SearchResults.noResultsAudio.swiftUIImage,
+                        image: Image(.noResultsAudio),
                         title: Strings.Localizable.Home.Search.Empty.noAudio,
                         foregroundColor: textColor
                     )
                 case SearchChipEntity.video.id:
                     return .init(
-                        image: Asset.Images.Home.SearchResults.noResultsVideo.swiftUIImage,
+                        image: Image(.noResultsVideo),
                         title: Strings.Localizable.Home.Search.Empty.noVideos,
                         foregroundColor: textColor
                     )
                 case SearchChipEntity.images.id:
                     return .init(
-                        image: Asset.Images.Home.SearchResults.noResultsImages.swiftUIImage,
+                        image: Image(.noResultsImages),
                         title: Strings.Localizable.Home.Search.Empty.noImages,
                         foregroundColor: textColor
                     )
                 case SearchChipEntity.folders.id:
                     return .init(
-                        image: Asset.Images.Home.SearchResults.noResultsFolders.swiftUIImage,
+                        image: Image(.noResultsFolders),
                         title: Strings.Localizable.Home.Search.Empty.noFolders,
                         foregroundColor: textColor
                     )
                 case SearchChipEntity.pdf.id:
                     return .init(
-                        image: Asset.Images.Home.SearchResults.noResultsDocuments.swiftUIImage,
+                        image: Image(.noResultsDocuments),
                         title: Strings.Localizable.Home.Search.Empty.noPdfs,
                         foregroundColor: textColor
                     )
                 case SearchChipEntity.presentation.id:
                     return .init(
-                        image: Asset.Images.Home.SearchResults.noResultsPresentations.swiftUIImage,
+                        image: Image(.noResultsPresentations),
                         title: Strings.Localizable.Home.Search.Empty.noPresentations,
                         foregroundColor: textColor
                     )
                 case SearchChipEntity.archives.id:
                     return .init(
-                        image: Asset.Images.Home.SearchResults.noResultsArchives.swiftUIImage,
+                        image: Image(.noResultsArchives),
                         title: Strings.Localizable.Home.Search.Empty.noArchives,
                         foregroundColor: textColor
                     )
@@ -78,13 +78,13 @@ extension SearchConfig {
                 }
             },
             rowAssets: .init(
-                contextImage: Asset.Images.Generic.moreList.image,
-                itemSelected: Asset.Images.Login.checkBoxSelected.image,
-                itemUnselected: Asset.Images.Login.checkBoxUnselected.image,
-                playImage: Asset.Images.Generic.videoList.image,
-                downloadedImage: Asset.Images.Generic.downloaded.image,
-                moreList: Asset.Images.Generic.moreList.image,
-                moreGrid: Asset.Images.Generic.moreGrid.image
+                contextImage: UIImage.moreList,
+                itemSelected: UIImage.checkBoxSelected,
+                itemUnselected: UIImage.checkBoxUnselected,
+                playImage: UIImage.videoList,
+                downloadedImage: UIImage.downloaded,
+                moreList: UIImage.moreList,
+                moreGrid: UIImage.moreGrid
             ), 
             colorAssets: .init(
                 F7F7F7: Color(.whiteF7F7F7),

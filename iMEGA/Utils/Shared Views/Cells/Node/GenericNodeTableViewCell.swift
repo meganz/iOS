@@ -110,9 +110,7 @@ final class GenericNodeTableViewCell: UITableViewCell {
     private func attributedTakenDownNameWithHeight(nodeModel: NodeEntity, height: CGFloat) -> NSAttributedString {
         let name = nodeModel.name + " "
         let nameMutableAttributedString = NSMutableAttributedString(string: name)
-        let takendownImageName = "isTakendown"
-        
-        let takedownImageAttributedString = NSAttributedString.mnz_attributedString(fromImageNamed: takendownImageName, fontCapHeight: height)!
+        let takedownImageAttributedString = NSAttributedString.mnz_attributedString(from: UIImage.isTakedown, fontCapHeight: height)!
         nameMutableAttributedString.append(takedownImageAttributedString)
         
         return nameMutableAttributedString
