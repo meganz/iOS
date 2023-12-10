@@ -4,23 +4,23 @@ import MEGAPermissions
 import MEGASDKRepo
 
 protocol HomeRecentActionViewModelInputs {
-
+    
     func saveToPhotoAlbum(of node: MEGANode)
-
+    
     func toggleFavourite(of node: MEGANode)
 }
 
 protocol HomeRecentActionViewModelOutputs {
-
+    
     var error: DevicePermissionDeniedError? { get }
 }
 
 protocol HomeRecentActionViewModelType {
-
+    
     var inputs: any HomeRecentActionViewModelInputs { get }
-
+    
     var outputs: any HomeRecentActionViewModelOutputs { get }
-
+    
     var notifyUpdate: ((any HomeRecentActionViewModelOutputs) -> Void)? { get set }
 }
 
@@ -29,7 +29,7 @@ final class HomeRecentActionViewModel:
     HomeRecentActionViewModelInputs,
     HomeRecentActionViewModelOutputs {
     // MARK: - HomeRecentActionViewModelInputs
-
+    
     func saveToPhotoAlbum(of node: MEGANode) {
         
         permissionHandler.photosPermissionWithCompletionHandler { [weak self] granted in
@@ -53,7 +53,7 @@ final class HomeRecentActionViewModel:
                     AnalyticsEventUseCase(repository: AnalyticsRepository.newRepo).sendAnalyticsEvent(.download(.saveToPhotos))
                     await SVProgressHUD.dismiss()
                     SVProgressHUD.show(
-                        Asset.Images.NodeActions.saveToPhotos.image,
+                        UIImage.saveToPhotos,
                         status: error.localizedDescription
                     )
                 }
@@ -61,39 +61,39 @@ final class HomeRecentActionViewModel:
             
         }
     }
-
+    
     func toggleFavourite(of node: MEGANode) {
         if node.isFavourite {
             Task {
                 try await nodeFavouriteActionUseCase.unFavourite(node: node.toNodeEntity())
             }
         } else {
-            Task {
+            Task { 
                 try await nodeFavouriteActionUseCase.favourite(node: node.toNodeEntity())
             }
         }
     }
-
+    
     // MARK: - HomeRecentActionViewModelOutputs
-
+    
     var error: DevicePermissionDeniedError?
-
+    
     // MARK: - HomeRecentActionViewModelType
-
+    
     var inputs: any HomeRecentActionViewModelInputs { self }
-
+    
     var outputs: any HomeRecentActionViewModelOutputs { self }
-
+    
     var notifyUpdate: ((any HomeRecentActionViewModelOutputs) -> Void)?
-
+    
     // MARK: - Use Cases
-
+    
     private let permissionHandler: any DevicePermissionsHandling
-
+    
     private let nodeFavouriteActionUseCase: any NodeFavouriteActionUseCaseProtocol
-
+    
     private let saveMediaToPhotosUseCase: any SaveMediaToPhotosUseCaseProtocol
-
+    
     init(
         permissionHandler: some DevicePermissionsHandling,
         nodeFavouriteActionUseCase: any NodeFavouriteActionUseCaseProtocol,
@@ -109,5 +109,5 @@ final class HomeRecentActionViewModel:
 // MARK: - View Error
 
 enum HomeRecentActionError: Error {
-   case noPhotoAlbumAccess
+    case noPhotoAlbumAccess
 }

@@ -10,7 +10,7 @@ class NodeInfoActionTableViewCell: UITableViewCell {
     func configureLinkCell(forNode node: MEGANode) {
         backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
 
-        iconImageView.image = Asset.Images.Generic.link.image
+        iconImageView.image = UIImage.link
         iconImageView.tintColor = UIColor.mnz_primaryGray(for: self.traitCollection)
         if node.isExported() {
             titleLabel.text = Strings.Localizable.General.MenuAction.ManageLink.title(1)
@@ -25,7 +25,7 @@ class NodeInfoActionTableViewCell: UITableViewCell {
     func configureVersionsCell(forNode node: MEGANode) {
         backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
 
-        iconImageView.image = Asset.Images.Generic.versions.image
+        iconImageView.image = UIImage.versions
         iconImageView.tintColor = UIColor.mnz_primaryGray(for: self.traitCollection)
         titleLabel.text = Strings.Localizable.versions
         subtitleLabel.text = String(node.mnz_numberOfVersions() - 1)

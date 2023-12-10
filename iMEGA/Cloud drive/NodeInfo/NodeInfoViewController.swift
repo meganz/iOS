@@ -243,7 +243,7 @@ class NodeInfoViewController: UIViewController {
     
     private func prepareShareFolderPermissionsAlertController(fromIndexPat indexPath: IndexPath) {
         let activeShare = cachedActiveShares[indexPath.row - 1].access
-        let checkmarkImageView = UIImageView(image: Asset.Images.Generic.turquoiseCheckmark.image)
+        let checkmarkImageView = UIImageView(image: UIImage.turquoiseCheckmark)
 
         guard let cell = tableView.cellForRow(at: indexPath) as? ContactTableViewCell else {
             return
@@ -256,18 +256,18 @@ class NodeInfoViewController: UIViewController {
         let isBackupNode = BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo).isBackupNode(node.toNodeEntity())
         
         if !isBackupNode {
-            actions.append(ActionSheetAction(title: Strings.Localizable.fullAccess, detail: nil, accessoryView: activeShare == .accessFull ? checkmarkImageView : nil, image: Asset.Images.SharedItems.fullAccessPermissions.image, style: .default) { [weak self] in
+            actions.append(ActionSheetAction(title: Strings.Localizable.fullAccess, detail: nil, accessoryView: activeShare == .accessFull ? checkmarkImageView : nil, image: UIImage.fullAccessPermissions, style: .default) { [weak self] in
                 self?.shareNode(withLevel: .accessFull, forUser: user, atIndexPath: indexPath)
             })
-            actions.append(ActionSheetAction(title: Strings.Localizable.readAndWrite, detail: nil, accessoryView: activeShare == .accessReadWrite ? checkmarkImageView : nil, image: Asset.Images.SharedItems.readWritePermissions.image, style: .default) { [weak self] in
+            actions.append(ActionSheetAction(title: Strings.Localizable.readAndWrite, detail: nil, accessoryView: activeShare == .accessReadWrite ? checkmarkImageView : nil, image: UIImage.readWritePermissions, style: .default) { [weak self] in
                 self?.shareNode(withLevel: .accessReadWrite, forUser: user, atIndexPath: indexPath)
             })
-            actions.append(ActionSheetAction(title: Strings.Localizable.readOnly, detail: nil, accessoryView: activeShare == .accessRead ? checkmarkImageView : nil, image: Asset.Images.SharedItems.readPermissions.image, style: .default) { [weak self] in
+            actions.append(ActionSheetAction(title: Strings.Localizable.readOnly, detail: nil, accessoryView: activeShare == .accessRead ? checkmarkImageView : nil, image: UIImage.readPermissions, style: .default) { [weak self] in
                 self?.shareNode(withLevel: .accessRead, forUser: user, atIndexPath: indexPath)
             })
         }
         
-        actions.append(ActionSheetAction(title: Strings.Localizable.remove, detail: nil, image: Asset.Images.NodeActions.delete.image, style: .destructive) { [weak self] in
+        actions.append(ActionSheetAction(title: Strings.Localizable.remove, detail: nil, image: UIImage.delete, style: .destructive) { [weak self] in
             self?.shareNode(withLevel: .accessUnknown, forUser: user, atIndexPath: indexPath)
         })
         
@@ -476,7 +476,7 @@ class NodeInfoViewController: UIViewController {
         
         cell.backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
         cell.permissionsImageView.isHidden = true
-        cell.avatarImageView.image = Asset.Images.Chat.inviteToChat.image
+        cell.avatarImageView.image = UIImage.inviteToChat
         cell.nameLabel.text = Strings.Localizable.addContact
         cell.shareLabel.isHidden = true
         
@@ -520,7 +520,7 @@ class NodeInfoViewController: UIViewController {
         cell.nameLabel.text = cachedPendingShares[indexPath.row].user
         cell.shareLabel.isHidden = true
         cell.permissionsImageView.isHidden = false
-        cell.permissionsImageView.image = Asset.Images.NodeActions.delete.image
+        cell.permissionsImageView.image = UIImage.delete
         
         return cell
     }

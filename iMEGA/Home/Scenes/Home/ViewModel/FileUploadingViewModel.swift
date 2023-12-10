@@ -193,11 +193,11 @@ struct FileUploadingSourceItem {
     }
     var icon: UIImage {
         switch source {
-        case .photos: return Asset.Images.NodeActions.saveToPhotos.image
-        case .textFile: return Asset.Images.NodeActions.textfile.image
-        case .capture: return Asset.Images.ActionSheetIcons.capture.image
-        case .imports: return Asset.Images.InfoActions.import.image
-        case .documentScan: return Asset.Images.ActionSheetIcons.scanDocument.image
+        case .photos: return UIImage.saveToPhotos
+        case .textFile: return UIImage.textfile
+        case .capture: return UIImage.capture
+        case .imports: return UIImage.import
+        case .documentScan: return UIImage.scanDocument
         }
     }
 

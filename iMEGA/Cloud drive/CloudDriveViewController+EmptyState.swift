@@ -54,23 +54,19 @@ extension CloudDriveViewController: DZNEmptyDataSetSource {
             }
             
             if searchController?.isActive ?? false {
-                return Asset.Images.EmptyStates.searchEmptyState.image
+                return UIImage.searchEmptyState
             } else {
                 switch displayMode {
                 case .cloudDrive:
-                    return parentNode.type == .root ?
-                                                Asset.Images.EmptyStates.cloudEmptyState.image :
-                                                Asset.Images.EmptyStates.folderEmptyState.image
+                    return parentNode.type == .root ? UIImage.cloudEmptyState :UIImage.folderEmptyState
                 case .rubbishBin:
-                    return parentNode.type == .root ?
-                                                Asset.Images.EmptyStates.rubbishEmptyState.image :
-                                                Asset.Images.EmptyStates.folderEmptyState.image
+                    return parentNode.type == .root ? UIImage.rubbishEmptyState : UIImage.folderEmptyState
                 default:
                     return nil
                 }
             }
         } else {
-            return Asset.Images.EmptyStates.noInternetEmptyState.image
+            return UIImage.noInternetEmptyState
         }
     }
     

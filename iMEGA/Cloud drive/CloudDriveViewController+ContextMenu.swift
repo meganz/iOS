@@ -64,7 +64,7 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
         if let contextMenuManager,
            let updatedMenu = contextMenuManager.contextMenu(with: menuConfig),
            !UIMenu.match(lhs: contextBarButtonItem.menu, rhs: updatedMenu) {
-            contextBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.moreNavigationBar.image,
+            contextBarButtonItem = UIBarButtonItem(image: UIImage.moreNavigationBar,
                                                    menu: updatedMenu)
             contextBarButtonItemUpdated = true
         }

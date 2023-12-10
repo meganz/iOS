@@ -33,7 +33,7 @@ extension CloudDriveViewController {
     
     @objc func setBackupNavigationBarButtons() {
         guard let menuConfig = contextMenuBackupConfiguration() else { return }
-        contextBarButtonItem = UIBarButtonItem(image: Asset.Images.NavigationBar.moreNavigationBar.image,
+        contextBarButtonItem = UIBarButtonItem(image: UIImage.moreNavigationBar,
                                                menu: contextMenuManager?.contextMenu(with: menuConfig))
         
         if displayMode != .rubbishBin,

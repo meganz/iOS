@@ -374,7 +374,7 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
     
     private func setupRightItems() {
         let startConversationItem = UIBarButtonItem(
-            image: Asset.Images.Home.startChat.image,
+            image: UIImage.startChat,
             style: .plain,
             target: self,
             action: .didTapNewChat
@@ -382,7 +382,7 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
         startConversationItem.accessibilityLabel = Strings.Localizable.startConversation
         self.startConversationItem = startConversationItem
         
-        startUploadBarButtonItem.image = Asset.Images.Home.uploadFile.image
+        startUploadBarButtonItem.image = UIImage.uploadFile
         
         startUploadBarButtonItem.accessibilityLabel = Strings.Localizable.upload
 
