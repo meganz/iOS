@@ -46,7 +46,7 @@ extension UIButton {
     
     @objc func mnz_setupPrimary(_ traitCollection: UITraitCollection) {
         backgroundColor = UIColor.mnz_turquoise(for: traitCollection)
-        setTitleColor(UIColor.white, for: UIControl.State.normal)
+        setTitleColor(MEGAAppColor.White._FFFFFF.uiColor, for: UIControl.State.normal)
         
         setupLayer()
     }
@@ -57,7 +57,7 @@ extension UIButton {
             darkMode = true
         }
         backgroundColor = UIColor.mnz_turquoise(for: traitCollection).withAlphaComponent(darkMode ? 0.2 : 0.3)
-        setTitleColor(UIColor.white.withAlphaComponent(darkMode ? 0.2 : 0.7), for: UIControl.State.normal)
+        setTitleColor(MEGAAppColor.White._FFFFFF.uiColor.withAlphaComponent(darkMode ? 0.2 : 0.7), for: UIControl.State.normal)
         
         setupLayer()
     }
@@ -71,7 +71,7 @@ extension UIButton {
     
     @objc func mnz_setupDelete(_ traitCollection: UITraitCollection) {
         backgroundColor = UIColor.mnz_red(for: traitCollection)
-        setTitleColor(UIColor.white, for: UIControl.State.normal)
+        setTitleColor(MEGAAppColor.White._FFFFFF.uiColor, for: UIControl.State.normal)
         
         setupLayer()
     }

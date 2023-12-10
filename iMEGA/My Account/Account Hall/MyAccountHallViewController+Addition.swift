@@ -25,7 +25,7 @@ extension MyAccountHallViewController {
         let color: UIColor
         switch trait.theme {
         case .light:
-            color = UIColor.whiteF7F7F7
+            color = MEGAAppColor.White._F7F7F7.uiColor
         case .dark:
             color = MEGAAppColor.Black._161616.uiColor
         }

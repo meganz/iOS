@@ -431,8 +431,8 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
     private func setupBackgroundColor(with trait: UITraitCollection) {
         switch trait.theme {
         case .light:
-            slidePanelView.backgroundColor = UIColor.whiteF7F7F7
-            view.backgroundColor = UIColor.whiteF7F7F7
+            slidePanelView.backgroundColor = MEGAAppColor.White._F7F7F7.uiColor
+            view.backgroundColor = MEGAAppColor.White._F7F7F7.uiColor
         case .dark:
             slidePanelView.backgroundColor = MEGAAppColor.Black._000000.uiColor
             view.backgroundColor = MEGAAppColor.Black._000000.uiColor
@@ -443,7 +443,7 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
         let color: UIColor
         switch trait.theme {
         case .light:
-            color = constraintToTopPosition.isActive ? .white : UIColor.whiteF7F7F7
+            color = constraintToTopPosition.isActive ? .white : MEGAAppColor.White._F7F7F7.uiColor
         case .dark:
             color = constraintToTopPosition.isActive ? .mnz_black1C1C1E() : .black
         }
@@ -479,7 +479,7 @@ extension HomeViewController: SlidePanelAnimationControllerDelegate {
         case .dark:
             return (.mnz_black1C1C1E(), .black)
         default:
-            return (.white, UIColor.whiteF7F7F7)
+            return (.white, MEGAAppColor.White._F7F7F7.uiColor)
         }
     }
 

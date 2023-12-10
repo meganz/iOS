@@ -64,8 +64,8 @@ final class ExploreViewStack: UIView, NibOwnerLoadable {
             backgroundColor = .black
             subviews.first?.backgroundColor = .black
         default:
-            backgroundColor = UIColor.whiteF7F7F7
-            subviews.first?.backgroundColor = UIColor.whiteF7F7F7
+            backgroundColor = MEGAAppColor.White._F7F7F7.uiColor
+            subviews.first?.backgroundColor = MEGAAppColor.White._F7F7F7.uiColor
         }
     }
 }

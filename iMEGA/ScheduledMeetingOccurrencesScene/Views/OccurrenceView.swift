@@ -27,7 +27,7 @@ struct OccurrenceView: View {
                 Divider()
                     .background(colorScheme == .dark ? MEGAAppColor.Gray._545458.color : MEGAAppColor.Gray._3C3C43.color)
             }
-            .background(colorScheme == .dark ? MEGAAppColor.Gray._1D1D1D.color.opacity(Constants.headerBackgroundOpacity) : Color(UIColor.whiteF7F7F7).opacity(Constants.headerBackgroundOpacity))
+            .background(colorScheme == .dark ? MEGAAppColor.Gray._1D1D1D.color.opacity(Constants.headerBackgroundOpacity) : MEGAAppColor.White._F7F7F7.color.opacity(Constants.headerBackgroundOpacity))
             .frame(height: Constants.headerHeight)
 
             HStack(alignment: .center) {

@@ -37,7 +37,7 @@ class MEGAPlayerButton: UIButton {
                                 case .dark:
                                     self.backgroundColor = self.isHighlighted ? MEGAAppColor.Gray._333333.uiColor : UIColor.clear
                                 case .light:
-                                    self.backgroundColor = self.isHighlighted ? UIColor.whiteEFEFEF : UIColor.clear
+                                    self.backgroundColor = self.isHighlighted ? MEGAAppColor.White._EFEFEF.uiColor : UIColor.clear
                                 default: break
                                 }
                               },

@@ -3,7 +3,7 @@ import Foundation
 struct DarkColorThemeFactory: ColorFactory {
     func textColor(_ style: MEGAColor.Text) -> UIColor {
         switch style {
-        case .primary: return UIColor.whiteFFFFFF32
+        case .primary: return MEGAAppColor.White._FFFFFF32.uiColor
         case .secondary: return MEGAAppColor.Gray._9B9B9B.uiColor
         case .tertiary: return MEGAAppColor.Gray._D1D1D1.uiColor
         case .quaternary: return MEGAAppColor.Gray._B5B5B5.uiColor
@@ -16,7 +16,7 @@ struct DarkColorThemeFactory: ColorFactory {
         case .primary: return MEGAAppColor.Black._1C1C1E.uiColor
         case .secondary: return MEGAAppColor.Gray._545A68.uiColor
         case .warning: return .white
-        case .enabled: return UIColor.whiteFFD60008
+        case .enabled: return MEGAAppColor.White._FFD60008.uiColor
         case .disabled: return MEGAAppColor.Gray._999999.uiColor
         case .highlighted: return UIColor.green00A88680
         case .searchTextField: return MEGAAppColor.Black._29292C.uiColor

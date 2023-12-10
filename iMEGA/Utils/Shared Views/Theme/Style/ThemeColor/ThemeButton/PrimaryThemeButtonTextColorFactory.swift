@@ -15,7 +15,7 @@ extension LightColorThemeFactory {
         }
 
         func highlightedColor() -> UIColor {
-            return UIColor.whiteFFFFFF30
+            return MEGAAppColor.White._FFFFFF30.uiColor
         }
     }
 
@@ -52,7 +52,7 @@ extension DarkColorThemeFactory {
         }
 
         func highlightedColor() -> UIColor {
-            return UIColor.whiteFFFFFF30
+            return MEGAAppColor.White._FFFFFF30.uiColor
         }
     }
 

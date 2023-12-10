@@ -63,7 +63,7 @@ struct SlideShowOptionDetailView: View {
     private var backGroundColor: UIColor {
         switch colorScheme {
         case .dark: return UIColor.mnz_black1C1C1E()
-        default: return UIColor.whiteF7F7F7
+        default: return MEGAAppColor.White._F7F7F7.uiColor
         }
     }
 }

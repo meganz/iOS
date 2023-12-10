@@ -10,8 +10,8 @@ class ParticipantsListSelectorTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .selected)
-        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .normal)
+        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: MEGAAppColor.White._FFFFFF.uiColor], for: .selected)
+        segmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: MEGAAppColor.White._FFFFFF.uiColor], for: .normal)
     }
      
     func configureFor(tabs: [ParticipantsListTab], selectedTab: ParticipantsListTab) {

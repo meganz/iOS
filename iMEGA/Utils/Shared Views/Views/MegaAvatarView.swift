@@ -63,7 +63,7 @@ class MegaAvatarView: UIView {
                                                  size: avatarImageView.frame.size,
                                                  backgroundColor: UIColor.mnz_secondaryGray(for: traitCollection),
                                                  backgroundGradientColor: MEGAAppColor.Gray._DBDBDB.uiColor,
-                                                 textColor: UIColor.white,
+                                                 textColor: MEGAAppColor.White._FFFFFF.uiColor,
                                                  font: font)
             configure(mode: .single)
         } else {

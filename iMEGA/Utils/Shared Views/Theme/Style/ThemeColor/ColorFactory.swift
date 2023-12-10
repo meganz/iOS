@@ -41,7 +41,7 @@ extension ColorFactory {
         switch style {
         case .bright: return .white
         case .dark: return .black
-        case .clear: return UIColor.whiteFFFFFF00
+        case .clear: return MEGAAppColor.White._FFFFFF00.uiColor
         case .warning: return UIColor.redFF3B30
         }
     }

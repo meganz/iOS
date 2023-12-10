@@ -148,8 +148,8 @@ import UIKit
         tableView.backgroundColor = UIColor.mnz_backgroundGrouped(for: traitCollection)
         tableView.separatorColor = UIColor.mnz_separator(for: traitCollection)
         
-        nameLabel.textColor = UIColor.white
-        emailLabel.textColor = UIColor.white
+        nameLabel.textColor = MEGAAppColor.White._FFFFFF.uiColor
+        emailLabel.textColor = MEGAAppColor.White._FFFFFF.uiColor
         avatarBottomSeparatorView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
     }
     

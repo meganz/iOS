@@ -15,7 +15,7 @@ class ChatBottomNewMessageIndicatorView: UIView {
         label.clipsToBounds = true
         label.layer.borderWidth = 1
         label.isUserInteractionEnabled = false
-        label.layer.borderColor = UIColor.white.cgColor
+        label.layer.borderColor = MEGAAppColor.White._FFFFFF.uiColor.cgColor
         return label
     }()
     
