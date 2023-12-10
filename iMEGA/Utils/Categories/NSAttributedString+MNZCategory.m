@@ -119,9 +119,9 @@
     return attributedString;
 }
 
-+ (NSAttributedString *)mnz_attributedStringFromImageNamed:(NSString *)imageName fontCapHeight:(CGFloat)capHeight {
++ (NSAttributedString *)mnz_attributedStringFromImage:(UIImage *)sourceImage fontCapHeight:(CGFloat)capHeight {
     NSTextAttachment *textAttachment = [[NSTextAttachment alloc] init];
-    UIImage *image = [UIImage imageNamed:imageName];
+    UIImage *image = sourceImage;
     textAttachment.bounds = CGRectMake(0.0f, roundf(capHeight - image.size.height) / 2.0, image.size.width, image.size.height);
     textAttachment.image = image;
     return [NSAttributedString attributedStringWithAttachment:textAttachment];

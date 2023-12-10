@@ -107,7 +107,7 @@ final class HomeScreenFactory: NSObject {
             )
         )
         
-        navigationController.tabBarItem = UITabBarItem(title: nil, image: Asset.Images.TabBarIcons.home.image, selectedImage: nil)
+        navigationController.tabBarItem = UITabBarItem(title: nil, image: UIImage.home, selectedImage: nil)
         
         let viewModeStore = newViewModeStore
         homeViewController.viewModeStore = viewModeStore

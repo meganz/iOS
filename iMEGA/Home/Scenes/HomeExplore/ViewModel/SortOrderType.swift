@@ -56,21 +56,21 @@ enum SortOrderType: String, CaseIterable {
     var image: UIImage? {
         switch self {
         case .nameAscending:
-            return Asset.Images.ActionSheetIcons.SortBy.ascending.image
+            return UIImage.ascending
         case .nameDescending:
-            return Asset.Images.ActionSheetIcons.SortBy.descending.image
+            return UIImage.descending
         case .largest:
-            return Asset.Images.ActionSheetIcons.SortBy.largest.image
+            return UIImage.largest
         case .smallest:
-            return Asset.Images.ActionSheetIcons.SortBy.smallest.image
+            return UIImage.smallest
         case .newest:
-            return Asset.Images.ActionSheetIcons.SortBy.newest.image
+            return UIImage.newest
         case .oldest:
-            return Asset.Images.ActionSheetIcons.SortBy.oldest.image
+            return UIImage.oldest
         case .label:
-            return Asset.Images.ActionSheetIcons.SortBy.sortLabel.image
+            return UIImage.sortLabel
         case .favourite:
-            return Asset.Images.ActionSheetIcons.SortBy.sortFavourite.image
+            return UIImage.sortFavourite
         case .none:
             return UIImage(named: "")
         }

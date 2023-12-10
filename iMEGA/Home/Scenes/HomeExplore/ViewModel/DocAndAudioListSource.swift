@@ -8,7 +8,7 @@ final class DocAndAudioListSource: NSObject, FilesExplorerListSourceProtocol {
     weak var delegate: (any FilesExplorerListSourceDelegate)?
     
     // MARK: - Initializers.
-
+    
     init(tableView: UITableView,
          nodes: [MEGANode]?,
          selectedNodes: [MEGANode]?,
@@ -22,7 +22,7 @@ final class DocAndAudioListSource: NSObject, FilesExplorerListSourceProtocol {
         super.init()
         configureTableView(tableView)
     }
-
+    
     // MARK: - Actions
     
     @objc func moreButtonTapped(sender: UIButton) {
@@ -70,7 +70,7 @@ extension DocAndAudioListSource {
             moreButton.tag = indexPath.row
             moreButton.addTarget(self, action: #selector(moreButtonTapped(sender:)), for: .touchUpInside)
         }
-                
+        
         cell?.cellFlavor = .explorerView
         cell?.configureCell(for: node, api: MEGASdk.shared)
         cell?.setSelectedBackgroundView(withColor: .clear)
@@ -115,37 +115,37 @@ extension DocAndAudioListSource {
 
 extension DocAndAudioListSource {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-
+        
         guard let nodeCell = tableView.cellForRow(at: indexPath) as? NodeTableViewCell,
               let node = nodeCell.node else {
             return nil
         }
-
+        
         if !isNodeInRubbishBin(node) {
             let shareLinkAction = contextualAction(
-                withImageName: Asset.Images.Generic.link.name,
+                withImage: UIImage.link,
                 backgroundColor: .systemOrange
             ) { [weak self] in
                 self?.shareLink(node: nodeCell.node)
             }
             let RubbishBinActionEntity = contextualAction(
-                withImageName: Asset.Images.NodeActions.rubbishBin.name,
+                withImage: UIImage.rubbishBin,
                 backgroundColor: .systemRed
             ) { [weak self] in
                 self?.moveToRubbishBin(node: nodeCell.node)
             }
-            let downloadAction = contextualAction(withImageName: Asset.Images.NodeActions.offline.name, backgroundColor: .mnz_turquoise(for: tableView.traitCollection)) { [weak self] in
+            let downloadAction = contextualAction(withImage: UIImage.offline, backgroundColor: .mnz_turquoise(for: tableView.traitCollection)) { [weak self] in
                 self?.download(node: node)
             }
-
+            
             let actions = [RubbishBinActionEntity, shareLinkAction, downloadAction]
             
             return UISwipeActionsConfiguration(actions: actions)
         }
-
+        
         return nil
     }
-
+    
     // MARK: - Private methods
     
     private func indexPath(forNode node: MEGANode) -> IndexPath? {
@@ -153,10 +153,10 @@ extension DocAndAudioListSource {
             MEGALogDebug("Could not find the node with name \(node.name ?? "no node name") as the index is nil")
             return nil
         }
-
+        
         return IndexPath(row: index, section: 0)
     }
-
+    
     private func shareLink(node: MEGANode) {
         if MEGAReachabilityManager.isReachableHUDIfNot() {
             GetLinkRouter(presenter: UIApplication.mnz_presentingViewController(),
@@ -165,32 +165,32 @@ extension DocAndAudioListSource {
         
         tableView.setEditing(false, animated: true)
     }
-
+    
     private func moveToRubbishBin(node: MEGANode) {
         node.mnz_moveToTheRubbishBin { [weak self] in
             self?.tableView.setEditing(false, animated: true)
         }
     }
-
+    
     private func restore(node: MEGANode) {
         node.mnz_restore()
         tableView.setEditing(false, animated: true)
     }
-
+    
     private func download(node: MEGANode) {
         delegate?.download(node: node)
         tableView.setEditing(false, animated: true)
     }
-
-    private func contextualAction(withImageName imageName: String, backgroundColor: UIColor, completion: @escaping () -> Void) -> UIContextualAction {
+    
+    private func contextualAction(withImage image: UIImage, backgroundColor: UIColor, completion: @escaping () -> Void) -> UIContextualAction {
         let action = UIContextualAction(style: .normal,
                                         title: nil) { (_, _, _) in
             completion()
         }
-
-        action.image = UIImage(named: imageName)
+        
+        action.image = image
         action.image = action.image?.withTintColor(.white)
-
+        
         action.backgroundColor = backgroundColor
         return action
     }
@@ -198,11 +198,11 @@ extension DocAndAudioListSource {
     private func isOwner(ofNode node: MEGANode) -> Bool {
         MEGASdk.shared.accessLevel(for: node) == .accessOwner
     }
-
+    
     private func isNodeInRubbishBin(_ node: MEGANode) -> Bool {
         MEGASdk.shared.isNode(inRubbish: node)
     }
-
+    
     private func restorationNode(forNode node: MEGANode) -> MEGANode? {
         MEGASdk.shared.node(forHandle: node.restoreHandle)
     }

@@ -298,7 +298,7 @@
             
             NSMutableAttributedString *lastMessageMutableAttributedString = senderString ? [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@: ", senderString]].mutableCopy : [[NSAttributedString alloc] initWithString:@""].mutableCopy;
             NSString *voiceMessageImageName = self.chatListItem.unreadCount ? @"voiceMessage" : @"voiceMessageGrey";
-            NSAttributedString *microphoneImageAttributedString = [NSAttributedString mnz_attributedStringFromImageNamed:voiceMessageImageName fontCapHeight:self.chatLastMessage.font.capHeight];
+            NSAttributedString *microphoneImageAttributedString = [NSAttributedString mnz_attributedStringFromImage:[UIImage imageNamed:voiceMessageImageName] fontCapHeight:self.chatLastMessage.font.capHeight];
             [lastMessageMutableAttributedString appendAttributedString:microphoneImageAttributedString];
             [lastMessageMutableAttributedString appendAttributedString:[[NSAttributedString alloc] initWithString:durationString]];
             
@@ -498,7 +498,7 @@
                 if (message.containsMeta.type == MEGAChatContainsMetaTypeGeolocation) {
                     NSMutableAttributedString *lastMessageMutableAttributedString = senderString ? [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@: ", senderString]].mutableCopy : [[NSAttributedString alloc] initWithString:@""].mutableCopy;
                     NSString *locationMessageImageName = self.chatListItem.unreadCount ? @"locationMessage" : @"locationMessageGrey";
-                    NSAttributedString *pinImageAttributedString = [NSAttributedString mnz_attributedStringFromImageNamed:locationMessageImageName fontCapHeight:self.chatLastMessage.font.capHeight];
+                    NSAttributedString *pinImageAttributedString = [NSAttributedString mnz_attributedStringFromImage:[UIImage imageNamed:locationMessageImageName] fontCapHeight:self.chatLastMessage.font.capHeight];
                     [lastMessageMutableAttributedString appendAttributedString:pinImageAttributedString];
                     [lastMessageMutableAttributedString appendAttributedString:[[NSAttributedString alloc] initWithString:LocalizedString(@"Pinned Location", @"Text shown in location-type messages")]];
 

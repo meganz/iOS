@@ -70,7 +70,7 @@ final class VideoExplorerTableCellViewModel {
         }
         
         if node.isFavourite,
-           let favouriteIcon = createImageAttachmentWithPadding(by: Asset.Images.Labels.favouriteSmall.image) {
+           let favouriteIcon = createImageAttachmentWithPadding(by: UIImage.favouriteSmall) {
             attributedTitle.append(favouriteIcon)
         }
         
