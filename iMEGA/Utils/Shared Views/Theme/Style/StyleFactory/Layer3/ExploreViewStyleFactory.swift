@@ -47,7 +47,7 @@ extension ExplorerCardConfiguration {
     
     static func favouritesExplorerCardConfiguration(forTraitCollection traitCollection: UITraitCollection) -> ExplorerCardConfiguration {
         let title = Strings.Localizable.Home.Favourites.title
-        let image = Asset.Images.Home.explorerCardFavourites.image
+        let image = UIImage.explorerCardFavourites
         let borderColors = [UIColor.gradientRed,
                             UIColor.gradientPink]
         
@@ -62,7 +62,7 @@ extension ExplorerCardConfiguration {
     
     static func documentsExplorerCardConfiguration(forTraitCollection traitCollection: UITraitCollection) -> ExplorerCardConfiguration {
         let title = Strings.Localizable.docs
-        let image = Asset.Images.Home.explorerCardDocs.image
+        let image = UIImage.explorerCardDocs
         let borderColors = [UIColor.explorerDocumentsFirstGradient,
                             UIColor.explorerDocumentsSecondGradient]
         
@@ -77,7 +77,7 @@ extension ExplorerCardConfiguration {
     
     static func audioExplorerCardConfiguration(forTraitCollection traitCollection: UITraitCollection) -> ExplorerCardConfiguration {
         let title = Strings.Localizable.audio
-        let image = Asset.Images.Home.explorerCardAudio.image
+        let image = UIImage.explorerCardAudio
         let borderColors = [UIColor.explorerAudioFirstGradient,
                             UIColor.explorerAudioSecondGradient]
         return ExplorerCardConfiguration(title: title,
@@ -91,8 +91,8 @@ extension ExplorerCardConfiguration {
     
     static func videoExplorerCardConfiguration(forTraitCollection traitCollection: UITraitCollection) -> ExplorerCardConfiguration {
         let title = Strings.Localizable.videos
-        let iconForegroundImage = Asset.Images.Home.explorerCardVideoPlayBlue.image
-        let iconBackgroundImage = Asset.Images.Home.explorerCardVideoFilmStripsBlue.image
+        let iconForegroundImage = UIImage.explorerCardVideoPlayBlue
+        let iconBackgroundImage = UIImage.explorerCardVideoFilmStripsBlue
         let borderColors = [UIColor.explorerGradientLightBlue,
                             UIColor.explorerGradientDarkBlue]
 

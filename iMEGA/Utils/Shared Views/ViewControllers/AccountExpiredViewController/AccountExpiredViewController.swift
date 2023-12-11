@@ -59,7 +59,7 @@ class AccountExpiredViewController: UIViewController {
     
     func configProFlexiAccount() {
         titleLabel.text = Strings.Localizable.Account.Expired.ProFlexi.title
-        imageView.image = Asset.Images.Business.accountExpiredAdmin.image
+        imageView.image = UIImage.accountExpiredAdmin
         detailLabel.text = Strings.Localizable.Account.Expired.ProFlexi.message
         dismissButton.setTitle(Strings.Localizable.ok, for: .normal)
     }
@@ -70,10 +70,10 @@ class AccountExpiredViewController: UIViewController {
         titleLabel.text = Strings.Localizable.yourBusinessAccountIsExpired
         dismissButton.setTitle(Strings.Localizable.dismiss, for: .normal)
         if MEGASdk.shared.isMasterBusinessAccount {
-            imageView.image = Asset.Images.Business.accountExpiredAdmin.image
+            imageView.image = UIImage.accountExpiredAdmin
             detailLabel.text = Strings.Localizable.ThereHasBeenAProblemProcessingYourPayment.megaIsLimitedToViewOnlyUntilThisIssueHasBeenFixedInADesktopWebBrowser
         } else {
-            imageView.image = Asset.Images.Business.accountExpiredUser.image
+            imageView.image = UIImage.accountExpiredUser
             detailLabel.text = Strings.Localizable.YourAccountIsCurrentlyBSuspendedB.youCanOnlyBrowseYourData.replacingOccurrences(of: "[B]", with: "").replacingOccurrences(of: "[/B]", with: "") + "\n\n" + Strings.Localizable.contactYourBusinessAccountAdministratorToResolveTheIssueAndActivateYourAccount
         }
     }

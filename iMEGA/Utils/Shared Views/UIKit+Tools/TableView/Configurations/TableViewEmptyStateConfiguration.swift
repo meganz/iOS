@@ -11,7 +11,7 @@ extension EmptyStateConfiguration {
     static var searchHints: Self {
         Self.init {
             EmptyStateView(
-                image: Asset.Images.EmptyStates.searchEmptyState.image,
+                image: UIImage.searchEmptyState,
                 title: Strings.Localizable.noResults,
                 description: nil,
                 buttonTitle: nil
@@ -22,7 +22,7 @@ extension EmptyStateConfiguration {
     static var searchResult: Self {
         Self.init {
             EmptyStateView(
-                image: Asset.Images.EmptyStates.searchEmptyState.image,
+                image: UIImage.searchEmptyState,
                 title: Strings.Localizable.noResults,
                 description: nil,
                 buttonTitle: nil

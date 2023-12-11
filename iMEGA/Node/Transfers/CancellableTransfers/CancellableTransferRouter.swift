@@ -120,10 +120,10 @@ final class CancellableTransferRouter: NSObject, CancellableTransferRouting, Tra
     func transferCompletedWithError(error: String, dismiss: Bool) {
         if dismiss {
             presenter?.dismiss(animated: true, completion: {
-                SVProgressHUD.show(Asset.Images.Hud.hudDownload.image, status: error)
+                SVProgressHUD.show(UIImage.hudDownload, status: error)
             })
         } else {
-            SVProgressHUD.show(Asset.Images.Hud.hudDownload.image, status: error)
+            SVProgressHUD.show(UIImage.hudDownload, status: error)
         }
     }
     
