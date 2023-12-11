@@ -61,7 +61,7 @@ struct ActionSheetFactory: ActionSheetFactoryProtocol {
             if currentLabelColor == .unknown {
                 return nil
             } else {
-                let checkMarkImageView = UIImageView.init(image: Asset.Images.Generic.turquoiseCheckmark.image)
+                let checkMarkImageView = UIImageView.init(image: UIImage.turquoiseCheckmark)
                 return ActionSheetAction(
                     title: labelColor.localizedTitle,
                     detail: nil,
@@ -93,21 +93,21 @@ private extension NodeLabelColor {
     var iconImage: UIImage {
         switch self {
         case .red:
-            return Asset.Images.Labels.red.image
+            return UIImage.red
         case .orange:
-            return Asset.Images.Labels.orange.image
+            return UIImage.orange
         case .yellow:
-            return Asset.Images.Labels.yellow.image
+            return UIImage.yellow
         case .green:
-            return Asset.Images.Labels.green.image
+            return UIImage.green
         case .blue:
-            return Asset.Images.Labels.blue.image
+            return UIImage.blue
         case .purple:
-            return Asset.Images.Labels.purple.image
+            return UIImage.purple
         case .grey:
-            return Asset.Images.Labels.grey.image
+            return UIImage.grey
         case .unknown:
-            return Asset.Images.NodeActions.delete.image
+            return UIImage.delete
         }
     }
 
