@@ -30,12 +30,12 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        MEGASdk.shared.add(self)
+        addListenerAsync()
     }
 
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        MEGASdk.shared.add(self)
+        addListenerAsync()
     }
     
     override func configure(with message: any MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
@@ -153,7 +153,13 @@ class ChatRichPreviewMediaCollectionViewCell: TextMessageCell, MEGARequestDelega
             richPreviewContentView.bottomAnchor.constraint(equalTo: messageContainerView.bottomAnchor)
         ])
     }
-
+    
+    // MARK: - Private
+    private func addListenerAsync() {
+        Task {
+            MEGASdk.shared.add(self)
+        }
+    }
 }
 
 open class ChatRichPreviewMediaCollectionViewSizeCalculator: TextMessageSizeCalculator {

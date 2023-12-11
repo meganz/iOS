@@ -18,7 +18,7 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
     lazy var chatVoiceClipCollectionViewSizeCalculator = ChatVoiceClipCollectionViewSizeCalculator(layout: self)
     lazy var chatLocationCollectionViewSizeCalculator = ChatlocationCollectionViewSizeCalculator(layout: self)
     lazy var chatGiphyCollectionViewSizeCalculator = ChatGiphyCollectionViewSizeCalculator(layout: self)
-    lazy var chatManagmentTypeCollectionViewSizeCalculator = ChatManagmentTypeCollectionViewSizeCalculator(layout: self)
+    lazy var chatManagementTypeCollectionViewSizeCalculator = ChatManagementTypeCollectionViewSizeCalculator(layout: self)
     lazy var chatAttributedTextMessageSizeCalculator  = ChatTextMessageSizeCalculator(layout: self)
     lazy var chatUnreadMessagesLabelCollectionCellSizeCalculator = ChatUnreadMessagesLabelCollectionCellSizeCalculator(layout: self)
     lazy var chatRichPreviewDialogCollectionViewSizeCalculator = ChatRichPreviewDialogCollectionViewSizeCalculator(layout: self)
@@ -150,7 +150,7 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
                 }
             default:
                 if chatMessage.message.isManagementMessage {
-                    return chatManagmentTypeCollectionViewSizeCalculator
+                    return chatManagementTypeCollectionViewSizeCalculator
                 }
                 if chatMessage.transfer?.transferChatMessageType() == .voiceClip {
                     return chatVoiceClipCollectionViewSizeCalculator
@@ -176,7 +176,7 @@ class ChatViewMessagesFlowLayout: MessagesCollectionViewFlowLayout {
             chatVoiceClipCollectionViewSizeCalculator,
             chatLocationCollectionViewSizeCalculator,
             chatGiphyCollectionViewSizeCalculator,
-            chatManagmentTypeCollectionViewSizeCalculator,
+            chatManagementTypeCollectionViewSizeCalculator,
             chatRichPreviewDialogCollectionViewSizeCalculator
         ])
         return calculators
