@@ -57,6 +57,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     private var chatRoom: ChatRoomEntity
     private var recentlyAddedHandles = [HandleEntity]()
     private var invitedUserIdsToBypassWaitingRoom = Set<HandleEntity>()
+    private var calledUserIdsToBypassWaitingRoom = Set<HandleEntity>()
     private var chatRoomParticipantsUpdatedTask: Task<Void, Never>?
     private var subscriptions = Set<AnyCancellable>()
     private var call: CallEntity? {
@@ -556,7 +557,18 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         callUseCase.allowUsersJoinCall(call, users: waitingRoomParticipantHandles)
     }
     
+    private func allowToJoinAbsentParticipantsIfNeeded(_ participants: [CallParticipantEntity]) {
+        if chatRoom.chatType == .meeting && chatRoom.isWaitingRoomEnabled {
+            guard let call else { return }
+            participants.forEach {
+                calledUserIdsToBypassWaitingRoom.insert($0.participantId)
+            }
+            callUseCase.allowUsersJoinCall(call, users: participants.map { $0.participantId })
+        }
+    }
+    
     private func callAbsentParticipants(_ participants: [CallParticipantEntity]) {
+        allowToJoinAbsentParticipantsIfNeeded(participants)
         invokeCommand?(.hideCallAllIcon(participants.count == 1))
         participants.forEach { participant in
             participant.absentParticipantState = .calling
@@ -566,6 +578,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         DispatchQueue.main.asyncAfter(deadline: .now() + 40.0) { [weak self] in
             participants.forEach { participant in
                 participant.absentParticipantState = .noResponse
+                self?.calledUserIdsToBypassWaitingRoom.remove(participant.participantId)
             }
             guard let self else { return }
             invokeCommand?(.hideCallAllIcon(true))
@@ -602,6 +615,9 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         
         if callParticipantsInWaitingRoom.isNotEmpty {
             selectParticipantsListTab(.waitingRoom)
+        } else if selectedParticipantsListTab == .notInCall && calledUserIdsToBypassWaitingRoom.isNotEmpty {
+            guard let waitingRoomUserHandles = call.waitingRoom?.userIds else { return }
+            waitingRoomUserHandles.forEach { calledUserIdsToBypassWaitingRoom.remove($0) }
         } else {
             selectParticipantsListTab(.inCall)
         }
@@ -634,12 +650,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     // MARK: - Load data
 
     private func loadParticipantsInCall() {
-        var sections: [FloatingPanelTableViewSection] = []
-        if isMyselfAModerator {
-            sections.append(.hostControls)
-        }
-        sections.append(.invite)
-        sections.append(.participants)
+        let sections: [FloatingPanelTableViewSection] = [.hostControls, .invite, .participants]
         
         var hostControls: [HostControlsSectionRow] = []
         if chatRoom.chatType != .oneToOne {
@@ -667,12 +678,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     }
     
     private func loadParticipantsInWaitingRoom() {
-        var sections: [FloatingPanelTableViewSection] = []
-        if isMyselfAModerator {
-            sections.append(.hostControls)
-        }
-        sections.append(.invite)
-        sections.append(.participants)
+        let sections: [FloatingPanelTableViewSection] = [.hostControls, .invite, .participants]
         
         var hostControls: [HostControlsSectionRow] = []
         if chatRoom.chatType != .oneToOne {
@@ -692,12 +698,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     }
     
     private func loadParticipantsNotInCall() {
-        var sections: [FloatingPanelTableViewSection] = []
-        if isMyselfAModerator {
-            sections.append(.hostControls)
-        }
-        sections.append(.invite)
-        sections.append(.participants)
+        let sections: [FloatingPanelTableViewSection] = [.hostControls, .invite, .participants]
         
         var hostControls: [HostControlsSectionRow] = []
         if chatRoom.chatType != .oneToOne {
