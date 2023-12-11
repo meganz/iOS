@@ -410,7 +410,9 @@ final class DeviceListViewModelTests: XCTestCase {
                 ),
             searchAssets: SearchAssets(
                 placeHolder: "",
-                cancelTitle: ""
+                cancelTitle: "",
+                lightBGColor: .gray,
+                darkBGColor: .black
             ),
             backupStatuses: backupStatusEntities.compactMap { BackupStatus(status: $0) },
             deviceCenterActions: [

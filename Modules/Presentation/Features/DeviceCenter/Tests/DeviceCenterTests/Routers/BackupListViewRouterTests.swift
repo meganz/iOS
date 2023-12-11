@@ -62,7 +62,10 @@ final class BackupListsViewRouterTests: XCTestCase {
                 ),
             searchAssets: SearchAssets(
                 placeHolder: "",
-                cancelTitle: ""
+                cancelTitle: "",
+                lightBGColor: .gray,
+                darkBGColor: .black
+                
             ),
             backupStatuses: [
                 BackupStatus(status: .upToDate, title: "", color: .blue, iconName: "circle.fill")

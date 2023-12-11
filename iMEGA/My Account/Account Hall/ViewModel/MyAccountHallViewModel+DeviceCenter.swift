@@ -2,6 +2,7 @@ import DeviceCenter
 import MEGADomain
 import MEGAL10n
 import MEGASDKRepo
+import SwiftUI
 
 extension MyAccountHallViewModel {
     func makeDeviceCenterBridge() {
@@ -67,7 +68,9 @@ extension MyAccountHallViewModel {
     private func makeSearchAssets() -> SearchAssets {
         return SearchAssets(
             placeHolder: Strings.Localizable.search,
-            cancelTitle: Strings.Localizable.cancel
+            cancelTitle: Strings.Localizable.cancel,
+            lightBGColor: MEGAAppColor.White._F7F7F7.color,
+            darkBGColor: MEGAAppColor.Black._161616.color
         )
     }
     
