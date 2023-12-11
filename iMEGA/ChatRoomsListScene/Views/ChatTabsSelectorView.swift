@@ -17,7 +17,7 @@ struct ChatTabsSelectorView: View {
                 }, label: {
                     Text(Strings.Localizable.Chat.Selector.chat)
                         .font(Font.system(.subheadline, design: .default).weight(.medium))
-                        .foregroundColor(Color(chatViewMode == .chats ? UIColor.chatTabSelectedText : UIColor.chatTabNormalText))
+                        .foregroundColor(chatViewMode == .chats ? MEGAAppColor.Chat.chatTabSelectedText.color : MEGAAppColor.Chat.chatTabNormalText.color)
                     
                 })
                 .overlay(alignment: .trailing, content: {
@@ -29,7 +29,7 @@ struct ChatTabsSelectorView: View {
                 })
                 Divider()
                     .frame(maxHeight: 1)
-                    .background(Color(chatViewMode == .chats ? UIColor.chatTabSelectedBackground : UIColor.chatTabNormalBackground))
+                    .background(chatViewMode == .chats ? MEGAAppColor.Chat.chatTabSelectedBackground.color : MEGAAppColor.Chat.chatTabNormalBackground.color)
             }
             
             VStack {
@@ -39,7 +39,7 @@ struct ChatTabsSelectorView: View {
                 }, label: {
                     Text(Strings.Localizable.Chat.Selector.meeting)
                         .font(Font.system(.subheadline, design: .default).weight(.medium))
-                        .foregroundColor(Color(chatViewMode == .meetings ? UIColor.chatTabSelectedText : UIColor.chatTabNormalText))
+                        .foregroundColor(chatViewMode == .meetings ? MEGAAppColor.Chat.chatTabSelectedText.color : MEGAAppColor.Chat.chatTabNormalText.color)
                 })
                 .overlay(alignment: .trailing, content: {
                     Circle()
@@ -50,7 +50,7 @@ struct ChatTabsSelectorView: View {
                 })
                 Divider()
                     .frame(maxHeight: 1)
-                    .background(Color(chatViewMode == .meetings ? UIColor.chatTabSelectedBackground : UIColor.chatTabNormalBackground))
+                    .background(chatViewMode == .meetings ? MEGAAppColor.Chat.chatTabSelectedBackground.color : MEGAAppColor.Chat.chatTabNormalBackground.color)
             }
         }
         .frame(maxHeight: 44)
