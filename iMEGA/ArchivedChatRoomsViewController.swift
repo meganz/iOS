@@ -47,12 +47,12 @@ extension ArchivedChatRoomsViewController {
         (meetingSelectorButton, chatSelectorButton, meetingSelectedView, chatSelectedView) :
         (chatSelectorButton, meetingSelectorButton, chatSelectedView, meetingSelectedView)
         
-        selectedButton?.setTitleColor(UIColor.chatTabSelectedText, for: .normal)
+        selectedButton?.setTitleColor(MEGAAppColor.Chat.chatTabSelectedText.uiColor, for: .normal)
         selectedButton?.titleLabel?.font = .preferredFont(style: .subheadline, weight: .medium)
-        normalButton?.setTitleColor(UIColor.chatTabNormalText, for: .normal)
+        normalButton?.setTitleColor(MEGAAppColor.Chat.chatTabNormalText.uiColor, for: .normal)
         normalButton?.titleLabel?.font = .preferredFont(style: .subheadline, weight: .regular)
-        selectedView?.backgroundColor = UIColor.chatTabSelectedBackground
-        normalView?.backgroundColor = UIColor.chatTabNormalBackground
+        selectedView?.backgroundColor = MEGAAppColor.Chat.chatTabSelectedBackground.uiColor
+        normalView?.backgroundColor = MEGAAppColor.Chat.chatTabNormalBackground.uiColor
     }
 }
 

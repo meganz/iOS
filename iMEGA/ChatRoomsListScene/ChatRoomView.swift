@@ -49,14 +49,14 @@ struct ChatRoomView: View {
         [
             SwipeActionLabel(
                 imageName: "archiveChatSwipeActionButton",
-                backgroundColor: Color.chatListArchiveSwipeActionBackground,
+                backgroundColor: MEGAAppColor.Chat.chatListArchiveSwipeActionBackground.color,
                 action: {
                     viewModel.archiveChat()
                 }
             ),
             SwipeActionLabel(
                 imageName: "moreListChatSwipeActionButton",
-                backgroundColor: Color.chatListMoreSwipeActionBackground,
+                backgroundColor: MEGAAppColor.Chat.chatListMoreSwipeActionBackground.color,
                 action: {
                     viewModel.presentMoreOptionsForChat()
                 }

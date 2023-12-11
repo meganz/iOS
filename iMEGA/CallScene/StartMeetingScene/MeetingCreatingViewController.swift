@@ -10,8 +10,8 @@ class MeetingCreatingViewController: UIViewController, UITextFieldDelegate {
         static let font = UIFont.preferredFont(forTextStyle: .title1).withWeight(.semibold)
         static let textColor = MEGAAppColor.White._FFFFFF.uiColor
         static let size = CGSize(width: 80, height: 80)
-        static let backgroundColor = UIColor.callAvatarBackground
-        static let backgroundGradientColor = UIColor.callAvatarBackgroundGradient
+        static let backgroundColor = MEGAAppColor.Chat.callAvatarBackground.uiColor
+        static let backgroundGradientColor = MEGAAppColor.Chat.callAvatarBackgroundGradient.uiColor
     }
     
     private struct Constants {

@@ -147,13 +147,13 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
     func chatStatusColor(forChatStatus chatStatus: ChatStatusEntity) -> UIColor? {
         switch chatStatus {
         case .online:
-            return UIColor.chatStatusOnline
+            return MEGAAppColor.Chat.chatStatusOnline.uiColor
         case .offline:
-            return UIColor.chatStatusOffline
+            return MEGAAppColor.Chat.chatStatusOffline.uiColor
         case .away:
-            return UIColor.chatStatusAway
+            return MEGAAppColor.Chat.chatStatusAway.uiColor
         case .busy:
-            return UIColor.chatStatusBusy
+            return MEGAAppColor.Chat.chatStatusBusy.uiColor
         default:
             return nil
         }
