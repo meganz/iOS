@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="CSm-b8-KOc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="CSm-b8-KOc">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -40,30 +40,30 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="contactCell" id="pNm-oN-god" customClass="ContactTableViewCell">
-                                        <rect key="frame" x="0.0" y="50" width="414" height="96.666664123535156"/>
+                                        <rect key="frame" x="0.0" y="50" width="414" height="97"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pNm-oN-god" id="BKV-y9-Eh3">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="96.666664123535156"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="97"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="bSg-qg-OLn">
-                                                    <rect key="frame" x="12" y="28.333333333333329" width="40" height="40"/>
+                                                    <rect key="frame" x="12" y="28.666666666666671" width="40" height="40"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="40" id="NE1-pL-tir"/>
                                                         <constraint firstAttribute="height" constant="40" id="TAE-qV-b8E"/>
                                                     </constraints>
                                                 </imageView>
                                                 <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="contactVerified" translatesAutoresizingMaskIntoConstraints="NO" id="piz-Ll-ozv">
-                                                    <rect key="frame" x="36" y="28.333333333333329" width="14" height="14"/>
+                                                    <rect key="frame" x="36" y="28.666666666666671" width="14" height="14"/>
                                                 </imageView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="ko1-su-Tex">
-                                                    <rect key="frame" x="60" y="12" width="52.666666666666657" height="72.666666666666671"/>
+                                                    <rect key="frame" x="60" y="12" width="52.666666666666657" height="73"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r7x-NA-1JP">
-                                                            <rect key="frame" x="0.0" y="0.0" width="52.666666666666664" height="55.333333333333336"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="52.666666666666664" height="55.666666666666664"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wFx-RQ-rS3" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
-                                                                    <rect key="frame" x="0.0" y="18.666666666666668" width="38.333333333333336" height="18.000000000000004"/>
+                                                                    <rect key="frame" x="0.0" y="19" width="38.333333333333336" height="18"/>
                                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -73,7 +73,7 @@
                                                                     </userDefinedRuntimeAttributes>
                                                                 </label>
                                                                 <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EdR-aC-dWr">
-                                                                    <rect key="frame" x="42.333333333333329" y="24.666666666666664" width="6" height="6"/>
+                                                                    <rect key="frame" x="42.333333333333329" y="25" width="6" height="6"/>
                                                                     <accessibility key="accessibilityConfiguration">
                                                                         <accessibilityTraits key="traits" notEnabled="YES"/>
                                                                     </accessibility>
@@ -97,7 +97,7 @@
                                                             </constraints>
                                                         </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eSl-2f-aMj">
-                                                            <rect key="frame" x="0.0" y="58.333333333333336" width="52.666666666666664" height="14.333333333333336"/>
+                                                            <rect key="frame" x="0.0" y="58.666666666666679" width="52.666666666666664" height="14.333333333333336"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -105,7 +105,7 @@
                                                     </subviews>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Orb-rk-RbC">
-                                                    <rect key="frame" x="414" y="0.0" width="0.0" height="96.666666666666671"/>
+                                                    <rect key="frame" x="414" y="0.0" width="0.0" height="97"/>
                                                     <subviews>
                                                         <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n9Y-RE-TXN">
                                                             <rect key="frame" x="0.0" y="0.0" width="50" height="60"/>
@@ -187,15 +187,15 @@
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
-                                                    <exclude reference="1OT-QM-3HG"/>
-                                                    <exclude reference="9IG-O5-67G"/>
-                                                    <exclude reference="PD1-Re-l1V"/>
-                                                    <exclude reference="TAv-vR-GK7"/>
-                                                    <exclude reference="dZF-7H-r0h"/>
-                                                    <exclude reference="hfM-0X-AT8"/>
                                                     <exclude reference="i48-jE-c7h"/>
-                                                    <exclude reference="iQo-HC-0yy"/>
+                                                    <exclude reference="9IG-O5-67G"/>
+                                                    <exclude reference="1OT-QM-3HG"/>
+                                                    <exclude reference="TAv-vR-GK7"/>
                                                     <exclude reference="xDE-91-tZa"/>
+                                                    <exclude reference="hfM-0X-AT8"/>
+                                                    <exclude reference="PD1-Re-l1V"/>
+                                                    <exclude reference="dZF-7H-r0h"/>
+                                                    <exclude reference="iQo-HC-0yy"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -213,7 +213,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ContactPermissionsNameTableViewCellID" id="QVJ-Tw-apZ" customClass="ContactTableViewCell">
-                                        <rect key="frame" x="0.0" y="146.66666412353516" width="414" height="60.333332061767578"/>
+                                        <rect key="frame" x="0.0" y="147" width="414" height="60.333332061767578"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QVJ-Tw-apZ" id="gcm-Tm-g4F">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="60.333332061767578"/>
@@ -248,7 +248,7 @@
                                                     </subviews>
                                                 </stackView>
                                                 <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="readPermissions" translatesAutoresizingMaskIntoConstraints="NO" id="kkm-lo-RIn">
-                                                    <rect key="frame" x="348" y="8.3333333333333357" width="46" height="44"/>
+                                                    <rect key="frame" x="352" y="8.3333333333333357" width="46" height="44"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="46" id="G5h-Oq-LkJ"/>
                                                         <constraint firstAttribute="height" constant="44" id="zl0-r0-KV2"/>
@@ -282,14 +282,14 @@
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
-                                                    <exclude reference="LM1-Ld-lqR"/>
-                                                    <exclude reference="MIt-Ia-n84"/>
-                                                    <exclude reference="Nr6-Pb-dxO"/>
-                                                    <exclude reference="bga-4M-Kfx"/>
-                                                    <exclude reference="cAY-w5-SDB"/>
-                                                    <exclude reference="emZ-gX-K4D"/>
                                                     <exclude reference="sNa-LP-eCB"/>
+                                                    <exclude reference="Nr6-Pb-dxO"/>
+                                                    <exclude reference="MIt-Ia-n84"/>
+                                                    <exclude reference="bga-4M-Kfx"/>
+                                                    <exclude reference="emZ-gX-K4D"/>
                                                     <exclude reference="sRC-15-XAx"/>
+                                                    <exclude reference="LM1-Ld-lqR"/>
+                                                    <exclude reference="cAY-w5-SDB"/>
                                                     <exclude reference="sY7-ZG-J7r"/>
                                                 </mask>
                                             </variation>
@@ -601,7 +601,7 @@
                         <action selector="createGroupAction:" destination="4jb-uN-Eto" id="oyN-2E-0VA"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem image="selectAll" style="plain" id="Llm-yt-C3F" userLabel="Select All Bar Button Item">
+                <barButtonItem image="selectAllItems" style="plain" id="Llm-yt-C3F" userLabel="Select All Bar Button Item">
                     <connections>
                         <action selector="selectAllAction:" destination="4jb-uN-Eto" id="hCu-lV-fHf"/>
                     </connections>
@@ -1381,8 +1381,8 @@
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
-                                                    <exclude reference="VRD-RJ-MVc"/>
                                                     <exclude reference="hRe-Fz-ffy"/>
+                                                    <exclude reference="VRD-RJ-MVc"/>
                                                     <exclude reference="M3m-IR-Hds"/>
                                                 </mask>
                                             </variation>
@@ -1398,7 +1398,7 @@
                                         <rect key="frame" x="0.0" y="232.66666793823242" width="414" height="44.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bSz-e2-MvM" id="d7H-iQ-Neb">
-                                            <rect key="frame" x="0.0" y="0.0" width="383.66666666666669" height="44.666667938232422"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="387.66666666666669" height="44.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fJk-mb-0sx">
@@ -1415,7 +1415,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ay2-EJ-Him">
-                                                    <rect key="frame" x="334" y="12.666666666666666" width="39.666666666666686" height="19.333333333333336"/>
+                                                    <rect key="frame" x="338" y="12.666666666666666" width="39.666666666666686" height="19.333333333333336"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1436,8 +1436,8 @@
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
-                                                    <exclude reference="1SC-20-6bt"/>
                                                     <exclude reference="PW7-Sc-chj"/>
+                                                    <exclude reference="1SC-20-6bt"/>
                                                     <exclude reference="2Xv-z5-xiE"/>
                                                 </mask>
                                             </variation>
@@ -1454,7 +1454,7 @@
                                         <rect key="frame" x="0.0" y="277.33333587646484" width="414" height="44.666667938232422"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HhG-sV-Fzf" id="fja-Rz-aZo">
-                                            <rect key="frame" x="0.0" y="0.0" width="383.66666666666669" height="44.666667938232422"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="387.66666666666669" height="44.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TYK-gL-cJh">
@@ -1465,13 +1465,13 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Send Message" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hz8-Xj-Fns" userLabel="Send Message Label">
-                                                    <rect key="frame" x="55" y="12.000000000000002" width="283.66666666666669" height="20.666666666666671"/>
+                                                    <rect key="frame" x="55" y="12.000000000000002" width="287.66666666666669" height="20.666666666666671"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="contactVerified" translatesAutoresizingMaskIntoConstraints="NO" id="0BY-oe-PLz">
-                                                    <rect key="frame" x="348.66666666666669" y="10" width="25" height="25"/>
+                                                    <rect key="frame" x="352.66666666666669" y="10" width="25" height="25"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="25" id="hau-h5-hH6"/>
                                                         <constraint firstAttribute="width" constant="25" id="odE-4N-fsP"/>
@@ -1494,8 +1494,8 @@
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
-                                                    <exclude reference="aEm-2v-ua3"/>
                                                     <exclude reference="rcJ-qs-t1S"/>
+                                                    <exclude reference="aEm-2v-ua3"/>
                                                     <exclude reference="y72-Sg-jym"/>
                                                 </mask>
                                             </variation>
@@ -1541,20 +1541,20 @@
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="YpN-Hr-e0k"/>
-                                <exclude reference="0xO-pw-dwt"/>
                                 <exclude reference="EjW-k4-9O5"/>
-                                <exclude reference="Xa2-84-baA"/>
                                 <exclude reference="bad-lX-kUp"/>
+                                <exclude reference="0xO-pw-dwt"/>
+                                <exclude reference="Xa2-84-baA"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact">
                             <mask key="constraints">
                                 <include reference="YpN-Hr-e0k"/>
                                 <exclude reference="Jby-KN-3N6"/>
-                                <include reference="0xO-pw-dwt"/>
                                 <include reference="EjW-k4-9O5"/>
-                                <include reference="Xa2-84-baA"/>
                                 <exclude reference="meF-5r-MSG"/>
+                                <include reference="0xO-pw-dwt"/>
+                                <include reference="Xa2-84-baA"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -2036,7 +2036,7 @@
         <image name="makeCallRound" width="37" height="37"/>
         <image name="makeCallRound, disabled" width="37" height="37"/>
         <image name="readPermissions" width="24" height="24"/>
-        <image name="selectAll" width="28" height="28"/>
+        <image name="selectAllItems" width="28" height="28"/>
         <image name="sendMessageRound" width="37" height="37"/>
         <image name="sendMessageRound, disabled" width="37" height="37"/>
         <systemColor name="groupTableViewBackgroundColor">

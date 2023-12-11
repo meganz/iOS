@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="faa-Ut-As6">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="faa-Ut-As6">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -56,7 +56,7 @@
                         <action selector="activityTapped:" destination="cPA-hf-QcT" id="unK-9U-A8u"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem image="selectAll" width="22" style="plain" id="Rfg-dz-CVh" userLabel="Select All Bar Button Item">
+                <barButtonItem image="selectAllItems" width="22" style="plain" id="Rfg-dz-CVh" userLabel="Select All Bar Button Item">
                     <connections>
                         <action selector="selectAllAction:" destination="cPA-hf-QcT" id="vAK-mC-SnE"/>
                     </connections>
@@ -271,10 +271,15 @@
             <point key="canvasLocation" x="1635" y="-2039"/>
         </scene>
     </scenes>
+    <designables>
+        <designable name="hoe-2e-rJm">
+            <size key="intrinsicContentSize" width="38.5" height="18"/>
+        </designable>
+    </designables>
     <resources>
         <image name="moreList" width="28" height="28"/>
         <image name="rubbishBin" width="28" height="28"/>
-        <image name="selectAll" width="28" height="28"/>
+        <image name="selectAllItems" width="28" height="28"/>
         <image name="share" width="33.5" height="33.5"/>
         <image name="video_list" width="22" height="22"/>
         <systemColor name="systemBackgroundColor">
