@@ -5,10 +5,6 @@ public protocol PhotoLibraryUseCaseProtocol: Sendable {
     /// - Returns: PhotoLibraryContainerEntity, which contains CameraUpload and MediaUpload node itself
     func photoLibraryContainer() async -> PhotoLibraryContainerEntity
     
-    /// Load Camera/Media Upload photos and videos
-    /// - Returns: Sorted nodes by modification time
-    func cameraUploadPhotos() async throws -> [NodeEntity]
-    
     /// Load Cloud Drive(include camera upload and media upload) photos and videos
     /// - Returns: All images and videos nodes from cloud drive
     func allPhotos() async throws -> [NodeEntity]
@@ -39,15 +35,6 @@ public struct PhotoLibraryUseCase<T: PhotoLibraryRepositoryProtocol, U: FilesSea
             cameraUploadNode: cameraUploadNode,
             mediaUploadNode: mediaUploadNode
         )
-    }
-    
-    public func cameraUploadPhotos() async throws -> [NodeEntity] {
-        let container = await photoLibraryContainer()
-        let nodesCameraUpload = photosRepository.visualMediaNodes(inParent: container.cameraUploadNode)
-        let nodesMediaUpload = photosRepository.visualMediaNodes(inParent: container.mediaUploadNode)
-        let nodes = nodesCameraUpload + nodesMediaUpload
-        
-        return nodes
     }
     
     public func allPhotos() async throws -> [NodeEntity] {

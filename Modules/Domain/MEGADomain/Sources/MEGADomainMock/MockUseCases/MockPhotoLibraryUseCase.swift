@@ -19,10 +19,6 @@ public struct MockPhotoLibraryUseCase: PhotoLibraryUseCaseProtocol {
         PhotoLibraryContainerEntity(cameraUploadNode: nil, mediaUploadNode: nil)
     }
     
-    public func cameraUploadPhotos() async throws -> [NodeEntity] {
-        []
-    }
-    
     public func allPhotos() async throws -> [NodeEntity] {
         allPhotos
     }
