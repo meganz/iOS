@@ -2,6 +2,7 @@ import MEGASwiftUI
 import SwiftUI
 
 struct SearchableView<WrappedView: View>: View {
+    @Environment(\.colorScheme) private var colorScheme
     let wrappedView: WrappedView
     @Binding private var searchText: String
     @Binding private var isEditing: Bool
@@ -11,8 +12,17 @@ struct SearchableView<WrappedView: View>: View {
     var emptyStateAssets: EmptyStateAssets
     
     private var contentView: some View {
-        wrappedView
-            .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always))
+        VStack(spacing: 5.0) {
+            SearchBarView(
+                text: $searchText,
+                isEditing: $isEditing,
+                placeholder: searchAssets.placeHolder,
+                cancelTitle: searchAssets.cancelTitle
+            )
+            .padding(8)
+            .background(colorScheme == .dark ? searchAssets.darkBGColor : searchAssets.lightBGColor)
+            wrappedView
+        }
     }
     
     public init(wrappedView: WrappedView, searchText: Binding<String>, isEditing: Binding<Bool>, isFilteredListEmpty: Bool, searchAssets: SearchAssets, emptyStateAssets: EmptyStateAssets) {
