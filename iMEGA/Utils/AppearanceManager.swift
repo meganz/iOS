@@ -78,8 +78,8 @@ class AppearanceManager: NSObject {
         SVProgressHUD.setBackgroundColor(UIColor.mnz_secondaryBackground(for: traitCollection))
         SVProgressHUD.setHapticsEnabled(true)
         
-        SVProgressHUD.setSuccessImage(Asset.Images.Hud.hudSuccess.image)
-        SVProgressHUD.setErrorImage(Asset.Images.Hud.hudError.image)
+        SVProgressHUD.setSuccessImage(UIImage.hudSuccess)
+        SVProgressHUD.setErrorImage(UIImage.hudError)
         SVProgressHUD.setMinimumDismissTimeInterval(2)
     }
     
@@ -150,7 +150,7 @@ class AppearanceManager: NSObject {
         navigationBarAppearance.shadowImage = nil
         navigationBarAppearance.shadowColor = nil
         
-        let backArrowImage = Asset.Images.Chat.backArrow.image
+        let backArrowImage = UIImage.backArrow
         navigationBarAppearance.setBackIndicatorImage(backArrowImage, transitionMaskImage: backArrowImage)
         
         let barButtonItemAppearance = UIBarButtonItemAppearance()

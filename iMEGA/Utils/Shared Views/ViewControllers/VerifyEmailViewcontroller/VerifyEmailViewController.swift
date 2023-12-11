@@ -92,7 +92,7 @@ class VerifyEmailViewController: UIViewController {
     func showWhyIAmBlocked() {
         let customModal = CustomModalAlertViewController.init()
 
-        customModal.image = Asset.Images.VerifyEmail.lockedAccounts.image
+        customModal.image = UIImage.lockedAccounts
         customModal.viewTitle = Strings.Localizable.lockedAccounts
         customModal.detail = Strings.Localizable.itIsPossibleThatYouAreUsingTheSamePasswordForYourMEGAAccountAsForOtherServicesAndThatAtLeastOneOfTheseOtherServicesHasSufferedADataBreach + "\n\n" + Strings.Localizable.yourPasswordLeakedAndIsNowBeingUsedByBadActorsToLogIntoYourAccountsIncludingButNotLimitedToYourMEGAAccount
         customModal.dismissButtonTitle = Strings.Localizable.close

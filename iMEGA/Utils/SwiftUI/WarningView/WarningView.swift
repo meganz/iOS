@@ -34,7 +34,7 @@ struct WarningView: View {
         Button {
             viewModel.closeAction()
         } label: {
-            Image(uiImage: Asset.Images.Banner.closeCircle.image)
+            Image(.closeCircle)
                 .padding()
         }
     }

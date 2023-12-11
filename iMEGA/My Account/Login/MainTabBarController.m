@@ -3,7 +3,6 @@
 #import "CloudDriveViewController.h"
 #import "Helper.h"
 #import "MEGANavigationController.h"
-#import "MyAccountHallViewController.h"
 #import "MEGAReachabilityManager.h"
 #import "UIApplication+MNZCategory.h"
 #import "MainTabBarController+CameraUpload.h"
