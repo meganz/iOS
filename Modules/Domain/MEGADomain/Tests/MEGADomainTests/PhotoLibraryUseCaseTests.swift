@@ -27,54 +27,40 @@ final class PhotoLibraryUseCaseTests: XCTestCase {
         
         let usecase = PhotoLibraryUseCase(photosRepository: photosRepo, searchRepository: fileSearchRepo)
         
-        do {
-            let photos = try await usecase.allPhotos()
-            XCTAssertTrue(photos.count == expectedCount)
-        } catch {
-            assertionFailure("Unexpected exception!")
-        }
+        let photos = try await usecase.allPhotos()
+        XCTAssertTrue(photos.count == expectedCount)
     }
     
     func testAllPhotos_withCameraUploads_shouldReturnTrue() async throws {
-        var photosRepo = MockPhotosLibraryRepository.newRepo
-        let fileSearchRepo = MockFilesSearchRepository.newRepo
-        
-        photosRepo.cameraUploadNode = cameraUploadNode
-        photosRepo.mediaUploadNode = mediaUploadNode
         let nodesInCameraUpload  = samplePhotoNodesFromCameraUpload()
         let nodesInMediaUpload = samplePhotoNodesFromMediaUpload()
-        photosRepo.nodesInCameraUpload = nodesInCameraUpload
-        photosRepo.nodesInMediaUpload = nodesInMediaUpload
+        
+        let fileSearchRepo = MockFilesSearchRepository.newRepo
+        let photosRepo = MockPhotosLibraryRepository(cameraUploadNode: cameraUploadNode,
+                                                     mediaUploadNode: mediaUploadNode,
+                                                     nodesInCameraUpload: nodesInCameraUpload,
+                                                     nodesInMediaUpload: nodesInMediaUpload)
         
         let expectedCount = nodesInCameraUpload.count + nodesInMediaUpload.count
         let usecase = PhotoLibraryUseCase(photosRepository: photosRepo, searchRepository: fileSearchRepo)
         
-        do {
-            let photos = try await usecase.allPhotosFromCameraUpload()
-            XCTAssertTrue(photos.count == expectedCount)
-        } catch {
-            assertionFailure("Unexpected exception!")
-        }
+        let photos = try await usecase.allPhotosFromCameraUpload()
+        XCTAssertTrue(photos.count == expectedCount)
     }
     
     func testAllPhotos_withCloudDriveOnly_shouldReturnTrue() async throws {
-        var photosRepo = MockPhotosLibraryRepository.newRepo
+        let photosRepo = MockPhotosLibraryRepository(cameraUploadNode: cameraUploadNode,
+                                                     mediaUploadNode: mediaUploadNode)
+        
         let videoNodes = sampleVideoNodesForCloudDrive()
         let imageNodes = sampleImageNodesForCloudDrive()
         let fileSearchRepo = MockFilesSearchRepository(photoNodes: imageNodes, videoNodes: videoNodes)
         
-        photosRepo.cameraUploadNode = cameraUploadNode
-        photosRepo.mediaUploadNode = mediaUploadNode
-        
         let expectedCount = 4
         let usecase = PhotoLibraryUseCase(photosRepository: photosRepo, searchRepository: fileSearchRepo)
         
-        do {
-            let photos = try await usecase.allPhotosFromCloudDriveOnly()
-            XCTAssertTrue(photos.count == expectedCount)
-        } catch {
-            assertionFailure("Unexpected exception!")
-        }
+        let photos = try await usecase.allPhotosFromCloudDriveOnly()
+        XCTAssertTrue(photos.count == expectedCount)
     }
     
     // MARK: - Private
