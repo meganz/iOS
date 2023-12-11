@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="eDp-9x-QPr">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="eDp-9x-QPr">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -964,7 +964,7 @@
                         <action selector="editTapped:" destination="WZ5-hi-K8Q" id="5rD-hQ-inZ"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem image="selectAll" style="plain" id="ZlW-K7-1lS" userLabel="Select All Bar Button Item">
+                <barButtonItem image="selectAllItems" style="plain" id="ZlW-K7-1lS" userLabel="Select All Bar Button Item">
                     <connections>
                         <action selector="selectAllAction:" destination="WZ5-hi-K8Q" id="T07-Bt-RBc"/>
                     </connections>
@@ -1085,9 +1085,9 @@
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
-                                                    <exclude reference="1AV-J1-vmy"/>
-                                                    <exclude reference="GjO-tD-xzO"/>
                                                     <exclude reference="b3W-EQ-0li"/>
+                                                    <exclude reference="GjO-tD-xzO"/>
+                                                    <exclude reference="1AV-J1-vmy"/>
                                                     <exclude reference="TXa-0b-jK8"/>
                                                     <exclude reference="kLl-dD-iwk"/>
                                                 </mask>
@@ -1208,7 +1208,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nr2-wV-nC7">
-                                                    <rect key="frame" x="350" y="8.3333333333333357" width="44" height="44"/>
+                                                    <rect key="frame" x="354" y="8.3333333333333357" width="44" height="44"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="44" id="7nP-YA-7Fz"/>
                                                         <constraint firstAttribute="width" constant="44" id="U0Z-ap-sv1"/>
@@ -1251,23 +1251,23 @@
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
-                                                    <exclude reference="Dgb-Zz-Qhj"/>
-                                                    <exclude reference="EYV-6c-AJ1"/>
-                                                    <exclude reference="NHq-GE-97t"/>
-                                                    <exclude reference="Nla-IT-WF1"/>
                                                     <exclude reference="ZFP-Vd-Ejh"/>
+                                                    <exclude reference="NHq-GE-97t"/>
                                                     <exclude reference="ikg-nt-u9O"/>
                                                     <exclude reference="oXX-gu-rFl"/>
-                                                    <exclude reference="tkd-Ig-NYb"/>
                                                     <exclude reference="txv-KK-Zrc"/>
+                                                    <exclude reference="Dgb-Zz-Qhj"/>
+                                                    <exclude reference="EYV-6c-AJ1"/>
+                                                    <exclude reference="Nla-IT-WF1"/>
+                                                    <exclude reference="tkd-Ig-NYb"/>
                                                     <exclude reference="yxl-uJ-f7M"/>
-                                                    <exclude reference="L5S-kg-WaX"/>
                                                     <exclude reference="SG7-7o-Uh0"/>
-                                                    <exclude reference="TOO-C1-Het"/>
+                                                    <exclude reference="L5S-kg-WaX"/>
                                                     <exclude reference="hSU-8F-Gfd"/>
-                                                    <exclude reference="jdM-97-Nkl"/>
                                                     <exclude reference="k44-yb-qjg"/>
                                                     <exclude reference="rzV-PW-ZPG"/>
+                                                    <exclude reference="TOO-C1-Het"/>
+                                                    <exclude reference="jdM-97-Nkl"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -1347,22 +1347,22 @@
                                             <variation key="default">
                                                 <mask key="constraints">
                                                     <exclude reference="4OH-ey-x5z"/>
-                                                    <exclude reference="5kH-rw-wmp"/>
                                                     <exclude reference="DBh-B7-LdE"/>
                                                     <exclude reference="ERO-Kq-tPu"/>
+                                                    <exclude reference="b3k-3c-1gu"/>
+                                                    <exclude reference="kOW-lO-eTJ"/>
+                                                    <exclude reference="5kH-rw-wmp"/>
+                                                    <exclude reference="byY-V7-Ch7"/>
                                                     <exclude reference="G22-bW-S6W"/>
                                                     <exclude reference="aQ4-yL-dXP"/>
-                                                    <exclude reference="b3k-3c-1gu"/>
-                                                    <exclude reference="byY-V7-Ch7"/>
-                                                    <exclude reference="kOW-lO-eTJ"/>
                                                     <exclude reference="lQj-82-mlx"/>
+                                                    <exclude reference="foq-XT-tjR"/>
+                                                    <exclude reference="Z5G-5F-ReZ"/>
+                                                    <exclude reference="x0Q-Kz-fZf"/>
+                                                    <exclude reference="VzV-u2-psF"/>
+                                                    <exclude reference="wHg-G9-pEx"/>
                                                     <exclude reference="0uB-BX-Jf3"/>
                                                     <exclude reference="D7B-2D-Vob"/>
-                                                    <exclude reference="VzV-u2-psF"/>
-                                                    <exclude reference="Z5G-5F-ReZ"/>
-                                                    <exclude reference="foq-XT-tjR"/>
-                                                    <exclude reference="wHg-G9-pEx"/>
-                                                    <exclude reference="x0Q-Kz-fZf"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -1431,7 +1431,7 @@
                                                     </subviews>
                                                 </stackView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="waT-q0-bk9">
-                                                    <rect key="frame" x="350" y="8.3333333333333357" width="44" height="44"/>
+                                                    <rect key="frame" x="354" y="8.3333333333333357" width="44" height="44"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="44" id="c9l-Cq-KH7"/>
                                                         <constraint firstAttribute="width" constant="44" id="kNC-5m-lPz"/>
@@ -1464,15 +1464,15 @@
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
-                                                    <exclude reference="1Qd-6w-PED"/>
-                                                    <exclude reference="1iC-bp-FpL"/>
                                                     <exclude reference="BPK-j7-T6i"/>
+                                                    <exclude reference="p9z-85-J43"/>
+                                                    <exclude reference="1Qd-6w-PED"/>
                                                     <exclude reference="Ezt-tb-NpD"/>
                                                     <exclude reference="IOz-qD-j3T"/>
-                                                    <exclude reference="SfT-Mb-Zw8"/>
                                                     <exclude reference="VGZ-Rg-LDD"/>
+                                                    <exclude reference="1iC-bp-FpL"/>
+                                                    <exclude reference="SfT-Mb-Zw8"/>
                                                     <exclude reference="XpO-hY-kas"/>
-                                                    <exclude reference="p9z-85-J43"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -1519,19 +1519,19 @@
                             <mask key="constraints">
                                 <exclude reference="6bp-Gx-qH7"/>
                                 <exclude reference="hDY-ub-NG1"/>
-                                <exclude reference="FUo-Wm-gZy"/>
                                 <exclude reference="ZIc-gU-eUq"/>
+                                <exclude reference="FUo-Wm-gZy"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact">
                             <mask key="constraints">
-                                <include reference="6bp-Gx-qH7"/>
                                 <exclude reference="CmA-Db-YAr"/>
+                                <include reference="6bp-Gx-qH7"/>
                                 <include reference="hDY-ub-NG1"/>
-                                <exclude reference="7l9-hr-Mb4"/>
-                                <include reference="FUo-Wm-gZy"/>
                                 <include reference="ZIc-gU-eUq"/>
+                                <exclude reference="7l9-hr-Mb4"/>
                                 <exclude reference="mdI-KB-pSI"/>
+                                <include reference="FUo-Wm-gZy"/>
                             </mask>
                         </variation>
                     </view>
@@ -1694,7 +1694,7 @@
                         <action selector="editAction:" destination="7lh-MZ-fv2" id="Hdn-qJ-MQb"/>
                     </connections>
                 </barButtonItem>
-                <barButtonItem image="selectAll" style="plain" id="2np-ec-Z9A" userLabel="Select All Bar Button Item">
+                <barButtonItem image="selectAllItems" style="plain" id="2np-ec-Z9A" userLabel="Select All Bar Button Item">
                     <connections>
                         <action selector="selectAllAction:" destination="7lh-MZ-fv2" id="V1X-CK-A6l"/>
                     </connections>
@@ -1871,7 +1871,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="J8f-QD-435">
                                                     <rect key="frame" x="48" y="2.6666666666666679" width="42.333333333333343" height="35.333333333333329"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XXx-W5-s4E" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" ambiguous="YES" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XXx-W5-s4E" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="31" height="18"/>
                                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                             <nil key="textColor"/>
@@ -1881,7 +1881,7 @@
                                                                 <userDefinedRuntimeAttribute type="string" keyPath="weight" value="medium"/>
                                                             </userDefinedRuntimeAttributes>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gar-TJ-8RK">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gar-TJ-8RK">
                                                             <rect key="frame" x="0.0" y="21" width="42.333333333333336" height="14.333333333333336"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                             <nil key="textColor"/>
@@ -1951,17 +1951,11 @@
         <designable name="TEb-uk-GYv">
             <size key="intrinsicContentSize" width="38.333333333333336" height="18"/>
         </designable>
-        <designable name="TVD-lW-EL3">
-            <size key="intrinsicContentSize" width="40" height="24"/>
-        </designable>
         <designable name="W71-dB-C1l">
             <size key="intrinsicContentSize" width="43.666666666666664" height="19.333333333333332"/>
         </designable>
         <designable name="XXx-W5-s4E">
             <size key="intrinsicContentSize" width="31" height="18"/>
-        </designable>
-        <designable name="fG5-gT-0wt">
-            <size key="intrinsicContentSize" width="30" height="24"/>
         </designable>
         <designable name="kJn-hd-tqh">
             <size key="intrinsicContentSize" width="36" height="17"/>
@@ -1983,7 +1977,7 @@
         <image name="privateChat" width="24" height="24"/>
         <image name="readPermissions" width="24" height="24"/>
         <image name="readWritePermissions" width="24" height="24"/>
-        <image name="selectAll" width="28" height="28"/>
+        <image name="selectAllItems" width="28" height="28"/>
         <image name="sendThisLocation" width="40" height="40"/>
         <image name="standardDisclosureIndicator" width="7.6666665077209473" height="12"/>
         <image name="userMuted-banner" width="16" height="16"/>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Osn-De-bku">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Osn-De-bku">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -287,7 +287,7 @@
                     </items>
                 </toolbar>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NUj-Pt-2Vj" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <barButtonItem image="selectAll" style="plain" id="gRA-OU-vS7" userLabel="Select All Bar Button Item">
+                <barButtonItem image="selectAllItems" style="plain" id="gRA-OU-vS7" userLabel="Select All Bar Button Item">
                     <connections>
                         <action selector="selectAllAction:" destination="3GS-cK-Hw6" id="XId-i9-9Xl"/>
                     </connections>
@@ -360,7 +360,7 @@
         <image name="move" width="28" height="28"/>
         <image name="offline" width="28" height="28"/>
         <image name="rubbishBin" width="28" height="28"/>
-        <image name="selectAll" width="28" height="28"/>
+        <image name="selectAllItems" width="28" height="28"/>
         <image name="video_list" width="22" height="22"/>
         <image name="white_checkmark" width="12" height="12"/>
         <systemColor name="systemBackgroundColor">
