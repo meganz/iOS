@@ -45,7 +45,7 @@ final class NodeCellViewModelTests: XCTestCase {
     func testAction_manageLabel_red() {
         let nodeOpener = NodeOpener(navigationController: UINavigationController())
         let mockNodeModel = NodeEntity(label: .red)
-        let mockNodeDataUC = MockNodeDataUseCase(labelString: Asset.Images.Labels.redSmall.name)
+        let mockNodeDataUC = MockNodeDataUseCase(labelString: "redSmall")
         let mockNodeThumbnailUC = MockThumbnailUseCase()
         let mockAccountUC = MockAccountUseCase()
         
@@ -58,14 +58,14 @@ final class NodeCellViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .manageLabel,
              expectedCommands: [.hideLabel(false),
-                                .setLabel(Asset.Images.Labels.redSmall.name)])
+                                .setLabel("redSmall")])
         XCTAssertEqual(mockNodeModel.label, .red)
     }
     
     func testAction_manageLabel_orange() {
         let nodeOpener = NodeOpener(navigationController: UINavigationController())
         let mockNodeModel = NodeEntity(label: .orange)
-        let mockNodeDataUC = MockNodeDataUseCase(labelString: Asset.Images.Labels.orangeSmall.name)
+        let mockNodeDataUC = MockNodeDataUseCase(labelString: "orangeSmall")
         let mockNodeThumbnailUC = MockThumbnailUseCase()
         let mockAccountUC = MockAccountUseCase()
         
@@ -78,14 +78,14 @@ final class NodeCellViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .manageLabel,
              expectedCommands: [.hideLabel(false),
-                                .setLabel(Asset.Images.Labels.orangeSmall.name)])
+                                .setLabel("orangeSmall")])
         XCTAssertEqual(mockNodeModel.label, .orange)
     }
     
     func testAction_manageLabel_yellow() {
         let nodeOpener = NodeOpener(navigationController: UINavigationController())
         let mockNodeModel = NodeEntity(label: .yellow)
-        let mockNodeDataUC = MockNodeDataUseCase(labelString: Asset.Images.Labels.yellowSmall.name)
+        let mockNodeDataUC = MockNodeDataUseCase(labelString: "yellowSmall")
         let mockNodeThumbnailUC = MockThumbnailUseCase()
         let mockAccountUC = MockAccountUseCase()
         
@@ -98,14 +98,14 @@ final class NodeCellViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .manageLabel,
              expectedCommands: [.hideLabel(false),
-                                .setLabel(Asset.Images.Labels.yellowSmall.name)])
+                                .setLabel("yellowSmall")])
         XCTAssertEqual(mockNodeModel.label, .yellow)
     }
     
     func testAction_manageLabel_green() {
         let nodeOpener = NodeOpener(navigationController: UINavigationController())
         let mockNodeModel = NodeEntity(label: .green)
-        let mockNodeDataUC = MockNodeDataUseCase(labelString: Asset.Images.Labels.greenSmall.name)
+        let mockNodeDataUC = MockNodeDataUseCase(labelString: "greenSmall")
         let mockNodeThumbnailUC = MockThumbnailUseCase()
         let mockAccountUC = MockAccountUseCase()
         
@@ -118,14 +118,14 @@ final class NodeCellViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .manageLabel,
              expectedCommands: [.hideLabel(false),
-                                .setLabel(Asset.Images.Labels.greenSmall.name)])
+                                .setLabel("greenSmall")])
         XCTAssertEqual(mockNodeModel.label, .green)
     }
     
     func testAction_manageLabel_blue() {
         let nodeOpener = NodeOpener(navigationController: UINavigationController())
         let mockNodeModel = NodeEntity(label: .blue)
-        let mockNodeDataUC = MockNodeDataUseCase(labelString: Asset.Images.Labels.blueSmall.name)
+        let mockNodeDataUC = MockNodeDataUseCase(labelString: "blueSmall")
         let mockNodeThumbnailUC = MockThumbnailUseCase()
         let mockAccountUC = MockAccountUseCase()
         
@@ -138,14 +138,14 @@ final class NodeCellViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .manageLabel,
              expectedCommands: [.hideLabel(false),
-                                .setLabel(Asset.Images.Labels.blueSmall.name)])
+                                .setLabel("blueSmall")])
         XCTAssertEqual(mockNodeModel.label, .blue)
     }
     
     func testAction_manageLabel_purple() {
         let nodeOpener = NodeOpener(navigationController: UINavigationController())
         let mockNodeModel = NodeEntity(label: .purple)
-        let mockNodeDataUC = MockNodeDataUseCase(labelString: Asset.Images.Labels.purpleSmall.name)
+        let mockNodeDataUC = MockNodeDataUseCase(labelString: "purpleSmall")
         let mockNodeThumbnailUC = MockThumbnailUseCase()
         let mockAccountUC = MockAccountUseCase()
         
@@ -158,14 +158,14 @@ final class NodeCellViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .manageLabel,
              expectedCommands: [.hideLabel(false),
-                                .setLabel(Asset.Images.Labels.purpleSmall.name)])
+                                .setLabel("purpleSmall")])
         XCTAssertEqual(mockNodeModel.label, .purple)
     }
     
     func testAction_manageLabel_grey() {
         let nodeOpener = NodeOpener(navigationController: UINavigationController())
         let mockNodeModel = NodeEntity(label: .grey)
-        let mockNodeDataUC = MockNodeDataUseCase(labelString: Asset.Images.Labels.greySmall.name)
+        let mockNodeDataUC = MockNodeDataUseCase(labelString: "greySmall")
         let mockNodeThumbnailUC = MockThumbnailUseCase()
         let mockAccountUC = MockAccountUseCase()
         
@@ -178,7 +178,7 @@ final class NodeCellViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .manageLabel,
              expectedCommands: [.hideLabel(false),
-                                .setLabel(Asset.Images.Labels.greySmall.name)])
+                                .setLabel("greySmall")])
         XCTAssertEqual(mockNodeModel.label, .grey)
     }
     

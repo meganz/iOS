@@ -54,19 +54,19 @@ import MEGAL10n
     @objc var icon: UIImage? {
         switch tabType {
         case .cloudDrive:
-            return Asset.Images.TabBarIcons.cloudDriveIcon.image
+            return UIImage.cloudDriveIcon
             
         case .cameraUploads:
-            return Asset.Images.TabBarIcons.cameraUploadsIcon.image
+            return UIImage.cameraUploadsIcon
             
         case .home:
-            return Asset.Images.TabBarIcons.home.image
+            return UIImage.home
             
         case .chat:
-            return Asset.Images.TabBarIcons.chatIcon.image
+            return UIImage.chatIcon
             
         case .sharedItems:
-            return Asset.Images.TabBarIcons.sharedItemsIcon.image
+            return UIImage.sharedItemsIcon
         }
     }
     

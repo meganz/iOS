@@ -32,14 +32,14 @@ extension EmptyStateView {
     }
     
     private class func photosEmptyState() -> EmptyStateView {
-        EmptyStateView(forHomeWith: Asset.Images.Home.allPhotosEmptyState.image,
+        EmptyStateView(forHomeWith: UIImage.allPhotosEmptyState,
                        title: Strings.Localizable.Home.Images.empty,
                        description: nil,
                        buttonTitle: nil)
     }
     
     private class func allMediaEmptyState() -> EmptyStateView {
-        let view = EmptyStateView(forHomeWith: Asset.Images.Home.allPhotosEmptyState.image,
+        let view = EmptyStateView(forHomeWith: UIImage.allPhotosEmptyState,
                                   title: Strings.Localizable.CameraUploads.Timeline.AllMedia.Empty.title,
                                   description: nil,
                                   buttonTitle: nil)
@@ -55,42 +55,42 @@ extension EmptyStateView {
     }
     
     private class func documentsEmptyState() -> EmptyStateView {
-        EmptyStateView(forHomeWith: Asset.Images.Home.documentsEmptyState.image,
+        EmptyStateView(forHomeWith: UIImage.documentsEmptyState,
                        title: Strings.Localizable.noDocumentsFound,
                        description: nil,
                        buttonTitle: nil)
     }
     
     private class func audioEmptyState() -> EmptyStateView {
-        EmptyStateView(forHomeWith: Asset.Images.Home.audioEmptyState.image,
+        EmptyStateView(forHomeWith: UIImage.audioEmptyState,
                        title: Strings.Localizable.noAudioFilesFound,
                        description: nil,
                        buttonTitle: nil)
     }
     
     private class func videoEmptyState() -> EmptyStateView {
-        EmptyStateView(forHomeWith: Asset.Images.Home.videoEmptyState.image,
+        EmptyStateView(forHomeWith: UIImage.videoEmptyState,
                        title: Strings.Localizable.noVideosFound,
                        description: nil,
                        buttonTitle: nil)
     }
     
     private class func favouritesEmptyState() -> EmptyStateView {
-        EmptyStateView(forHomeWith: Asset.Images.EmptyStates.favouritesEmptyState.image,
+        EmptyStateView(forHomeWith: UIImage.favouritesEmptyState,
                        title: Strings.Localizable.noFavourites,
                        description: nil,
                        buttonTitle: nil)
     }
     
     private class func backupsEmptyState(searchActive: Bool) -> EmptyStateView {
-        EmptyStateView(forHomeWith: searchActive ? Asset.Images.EmptyStates.searchEmptyState.image : Asset.Images.EmptyStates.folderEmptyState.image,
+        EmptyStateView(forHomeWith: searchActive ? UIImage.searchEmptyState : UIImage.folderEmptyState,
                        title: searchActive ? Strings.Localizable.noResults : Strings.Localizable.Backups.Empty.State.message,
                        description: searchActive ? nil : Strings.Localizable.Backups.Empty.State.description,
                        buttonTitle: nil)
     }
     
     private class func albumEmptyState() -> EmptyStateView {
-        EmptyStateView(forHomeWith: Asset.Images.Home.allPhotosEmptyState.image,
+        EmptyStateView(forHomeWith: UIImage.allPhotosEmptyState,
                        title: Strings.Localizable.CameraUploads.Albums.Empty.title,
                        description: nil,
                        buttonTitle: nil)

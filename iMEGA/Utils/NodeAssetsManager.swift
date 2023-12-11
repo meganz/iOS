@@ -49,9 +49,9 @@ import MEGASDKRepo
     
     private func commonFolderImage(for node: MEGANode) -> UIImage {
         if node.isInShare() {
-            return Asset.Images.Filetypes.folderIncoming.image
+            return UIImage.folderIncoming
         } else if node.isOutShare() {
-            return Asset.Images.Filetypes.folderOutgoing.image
+            return UIImage.folderOutgoing
         } else {
             return UIImage(resource: .filetypeFolder)
         }
@@ -62,15 +62,15 @@ import MEGASDKRepo
         let nodeNameLowerCased = nodeName.lowercased()
         
         if nodeNameLowerCased.matches(regex: BackupDeviceTypeEntity.win.toRegexString()) {
-            return Asset.Images.Backup.pcWindows.image
+            return UIImage.pcWindows
         } else if nodeNameLowerCased.matches(regex: BackupDeviceTypeEntity.linux.toRegexString()) {
-            return Asset.Images.Backup.pcLinux.image
+            return UIImage.pcLinux
         } else if nodeNameLowerCased.matches(regex: BackupDeviceTypeEntity.mac.toRegexString()) {
-            return Asset.Images.Backup.pcMac.image
+            return UIImage.pcMac
         } else if nodeNameLowerCased.matches(regex: BackupDeviceTypeEntity.drive.toRegexString()) {
-            return Asset.Images.Backup.drive.image
+            return UIImage.drive
         } else {
-            return Asset.Images.Backup.pc.image
+            return UIImage.pc
         }
     }
 }

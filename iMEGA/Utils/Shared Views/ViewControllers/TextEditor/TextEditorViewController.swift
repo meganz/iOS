@@ -311,7 +311,7 @@ extension TextEditorViewController: ViewType {
             )
         let downloadBarButtonItem =
             UIBarButtonItem(
-                image: Asset.Images.NodeActions.offline.image,
+                image: UIImage.offline,
                 style: .plain,
                 target: self,
                 action: #selector(downloadTapped)
@@ -321,7 +321,7 @@ extension TextEditorViewController: ViewType {
         if accessLevel != .read {
             let editBarButtonItem =
                 UIBarButtonItem(
-                    image: Asset.Images.NodeActions.edittext.image,
+                    image: UIImage.edittext,
                     style: .plain,
                     target: self,
                     action: #selector(editTapped)
@@ -333,7 +333,7 @@ extension TextEditorViewController: ViewType {
         if accessLevel == .owner {
             let exportFileBarButtonItem =
                 UIBarButtonItem(
-                    image: Asset.Images.NodeActions.export.image,
+                    image: UIImage.export,
                     style: .plain,
                     target: self,
                     action: #selector(exportFileTapped(button:))
@@ -342,7 +342,7 @@ extension TextEditorViewController: ViewType {
         } else {
             let importBarButtonItem =
                 UIBarButtonItem(
-                    image: Asset.Images.InfoActions.import.image,
+                    image: UIImage.import,
                     style: .plain,
                     target: self,
                     action: #selector(importTapped)
