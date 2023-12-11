@@ -330,6 +330,17 @@ final class CloudDriveViewControllerTests: XCTestCase {
         XCTAssertEqual(result.count, emptyItems.size)
     }
     
+    func testChangeViewModePreference_toMediaDiscovery_shouldSetViewModeMediaDiscovery() {
+        
+        let sut = makeSUT(nodes: [], displayMode: .cloudDrive, parentNode: MockNode(handle: 0))
+        sut.change(.mediaDiscovery)
+        
+        XCTAssertEqual(sut.children.count, 1)
+        XCTAssertTrue(sut.children.allSatisfy { $0 == sut.mdViewController })
+        XCTAssertEqual(sut.viewModePreference, .mediaDiscovery)
+        XCTAssertEqual(sut.viewModePreference_ObjC, 3)
+    }
+    
     // MARK: - Helpers
     
     private func setNoEditingState(on sut: CloudDriveViewController) {
@@ -351,18 +362,20 @@ final class CloudDriveViewControllerTests: XCTestCase {
         return mockNodeActionViewController
     }
     
-    private func makeSUT(nodes: [MEGANode], displayMode: DisplayMode = .cloudDrive) -> CloudDriveViewController {
+    private func makeSUT(nodes: [MEGANode], displayMode: DisplayMode = .cloudDrive, parentNode: MEGANode? = nil) -> CloudDriveViewController {
         let storyboard = UIStoryboard(name: "Cloud", bundle: .main)
         let sut = storyboard.instantiateViewController(withIdentifier: "CloudDriveID") as! CloudDriveViewController
         sut.cdTableView = storyboard.instantiateViewController(withIdentifier: "CloudDriveTableID") as? CloudDriveTableViewController
-        sut.loadView()
-        sut.viewDidLoad()
+
         sut.cdCollectionView = MockCloudDriveCollectionViewController()
         sut.cdTableView?.loadView()
         sut.cdCollectionView?.loadView()
         sut.nodes = MockNodeList(nodes: nodes)
+        sut.parentNode = parentNode
         sut.displayMode = displayMode
-        return (sut)
+        sut.loadView()
+        sut.viewDidLoad()
+        return sut
     }
     
     private func anyHandle() -> MEGAHandle {
