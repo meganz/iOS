@@ -343,6 +343,11 @@ extension MeetingFloatingPanelViewController: UITableViewDataSource, UITableView
         switch callParticipantsListView.sections[section] {
         case .invite:
             guard callParticipants.isNotEmpty, let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: MeetingParticipantTableViewHeader.reuseIdentifier) as? MeetingParticipantTableViewHeader else { return UIView(frame: .zero) }
+            if callParticipantsListView.selectedTab == .notInCall {
+                header.hideCallAllIcon(
+                    callParticipants.filter({ $0.absentParticipantState != .calling }).isNotEmpty
+                )
+            }
             header.configure(for: callParticipantsListView.selectedTab, participantsCount: callParticipants.count)
             header.actionButtonTappedHandler = { [weak self] in
                 self?.viewModel.dispatch(.onHeaderActionTap)
@@ -421,7 +426,8 @@ extension MeetingFloatingPanelViewController: UITableViewDataSource, UITableView
     }
     
     private func emptyParticipantsListCell(at indexPath: IndexPath) -> EmptyParticipantsListTableViewCell {
-        guard let cell = participantsTableView.dequeueReusableCell(withIdentifier: EmptyParticipantsListTableViewCell.reuseIdentifier, for: indexPath) as? EmptyParticipantsListTableViewCell else { return EmptyParticipantsListTableViewCell() }
+        guard let callParticipantsListView, let cell = participantsTableView.dequeueReusableCell(withIdentifier: EmptyParticipantsListTableViewCell.reuseIdentifier, for: indexPath) as? EmptyParticipantsListTableViewCell else { return EmptyParticipantsListTableViewCell() }
+        cell.configure(for: callParticipantsListView.selectedTab)
         return cell
     }
 }

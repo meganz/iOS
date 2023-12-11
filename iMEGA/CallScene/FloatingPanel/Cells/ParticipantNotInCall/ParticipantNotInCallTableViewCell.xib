@@ -38,7 +38,7 @@
                         </userDefinedRuntimeAttributes>
                     </imageView>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="lse-K7-qJD">
-                        <rect key="frame" x="61" y="5.3333333333333321" width="62.333333333333343" height="33.333333333333343"/>
+                        <rect key="frame" x="61" y="5.3333333333333321" width="208" height="33.333333333333343"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="6Xy-mo-Tfs">
                                 <rect key="frame" x="0.0" y="0.0" width="52.333333333333336" height="16"/>
@@ -53,7 +53,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wHo-dX-Whj">
-                                        <rect key="frame" x="46.333333333333329" y="5" width="6" height="6"/>
+                                        <rect key="frame" x="46.333333333333314" y="5" width="6" height="6"/>
                                         <viewLayoutGuide key="safeArea" id="cb0-Lv-qs6"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="6" id="8UO-RI-rxt"/>
@@ -76,7 +76,7 @@
                         </subviews>
                     </stackView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tPc-aX-nf3">
-                        <rect key="frame" x="12" y="7" width="296" height="30"/>
+                        <rect key="frame" x="278" y="7" width="30" height="30"/>
                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <state key="normal" title="Call">
@@ -92,12 +92,12 @@
                     <constraint firstAttribute="trailing" secondItem="tPc-aX-nf3" secondAttribute="trailing" constant="12" id="2BA-yc-Kqz"/>
                     <constraint firstItem="lse-K7-qJD" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="AVc-Yk-VCD"/>
                     <constraint firstAttribute="bottom" secondItem="tNx-ri-HV6" secondAttribute="bottom" id="JzX-7V-pnK"/>
-                    <constraint firstItem="tPc-aX-nf3" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="M5N-aT-tiW"/>
                     <constraint firstItem="lse-K7-qJD" firstAttribute="leading" secondItem="i7S-C0-VaN" secondAttribute="trailing" constant="9" id="ToX-n6-xwE"/>
                     <constraint firstItem="i7S-C0-VaN" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="U40-iH-Bbh"/>
                     <constraint firstItem="tNx-ri-HV6" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="60" id="boX-qe-zBh"/>
                     <constraint firstAttribute="trailing" secondItem="tNx-ri-HV6" secondAttribute="trailing" id="ohB-mR-7gm"/>
                     <constraint firstItem="i7S-C0-VaN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="12" id="tWe-QD-10K"/>
+                    <constraint firstItem="tPc-aX-nf3" firstAttribute="leading" secondItem="lse-K7-qJD" secondAttribute="trailing" constant="9" id="wpW-oz-NCb"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

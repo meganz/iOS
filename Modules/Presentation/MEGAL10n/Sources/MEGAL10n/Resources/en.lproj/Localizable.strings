@@ -2669,7 +2669,7 @@
 /* Meetings: Floating panel participants in call count header */
 "meetings.panel.ParticipantsCount"="Participants (%d)";
 /* Meetings: Floating panel participants not in call count header */
-"meetings.panel.ParticipantsNotInCallCount"="Not in call (%d)";
+"meetings.panel.ParticipantsNotInCallCount"="Invitees (%d)";
 /* Meetings: Floating panel participants in waiting room count header */
 "meetings.panel.ParticipantsInWaitingRoomCount"="Waiting (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
@@ -3954,5 +3954,7 @@
 "calls.panel.participantsNotInCall.participant.state.calling"="Calling...";
 /* Calls: Floating panel participants not in call label to describe no response state */
 "calls.panel.participantsNotInCall.participant.state.noResponse"="No Response";
-/* Calls: Floating panel participants empty list state */
+/* Calls: Floating panel participants empty list not in call state */
 "calls.panel.participantsNotInCall.emptyState"="All the invited participants have joined the call.";
+/* Calls: Floating panel participants empty list state */
+"calls.panel.participantsInWaitingRoom.emptyState"="There is no one in the waiting room";
