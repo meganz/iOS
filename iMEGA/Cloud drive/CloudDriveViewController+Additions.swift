@@ -4,13 +4,27 @@ import MEGASDKRepo
 import SwiftUI
 
 extension CloudDriveViewController {
+    var viewModeLocation: ViewModeLocation_ObjWrapper {
+        // For scenarios such as showing CDVC from Recents, there's
+        // no parent node, nodes are shown from recentActionBucket.
+        // To handle this situation and similar ones we encode a generic view mode location.
+        // In this mode there's no layout switching so it should not
+        // cause problems. View mode will be read from user settings or default to list
+        // Having this use a common interface will enable us to differentiate
+        // in the future and gives more granular control in a central place
+        if let node = parentNode {
+            return .init(node: node)
+        }
+        // example usage: show CloudDrive node list from multiple recent nodes
+        return .init(customLocation: Generic)
+    }
+    
     @objc func determineViewMode() {
         guard
-            let viewModeStore,
-            let node = parentNode
+            let viewModeStore
         else { return }
         
-        let viewMode = viewModeStore.viewMode(for: .init(node: node))
+        let viewMode = viewModeStore.viewMode(for: viewModeLocation)
         
         if viewMode == .list {
             initTable()

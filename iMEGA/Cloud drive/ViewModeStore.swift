@@ -9,6 +9,7 @@ extension Notification.Name {
 // [FM-1458] FolderLinkViewController
 
 let CustomHomeSearch = "HomeSearchResults"
+let Generic = "Generic" // used for other uses of cloud drive such as Recents
 
 enum ViewModeLocation {
     case node(NodeEntity) // per folder preference in cloud drive
