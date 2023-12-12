@@ -2423,6 +2423,8 @@
 		C4AF4A8F2582836000594716 /* MiniPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF4A8E2582836000594716 /* MiniPlayerViewController.swift */; };
 		C4AF4A992582839A00594716 /* MiniPlayerViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF4A982582839A00594716 /* MiniPlayerViewRouter.swift */; };
 		C4AF4AA3258283A700594716 /* MiniPlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF4AA2258283A700594716 /* MiniPlayerViewModel.swift */; };
+		C4B4B1652B27C3ED00F78710 /* PasswordView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B4B1642B27C3ED00F78710 /* PasswordView+Additions.swift */; };
+		C4B4B1692B27CAF900F78710 /* InputView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B4B1682B27CAF900F78710 /* InputView+Additions.swift */; };
 		C4C5C83325DC26100063D7B4 /* FolderLinkViewController+AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C5C83225DC26100063D7B4 /* FolderLinkViewController+AudioPlayer.swift */; };
 		C4C6A49827A4632600873165 /* MegaNode+Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C6A49527A4632600873165 /* MegaNode+Display.swift */; };
 		C4C6A49A27A4632600873165 /* MegaNode+Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C6A49527A4632600873165 /* MegaNode+Display.swift */; };
@@ -5023,6 +5025,8 @@
 		C4AF4A8E2582836000594716 /* MiniPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerViewController.swift; sourceTree = "<group>"; };
 		C4AF4A982582839A00594716 /* MiniPlayerViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerViewRouter.swift; sourceTree = "<group>"; };
 		C4AF4AA2258283A700594716 /* MiniPlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerViewModel.swift; sourceTree = "<group>"; };
+		C4B4B1642B27C3ED00F78710 /* PasswordView+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PasswordView+Additions.swift"; sourceTree = "<group>"; };
+		C4B4B1682B27CAF900F78710 /* InputView+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InputView+Additions.swift"; sourceTree = "<group>"; };
 		C4C5C83225DC26100063D7B4 /* FolderLinkViewController+AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FolderLinkViewController+AudioPlayer.swift"; sourceTree = "<group>"; };
 		C4C6A49527A4632600873165 /* MegaNode+Display.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MegaNode+Display.swift"; sourceTree = "<group>"; };
 		C4CBDD3E256EC00900835CF5 /* AudioPlayerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerItem.swift; sourceTree = "<group>"; };
@@ -7254,6 +7258,7 @@
 				C4F31F0225C1C51A00E15146 /* CustomTitleView.xib */,
 				83113493223900CB00647AB4 /* GradientView.h */,
 				83113494223900CB00647AB4 /* GradientView.m */,
+				C4B4B1682B27CAF900F78710 /* InputView+Additions.swift */,
 				777615AD2175D87D00A7796D /* InputView.h */,
 				777615AE2175D87D00A7796D /* InputView.m */,
 				777615B02175D88C00A7796D /* InputView.xib */,
@@ -7269,6 +7274,7 @@
 				5BB68C9E20359B5300B03C00 /* PasswordStrengthIndicatorView.h */,
 				5BB68C9F20359B5400B03C00 /* PasswordStrengthIndicatorView.m */,
 				5BB68CA020359B5400B03C00 /* PasswordStrengthIndicatorView.xib */,
+				C4B4B1642B27C3ED00F78710 /* PasswordView+Additions.swift */,
 				836AEDE32018AD1F00868FC7 /* PasswordView.h */,
 				836AEDE42018AD1F00868FC7 /* PasswordView.m */,
 				836AEDE12018AD0C00868FC7 /* PasswordView.xib */,
@@ -13928,6 +13934,7 @@
 				328C15382A3975DA002499CE /* ImportAlbumViewModel.swift in Sources */,
 				8396AB4127BBDD5600C71291 /* ImportNodeRepository.swift in Sources */,
 				77B3AE0F215D0588008E889A /* InitialLaunchViewController.m in Sources */,
+				C4B4B1692B27CAF900F78710 /* InputView+Additions.swift in Sources */,
 				777615AF2175D87D00A7796D /* InputView.m in Sources */,
 				5D21376D24DD282900FA4487 /* InstantPanGestureRecognizer.swift in Sources */,
 				5D01995724AD64C1006ED2A0 /* InterfaceStyle.swift in Sources */,
@@ -14340,6 +14347,7 @@
 				A87FF3C122F8111D00EFD95C /* PasscodeTimeDurationTableViewController.swift in Sources */,
 				836AEDDD2018830E00868FC7 /* PasswordReminderViewController.m in Sources */,
 				5BB68CA120359B5400B03C00 /* PasswordStrengthIndicatorView.m in Sources */,
+				C4B4B1652B27C3ED00F78710 /* PasswordView+Additions.swift in Sources */,
 				836AEDE52018AD1F00868FC7 /* PasswordView.m in Sources */,
 				2F26B3322578467E00486C40 /* PasteImagePreviewRouter.swift in Sources */,
 				2FD6A32A2574A73500C1997E /* PasteImagePreviewView.swift in Sources */,

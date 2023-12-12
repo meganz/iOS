@@ -94,6 +94,7 @@
 #import "OnboardingViewController.h"
 #import "ChatImageUploadQuality.h"
 #import "MEGANode.h"
+#import "InputView.h"
 #import "PasswordView.h"
 #import "PasswordStrengthIndicatorView.h"
 #import "ArchivedChatRoomsViewController.h"
