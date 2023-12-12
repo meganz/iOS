@@ -4,13 +4,19 @@ import MEGARepo
 
 extension CloudDriveViewController {
     
+    @objc func makeDefaultViewModeStoreCreator() {
+        viewModeStoreCreator = { [weak self] in
+            self?.viewModeStore = ViewModeStore(
+                preferenceRepo: PreferenceRepository(userDefaults: .standard),
+                megaStore: .shareInstance(),
+                sdk: .shared,
+                notificationCenter: .default
+            )
+        }
+    }
+    
     @objc func assignViewModeStore() {
-        viewModeStore = ViewModeStore(
-            preferenceRepo: PreferenceRepository(userDefaults: .standard),
-            megaStore: .shareInstance(),
-            sdk: .shared,
-            notificationCenter: .default
-        )
+        viewModeStoreCreator()
     }
     
     @objc func clearViewModeChildren() {

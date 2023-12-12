@@ -81,6 +81,11 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 #pragma mark - Lifecycle
 
+- (void)awakeFromNib{
+    [super awakeFromNib];
+    [self makeDefaultViewModeStoreCreator];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -92,7 +97,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     
     [self configureContextMenuManagerIfNeeded];
 
-    
     switch (self.displayMode) {
         case DisplayModeCloudDrive: {
             if (!self.parentNode) {

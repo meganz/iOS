@@ -61,6 +61,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) CloudDriveViewModel *viewModel;
 @property (weak, nonatomic) IBOutlet UIStackView *containerStackView;
 @property (nonatomic, assign) NSInteger viewModePreference_ObjC;
+// This creator closure is used to replace the
+// viewModeStore instance for the mock one, between init and viewDidLoad calls.
+// We can't inject in the init, as view is defined in Storyboard
+@property (nonatomic, copy) dispatch_block_t viewModeStoreCreator;
 - (void)presentScanDocument;
 - (void)setViewEditing:(BOOL)editing;
 - (void)setToolbarActionsEnabled:(BOOL)boolValue;
