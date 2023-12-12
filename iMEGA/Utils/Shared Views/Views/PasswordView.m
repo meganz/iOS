@@ -81,22 +81,6 @@
     }
 }
 
-- (void)updateAppearance {
-    self.topSeparatorView.backgroundColor = self.bottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
-    
-    self.topLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
-    
-    self.leftImageView.tintColor = self.topLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
-    self.passwordTextField.textColor = UIColor.labelColor;
-    
-    if (self.backgroundColor != nil && !self.isUsingDefaultBackgroundColor) {
-        self.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
-    } else {
-        self.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
-        self.usingDefaultBackgroundColor = YES;
-    }
-}
-
 #pragma mark - UITextFieldDelegate
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {

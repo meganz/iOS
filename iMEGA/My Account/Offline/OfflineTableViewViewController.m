@@ -30,7 +30,7 @@ static NSString *kPath = @"kPath";
     //White background for the view behind the table view
     self.tableView.backgroundView = UIView.alloc.init;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    [self updateAppearance:self.traitCollection];
+    [self updateAppearance: self.traitCollection];
 }
 
 #pragma mark - Public
@@ -253,24 +253,6 @@ contextMenuConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath
 willPerformPreviewActionForMenuWithConfiguration:(UIContextMenuConfiguration *)configuration
          animator:(id<UIContextMenuInteractionCommitAnimating>)animator {
     [self willPerformPreviewActionForMenuWithAnimator:animator];
-}
-
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    [self updateAppearance:self.traitCollection];
-}
-
-- (void)updateAppearance:(UITraitCollection *)currentTraitCollection{
-    switch (currentTraitCollection.userInterfaceStyle) {
-        case UIUserInterfaceStyleUnspecified:
-        case UIUserInterfaceStyleLight: {
-            self.tableView.backgroundColor = UIColor.whiteColor;
-        }
-            break;
-        case UIUserInterfaceStyleDark: {
-            self.tableView.backgroundColor = UIColor.mnz_black1C1C1E;
-        }
-    }
 }
 
 @end

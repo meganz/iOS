@@ -49,4 +49,22 @@ extension OfflineTableViewViewController {
             cell.thumbnailPlayImageView.isHidden = !isVideoExtension
         }
     }
+    @objc(updateAppearance:)
+    func updateAppearanceForTraitCollection(_ traitCollection: UITraitCollection) {
+        switch traitCollection.userInterfaceStyle {
+        case .unspecified, .light:
+            self.tableView?.backgroundColor = UIColor.white
+        case .dark:
+            self.tableView?.backgroundColor = UIColor.mnz_black1C1C1E()
+        @unknown default:
+            self.tableView?.backgroundColor = UIColor.white
+        }
+    }
+    
+    override open func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            updateAppearanceForTraitCollection(traitCollection)
+        }
+    }
 }

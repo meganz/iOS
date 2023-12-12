@@ -19,8 +19,6 @@ IB_DESIGNABLE
 
 - (void)setErrorState:(BOOL)error withText:(NSString *)text;
 
-- (void)updateAppearance;
-
 @end
 
 NS_ASSUME_NONNULL_END
