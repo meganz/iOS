@@ -233,14 +233,6 @@ extension MEGALinkManager {
     private class func openCallUI(call: CallEntity, chatRoom: ChatRoomEntity) {
         MeetingContainerRouter(presenter: UIApplication.mnz_presentingViewController(), chatRoom: chatRoom, call: call, isSpeakerEnabled: true).start()
     }
-
-    @objc class func presentUpgradeVC() {
-        // A delay is needed to fix a bug where the upgrade page is not
-        // presented when the app is newly launched and not in background
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            UpgradeAccountRouter().presentUpgradeTVC()
-        }
-    }
 }
 
 // MARK: - Ads
