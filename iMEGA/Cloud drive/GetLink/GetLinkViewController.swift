@@ -70,19 +70,19 @@ struct GetNodeLinkViewModel {
     var password: String?
     var multilink: Bool = false
     var nodeTypes: [NodeTypeEntity] = []
-
+    
     private let getLinkAnalyticsUseCase = GetLinkAnalyticsUseCase(repository: AnalyticsRepository.newRepo)
-
+    
     func trackSetPassword() {
         guard let nodeType = nodeTypes.first else { return }
-
+        
         if password == nil {
             getLinkAnalyticsUseCase.setPassword(nodeType: nodeType)
         } else {
             getLinkAnalyticsUseCase.resetPassword(nodeType: nodeType)
         }
     }
-
+    
     func trackConfirmPassword() {
         guard let nodeType = nodeTypes.first else { return }
         getLinkAnalyticsUseCase.confirmPassword(nodeType: nodeType)
@@ -91,20 +91,20 @@ struct GetNodeLinkViewModel {
         guard let nodeType = nodeTypes.first else { return }
         getLinkAnalyticsUseCase.removePassword(nodeType: nodeType)
     }
-
+    
     func trackShareLink() {
         getLinkAnalyticsUseCase.shareLink(nodeTypes: nodeTypes)
     }
-
+    
     func trackGetLink() {
         getLinkAnalyticsUseCase.getLink(nodeTypes: nodeTypes)
     }
-
+    
     func trackProFeatureSeePlans() {
         guard let nodeType = nodeTypes.first else { return }
         getLinkAnalyticsUseCase.proFeatureSeePlans(nodeType: nodeType)
     }
-
+    
     func trackProFeatureNotNow() {
         guard let nodeType = nodeTypes.first else { return }
         getLinkAnalyticsUseCase.proFeatureNotNow(nodeType: nodeType)
@@ -124,7 +124,7 @@ class GetLinkViewController: UIViewController {
     @IBOutlet private var copyKeyBarButton: UIBarButtonItem!
     
     let flexibleBarButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-
+    
     var snackBarContainer: UIView?
     private var nodes = [MEGANode]()
     private var getLinkVM = GetNodeLinkViewModel()
@@ -132,7 +132,7 @@ class GetLinkViewController: UIViewController {
     private var justUpgradedToProAccount = false
     private var isLinkAlreadyCreated = false
     private var defaultDateStored = false
-
+    
     private var getLinkViewModel: (any GetLinkViewModelType)?
     
     @objc class func instantiate(withNodes nodes: [MEGANode]) -> MEGANavigationController {
@@ -162,11 +162,11 @@ class GetLinkViewController: UIViewController {
         tableView.register(UINib(nibName: "GenericHeaderFooterView", bundle: nil), forHeaderFooterViewReuseIdentifier: "GenericHeaderFooterViewID")
         
         copyKeyBarButton.title = Strings.Localizable.copyKey
-
+        
         configureSnackBarPresenter()
-
+        
         nodes.notContains { !$0.isExported() } ? getLinkVM.trackGetLink() : getLinkVM.trackShareLink()
-
+        
         if var getLinkViewModel {
             let doneBarButtonItem = UIBarButtonItem(title: Strings.Localizable.done, style: .done, target: self, action: #selector(doneBarButtonTapped))
             navigationItem.rightBarButtonItem = doneBarButtonItem
@@ -183,7 +183,7 @@ class GetLinkViewController: UIViewController {
         updateAppearance()
         tableView.sectionHeaderTopPadding = 0
     }
-
+    
     private func loadNodes() {
         if !MEGASdk.shared.mnz_isProAccount {
             MEGASdk.shared.add(self as any MEGARequestDelegate)
@@ -194,7 +194,7 @@ class GetLinkViewController: UIViewController {
         
         configureNavigation()
         configureMultiLink(isMultiLink: getLinkVM.multilink)
-
+        
         processNodes()
         
         shareBarButton.title = Strings.Localizable.General.MenuAction.ShareLink.title(nodesToExportCount)
@@ -211,7 +211,7 @@ class GetLinkViewController: UIViewController {
         if let getLinkViewModel {
             getLinkViewModel.dispatch(.onViewWillDisappear)
         }
-
+        
         removeSnackBarPresenter()
         
         NotificationCenter.default.post(name: Notification.Name.MEGAShareCreated, object: nil)
@@ -231,8 +231,8 @@ class GetLinkViewController: UIViewController {
         navigationController?.setToolbarHidden(false, animated: true)
         
         title = nodes.notContains { !$0.isExported() } ?
-                    Strings.Localizable.General.MenuAction.ManageLink.title(nodes.count) :
-                    Strings.Localizable.General.MenuAction.ShareLink.title(nodes.count)
+        Strings.Localizable.General.MenuAction.ManageLink.title(nodes.count) :
+        Strings.Localizable.General.MenuAction.ShareLink.title(nodes.count)
         
         setToolbarItems([shareBarButton, flexibleBarButton, copyLinkBarButton], animated: true)
         let doneBarButtonItem = UIBarButtonItem(title: Strings.Localizable.done, style: .done, target: self, action: #selector(doneBarButtonTapped))
@@ -292,7 +292,7 @@ class GetLinkViewController: UIViewController {
                 UIPasteboard.general.string = getLinkVM.link
             }
         }
-
+        
         if isLinkAlreadyCreated {
             showCopySuccessSnackBar(with: Strings.Localizable.SharedItems.GetLink.linkCopied(isFromLinkCellTap ? 1 : nodes.count))
         } else {
@@ -305,7 +305,7 @@ class GetLinkViewController: UIViewController {
         UIPasteboard.general.string = getLinkVM.password
         showCopySuccessSnackBar(with: Strings.Localizable.passwordCopiedToClipboard)
     }
-
+    
     private func showCopySuccessSnackBar(with message: String) {
         SnackBarRouter.shared.present(snackBar: SnackBar(message: message))
     }
@@ -368,7 +368,7 @@ class GetLinkViewController: UIViewController {
                 self?.copyLinkToPasteboard()
                 SVProgressHUD.dismiss()
             }
-            }, multipleLinks: nodesToExportCount > 1))
+        }, multipleLinks: nodesToExportCount > 1))
     }
     
     @objc private func learnMoreTapped() {
@@ -493,14 +493,17 @@ class GetLinkViewController: UIViewController {
                 self?.getLinkVM.trackProFeatureNotNow()
             }
         )
-
+        
         UIApplication.mnz_presentingViewController().present(upgradeToProCustomModalAlert, animated: true, completion: nil)
     }
     
     private func reloadProSections() {
-        guard let expiryDateSection = sections().firstIndex(of: .expiryDate), let passwordSection = sections().firstIndex(of: .passwordProtection) else {
+        guard let expiryDateSection = sections().firstIndex(of: .expiryDate), expiryDateSection < tableView.numberOfSections,
+              let passwordSection = sections().firstIndex(of: .passwordProtection), passwordSection < tableView.numberOfSections
+        else {
             return
         }
+        
         tableView.reloadSections([expiryDateSection, passwordSection], with: .automatic)
     }
     
@@ -528,7 +531,7 @@ class GetLinkViewController: UIViewController {
         else {
             return
         }
-
+        
         if let getLinkViewModel {
             getLinkViewModel.dispatch(.switchToggled(indexPath: indexPath, isOn: sender.isOn))
             return
@@ -632,14 +635,14 @@ class GetLinkViewController: UIViewController {
         
         return cell
     }
-
+    
     private func linkAccessInfoCell(forIndexPath indexPath: IndexPath) -> GetLinkAccessInfoTableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: GetLinkAccessInfoTableViewCell.reuseIdentifier, for: indexPath) as? GetLinkAccessInfoTableViewCell else {
             fatalError("Could not get GetLinkAccessInfoTableViewCell")
         }
-
+        
         cell.configure(nodesCount: nodes.count, isPasswordSet: getLinkVM.passwordProtect)
-
+        
         return cell
     }
     
@@ -873,7 +876,7 @@ class GetLinkViewController: UIViewController {
             footer.titleLabel.isUserInteractionEnabled = true
             
             footer.configure(attributedTitle: attributedString, topDistance: 4.0, isTopSeparatorVisible: true, isBottomSeparatorVisible: false)
-
+            
         case .expiryDate:
             if getLinkVM.expiryDate && !getLinkVM.selectDate && (getLinkVM.date != nil) {
                 footer.configure(title: Strings.Localizable.linkExpires(dateFormatter.localisedString(from: getLinkVM.date ?? Date())), topDistance: 4.0, isTopSeparatorVisible: true, isBottomSeparatorVisible: false)
@@ -1020,7 +1023,7 @@ extension GetLinkViewController: UITableViewDelegate {
             guard section > 0 else {
                 return nil
             }
-
+            
             header.titleLabel.textAlignment = .left
             header.configure(
                 title: Strings.Localizable.link,
@@ -1047,7 +1050,7 @@ extension GetLinkViewController: UITableViewDelegate {
             guard section > 0 else {
                 return nil
             }
-
+            
             updateFooterViewForMultiItem(forFooter: &footer, forSection: section)
         } else if let sectionType = sections()[safe: section] {
             updateFooterViewForSingleItem(forFooter: &footer, forSection: sectionType)
@@ -1109,7 +1112,7 @@ extension GetLinkViewController: UITableViewDelegate {
             case .key:
                 copyKeyToPasteBoard()
             }
-        
+            
         }
         tableView.deselectRow(at: indexPath, animated: true)
     }
