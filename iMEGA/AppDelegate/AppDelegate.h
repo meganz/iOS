@@ -20,6 +20,8 @@ typedef NS_ENUM(NSInteger, MEGANotificationType) {
 @property (strong, nonatomic, nullable) UIWindow *blockingWindow;
 @property (nonatomic, weak, readonly) MainTabBarController *mainTBC;
 @property (nonatomic) NSNumber *openChatLater;
+@property (nonatomic) BOOL showAccountUpgradeScreen;
+@property (nonatomic) BOOL loadProductsAndShowAccountUpgradeScreen;
 
 - (void)showMainTabBar;
 - (void)performCall;

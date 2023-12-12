@@ -468,7 +468,26 @@ extension AppDelegate {
             self?.performCall()
         }
     }
-    
+
+    // MARK: - Show upgrade Screen
+
+    @objc func showUpgradeAccount() {
+        guard MEGAPurchase.sharedInstance().products != nil && MEGAPurchase.sharedInstance().products.isNotEmpty else {
+            MEGALogDebug("[Upgrade Account] In app purchase products not loaded")
+            MEGAPurchase.sharedInstance().pricingsDelegateMutableArray.add(self)
+            self.loadProductsAndShowAccountUpgradeScreen = true
+            return
+        }
+
+        guard MEGASdk.shared.mnz_accountDetails != nil else {
+            MEGALogDebug("[Upgrade Account] Account details are empty")
+            self.showAccountUpgradeScreen = true
+            return
+        }
+
+        UpgradeAccountRouter().presentUpgradeTVC()
+    }
+
     // MARK: - Account details
     @objc func refreshAccountDetails() {
         Task {

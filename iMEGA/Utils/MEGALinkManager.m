@@ -493,8 +493,11 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             [MEGALinkManager resetLinkAndURLType];
             break;
         case URLTypeUpgrade:
-            [MEGALinkManager presentUpgradeVC];
+        {
+            AppDelegate *delegate = (AppDelegate *)UIApplication.sharedApplication.delegate;
+            [delegate showUpgradeAccount];
             break;
+        }
         default:
             break;
     }

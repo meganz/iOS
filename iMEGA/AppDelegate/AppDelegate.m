@@ -1169,12 +1169,17 @@
 #pragma mark - MEGAPurchasePricingDelegate
 
 - (void)pricingsReady {
-    if (self.showChooseAccountTypeLater) {
+    if (self.loadProductsAndShowAccountUpgradeScreen) {
+        self.loadProductsAndShowAccountUpgradeScreen = NO;
+        [MEGAPurchase.sharedInstance.pricingsDelegateMutableArray removeObject:self];
+        [self showUpgradeAccount];
+    } else if (self.showChooseAccountTypeLater) {
         [self showChooseAccountPlanTypeView];
         
         self.chooseAccountTypeLater = NO;
         [MEGAPurchase.sharedInstance.pricingsDelegateMutableArray removeObject:self];
     }
+
 }
 
 #pragma mark - MEGAGlobalDelegate
@@ -1537,7 +1542,7 @@
                     [self.mainTBC openChatRoomNumber:self.openChatLater];
                 }
             }
-            
+
             [[MEGASdkManager sharedMEGASdk] getAccountDetails];
             [self refreshAccountDetails];
 
@@ -1579,6 +1584,12 @@
             
             NSInteger storageUsed = MEGASdkManager.sharedMEGASdk.mnz_accountDetails.storageUsed;
             [OverDiskQuotaService.sharedService updateUserStorageUsed:storageUsed];
+
+            if (self.showAccountUpgradeScreen && [MEGASdkManager.sharedMEGASdk mnz_accountDetails]) {
+                self.showAccountUpgradeScreen = NO;
+                [self showUpgradeAccount];
+            }
+
             break;
             
         case MEGARequestTypeGetAttrUser: {
