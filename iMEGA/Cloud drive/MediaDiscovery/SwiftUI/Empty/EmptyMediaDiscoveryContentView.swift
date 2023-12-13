@@ -71,13 +71,10 @@ private extension EmptyMediaDiscoveryContentMenuAction {
     }
 }
 
-struct EmptyMediaDiscoveryContentView_Previews: PreviewProvider {
-    
-    static var previews: some View {
-        EmptyMediaDiscoveryContentView(
-            image: UIImage.folderEmptyState,
-            title: Strings.Localizable.emptyFolder,
-            menuActionHandler: { _ in })
-            .previewLayout(.device)
-    }
+#Preview {
+    EmptyMediaDiscoveryContentView(
+        image: UIImage.folderEmptyState,
+        title: Strings.Localizable.emptyFolder,
+        menuActionHandler: { _ in })
+    .previewLayout(.device)
 }
