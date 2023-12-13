@@ -17,11 +17,9 @@ struct WaitingRoomUserAvatarView: View {
     }
 }
 
-struct WaitingRoomUserAvatarView_Previews: PreviewProvider {
-    static var previews: some View {
-        WaitingRoomUserAvatarView(avatar: Image(Color.red, CGSize(width: 100, height: 100)))
-            .padding(20)
-            .background(Color.black)
-            .previewLayout(.sizeThatFits)
-    }
+#Preview {
+    WaitingRoomUserAvatarView(avatar: Image(Color.red, CGSize(width: 100, height: 100)))
+        .padding(20)
+        .background(Color.black)
+        .previewLayout(.sizeThatFits)
 }
