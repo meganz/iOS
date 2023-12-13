@@ -79,7 +79,7 @@
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="請登入您的帳號。";
 /* Error message when a user attempts to change their email without an active login session. */
-"needToBeLoggedInToCompleteYourEmailChange"="您必須登入才能完成您的電子郵件地址變更。請您使用目前的電子郵件地址重新登入，然後再次點擊您的確認連結。";
+"needToBeLoggedInToCompleteYourEmailChange"="您需要登入才能完成您的電子郵件地址更改。請您使用目前的電子郵件地址再次登入，然後再次點選您的確認連結。";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="登入";
 /* Message for login option on Create Account screen */
@@ -749,7 +749,7 @@
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
 "noEmailAccountConfigured"="您的裝置沒有設定電子郵件帳戶";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
-"privacyPolicyLabel"="隱私政策";
+"privacyPolicyLabel"="私隱權政策";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
 "general.cookiePolicy"="Cookie政策";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Settings' */
@@ -967,7 +967,7 @@
 /* The title of the alert dialog to change the email associated to an account. */
 "Change Email"="更改電子郵件地址";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
-"oldAndNewEmailMatch"="新的和舊的電子郵件不能相同";
+"oldAndNewEmailMatch"="新的和舊的電子郵件地址不能相同";
 /* Error message shown when you have not written the same email when confirming a new one */
 "emailsDoNotMatch"="電子郵件地址不相符";
 /* Error message when a use wants to validate the same email twice */
@@ -2033,7 +2033,7 @@
 /* Text showing the user how to write more than one email in order to invite them to MEGA */
 "Tap space to enter multiple emails"="點選空白處來加入多個電子郵件";
 /* Text used as a section title or similar */
-"Enter Email"="輸入電子郵件";
+"Enter Email"="輸入電子郵件地址";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
 "contact.invite.message"="您有一個等待中的MEGA Chat請求。在MEGA上註冊帳戶並獲得20 GB的終身免費儲存空間。";
 /* Destination folder name of chat files */
@@ -2171,7 +2171,7 @@
 /* Label tell user to enter received txt to below input boxes */
 "Please type the verification code sent to"="請輸入傳送至以下手機門號的驗證碼";
 /* Text message to remind user to resend verification code */
-"You didn't receive a code?"="沒有收到驗證碼嗎？";
+"You didn't receive a code?"="您沒有收到驗證碼？";
 /* Message shown when verify phone number successfully */
 "Your phone number has been verified successfully"="您的手機號碼已通過驗證";
 /* Text describing account suspended state to the user */
@@ -2492,6 +2492,12 @@
 "dialog.cookies.title.yourPrivacy"="您的隱私";
 /* Cookie dialog text. */
 "dialog.cookies.description"="我們使用cookies和類似技術的目的僅用於為您提供您從MEGA請求的服務，或用於分析和收集資料。我們不會將cookies用於廣告追踪或與第三方共享有關您的任何個人資訊。";
+/* Cookie dialog title to manage cookies */
+"dialog.cookies.title.manageCookies"="管理cookies";
+/* Cookie dialog description with cookie policy. */
+"dialog.cookies.description.cookiePolicy"="我們使用cookies和類似技術來幫助我們改善我們的服務。請閱讀我們的[A]Cookie政策[/A]以瞭解更多資訊。";
+/* Cookie dialog description with advertisement cookie policy. */
+"dialog.cookies.description.adsCookiePolicy"="我們使用cookie和類似技術來幫助我們改善服務和廣告目的。繼續使用MEGA即表示您同意我們更新過的[A]Cookie政策[/A]條款。";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="接受Cookies";
 /* Cookie dialog footer description */
@@ -2509,7 +2515,7 @@
 /* Cookie settings dialog title label for Advertising Cookies */
 "settings.cookies.advertisingCookies"="廣告Cookies";
 /* Cookie settings dialog footer text for Advertising Cookies */
-"settings.cookies.advertisingCookies.footer"="由我們認可的廣告合作伙伴用於收集有關您的瀏覽活動的資料，並自訂您在我們的服務和其它網站上看到的廣告。不接受這些cookie意味著您仍然會看到廣告，但它們的相關性會降低。";
+"settings.cookies.advertisingCookies.footer"="由我們認可的廣告合作伙伴用於收集有關您的瀏覽活動的資料，並自訂您在我們的服務和其它網站上看到的廣告。不接受這些cookie意味著您仍然會看到廣告，但它們不會個人化。";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="該版本以新檔案建立";
 /* Text shown for the action create new file */
@@ -2663,7 +2669,7 @@
 /* Meetings: Floating panel participants in call count header */
 "meetings.panel.ParticipantsCount"="與會者（%d）";
 /* Meetings: Floating panel participants not in call count header */
-"meetings.panel.ParticipantsNotInCallCount"="不在通話中（%d）";
+"meetings.panel.ParticipantsNotInCallCount"="受邀者（%d）";
 /* Meetings: Floating panel participants in waiting room count header */
 "meetings.panel.ParticipantsInWaitingRoomCount"="正在等待（%d）";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
@@ -2719,7 +2725,7 @@
 /* Footer explaning how Use Mobile Data setting to load preview of images in hight resolution works */
 "settings.fileManagement.useMobileData.footer"="預覽時使用行動數據網路載入高解析度圖片。如果停用，則只會在放大檢視時載入高解析度影像。";
 /* Dialog title shown when a user tries to purchase a subscription while having a subscription activated from another platform. */
-"account.upgrade.alreadyHaveASubscription.title"="您已經有一個現行的訂閱";
+"account.upgrade.alreadyHaveASubscription.title"="您目前已經有一個訂閱";
 /* Dialog message shown when a user tries to purchase a subscriptions while having a subscription activated from another platform. */
 "account.upgrade.alreadyHaveASubscription.message"="您之前已透過Google Play或華為的應用程式商店訂閱Pro方案。請在您裝置上的Google Play或華為應用程式商店中手動取消您的訂閱，然後重試一遍。";
 /* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
@@ -3834,10 +3840,26 @@
 "home.search.filter.presentations"="簡報";
 /* Filter name for searching on the home screen */
 "home.search.filter.archives"="封存檔案";
-/* Type chips group title which is displayed in chips group pill */
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.today"="今天";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.last7days"="過去7天";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.last30days"="過去30天";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.thisYear"="今年";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.lastYear"="去年";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.older"="較舊的";
+/* Type chips group title which is displayed in node type chips group pill */
 "home.search.chipsGroup.nodeType.pillTitle"="類型";
-/* Type chips group picker title which is displayed in the picker shown when user taps on the chips group pill */
+/* Type chips group picker title which is displayed in the picker shown when user taps on the  node type chips group pill */
 "home.search.chipsGroup.nodeType.pickerTitle"="選擇類型";
+/* Type chips group title which is displayed in modified date chips group pill */
+"home.search.chipsGroup.modificationDate.pillTitle"="修改日期";
+/* Type chips group picker title which is displayed in the picker shown when user taps on the modified date chips group pill */
+"home.search.chipsGroup.modificationDate.pickerTitle"="選擇修改日期";
 /* Empty screen copy when no filter is selected on the home screen search */
 "home.search.empty.no-chip-selected"="沒有搜尋結果";
 /* Empty screen copy when Images filter is selected on the home screen search */
@@ -3909,7 +3931,7 @@
 /* Notification message about someone stopped to record call screen */
 "calls.screenRecording.notification.recording.stopped"="%@已停止錄影";
 /* Text for a UI label indicating that the call screen is being recorded */
-"calls.screenRecording.screenIndicator.label"="錄影中";
+"calls.screenRecording.screenIndicator.label"="錄製中";
 /* Camera uploads status banner - uploads in progress title */
 "cameraUploads.banner.status.uploadInProgress.title"="正在上傳";
 /* Camera uploads status banner - uploads complete title */
@@ -3920,3 +3942,19 @@
 "cameraUploads.banner.status.uploadsComplete.subHeading"="已備份所有項目";
 /* Camera uploads status banner - uploads partially completed due to limited access to photo library */
 "cameraUploads.banner.status.uploadsPartialComplete.limitedPhotoLibraryAccess.subHeading"="MEGA對您照片的存取權限受到限制，無法備份所有照片。點擊更改權限。";
+/* Title of Terms of Violation alert */
+"general.alert.termsOfServiceViolation.title"="檔案已無法使用";
+/* Calls: Floating panel participants not in call header to call them all */
+"calls.panel.participantsNotInCall.header.callAll"="與所有人通話";
+/* Calls: Floating panel participants not in call label to call a participant */
+"calls.panel.participantsNotInCall.participant.call"="通話";
+/* Calls: Floating panel participants not in call label to describe not in call state */
+"calls.panel.participantsNotInCall.participant.state.notInCall"="不在通話中";
+/* Calls: Floating panel participants not in call label to describe calling state */
+"calls.panel.participantsNotInCall.participant.state.calling"="撥號中⋯";
+/* Calls: Floating panel participants not in call label to describe no response state */
+"calls.panel.participantsNotInCall.participant.state.noResponse"="沒有回應";
+/* Calls: Floating panel participants empty list not in call state */
+"calls.panel.participantsNotInCall.emptyState"="所有受邀的與會者都加入了通話。";
+/* Calls: Floating panel participants empty list waiting room state */
+"calls.panel.participantsInWaitingRoom.emptyState"="等候室裡沒有人";

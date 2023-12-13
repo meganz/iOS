@@ -79,7 +79,7 @@
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="당신의 계정에 로그인하세요.";
 /* Error message when a user attempts to change their email without an active login session. */
-"needToBeLoggedInToCompleteYourEmailChange"="이메일 변경을 완료하려면 로그인하여야 합니다. 현재 이메일 주소로 다시 로그인한 후, 확인 링크를 다시 탭하세요.";
+"needToBeLoggedInToCompleteYourEmailChange"="You need to be logged in to complete your email address change. Please log in again with your current email address, then tap on your confirmation link again.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="로그인";
 /* Message for login option on Create Account screen */
@@ -967,7 +967,7 @@
 /* The title of the alert dialog to change the email associated to an account. */
 "Change Email"="이메일 주소 변경";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
-"oldAndNewEmailMatch"="새 이메일과 기존 이메일이 일치하지 않아야 합니다";
+"oldAndNewEmailMatch"="The new and the old email addresses must not match";
 /* Error message shown when you have not written the same email when confirming a new one */
 "emailsDoNotMatch"="이메일이 일치하지 않습니다";
 /* Error message when a use wants to validate the same email twice */
@@ -2033,7 +2033,7 @@
 /* Text showing the user how to write more than one email in order to invite them to MEGA */
 "Tap space to enter multiple emails"="여러 이메일을 입력하려면 스페이스를 탭하세요";
 /* Text used as a section title or similar */
-"Enter Email"="이메일 입력";
+"Enter Email"="Enter email address";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
 "contact.invite.message"="대기중인 MEGA 대화 요청이 있습니다. MEGA에 가입하고 20GB의 평생 무료 저장소를 받으세요.";
 /* Destination folder name of chat files */
@@ -2171,7 +2171,7 @@
 /* Label tell user to enter received txt to below input boxes */
 "Please type the verification code sent to"="다음으로 전송된 코드를 입력하세요";
 /* Text message to remind user to resend verification code */
-"You didn't receive a code?"="코드를 받지 못했나요?";
+"You didn't receive a code?"="You didn’t receive the code?";
 /* Message shown when verify phone number successfully */
 "Your phone number has been verified successfully"="당신의 휴대 전화 번호는 인증되었습니다.";
 /* Text describing account suspended state to the user */
@@ -2492,6 +2492,12 @@
 "dialog.cookies.title.yourPrivacy"="당신의 사생활";
 /* Cookie dialog text. */
 "dialog.cookies.description"="우리는 당신이 MEGA에 요청한 서비스를 제공하거나, 분석과 성능 데이터의 수집을 목적으로 쿠키 그리고 이와 유사한 기술을 사용합니다. 우리는 제3자와 어떠한 개인 정보를 공유하거나 광고 추적을 할 목적으로 쿠키를 사용하지 않습니다.";
+/* Cookie dialog title to manage cookies */
+"dialog.cookies.title.manageCookies"="Manage cookies";
+/* Cookie dialog description with cookie policy. */
+"dialog.cookies.description.cookiePolicy"="We use cookies and similar technologies to help us improve our services. Learn more in our [A]Cookie Policy[/A].";
+/* Cookie dialog description with advertisement cookie policy. */
+"dialog.cookies.description.adsCookiePolicy"="We use cookies and similar technologies to help us improve our services and for advertising purposes. By continuing to use MEGA you agree with the terms of our updated [A]Cookie Policy[/A].";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="쿠키 허용";
 /* Cookie dialog footer description */
@@ -2509,7 +2515,7 @@
 /* Cookie settings dialog title label for Advertising Cookies */
 "settings.cookies.advertisingCookies"="광고 쿠키";
 /* Cookie settings dialog footer text for Advertising Cookies */
-"settings.cookies.advertisingCookies.footer"="당신의 브라우징 활동과 관련한 데이터를 수집하고 당신이 우리 서비스와 다른 웹사이트에서 보는 광고를 개인화하기 위해 우리의 승인된 광고 파트너들에 의해 쓰입니다. 이러한 쿠키를 허용하지 않는 것은 당신은 여전히 광고를 보게 되지만 관련성이 떨어진다는 것을 뜻합니다.";
+"settings.cookies.advertisingCookies.footer"="Used by our approved advertising partners to collect data about your browsing activities and customise the ads you see on our services and on other websites. Not accepting these cookies means you will still see ads but they won’t be personalised.";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="버전을 새 파일로 생성하였습니다";
 /* Text shown for the action create new file */
@@ -2663,7 +2669,7 @@
 /* Meetings: Floating panel participants in call count header */
 "meetings.panel.ParticipantsCount"="참여자(%d)";
 /* Meetings: Floating panel participants not in call count header */
-"meetings.panel.ParticipantsNotInCallCount"="통화 중이 아님 (%d)";
+"meetings.panel.ParticipantsNotInCallCount"="초대 받은 사람 (%d)";
 /* Meetings: Floating panel participants in waiting room count header */
 "meetings.panel.ParticipantsInWaitingRoomCount"="대기 중 (%d명)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
@@ -3834,10 +3840,26 @@
 "home.search.filter.presentations"="프레젠테이션";
 /* Filter name for searching on the home screen */
 "home.search.filter.archives"="압축 파일";
-/* Type chips group title which is displayed in chips group pill */
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.today"="오늘";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.last7days"="Last 7 days";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.last30days"="Last 30 days";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.thisYear"="올해";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.lastYear"="지난 해";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.older"="더 오래됨";
+/* Type chips group title which is displayed in node type chips group pill */
 "home.search.chipsGroup.nodeType.pillTitle"="형식";
-/* Type chips group picker title which is displayed in the picker shown when user taps on the chips group pill */
+/* Type chips group picker title which is displayed in the picker shown when user taps on the  node type chips group pill */
 "home.search.chipsGroup.nodeType.pickerTitle"="유형 선택";
+/* Type chips group title which is displayed in modified date chips group pill */
+"home.search.chipsGroup.modificationDate.pillTitle"="Modified date";
+/* Type chips group picker title which is displayed in the picker shown when user taps on the modified date chips group pill */
+"home.search.chipsGroup.modificationDate.pickerTitle"="Select modified date";
 /* Empty screen copy when no filter is selected on the home screen search */
 "home.search.empty.no-chip-selected"="결과 없음";
 /* Empty screen copy when Images filter is selected on the home screen search */
@@ -3920,3 +3942,19 @@
 "cameraUploads.banner.status.uploadsComplete.subHeading"="모든 항목이 백업 되었습니다";
 /* Camera uploads status banner - uploads partially completed due to limited access to photo library */
 "cameraUploads.banner.status.uploadsPartialComplete.limitedPhotoLibraryAccess.subHeading"="MEGA가 당신의 사진 라이브러리에 제한된 접근 권한을 가지고 있으며 모든 사진을 백업할 수 없습니다. 권한을 변경하려면 탭 하세요.";
+/* Title of Terms of Violation alert */
+"general.alert.termsOfServiceViolation.title"="파일을 더 이상 이용할 수 없습니다";
+/* Calls: Floating panel participants not in call header to call them all */
+"calls.panel.participantsNotInCall.header.callAll"="모두 통화";
+/* Calls: Floating panel participants not in call label to call a participant */
+"calls.panel.participantsNotInCall.participant.call"="전화";
+/* Calls: Floating panel participants not in call label to describe not in call state */
+"calls.panel.participantsNotInCall.participant.state.notInCall"="통화 중 아님";
+/* Calls: Floating panel participants not in call label to describe calling state */
+"calls.panel.participantsNotInCall.participant.state.calling"="통화중…";
+/* Calls: Floating panel participants not in call label to describe no response state */
+"calls.panel.participantsNotInCall.participant.state.noResponse"="응답 없음";
+/* Calls: Floating panel participants empty list not in call state */
+"calls.panel.participantsNotInCall.emptyState"="All the invited participants have joined the call.";
+/* Calls: Floating panel participants empty list waiting room state */
+"calls.panel.participantsInWaitingRoom.emptyState"="There is no one in the waiting room";

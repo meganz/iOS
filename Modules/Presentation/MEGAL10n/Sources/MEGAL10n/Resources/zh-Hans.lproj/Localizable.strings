@@ -967,7 +967,7 @@
 /* The title of the alert dialog to change the email associated to an account. */
 "Change Email"="更改电子邮件地址";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
-"oldAndNewEmailMatch"="新旧电子邮件地址不能相同";
+"oldAndNewEmailMatch"="新的和旧的电子邮件地址不能相同";
 /* Error message shown when you have not written the same email when confirming a new one */
 "emailsDoNotMatch"="电子邮件地址不匹配";
 /* Error message when a use wants to validate the same email twice */
@@ -2171,7 +2171,7 @@
 /* Label tell user to enter received txt to below input boxes */
 "Please type the verification code sent to"="请输入验证码，已发送至";
 /* Text message to remind user to resend verification code */
-"You didn't receive a code?"="没有收到验证码？";
+"You didn't receive a code?"="您没有收到验证码？";
 /* Message shown when verify phone number successfully */
 "Your phone number has been verified successfully"="您的电话号码已经通过验证";
 /* Text describing account suspended state to the user */
@@ -2492,6 +2492,12 @@
 "dialog.cookies.title.yourPrivacy"="您的隐私";
 /* Cookie dialog text. */
 "dialog.cookies.description"="我们使用cookies和类似技术仅用于为您提供您从 MEGA请求的服务，或用于分析和收集性能数据。我们不使用cookies进行广告跟踪或与第三方共享关于您的任何个人信息。";
+/* Cookie dialog title to manage cookies */
+"dialog.cookies.title.manageCookies"="管理cookies";
+/* Cookie dialog description with cookie policy. */
+"dialog.cookies.description.cookiePolicy"="我们使用cookies和类似技术来帮助我们改善我们的服务。在我们的[A]Cookie政策[/A]中了解更多信息。";
+/* Cookie dialog description with advertisement cookie policy. */
+"dialog.cookies.description.adsCookiePolicy"="我们使用cookies和类似技术来帮助我们改善服务并用于广告目的。继续使用MEGA即表示您同意我们更新后的[A]Cookie政策[/A]条款。";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="接受Cookie";
 /* Cookie dialog footer description */
@@ -2509,7 +2515,7 @@
 /* Cookie settings dialog title label for Advertising Cookies */
 "settings.cookies.advertisingCookies"="广告Cookies";
 /* Cookie settings dialog footer text for Advertising Cookies */
-"settings.cookies.advertisingCookies.footer"="由我们认可的广告合作伙伴用于收集有关您的浏览活动的数据，并自定义您在我们的服务和其它网站上看到的广告。不接受这些cookies意味着您仍然会看到广告，但它们的相关性会降低。";
+"settings.cookies.advertisingCookies.footer"="由我们认可的广告合作伙伴用于收集有关您的浏览活动的数据，并自定义您在我们的服务和其它网站上看到的广告。不接受这些cookies意味着您仍然会看到广告，但它们不会是个性化的。";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="该版本已被创建为新文件";
 /* Text shown for the action create new file */
@@ -2663,7 +2669,7 @@
 /* Meetings: Floating panel participants in call count header */
 "meetings.panel.ParticipantsCount"="参与者（%d）";
 /* Meetings: Floating panel participants not in call count header */
-"meetings.panel.ParticipantsNotInCallCount"="未在通话中（%d）";
+"meetings.panel.ParticipantsNotInCallCount"="受邀者(%d)";
 /* Meetings: Floating panel participants in waiting room count header */
 "meetings.panel.ParticipantsInWaitingRoomCount"="正在等候(%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
@@ -3834,10 +3840,26 @@
 "home.search.filter.presentations"="演示文稿";
 /* Filter name for searching on the home screen */
 "home.search.filter.archives"="封存档案";
-/* Type chips group title which is displayed in chips group pill */
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.today"="今天";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.last7days"="最近7天";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.last30days"="最近30天";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.thisYear"="今年";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.lastYear"="去年";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.older"="较旧的";
+/* Type chips group title which is displayed in node type chips group pill */
 "home.search.chipsGroup.nodeType.pillTitle"="类型";
-/* Type chips group picker title which is displayed in the picker shown when user taps on the chips group pill */
+/* Type chips group picker title which is displayed in the picker shown when user taps on the  node type chips group pill */
 "home.search.chipsGroup.nodeType.pickerTitle"="选择类型";
+/* Type chips group title which is displayed in modified date chips group pill */
+"home.search.chipsGroup.modificationDate.pillTitle"="修改日期";
+/* Type chips group picker title which is displayed in the picker shown when user taps on the modified date chips group pill */
+"home.search.chipsGroup.modificationDate.pickerTitle"="选择修改日期";
 /* Empty screen copy when no filter is selected on the home screen search */
 "home.search.empty.no-chip-selected"="没有符合搜索的项目";
 /* Empty screen copy when Images filter is selected on the home screen search */
@@ -3920,3 +3942,19 @@
 "cameraUploads.banner.status.uploadsComplete.subHeading"="已备份所有项目";
 /* Camera uploads status banner - uploads partially completed due to limited access to photo library */
 "cameraUploads.banner.status.uploadsPartialComplete.limitedPhotoLibraryAccess.subHeading"="MEGA对您的照片库的访问权限受限，无法备份所有照片。点按更改权限。";
+/* Title of Terms of Violation alert */
+"general.alert.termsOfServiceViolation.title"="文件已不可用";
+/* Calls: Floating panel participants not in call header to call them all */
+"calls.panel.participantsNotInCall.header.callAll"="给所有人通话";
+/* Calls: Floating panel participants not in call label to call a participant */
+"calls.panel.participantsNotInCall.participant.call"="通话";
+/* Calls: Floating panel participants not in call label to describe not in call state */
+"calls.panel.participantsNotInCall.participant.state.notInCall"="未在通话中";
+/* Calls: Floating panel participants not in call label to describe calling state */
+"calls.panel.participantsNotInCall.participant.state.calling"="正在通话…";
+/* Calls: Floating panel participants not in call label to describe no response state */
+"calls.panel.participantsNotInCall.participant.state.noResponse"="无应答";
+/* Calls: Floating panel participants empty list not in call state */
+"calls.panel.participantsNotInCall.emptyState"="所有受邀的参与者都已加入通话。";
+/* Calls: Floating panel participants empty list waiting room state */
+"calls.panel.participantsInWaitingRoom.emptyState"="There is no one in the waiting room";

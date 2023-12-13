@@ -79,7 +79,7 @@
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Veuillez vous connecter à votre compte.";
 /* Error message when a user attempts to change their email without an active login session. */
-"needToBeLoggedInToCompleteYourEmailChange"="Vous devez être connecté pour effectuer votre changement d’adresse courriel. Veuillez vous connecter de nouveau avec votre adresse courriel actuelle et retoucher ensuite le lien de confirmation.";
+"needToBeLoggedInToCompleteYourEmailChange"="Vous devez être connecté pour effectuer votre changement d’adresse courriel. Veuillez vous connecter de nouveau avec votre adresse courriel actuelle, puis retoucher le lien de confirmation.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Me connecter";
 /* Message for login option on Create Account screen */
@@ -2171,7 +2171,7 @@
 /* Label tell user to enter received txt to below input boxes */
 "Please type the verification code sent to"="Veuillez saisir le code de confirmation envoyé à";
 /* Text message to remind user to resend verification code */
-"You didn't receive a code?"="N’avez-vous pas reçu un code ?";
+"You didn't receive a code?"="You didn’t receive the code?";
 /* Message shown when verify phone number successfully */
 "Your phone number has been verified successfully"="Votre numéro de téléphone a été confirmé";
 /* Text describing account suspended state to the user */
@@ -2492,6 +2492,12 @@
 "dialog.cookies.title.yourPrivacy"="Protection de vos renseignements personnels";
 /* Cookie dialog text. */
 "dialog.cookies.description"="Nous utilisons des témoins de connexion et des technologies semblables pour vous fournir les services que vous demandez à MEGA, ou à des fins d’analyse ou de collecte de données de performances. Nous n’utilisons pas de témoins pour le suivi publicitaire ni pour le partage avec des tiers de renseignements personnels à votre sujet.";
+/* Cookie dialog title to manage cookies */
+"dialog.cookies.title.manageCookies"="Gérer les témoins";
+/* Cookie dialog description with cookie policy. */
+"dialog.cookies.description.cookiePolicy"="Nous utilisons des témoins et des technologies semblables pour nous aider à améliorer nos services. Apprenez-en davantage dans notre [A]Politique d’utilisation des Témoins[/A].";
+/* Cookie dialog description with advertisement cookie policy. */
+"dialog.cookies.description.adsCookiePolicy"="Nous utilisons des témoins de connexion et des technologies semblables pour nous aider à améliorer nos services, ainsi qu’à des fins publicitaires. En continuant à utiliser MEGA, vous acceptez les conditions de notre [A]Politique d’utilisation des Témoins[/A] mise à jour.";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="Accepter les témoins";
 /* Cookie dialog footer description */
@@ -2509,7 +2515,7 @@
 /* Cookie settings dialog title label for Advertising Cookies */
 "settings.cookies.advertisingCookies"="Témoins publicitaires";
 /* Cookie settings dialog footer text for Advertising Cookies */
-"settings.cookies.advertisingCookies.footer"="Utilisés par nos partenaires publicitaires agréés pour collecter des données sur vos activités de navigation et personnaliser les publicités que vous voyez sur nos services et sur d’autres sites web. Ne pas accepter ces témoins implique que vous continuerez à voir des publicités, mais elles seront moins pertinentes.";
+"settings.cookies.advertisingCookies.footer"="Utilisés par nos partenaires publicitaires agréés pour collecter des données sur vos activités de navigation et personnaliser les publicités que vous voyez sur nos services et sur d’autres sites web. Ne pas accepter ces témoins implique que vous continuerez à voir des publicités, mais elles ne seront pas personnalisées.";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="La version a été créée en tant que nouveau fichier";
 /* Text shown for the action create new file */
@@ -2663,7 +2669,7 @@
 /* Meetings: Floating panel participants in call count header */
 "meetings.panel.ParticipantsCount"="Participants (%d)";
 /* Meetings: Floating panel participants not in call count header */
-"meetings.panel.ParticipantsNotInCallCount"="Hors appel (%d)";
+"meetings.panel.ParticipantsNotInCallCount"="Personnes invitées (%d)";
 /* Meetings: Floating panel participants in waiting room count header */
 "meetings.panel.ParticipantsInWaitingRoomCount"="En attente (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
@@ -3834,10 +3840,26 @@
 "home.search.filter.presentations"="Présentations";
 /* Filter name for searching on the home screen */
 "home.search.filter.archives"="Archives";
-/* Type chips group title which is displayed in chips group pill */
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.today"="Aujourd’hui";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.last7days"="7 derniers jours";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.last30days"="30 derniers jours";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.thisYear"="Cette année";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.lastYear"="La dernière année";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.older"="Plus ancien";
+/* Type chips group title which is displayed in node type chips group pill */
 "home.search.chipsGroup.nodeType.pillTitle"="Type";
-/* Type chips group picker title which is displayed in the picker shown when user taps on the chips group pill */
+/* Type chips group picker title which is displayed in the picker shown when user taps on the  node type chips group pill */
 "home.search.chipsGroup.nodeType.pickerTitle"="Sélectionner le type";
+/* Type chips group title which is displayed in modified date chips group pill */
+"home.search.chipsGroup.modificationDate.pillTitle"="Date de modification";
+/* Type chips group picker title which is displayed in the picker shown when user taps on the modified date chips group pill */
+"home.search.chipsGroup.modificationDate.pickerTitle"="Sélectionner la date de modification";
 /* Empty screen copy when no filter is selected on the home screen search */
 "home.search.empty.no-chip-selected"="Aucun résultat";
 /* Empty screen copy when Images filter is selected on the home screen search */
@@ -3907,9 +3929,9 @@
 /* Notification message about someone started to record call screen */
 "calls.screenRecording.notification.recording.started"="%@ a commencé l’enregistrement";
 /* Notification message about someone stopped to record call screen */
-"calls.screenRecording.notification.recording.stopped"="%@ a mis fin à l’enregistrement";
+"calls.screenRecording.notification.recording.stopped"="%@ a arrêté l’enregistrement";
 /* Text for a UI label indicating that the call screen is being recorded */
-"calls.screenRecording.screenIndicator.label"="Enregistrement";
+"calls.screenRecording.screenIndicator.label"="REC";
 /* Camera uploads status banner - uploads in progress title */
 "cameraUploads.banner.status.uploadInProgress.title"="Téléversement en cours";
 /* Camera uploads status banner - uploads complete title */
@@ -3920,3 +3942,19 @@
 "cameraUploads.banner.status.uploadsComplete.subHeading"="Tous les éléments ont été sauvegardés";
 /* Camera uploads status banner - uploads partially completed due to limited access to photo library */
 "cameraUploads.banner.status.uploadsPartialComplete.limitedPhotoLibraryAccess.subHeading"="MEGA a un accès limité à votre photothèque et ne peut pas sauvegarder toutes les photos. Touchez pour changer les autorisations.";
+/* Title of Terms of Violation alert */
+"general.alert.termsOfServiceViolation.title"="Le fichier n’est plus accessible";
+/* Calls: Floating panel participants not in call header to call them all */
+"calls.panel.participantsNotInCall.header.callAll"="Les appeler tous";
+/* Calls: Floating panel participants not in call label to call a participant */
+"calls.panel.participantsNotInCall.participant.call"="Appeler";
+/* Calls: Floating panel participants not in call label to describe not in call state */
+"calls.panel.participantsNotInCall.participant.state.notInCall"="Hors appel";
+/* Calls: Floating panel participants not in call label to describe calling state */
+"calls.panel.participantsNotInCall.participant.state.calling"="Appel…";
+/* Calls: Floating panel participants not in call label to describe no response state */
+"calls.panel.participantsNotInCall.participant.state.noResponse"="Pas de réponse";
+/* Calls: Floating panel participants empty list not in call state */
+"calls.panel.participantsNotInCall.emptyState"="Tous les participants invités se sont joints à l’appel.";
+/* Calls: Floating panel participants empty list waiting room state */
+"calls.panel.participantsInWaitingRoom.emptyState"="There is no one in the waiting room";

@@ -79,7 +79,7 @@
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="あなたのアカウントにログインしてください。";
 /* Error message when a user attempts to change their email without an active login session. */
-"needToBeLoggedInToCompleteYourEmailChange"="メールの変更を完了するには、ログインする必要があります。現在のメールアドレスで再度ログインしてから、確認リンクをもう一度タップしてください。";
+"needToBeLoggedInToCompleteYourEmailChange"="メールアドレスの変更を完了するには、ログインする必要があります。現在のメールアドレスで再度ログインしてから、認証リンクをもう一度タップしてください。";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="ログイン";
 /* Message for login option on Create Account screen */
@@ -961,7 +961,7 @@
 /* Hint text to suggest that the user have to write the new email on it */
 "newEmail"="新しいメールアドレス";
 /* Button text for the user to confirm their change of email address. */
-"confirmEmail"="メールを確認";
+"confirmEmail"="メールアドレスを確定";
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="新しいメールアドレスを確認";
 /* The title of the alert dialog to change the email associated to an account. */
@@ -2492,6 +2492,12 @@
 "dialog.cookies.title.yourPrivacy"="お客様のプライバシー";
 /* Cookie dialog text. */
 "dialog.cookies.description"="当社は、お客様からご要求されたサービスを提供する目的、または分析とパフォーマンスデータの収集の目的でのみ、Cookieおよび類似のテクノロジを使用します。広告の追跡や、お客様に関する個人情報を第三者と共有するためにCookieを使用することはありません。";
+/* Cookie dialog title to manage cookies */
+"dialog.cookies.title.manageCookies"="クッキーの管理";
+/* Cookie dialog description with cookie policy. */
+"dialog.cookies.description.cookiePolicy"="当社では、サービスの向上を目的としてクッキー（Cookie）および同様のテクノロジーを使用しています。詳細については、当社の[A]クッキーポリシー[/A]をご覧ください。";
+/* Cookie dialog description with advertisement cookie policy. */
+"dialog.cookies.description.adsCookiePolicy"="当社では、サービスの向上および広告目的としてクッキー（Cookie）および同様のテクノロジーを使用しています。MEGAのご使用を続けることで、当社の更新された[A]クッキーポリシー[/A]の条件に同意されたことになります。";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="クッキーを受け入れる";
 /* Cookie dialog footer description */
@@ -2509,7 +2515,7 @@
 /* Cookie settings dialog title label for Advertising Cookies */
 "settings.cookies.advertisingCookies"="広告クッキー";
 /* Cookie settings dialog footer text for Advertising Cookies */
-"settings.cookies.advertisingCookies.footer"="お客様の閲覧活動に関するデータを収集し、当社のサービスや他のウェブサイトで表示される広告をカスタマイズするために、当社の承認された広告パートナーによって使用されます。これらのCookieを受け入れない場合、広告は引き続き表示される一方で、広告の関連性は低くなります。";
+"settings.cookies.advertisingCookies.footer"="お客様の閲覧活動に関するデータを収集し、当社のサービスや他のウェブサイトで表示される広告をカスタマイズするために、当社の承認された広告パートナーによって使用されます。これらのクッキーを受け入れない場合、広告は引き続き表示される一方で、パーソナライズされません。";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="バージョンは新しいファイルとして作成されました";
 /* Text shown for the action create new file */
@@ -2663,7 +2669,7 @@
 /* Meetings: Floating panel participants in call count header */
 "meetings.panel.ParticipantsCount"="参加者 (%d)";
 /* Meetings: Floating panel participants not in call count header */
-"meetings.panel.ParticipantsNotInCallCount"="非通話中（%d人）";
+"meetings.panel.ParticipantsNotInCallCount"="被招待者（%d）";
 /* Meetings: Floating panel participants in waiting room count header */
 "meetings.panel.ParticipantsInWaitingRoomCount"="待機中（%d人）";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
@@ -3834,10 +3840,26 @@
 "home.search.filter.presentations"="プレゼンテーション";
 /* Filter name for searching on the home screen */
 "home.search.filter.archives"="アーカイブ";
-/* Type chips group title which is displayed in chips group pill */
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.today"="今日";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.last7days"="過去7日間";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.last30days"="過去30日間";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.thisYear"="今年";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.lastYear"="去年";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.older"="それ以前";
+/* Type chips group title which is displayed in node type chips group pill */
 "home.search.chipsGroup.nodeType.pillTitle"="タイプ";
-/* Type chips group picker title which is displayed in the picker shown when user taps on the chips group pill */
+/* Type chips group picker title which is displayed in the picker shown when user taps on the  node type chips group pill */
 "home.search.chipsGroup.nodeType.pickerTitle"="タイプを選択";
+/* Type chips group title which is displayed in modified date chips group pill */
+"home.search.chipsGroup.modificationDate.pillTitle"="変更日";
+/* Type chips group picker title which is displayed in the picker shown when user taps on the modified date chips group pill */
+"home.search.chipsGroup.modificationDate.pickerTitle"="変更日を選択";
 /* Empty screen copy when no filter is selected on the home screen search */
 "home.search.empty.no-chip-selected"="結果なし";
 /* Empty screen copy when Images filter is selected on the home screen search */
@@ -3920,3 +3942,19 @@
 "cameraUploads.banner.status.uploadsComplete.subHeading"="すべての項目がバックアップされました";
 /* Camera uploads status banner - uploads partially completed due to limited access to photo library */
 "cameraUploads.banner.status.uploadsPartialComplete.limitedPhotoLibraryAccess.subHeading"="MEGAはフォトライブラリへのアクセスに制限があり、すべての写真をバックアップすることはできません。タップすると、権限が変更されます。";
+/* Title of Terms of Violation alert */
+"general.alert.termsOfServiceViolation.title"="ファイルは利用できなくなりました";
+/* Calls: Floating panel participants not in call header to call them all */
+"calls.panel.participantsNotInCall.header.callAll"="全員と通話";
+/* Calls: Floating panel participants not in call label to call a participant */
+"calls.panel.participantsNotInCall.participant.call"="通話";
+/* Calls: Floating panel participants not in call label to describe not in call state */
+"calls.panel.participantsNotInCall.participant.state.notInCall"="通話中ではありません";
+/* Calls: Floating panel participants not in call label to describe calling state */
+"calls.panel.participantsNotInCall.participant.state.calling"="呼び出し中…";
+/* Calls: Floating panel participants not in call label to describe no response state */
+"calls.panel.participantsNotInCall.participant.state.noResponse"="応答なし";
+/* Calls: Floating panel participants empty list not in call state */
+"calls.panel.participantsNotInCall.emptyState"="招待された参加者全員が通話に参加しました。";
+/* Calls: Floating panel participants empty list waiting room state */
+"calls.panel.participantsInWaitingRoom.emptyState"="待合室に誰もいません";

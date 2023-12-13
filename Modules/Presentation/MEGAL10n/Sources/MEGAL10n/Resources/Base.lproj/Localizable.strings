@@ -79,7 +79,7 @@
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Please log in to your account.";
 /* Error message when a user attempts to change their email without an active login session. */
-"needToBeLoggedInToCompleteYourEmailChange"="You need to be logged in to complete your email change. Please log in again with your current email address, then tap on your confirmation link again.";
+"needToBeLoggedInToCompleteYourEmailChange"="You need to be logged in to complete your email address change. Please log in again with your current email address, then tap on your confirmation link again.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Log in";
 /* Message for login option on Create Account screen */
@@ -91,7 +91,7 @@
 /* Button title which triggers the action to join meeting as Guest */
 "general.joinMeetingAsGuest"="Join meeting as guest";
 /* Message shown when the user writes a wrong email or password on login */
-"invalidMailOrPassword"="Invalid email or password. Please try again.";
+"invalidMailOrPassword"="Invalid email address or password. Please try again.";
 /* Error message when to many attempts to login */
 "tooManyAttemptsLogin"="You have attempted to log in too many times. Please wait until %@ and try again.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
@@ -99,13 +99,13 @@
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Your account was terminated due to a breach of MEGA’s Terms of Service including, but not limited to, clause 15.";
 /* Message shown when the user writes an invalid format in the email field */
-"emailInvalidFormat"="Enter a valid email";
+"emailInvalidFormat"="Enter a valid email address";
 /* Add contacts and share dialog error message when user try to add wrong email address */
 "theEmailAddressFormatIsInvalid"="The email address format is invalid";
 /* Message shown when the user enters a wrong password */
 "passwordInvalidFormat"="Enter a valid password";
 /* Hint text to suggest that the user has to write his email */
-"emailPlaceholder"="Email";
+"emailPlaceholder"="Email address";
 /* Hint text to suggest that the user has to write his password */
 "passwordPlaceholder"="Password";
 /* Account, Change Password view. Error shown when you type your current password. */
@@ -673,7 +673,7 @@
 /* Alert title shown when you select to add a contact inserting his/her email */
 "addContact"="Add contact";
 /* Clue text to help the user know what should write there. In this case the contact email you want to add to your contacts list */
-"contactEmail"="Contact email";
+"contactEmail"="Contact email address";
 /* Button title to 'Add' the contact to your contacts list */
 "addContactButton"="Add";
 /* Add contacts and share dialog error message when user try to add your own email address */
@@ -961,13 +961,13 @@
 /* Hint text to suggest that the user have to write the new email on it */
 "newEmail"="New email address";
 /* Button text for the user to confirm their change of email address. */
-"confirmEmail"="Confirm email";
+"confirmEmail"="Confirm email address";
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="Confirm new email";
 /* The title of the alert dialog to change the email associated to an account. */
 "Change Email"="Change email address";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
-"oldAndNewEmailMatch"="The new and the old email must not match";
+"oldAndNewEmailMatch"="The new and the old email addresses must not match";
 /* Error message shown when you have not written the same email when confirming a new one */
 "emailsDoNotMatch"="Email addresses do not match";
 /* Error message when a use wants to validate the same email twice */
@@ -1031,13 +1031,13 @@
 /* Text shown to explain how and where you can invite friends */
 "Select from phone contacts or enter multiple email addresses"="Select from device contacts or enter multiple email addresses.";
 /*  */
-"insertYourFriendsEmails"="Insert your friends’ emails:";
+"insertYourFriendsEmails"="Insert your friends’ email addresses:";
 /*  */
 "howItWorks"="How it works";
 /*  */
 "howItWorksMain"="Your friend needs to register for a free account on MEGA and [S]install at least one MEGA client application[/S] (either the MEGA Desktop App or one of our MEGA Mobile Apps)";
 /*  */
-"howItWorksSecondary"="You can notify your friend through any method. You will earn the quota if you have entered your friend’s email here prior to them registering with that address.";
+"howItWorksSecondary"="You can notify your friend through any method. You will earn the quota if you have entered your friend’s email address here prior to them registering with that address.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
 "howItWorksTertiary"="You will not receive credit for inviting someone who has used MEGA previously and you will not be notified about such a rejection.";
 /* Header of block with achievements bonuses. */
@@ -2031,9 +2031,9 @@
 /* Text showing the user how many contacts would be invited */
 "Invite [X] contacts"="Invite [X] contacts";
 /* Text showing the user how to write more than one email in order to invite them to MEGA */
-"Tap space to enter multiple emails"="Tap space to enter multiple emails";
+"Tap space to enter multiple emails"="Tap space to enter multiple email addresses";
 /* Text used as a section title or similar */
-"Enter Email"="Enter email";
+"Enter Email"="Enter email address";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
 "contact.invite.message"="You have a MEGA Chat request waiting. Register an account on MEGA and get 20 GB free lifetime storage.";
 /* Destination folder name of chat files */
@@ -2171,7 +2171,7 @@
 /* Label tell user to enter received txt to below input boxes */
 "Please type the verification code sent to"="Please enter the verification code sent to";
 /* Text message to remind user to resend verification code */
-"You didn't receive a code?"="You didn’t receive a code?";
+"You didn't receive a code?"="You didn’t receive the code?";
 /* Message shown when verify phone number successfully */
 "Your phone number has been verified successfully"="Your phone number has been verified";
 /* Text describing account suspended state to the user */
@@ -2493,29 +2493,29 @@
 /* Cookie dialog text. */
 "dialog.cookies.description"="We use cookies and similar technologies solely for the purposes of providing you with the services you request from MEGA, or for analytics and gathering performance data. We don’t use cookies for ad tracking or sharing any personal information about you with third parties.";
 /* Cookie dialog title to manage cookies */
-"dialog.cookies.title.manageCookies"="Manage Cookies";
+"dialog.cookies.title.manageCookies"="Manage cookies";
 /* Cookie dialog description with cookie policy. */
-"dialog.cookies.description.cookiePolicy"="We use cookies and similar technologies to help us improve our services. By continuing to use MEGA you agree with the terms of our [A]Cookie Policy[/A].";
+"dialog.cookies.description.cookiePolicy"="We use cookies and similar technologies to help us improve our services. Learn more in our [A]Cookie Policy[/A].";
 /* Cookie dialog description with advertisement cookie policy. */
 "dialog.cookies.description.adsCookiePolicy"="We use cookies and similar technologies to help us improve our services and for advertising purposes. By continuing to use MEGA you agree with the terms of our updated [A]Cookie Policy[/A].";
 /* Cookie dialog button label. */
-"dialog.cookies.accept"="Accept Cookies";
+"dialog.cookies.accept"="Accept cookies";
 /* Cookie dialog footer description */
 "settings.accept.cookies.footer"="Cookies aren’t used for ad tracking or sharing any personal information with third parties.";
 /* Cookie settings dialog text. */
-"settings.cookies.essential"="Essential Cookies";
+"settings.cookies.essential"="Essential cookies";
 /* Text shown next to Essential Cookies in Cookie Settings. This setting can not be disabled, that is why is 'Always on' */
 "settings.cookies.essential.alwaysOn"="Always On";
 /* Cookie settings dialog text. */
 "settings.cookies.essential.footer"="Essential for providing you important functionality and secure access to our services. For this reason, they do not require consent.";
 /* Cookie settings dialog text. */
-"settings.cookies.performanceAndAnalytics"="Performance and analytics Cookies";
+"settings.cookies.performanceAndAnalytics"="Performance and analytics cookies";
 /* Cookie settings dialog text. */
-"settings.cookies.performanceAndAnalytics.footer"="Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these Cookies will mean we will have less data available to us to help design improvements.";
+"settings.cookies.performanceAndAnalytics.footer"="Help us to understand how you use our services and provide us data that we can use to make improvements. Not accepting these cookies will mean we will have less data available to us to help design improvements.";
 /* Cookie settings dialog title label for Advertising Cookies */
-"settings.cookies.advertisingCookies"="Advertising Cookies";
+"settings.cookies.advertisingCookies"="Advertising cookies";
 /* Cookie settings dialog footer text for Advertising Cookies */
-"settings.cookies.advertisingCookies.footer"="Used by our approved advertising partners to collect data about your browsing activities and customise the ads you see on our services and on other websites. Not accepting these cookies means you will still see ads but they will be less relevant.";
+"settings.cookies.advertisingCookies.footer"="Used by our approved advertising partners to collect data about your browsing activities and customise the ads you see on our services and on other websites. Not accepting these cookies means you will still see ads but they won’t be personalised.";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="Version was created as a new file";
 /* Text shown for the action create new file */
@@ -3940,8 +3940,8 @@
 "cameraUploads.banner.status.uploadsPausedDueToWifi.title"="Upload paused due to no Wi-Fi connection";
 /* Camera uploads status banner - uploads complete description */
 "cameraUploads.banner.status.uploadsComplete.subHeading"="All items backed up";
-/* Camera uploads status banner - uploads partially completed due to limited access to photo library*/
-"cameraUploads.banner.status.uploadsPartialComplete.limitedPhotoLibraryAccess.subHeading"="MEGA has limited access to photo library and cannot backup all your photos. Tap to change permissions.";
+/* Camera uploads status banner - uploads partially completed due to limited access to photo library */
+"cameraUploads.banner.status.uploadsPartialComplete.limitedPhotoLibraryAccess.subHeading"="MEGA has limited access to your photo library and cannot back up all photos. Tap to change permissions.";
 /* Title of Terms of Violation alert */
 "general.alert.termsOfServiceViolation.title"="File no longer available";
 /* Calls: Floating panel participants not in call header to call them all */
@@ -3951,9 +3951,9 @@
 /* Calls: Floating panel participants not in call label to describe not in call state */
 "calls.panel.participantsNotInCall.participant.state.notInCall"="Not in call";
 /* Calls: Floating panel participants not in call label to describe calling state */
-"calls.panel.participantsNotInCall.participant.state.calling"="Calling...";
+"calls.panel.participantsNotInCall.participant.state.calling"="Calling…";
 /* Calls: Floating panel participants not in call label to describe no response state */
-"calls.panel.participantsNotInCall.participant.state.noResponse"="No Response";
+"calls.panel.participantsNotInCall.participant.state.noResponse"="No response";
 /* Calls: Floating panel participants empty list not in call state */
 "calls.panel.participantsNotInCall.emptyState"="All the invited participants have joined the call.";
 /* Calls: Floating panel participants empty list waiting room state */

@@ -79,7 +79,7 @@
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Te rugăm să te autentifici în cont.";
 /* Error message when a user attempts to change their email without an active login session. */
-"needToBeLoggedInToCompleteYourEmailChange"="Trebuie să fii autentificat(ă) pentru a finaliza modificarea e-mailului. Te rugăm să te autentifici din nou cu adresa de e-mail actuală și apoi atinge linkul de confirmare din nou.";
+"needToBeLoggedInToCompleteYourEmailChange"="Trebuie să fiți autentificat pentru a finaliza schimbarea adresei de e-mail. Vă rugăm să vă conectați din nou cu adresa dvs. de e-mail curentă, apoi atingeți din nou linkul de confirmare.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Autentifică-te";
 /* Message for login option on Create Account screen */
@@ -967,7 +967,7 @@
 /* The title of the alert dialog to change the email associated to an account. */
 "Change Email"="Modifică adresa de e-mail";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
-"oldAndNewEmailMatch"="E-mailul nou și cel vechi nu trebuie să coincidă";
+"oldAndNewEmailMatch"="Adresele de e-mail noi și cele vechi nu trebuie să se potrivească";
 /* Error message shown when you have not written the same email when confirming a new one */
 "emailsDoNotMatch"="Adresele de e-mail nu se potrivesc";
 /* Error message when a use wants to validate the same email twice */
@@ -2033,7 +2033,7 @@
 /* Text showing the user how to write more than one email in order to invite them to MEGA */
 "Tap space to enter multiple emails"="Atinge spațiu pentru a introduce mai multe e-mailuri";
 /* Text used as a section title or similar */
-"Enter Email"="Introdu un e-mail";
+"Enter Email"="Introduceți adresa de e-mail";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
 "contact.invite.message"="Aveți o solicitare MEGA Chat în așteptare. Înregistrați-vă un cont pe MEGA și obțineți 20 GB spațiu de stocare gratuit pe viață.";
 /* Destination folder name of chat files */
@@ -2171,7 +2171,7 @@
 /* Label tell user to enter received txt to below input boxes */
 "Please type the verification code sent to"="Te rugăm să introduci codul de verificare trimis către";
 /* Text message to remind user to resend verification code */
-"You didn't receive a code?"="Nu ai primit un cod?";
+"You didn't receive a code?"="Nu ai primit codul?";
 /* Message shown when verify phone number successfully */
 "Your phone number has been verified successfully"="Numărul tău de telefon a fost verificat";
 /* Text describing account suspended state to the user */
@@ -2492,6 +2492,12 @@
 "dialog.cookies.title.yourPrivacy"="Intimitatea ta";
 /* Cookie dialog text. */
 "dialog.cookies.description"="Folosim cookie-uri și tehnologii similare numai în scopul de a vă oferi serviciile pe care le solicitați de la MEGA sau pentru analiza și colectarea datelor de performanță. Nu folosim cookie-uri pentru urmărirea anunțurilor sau partajarea oricăror informații personale despre dvs. cu terțe părți.";
+/* Cookie dialog title to manage cookies */
+"dialog.cookies.title.manageCookies"="Gestionați cookie-urile";
+/* Cookie dialog description with cookie policy. */
+"dialog.cookies.description.cookiePolicy"="Folosim cookie-uri și tehnologii similare pentru a ne ajuta să ne îmbunătățim serviciile. Aflați mai multe în [A]Politica privind cookie-urile[/A].";
+/* Cookie dialog description with advertisement cookie policy. */
+"dialog.cookies.description.adsCookiePolicy"="Folosim cookie-uri și tehnologii similare pentru a ne ajuta să ne îmbunătățim serviciile și în scopuri publicitare. Continuând să folosiți MEGA sunteți de acord cu termenii actualizați [A]Politica privind cookie-urile[/A].";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="Acceptă cookie-urile";
 /* Cookie dialog footer description */
@@ -2509,7 +2515,7 @@
 /* Cookie settings dialog title label for Advertising Cookies */
 "settings.cookies.advertisingCookies"="Cookie-uri de publicitate";
 /* Cookie settings dialog footer text for Advertising Cookies */
-"settings.cookies.advertisingCookies.footer"="Utilizate de partenerii noștri de publicitate aprobați pentru a colecta date despre activitățile dvs. de navigare și pentru a personaliza anunțurile pe care le vedeți în serviciile noastre și pe alte site-uri web. Dacă nu acceptați aceste cookie-uri, veți vedea în continuare anunțuri, dar acestea vor fi mai puțin relevante.";
+"settings.cookies.advertisingCookies.footer"="Utilizate de partenerii noștri de publicitate aprobați pentru a colecta date despre activitățile dvs. de navigare și pentru a personaliza anunțurile pe care le vedeți în serviciile noastre și pe alte site-uri web. Dacă nu acceptați aceste cookie-uri, veți vedea în continuare anunțuri, dar acestea nu vor fi personalizate.";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="Versiunea a fost creată ca un fișier nou.";
 /* Text shown for the action create new file */
@@ -2663,7 +2669,7 @@
 /* Meetings: Floating panel participants in call count header */
 "meetings.panel.ParticipantsCount"="Participanți (%d)";
 /* Meetings: Floating panel participants not in call count header */
-"meetings.panel.ParticipantsNotInCallCount"="Nu în apel (%d)";
+"meetings.panel.ParticipantsNotInCallCount"="Invitați (%d)";
 /* Meetings: Floating panel participants in waiting room count header */
 "meetings.panel.ParticipantsInWaitingRoomCount"="În așteptare (%d";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
@@ -3471,11 +3477,11 @@
 /* Device Center backup error: Initial scan failure */
 "device.center.backup.error.initialScanFailed"="Scanarea inițială a eșuat. Va trebui să reactivați sincronizarea sau backupul din aplicația desktop.";
 /* Device Center backup error: Device folder not located */
-"device.center.backup.error.folderDeviceUnlocatedNow"="Dosarul din dispozitiv nu poate fi localizat acum, încercați din nou mai târziu.";
+"device.center.backup.error.folderDeviceUnlocatedNow"="Folderul din dispozitiv nu poate fi localizat acum, încercați din nou mai târziu.";
 /* Device Center backup error: Device folder can't be located */
 "device.center.backup.error.folderDeviceUnlocated"="Folderul din dispozitiv nu poate fi localizat.";
 /* Device Center backup error: MEGA folder moved or deleted */
-"device.center.backup.error.folderMegaMovedOrDeleted"="Dosarul din MEGA nu poate fi localizat deoarece a fost mutat sau șters sau este posibil să nu aveți acces.";
+"device.center.backup.error.folderMegaMovedOrDeleted"="Folderul din MEGA nu poate fi localizat deoarece a fost mutat sau șters sau este posibil să nu aveți acces.";
 /* Device Center backup error: Storage quota limit */
 "device.center.backup.error.storageQuotaReached"="Limita cotei de spațiu de stocare a fost atinsă.";
 /* Device Center backup error: Plan expired */
@@ -3834,10 +3840,26 @@
 "home.search.filter.presentations"="Prezentări";
 /* Filter name for searching on the home screen */
 "home.search.filter.archives"="Arhive";
-/* Type chips group title which is displayed in chips group pill */
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.today"="Astăzi";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.last7days"="Ultimele 7 zile";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.last30days"="Ultimele 30 zile";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.thisYear"="Anul acesta";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.lastYear"="Ultimul an";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.older"="Mai vechi";
+/* Type chips group title which is displayed in node type chips group pill */
 "home.search.chipsGroup.nodeType.pillTitle"="Tip";
-/* Type chips group picker title which is displayed in the picker shown when user taps on the chips group pill */
+/* Type chips group picker title which is displayed in the picker shown when user taps on the  node type chips group pill */
 "home.search.chipsGroup.nodeType.pickerTitle"="Selectați tipul";
+/* Type chips group title which is displayed in modified date chips group pill */
+"home.search.chipsGroup.modificationDate.pillTitle"="Data modificării";
+/* Type chips group picker title which is displayed in the picker shown when user taps on the modified date chips group pill */
+"home.search.chipsGroup.modificationDate.pickerTitle"="Selectați data modificării";
 /* Empty screen copy when no filter is selected on the home screen search */
 "home.search.empty.no-chip-selected"="Niciun rezultat";
 /* Empty screen copy when Images filter is selected on the home screen search */
@@ -3920,3 +3942,19 @@
 "cameraUploads.banner.status.uploadsComplete.subHeading"="Toate elementele au fost backup-te";
 /* Camera uploads status banner - uploads partially completed due to limited access to photo library */
 "cameraUploads.banner.status.uploadsPartialComplete.limitedPhotoLibraryAccess.subHeading"="MEGA are acces limitat la biblioteca dvs. foto și nu poate face copii de rezervă pentru toate fotografiile. Atingeți pentru a modifica permisiunile.";
+/* Title of Terms of Violation alert */
+"general.alert.termsOfServiceViolation.title"="Fișiererul nu mai este disponibil";
+/* Calls: Floating panel participants not in call header to call them all */
+"calls.panel.participantsNotInCall.header.callAll"="Suna pe toți";
+/* Calls: Floating panel participants not in call label to call a participant */
+"calls.panel.participantsNotInCall.participant.call"="Apelează";
+/* Calls: Floating panel participants not in call label to describe not in call state */
+"calls.panel.participantsNotInCall.participant.state.notInCall"="Nu în apel";
+/* Calls: Floating panel participants not in call label to describe calling state */
+"calls.panel.participantsNotInCall.participant.state.calling"="Se apelează…";
+/* Calls: Floating panel participants not in call label to describe no response state */
+"calls.panel.participantsNotInCall.participant.state.noResponse"="Niciun răspuns";
+/* Calls: Floating panel participants empty list not in call state */
+"calls.panel.participantsNotInCall.emptyState"="Toți participanții invitați s-au alăturat apelului.";
+/* Calls: Floating panel participants empty list waiting room state */
+"calls.panel.participantsInWaitingRoom.emptyState"="There is no one in the waiting room";

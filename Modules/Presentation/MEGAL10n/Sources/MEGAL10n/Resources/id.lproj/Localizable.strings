@@ -67,7 +67,7 @@
 /* Alert title shown when the app detects that the Secure Sockets Layer (SSL) key of MEGA can't be verified. */
 "sslUnverified_alertTitle"="MEGA tidak dapat terhubung dengan aman melalui SSL. Anda mungkin menggunakan Wi-Fi publik dengan persyaratan tambahan.";
 /* Message shown when you're trying to open a file or folder from the mobile webclient and the accounts logged are not the same */
-"theContentIsNotAvailableForThisAccount"="The content you are trying to access is not available for this account. Try to log in with same account as in the mobile browser.";
+"theContentIsNotAvailableForThisAccount"="Konten yang anda coba akses tidak tersedia untuk akun ini. Cobalah masuk dengan akun yang sama seperti di browser seluler.";
 /* Message shown when the app is waiting for the server to complete a request due to an API lock (error -3). */
 "takingLongerThanExpected"="Prosesnya memakan waktu lebih lama dari yang diperkirakan. Mohon tunggu…";
 /* Message shown when the app is waiting for the server to complete a request due to a HTTP error 500. */
@@ -79,7 +79,7 @@
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Harap masuk ke akun anda.";
 /* Error message when a user attempts to change their email without an active login session. */
-"needToBeLoggedInToCompleteYourEmailChange"="Anda harus masuk untuk menyelesaikan perubahan email anda. Harap masuk kembali dengan alamat email anda saat ini, lalu ketuk lagi tautan konfirmasi anda.";
+"needToBeLoggedInToCompleteYourEmailChange"="Anda harus masuk untuk menyelesaikan perubahan alamat email anda. Silakan masuk lagi dengan alamat email anda saat ini, lalu ketuk tautan konfirmasi anda lagi.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Masuk";
 /* Message for login option on Create Account screen */
@@ -721,7 +721,7 @@
 /* Title of one of the Settings sections where you can set up the 'Camera Uploads' options */
 "cameraUploadsLabel"="Unggahan kamera";
 /* Banner message on Camera Uploads that warns user that they have limited access to photos */
-"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA has limited access to your photo library and cannot back up all of your media. Tap to change permissions.";
+"cameraUploads.warning.limitedAccessToPhotoMessage"="⚠ MEGA memiliki akses terbatas ke perpustakaan foto anda dan tidak dapat membuat cadangan semua media anda. Ketuk untuk mengubah izin.";
 /* Navigation title for Photo Controller */
 "photo.navigation.title"="Foto";
 /* Photo view is empty */
@@ -967,7 +967,7 @@
 /* The title of the alert dialog to change the email associated to an account. */
 "Change Email"="Mengganti alamat email";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
-"oldAndNewEmailMatch"="Email baru dan lama harus cocok";
+"oldAndNewEmailMatch"="Alamat email baru dan lama tidak boleh cocok";
 /* Error message shown when you have not written the same email when confirming a new one */
 "emailsDoNotMatch"="Alamat email tidak cocok";
 /* Error message when a use wants to validate the same email twice */
@@ -1407,11 +1407,11 @@
 /* Error message displayed when trying to invite a contact who is already added. */
 "alreadyAContact"="%s sudah menjadi kontak.";
 /* A summary message when a user sent a contact's details through the chat. Please keep %@ as it will be replaced at runtime with the name of the contact that was sent. */
-"sentContact"="Sent contact: %@";
+"sentContact"="Kontak terkirim: %@";
 /* A summary message when a user sent the information of %s number of contacts at once. Please keep %s as it will be replaced at runtime with the number of contacts sent. */
 "sentXContacts"="%s Kontak Terkirim.";
 /* A message appearing in the chat summary window when the most recent action performed by a user was attaching a file. Please keep %@ as it will be replaced at runtime with the name of the attached file. */
-"attachedFile"="Attached: %@";
+"attachedFile"="Terlampir: %@";
 /* A summary message when a user has attached many files at once into the chat. Please keep %s as it will be replaced at runtime with the number of files. */
 "attachedXFiles"="Melampirkan %s file.";
 /* Label in a button that allows to jump to the latest item */
@@ -1991,7 +1991,7 @@
 /* Label that indicates who modified a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.modifiedByLabel"="Diubah oleh %@";
 /* Title for a recent action bucket with multiple files. %@ will be replaced by the filename of the first file in the bucket. %ld will be replaced by the total number of other files in the bucket. */
-"home.recent.multipleFileTitle"="“%@” and %ld more";
+"home.recent.multipleFileTitle"="”%@” dan %ld lebih banyak";
 /* Label that indicates who uploaded a file into a recents bucket. %@ is a placeholder for a name, eg: Haley */
 "home.recent.createdByLabel"="Dibuat oleh %@";
 /* Message shown when the user has not recent activity in their account. */
@@ -2033,7 +2033,7 @@
 /* Text showing the user how to write more than one email in order to invite them to MEGA */
 "Tap space to enter multiple emails"="Ketuk ruang untuk memasukkan banyak email";
 /* Text used as a section title or similar */
-"Enter Email"="Masukan Email";
+"Enter Email"="Masukkan alamat email";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
 "contact.invite.message"="Anda memiliki permintaan Obrolan MEGA yang menunggu. Daftarkan akun di MEGA Chat dan dapatkan 20 GB penyimpanan gratis seumur hidup.";
 /* Destination folder name of chat files */
@@ -2171,7 +2171,7 @@
 /* Label tell user to enter received txt to below input boxes */
 "Please type the verification code sent to"="Silakan ketik kode verifikasi yang dikirim ke";
 /* Text message to remind user to resend verification code */
-"You didn't receive a code?"="Anda tidak menerima kode?";
+"You didn't receive a code?"="Kau tidak menerima kodenya?";
 /* Message shown when verify phone number successfully */
 "Your phone number has been verified successfully"="Nomor telepon anda telah diverifikasi";
 /* Text describing account suspended state to the user */
@@ -2237,9 +2237,9 @@
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the header title that appears above */
 "settings.userInterface.mediaDiscovery.header"="Penemuan media";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body that appears under that option */
-"settings.userInterface.mediaDiscovery.footer.body"="Folders that contain only images and videos will open in media discovery view by default.";
+"settings.userInterface.mediaDiscovery.footer.body"="Folder yang hanya berisi gambar dan video akan terbuka dalam tampilan penemuan media secara default.";
 /* In Settings - User Interface, there is a setting that can determine if the app should load media discovery view mode if it contains media only in cloud drive. This is the footer message body link that appears under that option */
-"settings.userInterface.mediaDiscovery.footer.link"="Learn more about media discovery.";
+"settings.userInterface.mediaDiscovery.footer.link"="Pelajari lebih lanjut tentang penemuan media.";
 /* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the label in the setting */
 "settings.userInterface.mediaDiscoverySubFolder"="Penemuan media di subfolder";
 /* In Settings - User Interface, there is a setting that can determine if the app should also load sub folder media. This is the footer message body that appears under that option */
@@ -2381,7 +2381,7 @@
 /* Label for any ‘Learn more’ button, link, text, title, etc. - (String as short as possible). */
 "Learn more"="Belajar Lebih";
 /* Text indicating the date until a link will be valid */
-"Link expires %@"="Link expires on %@";
+"Link expires %@"="Tautan kedaluwarsa pada %@";
 /* Text hint to let the user know that tapping something will be copied into the pasteboard */
 "Tap to Copy"="Ketuk untuk Menyalin";
 /* Caption of the button that will copy multiple files or folders export links to his clipboard */
@@ -2492,6 +2492,12 @@
 "dialog.cookies.title.yourPrivacy"="Privasi anda";
 /* Cookie dialog text. */
 "dialog.cookies.description"="Kami menggunakan cookie dan teknologi serupa semata-mata untuk tujuan menyediakan layanan yang anda minta dari MEGA, atau untuk analitik dan mengumpulkan data kinerja. Kami tidak menggunakan cookie untuk melacak iklan atau berbagi informasi pribadi apa pun tentang anda dengan pihak ketiga.";
+/* Cookie dialog title to manage cookies */
+"dialog.cookies.title.manageCookies"="Kelola cookie";
+/* Cookie dialog description with cookie policy. */
+"dialog.cookies.description.cookiePolicy"="Kami menggunakan cookie dan teknologi serupa untuk membantu kami meningkatkan layanan kami. Pelajari lebih lanjut di [A]Kebijakan Cookie[/A].";
+/* Cookie dialog description with advertisement cookie policy. */
+"dialog.cookies.description.adsCookiePolicy"="Kami menggunakan cookie dan teknologi serupa untuk membantu kami meningkatkan layanan kami dan untuk tujuan periklanan. Dengan terus menggunakan MEGA, anda setuju dengan ketentuan pembaruan kami [A]Kebijakan Cookie[/A].";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="Terima Cookies";
 /* Cookie dialog footer description */
@@ -2509,7 +2515,7 @@
 /* Cookie settings dialog title label for Advertising Cookies */
 "settings.cookies.advertisingCookies"="Cookie Iklan";
 /* Cookie settings dialog footer text for Advertising Cookies */
-"settings.cookies.advertisingCookies.footer"="Used by our approved advertising partners to collect data about your browsing activities and customise the ads you see on our services and on other websites. Not accepting these cookies means you will still see ads but they will be less relevant.";
+"settings.cookies.advertisingCookies.footer"="Digunakan oleh mitra periklanan kami yang disetujui untuk mengumpulkan data tentang aktivitas penjelajahan anda dan menyesuaikan iklan yang anda lihat di layanan kami dan di situs web lain. Tidak menerima cookie ini berarti anda masih akan melihat iklan tetapi iklan tersebut tidak akan dipersonalisasi.";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="Versi dibuat sebagai file baru";
 /* Text shown for the action create new file */
@@ -2555,7 +2561,7 @@
 /* Title of the button to open Settings */
 "dialog.turnOnNotifications.button.primary"="Buka Pengaturan";
 /* Dialog title for the change launch tab screen */
-"Change Launch Tab"="Change launch section";
+"Change Launch Tab"="Ubah bagian peluncuran";
 /* Dialog description for the change launch tab screen */
 "You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="Sekarang anda dapat memilih bagian mana yang dibuka aplikasi saat diluncurkan. Pilih salah satu yang lebih sesuai dengan kebutuhan anda, apakah itu Obrolan, Penyimpanan cloud, atau Rumah.";
 /* Dialog button text for the change launch tab screen */
@@ -2663,7 +2669,7 @@
 /* Meetings: Floating panel participants in call count header */
 "meetings.panel.ParticipantsCount"="Peserta (%d)";
 /* Meetings: Floating panel participants not in call count header */
-"meetings.panel.ParticipantsNotInCallCount"="Not in call (%d)";
+"meetings.panel.ParticipantsNotInCallCount"="Para undangan (%d)";
 /* Meetings: Floating panel participants in waiting room count header */
 "meetings.panel.ParticipantsInWaitingRoomCount"="Sedang menunggu (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
@@ -2741,7 +2747,7 @@
 /* Dialog button title which triggers the action to visit Huawei app gallery */
 "account.delete.subscription.huaweiAppGallery.visit"="Kunjungi AppGallery";
 /* Dialog message shown before deleting an account with active webclient subscription */
-"account.delete.subscription.webClient"="This is the last step to delete your account. Both your account and subscription will be deleted and you will permanently lose all the data stored in the account. Please enter your password below.";
+"account.delete.subscription.webClient"="Ini adalah langkah terakhir untuk menghapus akun anda. Akun dan langganan anda akan dihapus dan anda akan kehilangan semua data yang disimpan di akun secara permanen. Silakan masukkan kata sandi anda di bawah ini.";
 /* Button that allows the user to upload a photo, e.g. his avatar photo */
 "account.profile.avatar.uploadPhoto"="Unggah foto";
 /* Error text shown when trying to create or join a new meeting given that the user is already in another meeting */
@@ -2991,9 +2997,9 @@
 /* Error message shown when some error occurs during uploading a bug report. */
 "help.reportIssue.fail.message"="Tidak dapat mengirimkan laporan anda. Silakan coba lagi.";
 /* Error title shown when the user try to send more than one report in less than 10 minutes */
-"help.reportIssue.fail.too.many.request.title"="You must wait 10 minutes before submitting another issue";
+"help.reportIssue.fail.too.many.request.title"="Anda harus menunggu 10 menit sebelum mengirimkan masalah lain";
 /* Error message shown when the user try to send more than one report in less than 10 minutes */
-"help.reportIssue.fail.too.many.request.message"="Please try again later or contact our support team via support@mega.nz if the problem persists";
+"help.reportIssue.fail.too.many.request.message"="Silakan coba lagi nanti atau hubungi tim dukungan kami melalui support@mega.nz jika masalah berlanjut";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.title"="Apakah anda yakin ingin membatalkan mengunggah masalah yang anda laporkan?";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
@@ -3125,7 +3131,7 @@
 /* A log message in a chat to display that a participant's permission was changed to host role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep the [A], [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to host role by John Smith. */
 "chat.message.changedRole.host"="[A] diubah menjadi [S]tuan rumah[/S] oleh [B]";
 /* A log message in a chat to display that a participant's permission was changed to standard role and by whom. This message begins with the user's name who receive the permission change [A]. [B] will be replaced with the person who did it. Please keep [A] and [B] they will be replaced at runtime. Text between [S] and [/S] will have heavier font weight. For example: Alice Jones was changed to standard role by John Smith. */
-"chat.message.changedRole.standard"="[A] was changed to a [S]standard participant[/S] by [B]";
+"chat.message.changedRole.standard"="[A] diubah menjadi [S]peserta standar[/S] oleh [B]";
 /* Type of data displayed in a map view. Standard imagery of the area. */
 "chat.sendLocation.map.standard"="Standar";
 /* Type of data displayed in a map view. Satellite imagery of the area. */
@@ -3203,7 +3209,7 @@
 /* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
 "sharedItems.contactVerification.section.verifyContact.bannerMessage"="Untuk mengakses folder bersama, orang yang membagikannya dengan anda juga harus memverifikasi anda.";
 /* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
-"sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ is shared by a contact you haven’t verified. To ensure extra security, we recommend that you verify their credentials in Contacts by tapping on ⓘ next to the contact you want to verify.";
+"sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ dibagikan oleh kontak yang belum anda verifikasi. Untuk memastikan keamanan ekstra, kami sarankan anda memverifikasi kredensialnya di Kontak dengan mengetuk ⓘ di sebelah kontak yang ingin anda verifikasi.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
 "verifyCredentials.yourCredentials.title"="Kredensial Anda";
 /* Title of the header label in contact verification screen. */
@@ -3461,23 +3467,23 @@
 /* Default device name in case the device name cannot be obtained */
 "device.center.default.device.title"="Perangkat tidak dikenal";
 /* Device Center backup error: Unknown issue */
-"device.center.backup.error.unknown"="Unknown error.";
+"device.center.backup.error.unknown"="Kesalahan tidak diketahui.";
 /* Device Center backup error: Filesystem not supported */
 "device.center.backup.error.fileSystemUnsupported"="MEGA tidak dapat menyinkronkan atau mencadangkan folder ini karena sistem file di perangkat anda tidak didukung.";
 /* Device Center backup error: Chosen folder can't be synced */
-"device.center.backup.error.folderCantSync"="The folder you chose can’t be synced.";
+"device.center.backup.error.folderCantSync"="Folder yang anda pilih tidak dapat disinkronkan.";
 /* Device Center backup error: Individual file sync issue */
 "device.center.backup.error.fileSyncIndividual"="File tidak dapat disinkronkan satu per satu. Anda perlu mengatur sinkronisasi dari folder.";
 /* Device Center backup error: Initial scan failure */
-"device.center.backup.error.initialScanFailed"="Initial scan failed. You will need to re-enable your sync or backup from the Desktop app.";
+"device.center.backup.error.initialScanFailed"="Pemindaian awal gagal. Anda harus mengaktifkan kembali sinkronisasi atau cadangan dari aplikasi Desktop.";
 /* Device Center backup error: Device folder not located */
-"device.center.backup.error.folderDeviceUnlocatedNow"="Folder in your device can’t be located now, try again later.";
+"device.center.backup.error.folderDeviceUnlocatedNow"="Folder di perangkat anda tidak dapat ditemukan sekarang, coba lagi nanti.";
 /* Device Center backup error: Device folder can't be located */
-"device.center.backup.error.folderDeviceUnlocated"="Folder in your device can’t be located.";
+"device.center.backup.error.folderDeviceUnlocated"="Folder di perangkat anda tidak dapat ditemukan.";
 /* Device Center backup error: MEGA folder moved or deleted */
-"device.center.backup.error.folderMegaMovedOrDeleted"="Folder in MEGA can’t be located as it’s been moved or deleted, or you might not have access.";
+"device.center.backup.error.folderMegaMovedOrDeleted"="Folder di MEGA tidak dapat ditemukan karena telah dipindahkan atau dihapus, atau anda mungkin tidak memiliki akses.";
 /* Device Center backup error: Storage quota limit */
-"device.center.backup.error.storageQuotaReached"="Storage quota limit reached.";
+"device.center.backup.error.storageQuotaReached"="Batas kuota penyimpanan tercapai.";
 /* Device Center backup error: Plan expired */
 "device.center.backup.error.planExpired"="Unable to sync or back up this folder as your plan has expired.";
 /* Device Center backup error: Shared folder quota reached */
@@ -3829,15 +3835,31 @@
 /* Filter name for searching on the home screen */
 "home.search.filter.folders"="Folder";
 /* Filter name for searching on the home screen */
-"home.search.filter.pdfs"="PDFs";
+"home.search.filter.pdfs"="PDF";
 /* Filter name for searching on the home screen */
-"home.search.filter.presentations"="Presentations";
+"home.search.filter.presentations"="Presentasi";
 /* Filter name for searching on the home screen */
 "home.search.filter.archives"="Archives";
-/* Type chips group title which is displayed in chips group pill */
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.today"="Hari ini";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.last7days"="7 hari terakhir";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.last30days"="30 hari terakhir";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.thisYear"="Tahun ini";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.lastYear"="Tahun lalu";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.older"="Lama";
+/* Type chips group title which is displayed in node type chips group pill */
 "home.search.chipsGroup.nodeType.pillTitle"="Tipe";
-/* Type chips group picker title which is displayed in the picker shown when user taps on the chips group pill */
+/* Type chips group picker title which is displayed in the picker shown when user taps on the  node type chips group pill */
 "home.search.chipsGroup.nodeType.pickerTitle"="Select type";
+/* Type chips group title which is displayed in modified date chips group pill */
+"home.search.chipsGroup.modificationDate.pillTitle"="Tanggal modifikasi";
+/* Type chips group picker title which is displayed in the picker shown when user taps on the modified date chips group pill */
+"home.search.chipsGroup.modificationDate.pickerTitle"="Select modified date";
 /* Empty screen copy when no filter is selected on the home screen search */
 "home.search.empty.no-chip-selected"="Tidak ada hasil";
 /* Empty screen copy when Images filter is selected on the home screen search */
@@ -3893,9 +3915,9 @@
 /* Shared Screen label in the main view when one user is sharing screen */
 "calls.screenShare.mainView.presentingLabel"="%@ is presenting";
 /* A warning HUB to show in the call UI when the user A try to tap user B who is sharing screen and the shared screen is in the main view */
-"calls.screenShare.waring.title"="This person is screen sharing";
+"calls.screenShare.waring.title"="Orang ini sedang berbagi layar";
 /* Alert title informing user that call screen is being recorded */
-"calls.screenRecording.alert.title"="This call is being recorded";
+"calls.screenRecording.alert.title"="Panggilan ini sedang direkam";
 /* Alert message for user confirmation that agrees on call screen recording */
 "calls.screenRecording.alert.message"="By staying in the call you give permission to be recorded.";
 /* Alert button for user not accepting call screen recording and therefor leaving the call */
@@ -3909,7 +3931,7 @@
 /* Notification message about someone stopped to record call screen */
 "calls.screenRecording.notification.recording.stopped"="%@ stopped recording";
 /* Text for a UI label indicating that the call screen is being recorded */
-"calls.screenRecording.screenIndicator.label"="REC";
+"calls.screenRecording.screenIndicator.label"="";
 /* Camera uploads status banner - uploads in progress title */
 "cameraUploads.banner.status.uploadInProgress.title"="Upload in progress";
 /* Camera uploads status banner - uploads complete title */
@@ -3920,3 +3942,19 @@
 "cameraUploads.banner.status.uploadsComplete.subHeading"="All items backed up";
 /* Camera uploads status banner - uploads partially completed due to limited access to photo library */
 "cameraUploads.banner.status.uploadsPartialComplete.limitedPhotoLibraryAccess.subHeading"="MEGA memiliki akses terbatas ke perpustakaan foto anda dan tidak dapat mencadangkan semua foto. Ketuk untuk mengubah izin.";
+/* Title of Terms of Violation alert */
+"general.alert.termsOfServiceViolation.title"="File tidak lagi tersedia";
+/* Calls: Floating panel participants not in call header to call them all */
+"calls.panel.participantsNotInCall.header.callAll"="Hubungi semua";
+/* Calls: Floating panel participants not in call label to call a participant */
+"calls.panel.participantsNotInCall.participant.call"="Panggilan";
+/* Calls: Floating panel participants not in call label to describe not in call state */
+"calls.panel.participantsNotInCall.participant.state.notInCall"="Tidak sedang menelepon";
+/* Calls: Floating panel participants not in call label to describe calling state */
+"calls.panel.participantsNotInCall.participant.state.calling"="Memanggil…";
+/* Calls: Floating panel participants not in call label to describe no response state */
+"calls.panel.participantsNotInCall.participant.state.noResponse"="Tidak ada respon";
+/* Calls: Floating panel participants empty list not in call state */
+"calls.panel.participantsNotInCall.emptyState"="All the invited participants have joined the call.";
+/* Calls: Floating panel participants empty list waiting room state */
+"calls.panel.participantsInWaitingRoom.emptyState"="There is no one in the waiting room";

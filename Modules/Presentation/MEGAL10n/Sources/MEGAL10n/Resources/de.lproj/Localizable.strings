@@ -79,7 +79,7 @@
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Bitte melden Sie sich an.";
 /* Error message when a user attempts to change their email without an active login session. */
-"needToBeLoggedInToCompleteYourEmailChange"="Um Ihre E-Mail-Adresse zu ändern, müssen Sie angemeldet sein. Bitte melden Sie sich mit Ihrer aktuellen E-Mail-Adresse an und tippen Sie anschließend erneut auf Ihren Bestätigungslink.";
+"needToBeLoggedInToCompleteYourEmailChange"="Um Ihre E-Mail-Adresse zu ändern, müssen Sie eingeloggt sein. Bitte loggen Sie sich mit Ihrer aktuellen E-Mail-Adresse ein und tippen Sie anschließend erneut auf Ihren Bestätigungslink.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Login";
 /* Message for login option on Create Account screen */
@@ -967,7 +967,7 @@
 /* The title of the alert dialog to change the email associated to an account. */
 "Change Email"="E-Mail-Adresse ändern";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
-"oldAndNewEmailMatch"="Die neue E-Mail-Adresse muss sich von der jetzigen unterscheiden";
+"oldAndNewEmailMatch"="Die neue E-Mail-Adresse muss sich von der alten unterscheiden";
 /* Error message shown when you have not written the same email when confirming a new one */
 "emailsDoNotMatch"="Die E-Mail-Adressen stimmen nicht überein";
 /* Error message when a use wants to validate the same email twice */
@@ -2171,7 +2171,7 @@
 /* Label tell user to enter received txt to below input boxes */
 "Please type the verification code sent to"="Bitte geben Sie den Code ein";
 /* Text message to remind user to resend verification code */
-"You didn't receive a code?"="Keinen Code empfangen?";
+"You didn't receive a code?"="You didn’t receive the code?";
 /* Message shown when verify phone number successfully */
 "Your phone number has been verified successfully"="Ihre Telefonnummer wurde bestätigt";
 /* Text describing account suspended state to the user */
@@ -2492,6 +2492,12 @@
 "dialog.cookies.title.yourPrivacy"="Ihre Privatsphäre";
 /* Cookie dialog text. */
 "dialog.cookies.description"="Wir verwenden Cookies und ähnliche Technologien ausschließlich für die Bereitstellung der von Ihnen angeforderten MEGA-Dienste sowie zu Analysezwecken und zur Erfassung von Leistungsdaten. Wir verwenden Cookies nicht für die Anzeigenverfolgung oder für die Weitergabe Ihrer personenbezogenen Daten an Dritte.";
+/* Cookie dialog title to manage cookies */
+"dialog.cookies.title.manageCookies"="Cookies verwalten";
+/* Cookie dialog description with cookie policy. */
+"dialog.cookies.description.cookiePolicy"="Wir verwenden Cookies und verwandte Technologien, um unsere Dienste zu verbessern. Weitere Informationen finden Sie in unseren [A]Cookie-Richtlinien[/A].";
+/* Cookie dialog description with advertisement cookie policy. */
+"dialog.cookies.description.adsCookiePolicy"="Wir verwenden Cookies und verwandte Technologien zur Verbesserung unserer Dienste und zu Werbezwecken. Durch die weitere Nutzung von MEGA erklären Sie sich mit den Bedingungen unserer aktualisierten [A]Cookie-Richtlinien[/A] einverstanden.";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="Cookies akzeptieren";
 /* Cookie dialog footer description */
@@ -2509,7 +2515,7 @@
 /* Cookie settings dialog title label for Advertising Cookies */
 "settings.cookies.advertisingCookies"="Cookies zu Werbezwecken";
 /* Cookie settings dialog footer text for Advertising Cookies */
-"settings.cookies.advertisingCookies.footer"="Used by our approved advertising partners to collect data about your browsing activities and customise the ads you see on our services and on other websites. Not accepting these cookies means you will still see ads but they will be less relevant.";
+"settings.cookies.advertisingCookies.footer"="Verwendet von unseren autorisierten Werbepartnern, um Daten über Ihre Browsing-Aktivitäten zu sammeln und die Werbung, die Sie auf unseren Diensten und auf anderen Websites sehen, zu individualisieren. Wenn Sie diese Cookies nicht akzeptieren, werden Sie zwar weiterhin Werbeanzeigen sehen, diese werden aber nicht personalisiert sein.";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="Version wurde als neue Datei gespeichert";
 /* Text shown for the action create new file */
@@ -2663,7 +2669,7 @@
 /* Meetings: Floating panel participants in call count header */
 "meetings.panel.ParticipantsCount"="Teilnehmer (%d)";
 /* Meetings: Floating panel participants not in call count header */
-"meetings.panel.ParticipantsNotInCallCount"="Nicht in Konferenz (%d)";
+"meetings.panel.ParticipantsNotInCallCount"="Eingeladen (%d)";
 /* Meetings: Floating panel participants in waiting room count header */
 "meetings.panel.ParticipantsInWaitingRoomCount"="Wartend (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
@@ -3834,10 +3840,26 @@
 "home.search.filter.presentations"="Präsentationen";
 /* Filter name for searching on the home screen */
 "home.search.filter.archives"="Archive";
-/* Type chips group title which is displayed in chips group pill */
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.today"="Heute";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.last7days"="Letzte 7 Tage";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.last30days"="Letzte 30 Tage";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.thisYear"="Dieses Jahr";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.lastYear"="Letztes Jahr";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.older"="Älter";
+/* Type chips group title which is displayed in node type chips group pill */
 "home.search.chipsGroup.nodeType.pillTitle"="Typ";
-/* Type chips group picker title which is displayed in the picker shown when user taps on the chips group pill */
+/* Type chips group picker title which is displayed in the picker shown when user taps on the  node type chips group pill */
 "home.search.chipsGroup.nodeType.pickerTitle"="Typ auswählen";
+/* Type chips group title which is displayed in modified date chips group pill */
+"home.search.chipsGroup.modificationDate.pillTitle"="Änderungsdatum";
+/* Type chips group picker title which is displayed in the picker shown when user taps on the modified date chips group pill */
+"home.search.chipsGroup.modificationDate.pickerTitle"="Änderungsdatum auswählen";
 /* Empty screen copy when no filter is selected on the home screen search */
 "home.search.empty.no-chip-selected"="Keine Treffer";
 /* Empty screen copy when Images filter is selected on the home screen search */
@@ -3920,3 +3942,19 @@
 "cameraUploads.banner.status.uploadsComplete.subHeading"="Alle Inhalte wurden gesichert";
 /* Camera uploads status banner - uploads partially completed due to limited access to photo library */
 "cameraUploads.banner.status.uploadsPartialComplete.limitedPhotoLibraryAccess.subHeading"="MEGA hat nur eingeschränkten Zugriff auf Ihre Fotobibliothek und kann nicht alle Fotos sichern. Antippen, um die Berechtigungen zu ändern.";
+/* Title of Terms of Violation alert */
+"general.alert.termsOfServiceViolation.title"="Datei nicht mehr verfügbar";
+/* Calls: Floating panel participants not in call header to call them all */
+"calls.panel.participantsNotInCall.header.callAll"="Alle anrufen";
+/* Calls: Floating panel participants not in call label to call a participant */
+"calls.panel.participantsNotInCall.participant.call"="Anrufen";
+/* Calls: Floating panel participants not in call label to describe not in call state */
+"calls.panel.participantsNotInCall.participant.state.notInCall"="Nicht in Konferenz";
+/* Calls: Floating panel participants not in call label to describe calling state */
+"calls.panel.participantsNotInCall.participant.state.calling"="Verbinde…";
+/* Calls: Floating panel participants not in call label to describe no response state */
+"calls.panel.participantsNotInCall.participant.state.noResponse"="Keine Antwort";
+/* Calls: Floating panel participants empty list not in call state */
+"calls.panel.participantsNotInCall.emptyState"="Alle eingeladenen Teilnehmer sind der Konferenz beigetreten.";
+/* Calls: Floating panel participants empty list waiting room state */
+"calls.panel.participantsInWaitingRoom.emptyState"="There is no one in the waiting room";

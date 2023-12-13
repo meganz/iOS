@@ -810,10 +810,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Photos uploaded. Video uploads are off: video not uploaded</string>
         <key>other</key>
-        <string>Photos uploaded. Video uploads are off: %d videos not uploaded</string>
+        <string>Các ảnh đã được tải lên. Tải lên cho video bị tắt: %d video đã không tải lên.</string>
       </dict>
     </dict>
     <key>cameraUploads.banner.status.filesPending.subHeading</key>
