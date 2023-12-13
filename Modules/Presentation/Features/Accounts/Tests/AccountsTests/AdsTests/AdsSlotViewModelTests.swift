@@ -27,7 +27,50 @@ final class AdsSlotViewModelTests: XCTestCase {
         let sut = makeSUT(featureFlags: [.inAppAds: false])
         XCTAssertFalse(sut.isFeatureFlagForInAppAdsEnabled)
     }
+    
+    // MARK: - AB test
+    func testABTest_adsIsVariantA_externalAdsIsEnabled_adsTypeShouldBeExternal() async {
+        let sut = makeSUT(
+            abTestProvider: MockABTestProvider(
+                list: [
+                    .ads: .variantA,
+                    .externalAds: .variantA
+                ]
+            )
+        )
+        
+        await sut.setupABTestVariant()
+        
+        XCTAssertEqual(sut.adsType, .external)
+    }
+    
+    func testABTest_adsIsVariantA_externalAdsIsEnabled_adsTypeShouldBeNone() async {
+        let sut = makeSUT(
+            abTestProvider: MockABTestProvider(
+                list: [
+                    .ads: .variantA,
+                    .externalAds: .baseline
+                ]
+            )
+        )
 
+        await sut.setupABTestVariant()
+        
+        XCTAssertEqual(sut.adsType, .none)
+    }
+    
+    func testABTest_adsIsBaseline_adsTypeShouldBeNone() async {
+        let sut = makeSUT(
+            abTestProvider: MockABTestProvider(
+                list: [.ads: .baseline]
+            )
+        )
+
+        await sut.setupABTestVariant()
+        
+        XCTAssertEqual(sut.adsType, .none)
+    }
+    
     // MARK: - Ads slot
     func testLoadAdsForAdsSlot_featureFlagEnabled_shouldHaveNewUrlAndDisplayAds() async {
         let expectedAdsSlotConfig = randomAdsSlotConfig
@@ -37,12 +80,28 @@ final class AdsSlotViewModelTests: XCTestCase {
                           adsList: adsList,
                           featureFlags: [.inAppAds: true])
         
+        await sut.setupABTestVariant()
         sut.monitorAdsSlotChanges()
         await sut.monitorAdsSlotChangesTask?.value
         
         XCTAssertNotNil(sut.adsUrl)
         XCTAssertEqual(sut.adsUrl?.absoluteString, expectedAdsUrl)
         XCTAssertEqual(sut.displayAds, expectedAdsSlotConfig.displayAds)
+    }
+    
+    func testLoadAdsForAdsSlot_featureFlagEnabled_abTestExternalAdsDisabled_shouldHaveNilUrlAndDontDisplayAds() async {
+        let stream = makeMockAdsSlotChangeStream(adsSlotConfigs: [randomAdsSlotConfig])
+        let sut = makeSUT(adsSlotChangeStream: stream,
+                          adsList: adsList,
+                          featureFlags: [.inAppAds: true],
+                          abTestProvider: MockABTestProvider(list: [.ads: .baseline]))
+        
+        await sut.setupABTestVariant()
+        sut.monitorAdsSlotChanges()
+        await sut.monitorAdsSlotChangesTask?.value
+        
+        XCTAssertNil(sut.adsUrl)
+        XCTAssertFalse(sut.displayAds)
     }
 
     func testLoadAdsForAdsSlot_featureFlagDisabled_shouldHaveNilUrlAndDontDisplayAds() async {
@@ -51,6 +110,7 @@ final class AdsSlotViewModelTests: XCTestCase {
                           adsList: adsList,
                           featureFlags: [.inAppAds: false])
         
+        await sut.setupABTestVariant()
         sut.monitorAdsSlotChanges()
         await sut.monitorAdsSlotChangesTask?.value
         
@@ -62,6 +122,7 @@ final class AdsSlotViewModelTests: XCTestCase {
         let stream = makeMockAdsSlotChangeStream(adsSlotConfigs: [nil])
         let sut = makeSUT(adsSlotChangeStream: stream, adsList: adsList)
         
+        await sut.setupABTestVariant()
         sut.monitorAdsSlotChanges()
         await sut.monitorAdsSlotChangesTask?.value
         
@@ -86,6 +147,7 @@ final class AdsSlotViewModelTests: XCTestCase {
             }
             .store(in: &subscriptions)
 
+        await sut.setupABTestVariant()
         sut.monitorAdsSlotChanges()
         await sut.monitorAdsSlotChangesTask?.value
     }
@@ -106,6 +168,7 @@ final class AdsSlotViewModelTests: XCTestCase {
             }
             .store(in: &subscriptions)
         
+        await sut.setupABTestVariant()
         sut.monitorAdsSlotChanges()
         await sut.monitorAdsSlotChangesTask?.value
     }
@@ -114,6 +177,7 @@ final class AdsSlotViewModelTests: XCTestCase {
         let expectedAdsSlotConfig = randomAdsSlotConfig
         let stream = makeMockAdsSlotChangeStream(adsSlotConfigs: [expectedAdsSlotConfig])
         let sut = makeSUT(adsSlotChangeStream: stream, adsList: adsList)
+        await sut.setupABTestVariant()
         sut.monitorAdsSlotChanges()
         await sut.monitorAdsSlotChangesTask?.value
         
@@ -132,6 +196,7 @@ final class AdsSlotViewModelTests: XCTestCase {
                                                   displayAds: !currentAdsSlotConfig.displayAds)
         let stream = makeMockAdsSlotChangeStream(adsSlotConfigs: [currentAdsSlotConfig])
         let sut = makeSUT(adsSlotChangeStream: stream, adsList: adsList)
+        await sut.setupABTestVariant()
         sut.monitorAdsSlotChanges()
         await sut.monitorAdsSlotChangesTask?.value
         
@@ -148,6 +213,7 @@ final class AdsSlotViewModelTests: XCTestCase {
         let expectedAdsSlotConfig = AdsSlotConfig(adsSlot: .home, displayAds: false)
         let stream = makeMockAdsSlotChangeStream(adsSlotConfigs: [currentAdsSlotConfig])
         let sut = makeSUT(adsSlotChangeStream: stream, adsList: adsList)
+        await sut.setupABTestVariant()
         sut.monitorAdsSlotChanges()
         await sut.monitorAdsSlotChangesTask?.value
         
@@ -164,6 +230,7 @@ final class AdsSlotViewModelTests: XCTestCase {
         let adsSlotConfigTabTwo = AdsSlotConfig(adsSlot: .files, displayAds: true)
         let stream = makeMockAdsSlotChangeStream(adsSlotConfigs: [adsSlotConfigTabOne])
         let sut = makeSUT(adsSlotChangeStream: stream, adsList: adsList, isNewAccount: true)
+        await sut.setupABTestVariant()
         sut.monitorAdsSlotChanges()
         await sut.monitorAdsSlotChangesTask?.value
         
@@ -188,6 +255,7 @@ final class AdsSlotViewModelTests: XCTestCase {
         let adsSlotConfigCurrentTab = AdsSlotConfig(adsSlot: .home, displayAds: true)
         let stream = makeMockAdsSlotChangeStream(adsSlotConfigs: [adsSlotConfigCurrentTab])
         let sut = makeSUT(adsSlotChangeStream: stream, adsList: adsList, isNewAccount: false)
+        await sut.setupABTestVariant()
         sut.monitorAdsSlotChanges()
         await sut.monitorAdsSlotChangesTask?.value
         
@@ -204,6 +272,7 @@ final class AdsSlotViewModelTests: XCTestCase {
         adsSlotChangeStream: any AdsSlotChangeStreamProtocol = MockAdsSlotChangeStream(),
         adsList: [String: String] = [:],
         featureFlags: [FeatureFlagKey: Bool] = [FeatureFlagKey.inAppAds: true],
+        abTestProvider: MockABTestProvider = MockABTestProvider(list: [.ads: .variantA, .externalAds: .variantA]),
         isNewAccount: Bool = false,
         file: StaticString = #filePath,
         line: UInt = #line
@@ -216,7 +285,8 @@ final class AdsSlotViewModelTests: XCTestCase {
         let sut = AdsSlotViewModel(adsUseCase: adsUseCase, 
                                    accountUseCase: accountUseCase,
                                    adsSlotChangeStream: adsSlotChangeStream,
-                                   featureFlagProvider: featureFlagProvider)
+                                   featureFlagProvider: featureFlagProvider,
+                                   abTestProvider: abTestProvider)
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
     }

@@ -1640,7 +1640,6 @@
 		B57A559A28644D4300070BBB /* FavouritesExplorerViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57A559928644D4300070BBB /* FavouritesExplorerViewConfiguration.swift */; };
 		B57AD23028C1A26600FB173A /* NotificationsTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57AD22F28C1A26600FB173A /* NotificationsTableViewController+Additions.swift */; };
 		B58050BE2A8237C600D377D1 /* ProfileViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58050BD2A8237C600D377D1 /* ProfileViewRouter.swift */; };
-		B58050C12A823A6100D377D1 /* MockABTestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58050C02A823A6100D377D1 /* MockABTestProvider.swift */; };
 		B582965A27C5DF50004DD7A5 /* TransferInventoryUseCaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B582965927C5DF50004DD7A5 /* TransferInventoryUseCaseHelper.swift */; };
 		B582966A27C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B582966927C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift */; };
 		B58F7BFD298A8ABF0046F0FA /* ShareViewController+SecureFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58F7BFB298A88750046F0FA /* ShareViewController+SecureFlag.swift */; };
@@ -4247,7 +4246,6 @@
 		B57A559928644D4300070BBB /* FavouritesExplorerViewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesExplorerViewConfiguration.swift; sourceTree = "<group>"; };
 		B57AD22F28C1A26600FB173A /* NotificationsTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationsTableViewController+Additions.swift"; sourceTree = "<group>"; };
 		B58050BD2A8237C600D377D1 /* ProfileViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewRouter.swift; sourceTree = "<group>"; };
-		B58050C02A823A6100D377D1 /* MockABTestProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockABTestProvider.swift; sourceTree = "<group>"; };
 		B582965927C5DF50004DD7A5 /* TransferInventoryUseCaseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferInventoryUseCaseHelper.swift; sourceTree = "<group>"; };
 		B582966927C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CreateAccountViewController+Additions.swift"; sourceTree = "<group>"; };
 		B58F7BFB298A88750046F0FA /* ShareViewController+SecureFlag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ShareViewController+SecureFlag.swift"; sourceTree = "<group>"; };
@@ -7646,7 +7644,6 @@
 				32A9DECC28D198E300ABC3F6 /* ViewModel */,
 				C47E7BDA25D1550200DB6FF5 /* AudioPlayerItem.swift */,
 				5D33D671250DBA0B00D74666 /* CGSize.swift */,
-				B58050C02A823A6100D377D1 /* MockABTestProvider.swift */,
 				32D167A92942DA59008C5ED6 /* MockSlideShowDataSource.swift */,
 				25ED56692A98699E0063864F /* MockTransferWidgetResponder.swift */,
 				5D33D673250DBA3900D74666 /* StoreUser.swift */,
@@ -15361,7 +15358,6 @@
 				24189DCE2AA705C70071F160 /* MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift in Sources */,
 				C45A2E2325D2E05100915A83 /* MiniPlayerViewModelTests.swift in Sources */,
 				5D52C74A250C4F4100286A43 /* mock-function.swift in Sources */,
-				B58050C12A823A6100D377D1 /* MockABTestProvider.swift in Sources */,
 				BFBB888B28B8421B00E8B482 /* MockAnalyticsEventUseCase.swift in Sources */,
 				C47E7C4025D1AC3400DB6FF5 /* MockAudioPlayerHandler.swift in Sources */,
 				24C577F62AC1872F00302849 /* MockAudioPlayerRepository.swift in Sources */,

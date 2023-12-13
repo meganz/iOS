@@ -5,11 +5,17 @@ import MEGASwift
 import SwiftUI
 
 final public class AdsSlotViewModel: ObservableObject {
+    enum AdsType {
+        case external, none
+    }
+    
     private var adsUseCase: any AdsUseCaseProtocol
     private var accountUseCase: any AccountUseCaseProtocol
     private var featureFlagProvider: any FeatureFlagProviderProtocol
+    private var abTestProvider: any ABTestProviderProtocol
     private var adsSlotChangeStream: any AdsSlotChangeStreamProtocol
     private var adsSlotConfig: AdsSlotConfig?
+    private(set) var adsType: AdsType = .none
     
     @Published var adsUrl: URL?
     @Published var displayAds: Bool = false
@@ -21,12 +27,14 @@ final public class AdsSlotViewModel: ObservableObject {
         adsUseCase: some AdsUseCaseProtocol,
         accountUseCase: some AccountUseCaseProtocol,
         adsSlotChangeStream: some AdsSlotChangeStreamProtocol,
-        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
+        abTestProvider: some ABTestProviderProtocol = DIContainer.abTestProvider
     ) {
         self.adsUseCase = adsUseCase
         self.accountUseCase = accountUseCase
         self.adsSlotChangeStream = adsSlotChangeStream
         self.featureFlagProvider = featureFlagProvider
+        self.abTestProvider = abTestProvider
     }
     
     deinit {
@@ -37,6 +45,19 @@ final public class AdsSlotViewModel: ObservableObject {
     // MARK: Feature Flag
     var isFeatureFlagForInAppAdsEnabled: Bool {
         featureFlagProvider.isFeatureFlagEnabled(for: .inAppAds)
+    }
+    
+    // MARK: AB Test
+    func setupABTestVariant() async {
+        let isAdsEnabled = await abTestProvider.abTestVariant(for: .ads) == .variantA
+        let isExternalAdsEnabled = await abTestProvider.abTestVariant(for: .externalAds) == .variantA
+        
+        guard isAdsEnabled, isExternalAdsEnabled else {
+            adsType = .none
+            return
+        }
+
+        adsType = .external
     }
     
     // MARK: Ads
@@ -51,7 +72,7 @@ final public class AdsSlotViewModel: ObservableObject {
     }
     
     func updateAdsSlot(_ newAdsSlotConfig: AdsSlotConfig?) async {
-        guard isFeatureFlagForInAppAdsEnabled else {
+        guard isFeatureFlagForInAppAdsEnabled && adsType != .none else {
             adsSlotConfig = nil
             await configureAds(url: nil)
             return
@@ -79,14 +100,14 @@ final public class AdsSlotViewModel: ObservableObject {
     }
     
     func loadNewAds() async {
-        guard let adsSlotConfig, isFeatureFlagForInAppAdsEnabled else {
+        guard let adsSlotConfig, isFeatureFlagForInAppAdsEnabled, adsType != .none else {
             await configureAds(url: nil)
             return
         }
         
         do {
             let adsSlot = adsSlotConfig.adsSlot
-            let adsResult = try await adsUseCase.fetchAds(adsFlag: .forceAds,
+            let adsResult = try await adsUseCase.fetchAds(adsFlag: .defaultAds,
                                                           adUnits: [adsSlot],
                                                           publicHandle: .invalidHandle)
             guard let adsValue = adsResult[adsSlot.rawValue] else {
