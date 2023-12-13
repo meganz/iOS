@@ -9,8 +9,11 @@ func createPrepareBranch(_ versionNumber: String) throws -> String {
     return prepareBranch
 }
 
+func updateSubmodules() throws {
+    try runInShell("git submodule update --init --recursive")
+}
+
 func checkoutSubmoduleToCommit(submodule: Submodule, commitHash: String) throws {
-    try runInShell("git submodule update --init -- \(submodule.path)")
     try runInShell("git checkout \(commitHash)", cwd: URL(fileURLWithPath: submodule.path))
 }
 
@@ -20,7 +23,7 @@ func createReleaseCommitAndPushToOrigin(version: String, prepareBranch: String) 
     try runInShell("git push --set-upstream origin \(prepareBranch)")
 }
 
- func checkIfGitIsInstalled() throws {
+func checkIfGitIsInstalled() throws {
     try runInShell("git --version")
 }
 
