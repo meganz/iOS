@@ -17,4 +17,10 @@ public enum ABTestFlagKey: ABTestFlagName, Sendable {
 
     // This flag is part of real experiment related to the new search improvements on Home screen
     case newSearch = "nsf"
+    
+    // This flag is part of real experiment related to the advertisement feature to know whether user will see an ad or not
+    case ads = "ads"
+    
+    // This flag is part of real experiment related to the advertisement feature that will provide value if external ads is enabled for user.
+    case externalAds = "adse"
 }
