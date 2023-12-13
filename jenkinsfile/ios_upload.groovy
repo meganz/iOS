@@ -122,7 +122,6 @@ pipeline {
                 stage('Check translation') {
                     when {
                         anyOf {
-                            environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore_with_whats_new' 
                             environment name: 'gitlabTriggerPhrase', value: 'verify_translations' 
                         }
                     }
@@ -141,7 +140,7 @@ pipeline {
                     when {
                         anyOf {
                             environment name: 'gitlabTriggerPhrase', value: 'upload_whats_new_to_appstoreconnect' 
-                            environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore_with_whats_new' 
+                            environment name: 'gitlabTriggerPhrase', value: 'upload_whats_new_to_appstoreconnect'
                         }
                     }
                     steps {
@@ -181,7 +180,6 @@ pipeline {
                     environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore' 
                     environment name: 'gitlabTriggerPhrase', value: 'deliver_qa' 
                     environment name: 'gitlabTriggerPhrase', value: 'deliver_qa_include_new_devices'
-                    environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore_with_whats_new' 
                     environment name: 'GIT_BRANCH', value: 'origin/develop'
                 }
             }
@@ -240,8 +238,7 @@ pipeline {
         stage('Archive appstore') {
             when { 
                 anyOf {
-                    environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore' 
-                    environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore_with_whats_new' 
+                    environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore'
                 }
             }
             steps {
@@ -282,8 +279,7 @@ pipeline {
                 stage('Upload to Testflight') {    
                     when { 
                         anyOf {
-                            environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore' 
-                            environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore_with_whats_new' 
+                            environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore'
                         }
                     } 
                     steps {
@@ -303,13 +299,12 @@ pipeline {
                             environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore' 
                             environment name: 'gitlabTriggerPhrase', value: 'deliver_qa'
                             environment name: 'gitlabTriggerPhrase', value: 'deliver_qa_include_new_devices'
-                            environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore_with_whats_new' 
                             environment name: 'GIT_BRANCH', value: 'origin/develop'
                         }
                     }
                     steps {
                         script {
-                            if (env.gitlabTriggerPhrase == 'deliver_appStore' || env.gitlabTriggerPhrase == 'deliver_appStore_with_whats_new') {
+                            if (env.gitlabTriggerPhrase == 'deliver_appStore') {
                                 gitlabCommitStatus(name: 'Upload appstore symbols to crashlytics') {
                                     injectEnvironments({
                                         sh "bundle exec fastlane upload_symbols configuration:Release"
@@ -349,8 +344,7 @@ pipeline {
                 stage('Prepare archive zip to be uploaded to MEGA') {
                     when { 
                         anyOf {
-                            environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore' 
-                            environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore_with_whats_new' 
+                            environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore'
                         }
                     }
                     steps {
@@ -374,8 +368,7 @@ pipeline {
                 stage('Update what\'s new to appstore connect') {
                     when {
                         anyOf {
-                            environment name: 'gitlabTriggerPhrase', value: 'upload_whats_new_to_appstoreconnect' 
-                            environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore_with_whats_new' 
+                            environment name: 'gitlabTriggerPhrase', value: 'upload_whats_new_to_appstoreconnect'
                         }
                     }
                     steps {
@@ -398,7 +391,6 @@ pipeline {
                     environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore' 
                     environment name: 'gitlabTriggerPhrase', value: 'deliver_qa'
                     environment name: 'gitlabTriggerPhrase', value: 'deliver_qa_include_new_devices'
-                    environment name: 'gitlabTriggerPhrase', value: 'deliver_appStore_with_whats_new' 
                     environment name: 'GIT_BRANCH', value: 'origin/develop'
                 }
             }
