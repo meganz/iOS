@@ -13,7 +13,7 @@ do {
     let gitlabMR = try await createMR(sourceBranch: releaseBranch, targetBranch: "master", title: "Release \(version)", squash: false)
 
     log("Commenting in MR to upload build to TestFlight")
-    try await commentInMR(gitlabMR: gitlabMR, message: "deliver_appStore_with_whats_new")
+    try await commentInMR(gitlabMR: gitlabMR, message: "deliver_appStore")
 
     log("Finished successfully")
     exit(ProcessResult.success)
