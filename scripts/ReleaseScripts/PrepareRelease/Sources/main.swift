@@ -28,6 +28,9 @@ do {
     log("Updating project version to \(userInput.version)")
     try updateProjectVersion(userInput.version)
 
+    log("Updating git submodules")
+    try updateSubmodules()
+
     log("Checking out \(Submodule.sdk.description) to \(userInput.sdkHash)")
     try checkoutSubmoduleToCommit(submodule: .sdk, commitHash: userInput.sdkHash)
 
@@ -36,7 +39,7 @@ do {
 
     log("Creating prepare branch commit and pushing the branch to GitLab")
     try createReleaseCommitAndPushToOrigin(version: userInput.version, prepareBranch: prepareBranch)
-    
+
     log("Creating the prepare MR on GitLab")
     try await createMR(sourceBranch: prepareBranch, targetBranch: "develop", title: "Prepare v\(userInput.version)", squash: true)
 
