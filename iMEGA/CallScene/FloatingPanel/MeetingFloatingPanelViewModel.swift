@@ -300,9 +300,8 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
                     self.invitedUserIdsToBypassWaitingRoom.insert($0)
                 }
                 callUseCase.allowUsersJoinCall(call, users: userHandles)
-            } else {
-                userHandles.forEach { self.callUseCase.addPeer(toCall: call, peerId: $0) }
             }
+            userHandles.forEach { self.callUseCase.addPeer(toCall: call, peerId: $0) }
         }
     }
     
@@ -324,6 +323,10 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
                 chatRoomParticipantsUpdatedTask = Task {
                     await self.updateRecentlyAddedHandles(removing: peerHandles)
                 }
+                
+                guard let call, let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId) else { return }
+                self.chatRoom = chatRoom
+                populateParticipantsNotInCall()
             }
             .store(in: &subscriptions)
     }
@@ -661,7 +664,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         }
         
         var invite: [InviteSectionRow] = []
-        if (isMyselfAModerator || chatRoom.isOpenInviteEnabled) && chatRoom.chatType != .oneToOne {
+        if (isMyselfAModerator || chatRoom.isOpenInviteEnabled) && chatRoom.chatType != .oneToOne && !accountUseCase.isGuest {
             invite.append(.invite)
         }
         

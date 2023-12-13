@@ -254,6 +254,7 @@ final class MeetingCreatingViewModel: ViewModelType {
             switch $0 {
             case .success:
                 joinChatCall(chatId: chatId)
+                NotificationCenter.default.post(name: .accountDidLogin, object: nil)
             case .failure:
                 dismiss()
             }
