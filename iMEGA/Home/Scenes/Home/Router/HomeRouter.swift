@@ -1,5 +1,6 @@
 import CoreServices
 import MEGADomain
+import MEGASDKRepo
 import UIKit
 
 protocol HomeRouterProtocol {
@@ -205,6 +206,7 @@ final class HomeRouter: HomeRouterProtocol {
         MyAccountHallRouter(
             myAccountHallUseCase: MyAccountHallUseCase(repository: AccountRepository.newRepo),
             purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
+            networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
             navigationController: navigationController
         ).start()
     }
@@ -232,6 +234,7 @@ final class HomeRouter: HomeRouterProtocol {
         MyAccountHallRouter(
             myAccountHallUseCase: MyAccountHallUseCase(repository: AccountRepository.newRepo),
             purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
+            networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
             shouldOpenAchievements: true,
             navigationController: navigationController
         ).start()
