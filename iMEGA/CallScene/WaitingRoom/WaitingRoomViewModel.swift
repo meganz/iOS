@@ -463,6 +463,7 @@ final class WaitingRoomViewModel: ObservableObject {
             switch result {
             case .success:
                 joinChatCall()
+                NotificationCenter.default.post(name: .accountDidLogin, object: nil)
             case .failure:
                 viewState = .guestUserSetup
             }
