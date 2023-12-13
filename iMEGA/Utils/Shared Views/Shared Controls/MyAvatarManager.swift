@@ -57,6 +57,7 @@ import MEGASDKRepo
         MyAccountHallRouter(
             myAccountHallUseCase: MyAccountHallUseCase(repository: AccountRepository.newRepo),
             purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
+            networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
             navigationController: navigationController
         ).start()
     }

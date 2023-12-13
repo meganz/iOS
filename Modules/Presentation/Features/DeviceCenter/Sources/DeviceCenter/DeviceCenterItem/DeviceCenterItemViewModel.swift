@@ -106,6 +106,48 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
             .build()
     }
     
+    private func handleBackupAction(_ type: DeviceCenterActionType) {
+        switch type {
+        case .cameraUploads:
+            handleCameraUploadAction()
+        case .info, .copy, .offline, .shareLink, .manageLink, .removeLink, .shareFolder, .showInCloudDrive, .favourite, .label, .rename, .move, .moveToTheRubbishBin:
+            guard let node = nodeForEntityType() else { return }
+            deviceCenterBridge.nodeActionTapped(node, type)
+        default: break
+        }
+    }
+    
+    private func handleDeviceAction(_ type: DeviceCenterActionType, device: DeviceEntity) async {
+        switch type {
+        case .cameraUploads:
+            handleCameraUploadAction()
+        case .rename:
+            await handleRenameDeviceAction(device)
+        default: break
+        }
+    }
+    
+    private func handleCameraUploadAction() {
+        deviceCenterBridge.cameraUploadActionTapped { [weak self] in
+            guard let self else { return }
+            self.refreshDevicesPublisher?.send()
+        }
+    }
+    
+    private func handleRenameDeviceAction(_ device: DeviceEntity) async {
+        let deviceNames = await deviceCenterUseCase.fetchDeviceNames()
+        let renameEntity = RenameActionEntity(
+            deviceId: device.id,
+            deviceOldName: device.name,
+            otherDeviceNames: deviceNames) { [weak self] in
+                guard let self else { return }
+                DispatchQueue.main.async {
+                    self.refreshDevicesPublisher?.send()
+                }
+        }
+        deviceCenterBridge.renameActionTapped(renameEntity)
+    }
+    
     func loadAvailableActions() {
         switch itemType {
         case .backup(let backupEntity):
@@ -142,35 +184,9 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
     func executeAction(_ type: DeviceCenterActionType) async {
         switch itemType {
         case .backup:
-            switch type {
-            case .cameraUploads:
-                deviceCenterBridge.cameraUploadActionTapped { [weak self] in
-                    self?.refreshDevicesPublisher?.send()
-                }
-            case .info, .copy, .offline, .shareLink, .shareFolder, .showInCloudDrive, .favourite, .label, .rename, .move, .moveToTheRubbishBin:
-                guard let node = nodeForEntityType() else { return }
-                deviceCenterBridge.nodeActionTapped(node, type)
-            default: break
-            }
+            handleBackupAction(type)
         case .device(let device):
-            switch type {
-            case .cameraUploads:
-                deviceCenterBridge.cameraUploadActionTapped { [weak self] in
-                    self?.refreshDevicesPublisher?.send()
-                }
-            case .rename:
-                let deviceNames = await deviceCenterUseCase.fetchDeviceNames()
-                let renameEntity = RenameActionEntity(
-                    deviceId: device.id,
-                    deviceOldName: device.name,
-                    otherDeviceNames: deviceNames) { [weak self] in
-                        DispatchQueue.main.async {
-                            self?.refreshDevicesPublisher?.send()
-                        }
-                }
-                deviceCenterBridge.renameActionTapped(renameEntity)
-            default: break
-            }
+            await handleDeviceAction(type, device: device)
         default: break
         }
     }
