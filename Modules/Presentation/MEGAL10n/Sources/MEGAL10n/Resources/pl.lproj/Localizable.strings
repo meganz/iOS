@@ -79,7 +79,7 @@
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Zaloguj się do swojego konta.";
 /* Error message when a user attempts to change their email without an active login session. */
-"needToBeLoggedInToCompleteYourEmailChange"="Musisz być zalogowany, aby dokończyć zmianę adresu e-mail. Zaloguj się ponownie przy użyciu aktualnego adresu e-mail, a następnie ponownie naciśnij link potwierdzający.";
+"needToBeLoggedInToCompleteYourEmailChange"="Musisz być zalogowany, aby dokończyć zmianę adresu e-mail. Zaloguj się ponownie przy użyciu aktualnego adresu e-mail, a następnie wybierz ponownie link potwierdzający.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Zaloguj się";
 /* Message for login option on Create Account screen */
@@ -967,7 +967,7 @@
 /* The title of the alert dialog to change the email associated to an account. */
 "Change Email"="Zmień adres e-mail";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
-"oldAndNewEmailMatch"="Nowy i stary adres e-mail muszą być różne";
+"oldAndNewEmailMatch"="Nowy i stary adres e-mail nie mogą się zgadzać.";
 /* Error message shown when you have not written the same email when confirming a new one */
 "emailsDoNotMatch"="Adresy e-mail nie są zgodne";
 /* Error message when a use wants to validate the same email twice */
@@ -2033,7 +2033,7 @@
 /* Text showing the user how to write more than one email in order to invite them to MEGA */
 "Tap space to enter multiple emails"="Klknij spację, aby wprowadzić wiele wiadomości e-mail";
 /* Text used as a section title or similar */
-"Enter Email"="Wpisz adres e-mail";
+"Enter Email"="Wprowadź adres e-mail";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
 "contact.invite.message"="Masz oczekujące żądanie czatu MEGA. Zarejestruj konto na MEGA i uzyskaj 20 GB darmowej przestrzeni dyskowej na cały okres użytkowania.";
 /* Destination folder name of chat files */
@@ -2492,6 +2492,12 @@
 "dialog.cookies.title.yourPrivacy"="Twoja prywatność";
 /* Cookie dialog text. */
 "dialog.cookies.description"="Używamy plików cookie i podobnych technologii wyłącznie w celu dostarczenia Ci usług, o które prosisz w firmie MEGA, lub w celu analizy i zbierania danych dotyczących wydajności. Nie używamy plików cookie do śledzenia reklam lub udostępniania stronom trzecim jakichkolwiek danych osobowych o Tobie.";
+/* Cookie dialog title to manage cookies */
+"dialog.cookies.title.manageCookies"="Zarządzanie plikami cookie";
+/* Cookie dialog description with cookie policy. */
+"dialog.cookies.description.cookiePolicy"="Używamy plików cookie i podobnych technologii, aby pomóc nam ulepszyć nasze usługi. Więcej informacji można znaleźć w naszej [A]Polityce plików cookie[/A].";
+/* Cookie dialog description with advertisement cookie policy. */
+"dialog.cookies.description.adsCookiePolicy"="Używamy plików cookie i podobnych technologii, aby pomóc nam ulepszyć nasze usługi i do celów reklamowych. Kontynuując korzystanie z MEGA, zgadzasz się z warunkami naszej zaktualizowanej [A]Polityki plików cookie[/A].";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="Zaakceptuj pliki cookie";
 /* Cookie dialog footer description */
@@ -2509,7 +2515,7 @@
 /* Cookie settings dialog title label for Advertising Cookies */
 "settings.cookies.advertisingCookies"="Reklamowe pliki cookie";
 /* Cookie settings dialog footer text for Advertising Cookies */
-"settings.cookies.advertisingCookies.footer"="Używane przez naszych zatwierdzonych partnerów reklamowych do zbierania danych o aktywności użytkownika podczas przeglądania stron internetowych i dostosowywania reklam wyświetlanych w naszych usługach i na innych stronach internetowych. Brak akceptacji tych plików cookie oznacza, że nadal będziesz widzieć reklamy, ale będą one mniej trafne.";
+"settings.cookies.advertisingCookies.footer"="Używane przez naszych zatwierdzonych partnerów reklamowych do zbierania danych o aktywności użytkownika podczas przeglądania i dostosowywania reklam wyświetlanych w naszych usługach i na innych stronach internetowych. Brak akceptacji tych plików cookie oznacza, że nadal będziesz widzieć reklamy, ale nie będą one spersonalizowane.";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="Wersja została utworzona jako nowy plik";
 /* Text shown for the action create new file */
@@ -2663,7 +2669,7 @@
 /* Meetings: Floating panel participants in call count header */
 "meetings.panel.ParticipantsCount"="Uczestnicy (%d)";
 /* Meetings: Floating panel participants not in call count header */
-"meetings.panel.ParticipantsNotInCallCount"="Nie w trakcie rozmowy (%d)";
+"meetings.panel.ParticipantsNotInCallCount"="Zaproszeni (%d)";
 /* Meetings: Floating panel participants in waiting room count header */
 "meetings.panel.ParticipantsInWaitingRoomCount"="Oczekiwanie (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
@@ -3834,10 +3840,26 @@
 "home.search.filter.presentations"="Prezentacje";
 /* Filter name for searching on the home screen */
 "home.search.filter.archives"="Archiwa";
-/* Type chips group title which is displayed in chips group pill */
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.today"="Dzisiaj";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.last7days"="Ostatnie 7 dni";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.last30days"="Ostatnie 30 dni";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.thisYear"="W tym roku";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.lastYear"="Ostatni rok";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.older"="Starsze";
+/* Type chips group title which is displayed in node type chips group pill */
 "home.search.chipsGroup.nodeType.pillTitle"="Rodzaj";
-/* Type chips group picker title which is displayed in the picker shown when user taps on the chips group pill */
+/* Type chips group picker title which is displayed in the picker shown when user taps on the  node type chips group pill */
 "home.search.chipsGroup.nodeType.pickerTitle"="Wybierz rodzaj";
+/* Type chips group title which is displayed in modified date chips group pill */
+"home.search.chipsGroup.modificationDate.pillTitle"="Data modyfikacji";
+/* Type chips group picker title which is displayed in the picker shown when user taps on the modified date chips group pill */
+"home.search.chipsGroup.modificationDate.pickerTitle"="Wybierz datę modyfikacji";
 /* Empty screen copy when no filter is selected on the home screen search */
 "home.search.empty.no-chip-selected"="Brak wyników";
 /* Empty screen copy when Images filter is selected on the home screen search */
@@ -3920,3 +3942,19 @@
 "cameraUploads.banner.status.uploadsComplete.subHeading"="Kopia zapasowa wszystkich elementów";
 /* Camera uploads status banner - uploads partially completed due to limited access to photo library */
 "cameraUploads.banner.status.uploadsPartialComplete.limitedPhotoLibraryAccess.subHeading"="MEGA ma ograniczony dostęp do biblioteki zdjęć i nie może utworzyć kopii zapasowej wszystkich zdjęć. Wybierz, aby zmienić uprawnienia.";
+/* Title of Terms of Violation alert */
+"general.alert.termsOfServiceViolation.title"="Plik nie jest już dostępny";
+/* Calls: Floating panel participants not in call header to call them all */
+"calls.panel.participantsNotInCall.header.callAll"="Zadzwoń do wszystkich";
+/* Calls: Floating panel participants not in call label to call a participant */
+"calls.panel.participantsNotInCall.participant.call"="Połączenie";
+/* Calls: Floating panel participants not in call label to describe not in call state */
+"calls.panel.participantsNotInCall.participant.state.notInCall"="Nie w trakcie rozmowy";
+/* Calls: Floating panel participants not in call label to describe calling state */
+"calls.panel.participantsNotInCall.participant.state.calling"="Dzwonię…";
+/* Calls: Floating panel participants not in call label to describe no response state */
+"calls.panel.participantsNotInCall.participant.state.noResponse"="Brak odpowiedzi";
+/* Calls: Floating panel participants empty list not in call state */
+"calls.panel.participantsNotInCall.emptyState"="Wszyscy zaproszeni uczestnicy dołączyli do rozmowy.";
+/* Calls: Floating panel participants empty list waiting room state */
+"calls.panel.participantsInWaitingRoom.emptyState"="W poczekalni nie ma nikogo";

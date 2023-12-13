@@ -2099,7 +2099,7 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>other</key>
-        <string>โบนัสจะหมดอายุใน %d วัน</string>
+        <string>โบนัสจะหมดอายุภายใน %d วัน</string>
       </dict>
     </dict>
     <key>share.message.uploadedToDestinationFolder</key>

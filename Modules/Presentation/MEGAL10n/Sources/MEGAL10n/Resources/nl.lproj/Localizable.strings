@@ -79,7 +79,7 @@
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Log in op uw account.";
 /* Error message when a user attempts to change their email without an active login session. */
-"needToBeLoggedInToCompleteYourEmailChange"="U moet ingelogd zijn om uw email wijziging te voltooien. Log opnieuw in met uw huidige e-mailadres en tik dan opnieuw op uw bevestigingslink.";
+"needToBeLoggedInToCompleteYourEmailChange"="Om de wijziging van uw e-mailadres te voltooien, moet u ingelogd zijn. Log opnieuw in met uw huidige e-mailadres en tik vervolgens opnieuw op uw bevestigingslink.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Login";
 /* Message for login option on Create Account screen */
@@ -967,7 +967,7 @@
 /* The title of the alert dialog to change the email associated to an account. */
 "Change Email"="Wijzig e-mailadres";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
-"oldAndNewEmailMatch"="Het nieuwe en het oude e-mailadres mogen niet hetzelfde zijn";
+"oldAndNewEmailMatch"="Het nieuwe en het oude e-mailadres mogen niet overeenkomen";
 /* Error message shown when you have not written the same email when confirming a new one */
 "emailsDoNotMatch"="Emailadressen komen niet overeen";
 /* Error message when a use wants to validate the same email twice */
@@ -2033,7 +2033,7 @@
 /* Text showing the user how to write more than one email in order to invite them to MEGA */
 "Tap space to enter multiple emails"="Tik spatie om meerdere e-mails in te voeren";
 /* Text used as a section title or similar */
-"Enter Email"="Email Invoeren";
+"Enter Email"="Voer e-mailadres in";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
 "contact.invite.message"="Er wacht een MEGA Gespreksverzoek. Registreer een account op MEGA en ontvang 20 GB gratis levenslange opslag.";
 /* Destination folder name of chat files */
@@ -2171,7 +2171,7 @@
 /* Label tell user to enter received txt to below input boxes */
 "Please type the verification code sent to"="Voer de verificatiecode in die is verzonden naar";
 /* Text message to remind user to resend verification code */
-"You didn't receive a code?"="U heeft geen code ontvangen?";
+"You didn't receive a code?"="U heeft de code niet ontvangen?";
 /* Message shown when verify phone number successfully */
 "Your phone number has been verified successfully"="Uw telefoonnummer is geverifieerd";
 /* Text describing account suspended state to the user */
@@ -2492,6 +2492,12 @@
 "dialog.cookies.title.yourPrivacy"="Uw privacy";
 /* Cookie dialog text. */
 "dialog.cookies.description"="We gebruiken Cookies en vergelijkbare technologieën uitsluitend om u de diensten te bieden die u van MEGA aanvraagt, of voor analyse en het verzamelen van prestatiegegevens. We gebruiken geen Cookies voor het volgen van advertenties of het delen van persoonlijke informatie over u met derden.";
+/* Cookie dialog title to manage cookies */
+"dialog.cookies.title.manageCookies"="Cookies beheren";
+/* Cookie dialog description with cookie policy. */
+"dialog.cookies.description.cookiePolicy"="Wij gebruiken cookies en dergelijken technologieën om ons te helpen onze diensten te verbeteren. Leer meer in ons [A]Cookie Beleid[/A].";
+/* Cookie dialog description with advertisement cookie policy. */
+"dialog.cookies.description.adsCookiePolicy"="Wij gebruiken cookies en soortgelijke technologieën om ons te helpen onze dienstverlening te verbeteren. Als u MEGA blijft gebruiken, gaat u akkoord met de voorwaarden van ons [A]Cookiebeleid[/A].";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="Cookies Accepteren";
 /* Cookie dialog footer description */
@@ -2509,7 +2515,7 @@
 /* Cookie settings dialog title label for Advertising Cookies */
 "settings.cookies.advertisingCookies"="Advertentie Cookies";
 /* Cookie settings dialog footer text for Advertising Cookies */
-"settings.cookies.advertisingCookies.footer"="Gebruikt door onze goedgekeurde advertentiepartners om gegevens over uw browse-activiteiten te verzamelen en de advertenties die u op onze diensten en op andere websites ziet, aan te passen. Als u deze cookies niet accepteert, krijgt u nog steeds advertenties te zien, maar zijn deze minder relevant.";
+"settings.cookies.advertisingCookies.footer"="Gebruikt door onze goedgekeurde advertentiepartners om gegevens over uw browse-activiteiten te verzamelen en de advertenties die u op onze diensten en op andere websites ziet, aan te passen. Als u deze cookies niet accepteert, krijgt u nog steeds advertenties te zien, maar niet gepersonaliseerd.";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="Versie was gecreëerd als nieuw bestand";
 /* Text shown for the action create new file */
@@ -2663,7 +2669,7 @@
 /* Meetings: Floating panel participants in call count header */
 "meetings.panel.ParticipantsCount"="Deelnemers (%d)";
 /* Meetings: Floating panel participants not in call count header */
-"meetings.panel.ParticipantsNotInCallCount"="Niet in oproep (%d)";
+"meetings.panel.ParticipantsNotInCallCount"="Genodigden (%d)";
 /* Meetings: Floating panel participants in waiting room count header */
 "meetings.panel.ParticipantsInWaitingRoomCount"="Wachtend (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
@@ -3834,10 +3840,26 @@
 "home.search.filter.presentations"="Presentaties";
 /* Filter name for searching on the home screen */
 "home.search.filter.archives"="Archieven";
-/* Type chips group title which is displayed in chips group pill */
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.today"="Vandaag";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.last7days"="Laatste 7 dagen";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.last30days"="Laatste 30 dagen";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.thisYear"="Dit jaar";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.lastYear"="Laatste jaar";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.older"="Ouder";
+/* Type chips group title which is displayed in node type chips group pill */
 "home.search.chipsGroup.nodeType.pillTitle"="Type";
-/* Type chips group picker title which is displayed in the picker shown when user taps on the chips group pill */
+/* Type chips group picker title which is displayed in the picker shown when user taps on the  node type chips group pill */
 "home.search.chipsGroup.nodeType.pickerTitle"="Selecteer type";
+/* Type chips group title which is displayed in modified date chips group pill */
+"home.search.chipsGroup.modificationDate.pillTitle"="Aangepaste datum";
+/* Type chips group picker title which is displayed in the picker shown when user taps on the modified date chips group pill */
+"home.search.chipsGroup.modificationDate.pickerTitle"="Selecteer aangepaste datum";
 /* Empty screen copy when no filter is selected on the home screen search */
 "home.search.empty.no-chip-selected"="Geen resultaten";
 /* Empty screen copy when Images filter is selected on the home screen search */
@@ -3920,3 +3942,19 @@
 "cameraUploads.banner.status.uploadsComplete.subHeading"="Van alle items is een back-up gemaakt";
 /* Camera uploads status banner - uploads partially completed due to limited access to photo library */
 "cameraUploads.banner.status.uploadsPartialComplete.limitedPhotoLibraryAccess.subHeading"="MEGA heeft  beperkt toegang tot uw foto bibliotheek en kan geen back-up maken van uw foto’s. Tik om de toestemmingen te wijzigen.";
+/* Title of Terms of Violation alert */
+"general.alert.termsOfServiceViolation.title"="Bestand niet langer beschikbaar";
+/* Calls: Floating panel participants not in call header to call them all */
+"calls.panel.participantsNotInCall.header.callAll"="Iedereen bellen";
+/* Calls: Floating panel participants not in call label to call a participant */
+"calls.panel.participantsNotInCall.participant.call"="Bellen";
+/* Calls: Floating panel participants not in call label to describe not in call state */
+"calls.panel.participantsNotInCall.participant.state.notInCall"="Niet in oproep";
+/* Calls: Floating panel participants not in call label to describe calling state */
+"calls.panel.participantsNotInCall.participant.state.calling"="Bellen…";
+/* Calls: Floating panel participants not in call label to describe no response state */
+"calls.panel.participantsNotInCall.participant.state.noResponse"="Geen antwoord";
+/* Calls: Floating panel participants empty list not in call state */
+"calls.panel.participantsNotInCall.emptyState"="Alle uitgenodigde deelnemers hebben zich bij het gesprek aangesloten.";
+/* Calls: Floating panel participants empty list waiting room state */
+"calls.panel.participantsInWaitingRoom.emptyState"="Er is niemand in de wachtkamer";

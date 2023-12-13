@@ -79,7 +79,7 @@
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Пожалуйста, авторизируйтесь.";
 /* Error message when a user attempts to change their email without an active login session. */
-"needToBeLoggedInToCompleteYourEmailChange"="Чтобы изменить адрес электронной почты, необходимо войти в свой аккаунт. Пожалуйста, снова войдите с текущим адресом электронной почты и затем перейдите по ссылке подтверждения.";
+"needToBeLoggedInToCompleteYourEmailChange"="Чтобы изменить адрес электронной почты, необходимо войти в свой аккаунт. Пожалуйста, снова войдите с текущим адресом электронной почты и затем перейдите по ссылке для подтверждения.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Войти";
 /* Message for login option on Create Account screen */
@@ -2033,7 +2033,7 @@
 /* Text showing the user how to write more than one email in order to invite them to MEGA */
 "Tap space to enter multiple emails"="Нажмите пробел, чтобы ввести несколько адресов";
 /* Text used as a section title or similar */
-"Enter Email"="Введите email";
+"Enter Email"="Введите адрес электронной почты";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
 "contact.invite.message"="У вас есть ожидающий запрос в MEGA Chat. Зарегистрируйтесь в MEGA и получите бесплатно 20 ГБ хранилища навсегда.";
 /* Destination folder name of chat files */
@@ -2171,7 +2171,7 @@
 /* Label tell user to enter received txt to below input boxes */
 "Please type the verification code sent to"="Пожалуйста, введите отправленный проверочный код";
 /* Text message to remind user to resend verification code */
-"You didn't receive a code?"="Не получили код?";
+"You didn't receive a code?"="You didn’t receive the code?";
 /* Message shown when verify phone number successfully */
 "Your phone number has been verified successfully"="Ваш номер телефона подтверждён";
 /* Text describing account suspended state to the user */
@@ -2492,6 +2492,12 @@
 "dialog.cookies.title.yourPrivacy"="Ваша конфиденциальность";
 /* Cookie dialog text. */
 "dialog.cookies.description"="Мы используем куки-файлы и аналогичные технологии исключительно для предоставления услуг, которыми вы пользуетесь в MEGA, или для аналитики и сбора данных о производительности. Мы не используем куки-файлы для отслеживания рекламы или передачи какой-либо личной информации о вас третьим лицам.";
+/* Cookie dialog title to manage cookies */
+"dialog.cookies.title.manageCookies"="Управление куки-файлами";
+/* Cookie dialog description with cookie policy. */
+"dialog.cookies.description.cookiePolicy"="Мы используем куки и аналогичные технологии, чтобы улучшать наши сервисы. Подробнее в нашей [A]Политике в отношении куки-файлов[/A].";
+/* Cookie dialog description with advertisement cookie policy. */
+"dialog.cookies.description.adsCookiePolicy"="Мы используем куки и аналогичные технологии для улучшения наших сервисов и в рекамных целях. Продолжая использовать MEGA, вы соглашаетесь с условиями нашей обновлённой [A]Политики в отношении куки-файлов[/A].";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="Принять куки";
 /* Cookie dialog footer description */
@@ -2505,11 +2511,11 @@
 /* Cookie settings dialog text. */
 "settings.cookies.performanceAndAnalytics"="Куки производительности и аналитики";
 /* Cookie settings dialog text. */
-"settings.cookies.performanceAndAnalytics.footer"="Помогите нам понять, как вы используете наши услуги, и предоставьте нам данные, которые мы можем использовать для улучшения. Непринятие этих файлов cookie будет означать, что у нас будет меньше данных, необходимых для улучшения разработки.";
+"settings.cookies.performanceAndAnalytics.footer"="Помогите нам понять, как вы используете наши сервисы, предоставив данные, которые мы можем использовать для улучшения. Непринятие этих куки-файлов будет означать, что у нас будет меньше данных, необходимых для улучшения разработки.";
 /* Cookie settings dialog title label for Advertising Cookies */
 "settings.cookies.advertisingCookies"="Рекламные куки";
 /* Cookie settings dialog footer text for Advertising Cookies */
-"settings.cookies.advertisingCookies.footer"="Используется нашими одобренными рекламными партнерами для сбора данных о вашей активности в Интернете и настройки рекламы, которую вы видите в наших сервисах и на других веб-сайтах. Если вы не примете эти файлы cookie, вы всё равно будете видеть рекламу, но она будет менее релевантной.";
+"settings.cookies.advertisingCookies.footer"="Используются нашими одобренными рекламными партнерами для сбора данных о вашей активности в Интернете и настройки рекламы, которую вы видите в наших сервисах и на других веб-сайтах. Если вы не примете эти куки-файлы, вы всё равно будете видеть рекламу, но она не будет персонализированной.";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="Версия была успешно как новый файл";
 /* Text shown for the action create new file */
@@ -2663,7 +2669,7 @@
 /* Meetings: Floating panel participants in call count header */
 "meetings.panel.ParticipantsCount"="Участники (%d)";
 /* Meetings: Floating panel participants not in call count header */
-"meetings.panel.ParticipantsNotInCallCount"="Не в звонке (%d)";
+"meetings.panel.ParticipantsNotInCallCount"="Приглашённые (%d)";
 /* Meetings: Floating panel participants in waiting room count header */
 "meetings.panel.ParticipantsInWaitingRoomCount"="В ожидании (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
@@ -3834,10 +3840,26 @@
 "home.search.filter.presentations"="Презентации";
 /* Filter name for searching on the home screen */
 "home.search.filter.archives"="Архивы";
-/* Type chips group title which is displayed in chips group pill */
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.today"="Сегодня";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.last7days"="Последние 7 дней";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.last30days"="Последние 30 дней";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.thisYear"="Текущий год";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.lastYear"="Последний год";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.older"="Позже";
+/* Type chips group title which is displayed in node type chips group pill */
 "home.search.chipsGroup.nodeType.pillTitle"="Тип";
-/* Type chips group picker title which is displayed in the picker shown when user taps on the chips group pill */
+/* Type chips group picker title which is displayed in the picker shown when user taps on the  node type chips group pill */
 "home.search.chipsGroup.nodeType.pickerTitle"="Выберите тип";
+/* Type chips group title which is displayed in modified date chips group pill */
+"home.search.chipsGroup.modificationDate.pillTitle"="Дата изменения";
+/* Type chips group picker title which is displayed in the picker shown when user taps on the modified date chips group pill */
+"home.search.chipsGroup.modificationDate.pickerTitle"="Выберите дату изменения";
 /* Empty screen copy when no filter is selected on the home screen search */
 "home.search.empty.no-chip-selected"="Нет результатов";
 /* Empty screen copy when Images filter is selected on the home screen search */
@@ -3920,3 +3942,19 @@
 "cameraUploads.banner.status.uploadsComplete.subHeading"="Все элементы сохранены";
 /* Camera uploads status banner - uploads partially completed due to limited access to photo library */
 "cameraUploads.banner.status.uploadsPartialComplete.limitedPhotoLibraryAccess.subHeading"="MEGA имеет ограниченный доступ к вашей библиотеке фотографий и не может создавать резервные копии всех фотографий. Нажмите, чтобы изменить разрешения.";
+/* Title of Terms of Violation alert */
+"general.alert.termsOfServiceViolation.title"="Файл больше не доступен";
+/* Calls: Floating panel participants not in call header to call them all */
+"calls.panel.participantsNotInCall.header.callAll"="Позвонить всем";
+/* Calls: Floating panel participants not in call label to call a participant */
+"calls.panel.participantsNotInCall.participant.call"="Вызов";
+/* Calls: Floating panel participants not in call label to describe not in call state */
+"calls.panel.participantsNotInCall.participant.state.notInCall"="Не в звонке";
+/* Calls: Floating panel participants not in call label to describe calling state */
+"calls.panel.participantsNotInCall.participant.state.calling"="Вызов…";
+/* Calls: Floating panel participants not in call label to describe no response state */
+"calls.panel.participantsNotInCall.participant.state.noResponse"="Не отвечает";
+/* Calls: Floating panel participants empty list not in call state */
+"calls.panel.participantsNotInCall.emptyState"="Все приглашённые участники присоединились к звонку.";
+/* Calls: Floating panel participants empty list waiting room state */
+"calls.panel.participantsInWaitingRoom.emptyState"="There is no one in the waiting room";

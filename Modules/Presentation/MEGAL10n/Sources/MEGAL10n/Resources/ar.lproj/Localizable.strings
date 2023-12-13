@@ -79,7 +79,7 @@
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="يرجى تسجيل الدخول إلى حسابك.";
 /* Error message when a user attempts to change their email without an active login session. */
-"needToBeLoggedInToCompleteYourEmailChange"="تحتاج إلى تسجيل الدخول لإكمال تغيير بريدك الإلكتروني. يرجى تسجيل الدخول مرة أخرى باستخدام عنوان بريدك الإلكتروني الحالي ثم النقر على رابط التأكيد مرة أخرى.";
+"needToBeLoggedInToCompleteYourEmailChange"="You need to be logged in to complete your email address change. Please log in again with your current email address, then tap on your confirmation link again.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="تسجيل الدخول";
 /* Message for login option on Create Account screen */
@@ -967,7 +967,7 @@
 /* The title of the alert dialog to change the email associated to an account. */
 "Change Email"="تغيير البريد الالكتروني";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
-"oldAndNewEmailMatch"="يجب ألا يتطابق البريد الإلكتروني الجديد والقديم";
+"oldAndNewEmailMatch"="The new and the old email addresses must not match";
 /* Error message shown when you have not written the same email when confirming a new one */
 "emailsDoNotMatch"="عناوين البريد الإلكتروني غير متطابقة";
 /* Error message when a use wants to validate the same email twice */
@@ -2033,7 +2033,7 @@
 /* Text showing the user how to write more than one email in order to invite them to MEGA */
 "Tap space to enter multiple emails"="أنقر زر الفراغ لإدخال رسائل البريد الإلكتروني متعددة";
 /* Text used as a section title or similar */
-"Enter Email"="أدخل البريد الإلكتروني";
+"Enter Email"="Enter email address";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
 "contact.invite.message"="لديك طلب لمحادثة ميغا MEGA الآمنة في الانتظار. قم بتسجيل حساب على ميغا MEGA واحصل على 20 غيغابايت من مساحة التخزين المجانية مدى الحياة.";
 /* Destination folder name of chat files */
@@ -2171,7 +2171,7 @@
 /* Label tell user to enter received txt to below input boxes */
 "Please type the verification code sent to"="الرجاء إدخال رمز التحقق الذي تم إرساله إلى";
 /* Text message to remind user to resend verification code */
-"You didn't receive a code?"="لم تتلقى الرمز؟";
+"You didn't receive a code?"="You didn’t receive the code?";
 /* Message shown when verify phone number successfully */
 "Your phone number has been verified successfully"="تم التحقق من رقم هاتفك";
 /* Text describing account suspended state to the user */
@@ -2492,6 +2492,12 @@
 "dialog.cookies.title.yourPrivacy"="خصوصيتك";
 /* Cookie dialog text. */
 "dialog.cookies.description"="نحن نستخدم ملفات تعريف الارتباط cookies والتقنيات المماثلة فقط لأغراض تزويدك بالخدمات التي تطلبها من ميغا MEGA أو للتحليلات وجمع بيانات الأداء. لا نستخدم ملفات تعريف الارتباط cookies لتتبع الإعلانات أو مشاركة أي معلومات شخصية عنك مع جهات خارجية.";
+/* Cookie dialog title to manage cookies */
+"dialog.cookies.title.manageCookies"="Manage cookies";
+/* Cookie dialog description with cookie policy. */
+"dialog.cookies.description.cookiePolicy"="We use cookies and similar technologies to help us improve our services. Learn more in our [A]Cookie Policy[/A].";
+/* Cookie dialog description with advertisement cookie policy. */
+"dialog.cookies.description.adsCookiePolicy"="We use cookies and similar technologies to help us improve our services and for advertising purposes. By continuing to use MEGA you agree with the terms of our updated [A]Cookie Policy[/A].";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="قبول ملفات تعريف الارتباط Cookies";
 /* Cookie dialog footer description */
@@ -2509,7 +2515,7 @@
 /* Cookie settings dialog title label for Advertising Cookies */
 "settings.cookies.advertisingCookies"="ملفات تعريف الارتباط Cookies الإعلانية";
 /* Cookie settings dialog footer text for Advertising Cookies */
-"settings.cookies.advertisingCookies.footer"="يستخدمها شركاؤنا المعلنون المعتمدون لجمع بيانات حول أنشطة التصفح الخاصة بك وتخصيص الإعلانات التي تراها على خدماتنا وعلى مواقع الويب الأخرى. إن عدم قبول ملفات تعريف الارتباط  cookies هذه يعني أنك ستظل ترى الإعلانات ولكنها ستكون أقل أهمية.";
+"settings.cookies.advertisingCookies.footer"="Used by our approved advertising partners to collect data about your browsing activities and customise the ads you see on our services and on other websites. Not accepting these cookies means you will still see ads but they won’t be personalised.";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="تم إنشاء النسخة كملف جديد.";
 /* Text shown for the action create new file */
@@ -2663,7 +2669,7 @@
 /* Meetings: Floating panel participants in call count header */
 "meetings.panel.ParticipantsCount"="المشاركون (%d)";
 /* Meetings: Floating panel participants not in call count header */
-"meetings.panel.ParticipantsNotInCallCount"="ليس في المكالمة (%d)";
+"meetings.panel.ParticipantsNotInCallCount"="المدعوون (%d)";
 /* Meetings: Floating panel participants in waiting room count header */
 "meetings.panel.ParticipantsInWaitingRoomCount"="بالانتظار (%d)";
 /* Meetings: Floating panel participants listing indication if a participant is moderator */
@@ -3834,10 +3840,26 @@
 "home.search.filter.presentations"="العروض التقديمية";
 /* Filter name for searching on the home screen */
 "home.search.filter.archives"="مؤرشفة";
-/* Type chips group title which is displayed in chips group pill */
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.today"="اليوم";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.last7days"="Last 7 days";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.last30days"="Last 30 days";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.thisYear"="هذا العام";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.lastYear"="السنة الماضية";
+/* Filter name for searching on the home screen */
+"home.search.filter.modificationDate.older"="أقدم";
+/* Type chips group title which is displayed in node type chips group pill */
 "home.search.chipsGroup.nodeType.pillTitle"="النوع";
-/* Type chips group picker title which is displayed in the picker shown when user taps on the chips group pill */
+/* Type chips group picker title which is displayed in the picker shown when user taps on the  node type chips group pill */
 "home.search.chipsGroup.nodeType.pickerTitle"="اختر صنف";
+/* Type chips group title which is displayed in modified date chips group pill */
+"home.search.chipsGroup.modificationDate.pillTitle"="Modified date";
+/* Type chips group picker title which is displayed in the picker shown when user taps on the modified date chips group pill */
+"home.search.chipsGroup.modificationDate.pickerTitle"="Select modified date";
 /* Empty screen copy when no filter is selected on the home screen search */
 "home.search.empty.no-chip-selected"="لا يوجد نتائج";
 /* Empty screen copy when Images filter is selected on the home screen search */
@@ -3920,3 +3942,19 @@
 "cameraUploads.banner.status.uploadsComplete.subHeading"="تم نسخ جميع العناصر احتياطيًا";
 /* Camera uploads status banner - uploads partially completed due to limited access to photo library */
 "cameraUploads.banner.status.uploadsPartialComplete.limitedPhotoLibraryAccess.subHeading"="تتمتع ميغا MEGA بإذن وصول محدود إلى مكتبة الصور الخاصة بك ولا يمكنها عمل نسخة احتياطية لجميع الصور. انقر لتغيير الأذونات.";
+/* Title of Terms of Violation alert */
+"general.alert.termsOfServiceViolation.title"="الملف لم يعد متوفراً";
+/* Calls: Floating panel participants not in call header to call them all */
+"calls.panel.participantsNotInCall.header.callAll"="اتصل بالجميع";
+/* Calls: Floating panel participants not in call label to call a participant */
+"calls.panel.participantsNotInCall.participant.call"="اتصل";
+/* Calls: Floating panel participants not in call label to describe not in call state */
+"calls.panel.participantsNotInCall.participant.state.notInCall"="ليس في المكالمة ";
+/* Calls: Floating panel participants not in call label to describe calling state */
+"calls.panel.participantsNotInCall.participant.state.calling"="جار الاتصال…";
+/* Calls: Floating panel participants not in call label to describe no response state */
+"calls.panel.participantsNotInCall.participant.state.noResponse"="لا يوجد رد";
+/* Calls: Floating panel participants empty list not in call state */
+"calls.panel.participantsNotInCall.emptyState"="All the invited participants have joined the call.";
+/* Calls: Floating panel participants empty list waiting room state */
+"calls.panel.participantsInWaitingRoom.emptyState"="There is no one in the waiting room";
