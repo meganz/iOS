@@ -10,7 +10,7 @@ public struct OnboardingWithProPlanListView: View {
     
     public var body: some View {
         ZStack {
-            Color("primaryElevated").edgesIgnoringSafeArea(.all)
+            Color("background_regular_primaryElevated").edgesIgnoringSafeArea(.all)
             
             ScrollView(showsIndicators: false) {
                 LazyVStack(spacing: 10, pinnedViews: .sectionFooters) {
@@ -34,7 +34,7 @@ public struct OnboardingWithProPlanListView: View {
                         }
                         .padding(.vertical)
                         .frame(maxWidth: .infinity)
-                        .background(Color("primaryElevated"))
+                        .background(Color("background_regular_primaryElevated"))
                     }
                     
                     UpgradeSectionSubscriptionView()
@@ -79,7 +79,7 @@ private struct OnboardingProPlanHeaderView: View {
                 .bold()
             
             Text(Strings.Localizable.Onboarding.UpgradeAccount.Header.subTitle(lowestPlanPrice))
-                .foregroundColor(Color("primaryGrayText"))
+                .foregroundColor(Color("upgrade_account_primaryGrayText"))
                 .font(.title3)
                 .multilineTextAlignment(.center)
         }
