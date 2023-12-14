@@ -298,7 +298,7 @@ public final class BackupListViewModel: ObservableObject {
             guard let nodeHandle = backups?.first?.rootHandle,
                   let nodeEntity = nodeUseCase.parentForHandle(nodeHandle) else { return }
             
-            deviceCenterBridge.nodeActionTapped(nodeEntity, .info)
+            await deviceCenterBridge.nodeActionTapped(nodeEntity, .info)
         default: break
         }
     }

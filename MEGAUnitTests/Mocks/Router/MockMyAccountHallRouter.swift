@@ -23,4 +23,6 @@ final class MockMyAccountHallRouter: MyAccountHallRouting {
     func didTapNodeAction(type: DeviceCenterActionType, node: NodeEntity) {
         didTapNodeAction_calledTimes += 1
     }
+    
+    func showError(_ error: Error) {}
 }

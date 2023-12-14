@@ -110,9 +110,12 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
         switch type {
         case .cameraUploads:
             handleCameraUploadAction()
-        case .info, .copy, .offline, .shareLink, .manageLink, .removeLink, .shareFolder, .showInCloudDrive, .favourite, .label, .rename, .move, .moveToTheRubbishBin:
+        case .info, .copy, .offline, .shareLink, .manageLink, .removeLink, .shareFolder, .manageShare, .showInCloudDrive, .favourite, .label, .rename, .move, .moveToTheRubbishBin:
             guard let node = nodeForEntityType() else { return }
-            deviceCenterBridge.nodeActionTapped(node, type)
+            Task { [weak self] in
+                await self?.deviceCenterBridge.nodeActionTapped(node, type)
+            }
+            
         default: break
         }
     }
@@ -161,9 +164,12 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
     func showDetail() {
         switch itemType {
         case .backup(let backup):
-            guard let nodeEntity = nodeForEntityType(),
-                    backup.type != .cameraUpload && backup.type != .mediaUpload else { return }
-            deviceCenterBridge.nodeActionTapped(nodeEntity, .showInBackups)
+            Task { [weak self] in
+                guard let nodeEntity = self?.nodeForEntityType(),
+                        backup.type != .cameraUpload && backup.type != .mediaUpload else { return }
+                
+                await self?.deviceCenterBridge.nodeActionTapped(nodeEntity, .showInBackups)
+            }
         case .device(let device):
             guard let router else { return }
             let currentDeviceUUID = UIDevice.current.identifierForVendor?.uuidString ?? ""

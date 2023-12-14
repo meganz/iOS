@@ -42,6 +42,7 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
     private var abTestProvider: any ABTestProviderProtocol
     private let myAccountHallUseCase: any MyAccountHallUseCaseProtocol
     private let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
+    let shareUseCase: any ShareUseCaseProtocol
     let deviceCenterBridge: DeviceCenterBridge
     let router: any MyAccountHallRouting
     
@@ -56,12 +57,14 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
     
     init(myAccountHallUseCase: some MyAccountHallUseCaseProtocol,
          purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
+         shareUseCase: some ShareUseCaseProtocol,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
          abTestProvider: some ABTestProviderProtocol = DIContainer.abTestProvider,
          deviceCenterBridge: DeviceCenterBridge,
          router: some MyAccountHallRouting) {
         self.myAccountHallUseCase = myAccountHallUseCase
         self.purchaseUseCase = purchaseUseCase
+        self.shareUseCase = shareUseCase
         self.featureFlagProvider = featureFlagProvider
         self.abTestProvider = abTestProvider
         self.deviceCenterBridge = deviceCenterBridge

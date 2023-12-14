@@ -52,7 +52,7 @@ extension DeviceCenterAction {
     
     static func manageFolderAction() -> DeviceCenterAction {
         DeviceCenterAction(
-            type: .manageFolder,
+            type: .manageShare,
             title: Strings.Localizable.manageShare,
             icon: "shareFolder"
         )

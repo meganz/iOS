@@ -166,7 +166,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
         )
     }
     
-    func testDidTapNodeAction_whenNodeCopyActionTapped_callsRouterOnce() {
+    func testDidTapNodeAction_whenNodeCopyActionTapped_callsRouterOnce() async throws {
         let deviceCenterBridge = DeviceCenterBridge()
         let (sut, router) = makeSUT(deviceCenterBridge: deviceCenterBridge)
         
@@ -174,7 +174,22 @@ final class MyAccountHallViewModelTests: XCTestCase {
              actions: [MyAccountHallAction.didTapDeviceCenterButton],
              expectedCommands: [])
         
-        deviceCenterBridge.nodeActionTapped(MockNode(handle: 1).toNodeEntity(), .copy)
+        await deviceCenterBridge.nodeActionTapped(MockNode(handle: 1).toNodeEntity(), .copy)
+        
+        XCTAssertEqual(
+            router.didTapNodeAction_calledTimes, 1, "Node action should have called the router once"
+        )
+    }
+    
+    func testDidTapNodeAction_whenSharedFolderActionTapped_callsRouterOnce() async throws {
+        let deviceCenterBridge = DeviceCenterBridge()
+        let (sut, router) = makeSUT(deviceCenterBridge: deviceCenterBridge)
+        
+        test(viewModel: sut,
+             actions: [MyAccountHallAction.didTapDeviceCenterButton],
+             expectedCommands: [])
+        
+        await deviceCenterBridge.nodeActionTapped(MockNode(handle: 1).toNodeEntity(), .shareFolder)
         
         XCTAssertEqual(
             router.didTapNodeAction_calledTimes, 1, "Node action should have called the router once"
@@ -194,12 +209,14 @@ final class MyAccountHallViewModelTests: XCTestCase {
         )
         
         let purchaseUseCase = MockAccountPlanPurchaseUseCase()
+        let shareUseCase = MockShareUseCase()
         let router = MockMyAccountHallRouter()
         
         return (
             MyAccountHallViewModel(
                 myAccountHallUseCase: myAccountHallUseCase,
-                purchaseUseCase: purchaseUseCase,
+                purchaseUseCase: purchaseUseCase, 
+                shareUseCase: shareUseCase,
                 featureFlagProvider: featureFlagProvider,
                 abTestProvider: abTestProvider,
                 deviceCenterBridge: deviceCenterBridge,
