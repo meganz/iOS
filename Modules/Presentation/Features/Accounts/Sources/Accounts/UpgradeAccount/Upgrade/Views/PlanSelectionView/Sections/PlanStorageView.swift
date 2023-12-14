@@ -22,12 +22,12 @@ private struct PlanStorageContentView: View {
     private var detailAttributedText: AttributedString {
         var attributedString = AttributedString(title)
         attributedString.font = .subheadline
-        attributedString.foregroundColor = Color("secondaryText")
+        attributedString.foregroundColor = Color("upgrade_account_secondaryText")
         
         guard let rangeOfDetail = attributedString.range(of: detail) else {
             return attributedString
         }
-        attributedString[rangeOfDetail].foregroundColor = Color("primaryText")
+        attributedString[rangeOfDetail].foregroundColor = Color("upgrade_account_primaryText")
         return attributedString
     }
     
