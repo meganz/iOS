@@ -10,7 +10,7 @@ public struct PlanPricingView: View {
             Text(plan.formattedPrice)
                 .font(.title2)
                 .bold()
-                .foregroundColor(Color("primaryText"))
+                .foregroundColor(Color("upgrade_account_primaryText"))
             
             Text(currencyPerTermString)
                 .font(.subheadline)

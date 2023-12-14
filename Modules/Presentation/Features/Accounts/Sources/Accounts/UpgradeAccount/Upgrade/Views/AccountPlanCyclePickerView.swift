@@ -26,7 +26,7 @@ public struct AccountPlanCyclePickerView: View {
                 .bold()
                 .padding(.horizontal, 10)
                 .padding(.vertical, 6)
-                .background(Color("subMessageBackground"))
+                .background(Color("upgrade_account_subMessageBackground"))
                 .cornerRadius(10)
                 .padding(.bottom, 15)
         }
