@@ -15,7 +15,11 @@ extension MyAccountHallViewModel {
         }
         
         deviceCenterBridge.nodeActionTapped = { [weak self] (node, actionType) in
-            self?.router.didTapNodeAction(type: actionType, node: node)
+            do {
+                try await self?.manageShareFolderAction(actionType, for: node)
+            } catch {
+                self?.router.showError(error)
+            }
         }
     }
     
@@ -33,6 +37,13 @@ extension MyAccountHallViewModel {
             deviceCenterActions: deviceCenterActionList(),
             deviceIconNames: deviceIconNamesList()
         )
+    }
+    
+    private func manageShareFolderAction(_ actionType: DeviceCenterActionType, for node: NodeEntity) async throws {
+        if actionType == .shareFolder || actionType == .manageShare {
+            _ = try await self.shareUseCase.createShareKeys(forNodes: [node])
+        }
+        self.router.didTapNodeAction(type: actionType, node: node)
     }
     
     private func makeDeviceListAssets() -> DeviceListAssets {

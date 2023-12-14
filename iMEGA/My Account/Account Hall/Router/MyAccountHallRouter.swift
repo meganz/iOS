@@ -9,28 +9,47 @@ public protocol MyAccountHallRouting: Routing {
     func didTapCameraUploadsAction(statusChanged: @escaping () -> Void)
     func didTapRenameAction(_ renameEntity: RenameActionEntity)
     func didTapNodeAction(type: DeviceCenterActionType, node: NodeEntity)
+    func showError(_ error: any Error)
 }
 
 final class MyAccountHallRouter: MyAccountHallRouting {
     private let myAccountHallUseCase: any MyAccountHallUseCaseProtocol
     private let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
+    private let shareUseCase: any ShareUseCaseProtocol
     private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
     private let shouldOpenAchievements: Bool
     private weak var navigationController: UINavigationController?
     private weak var viewController: UIViewController?
+    private let loadingPresenter: () -> Void
+    private let actionSucceededPresenter: (String) -> Void
+    private let dismissLoadingPresenter: () -> Void
+    private let errorPresenter: (String) -> Void
+    private let noInternetConnectionPresenter: (UIImage, String) -> Void
     
     init(
         myAccountHallUseCase: some MyAccountHallUseCaseProtocol,
         purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
+        shareUseCase: some ShareUseCaseProtocol,
         networkMonitorUseCase: some NetworkMonitorUseCaseProtocol,
         shouldOpenAchievements: Bool = false,
-        navigationController: UINavigationController
+        navigationController: UINavigationController,
+        loadingPresenter: @escaping () -> Void = { SVProgressHUD.show() },
+        actionSucceededPresenter: @escaping (String) -> Void = { SVProgressHUD.showSuccess(withStatus: $0) },
+        dismissLoadingPresenter: @escaping () -> Void = { SVProgressHUD.dismiss() },
+        errorPresenter: @escaping (String) -> Void = { SVProgressHUD.showError(withStatus: $0) },
+        noInternetConnectionPresenter: @escaping (UIImage, String) -> Void = { SVProgressHUD.show($0, status: $1) }
     ) {
         self.myAccountHallUseCase = myAccountHallUseCase
         self.purchaseUseCase = purchaseUseCase
+        self.shareUseCase = shareUseCase
         self.networkMonitorUseCase = networkMonitorUseCase
         self.shouldOpenAchievements = shouldOpenAchievements
         self.navigationController = navigationController
+        self.loadingPresenter = loadingPresenter
+        self.actionSucceededPresenter = actionSucceededPresenter
+        self.dismissLoadingPresenter = dismissLoadingPresenter
+        self.errorPresenter = errorPresenter
+        self.noInternetConnectionPresenter = noInternetConnectionPresenter
     }
     
     private func didTapShowInBackupsAction(
@@ -61,6 +80,17 @@ final class MyAccountHallRouter: MyAccountHallRouting {
         return cloudDriveVC
     }
     
+    private func setupContactsViewController(with node: NodeEntity, mode: ContactsMode) -> ContactsViewController? {
+        guard let node = node.toMEGANode(in: MEGASdk.shared),
+              let contactsVC = UIStoryboard(name: "Contacts", bundle: nil).instantiateViewController(identifier: "ContactsViewControllerID") as? ContactsViewController else {
+            return nil
+        }
+        
+        contactsVC.node = node
+        contactsVC.contactsMode = mode
+        return contactsVC
+    }
+    
     func build() -> UIViewController {
         guard let myAccountViewController = UIStoryboard(name: "MyAccount", bundle: nil)
                 .instantiateViewController(withIdentifier: "MyAccountHall") as? MyAccountHallViewController else {
@@ -69,7 +99,8 @@ final class MyAccountHallRouter: MyAccountHallRouting {
         
         let viewModel = MyAccountHallViewModel(
             myAccountHallUseCase: myAccountHallUseCase,
-            purchaseUseCase: purchaseUseCase,
+            purchaseUseCase: purchaseUseCase, 
+            shareUseCase: shareUseCase,
             deviceCenterBridge: DeviceCenterBridge(),
             router: self
         )
@@ -147,19 +178,18 @@ final class MyAccountHallRouter: MyAccountHallRouting {
         action: @escaping (UIViewController, NodeEntity) -> Void
     ) {
         guard networkMonitorUseCase.isConnected() else {
-            SVProgressHUD.show(
+            noInternetConnectionPresenter(
                 UIImage.hudForbidden,
-                status: Strings.Localizable.noInternetConnection
+                Strings.Localizable.noInternetConnection
             )
             return
         }
-        guard let presenter = self.navigationController?.topViewController else { return }
-        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            guard let presenter = self.navigationController?.topViewController else { return }
             action(presenter, node)
         }
     }
-    
+
     func didTapShareLinkAction(
         _ node: NodeEntity
     ) {
@@ -180,26 +210,62 @@ final class MyAccountHallRouter: MyAccountHallRouting {
                 presenter: presenter,
                 nodes: [node],
                 actionType: .removeLink,
-                onActionStart: {
-                    SVProgressHUD.show()
-                }, onActionFinish: {
+                onActionStart: { [weak self] in
+                    self?.loadingPresenter()
+                }, onActionFinish: { [weak self] in
                     switch $0 {
                     case .success(let message):
-                        SVProgressHUD.showSuccess(withStatus: message)
+                        self?.actionSucceededPresenter(message)
                     case .failure:
-                        SVProgressHUD.dismiss()
+                        self?.dismissLoadingPresenter()
                     }
                 }
             ).start()
         }
     }
     
-    func didTapNodeAction(type: DeviceCenterActionType, node: NodeEntity) {
+    func didTapShareFolderAction(
+        _ node: NodeEntity
+    ) {
+        executeNodeAction(for: node) { [weak self] presenter, node in
+            BackupNodesValidator(presenter: presenter, nodes: [node]).showWarningAlertIfNeeded {
+                guard let self,
+                      let contactsVC = self.setupContactsViewController(with: node, mode: .shareFoldersWith),
+                      let node = node.toMEGANode(in: MEGASdk.shared) else { return }
+                contactsVC.nodesArray = [node]
+                let navigation = MEGANavigationController(rootViewController: contactsVC)
+                presenter.present(navigation, animated: true, completion: nil)
+            }
+        }
+    }
+    
+    func didTapManageShareAction(
+        _ node: NodeEntity
+    ) {
+        executeNodeAction(for: node) { [weak self] presenter, node in
+            BackupNodesValidator(presenter: presenter, nodes: [node]).showWarningAlertIfNeeded {
+                guard let self,
+                      let contactsVC = self.setupContactsViewController(with: node, mode: .folderSharedWith) else { return }
+                self.navigationController?.pushViewController(contactsVC, animated: true)
+            }
+        }
+    }
+    
+    func didTapNodeAction(
+        type: DeviceCenterActionType,
+        node: NodeEntity
+    ) {
         switch type {
         case .showInCloudDrive: didTapShowInCloudDriveAction(node)
         case .shareLink, .manageLink: didTapShareLinkAction(node)
         case .removeLink: didTapRemoveLinkAction(node)
+        case .shareFolder: didTapShareFolderAction(node)
+        case .manageShare: didTapManageShareAction(node)
         default: break
         }
+    }
+    
+    func showError(_ error: any Error) {
+        errorPresenter(error.localizedDescription)
     }
 }

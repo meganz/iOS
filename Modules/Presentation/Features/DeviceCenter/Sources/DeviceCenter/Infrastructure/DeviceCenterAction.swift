@@ -8,7 +8,7 @@ public enum DeviceCenterActionType {
     case manageLink
     case removeLink
     case shareFolder
-    case manageFolder
+    case manageShare
     case showInCloudDrive
     case showInBackups
     case sort
