@@ -10,7 +10,7 @@ public struct OnboardingWithViewProPlansView: View {
     
     public var body: some View {
         ZStack {
-            Color("primaryElevated").edgesIgnoringSafeArea(.all)
+            Color("background_regular_primaryElevated").edgesIgnoringSafeArea(.all)
             
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 30) {
@@ -65,7 +65,7 @@ private struct OnboardingProPlanHeaderView: View {
                 .bold()
             
             Text(Strings.Localizable.Onboarding.UpgradeAccount.Header.subTitle(lowestPlanPrice))
-                .foregroundColor(Color("primaryGrayText"))
+                .foregroundColor(Color("upgrade_account_primaryGrayText"))
                 .font(.subheadline)
                 .multilineTextAlignment(.center)
         }
