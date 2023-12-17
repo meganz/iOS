@@ -162,7 +162,7 @@ extension NodeAction {
     }
     
     class func retryAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.retry, detail: nil, image: Asset.Images.Generic.link.image, type: .retry)
+        NodeAction(title: Strings.Localizable.retry, detail: nil, image: UIImage.link, type: .retry)
     }
     
     class func manageLinkAction(nodeCount: Int = 1) -> NodeAction {

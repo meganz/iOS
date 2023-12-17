@@ -184,9 +184,9 @@ extension ContactsGroupsViewController: DZNEmptyDataSetSource {
     
     private func imageForEmptyDataSet() -> UIImage? {
         if self.searchController.isActive && self.searchController.searchBar.text?.isNotEmpty == true {
-            return Asset.Images.EmptyStates.searchEmptyState.image
+            return UIImage.searchEmptyState
         } else {
-            return Asset.Images.EmptyStates.chatEmptyState.image
+            return UIImage.chatEmptyState
         }
     }
     
