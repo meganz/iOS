@@ -17,7 +17,7 @@ extension MyAccountHallViewController: UITableViewDataSource {
     // MARK: - Settings row setup data
     private func settingsSetupData() -> MyAccountHallCellData {
         MyAccountHallCellData(sectionText: Strings.Localizable.settingsTitle,
-                              icon: Asset.Images.MyAccount.iconSettings.image.imageFlippedForRightToLeftLayoutDirection(),
+                              icon: UIImage.iconSettings.imageFlippedForRightToLeftLayoutDirection(),
                               isPendingViewVisible: true)
     }
     
@@ -40,7 +40,7 @@ extension MyAccountHallViewController: UITableViewDataSource {
         
         return MyAccountHallCellData(sectionText: Strings.Localizable.storage,
                                      detailText: detailText,
-                                     icon: Asset.Images.MyAccount.iconStorage.image.imageFlippedForRightToLeftLayoutDirection())
+                                     icon: UIImage.iconStorage.imageFlippedForRightToLeftLayoutDirection())
     }
     
     // MARK: - Contacts row setup data
@@ -54,7 +54,7 @@ extension MyAccountHallViewController: UITableViewDataSource {
             pendingText = String(describing: incomingContacts)
         }
         return MyAccountHallCellData(sectionText: Strings.Localizable.contactsTitle,
-                                     icon: Asset.Images.MyAccount.iconContacts.image.imageFlippedForRightToLeftLayoutDirection(),
+                                     icon: UIImage.iconContacts.imageFlippedForRightToLeftLayoutDirection(),
                                      isPendingViewVisible: isPendingViewVisible,
                                      pendingText: pendingText)
     }
@@ -72,7 +72,7 @@ extension MyAccountHallViewController: UITableViewDataSource {
         }
         
         return MyAccountHallCellData(sectionText: Strings.Localizable.notifications,
-                                     icon: Asset.Images.MyAccount.iconNotifications.image.imageFlippedForRightToLeftLayoutDirection(),
+                                     icon: UIImage.iconNotifications.imageFlippedForRightToLeftLayoutDirection(),
                                      isPendingViewVisible: isPendingViewVisible,
                                      pendingText: pendingText)
     }
@@ -80,35 +80,35 @@ extension MyAccountHallViewController: UITableViewDataSource {
     // MARK: - Backups row setup data
     private func makeBackupsCellData() -> MyAccountHallCellData {
         MyAccountHallCellData(sectionText: Strings.Localizable.Backups.title,
-                              icon: Asset.Images.MyAccount.backups.image.imageFlippedForRightToLeftLayoutDirection(),
+                              icon: UIImage.backups.imageFlippedForRightToLeftLayoutDirection(),
                               isPendingViewVisible: true)
     }
     
     // MARK: - Achievements row setup data
     private func achievementsSetupData() -> MyAccountHallCellData {
         MyAccountHallCellData(sectionText: Strings.Localizable.achievementsTitle,
-                              icon: Asset.Images.MyAccount.iconAchievements.image.imageFlippedForRightToLeftLayoutDirection(),
+                              icon: UIImage.iconAchievements.imageFlippedForRightToLeftLayoutDirection(),
                               isPendingViewVisible: true)
     }
     
     // MARK: - Transfers row setup data
     private func transfersSetupData() -> MyAccountHallCellData {
         MyAccountHallCellData(sectionText: Strings.Localizable.transfers,
-                              icon: Asset.Images.MyAccount.iconTransfers.image.imageFlippedForRightToLeftLayoutDirection(),
+                              icon: UIImage.iconTransfers.imageFlippedForRightToLeftLayoutDirection(),
                               isPendingViewVisible: true)
     }
     
     // MARK: - Device center row setup data
     private func makeDeviceCenterCellData() -> MyAccountHallCellData {
         MyAccountHallCellData(sectionText: Strings.Localizable.Device.Center.title,
-                              icon: Asset.Images.Backup.deviceCenter.image.imageFlippedForRightToLeftLayoutDirection(),
+                              icon: UIImage.deviceCenter.imageFlippedForRightToLeftLayoutDirection(),
                               isPendingViewVisible: true)
     }
     
     // MARK: - Offline row setup data
     private func offlineSetupData() -> MyAccountHallCellData {
         MyAccountHallCellData(sectionText: Strings.Localizable.offline,
-                              icon: Asset.Images.MyAccount.iconOffline.image.imageFlippedForRightToLeftLayoutDirection(),
+                              icon: UIImage.iconOffline.imageFlippedForRightToLeftLayoutDirection(),
                               isPendingViewVisible: true)
     }
     
@@ -121,7 +121,7 @@ extension MyAccountHallViewController: UITableViewDataSource {
         
         return MyAccountHallCellData(sectionText: Strings.Localizable.rubbishBinLabel,
                                      detailText: rubbishBinSize,
-                                     icon: Asset.Images.NodeActions.rubbishBin.image.imageFlippedForRightToLeftLayoutDirection(),
+                                     icon: UIImage.rubbishBin.imageFlippedForRightToLeftLayoutDirection(),
                                      isPendingViewVisible: true)
     }
     

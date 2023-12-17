@@ -6,7 +6,7 @@ struct MyAccountHallPlanView: View {
     
     var body: some View {
         HStack {
-            Image(uiImage: Asset.Images.MyAccount.plan.image)
+            Image(uiImage: .plan)
                 .frame(width: 24, height: 24)
                 .padding(.horizontal, 14)
             

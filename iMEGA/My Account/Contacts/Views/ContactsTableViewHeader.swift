@@ -19,12 +19,12 @@ class ContactsTableViewHeader: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        requestsImageView.image = Asset.Images.Contacts.contactRequests.image.imageFlippedForRightToLeftLayoutDirection()
+        requestsImageView.image = UIImage.contactRequests.imageFlippedForRightToLeftLayoutDirection()
         requestsLabel.text = Strings.Localizable.requests
         
         configDetailsLabel()
         
-        groupsImageView.image = Asset.Images.Contacts.groups.image.imageFlippedForRightToLeftLayoutDirection()
+        groupsImageView.image = UIImage.contactGroups.imageFlippedForRightToLeftLayoutDirection()
         groupsLabel.text = Strings.Localizable.groups
         
         updateAppearance()

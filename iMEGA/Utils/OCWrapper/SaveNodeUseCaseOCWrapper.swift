@@ -21,7 +21,7 @@ import MEGASDKRepo
                     transferInventoryRepository: TransferInventoryRepository(sdk: MEGASdk.shared), fileSystemRepository: FileSystemRepository.newRepo)
                 let anyPendingSavePhotosTransfer = transferInventoryUseCase.saveToPhotosTransfers(filteringUserTransfer: true)?.isNotEmpty ?? false
                 if savedToPhotos, !anyPendingSavePhotosTransfer {
-                    SVProgressHUD.show(Asset.Images.NodeActions.saveToPhotos.image, status: Strings.Localizable.savedToPhotos)
+                    SVProgressHUD.show(UIImage.saveToPhotos, status: Strings.Localizable.savedToPhotos)
                 }
             case .failure(let error):
                 switch error {

@@ -11,11 +11,11 @@ import MEGASDKRepo
             return image(for: ((node.name ?? "") as NSString).pathExtension)
         case .folder:
             if MyChatFilesFolderNodeAccess.shared.isTargetNode(for: node) {
-                return Asset.Images.Filetypes.folderChat.image
+                return UIImage.folderChat
             }
 #if MAIN_APP_TARGET
             if CameraUploadNodeAccess.shared.isTargetNode(for: node) {
-                return Asset.Images.Filetypes.filetypeFolderCamera.image
+                return UIImage.filetypeFolderCamera
             } else if BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo).isBackupDeviceFolder(node.toNodeEntity()) {
                 return backupDeviceIcon(for: node)
             }
