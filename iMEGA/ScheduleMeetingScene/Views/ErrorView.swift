@@ -6,7 +6,7 @@ struct ErrorView: View {
     var body: some View {
         Text(error)
             .font(.footnote)
-            .foregroundColor(Color(UIColor.redF30C14))
+            .foregroundColor(MEGAAppColor.Red._F30C14.color)
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal)
     }

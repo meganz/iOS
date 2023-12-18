@@ -81,7 +81,7 @@ extension CameraUploadBannerStatusPartiallyCompletedReason: CameraUploadBannerSt
         case .videoUploadIsNotEnabled:
             return .primary
         case .photoLibraryLimitedAccess:
-            return scheme == .dark ? .yellowFFD60A : .yellow9D8319
+            return scheme == .dark ? MEGAAppColor.Yellow._FFD60A.color : MEGAAppColor.Yellow._9D8319.color
         }
     }
         
@@ -90,7 +90,7 @@ extension CameraUploadBannerStatusPartiallyCompletedReason: CameraUploadBannerSt
         case .videoUploadIsNotEnabled:
             return scheme == .dark ? .gray1D1D1D : .white
         case .photoLibraryLimitedAccess:
-            return .yellowFED42926
+            return MEGAAppColor.Yellow._FED42926.color
         }
     }
 }

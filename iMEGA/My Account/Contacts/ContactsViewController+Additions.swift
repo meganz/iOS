@@ -60,7 +60,7 @@ extension ContactsViewController {
 
         guard let hostingViewUIView = hostingView.view else { return }
 
-        hostingViewUIView.backgroundColor = UIColor.yellowFED429
+        hostingViewUIView.backgroundColor = MEGAAppColor.Yellow._FED429.uiColor
 
         contactsNotVerifiedView.isHidden = true
         contactsNotVerifiedView.addSubview(hostingViewUIView)

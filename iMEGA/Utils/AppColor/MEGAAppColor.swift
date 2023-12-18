@@ -324,6 +324,10 @@ enum MEGAAppColor {
             DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) ? designTokenColor : legacyColor
         }
         
+        var color: Color {
+            DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) ? designTokenColor.swiftUI : legacyColor.swiftUI
+        }
+        
         private var designTokenColor: UIColor {
             switch self {
             case ._00A382: TokenColors.Background.blur
@@ -395,6 +399,10 @@ enum MEGAAppColor {
             DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) ? designTokenColor : legacyColor
         }
         
+        var color: Color {
+            DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) ? designTokenColor.swiftUI : legacyColor.swiftUI
+        }
+        
         private var designTokenColor: UIColor {
             switch self {
             case ._CA75D1: TokenColors.Background.blur
@@ -434,6 +442,10 @@ enum MEGAAppColor {
         
         var uiColor: UIColor {
             DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) ? designTokenColor : legacyColor
+        }
+        
+        var color: Color {
+            DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) ? designTokenColor.swiftUI : legacyColor.swiftUI
         }
         
         private var designTokenColor: UIColor {

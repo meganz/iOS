@@ -802,7 +802,7 @@ extension UIColor {
     // MARK: Red
     
     class func mnz_redFF453A() -> UIColor {
-        return UIColor.redFF453A
+        MEGAAppColor.Red._FF453A.uiColor
     }
     
     @objc(mnz_redForTraitCollection:)
@@ -810,16 +810,16 @@ extension UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.redCE0A11
+                return MEGAAppColor.Red._CE0A11.uiColor
             } else {
-                return UIColor.redF30C14
+                return MEGAAppColor.Red._F30C14.uiColor
             }
             
         case .dark:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.redF95C61
+                return MEGAAppColor.Red._F95C61.uiColor
             } else {
-                return UIColor.redF7363D
+                return MEGAAppColor.Red._F7363D.uiColor
             }
             
         @unknown default:
@@ -836,19 +836,19 @@ extension UIColor {
     // MARK: Yellow
     
     class func mnz_yellowFED429() -> UIColor {
-        UIColor.yellowFED429
+        MEGAAppColor.Yellow._FED429.uiColor
     }
     
     class func mnz_yellow9D8319() -> UIColor {
-        UIColor.yellow9D8319
+        MEGAAppColor.Yellow._9D8319.uiColor
     }
     
     class func mnz_yellowF8D552() -> UIColor {
-        UIColor.yellowF8D552
+        MEGAAppColor.Yellow._F8D552.uiColor
     }
     
     @objc class func mnz_yellowFFCC00() -> UIColor {
-        return UIColor.yellowFFCC00
+        MEGAAppColor.Yellow._FFCC00.uiColor
     }
     
     // MARK: Brown

@@ -86,7 +86,7 @@ struct RenameViewModel {
     }
     
     func alertTextsColor(text: String) -> UIColor {
-        containsInvalidChars(text) || isDuplicated(text) || !isNewNameWithinMaxLength(text) ? UIColor.redFF3B30 : UIColor.label
+        containsInvalidChars(text) || isDuplicated(text) || !isNewNameWithinMaxLength(text) ? MEGAAppColor.Red._FF3B30.uiColor : UIColor.label
     }
     
     func isActionButtonEnabled(text: String) -> Bool {

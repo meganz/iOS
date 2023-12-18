@@ -144,19 +144,19 @@ extension MyAccountHallViewModel {
             BackupStatus(
                 status: .outOfQuota,
                 title: Strings.Localizable.Device.Center.Backup.OutOfQuota.Status.message,
-                color: UIColor.redFF3B30,
+                color: MEGAAppColor.Red._FF3B30.uiColor,
                 iconName: BackUpStatusIconAssets.outOfQuota
             ),
             BackupStatus(
                 status: .error,
                 title: Strings.Localizable.Device.Center.Backup.Error.Status.message,
-                color: UIColor.redFF3B30,
+                color: MEGAAppColor.Red._FF3B30.uiColor,
                 iconName: BackUpStatusIconAssets.error
             ),
             BackupStatus(
                 status: .blocked,
                 title: Strings.Localizable.Device.Center.Backup.Blocked.Status.message,
-                color: UIColor.redFF3B30,
+                color: MEGAAppColor.Red._FF3B30.uiColor,
                 iconName: BackUpStatusIconAssets.disabled
             )
         ]

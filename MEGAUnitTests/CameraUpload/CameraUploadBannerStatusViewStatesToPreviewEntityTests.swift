@@ -56,8 +56,8 @@ class CameraUploadBannerStatusViewStatesToPreviewEntityTests: XCTestCase {
     func testToPreviewEntity_ForAllInUploadPartiallyCompletedStates_shouldReturnCorrectStrings() {
         performPreviewComparisonTest(
             status: .uploadPartialCompleted(reason: .photoLibraryLimitedAccess),
-            textColor: (.yellow9D8319, .yellowFFD60A),
-            backgroundColor: (.yellowFED42926, .yellowFED42926),
+            textColor: (MEGAAppColor.Yellow._9D8319.color, MEGAAppColor.Yellow._FFD60A.color),
+            backgroundColor: (MEGAAppColor.Yellow._FED42926.color, MEGAAppColor.Yellow._FED42926.color),
             expectedTitle: Strings.Localizable.CameraUploads.Banner.Status.UploadsComplete.title,
             expectedSubheading: Strings.Localizable.CameraUploads.Banner.Status.UploadsPartialComplete.LimitedPhotoLibraryAccess.subHeading
         )
