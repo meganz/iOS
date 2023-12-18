@@ -97,7 +97,8 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    [self.viewModel onViewDidLoad];
+    
     self.imageViewsZoomCache = [[NSCache<NSNumber *, NSNumber *> alloc] init];
 
     self.modalPresentationCapturesStatusBarAppearance = YES;
@@ -260,6 +261,13 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     [self freeUpSpaceOnImageViewCache:self.imageViewsCache imageViewsZoomCache: self.imageViewsZoomCache scrollView:self.scrollView];
     [self reloadUI];
     [super didReceiveMemoryWarning];
+}
+
+- (PhotoBrowserViewModel *)viewModel {
+    if (_viewModel == nil) {
+        _viewModel = [self makeViewModel];
+    }
+    return _viewModel;
 }
 
 #pragma mark - Status bar
@@ -1150,6 +1158,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             break;
             
         case MegaNodeActionTypeSaveToPhotos:
+            [self.viewModel trackAnalyticsSaveToDeviceMenuToolbarEvent];
             [self saveToPhotosWithNode:node];
             break;
             

@@ -11,6 +11,10 @@ import SwiftUI
 import UIKit
 
 extension MEGAPhotoBrowserViewController {
+    @objc func makeViewModel() -> PhotoBrowserViewModel {
+        PhotoBrowserViewModel()
+    }
+    
     @objc func createNodeInfoViewModel(withNode node: MEGANode) -> NodeInfoViewModel {
         NodeInfoViewModel(withNode: node)
     }
@@ -372,7 +376,7 @@ extension MEGAPhotoBrowserViewController {
                 nodeEntities.hasModifiedFavourites()
     }
     
-    ///Check if node updates require photos views to reload
+    /// Check if node updates require photos views to reload
     ///
     /// Node changes types containing anything other than `favourite`, `attributes` or `publicLink` will require reloading the image views again.
     private func shouldReloadUI(nodes: MEGANodeList) -> Bool {

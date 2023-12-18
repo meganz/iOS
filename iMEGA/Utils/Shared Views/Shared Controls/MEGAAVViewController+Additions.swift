@@ -9,6 +9,10 @@ import MEGASwift
 
 extension MEGAAVViewController {
     
+    @objc func makeViewModel() -> AVViewModel {
+        AVViewModel()
+    }
+    
     @objc func bindToSubscriptions(
         movieStalled: (() -> Void)?
     ) -> NSMutableSet {
