@@ -2,9 +2,11 @@ import SwiftUI
 
 // For more reference, please visit: https://github.com/markiv/SwiftUI-Shimmer/blob/main/Sources/Shimmer/Shimmer.swift
 public struct Shimmer: ViewModifier {
+    let isActive: Bool
+    
     @State private var isInitialState = true
     @Environment(\.layoutDirection) private var layoutDirection
-    @Environment(\.colorScheme) var colorScheme
+    @Environment(\.colorScheme) private var colorScheme
 
     private let animation = Animation.linear(duration: 1.5).delay(0.25).repeatForever(autoreverses: false)
     // Unit point dimensions beyond the gradient's edges by the band size of 0.3
@@ -16,7 +18,7 @@ public struct Shimmer: ViewModifier {
             colors: colorScheme == .light ? [.black.opacity(0.1), .black.opacity(0.2), .black.opacity(0.1)] : [.white.opacity(0.2), .white.opacity(0.3), .white.opacity(0.2)]
         )
     }
-
+    
     /// The start unit point of our gradient, adjusting for layout direction.
     private var startPoint: UnitPoint {
         if layoutDirection == .rightToLeft {
@@ -39,14 +41,31 @@ public struct Shimmer: ViewModifier {
         content
             .animation(nil, value: isInitialState)
             .mask(LinearGradient(gradient: gradient, startPoint: startPoint, endPoint: endPoint))
-            .animation(animation, value: isInitialState)
+            .animation(isActive ? animation : .linear(duration: 0), value: isInitialState)
             .onAppear {
                 // Delay the animation until the initial layout is established
                 // to prevent animating the appearance of the view
-                DispatchQueue.main.asyncAfter(deadline: .now()) {
-                    isInitialState = false
+                if isActive {
+                    DispatchQueue.main.asyncAfter(deadline: .now()) {
+                        startShimmering()
+                    }
                 }
             }
+            .onChange(of: isActive) { newValue in
+                if newValue {
+                    startShimmering()
+                } else {
+                    stopShimmering()
+                }
+            }
+    }
+    
+    private func startShimmering() {
+        isInitialState = false
+    }
+    
+    private func stopShimmering() {
+        isInitialState = true
     }
 }
 
@@ -57,11 +76,7 @@ public extension View {
     @ViewBuilder func shimmering(
         active: Bool = true
     ) -> some View {
-        if active {
-            modifier(Shimmer())
-        } else {
-            self
-        }
+        modifier(Shimmer(isActive: active))
     }
 }
 

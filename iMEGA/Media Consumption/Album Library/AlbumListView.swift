@@ -5,34 +5,18 @@ import SwiftUI
 struct AlbumListView: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass: UserInterfaceSizeClass?
     @StateObject var viewModel: AlbumListViewModel
-    @ObservedObject var createAlbumCellViewModel: CreateAlbumCellViewModel
     var router: any AlbumListViewRouting
     
     @State private var editMode: EditMode = .inactive
     
     var body: some View {
-        VStack(spacing: 0) {
-            ScrollView {
-                LazyVGrid(columns: viewModel.columns(horizontalSizeClass: horizontalSizeClass), spacing: 10) {
-                    CreateAlbumCell(viewModel: createAlbumCellViewModel)
-                        .opacity($editMode.wrappedValue.isEditing ? 0.5 : 1)
-                        .onTapGesture { viewModel.onCreateAlbum() }
-                    
-                    ForEach(viewModel.albums, id: \.self) { album in
-                        router.cell(album: album, selection: viewModel.selection)
-                        .clipped()
-                        .onTapGesture(count: 1) { viewModel.onAlbumTap(album) }
-                    }
-                }
-            }
-            .padding(.horizontal, 6)
-        }
+        content
+        .throwingTask { try await viewModel.monitorAlbums() }
         .alert(isPresented: $viewModel.showCreateAlbumAlert, viewModel.alertViewModel)
         .alert(item: $viewModel.albumAlertType, content: { albumAlertType in
             viewModel.showAlertView(albumAlertType)
         })
-        .overlay(viewModel.shouldLoad ? ProgressView()
-            .scaleEffect(1.5) : nil)
+        .overlay(placeholderView)
         .fullScreenCover(item: $viewModel.album, onDismiss: {
             viewModel.newAlbumContent = nil
         }, content: {
@@ -50,22 +34,36 @@ struct AlbumListView: View {
             shareLinksView(forAlbums: viewModel.selectedUserAlbums)
         })
         .padding([.top, .bottom], 10)
-        .onAppear {
-            viewModel.onViewAppeared()
-        }
-        .onDisappear {
-            viewModel.onViewDisappeared()
-        }
-        .progressViewStyle(.circular)
+        .onDisappear { viewModel.cancelLoading() }
         .environment(\.editMode, $editMode)
-        .onReceive(viewModel.selection.$editMode) {
-            editMode = $0
-        }
+        .onReceive(viewModel.selection.$editMode) { editMode = $0 }
         .onReceive(viewModel.$albumHudMessage) { hudMessage in
             guard let hudMessage else { return }
             SVProgressHUD.dismiss(withDelay: 3)
             SVProgressHUD.show(hudMessage.icon, status: hudMessage.message)
         }
+    }
+    
+    private var content: some View {
+        VStack(spacing: 0) {
+            ScrollView {
+                LazyVGrid(columns: viewModel.columns(horizontalSizeClass: horizontalSizeClass), spacing: 10) {
+                    CreateAlbumCell { viewModel.onCreateAlbum() }
+                        .opacity($editMode.wrappedValue.isEditing ? 0.5 : 1)
+                    
+                    ForEach(viewModel.albums, id: \.self) { album in
+                        router.cell(album: album, selection: viewModel.selection)
+                        .clipped()
+                        .onTapGesture(count: 1) { viewModel.onAlbumTap(album) }
+                    }
+                }
+            }
+            .padding(.horizontal, 6)
+        }
+    }
+    
+    private var placeholderView: some View {
+        AlbumListPlaceholderView(isActive: viewModel.shouldLoad) { viewModel.onCreateAlbum() }
     }
     
     @ViewBuilder

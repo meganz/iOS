@@ -7,7 +7,6 @@ import SwiftUI
 
 @MainActor
 final class AlbumListViewModel: NSObject, ObservableObject {
-    @Published var cameraUploadNode: NodeEntity?
     @Published var album: AlbumEntity?
     @Published var shouldLoad = true
     @Published var albums = [AlbumEntity]()
@@ -24,7 +23,6 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     lazy var selection = AlbumSelection()
     
     var albumCreationAlertMsg: String?
-    var albumLoadingTask: Task<Void, Never>?
     var createAlbumTask: Task<Void, Never>?
     var deleteAlbumTask: Task<Void, Never>?
     var albumRemoveShareLinkTask: Task<Void, Never>?
@@ -44,7 +42,6 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     private let tracker: any AnalyticsTracking
     private(set) var alertViewModel: TextFieldAlertViewModel
     private var subscriptions = Set<AnyCancellable>()
-    private(set) var viewIsVisiblePublisher = PassthroughSubject<Bool, Never>()
     
     private weak var photoAlbumContainerViewModel: PhotoAlbumContainerViewModel?
     
@@ -83,18 +80,8 @@ final class AlbumListViewModel: NSObject, ObservableObject {
             count: horizontalSizeClass == .compact ? 3 : 5
         )
     }
-    
-    func loadAlbums() {
-        albumLoadingTask = Task {
-            async let systemAlbums = systemAlbums()
-            async let userAlbums = userAlbums()
-            albums = await systemAlbums + userAlbums
-            shouldLoad = false
-        }
-    }
-    
+        
     func cancelLoading() {
-        albumLoadingTask?.cancel()
         createAlbumTask?.cancel()
     }
     
@@ -106,7 +93,6 @@ final class AlbumListViewModel: NSObject, ObservableObject {
         }
         
         photoAlbumContainerViewModel?.disableSelectBarButton = true
-        shouldLoad = true
         createAlbumTask = Task {
             do {
                 let newAlbum = try await usecase.createUserAlbum(with: name)
@@ -116,7 +102,6 @@ final class AlbumListViewModel: NSObject, ObservableObject {
             } catch {
                 MEGALogError("Error creating user album: \(error.localizedDescription)")
             }
-            shouldLoad = false
             photoAlbumContainerViewModel?.disableSelectBarButton = false
         }
     }
@@ -168,6 +153,15 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     }
     
     // MARK: - Private
+    private func loadAlbums() async throws {
+        shouldLoad = albums.isEmpty
+        async let systemAlbums = systemAlbums()
+        async let userAlbums = userAlbums()
+        try Task.checkCancellation()
+        albums = await systemAlbums + userAlbums
+        shouldLoad = false
+    }
+    
     private func systemAlbums() async -> [AlbumEntity] {
         do {
             return try await usecase.systemAlbums().map { album in
@@ -300,39 +294,23 @@ final class AlbumListViewModel: NSObject, ObservableObject {
         tracker.trackAnalyticsEvent(with: album.makeAlbumSelectedEvent(selectionType: .single))
     }
     
-    func onViewAppeared() {
-        viewIsVisiblePublisher.send(true)
-    }
-    
-    func onViewDisappeared() {
-        viewIsVisiblePublisher.send(false)
+    func monitorAlbums() async throws {
+        let albumsUpdatedStream = usecase
+            .albumsUpdatedPublisher
+            .prepend(())
+            .debounceImmediate(for: .seconds(0.35), scheduler: DispatchQueue.global())
+            .eraseToAnyPublisher()
+            .values
+        
+        for await _ in albumsUpdatedStream {
+            try Task.checkCancellation()
+            try await loadAlbums()
+        }
     }
     
     // MARK: - Private
     
     private func setupSubscription() {
-        viewIsVisiblePublisher
-            .map { [weak self] isVisible -> AnyPublisher<Void, Never> in
-                guard let self else {
-                    return Empty().eraseToAnyPublisher()
-                }
-                guard isVisible else {
-                    cancelLoading()
-                    return Empty().eraseToAnyPublisher()
-                }
-                
-                return self.usecase
-                    .albumsUpdatedPublisher
-                    .prepend(())
-                    .debounceImmediate(for: .seconds(0.35), scheduler: DispatchQueue.global())
-                    .eraseToAnyPublisher()
-            }
-            .eraseToAnyPublisher()
-            .switchToLatest()
-            .sink { [weak self] in
-                self?.loadAlbums()
-            }
-            .store(in: &subscriptions)
         
         photoAlbumContainerViewModel?.$showDeleteAlbumAlert
             .dropFirst()

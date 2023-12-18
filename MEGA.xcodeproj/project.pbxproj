@@ -216,6 +216,7 @@
 		25A58FA42B0ED04C00050882 /* TimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A58FA32B0ED04C00050882 /* TimelineView.swift */; };
 		25A58FAF2B0F084E00050882 /* CameraUploadStatusBannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A58FAE2B0F084E00050882 /* CameraUploadStatusBannerViewModel.swift */; };
 		25A58FB52B0FF8F100050882 /* MonitorCameraUploadBannerStatusProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A58FB42B0FF8F100050882 /* MonitorCameraUploadBannerStatusProvider.swift */; };
+		25AA545F2B27E1640094F2A2 /* AlbunListPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AA545E2B27E1640094F2A2 /* AlbunListPlaceholderView.swift */; };
 		25AF215E2AB263C400DC41AF /* EmptyMediaDiscoveryContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AF215D2AB263C400DC41AF /* EmptyMediaDiscoveryContentView.swift */; };
 		25AF21632AB28E9400DC41AF /* EmptyMediaDiscoveryContentMenuAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AF21622AB28E9400DC41AF /* EmptyMediaDiscoveryContentMenuAction.swift */; };
 		25B529412AE765B8004503FD /* EnableCameraUploadsBannerButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8C7E772AE2166900D408EB /* EnableCameraUploadsBannerButtonView.swift */; };
@@ -379,7 +380,6 @@
 		32CB4914284EF56900697BA9 /* PhotoLibraryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32CB4913284EF56900697BA9 /* PhotoLibraryRepository.swift */; };
 		32D167AA2942DA59008C5ED6 /* MockSlideShowDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D167A92942DA59008C5ED6 /* MockSlideShowDataSource.swift */; };
 		32D167C029497394008C5ED6 /* CreateAlbumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D167BF29497394008C5ED6 /* CreateAlbumCell.swift */; };
-		32D167EC294C555F008C5ED6 /* CreateAlbumCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D167EB294C555F008C5ED6 /* CreateAlbumCellViewModel.swift */; };
 		32DF912E2A1CA53200AEB585 /* PhotosFilterTypeTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32DF912D2A1CA53200AEB585 /* PhotosFilterTypeTest.swift */; };
 		32DF91302A1CA54000AEB585 /* PhotosFilterLocationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32DF912F2A1CA54000AEB585 /* PhotosFilterLocationTest.swift */; };
 		32EC27C429B6B54300D1D18D /* PhotoAlbumContainerToolbarProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32EC27C329B6B54300D1D18D /* PhotoAlbumContainerToolbarProvider.swift */; };
@@ -2761,6 +2761,7 @@
 		25A58FA32B0ED04C00050882 /* TimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineView.swift; sourceTree = "<group>"; };
 		25A58FAE2B0F084E00050882 /* CameraUploadStatusBannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadStatusBannerViewModel.swift; sourceTree = "<group>"; };
 		25A58FB42B0FF8F100050882 /* MonitorCameraUploadBannerStatusProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorCameraUploadBannerStatusProvider.swift; sourceTree = "<group>"; };
+		25AA545E2B27E1640094F2A2 /* AlbunListPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbunListPlaceholderView.swift; sourceTree = "<group>"; };
 		25AF215D2AB263C400DC41AF /* EmptyMediaDiscoveryContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMediaDiscoveryContentView.swift; sourceTree = "<group>"; };
 		25AF21622AB28E9400DC41AF /* EmptyMediaDiscoveryContentMenuAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMediaDiscoveryContentMenuAction.swift; sourceTree = "<group>"; };
 		25B774C32B141737001F623A /* CameraUploadStatusBannerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadStatusBannerViewModelTests.swift; sourceTree = "<group>"; };
@@ -2928,7 +2929,6 @@
 		32CB4913284EF56900697BA9 /* PhotoLibraryRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoLibraryRepository.swift; sourceTree = "<group>"; };
 		32D167A92942DA59008C5ED6 /* MockSlideShowDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockSlideShowDataSource.swift; sourceTree = "<group>"; };
 		32D167BF29497394008C5ED6 /* CreateAlbumCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAlbumCell.swift; sourceTree = "<group>"; };
-		32D167EB294C555F008C5ED6 /* CreateAlbumCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAlbumCellViewModel.swift; sourceTree = "<group>"; };
 		32DF912D2A1CA53200AEB585 /* PhotosFilterTypeTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosFilterTypeTest.swift; sourceTree = "<group>"; };
 		32DF912F2A1CA54000AEB585 /* PhotosFilterLocationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosFilterLocationTest.swift; sourceTree = "<group>"; };
 		32EC27C329B6B54300D1D18D /* PhotoAlbumContainerToolbarProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbumContainerToolbarProvider.swift; sourceTree = "<group>"; };
@@ -5454,6 +5454,7 @@
 				127053A32822216800D64C21 /* AlbumListViewRouter.swift */,
 				3282016729AEDEE100C0E841 /* AlbumNameValidator.swift */,
 				3256C38829A63A74001B0280 /* AlbumSelection.swift */,
+				25AA545E2B27E1640094F2A2 /* AlbunListPlaceholderView.swift */,
 			);
 			path = "Album Library";
 			sourceTree = "<group>";
@@ -5464,7 +5465,6 @@
 				12397E1C2820C47100A30CCC /* AlbumCell.swift */,
 				12397E1E2820C47E00A30CCC /* AlbumCellViewModel.swift */,
 				32D167BF29497394008C5ED6 /* CreateAlbumCell.swift */,
-				32D167EB294C555F008C5ED6 /* CreateAlbumCellViewModel.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -13384,6 +13384,7 @@
 				32F9E682283490620002132D /* AlbumToolbarConfigurator.swift in Sources */,
 				32F9E684283490A40002132D /* AlbumToolbarProvider.swift in Sources */,
 				0EA150D729B810D2005C6486 /* AlbumType.swift in Sources */,
+				25AA545F2B27E1640094F2A2 /* AlbunListPlaceholderView.swift in Sources */,
 				943649D82A4D81B0006CE8B8 /* AlertModel+DevicePermissions.swift in Sources */,
 				832DEFEA2AB46199004573D5 /* AllowNonHostToInviteTableViewCell.swift in Sources */,
 				B5E719B8290B716A0076FEA3 /* AppDelegate+Account.swift in Sources */,
@@ -13697,7 +13698,6 @@
 				B582966A27C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift in Sources */,
 				E8D4B8921A69429200A3B2E2 /* CreateAccountViewController.m in Sources */,
 				32D167C029497394008C5ED6 /* CreateAlbumCell.swift in Sources */,
-				32D167EC294C555F008C5ED6 /* CreateAlbumCellViewModel.swift in Sources */,
 				1246682F275DBE0500C94335 /* CreateTextFileAlertViewController.swift in Sources */,
 				12466834275DBE0600C94335 /* CreateTextFileAlertViewModel.swift in Sources */,
 				1246682D275DBE0500C94335 /* CreateTextFileAlertViewRouter.swift in Sources */,
