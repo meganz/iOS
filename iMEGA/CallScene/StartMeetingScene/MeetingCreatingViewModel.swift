@@ -57,6 +57,7 @@ final class MeetingCreatingViewModel: ViewModelType {
     private let userImageUseCase: any UserImageUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
+    private let callUseCase: any CallUseCaseProtocol
     private let tracker: any AnalyticsTracking
 
     private var isVideoEnabled = false
@@ -91,6 +92,7 @@ final class MeetingCreatingViewModel: ViewModelType {
         userImageUseCase: some UserImageUseCaseProtocol,
         accountUseCase: some AccountUseCaseProtocol,
         megaHandleUseCase: some MEGAHandleUseCaseProtocol,
+        callUseCase: some CallUseCaseProtocol,
         tracker: some AnalyticsTracking = DIContainer.tracker,
         link: String?,
         userHandle: UInt64
@@ -105,6 +107,7 @@ final class MeetingCreatingViewModel: ViewModelType {
         self.userImageUseCase = userImageUseCase
         self.accountUseCase = accountUseCase
         self.megaHandleUseCase = megaHandleUseCase
+        self.callUseCase = callUseCase
         self.tracker = tracker
         self.link = link
         self.userHandle = userHandle
@@ -273,13 +276,16 @@ final class MeetingCreatingViewModel: ViewModelType {
             guard let self else { return }
             switch $0 {
             case .success(let chatRoom):
-                guard let call = self.meetingUseCase.getCall(forChatId: chatRoom.chatId) else {
-                    MEGALogError("Can not join meeting, not call found for chat")
-                    self.dismiss()
-                    return
+                Task { @MainActor in
+                    do {
+                        let call = try await self.callUseCase.answerCall(for: chatId, enableVideo: self.isVideoEnabled, enableAudio: self.isMicrophoneEnabled)
+                        self.router.dismiss()
+                        self.router.goToMeetingRoom(chatRoom: chatRoom, call: call, isSpeakerEnabled: self.isSpeakerEnabled)
+                    } catch {
+                        MEGALogDebug("Cannot answer call")
+                        self.dismiss()
+                    }
                 }
-                self.router.dismiss()
-                self.router.goToMeetingRoom(chatRoom: chatRoom, call: call, isSpeakerEnabled: self.isSpeakerEnabled)
             case .failure:
                 self.dismiss()
             }
@@ -299,26 +305,27 @@ final class MeetingCreatingViewModel: ViewModelType {
             waitingRoom: isWaitingRoomEnabled,
             allowNonHostToAddParticipants: doesAllowNonHostToAddParticipants)
         
-        meetingUseCase.startCall(startCall) { [weak self] in
-            guard let self else { return }
-            switch $0 {
-            case .success(let chatRoom):
-                guard let call = self.meetingUseCase.getCall(forChatId: chatRoom.chatId) else {
-                    MEGALogError("Can not start meeting, not call found for chat")
-                    self.dismiss()
-                    return
-                }
-                
-                // Making sure the chatlink is created when meeting is created so that the other participant can share.
-                self.meetingUseCase.createChatLink(forChatId: chatRoom.chatId)
-                self.dismiss()
-                self.router.goToMeetingRoom(chatRoom: chatRoom, call: call, isSpeakerEnabled: self.isSpeakerEnabled)
-            case .failure:
+        Task { @MainActor in
+            do {
+                let chatRoom = try await meetingUseCase.createMeeting(startCall)
+                let call = try await callUseCase.startCall(
+                    for: chatRoom.chatId,
+                    enableVideo: isVideoEnabled,
+                    enableAudio: isMicrophoneEnabled
+                )
+                meetingUseCase.createChatLink(forChatId: chatRoom.chatId)
+                dismiss()
+                router.goToMeetingRoom(
+                    chatRoom: chatRoom,
+                    call: call,
+                    isSpeakerEnabled: isSpeakerEnabled
+                )
+            } catch {
                 self.dismiss()
             }
         }
     }
-    
+        
     private func checkForVideoPermission(onSuccess completionBlock: @escaping () -> Void) {
         permissionHandler.requestVideoPermission { [weak self] granted in
             if granted {

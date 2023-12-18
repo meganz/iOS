@@ -3,7 +3,7 @@ import MEGADomain
 
 final class MockMeetingCreatingUseCase: MeetingCreatingUseCaseProtocol {
     let userName: String
-    var chatCallCompletion: Result<ChatRoomEntity, CallErrorEntity>
+    var createMeetingResult: Result<ChatRoomEntity, CallErrorEntity>
     var createEphemeralAccountCompletion: Result<Void, MEGASDKErrorType>
     var joinCallCompletion: Result<ChatRoomEntity, CallErrorEntity>
     var checkChatLinkCompletion: Result<ChatRoomEntity, CallErrorEntity>
@@ -11,20 +11,25 @@ final class MockMeetingCreatingUseCase: MeetingCreatingUseCaseProtocol {
     var createChatLink_calledTimes = 0
     
     init(userName: String = "Test Name",
-         chatCallCompletion: Result<ChatRoomEntity, CallErrorEntity> = .failure(.generic),
+         createMeetingResult: Result<ChatRoomEntity, CallErrorEntity> = .failure(.generic),
          createEphemeralAccountCompletion: Result<Void, MEGASDKErrorType> = .failure(.unexpected),
          joinCallCompletion: Result<ChatRoomEntity, CallErrorEntity> = .failure(.generic),
          checkChatLinkCompletion: Result<ChatRoomEntity, CallErrorEntity> = .failure(.generic)
     ) {
         self.userName = userName
-        self.chatCallCompletion = chatCallCompletion
+        self.createMeetingResult = createMeetingResult
         self.createEphemeralAccountCompletion = createEphemeralAccountCompletion
         self.joinCallCompletion = joinCallCompletion
         self.checkChatLinkCompletion = checkChatLinkCompletion
     }
     
-    func startCall(_ startCall: StartCallEntity, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {
-        completion(chatCallCompletion)
+    func createMeeting(_ startCall: StartCallEntity) async throws -> ChatRoomEntity {
+        switch createMeetingResult {
+        case .success(let chatRoom):
+            return chatRoom
+        case .failure(let error):
+            throw error
+        }
     }
     
     func joinCall(forChatId chatId: UInt64, enableVideo: Bool, enableAudio: Bool, userHandle: UInt64, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {

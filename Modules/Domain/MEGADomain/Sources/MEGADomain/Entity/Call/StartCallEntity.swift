@@ -1,4 +1,4 @@
-public struct StartCallEntity {
+public struct StartCallEntity: Sendable {
     public let meetingName: String
     public let enableVideo: Bool
     public let enableAudio: Bool
