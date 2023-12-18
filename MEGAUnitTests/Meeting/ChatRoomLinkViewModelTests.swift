@@ -2,6 +2,8 @@ import Combine
 @testable import MEGA
 import MEGAAnalyticsiOS
 import MEGADomain
+import MEGADomainMock
+import MEGAPresentation
 import MEGAPresentationMock
 import MEGATest
 import XCTest
@@ -12,7 +14,7 @@ final class ChatRoomLinkViewModelTests: XCTestCase {
     func testIsMeetingLinkOn_onReceiveMeetingLinkNoneNil_meetingLinkShouldBeOn() {
         let chatLinkUseCase = MockChatLinkUseCase(link: "Meeting link")
         
-        let sut = ChatRoomLinkViewModel(chatLinkUseCase: chatLinkUseCase)
+        let sut = makeChatRoomLinkViewModel(chatLinkUseCase: chatLinkUseCase)
         
         let exp = expectation(description: "Should receive meeting link update")
         sut.$isMeetingLinkOn
@@ -30,7 +32,7 @@ final class ChatRoomLinkViewModelTests: XCTestCase {
     func testIsMeetingLinkOn_onReceiveMeetingLinkNil_meetingLinkShouldBeOff() {
         let chatLinkUseCase = MockChatLinkUseCase(link: nil)
 
-        let sut = ChatRoomLinkViewModel(chatLinkUseCase: chatLinkUseCase)
+        let sut = makeChatRoomLinkViewModel(chatLinkUseCase: chatLinkUseCase)
         
         let exp = expectation(description: "Should receive meeting link update")
         sut.$isMeetingLinkOn
@@ -47,7 +49,7 @@ final class ChatRoomLinkViewModelTests: XCTestCase {
 
     func testShareMeetingLinkTapped_onShareLinkTapped_shouldTrackEvent() {
         let tracker = MockTracker()
-        let sut = ChatRoomLinkViewModel(tracker: tracker)
+        let sut = makeChatRoomLinkViewModel(tracker: tracker)
         
         sut.shareMeetingLinkTapped()
         
@@ -56,6 +58,28 @@ final class ChatRoomLinkViewModelTests: XCTestCase {
             with: [
                 ScheduledMeetingShareMeetingLinkButtonEvent()
             ]
+        )
+    }
+    
+    // MARK: - Private
+
+    private func makeChatRoomLinkViewModel(
+        router: some MeetingInfoRouting = MockMeetingInfoRouter(),
+        chatRoom: ChatRoomEntity = ChatRoomEntity(),
+        scheduledMeeting: ScheduledMeetingEntity = ScheduledMeetingEntity(),
+        chatLinkUseCase: some ChatLinkUseCaseProtocol = MockChatLinkUseCase(),
+        chatUseCase: some ChatUseCaseProtocol = MockChatUseCase(),
+        tracker: some AnalyticsTracking = MockTracker(),
+        subtitle: String = ""
+    ) -> ChatRoomLinkViewModel {
+        ChatRoomLinkViewModel(
+            router: router,
+            chatRoom: chatRoom,
+            scheduledMeeting: scheduledMeeting,
+            chatLinkUseCase: chatLinkUseCase,
+            chatUseCase: chatUseCase,
+            tracker: tracker,
+            subtitle: subtitle
         )
     }
 }
@@ -97,7 +121,7 @@ final class MockMeetingInfoRouter: MeetingInfoRouting {
         showLeaveChatAlert_calledTimes += 1
     }
     
-    func showShareActivity(_ link: String, title: String?, description: String?) {
+    func showShareActivity(_ link: String, title: String, message: String) {
         showShareActivity_calledTimes += 1
     }
     

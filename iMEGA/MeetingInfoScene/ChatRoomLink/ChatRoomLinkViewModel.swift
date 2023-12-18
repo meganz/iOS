@@ -9,6 +9,7 @@ final class ChatRoomLinkViewModel: ObservableObject {
     private var chatRoom: ChatRoomEntity
     private let scheduledMeeting: ScheduledMeetingEntity
     private var chatLinkUseCase: any ChatLinkUseCaseProtocol
+    private var chatUseCase: any ChatUseCaseProtocol
     private let tracker: any AnalyticsTracking
     private let subtitle: String
 
@@ -25,6 +26,7 @@ final class ChatRoomLinkViewModel: ObservableObject {
         chatRoom: ChatRoomEntity,
         scheduledMeeting: ScheduledMeetingEntity,
         chatLinkUseCase: some ChatLinkUseCaseProtocol,
+        chatUseCase: some ChatUseCaseProtocol,
         tracker: some AnalyticsTracking = DIContainer.tracker,
         subtitle: String
     ) {
@@ -32,6 +34,7 @@ final class ChatRoomLinkViewModel: ObservableObject {
         self.chatRoom = chatRoom
         self.scheduledMeeting = scheduledMeeting
         self.chatLinkUseCase = chatLinkUseCase
+        self.chatUseCase = chatUseCase
         self.tracker = tracker
         self.subtitle = subtitle
         
@@ -109,8 +112,14 @@ final class ChatRoomLinkViewModel: ObservableObject {
             router.showLinkCopied()
         case .share:
             router.showShareActivity(meetingLink,
-                                     title: scheduledMeeting.title,
-                                     description: subtitle)
+                                     title: scheduledMeeting.title + "\n" +
+                                     subtitle,
+                                     message:
+                                        Strings.Localizable.Meetings.Info.ShareMeetingLink.invitation((chatUseCase.myFullName() ?? "")) + "\n" +
+                                     Strings.Localizable.Meetings.Info.ShareMeetingLink.meetingName(scheduledMeeting.title) + "\n" +
+                                     Strings.Localizable.Meetings.Info.ShareMeetingLink.meetingTime(subtitle) + "\n" +
+                                     Strings.Localizable.Meetings.Info.ShareMeetingLink.meetingLink(meetingLink)
+            )
         }
     }
 }
