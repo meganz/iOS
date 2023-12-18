@@ -8,7 +8,7 @@ struct LightColorThemeFactory: ColorFactory {
         case .secondary: return MEGAAppColor.Gray._999999.uiColor
         case .tertiary: return MEGAAppColor.Gray._515151.uiColor
         case .quaternary: return MEGAAppColor.Gray._848484.uiColor
-        case .warning: return UIColor.redFF3B30
+        case .warning: return MEGAAppColor.Red._FF3B30.uiColor
         }
     }
     
@@ -17,7 +17,7 @@ struct LightColorThemeFactory: ColorFactory {
         case .primary: return .white
         case .secondary: return MEGAAppColor.Gray._C4CCCC.uiColor
             
-        case .warning: return UIColor.yellowFFCC0003
+        case .warning: return MEGAAppColor.Yellow._FFCC0003.uiColor
         case .enabled: return UIColor.green00A886
         case .disabled: return MEGAAppColor.Gray._999999.uiColor
         case .highlighted: return UIColor.green00A88680
@@ -37,7 +37,7 @@ struct LightColorThemeFactory: ColorFactory {
     func borderColor(_ style: MEGAColor.Border) -> UIColor {
         switch style {
         case .primary: return MEGAAppColor.Black._00000015.uiColor
-        case .warning: return UIColor.yellowFFCC00
+        case .warning: return MEGAAppColor.Yellow._FFCC00.uiColor
         }
     }
     

@@ -18,11 +18,11 @@ struct LeaveChatButtonView: View {
             } label: {
                 Text(text)
                     .padding(.horizontal)
-                    .foregroundColor(Color(UIColor.redF30C14))
+                    .foregroundColor(MEGAAppColor.Red._F30C14.color)
             }
             Divider()
         }
         .frame(minHeight: Constants.viewHeight)
-        .background(colorScheme == .dark ? Color(.black1C1C1E) : .white)
+        .background(colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._FFFFFF.color)
     }
 }

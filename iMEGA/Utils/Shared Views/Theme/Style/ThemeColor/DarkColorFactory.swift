@@ -7,7 +7,7 @@ struct DarkColorThemeFactory: ColorFactory {
         case .secondary: return MEGAAppColor.Gray._9B9B9B.uiColor
         case .tertiary: return MEGAAppColor.Gray._D1D1D1.uiColor
         case .quaternary: return MEGAAppColor.Gray._B5B5B5.uiColor
-        case .warning: return UIColor.redFF453A
+        case .warning: return MEGAAppColor.Red._FF453A.uiColor
         }
     }
     
@@ -34,7 +34,7 @@ struct DarkColorThemeFactory: ColorFactory {
     func borderColor(_ style: MEGAColor.Border) -> UIColor {
         switch style {
         case .primary: return MEGAAppColor.Black._00000015.uiColor
-        case .warning: return UIColor.yellowFFD600
+        case .warning: return MEGAAppColor.Yellow._FFD600.uiColor
         }
     }
     

@@ -42,7 +42,7 @@ extension ColorFactory {
         case .bright: return .white
         case .dark: return .black
         case .clear: return MEGAAppColor.White._FFFFFF00.uiColor
-        case .warning: return UIColor.redFF3B30
+        case .warning: return MEGAAppColor.Red._FF3B30.uiColor
         }
     }
     
@@ -64,9 +64,9 @@ extension ColorFactory {
             return UIColor.blue0095A6
             
         case .exploreVideoStart:
-            return UIColor.redF288C2
+            return MEGAAppColor.Red._F288C2.uiColor
         case .exploreVideoEnd:
-            return UIColor.redCA75D1
+            return MEGAAppColor.Red._CA75D1.uiColor
         }
     }
 }

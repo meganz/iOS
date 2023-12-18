@@ -87,15 +87,15 @@ extension SearchConfig {
                 moreGrid: UIImage.moreGrid
             ), 
             colorAssets: .init(
-                F7F7F7: Color(.whiteF7F7F7),
-                _161616: Color.black161616,
-                _545458: Color.gray545458,
-                CE0A11: Color.redCE0A11,
-                F30C14: Color.redF30C14,
-                F95C61: Color.redF95C61,
-                F7363D: Color.redF7363D,
-                _1C1C1E: Color(.black1C1C1E),
-                _00A886: Color(.green00A886),
+                F7F7F7: MEGAAppColor.White._F7F7F7.color,
+                _161616: MEGAAppColor.Black._161616.color,
+                _545458: MEGAAppColor.Gray._545458.color,
+                CE0A11: MEGAAppColor.Red._CE0A11.color,
+                F30C14: MEGAAppColor.Red._F30C14.color,
+                F95C61: MEGAAppColor.Red._F95C61.color,
+                F7363D: MEGAAppColor.Red._F7363D.color,
+                _1C1C1E: MEGAAppColor.Black._1C1C1E.color,
+                _00A886: MEGAAppColor.Green._00A8868.color,
                 _3C3C43: MEGAAppColor.Gray._3C3C43.color
             ),
             contextPreviewFactory: contextPreviewFactory

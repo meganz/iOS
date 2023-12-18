@@ -14,13 +14,13 @@ struct WaitingRoomWarningBannerView: View {
             closeButton
         }
         .padding()
-        .background(colorScheme == .dark ? Color(UIColor.yellowFED42926) : Color(UIColor.yellowFED429))
+        .background(colorScheme == .dark ? MEGAAppColor.Yellow._FED42926.color : MEGAAppColor.Yellow._FED429.color)
     }
     
     private var text: some View {
         Text(Strings.Localizable.Meetings.ScheduleMeeting.WaitingRoomWarningBanner.title)
             .font(.caption2.bold())
-            .foregroundColor(colorScheme == .dark ? Color(UIColor.yellowFFD60A): Color(UIColor.yellow9D8319))
+            .foregroundColor(colorScheme == .dark ? MEGAAppColor.Yellow._FFD60A.color: MEGAAppColor.Yellow._9D8319.color)
     }
     
     private var closeButton: some View {
@@ -31,7 +31,7 @@ struct WaitingRoomWarningBannerView: View {
             }
         } label: {
             Image(systemName: "xmark.circle.fill")
-                .foregroundColor(colorScheme == .dark ? Color(UIColor.yellowFFD60A): Color(UIColor.yellow9D8319))
+                .foregroundColor(colorScheme == .dark ? MEGAAppColor.Yellow._FFD60A.color: MEGAAppColor.Yellow._9D8319.color)
         }
     }
 }
