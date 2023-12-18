@@ -78,9 +78,9 @@
             cloudDriveVC.parentNode = node;
             if (backupsRootNode != nil) {
                 cloudDriveVC.displayMode = DisplayModeBackup;
+                isBackupNode = true;
             }
             [navigationController pushViewController:cloudDriveVC animated:NO];
-            isBackupNode = true;
         }
     }
     

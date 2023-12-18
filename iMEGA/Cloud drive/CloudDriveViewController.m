@@ -88,7 +88,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [self setUpInvokeCommands];
     [self assignViewModeStore];
     
     self.view.backgroundColor = UIColor.systemBackgroundColor;
@@ -162,7 +162,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     self.wasSelectingFavoriteUnfavoriteNodeActionOption = NO;
 
     [self setupContactNotVerifiedBanner];
-    [self setUpInvokeCommands];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
