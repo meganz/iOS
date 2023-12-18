@@ -1056,6 +1056,7 @@
 		838A7B5625D55EFA00767DB0 /* CallUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838A7B5525D55EFA00767DB0 /* CallUseCase.swift */; };
 		838A7B6925D5678C00767DB0 /* CallRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838A7B6825D5678C00767DB0 /* CallRepository.swift */; };
 		838B976826B1615F000E480E /* CallParticipantEntity+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838B976726B1615F000E480E /* CallParticipantEntity+Mapping.swift */; };
+		838CC2652B2B2ECE001C85E9 /* ScheduledMeetingLinkPresentationItemSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838CC2642B2B2ECE001C85E9 /* ScheduledMeetingLinkPresentationItemSource.swift */; };
 		838CCF6C298C006200C83502 /* ScheduledMeetingDateBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838CCF6B298C006200C83502 /* ScheduledMeetingDateBuilder.swift */; };
 		838E55412A2E00DF00C3C2F8 /* ScheduleMeetingEndRecurrenceOptionsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838E55402A2E00DF00C3C2F8 /* ScheduleMeetingEndRecurrenceOptionsViewModelTests.swift */; };
 		838F63CE2836778A009B41D6 /* DuplicatedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838F63CD2836778A009B41D6 /* DuplicatedItem.swift */; };
@@ -1376,7 +1377,6 @@
 		94FAFF1B2AFA6CA50056A177 /* Node+ResultProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FAFF1A2AFA6CA50056A177 /* Node+ResultProperties.swift */; };
 		94FD8A8B2AA0C6F300CD1C8B /* MEGARepo in Frameworks */ = {isa = PBXBuildFile; productRef = 94FD8A8A2AA0C6F300CD1C8B /* MEGARepo */; };
 		990AC4ED2A4A77EC008E298F /* ChatRoomLinkViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990AC4EC2A4A77EC008E298F /* ChatRoomLinkViewModelTests.swift */; };
-		990AC4F02A4ABEB7008E298F /* ChatRoomLinkViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990AC4EF2A4ABEB7008E298F /* ChatRoomLinkViewModel+Additions.swift */; };
 		9911BA8B2A8B20C300B88F28 /* WaitingRoomViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9911BA8A2A8B20C300B88F28 /* WaitingRoomViewRouter.swift */; };
 		9911BA8E2A8B20CD00B88F28 /* WaitingRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9911BA8D2A8B20CD00B88F28 /* WaitingRoomViewController.swift */; };
 		9911BA902A8B20DE00B88F28 /* WaitingRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9911BA8F2A8B20DE00B88F28 /* WaitingRoomView.swift */; };
@@ -3680,6 +3680,7 @@
 		838A7B5525D55EFA00767DB0 /* CallUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallUseCase.swift; sourceTree = "<group>"; };
 		838A7B6825D5678C00767DB0 /* CallRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallRepository.swift; sourceTree = "<group>"; };
 		838B976726B1615F000E480E /* CallParticipantEntity+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CallParticipantEntity+Mapping.swift"; sourceTree = "<group>"; };
+		838CC2642B2B2ECE001C85E9 /* ScheduledMeetingLinkPresentationItemSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduledMeetingLinkPresentationItemSource.swift; sourceTree = "<group>"; };
 		838CCF6B298C006200C83502 /* ScheduledMeetingDateBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduledMeetingDateBuilder.swift; sourceTree = "<group>"; };
 		838E55402A2E00DF00C3C2F8 /* ScheduleMeetingEndRecurrenceOptionsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingEndRecurrenceOptionsViewModelTests.swift; sourceTree = "<group>"; };
 		838F63CD2836778A009B41D6 /* DuplicatedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicatedItem.swift; sourceTree = "<group>"; };
@@ -3971,7 +3972,6 @@
 		94FABD142ADE95A9003E8894 /* CameraUploadsRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraUploadsRepository.swift; sourceTree = "<group>"; };
 		94FAFF1A2AFA6CA50056A177 /* Node+ResultProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Node+ResultProperties.swift"; sourceTree = "<group>"; };
 		990AC4EC2A4A77EC008E298F /* ChatRoomLinkViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomLinkViewModelTests.swift; sourceTree = "<group>"; };
-		990AC4EF2A4ABEB7008E298F /* ChatRoomLinkViewModel+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatRoomLinkViewModel+Additions.swift"; sourceTree = "<group>"; };
 		9911BA8A2A8B20C300B88F28 /* WaitingRoomViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomViewRouter.swift; sourceTree = "<group>"; };
 		9911BA8D2A8B20CD00B88F28 /* WaitingRoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomViewController.swift; sourceTree = "<group>"; };
 		9911BA8F2A8B20DE00B88F28 /* WaitingRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomView.swift; sourceTree = "<group>"; };
@@ -8771,6 +8771,7 @@
 			isa = PBXGroup;
 			children = (
 				8371D2A8289933D300D0972F /* ContactLinkPresentationItemSource.swift */,
+				838CC2642B2B2ECE001C85E9 /* ScheduledMeetingLinkPresentationItemSource.swift */,
 			);
 			path = ShareActivityUtils;
 			sourceTree = "<group>";
@@ -11592,7 +11593,6 @@
 		BF8895AA2630F1AB002A18CA /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
-				990AC4EF2A4ABEB7008E298F /* ChatRoomLinkViewModel+Additions.swift */,
 				998379332ACA417100A9A439 /* ChatRoomParticipantViewModel+Additions.swift */,
 				BFD4E22A2935F73C0011392C /* FutureMeetingRoomViewModel+Additions.swift */,
 				BFE3B9F1285838A7003949FF /* MeetingContainerViewModel+Additions.swift */,
@@ -14591,6 +14591,7 @@
 				833DF2762804880E00B25B64 /* SaveNodeUseCaseOCWrapper.swift in Sources */,
 				5D79B51D2498471E0070FECD /* Scanner+Compatible.swift in Sources */,
 				838CCF6C298C006200C83502 /* ScheduledMeetingDateBuilder.swift in Sources */,
+				838CC2652B2B2ECE001C85E9 /* ScheduledMeetingLinkPresentationItemSource.swift in Sources */,
 				83669E972987F9BC003E8F74 /* ScheduledMeetingOccurrencesRouter.swift in Sources */,
 				83669E9D2987FA9F003E8F74 /* ScheduledMeetingOccurrencesView.swift in Sources */,
 				83669E9B2987F9F1003E8F74 /* ScheduledMeetingOccurrencesViewController.swift in Sources */,
@@ -15313,7 +15314,6 @@
 				6DE5563629F61ED40015A950 /* ChatContentViewModelTests.swift in Sources */,
 				9949C3662A72424C000C299B /* ChatRoomAvatarInitialsGeneratorTest.swift in Sources */,
 				99778D982AE74EC700537EA9 /* ChatRoomAvatarViewModelTests.swift in Sources */,
-				990AC4F02A4ABEB7008E298F /* ChatRoomLinkViewModel+Additions.swift in Sources */,
 				990AC4ED2A4A77EC008E298F /* ChatRoomLinkViewModelTests.swift in Sources */,
 				998299062ADCA02E001F9BED /* ChatRoomParticipantsListViewModelTests.swift in Sources */,
 				998379342ACA417100A9A439 /* ChatRoomParticipantViewModel+Additions.swift in Sources */,

@@ -11,7 +11,7 @@ protocol MeetingInfoRouting {
     func showEnableKeyRotation(for chatRoom: ChatRoomEntity)
     func closeMeetingInfoView()
     func showLeaveChatAlert(leaveAction: @escaping(() -> Void))
-    func showShareActivity(_ link: String, title: String?, description: String?)
+    func showShareActivity(_ link: String, title: String, message: String)
     func showSendToChat(_ link: String)
     func showLinkCopied()
     func showParticipantDetails(email: String, userHandle: HandleEntity, chatRoom: ChatRoomEntity, didUpdatePeerPermission: @escaping (ChatRoomParticipantPrivilege) -> Void)
@@ -137,7 +137,8 @@ final class MeetingInfoViewModel: ObservableObject {
             router: router,
             chatRoom: chatRoom,
             scheduledMeeting: scheduledMeeting,
-            chatLinkUseCase: chatLinkUseCase,
+            chatLinkUseCase: chatLinkUseCase, 
+            chatUseCase: chatUseCase,
             subtitle: subtitle)
     }
     
