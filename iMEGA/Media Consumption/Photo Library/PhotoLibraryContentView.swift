@@ -9,25 +9,17 @@ struct PhotoLibraryContentView: View {
     @State private var editMode: EditMode = .inactive
     
     var body: some View {
-        Group {
-            if viewModel.library.isEmpty {
-                PhotoLibraryPlaceholderView()
-            } else {
-                Group {
-                    content()
-                }
-                .environment(\.editMode, $editMode)
-                .onReceive(viewModel.selection.$editMode) {
-                    editMode = $0
-                }
+        content()
+            .overlay(placeholder)
+            .environment(\.editMode, $editMode)
+            .onReceive(viewModel.selection.$editMode) {
+                editMode = $0
             }
-        }
-        .shimmering(active: viewModel.library.isEmpty)
-        .sheet(isPresented: $viewModel.showFilter) {
-            PhotoLibraryFilterView(viewModel: viewModel.filterViewModel,
-                                   isPresented: $viewModel.showFilter,
-                                   onFilterUpdate: onFilterUpdate)
-        }
+            .sheet(isPresented: $viewModel.showFilter) {
+                PhotoLibraryFilterView(viewModel: viewModel.filterViewModel,
+                                       isPresented: $viewModel.showFilter,
+                                       onFilterUpdate: onFilterUpdate)
+            }
     }
     
     @ViewBuilder
@@ -47,6 +39,9 @@ struct PhotoLibraryContentView: View {
                     EmptyView().frame(height: 64)
                 }
         }
+    }
+    private var placeholder: some View {
+        PhotoLibraryPlaceholderView(isActive: viewModel.library.isEmpty)
     }
     
     @ViewBuilder

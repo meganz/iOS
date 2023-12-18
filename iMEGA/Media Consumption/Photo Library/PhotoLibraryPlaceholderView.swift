@@ -1,6 +1,8 @@
+import MEGASwiftUI
 import SwiftUI
 
 struct PhotoLibraryPlaceholderView: View {
+    let isActive: Bool
     private let columns: [GridItem] = Array(
         repeating: .init(.flexible(), spacing: 4),
         count: 3
@@ -17,7 +19,11 @@ struct PhotoLibraryPlaceholderView: View {
                     }
                 }
             }
+            .shimmering(active: isActive)
         }
+        .background(MEGAAppColor.White._FFFFFF.color)
+        .opacity(isActive ? 1 : 0)
+        .animation(.smooth, value: isActive)
     }
     
     var sectionHeader: some View {
@@ -32,6 +38,6 @@ struct PhotoLibraryPlaceholderView: View {
 
 struct PhotoLibraryLoadingView_Preview: PreviewProvider {
     static var previews: some View {
-        PhotoLibraryPlaceholderView()
+        PhotoLibraryPlaceholderView(isActive: true)
     }
 }

@@ -54,7 +54,6 @@ struct AlbumListViewRouter: AlbumListViewRouting, Routing {
         )
         
         let content = AlbumListView(viewModel: vm,
-                                    createAlbumCellViewModel: CreateAlbumCellViewModel(),
                                     router: self)
         
         return UIHostingController(rootView: content)
