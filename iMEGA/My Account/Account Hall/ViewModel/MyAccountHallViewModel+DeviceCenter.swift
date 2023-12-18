@@ -58,20 +58,20 @@ extension MyAccountHallViewModel {
     private func makeBackupListAssets() -> BackupListAssets {
         return BackupListAssets(
             backupTypes: [
-                BackupType(type: .backupUpload, iconName: Asset.Images.Backup.backupFolder.name),
-                BackupType(type: .cameraUpload, iconName: Asset.Images.Backup.cameraUploadsFolder.name),
-                BackupType(type: .mediaUpload, iconName: Asset.Images.Backup.cameraUploadsFolder.name),
-                BackupType(type: .twoWay, iconName: Asset.Images.Backup.syncFolder.name),
-                BackupType(type: .downSync, iconName: Asset.Images.Backup.syncFolder.name),
-                BackupType(type: .upSync, iconName: Asset.Images.Backup.syncFolder.name),
-                BackupType(type: .invalid, iconName: Asset.Images.Backup.syncFolder.name)
+                BackupType(type: .backupUpload, iconName: BackUpTypeIconAssets.backupFolder),
+                BackupType(type: .cameraUpload, iconName: BackUpTypeIconAssets.cameraUploadsFolder),
+                BackupType(type: .mediaUpload, iconName: BackUpTypeIconAssets.cameraUploadsFolder),
+                BackupType(type: .twoWay, iconName: BackUpTypeIconAssets.syncFolder),
+                BackupType(type: .downSync, iconName: BackUpTypeIconAssets.syncFolder),
+                BackupType(type: .upSync, iconName: BackUpTypeIconAssets.syncFolder),
+                BackupType(type: .invalid, iconName: BackUpTypeIconAssets.syncFolder)
             ]
         )
     }
     
     private func makeEmptyStateAssets() -> EmptyStateAssets {
         return EmptyStateAssets(
-            image: Asset.Images.EmptyStates.searchEmptyState.name,
+            image: EmptyStateIconAssets.searchEmptyState,
             title: Strings.Localizable.noResults
         )
     }
@@ -91,73 +91,73 @@ extension MyAccountHallViewModel {
                 status: .upToDate,
                 title: Strings.Localizable.Device.Center.Backup.UpToDate.Status.message,
                 color: UIColor.green34C759,
-                iconName: Asset.Images.BackupStatus.upToDate.name
+                iconName: BackUpStatusIconAssets.upToDate
             ),
             BackupStatus(
                 status: .scanning,
                 title: Strings.Localizable.Device.Center.Backup.Scanning.Status.message,
                 color: UIColor.blue007AFF,
-                iconName: Asset.Images.BackupStatus.updating.name
+                iconName: BackUpStatusIconAssets.updating
             ),
             BackupStatus(
                 status: .initialising,
                 title: Strings.Localizable.Device.Center.Backup.Initialising.Status.message,
                 color: UIColor.blue007AFF,
-                iconName: Asset.Images.BackupStatus.updating.name
+                iconName: BackUpStatusIconAssets.updating
             ),
             BackupStatus(
                 status: .updating,
                 title: Strings.Localizable.Device.Center.Backup.Updating.Status.message,
                 color: UIColor.blue007AFF,
-                iconName: Asset.Images.BackupStatus.updating.name
+                iconName: BackUpStatusIconAssets.updating
             ),
             BackupStatus(
                 status: .noCameraUploads,
                 title: Strings.Localizable.Device.Center.Backup.NoCameraUploads.Status.message,
                 color: UIColor.orangeFF9500,
-                iconName: Asset.Images.BackupStatus.noCameraUploads.name
+                iconName: BackUpStatusIconAssets.noCameraUploads
             ),
             BackupStatus(
                 status: .disabled,
                 title: Strings.Localizable.Device.Center.Backup.Disabled.Status.message,
                 color: UIColor.orangeFF9500,
-                iconName: Asset.Images.BackupStatus.disabled.name
+                iconName: BackUpStatusIconAssets.disabled
             ),
             BackupStatus(
                 status: .offline,
                 title: Strings.Localizable.Device.Center.Backup.Offline.Status.message,
                 color: MEGAAppColor.Gray._8E8E93.uiColor,
-                iconName: Asset.Images.BackupStatus.offlineStatus.name
+                iconName: BackUpStatusIconAssets.offlineStatus
             ),
             BackupStatus(
                 status: .backupStopped,
                 title: Strings.Localizable.Device.Center.Backup.BackupStopped.Status.message,
                 color: MEGAAppColor.Gray._8E8E93.uiColor,
-                iconName: Asset.Images.BackupStatus.error.name
+                iconName: BackUpStatusIconAssets.error
             ),
             BackupStatus(
                 status: .paused,
                 title: Strings.Localizable.Device.Center.Backup.Paused.Status.message,
                 color: MEGAAppColor.Gray._8E8E93.uiColor,
-                iconName: Asset.Images.BackupStatus.paused.name
+                iconName: BackUpStatusIconAssets.paused
             ),
             BackupStatus(
                 status: .outOfQuota,
                 title: Strings.Localizable.Device.Center.Backup.OutOfQuota.Status.message,
                 color: UIColor.redFF3B30,
-                iconName: Asset.Images.BackupStatus.outOfQuota.name
+                iconName: BackUpStatusIconAssets.outOfQuota
             ),
             BackupStatus(
                 status: .error,
                 title: Strings.Localizable.Device.Center.Backup.Error.Status.message,
                 color: UIColor.redFF3B30,
-                iconName: Asset.Images.BackupStatus.error.name
+                iconName: BackUpStatusIconAssets.error
             ),
             BackupStatus(
                 status: .blocked,
                 title: Strings.Localizable.Device.Center.Backup.Blocked.Status.message,
                 color: UIColor.redFF3B30,
-                iconName: Asset.Images.BackupStatus.disabled.name
+                iconName: BackUpStatusIconAssets.disabled
             )
         ]
     }
@@ -171,37 +171,37 @@ extension MyAccountHallViewModel {
                     CameraUploadManager.isCameraUploadEnabled ? Strings.Localizable.Device.Center.Camera.Uploads.Action.Status.enabled :
                         Strings.Localizable.Device.Center.Camera.Uploads.Action.Status.disabled
                 },
-                icon: Asset.Images.Settings.cameraUploadsSettings.name
+                icon: DeviceCenterActionIconAssets.cameraUploadsSettings
             ),
             DeviceCenterAction(
                 type: .info,
                 title: Strings.Localizable.info,
-                icon: Asset.Images.Generic.info.name
+                icon: DeviceCenterActionIconAssets.info
             ),
             DeviceCenterAction(
                 type: .rename,
                 title: Strings.Localizable.rename,
-                icon: Asset.Images.Generic.rename.name
+                icon: DeviceCenterActionIconAssets.rename
             ),
             DeviceCenterAction(
                 type: .showInCloudDrive,
                 title: Strings.Localizable.Device.Center.Show.In.Cloud.Drive.Action.title,
-                icon: Asset.Images.ActionSheetIcons.cloudDriveFolder.name
+                icon: DeviceCenterActionIconAssets.cloudDriveFolder
             ),
             DeviceCenterAction(
                 type: .sort,
                 title: Strings.Localizable.sortTitle,
-                icon: Asset.Images.ActionSheetIcons.sort.name,
+                icon: DeviceCenterActionIconAssets.sort,
                 subActions: [
                     DeviceCenterAction(
                         type: .sortAscending,
                         title: Strings.Localizable.nameAscending,
-                        icon: Asset.Images.ActionSheetIcons.SortBy.ascending.name
+                        icon: DeviceCenterActionIconAssets.ascending
                     ),
                     DeviceCenterAction(
                         type: .sortDescending,
                         title: Strings.Localizable.nameDescending,
-                        icon: Asset.Images.ActionSheetIcons.SortBy.descending.name
+                        icon: DeviceCenterActionIconAssets.descending
                     )
                 ]
             )
@@ -210,13 +210,54 @@ extension MyAccountHallViewModel {
     
     private func deviceIconNamesList() -> [BackupDeviceTypeEntity: String] {
         [
-            .android: Asset.Images.Backup.android.name,
-            .iphone: Asset.Images.Backup.ios.name,
-            .linux: Asset.Images.Backup.pcLinux.name,
-            .mac: Asset.Images.Backup.pcMac.name,
-            .win: Asset.Images.Backup.pcWindows.name,
-            .defaultMobile: Asset.Images.Backup.mobile.name,
-            .defaultPc: Asset.Images.Backup.pc.name
+            .android: DeviceIconAssets.android,
+            .iphone: DeviceIconAssets.ios,
+            .linux: DeviceIconAssets.pcLinux,
+            .mac: DeviceIconAssets.pcMac,
+            .win: DeviceIconAssets.pcWindows,
+            .defaultMobile: DeviceIconAssets.mobile,
+            .defaultPc: DeviceIconAssets.pc
         ]
+    }
+    
+    private struct DeviceIconAssets {
+        static let android = "android"
+        static let ios = "ios"
+        static let pcLinux = "pc-linux"
+        static let pcMac = "pc-mac"
+        static let pcWindows = "pc-windows"
+        static let mobile = "mobile"
+        static let pc = "pc"
+    }
+    
+    private struct DeviceCenterActionIconAssets {
+        static let cameraUploadsSettings = "cameraUploadsSettings"
+        static let info = "info"
+        static let rename = "rename"
+        static let cloudDriveFolder = "cloudDriveFolder"
+        static let sort = "sort"
+        static let ascending = "ascending"
+        static let descending = "descending"
+    }
+    
+    private struct BackUpStatusIconAssets {
+        static let upToDate = "backUpStatusUpToDate"
+        static let updating = "backUpStatusUpdating"
+        static let noCameraUploads = "backUpStatusNoCameraUploads"
+        static let disabled  = "backUpStatusDisabled"
+        static let offlineStatus = "backUpStatusOfflineStatus"
+        static let error = "backUpStatusError"
+        static let paused = "backUpStatusPaused"
+        static let outOfQuota = "backUpStatusOutOfQuota"
+    }
+    
+    private struct BackUpTypeIconAssets {
+        static let backupFolder = "backupFolder"
+        static let cameraUploadsFolder = "cameraUploadsFolder"
+        static let syncFolder = "syncFolder"
+    }
+    
+    private struct EmptyStateIconAssets {
+        static let searchEmptyState = "searchEmptyState"
     }
 }
