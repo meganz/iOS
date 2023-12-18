@@ -27,7 +27,7 @@ final class DeviceCenterActionBuilder {
     
     private func actionsForBackup(_ node: NodeEntity) -> [DeviceCenterAction] {
         var actions: [DeviceCenterAction] = [
-            .offlineAction()
+            .downloadAction()
         ]
         
         if node.isExported {
@@ -54,7 +54,7 @@ final class DeviceCenterActionBuilder {
         var actions: [DeviceCenterAction] = [
             .favouriteAction(isFavourite: node.isFavourite),
             .labelAction(label: node.label),
-            .offlineAction()
+            .downloadAction()
         ]
         
         if node.isExported {
@@ -87,7 +87,7 @@ final class DeviceCenterActionBuilder {
         var actions: [DeviceCenterAction] = [
             .favouriteAction(isFavourite: node.isFavourite),
             .labelAction(label: node.label),
-            .offlineAction()
+            .downloadAction()
         ]
         
         if node.isExported {

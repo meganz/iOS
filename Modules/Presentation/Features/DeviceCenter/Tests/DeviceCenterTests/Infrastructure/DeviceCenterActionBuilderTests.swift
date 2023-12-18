@@ -14,7 +14,7 @@ final class DeviceCenterActionBuilderTests: XCTestCase {
             isExported: true,
             expectedActions: [
                 .infoAction(),
-                .offlineAction(),
+                .downloadAction(),
                 .manageLinkAction(),
                 .removeLinkAction(),
                 .shareFolderAction(),
@@ -33,7 +33,7 @@ final class DeviceCenterActionBuilderTests: XCTestCase {
             ),
             expectedActions: [
                 .infoAction(),
-                .offlineAction(),
+                .downloadAction(),
                 .shareLinkAction(),
                 .shareFolderAction(),
                 .copyAction()
@@ -53,7 +53,7 @@ final class DeviceCenterActionBuilderTests: XCTestCase {
             isExported: true,
             expectedActions: [
                 .infoAction(),
-                .offlineAction(),
+                .downloadAction(),
                 .manageLinkAction(),
                 .removeLinkAction(),
                 .manageFolderAction(),
@@ -87,7 +87,7 @@ final class DeviceCenterActionBuilderTests: XCTestCase {
                 .infoAction(),
                 .favouriteAction(isFavourite: false),
                 .labelAction(label: .unknown),
-                .offlineAction(),
+                .downloadAction(),
                 .manageLinkAction(),
                 .removeLinkAction(),
                 .manageFolderAction(),
@@ -112,7 +112,7 @@ final class DeviceCenterActionBuilderTests: XCTestCase {
                 .infoAction(),
                 .favouriteAction(isFavourite: false),
                 .labelAction(label: .unknown),
-                .offlineAction(),
+                .downloadAction(),
                 .shareLinkAction(),
                 .manageFolderAction(),
                 .renameAction(),
@@ -135,7 +135,7 @@ final class DeviceCenterActionBuilderTests: XCTestCase {
                 .infoAction(),
                 .favouriteAction(isFavourite: false),
                 .labelAction(label: .unknown),
-                .offlineAction(),
+                .downloadAction(),
                 .shareLinkAction(),
                 .shareFolderAction(),
                 .renameAction(),

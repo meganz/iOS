@@ -10,9 +10,9 @@ extension DeviceCenterAction {
         )
     }
     
-    static func offlineAction() -> DeviceCenterAction {
+    static func downloadAction() -> DeviceCenterAction {
         DeviceCenterAction(
-            type: .offline,
+            type: .download,
             title: Strings.Localizable.General.downloadToOffline,
             icon: "offline"
         )

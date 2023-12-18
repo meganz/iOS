@@ -110,12 +110,11 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
         switch type {
         case .cameraUploads:
             handleCameraUploadAction()
-        case .info, .copy, .offline, .shareLink, .manageLink, .removeLink, .shareFolder, .manageShare, .showInCloudDrive, .favourite, .label, .rename, .move, .moveToTheRubbishBin:
+        case .info, .copy, .download, .shareLink, .manageLink, .removeLink, .shareFolder, .manageShare, .showInCloudDrive, .favourite, .label, .rename, .move, .moveToTheRubbishBin:
             guard let node = nodeForEntityType() else { return }
             Task { [weak self] in
                 await self?.deviceCenterBridge.nodeActionTapped(node, type)
             }
-            
         default: break
         }
     }

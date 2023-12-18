@@ -91,6 +91,109 @@ final class MyAccountHallRouter: MyAccountHallRouting {
         return contactsVC
     }
     
+    private func executeNodeAction(
+        for node: NodeEntity,
+        action: @escaping (UIViewController, NodeEntity) -> Void
+    ) {
+        guard networkMonitorUseCase.isConnected() else {
+            noInternetConnectionPresenter(
+                UIImage.hudForbidden,
+                Strings.Localizable.noInternetConnection
+            )
+            return
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            guard let presenter = self.navigationController?.topViewController else { return }
+            action(presenter, node)
+        }
+    }
+
+    private func didTapShareLinkAction(
+        _ node: NodeEntity
+    ) {
+        executeNodeAction(for: node) { presenter, node in
+            guard let node = node.toMEGANode(in: MEGASdk.shared) else { return }
+            GetLinkRouter(
+                presenter: presenter,
+                nodes: [node]
+            ).start()
+        }
+    }
+
+    private func didTapRemoveLinkAction(
+        _ node: NodeEntity
+    ) {
+        executeNodeAction(for: node) { presenter, node in
+            ActionWarningViewRouter(
+                presenter: presenter,
+                nodes: [node],
+                actionType: .removeLink,
+                onActionStart: { [weak self] in
+                    self?.loadingPresenter()
+                }, onActionFinish: { [weak self] in
+                    switch $0 {
+                    case .success(let message):
+                        self?.actionSucceededPresenter(message)
+                    case .failure:
+                        self?.dismissLoadingPresenter()
+                    }
+                }
+            ).start()
+        }
+    }
+    
+    private func didTapShareFolderAction(
+        _ node: NodeEntity
+    ) {
+        executeNodeAction(for: node) { [weak self] presenter, node in
+            BackupNodesValidator(presenter: presenter, nodes: [node]).showWarningAlertIfNeeded {
+                guard let self,
+                      let contactsVC = self.setupContactsViewController(with: node, mode: .shareFoldersWith),
+                      let node = node.toMEGANode(in: MEGASdk.shared) else { return }
+                contactsVC.nodesArray = [node]
+                let navigation = MEGANavigationController(rootViewController: contactsVC)
+                presenter.present(navigation, animated: true, completion: nil)
+            }
+        }
+    }
+    
+    private func didTapManageShareAction(
+        _ node: NodeEntity
+    ) {
+        executeNodeAction(for: node) { [weak self] presenter, node in
+            BackupNodesValidator(presenter: presenter, nodes: [node]).showWarningAlertIfNeeded {
+                guard let self,
+                      let contactsVC = self.setupContactsViewController(with: node, mode: .folderSharedWith) else { return }
+                self.navigationController?.pushViewController(contactsVC, animated: true)
+            }
+        }
+    }
+    
+    private func didTapCopyAction(
+        _ node: NodeEntity
+    ) {
+        executeNodeAction(for: node) { presenter, node in
+            guard let node = node.toMEGANode(in: MEGASdk.shared),
+                  let navigationController = UIStoryboard(name: "Cloud", bundle: nil).instantiateViewController(withIdentifier: "BrowserNavigationControllerID") as? MEGANavigationController,
+                  let browserViewController = navigationController.viewControllers.first as? BrowserViewController else {
+                return
+            }
+            browserViewController.browserAction = .copy
+            browserViewController.selectedNodesArray = [node]
+
+            presenter.present(navigationController, animated: true)
+        }
+    }
+    
+    private func didTapDownloadAction(
+        _ node: NodeEntity
+    ) {
+        executeNodeAction(for: node) { presenter, node in
+            let transfer = CancellableTransfer(handle: node.handle, name: nil, appData: nil, priority: false, isFile: node.isFile, type: .download)
+            CancellableTransferRouter(presenter: presenter, transfers: [transfer], transferType: .download).start()
+        }
+    }
+    
     func build() -> UIViewController {
         guard let myAccountViewController = UIStoryboard(name: "MyAccount", bundle: nil)
                 .instantiateViewController(withIdentifier: "MyAccountHall") as? MyAccountHallViewController else {
@@ -173,84 +276,6 @@ final class MyAccountHallRouter: MyAccountHallRouting {
         ).start()
     }
     
-    func executeNodeAction(
-        for node: NodeEntity,
-        action: @escaping (UIViewController, NodeEntity) -> Void
-    ) {
-        guard networkMonitorUseCase.isConnected() else {
-            noInternetConnectionPresenter(
-                UIImage.hudForbidden,
-                Strings.Localizable.noInternetConnection
-            )
-            return
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            guard let presenter = self.navigationController?.topViewController else { return }
-            action(presenter, node)
-        }
-    }
-
-    func didTapShareLinkAction(
-        _ node: NodeEntity
-    ) {
-        executeNodeAction(for: node) { presenter, node in
-            guard let node = node.toMEGANode(in: MEGASdk.shared) else { return }
-            GetLinkRouter(
-                presenter: presenter,
-                nodes: [node]
-            ).start()
-        }
-    }
-
-    func didTapRemoveLinkAction(
-        _ node: NodeEntity
-    ) {
-        executeNodeAction(for: node) { presenter, node in
-            ActionWarningViewRouter(
-                presenter: presenter,
-                nodes: [node],
-                actionType: .removeLink,
-                onActionStart: { [weak self] in
-                    self?.loadingPresenter()
-                }, onActionFinish: { [weak self] in
-                    switch $0 {
-                    case .success(let message):
-                        self?.actionSucceededPresenter(message)
-                    case .failure:
-                        self?.dismissLoadingPresenter()
-                    }
-                }
-            ).start()
-        }
-    }
-    
-    func didTapShareFolderAction(
-        _ node: NodeEntity
-    ) {
-        executeNodeAction(for: node) { [weak self] presenter, node in
-            BackupNodesValidator(presenter: presenter, nodes: [node]).showWarningAlertIfNeeded {
-                guard let self,
-                      let contactsVC = self.setupContactsViewController(with: node, mode: .shareFoldersWith),
-                      let node = node.toMEGANode(in: MEGASdk.shared) else { return }
-                contactsVC.nodesArray = [node]
-                let navigation = MEGANavigationController(rootViewController: contactsVC)
-                presenter.present(navigation, animated: true, completion: nil)
-            }
-        }
-    }
-    
-    func didTapManageShareAction(
-        _ node: NodeEntity
-    ) {
-        executeNodeAction(for: node) { [weak self] presenter, node in
-            BackupNodesValidator(presenter: presenter, nodes: [node]).showWarningAlertIfNeeded {
-                guard let self,
-                      let contactsVC = self.setupContactsViewController(with: node, mode: .folderSharedWith) else { return }
-                self.navigationController?.pushViewController(contactsVC, animated: true)
-            }
-        }
-    }
-    
     func didTapNodeAction(
         type: DeviceCenterActionType,
         node: NodeEntity
@@ -261,6 +286,8 @@ final class MyAccountHallRouter: MyAccountHallRouting {
         case .removeLink: didTapRemoveLinkAction(node)
         case .shareFolder: didTapShareFolderAction(node)
         case .manageShare: didTapManageShareAction(node)
+        case .copy: didTapCopyAction(node)
+        case .download: didTapDownloadAction(node)
         default: break
         }
     }

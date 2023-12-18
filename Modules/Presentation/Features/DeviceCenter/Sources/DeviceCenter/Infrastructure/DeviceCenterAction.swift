@@ -3,7 +3,7 @@ public enum DeviceCenterActionType {
     case copy
     case info
     case rename
-    case offline
+    case download
     case shareLink
     case manageLink
     case removeLink

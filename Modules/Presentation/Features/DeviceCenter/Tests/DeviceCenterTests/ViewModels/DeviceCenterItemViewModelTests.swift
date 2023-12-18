@@ -11,28 +11,28 @@ final class DeviceCenterItemViewModelTests: XCTestCase {
             backupType: .cameraUpload,
             isExported: false,
             isOutShared: false,
-            expectedActions: [.info, .favourite, .label, .offline, .shareLink, .shareFolder, .rename, .move, .copy, .moveToTheRubbishBin]
+            expectedActions: [.info, .favourite, .label, .download, .shareLink, .shareFolder, .rename, .move, .copy, .moveToTheRubbishBin]
         )
         
         testActions(
             backupType: .cameraUpload,
             isExported: true,
             isOutShared: false,
-            expectedActions: [.info, .favourite, .label, .offline, .manageLink, .removeLink, .shareFolder, .rename, .move, .copy, .moveToTheRubbishBin]
+            expectedActions: [.info, .favourite, .label, .download, .manageLink, .removeLink, .shareFolder, .rename, .move, .copy, .moveToTheRubbishBin]
         )
         
         testActions(
             backupType: .cameraUpload,
             isExported: false,
             isOutShared: true,
-            expectedActions: [.info, .favourite, .label, .offline, .shareLink, .manageShare, .rename, .move, .copy, .moveToTheRubbishBin]
+            expectedActions: [.info, .favourite, .label, .download, .shareLink, .manageShare, .rename, .move, .copy, .moveToTheRubbishBin]
         )
         
         testActions(
             backupType: .cameraUpload,
             isExported: true,
             isOutShared: true,
-            expectedActions: [.info, .favourite, .label, .offline, .manageLink, .removeLink, .manageShare, .rename, .move, .copy, .moveToTheRubbishBin]
+            expectedActions: [.info, .favourite, .label, .download, .manageLink, .removeLink, .manageShare, .rename, .move, .copy, .moveToTheRubbishBin]
         )
     }
  
@@ -41,28 +41,28 @@ final class DeviceCenterItemViewModelTests: XCTestCase {
             backupType: .backupUpload,
             isExported: false,
             isOutShared: false,
-            expectedActions: [.info, .offline, .shareLink, .shareFolder, .copy]
+            expectedActions: [.info, .download, .shareLink, .shareFolder, .copy]
         )
         
         testActions(
             backupType: .backupUpload,
             isExported: true,
             isOutShared: false,
-            expectedActions: [.info, .offline, .manageLink, .removeLink, .shareFolder, .copy]
+            expectedActions: [.info, .download, .manageLink, .removeLink, .shareFolder, .copy]
         )
         
         testActions(
             backupType: .backupUpload,
             isExported: false,
             isOutShared: true,
-            expectedActions: [.info, .offline, .shareLink, .manageShare, .copy]
+            expectedActions: [.info, .download, .shareLink, .manageShare, .copy]
         )
         
         testActions(
             backupType: .backupUpload,
             isExported: true,
             isOutShared: true,
-            expectedActions: [.info, .offline, .manageLink, .removeLink, .manageShare, .copy]
+            expectedActions: [.info, .download, .manageLink, .removeLink, .manageShare, .copy]
         )
     }
     
@@ -71,28 +71,28 @@ final class DeviceCenterItemViewModelTests: XCTestCase {
             backupType: .upSync,
             isExported: false,
             isOutShared: false,
-            expectedActions: [.info, .favourite, .label, .offline, .shareLink, .shareFolder, .rename, .move, .copy, .moveToTheRubbishBin]
+            expectedActions: [.info, .favourite, .label, .download, .shareLink, .shareFolder, .rename, .move, .copy, .moveToTheRubbishBin]
         )
         
         testActions(
             backupType: .upSync,
             isExported: true,
             isOutShared: false,
-            expectedActions: [.info, .favourite, .label, .offline, .manageLink, .removeLink, .shareFolder, .rename, .move, .copy, .moveToTheRubbishBin]
+            expectedActions: [.info, .favourite, .label, .download, .manageLink, .removeLink, .shareFolder, .rename, .move, .copy, .moveToTheRubbishBin]
         )
         
         testActions(
             backupType: .upSync,
             isExported: false,
             isOutShared: true,
-            expectedActions: [.info, .favourite, .label, .offline, .shareLink, .manageShare, .rename, .move, .copy, .moveToTheRubbishBin]
+            expectedActions: [.info, .favourite, .label, .download, .shareLink, .manageShare, .rename, .move, .copy, .moveToTheRubbishBin]
         )
         
         testActions(
             backupType: .upSync,
             isExported: true,
             isOutShared: true,
-            expectedActions: [.info, .favourite, .label, .offline, .manageLink, .removeLink, .manageShare, .rename, .move, .copy, .moveToTheRubbishBin]
+            expectedActions: [.info, .favourite, .label, .download, .manageLink, .removeLink, .manageShare, .rename, .move, .copy, .moveToTheRubbishBin]
         )
     }
     
