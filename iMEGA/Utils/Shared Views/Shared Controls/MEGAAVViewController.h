@@ -4,8 +4,11 @@
 
 #import "MEGASdkManager.h"
 
+@class AVViewModel;
+
 @interface MEGAAVViewController : AVPlayerViewController
 
+@property (nonatomic, strong, nonnull) AVViewModel *viewModel;
 @property (nonatomic, strong, nonnull) UIActivityIndicatorView  *activityIndicator;
 @property (nonatomic, assign) BOOL hasPlayedOnceBefore;
 @property (nonatomic, assign) BOOL isEndPlaying;

@@ -1,6 +1,8 @@
 import Combine
 import Foundation
+import MEGAAnalyticsiOS
 import MEGADomain
+import MEGAPresentation
 import SwiftUI
 
 protocol PhotoLibraryContentViewRouting {
@@ -14,16 +16,19 @@ protocol PhotoLibraryContentViewRouting {
 
 struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
     private let contentMode: PhotoLibraryContentMode
+    private let tracker: any AnalyticsTracking
     
-    init(contentMode: PhotoLibraryContentMode = .library) {
+    init(contentMode: PhotoLibraryContentMode = .library,
+         tracker: some AnalyticsTracking = DIContainer.tracker) {
         self.contentMode = contentMode
+        self.tracker = tracker
     }
     
     func card(for photoByYear: PhotoByYear) -> PhotoYearCard {
         return PhotoYearCard(
             viewModel: PhotoYearCardViewModel(
                 photoByYear: photoByYear,
-                thumbnailUseCase: makeThumnailUseCase()
+                thumbnailUseCase: makeThumbnailUseCase()
             )
         )
     }
@@ -32,7 +37,7 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
         return PhotoMonthCard(
             viewModel: PhotoMonthCardViewModel(
                 photoByMonth: photoByMonth,
-                thumbnailUseCase: makeThumnailUseCase()
+                thumbnailUseCase: makeThumbnailUseCase()
             )
         )
     }
@@ -41,7 +46,7 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
         return PhotoDayCard(
             viewModel: PhotoDayCardViewModel(
                 photoByDay: photoByDay,
-                thumbnailUseCase: makeThumnailUseCase()
+                thumbnailUseCase: makeThumbnailUseCase()
             )
         )
     }
@@ -51,12 +56,14 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
             viewModel: PhotoCellViewModel(
                 photo: photo,
                 viewModel: viewModel,
-                thumbnailUseCase: makeThumnailUseCase()
+                thumbnailUseCase: makeThumbnailUseCase()
             )
         )
     }
     
     func openPhotoBrowser(for photo: NodeEntity, allPhotos: [NodeEntity]) {
+        tracker.trackAnalyticsEvent(with: DIContainer.singlePhotoSelectedEvent)
+        
         guard var topController = UIApplication.shared.keyWindow?.rootViewController else { return }
         
         while let presentedViewController = topController.presentedViewController {
@@ -83,7 +90,7 @@ struct PhotoLibraryContentViewRouter: PhotoLibraryContentViewRouting {
         .start()
     }
     
-    private func makeThumnailUseCase() -> some ThumbnailUseCaseProtocol {
+    private func makeThumbnailUseCase() -> some ThumbnailUseCaseProtocol {
         return ThumbnailUseCase.makeThumbnailUseCase(mode: contentMode)
     }
 }

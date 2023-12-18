@@ -4,7 +4,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class MEGAPhotoBrowserViewController, PhotoBrowserDataProvider;
+@class MEGAPhotoBrowserViewController, PhotoBrowserDataProvider, PhotoBrowserViewModel;
 
 typedef NS_ENUM(NSUInteger, MEGAPhotoMode) {
     MEGAPhotoModeThumbnail = 0,
@@ -20,6 +20,7 @@ typedef NS_ENUM(NSUInteger, MEGAPhotoMode) {
 
 + (MEGAPhotoBrowserViewController *)photoBrowserWithProvider:(PhotoBrowserDataProvider *)provider api:(MEGASdk *)api displayMode:(DisplayMode)displayMode;
 
+@property (nonatomic, strong) PhotoBrowserViewModel *viewModel;
 @property (nonatomic) MEGASdk *api;
 @property (nonatomic) CGRect originFrame;
 @property (nonatomic) DisplayMode displayMode;

@@ -28,6 +28,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
     self = [super init];
     
     if (self) {
+        self.viewModel = [self makeViewModel];
         self.fileUrl    = fileUrl;
         self.node       = nil;
         _isFolderLink   = NO;
@@ -42,6 +43,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
     self = [super init];
     
     if (self) {
+        self.viewModel = [self makeViewModel];
         _apiForStreaming = apiForStreaming;
         self.node            = folderLink ? [[MEGASdkManager sharedMEGASdkFolder] authorizeNode:node] : node;
         _isFolderLink        = folderLink;
@@ -54,6 +56,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.viewModel onViewDidLoad];
     [self checkIsFileViolatesTermsOfService];
     [AudioSessionUseCaseOCWrapper.alloc.init configureVideoAudioSession];
     

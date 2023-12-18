@@ -15,6 +15,7 @@ final class PhotoAlbumContainerViewModel: ObservableObject {
     
     var disableSelectBarButton = false
     
+    private let photoScreenEvent = PhotoScreenEvent()
     private let tracker: any AnalyticsTracking
     
     init(tracker: some AnalyticsTracking) {
@@ -22,7 +23,7 @@ final class PhotoAlbumContainerViewModel: ObservableObject {
     }
     
     func didAppear() {
-        tracker.trackAnalyticsEvent(with: PhotoScreenEvent())
+        tracker.trackAnalyticsEvent(with: photoScreenEvent)
     }
     
     func shareLinksTapped() {
