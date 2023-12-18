@@ -100,7 +100,6 @@ class ChatViewController: MessagesViewController {
         let textColor = traitCollection.userInterfaceStyle == .dark ? MEGAAppColor.Black._000000.uiColor : MEGAAppColor.White._FFFFFF.uiColor
         button.setTitleColor(textColor, for: .normal)
         button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .callout)
-        button.setTitle(Strings.Localizable.tapToReturnToCall, for: .normal)
         button.layer.cornerRadius = 20
         button.backgroundColor = traitCollection.userInterfaceStyle == .dark ? MEGAAppColor.White._FFFFFF.uiColor : MEGAAppColor.Black._00000075.uiColor
         return button
@@ -238,7 +237,7 @@ class ChatViewController: MessagesViewController {
         configurePreviewerButton()
         addObservers()
         addChatBottomInfoScreenToView()
-        configureGuesture()
+        configureGesture()
         subscribeToNoUserJoinedNotification()
         
         chatContentViewModel.invokeCommand = { [weak self] command in
@@ -870,6 +869,7 @@ class ChatViewController: MessagesViewController {
     private func configureStartOrJoinCallButton() {
         startOrJoinCallButton.addTarget(self, action: #selector(didTapJoinCall), for: .touchUpInside)
         view.addSubview(startOrJoinCallButton)
+        startOrJoinCallButton.isHidden = true
         
         startOrJoinCallButton.translatesAutoresizingMaskIntoConstraints = false
         [
@@ -901,7 +901,7 @@ class ChatViewController: MessagesViewController {
         }
     }
     
-    func configureGuesture() {
+    private func configureGesture() {
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPressed(_:)))
         
         messagesCollectionView.addGestureRecognizer(longPressRecognizer)
