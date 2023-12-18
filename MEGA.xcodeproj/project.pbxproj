@@ -12451,7 +12451,6 @@
 			);
 			dependencies = (
 				94621F9A2AFD3C5000BEBB55 /* PBXTargetDependency */,
-				94CD1F752A8AA76C00DF456D /* PBXTargetDependency */,
 				943F8B191EF26E9C00AFD89F /* PBXTargetDependency */,
 				7794AEDA231E4E0A0039C1D2 /* PBXTargetDependency */,
 				83199F1D25556CDE00344531 /* PBXTargetDependency */,
@@ -12523,7 +12522,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				946336DE2A8ABA86005C58D9 /* PBXTargetDependency */,
 			);
 			name = MEGANotifications;
 			packageProductDependencies = (
@@ -12555,7 +12553,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				946336E42A8ABAD1005C58D9 /* PBXTargetDependency */,
 			);
 			name = MEGAWidgetExtension;
 			packageProductDependencies = (
@@ -12582,7 +12579,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				946336E12A8ABAA8005C58D9 /* PBXTargetDependency */,
 			);
 			name = MEGAIntent;
 			packageProductDependencies = (
@@ -12634,7 +12630,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				946336E72A8ABB51005C58D9 /* PBXTargetDependency */,
 			);
 			name = MEGAShare;
 			packageProductDependencies = (
@@ -12674,7 +12669,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				946336E92A8ABB57005C58D9 /* PBXTargetDependency */,
 			);
 			name = MEGAPickerFileProvider;
 			packageProductDependencies = (
@@ -12704,7 +12698,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				946336DA2A8ABA23005C58D9 /* PBXTargetDependency */,
 			);
 			name = MEGAPicker;
 			packageProductDependencies = (
@@ -15562,34 +15555,6 @@
 			isa = PBXTargetDependency;
 			productRef = 94621F992AFD3C5000BEBB55 /* SwiftLint */;
 		};
-		946336DA2A8ABA23005C58D9 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 946336D92A8ABA23005C58D9 /* SwiftGen */;
-		};
-		946336DE2A8ABA86005C58D9 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 946336DD2A8ABA86005C58D9 /* SwiftGen */;
-		};
-		946336E12A8ABAA8005C58D9 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 946336E02A8ABAA8005C58D9 /* SwiftGen */;
-		};
-		946336E42A8ABAD1005C58D9 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 946336E32A8ABAD1005C58D9 /* SwiftGen */;
-		};
-		946336E72A8ABB51005C58D9 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 946336E62A8ABB51005C58D9 /* SwiftGen */;
-		};
-		946336E92A8ABB57005C58D9 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 946336E82A8ABB57005C58D9 /* SwiftGen */;
-		};
-		94CD1F752A8AA76C00DF456D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			productRef = 94CD1F742A8AA76C00DF456D /* SwiftGen */;
-		};
 		A8399F4F296C40070062B6BC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = A8399F41296C40060062B6BC /* MEGAPickerFileProvider */;
@@ -17528,30 +17493,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = "plugin:SwiftLint";
 		};
-		946336D92A8ABA23005C58D9 /* SwiftGen */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "plugin:SwiftGen";
-		};
-		946336DD2A8ABA86005C58D9 /* SwiftGen */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "plugin:SwiftGen";
-		};
-		946336E02A8ABAA8005C58D9 /* SwiftGen */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "plugin:SwiftGen";
-		};
-		946336E32A8ABAD1005C58D9 /* SwiftGen */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "plugin:SwiftGen";
-		};
-		946336E62A8ABB51005C58D9 /* SwiftGen */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "plugin:SwiftGen";
-		};
-		946336E82A8ABB57005C58D9 /* SwiftGen */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "plugin:SwiftGen";
-		};
 		946ACCC2299C0ADD00E6C0F5 /* MEGAPresentation */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAPresentation;
@@ -17580,10 +17521,6 @@
 		94B6E8872A83F8530082D9B1 /* MEGAPickerFileProviderRepo */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAPickerFileProviderRepo;
-		};
-		94CD1F742A8AA76C00DF456D /* SwiftGen */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = "plugin:SwiftGen";
 		};
 		94FD8A8A2AA0C6F300CD1C8B /* MEGARepo */ = {
 			isa = XCSwiftPackageProductDependency;
