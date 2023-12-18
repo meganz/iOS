@@ -1,7 +1,21 @@
+import ChatRepoMock
 @testable import MEGA
+import MEGAL10n
 import XCTest
 
 final class ChatViewControllerTests: XCTestCase {
+    
+    var sut: ChatViewController!
+    override func setUp() {
+        super.setUp()
+        sut = ChatViewController(chatRoom: MockChatRoom())
+    }
+    
+    override func tearDown() {
+        sut = nil
+        super.tearDown()
+    }
+    
     func testbackButtonMenuTitle_NilChatTitle_IsEmptyString() {
         let title = ChatViewController.backButtonMenuTitle(chatTitle: nil, isOneToOne: false)
         XCTAssertEqual(title, "")
@@ -15,5 +29,24 @@ final class ChatViewControllerTests: XCTestCase {
     func testbackButtonMenuTitle_NonNilChatTitle_OneToOne_IsChatWithPerson() {
         let title = ChatViewController.backButtonMenuTitle(chatTitle: "PERSON", isOneToOne: true)
         XCTAssertEqual(title, "Chat with PERSON")
+    }
+    
+    func testViewDidLoad_viewConfiguration_shouldBeCorrect() {
+        // given
+        let sut = ChatViewController(chatRoom: MockChatRoom())
+        
+        // when
+        sut.viewDidLoad()
+        
+        // then
+        XCTAssertNil(sut.startOrJoinCallButton.title(for: .normal))
+        XCTAssertTrue(sut.startOrJoinCallButton.isHidden)
+        
+        XCTAssertEqual(sut.tapToReturnToCallButton.title(for: .normal), Strings.Localizable.tapToReturnToCall)
+        XCTAssertTrue(sut.tapToReturnToCallButton.isHidden)
+        
+        XCTAssertTrue(sut.previewerView.isHidden)
+        
+        XCTAssertEqual(sut.navigationItem.backBarButtonItem?.title, "")
     }
 }
