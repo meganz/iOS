@@ -37,9 +37,10 @@ final class MeetingCreatingViewModelTests: XCTestCase {
     func testAction_onViewReady_joinMeeting() {
         let router = MockMeetingCreateRouter()
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
-        let useCase = MockMeetingCreatingUseCase(userName: "Test Name",
-                                                 chatCallCompletion: .success(chatRoom),
-                                                 checkChatLinkCompletion: .success(chatRoom))
+        let useCase = MockMeetingCreatingUseCase(
+            userName: "Test Name",
+            checkChatLinkCompletion: .success(chatRoom)
+        )
         let audioSession = MockAudioSessionUseCase()
         
         let viewModel = MeetingCreatingViewModel(
@@ -117,11 +118,15 @@ final class MeetingCreatingViewModelTests: XCTestCase {
     func testAction_joinChatCall() {
         let router = MockMeetingCreateRouter()
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
-        let useCase = MockMeetingCreatingUseCase(userName: "Test Name", chatCallCompletion: .success(chatRoom))
+        let meetingCreatingUseCase = MockMeetingCreatingUseCase(
+            userName: "Test Name",
+            createMeetingResult: .success(chatRoom)
+        )
+        let callUseCase = MockCallUseCase(callCompletion: .success(CallEntity()))
         let viewModel = MeetingCreatingViewModel(
             router: router,
             type: .start,
-            meetingUseCase: useCase,
+            meetingUseCase: meetingCreatingUseCase,
             audioSessionUseCase: MockAudioSessionUseCase(),
             localVideoUseCase: MockCallLocalVideoUseCase(),
             captureDeviceUseCase: MockCaptureDeviceUseCase(),
@@ -129,13 +134,17 @@ final class MeetingCreatingViewModelTests: XCTestCase {
             userImageUseCase: MockUserImageUseCase(),
             accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
             megaHandleUseCase: MockMEGAHandleUseCase(),
+            callUseCase: callUseCase,
             link: nil,
             userHandle: 0
         )
         
         viewModel.dispatch(.didTapStartMeetingButton)
-        XCTAssert(router.dismiss_calledTimes == 1)
-        XCTAssert(router.goToMeetingRoom_calledTimes == 1)
+        
+        evaluate {
+            router.dismiss_calledTimes == 1 &&
+            router.goToMeetingRoom_calledTimes == 1
+        }
     }
     
     func testDidTapStartMeetingButton_forGuestJoin_shouldTrackEvent() {
@@ -178,6 +187,12 @@ final class MeetingCreatingViewModelTests: XCTestCase {
         )
     }
     
+    private func evaluate(isInverted: Bool = false, expression: @escaping () -> Bool) {
+        let predicate = NSPredicate { _, _ in expression() }
+        let expectation = expectation(for: predicate, evaluatedWith: nil)
+        expectation.isInverted = isInverted
+        wait(for: [expectation], timeout: 5)
+    }
 }
 
 final class MockMeetingCreateRouter: MeetingCreatingViewRouting {

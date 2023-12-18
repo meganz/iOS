@@ -2,22 +2,21 @@ import ChatRepo
 import Foundation
 import MEGADomain
 import MEGASDKRepo
+import MEGASwift
 
 final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreatingRepositoryProtocol {
     
     static var newRepo: MeetingCreatingRepository {
-        MeetingCreatingRepository(chatSdk: .sharedChatSdk, sdk: .sharedSdk, callActionManager: .shared)
+        MeetingCreatingRepository(chatSdk: .sharedChatSdk, sdk: .sharedSdk)
     }
     
     private let chatSdk: MEGAChatSdk
     private let sdk: MEGASdk
-    private let callActionManager: CallActionManager
     private var chatResultDelegate: MEGAChatResultDelegate?
     
-    init(chatSdk: MEGAChatSdk, sdk: MEGASdk, callActionManager: CallActionManager) {
+    init(chatSdk: MEGAChatSdk, sdk: MEGASdk) {
         self.chatSdk = chatSdk
         self.sdk = sdk
-        self.callActionManager = callActionManager
     }
     
     func getUsername() -> String {
@@ -40,42 +39,30 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
         chatSdk.createChatLink(chatId)
     }
     
-    func startCall(_ startCall: StartCallEntity, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {
-        let delegate = ChatRequestDelegate { [weak self] result in
-            switch result {
-            case .success(let request):
-                guard let self, let chatroom = chatSdk.chatRoom(forChatId: request.chatHandle) else {
-                    MEGALogDebug("ChatRoom not found with chat handle \(MEGASdk.base64Handle(forUserHandle: request.chatHandle) ?? "-1")")
-                    completion(.failure(.generic))
-                    return
-                }
-                
-                let startCallDelegate = MEGAChatStartCallRequestDelegate { [weak self] (chatError) in
-                    if chatError.type == .MEGAChatErrorTypeOk {
-                        guard (self?.chatSdk.chatCall(forChatId: request.chatHandle)) != nil else {
-                            completion(.failure(.generic))
-                            return
-                        }
-                        completion(.success(chatroom.toChatRoomEntity()))
-                    } else {
-                        completion(.failure(.generic))
+    func createMeeting(_ startCall: StartCallEntity) async throws -> ChatRoomEntity {
+        try await withAsyncThrowingValue { result in
+            let delegate = ChatRequestDelegate { [weak self] completion in
+                switch completion {
+                case .success(let request):
+                    guard let self, let megaChatRoom = chatSdk.chatRoom(forChatId: request.chatHandle) else {
+                        result(.failure(CallErrorEntity.generic))
+                        return
                     }
+                    let chatRoom = megaChatRoom.toChatRoomEntity()
+                    result(.success(chatRoom))
+                case .failure:
+                    result(.failure(CallErrorEntity.generic))
                 }
-                
-                callActionManager.startCall(chatId: chatroom.chatId, enableVideo: startCall.enableVideo, enableAudio: startCall.enableAudio, delegate: startCallDelegate)
-            case .failure:
-                completion(.failure(.generic))
             }
+            chatSdk.createMeeting(
+                withTitle: startCall.meetingName,
+                speakRequest: startCall.speakRequest,
+                waitingRoom: startCall.waitingRoom,
+                openInvite: startCall.allowNonHostToAddParticipants,
+                queueType: .main,
+                delegate: delegate
+            )
         }
-        
-        chatSdk.createMeeting(
-            withTitle: startCall.meetingName,
-            speakRequest: startCall.speakRequest,
-            waitingRoom: startCall.waitingRoom,
-            openInvite: startCall.allowNonHostToAddParticipants,
-            queueType: .main,
-            delegate: delegate
-        )
     }
 
     func joinChatCall(forChatId chatId: UInt64, enableVideo: Bool, enableAudio: Bool, userHandle: UInt64, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {
@@ -89,8 +76,7 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
                 }
                 
                 let chatRoom = megaChatRoom.toChatRoomEntity()
-                MEGALogDebug("Create meeting: Answer call with chatroom id \(MEGASdk.base64Handle(forUserHandle: chatRoom.chatId) ?? "-1")")
-                answerCall(for: chatRoom, enableVideo: enableVideo, enableAudio: enableAudio, completion: completion)
+                completion(.success(chatRoom))
             case .failure:
                 completion(.failure(.generic))
             }
@@ -219,31 +205,5 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
                 completion(.failure(.unexpected))
             }
         })
-    }
-    
-    private func answerCall(for chatRoom: ChatRoomEntity, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {
-        MEGALogDebug("Create meeting: Answer call with chatroom id \(MEGASdk.base64Handle(forUserHandle: chatRoom.chatId) ?? "-1")")
-        let answerCallDelegate =  MEGAChatAnswerCallRequestDelegate { [weak self] (chatError) in
-            guard let self else {
-                completion(.failure(.generic))
-                return
-            }
-            
-            if chatError.type == .MEGAChatErrorTypeOk {
-                guard chatSdk.chatCall(forChatId: chatRoom.chatId) != nil else {
-                    MEGALogDebug("Create meeting: not able to find call with chat id \(MEGASdk.base64Handle(forUserHandle: chatRoom.chatId) ?? "-1")")
-                    completion(.failure(.generic))
-                    return
-                }
-                
-                MEGALogDebug("Create meeting: success to answer call with chatroom id \(MEGASdk.base64Handle(forUserHandle: chatRoom.chatId) ?? "-1")")
-                completion(.success(chatRoom))
-            } else {
-                MEGALogDebug("Create meeting: failed to answer call with chatroom id \(MEGASdk.base64Handle(forUserHandle: chatRoom.chatId) ?? "-1")")
-                completion(.failure(.generic))
-            }
-        }
-        
-        callActionManager.answerCall(chatId: chatRoom.chatId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: answerCallDelegate)
     }
 }

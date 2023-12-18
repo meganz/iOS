@@ -47,6 +47,7 @@ class MeetingCreatingViewRouter: NSObject, MeetingCreatingViewRouting {
             userImageUseCase: userImageUseCase,
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             megaHandleUseCase: MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo),
+            callUseCase: CallUseCase(repository: CallRepository.newRepo),
             link: link,
             userHandle: userHandle)
         let vc = MeetingCreatingViewController(viewModel: vm)

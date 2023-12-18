@@ -2,7 +2,7 @@ import MEGADomain
 
 // MARK: - Use case protocol -
 protocol MeetingCreatingUseCaseProtocol {
-    func startCall(_ startCall: StartCallEntity, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void)
+    func createMeeting(_ startCall: StartCallEntity) async throws -> ChatRoomEntity
     func joinCall(forChatId chatId: UInt64, enableVideo: Bool, enableAudio: Bool, userHandle: UInt64, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void)
     func getUsername() -> String
     func getCall(forChatId chatId: UInt64) -> CallEntity?
@@ -19,9 +19,9 @@ struct MeetingCreatingUseCase<T: MeetingCreatingRepositoryProtocol>: MeetingCrea
     init(repository: T) {
         self.repository = repository
     }
-    
-    func startCall(_ startCall: StartCallEntity, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {
-        repository.startCall(startCall, completion: completion)
+        
+    func createMeeting(_ startCall: StartCallEntity) async throws -> ChatRoomEntity {
+        try await repository.createMeeting(startCall)
     }
     
     func joinCall(forChatId chatId: UInt64, enableVideo: Bool, enableAudio: Bool, userHandle: UInt64, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void) {

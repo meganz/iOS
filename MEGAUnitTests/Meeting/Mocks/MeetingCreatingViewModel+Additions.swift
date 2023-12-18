@@ -21,6 +21,7 @@ extension MeetingCreatingViewModel {
         userImageUseCase: some UserImageUseCaseProtocol = MockUserImageUseCase(),
         accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
         megaHandleUseCase: some MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
+        callUseCase: some CallUseCaseProtocol = MockCallUseCase(),
         tracker: some AnalyticsTracking = DIContainer.tracker,
         link: String? = nil,
         userHandle: UInt64 = 0,
@@ -37,6 +38,7 @@ extension MeetingCreatingViewModel {
             userImageUseCase: userImageUseCase,
             accountUseCase: accountUseCase,
             megaHandleUseCase: megaHandleUseCase,
+            callUseCase: callUseCase,
             tracker: tracker,
             link: link,
             userHandle: userHandle
