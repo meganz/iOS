@@ -18,6 +18,7 @@ public final class ContextMenuBuilder {
     private var isDocumentExplorer: Bool = false
     private var isAudiosExplorer: Bool = false
     private var isVideosExplorer: Bool = false
+    private var isVideosRevampExplorer: Bool = false
     private var isCameraUploadExplorer: Bool = false
     private var albumType: AlbumEntityType?
     private var isFilterEnabled: Bool = false
@@ -133,6 +134,11 @@ public final class ContextMenuBuilder {
     
     public func setIsVideosExplorer(_ isVideosExplorer: Bool) -> ContextMenuBuilder {
         self.isVideosExplorer = isVideosExplorer
+        return self
+    }
+    
+    public func setIsVideosRevampExplorer(_ isVideosRevampExplorer: Bool) -> ContextMenuBuilder {
+        self.isVideosRevampExplorer = isVideosRevampExplorer
         return self
     }
     
@@ -262,6 +268,8 @@ public final class ContextMenuBuilder {
                 return fileLinkMenu()
             case .home:
                 return homeMenu()
+            case .homeVideos:
+                return homeVideosMenu()
             default:
                 return nil
             }
@@ -388,6 +396,8 @@ public final class ContextMenuBuilder {
             displayActionsMenuChildren.append(contentsOf: [selectMenu(), sortMenu()])
         } else if isVideosExplorer {
             displayActionsMenuChildren.append(contentsOf: [sortMenu()])
+        } else if isVideosRevampExplorer {
+            displayActionsMenuChildren.append(contentsOf: [selectMenu(), sortMenu()])
         } else if isCameraUploadExplorer {
             displayActionsMenuChildren = [selectMenu(), sortMenu()]
             if isFilterEnabled {
@@ -602,6 +612,21 @@ public final class ContextMenuBuilder {
         
         return CMEntity(displayInline: true,
                         children: displayActionsMenuChildren)
+    }
+    
+    private func homeVideosMenu() -> CMEntity {
+        var displayActionsMenuChildren: [CMElement] = []
+        if !isSelectHidden {
+            displayActionsMenuChildren.append(selectMenu())
+        }
+        displayActionsMenuChildren.append(sortMenu())
+        if isFilterEnabled {
+            displayActionsMenuChildren.append(filterMenu())
+        }
+        return CMEntity(
+            displayInline: true,
+            children: displayActionsMenuChildren
+        )
     }
 
     // MARK: - Folder link actions

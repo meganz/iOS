@@ -4,13 +4,17 @@ import MEGADomain
 public final class MockSortOrderPreferenceUseCase: SortOrderPreferenceUseCaseProtocol {
     
     var sortOrderEntity: SortOrderEntity
+    public private(set) var getSortOrderCallCount = 0
+    public private(set) var saveSortOrderCallCount = 0
+    public private(set) var monitorSortOrderCallCount = 0
     
     public init(sortOrderEntity: SortOrderEntity) {
         self.sortOrderEntity = sortOrderEntity
     }
     
     public func sortOrder(for key: SortOrderPreferenceKeyEntity) -> SortOrderEntity {
-        sortOrderEntity
+        getSortOrderCallCount += 1
+        return sortOrderEntity
     }
     
     public func sortOrder(for node: NodeEntity?) -> SortOrderEntity {
@@ -18,6 +22,7 @@ public final class MockSortOrderPreferenceUseCase: SortOrderPreferenceUseCasePro
     }
     
     public func save(sortOrder: SortOrderEntity, for key: SortOrderPreferenceKeyEntity) {
+        saveSortOrderCallCount += 1
         sortOrderEntity = sortOrder
     }
     
@@ -26,7 +31,8 @@ public final class MockSortOrderPreferenceUseCase: SortOrderPreferenceUseCasePro
     }
     
     public func monitorSortOrder(for key: SortOrderPreferenceKeyEntity) -> AnyPublisher<SortOrderEntity, Never> {
-        Just(sortOrderEntity).eraseToAnyPublisher()
+        monitorSortOrderCallCount += 1
+        return Just(sortOrderEntity).eraseToAnyPublisher()
     }
     
     public func monitorSortOrder(for node: NodeEntity) -> AnyPublisher<SortOrderEntity, Never> {
