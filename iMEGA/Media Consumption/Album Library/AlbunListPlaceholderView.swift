@@ -23,7 +23,7 @@ struct AlbumListPlaceholderView: View {
             }
             .padding(.horizontal, 8)
         }
-        .background(MEGAAppColor.White._FFFFFF.color)
+        .background(Color(UIColor.systemBackground))
         .opacity(isActive ? 1 : 0)
         .animation(.smooth, value: isActive)
     }
