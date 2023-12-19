@@ -1,11 +1,9 @@
-import SharedReleaseScript
-
-struct UserInput {
-    let version: String
-    let message: String
+public struct ReleaseInput {
+    public let version: String
+    public let message: String
 }
 
-func userInput() throws -> UserInput {
+public func releaseInput() throws -> ReleaseInput {
     let version = try majorMinorOrMajorMinorPatchInput("Enter the version number you're releasing (format: '[major].[minor]' or '[major].[minor].[patch]'):")
     let message = try releaseNotesInput(defaultReleaseNotes: defaultReleaseNotesInput())
     return .init(version: version, message: message)
