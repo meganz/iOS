@@ -24,6 +24,7 @@ public final class MockCreateContextMenuRepository: CreateContextMenuRepositoryP
                         .setIsDocumentExplorer(config.isDocumentExplorer)
                         .setIsAudiosExplorer(config.isAudiosExplorer)
                         .setIsVideosExplorer(config.isVideosExplorer)
+                        .setIsVideosRevampExplorer(config.isVideosRevampExplorer)
                         .setIsCameraUploadExplorer(config.isCameraUploadExplorer)
                         .setAlbumType(config.albumType)
                         .setIsFilterEnabled(config.isFilterEnabled)

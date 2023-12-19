@@ -14,16 +14,20 @@ let package = Package(
         .library(
             name: "Video",
             targets: ["Video"]
-        ),
+        )
     ],
     dependencies: [
         .package(path: "../../../Domain/MEGASwiftUI"),
+        .package(path: "../../../Presentation/MEGAAssets"),
+        .package(path: "../../../Presentation/MEGAL10n")
     ],
     targets: [
         .target(
             name: "Video",
             dependencies: [
-                "MEGASwiftUI"
+                "MEGASwiftUI",
+                "MEGAAssets",
+                "MEGAL10n"
             ],
             swiftSettings: settings
         ),
@@ -31,6 +35,6 @@ let package = Package(
             name: "VideoTests",
             dependencies: ["Video"],
             swiftSettings: settings
-        ),
+        )
     ]
 )

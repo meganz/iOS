@@ -1,13 +1,24 @@
 import MEGADomain
+import MEGAPresentation
 import MEGASDKRepo
+import SwiftUI
+import Video
 
 struct FilesExplorerRouter {
     private weak var navigationController: UINavigationController?
     private let explorerType: ExplorerTypeEntity
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
     
-    init(navigationController: UINavigationController?, explorerType: ExplorerTypeEntity) {
+    init(navigationController: UINavigationController?, explorerType: ExplorerTypeEntity, featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
         self.navigationController = navigationController
         self.explorerType = explorerType
+        self.featureFlagProvider = featureFlagProvider
+    }
+    
+    private func makeVideoRevampTabContainerViewController() -> VideoRevampTabContainerViewController {
+        let viewModel = VideoRevampTabContainerViewModel()
+        let viewController = VideoRevampTabContainerViewController(viewModel: viewModel, videoConfig: .live)
+        return viewController
     }
     
     func start() {
@@ -15,7 +26,13 @@ struct FilesExplorerRouter {
             MEGALogDebug("Unable to start Document Explorer screen as navigation controller is nil")
             return
         }
-        let sdk = MEGASdkManager.sharedMEGASdk()
+        
+        if explorerType == .video && featureFlagProvider.isFeatureFlagEnabled(for: .videoRevamp) {
+            navController.pushViewController(makeVideoRevampTabContainerViewController(), animated: true)
+            return
+        }
+        
+        let sdk = MEGASdk.shared
         let nodesUpdateListenerRepo = SDKNodesUpdateListenerRepository(sdk: sdk)
         let transferListenerRepo = SDKTransferListenerRepository(sdk: sdk)
         let fileSearchRepo = FilesSearchRepository(sdk: sdk)

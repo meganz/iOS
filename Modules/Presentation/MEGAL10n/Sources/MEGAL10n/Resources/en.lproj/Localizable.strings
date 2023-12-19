@@ -3956,6 +3956,20 @@
 "calls.panel.participantsNotInCall.participant.state.noResponse"="No response";
 /* Calls: Floating panel participants empty list not in call state */
 "calls.panel.participantsNotInCall.emptyState"="All the invited participants have joined the call.";
+/* Videos: video scene title */
+"videos.navigationbar.title"="Videos";
+/* Videos: video tab title all videos*/
+"videos.tab.title.all"="All Videos";
+/* Videos: video tab title playlists */
+"videos.tab.title.playlist"="Playlists";
+/* Videos: video content empty state */
+"videos.tab.all.content.emptyState"="No videos";
+/* Videos: video playlist add playlist button text description */
+"videos.tab.playlist.content.addPlaylist"="Add playlist";
+/* Videos: video playlist playlist cell title */
+"videos.tab.playlist.content.playlistCell.title.favorites"="Favorites";
+/* Videos: video playlist playlist cell subtitle */
+"videos.tab.playlist.content.playlistCell.subtitle.emptyPlaylist"="Empty playlist";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="There is no one in the waiting room";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
