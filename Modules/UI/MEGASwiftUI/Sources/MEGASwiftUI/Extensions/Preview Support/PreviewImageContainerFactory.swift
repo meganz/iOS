@@ -1,4 +1,3 @@
-#if DEBUG
 import SwiftUI
 
 enum PreviewImageContainerFactory {
@@ -8,4 +7,3 @@ enum PreviewImageContainerFactory {
         return container
     }
 }
-#endif
