@@ -76,7 +76,7 @@ extension CustomModalAlertViewController {
             string: detailText,
             attributes: [
                 .font: UIFont.preferredFont(style: .callout, weight: .regular),
-                .foregroundColor: UIColor.textForeground,
+                .foregroundColor: MEGAAppColor.View.textForeground.uiColor,
                 .paragraphStyle: paragraph
             ]
         )
@@ -85,7 +85,7 @@ extension CustomModalAlertViewController {
             return detailTextAttributedString
         }
         detailTextAttributedString.addAttributes(
-            [.foregroundColor: UIColor.turquoise, .link: urlLink],
+            [.foregroundColor: MEGAAppColor.View.turquoise.uiColor, .link: urlLink],
             range: cookiePolicyRange
         )
         

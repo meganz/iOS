@@ -189,7 +189,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
                                    tappableText: tappableText,
                                    linkString: "https://mega.nz/pro",
                                    textColor: Color.upgradeAccountPrimaryText,
-                                   linkColor: Color.turquoise)
+                                   linkColor: MEGAAppColor.View.turquoise.color)
     }
     
     func createAccountPlanViewModel(_ plan: AccountPlanEntity) -> AccountPlanViewModel {
