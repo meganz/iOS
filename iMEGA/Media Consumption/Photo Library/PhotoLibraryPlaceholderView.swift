@@ -21,7 +21,7 @@ struct PhotoLibraryPlaceholderView: View {
             }
             .shimmering(active: isActive)
         }
-        .background(MEGAAppColor.White._FFFFFF.color)
+        .background(Color(UIColor.systemBackground))
         .opacity(isActive ? 1 : 0)
         .animation(.smooth, value: isActive)
     }
