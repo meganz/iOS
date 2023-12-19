@@ -1,9 +1,6 @@
-import MEGAAnalyticsiOS
 import MEGAPresentation
 
 @objc final class PhotoBrowserViewModel: NSObject {
-    private let photoPreviewScreenEvent = PhotoPreviewScreenEvent()
-    private lazy var photoPreviewSaveToDeviceMenuToolbarEvent = PhotoPreviewSaveToDeviceMenuToolbarEvent()
     
     private let tracker: any AnalyticsTracking
     
@@ -12,11 +9,11 @@ import MEGAPresentation
     }
     
     @objc func onViewDidLoad() {
-        tracker.trackAnalyticsEvent(with: photoPreviewScreenEvent)
+        tracker.trackAnalyticsEvent(with: DIContainer.photoPreviewScreenEvent)
     }
     
     @objc func trackAnalyticsSaveToDeviceMenuToolbarEvent() {
         tracker.trackAnalyticsEvent(
-            with: photoPreviewSaveToDeviceMenuToolbarEvent)
+            with: DIContainer.photoPreviewSaveToDeviceMenuToolbarEvent)
     }
 }

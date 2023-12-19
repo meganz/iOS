@@ -9,5 +9,10 @@ extension DIContainer {
     static let albumImportInputDecryptionKeyDialogEvent = AlbumImportInputDecryptionKeyDialogEvent()
     static let albumImportSaveToDeviceButtonEvent = AlbumImportSaveToDeviceButtonEvent()
     static let albumImportSaveToCloudDriveButtonEvent = AlbumImportSaveToCloudDriveButtonEvent()
-    static let singlePhotoSelectedEvent = PhotoItemSelectedEvent(selectionType: .single)
+    static let singlePhotoSelectedType = PhotoItemSelected.SelectionType.single
+    static let singlePhotoSelectedEvent = PhotoItemSelectedEvent(selectionType: singlePhotoSelectedType)
+    static let photoScreenEvent = PhotoScreenEvent()
+    static let albumListShareLinkMenuItemEvent = AlbumListShareLinkMenuItemEvent()
+    static let photoPreviewScreenEvent = PhotoPreviewScreenEvent()
+    static let photoPreviewSaveToDeviceMenuToolbarEvent = PhotoPreviewSaveToDeviceMenuToolbarEvent()
 }
