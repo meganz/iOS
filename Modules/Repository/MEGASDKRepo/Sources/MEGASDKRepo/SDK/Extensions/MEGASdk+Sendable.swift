@@ -1,4 +1,5 @@
 import Foundation
+import MEGASdk
 
 extension MEGASdk: @unchecked Sendable { }
 

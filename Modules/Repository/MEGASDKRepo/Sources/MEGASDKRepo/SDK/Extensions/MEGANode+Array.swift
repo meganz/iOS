@@ -1,6 +1,7 @@
 import Foundation
+import MEGASdk
 
-extension Array where Element: MEGANode {
+public extension Array where Element: MEGANode {
     func contentCounts() -> (fileCount: UInt, folderCount: UInt) {
         reduce(into: (fileCount: 0, folderCount: 0)) { (counts, node) in
             if node.isFile() {

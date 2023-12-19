@@ -1,6 +1,7 @@
 import Foundation
+import MEGASdk
 
-extension MEGANode {
+public extension MEGANode {
     
     /// Return the file path relative to the root directory of the receiver seperated by the delimeter string.
     /// - Parameters:
