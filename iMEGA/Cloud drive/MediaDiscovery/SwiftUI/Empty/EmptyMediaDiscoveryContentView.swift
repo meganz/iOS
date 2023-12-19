@@ -43,7 +43,7 @@ struct EmptyMediaDiscoveryContentView: View {
                     .foregroundColor(Color.white)
                     .frame(width: 288, height: 50)
             })
-            .background(Color.turquoise)
+            .background(MEGAAppColor.View.turquoise.color)
             .cornerRadius(8, corners: .allCorners)
             .shadow(color: Color.black.opacity(0.15), radius: 3, x: 0, y: 1)
         }

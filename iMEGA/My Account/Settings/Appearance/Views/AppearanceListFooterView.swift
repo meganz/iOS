@@ -12,7 +12,7 @@ struct AppearanceListFooterWithLinkView: View {
                 .foregroundColor(Color.chatListSectionTitle)
             Link(destination: linkUrl) {
                 Text(linkMessage)
-                    .foregroundColor(Color.turquoise)
+                    .foregroundColor(MEGAAppColor.View.turquoise.color)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)

@@ -32,7 +32,7 @@ struct MyAccountHallPlanView: View {
                 viewModel.dispatch(.didTapUpgradeButton)
             } label: {
                 Text(Strings.Localizable.upgrade)
-                    .foregroundColor(Color.turquoise)
+                    .foregroundColor(MEGAAppColor.View.turquoise.color)
                     .font(.subheadline.bold())
                     .frame(height: 50)
                     .frame(maxWidth: 300)
@@ -41,11 +41,11 @@ struct MyAccountHallPlanView: View {
                     .contentShape(Rectangle())
                     .overlay(
                         RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.turquoise, lineWidth: 2)
+                            .stroke(MEGAAppColor.View.turquoise.color, lineWidth: 2)
                     )
             }
             .padding()
         }
-        .background(Color.backgroundCell)
+        .background(MEGAAppColor.Background.background_cell.color)
     }
 }

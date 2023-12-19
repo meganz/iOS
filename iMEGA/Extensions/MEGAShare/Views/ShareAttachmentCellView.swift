@@ -16,7 +16,7 @@ struct ShareAttachmentCellView: View {
                         TextField("", text: $viewModel.fileName)
                             .font(.system(size: 15))
                             .autocorrectionDisabled()
-                            .foregroundColor(Color.textForeground)
+                            .foregroundColor(MEGAAppColor.View.textForeground.color)
                             .fixedSize()
                             .onReceive(NotificationCenter.default.publisher(for: UITextField.textDidBeginEditingNotification),
                                        perform: { notif in
@@ -43,6 +43,6 @@ struct ShareAttachmentCellView: View {
             .padding(.horizontal, 10)
         }
         .frame(height: 60)
-        .background(Color.cellBackground)
+        .background(MEGAAppColor.View.cellBackground.color)
     }
 }
