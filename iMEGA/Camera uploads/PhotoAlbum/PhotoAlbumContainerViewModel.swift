@@ -1,5 +1,4 @@
 import Combine
-import MEGAAnalyticsiOS
 import MEGAPresentation
 import SwiftUI
 
@@ -15,7 +14,6 @@ final class PhotoAlbumContainerViewModel: ObservableObject {
     
     var disableSelectBarButton = false
     
-    private let photoScreenEvent = PhotoScreenEvent()
     private let tracker: any AnalyticsTracking
     
     init(tracker: some AnalyticsTracking) {
@@ -23,11 +21,11 @@ final class PhotoAlbumContainerViewModel: ObservableObject {
     }
     
     func didAppear() {
-        tracker.trackAnalyticsEvent(with: photoScreenEvent)
+        tracker.trackAnalyticsEvent(with: DIContainer.photoScreenEvent)
     }
     
     func shareLinksTapped() {
         showShareAlbumLinks = true
-        tracker.trackAnalyticsEvent(with: AlbumListShareLinkMenuItemEvent())
+        tracker.trackAnalyticsEvent(with: DIContainer.albumListShareLinkMenuItemEvent)
     }
 }
