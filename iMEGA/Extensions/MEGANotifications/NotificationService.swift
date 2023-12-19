@@ -487,7 +487,8 @@ class NotificationService: UNNotificationServiceExtension, MEGAChatNotificationD
             MEGAChatSdk.shared.resetClientId()
         } else {
             MEGALogDebug("Init state != notDone -> Reconnect")
-            MEGAReachabilityManager.shared()?.reconnect()
+            MEGASdk.sharedNSE.reconnect()
+            MEGAChatSdk.shared.reconnect()
         }
         
         MEGAChatSdk.shared.setBackgroundStatus(true)
