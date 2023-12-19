@@ -1,4 +1,3 @@
-#if DEBUG
 import MEGAAssets
 import MEGASwiftUI
 import SwiftUI
@@ -56,4 +55,3 @@ extension VideoConfig {
         )
     )
 }
-#endif

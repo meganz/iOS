@@ -1,4 +1,3 @@
-#if DEBUG
 import SwiftUI
 import MEGASwiftUI
 
@@ -29,4 +28,3 @@ extension UIImage {
         return UIGraphicsGetImageFromCurrentImageContext() ?? UIImage()
     }
 }
-#endif

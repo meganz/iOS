@@ -1,4 +1,3 @@
-#if DEBUG
 import SwiftUI
 
 public extension Image {
@@ -20,4 +19,3 @@ public extension UIImage {
         return UIGraphicsGetImageFromCurrentImageContext() ?? UIImage()
     }
 }
-#endif
