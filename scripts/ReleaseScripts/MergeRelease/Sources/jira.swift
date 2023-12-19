@@ -25,7 +25,7 @@ private func markCurrentVersionAsReleasedInProject(project: JiraProject, version
     let releaseId = try await releaseId(projectId: project.id, version: version)
     let path = "/rest/api/2/version/\(releaseId)"
     let url = try makeURL(base: environment.jiraBaseURL, path: path)
-
+    
     let body: [String: Any] = [
         "id": releaseId,
         "project": project.name,
@@ -33,7 +33,7 @@ private func markCurrentVersionAsReleasedInProject(project: JiraProject, version
         "releaseDate": iso8601Formatter.string(from: .now),
         "released": true
     ]
-
+    
     try await sendRequest(
         url: url,
         method: .put,
@@ -57,12 +57,13 @@ private func releaseId(projectId: Int64, version: String) async throws -> String
         token: .bearer(environment.jiraToken),
         headers: [.init(field: "Accept", value: "application/json")]
     )
-
+    
     let releases = try decoder.decode([JiraRelease].self, from: data)
-
+    
     guard let release = releases.first(where: { $0.name == "iOS \(version)"}) else {
         throw JiraError.noReleaseFound(version: version)
     }
-
+    
     return release.id
 }
+
