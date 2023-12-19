@@ -9,27 +9,14 @@ struct PhotoCellVideoDurationViewModifier: ViewModifier {
     }
     
     private var videoOverlay: some View {
-        HStack {
-            Image(uiImage: UIImage.videoList)
-                .resizable()
-                .frame(
-                    width: viewModel.iconSize,
-                    height: viewModel.iconSize,
-                    alignment: .bottomLeading
-                )
-                .offset(x: 5, y: viewModel.iconOriginY)
-            
-            Text(viewModel.duration)
-                .font(.system(size: viewModel.fontSize))
-                .foregroundColor(Color.white)
-                .padding(.init(top: 2, leading: 5, bottom: 2, trailing: 5))
-                .background(Color.black.opacity(0.3))
-                .cornerRadius(6.0)
-                .frame(height: 20, alignment: .bottomLeading)
-                .offset(x: 0, y: -5)
-                .opacity(viewModel.shouldShowDurationDetail ? 1 : 0)
-        }
-        .opacity(viewModel.shouldShowDurationView ? 1 : 0)
+        Text(viewModel.duration)
+            .font(.system(size: viewModel.fontSize))
+            .foregroundColor(MEGAAppColor.White._FFFFFF.color)
+            .padding(.init(top: 2, leading: 5, bottom: 2, trailing: 5))
+            .background(MEGAAppColor.Black._000000.color.opacity(0.3))
+            .cornerRadius(6.0)
+            .offset(x: 5, y: viewModel.durationYOffset)
+            .opacity(viewModel.shouldShowDuration ? 1 : 0)
     }
 }
 

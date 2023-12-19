@@ -5,12 +5,8 @@ struct PhotoCellVideoDurationViewModel {
     let duration: String
     var scaleFactor: PhotoLibraryZoomState.ScaleFactor = PhotoLibraryZoomState.defaultScaleFactor
     
-    var shouldShowDurationView: Bool {
-        isVideo && scaleFactor != .thirteen
-    }
-    
-    var shouldShowDurationDetail: Bool {
-        isVideo && duration != ""
+    var shouldShowDuration: Bool {
+        isVideo && scaleFactor != .thirteen && duration != ""
     }
     
     private let fontSizeMapping: [PhotoLibraryZoomState.ScaleFactor: CGFloat] = [
@@ -29,11 +25,11 @@ struct PhotoCellVideoDurationViewModel {
         return playIconSizeMapping[scaleFactor] ?? 22
     }
     
-    private let playIconOriginYMapping: [PhotoLibraryZoomState.ScaleFactor: CGFloat] = [
+    private let durationYOffsetMapping: [PhotoLibraryZoomState.ScaleFactor: CGFloat] = [
         .one: -6, .three: -5, .five: -2, .thirteen: 0
     ]
     
-    var iconOriginY: CGFloat {
-        return playIconOriginYMapping[scaleFactor] ?? -5
+    var durationYOffset: CGFloat {
+        durationYOffsetMapping[scaleFactor] ?? -5
     }
 }
