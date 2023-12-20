@@ -262,6 +262,29 @@ final class MeetingContainerViewModelTests: XCTestCase {
         assertWhenMuteUnmuteOperationFailed(withMutedValue: true, hasLocalAudio: true, expectsMuteUnmuteCalls: [false])
     }
     
+    func testHangCall_forNonGuest_shouldResetCallToUnmute() {
+        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
+        let router = MockMeetingContainerRouter()
+        let callEntity = CallEntity(chatId: 1, callId: 1, duration: 1, initialTimestamp: 1, finalTimestamp: 1, numberOfParticipants: 1)
+        let callUseCase = MockCallUseCase(call: callEntity)
+        let accountUseCase = MockAccountUseCase(isGuest: false)
+        let callCoordinatorUseCase = MockCallCoordinatorUseCase()
+        viewModel = MeetingContainerViewModel(
+            router: router,
+            chatRoom: chatRoom,
+            callUseCase: callUseCase,
+            callCoordinatorUseCase: callCoordinatorUseCase,
+            accountUseCase: accountUseCase
+        )
+        test(viewModel: viewModel,
+             action: .hangCall(
+                presenter: UIViewController(),
+                sender: UIButton()
+             ),
+             expectedCommands: [])
+        XCTAssertEqual(callCoordinatorUseCase.muteUnmute_Calls[0], false)
+    }
+    
     // MARK: - Private methods
     
     private func assertWhenMuteUnmuteOperationFailed(

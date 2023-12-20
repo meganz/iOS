@@ -223,14 +223,14 @@ final class MeetingContainerViewModel: ViewModelType {
     }
     
     private func dismissCall(completion: (() -> Void)?) {
-        if let call = call {
+        if let call {
             if let callId = megaHandleUseCase.base64Handle(forUserHandle: call.callId),
                let chatId = megaHandleUseCase.base64Handle(forUserHandle: call.chatId) {
                 MEGALogDebug("Meeting: Container view model - Hang call for call id \(callId) and chat id \(chatId)")
             } else {
                 MEGALogDebug("Meeting: Container view model -Hang call - cannot get the call id and chat id string")
             }
-
+            callCoordinatorUseCase.muteUnmuteCall(call, muted: false)
             callCoordinatorUseCase.removeCallRemovedHandler()
             callUseCase.hangCall(for: call.callId)
             callCoordinatorUseCase.endCall(call)
