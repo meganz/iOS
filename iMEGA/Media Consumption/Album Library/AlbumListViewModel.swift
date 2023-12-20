@@ -80,10 +80,6 @@ final class AlbumListViewModel: NSObject, ObservableObject {
             count: horizontalSizeClass == .compact ? 3 : 5
         )
     }
-        
-    func cancelLoading() {
-        createAlbumTask?.cancel()
-    }
     
     func createUserAlbum(with name: String?) {
         guard let name = name else { return }
@@ -146,6 +142,12 @@ final class AlbumListViewModel: NSObject, ObservableObject {
                 MEGALogError("Albums [\(diff)] share link can not be removed")
             }
         }
+    }
+    
+    func onViewDisappear() {
+        setEditModeToInactive()
+        photoAlbumContainerViewModel?.showToolbar = false
+        cancelCreateAlbumTask()
     }
     
     func setEditModeToInactive() {
@@ -357,5 +359,10 @@ final class AlbumListViewModel: NSObject, ObservableObject {
         photoAlbumContainerViewModel.$showShareAlbumLinks
             .dropFirst()
             .assign(to: &$showShareAlbumLinks)
+    }
+    
+    private func cancelCreateAlbumTask() {
+        createAlbumTask?.cancel()
+        createAlbumTask = nil
     }
 }

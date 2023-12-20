@@ -7,27 +7,21 @@ import UIKit
 // MARK: - Context Menu
 extension PhotoAlbumContainerViewController {
     func updateBarButtons() {
+        guard pageTabViewModel.selectedTab == .album else { return }
+        
         if isEditing {
             navigationItem.setRightBarButton(cancelBarButton, animated: true)
             navigationItem.setLeftBarButton(nil, animated: true)
-            showToolbar()
         } else {
             navigationItem.setRightBarButton(selectBarButton, animated: false)
             navigationItem.setLeftBarButton(leftBarButton, animated: true)
-            hideToolbar()
         }
     }
     
     @objc func toggleEditing(sender: UIBarButtonItem) {
-        guard !viewModel.disableSelectBarButton else { return }
-        
-        isEditing = !isEditing
+        isEditing.toggle()
         viewModel.editMode = isEditing ? .active : .inactive
-        updateBarButtons()
-    }
-    
-    var selectBarButton: UIBarButtonItem {
-        UIBarButtonItem(image: UIImage(resource: .selectAllItems), style: .plain, target: self, action: #selector(toggleEditing))
+        viewModel.showToolbar.toggle()
     }
     
     var cancelBarButton: UIBarButtonItem {
