@@ -487,6 +487,16 @@ extension AppDelegate {
 
         UpgradeAccountRouter().presentUpgradeTVC()
     }
+    
+    @objc func cacheCloudDriveAbTestsAndThen(_ completion: @escaping () -> Void) {
+        Task {
+            let useNewCloudDrive = await DIContainer.abTestProvider.abTestVariant(for: .newCloudDrive) == .variantA
+            UserDefaults.standard.setValue(useNewCloudDrive, forKey: Helper.cloudDriveABTestCacheKey())
+            await MainActor.run {
+                completion()
+            }
+        }
+    }
 
     // MARK: - Account details
     @objc func refreshAccountDetails() {

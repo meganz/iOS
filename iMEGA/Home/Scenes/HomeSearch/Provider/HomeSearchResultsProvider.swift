@@ -29,8 +29,13 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
     private var availableChips: [SearchChipEntity]
 
     private let onSearchResultUpdated: (SearchResult) -> Void
-
+    
+    // The node from which we want start searching from,
+    // root node can be nil in case when we start app in offline
+    private let parentNodeProvider: () -> NodeEntity?
+    
     init(
+        parentNodeProvider: @escaping () -> NodeEntity?,
         searchFileUseCase: some SearchFileUseCaseProtocol,
         nodeDetailUseCase: some NodeDetailUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
@@ -42,6 +47,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         sdk: MEGASdk,
         onSearchResultUpdated: @escaping (SearchResult) -> Void
     ) {
+        self.parentNodeProvider = parentNodeProvider
         self.searchFileUseCase = searchFileUseCase
         self.nodeDetailUseCase = nodeDetailUseCase
         self.nodeUseCase = nodeUseCase
@@ -99,15 +105,29 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         }
     }
     
-    func childrenOfRoot() async -> SearchResultsEntity {
-        guard let root = nodeRepository.rootNode() else {
+    private var parentNode: NodeEntity? {
+        parentNodeProvider()
+    }
+    
+    private func childrenOfRoot() async -> SearchResultsEntity {
+        guard let parentNode else {
             return .empty
         }
-        self.nodeList = await nodeRepository.children(of: root)
+        self.nodeList = await nodeRepository.children(of: parentNode)
         return await fillResults()
     }
     
-    func fullSearch(with queryRequest: SearchQueryEntity) async throws -> NodeListEntity? {
+    private var searchPath: SearchFileRootPath {
+        guard 
+            let parentNode,
+            parentNode == nodeRepository.rootNode()
+        else {
+            return .root
+        }
+        return .specific(parentNode.handle)
+    }
+    
+    private func fullSearch(with queryRequest: SearchQueryEntity) async throws -> NodeListEntity? {
         // SDK does not support empty query and MEGANodeFormatType.unknown
         assert(!(queryRequest.query == "" && queryRequest.chips == []))
         MEGALogInfo("[search] full search \(queryRequest.query)")
@@ -117,7 +137,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
                 withFilter: queryRequest.searchFilter,
                 recursive: true,
                 sortOrder: .defaultAsc,
-                searchPath: .root,
+                searchPath: searchPath,
                 completion: { nodeList in
                     completion(.success(nodeList))
                 }

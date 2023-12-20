@@ -9,7 +9,7 @@ final class SlideShowUseCaseTests: XCTestCase {
                                                isRepeat: true,
                                                includeSubfolders: false)
         
-        let sut = SlideShowUseCase(preferenceRepo: MockPreferenceRepository<Data>.newRepo)
+        let sut = SlideShowUseCase(preferenceRepo: MockPreferenceRepository.newRepo)
         try XCTUnwrap(sut.saveConfiguration(config: newConfig, forUser: HandleEntity(1)))
         let loadNewConfig = try XCTUnwrap(sut.loadConfiguration(forUser: HandleEntity(1)))
         XCTAssert(loadNewConfig == newConfig)
@@ -26,7 +26,7 @@ final class SlideShowUseCaseTests: XCTestCase {
                                                isRepeat: true,
                                                includeSubfolders: false)
 
-        let sut = SlideShowUseCase(preferenceRepo: MockPreferenceRepository<Data>.newRepo)
+        let sut = SlideShowUseCase(preferenceRepo: MockPreferenceRepository.newRepo)
         
         try XCTUnwrap(sut.saveConfiguration(config: newConfig1, forUser: HandleEntity(1)))
         try XCTUnwrap(sut.saveConfiguration(config: newConfig2, forUser: HandleEntity(2)))
@@ -39,7 +39,7 @@ final class SlideShowUseCaseTests: XCTestCase {
     }
     
     func testSlideShowLoadConfiguration_whenNoSavedConfig_shouldLoadDefaultConfig() async throws {
-        let sut = SlideShowUseCase(preferenceRepo: MockPreferenceRepository<Data>.newRepo)
+        let sut = SlideShowUseCase(preferenceRepo: MockPreferenceRepository.newRepo)
         let config = try XCTUnwrap(sut.loadConfiguration(forUser: HandleEntity(1)))
         XCTAssert(config == sut.defaultConfig)
     }

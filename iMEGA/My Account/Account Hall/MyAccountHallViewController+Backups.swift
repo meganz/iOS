@@ -21,11 +21,19 @@ extension MyAccountHallViewController {
     }
     
     @objc func navigateToBackups() {
-        guard let cloudDriveVC = UIStoryboard(name: "Cloud", bundle: nil).instantiateViewController(identifier: "CloudDriveID") as? CloudDriveViewController else { return }
-        if let backupsRootNode {
-            cloudDriveVC.parentNode = backupsRootNode
+        guard
+            let navigationController,
+            let backupsRootNode
+        else { return }
+        
+        let factory = CloudDriveViewControllerFactory.make(nc: navigationController)
+        let cloudDriveVC = factory.buildBare(
+            parentNode: backupsRootNode.toNodeEntity(),
+            options: .init(displayMode: .backup)
+        )
+        
+        if let cloudDriveVC {
+            navigationController.pushViewController(cloudDriveVC, animated: true)
         }
-        cloudDriveVC.displayMode = .backup
-        navigationController?.pushViewController(cloudDriveVC, animated: true)
     }
 }

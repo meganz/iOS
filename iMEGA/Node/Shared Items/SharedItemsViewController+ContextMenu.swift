@@ -7,12 +7,10 @@ extension SharedItemsViewController: DisplayMenuDelegate {
     @objc func tableView(_ tableView: UITableView,
                          contextMenuConfigurationForRowAt indexPath: IndexPath,
                          node: MEGANode) -> UIContextMenuConfiguration? {
+        let factory = CloudDriveViewControllerFactory.make(nc: navigationController)
         let contextMenuConfiguration = UIContextMenuConfiguration(identifier: nil) {
             if node.isFolder() {
-                let cloudDriveVC = UIStoryboard(name: "Cloud", bundle: nil).instantiateViewController(withIdentifier: "CloudDriveID") as? CloudDriveViewController
-                cloudDriveVC?.parentNode = node
-                cloudDriveVC?.displayMode = .cloudDrive
-                return cloudDriveVC
+                return factory.buildBare(parentNode: node.toNodeEntity())
             } else {
                 return nil
             }

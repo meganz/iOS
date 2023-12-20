@@ -22,7 +22,7 @@ extension MainTabBarController {
     @objc func loadTabViewControllers() {
         defaultViewControllers = .init(capacity: 5)
 
-        if let cloudDriveVC = cloudDriveViewController() {
+        if let cloudDriveVC = makeCloudDriveViewController() {
             defaultViewControllers.add(cloudDriveVC)
         }
         if let photoAlbumVC = photoAlbumViewController() {
@@ -81,7 +81,16 @@ extension MainTabBarController {
         homeVC.searchResultViewController = searchResultVC
         homeVC.updateIsNewSearchEnabled(isNewHomeSearchEnabled)
     }
-
+    
+    private func makeCloudDriveViewController() -> UIViewController? {
+        CloudDriveViewControllerFactory
+            .make()
+            .build(
+                nodeSource: .node({ MEGASdk.shared.rootNode?.toNodeEntity() }),
+                options: .init(showsAvatar: true)
+            )
+    }
+    
     @objc func showPSAViewIfNeeded() {
         if psaViewModel == nil {
             psaViewModel = createPSAViewModel()
@@ -96,14 +105,6 @@ extension MainTabBarController {
         else { return nil }
         (vc as? (any MyAvatarPresenterProtocol))?.configureMyAvatarManager()
         return sharedItemsNavigationController
-    }
-
-    @objc func cloudDriveViewController() -> UIViewController? {
-        guard let cloudDriveNavigationController = UIStoryboard(name: "Cloud", bundle: nil).instantiateInitialViewController() as? MEGANavigationController,
-              let vc = cloudDriveNavigationController.viewControllers.first
-        else { return nil }
-        (vc as? (any MyAvatarPresenterProtocol))?.configureMyAvatarManager()
-        return cloudDriveNavigationController
     }
 
     @objc func updateUI() {

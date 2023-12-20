@@ -75,28 +75,23 @@
     BOOL isBackupNode = false;
     for (MEGANode *node in parentTreeArray) {
         if (node.handle != backupsRootNode.parentHandle) {
-            CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-            cloudDriveVC.parentNode = node;
-            if (backupsRootNode != nil) {
-                cloudDriveVC.displayMode = DisplayModeBackup;
-                isBackupNode = true;
-            }
-            [navigationController pushViewController:cloudDriveVC animated:NO];
+            [self pushCloudDriveForNode:node
+                            displayMode:backupsRootNode != nil ? DisplayModeBackup : DisplayModeCloudDrive
+                   navigationController:navigationController];
+            isBackupNode = true;
         }
     }
     
     switch (self.type) {
         case MEGANodeTypeFolder:
         case MEGANodeTypeRubbish: {
-            CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-            cloudDriveVC.parentNode = self;
+            DisplayMode displayMode;
             if (isBackupNode) {
-                cloudDriveVC.displayMode = DisplayModeBackup;
+                displayMode = DisplayModeBackup;
             } else {
-                cloudDriveVC.displayMode = self.type == MEGANodeTypeRubbish ? DisplayModeRubbishBin : DisplayModeCloudDrive;
+                displayMode = self.type == MEGANodeTypeRubbish ? DisplayModeRubbishBin : DisplayModeCloudDrive;
             }
-            [navigationController pushViewController:cloudDriveVC animated:NO];
-
+            [self pushCloudDriveForNode:self displayMode:displayMode navigationController:navigationController];
             [UIApplication.mnz_presentingViewController dismissView];
             break;
         }

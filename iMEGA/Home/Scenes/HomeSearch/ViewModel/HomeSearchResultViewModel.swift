@@ -40,7 +40,7 @@ final class HomeSearchResultViewModel {
 
     // MARK: - Components
 
-    private var router: HomeSearchResultRouter
+    private var router: any NodeRouting
 
     // MARK: - Use Case
 
@@ -54,7 +54,7 @@ final class HomeSearchResultViewModel {
         searchFileUseCase: some SearchFileUseCaseProtocol,
         searchFileHistoryUseCase: some SearchFileHistoryUseCaseProtocol,
         nodeDetailUseCase: some NodeDetailUseCaseProtocol,
-        router: HomeSearchResultRouter,
+        router: some NodeRouting,
         tracker: some AnalyticsTracking,
         sdk: MEGASdk
     ) {

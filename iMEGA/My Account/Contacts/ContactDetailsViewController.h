@@ -13,7 +13,7 @@ typedef NS_ENUM (NSInteger, ContactDetailsMode) {
 
 @property (nonatomic) ContactDetailsMode contactDetailsMode;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-
+@property (strong, nonatomic) MEGANodeList *incomingNodeListForUser;
 @property (nonatomic, strong) NSString *userEmail;
 @property (nonatomic, strong) NSString *userName;
 @property (nonatomic) uint64_t userHandle;

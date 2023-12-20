@@ -1536,21 +1536,30 @@
                 return;
             }
             
-            if (!isAccountFirstLogin) {
-                [self showMainTabBar];
-                if (self.openChatLater) {
-                    [self.mainTBC openChatRoomNumber:self.openChatLater];
+            BOOL _isAccountFirstLogin = isAccountFirstLogin;
+            
+            // We should have fetched ab test flags at this point, so we can cache the value
+            // of NewCloudDrive flag async and store in UserDefaults,
+            // then wee use it sync later on in the app. Only then we construct MainTabBarController
+            // We clean the cache when user logs out in the Helper.cleanAccount
+            
+            [self cacheCloudDriveAbTestsAndThen: ^{
+                if (!_isAccountFirstLogin) {
+                    [self showMainTabBar];
+                    if (self.openChatLater) {
+                        [self.mainTBC openChatRoomNumber:self.openChatLater];
+                    }
                 }
-            }
-
-            [[MEGASdkManager sharedMEGASdk] getAccountDetails];
-            [self refreshAccountDetails];
-
-            [self.quickAccessWidgetManager createWidgetItemData];
-            
-            [self presentAccountExpiredViewIfNeeded];
-            
-            [self configAppWithNewCookieSettings];
+                
+                [[MEGASdkManager sharedMEGASdk] getAccountDetails];
+                [self refreshAccountDetails];
+                
+                [self.quickAccessWidgetManager createWidgetItemData];
+                
+                [self presentAccountExpiredViewIfNeeded];
+                
+                [self configAppWithNewCookieSettings];
+            }];
             break;
         }
             

@@ -59,13 +59,12 @@ final class NodeOpener {
         )
         navigationController?.present(photoBrowserForMediaNode, animated: true, completion: nil)
     }
-
-    private func openFolderNode(_ node: MEGANode) {
-        let cloudStoryboard = UIStoryboard(name: "Cloud", bundle: nil)
-        guard let cloudDriveViewController =
-            cloudStoryboard.instantiateViewController(withIdentifier: "CloudDriveID") as? CloudDriveViewController
-        else { return }
-        cloudDriveViewController.parentNode = node
-        navigationController?.pushViewController(cloudDriveViewController, animated: true)
+    
+    func openFolderNode(_ node: MEGANode) {
+        let factory = CloudDriveViewControllerFactory.make(nc: navigationController)
+        let vc = factory.buildBare(parentNode: node.toNodeEntity())
+        if let vc {
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
 }

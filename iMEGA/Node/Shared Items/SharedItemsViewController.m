@@ -996,16 +996,7 @@
             if ([self shouldShowContactVerificationOnTapForIndexPath:indexPath node:node]) {
                 [self showContactVerificationViewForIndexPath:indexPath];
             } else {
-                BOOL isBackupNode = [[[BackupsOCWrapper alloc] init] isBackupNode:node];
-
-                CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-                cloudDriveVC.isFromSharedItem = YES;
-                cloudDriveVC.isFromUnverifiedContactSharedFolder = [self shouldDisplayContactVerificationBannerForCloudDrive:node];
-                
-                [cloudDriveVC setParentNode:node];
-                [cloudDriveVC setDisplayMode:isBackupNode ? DisplayModeBackup : DisplayModeCloudDrive];
-                
-                [self.navigationController pushViewController:cloudDriveVC animated:YES];
+                [self showCloudDriveFromNode:node];
             }
             break;
         }

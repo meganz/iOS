@@ -1041,18 +1041,6 @@ static TransfersWidgetViewController* instance = nil;
     [self reloadView];
 }
 
-- (void)openFolderNode:(MEGANode *)node isFromViewInFolder:(BOOL)isFromViewInFolder {
-    CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-    cloudDriveVC.parentNode = node;
-    cloudDriveVC.isFromViewInFolder = isFromViewInFolder;
-    
-    if (node.mnz_isInRubbishBin && isFromViewInFolder) {
-        cloudDriveVC.displayMode = DisplayModeRubbishBin;
-    }
-    
-    [self.navigationController pushViewController:cloudDriveVC animated:YES];
-}
-
 - (void)showNode:(MEGANode *)node {
     [self.navigationController presentViewController:[self photoBrowserForMediaNode:node] animated:YES completion:nil];
 }

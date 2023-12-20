@@ -75,7 +75,6 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *backButtonWidthConstraint;
 
 @property (strong, nonatomic) MEGAUser *user;
-@property (strong, nonatomic) MEGANodeList *incomingNodeListForUser;
 @property (strong, nonatomic) MEGAChatRoom *chatRoom; // The chat room of the contact. Used for send a message or make a call
 @property (strong, nonatomic) ChatNotificationControl *chatNotificationControl;
 
@@ -574,14 +573,6 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 - (BOOL)isSharedFolderSection:(NSInteger)section {
     return (self.contactDetailsSections.count > section
             && self.contactDetailsSections[section].intValue == ContactDetailsSectionSharedFolders);
-}
-
-- (void)openSharedFolderAtIndexPath:(NSIndexPath *)indexPath {
-    CloudDriveViewController *cloudDriveVC = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-    MEGANode *incomingNode = [self.incomingNodeListForUser nodeAtIndex:indexPath.row];
-    cloudDriveVC.parentNode = incomingNode;
-    cloudDriveVC.displayMode = DisplayModeCloudDrive;
-    [self.navigationController pushViewController:cloudDriveVC animated:YES];
 }
 
 - (void)performCallWithVideo:(BOOL)video {

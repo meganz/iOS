@@ -281,22 +281,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
 #pragma mark - Public
 
-- (void)didSelectNode:(MEGANode *)node {
-    if (node.isTakenDown) {
-        NSString *alertMessage = node.isFolder ? LocalizedString(@"This folder has been the subject of a takedown notice.", @"Popup notification text on mouse-over taken down folder.") : LocalizedString(@"This file has been the subject of a takedown notice.", @"Popup notification text on mouse-over of taken down file.");
-        
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:alertMessage preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"Dispute Takedown", @"File Manager -> Context menu item for taken down file or folder, for dispute takedown.") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            [[NSURL URLWithString:MEGADisputeURL] mnz_presentSafariViewController];
-        }]];
-        [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
-        
-        [self presentViewController:alertController animated:YES completion:nil];
-    } else {
-        node.isFolder ? [self openFolderNode:node] : [self openFileNode:node];
-    }
-}
-
 - (nullable MEGANode *)nodeAtIndexPath:(NSIndexPath *)indexPath {
     BOOL isInSearch = self.searchController.searchBar.text.length >= kMinimumLettersToStartTheSearch;
     MEGANode *node;
@@ -635,10 +619,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     return photoBrowserVC;
 }
 
-- (void)showNode:(MEGANode *)node {
-    [self.navigationController presentViewController:[self photoBrowserForMediaNode:node] animated:YES completion:nil];
-}
-
 - (void)reloadList {
     if (self.viewModePreference_ObjC == ViewModePreferenceEntityList) {
         [self.cdTableView.tableView reloadData];
@@ -728,27 +708,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         }
         [self.searchQueue cancelAllOperations];
     }
-}
-
-- (void)openFileNode:(MEGANode *)node {
-    if ([FileExtensionGroupOCWrapper verifyIsVisualMedia:node.name]) {
-        [self showNode:node];
-    } else {
-        [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO fileLink:nil messageId:nil chatId:nil allNodes: self.nodes.mnz_nodesArrayFromNodeList];
-    }
-}
-
-- (void)openFolderNode:(MEGANode *)node {
-    CloudDriveViewController *cloudDriveVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
-    cloudDriveVC.parentNode = node;
-    cloudDriveVC.isFromSharedItem = self.isFromSharedItem;
-    cloudDriveVC.isFromViewInFolder = self.isFromViewInFolder;
-    
-    if (self.displayMode == DisplayModeRubbishBin || self.displayMode == DisplayModeBackup) {
-        cloudDriveVC.displayMode = self.displayMode;
-    }
-    
-    [self.navigationController pushViewController:cloudDriveVC animated:YES];
 }
 
 - (void)confirmDeleteActionFiles:(NSUInteger)numFilesAction andFolders:(NSUInteger)numFoldersAction {

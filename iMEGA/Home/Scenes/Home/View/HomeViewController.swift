@@ -112,7 +112,7 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
     }
     
     var viewModeLocation: ViewModeLocation_ObjWrapper {
-        .init(customLocation: CustomHomeSearch)
+        .init(customLocation: CustomViewModeLocation.HomeSearch)
     }
     
     override func viewDidLoad() {

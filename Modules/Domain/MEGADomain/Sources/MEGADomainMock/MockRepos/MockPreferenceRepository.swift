@@ -1,15 +1,15 @@
 import Foundation
 import MEGADomain
 
-public struct MockPreferenceRepository<U>: PreferenceRepositoryProtocol {
-    private var userDefaults: [String: U]
+public struct MockPreferenceRepository: PreferenceRepositoryProtocol {
+    public var userDefaults: [String: Any]
     
     public static var newRepo: MockPreferenceRepository {
         MockPreferenceRepository()
     }
 
     public init() {
-        userDefaults = [String: U]()
+        userDefaults = [String: Any]()
     }
     
     public subscript<T>(key: String) -> T? {
@@ -17,7 +17,7 @@ public struct MockPreferenceRepository<U>: PreferenceRepositoryProtocol {
             userDefaults[key] as? T
         }
         set {
-            userDefaults[key] = newValue as? U
+            userDefaults[key] = newValue
         }
     }
     
