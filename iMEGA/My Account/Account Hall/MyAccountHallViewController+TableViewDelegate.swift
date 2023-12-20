@@ -78,10 +78,20 @@ extension MyAccountHallViewController: UITableViewDelegate {
             navigationController?.pushViewController(offlineVC, animated: true)
             
         case MyAccountMegaSection.rubbishBin.rawValue:
-            guard let cloudDriveVC = UIStoryboard(name: "Cloud", bundle: nil).instantiateViewController(withIdentifier: "CloudDriveID") as? CloudDriveViewController, let rubbishNode = MEGASdk.shared.rubbishNode else { return }
-            cloudDriveVC.parentNode = rubbishNode
-            cloudDriveVC.displayMode = .rubbishBin
-            navigationController?.pushViewController(cloudDriveVC, animated: true)
+            
+            guard 
+                let rubbishNode = MEGASdk.shared.rubbishNode,
+                let nc = navigationController
+            else { return }
+            
+            let factory = CloudDriveViewControllerFactory.make(nc: nc)
+            let cloudDriveVC = factory.buildBare(
+                parentNode: rubbishNode.toNodeEntity(),
+                options: .init(displayMode: .rubbishBin)
+            )
+            if let cloudDriveVC {
+                navigationController?.pushViewController(cloudDriveVC, animated: true)
+            }
             
         default:
             break

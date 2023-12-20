@@ -194,6 +194,27 @@ final class HomeScreenFactory: NSObject {
         }
     }
     
+    func makeRouter(
+        navController: UINavigationController,
+        tracker: some AnalyticsTracking
+    ) -> some NodeRouting {
+        HomeSearchResultRouter(
+            navigationController: navController,
+            nodeActionViewControllerDelegate: NodeActionViewControllerGenericDelegate(
+                viewController: navController,
+                nodeActionListener: nodeActionListener(tracker)
+            ),
+            backupsUseCase: makeBackupsUseCase()
+        )
+    }
+    
+    func makeBackupsUseCase() -> some BackupsUseCaseProtocol {
+         BackupsUseCase(
+            backupsRepository: BackupsRepository.newRepo,
+            nodeRepository: NodeRepository.newRepo
+         )
+    }
+    
     private func makeNewSearchResultsViewController(
         with navigationController: UINavigationController,
         bridge: SearchResultsBridge,
@@ -207,7 +228,8 @@ final class HomeScreenFactory: NSObject {
             nodeActionViewControllerDelegate: NodeActionViewControllerGenericDelegate(
                 viewController: navigationController,
                 nodeActionListener: nodeActionListener(tracker)
-            )
+            ),
+            backupsUseCase: makeBackupsUseCase()
         )
         
         // this bridge is needed to do a searchBar <-> searchResults -> homeScreen communication without coupling this to
@@ -258,26 +280,10 @@ final class HomeScreenFactory: NSObject {
             searchBridge?.updateBottomInset(inset)
         }
         
-        let featureFlagProvider = makeFeatureFlagProvider()
-        
         let vm = SearchResultsViewModel(
-            resultsProvider: HomeSearchResultsProvider(
-                searchFileUseCase: makeSearchFileUseCase(),
-                nodeDetailUseCase: makeNodeDetailUseCase(),
-                nodeUseCase: makeNodeUseCase(),
-                mediaUseCase: makeMediaUseCase(),
-                nodeRepository: makeNodeRepo(),
-                nodesUpdateListenerRepo: makeNodesUpdateListenerRepo(),
-                transferListenerRepo: makeTransferListenerRepo(),
-                allChips: Self.allChips(
-                    areChipsGroupEnabled: featureFlagProvider.isFeatureFlagEnabled(
-                        for: .chipsGroups
-                    )
-                ),
-                sdk: sdk,
-                onSearchResultUpdated: { [weak searchBridge] searchResult in
-                    searchBridge?.searchResultChanged(searchResult)
-                }
+            resultsProvider: makeResultsProvider(
+                parentNodeProvider: {[weak sdk] in sdk?.rootNode?.toNodeEntity() },
+                searchBridge: searchBridge
             ),
             bridge: searchBridge,
             config: .searchConfig(
@@ -285,13 +291,34 @@ final class HomeScreenFactory: NSObject {
                 enableItemMultiSelection: enableItemMultiSelection
                 )
             ),
-            layout: viewModeStore.viewMode(for: .init(customLocation: CustomHomeSearch)).pageLayout ?? .list,
+            layout: viewModeStore.viewMode(for: .init(customLocation: CustomViewModeLocation.HomeSearch)).pageLayout ?? .list,
             keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: notificationCenter)
 
         )
         return UIHostingController(rootView: SearchResultsView(viewModel: vm))
     }
     
+    func makeResultsProvider(
+        parentNodeProvider: @escaping () -> NodeEntity?,
+        searchBridge: SearchBridge
+    ) -> HomeSearchResultsProvider {
+        let featureFlagProvider = makeFeatureFlagProvider()
+        return HomeSearchResultsProvider(
+            parentNodeProvider: parentNodeProvider,
+            searchFileUseCase: makeSearchFileUseCase(),
+            nodeDetailUseCase: makeNodeDetailUseCase(),
+            nodeUseCase: makeNodeUseCase(),
+            mediaUseCase: makeMediaUseCase(),
+            nodeRepository: makeNodeRepo(),
+            nodesUpdateListenerRepo: makeNodesUpdateListenerRepo(),
+            transferListenerRepo: makeTransferListenerRepo(),
+            allChips: Self.allChips(areChipsGroupEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .chipsGroups)),
+            sdk: sdk,
+            onSearchResultUpdated: { [weak searchBridge] searchResult in
+                searchBridge?.searchResultChanged(searchResult)
+            }
+        )
+    }
     private static func allChips(
         areChipsGroupEnabled: Bool
     ) -> [SearchChipEntity] {
@@ -306,20 +333,19 @@ final class HomeScreenFactory: NSObject {
         .default
     }
     
-    func previewViewController(for node: MEGANode) -> UIViewController? {
+    func previewViewController(
+        for node: MEGANode
+    ) -> UIViewController? {
         if node.isFolder() {
-            let storyboard = UIStoryboard(name: "Cloud", bundle: nil)
-            let cloudDriveVC = storyboard.instantiateViewController(identifier: "CloudDriveID") as! CloudDriveViewController
-            
-            cloudDriveVC.parentNode = node
-            
-            return cloudDriveVC
+            let nc = UINavigationController()
+            let factory = CloudDriveViewControllerFactory.make(nc: nc)
+            return factory.buildBare(parentNode: node.toNodeEntity())
         } else {
             return nil
         }
     }
     
-    private func contextPreviewFactory(enableItemMultiSelection: Bool) -> SearchConfig.ContextPreviewFactory {
+    func contextPreviewFactory(enableItemMultiSelection: Bool) -> SearchConfig.ContextPreviewFactory {
         .init(
             // this logic below, constructs actions and preview
             // when an search item is long pressed
@@ -410,12 +436,9 @@ final class HomeScreenFactory: NSObject {
                 fileSearchHistoryRepository: .live
             ),
             nodeDetailUseCase: makeNodeDetailUseCase(),
-            router: HomeSearchResultRouter(
-                navigationController: navigationController,
-                nodeActionViewControllerDelegate: NodeActionViewControllerGenericDelegate(
-                    viewController: navigationController,
-                    nodeActionListener: nodeActionListener(tracker)
-                )
+            router: makeRouter(
+                navController: navigationController,
+                tracker: tracker
             ),
             tracker: tracker,
             sdk: sdk

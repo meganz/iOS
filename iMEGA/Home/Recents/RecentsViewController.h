@@ -14,8 +14,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RecentsViewController : UIViewController
 
-@property (nonatomic, weak, nullable) CloudDriveViewController *cloudDrive;
-
 @property (nonatomic, weak, nullable) id<RecentNodeActionDelegate> delegate;
 @property (nonatomic, copy, nullable) void (^didUpdateMiniPlayerHeight)(CGFloat);
 

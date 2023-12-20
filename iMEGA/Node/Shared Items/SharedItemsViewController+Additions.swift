@@ -157,6 +157,27 @@ extension SharedItemsViewController {
         }
     }
     
+    @objc func showCloudDriveFrom(node: MEGANode) {
+        guard let navigationController else { return }
+        let factory = CloudDriveViewControllerFactory.make(nc: navigationController)
+        let nodeEntity = node.toNodeEntity()
+        let isBackupNode = BackupsUseCase(
+            backupsRepository: BackupsRepository.newRepo,
+            nodeRepository: NodeRepository.newRepo
+        ).isBackupNode(nodeEntity)
+        
+        let vc = factory.buildBare(
+            parentNode: nodeEntity,
+            options: .init(
+                displayMode: isBackupNode ? .backup : .cloudDrive,
+                isFromUnverifiedContactSharedFolder: shouldDisplayContactVerificationBannerForCloudDrive(node),
+                isFromSharedItem: true
+            )
+        )
+        guard let vc else { return }
+        navigationController.pushViewController(vc, animated: true)
+    }
+    
     @objc func shareAtIndexPath(_ indexPath: IndexPath) -> MEGAShare? {
         guard indexPath.section == 0, linksButton?.isSelected == false else { return nil }
         
@@ -380,7 +401,7 @@ extension SharedItemsViewController {
         return nil
     }
 
-    @objc func shouldDisplayContactVerificationBannerForCloudDrive(_ node: MEGANode) -> Bool {
+    func shouldDisplayContactVerificationBannerForCloudDrive(_ node: MEGANode) -> Bool {
         var isUserVerified = false
         if let user = user(for: node) {
             isUserVerified = isContactVerified(user)

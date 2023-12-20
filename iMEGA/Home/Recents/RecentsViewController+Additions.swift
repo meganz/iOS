@@ -44,4 +44,16 @@ extension RecentsViewController {
             allNodes: nil
         )
     }
+    
+    @objc func showRecentAction(bucket: MEGARecentActionBucket) {
+        let factory = CloudDriveViewControllerFactory.make(nc: UINavigationController())
+        let vc = factory.build(
+            nodeSource: .recentActionBucket(bucket),
+            options: .init(
+                displayMode: .recents,
+                shouldRemovePlayerDelegate: false
+            )
+        )
+        delegate?.showSelectedNode(in: vc)
+    }
 }

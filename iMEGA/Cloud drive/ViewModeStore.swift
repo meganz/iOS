@@ -8,8 +8,10 @@ extension Notification.Name {
 // [FM-1457] OfflineViewController
 // [FM-1458] FolderLinkViewController
 
-let CustomHomeSearch = "HomeSearchResults"
-let Generic = "Generic" // used for other uses of cloud drive such as Recents
+enum CustomViewModeLocation {
+    static let HomeSearch = "HomeSearchResults"
+    static let Generic = "Generic" // used for other uses of cloud drive such as Recents
+}
 
 enum ViewModeLocation {
     case node(NodeEntity) // per folder preference in cloud drive
@@ -21,7 +23,7 @@ enum ViewModeLocation {
     struct Custom {
         let name: String
         
-        static let homeSearch = Custom(name: CustomHomeSearch)
+        static let homeSearch = Custom(name: CustomViewModeLocation.HomeSearch)
         
         // use this getter to get a CoreData path parameter to save and read
         // user preferences from the data base, reusing Offline preference storage mechanism

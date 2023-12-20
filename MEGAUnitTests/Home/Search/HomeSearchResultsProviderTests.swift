@@ -106,6 +106,9 @@ class HomeSearchProviderTests: XCTestCase {
             nodesUpdateListenerRepo = MockSDKNodesUpdateListenerRepository.newRepo
 
             sut = HomeSearchResultsProvider(
+                parentNodeProvider: {
+                    rootNode ?? NodeEntity(handle: 123)
+                },
                 searchFileUseCase: searchFile,
                 nodeDetailUseCase: nodeDetails,
                 nodeUseCase: nodeDataUseCase,

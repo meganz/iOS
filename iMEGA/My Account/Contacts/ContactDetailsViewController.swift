@@ -3,6 +3,19 @@ import MEGADomain
 import MEGAL10n
 
 extension ContactDetailsViewController {
+    
+    @objc func openSharedFolderAtIndexPath(_ indexPath: IndexPath) {
+        guard
+            let navigationController = navigationController,
+            let node = incomingNodeListForUser.node(at: indexPath.row)
+        else { return }
+        
+        let factory = CloudDriveViewControllerFactory.make(nc: navigationController)
+        let vc = factory.buildBare(parentNode: node.toNodeEntity())
+        guard let vc else { return }
+        navigationController.pushViewController(vc, animated: true)
+    }
+
     @objc func joinMeeting(withChatRoom chatRoom: MEGAChatRoom) {
         guard let call = MEGAChatSdk.shared.chatCall(forChatId: chatRoom.chatId) else { return }
         let isSpeakerEnabled = AVAudioSession.sharedInstance().isOutputEqualToPortType(.builtInSpeaker)

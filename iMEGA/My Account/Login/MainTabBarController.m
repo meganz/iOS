@@ -192,14 +192,6 @@
     [self setBadgeValueForChats];
 }
 
-- (UIViewController *)cloudDriveViewController {
-    MEGANavigationController *cloudDriveNavigationController = [[UIStoryboard storyboardWithName:@"Cloud" bundle:nil] instantiateInitialViewController];
-    if ([[cloudDriveNavigationController.viewControllers firstObject] conformsToProtocol:@protocol(MyAvatarPresenterProtocol)]) {
-        [[cloudDriveNavigationController.viewControllers firstObject] configureMyAvatarManager];
-    }
-    return cloudDriveNavigationController;
-}
-
 - (UIViewController *)photosViewController {
     return [self photoAlbumViewController];
 }

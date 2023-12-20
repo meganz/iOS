@@ -197,17 +197,26 @@ extension MEGAPhotoBrowserViewController {
     }
     
     func openFolderNode(_ node: MEGANode, isFromViewInFolder: Bool) {
-        let cloudStoryboard = UIStoryboard(name: "Cloud", bundle: nil)
-        guard let cloudDriveViewController = cloudStoryboard.instantiateViewController(withIdentifier: "CloudDriveID") as? CloudDriveViewController else { return }
-        cloudDriveViewController.parentNode = node
-        cloudDriveViewController.isFromViewInFolder = isFromViewInFolder
         
-        if node.mnz_isInRubbishBin() && isFromViewInFolder {
-            cloudDriveViewController.displayMode = .rubbishBin
+        let factory = CloudDriveViewControllerFactory.make()
+        let vc = factory.build(
+            parentNode: node.toNodeEntity(),
+            options: .init(
+                displayMode: displayMode(node: node, isFromViewInFolder: isFromViewInFolder),
+                isFromViewInFolder: isFromViewInFolder
+            )
+        )
+        if let vc {
+            present(vc, animated: true)
         }
-        
-        let navigationContorller = MEGANavigationController(rootViewController: cloudDriveViewController)
-        present(navigationContorller, animated: true)
+    }
+    
+    func displayMode(node: MEGANode, isFromViewInFolder: Bool) -> DisplayMode {
+        if node.mnz_isInRubbishBin() && isFromViewInFolder {
+            return .rubbishBin
+        } else {
+            return .cloudDrive
+        }
     }
     
     @objc func clearNodeOnTransfers(_ node: MEGANode) {

@@ -280,6 +280,8 @@ contextMenuConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath
     UIContextMenuConfiguration *configuration = [UIContextMenuConfiguration configurationWithIdentifier:nil
                                                                                         previewProvider:^UIViewController * _Nullable {
         if (node.isFolder) {
+            // not replacing this with CloudDriveViewController factory as this is used inside
+            // legacy CloudDriveViewControlle
             CloudDriveViewController *cloudDriveVC = [self.storyboard instantiateViewControllerWithIdentifier:@"CloudDriveID"];
             cloudDriveVC.parentNode = node;
             return cloudDriveVC;

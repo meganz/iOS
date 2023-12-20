@@ -8,7 +8,7 @@ enum PermissionsModalModel {
 }
 
 struct AlertModel {
-    var title: String
+    var title: String?
     var message: String
     var actions: [AlertAction]
     

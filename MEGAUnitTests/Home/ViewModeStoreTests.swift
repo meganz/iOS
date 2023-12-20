@@ -26,10 +26,10 @@ final class ViewModeStoreTests: XCTestCase {
     class Harness {
         let sut: ViewModeStore
         let megaStore = MockMEGAStore()
-        var preferenceRepo: MockPreferenceRepository<Int>
+        var preferenceRepo: MockPreferenceRepository
         
         init(savedPreference: ViewModePreferenceEntity? = nil) {
-            self.preferenceRepo = MockPreferenceRepository<Int>()
+            self.preferenceRepo = MockPreferenceRepository()
             if let savedPreference {
                 preferenceRepo[MEGAViewModePreference] = savedPreference.rawValue
             }

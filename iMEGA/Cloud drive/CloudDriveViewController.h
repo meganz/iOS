@@ -24,7 +24,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong, nullable) NSMutableDictionary *nodesIndexPathMutableDictionary;
 
 @property (nonatomic, strong, nullable) MEGARecentActionBucket *recentActionBucket;
-@property (nonatomic) NSInteger recentIndex;
 
 @property (strong, nonatomic, nullable) UISearchController *searchController;
 
@@ -68,7 +67,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)presentScanDocument;
 - (void)setViewEditing:(BOOL)editing;
 - (void)setToolbarActionsEnabled:(BOOL)boolValue;
-- (void)didSelectNode:(MEGANode *)node;
 - (void)moveNode:(MEGANode * _Nonnull)node;
 - (void)confirmDeleteActionFiles:(NSUInteger)numFilesAction andFolders:(NSUInteger)numFoldersAction;
 - (void)setEditMode:(BOOL)editMode;

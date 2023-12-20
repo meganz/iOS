@@ -71,13 +71,15 @@ final class MyAccountHallRouter: MyAccountHallRouting {
     private func createCloudDriveVCForNode(
         _ node: NodeEntity,
         isBackup: Bool
-    ) -> CloudDriveViewController? {
-        guard let node = node.toMEGANode(in: MEGASdk.shared),
-              let cloudDriveVC = UIStoryboard(name: "Cloud", bundle: nil).instantiateViewController(withIdentifier: "CloudDriveID") as? CloudDriveViewController else { return nil }
+    ) -> UIViewController? {
+        let factory = CloudDriveViewControllerFactory.make(nc: navigationController)
         
-        cloudDriveVC.parentNode = node
-        cloudDriveVC.displayMode = isBackup ? .backup : .cloudDrive
-        return cloudDriveVC
+        return factory.buildBare(
+            parentNode: node,
+            options: .init(
+                displayMode: isBackup ? .backup : .cloudDrive
+            )
+        )
     }
     
     private func setupContactsViewController(with node: NodeEntity, mode: ContactsMode) -> ContactsViewController? {
