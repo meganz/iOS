@@ -1,5 +1,6 @@
 import Combine
 import MEGADomain
+import MEGAL10n
 import MEGAPresentation
 
 enum MeetingContainerAction: ActionType {
@@ -43,6 +44,8 @@ final class MeetingContainerViewModel: ViewModelType {
     private let callCoordinatorUseCase: any CallCoordinatorUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
+    private let chatUseCase: any ChatUseCaseProtocol
+    private let scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol
     private let authUseCase: any AuthUseCaseProtocol
     private let noUserJoinedUseCase: any MeetingNoUserJoinedUseCaseProtocol
     private let analyticsEventUseCase: any AnalyticsEventUseCaseProtocol
@@ -64,6 +67,8 @@ final class MeetingContainerViewModel: ViewModelType {
          chatRoom: ChatRoomEntity,
          callUseCase: some CallUseCaseProtocol,
          chatRoomUseCase: some ChatRoomUseCaseProtocol,
+         chatUseCase: some ChatUseCaseProtocol,
+         scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol,
          callCoordinatorUseCase: some CallCoordinatorUseCaseProtocol,
          accountUseCase: some AccountUseCaseProtocol,
          authUseCase: some AuthUseCaseProtocol,
@@ -74,6 +79,8 @@ final class MeetingContainerViewModel: ViewModelType {
         self.chatRoom = chatRoom
         self.callUseCase = callUseCase
         self.chatRoomUseCase = chatRoomUseCase
+        self.chatUseCase = chatUseCase
+        self.scheduledMeetingUseCase = scheduledMeetingUseCase
         self.callCoordinatorUseCase = callCoordinatorUseCase
         self.accountUseCase = accountUseCase
         self.authUseCase = authUseCase
@@ -132,19 +139,7 @@ final class MeetingContainerViewModel: ViewModelType {
         case .hideOptionsMenu:
             router.toggleFloatingPanel(containerViewModel: self)
         case .shareLink(let presenter, let sender, let completion):
-            chatRoomUseCase.fetchPublicLink(forChatRoom: chatRoom) { [weak self] result in
-                guard let self else { return }
-                switch result {
-                case .success(let link):
-                    router.shareLink(presenter: presenter,
-                                          sender: sender,
-                                          link: link,
-                                          isGuestAccount: accountUseCase.isGuest,
-                                          completion: completion)
-                case .failure:
-                    router.showShareMeetingError()
-                }
-            }
+            shareLink(presenter, sender, completion)
         case .renameChat:
             router.renameChat()
         case .dismissCall(let completion):
@@ -323,6 +318,40 @@ final class MeetingContainerViewModel: ViewModelType {
                 guard let self else { return }
                 router.selectWaitingRoomList(containerViewModel: self)
             }
+    }
+    
+    private func shareLink(_ presenter: UIViewController?, _ sender: AnyObject, _ completion: UIActivityViewController.CompletionWithItemsHandler?) {
+        chatRoomUseCase.fetchPublicLink(forChatRoom: chatRoom) { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success(let link):
+                guard let url = URL(string: link) else {
+                    router.showShareMeetingError()
+                    return
+                }
+                var title = ""
+                var message = ""
+                if let scheduledMeeting = scheduledMeetingUseCase.scheduledMeetingsByChat(chatId: chatRoom.chatId).first {
+                    let meetingDate = ScheduledMeetingDateBuilder(scheduledMeeting: scheduledMeeting, chatRoom: chatRoom).buildDateDescriptionString()
+                    title = scheduledMeeting.title + "\n" + meetingDate
+                    message = Strings.Localizable.Meetings.Info.ShareMeetingLink.invitation((chatUseCase.myFullName() ?? "")) + "\n" +
+                    Strings.Localizable.Meetings.Info.ShareMeetingLink.meetingName(scheduledMeeting.title) + "\n" +
+                    Strings.Localizable.Meetings.Info.ShareMeetingLink.meetingTime(meetingDate) + "\n" +
+                    Strings.Localizable.Meetings.Info.ShareMeetingLink.meetingLink(link)
+                } else {
+                    title = chatRoom.title ?? ""
+                    message = title + "\n" + link
+                }
+                router.showShareChatLinkActivity(presenter: presenter,
+                                 sender: sender,
+                                 link: link,
+                                 metadataItemSource: ChatLinkPresentationItemSource(title: title, message: message, url: url),
+                                 isGuestAccount: accountUseCase.isGuest,
+                                 completion: completion)
+            case .failure:
+                router.showShareMeetingError()
+            }
+        }
     }
     
     deinit {

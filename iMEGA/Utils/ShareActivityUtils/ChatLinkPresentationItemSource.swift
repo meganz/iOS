@@ -1,6 +1,6 @@
 import LinkPresentation
 
-class ScheduledMeetingLinkPresentationItemSource: NSObject, UIActivityItemSource {
+class ChatLinkPresentationItemSource: NSObject, UIActivityItemSource {
     private let title: String
     private let message: String
     private let url: URL

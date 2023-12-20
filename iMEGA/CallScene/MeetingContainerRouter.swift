@@ -14,7 +14,7 @@ protocol MeetingContainerRouting: AnyObject, Routing {
                                meetingContainerViewModel: MeetingContainerViewModel,
                                sender: UIButton)
     func showOptionsMenu(presenter: UIViewController, sender: UIBarButtonItem, isMyselfModerator: Bool, containerViewModel: MeetingContainerViewModel)
-    func shareLink(presenter: UIViewController?, sender: AnyObject, link: String, isGuestAccount: Bool, completion: UIActivityViewController.CompletionWithItemsHandler?)
+    func showShareChatLinkActivity(presenter: UIViewController?, sender: AnyObject, link: String, metadataItemSource: ChatLinkPresentationItemSource, isGuestAccount: Bool, completion: UIActivityViewController.CompletionWithItemsHandler?)
     func renameChat()
     func showShareMeetingError()
     func enableSpeaker(_ enable: Bool)
@@ -83,6 +83,8 @@ final class MeetingContainerRouter: MeetingContainerRouting {
                                                   chatRoom: chatRoom,
                                                   callUseCase: createCallUseCase,
                                                   chatRoomUseCase: chatRoomUseCase,
+                                                  chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
+                                                  scheduledMeetingUseCase: ScheduledMeetingUseCase(repository: ScheduledMeetingRepository.newRepo),
                                                   callCoordinatorUseCase: CallCoordinatorUseCase(),
                                                   accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
                                                   authUseCase: DIContainer.authUseCase,
@@ -191,17 +193,12 @@ final class MeetingContainerRouter: MeetingContainerRouting {
         optionsMenuRouter.start()
     }
     
-    func shareLink(presenter: UIViewController?, sender: AnyObject, link: String, isGuestAccount: Bool, completion: UIActivityViewController.CompletionWithItemsHandler?) {
+    func showShareChatLinkActivity(presenter: UIViewController?, sender: AnyObject, link: String, metadataItemSource: ChatLinkPresentationItemSource, isGuestAccount: Bool, completion: UIActivityViewController.CompletionWithItemsHandler?) {
         guard UIActivityViewController.isAlreadyPresented == false else {
             MEGALogDebug("Meeting link Share controller is already presented.")
             return
         }
-        guard let url = URL(string: link) else {
-            MEGALogDebug("Meeting link url should exist.")
-            return
-        }
-        let itemSource = MeetingLinkPresentationItemSource(url: url, title: self.chatRoom.title ?? "")
-        let activityViewController = UIActivityViewController(activityItems: [itemSource], applicationActivities: isGuestAccount ? nil : [SendToChatActivity(text: link)])
+        let activityViewController = UIActivityViewController(activityItems: [metadataItemSource], applicationActivities: isGuestAccount ? nil : [SendToChatActivity(text: link)])
         if let barButtonSender = sender as? UIBarButtonItem {
             activityViewController.popoverPresentationController?.barButtonItem = barButtonSender
         } else if let buttonSender = sender as? UIButton {
