@@ -67,7 +67,7 @@ final class MeetingContainerViewModelTests: XCTestCase {
     func testAction_shareLink_Success() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
         let router = MockMeetingContainerRouter()
-        let chatRoomUseCase = MockChatRoomUseCase(publicLinkCompletion: .success(""))
+        let chatRoomUseCase = MockChatRoomUseCase(publicLinkCompletion: .success("https://mega.link"))
         viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom, chatRoomUseCase: chatRoomUseCase)
         test(viewModel: viewModel, action: .shareLink(presenter: UIViewController(), sender: UIButton(), completion: nil), expectedCommands: [])
         XCTAssert(router.shareLink_calledTimes == 1)
@@ -352,7 +352,7 @@ final class MockMeetingContainerRouter: MeetingContainerRouting {
         showEndMeetingOptions_calledTimes += 1
     }
     
-    func shareLink(presenter: UIViewController?, sender: AnyObject, link: String, isGuestAccount: Bool, completion: UIActivityViewController.CompletionWithItemsHandler?) {
+    func showShareChatLinkActivity(presenter: UIViewController?, sender: AnyObject, link: String, metadataItemSource: ChatLinkPresentationItemSource, isGuestAccount: Bool, completion: UIActivityViewController.CompletionWithItemsHandler?) {
         shareLink_calledTimes += 1
     }
     

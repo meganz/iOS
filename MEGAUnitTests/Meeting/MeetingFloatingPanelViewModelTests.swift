@@ -426,7 +426,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         let call = CallEntity()
         let containerRouter = MockMeetingContainerRouter()
         let callUseCase = MockCallUseCase(call: call)
-        let chatRoomUseCase = MockChatRoomUseCase(publicLinkCompletion: .success(""))
+        let chatRoomUseCase = MockChatRoomUseCase(publicLinkCompletion: .success("https://mega.link"))
         let containerViewModel = MeetingContainerViewModel(router: containerRouter, chatRoom: chatRoom, callUseCase: callUseCase, chatRoomUseCase: chatRoomUseCase)
         let router = MockMeetingFloatingPanelRouter()
         let viewModel = MeetingFloatingPanelViewModel(router: router,
@@ -447,9 +447,10 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
     func testAction_shareLink_Failure() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
         let callUseCase = MockCallUseCase(call: CallEntity())
-        let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
+        let containerRouter = MockMeetingContainerRouter()
+        let containerViewModel = MeetingContainerViewModel(router: containerRouter, chatRoom: chatRoom, callUseCase: callUseCase)
         let router = MockMeetingFloatingPanelRouter()
-        let viewModel = MeetingFloatingPanelViewModel(router: MockMeetingFloatingPanelRouter(),
+        let viewModel = MeetingFloatingPanelViewModel(router: router,
                                                       containerViewModel: containerViewModel,
                                                       chatRoom: chatRoom,
                                                       isSpeakerEnabled: false,
@@ -461,7 +462,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       localVideoUseCase: MockCallLocalVideoUseCase(),
                                                       accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true))
         test(viewModel: viewModel, action: .shareLink(presenter: UIViewController(), sender: UIButton()), expectedCommands: [])
-        XCTAssert(router.shareLink_calledTimes == 0)
+        XCTAssert(containerRouter.shareLink_calledTimes == 0)
     }
     
     func testAction_inviteParticipants() {
@@ -1059,7 +1060,6 @@ final class MockMeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     var videoPermissionError_calledTimes = 0
     var audioPermissionError_calledTimes = 0
     var dismiss_calledTimes = 0
-    var shareLink_calledTimes = 0
     var inviteParticipants_calledTimes = 0
     var showContextMenu_calledTimes = 0
     var showAllContactsAlreadyAddedAlert_CalledTimes = 0
@@ -1074,10 +1074,6 @@ final class MockMeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     
     func dismiss() {
         dismiss_calledTimes += 1
-    }
-    
-    func shareLink(presenter: UIViewController, sender: UIButton, link: String) {
-        shareLink_calledTimes += 1
     }
     
     func inviteParticipants(

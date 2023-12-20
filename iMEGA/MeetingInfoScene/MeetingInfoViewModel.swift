@@ -11,7 +11,7 @@ protocol MeetingInfoRouting {
     func showEnableKeyRotation(for chatRoom: ChatRoomEntity)
     func closeMeetingInfoView()
     func showLeaveChatAlert(leaveAction: @escaping(() -> Void))
-    func showShareActivity(_ link: String, title: String, message: String)
+    func showShareMeetingLinkActivity(_ link: String, metadataItemSource: ChatLinkPresentationItemSource)
     func showSendToChat(_ link: String)
     func showLinkCopied()
     func showParticipantDetails(email: String, userHandle: HandleEntity, chatRoom: ChatRoomEntity, didUpdatePeerPermission: @escaping (ChatRoomParticipantPrivilege) -> Void)

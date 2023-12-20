@@ -80,9 +80,8 @@ final class MeetingInfoRouter: NSObject, MeetingInfoRouting {
         presenter.present(alertController, animated: true)
     }
     
-    func showShareActivity(_ link: String, title: String, message: String) {
-        guard let url = URL(string: link), let sourceView = presenter.viewControllers.first?.view else { return }
-        let metadataItemSource = ScheduledMeetingLinkPresentationItemSource(title: title, message: message, url: url)
+    func showShareMeetingLinkActivity(_ link: String, metadataItemSource: ChatLinkPresentationItemSource) {
+        guard let sourceView = presenter.viewControllers.first?.view else { return }
         let shareActivity = UIActivityViewController(activityItems: [metadataItemSource], applicationActivities: [SendToChatActivity(text: link)])
         shareActivity.popoverPresentationController?.sourceView = sourceView
         presenter.present(shareActivity, animated: true)

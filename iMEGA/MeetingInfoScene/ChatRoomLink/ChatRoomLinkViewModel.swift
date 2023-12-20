@@ -111,14 +111,16 @@ final class ChatRoomLinkViewModel: ObservableObject {
             UIPasteboard.general.string = meetingLink
             router.showLinkCopied()
         case .share:
-            router.showShareActivity(meetingLink,
-                                     title: scheduledMeeting.title + "\n" +
-                                     subtitle,
-                                     message:
-                                        Strings.Localizable.Meetings.Info.ShareMeetingLink.invitation((chatUseCase.myFullName() ?? "")) + "\n" +
-                                     Strings.Localizable.Meetings.Info.ShareMeetingLink.meetingName(scheduledMeeting.title) + "\n" +
-                                     Strings.Localizable.Meetings.Info.ShareMeetingLink.meetingTime(subtitle) + "\n" +
-                                     Strings.Localizable.Meetings.Info.ShareMeetingLink.meetingLink(meetingLink)
+            guard let url = URL(string: meetingLink) else { return }
+            let metadataItemSource = ChatLinkPresentationItemSource(title: scheduledMeeting.title + "\n" +
+                                                       subtitle,
+                                                       message: Strings.Localizable.Meetings.Info.ShareMeetingLink.invitation((chatUseCase.myFullName() ?? "")) + "\n" +
+                                                       Strings.Localizable.Meetings.Info.ShareMeetingLink.meetingName(scheduledMeeting.title) + "\n" +
+                                                       Strings.Localizable.Meetings.Info.ShareMeetingLink.meetingTime(subtitle) + "\n" +
+                                                       Strings.Localizable.Meetings.Info.ShareMeetingLink.meetingLink(meetingLink),
+                                                       url: url)
+            router.showShareMeetingLinkActivity(meetingLink,
+                                     metadataItemSource: metadataItemSource
             )
         }
     }
