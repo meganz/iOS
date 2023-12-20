@@ -205,9 +205,11 @@ extension SearchQueryEntity {
             filter.category = Int32(nodeFormat)
         }
 
+        // SDK support both creation and modification date
+        // but we only support modification date
         if let firstTimeFilterChip = chips.first(where: { $0.type.isTimeFilterChip })?.type,
            case let SearchChipEntity.ChipType.timeFrame(timeFrame) = firstTimeFilterChip {
-            filter.timeFrame = .init(
+            filter.modificationTimeFrame = .init(
                 lowerLimit: timeFrame.startDate,
                 upperLimit: timeFrame.endDate
             )

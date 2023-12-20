@@ -59,7 +59,7 @@ class HomeSearchProviderTests: XCTestCase {
         var receivedFilters: [MEGASearchFilter] = []
         var receivedTimeFrames: [SearchChipEntity.TimeFrame] {
             receivedFilters.compactMap {
-                guard let timeFrame = $0.timeFrame else { return nil }
+                guard let timeFrame = $0.modificationTimeFrame else { return nil }
                 let start = Date(timeIntervalSince1970: TimeInterval(timeFrame.lowerLimit))
                 let end = Date(timeIntervalSince1970: TimeInterval(timeFrame.upperLimit))
                 return .init(
