@@ -10,8 +10,7 @@ extension MyAccountHallViewController {
     }
     
     @objc func showProfileView() {
-        let profileViewModel = ProfileViewModel(sdk: MEGASdk.shared,
-                                                isNewUpgradeAccountPlanEnabled: viewModel.isNewUpgradeAccountPlanEnabled)
+        let profileViewModel = ProfileViewModel(sdk: MEGASdk.shared)
         let profileRouter = ProfileViewRouter(navigationController: navigationController, viewModel: profileViewModel)
         profileRouter.start()
     }
@@ -61,12 +60,6 @@ extension MyAccountHallViewController {
     
     @objc func removeSubscriptions() {
         viewModel.dispatch(.removeSubscriptions)
-    }
-    
-    // MARK: - A/B Testing
-    
-    @objc func isNewUpgradeAccountPlanEnabled() -> Bool {
-        viewModel.isNewUpgradeAccountPlanEnabled
     }
     
     // MARK: - Open sections programmatically
@@ -122,27 +115,14 @@ extension MyAccountHallViewController {
     }
     
     private func configPlanDisplay() {
-        accountTypeLabel?.text = ""
-        buyPROBarButtonItem?.title = nil
-        buyPROBarButtonItem?.isEnabled = false
-
-        guard let accountDetails = viewModel.accountDetails else {
+        guard let accountDetails = viewModel.accountDetails,
+              accountDetails.proLevel == .business ||
+                accountDetails.proLevel == .proFlexi else {
+            accountTypeLabel?.text = ""
             return
         }
-        
-        switch accountDetails.proLevel {
-        case .business, .proFlexi:
-            navigationItem.rightBarButtonItem = nil
-            accountTypeLabel?.text = accountDetails.proLevel.toAccountTypeDisplayName()
-            buyPROBarButtonItem?.title = nil
-            buyPROBarButtonItem?.isEnabled = false
-        default:
-            guard !viewModel.isNewUpgradeAccountPlanEnabled else { return }
-                  
-            accountTypeLabel?.text = ""
-            buyPROBarButtonItem?.title = Strings.Localizable.upgrade
-            buyPROBarButtonItem?.isEnabled = !viewModel.planList.isEmpty
-        }
+
+        accountTypeLabel?.text = accountDetails.proLevel.toAccountTypeDisplayName()
     }
     
     private func configNavigationBar() {

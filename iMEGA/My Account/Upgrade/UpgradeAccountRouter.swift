@@ -58,11 +58,6 @@ final class UpgradeAccountRouter {
             UIApplication.mnz_presentingViewController().present(upgradeAccountNC, animated: true, completion: nil)
         }
     }
-    
-    // MARK: AB Testing
-    private func shouldShowNewPlanPageVariant() async -> Bool {
-        await abTestProvider.abTestVariant(for: .upgradePlanRevamp) == .variantA
-    }
 
     private func presentNewPlanPage() {
         guard let accountDetails = MEGASdk.shared.mnz_accountDetails else { return }
@@ -76,11 +71,6 @@ final class UpgradeAccountRouter {
     private func shouldPushUpgradeTVC() async throws -> Bool {
         guard try shouldShowPlanPage() else {
             throw UpgradeAccountError.noProducts
-        }
-        
-        let isNewPlanPageVariant = await shouldShowNewPlanPageVariant()
-        guard isNewPlanPageVariant else {
-            return true
         }
         
         throw UpgradeAccountError.newPlanPageRequired

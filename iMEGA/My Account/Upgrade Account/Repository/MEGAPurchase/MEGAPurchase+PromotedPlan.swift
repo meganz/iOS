@@ -50,7 +50,6 @@ extension MEGAPurchase {
     }
     
     @objc func handlePromotedPlanPurchaseResult(isSuccess: Bool) {
-
         guard isSuccess else {
             // Failed purchase. Show the default purchase error message.
             handleFailedPurchaseWithAlert()
@@ -58,46 +57,20 @@ extension MEGAPurchase {
         }
         
         // Success purchase. Refresh account details.
-        // VariantA updates the `currentAccountDetails` on AccountUseCase
-        // Baseline updates the `mnz_accountDetails` since it is not using the `currentAccountDetails`
         SVProgressHUD.show()
         Task {
-            let abTestProvider = DIContainer.abTestProvider
-            let abValue = await abTestProvider.abTestVariant(for: .upgradePlanRevamp)
-            
-            if abValue == .variantA {
-                await handleRefreshAccountDetailsForVariantA()
-            } else {
-                await handleRefreshAccountDetailsForBaseline()
-            }
-            
+            await handleRefreshAccountDetails()
             await MainActor.run { SVProgressHUD.dismiss() }
         }
     }
     
     // MARK: Purchase result handler
-    private func handleRefreshAccountDetailsForVariantA() async {
+    private func handleRefreshAccountDetails() async {
         do {
             let accountDetails = try await refreshAccountDetails()
             NotificationCenter.default.post(name: .refreshAccountDetails, object: accountDetails)
         } catch {
             MEGALogError("[StoreKit] Error loading account details. Error: \(error)")
-        }
-    }
-    
-    private func handleRefreshAccountDetailsForBaseline() async {
-        await withAsyncValue { completion in
-            MEGASdk.shared.getAccountDetails(with: RequestDelegate { result in
-                switch result {
-                case .success(let request):
-                    MEGASdk.shared.mnz_accountDetails = request.megaAccountDetails
-                    NotificationCenter.default.post(name: .refreshAccountDetails, object: nil)
-                    completion(.success)
-                case .failure(let error):
-                    MEGALogError("[StoreKit] Error loading account details. Error: \(error)")
-                    completion(.success)
-                }
-            })
         }
     }
     

@@ -41,7 +41,6 @@ final class ProfileViewModel: ViewModelType {
     var invokeCommand: ((Command) -> Void)?
 
     private let sdk: MEGASdk
-    private let isNewUpgradeAccountPlanEnabled: Bool
     
     // Internal State
     private let requestedChangeTypeValueSubject = CurrentValueSubject<ChangeType?, Never>(nil)
@@ -49,9 +48,8 @@ final class ProfileViewModel: ViewModelType {
     private let invalidateSectionsValueSubject = PassthroughSubject<Void, Never>()
     private var subscriptions = Set<AnyCancellable>()
     
-    init(sdk: MEGASdk, isNewUpgradeAccountPlanEnabled: Bool) {
+    init(sdk: MEGASdk) {
         self.sdk = sdk
-        self.isNewUpgradeAccountPlanEnabled = isNewUpgradeAccountPlanEnabled
         bindToSubscriptions()
     }
     
@@ -89,7 +87,7 @@ final class ProfileViewModel: ViewModelType {
     private var shouldShowPlanSection: Bool {
         let shouldShow = sdk.isAccountType(.proFlexi) || sdk.isAccountType(.business) || sdk.isMasterBusinessAccount
         
-        return shouldShow || !isNewUpgradeAccountPlanEnabled
+        return shouldShow
     }
 }
 

@@ -149,7 +149,7 @@ extension MyAccountHallViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == MyAccountSection.mega.rawValue &&
             indexPath.row == MyAccountMegaSection.plan.rawValue &&
-            viewModel.isNewUpgradeAccountPlanEnabled && showPlanRow {
+            showPlanRow {
             return upgradePlanSetupCell(indexPath)
         }
         
