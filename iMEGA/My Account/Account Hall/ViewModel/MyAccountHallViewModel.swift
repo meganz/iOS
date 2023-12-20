@@ -30,16 +30,13 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
     }
 
     @Atomic var relevantUnseenUserAlertsCount: UInt = 0
-    @Atomic var isNewUpgradeAccountPlanEnabled: Bool = false
     @Atomic var accountDetails: AccountDetailsEntity?
 
     var invokeCommand: ((Command) -> Void)?
     var incomingContactRequestsCount = 0
-    var setupABTestVariantTask: Task<Void, Never>?
 
     private(set) var planList: [AccountPlanEntity] = []
     private var featureFlagProvider: any FeatureFlagProviderProtocol
-    private var abTestProvider: any ABTestProviderProtocol
     private let myAccountHallUseCase: any MyAccountHallUseCaseProtocol
     private let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
     let shareUseCase: any ShareUseCaseProtocol
@@ -59,18 +56,15 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
          purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
          shareUseCase: some ShareUseCaseProtocol,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
-         abTestProvider: some ABTestProviderProtocol = DIContainer.abTestProvider,
          deviceCenterBridge: DeviceCenterBridge,
          router: some MyAccountHallRouting) {
         self.myAccountHallUseCase = myAccountHallUseCase
         self.purchaseUseCase = purchaseUseCase
         self.shareUseCase = shareUseCase
         self.featureFlagProvider = featureFlagProvider
-        self.abTestProvider = abTestProvider
         self.deviceCenterBridge = deviceCenterBridge
         self.router = router
         
-        setupABTestVariant()
         setAccountDetails(myAccountHallUseCase.currentAccountDetails)
         makeDeviceCenterBridge()
     }
@@ -84,17 +78,6 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
         featureFlagProvider.isFeatureFlagEnabled(for: .deviceCenter)
     }
     
-    // MARK: A/B testing
-    func setupABTestVariant() {
-        setupABTestVariantTask = Task { [weak self] in
-            guard let self else { return }
-            let isNewUpgradeAccountPlanEnabled = await abTestProvider.abTestVariant(for: .upgradePlanRevamp) == .variantA
-            $isNewUpgradeAccountPlanEnabled.mutate { currentValue in
-                currentValue = isNewUpgradeAccountPlanEnabled
-            }
-        }
-    }
-
     // MARK: - Dispatch actions
     
     func dispatch(_ action: MyAccountHallAction) {

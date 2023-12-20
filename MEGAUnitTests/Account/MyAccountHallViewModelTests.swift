@@ -97,18 +97,6 @@ final class MyAccountHallViewModelTests: XCTestCase {
         test(viewModel: sut, actions: [MyAccountHallAction.didTapUpgradeButton], expectedCommands: [])
     }
     
-    func testABTest_onNewUpgradeAccountPlanIsVariantA_shouldBeTrue() async {
-        let (sut, _) = makeSUT(abTestProvider: MockABTestProvider(list: [.upgradePlanRevamp: .variantA]))
-        await sut.setupABTestVariantTask?.value
-        XCTAssertTrue(sut.isNewUpgradeAccountPlanEnabled)
-    }
-
-    func testABTest_onNewUpgradeAccountPlanIsBaseline_shouldBeFalse() async {
-        let (sut, _) = makeSUT(abTestProvider: MockABTestProvider(list: [.upgradePlanRevamp: .baseline]))
-        await sut.setupABTestVariantTask?.value
-        XCTAssertFalse(sut.isNewUpgradeAccountPlanEnabled)
-    }
-    
     func testIsFeatureFlagEnabled_onDeviceCenterUIEnabled_shouldBeEnabled() {
         let (sut, _) = makeSUT(featureFlagProvider: MockFeatureFlagProvider(list: [.deviceCenter: true]))
         XCTAssertTrue(sut.isDeviceCenterEnabled())
@@ -200,7 +188,6 @@ final class MyAccountHallViewModelTests: XCTestCase {
         isMasterBusinessAccount: Bool = false,
         currentAccountDetails: AccountDetailsEntity? = nil,
         featureFlagProvider: MockFeatureFlagProvider = MockFeatureFlagProvider(list: [:]),
-        abTestProvider: MockABTestProvider = MockABTestProvider(list: [:]),
         deviceCenterBridge: DeviceCenterBridge = DeviceCenterBridge()
     ) -> (MyAccountHallViewModel, MockMyAccountHallRouter) {
         let myAccountHallUseCase = MockMyAccountHallUseCase(
@@ -218,7 +205,6 @@ final class MyAccountHallViewModelTests: XCTestCase {
                 purchaseUseCase: purchaseUseCase, 
                 shareUseCase: shareUseCase,
                 featureFlagProvider: featureFlagProvider,
-                abTestProvider: abTestProvider,
                 deviceCenterBridge: deviceCenterBridge,
                 router: router
             ), router

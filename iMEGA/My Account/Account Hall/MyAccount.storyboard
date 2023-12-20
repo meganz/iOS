@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="goA-hy-Wkg">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="goA-hy-Wkg">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -379,11 +379,6 @@
                     </view>
                     <navigationItem key="navigationItem" leftItemsSupplementBackButton="YES" id="mxI-vZ-8su">
                         <barButtonItem key="backBarButtonItem" title=" " id="n2C-mH-XhE"/>
-                        <barButtonItem key="rightBarButtonItem" id="yAq-Z4-Blx">
-                            <connections>
-                                <action selector="buyPROTouchUpInside:" destination="EN7-B0-mf8" id="bSl-1d-pau"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="accountTypeLabel" destination="10p-Ba-INI" id="6Nl-3L-5Bw"/>
@@ -393,7 +388,6 @@
                         <outlet property="addPhoneNumberTitle" destination="oi5-pG-ers" id="c2i-5n-d1u"/>
                         <outlet property="addPhoneNumberView" destination="QRm-6M-zp1" id="Q7z-lg-1wU"/>
                         <outlet property="avatarImageView" destination="wKG-M1-Umc" id="Rkf-F1-Mgw"/>
-                        <outlet property="buyPROBarButtonItem" destination="yAq-Z4-Blx" id="LGG-fY-4Dv"/>
                         <outlet property="nameLabel" destination="YqG-fz-6ti" id="ONK-2v-2hU"/>
                         <outlet property="profileBottomSeparatorView" destination="uOe-An-q3u" id="746-sx-sOu"/>
                         <outlet property="profileView" destination="eYn-oF-AZu" id="wui-te-f6l"/>

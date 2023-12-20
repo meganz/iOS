@@ -20,7 +20,7 @@
 @import MEGAL10nObjc;
 @import MEGASDKRepo;
 
-@interface MyAccountHallViewController () <UITableViewDelegate, MEGAPurchasePricingDelegate, MEGAGlobalDelegate, MEGARequestDelegate, AudioPlayerPresenterProtocol>
+@interface MyAccountHallViewController () <UITableViewDelegate, MEGAGlobalDelegate, MEGARequestDelegate, AudioPlayerPresenterProtocol>
 
 @property (weak, nonatomic) IBOutlet UIView *profileView;
 @property (weak, nonatomic) IBOutlet UILabel *viewAndEditProfileLabel;
@@ -59,8 +59,6 @@
     self.viewAndEditProfileImageView.image = self.viewAndEditProfileImageView.image.imageFlippedForRightToLeftLayoutDirection;
     self.addPhoneNumberImageView.image = self.addPhoneNumberImageView.image.imageFlippedForRightToLeftLayoutDirection;
     
-    [MEGAPurchase.sharedInstance.pricingsDelegateMutableArray addObject:self];
-    
     UITapGestureRecognizer *tapAvatarGestureRecognizer = [UITapGestureRecognizer.alloc initWithTarget:self action:@selector(avatarTapped:)];
     self.avatarImageView.gestureRecognizers = @[tapAvatarGestureRecognizer];
     self.avatarImageView.userInteractionEnabled = YES;
@@ -92,10 +90,6 @@
     [super viewWillDisappear:animated];
     
     [self removeSubscriptions];
-    
-    if (self.isMovingFromParentViewController) {
-        [MEGAPurchase.sharedInstance.pricingsDelegateMutableArray removeObject:self];
-    }
     
     NSInteger index = self.navigationController.viewControllers.count-1;
     if (![self.navigationController.viewControllers[index] isKindOfClass:OfflineViewController.class] &&
@@ -211,23 +205,12 @@
     [self presentViewController:contactLinkVC animated:YES completion:nil];
 }
 
-- (IBAction)buyPROTouchUpInside:(UIBarButtonItem *)sender {
-    [self showUpgradePlanView];
-}
-
 - (IBAction)viewAndEditProfileTouchUpInside:(UIButton *)sender {
     [self showProfileView];
 }
 
 - (IBAction)didTapAddPhoneNumberView {
     [[[SMSVerificationViewRouter alloc] initWithVerificationType:SMSVerificationTypeAddPhoneNumber presenter:self onPhoneNumberVerified: nil] start];
-}
-
-#pragma mark - MEGAPurchasePricingDelegate
-
-- (void)pricingsReady {
-    BOOL isEnabled = ![self isNewUpgradeAccountPlanEnabled];
-    self.buyPROBarButtonItem.enabled = isEnabled;
 }
 
 #pragma mark - AudioPlayer

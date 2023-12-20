@@ -15,60 +15,35 @@ final class ProfileViewModelTests: XCTestCase {
     
     func testAction_onViewDidLoad_defaultValue() {
         let sut = makeSUT()
+        
         let result = receivedSectionDataSource(from: sut, after: .onViewDidLoad)
         
-        XCTAssertEqual(result, expectedSectionsWithPlan)
-    }
-    
-    func testAction_onViewDidLoad_isNewUpgradeAccountPlanUIDisabled_defaultValue() {
-        let sut = makeSUT(isNewUpgradeAccountPlanEnabled: false)
-        let result = receivedSectionDataSource(from: sut, after: .onViewDidLoad)
-        
-        XCTAssertEqual(result, expectedSectionsWithPlan)
-    }
-    
-    func testAction_onViewDidLoad_isNewUpgradeAccountPlanUIEnabled_defaultValue() {
-        let sut = makeSUT(isNewUpgradeAccountPlanEnabled: true)
-        let result = receivedSectionDataSource(from: sut, after: .onViewDidLoad)
-        
-        XCTAssertEqual(result, expectedSectionsWithoutPlan)
-    }
-    
-    func testAction_onViewDidLoad_isNewUpgradeAccountPlanUIEnabled_businessAccount() {
-        let sut = makeSUT(isMasterBusinessAccount: true, isNewUpgradeAccountPlanEnabled: true)
-        let result = receivedSectionDataSource(from: sut, after: .onViewDidLoad)
-        
-        XCTAssertEqual(result, expectedSectionsWithPlan)
-    }
-    
-    func testAction_onViewDidLoad_isNewUpgradeAccountPlanUIDisabled_businessAccount() {
-        let sut = makeSUT(isMasterBusinessAccount: true, isNewUpgradeAccountPlanEnabled: false)
-        let result = receivedSectionDataSource(from: sut, after: .onViewDidLoad)
-        
-        XCTAssertEqual(result, expectedSectionsWithPlan)
+        let expectedSections = ProfileViewModel.SectionCellDataSource(
+            sectionOrder: [.profile, .security, .session],
+            sectionRows: [
+                .profile: [.changeName, .changePhoto, .changeEmail(isLoading: false), .changePassword(isLoading: false)],
+                .security: [.recoveryKey],
+                .session: [.logout]
+            ])
+        XCTAssertEqual(result, expectedSections)
     }
     
     func testAction_onViewDidLoad_whenSmsIsAllowed() {
-        // Arrange
         let sut = makeSUT(smsState: .optInAndUnblock)
         
-        // Act
         let result = receivedSectionDataSource(from: sut, after: .onViewDidLoad)
         
-        // Assert
         let expectedResult = ProfileViewModel.SectionCellDataSource(
-            sectionOrder: [.profile, .security, .plan, .session],
+            sectionOrder: [.profile, .security, .session],
             sectionRows: [
                 .profile: [.changeName, .changePhoto, .changeEmail(isLoading: false), .changePassword(isLoading: false), .phoneNumber],
                 .security: [.recoveryKey],
-                .plan: [.upgrade],
                 .session: [.logout]
             ])
         XCTAssertEqual(result, expectedResult)
     }
     
     func testAction_changeEmail_emailCellShouldBeLoading() {
-        // Arrange
         let sut = makeSUT()
         sut.dispatch(.onViewDidLoad)
         
@@ -83,10 +58,9 @@ final class ProfileViewModelTests: XCTestCase {
                 expectation.fulfill()
             }
             .store(in: &subscriptions)
-        // Act
+
         sut.dispatch(.changeEmail)
         
-        // Assert
         wait(for: [expectation], timeout: 3)
         
         XCTAssertTrue(
@@ -96,7 +70,6 @@ final class ProfileViewModelTests: XCTestCase {
     }
     
     func testAction_changePasword_passwordCellShouldBeLoading() {
-        // Arrange
         let sut = makeSUT()
         sut.dispatch(.onViewDidLoad)
         
@@ -112,10 +85,8 @@ final class ProfileViewModelTests: XCTestCase {
             }
             .store(in: &subscriptions)
         
-        // Act
         sut.dispatch(.changePassword)
         
-        // Assert
         wait(for: [expectation], timeout: 1)
         
         XCTAssertTrue(
@@ -125,20 +96,16 @@ final class ProfileViewModelTests: XCTestCase {
     }
     
     func testAction_changeEmail_shouldPresentChangeControler() {
-        // Arrange
         let sut = makeSUT()
         sut.dispatch(.onViewDidLoad)
         
-        // Act & Assert
         test(viewModel: sut, actions: [ProfileAction.changeEmail], expectedCommands: [.changeProfile(requestedChangeType: .email, isTwoFactorAuthenticationEnabled: true)])
     }
     
     func testAction_changePasword_shouldPresentChangeControler() {
-        // Arrange
         let sut = makeSUT()
         sut.dispatch(.onViewDidLoad)
         
-        // Act & Assert
         test(viewModel: sut, actions: [ProfileAction.changePassword], expectedCommands: [.changeProfile(requestedChangeType: .password, isTwoFactorAuthenticationEnabled: true)])
     }
     
@@ -147,13 +114,11 @@ final class ProfileViewModelTests: XCTestCase {
     private func makeSUT(
         email: String = "test@email.com",
         smsState: SMSState = .notAllowed,
-        isMasterBusinessAccount: Bool = false,
-        isNewUpgradeAccountPlanEnabled: Bool = false
+        isMasterBusinessAccount: Bool = false
     ) -> ProfileViewModel {
         
         ProfileViewModel(
-            sdk: MockSdk(isMasterBusinessAccount: isMasterBusinessAccount, smsState: smsState, myEmail: email),
-            isNewUpgradeAccountPlanEnabled: isNewUpgradeAccountPlanEnabled
+            sdk: MockSdk(isMasterBusinessAccount: isMasterBusinessAccount, smsState: smsState, myEmail: email)
         )
     }
     
@@ -172,30 +137,8 @@ final class ProfileViewModelTests: XCTestCase {
             }
             .store(in: &subscriptions)
         
-        // Act
         sut.dispatch(action)
         wait(for: [expectation], timeout: 1)
         return result
-    }
-    
-    private var expectedSectionsWithPlan: ProfileViewModel.SectionCellDataSource {
-        ProfileViewModel.SectionCellDataSource(
-            sectionOrder: [.profile, .security, .plan, .session],
-            sectionRows: [
-                .profile: [.changeName, .changePhoto, .changeEmail(isLoading: false), .changePassword(isLoading: false)],
-                .security: [.recoveryKey],
-                .plan: [.upgrade],
-                .session: [.logout]
-            ])
-    }
-    
-    private var expectedSectionsWithoutPlan: ProfileViewModel.SectionCellDataSource {
-        ProfileViewModel.SectionCellDataSource(
-            sectionOrder: [.profile, .security, .session],
-            sectionRows: [
-                .profile: [.changeName, .changePhoto, .changeEmail(isLoading: false), .changePassword(isLoading: false)],
-                .security: [.recoveryKey],
-                .session: [.logout]
-            ])
     }
 }
