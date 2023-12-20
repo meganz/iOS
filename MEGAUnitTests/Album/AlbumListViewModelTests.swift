@@ -563,6 +563,18 @@ final class AlbumListViewModelTests: XCTestCase {
         sut.setEditModeToInactive()
         XCTAssertEqual(photoAlbumContainerViewModel.editMode, .inactive)
     }
+    
+    func testOnViewDisappear_editModeActiveAndToolbarShown_shouldSetEditModeToInactiveAndToolbarShouldNotShow() {
+        let photoAlbumContainerViewModel = PhotoAlbumContainerViewModel()
+        photoAlbumContainerViewModel.editMode = .active
+        photoAlbumContainerViewModel.showToolbar = true
+        let sut = albumListViewModel(photoAlbumContainerViewModel: photoAlbumContainerViewModel)
+        
+        sut.onViewDisappear()
+        
+        XCTAssertEqual(photoAlbumContainerViewModel.editMode, .inactive)
+        XCTAssertFalse(photoAlbumContainerViewModel.showToolbar)
+    }
         
     // MARK: - Helpers
     

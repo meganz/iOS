@@ -11,8 +11,8 @@ final class PhotoAlbumContainerViewModel: ObservableObject {
     @Published var isOnlyExportedAlbumsSelected = false 
     @Published var showShareAlbumLinks = false
     @Published var showRemoveAlbumLinksAlert = false
-    
-    var disableSelectBarButton = false
+    @Published var showToolbar = false
+    @Published var disableSelectBarButton = false
     
     private let tracker: any AnalyticsTracking
     

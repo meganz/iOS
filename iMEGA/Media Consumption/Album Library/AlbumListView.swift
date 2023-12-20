@@ -34,7 +34,7 @@ struct AlbumListView: View {
             shareLinksView(forAlbums: viewModel.selectedUserAlbums)
         })
         .padding([.top, .bottom], 10)
-        .onDisappear { viewModel.cancelLoading() }
+        .onDisappear { viewModel.onViewDisappear() }
         .environment(\.editMode, $editMode)
         .onReceive(viewModel.selection.$editMode) { editMode = $0 }
         .onReceive(viewModel.$albumHudMessage) { hudMessage in

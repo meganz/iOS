@@ -45,6 +45,10 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnvironmen
                                                style: .plain,
                                                target: self,
                                                action: #selector(deleteAlbumButtonPressed))
+    lazy var selectBarButton = UIBarButtonItem(image: UIImage(resource: .selectAllItems),
+                                               style: .plain,
+                                               target: self,
+                                               action: #selector(toggleEditing))
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -243,12 +247,13 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnvironmen
             .store(in: &subscriptions)
         
         viewModel.$editMode
+            .dropFirst()
+            .map { $0.isEditing }
+            .removeDuplicates()
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
-                self?.isEditing = $0 == .active
-                if !$0.isEditing {
-                    self?.updateBarButtons()
-                }
+                self?.isEditing = $0
+                self?.updateBarButtons()
             }
             .store(in: &subscriptions)
         
@@ -269,6 +274,20 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnvironmen
             }
             .store(in: &subscriptions)
         
+        viewModel.$showToolbar
+            .removeDuplicates()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                guard let self else { return }
+                $0 ? showToolbar() : hideToolbar()
+            }.store(in: &subscriptions)
+
+        viewModel.$disableSelectBarButton
+            .removeDuplicates()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.selectBarButton.isEnabled = !$0
+            }.store(in: &subscriptions)
     }
     
     private func updatePageTabViewLayout() {
