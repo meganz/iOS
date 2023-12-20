@@ -71,6 +71,7 @@ final class GenericHeaderFooterView: UITableViewHeaderFooterView {
         
         topSeparatorView.isHidden = !isTopSeparatorVisible
         bottomSeparatorView.isHidden = !isBottomSeparatorVisible
+        updateAppearance()
     }
     
     private func updateAppearance() {
