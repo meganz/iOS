@@ -750,16 +750,16 @@ extension UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.blue0089C7
+                return MEGAAppColor.Blue._0089C7.uiColor
             } else {
-                return UIColor.blue009AE0
+                return MEGAAppColor.Blue._009AE0.uiColor
             }
             
         case .dark:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.blue38C1FF
+                return MEGAAppColor.Blue._38C1FF.uiColor
             } else {
-                return UIColor.blue059DE2
+                return MEGAAppColor.Blue._059DE2.uiColor
             }
             
         @unknown default:
@@ -854,6 +854,6 @@ extension UIColor {
     // MARK: Brown
     
     class func mnz_brown544b27() -> UIColor {
-        UIColor.brown544B27
+        MEGAAppColor.Brown._544B27.uiColor
     }
 }

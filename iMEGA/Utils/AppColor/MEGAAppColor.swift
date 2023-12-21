@@ -289,7 +289,7 @@ enum MEGAAppColor {
     }
     
     enum Brown {
-        case _544b27
+        case _544B27
         
         var uiColor: UIColor {
             DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) ? designTokenColor : legacyColor
@@ -297,13 +297,13 @@ enum MEGAAppColor {
         
         private var designTokenColor: UIColor {
             switch self {
-            case ._544b27: TokenColors.Background.blur
+            case ._544B27: TokenColors.Background.blur
             }
         }
         
         private var legacyColor: UIColor {
             switch self {
-            case ._544b27: UIColor.brown544B27
+            case ._544B27: UIColor.brown544B27
             }
         }
     }
