@@ -102,4 +102,13 @@ public extension Date {
         let date = calendar.date(byAdding: .year, value: -1, to: currentYearStartDate)
         return date?.startOfDay(on: calendar)
     }
+    
+    /// Return a date that has added single day, and subtracted one second
+    /// - Returns: A new date object at the end of the current day
+    func endOfDay(calendar: Calendar = .autoupdatingCurrent) -> Date? {
+        var components = DateComponents()
+        components.day = 1
+        components.second = -1
+        return calendar.date(byAdding: components, to: calendar.startOfDay(for: self))
+    }
 }
