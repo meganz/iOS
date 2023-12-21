@@ -1408,7 +1408,6 @@
 		99D65D772A8C699A005D5877 /* WaitingRoomUserAvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D65D762A8C699A005D5877 /* WaitingRoomUserAvatarView.swift */; };
 		99DB1D5A2AC64B34004A9CC3 /* ChatRepoMock in Frameworks */ = {isa = PBXBuildFile; productRef = 99DB1D592AC64B34004A9CC3 /* ChatRepoMock */; };
 		99E1A9292A383EC000974FC9 /* BadgeButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E1A9282A383EC000974FC9 /* BadgeButtonTests.swift */; };
-		99E1A9412A3C0CF800974FC9 /* MeetingLinkActivityItemSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E1A9402A3C0CF800974FC9 /* MeetingLinkActivityItemSource.swift */; };
 		99F7043D2AD3A7E600A774DB /* MeetingCreatingViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F7043C2AD3A7E600A774DB /* MeetingCreatingViewModel+Additions.swift */; };
 		99F9ABC02A7B428A0050B5E4 /* WaitingRoomWarningBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F9ABBF2A7B428A0050B5E4 /* WaitingRoomWarningBannerView.swift */; };
 		99FF30E42A8F3241006CE3DB /* ScheduleMeetingViewModel+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FF30E32A8F3241006CE3DB /* ScheduleMeetingViewModel+Init.swift */; };
@@ -3999,7 +3998,6 @@
 		99D65D722A8BB5AE005D5877 /* WaitingRoomControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomControlsView.swift; sourceTree = "<group>"; };
 		99D65D762A8C699A005D5877 /* WaitingRoomUserAvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomUserAvatarView.swift; sourceTree = "<group>"; };
 		99E1A9282A383EC000974FC9 /* BadgeButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeButtonTests.swift; sourceTree = "<group>"; };
-		99E1A9402A3C0CF800974FC9 /* MeetingLinkActivityItemSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingLinkActivityItemSource.swift; sourceTree = "<group>"; };
 		99F7043C2AD3A7E600A774DB /* MeetingCreatingViewModel+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MeetingCreatingViewModel+Additions.swift"; sourceTree = "<group>"; };
 		99F9ABBF2A7B428A0050B5E4 /* WaitingRoomWarningBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomWarningBannerView.swift; sourceTree = "<group>"; };
 		99FF30D12A8F16E6006CE3DB /* WaitingRoomViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomViewModelTests.swift; sourceTree = "<group>"; };
@@ -6876,7 +6874,6 @@
 		41C736BD1DBE6CCE00F1F38A /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				99E1A9402A3C0CF800974FC9 /* MeetingLinkActivityItemSource.swift */,
 				A83892411EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.h */,
 				A83892421EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m */,
 			);
@@ -14057,7 +14054,6 @@
 				83BFDBD3291BE67900FFFEA0 /* MeetingInfoViewModel.swift in Sources */,
 				996F742C2A794B9D007209F0 /* MeetingInfoWaitingRoomSettingView.swift in Sources */,
 				839BA9E72AB355DE001F852C /* MeetingInviteParticipantTableViewCell.swift in Sources */,
-				99E1A9412A3C0CF800974FC9 /* MeetingLinkActivityItemSource.swift in Sources */,
 				839999F7264AE6A300520F38 /* MeetingOptionsMenuRouter.swift in Sources */,
 				839999DB264AE52700520F38 /* MeetingOptionsMenuViewController.swift in Sources */,
 				839999ED264AE54A00520F38 /* MeetingOptionsMenuViewModel.swift in Sources */,
