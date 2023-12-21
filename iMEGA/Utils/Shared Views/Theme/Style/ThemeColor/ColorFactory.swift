@@ -54,14 +54,14 @@ extension ColorFactory {
             return UIColor.orangeE68F4D
             
         case .exploreDocumentsStart:
-            return UIColor.blue02A2FF
+            return MEGAAppColor.Blue._02A2FF.uiColor
         case .exploreDocumentsEnd:
-            return UIColor.blue0274CC
+            return MEGAAppColor.Blue._0274CC.uiColor
             
         case .exploreAudioStart:
-            return UIColor.blue00ACBF
+            return MEGAAppColor.Blue._00ACBF.uiColor
         case .exploreAudioEnd:
-            return UIColor.blue0095A6
+            return MEGAAppColor.Blue._0095A6.uiColor
             
         case .exploreVideoStart:
             return MEGAAppColor.Red._F288C2.uiColor

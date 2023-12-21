@@ -96,19 +96,19 @@ extension MyAccountHallViewModel {
             BackupStatus(
                 status: .scanning,
                 title: Strings.Localizable.Device.Center.Backup.Scanning.Status.message,
-                color: UIColor.blue007AFF,
+                color: MEGAAppColor.Blue._007AFF.uiColor,
                 iconName: BackUpStatusIconAssets.updating
             ),
             BackupStatus(
                 status: .initialising,
                 title: Strings.Localizable.Device.Center.Backup.Initialising.Status.message,
-                color: UIColor.blue007AFF,
+                color: MEGAAppColor.Blue._007AFF.uiColor,
                 iconName: BackUpStatusIconAssets.updating
             ),
             BackupStatus(
                 status: .updating,
                 title: Strings.Localizable.Device.Center.Backup.Updating.Status.message,
-                color: UIColor.blue007AFF,
+                color: MEGAAppColor.Blue._007AFF.uiColor,
                 iconName: BackUpStatusIconAssets.updating
             ),
             BackupStatus(
