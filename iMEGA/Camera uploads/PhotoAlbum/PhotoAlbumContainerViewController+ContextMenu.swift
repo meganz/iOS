@@ -21,7 +21,6 @@ extension PhotoAlbumContainerViewController {
     @objc func toggleEditing(sender: UIBarButtonItem) {
         isEditing.toggle()
         viewModel.editMode = isEditing ? .active : .inactive
-        viewModel.showToolbar.toggle()
     }
     
     var cancelBarButton: UIBarButtonItem {

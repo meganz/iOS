@@ -567,7 +567,6 @@ final class AlbumListViewModelTests: XCTestCase {
     func testOnViewDisappear_editModeActiveAndToolbarShown_shouldSetEditModeToInactiveAndToolbarShouldNotShow() {
         let photoAlbumContainerViewModel = PhotoAlbumContainerViewModel()
         photoAlbumContainerViewModel.editMode = .active
-        photoAlbumContainerViewModel.showToolbar = true
         let sut = albumListViewModel(photoAlbumContainerViewModel: photoAlbumContainerViewModel)
         
         sut.onViewDisappear()

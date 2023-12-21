@@ -3,7 +3,11 @@ import MEGAPresentation
 import SwiftUI
 
 final class PhotoAlbumContainerViewModel: ObservableObject {
-    @Published var editMode: EditMode = .inactive
+    @Published var editMode: EditMode = .inactive {
+        willSet {
+            showToolbar = newValue == .active
+        }
+    }
     @Published var shouldShowSelectBarButton = false
     @Published var isAlbumsSelected = false
     @Published var showDeleteAlbumAlert = false
@@ -11,7 +15,7 @@ final class PhotoAlbumContainerViewModel: ObservableObject {
     @Published var isOnlyExportedAlbumsSelected = false 
     @Published var showShareAlbumLinks = false
     @Published var showRemoveAlbumLinksAlert = false
-    @Published var showToolbar = false
+    @Published private(set) var showToolbar = false
     @Published var disableSelectBarButton = false
     
     private let tracker: any AnalyticsTracking

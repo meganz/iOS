@@ -146,7 +146,6 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     
     func onViewDisappear() {
         setEditModeToInactive()
-        photoAlbumContainerViewModel?.showToolbar = false
         cancelCreateAlbumTask()
     }
     
