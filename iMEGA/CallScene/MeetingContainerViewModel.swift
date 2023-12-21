@@ -329,25 +329,31 @@ final class MeetingContainerViewModel: ViewModelType {
                     router.showShareMeetingError()
                     return
                 }
-                var title = ""
+                var title = (chatRoom.title ?? "") + "\n" + link
                 var message = ""
-                if let scheduledMeeting = scheduledMeetingUseCase.scheduledMeetingsByChat(chatId: chatRoom.chatId).first {
-                    let meetingDate = ScheduledMeetingDateBuilder(scheduledMeeting: scheduledMeeting, chatRoom: chatRoom).buildDateDescriptionString()
-                    title = scheduledMeeting.title + "\n" + meetingDate
-                    message = Strings.Localizable.Meetings.Info.ShareMeetingLink.invitation((chatUseCase.myFullName() ?? "")) + "\n" +
-                    Strings.Localizable.Meetings.Info.ShareMeetingLink.meetingName(scheduledMeeting.title) + "\n" +
-                    Strings.Localizable.Meetings.Info.ShareMeetingLink.meetingTime(meetingDate) + "\n" +
-                    Strings.Localizable.Meetings.Info.ShareMeetingLink.meetingLink(link)
+                if chatRoom.isMeeting {
+                    message =
+                    Strings.Localizable.Meetings.Info.ShareMeetingLink.invitation((chatUseCase.myFullName() ?? "")) + "\n" +
+                    Strings.Localizable.Meetings.Info.ShareMeetingLink.meetingName(chatRoom.title ?? "")
+                    if let scheduledMeeting = scheduledMeetingUseCase.scheduledMeetingsByChat(chatId: chatRoom.chatId).first {
+                        let meetingDate = ScheduledMeetingDateBuilder(scheduledMeeting: scheduledMeeting, chatRoom: chatRoom).buildDateDescriptionString()
+                        title = scheduledMeeting.title + "\n" + meetingDate
+                        message += "\n" +
+                        Strings.Localizable.Meetings.Info.ShareMeetingLink.meetingTime(meetingDate)
+                    }
+                    message += "\n" + Strings.Localizable.Meetings.Info.ShareMeetingLink.meetingLink(link)
                 } else {
                     title = chatRoom.title ?? ""
                     message = title + "\n" + link
                 }
-                router.showShareChatLinkActivity(presenter: presenter,
-                                 sender: sender,
-                                 link: link,
-                                 metadataItemSource: ChatLinkPresentationItemSource(title: title, message: message, url: url),
-                                 isGuestAccount: accountUseCase.isGuest,
-                                 completion: completion)
+                router.showShareChatLinkActivity(
+                    presenter: presenter,
+                    sender: sender,
+                    link: link,
+                    metadataItemSource: ChatLinkPresentationItemSource(title: title, message: message, url: url),
+                    isGuestAccount: accountUseCase.isGuest,
+                    completion: completion
+                )
             case .failure:
                 router.showShareMeetingError()
             }

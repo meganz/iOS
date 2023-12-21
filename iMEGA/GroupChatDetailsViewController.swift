@@ -123,6 +123,22 @@ extension GroupChatDetailsViewController {
         cell.controlSwitch.isOn = chatRoom.isOpenInviteEnabled
         cell.delegate = self
     }
+    
+    @objc func shareLinkActivityItem(_ url: URL) -> ChatLinkPresentationItemSource {
+        let chatUseCase = ChatUseCase(chatRepo: ChatRepository.newRepo)
+        var title = ""
+        var message = ""
+        if chatRoom.isMeeting {
+            title = (chatRoom.title ?? "") + "\n" + url.absoluteString
+            message = Strings.Localizable.Meetings.Info.ShareMeetingLink.invitation((chatUseCase.myFullName() ?? "")) + "\n" +
+            Strings.Localizable.Meetings.Info.ShareMeetingLink.meetingName(chatRoom.title ?? "") + "\n" +
+            Strings.Localizable.Meetings.Info.ShareMeetingLink.meetingLink(url.absoluteString)
+        } else {
+            title = chatRoom.title ?? ""
+            message = title + "\n" + url.absoluteString
+        }
+        return ChatLinkPresentationItemSource(title: title, message: message, url: url)
+    }
 }
 
 extension GroupChatDetailsViewController: MEGAChatCallDelegate {

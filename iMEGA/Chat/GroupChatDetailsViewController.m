@@ -311,14 +311,10 @@
     }
     customModalAlertVC.dismissButtonTitle = LocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
     NSURL *url = [NSURL URLWithString:link];
-    MeetingLinkPresentationItemSource *itemSource = [[MeetingLinkPresentationItemSource alloc] initWithUrl:url title:self.chatRoom.title];
-    NSArray *activityItems = self.chatRoom.isMeeting
-        ? [NSArray arrayWithObject:itemSource]
-        : [NSArray arrayWithObject:link];
     __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
     customModalAlertVC.firstCompletion = ^{
         [weakCustom dismissViewControllerAnimated:YES completion:^{
-            UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
+            UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[[self shareLinkActivityItem:url]] applicationActivities:nil];
             if (activityVC.popoverPresentationController != nil) {
                 activityVC.popoverPresentationController.sourceView = self.view;
                 activityVC.popoverPresentationController.sourceRect = CGRectMake(0, 0, self.view.frame.size.width/2, self.view.frame.size.height/2);
