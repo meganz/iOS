@@ -60,7 +60,7 @@ extension SearchChipEntity {
             type: .timeFrame(
                 .init(
                     startDate: calendar.startOfDay(for: date),
-                    endDate: date
+                    endDate: date.endOfDay(calendar: calendar) ?? date
                 )
             ),
             title: Strings.Localizable.Home.Search.Filter.ModificationDate.today
