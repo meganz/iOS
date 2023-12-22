@@ -1,7 +1,8 @@
 import MEGADomain
 
 protocol MeetingCreatingRepositoryProtocol: RepositoryProtocol {
-    func getUsername() -> String
+    func username() -> String
+    func userEmail() -> String?
     func getCall(forChatId chatId: UInt64) -> CallEntity?
     func createMeeting(_ startCall: StartCallEntity) async throws -> ChatRoomEntity
     func joinChatCall(forChatId chatId: UInt64, enableVideo: Bool, enableAudio: Bool, userHandle: UInt64, completion: @escaping (Result<ChatRoomEntity, CallErrorEntity>) -> Void)

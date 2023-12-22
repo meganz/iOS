@@ -19,4 +19,8 @@ public struct MockUserStoreRepository: UserStoreRepositoryProtocol {
     public func displayName(forUserHandle handle: HandleEntity) async -> String? {
         displayName
     }
+    
+    public func userDisplayName(forEmail email: String) -> String? {
+        displayName
+    }
 }
