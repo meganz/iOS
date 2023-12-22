@@ -113,7 +113,8 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
         case .info, .copy, .download, .shareLink, .manageLink, .removeLink, .shareFolder, .manageShare, .showInCloudDrive, .favourite, .label, .rename, .move, .moveToTheRubbishBin:
             guard let node = nodeForEntityType() else { return }
             Task { [weak self] in
-                await self?.deviceCenterBridge.nodeActionTapped(node, type)
+                guard let self else { return }
+                await self.deviceCenterBridge.nodeActionTapped(node, type)
             }
         default: break
         }
@@ -164,10 +165,14 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
         switch itemType {
         case .backup(let backup):
             Task { [weak self] in
-                guard let nodeEntity = self?.nodeForEntityType(),
-                        backup.type != .cameraUpload && backup.type != .mediaUpload else { return }
-                
-                await self?.deviceCenterBridge.nodeActionTapped(nodeEntity, .showInBackups)
+                guard let self,
+                      let nodeEntity = self.nodeForEntityType() else { return }
+                switch backup.type {
+                case .cameraUpload, .mediaUpload, .twoWay:
+                    await self.deviceCenterBridge.nodeActionTapped(nodeEntity, .showInCloudDrive)
+                default:
+                    await self.deviceCenterBridge.nodeActionTapped(nodeEntity, .showInBackups)
+                }
             }
         case .device(let device):
             guard let router else { return }
