@@ -18,9 +18,9 @@ final class MEGASelectedButton: UIButton {
         imageView?.image?.withRenderingMode(.alwaysTemplate)
         switch traitCollection.userInterfaceStyle {
         case .dark:
-            tintColor = isSelected ? UIColor.green00A382 : .white
+            tintColor = isSelected ?  MEGAAppColor.Green._00A382.uiColor : .white
         case .light:
-            tintColor = isSelected ? UIColor.green00A382 : .black
+            tintColor = isSelected ? MEGAAppColor.Green._00A382.uiColor : .black
         default: break
         }
     }

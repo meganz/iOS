@@ -310,20 +310,20 @@ extension UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.green007B62
+                return MEGAAppColor.Green._007B62.uiColor
             } else {
-                return UIColor.green009476
+                return MEGAAppColor.Green._009476.uiColor
             }
             
         case .dark:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.mnz_green00C29A()
+                return MEGAAppColor.Green._00C29A.uiColor 
             } else {
-                return UIColor.green00A382
+                return MEGAAppColor.Green._00A382.uiColor
             }
             
         @unknown default:
-            return UIColor.green009476
+            return MEGAAppColor.Green._009476.uiColor
         }
     }
     
@@ -411,16 +411,16 @@ extension UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.green007B62
+                return MEGAAppColor.Green._007B62.uiColor
             } else {
                 return UIColor.mnz_green00A886()
             }
             
         case .dark:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.mnz_green00C29A()
+                return MEGAAppColor.Green._00C29A.uiColor
             } else {
-                return UIColor.green00A382
+                return MEGAAppColor.Green._00A382.uiColor
             }
             
         @unknown default:
@@ -770,11 +770,7 @@ extension UIColor {
     // MARK: Green
     
     @objc class func mnz_green00A886() -> UIColor {
-        return UIColor.green00A886
-    }
-    
-    class func mnz_green00C29A() -> UIColor {
-        return UIColor.green00C29A
+        return MEGAAppColor.Green._00A886.uiColor
     }
     
     @objc(mnz_turquoiseForTraitCollection:)
@@ -782,16 +778,16 @@ extension UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.green347467
+                return MEGAAppColor.Green._347467.uiColor
             } else {
-                return UIColor.green00A886
+                return MEGAAppColor.Green._00A886.uiColor
             }
             
         case .dark:
             if traitCollection.accessibilityContrast == .high {
-                return UIColor.green00E9B9
+                return MEGAAppColor.Green._00E9B9.uiColor
             } else {
-                return UIColor.green00C29A
+                return MEGAAppColor.Green._00C29A.uiColor
             }
             
         @unknown default:

@@ -33,7 +33,7 @@ struct ScheduleMeetingCreationCustomOptionsSelectionHeaderView: View {
     
     private func darkThemeForegroundTextColor() -> Color {
         isExpanded
-        ? Color(UIColor.mnz_green00C29A())
+        ? MEGAAppColor.Green._00C29A.color
         : Color.white.opacity(0.6)
     }
 }

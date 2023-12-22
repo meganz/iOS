@@ -310,12 +310,13 @@ enum MEGAAppColor {
     
     enum Green {
         case _00A382
-        case _00A8868
+        case _00A886
         case _00A88680
         case _00C29A
         case _00C29A4D
         case _00E9B9
         case _007B62
+        case _00FF00
         case _34C759
         case _009476
         case _347467
@@ -331,12 +332,13 @@ enum MEGAAppColor {
         private var designTokenColor: UIColor {
             switch self {
             case ._00A382: TokenColors.Background.blur
-            case ._00A8868: TokenColors.Background.blur
+            case ._00A886: TokenColors.Background.blur
             case ._00A88680: TokenColors.Background.blur
             case ._00C29A: TokenColors.Background.blur
             case ._00C29A4D: TokenColors.Background.blur
             case ._00E9B9: TokenColors.Background.blur
             case ._007B62: TokenColors.Background.blur
+            case ._00FF00: TokenColors.Background.blur
             case ._34C759: TokenColors.Background.blur
             case ._009476: TokenColors.Background.blur
             case ._347467: TokenColors.Background.blur
@@ -346,12 +348,13 @@ enum MEGAAppColor {
         private var legacyColor: UIColor {
             switch self {
             case ._00A382: UIColor.green00A382
-            case ._00A8868: UIColor.green00A886
+            case ._00A886: UIColor.green00A886
             case ._00A88680: UIColor.green00A88680
             case ._00C29A: UIColor.green00C29A
             case ._00C29A4D: UIColor.green00C29A4D
             case ._00E9B9: UIColor.green00E9B9
             case ._007B62: UIColor.green007B62
+            case ._00FF00: UIColor.green0CFF00
             case ._34C759: UIColor.green34C759
             case ._009476: UIColor.green009476
             case ._347467: UIColor.green347467

@@ -95,7 +95,7 @@ extension SearchConfig {
                 F95C61: MEGAAppColor.Red._F95C61.color,
                 F7363D: MEGAAppColor.Red._F7363D.color,
                 _1C1C1E: MEGAAppColor.Black._1C1C1E.color,
-                _00A886: MEGAAppColor.Green._00A8868.color,
+                _00A886: MEGAAppColor.Green._00A886.color,
                 _3C3C43: MEGAAppColor.Gray._3C3C43.color
             ),
             contextPreviewFactory: contextPreviewFactory

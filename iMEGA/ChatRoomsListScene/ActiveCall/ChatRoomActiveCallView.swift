@@ -28,7 +28,7 @@ struct ChatRoomActiveCallView: View {
         if isReconnecting {
             return Color(.systemOrange)
         } else {
-            return colorScheme == .dark ? Color(UIColor.mnz_green00C29A()) : Color(UIColor.mnz_green00A886())
+            return colorScheme == .dark ? MEGAAppColor.Green._00C29A.color : MEGAAppColor.Green._00A886.color
         }
     }
 }

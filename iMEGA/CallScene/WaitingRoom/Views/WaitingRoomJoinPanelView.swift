@@ -36,7 +36,7 @@ struct WaitingRoomJoinPanelView: View {
                     .foregroundColor(.white)
                     .font(.system(size: 17, weight: .bold))
                     .frame(width: 288, height: 50)
-                    .background(Color(.green00C29A))
+                    .background(MEGAAppColor.Green._00C29A.color)
             }
             .cornerRadius(8)
             .disabled(disableJoinButton)

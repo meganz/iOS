@@ -96,7 +96,7 @@ private struct ScheduleMeetingCreationMonthlyDatePickerTileView: View {
     var body: some View {
         ZStack {
             Circle()
-                .fill(colorScheme == .dark ? Color(.green00C29A) : Color(.green00A886))
+                .fill(colorScheme == .dark ? MEGAAppColor.Green._00C29A.color : MEGAAppColor.Green._00A886.color)
                 .opacity(selected ? 1.0 : 0.0)
             Text(day)
                 .font(.title3)

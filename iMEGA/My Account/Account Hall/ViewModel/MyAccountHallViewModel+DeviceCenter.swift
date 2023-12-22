@@ -90,7 +90,7 @@ extension MyAccountHallViewModel {
             BackupStatus(
                 status: .upToDate,
                 title: Strings.Localizable.Device.Center.Backup.UpToDate.Status.message,
-                color: UIColor.green34C759,
+                color: MEGAAppColor.Green._34C759.uiColor,
                 iconName: BackUpStatusIconAssets.upToDate
             ),
             BackupStatus(
@@ -114,13 +114,13 @@ extension MyAccountHallViewModel {
             BackupStatus(
                 status: .noCameraUploads,
                 title: Strings.Localizable.Device.Center.Backup.NoCameraUploads.Status.message,
-                color: UIColor.orangeFF9500,
+                color: MEGAAppColor.Orange._FF9500.uiColor,
                 iconName: BackUpStatusIconAssets.noCameraUploads
             ),
             BackupStatus(
                 status: .disabled,
                 title: Strings.Localizable.Device.Center.Backup.Disabled.Status.message,
-                color: UIColor.orangeFF9500,
+                color: MEGAAppColor.Orange._FF9500.uiColor,
                 iconName: BackUpStatusIconAssets.disabled
             ),
             BackupStatus(

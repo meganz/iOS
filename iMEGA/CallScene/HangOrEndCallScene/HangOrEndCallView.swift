@@ -24,7 +24,7 @@ struct HangOrEndCallView: View {
                     }, label: {
                         Text(Strings.Localizable.Meetings.LeaveCall.buttonTitle)
                             .font(.headline)
-                            .foregroundColor(Color(.green00C29A))
+                            .foregroundColor(MEGAAppColor.Green._00C29A.color)
                             .padding()
                             .frame(maxWidth: .infinity, maxHeight: Constants.buttonsHeight)
                             .background(MEGAAppColor.Gray._363638.color)

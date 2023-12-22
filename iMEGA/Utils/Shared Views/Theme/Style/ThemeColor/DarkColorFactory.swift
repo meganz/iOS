@@ -18,7 +18,7 @@ struct DarkColorThemeFactory: ColorFactory {
         case .warning: return .white
         case .enabled: return MEGAAppColor.White._FFD60008.uiColor
         case .disabled: return MEGAAppColor.Gray._999999.uiColor
-        case .highlighted: return UIColor.green00A88680
+        case .highlighted: return MEGAAppColor.Green._00A88680.uiColor
         case .searchTextField: return MEGAAppColor.Black._29292C.uiColor
         case .homeTopSide: return .black
         }
