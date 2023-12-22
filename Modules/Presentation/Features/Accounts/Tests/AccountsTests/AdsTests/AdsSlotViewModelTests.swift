@@ -28,57 +28,15 @@ final class AdsSlotViewModelTests: XCTestCase {
         XCTAssertFalse(sut.isFeatureFlagForInAppAdsEnabled)
     }
     
-    // MARK: - AB test
-    func testABTest_adsIsVariantA_externalAdsIsEnabled_adsTypeShouldBeExternal() async {
-        let sut = makeSUT(
-            abTestProvider: MockABTestProvider(
-                list: [
-                    .ads: .variantA,
-                    .externalAds: .variantA
-                ]
-            )
-        )
-        
-        await sut.setupABTestVariant()
-        
-        XCTAssertEqual(sut.adsType, .external)
-    }
-    
-    func testABTest_adsIsVariantA_externalAdsIsEnabled_adsTypeShouldBeNone() async {
-        let sut = makeSUT(
-            abTestProvider: MockABTestProvider(
-                list: [
-                    .ads: .variantA,
-                    .externalAds: .baseline
-                ]
-            )
-        )
-
-        await sut.setupABTestVariant()
-        
-        XCTAssertEqual(sut.adsType, .none)
-    }
-    
-    func testABTest_adsIsBaseline_adsTypeShouldBeNone() async {
-        let sut = makeSUT(
-            abTestProvider: MockABTestProvider(
-                list: [.ads: .baseline]
-            )
-        )
-
-        await sut.setupABTestVariant()
-        
-        XCTAssertEqual(sut.adsType, .none)
-    }
-    
     // MARK: - Ads slot
-    func testLoadAdsForAdsSlot_featureFlagEnabled_shouldHaveNewUrlAndDisplayAds() async {
+    func testLoadAdsForAdsSlot_featureFlagEnabled_abTestAdsEnabled_shouldHaveNewUrlAndDisplayAds() async {
         let expectedAdsSlotConfig = randomAdsSlotConfig
         let expectedAdsUrl = adsList[expectedAdsSlotConfig.adsSlot.rawValue]
         let stream = makeMockAdsSlotChangeStream(adsSlotConfigs: [expectedAdsSlotConfig])
         let sut = makeSUT(adsSlotChangeStream: stream,
                           adsList: adsList,
-                          featureFlags: [.inAppAds: true])
+                          featureFlags: [.inAppAds: true],
+                          abTestProvider: MockABTestProvider(list: [.ads: .variantA]))
         
         await sut.setupABTestVariant()
         sut.monitorAdsSlotChanges()
@@ -89,7 +47,7 @@ final class AdsSlotViewModelTests: XCTestCase {
         XCTAssertEqual(sut.displayAds, expectedAdsSlotConfig.displayAds)
     }
     
-    func testLoadAdsForAdsSlot_featureFlagEnabled_abTestExternalAdsDisabled_shouldHaveNilUrlAndDontDisplayAds() async {
+    func testLoadAdsForAdsSlot_featureFlagEnabled_abTestAdsDisabled_shouldHaveNilUrlAndDontDisplayAds() async {
         let stream = makeMockAdsSlotChangeStream(adsSlotConfigs: [randomAdsSlotConfig])
         let sut = makeSUT(adsSlotChangeStream: stream,
                           adsList: adsList,
@@ -272,7 +230,7 @@ final class AdsSlotViewModelTests: XCTestCase {
         adsSlotChangeStream: any AdsSlotChangeStreamProtocol = MockAdsSlotChangeStream(),
         adsList: [String: String] = [:],
         featureFlags: [FeatureFlagKey: Bool] = [FeatureFlagKey.inAppAds: true],
-        abTestProvider: MockABTestProvider = MockABTestProvider(list: [.ads: .variantA, .externalAds: .variantA]),
+        abTestProvider: MockABTestProvider = MockABTestProvider(list: [.ads: .variantA]),
         isNewAccount: Bool = false,
         file: StaticString = #filePath,
         line: UInt = #line

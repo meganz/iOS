@@ -5,17 +5,13 @@ import MEGASwift
 import SwiftUI
 
 final public class AdsSlotViewModel: ObservableObject {
-    enum AdsType {
-        case external, none
-    }
-    
     private var adsUseCase: any AdsUseCaseProtocol
     private var accountUseCase: any AccountUseCaseProtocol
     private var featureFlagProvider: any FeatureFlagProviderProtocol
     private var abTestProvider: any ABTestProviderProtocol
     private var adsSlotChangeStream: any AdsSlotChangeStreamProtocol
     private var adsSlotConfig: AdsSlotConfig?
-    private(set) var adsType: AdsType = .none
+    private var isAdsEnabled: Bool = false
     
     @Published var adsUrl: URL?
     @Published var displayAds: Bool = false
@@ -49,15 +45,7 @@ final public class AdsSlotViewModel: ObservableObject {
     
     // MARK: AB Test
     func setupABTestVariant() async {
-        let isAdsEnabled = await abTestProvider.abTestVariant(for: .ads) == .variantA
-        let isExternalAdsEnabled = await abTestProvider.abTestVariant(for: .externalAds) == .variantA
-        
-        guard isAdsEnabled, isExternalAdsEnabled else {
-            adsType = .none
-            return
-        }
-
-        adsType = .external
+        isAdsEnabled = await abTestProvider.abTestVariant(for: .ads) == .variantA
     }
     
     // MARK: Ads
@@ -72,7 +60,7 @@ final public class AdsSlotViewModel: ObservableObject {
     }
     
     func updateAdsSlot(_ newAdsSlotConfig: AdsSlotConfig?) async {
-        guard isFeatureFlagForInAppAdsEnabled && adsType != .none else {
+        guard isFeatureFlagForInAppAdsEnabled, isAdsEnabled else {
             adsSlotConfig = nil
             await configureAds(url: nil)
             return
@@ -100,7 +88,7 @@ final public class AdsSlotViewModel: ObservableObject {
     }
     
     func loadNewAds() async {
-        guard let adsSlotConfig, isFeatureFlagForInAppAdsEnabled, adsType != .none else {
+        guard isFeatureFlagForInAppAdsEnabled, let adsSlotConfig, isAdsEnabled else {
             await configureAds(url: nil)
             return
         }
