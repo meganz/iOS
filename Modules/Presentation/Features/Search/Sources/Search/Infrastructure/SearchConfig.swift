@@ -38,12 +38,14 @@ public struct SearchConfig {
     public struct ChipAssets {
         public init(
             selectionIndicatorImage: UIImage,
+            closeIcon: UIImage,
             selectedForeground: Color,
             selectedBackground: Color,
             normalForeground: Color,
             normalBackground: Color
         ) {
             self.selectionIndicatorImage = selectionIndicatorImage
+            self.closeIcon = closeIcon
             self.selectedForeground = selectedForeground
             self.selectedBackground = selectedBackground
             self.normalForeground = normalForeground
@@ -51,6 +53,7 @@ public struct SearchConfig {
         }
 
         let selectionIndicatorImage: UIImage
+        let closeIcon: UIImage
 
         let selectedForeground: Color
         let selectedBackground: Color

@@ -7,6 +7,7 @@ extension SearchConfig {
         .init(
             chipAssets: .init(
                 selectionIndicatorImage: UIImage.turquoiseCheckmark,
+                closeIcon: UIImage.miniplayerClose,
                 selectedForeground: .white,
                 selectedBackground: Color.photosFilterTypeSelectionBackground,
                 normalForeground: Color.photosFilterNormalTextForeground,
