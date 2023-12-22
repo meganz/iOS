@@ -14,6 +14,7 @@ enum UpgradeAccountPlanTarget {
 
 final class UpgradeAccountPlanViewModel: ObservableObject {
     private var subscriptions = Set<AnyCancellable>()
+    private let accountUseCase: any AccountUseCaseProtocol
     private let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
     private var planList: [AccountPlanEntity] = []
     private var accountDetails: AccountDetailsEntity
@@ -47,8 +48,14 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     private(set) var setUpPlanTask: Task<Void, Never>?
     private(set) var buyPlanTask: Task<Void, Never>?
     private(set) var restorePlanTask: Task<Void, Never>?
+    private(set) var cancelActivePlanAndBuyNewPlanTask: Task<Void, Never>?
     
-    init(accountDetails: AccountDetailsEntity, purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol) {
+    init(
+        accountDetails: AccountDetailsEntity,
+        accountUseCase: some AccountUseCaseProtocol,
+        purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol
+    ) {
+        self.accountUseCase = accountUseCase
         self.purchaseUseCase = purchaseUseCase
         self.accountDetails = accountDetails
         registerDelegates()
@@ -61,6 +68,12 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         setUpPlanTask?.cancel()
         buyPlanTask?.cancel()
         restorePlanTask?.cancel()
+        cancelActivePlanAndBuyNewPlanTask?.cancel()
+        registerDelegateTask = nil
+        setUpPlanTask = nil
+        buyPlanTask = nil
+        restorePlanTask = nil
+        cancelActivePlanAndBuyNewPlanTask = nil
     }
     
     // MARK: - Setup
@@ -306,6 +319,11 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         return currentPlan != plan
     }
     
+    @MainActor
+    private func startLoading() {
+        isLoading = true
+    }
+    
     // MARK: Restore
     private func restorePurchase() {
         restorePlanTask = Task { [weak self] in
@@ -325,10 +343,71 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     
     private func buySelectedPlan() {
         guard let currentSelectedPlan else { return }
-        isLoading = true
+        
         buyPlanTask = Task { [weak self] in
             guard let self else { return }
-            await purchaseUseCase.purchasePlan(currentSelectedPlan)
+            MEGALogDebug("[Upgrade Account] Starting plan purchase.")
+            
+            do {
+                try validateActiveSubscriptions()
+                
+                await startLoading()
+                await purchaseUseCase.purchasePlan(currentSelectedPlan)
+            } catch {
+                guard let error = error as? ActiveSubscriptionError else {
+                    fatalError("[Upgrade Account] Error \(error) is not supported.")
+                }
+                
+                await handleActiveSubscription(type: error)
+            }
+        }
+    }
+    
+    func validateActiveSubscriptions() throws {
+        guard accountDetails.proLevel != .free,
+              accountDetails.subscriptionStatus == .valid,
+              accountDetails.subscriptionMethodId != .itunes else { return }
+        
+        switch accountDetails.subscriptionMethodId {
+        case .ECP, .sabadell, .stripe2:
+            throw ActiveSubscriptionError.haveCancellablePlan
+        default:
+            throw ActiveSubscriptionError.haveNonCancellablePlan
+        }
+    }
+    
+    @MainActor
+    func handleActiveSubscription(type: ActiveSubscriptionError) {
+        guard type == .haveCancellablePlan else {
+            setAlertType(.activeSubscription(type, primaryButtonAction: nil))
+            return
+        }
+        
+        setAlertType(.activeSubscription(type, primaryButtonAction: { [weak self] in
+            guard let self else { return }
+            cancelActivePlanAndBuyNewPlanTask = Task { [weak self] in
+                guard let self else { return }
+                await cancelActiveCancellableSubscription()
+                buySelectedPlan()
+            }
+        }))
+    }
+    
+    func cancelActiveCancellableSubscription() async {
+        do {
+            try await purchaseUseCase.cancelCreditCardSubscriptions(reason: nil)
+            await refreshAccountDetails()
+        } catch {
+            MEGALogError("[Upgrade Account] Unable to cancel active subscription")
+        }
+    }
+    
+    // MARK: - Account details
+    func refreshAccountDetails() async {
+        do {
+            accountDetails = try await accountUseCase.refreshCurrentAccountDetails()
+        } catch {
+            MEGALogError("Error loading account details. Error: \(error)")
         }
     }
 }
