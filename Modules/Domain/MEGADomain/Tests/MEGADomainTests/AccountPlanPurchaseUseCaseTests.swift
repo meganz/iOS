@@ -175,4 +175,13 @@ final class AccountPlanPurchaseUseCaseTests: XCTestCase {
         purchasePlanResultPublisher.send(.failure(expectedError))
         wait(for: [exp], timeout: 1.0)
     }
+    
+    // MARK: - Cancel active subscriptions
+    
+    func testCancelCreditCardSubscriptionCalled_shouldReturnTrue() async throws {
+        let mockRepo = MockAccountPlanPurchaseRepository()
+        let sut = AccountPlanPurchaseUseCase(repository: mockRepo)
+        try await sut.cancelCreditCardSubscriptions(reason: nil)
+        XCTAssertTrue(mockRepo.cancelCreditCardSubscriptionsCalled == 1)
+    }
 }

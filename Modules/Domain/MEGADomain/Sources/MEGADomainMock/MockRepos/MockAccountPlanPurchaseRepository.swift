@@ -11,6 +11,7 @@ public final class MockAccountPlanPurchaseRepository: AccountPlanPurchaseReposit
     public var deRegisterRestoreDelegateCalled = 0
     public var restorePurchaseCalled = 0
     public var purchasePlanCalled = 0
+    public var cancelCreditCardSubscriptionsCalled = 0
     public var registerPurchaseDelegateCalled = 0
     public var deRegisterPurchaseDelegateCalled = 0
     
@@ -32,6 +33,10 @@ public final class MockAccountPlanPurchaseRepository: AccountPlanPurchaseReposit
     
     public func accountPlanProducts() -> [AccountPlanEntity] {
         plans
+    }
+    
+    public func cancelCreditCardSubscriptions(reason: String?) async throws {
+        cancelCreditCardSubscriptionsCalled += 1
     }
     
     public func registerRestoreDelegate() async {
