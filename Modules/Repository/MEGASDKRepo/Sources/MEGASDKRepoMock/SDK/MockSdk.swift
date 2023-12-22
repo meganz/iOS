@@ -468,6 +468,15 @@ public final class MockSdk: MEGASdk {
         _accountDetails(self, delegate)
     }
     
+    public override func creditCardCancelSubscriptions(_ reason: String?, delegate: MEGARequestDelegate) {
+        switch requestResult {
+        case .success(let request):
+            delegate.onRequestFinish?(self, request: request, error: MEGAError())
+        case .failure(let error):
+            delegate.onRequestFinish?(self, request: MockRequest(handle: 1), error: error)
+        }
+    }
+    
     // MARK: - SMS
     
     public override func smsAllowedState() -> SMSState {

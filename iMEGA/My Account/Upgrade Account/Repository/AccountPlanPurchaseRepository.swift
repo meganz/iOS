@@ -1,13 +1,17 @@
 import Combine
 import MEGADomain
+import MEGASdk
+import MEGASDKRepo
+import MEGASwift
 
 final class AccountPlanPurchaseRepository: NSObject, AccountPlanPurchaseRepositoryProtocol {
 
     static var newRepo: AccountPlanPurchaseRepository {
-        AccountPlanPurchaseRepository(purchase: MEGAPurchase.sharedInstance())
+        AccountPlanPurchaseRepository(purchase: MEGAPurchase.sharedInstance(), sdk: MEGASdk.shared)
     }
     
     private let purchase: MEGAPurchase
+    private let sdk: MEGASdk
     
     private let successfulRestoreSourcePublisher = PassthroughSubject<Void, Never>()
     var successfulRestorePublisher: AnyPublisher<Void, Never> {
@@ -29,8 +33,9 @@ final class AccountPlanPurchaseRepository: NSObject, AccountPlanPurchaseReposito
         purchasePlanResultSourcePublisher.eraseToAnyPublisher()
     }
     
-    init(purchase: MEGAPurchase) {
+    init(purchase: MEGAPurchase, sdk: MEGASdk) {
         self.purchase = purchase
+        self.sdk = sdk
     }
     
     func registerRestoreDelegate() async {
@@ -59,6 +64,19 @@ final class AccountPlanPurchaseRepository: NSObject, AccountPlanPurchaseReposito
             return
         }
         purchase.purchaseProduct(productPlan)
+    }
+    
+    func cancelCreditCardSubscriptions(reason: String?) async throws {
+        try await withAsyncThrowingValue { (completion: @escaping (Result<Void, Error>) -> Void) in
+            sdk.creditCardCancelSubscriptions(reason, delegate: RequestDelegate(completion: { result in
+                switch result {
+                case .failure:
+                    completion(.failure(AccountErrorEntity.generic))
+                case .success:
+                    completion(.success)
+                }
+            }))
+        }
     }
     
     func accountPlanProducts() async -> [AccountPlanEntity] {

@@ -4,6 +4,7 @@ public protocol AccountPlanPurchaseUseCaseProtocol {
     func accountPlanProducts() async -> [AccountPlanEntity]
     func restorePurchase() async
     func purchasePlan(_ plan: AccountPlanEntity) async
+    func cancelCreditCardSubscriptions(reason: String?) async throws
     
     var successfulRestorePublisher: AnyPublisher<Void, Never> { get }
     var incompleteRestorePublisher: AnyPublisher<Void, Never> { get }
@@ -17,6 +18,7 @@ public protocol AccountPlanPurchaseUseCaseProtocol {
 }
 
 public struct AccountPlanPurchaseUseCase<T: AccountPlanPurchaseRepositoryProtocol>: AccountPlanPurchaseUseCaseProtocol {
+    
     private let repo: T
     
     public init(repository: T) {
@@ -33,6 +35,10 @@ public struct AccountPlanPurchaseUseCase<T: AccountPlanPurchaseRepositoryProtoco
     
     public func purchasePlan(_ plan: AccountPlanEntity) async {
         await repo.purchasePlan(plan)
+    }
+    
+    public func cancelCreditCardSubscriptions(reason: String?) async throws {
+        try await repo.cancelCreditCardSubscriptions(reason: reason)
     }
 
     public var successfulRestorePublisher: AnyPublisher<Void, Never> {
