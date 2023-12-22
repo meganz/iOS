@@ -52,20 +52,32 @@ final class MyAccountHallRouter: MyAccountHallRouting {
         self.noInternetConnectionPresenter = noInternetConnectionPresenter
     }
     
-    private func didTapShowInBackupsAction(
-        _ node: NodeEntity
-    ) {
-        guard let backupViewController = self.createCloudDriveVCForNode(node, isBackup: true) else { return }
+    @MainActor
+    private func pushCDViewController(_ node: NodeEntity, isBackup: Bool) {
+        guard let viewController = self.createCloudDriveVCForNode(
+            node,
+            isBackup: isBackup
+        ) else { return }
         
-        self.navigationController?.pushViewController(backupViewController, animated: true)
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
-    
-    private func didTapShowInCloudDriveAction(
-        _ node: NodeEntity
-    ) {
-        guard let backupViewController = self.createCloudDriveVCForNode(node, isBackup: false) else { return }
-        
-        self.navigationController?.pushViewController(backupViewController, animated: true)
+
+    private func didTapShowInBackupsAction(_ node: NodeEntity) {
+        Task {
+            await pushCDViewController(
+                node,
+                isBackup: true
+            )
+        }
+    }
+
+    private func didTapShowInCloudDriveAction(_ node: NodeEntity) {
+        Task {
+            await pushCDViewController(
+                node,
+                isBackup: false
+            )
+        }
     }
     
     private func createCloudDriveVCForNode(
@@ -284,6 +296,7 @@ final class MyAccountHallRouter: MyAccountHallRouting {
     ) {
         switch type {
         case .showInCloudDrive: didTapShowInCloudDriveAction(node)
+        case .showInBackups: didTapShowInBackupsAction(node)
         case .shareLink, .manageLink: didTapShareLinkAction(node)
         case .removeLink: didTapRemoveLinkAction(node)
         case .shareFolder: didTapShareFolderAction(node)
