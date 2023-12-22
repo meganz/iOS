@@ -156,12 +156,12 @@ final class AudioPlayerViewController: UIViewController {
         case .none:
             repeatButton.tintColor = traitCollection.userInterfaceStyle == .dark ? .white: MEGAAppColor.Black._000000.uiColor
         case .loop, .repeatOne:
-            repeatButton.tintColor = UIColor.green00A382
+            repeatButton.tintColor = MEGAAppColor.Green._00A382.uiColor
         }
     }
     
     private func updateShuffleButtonAppearance(status: Bool) {
-        shuffleButton.tintColor = status ? UIColor.green00A382 : traitCollection.userInterfaceStyle == .dark ? .white : .black
+        shuffleButton.tintColor = status ? MEGAAppColor.Green._00A382.uiColor : traitCollection.userInterfaceStyle == .dark ? .white : .black
         shuffleButton.setImage(UIImage(resource: .shuffleAudio), for: .normal)
     }
     

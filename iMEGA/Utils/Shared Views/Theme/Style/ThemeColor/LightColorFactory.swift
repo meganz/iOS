@@ -18,9 +18,9 @@ struct LightColorThemeFactory: ColorFactory {
         case .secondary: return MEGAAppColor.Gray._C4CCCC.uiColor
             
         case .warning: return MEGAAppColor.Yellow._FFCC0003.uiColor
-        case .enabled: return UIColor.green00A886
+        case .enabled: return MEGAAppColor.Green._00A886.uiColor
         case .disabled: return MEGAAppColor.Gray._999999.uiColor
-        case .highlighted: return UIColor.green00A88680
+        case .highlighted: return MEGAAppColor.Green._00A88680.uiColor
             
         case .searchTextField: return MEGAAppColor.White._EFEFEF.uiColor
         case .homeTopSide: return MEGAAppColor.White._F7F7F7.uiColor

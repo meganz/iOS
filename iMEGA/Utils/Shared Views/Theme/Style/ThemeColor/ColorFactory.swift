@@ -49,10 +49,9 @@ extension ColorFactory {
     func gradient(_ style: MEGAColor.Gradient) -> UIColor {
         switch style {
         case .exploreImagesStart:
-            return UIColor.orangeF9B35F
+            return MEGAAppColor.Orange._F9B35F.uiColor
         case .exploreImagesEnd:
-            return UIColor.orangeE68F4D
-            
+            return MEGAAppColor.Orange._E68F4D.uiColor
         case .exploreDocumentsStart:
             return MEGAAppColor.Blue._02A2FF.uiColor
         case .exploreDocumentsEnd:

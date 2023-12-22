@@ -55,7 +55,7 @@ struct WaitingRoomParticipantsListView: View {
                 viewModel.admitAllTapped()
             }
             .font(.body.bold())
-            .foregroundColor(Color(.green00C29A))
+            .foregroundColor(MEGAAppColor.Green._00C29A.color)
             .frame(width: 288, height: 50, alignment: .center)
             .background(MEGAAppColor.Gray._363638.color)
             .cornerRadius(8)

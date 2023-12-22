@@ -33,7 +33,7 @@ struct AlbumCell: View {
                     
                     CheckMarkView(
                         markedSelected: viewModel.isSelected,
-                        foregroundColor: viewModel.isSelected ? .green : Color.photosPhotoSeletionBorder
+                        foregroundColor: viewModel.isSelected ? MEGAAppColor.Green._00FF00.color : Color.photosPhotoSeletionBorder
                     )
                     .offset(x: -5, y: -5)
                     .opacity(viewModel.shouldShowEditStateOpacity)

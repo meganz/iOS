@@ -54,7 +54,7 @@ class CallParticipantCell: UICollectionViewCell {
             }
             
             if participant.audioDetected {
-                borderColor = UIColor.green00C29A
+                borderColor = MEGAAppColor.Green._00C29A.uiColor
                 borderWidth = 1
             }
         } else {
