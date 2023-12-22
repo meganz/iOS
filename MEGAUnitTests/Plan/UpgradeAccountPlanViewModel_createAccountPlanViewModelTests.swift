@@ -2,6 +2,7 @@ import Combine
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
+import MEGATest
 import XCTest
 
 final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestCase {
@@ -17,10 +18,9 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
     func testCreateAccountPlanViewModel_withSelectedPlanType_shouldReturnViewModel() {
         let details = AccountDetailsEntity(proLevel: .free)
         let planList = [proI_monthly, proIII_monthly]
-        let mockUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
         
         let exp = expectation(description: "Setting Current plan")
-        let sut = UpgradeAccountPlanViewModel(accountDetails: details, purchaseUseCase: mockUseCase)
+        let sut = makeSUT(accountDetails: details, planList: planList)
         sut.$currentPlan
             .dropFirst()
             .sink { _ in
@@ -40,10 +40,9 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
     func testCreateAccountPlanViewModel_noSelectedPlan_shouldReturnViewModel() {
         let details = AccountDetailsEntity(proLevel: .free)
         let planList = [proI_monthly, proII_yearly]
-        let mockUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
 
         let exp = expectation(description: "Setting Current plan")
-        let sut = UpgradeAccountPlanViewModel(accountDetails: details, purchaseUseCase: mockUseCase)
+        let sut = makeSUT(accountDetails: details, planList: planList)
         sut.$currentPlan
             .dropFirst()
             .sink { _ in
@@ -62,10 +61,9 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
     func testCreateAccountPlanViewModel_recurringPlanMonthly_shouldReturnViewModel() {
         let details = AccountDetailsEntity(proLevel: .proI, subscriptionCycle: .monthly)
         let planList = [proI_monthly, proII_yearly]
-        let mockUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
 
         let exp = expectation(description: "Setting Current plan Tag for recurring monthly plan")
-        let sut = UpgradeAccountPlanViewModel(accountDetails: details, purchaseUseCase: mockUseCase)
+        let sut = makeSUT(accountDetails: details, planList: planList)
         sut.$currentPlan
             .dropFirst()
             .sink { _ in
@@ -89,10 +87,9 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
     func testCreateAccountPlanViewModel_recurringPlanYearly_shouldReturnViewModel() {
         let details = AccountDetailsEntity(proLevel: .proI, subscriptionCycle: .yearly)
         let planList = [proI_monthly, proI_yearly]
-        let mockUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
 
         let exp = expectation(description: "Setting Current plan Tag for recurring yearly plan")
-        let sut = UpgradeAccountPlanViewModel(accountDetails: details, purchaseUseCase: mockUseCase)
+        let sut = makeSUT(accountDetails: details, planList: planList)
         sut.$currentPlan
             .dropFirst()
             .sink { _ in
@@ -116,10 +113,9 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
     func testCreateAccountPlanViewModel_oneTimePlanPurchase_shouldReturnViewModel() {
         let details = AccountDetailsEntity(proLevel: .proI, subscriptionCycle: .none)
         let planList = [proI_monthly, proI_yearly, proII_yearly]
-        let mockUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
 
         let exp = expectation(description: "Setting Current plan Tag for one time purchase of plan")
-        let sut = UpgradeAccountPlanViewModel(accountDetails: details, purchaseUseCase: mockUseCase)
+        let sut = makeSUT(accountDetails: details, planList: planList)
         sut.$currentPlan
             .dropFirst()
             .sink { _ in
@@ -143,10 +139,9 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
     func testCreateAccountPlanViewModel_withRecommendedPlanType_onRecommendedPlan_shouldReturnViewModel() {
         let details = AccountDetailsEntity(proLevel: .free)
         let planList = [proI_monthly, proI_yearly, proII_yearly]
-        let mockUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
         
         let exp = expectation(description: "Setting Current plan")
-        let sut = UpgradeAccountPlanViewModel(accountDetails: details, purchaseUseCase: mockUseCase)
+        let sut = makeSUT(accountDetails: details, planList: planList)
         sut.$currentPlan
             .dropFirst()
             .sink { _ in
@@ -170,10 +165,9 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
     func testCreateAccountPlanViewModel_withRecommendedPlanType_onNotRecommendedPlan_shouldReturnViewModel() {
         let details = AccountDetailsEntity(proLevel: .free)
         let planList = [proI_monthly, proI_yearly, proII_monthly, proII_yearly]
-        let mockUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
         
         let exp = expectation(description: "Setting Current plan")
-        let sut = UpgradeAccountPlanViewModel(accountDetails: details, purchaseUseCase: mockUseCase)
+        let sut = makeSUT(accountDetails: details, planList: planList)
         sut.$currentPlan
             .dropFirst()
             .sink { _ in
@@ -197,10 +191,9 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
     func testCreateAccountPlanViewModel_withNoRecommendedPlanType_shouldReturnViewModel() {
         let details = AccountDetailsEntity(proLevel: .proIII)
         let planList = [proIII_monthly, proIII_yearly]
-        let mockUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
         
         let exp = expectation(description: "Setting Current plan")
-        let sut = UpgradeAccountPlanViewModel(accountDetails: details, purchaseUseCase: mockUseCase)
+        let sut = makeSUT(accountDetails: details, planList: planList)
         sut.$currentPlan
             .dropFirst()
             .sink { _ in
@@ -219,5 +212,21 @@ final class UpgradeAccountPlanViewModel_createAccountPlanViewModelTests: XCTestC
         XCTAssertEqual(yearlyPlanViewModel.plan, proIII_yearly)
         XCTAssertTrue(yearlyPlanViewModel.isSelectionEnabled)
         XCTAssertEqual(yearlyPlanViewModel.planTag, .none)
+    }
+    
+    // MARK: - Helper
+    private func makeSUT(
+        accountDetails: AccountDetailsEntity,
+        currentAccountDetails: AccountDetailsEntity? = nil,
+        planList: [AccountPlanEntity] = []
+    ) -> UpgradeAccountPlanViewModel {
+        let mockPurchaseUseCase = MockAccountPlanPurchaseUseCase(accountPlanProducts: planList)
+        let mockAccountUseCase = MockAccountUseCase(currentAccountDetails: currentAccountDetails)
+        let sut = UpgradeAccountPlanViewModel(
+            accountDetails: accountDetails,
+            accountUseCase: mockAccountUseCase,
+            purchaseUseCase: mockPurchaseUseCase
+        )
+        return sut
     }
 }

@@ -14,6 +14,7 @@ final class UpgradeAccountPlanRouter: NSObject {
     
     func build() -> UIViewController {
         let viewModel = UpgradeAccountPlanViewModel(accountDetails: accountDetails,
+                                                    accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
                                                     purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo))
         let upgradeAccountPlanView = UpgradeAccountPlanView(viewModel: viewModel)
         let hostingController = UIHostingController(rootView: upgradeAccountPlanView)
