@@ -198,6 +198,9 @@
 		24DE90072AA765970039C846 /* MockStreamingInfoUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24DE90062AA765970039C846 /* MockStreamingInfoUseCase.swift */; };
 		24E038462AEBE5570001159C /* AudioPlayerConfigEntityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E038452AEBE5570001159C /* AudioPlayerConfigEntityTests.swift */; };
 		24E99B462A65257700E4D6A5 /* ToggleSecureFingerprintFlagUIAlertAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E99B452A65257700E4D6A5 /* ToggleSecureFingerprintFlagUIAlertAdapter.swift */; };
+		24EF67062B358055002F1380 /* AudioPlayerEventObserversLoadingLogicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EF67052B358055002F1380 /* AudioPlayerEventObserversLoadingLogicController.swift */; };
+		24EF670C2B358A70002F1380 /* AudioPlayerEventObserversLoadingLogicControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EF670B2B358A70002F1380 /* AudioPlayerEventObserversLoadingLogicControllerTests.swift */; };
+		24EF67102B3594BF002F1380 /* ReasonWaitingToPlayNilLogicControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EF670F2B3594BF002F1380 /* ReasonWaitingToPlayNilLogicControllerTests.swift */; };
 		24F231592A5FB33A000BFBBA /* AudioPlayerViewRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F231582A5FB33A000BFBBA /* AudioPlayerViewRouterTests.swift */; };
 		251863132AA69108005C77F0 /* CloudDriveViewController+ViewMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251863122AA69108005C77F0 /* CloudDriveViewController+ViewMode.swift */; };
 		251B07BB2AC4D4B2008B7380 /* PhotoZoomControlPositionTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251B07BA2AC4D4B2008B7380 /* PhotoZoomControlPositionTracker.swift */; };
@@ -2736,6 +2739,9 @@
 		24DE90062AA765970039C846 /* MockStreamingInfoUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockStreamingInfoUseCase.swift; sourceTree = "<group>"; };
 		24E038452AEBE5570001159C /* AudioPlayerConfigEntityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerConfigEntityTests.swift; sourceTree = "<group>"; };
 		24E99B452A65257700E4D6A5 /* ToggleSecureFingerprintFlagUIAlertAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleSecureFingerprintFlagUIAlertAdapter.swift; sourceTree = "<group>"; };
+		24EF67052B358055002F1380 /* AudioPlayerEventObserversLoadingLogicController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerEventObserversLoadingLogicController.swift; sourceTree = "<group>"; };
+		24EF670B2B358A70002F1380 /* AudioPlayerEventObserversLoadingLogicControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerEventObserversLoadingLogicControllerTests.swift; sourceTree = "<group>"; };
+		24EF670F2B3594BF002F1380 /* ReasonWaitingToPlayNilLogicControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonWaitingToPlayNilLogicControllerTests.swift; sourceTree = "<group>"; };
 		24F231582A5FB33A000BFBBA /* AudioPlayerViewRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerViewRouterTests.swift; sourceTree = "<group>"; };
 		251863122AA69108005C77F0 /* CloudDriveViewController+ViewMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+ViewMode.swift"; sourceTree = "<group>"; };
 		251B07BA2AC4D4B2008B7380 /* PhotoZoomControlPositionTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoZoomControlPositionTracker.swift; sourceTree = "<group>"; };
@@ -5886,6 +5892,32 @@
 				C47E7C2D25D1A8C800DB6FF5 /* MockStreaminginfoRepository.swift */,
 			);
 			path = Mocks;
+			sourceTree = "<group>";
+		};
+		24EF67042B35803E002F1380 /* AudioPlayerEventObservers */ = {
+			isa = PBXGroup;
+			children = (
+				C44CE0102590C66F00313719 /* AudioPlayer+EventObservers.swift */,
+				24EF67052B358055002F1380 /* AudioPlayerEventObserversLoadingLogicController.swift */,
+			);
+			path = AudioPlayerEventObservers;
+			sourceTree = "<group>";
+		};
+		24EF67092B358A37002F1380 /* AudioPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				24EF670A2B358A59002F1380 /* AudioPlayerEventObservers */,
+			);
+			path = AudioPlayer;
+			sourceTree = "<group>";
+		};
+		24EF670A2B358A59002F1380 /* AudioPlayerEventObservers */ = {
+			isa = PBXGroup;
+			children = (
+				24EF670B2B358A70002F1380 /* AudioPlayerEventObserversLoadingLogicControllerTests.swift */,
+				24EF670F2B3594BF002F1380 /* ReasonWaitingToPlayNilLogicControllerTests.swift */,
+			);
+			path = AudioPlayerEventObservers;
 			sourceTree = "<group>";
 		};
 		24F231562A5FB313000BFBBA /* Scenes */ = {
@@ -12008,7 +12040,7 @@
 		C44CDFA32590A08F00313719 /* AudioPlayer */ = {
 			isa = PBXGroup;
 			children = (
-				C44CE0102590C66F00313719 /* AudioPlayer+EventObservers.swift */,
+				24EF67042B35803E002F1380 /* AudioPlayerEventObservers */,
 				C44FE40825B9DC0400EAF5F7 /* AudioPlayer+MetadataLoader.swift */,
 				C458D94725CC23D300D1A496 /* AudioPlayer+Notifiers.swift */,
 				C44CE01A2590D20E00313719 /* AudioPlayer+PlaybackEvents.swift */,
@@ -12023,6 +12055,7 @@
 		C452B66225CD4E550073B22C /* AudioPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				24EF67092B358A37002F1380 /* AudioPlayer */,
 				C4575F2F265FA3C000D527DC /* DispatchQueue */,
 				C47E7C0025D18FC800DB6FF5 /* Repository */,
 				C45A2E0625D2B9C200915A83 /* Routers */,
@@ -13446,6 +13479,7 @@
 				C44CE0052590B57000313719 /* AudioPlayer+RemoteCommand.swift in Sources */,
 				C49F8639255AE2030074A054 /* AudioPlayer.swift in Sources */,
 				9444D0DD28C74B2D001F681C /* AudioPlayerConfigEntity.swift in Sources */,
+				24EF67062B358055002F1380 /* AudioPlayerEventObserversLoadingLogicController.swift in Sources */,
 				C4F31EDC25C19ABE00E15146 /* AudioPlayerFileToolbarConfigurator.swift in Sources */,
 				C4CBDD3F256EC00900835CF5 /* AudioPlayerItem.swift in Sources */,
 				2400A7E02ACB135F0023C015 /* AudioPlayerItemDataSourceCommand.swift in Sources */,
@@ -15284,6 +15318,7 @@
 				24A6ADD92A81EBDA0035C7B0 /* AudioPlayerAllAudioAsPlaylistShiftStrategyTests.swift in Sources */,
 				24E038462AEBE5570001159C /* AudioPlayerConfigEntityTests.swift in Sources */,
 				24A6ADD62A81E87D0035C7B0 /* AudioPlayerDefaultPlaylistShiftStrategyTests.swift in Sources */,
+				24EF670C2B358A70002F1380 /* AudioPlayerEventObserversLoadingLogicControllerTests.swift in Sources */,
 				C47E7BDB25D1550200DB6FF5 /* AudioPlayerItem.swift in Sources */,
 				240D80FB2AB1A1DC00FBD2C4 /* AudioPlayerItemTests.swift in Sources */,
 				C452B66425CD50260073B22C /* AudioPlayerPlaybackTests.swift in Sources */,
@@ -15480,6 +15515,7 @@
 				247FC1BE2A4F1C3700CC8518 /* QASettingsRouterTests.swift in Sources */,
 				24A619DF2A52735600EBB863 /* QASettingsViewModelTests.swift in Sources */,
 				948176C52A93E9DC00E3A181 /* QuickAccessWidgetManagerTests.swift in Sources */,
+				24EF67102B3594BF002F1380 /* ReasonWaitingToPlayNilLogicControllerTests.swift in Sources */,
 				B6AADE952518456B009A874C /* RegionListViewModelTests.swift in Sources */,
 				949704B32AB425C500B2CA3A /* RenameViewModelTests.swift in Sources */,
 				240380542A30687500C06E61 /* ReportIssueMessageViewModelTests.swift in Sources */,

@@ -1,5 +1,6 @@
 import AVFoundation
 import Foundation
+import MediaPlayer
 import MEGADomain
 import MEGAFoundation
 
@@ -10,6 +11,9 @@ enum PlayerConfiguration: String {
 final class AudioPlayer: NSObject {
     
     // MARK: - Internal properties
+    var mediaPlayerNowPlayingInfoCenter = MPNowPlayingInfoCenter.default()
+    var mediaPlayerRemoteCommandCenter = MPRemoteCommandCenter.shared()
+    var observers = [UIViewController]()
     var queuePlayer: AVQueuePlayer?
     var tracks: [AudioPlayerItem] = []
     var audioQueueObserver: NSKeyValueObservation?
@@ -42,6 +46,9 @@ final class AudioPlayer: NSObject {
     var isPaused = false
     var isCloseRequested = false
     var needToBeResumedAfterInterruption = false
+    
+    var previouslyPlayedItem: AudioPlayerItem?
+    var isUserPreviouslyJustPlayedSameItem = false
     
     // MARK: - Private properties
     private var timer: Timer?

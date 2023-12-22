@@ -3,36 +3,72 @@ import MediaPlayer
 
 extension AudioPlayer {
     func registerRemoteControls() {
-        let commandCenter = MPRemoteCommandCenter.shared()
-        commandCenter.playCommand.addTarget(self, action: #selector(audioPlayer(didReceivePlayCommand:)))
-        commandCenter.pauseCommand.addTarget(self, action: #selector(audioPlayer(didReceivePauseCommand:)))
-        commandCenter.nextTrackCommand.addTarget(self, action: #selector(audioPlayer(didReceiveNextTrackCommand:)))
-        commandCenter.previousTrackCommand.addTarget(self, action: #selector(audioPlayer(didReceivePreviousTrackCommand:)))
-        commandCenter.togglePlayPauseCommand.addTarget(self, action: #selector(audioPlayer(didReceiveTogglePlayPauseCommand:)))
-        commandCenter.changePlaybackPositionCommand.addTarget(self, action: #selector(audioPlayer(didReceiveChangePlaybackPositionCommand:)))
+        mediaPlayerRemoteCommandCenter.playCommand.addTarget(self, action: #selector(audioPlayer(didReceivePlayCommand:)))
+        mediaPlayerRemoteCommandCenter.pauseCommand.addTarget(self, action: #selector(audioPlayer(didReceivePauseCommand:)))
+        mediaPlayerRemoteCommandCenter.nextTrackCommand.addTarget(self, action: #selector(audioPlayer(didReceiveNextTrackCommand:)))
+        mediaPlayerRemoteCommandCenter.previousTrackCommand.addTarget(self, action: #selector(audioPlayer(didReceivePreviousTrackCommand:)))
+        mediaPlayerRemoteCommandCenter.togglePlayPauseCommand.addTarget(self, action: #selector(audioPlayer(didReceiveTogglePlayPauseCommand:)))
+        mediaPlayerRemoteCommandCenter.changePlaybackPositionCommand.addTarget(self, action: #selector(audioPlayer(didReceiveChangePlaybackPositionCommand:)))
     }
     
     func unregisterRemoteControls() {
-        let commandCenter = MPRemoteCommandCenter.shared()
-        commandCenter.playCommand.removeTarget(self)
-        commandCenter.pauseCommand.removeTarget(self)
-        commandCenter.nextTrackCommand.removeTarget(self)
-        commandCenter.previousTrackCommand.removeTarget(self)
-        commandCenter.togglePlayPauseCommand.removeTarget(self)
-        commandCenter.seekForwardCommand.removeTarget(self)
-        commandCenter.seekBackwardCommand.removeTarget(self)
+        mediaPlayerRemoteCommandCenter.playCommand.removeTarget(self)
+        mediaPlayerRemoteCommandCenter.pauseCommand.removeTarget(self)
+        mediaPlayerRemoteCommandCenter.nextTrackCommand.removeTarget(self)
+        mediaPlayerRemoteCommandCenter.previousTrackCommand.removeTarget(self)
+        mediaPlayerRemoteCommandCenter.togglePlayPauseCommand.removeTarget(self)
+        mediaPlayerRemoteCommandCenter.seekForwardCommand.removeTarget(self)
+        mediaPlayerRemoteCommandCenter.seekBackwardCommand.removeTarget(self)
     }
     
     func refreshNowPlayingInfo() {
+        updateNowPlayingInfo()
+        updateCommandsState(enabled: true)
+    }
+    
+    private func updateNowPlayingInfo() {
         guard let item = currentItem() else { return }
         
-        var nowPlayingInfo = [String: Any]()
-        
+        Task { @MainActor in
+            var nowPlayingInfo = [String: Any]()
+            
+            updateNowPlayingInfoDescription(&nowPlayingInfo, item)
+            updateNowPlayingInfoPropertyElapsedPlaybackTimeAsync(item)
+            updateNowPlayingInfoPropertyPlakbackRate(&nowPlayingInfo)
+            updateNowPlayingInfoArtwork(item, &nowPlayingInfo)
+            mediaPlayerNowPlayingInfoCenter.nowPlayingInfo = nowPlayingInfo
+            
+            guard let duration = try? await item.asset.load(.duration) else { return }
+            nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = duration.seconds
+            mediaPlayerNowPlayingInfoCenter.nowPlayingInfo = nowPlayingInfo
+        }
+    }
+    
+    private func updateNowPlayingInfoDescription(_ nowPlayingInfo: inout [String: Any], _ item: AudioPlayerItem) {
         nowPlayingInfo[MPMediaItemPropertyTitle] = item.name
         nowPlayingInfo[MPMediaItemPropertyArtist] = item.artist
+    }
+    
+    private func updateNowPlayingInfoPlayback(_ nowPlayingInfo: inout [String: Any], _ item: AudioPlayerItem) {
+        updateNowPlayingInfoPropertyElapsedPlaybackTimeAsync(item)
+        updateNowPlayingInfoPropertyPlakbackRate(&nowPlayingInfo)
+    }
+    
+    private func updateNowPlayingInfoPropertyElapsedPlaybackTime(_ nowPlayingInfo: inout [String: Any], _ item: AudioPlayerItem) {
         nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = item.currentTime().seconds
-        nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = item.asset.duration.seconds
+    }
+    
+    private func updateNowPlayingInfoPropertyElapsedPlaybackTimeAsync(_ item: AudioPlayerItem) {
+        var nowPlayingInfo = mediaPlayerNowPlayingInfoCenter.nowPlayingInfo
+        nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = item.currentTime().seconds
+        mediaPlayerNowPlayingInfoCenter.nowPlayingInfo = nowPlayingInfo
+    }
+    
+    private func updateNowPlayingInfoPropertyPlakbackRate(_ nowPlayingInfo: inout [String: Any]) {
         nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = NSNumber(value: isPaused ? 0.0 : 1.0)
+    }
+    
+    private func updateNowPlayingInfoArtwork(_ item: AudioPlayerItem, _ nowPlayingInfo: inout [String: Any]) {
         if let artwork = item.artwork {
             nowPlayingInfo[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(boundsSize: artwork.size) { _ in
                 artwork
@@ -43,9 +79,6 @@ extension AudioPlayer {
                 defaultArtworkImage
             }
         }
-        
-        updateCommandsState(enabled: true)
-        MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
     }
 }
 
@@ -125,12 +158,12 @@ extension AudioPlayer: AudioPlayerRemoteCommandProtocol {
     }
     
     private func updateCommandsState(enabled: Bool) {
-        MPRemoteCommandCenter.shared().playCommand.isEnabled = enabled
-        MPRemoteCommandCenter.shared().pauseCommand.isEnabled = enabled
-        MPRemoteCommandCenter.shared().nextTrackCommand.isEnabled = enabled
-        MPRemoteCommandCenter.shared().previousTrackCommand.isEnabled = enabled
-        MPRemoteCommandCenter.shared().togglePlayPauseCommand.isEnabled = enabled
-        MPRemoteCommandCenter.shared().changePlaybackPositionCommand.isEnabled = enabled
+        mediaPlayerRemoteCommandCenter.playCommand.isEnabled = enabled
+        mediaPlayerRemoteCommandCenter.pauseCommand.isEnabled = enabled
+        mediaPlayerRemoteCommandCenter.nextTrackCommand.isEnabled = enabled
+        mediaPlayerRemoteCommandCenter.previousTrackCommand.isEnabled = enabled
+        mediaPlayerRemoteCommandCenter.togglePlayPauseCommand.isEnabled = enabled
+        mediaPlayerRemoteCommandCenter.changePlaybackPositionCommand.isEnabled = enabled
         
         if enabled {
             registerRemoteControls()

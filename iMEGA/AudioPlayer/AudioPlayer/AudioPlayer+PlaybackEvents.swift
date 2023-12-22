@@ -45,8 +45,9 @@ extension AudioPlayer: AudioPlayerStateProtocol {
         }
 
         notify(aboutShowingLoadingView)
-        currentItem.seek(to: time, toleranceBefore: .zero, toleranceAfter: .zero) { [weak self] in
-            self?.refreshCurrentState(refresh: $0)
+        Task { @MainActor in
+            let isFinished = await currentItem.seek(to: time)
+            refreshCurrentState(refresh: isFinished)
             completion()
         }
 
@@ -147,7 +148,9 @@ extension AudioPlayer: AudioPlayerStateProtocol {
                 }
             }
             
-            currentItem.seek(to: .zero, toleranceBefore: .zero, toleranceAfter: .zero, completionHandler: nil)
+            Task { @MainActor in
+                _ = await currentItem.seek(to: .zero)
+            }
         }
     }
     
@@ -177,9 +180,9 @@ extension AudioPlayer: AudioPlayerStateProtocol {
                     completion()
                     return
                 }
-                
-                currentItem.seek(to: .zero, toleranceBefore: .zero, toleranceAfter: .zero) { _ in
-                    self.pause()
+                Task { @MainActor in
+                    _ = await currentItem.seek(to: .zero)
+                    pause()
                     completion()
                     return
                 }
@@ -203,9 +206,12 @@ extension AudioPlayer: AudioPlayerStateProtocol {
             play(item: previousItem, completion: completion)
         } else {
             storedRate = rate
-            queuePlayer.currentItem?.seek(to: .zero, toleranceBefore: .zero, toleranceAfter: .zero) { _ in
-                self.isPlaying ? self.play() : self.pause()
-                completion()
+            Task { @MainActor in
+                let isFinished = await queuePlayer.currentItem?.seek(to: .zero)
+                if isFinished == true {
+                    isPlaying ? play() : pause()
+                    completion()
+                }
             }
         }
     }
@@ -221,16 +227,21 @@ extension AudioPlayer: AudioPlayerStateProtocol {
         if currentIndex > index {
             queuePlayer.remove(item)
             queuePlayer.secureInsert(item, after: queuePlayer.currentItem)
-            item.seek(to: .zero, completionHandler: nil)
+            Task { @MainActor in
+                _ = await item.seek(to: .zero)
+            }
 
             if let currentItem = queuePlayer.currentItem {
                 queuePlayer.remove(currentItem)
                 queuePlayer.secureInsert(currentItem, after: item)
             }
         } else if currentIndex == index {
-            queuePlayer.currentItem?.seek(to: .zero, toleranceBefore: .zero, toleranceAfter: .zero) {_ in
-                completion()
-                return
+            Task { @MainActor in
+                let isFinished = await queuePlayer.currentItem?.seek(to: .zero)
+                if isFinished == true {
+                    completion()
+                    return
+                }
             }
         } else {
             queuePlayer.items()
@@ -276,7 +287,8 @@ extension AudioPlayer: AudioPlayerStateProtocol {
             return
         }
         
-        queuePlayer.seek(to: futureTime < .zero ? .zero : futureTime, toleranceBefore: .zero, toleranceAfter: .zero) { _ in
+        Task { @MainActor in
+            _ = await queuePlayer.seek(to: futureTime < .zero ? .zero : futureTime)
             completion(true)
         }
     }
@@ -297,7 +309,8 @@ extension AudioPlayer: AudioPlayerStateProtocol {
             return
         }
         
-        queuePlayer.seek(to: futureTime > duration ? duration : futureTime, toleranceBefore: .zero, toleranceAfter: .zero) { _ in
+        Task { @MainActor in
+            _ = await queuePlayer.seek(to: futureTime > duration ? duration : futureTime)
             completion(true)
         }
     }
@@ -368,7 +381,9 @@ extension AudioPlayer: AudioPlayerStateProtocol {
         notify(aboutTheBeginningOfBlockingAction)
         
         queuePlayer.remove(movedItem)
-        movedItem.seek(to: .zero, toleranceBefore: .zero, toleranceAfter: .zero, completionHandler: nil)
+        Task { @MainActor in
+            _ = await movedItem.seek(to: .zero)
+        }
         
         let afterItem = queuePlayer.items()[position.previous().row]
         
@@ -454,7 +469,9 @@ extension AudioPlayer: AudioPlayerStateProtocol {
     }
     
     func reset(item: AudioPlayerItem) {
-        item.seek(to: .zero, toleranceBefore: .zero, toleranceAfter: .zero, completionHandler: nil)
+        Task { @MainActor in
+            _ = await item.seek(to: .zero)
+        }
     }
     
     func resetCurrentItem() {

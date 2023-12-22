@@ -24,6 +24,23 @@ extension AudioPlayer: AudioPlayerMetadataLoaderProtocol {
             }
         })
     }
+    
+    func loadACurrentItemArtworkIfNeeded() async {
+        guard let currentItem = currentItem(), currentItem.artwork == nil else { return }
+        let asset = currentItem.asset
+        
+        guard let metadata = try? await asset.load(.commonMetadata) else { return }
+        let artworkMetadata = AVMetadataItem.metadataItems(from: metadata, filteredByIdentifier: .commonIdentifierArtwork)
+        
+        guard
+            let firstArtwork = artworkMetadata.first,
+            let imageData = firstArtwork.dataValue,
+            let image = UIImage(data: imageData) else {
+            return
+        }
+        
+        self.currentItem()?.artwork = image
+    }
 }
 
 final class AudioPlayerMetadataOperation: MEGAOperation {
