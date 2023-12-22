@@ -7,36 +7,30 @@ import MessageKit
 class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate {
     // MARK: - Properties
     
-    var transfers: [ChatMessage] = []
-    var chatRoom: MEGAChatRoom
+    private var transfers: [ChatMessage] = []
+    private var chatRoom: MEGAChatRoom
     weak var chatViewController: ChatViewController?
     var chatMessages: [any MessageType] = []
     var messages: [any MessageType] {
         return chatMessages + transfers
     }
     
-    var isChatRoomOpen: Bool = false
-    var historyMessages: [ChatMessage] = []
+    private var isChatRoomOpen: Bool = false
+    private var historyMessages: [ChatMessage] = []
     var loadingState = true
     private(set) var hasChatRoomClosed: Bool = false
     var isFullChatHistoryLoaded: Bool {
         return MEGAChatSdk.shared.isFullHistoryLoaded(forChat: chatRoom.chatId)
     }
     
-    var whoIsTyping: [UInt64: Timer] = [:]
-    var awaitingLoad = false
+    private var whoIsTyping: [UInt64: Timer] = [:]
+    private var awaitingLoad = false
     
     // MARK: - Init
     
-    init(chatRoom: MEGAChatRoom?) {
-        guard let chatRoom = chatRoom else {
-            self.chatRoom = MEGAChatRoom()
-            super.init()
-            return
-        }
+    init(chatRoom: MEGAChatRoom) {
         self.chatRoom = chatRoom
         super.init()
-        configTransferDataAsync()
     }
     
     // MARK: - MEGAChatRequestDelegate
@@ -434,6 +428,8 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
             MEGASdk.shared.add(self)
             MEGAChatSdk.shared.add(self)
             
+            await reloadTransferData()
+            
             do {
                 try ChatRoomRepository.newRepo.openChatRoom(chatId: chatRoom.chatId, delegate: self)
                 isChatRoomOpen = true
@@ -721,18 +717,6 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
             return lastMessageId == message.messageId
         }
         return false
-    }
-    
-    private func configTransferDataAsync() {
-        Task {
-            await registerDelegates()
-            await reloadTransferData()
-        }
-    }
-
-    private func registerDelegates() async {
-        MEGASdk.shared.add(self)
-        MEGAChatSdk.shared.add(self)
     }
 }
 
