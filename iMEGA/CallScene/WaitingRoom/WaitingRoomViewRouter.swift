@@ -44,7 +44,10 @@ final class WaitingRoomViewRouter: NSObject, WaitingRoomViewRouting {
             chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo),
             callUseCase: CallUseCase(repository: CallRepository.newRepo),
             callCoordinatorUseCase: CallCoordinatorUseCase(),
-            meetingUseCase: MeetingCreatingUseCase(repository: MeetingCreatingRepository.newRepo),
+            meetingUseCase: MeetingCreatingUseCase(
+                meetingCreatingRepo: MeetingCreatingRepository.newRepo,
+                userStoreRepo: UserStoreRepository.newRepo
+            ),
             authUseCase: AuthUseCase(repo: AuthRepository.newRepo, credentialRepo: CredentialRepository.newRepo),
             waitingRoomUseCase: WaitingRoomUseCase(waitingRoomRepo: WaitingRoomRepository.newRepo),
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
