@@ -32,9 +32,7 @@ public struct SearchResultsView: View {
         .sheet(item: $viewModel.presentedChipsPickerViewModel) { item in
             if #available(iOS 16, *) {
                 chipsPickerView(for: item)
-                    .presentationDetents([
-                        .height(440)
-                    ])
+                    .presentationDetents([.medium, .large])
                     .presentationDragIndicator(.visible)
             } else {
                 chipsPickerView(for: item)
@@ -73,10 +71,16 @@ public struct SearchResultsView: View {
             viewModel: .init(
                 title: item.subchipsPickerTitle ?? "",
                 chips: item.subchips,
+                closeIcon: viewModel.chipAssets.closeIcon,
                 colorAssets: viewModel.colorAssets,
                 chipSelection: { chip in
                     Task { @MainActor in
                         await chip.select()
+                    }
+                },
+                dismiss: {
+                    Task { @MainActor in
+                        await viewModel.dismissChipGroupPicker()
                     }
                 }
             )

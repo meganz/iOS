@@ -5,34 +5,42 @@ struct ChipsPickerView: View {
     var viewModel: ChipsPickerViewModel
 
     var body: some View {
-        VStack(alignment: .leading, spacing: .zero) {
-            HStack {
-                Spacer()
-                Text(viewModel.title)
-                    .font(.subheadline)
-                    .fontWeight(.bold)
-                Spacer()
-            }
+        ScrollView(.vertical) {
+            header
+            chips
+        }
+    }
 
-            ScrollView(.vertical) {
-                VStack(alignment: .leading, spacing: .zero) {
-                    ForEach(viewModel.chips) { chip in
-                        if viewModel.shouldDisplayBottomSeparator(for: chip) {
-                            chipRow(for: chip)
-                                .overlay(
-                                    separator,
-                                    alignment: .bottom
-                                )
-                        } else {
-                            chipRow(for: chip)
-                        }
-                    }
+    private var header: some View {
+        HStack {
+            Spacer()
+            Text(viewModel.title)
+                .font(.subheadline)
+                .fontWeight(.bold)
+            Spacer()
+        }
+        .padding(.top, 32)
+        .overlay(
+            closeButton,
+            alignment: .trailing
+        )
+    }
+
+    private var chips: some View {
+        VStack(spacing: .zero) {
+            ForEach(viewModel.chips) { chip in
+                if viewModel.shouldDisplayBottomSeparator(for: chip) {
+                    chipRow(for: chip)
+                        .overlay(
+                            separator,
+                            alignment: .bottom
+                        )
+                } else {
+                    chipRow(for: chip)
                 }
             }
-            .padding(.top, 6)
         }
-        .padding(.horizontal, 16)
-        .padding(.top, 32)
+        .padding(.leading, 16)
     }
 
     private func chipRow(for chip: ChipViewModel) -> some View {
@@ -58,6 +66,19 @@ struct ChipsPickerView: View {
     private var separator: some View {
         viewModel.separatorColor(for: colorScheme).frame(height: 1)
     }
+
+    private var closeButton: some View {
+        Button(action: {
+            viewModel.close()
+        }, label: {
+            Image(uiImage: viewModel.closeIcon)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 16, height: 16)
+        })
+        .padding(.trailing, 16)
+        .padding(.top, 32)
+    }
 }
 
 struct ChipsPickerViewPreviews: PreviewProvider {
@@ -81,8 +102,10 @@ struct ChipsPickerViewPreviews: PreviewProvider {
                             select: {}
                         )
                     ],
+                    closeIcon: UIImage(systemName: "ellipsis")!,
                     colorAssets: .example,
-                    chipSelection: {_ in}
+                    chipSelection: {_ in},
+                    dismiss: {}
                 )
             )
             .frame(height: 440)

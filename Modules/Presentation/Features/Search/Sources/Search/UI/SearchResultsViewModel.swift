@@ -29,6 +29,10 @@ public class SearchResultsViewModel: ObservableObject {
         config.colorAssets
     }
 
+    var chipAssets: SearchConfig.ChipAssets {
+        config.chipAssets
+    }
+
     // this is needed to be able to construct new query after receiving new query string from SearchBar
     private var currentQuery: SearchQuery = .initial
 

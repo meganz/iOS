@@ -7,6 +7,7 @@ extension SearchConfig {
         .init(
             chipAssets: .init(
                 selectionIndicatorImage: UIImage(systemName: "ellipsis")!,
+                closeIcon: UIImage(systemName: "ellipsis")!,
                 selectedForeground: .white,
                 selectedBackground: .green,
                 normalForeground: .black,
