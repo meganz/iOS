@@ -2493,11 +2493,11 @@
 /* Cookie dialog text. */
 "dialog.cookies.description"="نحن نستخدم ملفات تعريف الارتباط cookies والتقنيات المماثلة فقط لأغراض تزويدك بالخدمات التي تطلبها من ميغا MEGA أو للتحليلات وجمع بيانات الأداء. لا نستخدم ملفات تعريف الارتباط cookies لتتبع الإعلانات أو مشاركة أي معلومات شخصية عنك مع جهات خارجية.";
 /* Cookie dialog title to manage cookies */
-"dialog.cookies.title.manageCookies"="Manage cookies";
+"dialog.cookies.title.manageCookies"="إدارة ملفات تعريف الارتباط cookies";
 /* Cookie dialog description with cookie policy. */
-"dialog.cookies.description.cookiePolicy"="We use cookies and similar technologies to help us improve our services. Learn more in our [A]Cookie Policy[/A].";
+"dialog.cookies.description.cookiePolicy"="نحن نستخدم ملفات تعريف الارتباط cookies والتقنيات المشابهة لمساعدتنا على تحسين خدماتنا. تعرف على المزيد في [A]سياسة ملفات تعريف الارتباط cookies[/A] الخاصة بنا.";
 /* Cookie dialog description with advertisement cookie policy. */
-"dialog.cookies.description.adsCookiePolicy"="We use cookies and similar technologies to help us improve our services and for advertising purposes. By continuing to use MEGA you agree with the terms of our updated [A]Cookie Policy[/A].";
+"dialog.cookies.description.adsCookiePolicy"="نحن نستخدم ملفات تعريف الارتباط cookies والتقنيات المشابهة لمساعدتنا على تحسين خدماتنا ولأغراض إعلانية. من خلال الاستمرار في استخدام ميغا MEGA فإنك توافق على شروط [A]سياسة ملفات تعريف الارتباط cookies[/A] المحدثة لدينا.";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="قبول ملفات تعريف الارتباط Cookies";
 /* Cookie dialog footer description */
@@ -2515,7 +2515,7 @@
 /* Cookie settings dialog title label for Advertising Cookies */
 "settings.cookies.advertisingCookies"="ملفات تعريف الارتباط Cookies الإعلانية";
 /* Cookie settings dialog footer text for Advertising Cookies */
-"settings.cookies.advertisingCookies.footer"="Used by our approved advertising partners to collect data about your browsing activities and customise the ads you see on our services and on other websites. Not accepting these cookies means you will still see ads but they won’t be personalised.";
+"settings.cookies.advertisingCookies.footer"="يستخدمها شركاؤنا الإعلانيون المعتمدون لجمع بيانات حول أنشطة التصفح الخاصة بك وتخصيص الإعلانات التي تراها على خدماتنا وعلى مواقع الويب الأخرى. إن عدم قبول ملفات تعريف الارتباط cookies هذه يعني أنك ستظل ترى الإعلانات ولكن لن يتم تخصيصها.";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="تم إنشاء النسخة كملف جديد.";
 /* Text shown for the action create new file */
@@ -3206,8 +3206,6 @@
 "sharedItems.contactVerification.section.myCredentials.message"="للتحقق من جهة الاتصال الخاصة بك، تأكد من أن بيانات الاعتماد التي تراها أعلاه تطابق بيانات اعتماد حسابهم. يمكنك أن تطلب منهم مشاركة بيانات اعتمادهم معك.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
 "sharedItems.contactVerification.section.verifyContact.receiver.message"="نحن نحمي بياناتك عن طريق تشفير المعرفة الصفرية. لضمان أمان إضافي نطلب منك التحقق من جهات الاتصال التي تستقبل المعلومات منها قبل أن تتمكن من الوصول إلى المجلدات المشاركة.";
-/* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
-"sharedItems.contactVerification.section.verifyContact.bannerMessage"="للوصول إلى المجلد المشارك يجب على الشخص الذي شاركه معك التحقق منك أيضًا.";
 /* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
 "sharedItems.contactVerification.contactNotVerifiedBannerMessage"="تتم مشاركة %@ من قبل جهة اتصال لم يتم التحقق منها. لضمان المزيد من الأمان، نوصيك بالتحقق من بيانات الاعتماد الخاصة بهم في جهات الاتصال من خلال النقر على ⓘ بجوار جهة الاتصال التي تريد التحقق منها.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
@@ -3956,5 +3954,27 @@
 "calls.panel.participantsNotInCall.participant.state.noResponse"="لا يوجد رد";
 /* Calls: Floating panel participants empty list not in call state */
 "calls.panel.participantsNotInCall.emptyState"="All the invited participants have joined the call.";
+/* Videos: video scene title */
+"videos.navigationbar.title"="مقاطع الفيديو";
+/* Videos: video tab title all videos */
+"videos.tab.title.all"="All videos";
+/* Videos: video tab title playlists */
+"videos.tab.title.playlist"="Playlists";
+/* Videos: video content empty state */
+"videos.tab.all.content.emptyState"="No videos";
+/* Videos: video playlist add new playlist button text description */
+"videos.tab.playlist.content.newPlaylist"="New playlist";
+/* Videos: video playlist playlist cell title */
+"videos.tab.playlist.content.playlistCell.title.favorites"="المفضلة";
+/* Videos: video playlist playlist cell subtitle */
+"videos.tab.playlist.content.playlistCell.subtitle.emptyPlaylist"="Empty playlist";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="There is no one in the waiting room";
+/* Meeting invitation text for sharing a scheduled meeting link through external app */
+"meetings.info.shareMeetingLink.invitation"="%@ is inviting you to a MEGA meeting";
+/* Meeting name text for sharing a scheduled meeting link through external app */
+"meetings.info.shareMeetingLink.meetingName"="Meeting name: %@";
+/* Meeting time text for sharing a scheduled meeting link through external app */
+"meetings.info.shareMeetingLink.meetingTime"="Date and time: %@";
+/* Meeting link text for sharing a scheduled meeting link through external app */
+"meetings.info.shareMeetingLink.meetingLink"="Meeting link: %@";

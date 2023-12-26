@@ -1201,7 +1201,7 @@
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="Включить режим отладки";
 /* Alert message shown when the DEBUG mode is enabled */
-"enableDebugMode_message"="Журнал будет создан локально (MEGAiOS.log). Журналы могут содержать информацию о вашем аккаунте.";
+"enableDebugMode_message"="Лог будет создан в разделе «Локальные» (MEGAiOS.log). Логи могут содержать информацию о вашем аккаунте.";
 /* Alert title shown when the DEBUG mode is disabled */
 "disableDebugMode_title"="Отключить режим отладки";
 /* Alert message shown when the DEBUG mode is disabled */
@@ -2171,7 +2171,7 @@
 /* Label tell user to enter received txt to below input boxes */
 "Please type the verification code sent to"="Пожалуйста, введите отправленный проверочный код";
 /* Text message to remind user to resend verification code */
-"You didn't receive a code?"="You didn’t receive the code?";
+"You didn't receive a code?"="Не получили код?";
 /* Message shown when verify phone number successfully */
 "Your phone number has been verified successfully"="Ваш номер телефона подтверждён";
 /* Text describing account suspended state to the user */
@@ -2447,7 +2447,7 @@
 /* Section header of Audio Player playlist that contains playing track */
 "Playing"="Воспроизводится";
 /* Message when to move Camera Uploads folder to Rubbish Bin */
-"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Вы действительно хотите переместить папку «Загрузки из камеры» в Корзину? В этом случае будет автоматически создана новая папка для Загрузок из камеры.";
+"Are you sure you want to move Camera Uploads folder to Rubbish Bin? If so, a new folder will be auto-generated for Camera Uploads."="Вы действительно хотите переместить папку «Загрузки из камеры» в Корзину? В этом случае будет автоматически создана новая папка для «Загрузок из камеры».";
 /* Text to indicate the action of uploading a file to the cloud drive */
 "Upload File"="Загрузить файл";
 /* Text title for shortcuts, ie in the widget */
@@ -3206,8 +3206,6 @@
 "sharedItems.contactVerification.section.myCredentials.message"="Чтобы подтвердить контакт, убедитесь, что учётные данные, которые вы видите выше, соответствуют его учётным данным. Вы можете попросить его поделиться с вами своими учётными данными.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
 "sharedItems.contactVerification.section.verifyContact.receiver.message"="Мы защищаем ваши данные с помощью шифрования с нулевым разглашением. Чтобы обеспечить дополнительную безопасность, мы просим вас подтвердить контакты, от которых вы получаете информацию, прежде чем вы сможете получить доступ к общим папкам.";
-/* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
-"sharedItems.contactVerification.section.verifyContact.bannerMessage"="Чтобы общая папка стала доступной, человек, который поделился ей с вами, также должен подтвердить вас.";
 /* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
 "sharedItems.contactVerification.contactNotVerifiedBannerMessage"="Папкой «%@» поделился контакт, которого вы не подтвердили. Чтобы обеспечить дополнительную безопасность, мы рекомендуем вам подтвердить его учётные данные в «Контактах». Нажмите на ⓘ рядом с контактом, который хотите подтвердить.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
@@ -3956,5 +3954,27 @@
 "calls.panel.participantsNotInCall.participant.state.noResponse"="Не отвечает";
 /* Calls: Floating panel participants empty list not in call state */
 "calls.panel.participantsNotInCall.emptyState"="Все приглашённые участники присоединились к звонку.";
+/* Videos: video scene title */
+"videos.navigationbar.title"="Видео";
+/* Videos: video tab title all videos */
+"videos.tab.title.all"="Все видео";
+/* Videos: video tab title playlists */
+"videos.tab.title.playlist"="Плейлисты";
+/* Videos: video content empty state */
+"videos.tab.all.content.emptyState"="Нет видео";
+/* Videos: video playlist add new playlist button text description */
+"videos.tab.playlist.content.newPlaylist"="Новый плейлист";
+/* Videos: video playlist playlist cell title */
+"videos.tab.playlist.content.playlistCell.title.favorites"="Избранное";
+/* Videos: video playlist playlist cell subtitle */
+"videos.tab.playlist.content.playlistCell.subtitle.emptyPlaylist"="Пустой плейлист";
 /* Calls: Floating panel participants empty list waiting room state */
-"calls.panel.participantsInWaitingRoom.emptyState"="There is no one in the waiting room";
+"calls.panel.participantsInWaitingRoom.emptyState"="В комнате ожидания никого нет";
+/* Meeting invitation text for sharing a scheduled meeting link through external app */
+"meetings.info.shareMeetingLink.invitation"="%@ приглашает вас на MEGA-встречу";
+/* Meeting name text for sharing a scheduled meeting link through external app */
+"meetings.info.shareMeetingLink.meetingName"="Название встречи:%@";
+/* Meeting time text for sharing a scheduled meeting link through external app */
+"meetings.info.shareMeetingLink.meetingTime"="Дата и время: %@";
+/* Meeting link text for sharing a scheduled meeting link through external app */
+"meetings.info.shareMeetingLink.meetingLink"="Ссылка на встречу: %@";

@@ -79,7 +79,7 @@
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="กรุณาเข้าสู่ระบบในบัญชีของคุณ";
 /* Error message when a user attempts to change their email without an active login session. */
-"needToBeLoggedInToCompleteYourEmailChange"="You need to be logged in to complete your email address change. Please log in again with your current email address, then tap on your confirmation link again.";
+"needToBeLoggedInToCompleteYourEmailChange"="คุณต้องเข้าสู่ระบบก่อนเพื่อให้การเปลี่ยนแปลงอีเมลของคุณเสร็จสมบูรณ์ กรุณาเข้าสู่ระบบอีกครั้งด้วยที่อยู่อีเมลปัจจุบันของคุณ จากนั้นแตะที่ลิงก์ยืนยันของคุณอีกครั้ง";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="เข้าสู่ระบบ";
 /* Message for login option on Create Account screen */
@@ -967,7 +967,7 @@
 /* The title of the alert dialog to change the email associated to an account. */
 "Change Email"="เปลี่ยนอีเมล";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
-"oldAndNewEmailMatch"="The new and the old email addresses must not match";
+"oldAndNewEmailMatch"="อีเมลใหม่และอีเมลเก่าต้องไม่ตรงกัน";
 /* Error message shown when you have not written the same email when confirming a new one */
 "emailsDoNotMatch"="ที่อยู่อีเมลไม่ตรงกัน";
 /* Error message when a use wants to validate the same email twice */
@@ -2033,7 +2033,7 @@
 /* Text showing the user how to write more than one email in order to invite them to MEGA */
 "Tap space to enter multiple emails"="ใช้เว้นวรรค เพื่อกรอกอีเมลหลายรายการ";
 /* Text used as a section title or similar */
-"Enter Email"="Enter email address";
+"Enter Email"="กรอกที่อยู่อีเมล";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
 "contact.invite.message"="คุณมีคำขอ MEGA Chat รออยู่ ลงทะเบียนบัญชีที่ MEGA แล้วรับพื้นที่เก็บข้อมูลฟรี 20 GB ตลอดอายุการใช้งาน";
 /* Destination folder name of chat files */
@@ -2171,7 +2171,7 @@
 /* Label tell user to enter received txt to below input boxes */
 "Please type the verification code sent to"="กรุณากรอกรหัสการตรวจสอบที่ส่งถึง";
 /* Text message to remind user to resend verification code */
-"You didn't receive a code?"="You didn’t receive the code?";
+"You didn't receive a code?"="คุณไม่ได้รับรหัสใช่ไหม";
 /* Message shown when verify phone number successfully */
 "Your phone number has been verified successfully"="หมายเลขโทรศัพท์ของคุณถูกตรวจสอบเรียบร้อยแล้ว";
 /* Text describing account suspended state to the user */
@@ -2493,11 +2493,11 @@
 /* Cookie dialog text. */
 "dialog.cookies.description"="เราใช้คุกกี้และเทคโนโลยีที่คล้ายกันเพื่อให้บริการที่คุณขอจาก MEGA หรือสำหรับการวิเคราะห์และเก็บข้อมูลเพื่อการประเมินผลการทำงาน โดยเราไม่ใช้คุกกี้สำหรับการติดตามโฆษณาหรือการแชร์ข้อมูลส่วนบุคคลของคุณกับบุคคลภายนอกใด ๆ";
 /* Cookie dialog title to manage cookies */
-"dialog.cookies.title.manageCookies"="Manage cookies";
+"dialog.cookies.title.manageCookies"="การจัดการคุกกี้";
 /* Cookie dialog description with cookie policy. */
-"dialog.cookies.description.cookiePolicy"="We use cookies and similar technologies to help us improve our services. Learn more in our [A]Cookie Policy[/A].";
+"dialog.cookies.description.cookiePolicy"="เราใช้คุกกี้และเทคโนโลยีที่คล้ายคลึงกันเพื่อปรับปรุงบริการของเรา คุณสามารถเรียนรู้เพิ่มเติมเกี่ยวกับคุกกี้ของเราได้ใน[A]นโยบายคุกกี้[/A]";
 /* Cookie dialog description with advertisement cookie policy. */
-"dialog.cookies.description.adsCookiePolicy"="We use cookies and similar technologies to help us improve our services and for advertising purposes. By continuing to use MEGA you agree with the terms of our updated [A]Cookie Policy[/A].";
+"dialog.cookies.description.adsCookiePolicy"="เราใช้คุกกี้และเทคโนโลยีที่คล้ายคลึงกันเพื่อปรับปรุงบริการของเราและเพื่อวัตถุประสงค์ในการโฆษณา หากคุณยังคงใช้ MEGA อยู่ แสดงว่าคุณยอมรับเงื่อนไขของ[A]นโยบายคุกกี้[/A]ฉบับอัปเดตของเรา";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="ยอมรับการใช้งานคุกกี้";
 /* Cookie dialog footer description */
@@ -2515,7 +2515,7 @@
 /* Cookie settings dialog title label for Advertising Cookies */
 "settings.cookies.advertisingCookies"="คุกกี้สำหรับโฆษณา";
 /* Cookie settings dialog footer text for Advertising Cookies */
-"settings.cookies.advertisingCookies.footer"="Used by our approved advertising partners to collect data about your browsing activities and customise the ads you see on our services and on other websites. Not accepting these cookies means you will still see ads but they won’t be personalised.";
+"settings.cookies.advertisingCookies.footer"="คุกกี้เหล่านี้ใช้โดยพันธมิตรโฆษณาที่ได้รับอนุมัติจากเราเพื่อรวบรวมข้อมูลเกี่ยวกับกิจกรรมการท่องเว็บของคุณและปรับแต่งโฆษณาที่คุณเห็นในบริการของเราและบนเว็บไซต์อื่น ๆ การไม่ยอมรับคุกกี้เหล่านี้หมายความว่าคุณจะยังคงเห็นโฆษณา แต่โฆษณาเหล่านั้นจะไม่ตรงกับความสนใจของคุณมากนัก";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="สร้างเวอร์ชันเป็นไฟล์ใหม่แล้ว";
 /* Text shown for the action create new file */
@@ -3206,8 +3206,6 @@
 "sharedItems.contactVerification.section.myCredentials.message"="ในการตรวจสอบผู้ติดต่อของคุณ ตรวจสอบให้แน่ใจว่าข้อมูลประจำตัวที่แสดงด้านบนตรงกับข้อมูลประจำตัวของคุณ คุณสามารถขอให้ผู้ติดต่อของคุณให้ข้อมูลประจำตัวแก่คุณได้";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
 "sharedItems.contactVerification.section.verifyContact.receiver.message"="เราปกป้องข้อมูลของคุณด้วยกระบวนการเข้ารหัส zero-knowledge และเพื่อความปลอดภัยมากยิ่งขึ้น เราขอให้คุณตรวจสอบผู้ติดต่อที่คุณได้รับข้อมูลอยู่ด้วยนั้น ก่อนที่จะให้สิทธิ์ในการเข้าถึงโฟลเดอร์ที่แชร์ได้";
-/* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
-"sharedItems.contactVerification.section.verifyContact.bannerMessage"="เพื่อเข้าถึงโฟลเดอร์ที่มีการแชร์ไว้ ผู้ที่แชร์โฟลเดอร์กับคุณควรทำการตรวจสอบคุณด้วย";
 /* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
 "sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ ถูกแชร์โดยผู้ติดต่อที่คุณยังไม่ได้รับการตรวจสอบ เพื่อความปลอดภัยมากยิ่งขึ้น เราขอแนะนำให้คุณตรวจสอบข้อมูลประจำตัวของพวกเขาในรายชื่อติดต่อ โดยแตะที่ ⓘ ถัดจากรายชื่อติดต่อที่คุณต้องการตรวจสอบ";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
@@ -3843,9 +3841,9 @@
 /* Filter name for searching on the home screen */
 "home.search.filter.modificationDate.today"="วันนี้";
 /* Filter name for searching on the home screen */
-"home.search.filter.modificationDate.last7days"="Last 7 days";
+"home.search.filter.modificationDate.last7days"="7 วันที่ผ่านมา";
 /* Filter name for searching on the home screen */
-"home.search.filter.modificationDate.last30days"="Last 30 days";
+"home.search.filter.modificationDate.last30days"="30 วันที่ผ่านมา";
 /* Filter name for searching on the home screen */
 "home.search.filter.modificationDate.thisYear"="ปีนี้";
 /* Filter name for searching on the home screen */
@@ -3857,9 +3855,9 @@
 /* Type chips group picker title which is displayed in the picker shown when user taps on the  node type chips group pill */
 "home.search.chipsGroup.nodeType.pickerTitle"="เลือกประเภทไฟล์";
 /* Type chips group title which is displayed in modified date chips group pill */
-"home.search.chipsGroup.modificationDate.pillTitle"="Modified date";
+"home.search.chipsGroup.modificationDate.pillTitle"="วันที่ปรับเปลี่ยน";
 /* Type chips group picker title which is displayed in the picker shown when user taps on the modified date chips group pill */
-"home.search.chipsGroup.modificationDate.pickerTitle"="Select modified date";
+"home.search.chipsGroup.modificationDate.pickerTitle"="เลือกวันที่ปรับเปลี่ยน";
 /* Empty screen copy when no filter is selected on the home screen search */
 "home.search.empty.no-chip-selected"="ไม่พบรายการค้นหา";
 /* Empty screen copy when Images filter is selected on the home screen search */
@@ -3955,6 +3953,28 @@
 /* Calls: Floating panel participants not in call label to describe no response state */
 "calls.panel.participantsNotInCall.participant.state.noResponse"="ไม่รับสาย";
 /* Calls: Floating panel participants empty list not in call state */
-"calls.panel.participantsNotInCall.emptyState"="All the invited participants have joined the call.";
+"calls.panel.participantsNotInCall.emptyState"="ทุกคนที่ถูกเชิญมา ได้เข้าร่วมสายครบแล้ว";
+/* Videos: video scene title */
+"videos.navigationbar.title"="วิดีโอ";
+/* Videos: video tab title all videos */
+"videos.tab.title.all"="วิดีโอทั้งหมด";
+/* Videos: video tab title playlists */
+"videos.tab.title.playlist"="เพลย์ลิส";
+/* Videos: video content empty state */
+"videos.tab.all.content.emptyState"="ไม่มีวิดีโอ";
+/* Videos: video playlist add new playlist button text description */
+"videos.tab.playlist.content.newPlaylist"="เพลย์ลิสต์ใหม่";
+/* Videos: video playlist playlist cell title */
+"videos.tab.playlist.content.playlistCell.title.favorites"="รายการโปรด";
+/* Videos: video playlist playlist cell subtitle */
+"videos.tab.playlist.content.playlistCell.subtitle.emptyPlaylist"="ไม่พบรายการในเพลย์ลิสต์";
 /* Calls: Floating panel participants empty list waiting room state */
-"calls.panel.participantsInWaitingRoom.emptyState"="There is no one in the waiting room";
+"calls.panel.participantsInWaitingRoom.emptyState"="ไม่มีใครอยู่ในห้องนั่งรอ";
+/* Meeting invitation text for sharing a scheduled meeting link through external app */
+"meetings.info.shareMeetingLink.invitation"="%@ เชิญคุณเข้าร่วมการประชุม MEGA";
+/* Meeting name text for sharing a scheduled meeting link through external app */
+"meetings.info.shareMeetingLink.meetingName"="ชื่อเรื่องการประชุม: %@";
+/* Meeting time text for sharing a scheduled meeting link through external app */
+"meetings.info.shareMeetingLink.meetingTime"="วันที่และเวลา: %@";
+/* Meeting link text for sharing a scheduled meeting link through external app */
+"meetings.info.shareMeetingLink.meetingLink"="ลิงก์ประชุม: %@";

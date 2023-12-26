@@ -2515,7 +2515,7 @@
 /* Cookie settings dialog title label for Advertising Cookies */
 "settings.cookies.advertisingCookies"="廣告Cookies";
 /* Cookie settings dialog footer text for Advertising Cookies */
-"settings.cookies.advertisingCookies.footer"="由我們認可的廣告合作伙伴用於收集有關您的瀏覽活動的資料，並自訂您在我們的服務和其它網站上看到的廣告。不接受這些cookie意味著您仍然會看到廣告，但它們不會個人化。";
+"settings.cookies.advertisingCookies.footer"="由我們認可的廣告合作伙伴用於收集有關您的瀏覽活動的資料，並自訂您在我們的服務和其它網站上看到的廣告。不接受這些cookie意味著您仍然會看到廣告，但它們不會是個人化的。";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="該版本以新檔案建立";
 /* Text shown for the action create new file */
@@ -3206,8 +3206,6 @@
 "sharedItems.contactVerification.section.myCredentials.message"="若要驗證您的聯絡人，請確定您在上面看到的憑證與他們的帳戶憑證相匹配。您可以要求對方分享他們的憑證給您。";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
 "sharedItems.contactVerification.section.verifyContact.receiver.message"="我們使用零知識加密保護您的資料。為確保額外的安全性，我們會要求您驗證您從之接收資訊的聯絡人，您才能存取共享資料夾。";
-/* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
-"sharedItems.contactVerification.section.verifyContact.bannerMessage"="若要存取共享資料夾，與您共享它的人也應該對您進行驗證。";
 /* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
 "sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@是由您尚未驗證的聯絡人共享。為了確保額外的安全性，我們建議您於聯絡人中，透過點選要驗證的聯絡人旁邊的ⓘ來驗證他們的憑證。";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
@@ -3373,7 +3371,7 @@
 /* Schedule meeting open invite field */
 "meetings.scheduleMeeting.openInvite"="允許非主持人新增參與者";
 /* Schedule meeting description field placeholder */
-"meetings.scheduleMeeting.description"="加入描述";
+"meetings.scheduleMeeting.description"="加入說明";
 /* Schedule meeting name error */
 "meetings.scheduleMeeting.meetingName.lenghtError"="輸入最多30 個字元（15個中文字）";
 /* Schedule meeting description error */
@@ -3956,5 +3954,27 @@
 "calls.panel.participantsNotInCall.participant.state.noResponse"="沒有回應";
 /* Calls: Floating panel participants empty list not in call state */
 "calls.panel.participantsNotInCall.emptyState"="所有受邀的與會者都加入了通話。";
+/* Videos: video scene title */
+"videos.navigationbar.title"="影片";
+/* Videos: video tab title all videos */
+"videos.tab.title.all"="所有影片";
+/* Videos: video tab title playlists */
+"videos.tab.title.playlist"="播放列表";
+/* Videos: video content empty state */
+"videos.tab.all.content.emptyState"="沒有影片";
+/* Videos: video playlist add new playlist button text description */
+"videos.tab.playlist.content.newPlaylist"="新的播放列表";
+/* Videos: video playlist playlist cell title */
+"videos.tab.playlist.content.playlistCell.title.favorites"="收藏";
+/* Videos: video playlist playlist cell subtitle */
+"videos.tab.playlist.content.playlistCell.subtitle.emptyPlaylist"="空的播放表列";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="等候室裡沒有人";
+/* Meeting invitation text for sharing a scheduled meeting link through external app */
+"meetings.info.shareMeetingLink.invitation"="%@邀請你參加一個MEGA會議";
+/* Meeting name text for sharing a scheduled meeting link through external app */
+"meetings.info.shareMeetingLink.meetingName"="會議名稱：%@";
+/* Meeting time text for sharing a scheduled meeting link through external app */
+"meetings.info.shareMeetingLink.meetingTime"="日期和時間：%@";
+/* Meeting link text for sharing a scheduled meeting link through external app */
+"meetings.info.shareMeetingLink.meetingLink"="會議連結：%@";

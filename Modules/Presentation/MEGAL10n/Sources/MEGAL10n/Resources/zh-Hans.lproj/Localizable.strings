@@ -3206,8 +3206,6 @@
 "sharedItems.contactVerification.section.myCredentials.message"="为了验证您的联系人，请确保您在上面看到的凭证与他们的账户凭证相符。您可以要求他们与您分享他们的凭证。";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
 "sharedItems.contactVerification.section.verifyContact.receiver.message"="我们采用零知识加密保护您的数据。为了进一步确保安全性，我们要求您在访问共享文件夹之前您你接收信息的联系人进行验证。";
-/* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
-"sharedItems.contactVerification.section.verifyContact.bannerMessage"="为了访问此共享文件夹，与您分享它的人应该也对您进行验证。";
 /* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
 "sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@是由您尚未验证的联系人共享。为确保额外的安全性，我们建议您通过点击要验证的联系人旁边的ⓘ来验证其在联系人中的凭证。";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
@@ -3956,5 +3954,27 @@
 "calls.panel.participantsNotInCall.participant.state.noResponse"="无应答";
 /* Calls: Floating panel participants empty list not in call state */
 "calls.panel.participantsNotInCall.emptyState"="所有受邀的参与者都已加入通话。";
+/* Videos: video scene title */
+"videos.navigationbar.title"="视频";
+/* Videos: video tab title all videos */
+"videos.tab.title.all"="所有视频";
+/* Videos: video tab title playlists */
+"videos.tab.title.playlist"="播放列表";
+/* Videos: video content empty state */
+"videos.tab.all.content.emptyState"="无视频";
+/* Videos: video playlist add new playlist button text description */
+"videos.tab.playlist.content.newPlaylist"="新播放列表";
+/* Videos: video playlist playlist cell title */
+"videos.tab.playlist.content.playlistCell.title.favorites"="收藏";
+/* Videos: video playlist playlist cell subtitle */
+"videos.tab.playlist.content.playlistCell.subtitle.emptyPlaylist"="空播放列表";
 /* Calls: Floating panel participants empty list waiting room state */
-"calls.panel.participantsInWaitingRoom.emptyState"="There is no one in the waiting room";
+"calls.panel.participantsInWaitingRoom.emptyState"="等候室里没有人";
+/* Meeting invitation text for sharing a scheduled meeting link through external app */
+"meetings.info.shareMeetingLink.invitation"="%@正在邀请您参加MEGA会议";
+/* Meeting name text for sharing a scheduled meeting link through external app */
+"meetings.info.shareMeetingLink.meetingName"="会议名称：%@";
+/* Meeting time text for sharing a scheduled meeting link through external app */
+"meetings.info.shareMeetingLink.meetingTime"="日期和时间：%@";
+/* Meeting link text for sharing a scheduled meeting link through external app */
+"meetings.info.shareMeetingLink.meetingLink"="会议链接：%@";

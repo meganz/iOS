@@ -3206,8 +3206,6 @@
 "sharedItems.contactVerification.section.myCredentials.message"="Para verificar o seu contato, confirme que as credenciais que você vê acima correspondem às credenciais da conta dele. Você pode pedir que eles compartilhem as credenciais com você.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
 "sharedItems.contactVerification.section.verifyContact.receiver.message"="Protegemos os seus dados com criptografia de conhecimento zero. Para garantir uma segurança adicional, pedimos que você verifique os contatos dos quais você recebe informações antes de poder acessar as pastas compartilhadas.";
-/* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
-"sharedItems.contactVerification.section.verifyContact.bannerMessage"="Para acessar a pasta compartilhada, a pessoa que a compartilhou com você também deve verificar as suas credenciais.";
 /* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
 "sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ foi compartilhado por um contato que você não validou. Como medida de segurança, recomendamos que você valide as credenciais dos mesmos em Contatos, tocando no ícone ⓘ ao lado do contato que quiser validar.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
@@ -3843,9 +3841,9 @@
 /* Filter name for searching on the home screen */
 "home.search.filter.modificationDate.today"="Hoje";
 /* Filter name for searching on the home screen */
-"home.search.filter.modificationDate.last7days"="Last 7 days";
+"home.search.filter.modificationDate.last7days"="Últimos 7 dias";
 /* Filter name for searching on the home screen */
-"home.search.filter.modificationDate.last30days"="Last 30 days";
+"home.search.filter.modificationDate.last30days"="Últimos 30 dias";
 /* Filter name for searching on the home screen */
 "home.search.filter.modificationDate.thisYear"="Este ano";
 /* Filter name for searching on the home screen */
@@ -3956,5 +3954,27 @@
 "calls.panel.participantsNotInCall.participant.state.noResponse"="Não há resposta";
 /* Calls: Floating panel participants empty list not in call state */
 "calls.panel.participantsNotInCall.emptyState"="Todos os participantes convidados entraram na chamada.";
+/* Videos: video scene title */
+"videos.navigationbar.title"="Vídeos";
+/* Videos: video tab title all videos */
+"videos.tab.title.all"="All videos";
+/* Videos: video tab title playlists */
+"videos.tab.title.playlist"="Playlists";
+/* Videos: video content empty state */
+"videos.tab.all.content.emptyState"="Não há vídeos";
+/* Videos: video playlist add new playlist button text description */
+"videos.tab.playlist.content.newPlaylist"="New playlist";
+/* Videos: video playlist playlist cell title */
+"videos.tab.playlist.content.playlistCell.title.favorites"="Favoritos";
+/* Videos: video playlist playlist cell subtitle */
+"videos.tab.playlist.content.playlistCell.subtitle.emptyPlaylist"="Empty playlist";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="There is no one in the waiting room";
+/* Meeting invitation text for sharing a scheduled meeting link through external app */
+"meetings.info.shareMeetingLink.invitation"="%@ is inviting you to a MEGA meeting";
+/* Meeting name text for sharing a scheduled meeting link through external app */
+"meetings.info.shareMeetingLink.meetingName"="Meeting name: %@";
+/* Meeting time text for sharing a scheduled meeting link through external app */
+"meetings.info.shareMeetingLink.meetingTime"="Date and time: %@";
+/* Meeting link text for sharing a scheduled meeting link through external app */
+"meetings.info.shareMeetingLink.meetingLink"="Meeting link: %@";

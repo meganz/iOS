@@ -3206,8 +3206,6 @@
 "sharedItems.contactVerification.section.myCredentials.message"="Aby zweryfikować kontakt, upewnij się, że dane uwierzytelniające, które widzisz powyżej, odpowiadają danym uwierzytelniającym ich konta. Możesz poprosić ich o udostępnienie swoich danych uwierzytelniających.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
 "sharedItems.contactVerification.section.verifyContact.receiver.message"="Chronimy Twoje dane za pomocą szyfrowania z zerową świadomością. Aby zapewnić dodatkowe bezpieczeństwo, prosimy o weryfikację kontaktów, od których otrzymujesz informacje, zanim uzyskasz dostęp do katalogow współdzielonych.";
-/* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
-"sharedItems.contactVerification.section.verifyContact.bannerMessage"="Aby uzyskać dostęp do udostępnionego katalogu, osoba, która ci go udostępniła, również powinna cię zweryfikować.";
 /* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
 "sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ jest udostępniany przez kontakt, który nie został zweryfikowany. Aby zapewnić dodatkowe bezpieczeństwo, zalecamy zweryfikowanie uprawnień w Kontaktach, wybierając ⓘ obok kontaktu, który chcesz zweryfikować.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
@@ -3956,5 +3954,27 @@
 "calls.panel.participantsNotInCall.participant.state.noResponse"="Brak odpowiedzi";
 /* Calls: Floating panel participants empty list not in call state */
 "calls.panel.participantsNotInCall.emptyState"="Wszyscy zaproszeni uczestnicy dołączyli do rozmowy.";
+/* Videos: video scene title */
+"videos.navigationbar.title"="Filmy";
+/* Videos: video tab title all videos */
+"videos.tab.title.all"="Wszystkie filmy";
+/* Videos: video tab title playlists */
+"videos.tab.title.playlist"="Listy odtwarzania";
+/* Videos: video content empty state */
+"videos.tab.all.content.emptyState"="Brak filmów";
+/* Videos: video playlist add new playlist button text description */
+"videos.tab.playlist.content.newPlaylist"="Nowa lista odtwarzania";
+/* Videos: video playlist playlist cell title */
+"videos.tab.playlist.content.playlistCell.title.favorites"="Ulubione";
+/* Videos: video playlist playlist cell subtitle */
+"videos.tab.playlist.content.playlistCell.subtitle.emptyPlaylist"="Pusta lista odtwarzania";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="W poczekalni nie ma nikogo";
+/* Meeting invitation text for sharing a scheduled meeting link through external app */
+"meetings.info.shareMeetingLink.invitation"="%@ zaprasza na spotkanie MEGA";
+/* Meeting name text for sharing a scheduled meeting link through external app */
+"meetings.info.shareMeetingLink.meetingName"="Nazwa spotkania: %@";
+/* Meeting time text for sharing a scheduled meeting link through external app */
+"meetings.info.shareMeetingLink.meetingTime"="Date and time: %@";
+/* Meeting link text for sharing a scheduled meeting link through external app */
+"meetings.info.shareMeetingLink.meetingLink"="Link do spotkania: %@";

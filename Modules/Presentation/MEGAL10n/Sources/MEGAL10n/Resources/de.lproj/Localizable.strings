@@ -2171,7 +2171,7 @@
 /* Label tell user to enter received txt to below input boxes */
 "Please type the verification code sent to"="Bitte geben Sie den Code ein";
 /* Text message to remind user to resend verification code */
-"You didn't receive a code?"="You didn’t receive the code?";
+"You didn't receive a code?"="Sie haben keinen Code erhalten?";
 /* Message shown when verify phone number successfully */
 "Your phone number has been verified successfully"="Ihre Telefonnummer wurde bestätigt";
 /* Text describing account suspended state to the user */
@@ -3206,8 +3206,6 @@
 "sharedItems.contactVerification.section.myCredentials.message"="Um Ihren Kontakt zu verifizieren, stellen Sie sicher, dass die oben angezeigten Identitätsdaten mit den Account-Identitätsdaten übereinstimmen. Sie können Ihren Kontakt bitten, Ihnen seine Identitätsdaten mitzuteilen.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
 "sharedItems.contactVerification.section.verifyContact.receiver.message"="Wir schützen Ihre Daten mit einer Zero-Knowledge-Verschlüsselung. Um eine besonders hohe Sicherheit zu gewährleisten, bitten wir Sie, die Kontakte, von denen Sie Informationen erhalten, zu verifizieren, bevor Sie auf die freigegebenen Ordner zugreifen können.";
-/* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
-"sharedItems.contactVerification.section.verifyContact.bannerMessage"="Damit Sie auf den freigegebenen Ordner zugreifen können, sollte die freigebende Person Sie ebenfalls verifizieren.";
 /* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
 "sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ wurde von einem Kontakt freigegeben, den Sie noch nicht verifiziert haben. Um eine besonders hohe Sicherheit zu gewährleisten, empfehlen wir Ihnen, die Identitätsdaten des Kontakts in Ihrer Kontaktliste zu verifizieren, indem Sie auf das ⓘ-Symbol neben dem zu überprüfenden Kontakt tippen.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
@@ -3956,5 +3954,27 @@
 "calls.panel.participantsNotInCall.participant.state.noResponse"="Keine Antwort";
 /* Calls: Floating panel participants empty list not in call state */
 "calls.panel.participantsNotInCall.emptyState"="Alle eingeladenen Teilnehmer sind der Konferenz beigetreten.";
+/* Videos: video scene title */
+"videos.navigationbar.title"="Videos";
+/* Videos: video tab title all videos */
+"videos.tab.title.all"="Alle Videos";
+/* Videos: video tab title playlists */
+"videos.tab.title.playlist"="Playlists";
+/* Videos: video content empty state */
+"videos.tab.all.content.emptyState"="Keine Videos";
+/* Videos: video playlist add new playlist button text description */
+"videos.tab.playlist.content.newPlaylist"="Neue Playlist";
+/* Videos: video playlist playlist cell title */
+"videos.tab.playlist.content.playlistCell.title.favorites"="Favoriten";
+/* Videos: video playlist playlist cell subtitle */
+"videos.tab.playlist.content.playlistCell.subtitle.emptyPlaylist"="Leere Playlist";
 /* Calls: Floating panel participants empty list waiting room state */
-"calls.panel.participantsInWaitingRoom.emptyState"="There is no one in the waiting room";
+"calls.panel.participantsInWaitingRoom.emptyState"="Der Warteraum ist leer";
+/* Meeting invitation text for sharing a scheduled meeting link through external app */
+"meetings.info.shareMeetingLink.invitation"="%@ lädt Sie zu einem MEGA-Meeting ein";
+/* Meeting name text for sharing a scheduled meeting link through external app */
+"meetings.info.shareMeetingLink.meetingName"="Name des Meetings: %@";
+/* Meeting time text for sharing a scheduled meeting link through external app */
+"meetings.info.shareMeetingLink.meetingTime"="Datum und Uhrzeit: %@";
+/* Meeting link text for sharing a scheduled meeting link through external app */
+"meetings.info.shareMeetingLink.meetingLink"="Meetinglink: %@";
