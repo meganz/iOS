@@ -19,8 +19,9 @@ fileprivate extension SetEntity {
             handle: set.handle,
             userId: set.userId,
             coverId: set.cover,
-            creationTime: set.timestampCreated,
-            modificationTime: set.timestamp,
+            creationTime: set.timestampCreated ?? Date(),
+            modificationTime: set.timestamp ?? Date(),
+            setType: set.type.toSetTypeEntity(),
             name: set.name ?? "",
             isExported: set.isExported(),
             changeTypes: set.changes().toChangeTypeEntity()

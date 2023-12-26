@@ -31,7 +31,7 @@ final public class UserAlbumRepository: NSObject, UserAlbumRepositoryProtocol {
     
     // MARK: - Albums
     public func albums() async -> [SetEntity] {
-        sdk.megaSets().toSetEntities()
+        sdk.megaSets().toSetEntities().filter { $0.setType == .album }
     }
     
     public func albumContent(by id: HandleEntity, includeElementsInRubbishBin: Bool) async -> [SetElementEntity] {
@@ -46,7 +46,7 @@ final public class UserAlbumRepository: NSObject, UserAlbumRepositoryProtocol {
     
     public func createAlbum(_ name: String?) async throws -> SetEntity {
         return try await withCheckedThrowingContinuation { continuation in
-            sdk.createSet(name, delegate: RequestDelegate { result in
+            sdk.createSet(name, type: .album, delegate: RequestDelegate { result in
                 guard Task.isCancelled == false else { continuation.resume(throwing: AlbumErrorEntity.generic); return }
                 
                 switch result {
@@ -188,7 +188,9 @@ final public class UserAlbumRepository: NSObject, UserAlbumRepositoryProtocol {
 
 extension UserAlbumRepository: MEGAGlobalDelegate {
     public func onSetsUpdate(_ api: MEGASdk, sets: [MEGASet]) {
-        setsUpdatedSourcePublisher.send(sets.toSetEntities())
+        let albumSets = sets.toSetEntities().filter { $0.setType == .album }
+        guard albumSets.isNotEmpty else { return }
+        setsUpdatedSourcePublisher.send(albumSets)
     }
     
     public func onSetElementsUpdate(_ api: MEGASdk, setElements: [MEGASetElement]) {

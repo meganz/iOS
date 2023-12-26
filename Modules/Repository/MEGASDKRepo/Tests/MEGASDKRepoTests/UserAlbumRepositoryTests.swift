@@ -7,17 +7,20 @@ import XCTest
 final class UserAlbumRepositoryTests: XCTestCase {
     private var subscriptions = Set<AnyCancellable>()
     
-    func testLoadingAlbums_onRetrieved_shouldReturnAlbums() async throws {
-        let megaSets = sampleSets()
-        let sdk = MockSdk(megaSets: megaSets)
+    func testLoadingAlbums_onSetsReturnedWithDifferentTypes_shouldReturnOnlyAlbumSets() async {
+        let expectedAlbumSets = makeAlbumSets()
+        let otherSets = [MockMEGASet(handle: 66, type: .playlist),
+                         MockMEGASet(handle: 87, type: .invalid)
+        ]
+        let sdk = MockSdk(megaSets: expectedAlbumSets + otherSets)
         let repo = UserAlbumRepository(sdk: sdk)
         
-        let sets = await repo.albums()
+        let albums = await repo.albums()
         
-        XCTAssertEqual(sets, megaSets.toSetEntities())
+        XCTAssertEqual(albums, expectedAlbumSets.toSetEntities())
     }
     
-    func testLoadingAlbumContent_onRetrieved_shouldReturnAlbumElements() async throws {
+    func testLoadingAlbumContent_onRetrieved_shouldReturnAlbumElements() async {
         let megaSetElements = sampleSetElements()
         let sdk = MockSdk(megaSetElements: megaSetElements)
         let repo = UserAlbumRepository(sdk: sdk)
@@ -117,15 +120,19 @@ final class UserAlbumRepositoryTests: XCTestCase {
     func testSetsUpdatedPublisher_onSetsUpdate_sendsUpdatedSets() {
         let sdk = MockSdk()
         let repo = UserAlbumRepository(sdk: sdk)
-        let expectedSets = sampleSets()
+        let albumSets = makeAlbumSets()
         
         let exp = expectation(description: "Should receive set update")
         repo.setsUpdatedPublisher
             .sink {
-                XCTAssertEqual($0, expectedSets.toSetEntities())
+                XCTAssertEqual($0, albumSets.toSetEntities())
                 exp.fulfill()
             }.store(in: &subscriptions)
-        repo.onSetsUpdate(sdk, sets: expectedSets)
+        
+        let otherSets = [MockMEGASet(handle: 76, type: .invalid)]
+        repo.onSetsUpdate(sdk, sets: otherSets)
+        repo.onSetsUpdate(sdk, sets: albumSets + otherSets)
+        
         wait(for: [exp], timeout: 1)
     }
     
@@ -147,10 +154,10 @@ final class UserAlbumRepositoryTests: XCTestCase {
     
     // MARK: Private
     
-    private func sampleSets() -> [MockMEGASet] {
-        let set1 = MockMEGASet(handle: 1, userId: 0, coverId: 1)
-        let set2 = MockMEGASet(handle: 2, userId: 0, coverId: 2)
-        let set3 = MockMEGASet(handle: 3, userId: 0, coverId: 3)
+    private func makeAlbumSets() -> [MockMEGASet] {
+        let set1 = MockMEGASet(handle: 1, userId: 0, coverId: 1, type: .album)
+        let set2 = MockMEGASet(handle: 2, userId: 0, coverId: 2, type: .album)
+        let set3 = MockMEGASet(handle: 3, userId: 0, coverId: 3, type: .album)
         
         return [set1, set2, set3]
     }
