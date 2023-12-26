@@ -3206,8 +3206,6 @@
 "sharedItems.contactVerification.section.myCredentials.message"="Om uw contactpersoon te verifiëren, moet u ervoor zorgen dat de inloggegevens die u hierboven ziet, overeenkomen met de inloggegevens van hun account. U kunt hen vragen om hun inloggegevens met u te delen.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
 "sharedItems.contactVerification.section.verifyContact.receiver.message"="We beschermen uw gegevens met zero-knowledge codering. Om extra veiligheid te garanderen, vragen we u om de contacten van wie u informatie ontvangt te verifiëren voordat u oegang krijgt tot de gedeelde mappen.";
-/* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
-"sharedItems.contactVerification.section.verifyContact.bannerMessage"="Om toegang te krijgen tot de gedeelde map, moet de persoon die deze met u heeft gedeeld, u ook verifiëren.";
 /* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
 "sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ wordt gedeeld door een contactpersoon die u niet heeft goedgekeurd. Om extra veiligheid te garanderen, raden we aan dat u hun gegevens goedkeurt in Contacten door op ⓘ te tikken naast het contact dat u wilt goedkeuren.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
@@ -3956,5 +3954,27 @@
 "calls.panel.participantsNotInCall.participant.state.noResponse"="Geen antwoord";
 /* Calls: Floating panel participants empty list not in call state */
 "calls.panel.participantsNotInCall.emptyState"="Alle uitgenodigde deelnemers hebben zich bij het gesprek aangesloten.";
+/* Videos: video scene title */
+"videos.navigationbar.title"="Video’s";
+/* Videos: video tab title all videos */
+"videos.tab.title.all"="Alle video's";
+/* Videos: video tab title playlists */
+"videos.tab.title.playlist"="Afspeellijst";
+/* Videos: video content empty state */
+"videos.tab.all.content.emptyState"="Geen video's";
+/* Videos: video playlist add new playlist button text description */
+"videos.tab.playlist.content.newPlaylist"="Nieuwe afspeellijst";
+/* Videos: video playlist playlist cell title */
+"videos.tab.playlist.content.playlistCell.title.favorites"="Favorieten";
+/* Videos: video playlist playlist cell subtitle */
+"videos.tab.playlist.content.playlistCell.subtitle.emptyPlaylist"="Afspeellijst leeg";
 /* Calls: Floating panel participants empty list waiting room state */
 "calls.panel.participantsInWaitingRoom.emptyState"="Er is niemand in de wachtkamer";
+/* Meeting invitation text for sharing a scheduled meeting link through external app */
+"meetings.info.shareMeetingLink.invitation"="%@ nodigt u uit tot een MEGA vergadering";
+/* Meeting name text for sharing a scheduled meeting link through external app */
+"meetings.info.shareMeetingLink.meetingName"="Vergader naam: %@";
+/* Meeting time text for sharing a scheduled meeting link through external app */
+"meetings.info.shareMeetingLink.meetingTime"="Date and time: %@";
+/* Meeting link text for sharing a scheduled meeting link through external app */
+"meetings.info.shareMeetingLink.meetingLink"="Vergader link: %@";

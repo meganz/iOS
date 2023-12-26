@@ -79,7 +79,7 @@
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Si prega di accedere al proprio account.";
 /* Error message when a user attempts to change their email without an active login session. */
-"needToBeLoggedInToCompleteYourEmailChange"="You need to be logged in to complete your email address change. Please log in again with your current email address, then tap on your confirmation link again.";
+"needToBeLoggedInToCompleteYourEmailChange"="Hai bisogno di effettuare il login per completare il cambiamento del tuo indirizzo email. Per favore, effettua nuovamente il login con il tuo indirizzo email corrente e poi tocca di nuovo sul link di conferma.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Login";
 /* Message for login option on Create Account screen */
@@ -511,7 +511,7 @@
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin */
 "filesFoldersMovedToRubbishBinMessage"="[A] file e [B] cartelle spostate nel Cestino";
 /* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
-"permissionTitle"="Errori di permesso";
+"permissionTitle"="Errore di autorizzazione";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionMessage"="Controllare le autorizzazioni per questa cartella";
 /* Message shown when a folder have been shared */
@@ -967,7 +967,7 @@
 /* The title of the alert dialog to change the email associated to an account. */
 "Change Email"="Cambiare indirizzo email";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
-"oldAndNewEmailMatch"="The new and the old email addresses must not match";
+"oldAndNewEmailMatch"="Il nuovo e il vecchio indirizzo email non devono combaciare";
 /* Error message shown when you have not written the same email when confirming a new one */
 "emailsDoNotMatch"="Gli indirizzi email non combaciano";
 /* Error message when a use wants to validate the same email twice */
@@ -2033,7 +2033,7 @@
 /* Text showing the user how to write more than one email in order to invite them to MEGA */
 "Tap space to enter multiple emails"="Tocca sullo spazio per inserire più indirizzi email";
 /* Text used as a section title or similar */
-"Enter Email"="Enter email address";
+"Enter Email"="Inserisci indirizzo email";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
 "contact.invite.message"="Hai una richiesta MEGA Chat in attesa. Registra un account su MEGA ed ottieni 20 GB di spazio gratuito di archiviazione per sempre.";
 /* Destination folder name of chat files */
@@ -2171,7 +2171,7 @@
 /* Label tell user to enter received txt to below input boxes */
 "Please type the verification code sent to"="Per favore, inserisci il codice di verifica inviato a";
 /* Text message to remind user to resend verification code */
-"You didn't receive a code?"="You didn’t receive the code?";
+"You didn't receive a code?"="Non hai ricevuto il codice?";
 /* Message shown when verify phone number successfully */
 "Your phone number has been verified successfully"="Il tuo numero di telefono è stato verificato";
 /* Text describing account suspended state to the user */
@@ -2493,11 +2493,11 @@
 /* Cookie dialog text. */
 "dialog.cookies.description"="Utilizziamo i cookie e tecnologie simili per l'unico motivo di fornirti i servizi che utilizzi in MEGA, o per statistiche e raccolta di dati di utilizzo e performance. Non utilizziamo i cookie per pubblicità mirata o condividere qualsiasi informazione personale su di te con terze parti.";
 /* Cookie dialog title to manage cookies */
-"dialog.cookies.title.manageCookies"="Manage cookies";
+"dialog.cookies.title.manageCookies"="Gestisci i cookie";
 /* Cookie dialog description with cookie policy. */
-"dialog.cookies.description.cookiePolicy"="We use cookies and similar technologies to help us improve our services. Learn more in our [A]Cookie Policy[/A].";
+"dialog.cookies.description.cookiePolicy"="Utilizziamo cookie e tecnologie simili per aiutarci a migliorare i nostri servizi. Leggi di più nella nostra [A]Politica dei Cookie[/A].";
 /* Cookie dialog description with advertisement cookie policy. */
-"dialog.cookies.description.adsCookiePolicy"="We use cookies and similar technologies to help us improve our services and for advertising purposes. By continuing to use MEGA you agree with the terms of our updated [A]Cookie Policy[/A].";
+"dialog.cookies.description.adsCookiePolicy"="Utilizziamo cookie e tecnologie simili per aiutarci a migliorare i nostri servizi e per motivi pubblicitari. Continuando ad utilizzare MEGA accetti i termini della nostra [A]Politica dei Cookie[/A] aggiornata.";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="Accetta cookie";
 /* Cookie dialog footer description */
@@ -2515,7 +2515,7 @@
 /* Cookie settings dialog title label for Advertising Cookies */
 "settings.cookies.advertisingCookies"="Cookie pubblicitari";
 /* Cookie settings dialog footer text for Advertising Cookies */
-"settings.cookies.advertisingCookies.footer"="Used by our approved advertising partners to collect data about your browsing activities and customise the ads you see on our services and on other websites. Not accepting these cookies means you will still see ads but they won’t be personalised.";
+"settings.cookies.advertisingCookies.footer"="Utilizzati dai nostri partner pubblicitari approvati per raccogliere dati riguardo le tue attività di navigazione su internet e per personalizzare le pubblicità che vedi nei nostri servizi e su altri siti. Non accettare questi cookie implicherà che vedrai ancora pubblicità ma che non saranno personalizzate.";
 /* Text shown when the creation of a version as a new file was successful */
 "Version created as a new file successfully."="La versione è stata ripristinata come nuovo file";
 /* Text shown for the action create new file */
@@ -3206,8 +3206,6 @@
 "sharedItems.contactVerification.section.myCredentials.message"="Per verificare il tuo contatto, assicurati che le credenziali che vedi qui sopra siano le stesse credenziali dell'account. Puoi chiedere di condividere queste credenziali con te.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
 "sharedItems.contactVerification.section.verifyContact.receiver.message"="Proteggiamo i tuoi dati tramite criptazione a conoscenza zero. Per assicurare una sicurezza extra, ti chiediamo di verificare i contatti che ti condividono informazioni prima che tu possa accedere alle cartelle condivise.";
-/* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
-"sharedItems.contactVerification.section.verifyContact.bannerMessage"="Per accedere alla cartella condivisa, la persona che la ha condivisa con te deve verificarti.";
 /* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
 "sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ è condivisa da un contatto che non hai verificato. Per assicurare una sicurezza extra, ti raccomandiamo di verificare le sue credenziali in Contatti toccando sull'icona ⓘ affianco il contatto che desideri verificare.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
@@ -3843,9 +3841,9 @@
 /* Filter name for searching on the home screen */
 "home.search.filter.modificationDate.today"="Oggi";
 /* Filter name for searching on the home screen */
-"home.search.filter.modificationDate.last7days"="Last 7 days";
+"home.search.filter.modificationDate.last7days"="Ultimi 7 giorni";
 /* Filter name for searching on the home screen */
-"home.search.filter.modificationDate.last30days"="Last 30 days";
+"home.search.filter.modificationDate.last30days"="Ultimi 30 giorni";
 /* Filter name for searching on the home screen */
 "home.search.filter.modificationDate.thisYear"="Quest’anno";
 /* Filter name for searching on the home screen */
@@ -3857,9 +3855,9 @@
 /* Type chips group picker title which is displayed in the picker shown when user taps on the  node type chips group pill */
 "home.search.chipsGroup.nodeType.pickerTitle"="Seleziona un tipo";
 /* Type chips group title which is displayed in modified date chips group pill */
-"home.search.chipsGroup.modificationDate.pillTitle"="Modified date";
+"home.search.chipsGroup.modificationDate.pillTitle"="Data di modifica";
 /* Type chips group picker title which is displayed in the picker shown when user taps on the modified date chips group pill */
-"home.search.chipsGroup.modificationDate.pickerTitle"="Select modified date";
+"home.search.chipsGroup.modificationDate.pickerTitle"="Seleziona data di modifica";
 /* Empty screen copy when no filter is selected on the home screen search */
 "home.search.empty.no-chip-selected"="Nessun risultato";
 /* Empty screen copy when Images filter is selected on the home screen search */
@@ -3955,6 +3953,28 @@
 /* Calls: Floating panel participants not in call label to describe no response state */
 "calls.panel.participantsNotInCall.participant.state.noResponse"="Nessuna risposta";
 /* Calls: Floating panel participants empty list not in call state */
-"calls.panel.participantsNotInCall.emptyState"="All the invited participants have joined the call.";
+"calls.panel.participantsNotInCall.emptyState"="Tutti i partecipanti invitati si sono uniti alla chiamata.";
+/* Videos: video scene title */
+"videos.navigationbar.title"="Video";
+/* Videos: video tab title all videos */
+"videos.tab.title.all"="Tutti i video";
+/* Videos: video tab title playlists */
+"videos.tab.title.playlist"="Playlist";
+/* Videos: video content empty state */
+"videos.tab.all.content.emptyState"="Nessun video";
+/* Videos: video playlist add new playlist button text description */
+"videos.tab.playlist.content.newPlaylist"="Nuova playlist";
+/* Videos: video playlist playlist cell title */
+"videos.tab.playlist.content.playlistCell.title.favorites"="Preferiti";
+/* Videos: video playlist playlist cell subtitle */
+"videos.tab.playlist.content.playlistCell.subtitle.emptyPlaylist"="Svuota playlist";
 /* Calls: Floating panel participants empty list waiting room state */
-"calls.panel.participantsInWaitingRoom.emptyState"="There is no one in the waiting room";
+"calls.panel.participantsInWaitingRoom.emptyState"="Non c'è nessuno nella sala d'attesa";
+/* Meeting invitation text for sharing a scheduled meeting link through external app */
+"meetings.info.shareMeetingLink.invitation"="%@ ti sta invitando ad un meeting MEGA";
+/* Meeting name text for sharing a scheduled meeting link through external app */
+"meetings.info.shareMeetingLink.meetingName"="Nome del meeting: %@";
+/* Meeting time text for sharing a scheduled meeting link through external app */
+"meetings.info.shareMeetingLink.meetingTime"="Data e ora: %@";
+/* Meeting link text for sharing a scheduled meeting link through external app */
+"meetings.info.shareMeetingLink.meetingLink"="Link del meeting: %@";

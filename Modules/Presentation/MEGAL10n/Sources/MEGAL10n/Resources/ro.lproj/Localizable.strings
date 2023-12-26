@@ -83,7 +83,7 @@
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Autentifică-te";
 /* Message for login option on Create Account screen */
-"account.createAccount.alreadyHaveAnAccount"="Ai deja un cont?";
+"account.createAccount.alreadyHaveAnAccount"="Aveți un cont?";
 /* Button title which triggers the action to create a MEGA account */
 "createAccount"="Creează un cont";
 /* Message on login screen for Create Account */
@@ -93,9 +93,9 @@
 /* Message shown when the user writes a wrong email or password on login */
 "invalidMailOrPassword"="E-mail sau parolă nevalide. Te rugăm să încerci din nou.";
 /* Error message when to many attempts to login */
-"tooManyAttemptsLogin"="Ai încercat să te autentifici de prea multe ori. Te rugăm să aștepți până la %@ și să încerci din nou.";
+"tooManyAttemptsLogin"="Ați încercat să vă conectați de prea multe ori. Vă rugăm să așteptați până %@ și încercați din nou.";
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
-"accountNotConfirmed"="Te rugăm să verifici e-mailul și să urmezi linkul pentru a confirma contul.";
+"accountNotConfirmed"="Vă rugăm să verificați adresa de e-mail și să urmați linkul pentru a vă confirma contul.";
 /* Error message when trying to login and the account is blocked */
 "accountBlocked"="Contul tău a fost desființat din cauza unei încălcări a Termenilor de utilizare a serviciului MEGA, inclusiv, dar fără a se limita la, clauza 15.";
 /* Message shown when the user writes an invalid format in the email field */
@@ -1719,7 +1719,7 @@
 /* Title shown in a page of the on boarding screens explaining that the user can backup the photos automatically */
 "Your Photos in the Cloud"="Fotografiile tale în cloud";
 /* Description shown in a page of the onboarding screens explaining the camera uploads feature */
-"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Încărcări cameră este o caracteristică esențială pentru orice dispozitiv mobil și te-am ocupat de tine. Creează-ți contul acum.";
+"Camera Uploads is an essential feature for any mobile device and we have got you covered. Create your account now."="Încărcările camerelor sunt o caracteristică esențială pentru orice dispozitiv mobil și vă asigurăm. Creează-ți contul acum.";
 /* Button which triggers the initial setup */
 "Setup MEGA"="Configurare MEGA";
 /* Detailed explanation of why the user should give some permissions to MEGA */
@@ -1775,9 +1775,9 @@
 /* Textfield placeholder for rubbish bin Cleaning Scheduler in days alert */
 "settings.fileManagement.rubbishBin.cleanScheduler.placeholder.days"="de zile";
 /* New server-side rubbish-bin cleaning scheduler description (for Free users) */
-"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Coșul de gunoi este golit pentru tine automat. Perioada minimă este de 7 zile și perioada maximă este de 30 de zile.";
+"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days."="Coșul de gunoi este golit automat pentru dvs. Perioada minimă este de 7 zile, iar perioada maximă este de 30 de zile.";
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
-"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Coșul de gunoi poate fi golit pentru tine automat. Perioada minimă este de 7 zile.";
+"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Coșul de gunoi poate fi golit automat pentru dvs. Perioada minimă este de 7 zile.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
 "To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Pentru a dezactiva planificatorul de golire a coșului de gunoi sau pentru a seta o perioadă de păstrare mai lungă, trebuie să te abonezi la un plan PRO.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
@@ -2735,15 +2735,15 @@
 /* Dialog title shown before deleting an account with active subscription */
 "account.delete.subscription.title"="Abonament activ";
 /* Dialog message shown before deleting an account with active iTunes subscription */
-"account.delete.subscription.itunes"="Ai un abonament MEGA activ cu Apple. Trebuie să îl anulezi separat la Abonamente, deoarece MEGA nu îl poate anula pentru tine. Vizitează-ne Centrul de ajutor pentru mai multe informații.";
+"account.delete.subscription.itunes"="Aveți un abonament MEGA activ la Apple. Trebuie să îl anulați separat la Abonamente, deoarece MEGA nu îl poate anula pentru dvs. Vizitați Centrul nostru de ajutor pentru mai multe informații.";
 /* Dialog button title which triggers the action to visit AppStore Subscriptions */
 "account.delete.subscription.itunes.manage"="Gestionează abonamentele";
 /* Dialog message shown before deleting an account with active Google play subscription */
-"account.delete.subscription.googlePlay"="Ai un abonament MEGA activ cu Google. Trebuie să îl anulezi separat la Abonamente, deoarece MEGA nu îl poate anula pentru tine. Vizitează-ne Centrul de ajutor pentru mai multe informații.";
+"account.delete.subscription.googlePlay"="Aveți un abonament MEGA activ la Google. Trebuie să îl anulați separat în Google Play, deoarece MEGA nu îl poate anula pentru dvs. Vizitați Centrul nostru de ajutor pentru mai multe informații.";
 /* Dialog button title which triggers the action to visit Google play */
 "account.delete.subscription.googlePlay.visit"="Vizitează Google Play";
 /* Dialog message shown before deleting an account with active Huawei AppGallery subscription */
-"account.delete.subscription.huaweiAppGallery"="Ai un abonament MEGA activ cu Huawei. Trebuie să îl anulezi separat la Huawei AppGallery, deoarece MEGA nu îl poate anula pentru tine. Vizitează-ne Centrul de ajutor pentru mai multe informații.";
+"account.delete.subscription.huaweiAppGallery"="Aveți un abonament MEGA activ cu Huawei. Trebuie să îl anulați separat la Huawei AppGallery, deoarece MEGA nu îl poate anula pentru dvs. Vizitați Centrul nostru de ajutor pentru mai multe informații.";
 /* Dialog button title which triggers the action to visit Huawei app gallery */
 "account.delete.subscription.huaweiAppGallery.visit"="Vizitează AppGallery";
 /* Dialog message shown before deleting an account with active webclient subscription */
@@ -3206,8 +3206,6 @@
 "sharedItems.contactVerification.section.myCredentials.message"="Pentru a vă confirma contactul, asigurați-vă că acreditările pe care le vedeți mai sus corespund cu acreditările contului lor. Le puteți cere să vă împărtășească acreditările.";
 /* On fingerprint verification screen for Shared Items. Header message located at the top of contact's name and email address if the owner of the received shared item is unverified */
 "sharedItems.contactVerification.section.verifyContact.receiver.message"="Vă protejăm datele cu criptare tip zero cunoștințe. Pentru a asigura un plus de securitate, vă rugăm să confirmați contactele de la care primiți informații înainte de a putea accesa folderele partajate.";
-/* On fingerprint verification screen for Incoming Shared Items. Yellow banner message that will be shown to the receiver if the owner of the folder haven't verified them yet. */
-"sharedItems.contactVerification.section.verifyContact.bannerMessage"="Pentru a accesa folderul partajat, persoana care l-a partajat cu dvs. ar trebui să vă confirme și dvs.";
 /* On Cloud Drive screen for incoming shared folder, if the contact which shared the folder is not verified, this is the message that wwe display */
 "sharedItems.contactVerification.contactNotVerifiedBannerMessage"="%@ este partajat de un contact pe care nu l-ați confirmat. Pentru a asigura un plus de securitate, vă recomandăm să confirmați acreditările lor în Contacte apăsând pe ⓘ lângă contactul pe care doriți să îl confirmați.";
 /* Title of the label in verification screen. It shows the credentials of the current user so it can be used to be verified by other contacts */
@@ -3619,7 +3617,7 @@
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
 "upgradeAccountPlan.button.buyAccountPlan.title"="Cumpără %@";
 /* On Upgrade Account Plan screen. Displayed header title text message */
-"upgradeAccountPlan.header.title.choosePlan"="Alege planul potrivit pentru tine";
+"upgradeAccountPlan.header.title.choosePlan"="Alegeți planul potrivit pentru dvs.";
 /* On Upgrade Account Plan screen. Displayed header title text with current plan. %@ will be the name of the current plan */
 "upgradeAccountPlan.header.title.currentPlan"="Planul curent: %@";
 /* On Upgrade Account Plan screen. Account Plan picker option for monthly term. */
@@ -3956,5 +3954,27 @@
 "calls.panel.participantsNotInCall.participant.state.noResponse"="Niciun răspuns";
 /* Calls: Floating panel participants empty list not in call state */
 "calls.panel.participantsNotInCall.emptyState"="Toți participanții invitați s-au alăturat apelului.";
+/* Videos: video scene title */
+"videos.navigationbar.title"="Videoclipuri";
+/* Videos: video tab title all videos */
+"videos.tab.title.all"="Toate videoclipurile";
+/* Videos: video tab title playlists */
+"videos.tab.title.playlist"="Listuri de redare";
+/* Videos: video content empty state */
+"videos.tab.all.content.emptyState"="Niciun videoclip";
+/* Videos: video playlist add new playlist button text description */
+"videos.tab.playlist.content.newPlaylist"="Listă de redare nouă";
+/* Videos: video playlist playlist cell title */
+"videos.tab.playlist.content.playlistCell.title.favorites"="Favorite";
+/* Videos: video playlist playlist cell subtitle */
+"videos.tab.playlist.content.playlistCell.subtitle.emptyPlaylist"="Lista de redare goală";
 /* Calls: Floating panel participants empty list waiting room state */
-"calls.panel.participantsInWaitingRoom.emptyState"="There is no one in the waiting room";
+"calls.panel.participantsInWaitingRoom.emptyState"="Nu este nimeni în sala de așteptare";
+/* Meeting invitation text for sharing a scheduled meeting link through external app */
+"meetings.info.shareMeetingLink.invitation"="%@ vă invită la o întâlnire MEGA";
+/* Meeting name text for sharing a scheduled meeting link through external app */
+"meetings.info.shareMeetingLink.meetingName"="Numele întâlnirii: %@";
+/* Meeting time text for sharing a scheduled meeting link through external app */
+"meetings.info.shareMeetingLink.meetingTime"="Data și ora: %@";
+/* Meeting link text for sharing a scheduled meeting link through external app */
+"meetings.info.shareMeetingLink.meetingLink"="Întâlnire link: %@";
