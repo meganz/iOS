@@ -293,6 +293,9 @@ class ChatRoomDelegate: NSObject, MEGAChatRoomDelegate, MEGAChatRequestDelegate 
                         }
                         
                         chatViewController?.messagesCollectionView.reloadDataAndKeepOffset()
+                        if isLastSectionVisible() {
+                            chatViewController?.scrollToBottom(animated: false)
+                        }
                         chatViewController?.showOrHideJumpToBottom()
                         return
                     }
