@@ -7,6 +7,7 @@ public extension SetEntity {
          coverId: HandleEntity = .invalid,
          creationTime: Date = Date(),
          modificationTime: Date = Date(),
+         setType: SetTypeEntity = .invalid,
          name: String = "",
          isExported: Bool = false,
          changeTypes: SetChangeTypeEntity = [],
@@ -16,6 +17,7 @@ public extension SetEntity {
                   coverId: coverId,
                   creationTime: creationTime,
                   modificationTime: modificationTime,
+                  setType: setType,
                   name: name,
                   isExported: isExported,
                   changeTypes: changeTypes)
