@@ -502,7 +502,9 @@ enum MEGAAppColor {
     }
     
     enum Background {
-        case background_cell
+        case backgroundCell
+        case navigationBgColor
+        case backgroundRegularPrimaryElevated
         
         var uiColor: UIColor {
             DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) ? designTokenColor : legacyColor
@@ -514,13 +516,17 @@ enum MEGAAppColor {
         
         private var designTokenColor: UIColor {
             switch self {
-            case .background_cell: TokenColors.Background.blur
+            case .backgroundCell: TokenColors.Background.blur
+            case .navigationBgColor:  TokenColors.Background.blur
+            case .backgroundRegularPrimaryElevated:  TokenColors.Background.blur
             }
         }
         
         private var legacyColor: UIColor {
             switch self {
-            case .background_cell: UIColor.backgroundCell
+            case .backgroundCell: UIColor.backgroundCell
+            case .navigationBgColor: UIColor.navigationBg
+            case .backgroundRegularPrimaryElevated: UIColor.backgroundRegularPrimaryElevated
             }
         }
     }
@@ -551,6 +557,33 @@ enum MEGAAppColor {
             case .cellBackground: UIColor.cellBackground
             case .textForeground: UIColor.textForeground
             case .turquoise: UIColor.turquoise
+            }
+        }
+    }
+    
+    enum Banner {
+        case bannerWarningBackground
+        case bannerWarningText
+        
+        var uiColor: UIColor {
+            DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) ? designTokenColor : legacyColor
+        }
+        
+        var color: Color {
+            DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) ? designTokenColor.swiftUI : legacyColor.swiftUI
+        }
+        
+        private var designTokenColor: UIColor {
+            switch self {
+            case .bannerWarningBackground: TokenColors.Background.blur
+            case .bannerWarningText: TokenColors.Background.blur
+            }
+        }
+        
+        private var legacyColor: UIColor {
+            switch self {
+            case .bannerWarningBackground: UIColor.bannerWarningBackground
+            case .bannerWarningText: UIColor.bannerWarningText
             }
         }
     }

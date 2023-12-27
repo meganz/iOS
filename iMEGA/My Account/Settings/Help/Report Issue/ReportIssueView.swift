@@ -70,7 +70,7 @@ struct ReportIssueView: View {
             rightNavigationBarButton
         }, center: {
             NavigationTitleView(title: Strings.Localizable.Help.ReportIssue.title)
-        }, backgroundColor: Color("navigationBgColor"))
+        }, backgroundColor: MEGAAppColor.Background.navigationBgColor.color)
     }
     
     private var leftNavigationButton: some View {
