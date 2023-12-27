@@ -29,7 +29,7 @@ struct HangOrEndCallView: View {
                             .frame(maxWidth: .infinity, maxHeight: Constants.buttonsHeight)
                             .background(MEGAAppColor.Gray._363638.color)
                             .cornerRadius(Constants.cornerRadius)
-                            .shadow(color: Color.black.opacity(Constants.shadowOpacity), radius: Constants.cornerRadius, x: 0, y: Constants.shadowOffsetY)
+                            .shadow(color: MEGAAppColor.Black._000000.color.opacity(Constants.shadowOpacity), radius: Constants.cornerRadius, x: 0, y: Constants.shadowOffsetY)
                     })
                     
                     Button(action: {
@@ -37,18 +37,18 @@ struct HangOrEndCallView: View {
                     }, label: {
                         Text(Strings.Localizable.Meetings.EndForAll.buttonTitle)
                             .font(.headline)
-                            .foregroundColor(Color.white)
+                            .foregroundColor(MEGAAppColor.White._FFFFFF.color)
                             .padding()
                             .frame(maxWidth: .infinity, maxHeight: Constants.buttonsHeight)
                             .background(Color(.redFF453A))
                             .cornerRadius(Constants.cornerRadius)
-                            .shadow(color: Color.black.opacity(Constants.shadowOpacity), radius: Constants.cornerRadius, x: 0, y: Constants.shadowOffsetY)
+                            .shadow(color: MEGAAppColor.Black._000000.color.opacity(Constants.shadowOpacity), radius: Constants.cornerRadius, x: 0, y: Constants.shadowOffsetY)
                     })
                 }
                 .padding(Constants.buttonsPadding)
             }
             .cornerRadius(Constants.cornerRadius, corners: [.topLeft, .topRight])
-            .background(Color(.black1C1C1E).edgesIgnoringSafeArea(.bottom))
+            .background(MEGAAppColor.Black._1C1C1E.color.edgesIgnoringSafeArea(.bottom))
         }
     }
 }

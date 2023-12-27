@@ -37,7 +37,7 @@ final class MEGAVerticalButton: UIButton {
         self.badgeView = badgeView
         
         let badgeLabel = UILabel()
-        badgeLabel.textColor = .white
+        badgeLabel.textColor = MEGAAppColor.White._FFFFFF.uiColor
         badgeLabel.font = UIFont.systemFont(ofSize: 11)
         badgeLabel.textAlignment = .center
         badgeLabel.translatesAutoresizingMaskIntoConstraints = false

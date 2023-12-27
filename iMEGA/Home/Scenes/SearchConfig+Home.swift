@@ -8,7 +8,7 @@ extension SearchConfig {
             chipAssets: .init(
                 selectionIndicatorImage: UIImage.turquoiseCheckmark,
                 closeIcon: UIImage.miniplayerClose,
-                selectedForeground: .white,
+                selectedForeground: MEGAAppColor.White._FFFFFF.color,
                 selectedBackground: Color.photosFilterTypeSelectionBackground,
                 normalForeground: Color.photosFilterNormalTextForeground,
                 normalBackground: Color.photosFilterTypeNormalBackground

@@ -30,10 +30,10 @@ struct WaitingRoomParticipantsListView: View {
             VStack {
                 Text(Strings.Localizable.Chat.Call.WaitingRoom.ParticipantsList.title)
                     .font(.subheadline)
-                    .foregroundColor(.white)
+                    .foregroundColor(MEGAAppColor.White._FFFFFF.color)
                 Text(Strings.Localizable.Chat.Call.WaitingRoom.participantsCount(viewModel.displayWaitingRoomParticipants.count))
                     .font(.caption)
-                    .foregroundColor(.white)
+                    .foregroundColor(MEGAAppColor.White._FFFFFF.color)
                     .opacity(0.8)
             }
             HStack {
@@ -59,7 +59,7 @@ struct WaitingRoomParticipantsListView: View {
             .frame(width: 288, height: 50, alignment: .center)
             .background(MEGAAppColor.Gray._363638.color)
             .cornerRadius(8)
-            .shadow(color: .black.opacity(0.15), radius: 2, x: 0, y: 1)
+            .shadow(color: MEGAAppColor.Black._000000.color.opacity(0.15), radius: 2, x: 0, y: 1)
         }
         .padding(EdgeInsets(top: 8, leading: 32, bottom: 42, trailing: 32))
     }

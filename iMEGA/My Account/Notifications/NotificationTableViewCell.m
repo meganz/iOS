@@ -10,7 +10,7 @@
     
     self.theNewView.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
     
-    self.theNewLabel.textColor = UIColor.whiteColor;
+    self.theNewLabel.textColor = UIColor.mnz_whiteFFFFFF;
     self.theNewLabel.text = LocalizedString(@"New", @"Label shown inside an unseen notification");
 }
 

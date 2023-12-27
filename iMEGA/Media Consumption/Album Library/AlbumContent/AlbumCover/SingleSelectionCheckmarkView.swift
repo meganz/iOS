@@ -8,7 +8,7 @@ struct SingleSelectionCheckmarkView: View {
     }
     
     private var backgroundView: some View {
-        markedSelected ? Color.white.mask(Circle()) : nil
+        markedSelected ? MEGAAppColor.White._FFFFFF.color.mask(Circle()) : nil
     }
     
     var body: some View {

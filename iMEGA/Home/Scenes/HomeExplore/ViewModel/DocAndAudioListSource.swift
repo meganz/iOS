@@ -189,7 +189,7 @@ extension DocAndAudioListSource {
         }
         
         action.image = image
-        action.image = action.image?.withTintColor(.white)
+        action.image = action.image?.withTintColor(MEGAAppColor.White._FFFFFF.uiColor)
         
         action.backgroundColor = backgroundColor
         return action

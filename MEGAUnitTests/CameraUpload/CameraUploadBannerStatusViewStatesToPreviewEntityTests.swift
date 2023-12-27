@@ -11,7 +11,7 @@ class CameraUploadBannerStatusViewStatesToPreviewEntityTests: XCTestCase {
         performPreviewComparisonTest(
             status: .uploadCompleted,
             textColor: (.primary, .primary),
-            backgroundColor: (.white, .gray1D1D1D),
+            backgroundColor: (MEGAAppColor.White._FFFFFF.color, .gray1D1D1D),
             expectedTitle: Strings.Localizable.CameraUploads.Banner.Status.UploadsComplete.title,
             expectedSubheading: Strings.Localizable.CameraUploads.Banner.Status.UploadsComplete.subHeading
         )
@@ -21,7 +21,7 @@ class CameraUploadBannerStatusViewStatesToPreviewEntityTests: XCTestCase {
         performPreviewComparisonTest(
             status: .uploadInProgress(numberOfFilesPending: 1),
             textColor: (.primary, .primary),
-            backgroundColor: (.white, .gray1D1D1D),
+            backgroundColor: (MEGAAppColor.White._FFFFFF.color, .gray1D1D1D),
             expectedTitle: Strings.Localizable.CameraUploads.Banner.Status.UploadInProgress.title,
             expectedSubheading: Strings.Localizable.CameraUploads.Banner.Status.FilesPending.subHeading(1)
         )
@@ -29,7 +29,7 @@ class CameraUploadBannerStatusViewStatesToPreviewEntityTests: XCTestCase {
         performPreviewComparisonTest(
             status: .uploadInProgress(numberOfFilesPending: 12),
             textColor: (.primary, .primary),
-            backgroundColor: (.white, .gray1D1D1D),
+            backgroundColor: (MEGAAppColor.White._FFFFFF.color, .gray1D1D1D),
             expectedTitle: Strings.Localizable.CameraUploads.Banner.Status.UploadInProgress.title,
             expectedSubheading: Strings.Localizable.CameraUploads.Banner.Status.FilesPending.subHeading(12)
         )
@@ -39,7 +39,7 @@ class CameraUploadBannerStatusViewStatesToPreviewEntityTests: XCTestCase {
         performPreviewComparisonTest(
             status: .uploadPaused(reason: .noWifiConnection(numberOfFilesPending: 1)),
             textColor: (.primary, .primary),
-            backgroundColor: (.white, .gray1D1D1D),
+            backgroundColor: (MEGAAppColor.White._FFFFFF.color, .gray1D1D1D),
             expectedTitle: Strings.Localizable.CameraUploads.Banner.Status.UploadsPausedDueToWifi.title,
             expectedSubheading: Strings.Localizable.CameraUploads.Banner.Status.FilesPending.subHeading(1)
         )
@@ -47,7 +47,7 @@ class CameraUploadBannerStatusViewStatesToPreviewEntityTests: XCTestCase {
         performPreviewComparisonTest(
             status: .uploadPaused(reason: .noWifiConnection(numberOfFilesPending: 13)),
             textColor: (.primary, .primary),
-            backgroundColor: (.white, .gray1D1D1D),
+            backgroundColor: (MEGAAppColor.White._FFFFFF.color, .gray1D1D1D),
             expectedTitle: Strings.Localizable.CameraUploads.Banner.Status.UploadsPausedDueToWifi.title,
             expectedSubheading: Strings.Localizable.CameraUploads.Banner.Status.FilesPending.subHeading(13)
         )
@@ -65,7 +65,7 @@ class CameraUploadBannerStatusViewStatesToPreviewEntityTests: XCTestCase {
         performPreviewComparisonTest(
             status: .uploadPartialCompleted(reason: .videoUploadIsNotEnabled(pendingVideoUploadCount: 1)),
             textColor: (.primary, .primary),
-            backgroundColor: (.white, .gray1D1D1D),
+            backgroundColor: (MEGAAppColor.White._FFFFFF.color, .gray1D1D1D),
             expectedTitle: Strings.Localizable.CameraUploads.Banner.Status.UploadsComplete.title,
             expectedSubheading: Strings.Localizable.CameraUploads.Banner.Status.UploadsPartialComplete.VideosNotUploaded.subHeading(1)
         )
@@ -73,7 +73,7 @@ class CameraUploadBannerStatusViewStatesToPreviewEntityTests: XCTestCase {
         performPreviewComparisonTest(
             status: .uploadPartialCompleted(reason: .videoUploadIsNotEnabled(pendingVideoUploadCount: 42)),
             textColor: (.primary, .primary),
-            backgroundColor: (.white, .gray1D1D1D),
+            backgroundColor: (MEGAAppColor.White._FFFFFF.color, .gray1D1D1D),
             expectedTitle: Strings.Localizable.CameraUploads.Banner.Status.UploadsComplete.title,
             expectedSubheading: Strings.Localizable.CameraUploads.Banner.Status.UploadsPartialComplete.VideosNotUploaded.subHeading(42)
         )

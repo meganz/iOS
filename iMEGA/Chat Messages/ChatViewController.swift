@@ -107,7 +107,7 @@ class ChatViewController: MessagesViewController {
     
     lazy var tapToReturnToCallButton: UIButton = {
         let button = MEGAButton(textStyle: "caption1", weight: "bold")
-        button.setTitleColor(.white, for: .normal)
+        button.setTitleColor(MEGAAppColor.White._FFFFFF.uiColor, for: .normal)
         button.setTitle(Strings.Localizable.tapToReturnToCall, for: .normal)
         button.backgroundColor = UIColor.mnz_turquoise(for: traitCollection)
         return button

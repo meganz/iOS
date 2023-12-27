@@ -174,7 +174,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
         self.onlineStatusView.backgroundColor = [UIColor colorWithChatStatus: [MEGAChatSdk.shared userOnlineStatus:self.user.handle]];
         [self configureShadowInLayer:self.onlineStatusView.layer];
         self.onlineStatusView.layer.borderWidth = 1;
-        self.onlineStatusView.layer.borderColor = UIColor.whiteColor.CGColor;
+        self.onlineStatusView.layer.borderColor = UIColor.mnz_whiteFFFFFF.CGColor;
     } else {
         self.statusLabel.hidden = YES;
         self.onlineStatusView.hidden = YES;
@@ -405,7 +405,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     self.avatarBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     
     self.actionsView.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
-    self.nameOrNicknameLabel.textColor = self.optionalNameLabel.textColor = self.statusLabel.textColor = self.emailLabel.textColor = UIColor.whiteColor;
+    self.nameOrNicknameLabel.textColor = self.optionalNameLabel.textColor = self.statusLabel.textColor = self.emailLabel.textColor = UIColor.mnz_whiteFFFFFF;
     self.actionsBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
 }
 

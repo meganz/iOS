@@ -28,7 +28,7 @@ class VoiceClipInputBar: UIView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        sendImageView.renderImage(withColor: .white)
+        sendImageView.renderImage(withColor: MEGAAppColor.White._FFFFFF.uiColor)
         
         audioWavesView = AudioWavesView.instanceFromNib        
         audioWavesholderView.wrap(audioWavesView)

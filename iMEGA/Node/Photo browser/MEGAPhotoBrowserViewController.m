@@ -1043,7 +1043,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     UIColor *color;
     switch (index) {
         case 0:
-            color = [UIColor.whiteColor colorWithAlphaComponent:0.2];
+            color = [UIColor.mnz_whiteFFFFFF colorWithAlphaComponent:0.2];
             break;
             
         default:

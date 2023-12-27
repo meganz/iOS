@@ -125,7 +125,7 @@
 - (void)updateAppearance {
     self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     
-    self.storageLabel.textColor = self.storageSizeLabel.textColor = self.bandwidthLabel.textColor = self.bandwidthSizeLabel.textColor = UIColor.whiteColor;
+    self.storageLabel.textColor = self.storageSizeLabel.textColor = self.bandwidthLabel.textColor = self.bandwidthSizeLabel.textColor = UIColor.mnz_whiteFFFFFF;
     
     self.selectMembershiptLabel.textColor = self.megaAccountType == MEGAAccountTypeLite ? UIColor.mnz_proLITE : [UIColor mnz_redForTraitCollection:self.traitCollection];
     

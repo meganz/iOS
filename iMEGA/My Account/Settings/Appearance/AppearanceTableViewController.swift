@@ -145,7 +145,7 @@ class AppearanceTableViewController: UITableViewController {
     }
     
     private func markIcon(in view: UIView) {
-        view.layer.borderColor = UIColor.white.cgColor
+        view.layer.borderColor = MEGAAppColor.White._FFFFFF.uiColor.cgColor
     }
     
     private func changeLabelWeight(to label: UILabel) {

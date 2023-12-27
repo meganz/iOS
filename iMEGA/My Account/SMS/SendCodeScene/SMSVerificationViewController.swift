@@ -160,8 +160,8 @@ final class SMSVerificationViewController: UIViewController, ViewType {
     private func updateAppearance() {
         view.backgroundColor = .mnz_backgroundGrouped(for: traitCollection)
         
-        titleLabel.textColor = .white
-        cancelButton.setTitleColor(.white, for: .normal)
+        titleLabel.textColor = MEGAAppColor.White._FFFFFF.uiColor
+        cancelButton.setTitleColor(MEGAAppColor.White._FFFFFF.uiColor, for: .normal)
         
         countryTopSeparatorView.backgroundColor = .mnz_separator(for: traitCollection)
         countryContainerView.backgroundColor = .mnz_backgroundElevated(traitCollection)

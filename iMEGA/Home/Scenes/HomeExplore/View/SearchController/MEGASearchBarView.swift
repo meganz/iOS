@@ -123,8 +123,8 @@ final class MEGASearchBarView: UIView, NibOwnerLoadable {
     private func setupBackgroundColor(with trait: UITraitCollection) {
         switch trait.theme {
         case .dark:
-            backgroundColor = .black
-            subviews.first?.backgroundColor = .black
+            backgroundColor = MEGAAppColor.Black._000000.uiColor
+            subviews.first?.backgroundColor = MEGAAppColor.Black._000000.uiColor
         default:
             backgroundColor = MEGAAppColor.White._F7F7F7.uiColor
             subviews.first?.backgroundColor = MEGAAppColor.White._F7F7F7.uiColor

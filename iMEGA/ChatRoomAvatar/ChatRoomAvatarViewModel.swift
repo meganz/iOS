@@ -183,7 +183,7 @@ final class ChatRoomAvatarViewModel: ObservableObject {
             size: size,
             backgroundColor: MEGAAppColor.Chat.chatAvatarBackground.uiColor,
             backgroundGradientColor: MEGAAppColor.Gray._DBDBDB.uiColor,
-            textColor: .white,
+            textColor: MEGAAppColor.White._FFFFFF.uiColor,
             font: UIFont.systemFont(ofSize: min(size.width, size.height)/2.0),
             isRightToLeftLanguage: isRightToLeftLanguage
         )

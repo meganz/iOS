@@ -40,12 +40,12 @@ struct EmptyMediaDiscoveryContentView: View {
             }, label: {
                 Text(Strings.Localizable.addFiles)
                     .font(.body.weight(.semibold))
-                    .foregroundColor(Color.white)
+                    .foregroundColor(MEGAAppColor.White._FFFFFF.color)
                     .frame(width: 288, height: 50)
             })
             .background(MEGAAppColor.View.turquoise.color)
             .cornerRadius(8, corners: .allCorners)
-            .shadow(color: Color.black.opacity(0.15), radius: 3, x: 0, y: 1)
+            .shadow(color: MEGAAppColor.Black._000000.color.opacity(0.15), radius: 3, x: 0, y: 1)
         }
         .padding(.bottom, 35)
     }

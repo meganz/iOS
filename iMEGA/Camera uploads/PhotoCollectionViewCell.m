@@ -1,5 +1,11 @@
 #import "PhotoCollectionViewCell.h"
 
+#ifdef MNZ_SHARE_EXTENSION
+#import "MEGAShare-Swift.h"
+#else
+#import "MEGA-Swift.h"
+#endif
+
 @implementation PhotoCollectionViewCell
 
 - (void)awakeFromNib {
@@ -25,7 +31,7 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.thumbnailVideoDurationLabel.textColor = UIColor.whiteColor;
+    self.thumbnailVideoDurationLabel.textColor = UIColor.mnz_whiteFFFFFF;
 }
 
 @end

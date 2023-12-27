@@ -325,7 +325,7 @@ static const void *richTitleTagKey = &richTitleTagKey;
     } else if (self.type == MEGAChatMessageTypeVoiceClip) {
         text = @"MEGAChatMessageTypeVoiceClip";
     } else {
-        UIColor *textColor = self.userHandle == myHandle ? UIColor.whiteColor : UIColor.labelColor;
+        UIColor *textColor = self.userHandle == myHandle ? UIColor.mnz_whiteFFFFFF : UIColor.labelColor;
         UIFont *textFont = textFontRegular;
         if (self.content.mnz_isPureEmojiString) {
             textFont = [UIFont mnz_defaultFontForPureEmojiStringWithEmojis:[self.content mnz_emojiCount]];

@@ -72,7 +72,7 @@ struct SwipeLeftActionModifier: ViewModifier {
                                     }
                                 }, label: {
                                     Image(uiImage: image)
-                                        .foregroundColor(.white)
+                                        .foregroundColor(MEGAAppColor.White._FFFFFF.color)
                                         .frame(width: buttonWidth)
                                         .frame(maxHeight: .infinity)
                                 })

@@ -103,20 +103,20 @@ extension UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
             if traitCollection.accessibilityContrast == .high {
-                return .white
+                return MEGAAppColor.White._FFFFFF.uiColor
             } else {
                 return MEGAAppColor.White._F7F7F7.uiColor
             }
             
         case .dark:
             if traitCollection.accessibilityContrast == .high {
-                return .black
+                return MEGAAppColor.Black._000000.uiColor
             } else {
                 return MEGAAppColor.Black._161616.uiColor
             }
             
         @unknown default:
-            return .white
+            return MEGAAppColor.White._FFFFFF.uiColor
         }
     }
     
@@ -133,10 +133,10 @@ extension UIColor {
             }
             
         case .dark:
-            return .black
+            return MEGAAppColor.Black._000000.uiColor
             
         @unknown default:
-            return .white
+            return MEGAAppColor.White._FFFFFF.uiColor
         }
     }
     
@@ -160,7 +160,7 @@ extension UIColor {
             }
             
         @unknown default:
-            return .white
+            return MEGAAppColor.White._FFFFFF.uiColor
         }
     }
     
@@ -330,7 +330,7 @@ extension UIColor {
     class func mnz_basicButton(for traitCollection: UITraitCollection) -> UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
-            return .white
+            return MEGAAppColor.White._FFFFFF.uiColor
             
         case .dark:
             if traitCollection.accessibilityContrast == .high {
@@ -340,7 +340,7 @@ extension UIColor {
             }
             
         @unknown default:
-            return .white
+            return MEGAAppColor.White._FFFFFF.uiColor
         }
     }
     
@@ -362,7 +362,7 @@ extension UIColor {
             }
             
         @unknown default:
-            return .white
+            return MEGAAppColor.White._FFFFFF.uiColor
         }
     }
     
@@ -384,7 +384,7 @@ extension UIColor {
             }
             
         @unknown default:
-            return .white
+            return MEGAAppColor.White._FFFFFF.uiColor
         }
     }
     
@@ -643,6 +643,10 @@ extension UIColor {
         return MEGAAppColor.Black._1C1C1E.uiColor
     }
     
+    @objc class func mnz_black000000() -> UIColor {
+        return MEGAAppColor.Black._000000.uiColor
+    }
+    
     // MARK: Gray
     
     class func mnz_gray3C3C43() -> UIColor {
@@ -695,7 +699,7 @@ extension UIColor {
             }
             
         @unknown default:
-            return .white
+            return MEGAAppColor.White._FFFFFF.uiColor
         }
     }
     
@@ -717,7 +721,7 @@ extension UIColor {
             }
             
         @unknown default:
-            return .white
+            return MEGAAppColor.White._FFFFFF.uiColor
         }
     }
     
@@ -739,7 +743,7 @@ extension UIColor {
             }
             
         @unknown default:
-            return .white
+            return MEGAAppColor.White._FFFFFF.uiColor
         }
     }
     
@@ -763,7 +767,7 @@ extension UIColor {
             }
             
         @unknown default:
-            return .white
+            return MEGAAppColor.White._FFFFFF.uiColor
         }
     }
     
@@ -791,7 +795,7 @@ extension UIColor {
             }
             
         @unknown default:
-            return .white
+            return MEGAAppColor.White._FFFFFF.uiColor
         }
     }
     
@@ -819,7 +823,7 @@ extension UIColor {
             }
             
         @unknown default:
-            return .white
+            return MEGAAppColor.White._FFFFFF.uiColor
         }
     }
     
@@ -827,6 +831,10 @@ extension UIColor {
     
     @objc class func mnz_whiteF7F7F7() -> UIColor {
         return MEGAAppColor.White._F7F7F7.uiColor
+    }
+    
+    @objc class func mnz_whiteFFFFFF() -> UIColor {
+        return MEGAAppColor.White._FFFFFF.uiColor
     }
     
     // MARK: Yellow

@@ -106,7 +106,7 @@ extension MEGAAVViewController {
     
     @objc func configureActivityIndicator() {
         activityIndicator = UIActivityIndicatorView(style: .large)
-        activityIndicator.color = .white
+        activityIndicator.color = MEGAAppColor.White._FFFFFF.uiColor
         activityIndicator.hidesWhenStopped = true
         
         addLoadingViewAsVideoPlayerSubview(activityIndicator)

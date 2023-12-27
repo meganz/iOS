@@ -37,7 +37,7 @@
 - (void)setupCell {
     self.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
     
-    self.productNameLabel.textColor = UIColor.whiteColor;
+    self.productNameLabel.textColor = UIColor.mnz_whiteFFFFFF;
 }
 
 @end

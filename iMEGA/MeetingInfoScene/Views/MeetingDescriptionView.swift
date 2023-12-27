@@ -18,6 +18,6 @@ struct MeetingDescriptionView: View {
                 .padding(.horizontal)
             Divider()
         }
-        .background(colorScheme == .dark ? Color(.black1C1C1E) : .white)
+        .background(colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._FFFFFF.color)
     }
 }

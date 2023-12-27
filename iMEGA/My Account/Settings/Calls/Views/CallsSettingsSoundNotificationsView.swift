@@ -21,13 +21,13 @@ struct CallsSettingsSoundNotificationsView: View {
                     .padding(.trailing, parentGeometry.safeAreaInsets.trailing + Constants.defaultPadding)
                 Divider()
             }
-            .background(colorScheme == .dark ? Color(.black1C1C1E) : .white)
+            .background(colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._FFFFFF.color)
             Text(Strings.Localizable.Settings.Section.Calls.SoundNotifications.description)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.leading, parentGeometry.safeAreaInsets.leading + Constants.defaultPadding)
                 .padding(.trailing, parentGeometry.safeAreaInsets.trailing + Constants.defaultPadding)
                 .font(.footnote)
-                .foregroundColor(colorScheme == .dark ? .white.opacity(Constants.textDescriptionOpacity) : .black.opacity(Constants.textDescriptionOpacity))
+                .foregroundColor(colorScheme == .dark ? MEGAAppColor.White._FFFFFF.color.opacity(Constants.textDescriptionOpacity) : MEGAAppColor.Black._000000.color.opacity(Constants.textDescriptionOpacity))
         }
     }
 }

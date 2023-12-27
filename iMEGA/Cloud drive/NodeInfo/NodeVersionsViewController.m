@@ -244,7 +244,7 @@
         UIContextualAction *removeAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
             [self removeAction:nil];
         }];
-        removeAction.image = [[UIImage imageNamed:@"delete"] imageWithTintColor:UIColor.whiteColor];
+        removeAction.image = [[UIImage imageNamed:@"delete"] imageWithTintColor:UIColor.mnz_whiteFFFFFF];
         removeAction.backgroundColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
         [rightActions addObject:removeAction];
     }
@@ -254,7 +254,7 @@
             [self revertAction:nil];
         }];
         
-        revertAction.image = [[UIImage imageNamed:@"history"] imageWithTintColor:UIColor.whiteColor];
+        revertAction.image = [[UIImage imageNamed:@"history"] imageWithTintColor:UIColor.mnz_whiteFFFFFF];
         revertAction.backgroundColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
         [rightActions addObject:revertAction];
     }
@@ -266,7 +266,7 @@
         }
         [self setEditing:NO animated:YES];
     }];
-    downloadAction.image = [[UIImage imageNamed:@"offline"] imageWithTintColor:UIColor.whiteColor];
+    downloadAction.image = [[UIImage imageNamed:@"offline"] imageWithTintColor:UIColor.mnz_whiteFFFFFF];
     downloadAction.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
     [rightActions addObject:downloadAction];
     

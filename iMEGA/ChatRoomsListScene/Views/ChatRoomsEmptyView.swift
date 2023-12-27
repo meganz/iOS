@@ -83,7 +83,7 @@ private struct ChatRoomsEmptyBottomButtonView: View {
     let name: String
     var height: CGFloat? = 50
     var backgroundColor = Color(red: 0, green: 0.66, blue: 0.52)
-    var textColor = Color.white
+    var textColor = MEGAAppColor.White._FFFFFF.color
     var maxWidth: CGFloat? = 288
     var cornerRadius: CGFloat = 10
     var font: Font = .headline

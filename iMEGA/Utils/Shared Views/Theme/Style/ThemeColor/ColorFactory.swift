@@ -39,8 +39,8 @@ extension ColorFactory {
     
     func independent(_ style: MEGAColor.Independent) -> UIColor {
         switch style {
-        case .bright: return .white
-        case .dark: return .black
+        case .bright: return MEGAAppColor.White._FFFFFF.uiColor
+        case .dark: return MEGAAppColor.Black._000000.uiColor
         case .clear: return MEGAAppColor.White._FFFFFF00.uiColor
         case .warning: return MEGAAppColor.Red._FF3B30.uiColor
         }

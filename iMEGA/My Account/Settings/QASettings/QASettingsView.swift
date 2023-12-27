@@ -9,8 +9,8 @@ struct QASettingsView: View {
         static let fingerprintVerificationHeaderText = "SDK secure flag"
         static let fingerprintVerificationFooterText = "To toggle secure flag: logout user > on onboarding screen > tap 5 times"
         static let fingerprintVerificationText = "Share secure flag: "
-        static let cellDarkBackgroundColor = Color(.black1C1C1E)
-        static let cellLightBackgroundColor = Color.white
+        static let cellDarkBackgroundColor = MEGAAppColor.Black._1C1C1E.color
+        static let cellLightBackgroundColor = MEGAAppColor.White._FFFFFF.color
     }
     
     let viewModel: QASettingsViewModel
@@ -47,6 +47,6 @@ struct QASettingsView: View {
     }
     
     private var backgroundColor: Color {
-        colorScheme == .dark ? .black : Color(.whiteF7F7F7)
+        colorScheme == .dark ? MEGAAppColor.Black._000000.color : MEGAAppColor.White._F7F7F7.color
     }
 }

@@ -30,7 +30,7 @@ struct PhotoLibraryPicker: View {
             }
         }
         .pickerStyle(.segmented)
-        .background(RoundedRectangle(cornerRadius: 7).fill(Color.white).background(.thinMaterial))
+        .background(RoundedRectangle(cornerRadius: 7).fill(MEGAAppColor.White._FFFFFF.color).background(.thinMaterial))
         .cornerRadius(7)
         .padding(16)
     }

@@ -48,7 +48,7 @@ struct ActionView: View {
                             Text(description)
                                 .multilineTextAlignment(.leading)
                                 .font(.footnote)
-                                .foregroundColor(colorScheme == .dark ? Color.white.opacity(0.8) : Color.black.opacity(0.8))
+                                .foregroundColor(colorScheme == .dark ? MEGAAppColor.White._FFFFFF.color.opacity(0.8) : MEGAAppColor.Black._000000.color.opacity(0.8))
                         }
                     }
                     if viewModel.showItemView {
@@ -64,7 +64,7 @@ struct ActionView: View {
             .padding()
             Divider()
         }
-        .background(colorScheme == .dark ? Color(MEGAAppColor.Black._2C2C2E.uiColor.cgColor) : Color.white)
+        .background(colorScheme == .dark ? Color(MEGAAppColor.Black._2C2C2E.uiColor.cgColor) : MEGAAppColor.White._FFFFFF.color)
         .frame(maxWidth: .infinity)
     }
 }

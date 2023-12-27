@@ -27,7 +27,7 @@ struct ChatRoomAvatarView: View {
                     .clipShape(Circle())
                     .overlay(
                         Circle()
-                            .stroke(colorScheme == .dark ? Color.black : Color.white, lineWidth: 1)
+                            .stroke(colorScheme == .dark ? MEGAAppColor.Black._000000.color : MEGAAppColor.White._FFFFFF.color, lineWidth: 1)
                     )
                     .offset(x: offsetValue, y: offsetValue)
             } else if case let .one(avatar) = viewModel.avatarType {

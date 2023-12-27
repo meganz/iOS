@@ -13,7 +13,7 @@ struct ChatRoomLinkNonHostView: View {
                 text: Strings.Localizable.Meetings.Info.shareMeetingLink) {
                     viewModel.shareMeetingLinkTapped()
                 }
-                .background(colorScheme == .dark ? Color(.black1C1C1E) : .white)
+                .background(colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._FFFFFF.color)
         }
         .alert(isPresented: $viewModel.showChatLinksMustHaveCustomTitleAlert) {
             Alert(title: Text(Strings.Localizable.chatLink),
@@ -23,7 +23,7 @@ struct ChatRoomLinkNonHostView: View {
         .actionSheet(isPresented: $viewModel.showShareMeetingLinkOptions) {
             ActionSheet(title: Text(Strings.Localizable.Meetings.Info.ShareOptions.title), buttons: shareOptionsSheetButtons())
         }
-        .background(colorScheme == .dark ? Color(.black1C1C1E) : .white)
+        .background(colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._FFFFFF.color)
     }
     
     private func shareOptionsSheetButtons() -> [ActionSheet.Button] {

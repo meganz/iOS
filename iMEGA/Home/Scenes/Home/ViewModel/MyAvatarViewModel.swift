@@ -121,7 +121,7 @@ extension MyAvatarViewModel {
             forName: avatarName,
             size: avatarSize,
             backgroundColor: avatarBackgroundColor,
-            textColor: .white,
+            textColor: MEGAAppColor.White._FFFFFF.uiColor,
             font: UIFont.systemFont(ofSize: avatarSize.width / 2)
         )
     }
@@ -132,7 +132,7 @@ extension MyAvatarViewModel {
             forName: "M",
             size: avatarSize,
             backgroundColor: UIColor.systemGray,
-            textColor: .white,
+            textColor: MEGAAppColor.White._FFFFFF.uiColor,
             font: UIFont.systemFont(ofSize: avatarSize.width / 2)
         )
     }

@@ -73,7 +73,7 @@ final class SlideShowViewController: UIViewController, ViewType {
     }
     
     private func showLoader() {
-        activityIndicator.color = .white
+        activityIndicator.color = MEGAAppColor.White._FFFFFF.uiColor
         view.bringSubviewToFront(activityIndicator)
         activityIndicator.startAnimating()
     }
@@ -169,7 +169,7 @@ final class SlideShowViewController: UIViewController, ViewType {
         
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut) {
             self.collectionView.backgroundColor = MEGAAppColor.Black._000000.uiColor
-            self.view.backgroundColor = .black
+            self.view.backgroundColor = MEGAAppColor.Black._000000.uiColor
             cell?.resetZoomScale()
             if viewModel.currentSlideIndex >= viewModel.photos.count - 1 {
                 viewModel.currentSlideIndex = -1

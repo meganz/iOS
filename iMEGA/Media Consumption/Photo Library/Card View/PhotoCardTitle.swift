@@ -3,11 +3,11 @@ import SwiftUI
 struct PhotoCardTitle: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .foregroundColor(.white)
+            .foregroundColor(MEGAAppColor.White._FFFFFF.color)
             .padding(20)
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(
-                LinearGradient(colors: [.black.opacity(0.3), .black.opacity(0)], startPoint: .top, endPoint: .bottom)
+                LinearGradient(colors: [MEGAAppColor.Black._000000.color.opacity(0.3), MEGAAppColor.Black._000000.color.opacity(0)], startPoint: .top, endPoint: .bottom)
             )
     }
 }

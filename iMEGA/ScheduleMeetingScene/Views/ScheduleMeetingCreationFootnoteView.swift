@@ -7,7 +7,7 @@ struct ScheduleMeetingCreationFootnoteView: View {
     var body: some View {
         Text(title)
             .font(.footnote)
-            .foregroundColor(colorScheme == .dark ? Color.white.opacity(0.6) : MEGAAppColor.Gray._3C3C43.color.opacity(0.6))
+            .foregroundColor(colorScheme == .dark ? MEGAAppColor.White._FFFFFF.color.opacity(0.6) : MEGAAppColor.Gray._3C3C43.color.opacity(0.6))
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal)
     }

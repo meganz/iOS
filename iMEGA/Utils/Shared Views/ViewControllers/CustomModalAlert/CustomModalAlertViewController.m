@@ -45,7 +45,7 @@
 - (void)didMoveToParentViewController:(UIViewController *)parent {
     [super didMoveToParentViewController:parent];
     
-    parent.view.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.3];
+    parent.view.backgroundColor = [UIColor.mnz_black000000 colorWithAlphaComponent:0.3];
 }
 
 - (void)viewDidLoad {

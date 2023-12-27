@@ -15,12 +15,12 @@ struct DarkColorThemeFactory: ColorFactory {
         switch style {
         case .primary: return MEGAAppColor.Black._1C1C1E.uiColor
         case .secondary: return MEGAAppColor.Gray._545A68.uiColor
-        case .warning: return .white
+        case .warning: return MEGAAppColor.White._FFFFFF.uiColor
         case .enabled: return MEGAAppColor.White._FFD60008.uiColor
         case .disabled: return MEGAAppColor.Gray._999999.uiColor
         case .highlighted: return MEGAAppColor.Green._00A88680.uiColor
         case .searchTextField: return MEGAAppColor.Black._29292C.uiColor
-        case .homeTopSide: return .black
+        case .homeTopSide: return MEGAAppColor.Black._000000.uiColor
         }
     }
     
@@ -40,7 +40,7 @@ struct DarkColorThemeFactory: ColorFactory {
     
     func shadowColor(_ style: MEGAColor.Shadow) -> UIColor {
         switch style {
-        case .primary: return .black
+        case .primary: return MEGAAppColor.Black._000000.uiColor
         }
     }
     

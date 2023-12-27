@@ -55,7 +55,7 @@ struct ChatRoomParticipantView: View {
         .actionSheet(isPresented: $viewModel.showPrivilegeOptions) {
             ActionSheet(title: Text(Strings.Localizable.permissions), buttons: privilegeOptionsSheetButtons())
         }
-        .background(colorScheme == .dark ? Color(.black1C1C1E) : .white)
+        .background(colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._FFFFFF.color)
     }
     
     private func privilegeOptionsSheetButtons() -> [ActionSheet.Button] {

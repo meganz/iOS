@@ -11,7 +11,7 @@ struct ChatRoomActiveCallView: View {
             Text(viewModel.message)
                 .font(.caption)
                 .bold()
-                .foregroundColor(.white)
+                .foregroundColor(MEGAAppColor.White._FFFFFF.color)
             Image(uiImage: viewModel.muted)
             Image(uiImage: viewModel.video)
             Spacer()

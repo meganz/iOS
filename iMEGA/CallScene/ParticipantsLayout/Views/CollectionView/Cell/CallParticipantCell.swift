@@ -48,7 +48,7 @@ class CallParticipantCell: UICollectionViewCell {
                 nameLabel.superview?.isHidden = true
                 micImageView.superview?.layer.cornerRadius = 12
                 if participant.isSpeakerPinned {
-                    borderColor = .white
+                    borderColor = MEGAAppColor.White._FFFFFF.uiColor
                     borderWidth = 1
                 }
             }

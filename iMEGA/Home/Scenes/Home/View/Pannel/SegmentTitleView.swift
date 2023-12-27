@@ -106,7 +106,7 @@ final class SegmentTitleView: UIView {
 
         switch trait.theme {
         case .dark: backgroundColor = .mnz_black1C1C1E()
-        case .light: backgroundColor = .white
+        case .light: backgroundColor = MEGAAppColor.White._FFFFFF.uiColor
         }
     }
 

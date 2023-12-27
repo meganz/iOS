@@ -33,7 +33,7 @@ struct WaitingRoomParticipantView: View {
                 HStack {
                     Text(viewModel.name)
                         .font(.subheadline)
-                        .foregroundColor(.white)
+                        .foregroundColor(MEGAAppColor.White._FFFFFF.color)
                     Spacer()
                     Button {
                         viewModel.denyTapped()
