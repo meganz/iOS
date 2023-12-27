@@ -46,6 +46,6 @@ struct MyAccountHallPlanView: View {
             }
             .padding()
         }
-        .background(MEGAAppColor.Background.background_cell.color)
+        .background(MEGAAppColor.Background.backgroundCell.color)
     }
 }

@@ -5,14 +5,14 @@ struct WarningView: View {
     
     var body: some View {
         ZStack {
-            Color.bannerWarningBackground
+            MEGAAppColor.Banner.bannerWarningBackground.color
                 .edgesIgnoringSafeArea(.all)
             
             HStack {
                 Text(viewModel.warningType.description)
                     .font(.caption2.bold())
                     .fixedSize(horizontal: false, vertical: true)
-                    .foregroundColor(Color.bannerWarningText)
+                    .foregroundColor(MEGAAppColor.Banner.bannerWarningText.color)
                     .multilineTextAlignment(.leading)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 5))
@@ -29,7 +29,7 @@ struct WarningView: View {
         .frame(height: viewModel.isHideWarningView ? 0 : nil)
         .opacity(viewModel.isHideWarningView ? 0 : 1)
     }
-
+    
     private var warningCloseButton: some View {
         Button {
             viewModel.closeAction()
