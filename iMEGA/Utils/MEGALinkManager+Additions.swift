@@ -233,6 +233,16 @@ extension MEGALinkManager {
     private class func openCallUI(call: CallEntity, chatRoom: ChatRoomEntity) {
         MeetingContainerRouter(presenter: UIApplication.mnz_presentingViewController(), chatRoom: chatRoom, call: call, isSpeakerEnabled: true).start()
     }
+
+    @objc class func openDefaultLink(_ url: NSURL) {
+        // This workaround is needed because if we come to open a link from a cold start (i.e. the app is not in the background)
+        // the view controller return by 'mnz_visibleViewController()' will have 'isViewLoaded' as 'false', so the link won't be
+        // presented in a SafariVC. In order to fix the issue, we advance one run loop.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+            url.mnz_presentSafariViewController()
+            resetLinkAndURLType()
+        }
+    }
 }
 
 // MARK: - Ads
