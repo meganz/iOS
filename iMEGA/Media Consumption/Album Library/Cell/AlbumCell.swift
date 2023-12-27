@@ -15,7 +15,7 @@ struct AlbumCell: View {
                     .cornerRadius(6)
                 
                 GeometryReader { geo in
-                    LinearGradient(colors: [.black, .clear], startPoint: .top, endPoint: .bottom)
+                    LinearGradient(colors: [MEGAAppColor.Black._000000.color, .clear], startPoint: .top, endPoint: .bottom)
                         .frame(height: geo.size.height / 2)
                         .cornerRadius(5, corners: [.topLeft, .topRight])
                         .opacity(viewModel.isLinkShared ? 0.4 : 0.0)

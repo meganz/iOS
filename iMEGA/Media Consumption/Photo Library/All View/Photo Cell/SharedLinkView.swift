@@ -6,6 +6,6 @@ struct SharedLinkView: View {
             .resizable()
             .aspectRatio(contentMode: .fill)
             .frame(width: 15, height: 15)
-            .foregroundColor(.white)
+            .foregroundColor(MEGAAppColor.White._FFFFFF.color)
     }
 }

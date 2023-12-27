@@ -58,9 +58,9 @@ final class HandlerView: UIView {
 
     private func themeColor(of trait: UITraitCollection) -> (UIColor, UIColor) {
         switch trait.userInterfaceStyle {
-        case .dark: return (.mnz_black1C1C1E(), .white)
-        case .light: return (.white, .mnz_black1C1C1E())
-        default: return (.white, .mnz_black1C1C1E())
+        case .dark: return (.mnz_black1C1C1E(), MEGAAppColor.White._FFFFFF.uiColor)
+        case .light: return (MEGAAppColor.White._FFFFFF.uiColor, .mnz_black1C1C1E())
+        default: return (MEGAAppColor.White._FFFFFF.uiColor, .mnz_black1C1C1E())
         }
     }
         // MARK: - UIView overrides

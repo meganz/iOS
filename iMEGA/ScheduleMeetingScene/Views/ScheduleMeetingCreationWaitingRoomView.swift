@@ -20,7 +20,7 @@ struct ScheduleMeetingCreationWaitingRoomView: View {
             
             Divider()
         }
-        .background(colorScheme == .dark ? Color(.black1C1C1E) : .white)
+        .background(colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._FFFFFF.color)
         
         ScheduleMeetingCreationFootnoteView(title: Strings.Localizable.Meetings.ScheduleMeeting.WaitingRoom.description)
             .padding(.bottom)
@@ -35,7 +35,7 @@ struct ScheduleMeetingCreationWaitingRoomView_Previews: PreviewProvider {
         var body: some View {
             VStack {
                 ScheduleMeetingCreationWaitingRoomView(waitingRoomEnabled: .constant(true), shouldAllowEditingWaitingRoom: true)
-                    .background(colorScheme == .dark ? .black : Color(.whiteF7F7F7))
+                    .background(colorScheme == .dark ? MEGAAppColor.Black._000000.color : MEGAAppColor.White._F7F7F7.color)
             }
         }
     }

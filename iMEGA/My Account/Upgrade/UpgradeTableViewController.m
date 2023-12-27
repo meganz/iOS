@@ -196,7 +196,7 @@
     self.currentPlanLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
     self.currentPlanLabelLineView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     
-    self.currentPlanNameLabel.textColor = UIColor.whiteColor;
+    self.currentPlanNameLabel.textColor = UIColor.mnz_whiteFFFFFF;
     NSNumber *userProLevelIndexNumber = [self.proLevelsIndexesMutableDictionary objectForKey:[NSNumber numberWithInteger:self.userProLevel]];
     [self.currentPlanDisclosureImageView setHidden:userProLevelIndexNumber == nil];
     

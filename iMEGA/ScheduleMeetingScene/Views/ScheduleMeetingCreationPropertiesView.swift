@@ -23,7 +23,7 @@ struct ScheduleMeetingCreationPropertiesView: View {
                 )
                 Divider()
             }
-            .background(colorScheme == .dark ? Color(.black1C1C1E) : .white)
+            .background(colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._FFFFFF.color)
             
             ScheduleMeetingCreationFootnoteView(title: Strings.Localizable.Meetings.ScheduleMeeting.Link.description)
                 .opacity(viewModel.shouldAllowEditingMeetingLink ? 1.0 : 0.3)

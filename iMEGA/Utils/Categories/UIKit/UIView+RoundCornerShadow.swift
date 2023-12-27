@@ -14,7 +14,7 @@ struct RoundCornerShadowConfiguration: Equatable {
         let color: UIColor
     }
 
-    var backgroundColor: UIColor = .white
+    var backgroundColor: UIColor = MEGAAppColor.White._FFFFFF.uiColor
 
     let corner: Corner
     let shadow: Shadow

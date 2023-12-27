@@ -283,8 +283,8 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     
     func showScreenShareWarning() {
         SVProgressHUD.setHudViewCustomBlurEffect(UIBlurEffect.init(style: UIBlurEffect.Style.systemMaterialDark))
-        SVProgressHUD.setForegroundColor(.white)
-        SVProgressHUD.setForegroundImageColor(.white)
+        SVProgressHUD.setForegroundColor(MEGAAppColor.White._FFFFFF.uiColor)
+        SVProgressHUD.setForegroundImageColor(MEGAAppColor.White._FFFFFF.uiColor)
         SVProgressHUD.showError(withStatus: Strings.Localizable.Calls.ScreenShare.Waring.title)
     }
     

@@ -11,7 +11,7 @@ struct PhotoLibraryFilterTypeView: View {
     }
     
     private var foreground: Color {
-        selected ? .white : Color.photosFilterNormalTextForeground
+        selected ? MEGAAppColor.White._FFFFFF.color : Color.photosFilterNormalTextForeground
     }
     
     private var background: Color {

@@ -25,7 +25,7 @@ struct EnableCameraUploadsEmptyView: View {
             Button(action: action) {
                 Text(Strings.Localizable.enable)
                     .font(.body.weight(.semibold))
-                    .foregroundColor(.white)
+                    .foregroundColor( MEGAAppColor.White._FFFFFF.color)
                     .frame(width: 288, height: 50)
                     .background(MEGAAppColor.Green._00A886.color)
                     .cornerRadius(8)

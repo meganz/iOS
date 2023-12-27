@@ -35,7 +35,7 @@ extension ChatViewController: MessagesDisplayDelegate {
     }
 
     func textColor(for message: any MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
-        return isFromCurrentSender(message: message) ? .white : .label
+        return isFromCurrentSender(message: message) ? MEGAAppColor.White._FFFFFF.uiColor : .label
     }
 
     func messageStyle(for message: any MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> MessageStyle {
@@ -147,7 +147,7 @@ extension ChatViewController: MessagesDisplayDelegate {
     // MARK: - Audio Messages
     
     func audioTintColor(for message: any MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) -> UIColor {
-        return isFromCurrentSender(message: message) ? .white : .label
+        return isFromCurrentSender(message: message) ? MEGAAppColor.White._FFFFFF.uiColor : .label
     }
     
     func configureAudioCell(_ cell: AudioMessageCell, message: any MessageType) {

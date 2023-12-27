@@ -98,7 +98,7 @@ class AddToChatCameraCollectionCell: UICollectionViewCell {
         
         let lifeFeedFadingView = UIView()
         lifeFeedFadingView.translatesAutoresizingMaskIntoConstraints = false
-        lifeFeedFadingView.backgroundColor = .black
+        lifeFeedFadingView.backgroundColor = MEGAAppColor.Black._000000.uiColor
         mainView.insertSubview(lifeFeedFadingView, aboveSubview: liveFeedView)
         
         NSLayoutConstraint.activate([

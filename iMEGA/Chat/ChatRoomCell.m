@@ -80,7 +80,7 @@
     
     BOOL chatRoomsTypeArchived = [self.unreadCount.text isEqualToString:LocalizedString(@"archived", @"Title of flag of archived chats.")];
     self.unreadView.backgroundColor = chatRoomsTypeArchived ? [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection] : [UIColor mnz_redForTraitCollection:self.traitCollection];
-    self.unreadCount.textColor = UIColor.whiteColor;
+    self.unreadCount.textColor = UIColor.mnz_whiteFFFFFF;
     
     self.onCallDuration.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
 }

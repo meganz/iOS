@@ -34,7 +34,7 @@ struct ChatRoomLinkView: View {
         .actionSheet(isPresented: $viewModel.showShareMeetingLinkOptions) {
             ActionSheet(title: Text(Strings.Localizable.Meetings.Info.ShareOptions.title), buttons: shareOptionsSheetButtons())
         }
-        .background(colorScheme == .dark ? Color(.black1C1C1E) : .white)
+        .background(colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._FFFFFF.color)
     }
     
     private func shareOptionsSheetButtons() -> [ActionSheet.Button] {

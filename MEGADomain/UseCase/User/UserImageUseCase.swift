@@ -181,7 +181,7 @@ struct UserImageUseCase<T: UserImageRepositoryProtocol, U: UserStoreRepositoryPr
             size: size,
             backgroundColor: avatarBackgroundColor,
             backgroundGradientColor: backgroundGradientColor,
-            textColor: .white,
+            textColor: MEGAAppColor.White._FFFFFF.uiColor,
             font: UIFont.systemFont(ofSize: min(size.width, size.height)/2.0),
             isRightToLeftLanguage: isRightToLeftLanguage)
         

@@ -33,7 +33,7 @@ struct WaitingRoomJoinPanelView: View {
                 hideKeyboard()
             } label: {
                 Text(Strings.Localizable.Meetings.WaitingRoom.Guest.join)
-                    .foregroundColor(.white)
+                    .foregroundColor(MEGAAppColor.White._FFFFFF.color)
                     .font(.system(size: 17, weight: .bold))
                     .frame(width: 288, height: 50)
                     .background(MEGAAppColor.Green._00C29A.color)
@@ -43,7 +43,7 @@ struct WaitingRoomJoinPanelView: View {
             .opacity(disableJoinButton ? 0.3 : 1)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color(.black1C1C1E))
+        .background(MEGAAppColor.Black._1C1C1E.color)
     }
     
     struct FocusableNameTextFieldView: View {
@@ -75,6 +75,6 @@ struct WaitingRoomJoinPanelView_Previews: PreviewProvider {
             .frame(height: 142)
         }
         .preferredColorScheme(.dark)
-        .background(Color.black)
+        .background(MEGAAppColor.Black._000000.color)
     }
 }

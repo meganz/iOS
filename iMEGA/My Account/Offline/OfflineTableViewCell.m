@@ -49,7 +49,7 @@
     switch (currentTraitCollection.userInterfaceStyle) {
         case UIUserInterfaceStyleUnspecified:
         case UIUserInterfaceStyleLight: {
-            self.backgroundColor = UIColor.whiteColor;
+            self.backgroundColor = UIColor.mnz_whiteFFFFFF;
         }
             break;
         case UIUserInterfaceStyleDark: {

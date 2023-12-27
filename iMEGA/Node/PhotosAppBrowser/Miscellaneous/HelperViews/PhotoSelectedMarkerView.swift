@@ -38,7 +38,7 @@ final class PhotoSelectedMarkerView: SingleTapView {
     private lazy var label: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.textColor = .white
+        label.textColor = MEGAAppColor.White._FFFFFF.uiColor
         label.baselineAdjustment = .alignCenters
         label.font = UIFont.systemFont(ofSize: 17, weight: .medium)
         label.adjustsFontSizeToFitWidth = true

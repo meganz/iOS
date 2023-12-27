@@ -458,7 +458,7 @@
     self.archivedChatEmptyStateCount.textColor = UIColor.secondaryLabelColor;
     
     self.topBannerView.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
-    self.topBannerLabel.textColor = UIColor.whiteColor;
+    self.topBannerLabel.textColor = UIColor.mnz_whiteFFFFFF;
     self.chatOrMeetingSelectorView.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
 }
 
@@ -1116,13 +1116,13 @@
             UIContextualAction *archiveAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
                 [MEGAChatSdk.shared archiveChat:chatListItem.chatId archive:YES];
             }];
-            archiveAction.image = [[UIImage imageNamed:@"archiveChat"] imageWithTintColor:UIColor.whiteColor];
+            archiveAction.image = [[UIImage imageNamed:@"archiveChat"] imageWithTintColor:UIColor.mnz_whiteFFFFFF];
             archiveAction.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
             
             UIContextualAction *infoAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
                 [self showOptionsForChatAtIndexPath:indexPath];
             }];
-            infoAction.image = [[UIImage imageNamed:@"moreList"] imageWithTintColor:UIColor.whiteColor];
+            infoAction.image = [[UIImage imageNamed:@"moreList"] imageWithTintColor:UIColor.mnz_whiteFFFFFF];
             infoAction.backgroundColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
             
             return [UISwipeActionsConfiguration configurationWithActions:@[archiveAction, infoAction]];

@@ -12,7 +12,7 @@ struct WaitingRoomUserAvatarView: View {
             .padding(2)
             .overlay(
                 Circle()
-                    .stroke(Color.white.opacity(0.3), lineWidth: 4)
+                    .stroke(MEGAAppColor.White._FFFFFF.color.opacity(0.3), lineWidth: 4)
             )
     }
 }
@@ -20,6 +20,6 @@ struct WaitingRoomUserAvatarView: View {
 #Preview {
     WaitingRoomUserAvatarView(avatar: Image(Color.red, CGSize(width: 100, height: 100)))
         .padding(20)
-        .background(Color.black)
+        .background(MEGAAppColor.Black._000000.color)
         .previewLayout(.sizeThatFits)
 }

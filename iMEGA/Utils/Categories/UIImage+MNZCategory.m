@@ -1,5 +1,12 @@
 #import "UIImage+MNZCategory.h"
 
+
+#ifdef MNZ_SHARE_EXTENSION
+#import "MEGAShare-Swift.h"
+#else
+#import "MEGA-Swift.h"
+#endif
+
 #import "Helper.h"
 #import "MEGAStore.h"
 #import "MEGASdkManager.h"
@@ -131,7 +138,7 @@
             initialForAvatar = name.mnz_initialForAvatar;
         }
         
-        image = [UIImage imageForName:initialForAvatar size:size backgroundColor:[UIColor mnz_fromHexString:colorString] backgroundGradientColor:[UIColor mnz_fromHexString:secondaryColorString] textColor:UIColor.whiteColor font:[UIFont systemFontOfSize:(size.width/2.0f)]];
+        image = [UIImage imageForName:initialForAvatar size:size backgroundColor:[UIColor mnz_fromHexString:colorString] backgroundGradientColor:[UIColor mnz_fromHexString:secondaryColorString] textColor:UIColor.mnz_whiteFFFFFF font:[UIFont systemFontOfSize:(size.width/2.0f)]];
         [UIImageJPEGRepresentation(image, 1) writeToFile:avatarFilePath atomically:YES];
         
         [[MEGASdkManager sharedMEGASdk] getAvatarUserWithEmailOrHandle:base64Handle destinationFilePath:avatarFilePath delegate:delegate];

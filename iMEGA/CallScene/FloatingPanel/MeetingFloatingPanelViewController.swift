@@ -79,8 +79,8 @@ final class MeetingFloatingPanelViewController: UIViewController {
         flipQuickActionView.disabled = true
         
         let quickActionProperties = MeetingQuickActionView.Properties(
-            iconTintColor: MeetingQuickActionView.Properties.StateColor(normal: .white, selected: MEGAAppColor.Black._000000.uiColor),
-            backgroundColor: MeetingQuickActionView.Properties.StateColor(normal: MEGAAppColor.Gray._474747.uiColor, selected: .white)
+            iconTintColor: MeetingQuickActionView.Properties.StateColor(normal: MEGAAppColor.White._FFFFFF.uiColor, selected: MEGAAppColor.Black._000000.uiColor),
+            backgroundColor: MeetingQuickActionView.Properties.StateColor(normal: MEGAAppColor.Gray._474747.uiColor, selected: MEGAAppColor.White._FFFFFF.uiColor)
         )
         let quickActions = [cameraQuickActionView, muteQuickActionView, speakerQuickActionView, flipQuickActionView]
         quickActions.forEach { $0?.properties = quickActionProperties }

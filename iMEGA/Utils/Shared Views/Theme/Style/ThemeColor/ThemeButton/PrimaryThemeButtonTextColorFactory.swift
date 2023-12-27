@@ -7,7 +7,7 @@ extension LightColorThemeFactory {
     struct LightPrimaryThemeButtonTextColorFactory: ButtonColorFactory {
 
         func normalColor() -> UIColor {
-            return .white
+            return MEGAAppColor.White._FFFFFF.uiColor
         }
 
         func disabledColor() -> UIColor {
@@ -44,7 +44,7 @@ extension DarkColorThemeFactory {
     struct DarkPrimaryThemeButtonTextColorFactory: ButtonColorFactory {
 
         func normalColor() -> UIColor {
-            return .white
+            return MEGAAppColor.White._FFFFFF.uiColor
         }
 
         func disabledColor() -> UIColor {

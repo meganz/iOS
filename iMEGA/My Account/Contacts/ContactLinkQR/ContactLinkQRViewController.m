@@ -149,10 +149,10 @@ typedef NS_ENUM(NSInteger, QRSection) {
             
         case QRSectionScanCode: {
             self.view.backgroundColor = UIColor.clearColor;
-            self.backButton.tintColor = UIColor.whiteColor;
-            self.hintLabel.textColor = UIColor.whiteColor;
-            UIColor *scanCodeLabelTextColor = (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark ? UIColor.whiteColor : [self scanCodeLabelTextColorInLightMode]);
-            [self.segmentedControl setTitleTextColor:UIColor.whiteColor selectedColor:scanCodeLabelTextColor];
+            self.backButton.tintColor = UIColor.mnz_whiteFFFFFF;
+            self.hintLabel.textColor = UIColor.mnz_whiteFFFFFF;
+            UIColor *scanCodeLabelTextColor = (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark ? UIColor.mnz_whiteFFFFFF : [self scanCodeLabelTextColorInLightMode]);
+            [self.segmentedControl setTitleTextColor:UIColor.mnz_whiteFFFFFF selectedColor:scanCodeLabelTextColor];
             break;
         }
     }
@@ -326,7 +326,7 @@ typedef NS_ENUM(NSInteger, QRSection) {
     CustomModalAlertViewController *inviteOrDismissModal = [[CustomModalAlertViewController alloc] init];
     
     if (imageOnBase64URLEncoding.mnz_isEmpty) {
-        inviteOrDismissModal.image = [UIImage imageForName:fullName.mnz_initialForAvatar size:CGSizeMake(128.0f, 128.0f) backgroundColor:[UIColor mnz_fromHexString:[MEGASdk avatarColorForBase64UserHandle:[MEGASdk base64HandleForUserHandle:contactLinkHandle]]] backgroundGradientColor:[UIColor mnz_fromHexString:[MEGASdk avatarSecondaryColorForBase64UserHandle:[MEGASdk base64HandleForUserHandle:contactLinkHandle]]] textColor:UIColor.whiteColor font:[UIFont systemFontOfSize:64.0f]];
+        inviteOrDismissModal.image = [UIImage imageForName:fullName.mnz_initialForAvatar size:CGSizeMake(128.0f, 128.0f) backgroundColor:[UIColor mnz_fromHexString:[MEGASdk avatarColorForBase64UserHandle:[MEGASdk base64HandleForUserHandle:contactLinkHandle]]] backgroundGradientColor:[UIColor mnz_fromHexString:[MEGASdk avatarSecondaryColorForBase64UserHandle:[MEGASdk base64HandleForUserHandle:contactLinkHandle]]] textColor:UIColor.mnz_whiteFFFFFF font:[UIFont systemFontOfSize:64.0f]];
     } else {
         inviteOrDismissModal.roundImage = YES;
         NSData *imageData = [[NSData alloc] initWithBase64EncodedString:[NSString mnz_base64FromBase64URLEncoding:imageOnBase64URLEncoding] options:NSDataBase64DecodingIgnoreUnknownCharacters];
@@ -395,7 +395,7 @@ typedef NS_ENUM(NSInteger, QRSection) {
         self.errorLabel.text = message;
         CABasicAnimation *colorAnimation = [CABasicAnimation animationWithKeyPath:@"borderColor"];
         colorAnimation.fromValue = (id)color.CGColor;
-        colorAnimation.toValue = (id)[UIColor whiteColor].CGColor;
+        colorAnimation.toValue = (id)UIColor.mnz_whiteFFFFFF.CGColor;
         colorAnimation.duration = 1;
         [self.cameraMaskBorderView.layer addAnimation:colorAnimation forKey:@"borderColor"];
     });

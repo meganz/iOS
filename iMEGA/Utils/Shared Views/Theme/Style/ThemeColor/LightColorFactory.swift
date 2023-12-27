@@ -14,7 +14,7 @@ struct LightColorThemeFactory: ColorFactory {
     
     func backgroundColor(_ style: MEGAColor.Background) -> UIColor {
         switch style {
-        case .primary: return .white
+        case .primary: return MEGAAppColor.White._FFFFFF.uiColor
         case .secondary: return MEGAAppColor.Gray._C4CCCC.uiColor
             
         case .warning: return MEGAAppColor.Yellow._FFCC0003.uiColor
@@ -43,7 +43,7 @@ struct LightColorThemeFactory: ColorFactory {
     
     func shadowColor(_ style: MEGAColor.Shadow) -> UIColor {
         switch style {
-        case .primary: return .black
+        case .primary: return MEGAAppColor.Black._000000.uiColor
         }
     }
     
