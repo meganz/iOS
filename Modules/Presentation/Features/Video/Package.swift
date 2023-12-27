@@ -18,8 +18,11 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../../../Domain/MEGASwiftUI"),
+        .package(path: "../../../Domain/MEGADomain"),
         .package(path: "../../../Presentation/MEGAAssets"),
-        .package(path: "../../../Presentation/MEGAL10n")
+        .package(path: "../../../Presentation/MEGAL10n"),
+        .package(path: "../../../Presentation/MEGAPresentation"),
+        .package(path: "../../Infrastracture/MEGATest")
     ],
     targets: [
         .target(
@@ -27,13 +30,19 @@ let package = Package(
             dependencies: [
                 "MEGASwiftUI",
                 "MEGAAssets",
-                "MEGAL10n"
+                "MEGAL10n",
+                "MEGAPresentation"
             ],
             swiftSettings: settings
         ),
         .testTarget(
             name: "VideoTests",
-            dependencies: ["Video"],
+            dependencies: [
+                "Video",
+                "MEGADomain",
+                .product(name: "MEGADomainMock", package: "MEGADomain"),
+                "MEGATest"
+            ],
             swiftSettings: settings
         )
     ]
