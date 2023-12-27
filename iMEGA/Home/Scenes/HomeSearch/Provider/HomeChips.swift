@@ -36,6 +36,10 @@ extension SearchChipEntity {
         type: .nodeFormat(MEGANodeFormatType.archive.rawValue),
         title: Strings.Localizable.Home.Search.Filter.archives
     )
+    public static let spreadsheets = SearchChipEntity(
+        type: .nodeFormat(MEGANodeFormatType.spreadsheet.rawValue),
+        title: Strings.Localizable.Home.Search.Filter.spreadsheets
+    )
 
     // MARK: - Time filter by last modified time chipses
     private static func allTimeFilterChips(
@@ -144,7 +148,8 @@ extension SearchChipEntity {
             .pdf,
             .docs,
             .presentation,
-            .archives
+            .archives,
+            .spreadsheets
         ]
     }
 

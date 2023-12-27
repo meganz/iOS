@@ -294,7 +294,7 @@ public final class MockSdk: MEGASdk {
         
         delegate.onRequestFinish?(self, request: mockRequest, error: MEGAError())
     }
-    
+
     public override func updateSetName(_ sid: MEGAHandle, name: String, delegate: any MEGARequestDelegate) {
         let mockRequest = MockRequest(handle: 1, text: name)
         
