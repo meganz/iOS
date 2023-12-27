@@ -269,8 +269,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     MEGALinkManager.urlType = url.mnz_type;
     switch (MEGALinkManager.urlType) {
         case URLTypeDefault:
-            [MEGALinkManager.linkURL mnz_presentSafariViewController];
-            [MEGALinkManager resetLinkAndURLType];
+            [MEGALinkManager openDefaultLink: url];
             break;
             
         case URLTypeOpenInLink:
