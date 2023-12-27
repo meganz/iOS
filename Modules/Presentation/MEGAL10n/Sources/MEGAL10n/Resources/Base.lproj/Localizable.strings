@@ -3839,6 +3839,8 @@
 /* Filter name for searching on the home screen */
 "home.search.filter.archives"="Archives";
 /* Filter name for searching on the home screen */
+"home.search.filter.spreadsheets"="Spreadsheets";
+/* Filter name for searching on the home screen */
 "home.search.filter.modificationDate.today"="Today";
 /* Filter name for searching on the home screen */
 "home.search.filter.modificationDate.last7days"="Last 7 days";
