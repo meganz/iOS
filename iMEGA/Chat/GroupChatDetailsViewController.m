@@ -559,7 +559,7 @@
         
         case GroupChatDetailsSectionEndCallForAll:
             cell.leftImageView.image = [UIImage imageNamed:@"endCall"];
-            cell.leftImageView.tintColor = [UIColor redColor];
+            cell.leftImageView.tintColor = UIColor.mnz_redFF0000;
             cell.leftImageView.contentMode = UIViewContentModeScaleAspectFit;
             cell.nameLabel.text = LocalizedString(@"meetings.endCall.endForAllButtonTitle", @"Button title that ends the call for all the participants.");
             [cell setDestructive:YES];

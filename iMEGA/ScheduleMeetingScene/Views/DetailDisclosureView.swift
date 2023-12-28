@@ -54,7 +54,7 @@ struct DetailDisclosureView: View {
                     .foregroundColor(colorScheme == .dark ? MEGAAppColor.Gray._EBEBF5.color.opacity(Constants.disclosureOpacity) : MEGAAppColor.Gray._3C3C43.color.opacity(Constants.disclosureOpacity))
             }
             Image(systemName: Constants.discolureIndicator)
-                .foregroundColor(.gray.opacity(Constants.disclosureOpacity))
+                .foregroundColor(MEGAAppColor.Gray._808080.color.opacity(Constants.disclosureOpacity))
                 .flipsForRightToLeftLayoutDirection(layoutDirection == .rightToLeft)
         }
     }

@@ -777,6 +777,10 @@ extension UIColor {
         return MEGAAppColor.Green._00A886.uiColor
     }
     
+    @objc class func mnz_green00FF00() -> UIColor {
+        return MEGAAppColor.Green._00FF00.uiColor
+    }
+    
     @objc(mnz_turquoiseForTraitCollection:)
     class func mnz_turquoise(for traitCollection: UITraitCollection) -> UIColor {
         switch traitCollection.userInterfaceStyle {
@@ -803,6 +807,10 @@ extension UIColor {
     
     class func mnz_redFF453A() -> UIColor {
         MEGAAppColor.Red._FF453A.uiColor
+    }
+    
+    @objc class func mnz_redFF0000() -> UIColor {
+        MEGAAppColor.Red._FF0000.uiColor
     }
     
     @objc(mnz_redForTraitCollection:)

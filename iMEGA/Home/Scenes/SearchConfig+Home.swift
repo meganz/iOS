@@ -14,7 +14,7 @@ extension SearchConfig {
                 normalBackground: Color.photosFilterTypeNormalBackground
             ),
             emptyViewAssetFactory: { chip in
-                let textColor = Color(.gray515151)
+                let textColor = MEGAAppColor.Gray._515151.color
                 let defaultEmptyContent = EmptyViewAssets(
                     image: Image(.searchEmptyState),
                     title: Strings.Localizable.Home.Search.Empty.noChipSelected,
