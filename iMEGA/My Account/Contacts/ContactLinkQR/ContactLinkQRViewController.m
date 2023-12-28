@@ -390,7 +390,7 @@ typedef NS_ENUM(NSInteger, QRSection) {
 
 - (void)feedbackWithSuccess:(BOOL)success {
     NSString *message = success ? LocalizedString(@"codeScanned", @"Success text shown in a label when the user scans a valid QR. String as short as possible.") : LocalizedString(@"invalidCode", @"Error text shown when the user scans a QR that is not valid. String as short as possible.");
-    UIColor *color = success ? [UIColor greenColor] : [UIColor redColor];
+    UIColor *color = success ? UIColor.mnz_green00FF00 : UIColor.mnz_redFF0000;
     dispatch_async(dispatch_get_main_queue(), ^{
         self.errorLabel.text = message;
         CABasicAnimation *colorAnimation = [CABasicAnimation animationWithKeyPath:@"borderColor"];

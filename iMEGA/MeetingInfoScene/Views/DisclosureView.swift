@@ -21,7 +21,7 @@ struct DisclosureView: View {
                     .font(.body)
                 Spacer()
                 Image(systemName: discolureIndicator)
-                    .foregroundColor(.gray.opacity(Constants.disclosureOpacity))
+                    .foregroundColor(MEGAAppColor.Gray._808080.color.opacity(Constants.disclosureOpacity))
                     .flipsForRightToLeftLayoutDirection(layoutDirection == .rightToLeft)
             }
             .padding(.horizontal)

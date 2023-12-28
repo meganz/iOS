@@ -18,7 +18,7 @@ class ShareDestinationTableViewCell: UITableViewCell {
         isUserInteractionEnabled = isEnabled
         
         if showActivityIndicator {
-            nameLabel.textColor = .gray
+            nameLabel.textColor = MEGAAppColor.Gray._808080.uiColor
             tintColor = UIColor.mnz_primaryGray(for: traitCollection).withAlphaComponent(0.5)
             
             let activityIndicator = UIActivityIndicatorView.mnz_init()

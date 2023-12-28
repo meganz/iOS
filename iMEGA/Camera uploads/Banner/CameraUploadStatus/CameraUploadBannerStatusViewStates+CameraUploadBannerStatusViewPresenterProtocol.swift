@@ -51,7 +51,7 @@ extension CameraUploadBannerStatusViewStates: CameraUploadBannerStatusViewPresen
     func backgroundColor(for scheme: ColorScheme) -> Color {
         switch self {
         case .uploadInProgress, .uploadCompleted:
-            return scheme == .dark ? .gray1D1D1D : MEGAAppColor.White._FFFFFF.color
+            return scheme == .dark ? MEGAAppColor.Gray._1D1D1D.color : MEGAAppColor.White._FFFFFF.color
         case .uploadPaused(let reason as any CameraUploadBannerStatusViewPresenterProtocol),
                 .uploadPartialCompleted(let reason as any CameraUploadBannerStatusViewPresenterProtocol):
             return reason.backgroundColor(for: scheme)
@@ -88,7 +88,7 @@ extension CameraUploadBannerStatusPartiallyCompletedReason: CameraUploadBannerSt
     func backgroundColor(for scheme: ColorScheme) -> Color {
         switch self {
         case .videoUploadIsNotEnabled:
-            return scheme == .dark ? .gray1D1D1D : MEGAAppColor.White._FFFFFF.color
+            return scheme == .dark ? MEGAAppColor.Gray._1D1D1D.color : MEGAAppColor.White._FFFFFF.color
         case .photoLibraryLimitedAccess:
             return MEGAAppColor.Yellow._FED42926.color
         }
@@ -113,6 +113,6 @@ extension CameraUploadBannerStatusUploadPausedReason: CameraUploadBannerStatusVi
     func textColor(for scheme: ColorScheme) -> Color { .primary }
     
     func backgroundColor(for scheme: ColorScheme) -> Color {
-        scheme == .dark ? .gray1D1D1D : MEGAAppColor.White._FFFFFF.color
+        scheme == .dark ? MEGAAppColor.Gray._1D1D1D.color : MEGAAppColor.White._FFFFFF.color
     }
 }

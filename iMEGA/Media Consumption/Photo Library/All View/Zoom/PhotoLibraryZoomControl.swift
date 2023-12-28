@@ -33,7 +33,7 @@ struct PhotoLibraryZoomControl: View {
             Image(systemName: "plus")
                 .imageScale(.large)
         }
-        .foregroundColor(zoomState.canZoom(.in) ? Color.photosZoomButtonForeground : Color.gray)
+        .foregroundColor(zoomState.canZoom(.in) ? Color.photosZoomButtonForeground : MEGAAppColor.Gray._808080.color)
         .disabled(!zoomState.canZoom(.in))
     }
     
@@ -44,7 +44,7 @@ struct PhotoLibraryZoomControl: View {
             Image(systemName: "minus")
                 .imageScale(.large)
         }
-        .foregroundColor(zoomState.canZoom(.out) ? Color.photosZoomButtonForeground : Color.gray)
+        .foregroundColor(zoomState.canZoom(.out) ? Color.photosZoomButtonForeground : MEGAAppColor.Gray._808080.color)
         .disabled(!zoomState.canZoom(.out))
     }
 }

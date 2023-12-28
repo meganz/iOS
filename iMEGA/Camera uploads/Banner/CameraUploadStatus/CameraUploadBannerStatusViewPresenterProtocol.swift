@@ -9,7 +9,7 @@ protocol CameraUploadBannerStatusViewPresenterProtocol {
 
 extension CameraUploadBannerStatusViewPresenterProtocol {
     func bottomBorder(for scheme: ColorScheme) -> Color {
-        scheme == .dark ? .gray545458.opacity(0.3) : .gray3C3C43.opacity(0.65)
+        scheme == .dark ? MEGAAppColor.Gray._545458.color.opacity(0.3) : MEGAAppColor.Gray._3C3C43.color.opacity(0.65)
     }
 }
 

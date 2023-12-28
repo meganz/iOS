@@ -31,7 +31,7 @@ struct ShareAttachmentCellView: View {
                         
                         Text(viewModel.fileExtension)
                             .font(.system(size: 15))
-                            .foregroundColor(.gray)
+                            .foregroundColor(MEGAAppColor.Gray._808080.color)
                             .fixedSize()
                     }
                 }

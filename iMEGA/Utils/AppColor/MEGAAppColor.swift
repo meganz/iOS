@@ -136,6 +136,7 @@ enum MEGAAppColor {
         case _545457
         case _545458
         case _676767
+        case _808080
         case _848484
         case _949494
         case _999999
@@ -182,6 +183,7 @@ enum MEGAAppColor {
             case ._545457: TokenColors.Background.blur
             case ._545458: TokenColors.Background.blur
             case ._676767: TokenColors.Background.blur
+            case ._808080: TokenColors.Background.blur
             case ._848484: TokenColors.Background.blur
             case ._949494: TokenColors.Background.blur
             case ._999999: TokenColors.Background.blur
@@ -222,6 +224,7 @@ enum MEGAAppColor {
             case ._545457: UIColor.gray545457
             case ._545458: UIColor.gray545458
             case ._676767: UIColor.gray676767
+            case ._808080: UIColor.gray808080
             case ._848484: UIColor.gray848484
             case ._949494: UIColor.gray949494
             case ._999999: UIColor.gray999999
@@ -395,6 +398,7 @@ enum MEGAAppColor {
         case _F95C61
         case _F288C2
         case _F7363D
+        case _FF0000
         case _FF3B30
         case _FF453A
         
@@ -414,6 +418,7 @@ enum MEGAAppColor {
             case ._F95C61: TokenColors.Background.blur
             case ._F288C2: TokenColors.Background.blur
             case ._F7363D: TokenColors.Background.blur
+            case ._FF0000: TokenColors.Background.blur
             case ._FF3B30: TokenColors.Background.blur
             case ._FF453A: TokenColors.Background.blur
             }
@@ -427,6 +432,7 @@ enum MEGAAppColor {
             case ._F95C61: UIColor.redF95C61
             case ._F288C2: UIColor.redF288C2
             case ._F7363D: UIColor.redF7363D
+            case ._FF0000: UIColor.redFF3B30
             case ._FF3B30: UIColor.redFF3B30
             case ._FF453A: UIColor.redFF453A
             }
