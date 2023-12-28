@@ -48,9 +48,9 @@ extension SearchChipEntity {
     ) -> [SearchChipEntity] {
         [
             today(calendar: calendar, currentDate: date),
-            last7Days(currentDate: date),
-            last30Days(currentDate: date),
-            thisYear(currentDate: date),
+            last7Days(calendar: calendar, currentDate: date),
+            last30Days(calendar: calendar, currentDate: date),
+            thisYear(calendar: calendar, currentDate: date),
             lastYear(currentDate: date),
             older(currentDate: date)
         ]
@@ -71,36 +71,45 @@ extension SearchChipEntity {
         )
     }
 
-    public static func last7Days(currentDate date: Date) -> SearchChipEntity {
+    public static func last7Days(
+        calendar: Calendar,
+        currentDate date: Date
+    ) -> SearchChipEntity {
         SearchChipEntity(
             type: .timeFrame(
                 .init(
                     startDate: date.daysAgo(7) ?? Date(),
-                    endDate: date
+                    endDate: date.endOfDay(calendar: calendar) ?? date
                 )
             ),
             title: Strings.Localizable.Home.Search.Filter.ModificationDate.last7days
         )
     }
 
-    public static func last30Days(currentDate date: Date) -> SearchChipEntity {
+    public static func last30Days(
+        calendar: Calendar,
+        currentDate date: Date
+    ) -> SearchChipEntity {
         SearchChipEntity(
             type: .timeFrame(
                 .init(
                     startDate: date.daysAgo(30) ?? Date(),
-                    endDate: date
+                    endDate: date.endOfDay(calendar: calendar) ?? date
                 )
             ),
             title: Strings.Localizable.Home.Search.Filter.ModificationDate.last30days
         )
     }
 
-    public static func thisYear(currentDate date: Date) -> SearchChipEntity {
+    public static func thisYear(
+        calendar: Calendar,
+        currentDate date: Date
+    ) -> SearchChipEntity {
         SearchChipEntity(
             type: .timeFrame(
                 .init(
                     startDate: date.currentYearStartDate() ?? Date(),
-                    endDate: date
+                    endDate: date.endOfDay(calendar: calendar) ?? date
                 )
             ),
             title: Strings.Localizable.Home.Search.Filter.ModificationDate.thisYear
