@@ -22,7 +22,7 @@ struct SeeMoreParticipantsView: View {
         VStack(spacing: Constants.spacing) {
             HStack {
                 Image(systemName: discolureIndicator)
-                    .foregroundColor(MEGAAppColor.Gray._808080.color.opacity(Constants.disclosureOpacity))
+                    .foregroundColor(MEGAAppColor.Gray._8E8E93.color.opacity(Constants.disclosureOpacity))
                     .rotationEffect(.degrees(isExpanded ? Constants.rotationLeft : Constants.rotationRight))
                     .padding(.horizontal)
                 Text(isExpanded ? Strings.Localizable.Meetings.Info.Participants.seeLess : Strings.Localizable.Meetings.Info.Participants.seeMore)

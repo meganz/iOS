@@ -22,7 +22,7 @@ struct ChatTabsSelectorView: View {
                 })
                 .overlay(alignment: .trailing, content: {
                     Circle()
-                        .fill(MEGAAppColor.Red._FF0000.color)
+                        .fill(MEGAAppColor.Red._FF3B30.color)
                         .frame(width: 5, height: 5)
                         .offset(x: 9, y: -3)
                         .opacity(shouldDisplayUnreadBadgeForChats ? 1 : 0)
@@ -43,7 +43,7 @@ struct ChatTabsSelectorView: View {
                 })
                 .overlay(alignment: .trailing, content: {
                     Circle()
-                        .fill(MEGAAppColor.Red._FF0000.color)
+                        .fill(MEGAAppColor.Red._FF3B30.color)
                         .frame(width: 5, height: 5)
                         .offset(x: 9, y: -3)
                         .opacity(shouldDisplayUnreadBadgeForMeetings ? 1 : 0)
