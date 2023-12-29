@@ -14,7 +14,7 @@ struct UpgradeSectionHeaderView: View {
                 .bold()
             
             Text(Strings.Localizable.UpgradeAccountPlan.Header.Title.currentPlan(currentPlanName))
-                .foregroundColor(MEGAAppColor.Gray._808080.color)
+                .foregroundColor(MEGAAppColor.Gray._8E8E93.color)
                 .font(.subheadline)
                 .bold()
                 .padding(.top, 1)

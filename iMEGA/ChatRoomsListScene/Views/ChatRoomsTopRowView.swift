@@ -24,7 +24,7 @@ struct ChatRoomsTopRowView: View {
             }
             
             Image(systemName: discolureIndicator)
-                .foregroundColor(MEGAAppColor.Gray._808080.color.opacity(0.6))
+                .foregroundColor(MEGAAppColor.Gray._8E8E93.color.opacity(0.6))
                 .flipsForRightToLeftLayoutDirection(layoutDirection == .rightToLeft)
         }
         .contentShape(Rectangle())

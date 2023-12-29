@@ -4,7 +4,7 @@ struct SingleSelectionCheckmarkView: View {
     let markedSelected: Bool
     
     private var foregroundColor: Color {
-        markedSelected ? MEGAAppColor.Green._00FF00.color : Color.photosPhotoSeletionBorder
+        markedSelected ? MEGAAppColor.Green._34C759.color : Color.photosPhotoSeletionBorder
     }
     
     private var backgroundView: some View {
