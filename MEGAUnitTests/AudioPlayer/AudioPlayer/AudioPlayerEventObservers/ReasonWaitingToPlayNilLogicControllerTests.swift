@@ -30,7 +30,7 @@ class ReasonWaitingToPlayNilLogicControllerTests: XCTestCase {
         XCTAssertFalse(result)
     }
     
-    func testReadyToPlayNotPausedSameItem_ReturnsTrue() {
+    func testReadyToPlayNotPausedSameItem_ReturnsFalse() {
         let sut = AudioPlayerEventObserversLoadingLogicController.ReasonWaitingToPlayNilLogicController()
         
         let result = sut.shouldNotifyLoadingView(
@@ -40,10 +40,10 @@ class ReasonWaitingToPlayNilLogicControllerTests: XCTestCase {
             isUserPreviouslyJustPlayedSameItem: true
         )
         
-        XCTAssertTrue(result)
+        XCTAssertFalse(result)
     }
     
-    func testReadyToPlayNotPausedNotSameItem_ReturnsTrue() {
+    func testReadyToPlayNotPausedNotSameItem_ReturnsFalse() {
         let sut = AudioPlayerEventObserversLoadingLogicController.ReasonWaitingToPlayNilLogicController()
         
         let result = sut.shouldNotifyLoadingView(
@@ -53,7 +53,7 @@ class ReasonWaitingToPlayNilLogicControllerTests: XCTestCase {
             isUserPreviouslyJustPlayedSameItem: false
         )
         
-        XCTAssertTrue(result)
+        XCTAssertFalse(result)
     }
     
     func testUnknownNotPaused_ReturnsTrue() {
