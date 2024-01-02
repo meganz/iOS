@@ -31,7 +31,7 @@ enum MEGAAppColor {
             case ._EEEEEE: TokenColors.Background.blur
             case ._EFEFEF: TokenColors.Background.blur
             case ._F2F2F2: TokenColors.Background.blur
-            case ._F7F7F7: TokenColors.Background.blur
+            case ._F7F7F7: TokenColors.Background.surface1
             case ._FAFAFA: TokenColors.Background.blur
             case ._FCFCFC: TokenColors.Background.blur
             case ._FFD60008: TokenColors.Background.blur
@@ -94,7 +94,7 @@ enum MEGAAppColor {
             case ._222222: TokenColors.Background.blur
             case ._2C2C2E: TokenColors.Background.blur
             case ._29292C: TokenColors.Background.blur
-            case ._161616: TokenColors.Background.blur
+            case ._161616: TokenColors.Background.surface1
             case ._252525: TokenColors.Background.blur
             case ._363638: TokenColors.Background.blur
             case ._404040: TokenColors.Background.blur
@@ -185,7 +185,7 @@ enum MEGAAppColor {
             case ._333333: TokenColors.Background.blur
             case ._363638: TokenColors.Background.blur
             case ._474747: TokenColors.Background.blur
-            case ._515151: TokenColors.Background.blur
+            case ._515151: TokenColors.Icon.secondary
             case ._535356: TokenColors.Background.blur
             case ._545457: TokenColors.Background.blur
             case ._545458: TokenColors.Background.blur
@@ -201,7 +201,7 @@ enum MEGAAppColor {
             case ._C4C4C4: TokenColors.Background.blur
             case ._C4CCCC: TokenColors.Background.blur
             case ._C9C9C9: TokenColors.Background.blur
-            case ._D1D1D1: TokenColors.Background.blur
+            case ._D1D1D1: TokenColors.Icon.secondary
             case ._DBDBDB: TokenColors.Background.blur
             case ._E2E2E2: TokenColors.Background.blur
             case ._E4EBEA: TokenColors.Background.blur
@@ -429,10 +429,10 @@ enum MEGAAppColor {
             switch self {
             case ._CA75D1: TokenColors.Background.blur
             case ._CE0A11: TokenColors.Background.blur
-            case ._F30C14: TokenColors.Background.blur
+            case ._F30C14: TokenColors.Button.brand
             case ._F95C61: TokenColors.Background.blur
             case ._F288C2: TokenColors.Background.blur
-            case ._F7363D: TokenColors.Background.blur
+            case ._F7363D: TokenColors.Button.brand
             case ._FF0000: TokenColors.Background.blur
             case ._FF3B30: TokenColors.Background.blur
             case ._FF453A: TokenColors.Background.blur
