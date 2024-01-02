@@ -11,32 +11,100 @@ class CookieSettingsViewModelTests: XCTestCase {
                                                Strings.Localizable.Settings.Cookies.Essential.footer,
                                                Strings.Localizable.Settings.Cookies.PerformanceAndAnalytics.footer]
     
-    func testIsFeatureFlagForInAppAdsEnabled_inAppAdsEnabled_shouldBeEnabled() {
-        let sut = makeSUT(featureFlags: [.inAppAds: true])
-        XCTAssertTrue(sut.isFeatureFlagForInAppAdsEnabled)
+    func testConfigViewTask_featureFlagEnabled_adsFlagsEnabled_shouldEnableAds() async {
+        let sut = makeSUT(
+            featureFlags: [.inAppAds: true],
+            abTestProvider: MockABTestProvider(
+                list: [
+                    .ads: .variantA,
+                    .externalAds: .variantA
+                ]
+            )
+        )
+        
+        var commands = [CookieSettingsViewModel.Command]()
+        sut.invokeCommand = { viewCommand in
+            commands.append(viewCommand)
+        }
+        sut.dispatch(.configView)
+        await sut.configViewTask?.value
+        
+        XCTAssertTrue(sut.isExternalAdsActive)
+        XCTAssertEqual(sut.numberOfSection, CookieSettingsViewModel.SectionType.externalAdsActive.numberOfSections)
     }
     
-    func testIsFeatureFlagForInAppAdsEnabled_inAppAdsDisabled_shouldBeDisabled() {
-        let sut = makeSUT(featureFlags: [.inAppAds: false])
-        XCTAssertFalse(sut.isFeatureFlagForInAppAdsEnabled)
+    func testConfigViewTask_featureFlagEnabled_adsFlagsDisabled_shouldNotEnableAds() async {
+        let sut = makeSUT(
+            featureFlags: [.inAppAds: true],
+            abTestProvider: MockABTestProvider(
+                list: [
+                    .ads: .variantA,
+                    .externalAds: .baseline
+                ]
+            )
+        )
+        var commands = [CookieSettingsViewModel.Command]()
+        sut.invokeCommand = { viewCommand in
+            commands.append(viewCommand)
+        }
+        
+        sut.dispatch(.configView)
+        await sut.configViewTask?.value
+        
+        XCTAssertFalse(sut.isExternalAdsActive)
+        XCTAssertEqual(sut.numberOfSection, CookieSettingsViewModel.SectionType.externalAdsInactive.numberOfSections)
     }
     
-    func testActionConfigView_cookieSettings_featureFlagInAppAdsEnabled_success() {
-        let sut = makeSUT(featureFlags: [.inAppAds: true])
+    func testConfigViewTask_featureFlagDisabled_adsFlagsDisabled_shouldNotEnableAds() async {
+        let sut = makeSUT(
+            featureFlags: [.inAppAds: false],
+            abTestProvider: MockABTestProvider(list: [.ads: .baseline])
+        )
+        var commands = [CookieSettingsViewModel.Command]()
+        sut.invokeCommand = { viewCommand in
+            commands.append(viewCommand)
+        }
+        
+        sut.dispatch(.configView)
+        await sut.configViewTask?.value
+        
+        XCTAssertFalse(sut.isExternalAdsActive)
+        XCTAssertEqual(sut.numberOfSection, CookieSettingsViewModel.SectionType.externalAdsInactive.numberOfSections)
+    }
+    
+    func testActionConfigView_adsIsEnabled_adsCheckCookieNotYetSet_success() {
+        var expectedFooters = footersArray
+        expectedFooters.append(Strings.Localizable.Settings.Cookies.AdvertisingCookies.footer)
+        var expectedCookiesBit = CookiesBitmap.all
+        expectedCookiesBit.remove(.ads)
+        
+        let noAdsCheckCookieBit = CookiesBitmap.all
+        let sut = makeSUT(cookieSettings: .success(noAdsCheckCookieBit.rawValue), featureFlags: [.inAppAds: true])
+        
+        test(viewModel: sut,
+             action: .configView,
+             expectedCommands: [.configCookieSettings(CookiesBitmap(rawValue: expectedCookiesBit.rawValue)), .updateFooters(expectedFooters)])
+    }
+    
+    func testActionConfigView_adsIsEnabled_adsCheckCookieAlreadySet_success() {
         var expectedFooters = footersArray
         expectedFooters.append(Strings.Localizable.Settings.Cookies.AdvertisingCookies.footer)
         
-        test(viewModel: sut,
-             action: .configView,
-             expectedCommands: [.configCookieSettings(CookiesBitmap(rawValue: 10)), .updateFooters(expectedFooters)])
-    }
-    
-    func testAction_configView_cookieSettings_success() {
-        let sut = makeSUT(cookieSettings: .success(10))
+        var withAdsCheckCookieBit = CookiesBitmap.all
+        withAdsCheckCookieBit.insert(.adsCheckCookie)
+        let sut = makeSUT(cookieSettings: .success(withAdsCheckCookieBit.rawValue), featureFlags: [.inAppAds: true])
         
         test(viewModel: sut,
              action: .configView,
-             expectedCommands: [.configCookieSettings(CookiesBitmap(rawValue: 10)), .updateFooters(footersArray)])
+             expectedCommands: [.configCookieSettings(CookiesBitmap(rawValue: withAdsCheckCookieBit.rawValue)), .updateFooters(expectedFooters)])
+    }
+    
+    func testAction_configView_cookieSettings_success() {
+        let sut = makeSUT(cookieSettings: .success(defaultCookieBits))
+        
+        test(viewModel: sut,
+             action: .configView,
+             expectedCommands: [.configCookieSettings(CookiesBitmap(rawValue: defaultCookieBits)), .updateFooters(footersArray)])
     }
     
     func testAction_configView_cookieSettings_fail_bitmapNotSet() {
@@ -64,7 +132,7 @@ class CookieSettingsViewModelTests: XCTestCase {
     }
     
     func testAction_save_setCookieSettings_success() {
-        let sut = makeSUT(cookieSettings: .success(10))
+        let sut = makeSUT(cookieSettings: .success(defaultCookieBits))
         
         test(viewModel: sut,
              action: .save,
@@ -72,10 +140,14 @@ class CookieSettingsViewModelTests: XCTestCase {
     }
     
     // MARK: Helper
+    // All Cookie bits: .essential, .preference, .analytics, .ads, .thirdparty
+    private let defaultCookieBits = CookiesBitmap.all.rawValue // 31
+    
     private func makeSUT(
         cookieBannerEnable: Bool = true,
-        cookieSettings: Result<Int, CookieSettingsErrorEntity> = .success(10),
+        cookieSettings: Result<Int, CookieSettingsErrorEntity> = .success(31),
         featureFlags: [FeatureFlagKey: Bool] = [FeatureFlagKey.inAppAds: false],
+        abTestProvider: MockABTestProvider = MockABTestProvider(list: [.ads: .variantA, .externalAds: .variantA]),
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> CookieSettingsViewModel {
@@ -85,7 +157,8 @@ class CookieSettingsViewModelTests: XCTestCase {
         
         let sut = CookieSettingsViewModel(cookieSettingsUseCase: cookieSettingsUseCase,
                                           router: mockRouter,
-                                          featureFlagProvider: featureFlagProvider)
+                                          featureFlagProvider: featureFlagProvider,
+                                          abTestProvider: abTestProvider)
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
     }

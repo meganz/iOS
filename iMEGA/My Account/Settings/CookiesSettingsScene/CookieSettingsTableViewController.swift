@@ -58,7 +58,7 @@ class CookieSettingsTableViewController: UITableViewController {
     func executeCommand(_ command: CookieSettingsViewModel.Command) {
         switch command {
         case .configCookieSettings(let cookiesBitmap):
-            guard viewModel.isFeatureFlagForInAppAdsEnabled else {
+            guard viewModel.isExternalAdsActive else {
                 performanceAndAnalyticsSwitch.setOn(cookiesBitmap.contains(.analytics), animated: false)
                 acceptCookiesSwitch.isOn = performanceAndAnalyticsSwitch.isOn
                 return
@@ -101,7 +101,7 @@ class CookieSettingsTableViewController: UITableViewController {
         
         performanceAndAnalyticsSwitch.setOn(sender.isOn, animated: true)
         
-        if viewModel.isFeatureFlagForInAppAdsEnabled {
+        if viewModel.isExternalAdsActive {
             advertisingCookiesSwitch.setOn(sender.isOn, animated: true)
         }
     }
@@ -136,15 +136,15 @@ class CookieSettingsTableViewController: UITableViewController {
         essentialCookiesLabel.text = Strings.Localizable.Settings.Cookies.essential
         essentialCookiesDetailLabel.text = Strings.Localizable.Settings.Cookies.Essential.alwaysOn
         performanceAndAnalyticsCookiesLabel.text = Strings.Localizable.Settings.Cookies.performanceAndAnalytics
-        
-        if viewModel.isFeatureFlagForInAppAdsEnabled {
-            advertisingCookiesLabel.text = Strings.Localizable.Settings.Cookies.advertisingCookies
-        }
-        
+                
         configToolbar()
         
         viewModel.dispatch(.configView)
         
+        if viewModel.isExternalAdsActive {
+            advertisingCookiesLabel.text = Strings.Localizable.Settings.Cookies.advertisingCookies
+        }
+
         updateAppearance()
     }
     
@@ -183,7 +183,7 @@ class CookieSettingsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         switch section {
         case CookieSettingsSection.acceptCookies.rawValue:
-            return viewModel.isFeatureFlagForInAppAdsEnabled ? "" : footersArray[CookieSettingsSection.acceptCookies.rawValue]
+            return viewModel.isExternalAdsActive ? "" : footersArray[CookieSettingsSection.acceptCookies.rawValue]
             
         case CookieSettingsSection.essentialCookies.rawValue:
             return footersArray[CookieSettingsSection.essentialCookies.rawValue]
@@ -192,7 +192,7 @@ class CookieSettingsTableViewController: UITableViewController {
             return footersArray[CookieSettingsSection.performanceAndAnalyticsCookies.rawValue]
             
         case CookieSettingsSection.advertisingCookies.rawValue:
-            return viewModel.isFeatureFlagForInAppAdsEnabled ? footersArray[CookieSettingsSection.advertisingCookies.rawValue] : ""
+            return viewModel.isExternalAdsActive ? footersArray[CookieSettingsSection.advertisingCookies.rawValue] : ""
             
         default:
             return ""
