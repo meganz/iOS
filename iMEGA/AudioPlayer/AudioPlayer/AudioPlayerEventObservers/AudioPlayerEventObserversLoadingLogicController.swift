@@ -48,12 +48,16 @@ struct AudioPlayerEventObserversLoadingLogicController {
             let isPaused = playerTimeControlStatus == .paused
             let isReady = playerStatus == .readyToPlay
             let isUnknown = playerStatus == .unknown
+            let isPlaying = playerTimeControlStatus == .playing
             
             if isUnknown && isPaused {
                 return true
             } else if isReady {
-                let isUserPausedCurrentPlayingItemWithoutChangingItemBefore = isPaused && isUserPreviouslyJustPlayedSameItem
-                return !isUserPausedCurrentPlayingItemWithoutChangingItemBefore
+                guard isPlaying else {
+                    let isUserPausedCurrentPlayingItemWithoutChangingItemBefore = isPaused && isUserPreviouslyJustPlayedSameItem
+                    return !isUserPausedCurrentPlayingItemWithoutChangingItemBefore
+                }
+                return false
             } else {
                 return !(isPaused && isReady)
             }
