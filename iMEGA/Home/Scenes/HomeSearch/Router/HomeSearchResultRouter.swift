@@ -9,6 +9,8 @@ protocol NodeRouting {
         on node: HandleEntity,
         button: UIButton
     )
+    func didTapNode(_ nodeHandle: HandleEntity, displayMode: DisplayMode?)
+    
     func didTapNode(_ nodeHandle: HandleEntity)
 }
 
@@ -48,7 +50,11 @@ final class HomeSearchResultRouter: NodeRouting {
         navigationController?.present(nodeActionViewController, animated: true, completion: nil)
     }
 
+    func didTapNode(_ nodeHandle: HandleEntity, displayMode: DisplayMode? = nil) {
+        nodeOpener.openNode(nodeHandle, config: .withOptionalDisplayMode(displayMode))
+    }
+    
     func didTapNode(_ nodeHandle: HandleEntity) {
-        nodeOpener.openNode(nodeHandle)
+        didTapNode(nodeHandle, displayMode: nil)
     }
 }
