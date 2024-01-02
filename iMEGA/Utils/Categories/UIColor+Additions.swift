@@ -102,18 +102,10 @@ extension UIColor {
     class func mnz_mainBars(for traitCollection: UITraitCollection) -> UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
-            if traitCollection.accessibilityContrast == .high {
-                return MEGAAppColor.White._FFFFFF.uiColor
-            } else {
-                return MEGAAppColor.White._F7F7F7.uiColor
-            }
+            return MEGAAppColor.White._F7F7F7.uiColor
             
         case .dark:
-            if traitCollection.accessibilityContrast == .high {
-                return MEGAAppColor.Black._000000.uiColor
-            } else {
-                return MEGAAppColor.Black._161616.uiColor
-            }
+            return MEGAAppColor.Black._161616.uiColor
             
         @unknown default:
             return MEGAAppColor.White._FFFFFF.uiColor
@@ -685,18 +677,10 @@ extension UIColor {
     class func mnz_primaryGray(for traitCollection: UITraitCollection) -> UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
-            if traitCollection.accessibilityContrast == .high {
-                return MEGAAppColor.Gray._3D3D3D.uiColor
-            } else {
-                return MEGAAppColor.Gray._515151.uiColor
-            }
+            return MEGAAppColor.Gray._515151.uiColor
             
         case .dark:
-            if traitCollection.accessibilityContrast == .high {
-                return MEGAAppColor.Gray._E5E5E5.uiColor
-            } else {
-                return MEGAAppColor.Gray._D1D1D1.uiColor
-            }
+            return MEGAAppColor.Gray._D1D1D1.uiColor
             
         @unknown default:
             return MEGAAppColor.White._FFFFFF.uiColor
@@ -817,18 +801,10 @@ extension UIColor {
     class func mnz_red(for traitCollection: UITraitCollection) -> UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
-            if traitCollection.accessibilityContrast == .high {
-                return MEGAAppColor.Red._CE0A11.uiColor
-            } else {
-                return MEGAAppColor.Red._F30C14.uiColor
-            }
+            return MEGAAppColor.Red._F30C14.uiColor
             
         case .dark:
-            if traitCollection.accessibilityContrast == .high {
-                return MEGAAppColor.Red._F95C61.uiColor
-            } else {
-                return MEGAAppColor.Red._F7363D.uiColor
-            }
+            return MEGAAppColor.Red._F7363D.uiColor
             
         @unknown default:
             return MEGAAppColor.White._FFFFFF.uiColor
