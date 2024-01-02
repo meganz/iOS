@@ -1231,6 +1231,7 @@
 		9419E0482A50175F00813577 /* NodeLoadOperation+NodeAccessConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9419E0462A50175F00813577 /* NodeLoadOperation+NodeAccessConfiguration.swift */; };
 		9422494228DB77A2009626E6 /* ContactLinkContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9422494128DB77A2009626E6 /* ContactLinkContentView.swift */; };
 		9422494428DB77B8009626E6 /* ContactLinkContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9422494328DB77B8009626E6 /* ContactLinkContentView.xib */; };
+		9422636E2B445FF60010B667 /* DisplayModeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9422636D2B445FF60010B667 /* DisplayModeTests.swift */; };
 		9422B9F02A41A331007AA5D1 /* PermissionAlertRouting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9422B9EF2A41A331007AA5D1 /* PermissionAlertRouting.swift */; };
 		9422B9F22A41A55C007AA5D1 /* MockPermissionAlertRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9422B9F12A41A55C007AA5D1 /* MockPermissionAlertRouter.swift */; };
 		942578062824312800D1E17D /* SharedItemsViewController+EmptyStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942578052824312800D1E17D /* SharedItemsViewController+EmptyStates.swift */; };
@@ -3822,6 +3823,7 @@
 		9419E0462A50175F00813577 /* NodeLoadOperation+NodeAccessConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeLoadOperation+NodeAccessConfiguration.swift"; sourceTree = "<group>"; };
 		9422494128DB77A2009626E6 /* ContactLinkContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactLinkContentView.swift; sourceTree = "<group>"; };
 		9422494328DB77B8009626E6 /* ContactLinkContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactLinkContentView.xib; sourceTree = "<group>"; };
+		9422636D2B445FF60010B667 /* DisplayModeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayModeTests.swift; sourceTree = "<group>"; };
 		9422B9EF2A41A331007AA5D1 /* PermissionAlertRouting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionAlertRouting.swift; sourceTree = "<group>"; };
 		9422B9F12A41A55C007AA5D1 /* MockPermissionAlertRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockPermissionAlertRouter.swift; sourceTree = "<group>"; };
 		942578052824312800D1E17D /* SharedItemsViewController+EmptyStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedItemsViewController+EmptyStates.swift"; sourceTree = "<group>"; };
@@ -5503,6 +5505,7 @@
 				245385F82A13C04800208B31 /* NodeInfo */,
 				24575FEE2A499A62003EAE79 /* CloudDriveViewControllerTests.swift */,
 				25BE0B082AC3ADCC00ED44DF /* CloudDriveViewModelTests.swift */,
+				9422636D2B445FF60010B667 /* DisplayModeTests.swift */,
 				2435921D2A4ABBC100B0C57E /* DocScannerSaveSettingTableViewControllerTests.swift */,
 				B64A71CA287B8C000085087D /* PhotoBrowserDataProvider_megaNode_Tests.swift */,
 				B6A6E1A2287BD08D00179806 /* PhotoBrowserDataProvider_nodeEntity_Tests.swift */,
@@ -15366,6 +15369,7 @@
 				943649DF2A4D83DE006CE8B8 /* CustomModalModel+Equatable.swift in Sources */,
 				2FF3FA6B260C39A300015050 /* DeepLinkingTests.m in Sources */,
 				B6AF22DF26097F500008FF72 /* DiskFullBlockingViewModelTests.swift in Sources */,
+				9422636E2B445FF60010B667 /* DisplayModeTests.swift in Sources */,
 				2435921E2A4ABBC100B0C57E /* DocScannerSaveSettingTableViewControllerTests.swift in Sources */,
 				24CCAC482B1363BD00BE4726 /* DownloadFileRepositoryTests.swift in Sources */,
 				837B17A328819CF600A4D01B /* DownloadLinkViewModelTests.swift in Sources */,
