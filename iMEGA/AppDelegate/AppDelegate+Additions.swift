@@ -77,19 +77,41 @@ extension AppDelegate {
         if cookieSettingsUseCase.cookieBannerEnabled() {
             Task { @MainActor in
                 do {
-                    // cookie settings already set
-                    _ = try await cookieSettingsUseCase.cookieSettings()
+                    // Cookie settings already set
+                    let bitmap = try await cookieSettingsUseCase.cookieSettings()
+                    
+                    // Check if new ads cookie is set
+                    guard await isExternalAdsActive() else { return }
+                    
+                    let cookiesBitmap = CookiesBitmap(rawValue: bitmap)
+                    guard !cookiesBitmap.contains(.adsCheckCookie) else { return }
+                    
+                    // Ads cookie not yet set. Show manage cookies with ads policy.
+                    showCookieDialog(type: .adsCookiePolicy)
+                    
                 } catch {
                     guard let error = error as? CookieSettingsErrorEntity else { return }
                     switch error {
                     case .generic, .invalidBitmap: break
                         
                     case .bitmapNotSet:
-                        showCookieDialog()
+                        let isExternalAdsActive = await isExternalAdsActive()
+                        showCookieDialog(type: isExternalAdsActive ? .adsCookiePolicy : .noAdsCookiePolicy)
                     }
                 }
             }
         }
+    }
+    
+    private func isExternalAdsActive() async -> Bool {
+        guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .inAppAds) else {
+            return false
+        }
+        
+        let abTestProvider = DIContainer.abTestProvider
+        let isAdsEnabled = await abTestProvider.abTestVariant(for: .ads) == .variantA
+        let isExternalAdsEnabled = await abTestProvider.abTestVariant(for: .externalAds) == .variantA
+        return isAdsEnabled && isExternalAdsEnabled
     }
     
     @objc func performCall(presenter: UIViewController, chatRoom: MEGAChatRoom, isSpeakerEnabled: Bool) {
@@ -100,12 +122,12 @@ extension AppDelegate {
                                isSpeakerEnabled: isSpeakerEnabled).start()
     }
         
-    private func showCookieDialog() {
+    private func showCookieDialog(type: CustomModalAlertViewController.CookieDialogType) {
         
         guard shouldPresentModal else { return }
         
         let cookieDialogCustomModalAlert = CustomModalAlertViewController()
-        cookieDialogCustomModalAlert.configureForCookieDialog(type: .noAdsCookiePolicy)
+        cookieDialogCustomModalAlert.configureForCookieDialog(type: type)
 
         UIApplication.mnz_presentingViewController().present(cookieDialogCustomModalAlert, animated: true, completion: nil)
     }

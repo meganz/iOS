@@ -32,7 +32,13 @@ extension CustomModalAlertViewController {
                 Task { @MainActor in
                     do {
                         let cookieSettingsUseCase = CookieSettingsUseCase(repository: CookieSettingsRepository.newRepo)
-                        _ = try await cookieSettingsUseCase.setCookieSettings(with: CookiesBitmap.all.rawValue)
+                        
+                        var cookieSettings = CookiesBitmap.all
+                        if type == .adsCookiePolicy {
+                            cookieSettings.insert(.adsCheckCookie)
+                        }
+
+                        _ = try await cookieSettingsUseCase.setCookieSettings(with: cookieSettings.rawValue)
                         self?.dismiss(animated: true, completion: nil)
                     } catch {
                         guard let cookieSettingsError = error as? CookieSettingsErrorEntity else {
