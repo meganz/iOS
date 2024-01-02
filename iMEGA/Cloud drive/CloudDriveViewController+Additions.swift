@@ -438,7 +438,7 @@ extension CloudDriveViewController {
                 navController: navigationController,
                 tracker: DIContainer.tracker
             )
-            router.didTapNode(node.handle)
+            router.didTapNode(node.handle, displayMode: displayMode.carriedOverDisplayMode)
         }
     }
     

@@ -21,6 +21,17 @@ enum NodeSource {
     case recentActionBucket(MEGARecentActionBucket)
 }
 
+extension DisplayMode {
+    var carriedOverDisplayMode: DisplayMode? {
+        // for those 2 special cases, we carry over the display mode so that children are configured properly
+        // [bug in the comments in FM-1461]
+        if self == .rubbishBin || self == .backup {
+            return self
+        }
+        return nil
+    }
+}
+
 struct CloudDriveViewControllerFactory {
     
     struct NodeBrowserConfig {
@@ -33,6 +44,14 @@ struct CloudDriveViewControllerFactory {
         
         static var `default`: Self {
             .init()
+        }
+        
+        /// small helper function to make it easier to pass down and package display mode into a config
+        /// display mode must be carried over into a child folder when presenting in rubbish or backups mode
+        static func withOptionalDisplayMode(_ displayMode: DisplayMode?) -> Self {
+            var config = Self.default
+            config.displayMode = displayMode
+            return config
         }
     }
     
@@ -164,7 +183,7 @@ struct CloudDriveViewControllerFactory {
         let bridge = SearchResultsBridge()
         let searchBridge = SearchBridge(
             selection: {
-                router.didTapNode($0.id)
+                router.didTapNode($0.id, displayMode: options.displayMode?.carriedOverDisplayMode)
             },
             context: { result, button in
                 router.didTapMoreAction(on: result.id, button: button)
