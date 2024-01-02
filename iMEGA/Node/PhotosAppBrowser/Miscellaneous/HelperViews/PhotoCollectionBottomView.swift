@@ -6,7 +6,7 @@ final class PhotoCollectionBottomView: UIView {
     private lazy var label: UILabel = {
         let label = UILabel()
         label.layer.zPosition = 1
-        label.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        label.textColor = MEGAAppColor.White._FFFFFF.uiColor
         label.font = .boldSystemFont(ofSize: 12)
         return label
     }()
@@ -14,13 +14,13 @@ final class PhotoCollectionBottomView: UIView {
     private lazy var videoIconLayer: CAShapeLayer = {
         let layer = CAShapeLayer()
         layer.path = UIBezierPath.videoIconPath.cgPath
-        layer.fillColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        layer.fillColor = MEGAAppColor.White._FFFFFF.uiColor.cgColor
         return layer
     }()
     
     private lazy var gradientLayer: CAGradientLayer = {
         let gradientLayer = CAGradientLayer()
-        gradientLayer.colors = [#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0), #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)].map { $0.cgColor }
+        gradientLayer.colors = [MEGAAppColor.Black._000000.uiColor.withAlphaComponent(0), MEGAAppColor.Black._000000.uiColor].map { $0.cgColor }
         gradientLayer.opacity = 0.5
         return gradientLayer
     }()

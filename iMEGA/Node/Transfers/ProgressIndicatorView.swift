@@ -94,13 +94,13 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
         backgroundLayer?.fillColor = UIColor.mnz_secondaryBackgroundElevated(traitCollection).cgColor
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
-            progressBackgroundLayer?.strokeColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.05)
+            progressBackgroundLayer?.strokeColor = MEGAAppColor.Black._000000.uiColor.withAlphaComponent(0.05).cgColor
             
         case .dark:
-            progressBackgroundLayer?.strokeColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.33)
+            progressBackgroundLayer?.strokeColor = MEGAAppColor.Black._000000.uiColor.withAlphaComponent(0.33).cgColor
             
         @unknown default:
-            progressBackgroundLayer?.strokeColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.05)
+            progressBackgroundLayer?.strokeColor = MEGAAppColor.Black._000000.uiColor.withAlphaComponent(0.05).cgColor
             
         }
     }
@@ -194,7 +194,7 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
         if transfers.isNotEmpty {
             self.isHidden = false
             self.alpha = 1
-            self.progressLayer?.strokeColor = #colorLiteral(red: 0, green: 0.6588235294, blue: 0.5254901961, alpha: 1)
+            self.progressLayer?.strokeColor = MEGAAppColor.Green._00A886.uiColor.cgColor
             let hasDownloadTransfer = transfers.contains { (transfer) -> Bool in
                 return transfer.type == .download
             }
@@ -204,7 +204,7 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
             arrowImageView.image = hasDownloadTransfer ? UIImage.transfersDownload : UIImage.transfersUpload
             if overquota {
                 stateBadge.image = UIImage.overquota
-                self.progressLayer?.strokeColor = hasUploadTransfer ? #colorLiteral(red: 0, green: 0.6588235294, blue: 0.5254901961, alpha: 1) : #colorLiteral(red: 1, green: 0.8, blue: 0, alpha: 1)
+                self.progressLayer?.strokeColor = hasUploadTransfer ? MEGAAppColor.Green._00A886.uiColor.cgColor : MEGAAppColor.Yellow._FFCC00.uiColor.cgColor
             } else if transfersPaused {
                 stateBadge.image = UIImage.combinedShape
             }
@@ -220,19 +220,19 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
                     if let lastErrorExtended = failedTransfer.lastErrorExtended {
                         if lastErrorExtended == .overquota {
                             stateBadge.image = UIImage.overquota
-                            self.progressLayer?.strokeColor = #colorLiteral(red: 1, green: 0.8, blue: 0, alpha: 1)
+                            self.progressLayer?.strokeColor = MEGAAppColor.Yellow._FFCC00.uiColor.cgColor
                         } else if lastErrorExtended != .generic {
                             stateBadge.image = UIImage.errorBadge
-                            self.progressLayer?.strokeColor = #colorLiteral(red: 1, green: 0.231372549, blue: 0.1882352941, alpha: 1)
+                            self.progressLayer?.strokeColor = MEGAAppColor.Red._FF3B30.uiColor.cgColor
                         }
                     } else {
                         stateBadge.image = UIImage.completedBadge
-                        self.progressLayer?.strokeColor = #colorLiteral(red: 0, green: 0.6588235294, blue: 0.5254901961, alpha: 1)
+                        self.progressLayer?.strokeColor = MEGAAppColor.Green._00A886.uiColor.cgColor
                         dismissWidget()
                     }
                 } else {
                     stateBadge.image = UIImage.completedBadge
-                    self.progressLayer?.strokeColor = #colorLiteral(red: 0, green: 0.6588235294, blue: 0.5254901961, alpha: 1)
+                    self.progressLayer?.strokeColor = MEGAAppColor.Green._00A886.uiColor.cgColor
                     dismissWidget()
                 }
                 
@@ -254,7 +254,7 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
         shapeLayer.fillColor = UIColor.mnz_secondaryBackgroundElevated(traitCollection).cgColor
         shapeLayer.shadowRadius = 16
         shapeLayer.shadowOpacity = 0.2
-        shapeLayer.shadowColor = #colorLiteral(red: 0.01568627451, green: 0.01568627451, blue: 0.05882352941, alpha: 1)
+        shapeLayer.shadowColor = MEGAAppColor.Gray._04040F.uiColor.cgColor
         shapeLayer.shadowOffset = CGSize(width: 0, height: 2)
         
         layer.addSublayer(shapeLayer)
@@ -264,8 +264,8 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
     private func addProgressBackgroundLayer() {
         let shapeLayer = circlularLayer(withRect: bounds,
                                         insetSize: CGSize(width: 10, height: 10))
-        shapeLayer.strokeColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.05)
-        shapeLayer.fillColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0)
+        shapeLayer.strokeColor = MEGAAppColor.Black._000000.uiColor.withAlphaComponent(0.05).cgColor
+        shapeLayer.fillColor = MEGAAppColor.Black._000000.uiColor.withAlphaComponent(0).cgColor
         shapeLayer.lineWidth = 2
         
         layer.addSublayer(shapeLayer)
@@ -275,8 +275,8 @@ class ProgressIndicatorView: UIView, MEGATransferDelegate, MEGARequestDelegate {
     private func addProgressLayer() {
         let shapeLayer = circlularLayer(withRect: bounds,
                                         insetSize: CGSize(width: 10, height: 10))
-        shapeLayer.strokeColor = #colorLiteral(red: 0, green: 0.6588235294, blue: 0.5254901961, alpha: 1)
-        shapeLayer.fillColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0)
+        shapeLayer.strokeColor = MEGAAppColor.Green._00A886.uiColor.cgColor
+        shapeLayer.fillColor = MEGAAppColor.Black._000000.uiColor.withAlphaComponent(0).cgColor
         shapeLayer.lineWidth = 2
         shapeLayer.strokeEnd = 0.0
         layer.addSublayer(shapeLayer)

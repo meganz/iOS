@@ -446,9 +446,9 @@ extension MeetingFloatingPanelViewController: PanModalPresentable {
     }
     
     var panModalBackgroundColor: UIColor {
-        #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0)
+        MEGAAppColor.Black._000000.uiColor.withAlphaComponent(0)
     }
-    
+
     var anchorModalToLongForm: Bool {
         false
     }

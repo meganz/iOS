@@ -42,16 +42,16 @@ extension EndMeetingOptionsViewViewController: PanModalPresentable {
         nil
     }
     
+    var panModalBackgroundColor: UIColor {
+        MEGAAppColor.Black._000000.uiColor.withAlphaComponent(0.3955365646)
+    }
+    
     var longFormHeight: PanModalHeight {
         shortFormHeight
     }
     
     var shortFormHeight: PanModalHeight {
         .contentHeight(170.0)
-    }
-    
-    var panModalBackgroundColor: UIColor {
-        #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.3955365646)
     }
 
     var allowsTapToDismiss: Bool {

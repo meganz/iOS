@@ -10,7 +10,7 @@ class ChatBottomNewMessageIndicatorView: UIView {
         var config = UIButton.Configuration.plain()
         config.contentInsets = NSDirectionalEdgeInsets(top: 3, leading: 5, bottom: 3, trailing: 5)
         label.configuration = config
-        label.backgroundColor = #colorLiteral(red: 0.2, green: 0.2, blue: 0.2039215686, alpha: 0.9)
+        label.backgroundColor = MEGAAppColor.Gray._333333.uiColor.withAlphaComponent(0.9)
         label.layer.cornerRadius = 10
         label.clipsToBounds = true
         label.layer.borderWidth = 1
@@ -21,7 +21,7 @@ class ChatBottomNewMessageIndicatorView: UIView {
     
     lazy var backgroundView: UIButton = {
         let backgroundView = UIButton()
-        backgroundView.backgroundColor = #colorLiteral(red: 0.2, green: 0.2, blue: 0.2039215686, alpha: 0.9)
+        backgroundView.backgroundColor = MEGAAppColor.Gray._333333.uiColor.withAlphaComponent(0.9)
         backgroundView.layer.cornerRadius = 22
         backgroundView.clipsToBounds = true
         backgroundView.setImage(UIImage(resource: .jumpToLatest), for: .normal)

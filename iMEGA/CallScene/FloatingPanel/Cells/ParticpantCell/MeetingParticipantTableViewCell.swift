@@ -13,7 +13,7 @@ class MeetingParticipantTableViewCell: UITableViewCell, ViewType {
         
     override func awakeFromNib() {
         super.awakeFromNib()
-        moderatorTextLabel.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.1957759226)
+        moderatorTextLabel.backgroundColor = MEGAAppColor.White._FFFFFF.uiColor.withAlphaComponent(0.1957759226)
         moderatorTextLabel.layer.cornerRadius = 4.0
         moderatorTextLabel.text = "  \(Strings.Localizable.Meetings.Participant.moderator)  "
     }

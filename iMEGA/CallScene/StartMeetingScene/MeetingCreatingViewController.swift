@@ -17,10 +17,10 @@ class MeetingCreatingViewController: UIViewController, UITextFieldDelegate {
     private struct Constants {
         static let bottomBarText = UIFont.preferredFont(style: .title3, weight: .semibold)
         static let bottomBarButtonText = UIFont.preferredFont(forTextStyle: .headline)
-        static let backgroundColor = #colorLiteral(red: 0.2, green: 0.1843137255, blue: 0.1843137255, alpha: 1)
+        static let backgroundColor = MEGAAppColor.Gray._332F2F.uiColor
         static let iconTintColorNormal = MEGAAppColor.White._FFFFFF.uiColor
         static let iconTintColorSelected = MEGAAppColor.Black._000000.uiColor
-        static let iconBackgroundColorNormal = #colorLiteral(red: 0.1333158016, green: 0.1333456039, blue: 0.1333118975, alpha: 1)
+        static let iconBackgroundColorNormal = MEGAAppColor.Black._222222.uiColor
         static let iconBackgroundColorSelected = MEGAAppColor.White._FFFFFF.uiColor
         static let meetingNameTextColor = MEGAAppColor.White._FFFFFF.uiColor.withAlphaComponent(0.2)
         static let placeholderTextColor = MEGAAppColor.White._FFFFFF.uiColor.withAlphaComponent(0.2)

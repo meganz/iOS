@@ -42,8 +42,8 @@ class MessageTextView: UITextView {
     
     private lazy var placeholderTextView: UITextView = {
         let textView = UITextView()
-        textView.textColor = #colorLiteral(red: 0.5176470588, green: 0.5176470588, blue: 0.5176470588, alpha: 1)
-        textView.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0)
+        textView.textColor = MEGAAppColor.Gray._848484.uiColor
+        textView.backgroundColor = MEGAAppColor.Black._000000.uiColor.withAlphaComponent(0)
         textView.font = font
         textView.adjustsFontForContentSizeCategory = true
         textView.isUserInteractionEnabled = false
