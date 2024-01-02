@@ -12,13 +12,13 @@ final class PhotoSelectedMarkerView: SingleTapView {
         let layer = CAShapeLayer()
         createPath(circleLayer: layer, insetValue: outerCircleInsetValue)
         
-        layer.fillColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0)
-        layer.strokeColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        layer.fillColor = MEGAAppColor.Black._000000.uiColor.withAlphaComponent(0).cgColor
+        layer.strokeColor = MEGAAppColor.White._FFFFFF.uiColor.cgColor
         layer.lineWidth = 1.65
         
         layer.shadowRadius = 1
         layer.shadowOpacity = 0.3
-        layer.shadowColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+        layer.shadowColor = MEGAAppColor.Black._000000.uiColor.cgColor
         layer.shadowOffset = CGSize(width: -2, height: 2)
         
         return layer
@@ -29,7 +29,7 @@ final class PhotoSelectedMarkerView: SingleTapView {
         let layer = CAShapeLayer()
         createPath(circleLayer: layer, insetValue: innerCircleInsetValue)
         
-        layer.fillColor = #colorLiteral(red: 0.2901960784, green: 0.6470588235, blue: 0.5333333333, alpha: 1)
+        layer.fillColor = MEGAAppColor.Green._4AA588.uiColor.cgColor
 
         return layer
     }()

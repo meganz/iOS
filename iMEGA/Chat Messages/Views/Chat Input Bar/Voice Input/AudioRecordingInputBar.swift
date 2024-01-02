@@ -94,7 +94,7 @@ class AudioRecordingInputBar: UIView {
         locked = true
         let width = voiceView.bounds.width - trashView.bounds.width
         voiceView.finalRatio = width / voiceView.bounds.width
-        voiceView.selectionView.backgroundColor = #colorLiteral(red: 0, green: 0.5803921569, blue: 0.462745098, alpha: 1)
+        voiceView.selectionView.backgroundColor = MEGAAppColor.Green._009476.uiColor
         voiceView.imageView.image = UIImage(resource: .sendChatDisabled)
         voiceView.imageView.renderImage(withColor: MEGAAppColor.White._FFFFFF.uiColor)
         let audioWaveTrailing = self.trashView.frame.width

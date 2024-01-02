@@ -60,27 +60,27 @@ extension ChatViewController: MessagesDisplayDelegate {
             }
             
             if chatMessage.message.isManagementMessage {
-                containerView.layer.borderColor = #colorLiteral(red: 0.8941176471, green: 0.9215686275, blue: 0.9176470588, alpha: 0).cgColor
+                containerView.layer.borderColor = MEGAAppColor.Gray._E4EBEA.uiColor.withAlphaComponent(0).cgColor
                 return
             }
             
             if chatMessage.message.type == .normal && ((chatMessage.message.content ?? "") as NSString).mnz_isPureEmojiString() {
-                containerView.layer.borderColor = #colorLiteral(red: 0.8941176471, green: 0.9215686275, blue: 0.9176470588, alpha: 0).cgColor
+                containerView.layer.borderColor = MEGAAppColor.Gray._E4EBEA.uiColor.withAlphaComponent(0).cgColor
             }
             
             if chatMessage.transfer?.transferChatMessageType() == .attachment {
-                containerView.layer.borderColor = #colorLiteral(red: 0.8941176471, green: 0.9215686275, blue: 0.9176470588, alpha: 0).cgColor
+                containerView.layer.borderColor = MEGAAppColor.Gray._E4EBEA.uiColor.withAlphaComponent(0).cgColor
             }
             
             if chatMessage.message.type == .attachment && (chatMessage.message.nodeList?.size ?? 0 == 1) {
                 if let node = chatMessage.message.nodeList?.node(at: 0), (node.name?.fileExtensionGroup.isVisualMedia ?? false) {
-                    containerView.layer.borderColor = #colorLiteral(red: 0.8941176471, green: 0.9215686275, blue: 0.9176470588, alpha: 0).cgColor
+                    containerView.layer.borderColor = MEGAAppColor.Gray._E4EBEA.uiColor.withAlphaComponent(0).cgColor
                 }
             }
             
             if chatMessage.message.type == .containsMeta,
                 chatMessage.message.containsMeta?.type == .giphy {
-                containerView.layer.borderColor = #colorLiteral(red: 0.8941176471, green: 0.9215686275, blue: 0.9176470588, alpha: 0).cgColor
+                containerView.layer.borderColor = MEGAAppColor.Gray._E4EBEA.uiColor.withAlphaComponent(0).cgColor
             }
             
         }

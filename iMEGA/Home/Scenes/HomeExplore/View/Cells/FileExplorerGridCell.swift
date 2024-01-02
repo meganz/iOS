@@ -60,9 +60,9 @@ class FileExplorerGridCell: UICollectionViewCell {
         didSet {
             selectImageView.image = markSelection ? UIImage.thumbnailSelected : UIImage.checkBoxUnselected
             if markSelection {
-                self.borderColor = #colorLiteral(red: 0, green: 0.6588235294, blue: 0.5254901961, alpha: 1)
+                self.borderColor = MEGAAppColor.Green._00A886.uiColor
             } else {
-                self.borderColor = traitCollection.theme == .dark ? #colorLiteral(red: 0.3294117647, green: 0.3294117647, blue: 0.3450980392, alpha: 0.65) : #colorLiteral(red: 0.968627451, green: 0.968627451, blue: 0.968627451, alpha: 1)
+                self.borderColor = traitCollection.theme == .dark ? MEGAAppColor.Gray._545458.uiColor.withAlphaComponent(0.65) : MEGAAppColor.White._F7F7F7.uiColor
             }
         }
     }
@@ -82,11 +82,11 @@ class FileExplorerGridCell: UICollectionViewCell {
     private func setupAppearance(with trait: UITraitCollection) {
         switch trait.theme {
         case .dark:
-            self.borderColor = #colorLiteral(red: 0.3294117647, green: 0.3294117647, blue: 0.3450980392, alpha: 0.65)
-            thumbnailImageView.backgroundColor = #colorLiteral(red: 0.1098039216, green: 0.1098039216, blue: 0.1176470588, alpha: 1)
+            self.borderColor = MEGAAppColor.Gray._545458.uiColor.withAlphaComponent(0.65)
+            thumbnailImageView.backgroundColor = MEGAAppColor.Black._1C1C1E.uiColor
         default:
-            self.borderColor = #colorLiteral(red: 0.968627451, green: 0.968627451, blue: 0.968627451, alpha: 1)
-            thumbnailImageView.backgroundColor = #colorLiteral(red: 0.968627451, green: 0.968627451, blue: 0.968627451, alpha: 1)
+            self.borderColor = MEGAAppColor.White._F7F7F7.uiColor
+            thumbnailImageView.backgroundColor = MEGAAppColor.White._F7F7F7.uiColor
         }
     }
 }
