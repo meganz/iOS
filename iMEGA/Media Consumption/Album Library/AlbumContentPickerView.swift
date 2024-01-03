@@ -11,7 +11,7 @@ struct AlbumContentPickerView: View {
     
     var body: some View {
         ZStack {
-            Color(backGroundColor)
+            backgroundColor
             VStack(spacing: 0) {
                 navigationBar
                 
@@ -93,12 +93,12 @@ struct AlbumContentPickerView: View {
         }
     }
     
-    private var backGroundColor: UIColor {
-        colorScheme == .dark ? UIColor.mnz_black1C1C1E() : MEGAAppColor.White._F7F7F7.uiColor
+    private var backgroundColor: Color {
+        colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._F7F7F7.color
     }
     
     private var textColor: Color {
-        colorScheme == .dark ? Color(UIColor.mnz_grayD1D1D1()) : Color(UIColor.mnz_gray515151())
+        colorScheme == .dark ? MEGAAppColor.Gray._D1D1D1.color : MEGAAppColor.Gray._515151.color
     }
     
     private func dismiss() {

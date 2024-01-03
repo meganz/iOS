@@ -8,7 +8,7 @@ struct SlideShowOptionDetailView: View {
     
     var body: some View {
         ZStack {
-            Color(backGroundColor)
+            backgroundColor
             VStack(spacing: 0) {
                 navigationBar
                 listView()
@@ -22,7 +22,7 @@ struct SlideShowOptionDetailView: View {
         } label: {
             Text(Strings.Localizable.cancel)
                 .font(.body)
-                .foregroundColor(Color(colorScheme == .dark ? UIColor.mnz_grayD1D1D1() : UIColor.mnz_gray515151()))
+                .foregroundColor(colorScheme == .dark ? MEGAAppColor.Gray._D1D1D1.color : MEGAAppColor.Gray._515151.color)
                 .padding()
                 .contentShape(Rectangle())
         }
@@ -60,10 +60,10 @@ struct SlideShowOptionDetailView: View {
         .padding(.top, 36)
     }
     
-    private var backGroundColor: UIColor {
+    private var backgroundColor: Color {
         switch colorScheme {
-        case .dark: return UIColor.mnz_black1C1C1E()
-        default: return MEGAAppColor.White._F7F7F7.uiColor
+        case .dark: return MEGAAppColor.Black._1C1C1E.color
+        default: return MEGAAppColor.White._F7F7F7.color
         }
     }
 }

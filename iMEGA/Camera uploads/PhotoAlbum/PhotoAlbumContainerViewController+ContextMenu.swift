@@ -25,7 +25,8 @@ extension PhotoAlbumContainerViewController {
     
     var cancelBarButton: UIBarButtonItem {
         let cancelBarButton = UIBarButtonItem(title: Strings.Localizable.cancel, style: .done, target: self, action: #selector(toggleEditing))
-        cancelBarButton.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.mediaDiscoveryExitButtonTint], for: .normal)
+        let normalForegroundColor = traitCollection.userInterfaceStyle == .dark ? MEGAAppColor.White._FFFFFF.uiColor : MEGAAppColor.Black._000000.uiColor
+        cancelBarButton.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: normalForegroundColor], for: .normal)
         return cancelBarButton
     }
     

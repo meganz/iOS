@@ -5,6 +5,10 @@ import UIKit
 
 extension MEGAAppColor {
     enum Photos {
+        case cameraUploadStatusUploading
+        case cameraUploadStatusCompleted
+        case decryptTitleEnabled
+        case decryptTitleDisabled
         case filterBackground
         case filterLocationItemBackground
         case filterLocationItemForeground
@@ -15,7 +19,7 @@ extension MEGAAppColor {
         case filterTypeSelectionBackground
         case filterTypeSelectionForeground
         case pageTabForeground
-        case photoSeletionBorder
+        case photoSelectionBorder
         case rightBarButtonForeground
         case zoomButtonForeground
         
@@ -29,6 +33,10 @@ extension MEGAAppColor {
         
         private var designTokenColor: UIColor {
             switch self {
+            case .cameraUploadStatusUploading: TokenColors.Background.blur
+            case .cameraUploadStatusCompleted: TokenColors.Background.blur
+            case .decryptTitleEnabled: TokenColors.Background.blur
+            case .decryptTitleDisabled: TokenColors.Background.blur
             case .filterBackground: TokenColors.Background.blur
             case .filterLocationItemBackground: TokenColors.Background.blur
             case .filterLocationItemForeground: TokenColors.Text.primary
@@ -39,7 +47,7 @@ extension MEGAAppColor {
             case .filterTypeSelectionBackground: TokenColors.Background.blur
             case .filterTypeSelectionForeground: TokenColors.Text.primary
             case .pageTabForeground: TokenColors.Text.primary
-            case .photoSeletionBorder: TokenColors.Background.blur
+            case .photoSelectionBorder: TokenColors.Background.blur
             case .rightBarButtonForeground: TokenColors.Text.primary
             case .zoomButtonForeground: TokenColors.Text.primary
             }
@@ -47,6 +55,10 @@ extension MEGAAppColor {
         
         private var legacyColor: UIColor {
             switch self {
+            case .cameraUploadStatusUploading: UIColor.cameraUploadStatusUploading
+            case .cameraUploadStatusCompleted: UIColor.cameraUploadStatusCompleted
+            case .decryptTitleEnabled: UIColor.mediaConsumptionDecryptTitleEnabled
+            case .decryptTitleDisabled: UIColor.mediaConsumptionDecryptTitleDisabled
             case .filterBackground: UIColor.photosFilterBackground
             case .filterLocationItemBackground: UIColor.photosFilterLocationItemBackground
             case .filterLocationItemForeground: UIColor.photosFilterLocationItemForeground
@@ -57,7 +69,7 @@ extension MEGAAppColor {
             case .filterTypeSelectionBackground: UIColor.photosFilterTypeSelectionBackground
             case .filterTypeSelectionForeground: UIColor.photosFilterTypeSelectionForeground
             case .pageTabForeground: UIColor.photosPageTabForeground
-            case .photoSeletionBorder: UIColor.photosPhotoSeletionBorder
+            case .photoSelectionBorder: UIColor.photosPhotoSeletionBorder
             case .rightBarButtonForeground: UIColor.photosRightBarButtonForeground
             case .zoomButtonForeground: UIColor.photosZoomButtonForeground
             }

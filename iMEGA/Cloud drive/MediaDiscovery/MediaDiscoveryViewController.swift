@@ -103,7 +103,8 @@ final class MediaDiscoveryViewController: ExplorerBaseViewController {
                 action: #selector(selectAllButtonPressed(_:))
             )
         } else {
-            leftBarButtonItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.mediaDiscoveryExitButtonTint], for: .normal)
+            let normalForegroundColor = traitCollection.userInterfaceStyle == .dark ? MEGAAppColor.White._FFFFFF.uiColor : MEGAAppColor.Black._000000.uiColor
+            leftBarButtonItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: normalForegroundColor], for: .normal)
             navigationItem.leftBarButtonItem = leftBarButtonItem
         }
     }
@@ -115,7 +116,8 @@ final class MediaDiscoveryViewController: ExplorerBaseViewController {
                 target: self,
                 action: #selector(cancelButtonPressed(_:))
             )
-            navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.mediaDiscoveryExitButtonTint], for: .normal)
+            let normalForegroundColor = traitCollection.userInterfaceStyle == .dark ? MEGAAppColor.White._FFFFFF.uiColor : MEGAAppColor.Black._000000.uiColor
+            navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: normalForegroundColor], for: .normal)
         } else {
             rightBarButtonItem.isEnabled = true
             navigationItem.rightBarButtonItem = photoLibraryContentViewModel.library.isEmpty ? nil : rightBarButtonItem

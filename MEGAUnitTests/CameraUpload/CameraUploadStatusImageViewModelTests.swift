@@ -47,8 +47,8 @@ final class CameraUploadStatusImageViewModelTests: XCTestCase {
         let expectations: [(CameraUploadStatus, Color)] = [
             (.turnedOff, .clear),
             (.checkPendingItemsToUpload, .clear),
-            (.uploading(progress: 0.65), Color.cameraUploadStatusUploading),
-            (.completed, Color.cameraUploadStatusCompleted),
+            (.uploading(progress: 0.65), MEGAAppColor.Photos.cameraUploadStatusUploading.color),
+            (.completed, MEGAAppColor.Photos.cameraUploadStatusCompleted.color),
             (.idle, .clear),
             (.warning, .clear)]
         

@@ -54,10 +54,10 @@ struct PhotoLibraryPicker: View {
         
         UISegmentedControl
             .appearance()
-            .backgroundColor = UIColor.mediaConsumptionTimelineYMDATabs
+            .backgroundColor = MEGAAppColor.White._FFFFFF.uiColor.withAlphaComponent(0.6)
         
         UISegmentedControl
             .appearance()
-            .selectedSegmentTintColor = UIColor.mediaConsumptionTimelineYMDATabsSelected
+            .selectedSegmentTintColor = MEGAAppColor.Black._000000.uiColor.withAlphaComponent(0.5)
     }
 }

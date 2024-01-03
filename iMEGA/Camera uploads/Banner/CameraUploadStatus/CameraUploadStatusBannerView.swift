@@ -11,7 +11,7 @@ struct CameraUploadBannerStatusView: View {
     var body: some View {
         Button(action: onTapHandler, label: content)
             .buttonStyle(.plain)
-            .background(Color.backgroundRegularPrimaryElevated)
+            .background(MEGAAppColor.Background.backgroundRegularPrimaryElevated.color)
     }
     
     @ViewBuilder
