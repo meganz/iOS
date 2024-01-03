@@ -131,6 +131,22 @@ final class AdsSlotViewModelTests: XCTestCase {
         await sut.monitorAdsSlotChangesTask?.value
     }
     
+    func testUpdateAdsSlot_sameAdsSlotConfig_adsUrlIsNil_shouldNotDisplayAds() async {
+        let adsSlotConfigs = [AdsSlotConfig(adsSlot: .home, displayAds: true),
+                                     AdsSlotConfig(adsSlot: .home, displayAds: false),
+                                     AdsSlotConfig(adsSlot: .home, displayAds: true)]
+        let stream = makeMockAdsSlotChangeStream(adsSlotConfigs: adsSlotConfigs)
+        let sut = makeSUT(adsSlotChangeStream: stream, adsList: [:])
+        sut.adsUrl = nil
+
+        await sut.setupABTestVariant()
+        sut.monitorAdsSlotChanges()
+        await sut.monitorAdsSlotChangesTask?.value
+        
+        XCTAssertFalse(sut.displayAds)
+        XCTAssertNil(sut.adsUrl)
+    }
+    
     func testUpdateAdsSlot_sameAdsSlotConfig_shouldNotChangeURLandDisplayAdsValue() async {
         let expectedAdsSlotConfig = randomAdsSlotConfig
         let stream = makeMockAdsSlotChangeStream(adsSlotConfigs: [expectedAdsSlotConfig])

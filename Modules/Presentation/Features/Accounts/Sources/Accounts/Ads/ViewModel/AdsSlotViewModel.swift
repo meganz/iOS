@@ -80,7 +80,7 @@ final public class AdsSlotViewModel: ObservableObject {
            let newAdsSlotConfig,
             adsSlotConfig.adsSlot == newAdsSlotConfig.adsSlot {
             self.adsSlotConfig = newAdsSlotConfig
-            await displayAds(newAdsSlotConfig.displayAds)
+            await displayAds(newAdsSlotConfig.displayAds && adsUrl != nil)
         } else {
             adsSlotConfig = newAdsSlotConfig
             await loadNewAds()
