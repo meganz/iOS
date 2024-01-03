@@ -1508,6 +1508,8 @@
 		A85740C52032F6B80033034C /* MOChatDraft+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C22032F6B80033034C /* MOChatDraft+CoreDataClass.m */; };
 		A85740C82032F6E80033034C /* MOChatDraft+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C22032F6B80033034C /* MOChatDraft+CoreDataClass.m */; };
 		A85740C92032F6E80033034C /* MOChatDraft+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = A85740C02032F6B70033034C /* MOChatDraft+CoreDataProperties.m */; };
+		A857F4FF2B45B05F001CA42C /* NSString+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BADDAC1A8E1659008408B3 /* NSString+MNZCategory.m */; };
+		A857F5002B45B2D0001CA42C /* NSDate+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC25724220080FC0098E781 /* NSDate+MNZCategory.m */; };
 		A85B7AC42A14F5C7002B1D6A /* MEGAApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85B7AC32A14F5C7002B1D6A /* MEGAApplication.swift */; };
 		A85CF69D2A7180A90018FEF1 /* ChatRepo in Frameworks */ = {isa = PBXBuildFile; productRef = A85CF69C2A7180A90018FEF1 /* ChatRepo */; };
 		A85D93BC2045751E0066F45B /* ChatVideoQualityTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A85D93BB2045751E0066F45B /* ChatVideoQualityTableViewController.m */; };
@@ -14983,7 +14985,9 @@
 				A893322A24127B1B0088E588 /* MOUser.m in Sources */,
 				BF4989602A0C5828005C9ABD /* NotificationService+ScheduleMeeting.swift in Sources */,
 				7794AED7231E4E0A0039C1D2 /* NotificationService.swift in Sources */,
+				A857F5002B45B2D0001CA42C /* NSDate+MNZCategory.m in Sources */,
 				77F0ED4323C4C750000E6B5B /* NSFileManager+MNZCategory.m in Sources */,
+				A857F4FF2B45B05F001CA42C /* NSString+MNZCategory.m in Sources */,
 				7794AF19231FDF3D0039C1D2 /* Reachability.m in Sources */,
 				BF121D672A09FF1700DA3633 /* ScheduleMeetingNotificationInfo.swift in Sources */,
 				BFCB32B72A023A7F0013409C /* ScheduleMeetingPushNotifications.swift in Sources */,
