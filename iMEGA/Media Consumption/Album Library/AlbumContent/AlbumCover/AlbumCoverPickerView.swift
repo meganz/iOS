@@ -68,7 +68,7 @@ struct AlbumCoverPickerView: View {
     }
     
     private var textColor: Color {
-        colorScheme == .dark ? Color(UIColor.mnz_grayD1D1D1()) : Color(UIColor.mnz_gray515151())
+        colorScheme == .dark ? MEGAAppColor.Gray._D1D1D1.color : MEGAAppColor.Gray._515151.color
     }
     
     private func dismiss() {

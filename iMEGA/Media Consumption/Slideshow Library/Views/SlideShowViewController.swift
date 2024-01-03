@@ -28,14 +28,14 @@ final class SlideShowViewController: UIViewController, ViewType {
     private func updatePlayButtonTintColor() {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
-            btnPlay.tintColor = UIColor.mnz_gray515151()
-            slideShowOptionButton.tintColor = UIColor.mnz_gray515151()
+            btnPlay.tintColor = MEGAAppColor.Gray._515151.uiColor
+            slideShowOptionButton.tintColor = MEGAAppColor.Gray._515151.uiColor
         case .dark:
-            btnPlay.tintColor = UIColor.mnz_grayD1D1D1()
-            slideShowOptionButton.tintColor = UIColor.mnz_grayD1D1D1()
+            btnPlay.tintColor = MEGAAppColor.Gray._D1D1D1.uiColor
+            slideShowOptionButton.tintColor = MEGAAppColor.Gray._D1D1D1.uiColor
         @unknown default:
-            btnPlay.tintColor = UIColor.mnz_gray515151()
-            slideShowOptionButton.tintColor = UIColor.mnz_gray515151()
+            btnPlay.tintColor = MEGAAppColor.Gray._515151.uiColor
+            slideShowOptionButton.tintColor = MEGAAppColor.Gray._515151.uiColor
         }
     }
     

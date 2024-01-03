@@ -10,7 +10,7 @@ struct PhotoLibraryFilterLocationView: View {
             Text(location.localization)
             Spacer()
             Image(systemName: "checkmark")
-                .foregroundColor(Color.photosFilterLocationItemTickForeground)
+                .foregroundColor(MEGAAppColor.Photos.filterLocationItemTickForeground.color)
                 .offset(x: 5, y: 0)
         }
     }
@@ -43,7 +43,7 @@ struct PhotoLibraryFilterLocationView: View {
             }
             Spacer()
         }
-        .foregroundColor(Color.photosFilterLocationItemForeground)
+        .foregroundColor(MEGAAppColor.Photos.filterLocationItemForeground.color)
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
         .contentShape(Rectangle())

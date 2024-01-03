@@ -18,7 +18,7 @@ struct CameraUploadStatusImageView: View {
             if let statusImageResource = viewModel.statusImageResource {
                 Group {
                     Circle()
-                        .fill(Color(UIColor.navigationBg))
+                        .fill(MEGAAppColor.Background.navigationBgColor.color)
                         .frame(width: 15.5,
                                height: 15.5)
                     
