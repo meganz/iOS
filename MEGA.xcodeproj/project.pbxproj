@@ -3358,6 +3358,7 @@
 		5DFC8DC124ECEC9B00DDA006 /* StoreUserClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreUserClient.swift; sourceTree = "<group>"; };
 		5DFC8DC424ECF37800DDA006 /* MEGAavatarGeneratingUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAavatarGeneratingUseCaseTests.swift; sourceTree = "<group>"; };
 		6D00BD272B1E5D9600370AC7 /* DIContainer+Photos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DIContainer+Photos.swift"; sourceTree = "<group>"; };
+		6D18B4D02B44C75600E4ABA8 /* MEGAMacro */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAMacro; sourceTree = "<group>"; };
 		6D39A57829EF456D00348D1C /* ChatContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatContentViewModel.swift; sourceTree = "<group>"; };
 		6D5A19AF2A10D33E00FDD5B3 /* MyAccountHallViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountHallViewModelTests.swift; sourceTree = "<group>"; };
 		6D60255A28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BrowserViewController+NodesUpdate.swift"; sourceTree = "<group>"; };
@@ -11414,6 +11415,7 @@
 			isa = PBXGroup;
 			children = (
 				B6A01BAA289A618500B503FD /* MEGAFoundation */,
+				6D18B4D02B44C75600E4ABA8 /* MEGAMacro */,
 				9418DB272A4EE5E7002B0077 /* MEGAPermissions */,
 				B6FCDABA2898A86400319754 /* MEGASwift */,
 				1678D7F02A45474E00336C52 /* MEGATest */,
