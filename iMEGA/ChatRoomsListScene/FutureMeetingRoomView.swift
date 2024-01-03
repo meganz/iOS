@@ -40,14 +40,14 @@ struct FutureMeetingRoomView: View {
                         : Strings.Localizable.Meetings.Scheduled.Listing.InProgress.description
                     )
                     .font(.caption)
-                    .foregroundColor(Color.chatListSubtitleText)
+                    .foregroundColor(MEGAAppColor.Chat.chatListSubtitleText.color)
                 } else {
                     HStack(spacing: 3) {
                         Text(viewModel.time)
-                            .foregroundColor(Color.chatListMeetingTimeText)
+                            .foregroundColor(MEGAAppColor.Chat.chatListMeetingTimeText.color)
                             .font(.caption)
                         Text(viewModel.recurrence)
-                            .foregroundColor(Color.chatListMeetingTimeText)
+                            .foregroundColor(MEGAAppColor.Chat.chatListMeetingTimeText.color)
                             .font(.caption)
                     }
                 }

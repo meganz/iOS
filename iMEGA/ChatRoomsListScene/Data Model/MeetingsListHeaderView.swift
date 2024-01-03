@@ -5,11 +5,11 @@ struct MeetingsListHeaderView: View {
     
     var body: some View {
         ZStack(alignment: .bottomLeading) {
-            Color.chatListSectionBackground
+            MEGAAppColor.Chat.chatListSectionBackground.color
             
             Text(title)
                 .font(.footnote)
-                .foregroundColor(Color.chatListSectionTitle)
+                .foregroundColor(MEGAAppColor.Chat.chatListSectionTitle.color)
                 .offset(CGSize(width: 16, height: -6))
         }
         .frame(maxWidth: .infinity)
