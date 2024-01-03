@@ -29,12 +29,24 @@ struct UserStoreRepository: UserStoreRepositoryProtocol {
     }
     
     func userDisplayName(forEmail email: String) -> String? {
-        store.fetchUser(withEmail: email)?.displayName
+        fetchUser(withEmail: email)?.displayName
+    }
+    
+    func userFirstName(withHandle handle: UInt64) -> String? {
+        fetchUser(withHandle: handle)?.firstname
+    }
+    
+    func userLastName(withHandle handle: UInt64) -> String? {
+        fetchUser(withHandle: handle)?.lastname
     }
     
     // MARK: - Private
     
     private func fetchUser(withHandle handle: UInt64) -> MOUser? {
         store.fetchUser(withUserHandle: handle)
+    }
+    
+    private func fetchUser(withEmail email: String) -> MOUser? {
+        store.fetchUser(withEmail: email)
     }
 }
