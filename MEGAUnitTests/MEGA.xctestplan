@@ -268,7 +268,7 @@
     {
       "parallelizable" : true,
       "target" : {
-        "containerPath" : "container:",
+        "containerPath" : "container:Modules\/Presentation\/Features\/Video",
         "identifier" : "VideoTests",
         "name" : "VideoTests"
       }
