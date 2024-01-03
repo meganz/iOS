@@ -545,7 +545,6 @@
 		5B947A9E267A2A3400715B0C /* GenericNodeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B947A9D267A2A3400715B0C /* GenericNodeTableViewCell.swift */; };
 		5B95DD94237C35610068DF97 /* EmptyStateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BE7BEE423745FC700BBD23F /* EmptyStateView.xib */; };
 		5B98624D26B1B2E600BB9945 /* EmptyStateView+Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B98624526B1A39900BB9945 /* EmptyStateView+Config.swift */; };
-		5B98BE1327AA9FF800426B97 /* ExportChatMessagesRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B98BE1227AA9FF700426B97 /* ExportChatMessagesRepository.swift */; };
 		5B9CC937269DA6A8006342FC /* GenericNodeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B9CC936269DA6A8006342FC /* GenericNodeTableViewCell.xib */; };
 		5B9F2010243332D200F22FBA /* ContactLinkQR.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B9F200F243332D200F22FBA /* ContactLinkQR.storyboard */; };
 		5B9F336624448FA400E2A15B /* NSDate+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC25724220080FC0098E781 /* NSDate+MNZCategory.m */; };
@@ -3166,7 +3165,6 @@
 		5B947A99267A20CD00715B0C /* NodeCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeCellViewModel.swift; sourceTree = "<group>"; };
 		5B947A9D267A2A3400715B0C /* GenericNodeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericNodeTableViewCell.swift; sourceTree = "<group>"; };
 		5B98624526B1A39900BB9945 /* EmptyStateView+Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EmptyStateView+Config.swift"; sourceTree = "<group>"; };
-		5B98BE1227AA9FF700426B97 /* ExportChatMessagesRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportChatMessagesRepository.swift; sourceTree = "<group>"; };
 		5B9CC936269DA6A8006342FC /* GenericNodeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GenericNodeTableViewCell.xib; sourceTree = "<group>"; };
 		5B9F200F243332D200F22FBA /* ContactLinkQR.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ContactLinkQR.storyboard; sourceTree = "<group>"; };
 		5B9FBDFC26499B0C0014B7FD /* UIAlertController+InAppPurchase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+InAppPurchase.swift"; sourceTree = "<group>"; };
@@ -7392,14 +7390,6 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		5BC47E2C253F0F7200853323 /* Chat */ = {
-			isa = PBXGroup;
-			children = (
-				5B98BE1227AA9FF700426B97 /* ExportChatMessagesRepository.swift */,
-			);
-			path = Chat;
-			sourceTree = "<group>";
-		};
 		5BCF7E3F2631707500BE769B /* TermsAndPoliciesScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -10635,7 +10625,6 @@
 				25F932922AF49B7000A63E73 /* Appearance */,
 				BFAC873525FEF1F3009CA3F6 /* AudioVideo */,
 				838A7B6725D5677500767DB0 /* Calls */,
-				5BC47E2C253F0F7200853323 /* Chat */,
 				830C266F25DFC70B00E9B56E /* Favourites */,
 				83E3463B25B6DE56006F2AD6 /* Files */,
 				0D213E8C263A611500B43723 /* Node */,
@@ -13856,7 +13845,6 @@
 				BF5E33762558BE620055395E /* ExplorerToolbarConfigurator.swift in Sources */,
 				5DC4DE0D24DBC27900D9AD16 /* ExploreViewStack.swift in Sources */,
 				5DC4DE1124DBE20F00D9AD16 /* ExploreViewStyleFactory.swift in Sources */,
-				5B98BE1327AA9FF800426B97 /* ExportChatMessagesRepository.swift in Sources */,
 				839A1C9F27CCF694004A387B /* ExportFileRouter.swift in Sources */,
 				83D0E56827C78D53003BEC2E /* ExportFileUseCaseHelper.swift in Sources */,
 				839A1CA127CCF694004A387B /* ExportFileViewModel.swift in Sources */,

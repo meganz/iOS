@@ -1,9 +1,12 @@
+import Contacts
 import Foundation
+import MEGAChatSdk
 import MEGADomain
+import UIKit
 
-final class ExportChatMessagesRepository: ExportChatMessagesRepositoryProtocol {
-    static var newRepo: ExportChatMessagesRepository {
-        ExportChatMessagesRepository(chatSdk: .shared)
+public final class ExportChatMessagesRepository: ExportChatMessagesRepositoryProtocol {
+    public static var newRepo: ExportChatMessagesRepository {
+        ExportChatMessagesRepository(chatSdk: .sharedChatSdk)
     }
 
     private let chatSdk: MEGAChatSdk
@@ -12,9 +15,9 @@ final class ExportChatMessagesRepository: ExportChatMessagesRepositoryProtocol {
         self.chatSdk = chatSdk
     }
     
-    func exportText(message: ChatMessageEntity) -> URL? {
+    public func exportText(message: ChatMessageEntity) -> URL? {
         let userName = chatSdk.userFullnameFromCache(byUserHandle: message.userHandle) ?? ""
-        let messageTimestamp = message.timestamp?.string(withDateFormat: "dd/MM/yyyy HH:mm")
+        let messageTimestamp = message.timestamp?.string(with: "dd/MM/yyyy HH:mm")
         let messageContent = message.content ?? ""
         let content = "[\(messageTimestamp ?? "")]#\(userName): \(messageContent)\n"
         
@@ -26,7 +29,7 @@ final class ExportChatMessagesRepository: ExportChatMessagesRepositoryProtocol {
         }
     }
     
-    func exportContact(
+    public func exportContact(
         message: ChatMessageEntity,
         contactAvatarImage: String?,
         userFirstName: String?,
@@ -74,12 +77,20 @@ final class ExportChatMessagesRepository: ExportChatMessagesRepositoryProtocol {
                     
                     return vCardURL
                 }
-            } catch let error as NSError {
-                MEGALogError("Could not write to vCard with error \(error)")
+            } catch {
+                return nil
             }
-        } catch let error as NSError {
-            MEGALogError("Could not create vCard representation of the specified contacts with error \(error)")
+        } catch {
+            return nil
         }
         return nil
+    }
+}
+
+private extension Date {
+    func string(with dateFormat: String) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = dateFormat
+        return formatter.string(from: self)
     }
 }
