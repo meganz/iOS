@@ -3,15 +3,13 @@ import MEGADomain
 
 final class ExportChatMessagesRepository: ExportChatMessagesRepositoryProtocol {
     static var newRepo: ExportChatMessagesRepository {
-        ExportChatMessagesRepository(chatSdk: .shared, store: MEGAStore.shareInstance())
+        ExportChatMessagesRepository(chatSdk: .shared)
     }
 
     private let chatSdk: MEGAChatSdk
-    private let store: MEGAStore
 
-    init(chatSdk: MEGAChatSdk, store: MEGAStore) {
+    init(chatSdk: MEGAChatSdk) {
         self.chatSdk = chatSdk
-        self.store = store
     }
     
     func exportText(message: ChatMessageEntity) -> URL? {
@@ -28,24 +26,27 @@ final class ExportChatMessagesRepository: ExportChatMessagesRepositoryProtocol {
         }
     }
     
-    func exportContact(message: ChatMessageEntity, contactAvatarImage: String?) -> URL? {
+    func exportContact(
+        message: ChatMessageEntity,
+        contactAvatarImage: String?,
+        userFirstName: String?,
+        userLastName: String?
+    ) -> URL? {
         let cnMutableContact = CNMutableContact()
         
         guard let peer = message.peers.first else {
             return nil
         }
-        let userHandle = peer.handle
         
-        if let moUser = store.fetchUser(withUserHandle: userHandle),
-           let firstname = moUser.firstname,
-           let lastname = moUser.lastname {
+        if let firstname = userFirstName,
+           let lastname = userLastName {
             cnMutableContact.givenName = firstname
             cnMutableContact.familyName = lastname
         } else {
             cnMutableContact.givenName = peer.name ?? ""
         }
         
-        let userEmail1 = (peer.email ?? "")as NSString
+        let userEmail1 = (peer.email ?? "") as NSString
         cnMutableContact.emailAddresses = [CNLabeledValue.init(label: CNLabelHome, value: userEmail1)]
         
         if let avatarFilePath = contactAvatarImage, let avatarImage = UIImage(contentsOfFile: avatarFilePath) {

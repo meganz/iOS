@@ -23,7 +23,8 @@ public struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
                                 X: ImportNodeRepositoryProtocol,
                                 Z: MEGAHandleRepositoryProtocol,
                                 M: MediaUseCaseProtocol,
-                                G: OfflineFileFetcherRepositoryProtocol> {
+                                G: OfflineFileFetcherRepositoryProtocol,
+                                H: UserStoreRepositoryProtocol> {
     private let downloadFileRepository: T
     private let offlineFilesRepository: U
     private let fileCacheRepository: V
@@ -34,17 +35,21 @@ public struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
     private let mediaUseCase: M
     private let megaHandleRepository: Z
     private let offlineFileFetcherRepository: G
+    private let userStoreRepository: H
     
-    public init(downloadFileRepository: T,
-                offlineFilesRepository: U,
-                fileCacheRepository: V,
-                thumbnailRepository: R,
-                fileSystemRepository: F,
-                exportChatMessagesRepository: W,
-                importNodeRepository: X,
-                megaHandleRepository: Z,
-                mediaUseCase: M,
-                offlineFileFetcherRepository: G) {
+    public init(
+        downloadFileRepository: T,
+        offlineFilesRepository: U,
+        fileCacheRepository: V,
+        thumbnailRepository: R,
+        fileSystemRepository: F,
+        exportChatMessagesRepository: W,
+        importNodeRepository: X,
+        megaHandleRepository: Z,
+        mediaUseCase: M,
+        offlineFileFetcherRepository: G,
+        userStoreRepository: H
+    ) {
         self.downloadFileRepository = downloadFileRepository
         self.offlineFilesRepository = offlineFilesRepository
         self.fileCacheRepository = fileCacheRepository
@@ -55,6 +60,7 @@ public struct ExportFileUseCase<T: DownloadFileRepositoryProtocol,
         self.megaHandleRepository = megaHandleRepository
         self.mediaUseCase = mediaUseCase
         self.offlineFileFetcherRepository = offlineFileFetcherRepository
+        self.userStoreRepository = userStoreRepository
     }
     
     // MARK: - Private
@@ -161,7 +167,15 @@ extension ExportFileUseCase: ExportFileChatMessageUseCaseProtocol {
                 return
             }
             let avatarUrl = thumbnailRepository.generateCachingURL(for: base64Handle, type: .thumbnail)
-            if let contactUrl = exportChatMessagesRepository.exportContact(message: message, contactAvatarImage: fileSystemRepository.fileExists(at: avatarUrl) ? avatarUrl.path : nil) {
+            let contactAvatarImage = fileSystemRepository.fileExists(at: avatarUrl) ? avatarUrl.path : nil
+            let firstName = userStoreRepository.userFirstName(withHandle: handle)
+            let lastName = userStoreRepository.userLastName(withHandle: handle)
+            if let contactUrl = exportChatMessagesRepository.exportContact(
+                message: message,
+                contactAvatarImage: contactAvatarImage,
+                userFirstName: firstName,
+                userLastName: lastName
+            ) {
                 completion(.success(contactUrl))
             } else {
                 completion(.failure(.failedToCreateContact))

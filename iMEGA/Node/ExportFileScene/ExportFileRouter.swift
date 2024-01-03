@@ -42,7 +42,9 @@ final class ExportFileRouter: ExportFileViewRouting {
             importNodeRepository: ImportNodeRepository.newRepo,
             megaHandleRepository: MEGAHandleRepository.newRepo,
             mediaUseCase: MediaUseCase(fileSearchRepo: FilesSearchRepository.newRepo),
-            offlineFileFetcherRepository: OfflineFileFetcherRepository.newRepo)
+            offlineFileFetcherRepository: OfflineFileFetcherRepository.newRepo,
+            userStoreRepository: UserStoreRepository.newRepo
+        )
         
         return ExportFileViewModel(router: self,
                                    analyticsEventUseCase: AnalyticsEventUseCase(repository: AnalyticsRepository.newRepo),
