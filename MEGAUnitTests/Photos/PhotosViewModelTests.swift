@@ -279,6 +279,30 @@ final class PhotosViewModelTests: XCTestCase {
         XCTAssertEqual(cameraUploadsSettingsViewRouter.startCalled, 1)
     }
     
+    func testCameraUploadStatusButtonTapped_whenCameraUploadesIsDisabled_shouldNavigateToCUSetting() {
+        let cameraUploadsSettingsViewRouter = MockCameraUploadsSettingsViewRouter()
+        let sut = makePhotosViewModel(
+            preferenceUseCase: MockPreferenceUseCase(dict: [.isCameraUploadsEnabled: false]),
+            cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter)
+        
+        sut.cameraUploadStatusButtonViewModel.onTappedHandler?()
+        
+        XCTAssertEqual(cameraUploadsSettingsViewRouter.startCalled, 1)
+        XCTAssertFalse(sut.timelineViewModel.cameraUploadStatusShown)
+    }
+    
+    func testCameraUploadStatusButtonTapped_whenCameraUploadesEnabled_shouldShowCUStatusBanner() {
+        let cameraUploadsSettingsViewRouter = MockCameraUploadsSettingsViewRouter()
+        let sut = makePhotosViewModel(
+            preferenceUseCase: MockPreferenceUseCase(dict: [.isCameraUploadsEnabled: true]),
+            cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter)
+        
+        sut.cameraUploadStatusButtonViewModel.onTappedHandler?()
+        
+        XCTAssertEqual(cameraUploadsSettingsViewRouter.startCalled, 0)
+        XCTAssertTrue(sut.timelineViewModel.cameraUploadStatusShown)
+    }
+    
     private func sampleNodesForAllLocations() -> [NodeEntity] {
         let node1 = NodeEntity(nodeType: .file, name: "TestImage1.png", handle: 1, parentHandle: 0, hasThumbnail: true)
         let node2 = NodeEntity(nodeType: .file, name: "TestImage2.png", handle: 2, parentHandle: 1, hasThumbnail: true)

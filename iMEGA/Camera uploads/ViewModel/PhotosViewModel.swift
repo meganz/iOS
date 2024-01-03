@@ -21,7 +21,7 @@ final class PhotosViewModel: NSObject {
     
     var cameraUploadStatusButtonViewModel = CameraUploadStatusButtonViewModel(monitorCameraUploadUseCase: FakeCameraUploadSuccessfulUseCase()) {
         didSet {
-            monitorCameraUploadStatusButtonTapHandler()
+            cameraUploadStatusButtonViewModel.onTappedHandler = cameraUploadStatusButtonTapped
         }
     }
     
@@ -79,7 +79,7 @@ final class PhotosViewModel: NSObject {
         $isCameraUploadsEnabled.useCase = preferenceUseCase
         
         monitorSortOrderSubscription()
-        monitorCameraUploadStatusButtonTapHandler()
+        cameraUploadStatusButtonViewModel.onTappedHandler = cameraUploadStatusButtonTapped
     }
     
     @objc func onCameraAndMediaNodesUpdate(nodeList: MEGANodeList) {
@@ -229,11 +229,16 @@ final class PhotosViewModel: NSObject {
         
         return false
     }
-    
-    private func monitorCameraUploadStatusButtonTapHandler() {
-        cameraUploadStatusButtonViewModel.onTappedHandler = { [weak timelineViewModel] in 
-            timelineViewModel?.cameraUploadStatusShown = true
+        
+    private func cameraUploadStatusButtonTapped() {
+        guard isCameraUploadsEnabled else {
+            return navigateToCameraUploadSettings()
         }
+        showCameraUploadStatusBanner()
+    }
+    
+    private func showCameraUploadStatusBanner() {
+        timelineViewModel.cameraUploadStatusShown = true
     }
     
     private func monitorSortOrderSubscription() {
