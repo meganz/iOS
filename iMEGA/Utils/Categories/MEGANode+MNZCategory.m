@@ -72,13 +72,12 @@
         }];
     }
     
-    BOOL isBackupNode = false;
+    BOOL isBackupNode = backupsRootNode != nil;
     for (MEGANode *node in parentTreeArray) {
         if (node.handle != backupsRootNode.parentHandle) {
             [self pushCloudDriveForNode:node
-                            displayMode:backupsRootNode != nil ? DisplayModeBackup : DisplayModeCloudDrive
+                            displayMode:isBackupNode ? DisplayModeBackup : DisplayModeCloudDrive
                    navigationController:navigationController];
-            isBackupNode = true;
         }
     }
     
