@@ -219,23 +219,23 @@ extension UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
             if selected {
-                return UIColor.chatReactionBubbleSelectedLight
+                return MEGAAppColor.Chat.chatReactionBubbleSelectedLight.uiColor
             } else {
                 return  UIColor.mnz_secondaryBackground(for: traitCollection)
             }
             
         case .dark:
             if selected {
-                return UIColor.chatReactionBubbleSelectedDark
+                return MEGAAppColor.Chat.chatReactionBubbleSelectedDark.uiColor
             } else {
                 return  UIColor.mnz_secondaryBackground(for: traitCollection)
             }
             
         @unknown default:
             if selected {
-                return UIColor.chatReactionBubbleSelectedLight
+                return MEGAAppColor.Chat.chatReactionBubbleSelectedLight.uiColor
             } else {
-                return UIColor.chatReactionBubbleUnselectedDefault
+                return MEGAAppColor.Chat.chatReactionBubbleUnselectedDefault.uiColor
             }
         }
     }

@@ -10,7 +10,7 @@ struct RecurrenceOptionView: View {
             Text(name)
             Spacer()
             Image(systemName: "checkmark")
-                .foregroundColor(Color.chatMeetingFrequencySelectionTickMark)
+                .foregroundColor(MEGAAppColor.Chat.chatMeetingFrequencySelectionTickMark.color)
                 .font(.system(.footnote).bold())
                 .opacity(isSelected ? 1 : 0)
         }

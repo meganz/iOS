@@ -200,13 +200,13 @@ private struct ChatRoomContentDescriptionView: View {
                 : Strings.Localizable.Meetings.Scheduled.Listing.InProgress.description
             )
             .font(.caption)
-            .foregroundColor(Color.chatListSubtitleText)
+            .foregroundColor(MEGAAppColor.Chat.chatListSubtitleText.color)
         } else if let hybridDescription = viewModel.hybridDescription {
             HStack(spacing: 0) {
                 if let sender = hybridDescription.sender {
                     Text(sender)
                         .font(viewModel.shouldShowUnreadCount ? .caption.bold(): .caption)
-                        .foregroundColor(Color.chatListSubtitleText)
+                        .foregroundColor(MEGAAppColor.Chat.chatListSubtitleText.color)
                 }
                 
                 Image(uiImage: hybridDescription.image)
@@ -216,12 +216,12 @@ private struct ChatRoomContentDescriptionView: View {
                 
                 Text(hybridDescription.duration)
                     .font(viewModel.shouldShowUnreadCount ? .caption.bold(): .caption)
-                    .foregroundColor(Color.chatListSubtitleText)
+                    .foregroundColor(MEGAAppColor.Chat.chatListSubtitleText.color)
             }
         } else if let description = viewModel.description {
             Text(description)
                 .font(viewModel.shouldShowUnreadCount ? .caption.bold(): .caption)
-                .foregroundColor(Color.chatListSubtitleText)
+                .foregroundColor(MEGAAppColor.Chat.chatListSubtitleText.color)
                 .lineLimit(1)
         } else {
             Text("Placeholder")
