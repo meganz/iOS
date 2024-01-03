@@ -19,6 +19,7 @@ extension MEGAAppColor {
         case filterTypeSelectionBackground
         case filterTypeSelectionForeground
         case pageTabForeground
+        case photoNumbersBackground
         case photoSelectionBorder
         case rightBarButtonForeground
         case zoomButtonForeground
@@ -47,6 +48,7 @@ extension MEGAAppColor {
             case .filterTypeSelectionBackground: TokenColors.Background.blur
             case .filterTypeSelectionForeground: TokenColors.Text.primary
             case .pageTabForeground: TokenColors.Text.primary
+            case .photoNumbersBackground: TokenColors.Background.blur
             case .photoSelectionBorder: TokenColors.Background.blur
             case .rightBarButtonForeground: TokenColors.Text.primary
             case .zoomButtonForeground: TokenColors.Text.primary
@@ -69,6 +71,7 @@ extension MEGAAppColor {
             case .filterTypeSelectionBackground: UIColor.photosFilterTypeSelectionBackground
             case .filterTypeSelectionForeground: UIColor.photosFilterTypeSelectionForeground
             case .pageTabForeground: UIColor.photosPageTabForeground
+            case .photoNumbersBackground: UIColor.mediaConsumptionPhotoNumbersBackground
             case .photoSelectionBorder: UIColor.photosPhotoSeletionBorder
             case .rightBarButtonForeground: UIColor.photosRightBarButtonForeground
             case .zoomButtonForeground: UIColor.photosZoomButtonForeground
