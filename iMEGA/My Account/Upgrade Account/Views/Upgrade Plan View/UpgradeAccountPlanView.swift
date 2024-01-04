@@ -48,7 +48,7 @@ struct UpgradeAccountPlanView: View {
                                 .frame(maxWidth: .infinity, alignment: .leading)
                         }
                         
-                        UpgradeSectionFeatureOfProView()
+                        UpgradeSectionFeatureOfProView(showAdFreeContent: viewModel.isExternalAdsActive)
                             .padding(.top, 15)
                         
                     } footer: {
@@ -84,6 +84,9 @@ struct UpgradeAccountPlanView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .clipped()
         .disabled(viewModel.isLoading)
+        .task {
+            await viewModel.setUpExternalAds()
+        }
         .onChange(of: viewModel.isDismiss) { newValue in
             if newValue {
                 dismiss()

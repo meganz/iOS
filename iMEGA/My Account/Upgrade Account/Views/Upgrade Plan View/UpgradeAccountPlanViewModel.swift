@@ -2,6 +2,7 @@ import Accounts
 import Combine
 import MEGADomain
 import MEGAL10n
+import MEGAPresentation
 import MEGASdk
 import MEGASDKRepo
 import MEGASwift
@@ -16,8 +17,11 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     private var subscriptions = Set<AnyCancellable>()
     private let accountUseCase: any AccountUseCaseProtocol
     private let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private var abTestProvider: any ABTestProviderProtocol
     private var planList: [AccountPlanEntity] = []
     private var accountDetails: AccountDetailsEntity
+    private(set) var isExternalAdsActive: Bool = false
     
     private(set) var alertType: UpgradeAccountPlanAlertType?
     @Published var isAlertPresented = false {
@@ -53,11 +57,15 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     init(
         accountDetails: AccountDetailsEntity,
         accountUseCase: some AccountUseCaseProtocol,
-        purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol
+        purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
+        abTestProvider: some ABTestProviderProtocol = DIContainer.abTestProvider
     ) {
         self.accountUseCase = accountUseCase
         self.purchaseUseCase = purchaseUseCase
         self.accountDetails = accountDetails
+        self.featureFlagProvider = featureFlagProvider
+        self.abTestProvider = abTestProvider
         registerDelegates()
         setupPlans()
     }
@@ -77,6 +85,17 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     }
     
     // MARK: - Setup
+    func setUpExternalAds() async {
+        guard featureFlagProvider.isFeatureFlagEnabled(for: .inAppAds) else {
+            isExternalAdsActive = false
+            return
+        }
+        
+        let isAdsEnabled = await abTestProvider.abTestVariant(for: .ads) == .variantA
+        let isExternalAdsEnabled = await abTestProvider.abTestVariant(for: .externalAds) == .variantA
+        isExternalAdsActive = isAdsEnabled && isExternalAdsEnabled
+    }
+    
     private func registerDelegates() {
         registerDelegateTask = Task {
             await purchaseUseCase.registerRestoreDelegate()
