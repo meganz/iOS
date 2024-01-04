@@ -28,7 +28,7 @@ extension VideoConfig {
         colorAssets: VideoConfig.ColorAssets(
             primaryTextColor: Color.primary,
             secondaryLightTextColor: MEGAAppColor.Gray._515151.color,
-            secondaryDarkTextColor: MEGAAppColor.Gray._1D1D1D.color,
+            secondaryDarkTextColor: MEGAAppColor.Gray._D1D1D1.color,
             whiteColor: MEGAAppColor.White._FFFFFF.color,
             durationTextBackgroundColor: MEGAAppColor.Black._161616.color.opacity(0.5),
             tabActiveIndicatorColor: MEGAAppColor.Red._F30C14.color,
