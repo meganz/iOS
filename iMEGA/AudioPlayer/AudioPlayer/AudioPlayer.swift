@@ -154,7 +154,8 @@ final class AudioPlayer: NSObject {
     
     private func setupPlayer() {
         setAudioPlayerSession(active: true)
-        
+
+        CrashlyticsLogger.log(category: .audioPlayer, "Creating new AVQueuePlayer with tracks: \(tracks)")
         queuePlayer = AVQueuePlayer(items: tracks)
         
         queuePlayer?.usesExternalPlaybackWhileExternalScreenIsActive = true
@@ -176,14 +177,14 @@ final class AudioPlayer: NSObject {
             self.audioPlayerConfig = [.loop: false, .shuffle: false, .repeatOne: false]
             self.pause()
             
-            CrashlyticsLogger.log("[AudioPlayer] Player replaced Items: \(String(describing: self.queuePlayer?.items()))")
+            CrashlyticsLogger.log(category: .audioPlayer, "Player replaced Items: \(String(describing: self.queuePlayer?.items()))")
             self.secureReplaceCurrentItem(with: tracks.first)
             self.queuePlayer?.items().lazy.filter({$0 != self.queuePlayer?.items().first}).forEach {
                 self.queuePlayer?.remove($0)
             }
             self.tracks.forEach { self.queuePlayer?.secureInsert($0, after: self.queuePlayer?.items().last) }
             
-            CrashlyticsLogger.log("[AudioPlayer] Player new Items: \(String(describing: self.queuePlayer?.items()))")
+            CrashlyticsLogger.log(category: .audioPlayer, "Player new Items: \(String(describing: self.queuePlayer?.items()))")
             self.register()
             
             self.configurePlayer()
@@ -215,7 +216,7 @@ final class AudioPlayer: NSObject {
         guard let newItem = item else { return }
         
         self.queuePlayer?.items().filter({$0 == newItem}).forEach {
-            CrashlyticsLogger.log("[AudioPlayer] Item removed: \(newItem)")
+            CrashlyticsLogger.log(category: .audioPlayer, "Item removed: \(newItem)")
             self.queuePlayer?.remove($0)
         }
         
@@ -252,12 +253,12 @@ final class AudioPlayer: NSObject {
         beginBackgroundTask()
         self.tracks = tracks
         
-        CrashlyticsLogger.log("[AudioPlayer] Previous instance exists: \(queuePlayer != nil)")
-        
         if queuePlayer != nil {
+            CrashlyticsLogger.log(category: .audioPlayer, "queuePlayer exists, refreshing player with tracks: \(self.tracks)")
             refreshPlayer(tracks: self.tracks)
             MEGALogDebug("[AudioPlayer] Refresh the current audio player")
         } else {
+            CrashlyticsLogger.log(category: .audioPlayer, "queuePlayer did not exist, setting up new player")
             setupPlayer()
             MEGALogDebug("[AudioPlayer] Setting up a new audio player")
         }

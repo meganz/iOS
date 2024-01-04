@@ -185,6 +185,7 @@ final class MiniPlayerViewModel: ViewModelType {
                 router.dismiss()
                 return
             }
+            CrashlyticsLogger.log(category: .audioPlayer, "File link - Initializing with single file track: \(track)")
             initialize(tracks: [track], currentTrack: track)
         } else {
             guard let children = configEntity.isFolderLink ? nodeInfoUseCase?.folderChildrenInfo(fromParentHandle: node.parentHandle) :
@@ -195,9 +196,11 @@ final class MiniPlayerViewModel: ViewModelType {
                     router.dismiss()
                     return
                 }
+                CrashlyticsLogger.log(category: .audioPlayer, "Not file link - Initializing with single file track: \(track)")
                 initialize(tracks: [track], currentTrack: track)
                 return
             }
+            CrashlyticsLogger.log(category: .audioPlayer, "Not file link - Initializing with multiple tracks: \(children)")
             initialize(tracks: children, currentTrack: currentTrack)
         }
     }
@@ -220,7 +223,7 @@ final class MiniPlayerViewModel: ViewModelType {
     
     private func initialize(tracks: [AudioPlayerItem], currentTrack: AudioPlayerItem) {
         let mutableTracks = shift(tracks: tracks, startItem: currentTrack)
-        CrashlyticsLogger.log("[AudioPlayer] type: , \(configEntity.playerType)")
+        CrashlyticsLogger.log(category: .audioPlayer, "Initializing with player type: \(configEntity.playerType), tracks: \(tracks)")
         resetConfigurationIfNeeded(nextCurrentTrack: currentTrack)
         configEntity.playerHandler.autoPlay(enable: configEntity.playerType != .fileLink)
         configEntity.playerHandler.addPlayer(tracks: mutableTracks)

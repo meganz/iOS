@@ -87,11 +87,11 @@ import MEGAPresentation
         tracks: [AudioPlayerItem]
     ) {
         if self.player != nil {
-            CrashlyticsLogger.log("[AudioPlayer] current instance of the player \(String(describing: player)) need to be closed")
+            CrashlyticsLogger.log(category: .audioPlayer, "Current instance of the player \(String(describing: player)) need to be closed")
             player?.close { [weak self] in
                 MEGALogDebug("[AudioPlayer] closing current player before assign new instance")
                 self?.player = nil
-                CrashlyticsLogger.log("[AudioPlayer] player closed")
+                CrashlyticsLogger.log(category: .audioPlayer, "Player closed")
                 self?.configure(player: player, autoPlayEnabled: autoPlayEnabled, tracks: tracks)
             }
         } else {
@@ -104,7 +104,7 @@ import MEGAPresentation
         autoPlayEnabled: Bool,
         tracks: [AudioPlayerItem]
     ) {
-        CrashlyticsLogger.log("[AudioPlayer] new player being configured: (autoPlayEnabled: \(autoPlayEnabled), tracks: \(tracks)")
+        CrashlyticsLogger.log(category: .audioPlayer, "New player being configured: (autoPlayEnabled: \(autoPlayEnabled), tracks: \(tracks)")
         self.player = player
         self.player?.isAutoPlayEnabled = autoPlayEnabled
         self.player?.add(tracks: tracks)
@@ -119,7 +119,7 @@ import MEGAPresentation
     }
     
     func addPlayer(tracks: [AudioPlayerItem]) {
-        CrashlyticsLogger.log("[AudioPlayer] adding new tracks: \(tracks)")
+        CrashlyticsLogger.log(category: .audioPlayer, "Adding player tracks: \(tracks)")
         playbackStoppedForCurrentItem()
         player?.add(tracks: tracks)
     }
@@ -261,6 +261,7 @@ import MEGAPresentation
     }
     
     func initFullScreenPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, messageId: HandleEntity, chatId: HandleEntity, allNodes: [MEGANode]?) {
+        CrashlyticsLogger.log(category: .audioPlayer, "Initializing Full Screen Player - node: \(String(describing: node)), fileLink: \(String(describing: fileLink)), filePaths: \(String(describing: filePaths)), isFolderLink: \(isFolderLink), messageId: \(messageId), chatId: \(chatId), allNodes: \(String(describing: allNodes))")
         let configEntity = AudioPlayerConfigEntity(node: node, isFolderLink: isFolderLink, fileLink: fileLink, messageId: messageId, chatId: chatId, relatedFiles: filePaths, allNodes: allNodes, playerHandler: self)
         
         let playlistRouter = AudioPlaylistViewRouter(configEntity: AudioPlayerConfigEntity(parentNode: configEntity.node?.parent, playerHandler: configEntity.playerHandler), presenter: presenter)
@@ -281,6 +282,7 @@ import MEGAPresentation
     private func makeAudioPlayerViewController(configEntity: AudioPlayerConfigEntity, router: some AudioPlayerViewRouting) -> AudioPlayerViewController? {
         guard let vc = UIStoryboard(name: "AudioPlayer", bundle: nil).instantiateViewController(identifier: "AudioPlayerViewControllerID", creator: { coder in
             let makeViewModel: () -> AudioPlayerViewModel = {
+                CrashlyticsLogger.log(category: .audioPlayer, "Making AudioPlayerViewModel for playerType: \(configEntity.playerType)")
                 if configEntity.playerType == .offline {
                     return AudioPlayerViewModel(
                         configEntity: configEntity,
@@ -312,6 +314,7 @@ import MEGAPresentation
     }
     
     func initMiniPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController, shouldReloadPlayerInfo: Bool, shouldResetPlayer: Bool) {
+        CrashlyticsLogger.log(category: .audioPlayer, "Initializing Mini Player - node: \(String(describing: node)), fileLink: \(String(describing: fileLink)), filePaths: \(String(describing: filePaths)), isFolderLink: \(isFolderLink)")
         if shouldReloadPlayerInfo {
             if shouldResetPlayer { folderSDKLogoutIfNeeded() }
             
