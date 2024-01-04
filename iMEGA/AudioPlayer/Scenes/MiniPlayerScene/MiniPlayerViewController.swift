@@ -84,7 +84,7 @@ final class MiniPlayerViewController: UIViewController {
     }
     
     private func updatePlaybackTracks(_ currentItem: AudioPlayerItem, queue: [AudioPlayerItem]?, loopMode: Bool) {
-        CrashlyticsLogger.log("[MiniPlayer] Setup datasource - player items: \(queue?.count ?? 0)")
+        CrashlyticsLogger.log(category: .audioPlayer, "Setup datasource - player items: \(queue?.count ?? 0)")
 
         miniPlayerSource = MiniPlayerDataSource(currentTrack: currentItem, queue: queue, loopMode: loopMode)
         miniPlayerDelegate = MiniPlayerDelegate(delegate: self, loopMode: loopMode, itemsNumber: queue?.count ?? 0)
@@ -96,7 +96,7 @@ final class MiniPlayerViewController: UIViewController {
             self.collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: false)
         }
         
-        CrashlyticsLogger.log("[MiniPlayer] After reload - player items : \(collectionView.numberOfItems(inSection: 0))")
+        CrashlyticsLogger.log(category: .audioPlayer, "After reload - player items : \(collectionView.numberOfItems(inSection: 0))")
     }
     
     private func updateCurrent(indexPath: IndexPath, item: AudioPlayerItem) {
@@ -104,7 +104,7 @@ final class MiniPlayerViewController: UIViewController {
               let currentItem = cell.item else { return }
         
         guard indexPath.item >= 0, indexPath.item < collectionView.numberOfItems(inSection: indexPath.section) else {
-            CrashlyticsLogger.log("[MiniPlayer] Attempting to access the indexPath beyond its valid bounds.")
+            CrashlyticsLogger.log(category: .audioPlayer, "Attempting to access the indexPath beyond its valid bounds.")
             return
         }
 

@@ -9,8 +9,10 @@
     if (error.userInfo[NSSQLiteErrorDomain] != nil) {
         NSInteger sqliteErrorCode = [error.userInfo[NSSQLiteErrorDomain] integerValue];
         NSError *sqliteError = [NSError errorWithDomain:NSSQLiteErrorDomain code:sqliteErrorCode userInfo:nil];
+        [[FIRCrashlytics crashlytics] logWithFormat:@"Aborting app due to CoreData error %@", sqliteError];
         [[FIRCrashlytics crashlytics] recordError:sqliteError];
     } else {
+        [[FIRCrashlytics crashlytics] logWithFormat:@"Aborting app due to CoreData error %@", error];
         [[FIRCrashlytics crashlytics] recordError:error];
     }
     

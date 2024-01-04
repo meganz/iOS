@@ -163,6 +163,7 @@ extension MEGALinkManager {
     }
     
     @objc class func initFullScreenPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController) {
+        CrashlyticsLogger.log(category: .audioPlayer, "Initializing Full Screen Player - node: \(String(describing: node)), fileLink: \(String(describing: fileLink)), filePaths: \(String(describing:filePaths)), isFolderLink: \(isFolderLink)")
         AudioPlayerManager.shared.initFullScreenPlayer(
             node: node,
             fileLink: fileLink,

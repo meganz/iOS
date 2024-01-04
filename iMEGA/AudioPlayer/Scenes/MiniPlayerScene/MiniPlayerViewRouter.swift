@@ -13,6 +13,7 @@ final class MiniPlayerViewRouter: NSObject, MiniPlayerViewRouting {
     }
     
     @objc func build() -> UIViewController {
+        CrashlyticsLogger.log(category: .audioPlayer, "Building MiniPlayerViewModel")
         let vc = UIStoryboard(name: "AudioPlayer", bundle: nil).instantiateViewController(withIdentifier: "MiniPlayerViewControllerID") as! MiniPlayerViewController
                 
         folderSDKLogoutRequired = configEntity.isFolderLink
@@ -60,7 +61,6 @@ final class MiniPlayerViewRouter: NSObject, MiniPlayerViewRouting {
     
     func showPlayer(node: MEGANode?, filePath: String?) {
         guard let presenter = presenter else { return }
-                
         AudioPlayerManager.shared.initFullScreenPlayer(node: node, fileLink: filePath, filePaths: configEntity.relatedFiles, isFolderLink: configEntity.isFolderLink, presenter: presenter, messageId: .invalid, chatId: .invalid, allNodes: nil)
 
     }
