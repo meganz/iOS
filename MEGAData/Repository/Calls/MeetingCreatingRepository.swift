@@ -27,11 +27,6 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
         sdk.myEmail
     }
     
-    func getCall(forChatId chatId: UInt64) -> CallEntity? {
-        guard let call = chatSdk.chatCall(forChatId: chatId) else { return nil }
-        return call.toCallEntity()
-    }
-    
     func createChatLink(forChatId chatId: UInt64) {
         chatSdk.createChatLink(chatId)
     }
@@ -121,11 +116,11 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
         })
     }
     
-    func createEphemeralAccountAndJoinChat(firstName: String, lastName: String, link: String, completion: @escaping (Result<Void, MEGASDKErrorType>) -> Void, karereInitCompletion: @escaping () -> Void) {
+    func createEphemeralAccountAndJoinChat(firstName: String, lastName: String, link: String, completion: @escaping (Result<Void, GenericErrorEntity>) -> Void, karereInitCompletion: @escaping () -> Void) {
         MEGALogDebug("Create meeting: Now logging out of anonymous account")
         chatSdk.logout(with: ChatRequestDelegate { [weak self] result in
             guard let self else {
-                completion(.failure(.unexpected))
+                completion(.failure(GenericErrorEntity()))
                 return
             }
             switch result {
@@ -135,13 +130,13 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
                 MEGALogDebug("Create meeting: Now creating ephemeral account plus plus with firstname - \(firstName) and lastname - \(lastName)")
                 sdk.createEphemeralAccountPlusPlus(withFirstname: firstName, lastname: lastName, delegate: RequestDelegate { [weak self] result in
                     guard let self else {
-                        completion(.failure(.unexpected))
+                        completion(.failure(GenericErrorEntity()))
                         return
                     }
                     switch result {
                     case .failure(let errorType):
                         MEGALogDebug("Create meeting: failed creating ephemeral account plus plus with error \(errorType)")
-                        completion(.failure(.unexpected))
+                        completion(.failure(GenericErrorEntity()))
                     case .success(let request):
                         MEGALogDebug("Create meeting: success creating ephemeral account plus plus")
                         if request.paramType == AccountActionType.resumeEphemeralPlusPlus.rawValue {
@@ -153,7 +148,7 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
                                     self?.connectToChat(link: link, completion: completion)
                                 case .failure(let error):
                                     MEGALogDebug("Create meeting: failure fetching node for ephemeral account \(error)")
-                                    completion(.failure(.unexpected))
+                                    completion(.failure(GenericErrorEntity()))
                                 }
                             })
                         } else {
@@ -163,22 +158,22 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
                 })
             case .failure(let error):
                 MEGALogDebug("Create meeting: failed to logout of anonymous account \(error)")
-                completion(.failure(.unexpected))
+                completion(.failure(GenericErrorEntity()))
             }
         })
     }
     
-    private func connectToChat(link: String, completion: @escaping (Result<Void, MEGASDKErrorType>) -> Void) {
+    private func connectToChat(link: String, completion: @escaping (Result<Void, GenericErrorEntity>) -> Void) {
         guard let url = URL(string: link) else {
             MEGALogDebug("Create meeting: invalid url \(link)")
-            completion(.failure(.unexpected))
+            completion(.failure(GenericErrorEntity()))
             return
         }
         
         MEGALogDebug("Create meeting: open chat preview for url \(url)")
         chatSdk.openChatPreview(url, delegate: ChatRequestDelegate { [weak self]  result in
             guard let self else {
-                completion(.failure(.unexpected))
+                completion(.failure(GenericErrorEntity()))
                 return
             }
             switch result {
@@ -186,7 +181,7 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
                 MEGALogDebug("Create meeting: open chat preview succeeded with request \(chatRequest)")
                 chatResultDelegate = MEGAChatResultDelegate { [weak self] _, chatId, newState in
                     guard let self else {
-                        completion(.failure(.unexpected))
+                        completion(.failure(GenericErrorEntity()))
                         return
                     }
                     if chatRequest.chatHandle == chatId, newState == .online, let chatResultDelegate {
@@ -199,7 +194,7 @@ final class MeetingCreatingRepository: NSObject, MEGAChatDelegate, MeetingCreati
                 }
             case .failure(let error):
                 MEGALogDebug("Create meeting: open chat preview failure \(error)")
-                completion(.failure(.unexpected))
+                completion(.failure(GenericErrorEntity()))
             }
         })
     }
