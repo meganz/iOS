@@ -35,6 +35,13 @@ final class BackupListsViewRouterTests: XCTestCase {
         
         let mockPresenter = UINavigationController()
         let networkMonitorUseCase = MockNetworkMonitorUseCase()
+        let cameraUploadsUseCase = MockCameraUploadsUseCase(
+            cuNode: NodeEntity(
+                name: "Camera Uploads",
+                handle: 1
+            ),
+            isCameraUploadsNode: true
+        )
         
         let sut = BackupListViewRouter(
             isCurrentDevice: true,
@@ -45,7 +52,8 @@ final class BackupListsViewRouterTests: XCTestCase {
             backups: [],
             notificationCenter: NotificationCenter.default,
             deviceCenterUseCase: MockDeviceCenterUseCase(),
-            nodeUseCase: MockNodeDataUseCase(), 
+            nodeUseCase: MockNodeDataUseCase(),
+            cameraUploadsUseCase: cameraUploadsUseCase, 
             networkMonitorUseCase: networkMonitorUseCase,
             navigationController: mockPresenter,
             deviceCenterBridge: DeviceCenterBridge(),

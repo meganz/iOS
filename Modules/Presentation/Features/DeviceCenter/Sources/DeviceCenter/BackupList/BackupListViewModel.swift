@@ -1,15 +1,17 @@
 import Combine
 import MEGADomain
+import MEGAL10n
 import MEGASDKRepo
 import SwiftUI
 
 public extension Notification.Name {
-    static let didChangeCameraUploadsBackupName = Notification.Name("didChangeCameraUploadsBackupName")
+    static let shouldChangeCameraUploadsBackupName = Notification.Name("shouldChangeCameraUploadsBackupName")
 }
 
 public final class BackupListViewModel: ObservableObject {
     private let deviceCenterUseCase: any DeviceCenterUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
+    private let cameraUploadsUseCase: any CameraUploadsUseCaseProtocol
     private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
     private let router: any BackupListRouting
     private let deviceCenterBridge: DeviceCenterBridge
@@ -67,6 +69,7 @@ public final class BackupListViewModel: ObservableObject {
         updateInterval: UInt64,
         deviceCenterUseCase: some DeviceCenterUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
+        cameraUploadsUseCase: some CameraUploadsUseCaseProtocol,
         networkMonitorUseCase: some NetworkMonitorUseCaseProtocol,
         router: some BackupListRouting,
         deviceCenterBridge: DeviceCenterBridge,
@@ -85,6 +88,7 @@ public final class BackupListViewModel: ObservableObject {
         self.updateInterval = updateInterval
         self.deviceCenterUseCase = deviceCenterUseCase
         self.nodeUseCase = nodeUseCase
+        self.cameraUploadsUseCase = cameraUploadsUseCase
         self.networkMonitorUseCase = networkMonitorUseCase
         self.router = router
         self.deviceCenterBridge = deviceCenterBridge
@@ -119,16 +123,16 @@ public final class BackupListViewModel: ObservableObject {
     private func addObservers() {
         if isCurrentDevice && isMobileDevice {
             backupNameChangeObserver = notificationCenter.addObserver(
-                forName: Notification.Name.didChangeCameraUploadsBackupName,
+                forName: Notification.Name.shouldChangeCameraUploadsBackupName,
                 object: nil,
                 queue: .main
             ) { [weak self] _ in
-                self?.handleDidChangeCameraUploadsBackupName()
+                self?.handleShouldChangeCameraUploadsBackupName()
             }
         }
     }
     
-    private func handleDidChangeCameraUploadsBackupName() {
+    private func handleShouldChangeCameraUploadsBackupName() {
         Task {
             if self.showEmptyStateView,
                let currentDeviceId = self.deviceCenterUseCase.loadCurrentDeviceId() {
@@ -217,6 +221,7 @@ public final class BackupListViewModel: ObservableObject {
                     return DeviceCenterItemViewModel(
                         deviceCenterUseCase: deviceCenterUseCase,
                         nodeUseCase: nodeUseCase,
+                        cameraUploadsUseCase: cameraUploadsUseCase,
                         deviceCenterBridge: deviceCenterBridge,
                         itemType: .backup(backup),
                         assets: assets
@@ -250,7 +255,7 @@ public final class BackupListViewModel: ObservableObject {
     
     func actionsForDevice() -> [DeviceCenterAction] {
         var actionTypes: [DeviceCenterActionType] = [.rename]
-
+        
         if isCurrentDevice && isMobileDevice {
             actionTypes.append(.cameraUploads)
         }
@@ -284,15 +289,7 @@ public final class BackupListViewModel: ObservableObject {
                 }
             }
         case .rename:
-            let deviceNames = await deviceCenterUseCase.fetchDeviceNames()
-            let renameEntity = RenameActionEntity(
-                deviceId: selectedDeviceId,
-                deviceOldName: selectedDeviceName,
-                otherDeviceNames: deviceNames) { [weak self] in
-                    Task {
-                        await self?.syncDevicesAndLoadBackups()
-                    }
-            }
+            let renameEntity = await makeRenameEntity()
             deviceCenterBridge.renameActionTapped(renameEntity)
         case .info:
             guard let nodeHandle = backups?.first?.rootHandle,
@@ -301,5 +298,32 @@ public final class BackupListViewModel: ObservableObject {
             await deviceCenterBridge.nodeActionTapped(nodeEntity, .info)
         default: break
         }
+    }
+    
+    private func makeRenameEntity() async -> RenameActionEntity {
+        let deviceNames = await deviceCenterUseCase.fetchDeviceNames()
+        
+        return RenameActionEntity(
+            oldName: selectedDeviceName,
+            otherNamesInContext: deviceNames,
+            actionType: .device(
+                deviceId: selectedDeviceId,
+                maxCharacters: 32
+            ),
+            alertTitles: [
+                .invalidCharacters: Strings.Localizable.General.Error.charactersNotAllowed(String.Constants.invalidFileFolderNameCharacters),
+                .duplicatedName: Strings.Localizable.Device.Center.Rename.Device.Duplicated.name,
+                .nameTooLong: Strings.Localizable.Device.Center.Rename.Device.Invalid.Long.name,
+                .none: Strings.Localizable.rename
+            ],
+            alertMessage: [
+                .duplicatedName: Strings.Localizable.Device.Center.Rename.Device.Different.name,
+                .none: Strings.Localizable.renameNodeMessage
+            ],
+            alertPlaceholder: Strings.Localizable.Device.Center.Rename.Device.title) {
+                Task { [weak self] in
+                    await self?.syncDevicesAndLoadBackups()
+                }
+            }
     }
 }

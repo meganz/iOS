@@ -12,4 +12,14 @@ public final class MockRenameUseCase: RenameUseCaseProtocol {
             throw GenericErrorEntity()
         }
     }
+    
+    public func renameNode(_ node: NodeEntity, newName: String) async throws {
+        if shouldThrowError {
+            throw GenericErrorEntity()
+        }
+    }
+    
+    public func parentNodeHasMatchingChild(_ parentNode: NodeEntity, childName: String) -> Bool {
+        true
+    }
 }

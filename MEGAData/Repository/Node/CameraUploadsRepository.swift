@@ -83,7 +83,7 @@ public final class CameraUploadsRepository: NSObject, CameraUploadsRepositoryPro
         try await withAsyncThrowingValue { completion in
             sdk.updateBackup(handle,
                              backupType: .cameraUploads,
-                             targetNode: nil,
+                             targetNode: cuNode,
                              folderPath: nil,
                              backupName: cuNodeName,
                              state: .invalid,

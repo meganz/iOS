@@ -71,4 +71,8 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
     public func parentsForHandle(_ handle: HandleEntity) async -> [NodeEntity]? {
         nil
     }
+    
+    public func childrenNames(of node: NodeEntity) -> [String]? {
+        nil
+    }
 }

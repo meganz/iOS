@@ -101,4 +101,8 @@ public struct MockNodeRepository: NodeRepositoryProtocol {
             return childrenNodes[index]
         })
     }
+    
+    public func childrenNames(of node: NodeEntity) -> [String]? {
+        nil
+    }
 }

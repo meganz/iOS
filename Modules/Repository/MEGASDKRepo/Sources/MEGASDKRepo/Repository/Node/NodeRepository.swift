@@ -134,6 +134,14 @@ public struct NodeRepository: NodeRepositoryProtocol {
         guard let node = node.toMEGANode(in: sdk) else { return nil }
         return sdk.children(forParent: node).toNodeListEntity()
     }
+    
+    public func childrenNames(of node: NodeEntity) -> [String]? {
+        guard let node = sdk.node(forHandle: node.handle) else { return nil }
+        return sdk
+            .children(forParent: node)
+            .toNodeArray()
+            .compactMap(\.name)
+    }
 
     // MARK: - Private
     private func images(forParentNode node: MEGANode) -> [NodeEntity] {

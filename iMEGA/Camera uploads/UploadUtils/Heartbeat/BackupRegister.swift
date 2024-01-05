@@ -145,7 +145,7 @@ final class BackupRegister {
             try await cameraUploadsUseCase.updateCameraUploadsBackupName(
                 backupId
             )
-            NotificationCenter.default.post(name: .didChangeCameraUploadsBackupName, object: nil)
+            NotificationCenter.default.post(name: .shouldChangeCameraUploadsBackupName, object: nil)
         } catch {
             Crashlytics.crashlytics().record(error: error)
             MEGALogError("[Camera Upload] heartbeat - error when to update backup name \(String(describing: type(of: sdk).base64Handle(forHandle: backupId))) \(error)")

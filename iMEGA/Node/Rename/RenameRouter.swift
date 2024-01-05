@@ -2,30 +2,26 @@ import DeviceCenter
 import MEGADomain
 import MEGAPresentation
 
-enum RenameType {
-    case device(renameEntity: RenameActionEntity)
-}
-
 final class RenameRouter: Routing, RenameViewRouting {
     private weak var presenter: UIViewController?
     private weak var baseViewController: UIViewController?
-    private let type: RenameType
+    private let renameEntity: RenameActionEntity
     private let renameUseCase: any RenameUseCaseProtocol
 
     init(
         presenter: UIViewController,
-        type: RenameType,
+        renameEntity: RenameActionEntity,
         renameUseCase: any RenameUseCaseProtocol
     ) {
         self.presenter = presenter
-        self.type = type
+        self.renameEntity = renameEntity
         self.renameUseCase = renameUseCase
     }
     
     func build() -> UIViewController {
         let vm = RenameViewModel(
             router: self,
-            type: type,
+            renameEntity: renameEntity,
             renameUseCase: renameUseCase
         )
         
@@ -48,12 +44,7 @@ final class RenameRouter: Routing, RenameViewRouting {
         presenter?.present(viewController, animated: true)
     }
     
-    func renamingFinishedSuccessfully() {
-        switch type {
-        case .device(let entity):
-            entity.renamingFinished()
-        }
+    func renamingFinished(with result: Result<Void, any Error>) {
+        renameEntity.renamingFinished()
     }
-    
-    func renamingFinishedWithError() {}
 }
