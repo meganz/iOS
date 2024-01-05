@@ -142,9 +142,12 @@ final class MyAccountHallViewModelTests: XCTestCase {
         
         deviceCenterBridge.renameActionTapped(
             RenameActionEntity(
-                deviceId: "",
-                deviceOldName: "",
-                otherDeviceNames: [],
+                oldName: "",
+                otherNamesInContext: [],
+                actionType: .device(deviceId: "", maxCharacters: 32),
+                alertTitles: [:],
+                alertMessage: [:],
+                alertPlaceholder: "",
                 renamingFinished: {}
             )
         )

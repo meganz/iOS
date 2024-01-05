@@ -1,44 +1,53 @@
+import DeviceCenter
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
 
 protocol RenameViewRouting: Routing {
-    func renamingFinishedSuccessfully()
-    func renamingFinishedWithError()
+    func renamingFinished(with result: Result<Void, any Error>)
 }
 
 struct RenameViewModel {
     private let router: any RenameViewRouting
-    private let type: RenameType
+    private let renameEntity: RenameActionEntity
     private let renameUseCase: any RenameUseCaseProtocol
     
     init(
         router: any RenameViewRouting,
-        type: RenameType,
+        renameEntity: RenameActionEntity,
         renameUseCase: any RenameUseCaseProtocol
     ) {
         self.router = router
-        self.type = type
+        self.renameEntity = renameEntity
         self.renameUseCase = renameUseCase
     }
     
-    func rename(_ newName: String) async {
-        switch type {
-        case .device(let renameEntity):
-            do {
-                try await renameUseCase.renameDevice(renameEntity.deviceId, newName: newName)
-                router.renamingFinishedSuccessfully()
-            } catch {
-                router.renamingFinishedWithError()
-            }
+    private func performRenaming(newName: String) async -> Result<Void, any Error> {
+        switch renameEntity.actionType {
+        case .device(let deviceId, _):
+            return await renameEntityIfNeeded(deviceId, newName: newName, renameAction: renameUseCase.renameDevice)
+        case .node(let node):
+            return await renameEntityIfNeeded(node, newName: newName, renameAction: renameUseCase.renameNode)
+        }
+    }
+
+    private func renameEntityIfNeeded<T>(_ identifier: T?, newName: String, renameAction: (T, String) async throws -> Void) async -> Result<Void, any Error> {
+        guard let id = identifier else { return .failure(GenericErrorEntity()) }
+        do {
+            try await renameAction(id, newName)
+            return .success
+        } catch {
+            return .failure(error)
         }
     }
     
+    func rename(_ newName: String) async {
+        let result = await performRenaming(newName: newName)
+        router.renamingFinished(with: result)
+    }
+    
     func isDuplicated(_ text: String) -> Bool {
-        switch type {
-        case .device(let renameEntity):
-            return renameEntity.otherDeviceNames.contains(text)
-        }
+        renameEntity.otherNamesInContext.contains(text)
     }
     
     func containsInvalidChars(_ text: String) -> Bool {
@@ -47,42 +56,41 @@ struct RenameViewModel {
     }
     
     func isNewNameWithinMaxLength(_ newName: String) -> Bool {
-        switch type {
-        case .device(let renameEntity):
-            return newName.count <= renameEntity.maxCharacters
+        switch renameEntity.actionType {
+            
+        case .device(_, let maxCharacters):
+            return newName.count <= maxCharacters
+        default:
+            return true
         }
     }
     
     func textfieldText() -> String {
-        switch type {
-        case .device(let renameEntity):
-            return renameEntity.deviceOldName
-        }
+        renameEntity.oldName
     }
     
     func textfieldPlaceHolder() -> String {
-        switch type {
-        case .device:
-            return Strings.Localizable.Device.Center.Rename.Device.title
-        }
+        renameEntity.alertPlaceholder
     }
     
     func alertTitle(text: String) -> String {
         if containsInvalidChars(text) {
-            return Strings.Localizable.General.Error.charactersNotAllowed(String.Constants.invalidFileFolderNameCharacters)
+            return renameEntity.alertTitles[.invalidCharacters] ?? ""
         } else if isDuplicated(text) {
-            return Strings.Localizable.Device.Center.Rename.Device.Duplicated.name
+            return renameEntity.alertTitles[.duplicatedName] ?? ""
         } else if !isNewNameWithinMaxLength(text) {
-            return Strings.Localizable.Device.Center.Rename.Device.Invalid.Long.name
+            return renameEntity.alertTitles[.nameTooLong] ?? ""
         }
         
-        return Strings.Localizable.rename
+        return renameEntity.alertTitles[.none] ?? ""
     }
     
     func alertMessage(text: String) -> String {
-        isDuplicated(text) || !isNewNameWithinMaxLength(text) ?
-            Strings.Localizable.Device.Center.Rename.Device.Different.name :
-            Strings.Localizable.renameNodeMessage
+        if isDuplicated(text) || !isNewNameWithinMaxLength(text) {
+            return renameEntity.alertMessage[.duplicatedName] ?? ""
+        } else {
+            return renameEntity.alertMessage[.none] ?? ""
+        }
     }
     
     func alertTextsColor(text: String) -> UIColor {

@@ -20,4 +20,5 @@ public protocol NodeRepositoryProtocol: RepositoryProtocol {
     func rootNode() -> NodeEntity?
     func parents(of node: NodeEntity) async -> [NodeEntity]
     func children(of node: NodeEntity) async -> NodeListEntity?
+    func childrenNames(of node: NodeEntity) -> [String]?
 }

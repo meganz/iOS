@@ -31,6 +31,13 @@ final class DeviceListViewRouterTests: XCTestCase {
         
         let mockPresenter = UINavigationController()
         let deviceCenterUseCase = MockDeviceCenterUseCase()
+        let cameraUploadsUseCase = MockCameraUploadsUseCase(
+            cuNode: NodeEntity(
+                name: "Camera Uploads",
+                handle: 1
+            ),
+            isCameraUploadsNode: true
+        )
         let deviceListAssets = DeviceCenterAssets(
             deviceListAssets:
                 DeviceListAssets(
@@ -68,6 +75,7 @@ final class DeviceListViewRouterTests: XCTestCase {
             deviceCenterBridge: DeviceCenterBridge(),
             deviceCenterUseCase: deviceCenterUseCase,
             nodeUseCase: MockNodeDataUseCase(),
+            cameraUploadsUseCase: cameraUploadsUseCase,
             networkMonitorUseCase: MockNetworkMonitorUseCase(),
             notificationCenter: NotificationCenter.default,
             deviceCenterAssets: deviceListAssets

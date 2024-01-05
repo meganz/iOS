@@ -2,6 +2,8 @@ import Foundation
 
 public protocol RenameUseCaseProtocol {
     func renameDevice(_ deviceId: String, newName: String) async throws
+    func renameNode(_ node: NodeEntity, newName: String) async throws
+    func parentNodeHasMatchingChild(_ parentNode: NodeEntity, childName: String) -> Bool
 }
 
 public struct RenameUseCase<Repository: RenameRepositoryProtocol>: RenameUseCaseProtocol {
@@ -13,5 +15,13 @@ public struct RenameUseCase<Repository: RenameRepositoryProtocol>: RenameUseCase
     
     public func renameDevice(_ deviceId: String, newName: String) async throws {
         try await repository.renameDevice(deviceId, newName: newName)
+    }
+    
+    public func renameNode(_ node: NodeEntity, newName: String) async throws {
+        try await repository.renameNode(node, newName: newName)
+    }
+    
+    public func parentNodeHasMatchingChild(_ parentNode: NodeEntity, childName: String) -> Bool {
+        repository.parentNodeHasMatchingChild(parentNode, childName: childName)
     }
 }

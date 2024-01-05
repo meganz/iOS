@@ -1,23 +1,43 @@
+import MEGADomain
+
 public typealias RenamingFinished = () -> Void
 
 public struct RenameActionEntity {
-    public let deviceId: String
-    public let deviceOldName: String
-    public let maxCharacters: Int
-    public let otherDeviceNames: [String]
+    public let oldName: String
+    public let otherNamesInContext: [String]
+    public let actionType: RenameActionType
+    public let alertTitles: [RenameErrorType: String]
+    public let alertMessage: [RenameErrorType: String]
+    public let alertPlaceholder: String
     public let renamingFinished: RenamingFinished
     
+    public enum RenameErrorType {
+        case invalidCharacters
+        case duplicatedName
+        case nameTooLong
+        case none
+    }
+
+    public enum RenameActionType {
+        case device(deviceId: String, maxCharacters: Int)
+        case node(node: NodeEntity)
+    }
+
     public init(
-        deviceId: String,
-        deviceOldName: String,
-        maxCharacters: Int = 32,
-        otherDeviceNames: [String],
-        renamingFinished: @escaping RenamingFinished)
-    {
-        self.deviceId = deviceId
-        self.deviceOldName = deviceOldName
-        self.maxCharacters = maxCharacters
-        self.otherDeviceNames = otherDeviceNames
+        oldName: String,
+        otherNamesInContext: [String],
+        actionType: RenameActionType,
+        alertTitles: [RenameErrorType: String],
+        alertMessage: [RenameErrorType: String],
+        alertPlaceholder: String,
+        renamingFinished: @escaping RenamingFinished
+    ) {
+        self.oldName = oldName
+        self.otherNamesInContext = otherNamesInContext
+        self.actionType = actionType
+        self.alertTitles = alertTitles
+        self.alertMessage = alertMessage
+        self.alertPlaceholder = alertPlaceholder
         self.renamingFinished = renamingFinished
     }
 }

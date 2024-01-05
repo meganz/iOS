@@ -19,6 +19,7 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
     private let deviceCenterAssets: DeviceCenterAssets
     private let deviceCenterUseCase: any DeviceCenterUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
+    private let cameraUploadsUseCase: any CameraUploadsUseCaseProtocol
     private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
     private let notificationCenter: NotificationCenter
     
@@ -27,6 +28,7 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
         deviceCenterBridge: DeviceCenterBridge,
         deviceCenterUseCase: some DeviceCenterUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
+        cameraUploadsUseCase: some CameraUploadsUseCaseProtocol,
         networkMonitorUseCase: some NetworkMonitorUseCaseProtocol,
         notificationCenter: NotificationCenter,
         deviceCenterAssets: DeviceCenterAssets
@@ -36,6 +38,7 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
         self.deviceCenterAssets = deviceCenterAssets
         self.deviceCenterUseCase = deviceCenterUseCase
         self.nodeUseCase = nodeUseCase
+        self.cameraUploadsUseCase = cameraUploadsUseCase
         self.notificationCenter = notificationCenter
         self.networkMonitorUseCase = networkMonitorUseCase
         
@@ -88,6 +91,7 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
             notificationCenter: NotificationCenter.default,
             deviceCenterUseCase: deviceCenterUseCase,
             nodeUseCase: nodeUseCase,
+            cameraUploadsUseCase: cameraUploadsUseCase,
             networkMonitorUseCase: networkMonitorUseCase,
             navigationController: navigationController,
             deviceCenterBridge: deviceCenterBridge,
@@ -110,6 +114,7 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
             notificationCenter: notificationCenter,
             deviceCenterUseCase: deviceCenterUseCase,
             nodeUseCase: nodeUseCase,
+            cameraUploadsUseCase: cameraUploadsUseCase,
             networkMonitorUseCase: networkMonitorUseCase,
             navigationController: navigationController,
             deviceCenterBridge: deviceCenterBridge,

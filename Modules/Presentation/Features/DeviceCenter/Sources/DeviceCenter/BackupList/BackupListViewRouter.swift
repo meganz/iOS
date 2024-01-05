@@ -21,6 +21,7 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
     private let notificationCenter: NotificationCenter
     private let deviceCenterUseCase: any DeviceCenterUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
+    private let cameraUploadsUseCase: any CameraUploadsUseCaseProtocol
     private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
     private let backupListAssets: BackupListAssets
     private let emptyStateAssets: EmptyStateAssets
@@ -38,6 +39,7 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
         notificationCenter: NotificationCenter,
         deviceCenterUseCase: some DeviceCenterUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
+        cameraUploadsUseCase: some CameraUploadsUseCaseProtocol,
         networkMonitorUseCase: some NetworkMonitorUseCaseProtocol,
         navigationController: UINavigationController?,
         deviceCenterBridge: DeviceCenterBridge,
@@ -56,6 +58,7 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
         self.notificationCenter = notificationCenter
         self.deviceCenterUseCase = deviceCenterUseCase
         self.nodeUseCase = nodeUseCase
+        self.cameraUploadsUseCase = cameraUploadsUseCase
         self.networkMonitorUseCase = networkMonitorUseCase
         self.navigationController = navigationController
         self.deviceCenterBridge = deviceCenterBridge
@@ -75,6 +78,7 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
             updateInterval: updateInterval,
             deviceCenterUseCase: deviceCenterUseCase,
             nodeUseCase: nodeUseCase,
+            cameraUploadsUseCase: cameraUploadsUseCase,
             networkMonitorUseCase: networkMonitorUseCase,
             router: self,
             deviceCenterBridge: deviceCenterBridge,

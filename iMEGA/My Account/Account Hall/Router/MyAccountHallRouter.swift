@@ -255,6 +255,10 @@ final class MyAccountHallRouter: MyAccountHallRouting {
                     nodeValidationRepository: NodeValidationRepository.newRepo,
                     nodeRepository: NodeRepository.newRepo
                 ),
+            cameraUploadsUseCase:
+                CameraUploadsUseCase(
+                    cameraUploadsRepository: CameraUploadsRepository.newRepo
+                ),
             networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
             notificationCenter: NotificationCenter.default,
             deviceCenterAssets: deviceCenterAssets
@@ -276,18 +280,17 @@ final class MyAccountHallRouter: MyAccountHallRouting {
     func didTapRenameAction(
         _ renameEntity: RenameActionEntity
     ) {
-        guard let presenter = self.navigationController else { return }
-        
-        RenameRouter(
-            presenter: presenter,
-            type: .device(
-                renameEntity: renameEntity
-            ),
-            renameUseCase:
-                RenameUseCase(
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            guard let presenter = self.navigationController else { return }
+            
+            RenameRouter(
+                presenter: presenter,
+                renameEntity: renameEntity,
+                renameUseCase: RenameUseCase(
                     renameRepository: RenameRepository.newRepo
                 )
-        ).start()
+            ).start()
+        }
     }
     
     func didTapNodeAction(

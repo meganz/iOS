@@ -4,11 +4,12 @@ class MockRenameViewRouter: RenameViewRouting {
     var didFinishSuccessfullyCalled = false
     var didFinishWithErrorCalled = false
     
-    func renamingFinishedSuccessfully() {
-        didFinishSuccessfullyCalled = true
-    }
-    
-    func renamingFinishedWithError() {
-        didFinishWithErrorCalled = true
+    func renamingFinished(with result: Result<Void, Error>) {
+        switch result {
+        case .success:
+            didFinishSuccessfullyCalled = true
+        case .failure:
+            didFinishWithErrorCalled = true
+        }
     }
 }
