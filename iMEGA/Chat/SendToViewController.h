@@ -28,4 +28,6 @@
 @property (nonatomic, weak) id<SendToViewControllerDelegate> sendToViewControllerDelegate;
 @property (nonatomic, weak) id<SendToChatActivityDelegate> sendToChatActivityDelegate;
 
+- (NSUInteger)selectedChatCount;
+
 @end

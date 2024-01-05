@@ -148,6 +148,11 @@
     }
 }
 
+#pragma mark - Public
+- (NSUInteger)selectedChatCount {
+    return self.selectedUsersMutableArray.count + self.selectedGroupChatsMutableArray.count;
+}
+
 #pragma mark - Private
 
 - (void)updateAppearance {
@@ -265,27 +270,6 @@
     [self.searchedUsersAndGroupChatsMutableArray addObjectsFromArray:self.searchedGroupChatsMutableArray];
     [self.searchedUsersAndGroupChatsMutableArray addObjectsFromArray:self.searchedUsersMutableArray];
     self.searchedUsersAndGroupChatsMutableArray = [[self.searchedUsersAndGroupChatsMutableArray sortedArrayUsingComparator:[self comparatorToOrderUsersAndGroupChats]] mutableCopy];
-}
-
-- (void)showSuccessMessage {
-    NSString *status;
-    if (self.nodes == nil) {
-        status = LocalizedString(@"Shared successfully", @"Shared successfully");
-    } else if (self.nodes.count == 1) {
-        if ((self.selectedGroupChatsMutableArray.count + self.selectedUsersMutableArray.count) == 1) {
-            status = LocalizedString(@"fileSentToChat", @"Toast text upon sending a single file to chat");
-        } else {
-            status = [NSString stringWithFormat:LocalizedString(@"fileSentToXChats", @"Success message when the attachment has been sent to a many chats"), (self.selectedGroupChatsMutableArray.count + self.selectedUsersMutableArray.count) ];
-        }
-    } else {
-        if ((self.selectedGroupChatsMutableArray.count + self.selectedUsersMutableArray.count) == 1) {
-            status = LocalizedString(@"filesSentToChat", @"Toast text upon sending multiple files to chat");
-        } else {
-            status = [NSString stringWithFormat:LocalizedString(@"xfilesSentSuccesfully", @"success message when sending multiple files. Please do not modify the %d placeholder."), self.nodes.count];
-        }
-    }
-    
-    [SVProgressHUD showSuccessWithStatus:status];
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification {

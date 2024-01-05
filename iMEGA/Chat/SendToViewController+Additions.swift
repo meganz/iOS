@@ -1,6 +1,29 @@
+import MEGAL10n
 import UIKit
 
 extension SendToViewController {
+
+    @objc func showSuccessMessage() {
+        guard let nodes else {
+            SVProgressHUD.showSuccess(withStatus: Strings.Localizable.sharedSuccessfully)
+            return
+        }
+        
+        var statusMessage = ""
+        let selectedChatCount = Int(selectedChatCount())
+        let nodesCount = nodes.count
+        
+        if selectedChatCount == 1 {
+            statusMessage = Strings.Localizable.Chat.Message.filesSentToAChat(nodesCount)
+        } else {
+            statusMessage = nodesCount == 1 ?
+                Strings.Localizable.Chat.Message.fileSentToMultipleChats(selectedChatCount) :
+                Strings.Localizable.Chat.Message.filesSent(nodesCount)
+        }
+        
+        SVProgressHUD.showSuccess(withStatus: statusMessage)
+    }
+    
     @objc
     func syncSelectionState(for section: Int,
                             dataSourceArray: NSMutableArray,

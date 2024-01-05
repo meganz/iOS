@@ -40,7 +40,9 @@ extension SendLinkToChatsDelegate: SendToViewControllerDelegate {
         }
         
         let totalCount = chats.count + users.count
-        let message = totalCount == 1 ? Strings.Localizable.fileSentToChat : Strings.Localizable.fileSentToXChats(totalCount)
+        let message = totalCount == 1 ?
+            Strings.Localizable.Chat.Message.filesSentToAChat(1) :
+            Strings.Localizable.Chat.Message.fileSentToMultipleChats(totalCount)
         
         SVProgressHUD.showSuccess(withStatus: message)
     }
