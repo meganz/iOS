@@ -1,3 +1,4 @@
+import FirebaseCrashlytics
 import MEGADomain
 import MEGAL10n
 import PanModal
@@ -381,9 +382,12 @@ extension MeetingFloatingPanelViewController: UITableViewDataSource, UITableView
     }
     
     private func participantInCallCell(at indexPath: IndexPath) -> MeetingParticipantTableViewCell {
-        guard let cell = participantsTableView.dequeueReusableCell(withIdentifier: MeetingParticipantTableViewCell.reuseIdentifier, for: indexPath) as? MeetingParticipantTableViewCell else { return MeetingParticipantTableViewCell() }
+        guard let cell = participantsTableView.dequeueReusableCell(withIdentifier: MeetingParticipantTableViewCell.reuseIdentifier, for: indexPath) as? MeetingParticipantTableViewCell, let participant = callParticipants[safe: indexPath.row] else {
+            reportWrongParticipantIndex(for: indexPath)
+            return MeetingParticipantTableViewCell()
+        }
         cell.viewModel = MeetingParticipantViewModel(
-            participant: callParticipants[indexPath.row],
+            participant: participant,
             userImageUseCase: userImageUseCase,
             accountUseCase: accountUseCase,
             chatRoomUseCase: chatRoomUseCase,
@@ -429,6 +433,21 @@ extension MeetingFloatingPanelViewController: UITableViewDataSource, UITableView
         guard let callParticipantsListView, let cell = participantsTableView.dequeueReusableCell(withIdentifier: EmptyParticipantsListTableViewCell.reuseIdentifier, for: indexPath) as? EmptyParticipantsListTableViewCell else { return EmptyParticipantsListTableViewCell() }
         cell.configure(for: callParticipantsListView.selectedTab)
         return cell
+    }
+}
+
+extension MeetingFloatingPanelViewController {
+    private func reportWrongParticipantIndex(for indexPath: IndexPath) {
+        let userInfo: [String: Any] = [
+            "callParticipantsListView data": String(describing: callParticipantsListView),
+            "indexPath": indexPath
+        ]
+        let error = NSError.init(
+            domain: "nz.mega.meetingfloatingpanelviewcontroller",
+            code: 0,
+            userInfo: userInfo
+        )
+        Crashlytics.crashlytics().record(error: error)
     }
 }
 
