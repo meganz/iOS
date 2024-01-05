@@ -256,7 +256,6 @@
 		2F04634024BFF13900A47A81 /* ChatMessageActionMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F04633F24BFF13900A47A81 /* ChatMessageActionMenuViewController.swift */; };
 		2F0986762511B97800E959C2 /* ChatRichPreviewDialogCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0986752511B97800E959C2 /* ChatRichPreviewDialogCollectionViewCell.swift */; };
 		2F09867A2511BA8900E959C2 /* RichPreviewDialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0986792511BA8900E959C2 /* RichPreviewDialogView.swift */; };
-		2F0CB0C2260028EC002CB24F /* MeetingCreatingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0CB0C1260028EC002CB24F /* MeetingCreatingUseCase.swift */; };
 		2F0CB57123DFD209009F09A2 /* DocScannerSaveSettingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F0CB56F23DFD209009F09A2 /* DocScannerSaveSettingTableViewController.swift */; };
 		2F147784244D1C950069B264 /* ChatLocationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F147783244D1C950069B264 /* ChatLocationCollectionViewCell.swift */; };
 		2F147788244D2DF30069B264 /* GeoLocationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F147787244D2DF30069B264 /* GeoLocationView.xib */; };
@@ -310,7 +309,6 @@
 		2F9F11372509E9C800896DFF /* GiphyResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9F11352509E9C700896DFF /* GiphyResponseModel.swift */; };
 		2FA4CB71252C019200240AFA /* ChatBottomNewMessageIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA4CB70252C019200240AFA /* ChatBottomNewMessageIndicatorView.swift */; };
 		2FA61993261D2FFA00663034 /* MeetingCreatingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA61992261D2FFA00663034 /* MeetingCreatingRepository.swift */; };
-		2FA619A7261D31DE00663034 /* MeetingCreatingRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA619A6261D31DE00663034 /* MeetingCreatingRepositoryProtocol.swift */; };
 		2FA6D9C42436C314007A8E81 /* ChatViewAttachmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA6D9C22436C314007A8E81 /* ChatViewAttachmentCell.swift */; };
 		2FA6D9DD243E8CB5007A8E81 /* ChatMediaCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA6D9DA243E8CB4007A8E81 /* ChatMediaCollectionViewCell.swift */; };
 		2FA6DAA7243ED07F007A8E81 /* MEGAGetPreviewRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8EC55B31F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m */; };
@@ -2798,7 +2796,6 @@
 		2F04633F24BFF13900A47A81 /* ChatMessageActionMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageActionMenuViewController.swift; sourceTree = "<group>"; };
 		2F0986752511B97800E959C2 /* ChatRichPreviewDialogCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRichPreviewDialogCollectionViewCell.swift; sourceTree = "<group>"; };
 		2F0986792511BA8900E959C2 /* RichPreviewDialogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RichPreviewDialogView.swift; sourceTree = "<group>"; };
-		2F0CB0C1260028EC002CB24F /* MeetingCreatingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingCreatingUseCase.swift; sourceTree = "<group>"; };
 		2F0CB56F23DFD209009F09A2 /* DocScannerSaveSettingTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocScannerSaveSettingTableViewController.swift; sourceTree = "<group>"; };
 		2F147783244D1C950069B264 /* ChatLocationCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLocationCollectionViewCell.swift; sourceTree = "<group>"; };
 		2F147787244D2DF30069B264 /* GeoLocationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GeoLocationView.xib; sourceTree = "<group>"; };
@@ -2856,7 +2853,6 @@
 		2F9F11352509E9C700896DFF /* GiphyResponseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiphyResponseModel.swift; sourceTree = "<group>"; };
 		2FA4CB70252C019200240AFA /* ChatBottomNewMessageIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBottomNewMessageIndicatorView.swift; sourceTree = "<group>"; };
 		2FA61992261D2FFA00663034 /* MeetingCreatingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingCreatingRepository.swift; sourceTree = "<group>"; };
-		2FA619A6261D31DE00663034 /* MeetingCreatingRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingCreatingRepositoryProtocol.swift; sourceTree = "<group>"; };
 		2FA6D9C22436C314007A8E81 /* ChatViewAttachmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewAttachmentCell.swift; sourceTree = "<group>"; };
 		2FA6D9DA243E8CB4007A8E81 /* ChatMediaCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatMediaCollectionViewCell.swift; sourceTree = "<group>"; };
 		2FA6DA5C243E915F007A8E81 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -8947,7 +8943,6 @@
 			children = (
 				8338E0F22666552900D1458B /* CallManagerUseCase.swift */,
 				838A7B5525D55EFA00767DB0 /* CallUseCase.swift */,
-				2F0CB0C1260028EC002CB24F /* MeetingCreatingUseCase.swift */,
 			);
 			path = Calls;
 			sourceTree = "<group>";
@@ -8964,7 +8959,6 @@
 		838A7B7A25D5679100767DB0 /* Calls */ = {
 			isa = PBXGroup;
 			children = (
-				2FA619A6261D31DE00663034 /* MeetingCreatingRepositoryProtocol.swift */,
 			);
 			path = Calls;
 			sourceTree = "<group>";
@@ -14067,8 +14061,6 @@
 				BF66DFFF26140B3D00066F35 /* MeetingContainerViewController.swift in Sources */,
 				BF66E01B26140BF700066F35 /* MeetingContainerViewModel.swift in Sources */,
 				2FA61993261D2FFA00663034 /* MeetingCreatingRepository.swift in Sources */,
-				2FA619A7261D31DE00663034 /* MeetingCreatingRepositoryProtocol.swift in Sources */,
-				2F0CB0C2260028EC002CB24F /* MeetingCreatingUseCase.swift in Sources */,
 				2FFCF3AA25FB1F5E00E1718D /* MeetingCreatingViewController.swift in Sources */,
 				2FFCF3CE25FB1FE700E1718D /* MeetingCreatingViewModel.swift in Sources */,
 				2FFCF3C425FB1FBE00E1718D /* MeetingCreatingViewRouter.swift in Sources */,

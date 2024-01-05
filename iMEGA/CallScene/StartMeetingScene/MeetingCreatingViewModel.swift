@@ -77,7 +77,7 @@ final class MeetingCreatingViewModel: ViewModelType {
     var invokeCommand: ((Command) -> Void)?
     
     private var defaultMeetingName: String {
-        Strings.Localizable.Meetings.CreateMeeting.defaultMeetingName(meetingUseCase.getUsername())
+        Strings.Localizable.Meetings.CreateMeeting.defaultMeetingName(meetingUseCase.username())
     }
     
     // MARK: - Init
@@ -214,7 +214,7 @@ final class MeetingCreatingViewModel: ViewModelType {
             userImageUseCase.fetchUserAvatar(withUserHandle: myHandle,
                                              base64Handle: base64Handle,
                                              avatarBackgroundHexColor: avatarBackgroundHexColor,
-                                             name: meetingUseCase.getUsername()) { [weak self] result in
+                                             name: meetingUseCase.username()) { [weak self] result in
                 guard let self else { return }
                 switch result {
                 case .success(let image):
