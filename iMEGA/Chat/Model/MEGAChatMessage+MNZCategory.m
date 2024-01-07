@@ -115,7 +115,7 @@ static const void *richTitleTagKey = &richTitleTagKey;
     return NO;
 }
 
-- (NSString *)generateAttributedString {
+- (NSString *)generateAttributedString:(BOOL)isMeeting {
     NSString *text;
     uint64_t myHandle = [[MEGASdkManager sharedMEGAChatSdk] myUserHandle];
     
@@ -130,58 +130,13 @@ static const void *richTitleTagKey = &richTitleTagKey;
         NSString *fullNameReceiveAction = [self fullNameReceiveAction];
         
         switch (self.type) {
-            case MEGAChatMessageTypeAlterParticipants:
-                switch (self.privilege) {
-                    case -1: {
-                        if (fullNameDidAction && ![fullNameReceiveAction isEqualToString:fullNameDidAction]) {
-                            NSString *wasRemovedFromTheGroupChatBy = LocalizedString(@"wasRemovedFromTheGroupChatBy", @"A log message in a chat conversation to tell the reader that a participant [A] was removed from the group chat by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the group chat by Frank.");
-                            wasRemovedFromTheGroupChatBy = [wasRemovedFromTheGroupChatBy stringByReplacingOccurrencesOfString:@"[A]" withString:fullNameReceiveAction];
-                            wasRemovedFromTheGroupChatBy = [wasRemovedFromTheGroupChatBy stringByReplacingOccurrencesOfString:@"[B]" withString:fullNameDidAction];
-                            text = wasRemovedFromTheGroupChatBy;
-                            
-                            NSMutableAttributedString *mutableAttributedString = [NSMutableAttributedString.alloc initWithString:wasRemovedFromTheGroupChatBy attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:UIColor.labelColor}];
-                            [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSFontAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[wasRemovedFromTheGroupChatBy rangeOfString:fullNameReceiveAction]];
-                            [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSFontAttributeName: [self chatPeerOptionsUrlStringForUserHandle:self.userHandle] } range:[wasRemovedFromTheGroupChatBy rangeOfString:fullNameDidAction]];
-                            self.attributedText = mutableAttributedString;
-                        } else {
-                            NSString *leftTheGroupChat = LocalizedString(@"leftTheGroupChat", @"A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat.");
-                            leftTheGroupChat = [leftTheGroupChat stringByReplacingOccurrencesOfString:@"[A]" withString:fullNameReceiveAction];
-                            text = leftTheGroupChat;
-                            
-                            NSMutableAttributedString *mutableAttributedString = [NSMutableAttributedString.alloc initWithString:leftTheGroupChat attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:UIColor.labelColor}];
-                            [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSFontAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[leftTheGroupChat rangeOfString:fullNameReceiveAction]];
-                            self.attributedText = mutableAttributedString;
-                        }
-                        break;
-                    }
-                        
-                    case -2: {
-                        if (fullNameDidAction && ![fullNameReceiveAction isEqualToString:fullNameDidAction]) {
-                            NSString *joinedTheGroupChatByInvitationFrom = LocalizedString(@"joinedTheGroupChatByInvitationFrom", @"A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank.");
-                            joinedTheGroupChatByInvitationFrom = [joinedTheGroupChatByInvitationFrom stringByReplacingOccurrencesOfString:@"[A]" withString:fullNameReceiveAction];
-                            joinedTheGroupChatByInvitationFrom = [joinedTheGroupChatByInvitationFrom stringByReplacingOccurrencesOfString:@"[B]" withString:fullNameDidAction];
-                            text = joinedTheGroupChatByInvitationFrom;
-                            
-                            NSMutableAttributedString *mutableAttributedString = [NSMutableAttributedString.alloc initWithString:joinedTheGroupChatByInvitationFrom attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:UIColor.labelColor}];
-                            [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSFontAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[joinedTheGroupChatByInvitationFrom rangeOfString:fullNameReceiveAction]];
-                            [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSFontAttributeName: [self chatPeerOptionsUrlStringForUserHandle:self.userHandle] } range:[joinedTheGroupChatByInvitationFrom rangeOfString:fullNameDidAction]];
-                            self.attributedText = mutableAttributedString;
-                        } else {
-                            NSString *joinedTheGroupChat = [NSString stringWithFormat:LocalizedString(@"%@ joined the group chat.", @"Management message shown in a chat when the user %@ joined it from a public chat link"), fullNameReceiveAction];
-                            text = joinedTheGroupChat;
-                            
-                            NSMutableAttributedString *mutableAttributedString = [NSMutableAttributedString.alloc initWithString:joinedTheGroupChat attributes:@{NSFontAttributeName:textFontRegular, NSForegroundColorAttributeName:UIColor.labelColor}];
-                            [mutableAttributedString addAttributes:@{ NSFontAttributeName: textFontMedium, NSFontAttributeName: [self chatPeerOptionsUrlStringForUserHandle:[self userHandleReceiveAction]] } range:[joinedTheGroupChat rangeOfString:fullNameReceiveAction]];
-                            self.attributedText = mutableAttributedString;
-                        }
-                        break;
-                    }
-                        
-                    default:
-                        text = @"";
-                        break;
-                }
+            case MEGAChatMessageTypeAlterParticipants: {
+                [self alterParticipantsMessageWithFullNameDidAction:fullNameDidAction
+                                               fullNameReceiveAction:fullNameReceiveAction
+                                                           isMeeting:isMeeting];
+                text = self.attributedText.string;
                 break;
+            }
                 
             case MEGAChatMessageTypeTruncate: {
                 NSString *clearedTheChatHistory = LocalizedString(@"clearedTheChatHistory", @"A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history.");

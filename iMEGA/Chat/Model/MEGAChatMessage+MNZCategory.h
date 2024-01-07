@@ -26,7 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)containsMEGALink;
 - (BOOL)shouldShowForwardAccessory;
-- (NSString *)generateAttributedString;
+- (NSString *)generateAttributedString:(BOOL)isMeeting;
 
 @end
 

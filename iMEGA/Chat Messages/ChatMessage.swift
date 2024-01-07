@@ -40,7 +40,7 @@ extension ChatMessage: MessageType {
     
     var kind: MessageKind {
         
-        message.generateAttributedString()
+        message.generateAttributedString(chatRoom.isMeeting)
         
         switch message.type {
         case .callEnded, .callStarted, .attachment, .containsMeta, .contact, .voiceClip, .normal:
