@@ -16,7 +16,7 @@ extension ConcreteMessageType {
         self.sender = chatMessage.sender
         self.messageId = chatMessage.messageId
         self.sentDate = chatMessage.sentDate
-        chatMessage.message.generateAttributedString()
+        chatMessage.message.generateAttributedString(chatMessage.chatRoom.isMeeting)
         self.kind = .attributedText(chatMessage.message.attributedText ?? NSAttributedString(string: ""))
     }
 }
