@@ -146,11 +146,14 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
     }
 
     private func showNodeInfo(_ node: MEGANode) {
-        guard let nodeInfoNavigationController = UIStoryboard(name: "Node", bundle: nil).instantiateViewController(withIdentifier: "NodeInfoNavigationControllerID") as? UINavigationController,
-            let nodeInfoVC = nodeInfoNavigationController.viewControllers.first as? NodeInfoViewController else {
+        let nodeInfoNavigationController = NodeInfoViewController.instantiate(
+            withViewModel: .init(withNode: node),
+            delegate: nil
+        )
+        
+        guard let nodeInfoVC = nodeInfoNavigationController.viewControllers.first as? NodeInfoViewController else {
             return
         }
-
         nodeInfoVC.display(node, withDelegate: self)
         viewController?.present(nodeInfoNavigationController, animated: true, completion: nil)
     }
