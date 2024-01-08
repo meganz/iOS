@@ -3,13 +3,21 @@ import FirebaseCrashlytics
 @objc
 final class CrashlyticsLogger: NSObject {
     static let shared = CrashlyticsLogger()
-    
     private lazy var loggerQueue = DispatchQueue(label: "CrashlyticsLogger")
     
     /// The category of the issue we want to keep track of
-    enum Category: String {
-        case general = "General"
-        case audioPlayer = "Audio Player"
+    @objc enum LogCategory: Int, RawRepresentable {
+        
+        case general
+        case audioPlayer
+        case tranfersWidget
+        var rawValue: String {
+            switch self {
+            case .general: return "General"
+            case .audioPlayer: return "Audio Player"
+            case .tranfersWidget: return "Transfers Widget"
+            }
+        }
     }
     
     @objc static func log(_ msg: String) {
@@ -22,11 +30,12 @@ final class CrashlyticsLogger: NSObject {
     ///   - msg: The message to log.
     ///   - file: The file when the log message is called, caller should not pass this parameter.
     ///   - function: The caller function when the log message is called, caller should not pass this parameter.
-    static func log(category: Category, _ msg: String, _ file: String = #file, _ function: String = #function) {
+    @objc(logWithCategory:msg:file:function:)
+    static func log(category: LogCategory, _ msg: String, _ file: String = #file, _ function: String = #function) {
         shared.log(category: category, msg, file, function)
     }
     
-    private func log(category: Category, _ msg: String, _ file: String, _ function: String) {
+    private func log(category: LogCategory, _ msg: String, _ file: String, _ function: String) {
         loggerQueue.async {
             let file = file.components(separatedBy: "/").last ?? ""
             let msg = "[\(category.rawValue)] \(file).\(function): \(msg)"

@@ -80,6 +80,7 @@ static TransfersWidgetViewController* instance = nil;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.title = LocalizedString(@"transfers", @"Transfers");
     self.uploadTransfersQueued = NSMutableArray.new;
     self.selectedTransfers = NSMutableArray.new;
     self.transferInventoryUseCaseHelper = [[TransferInventoryUseCaseHelper alloc] init];
@@ -114,7 +115,10 @@ static TransfersWidgetViewController* instance = nil;
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    self.navigationItem.title = LocalizedString(@"transfers", @"Transfers");
+    [CrashlyticsLogger logWithCategory:LogCategoryTranfersWidget
+                                   msg:[NSString stringWithFormat: @"Tranfers widget will appear. Navigation bar info: %@.", self.navigationController.navigationBar]
+                                  file:@(__FILENAME__)
+                              function:@(__FUNCTION__)];
     
     [self setNavigationBarButtonItemsEnabled:[MEGAReachabilityManager isReachable]];
     
@@ -131,6 +135,10 @@ static TransfersWidgetViewController* instance = nil;
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [CrashlyticsLogger logWithCategory:LogCategoryTranfersWidget
+                                   msg:[NSString stringWithFormat: @"Tranfers widget will disappear. Navigation bar info %@.", self.navigationController.navigationBar]
+                                  file:@(__FILENAME__)
+                              function:@(__FUNCTION__)];
     [self.progressView showWidgetIfNeeded];
 }
 
@@ -176,6 +184,11 @@ static TransfersWidgetViewController* instance = nil;
 }
 
 - (void)updateViewState {
+    [CrashlyticsLogger logWithCategory:LogCategoryTranfersWidget
+                                   msg:[NSString stringWithFormat: @"Tranfers widget will disappear. Navigation bar info: %@.", self.navigationController.navigationBar]
+                                  file:@(__FILENAME__)
+                              function:@(__FUNCTION__)];
+    
     switch (self.transfersSelected) {
         case TransfersWidgetSelectedAll: {
             BOOL ongoingTransfers = self.transfers.count > 0;

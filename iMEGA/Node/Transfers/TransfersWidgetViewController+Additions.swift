@@ -104,7 +104,7 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
         let transferWidgetVC = TransfersWidgetViewController.sharedTransfer()
         let navigationController = MEGANavigationController(rootViewController: transferWidgetVC)
         navigationController.addLeftDismissButton(withText: Strings.Localizable.close)
-        
+        CrashlyticsLogger.log(category: .tranfersWidget, "Showing transfers widget from progress view")
         UIApplication.mnz_visibleViewController().present(navigationController, animated: true, completion: nil)
     }
     
@@ -161,6 +161,8 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
     
     // MARK: - NavigationBarButtons
     @objc func updateNavBarButtonAppearance() {
+        CrashlyticsLogger.log(category: .tranfersWidget, "Updating Navigation bar button appearance. Navigation bar info: \(String(describing: navigationController?.navigationBar))")
+        
         let barButtons = [navigationItem.rightBarButtonItems,
                           navigationItem.leftBarButtonItems].compactMap { $0 }.flatMap { $0 }
         barButtons.forEach { barButton in
@@ -174,6 +176,12 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
     @objc func registerNib(name: String, identifier: String) {
         let nib = UINib(nibName: name, bundle: nil)
         self.tableView?.register(nib, forCellReuseIdentifier: identifier)
+    }
+    
+    // This overriden viewDidAppear is used for crash tracking purpose.
+    override open func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        CrashlyticsLogger.log(category: .tranfersWidget, "Transfers widget did appear with navigation bar: \(String(describing: navigationController?.navigationBar))")
     }
 }
 
