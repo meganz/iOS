@@ -8,20 +8,12 @@ struct PhotoLibraryPicker: View {
     
     var body: some View {
         pickerView()
+            .padding(16)
             .opacity(editMode?.wrappedValue.isEditing == true ? 0 : 1)
-            .onChange(of: colorScheme) { _ in
-                configSegmentedControlAppearance()
-            }
-    }
-    
-    init(selectedMode: Binding<PhotoLibraryViewMode>) {
-        _selectedMode = selectedMode
-        
-        configSegmentedControlAppearance()
     }
     
     private func pickerView() -> some View {
-        Picker("View Mode", selection: $selectedMode.animation()) {
+        Picker("View Mode", selection: $selectedMode) {
             ForEach(PhotoLibraryViewMode.allCases) {
                 Text($0.title)
                     .font(.headline)
@@ -30,34 +22,9 @@ struct PhotoLibraryPicker: View {
             }
         }
         .pickerStyle(.segmented)
-        .background(RoundedRectangle(cornerRadius: 7).fill(MEGAAppColor.White._FFFFFF.color).background(.thinMaterial))
-        .cornerRadius(7)
-        .padding(16)
-    }
-    
-    private func configSegmentedControlAppearance() {
-        UISegmentedControl
-            .appearance()
-            .setTitleTextAttributes(
-                [.font: UIFont.systemFont(ofSize: 13, weight: .medium),
-                 .foregroundColor: MEGAAppColor.White._FFFFFF.uiColor],
-                for: .selected
-            )
-        
-        UISegmentedControl
-            .appearance()
-            .setTitleTextAttributes(
-                [.font: UIFont.systemFont(ofSize: 13, weight: .medium),
-                 .foregroundColor: MEGAAppColor.Black._000000.uiColor],
-                for: .normal
-            )
-        
-        UISegmentedControl
-            .appearance()
-            .backgroundColor = MEGAAppColor.White._FFFFFF.uiColor.withAlphaComponent(0.6)
-        
-        UISegmentedControl
-            .appearance()
-            .selectedSegmentTintColor = MEGAAppColor.Black._000000.uiColor.withAlphaComponent(0.5)
+        .background(
+            MEGAAppColor.Background.backgroundRegularPrimaryElevated.color
+                .cornerRadius(7, corners: .allCorners)
+        )
     }
 }
