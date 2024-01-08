@@ -14,9 +14,6 @@ class ExtensionAppearanceManager: NSObject {
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = UIColor.label
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.regular)
         
-        let segmentedControlFont = UIFont.systemFont(ofSize: 13, weight: UIFont.Weight.regular)
-        UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.font: segmentedControlFont], for: .normal)
-        
         UIBarButtonItem.appearance(whenContainedInInstancesOf: [UIToolbar.self]).tintColor = UIColor.mnz_primaryGray(for: traitCollection)
         
         UITextField.appearance().tintColor = UIColor.mnz_turquoise(for: traitCollection)

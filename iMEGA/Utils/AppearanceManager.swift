@@ -29,9 +29,6 @@ class AppearanceManager: NSObject {
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).textColor = UIColor.label
         UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).font = UIFont.systemFont(ofSize: 17, weight: UIFont.Weight.regular)
         
-        let segmentedControlFont = UIFont.systemFont(ofSize: 13, weight: UIFont.Weight.regular)
-        UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.font: segmentedControlFont], for: .normal)
-        
         UISwitch.appearance().onTintColor = UIColor.mnz_turquoise(for: traitCollection)
         
         UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = UIColor.label
