@@ -308,7 +308,6 @@
 		2F9F11362509E9C800896DFF /* GiphyGifsRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9F11342509E9C700896DFF /* GiphyGifsRequestModel.swift */; };
 		2F9F11372509E9C800896DFF /* GiphyResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F9F11352509E9C700896DFF /* GiphyResponseModel.swift */; };
 		2FA4CB71252C019200240AFA /* ChatBottomNewMessageIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA4CB70252C019200240AFA /* ChatBottomNewMessageIndicatorView.swift */; };
-		2FA61993261D2FFA00663034 /* MeetingCreatingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA61992261D2FFA00663034 /* MeetingCreatingRepository.swift */; };
 		2FA6D9C42436C314007A8E81 /* ChatViewAttachmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA6D9C22436C314007A8E81 /* ChatViewAttachmentCell.swift */; };
 		2FA6D9DD243E8CB5007A8E81 /* ChatMediaCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA6D9DA243E8CB4007A8E81 /* ChatMediaCollectionViewCell.swift */; };
 		2FA6DAA7243ED07F007A8E81 /* MEGAGetPreviewRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A8EC55B31F02AD1D00426DCC /* MEGAGetPreviewRequestDelegate.m */; };
@@ -2853,7 +2852,6 @@
 		2F9F11342509E9C700896DFF /* GiphyGifsRequestModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiphyGifsRequestModel.swift; sourceTree = "<group>"; };
 		2F9F11352509E9C700896DFF /* GiphyResponseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GiphyResponseModel.swift; sourceTree = "<group>"; };
 		2FA4CB70252C019200240AFA /* ChatBottomNewMessageIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBottomNewMessageIndicatorView.swift; sourceTree = "<group>"; };
-		2FA61992261D2FFA00663034 /* MeetingCreatingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingCreatingRepository.swift; sourceTree = "<group>"; };
 		2FA6D9C22436C314007A8E81 /* ChatViewAttachmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewAttachmentCell.swift; sourceTree = "<group>"; };
 		2FA6D9DA243E8CB4007A8E81 /* ChatMediaCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatMediaCollectionViewCell.swift; sourceTree = "<group>"; };
 		2FA6DA5C243E915F007A8E81 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -8952,14 +8950,6 @@
 			isa = PBXGroup;
 			children = (
 				838A7B6825D5678C00767DB0 /* CallRepository.swift */,
-				2FA61992261D2FFA00663034 /* MeetingCreatingRepository.swift */,
-			);
-			path = Calls;
-			sourceTree = "<group>";
-		};
-		838A7B7A25D5679100767DB0 /* Calls */ = {
-			isa = PBXGroup;
-			children = (
 			);
 			path = Calls;
 			sourceTree = "<group>";
@@ -10489,7 +10479,6 @@
 		B654BF3724FF117700A3CBC8 /* MEGADomain */ = {
 			isa = PBXGroup;
 			children = (
-				B67A2C71251755A300B40D89 /* RepositoryProtocol */,
 				B662B84D24EC6F810089376A /* UseCase */,
 			);
 			path = MEGADomain;
@@ -10736,14 +10725,6 @@
 				B6F39F082772A986002386BE /* PhotoLibraryModeCardViewModel.swift */,
 			);
 			path = "Card View";
-			sourceTree = "<group>";
-		};
-		B67A2C71251755A300B40D89 /* RepositoryProtocol */ = {
-			isa = PBXGroup;
-			children = (
-				838A7B7A25D5679100767DB0 /* Calls */,
-			);
-			path = RepositoryProtocol;
 			sourceTree = "<group>";
 		};
 		B67FFF9429D53D1400E830FA /* Release */ = {
@@ -14061,7 +14042,6 @@
 				BF66E00926140BE900066F35 /* MeetingContainerRouter.swift in Sources */,
 				BF66DFFF26140B3D00066F35 /* MeetingContainerViewController.swift in Sources */,
 				BF66E01B26140BF700066F35 /* MeetingContainerViewModel.swift in Sources */,
-				2FA61993261D2FFA00663034 /* MeetingCreatingRepository.swift in Sources */,
 				2FFCF3AA25FB1F5E00E1718D /* MeetingCreatingViewController.swift in Sources */,
 				2FFCF3CE25FB1FE700E1718D /* MeetingCreatingViewModel.swift in Sources */,
 				2FFCF3C425FB1FBE00E1718D /* MeetingCreatingViewRouter.swift in Sources */,
