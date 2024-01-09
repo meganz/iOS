@@ -2,6 +2,19 @@ import Foundation
 import MEGADomain
 import MEGASDKRepo
 import SwiftUI
+
+// this logic is moved to free floating function to be able to reuse the same exact logic and guarantee
+// identical behaviour in the new cloud drive (NodeBrowserView)
+func sharedShouldShowMediaDiscoveryContextMenuOption(
+    mediaDiscoveryDetectionEnabled: Bool, // can't inject node here as we need to handle nil case (happens during offline starts)
+    hasMediaFiles: Bool?,
+    isFromSharedItem: Bool,
+    viewModePreference: ViewModePreferenceEntity
+) -> Bool {
+    let shouldAutomaticallyShowMediaView = mediaDiscoveryDetectionEnabled &&
+    hasMediaFiles == true && !isFromSharedItem
+    return shouldAutomaticallyShowMediaView || viewModePreference == .mediaDiscovery
+}
  
 extension CloudDriveViewController: MediaDiscoveryContentDelegate {
         
@@ -10,10 +23,13 @@ extension CloudDriveViewController: MediaDiscoveryContentDelegate {
         set { mdHostedController = newValue }
     }
     
-    @objc func shouldShowMediaDiscovery() -> Bool {
-        guard let parent = parentNode else { return false }
-        
-        return parent.type != .root && hasMediaFiles && !isFromSharedItem || currentViewModePreference == .mediaDiscovery
+    @objc func shouldShowMediaDiscoveryContextMenuOption() -> Bool {
+        sharedShouldShowMediaDiscoveryContextMenuOption(
+            mediaDiscoveryDetectionEnabled: parentNode?.toNodeEntity().nodeType != .root,
+            hasMediaFiles: hasMediaFiles,
+            isFromSharedItem: isFromSharedItem,
+            viewModePreference: currentViewModePreference
+        )
     }
     
     @objc func configureMediaDiscoveryViewMode(isShowingAutomatically: Bool) {
@@ -33,7 +49,7 @@ extension CloudDriveViewController: MediaDiscoveryContentDelegate {
     
         let viewModel = MediaDiscoveryContentViewModel(
             contentMode: .mediaDiscovery,
-            parentNode: parentNodeEntity,
+            parentNodeProvider: { parentNodeEntity },
             sortOrder: viewModel.sortOrder(for: .mediaDiscovery),
             isAutomaticallyShown: isShowingAutomatically,
             delegate: self,

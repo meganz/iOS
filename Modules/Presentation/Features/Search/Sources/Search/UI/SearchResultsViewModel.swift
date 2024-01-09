@@ -75,7 +75,7 @@ public class SearchResultsViewModel: ObservableObject {
     private let keyboardVisibilityHandler: any KeyboardVisibilityHandling
 
     @Published public var editing: Bool = false
-    
+
     public init(
         resultsProvider: any SearchResultsProviding,
         bridge: SearchBridge,

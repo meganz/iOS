@@ -123,19 +123,29 @@ private extension MEGANodeList {
     var nodeCount: Int { size }
     
     func containsOnlyVisualMedia() -> Bool {
-        guard nodeCount > 0 else { return false }
-        return (0..<nodeCount).notContains {
-            guard let nodeName = node(at: $0)?.name else {
-                return false
-            }
-            return !nodeName.fileExtensionGroup.isVisualMedia
-        }
+        self.toNodeListEntity().containsOnlyVisualMedia()
     }
     
     func containsVisualMedia() -> Bool {
-        guard nodeCount > 0 else { return false }
-        return (0..<nodeCount).contains {
-            node(at: $0)?.name?.fileExtensionGroup.isVisualMedia ?? false
+        self.toNodeListEntity().containsVisualMedia()
+    }
+}
+
+extension NodeListEntity {
+    func containsVisualMedia() -> Bool {
+        guard nodesCount > 0 else { return false }
+        return (0..<nodesCount).contains {
+            nodeAt($0)?.name.fileExtensionGroup.isVisualMedia ?? false
+        }
+    }
+    
+    func containsOnlyVisualMedia() -> Bool {
+        guard nodesCount > 0 else { return false }
+        return (0..<nodesCount).notContains {
+            guard let nodeName = nodeAt($0)?.name else {
+                return false
+            }
+            return !nodeName.fileExtensionGroup.isVisualMedia
         }
     }
 }

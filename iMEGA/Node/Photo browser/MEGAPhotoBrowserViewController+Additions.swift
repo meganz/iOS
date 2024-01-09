@@ -201,7 +201,7 @@ extension MEGAPhotoBrowserViewController {
         let factory = CloudDriveViewControllerFactory.make()
         let vc = factory.build(
             parentNode: node.toNodeEntity(),
-            options: .init(
+            config: .init(
                 displayMode: displayMode(node: node, isFromViewInFolder: isFromViewInFolder),
                 isFromViewInFolder: isFromViewInFolder
             )

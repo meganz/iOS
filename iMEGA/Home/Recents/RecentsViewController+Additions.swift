@@ -50,7 +50,7 @@ extension RecentsViewController {
         let factory = CloudDriveViewControllerFactory.make(nc: UINavigationController())
         let vc = factory.build(
             nodeSource: .recentActionBucket(bucket),
-            options: .init(
+            config: .init(
                 displayMode: .recents,
                 shouldRemovePlayerDelegate: false
             )

@@ -9,7 +9,7 @@ final class NodeOpener {
         self.navigationController = navigationController
     }
 
-    func openNode(_ nodeHandle: HandleEntity, config: CloudDriveViewControllerFactory.NodeBrowserConfig = .default) {
+    func openNode(_ nodeHandle: HandleEntity, config: NodeBrowserConfig = .default) {
         guard let node = MEGASdk.sharedSdk.node(forHandle: nodeHandle) else { return }
         switch node.isFolder() {
         case true: openFolderNode(node, config: config)
@@ -17,7 +17,7 @@ final class NodeOpener {
         }
     }
     
-    func openNode(_ node: MEGANode, allNodes: [MEGANode]?, config: CloudDriveViewControllerFactory.NodeBrowserConfig = .default) {
+    func openNode(_ node: MEGANode, allNodes: [MEGANode]?, config: NodeBrowserConfig = .default) {
         switch node.isFolder() {
         case true: openFolderNode(node, config: config)
         case false: openFileNode(node, allNodes: allNodes)
@@ -62,12 +62,12 @@ final class NodeOpener {
     
     func openFolderNode(
         _ node: MEGANode,
-        config: CloudDriveViewControllerFactory.NodeBrowserConfig
+        config: NodeBrowserConfig
     ) {
         let factory = CloudDriveViewControllerFactory.make(nc: navigationController)
         let vc = factory.buildBare(
             parentNode: node.toNodeEntity(),
-            options: config
+            config: config
         )
         if let vc {
             navigationController?.pushViewController(vc, animated: true)

@@ -5,7 +5,7 @@ extension MEGANode {
         let factory = CloudDriveViewControllerFactory.make()
         let vc = factory.buildBare(
             parentNode: node.toNodeEntity(),
-            options: .init(
+            config: .init(
                 displayMode: displayMode
             )
         )

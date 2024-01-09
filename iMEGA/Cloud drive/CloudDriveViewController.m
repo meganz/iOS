@@ -366,7 +366,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         self.parentNode.type != MEGANodeTypeRoot &&
         !self.isFromSharedItem &&
         !self.didShowMediaDiscoveryAutomatically &&
-        [self.viewModel shouldShowMediaDiscoveryAutomaticallyForNodes:self.nodes]) {
+        [self.viewModel shouldShowMediaDiscoveryAutomaticallyForNodes:self.nodes]) 
+    {
         self.didShowMediaDiscoveryAutomatically = YES;
         self.viewModePreference_ObjC = ViewModePreferenceEntityMediaDiscovery;
         [self configureMediaDiscoveryViewModeWithIsShowingAutomatically:YES];

@@ -630,7 +630,10 @@
         self.mainTBC.selectedIndex = TabTypeCloudDrive;
         MEGANavigationController *navigationController = [self.mainTBC.childViewControllers objectAtIndex:TabTypeCloudDrive];
         CloudDriveViewController *cloudDriveVC = navigationController.viewControllers.firstObject;
-        [cloudDriveVC presentUploadOptions];
+        // need to check what was returned from CloudDriveViewControllerFactory
+        if ([cloudDriveVC isKindOfClass:[CloudDriveViewController class]]) {
+            [cloudDriveVC presentUploadOptions];
+        }
     } else if ([AppDelegate matchQuickAction:type with: @"offline"]) {
         [self.mainTBC showOfflineAndPresentFileWithHandle:nil];
     } else {

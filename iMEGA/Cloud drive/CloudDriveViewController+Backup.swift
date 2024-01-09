@@ -28,7 +28,7 @@ extension CloudDriveViewController {
                               isBackupsChild: isBackupsChild,
                               isOutShare: parentNode.isOutShare(),
                               isExported: parentNode.isExported(),
-                              showMediaDiscovery: shouldShowMediaDiscovery())
+                              showMediaDiscovery: shouldShowMediaDiscoveryContextMenuOption())
     }
     
     @objc func setBackupNavigationBarButtons() {

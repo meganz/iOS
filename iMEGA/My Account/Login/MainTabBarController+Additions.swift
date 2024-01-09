@@ -87,7 +87,7 @@ extension MainTabBarController {
             .make()
             .build(
                 nodeSource: .node({ MEGASdk.shared.rootNode?.toNodeEntity() }),
-                options: .init(showsAvatar: true)
+                config: .init(showsAvatar: true)
             )
     }
     
