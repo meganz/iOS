@@ -11,25 +11,21 @@
 #import "NSString+MNZCategory.h"
 #import "Helper.h"
 #import "NodeTableViewCell.h"
-
 #import "MEGAPhotoBrowserViewController.h"
 
 @import MEGAL10nObjc;
 @import MEGASDKRepo;
 
-@interface NodeVersionsViewController () <UITableViewDelegate, UITableViewDataSource, NodeActionViewControllerDelegate, MEGADelegate> {
-    BOOL allNodesSelected;
-}
-
+@interface NodeVersionsViewController () <
+UITableViewDelegate,
+UITableViewDataSource,
+NodeActionViewControllerDelegate,
+MEGADelegate
+>
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
-
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-
-@property (nonatomic, strong) NSMutableArray<MEGANode *> *nodeVersionsMutableArray;
-@property (nonatomic, strong) NSMutableDictionary *nodesIndexPathMutableDictionary;
-
 @end
 
 @implementation NodeVersionsViewController
@@ -54,7 +50,28 @@
         self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
     }
     
-    self.nodesIndexPathMutableDictionary = [[NSMutableDictionary alloc] init];
+    [self captureVersions];
+}
+
+- (void)captureVersions {
+    NSMutableArray<NodeVersionItem *> *previousVersions = [NSMutableArray new];
+    __block MEGANode *currentVersion;
+    
+    [self.node.mnz_versions enumerateObjectsUsingBlock:^(MEGANode * _Nonnull version, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (idx == 0) {
+            currentVersion = version;
+        } else {
+            NodeVersionItem *item = [[NodeVersionItem alloc] initWithNode:version];
+            [previousVersions addObject:item];
+        }
+    }];
+    
+    self.sections = @[
+        [[NodeVersionSection alloc] initWithItems:@[
+            [[NodeVersionItem alloc] initWithNode:currentVersion]
+        ]],
+        [[NodeVersionSection alloc] initWithItems:[NSArray arrayWithArray:previousVersions]]
+    ];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -88,13 +105,10 @@
 #pragma mark - Private
 
 - (void)reloadUI {
+    [self captureVersions];
     if (self.node.mnz_numberOfVersions == 0) {
         [self dismissViewControllerAnimated:true completion:nil];
     }  else {
-        [self.nodesIndexPathMutableDictionary removeAllObjects];
-        
-        self.nodeVersionsMutableArray = [NSMutableArray.alloc initWithArray:self.node.mnz_versions];
-        
         [self.tableView reloadData];
     }
 }
@@ -106,22 +120,23 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return self.sections.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 0) {
-        return 1;
-    } else {
-        return self.node.mnz_numberOfVersions-1;
-    }
+    NodeVersionSection *versionSection = self.sections[section];
+    return [versionSection itemCount];
+}
+
+- (NodeVersionItem *)itemAt:(NSIndexPath *)indexPath {
+    NodeVersionSection *section = self.sections[indexPath.section];
+    NodeVersionItem *item = [section itemAtIndex:indexPath.row];
+    return item;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    MEGANode *node = [self nodeForIndexPath:indexPath];
+    MEGANode *node = [[self itemAt:indexPath] node];
 
-    [self.nodesIndexPathMutableDictionary setObject:indexPath forKey:node.base64Handle];
-    
     NodeTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
     cell.cellFlavor = NodeTableViewCellFlavorVersions;
     cell.isNodeInRubbishBin = [node mnz_isInRubbishBin];
@@ -156,7 +171,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    MEGANode *node = [self nodeForIndexPath:indexPath];
+    MEGANode *node = [[self itemAt:indexPath] node];
 
     if (tableView.isEditing) {
         if (indexPath.section == 0) {
@@ -167,33 +182,16 @@
         [self updateNavigationBarTitle];
         
         [self setToolbarActionsEnabled:YES];
-        
-        if (self.selectedNodesArray.count == self.node.mnz_numberOfVersions-1) {
-            allNodesSelected = YES;
-        } else {
-            allNodesSelected = NO;
-        }
+        [tableView reloadData];
     
     } else {
-        if ([FileExtensionGroupOCWrapper verifyIsVisualMedia:node.name]) {
-            NSMutableArray<MEGANode *> *mediaNodesArray = [[[MEGASdkManager sharedMEGASdk] versionsForNode:self.node] mnz_mediaNodesMutableArrayFromNodeList];
-            
-            DisplayMode displayMode = self.node.mnz_isInRubbishBin ? DisplayModeRubbishBin : DisplayModeNodeVersions;
-            MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:displayMode presentingNode:node];
-            [self.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
-        } else {
-            [node mnz_openNodeInNavigationController:self.navigationController folderLink:NO fileLink:nil messageId:nil chatId:nil allNodes: nil];
-        }
+        [self open:node];
     }
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row > (self.node.mnz_numberOfVersions - 1)) {
-        return;
-    }
-
     if (tableView.isEditing) {
-        MEGANode *node = [self nodeForIndexPath:indexPath];
+        MEGANode *node = [[self itemAt:indexPath] node];
         NSMutableArray *tempArray = [self.selectedNodesArray copy];
         for (MEGANode *tempNode in tempArray) {
             if (tempNode.handle == node.handle) {
@@ -204,8 +202,6 @@
         [self updateNavigationBarTitle];
         
         [self setToolbarActionsEnabled:self.selectedNodesArray.count != 0];
-        
-        allNodesSelected = NO;
         
         return;
     }
@@ -236,7 +232,8 @@
         return nil;
     }
     
-    self.selectedNodesArray = [NSMutableArray arrayWithObject:[self nodeForIndexPath:indexPath]];
+    MEGANode *node = [[self itemAt:indexPath] node];
+    self.selectedNodesArray = [NSMutableArray arrayWithObject:node];
     
     NSMutableArray *rightActions = [NSMutableArray new];
     
@@ -260,7 +257,7 @@
     }
         
     UIContextualAction *downloadAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-        MEGANode *node = [self nodeForIndexPath:indexPath];
+        
         if (node != nil) {
             [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:@[node] presenter:self isFolderLink:NO];
         }
@@ -306,8 +303,7 @@
     } else {
         self.editBarButtonItem.title = LocalizedString(@"select", @"Caption of a button to select files");
 
-        allNodesSelected = NO;
-        self.selectedNodesArray = nil;
+        [self.selectedNodesArray removeAllObjects];
         self.navigationItem.leftBarButtonItems = @[self.closeBarButtonItem];
         
         [self.navigationController setToolbarHidden:YES animated:YES];
@@ -322,14 +318,6 @@
 
         [self setToolbarActionsEnabled:NO];
     }        
-}
-
-- (MEGANode *)nodeForIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0) {
-        return self.node.mnz_versions.firstObject;
-    } else {
-        return [self.nodeVersionsMutableArray objectAtIndex:indexPath.row + 1];
-    }
 }
 
 #pragma mark - IBActions
@@ -382,21 +370,13 @@
 }
 
 - (IBAction)selectAllAction:(UIBarButtonItem *)sender {
-    [self.selectedNodesArray removeAllObjects];
     
-    if (!allNodesSelected) {
-        MEGANode *n = nil;
-        
-        for (NSInteger i = 1; i < self.node.mnz_numberOfVersions; i++) {
-            n = [self.nodeVersionsMutableArray objectAtIndex:i];
-            [self.selectedNodesArray addObject:n];
-        }
-        
-        allNodesSelected = YES;
-        [self setToolbarActionsEnabled:YES];
-    } else {
-        allNodesSelected = NO;
+    if ([self allNodesSelected]) {
+        [self.selectedNodesArray removeAllObjects];
         [self setToolbarActionsEnabled:NO];
+    } else {
+        self.selectedNodesArray = [[[self previousVersionsSection] nodes] mutableCopy];
+        [self setToolbarActionsEnabled:YES];
     }
     
     [self updateNavigationBarTitle];
@@ -406,7 +386,7 @@
 - (IBAction)infoTouchUpInside:(UIButton *)sender {
     CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
-    MEGANode *node = [self nodeForIndexPath:indexPath];
+    MEGANode *node = [[self itemAt:indexPath] node];
     
     BOOL isBackupNode = [[[BackupsOCWrapper alloc] init] isBackupNode:node];
     NodeActionViewController *nodeActions = [NodeActionViewController.alloc initWithNode:node delegate:self displayMode:DisplayModeNodeVersions isIncoming:NO isBackupNode:isBackupNode sender:sender];
@@ -461,7 +441,7 @@
                 [self currentVersionRemoved];
                 break;
             } else {
-                if ([self.nodesIndexPathMutableDictionary objectForKey:nodeUpdated.base64Handle]) {
+                if ([self isNodeWithHandlePreviousVersion:nodeUpdated.base64Handle]) {
                     self.node = [MEGASdkManager.sharedMEGASdk nodeForHandle:self.node.handle];
                     [self reloadUI];
                     break;
@@ -480,10 +460,10 @@
 }
 
 - (void)currentVersionRemoved {
-    if (self.nodeVersionsMutableArray.count == 1) {
+    if (self.node.mnz_versions.count == 1) {
         [self dismissViewControllerAnimated:YES completion:nil];
     } else {
-        self.node = [self.nodeVersionsMutableArray objectAtIndex:1];
+        self.node = self.node.mnz_versions[1];
         [self reloadUI];
     }
 }
@@ -497,9 +477,8 @@
     
     if (transfer.type == MEGATransferTypeDownload) {
         NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
-        NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
-        if (indexPath != nil) {
-            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+        if ([self isNodeWithHandlePreviousVersion:base64Handle]) {
+            [self reloadUI];
         }
     }
 }
@@ -519,16 +498,15 @@
         } else if (error.type == MEGAErrorTypeApiEIncomplete) {
             [SVProgressHUD showImage:[UIImage imageNamed:@"hudMinus"] status:LocalizedString(@"transferCancelled", @"")];
             NSString *base64Handle = [MEGASdk base64HandleForHandle:transfer.nodeHandle];
-            NSIndexPath *indexPath = [self.nodesIndexPathMutableDictionary objectForKey:base64Handle];
-            if (indexPath != nil) {
-                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+            if ([self isNodeWithHandlePreviousVersion:base64Handle]) {
+                [self reloadUI];
             }
         }
         return;
     }
     
     if (transfer.type == MEGATransferTypeDownload) {
-        [self.tableView reloadData];
+        [self reloadUI];
     }
 }
 
