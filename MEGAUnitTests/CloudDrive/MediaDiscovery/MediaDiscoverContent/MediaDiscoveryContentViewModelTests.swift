@@ -409,7 +409,7 @@ extension MediaDiscoveryContentViewModelTests {
         line: UInt = #line) -> MediaDiscoveryContentViewModel {
             let viewModel = MediaDiscoveryContentViewModel(
                 contentMode: .mediaDiscovery,
-                parentNode: parentNode,
+                parentNodeProvider: { parentNode },
                 sortOrder: sortOrder,
                 isAutomaticallyShown: isAutomaticallyShown,
                 delegate: delegate,

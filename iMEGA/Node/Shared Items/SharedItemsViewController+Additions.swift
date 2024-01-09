@@ -168,7 +168,7 @@ extension SharedItemsViewController {
         
         let vc = factory.buildBare(
             parentNode: nodeEntity,
-            options: .init(
+            config: .init(
                 displayMode: isBackupNode ? .backup : .cloudDrive,
                 isFromUnverifiedContactSharedFolder: shouldDisplayContactVerificationBannerForCloudDrive(node),
                 isFromSharedItem: true

@@ -2,6 +2,7 @@ import Foundation
 import MEGADomain
 import MEGAPresentation
 import MEGARepo
+import MEGASDKRepo
 import MEGASwift
 import Search
 import SwiftUI
@@ -32,28 +33,31 @@ extension DisplayMode {
     }
 }
 
-struct CloudDriveViewControllerFactory {
+struct NodeBrowserConfig {
     
-    struct NodeBrowserConfig {
-        var displayMode: DisplayMode?
-        var isFromViewInFolder: Bool?
-        var isFromUnverifiedContactSharedFolder: Bool?
-        var isFromSharedItem: Bool?
-        var showsAvatar: Bool?
-        var shouldRemovePlayerDelegate: Bool?
-        
-        static var `default`: Self {
-            .init()
-        }
-        
-        /// small helper function to make it easier to pass down and package display mode into a config
-        /// display mode must be carried over into a child folder when presenting in rubbish or backups mode
-        static func withOptionalDisplayMode(_ displayMode: DisplayMode?) -> Self {
-            var config = Self.default
-            config.displayMode = displayMode
-            return config
-        }
+    var displayMode: DisplayMode?
+    var isFromViewInFolder: Bool?
+    var isFromUnverifiedContactSharedFolder: Bool?
+    var isFromSharedItem: Bool?
+    var showsAvatar: Bool?
+    var shouldRemovePlayerDelegate: Bool?
+    // this should enabled for non-root nodes
+    var mediaDiscoveryAutomaticDetectionEnabled: () -> Bool = { false }
+    
+    static var `default`: Self {
+        .init()
     }
+    
+    /// small helper function to make it easier to pass down and package display mode into a config
+    /// display mode must be carried over into a child folder when presenting in rubbish or backups mode
+    static func withOptionalDisplayMode(_ displayMode: DisplayMode?) -> Self {
+        var config = Self.default
+        config.displayMode = displayMode
+        return config
+    }
+}
+
+struct CloudDriveViewControllerFactory {
     
     let featureFlagProvider: any FeatureFlagProviderProtocol
     let abTestProvider: any ABTestProviderProtocol
@@ -61,7 +65,11 @@ struct CloudDriveViewControllerFactory {
     let viewModeStore: any ViewModeStoring
     let router: any NodeRouting
     let tracker: any AnalyticsTracking
+    let mediaAnalyticsUseCase: any MediaDiscoveryAnalyticsUseCaseProtocol
+    let mediaDiscoveryUseCase: any MediaDiscoveryUseCaseProtocol
     let homeScreenFactory: HomeScreenFactory
+    let nodeRepository: any NodeRepositoryProtocol
+    let preferences: any PreferenceUseCaseProtocol
     let sdk: MEGASdk
     let userDefaults: UserDefaults
     
@@ -72,7 +80,11 @@ struct CloudDriveViewControllerFactory {
         viewModeStore: some ViewModeStoring,
         router: some NodeRouting,
         tracker: some AnalyticsTracking,
+        mediaAnalyticsUseCase: some MediaDiscoveryAnalyticsUseCaseProtocol,
+        mediaDiscoveryUseCase: some MediaDiscoveryUseCaseProtocol,
         homeScreenFactory: HomeScreenFactory,
+        nodeRepository: some NodeRepositoryProtocol,
+        preferences: some PreferenceUseCaseProtocol,
         sdk: MEGASdk,
         userDefaults: UserDefaults
     ) {
@@ -82,12 +94,16 @@ struct CloudDriveViewControllerFactory {
         self.viewModeStore = viewModeStore
         self.router = router
         self.tracker = tracker
+        self.mediaAnalyticsUseCase = mediaAnalyticsUseCase
+        self.mediaDiscoveryUseCase = mediaDiscoveryUseCase
         self.homeScreenFactory = homeScreenFactory
+        self.nodeRepository = nodeRepository
+        self.preferences = preferences
         self.sdk = sdk
         self.userDefaults = userDefaults
     }
     
-    static func make(nc: UINavigationController? = nil) -> Self {
+    static func make(nc: UINavigationController? = nil) -> CloudDriveViewControllerFactory {
         let sdk = MEGASdk.shared
         let factory = HomeScreenFactory()
         let tracker = DIContainer.tracker
@@ -99,7 +115,7 @@ struct CloudDriveViewControllerFactory {
             tracker: tracker
         )
         
-        return .init(
+        return CloudDriveViewControllerFactory(
             featureFlagProvider: DIContainer.featureFlagProvider,
             abTestProvider: DIContainer.abTestProvider,
             navigationController: navController,
@@ -111,7 +127,16 @@ struct CloudDriveViewControllerFactory {
             ),
             router: router,
             tracker: tracker,
+            mediaAnalyticsUseCase: MediaDiscoveryAnalyticsUseCase(
+                repository: AnalyticsRepository.newRepo
+            ),
+            mediaDiscoveryUseCase: MediaDiscoveryUseCase(
+                filesSearchRepository: FilesSearchRepository(sdk: sdk),
+                nodeUpdateRepository: NodeUpdateRepository(sdk: sdk)
+            ),
             homeScreenFactory: factory,
+            nodeRepository: NodeRepository.newRepo,
+            preferences: PreferenceUseCase.default,
             sdk: sdk,
             userDefaults: .standard
         )
@@ -124,42 +149,48 @@ struct CloudDriveViewControllerFactory {
     /// build bare is return a plain UIViewController, bare-less version returns one wrapped in the UINavigationController
     func buildBare(
         parentNode: NodeEntity,
-        options: NodeBrowserConfig = .default
+        config: NodeBrowserConfig = .default
     ) -> UIViewController? {
-        buildBare(nodeSource: .node({ parentNode }), options: options)
+        buildBare(nodeSource: .node({ parentNode }), config: config)
     }
     
     func build(
         rootNodeProvider: @escaping ParentNodeProvider,
-        options: NodeBrowserConfig
+        config: NodeBrowserConfig
     ) -> UIViewController? {
-        build(nodeSource: .node(rootNodeProvider), options: options)
+        build(nodeSource: .node(rootNodeProvider), config: config)
     }
     
     func build(
         parentNode: NodeEntity,
-        options: NodeBrowserConfig
+        config: NodeBrowserConfig
     ) -> UIViewController? {
-        build(nodeSource: .node({ parentNode }), options: options)
+        build(nodeSource: .node({ parentNode }), config: config)
     }
     
     func buildBare(
         nodeSource: NodeSource,
-        options: NodeBrowserConfig
+        config: NodeBrowserConfig
     ) -> UIViewController? {
         if useNewCloudDrive {
-            return new(nodeSource, options)
+            newCloudDriveViewController(
+                nodeSource: nodeSource,
+                config: config
+            )
         } else {
-            return legacy(nodeSource, options)
+            legacyCloudDriveViewController(
+                nodeSource: nodeSource,
+                options: config
+            )
         }
     }
     
     func build(
         nodeSource: NodeSource,
-        options: NodeBrowserConfig
+        config: NodeBrowserConfig
     ) -> UIViewController? {
         guard
-            let vc = buildBare(nodeSource: nodeSource, options: options)
+            let vc = buildBare(nodeSource: nodeSource, config: config)
         else { return navigationController }
         
         navigationController.viewControllers = [vc]
@@ -169,21 +200,103 @@ struct CloudDriveViewControllerFactory {
             selectedImage: nil
         )
         
-        if 
+        if
             let legacy = vc as? (any MyAvatarPresenterProtocol),
-            options.showsAvatar == true {
+            config.showsAvatar == true {
             legacy.configureMyAvatarManager()
         }
         
         return navigationController
     }
     
-    private func new(_ nodeSource: NodeSource, _ options: NodeBrowserConfig) -> UIViewController {
+    private func newCloudDriveViewController(
+        nodeSource: NodeSource,
+        config: NodeBrowserConfig
+    ) -> UIViewController {
+        // overriding might be pulled level up,
+        // it's an nil safe check for root node basically
+        // it would be very much useful to make media discovery work with
+        // MEGARecentActionBucket to load arbitrary list of nodes
+        
+        let overriddenConfig = makeOverriddenConfigIfNeeded(nodeSource: nodeSource, config: config)
+        
+        let view = NodeBrowserView(
+            viewModel: .init(
+                searchResultsViewModel: makeSearchResultsViewModel(
+                    nodeSource: nodeSource,
+                    config: overriddenConfig
+                ),
+                mediaDiscoveryViewModel: makeOptionalMediaDiscoveryViewModel(nodeSource),
+                config: overriddenConfig,
+                hasOnlyMediaNodesChecker: makeHasOnlyMediaChecker(nodeSource: nodeSource)
+            )
+        )
+        return UIHostingController(rootView: view)
+    }
+    
+    private func makeHasOnlyMediaChecker(nodeSource: NodeSource) -> () async -> Bool {
+        switch nodeSource {
+        case .node(let provider):
+            // in here we produce a closure that can asynchronously check
+            // if given folder node contains only media (videos/images)
+            return  {
+                guard
+                    let node = provider(),
+                    let children = await nodeRepository.children(of: node)
+                else { return false }
+                
+                return children.containsOnlyVisualMedia()
+            }
+        case .recentActionBucket:
+            return { false }
+        }
+    }
+    
+    private func makeOptionalMediaDiscoveryViewModel(_ nodeSource: NodeSource) -> MediaDiscoveryContentViewModel? {
+        guard case let .node(parentNodeProvider) = nodeSource else { return nil }
+        
+        return makeMediaDiscoveryViewModel(
+            parentNodeProvider: parentNodeProvider,
+            isShowingAutomatically: false // this is set later in .task modifier when we decide if need to show the banner explaining automatic MD presentation
+        )
+    }
+    
+    private func makeOverriddenConfigIfNeeded(
+        nodeSource: NodeSource,
+        config: NodeBrowserConfig
+    ) -> NodeBrowserConfig {
+        
+        switch nodeSource {
+        case .node(let parentNodeProvider):
+            var overriddenConfig = config
+            // overriding the config before passing to the NodeBrowserView
+            // to make async checking for optional nodes possible, this is needed to be
+            // able to launch the app in the offline mode, during which, root node is nil
+            overriddenConfig.mediaDiscoveryAutomaticDetectionEnabled = {
+                guard
+                    let node = parentNodeProvider(),
+                    node.nodeType != .root
+                else {
+                    return false
+                }
+                
+                return preferences[.shouldDisplayMediaDiscoveryWhenMediaOnly] ?? true
+            }
+            return overriddenConfig
+        case .recentActionBucket:
+            return config
+        }
+    }
+    
+    private func makeSearchResultsViewModel(
+        nodeSource: NodeSource,
+        config: NodeBrowserConfig
+    ) -> SearchResultsViewModel {
         // not all actions are triggered using bridge yet
         let bridge = SearchResultsBridge()
         let searchBridge = SearchBridge(
             selection: {
-                router.didTapNode($0.id, displayMode: options.displayMode?.carriedOverDisplayMode)
+                router.didTapNode($0.id, displayMode: config.displayMode?.carriedOverDisplayMode)
             },
             context: { result, button in
                 router.didTapMoreAction(on: result.id, button: button)
@@ -214,7 +327,7 @@ struct CloudDriveViewControllerFactory {
             searchBridge?.updateBottomInset(inset)
         }
         
-        let vm = SearchResultsViewModel(
+        return SearchResultsViewModel(
             resultsProvider: resultProvider(
                 for: nodeSource,
                 searchBridge: searchBridge
@@ -227,9 +340,7 @@ struct CloudDriveViewControllerFactory {
             ),
             layout: viewModeStore.viewMode(for: locationFor(nodeSource)).pageLayout ?? .list,
             keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: .default)
-            
         )
-        return UIHostingController(rootView: SearchResultsView(viewModel: vm))
     }
     
     private func resultProvider(
@@ -253,7 +364,7 @@ struct CloudDriveViewControllerFactory {
             // this is to remember layout per folder
             guard
                 let parentNode = nodeProvider(),
-                let megaNode = sdk.node(forHandle: parentNode.handle) 
+                let megaNode = sdk.node(forHandle: parentNode.handle)
             else {
                 return .init(customLocation: CustomViewModeLocation.Generic)
             }
@@ -263,7 +374,10 @@ struct CloudDriveViewControllerFactory {
         }
     }
     
-    private func legacy(_ nodeSource: NodeSource, _ options: NodeBrowserConfig) -> UIViewController? {
+    private func legacyCloudDriveViewController(
+        nodeSource: NodeSource,
+        options: NodeBrowserConfig
+    ) -> UIViewController? {
         let stroryboard = UIStoryboard(name: "Cloud", bundle: nil)
         guard let vc =
                 stroryboard.instantiateViewController(withIdentifier: "CloudDriveID") as? CloudDriveViewController
@@ -301,5 +415,37 @@ struct CloudDriveViewControllerFactory {
         }
         
         return vc
+    }
+    
+    private func makeMediaDiscoveryViewModel(
+        parentNodeProvider: @escaping ParentNodeProvider,
+        isShowingAutomatically: Bool
+    ) -> MediaDiscoveryContentViewModel {
+            .init(
+            contentMode: .mediaDiscovery,
+            parentNodeProvider: parentNodeProvider,
+            //            sortOrder: viewModel.sortOrder(for: .mediaDiscovery),
+            sortOrder: .nameAscending,
+            isAutomaticallyShown: isShowingAutomatically,
+            delegate: MediaContentDelegate(),
+            analyticsUseCase: mediaAnalyticsUseCase,
+            mediaDiscoveryUseCase: mediaDiscoveryUseCase
+        )
+    }
+}
+
+// Implementing of the selection of nodes
+// will be implemented here [FM-1463]
+class MediaContentDelegate: MediaDiscoveryContentDelegate {
+    func selectedPhotos(selected: [MEGADomain.NodeEntity], allPhotos: [MEGADomain.NodeEntity]) {
+        // Connect select photos action
+    }
+    
+    func isMediaDiscoverySelection(isHidden: Bool) {
+        // Connect media discovery selection action
+    }
+    
+    func mediaDiscoverEmptyTapped(menuAction: EmptyMediaDiscoveryContentMenuAction) {
+        // Connect empty tapped action
     }
 }

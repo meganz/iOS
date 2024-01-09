@@ -1378,6 +1378,8 @@
 		94F4157C2B2086A300F1BBFD /* CloudDriveViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94F4157B2B2086A300F1BBFD /* CloudDriveViewControllerFactory.swift */; };
 		94FABD152ADE95A9003E8894 /* CameraUploadsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FABD142ADE95A9003E8894 /* CameraUploadsRepository.swift */; };
 		94FAFF1B2AFA6CA50056A177 /* Node+ResultProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FAFF1A2AFA6CA50056A177 /* Node+ResultProperties.swift */; };
+		94FB1E8F2B2AF16C0045276C /* NodeBrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FB1E8E2B2AF16C0045276C /* NodeBrowserView.swift */; };
+		94FB1E932B2AF1990045276C /* NodeBrowserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FB1E922B2AF1990045276C /* NodeBrowserViewModel.swift */; };
 		94FB1EAD2B302C030045276C /* RecentActionBucketProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94FB1EAC2B302C030045276C /* RecentActionBucketProvider.swift */; };
 		94FD8A8B2AA0C6F300CD1C8B /* MEGARepo in Frameworks */ = {isa = PBXBuildFile; productRef = 94FD8A8A2AA0C6F300CD1C8B /* MEGARepo */; };
 		990AC4ED2A4A77EC008E298F /* ChatRoomLinkViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990AC4EC2A4A77EC008E298F /* ChatRoomLinkViewModelTests.swift */; };
@@ -3978,6 +3980,8 @@
 		94F991472AB45ED500C7CC18 /* SearchConfig+Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchConfig+Home.swift"; sourceTree = "<group>"; };
 		94FABD142ADE95A9003E8894 /* CameraUploadsRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraUploadsRepository.swift; sourceTree = "<group>"; };
 		94FAFF1A2AFA6CA50056A177 /* Node+ResultProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Node+ResultProperties.swift"; sourceTree = "<group>"; };
+		94FB1E8E2B2AF16C0045276C /* NodeBrowserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeBrowserView.swift; sourceTree = "<group>"; };
+		94FB1E922B2AF1990045276C /* NodeBrowserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeBrowserViewModel.swift; sourceTree = "<group>"; };
 		94FB1EAC2B302C030045276C /* RecentActionBucketProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentActionBucketProvider.swift; sourceTree = "<group>"; };
 		990AC4EC2A4A77EC008E298F /* ChatRoomLinkViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomLinkViewModelTests.swift; sourceTree = "<group>"; };
 		9911BA8A2A8B20C300B88F28 /* WaitingRoomViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomViewRouter.swift; sourceTree = "<group>"; };
@@ -6420,6 +6424,7 @@
 				0E72E11F2A27EC8D00C900F9 /* CopyrightWarning */,
 				837EE1F3253DB7E50083D927 /* GetLink */,
 				12647CD027D7F7AA002033AF /* MediaDiscovery */,
+				94FB1E912B2AF1860045276C /* NewNodeBrowser */,
 				834EFDBC24D9AB9C004BFECA /* NodeInfo */,
 				0EAF73242A6786D9008F939D /* BrowserView.swift */,
 				947C6CB12A5D408C00CF929E /* BrowserViewController+Additions.swift */,
@@ -9685,6 +9690,15 @@
 				94EFD0AF2B0E66C2009247FF /* MyAccountHallRouter.swift */,
 			);
 			path = Router;
+			sourceTree = "<group>";
+		};
+		94FB1E912B2AF1860045276C /* NewNodeBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				94FB1E8E2B2AF16C0045276C /* NodeBrowserView.swift */,
+				94FB1E922B2AF1990045276C /* NodeBrowserViewModel.swift */,
+			);
+			path = NewNodeBrowser;
 			sourceTree = "<group>";
 		};
 		9911BA892A8B209F00B88F28 /* WaitingRoom */ = {
@@ -14292,6 +14306,8 @@
 				5D166B82252197ED004F4F4A /* NodeActionViewControllerGenericDelegate.swift in Sources */,
 				12E23289286D49000099775D /* NodeActionViewModel.swift in Sources */,
 				94C85E6C28B93CEF00007A38 /* NodeAssetsManager.swift in Sources */,
+				94FB1E8F2B2AF16C0045276C /* NodeBrowserView.swift in Sources */,
+				94FB1E932B2AF1990045276C /* NodeBrowserViewModel.swift in Sources */,
 				5B947A9A267A20CD00715B0C /* NodeCellViewModel.swift in Sources */,
 				BFEAFF7C2565D57300646606 /* NodeClipboardOperationUseCase.swift in Sources */,
 				B5FC636429E9283C00EE4C8E /* NodeCollectionViewCell+Additions.swift in Sources */,

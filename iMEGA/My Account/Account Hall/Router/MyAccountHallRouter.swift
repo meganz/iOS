@@ -88,7 +88,7 @@ final class MyAccountHallRouter: MyAccountHallRouting {
         
         return factory.buildBare(
             parentNode: node,
-            options: .init(
+            config: .init(
                 displayMode: isBackup ? .backup : .cloudDrive
             )
         )

@@ -88,7 +88,7 @@ extension MyAccountHallViewController: UITableViewDelegate {
             let factory = CloudDriveViewControllerFactory.make(nc: nc)
             let cloudDriveVC = factory.buildBare(
                 parentNode: rubbishNode.toNodeEntity(),
-                options: .init(displayMode: .rubbishBin)
+                config: .init(displayMode: .rubbishBin)
             )
             if let cloudDriveVC {
                 navigationController?.pushViewController(cloudDriveVC, animated: true)

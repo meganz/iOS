@@ -3,7 +3,7 @@
 /// which is triggered when the results screen appears
 /// the actual place being search can differ, hence it's
 /// abstracted from the SearchQuery type and has to be decied by the parent
-public enum SearchQuery: Equatable {
+public enum SearchQuery: Equatable, Sendable {
     case initial
     case userSupplied(SearchQueryEntity)
     

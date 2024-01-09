@@ -44,8 +44,8 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
     
     @PreferenceWrapper(key: .autoMediaDiscoveryBannerDismissed, defaultValue: false)
     var autoMediaDiscoveryBannerDismissed: Bool
-        
-    private let parentNode: NodeEntity
+    
+    private let parentNodeProvider: () -> NodeEntity?
     private var sortOrder: SortOrderType
     private let analyticsUseCase: any MediaDiscoveryAnalyticsUseCaseProtocol
     private let mediaDiscoveryUseCase: any MediaDiscoveryUseCaseProtocol
@@ -55,7 +55,7 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
     private let shouldIncludeSubfolderMedia: Bool
     
     init(contentMode: PhotoLibraryContentMode,
-         parentNode: NodeEntity,
+         parentNodeProvider: @escaping () -> NodeEntity?,
          sortOrder: SortOrderType,
          isAutomaticallyShown: Bool,
          delegate: (some MediaDiscoveryContentDelegate)?,
@@ -66,7 +66,7 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
         photoLibraryContentViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary(), contentMode: contentMode)
         photoLibraryContentViewRouter = PhotoLibraryContentViewRouter(contentMode: contentMode)
         
-        self.parentNode = parentNode
+        self.parentNodeProvider = parentNodeProvider
         self.delegate = delegate
         self.analyticsUseCase = analyticsUseCase
         self.mediaDiscoveryUseCase = mediaDiscoveryUseCase
@@ -77,13 +77,17 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
         if isAutomaticallyShown {
             showAutoMediaDiscoveryBanner = !autoMediaDiscoveryBannerDismissed
         }
-       
+        
         subscribeToSelectionChanges()
         subscribeToNodeChanges()
     }
     
     @MainActor
     func loadPhotos() async {
+        guard let parentNode = parentNodeProvider() else {
+            viewState = .empty
+            return
+        }
         do {
             viewState = .normal
             try Task.checkCancellation()
@@ -177,7 +181,14 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
                 
                 let nodes = photoLibraryContentViewModel.library.allPhotos
                 
-                guard mediaDiscoveryUseCase.shouldReload(parentNode: parentNode, loadedNodes: nodes, updatedNodes: updatedNodes) else {
+                guard
+                    let parentNode = parentNodeProvider(),
+                    mediaDiscoveryUseCase.shouldReload(
+                        parentNode: parentNode,
+                        loadedNodes: nodes,
+                        updatedNodes: updatedNodes
+                    )
+                else {
                     return
                 }
                 

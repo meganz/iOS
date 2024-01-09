@@ -44,6 +44,7 @@ final public class AdsSlotViewModel: ObservableObject {
     }
     
     // MARK: AB Test
+
     func setupABTestVariant() async {
         isAdsEnabled = await abTestProvider.abTestVariant(for: .ads) == .variantA
     }

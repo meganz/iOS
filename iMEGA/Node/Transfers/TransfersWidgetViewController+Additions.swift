@@ -14,7 +14,7 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
         let factory = CloudDriveViewControllerFactory.make(nc: nc)
         let vc = factory.buildBare(
             parentNode: node.toNodeEntity(),
-            options: .init(
+            config: .init(
                 displayMode: node.mnz_isInRubbishBin() && isFromViewInFolder ? .rubbishBin : .cloudDrive,
                 isFromViewInFolder: isFromViewInFolder
             )

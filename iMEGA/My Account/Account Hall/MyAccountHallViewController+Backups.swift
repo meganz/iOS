@@ -29,7 +29,7 @@ extension MyAccountHallViewController {
         let factory = CloudDriveViewControllerFactory.make(nc: navigationController)
         let cloudDriveVC = factory.buildBare(
             parentNode: backupsRootNode.toNodeEntity(),
-            options: .init(displayMode: .backup)
+            config: .init(displayMode: .backup)
         )
         
         if let cloudDriveVC {
