@@ -157,6 +157,10 @@ public struct VideoConfig: Equatable {
         public let emptyFavoriteThumbnailDarkBackgroundColor: Color
         public let emptyFavoriteThumbnaillImageLightForegroundColor: Color
         public let emptyFavoriteThumbnaillImageDarkForegroundColor: Color
+        public let videoCellSecondaryLightTextColor: Color
+        public let videoCellSecondaryDarkTextColor: Color
+        public let videoThumbnailImageViewPlaceholderBackgroundColor: Color
+        public let videoThumbnailDurationTextBackgroundColor: Color
         
         /// Specify colors that needs to be injected from Main module.
         public init(
@@ -176,7 +180,11 @@ public struct VideoConfig: Equatable {
             emptyFavoriteThumbnailLightBackgroundColor: Color,
             emptyFavoriteThumbnailDarkBackgroundColor: Color,
             emptyFavoriteThumbnaillImageLightForegroundColor: Color,
-            emptyFavoriteThumbnaillImageDarkForegroundColor: Color
+            emptyFavoriteThumbnaillImageDarkForegroundColor: Color,
+            videoCellSecondaryLightTextColor: Color,
+            videoCellSecondaryDarkTextColor: Color,
+            videoThumbnailImageViewPlaceholderBackgroundColor: Color,
+            videoThumbnailDurationTextBackgroundColor: Color
         ) {
             self.primaryTextColor = primaryTextColor
             self.secondaryLightTextColor = secondaryLightTextColor
@@ -195,6 +203,10 @@ public struct VideoConfig: Equatable {
             self.emptyFavoriteThumbnailDarkBackgroundColor = emptyFavoriteThumbnailDarkBackgroundColor
             self.emptyFavoriteThumbnaillImageLightForegroundColor = emptyFavoriteThumbnaillImageLightForegroundColor
             self.emptyFavoriteThumbnaillImageDarkForegroundColor = emptyFavoriteThumbnaillImageDarkForegroundColor
+            self.videoCellSecondaryLightTextColor = videoCellSecondaryLightTextColor
+            self.videoCellSecondaryDarkTextColor = videoCellSecondaryDarkTextColor
+            self.videoThumbnailImageViewPlaceholderBackgroundColor = videoThumbnailImageViewPlaceholderBackgroundColor
+            self.videoThumbnailDurationTextBackgroundColor = videoThumbnailDurationTextBackgroundColor
         }
     }
 }

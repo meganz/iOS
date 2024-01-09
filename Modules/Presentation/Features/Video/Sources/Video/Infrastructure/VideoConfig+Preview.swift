@@ -11,7 +11,7 @@ extension VideoConfig {
         ),
         rowAssets: RowAssets(
             favoriteImage: MEGAAssetsPreviewImageProvider.image(named: "favouriteThumbnail")!,
-            playImage: UIImage(systemName: "play.circle.fill")!,
+            playImage: MEGAAssetsPreviewImageProvider.image(named: "blackPlayButton")!,
             publicLinkImage: MEGAAssetsPreviewImageProvider.image(named: "linked")!,
             moreImage: MEGAAssetsPreviewImageProvider.image(named: "moreList")!,
             addPlaylistImage: MEGAAssetsPreviewImageProvider.image(named: "navigationbar_add")!,
@@ -44,7 +44,11 @@ extension VideoConfig {
             emptyFavoriteThumbnailLightBackgroundColor: Color(uiColor: MEGAAssetsPreviewColorProvider.color(named: "gray_E2E2E2")!),
             emptyFavoriteThumbnailDarkBackgroundColor: Color(uiColor: MEGAAssetsPreviewColorProvider.color(named: "black_2c2c2e")!),
             emptyFavoriteThumbnaillImageLightForegroundColor: Color(uiColor: MEGAAssetsPreviewColorProvider.color(named: "gray_BBBBBB")!),
-            emptyFavoriteThumbnaillImageDarkForegroundColor: Color(uiColor: MEGAAssetsPreviewColorProvider.color(named: "gray_D1D1D1")!)
+            emptyFavoriteThumbnaillImageDarkForegroundColor: Color(uiColor: MEGAAssetsPreviewColorProvider.color(named: "gray_D1D1D1")!),
+            videoCellSecondaryLightTextColor: Color(uiColor: MEGAAssetsPreviewColorProvider.color(named: "gray_BBBBBB")!),
+            videoCellSecondaryDarkTextColor: Color(uiColor: MEGAAssetsPreviewColorProvider.color(named: "gray_D1D1D1")!),
+            videoThumbnailImageViewPlaceholderBackgroundColor: Color.black,
+            videoThumbnailDurationTextBackgroundColor: Color.black.opacity(0.2)
         ),
         toolbarAssets: ToolbarAssets(
             offlineImage: MEGAAssetsPreviewImageProvider.image(named: "offline")!,

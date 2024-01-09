@@ -9,7 +9,7 @@ extension VideoConfig {
         ),
         rowAssets: VideoConfig.RowAssets(
             favoriteImage: UIImage.favouriteThumbnail,
-            playImage: UIImage.rectangleVideoStack,
+            playImage: UIImage.blackPlayButton,
             publicLinkImage: UIImage.linked,
             moreImage: UIImage.moreList,
             addPlaylistImage: UIImage.navigationbarAdd,
@@ -42,7 +42,11 @@ extension VideoConfig {
             emptyFavoriteThumbnailLightBackgroundColor: MEGAAppColor.Gray._E2E2E2.color,
             emptyFavoriteThumbnailDarkBackgroundColor: MEGAAppColor.Black._2C2C2E.color,
             emptyFavoriteThumbnaillImageLightForegroundColor: MEGAAppColor.Gray._BBBBBB.color,
-            emptyFavoriteThumbnaillImageDarkForegroundColor: MEGAAppColor.Gray._D1D1D1.color
+            emptyFavoriteThumbnaillImageDarkForegroundColor: MEGAAppColor.Gray._D1D1D1.color,
+            videoCellSecondaryLightTextColor: MEGAAppColor.Gray._BBBBBB.color,
+            videoCellSecondaryDarkTextColor: MEGAAppColor.Gray._D1D1D1.color,
+            videoThumbnailImageViewPlaceholderBackgroundColor: MEGAAppColor.Videos.videoThumbnailImageViewPlaceholderBackgroundColor.color,
+            videoThumbnailDurationTextBackgroundColor: MEGAAppColor.Videos.videoThumbnailDurationTextBackgroundColor.color
         ),
         toolbarAssets: VideoConfig.ToolbarAssets(
             offlineImage: UIImage.offline,

@@ -1,0 +1,111 @@
+import SwiftUI
+import MEGADomain
+
+struct VideoCellView: View {
+    @ObservedObject var viewModel: VideoCellViewModel
+    let videoConfig: VideoConfig
+    
+    var body: some View {
+        VideoCellViewContent(previewEntity: viewModel.previewEntity, videoConfig: videoConfig)
+            .task {
+                await viewModel.attemptLoadThumbnail()
+            }
+    }
+}
+
+struct VideoCellViewContent: View {
+    @Environment(\.colorScheme) var colorScheme
+    let previewEntity: VideoCellPreviewEntity
+    let videoConfig: VideoConfig
+    
+    var body: some View {
+        HStack(alignment: .center, spacing: 8) {
+            
+            leadingContent
+                .frame(width: 142, height: 80)
+                .clipShape(RoundedRectangle(cornerRadius: 4))
+            
+            centerContent
+                .padding(0)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            
+            trailingContent
+                .frame(width: 24, height: 24)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+        .padding([.top, .bottom], 8)
+    }
+    
+    private var leadingContent: some View {
+        VideoThumbnailView(previewEntity: previewEntity, videoConfig: videoConfig)
+    }
+    
+    private var centerContent: some View {
+        
+        VStack(alignment: .leading, spacing: 4) {
+            
+            HStack {
+                Text(previewEntity.title)
+                    .font(.subheadline)
+                    .foregroundColor(.primary)
+                    .frame(maxWidth: .infinity, minHeight: 40, maxHeight: 40, alignment: .topLeading)
+                
+                if let labelImage = previewEntity.labelImage(source: videoConfig.rowAssets.labelAssets) {
+                    Image(uiImage: labelImage)
+                        .font(.system(size: 12))
+                        .clipShape(RoundedRectangle(cornerRadius: 6))
+                }
+            }
+            
+            HStack(alignment: .center, spacing: 8) {
+                
+                Text(previewEntity.size)
+                    .font(.caption)
+                    .foregroundColor(secondaryTextColor)
+                
+                Image(systemName: "circle.fill")
+                    .font(.system(size: 4))
+                    .foregroundColor(secondaryTextColor)
+                    .opacity(previewEntity.shouldShowCircleImage ? 1 : 0)
+                
+                Image(uiImage: videoConfig.rowAssets.publicLinkImage)
+                    .font(.system(size: 12))
+                    .foregroundColor(secondaryTextColor)
+                    .opacity(previewEntity.isPublicLink ? 1 : 0)
+                
+            }
+            .padding(0)
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+    }
+    
+    private var secondaryTextColor: Color {
+        colorScheme == .light
+        ? videoConfig.colorAssets.videoCellSecondaryLightTextColor
+        : videoConfig.colorAssets.videoCellSecondaryDarkTextColor
+    }
+    
+    private var trailingContent: some View {
+        Image(uiImage: videoConfig.rowAssets.moreImage)
+            .foregroundColor(videoConfig.colorAssets.tabInactiveTextColor)
+    }
+}
+
+// MARK: - Preview
+
+#Preview {
+    Group {
+        VideoCellViewContent(previewEntity: .standard, videoConfig: .preview)
+            .frame(height: 80)
+        VideoCellViewContent(previewEntity: .favorite, videoConfig: .preview)
+            .frame(height: 80)
+        VideoCellViewContent(previewEntity: .hasPublicLink, videoConfig: .preview)
+            .frame(height: 80)
+        VideoCellViewContent(previewEntity: .hasLabel, videoConfig: .preview)
+            .frame(height: 80)
+        VideoCellViewContent(previewEntity: .all, videoConfig: .preview)
+            .frame(height: 80)
+        VideoCellViewContent(previewEntity: .placeholder, videoConfig: .preview)
+            .frame(height: 80)
+    }
+}
