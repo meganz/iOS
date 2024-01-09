@@ -15,18 +15,20 @@ public struct OnboardingWithProPlanListView: View {
             ScrollView(showsIndicators: false) {
                 LazyVStack(spacing: 10, pinnedViews: .sectionFooters) {
                     OnboardingProPlanHeaderView(
-                        lowestPlanPrice: viewModel.lowestProPlan.formattedPrice
+                        lowestPlanPrice: viewModel.lowestProPlan.formattedPrice,
+                        primaryGrayTextColor: accountsConfig.onboardingViewAssets.primaryGrayTextColor
                     )
                     .padding(.vertical, 15)
                     
                     OnboardingProPlanContentView(viewModel: viewModel, accountsConfig: accountsConfig)
                     
-                    AccountPlanCyclePickerView(selectedCycleTab: $viewModel.selectedCycleTab)
+                    AccountPlanCyclePickerView(selectedCycleTab: $viewModel.selectedCycleTab, subMessageBackgroundColor: accountsConfig.onboardingViewAssets.subMessageBackgroundColor)
                     
                     Section {
                         ForEach(viewModel.filteredPlanList, id: \.self) { plan in
-                            AccountPlanView(viewModel: viewModel.createAccountPlanViewModel(plan))
-                                .padding(.bottom, 5)
+                            AccountPlanView(viewModel: viewModel.createAccountPlanViewModel(plan),
+                                            config: accountsConfig)
+                            .padding(.bottom, 5)
                         }
                     } footer: {
                         PrimaryActionButtonView(title: Strings.Localizable.continue) {
@@ -71,6 +73,7 @@ public struct OnboardingWithProPlanListView: View {
 
 private struct OnboardingProPlanHeaderView: View {
     var lowestPlanPrice: String
+    var primaryGrayTextColor: Color
     
     var body: some View {
         VStack(spacing: 30) {
@@ -79,7 +82,7 @@ private struct OnboardingProPlanHeaderView: View {
                 .bold()
             
             Text(Strings.Localizable.Onboarding.UpgradeAccount.Header.subTitle(lowestPlanPrice))
-                .foregroundColor(Color("upgrade_account_primaryGrayText"))
+                .foregroundColor(primaryGrayTextColor)
                 .font(.title3)
                 .multilineTextAlignment(.center)
         }

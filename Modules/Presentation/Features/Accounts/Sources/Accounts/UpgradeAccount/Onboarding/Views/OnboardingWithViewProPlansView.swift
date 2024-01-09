@@ -65,7 +65,7 @@ private struct OnboardingProPlanHeaderView: View {
                 .bold()
             
             Text(Strings.Localizable.Onboarding.UpgradeAccount.Header.subTitle(lowestPlanPrice))
-                .foregroundColor(Color("upgrade_account_primaryGrayText"))
+                .foregroundColor(accountsConfig.onboardingViewAssets.primaryGrayTextColor)
                 .font(.subheadline)
                 .multilineTextAlignment(.center)
         }

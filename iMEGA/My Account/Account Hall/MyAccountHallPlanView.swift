@@ -13,7 +13,7 @@ struct MyAccountHallPlanView: View {
             VStack(alignment: .leading, spacing: 0) {
                 Text(Strings.Localizable.InAppPurchase.ProductDetail.Navigation.currentPlan)
                     .font(.footnote)
-                    .foregroundColor(Color.upgradeAccountPrimaryGrayText)
+                    .foregroundColor(MEGAAppColor.Account.upgradeAccountPrimaryGrayText.color)
                 
                 ZStack {
                     ProgressView()
@@ -21,7 +21,7 @@ struct MyAccountHallPlanView: View {
                     
                     Text(viewModel.currentPlanName)
                         .font(.body)
-                        .foregroundColor(Color.upgradeAccountPrimaryText)
+                        .foregroundColor(MEGAAppColor.Account.upgradeAccountPrimaryText.color)
                         .opacity(viewModel.isUpdatingAccountDetails ? 0 : 1)
                 }
             }

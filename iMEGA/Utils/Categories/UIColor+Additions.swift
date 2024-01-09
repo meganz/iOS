@@ -309,7 +309,7 @@ extension UIColor {
             
         case .dark:
             if traitCollection.accessibilityContrast == .high {
-                return MEGAAppColor.Green._00C29A.uiColor 
+                return MEGAAppColor.Green._00C29A.uiColor
             } else {
                 return MEGAAppColor.Green._00A382.uiColor
             }
@@ -460,7 +460,7 @@ extension UIColor {
      - Returns: The color associated with the PRO LITE trademark.
      */
     @objc class func mnz_proLITE() -> UIColor {
-        UIColor.proAccountLITE
+        MEGAAppColor.Account.proAccountLite.uiColor
     }
     
     /**
@@ -469,7 +469,7 @@ extension UIColor {
      - Returns: The color associated with the PRO I trademark.
      */
     @objc class func mnz_redProI() -> UIColor {
-        UIColor.proAccountRedProI
+        MEGAAppColor.Account.proAccountRedProI.uiColor
     }
     
     /**
@@ -478,7 +478,7 @@ extension UIColor {
      - Returns: The color associated with the PRO II trademark.
      */
     @objc class func mnz_redProII() -> UIColor {
-        UIColor.proAccountRedProII
+        MEGAAppColor.Account.proAccountRedProII.uiColor
     }
     
     /**
@@ -487,7 +487,7 @@ extension UIColor {
      - Returns: The color associated with the PRO III trademark.
      */
     @objc class func mnz_redProIII() -> UIColor {
-        UIColor.proAccountRedProIII
+        MEGAAppColor.Account.proAccountRedProIII.uiColor
     }
     
     @objc class func mnz_color(proLevel: MEGAAccountType) -> UIColor? {

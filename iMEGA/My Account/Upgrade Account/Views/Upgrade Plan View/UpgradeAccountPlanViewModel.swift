@@ -221,7 +221,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         return TextWithLinkDetails(fullText: fullTextWithoutFormatters,
                                    tappableText: tappableText,
                                    linkString: "https://mega.nz/pro",
-                                   textColor: Color.upgradeAccountPrimaryText,
+                                   textColor: MEGAAppColor.Account.upgradeAccountPrimaryText.color,
                                    linkColor: MEGAAppColor.View.turquoise.color)
     }
     

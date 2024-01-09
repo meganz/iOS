@@ -4,9 +4,11 @@ import SwiftUI
 
 public struct AccountPlanCyclePickerView: View {
     @Binding private var selectedCycleTab: SubscriptionCycleEntity
+    private let subMessageBackgroundColor: Color
     
-    public init(selectedCycleTab: Binding<SubscriptionCycleEntity>) {
+    public init(selectedCycleTab: Binding<SubscriptionCycleEntity>, subMessageBackgroundColor: Color) {
         self._selectedCycleTab = selectedCycleTab
+        self.subMessageBackgroundColor = subMessageBackgroundColor
     }
     
     public var body: some View {
@@ -26,7 +28,7 @@ public struct AccountPlanCyclePickerView: View {
                 .bold()
                 .padding(.horizontal, 10)
                 .padding(.vertical, 6)
-                .background(Color("upgrade_account_subMessageBackground"))
+                .background(subMessageBackgroundColor)
                 .cornerRadius(10)
                 .padding(.bottom, 15)
         }

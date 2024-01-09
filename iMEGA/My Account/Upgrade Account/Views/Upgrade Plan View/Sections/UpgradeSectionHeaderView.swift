@@ -6,6 +6,7 @@ import SwiftUI
 struct UpgradeSectionHeaderView: View {
     var currentPlanName: String
     @Binding var selectedCycleTab: SubscriptionCycleEntity
+    var subMessageBackgroundColor: Color
     
     var body: some View {
         Section {
@@ -19,7 +20,7 @@ struct UpgradeSectionHeaderView: View {
                 .bold()
                 .padding(.top, 1)
             
-            AccountPlanCyclePickerView(selectedCycleTab: $selectedCycleTab)
+            AccountPlanCyclePickerView(selectedCycleTab: $selectedCycleTab, subMessageBackgroundColor: subMessageBackgroundColor)
         }
     }
 }

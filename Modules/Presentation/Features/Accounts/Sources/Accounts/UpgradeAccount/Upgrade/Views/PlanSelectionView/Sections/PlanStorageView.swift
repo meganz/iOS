@@ -4,13 +4,15 @@ import SwiftUI
 
 public struct PlanStorageView: View {
     public var plan: AccountPlanEntity
+    public var primaryTextColor: Color
+    public var secondaryTextColor: Color
     
     public var body: some View {
         VStack(alignment: .leading, spacing: 5) {
             PlanStorageContentView(title: Strings.Localizable.UpgradeAccountPlan.Plan.Details.storage(plan.storage),
-                                  detail: plan.storage)
+                                  detail: plan.storage, primaryTextColor: primaryTextColor, secondaryTextColor: secondaryTextColor)
             PlanStorageContentView(title: Strings.Localizable.UpgradeAccountPlan.Plan.Details.transfer(plan.transfer),
-                                  detail: plan.transfer)
+                                  detail: plan.transfer, primaryTextColor: primaryTextColor, secondaryTextColor: secondaryTextColor)
         }
     }
 }
@@ -18,16 +20,19 @@ public struct PlanStorageView: View {
 private struct PlanStorageContentView: View {
     var title: String
     var detail: String
+    var primaryTextColor: Color
+    var secondaryTextColor: Color
     
     private var detailAttributedText: AttributedString {
         var attributedString = AttributedString(title)
         attributedString.font = .subheadline
-        attributedString.foregroundColor = Color("upgrade_account_secondaryText")
+        attributedString.foregroundColor = secondaryTextColor
         
         guard let rangeOfDetail = attributedString.range(of: detail) else {
             return attributedString
         }
-        attributedString[rangeOfDetail].foregroundColor = Color("upgrade_account_primaryText")
+        
+        attributedString[rangeOfDetail].foregroundColor = primaryTextColor
         return attributedString
     }
     
