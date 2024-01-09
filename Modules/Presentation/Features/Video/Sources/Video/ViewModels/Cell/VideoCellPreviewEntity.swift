@@ -41,3 +41,19 @@ extension VideoCellPreviewEntity {
         label: nil
     )
 }
+
+extension VideoCellPreviewEntity {
+    
+    func labelImage(source labelAssets: VideoConfig.RowAssets.LabelAssets) -> UIImage? {
+        switch label {
+        case .unknown, .none: nil
+        case .red: labelAssets.redImage
+        case .orange: labelAssets.orangeImage
+        case .yellow: labelAssets.yellowImage
+        case .green: labelAssets.greenImage
+        case .blue: labelAssets.blueImage
+        case .purple: labelAssets.purpleImage
+        case .grey: labelAssets.greyImage
+        }
+    }
+}

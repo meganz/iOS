@@ -202,6 +202,7 @@
 		24EF670C2B358A70002F1380 /* AudioPlayerEventObserversLoadingLogicControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EF670B2B358A70002F1380 /* AudioPlayerEventObserversLoadingLogicControllerTests.swift */; };
 		24EF67102B3594BF002F1380 /* ReasonWaitingToPlayNilLogicControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24EF670F2B3594BF002F1380 /* ReasonWaitingToPlayNilLogicControllerTests.swift */; };
 		24F231592A5FB33A000BFBBA /* AudioPlayerViewRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F231582A5FB33A000BFBBA /* AudioPlayerViewRouterTests.swift */; };
+		24F583B62B46E18C00AA0562 /* MEGAAppColor+Videos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24F583B52B46E18C00AA0562 /* MEGAAppColor+Videos.swift */; };
 		251863132AA69108005C77F0 /* CloudDriveViewController+ViewMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251863122AA69108005C77F0 /* CloudDriveViewController+ViewMode.swift */; };
 		251B07BB2AC4D4B2008B7380 /* PhotoZoomControlPositionTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251B07BA2AC4D4B2008B7380 /* PhotoZoomControlPositionTracker.swift */; };
 		2533401E2A78A3CF002C7AAE /* CustomModalAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2533401D2A78A3CF002C7AAE /* CustomModalAlertView.swift */; };
@@ -2743,6 +2744,7 @@
 		24EF670B2B358A70002F1380 /* AudioPlayerEventObserversLoadingLogicControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerEventObserversLoadingLogicControllerTests.swift; sourceTree = "<group>"; };
 		24EF670F2B3594BF002F1380 /* ReasonWaitingToPlayNilLogicControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReasonWaitingToPlayNilLogicControllerTests.swift; sourceTree = "<group>"; };
 		24F231582A5FB33A000BFBBA /* AudioPlayerViewRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerViewRouterTests.swift; sourceTree = "<group>"; };
+		24F583B52B46E18C00AA0562 /* MEGAAppColor+Videos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAAppColor+Videos.swift"; sourceTree = "<group>"; };
 		251863122AA69108005C77F0 /* CloudDriveViewController+ViewMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+ViewMode.swift"; sourceTree = "<group>"; };
 		251B07BA2AC4D4B2008B7380 /* PhotoZoomControlPositionTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoZoomControlPositionTracker.swift; sourceTree = "<group>"; };
 		2533401D2A78A3CF002C7AAE /* CustomModalAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomModalAlertView.swift; sourceTree = "<group>"; };
@@ -8150,6 +8152,7 @@
 			children = (
 				6D8820762B1BE50200F0BE18 /* MEGAAppColor+Chat.swift */,
 				6D88207B2B1C07C700F0BE18 /* MEGAAppColor+Photos.swift */,
+				24F583B52B46E18C00AA0562 /* MEGAAppColor+Videos.swift */,
 				6D88206F2B1B1B5B00F0BE18 /* MEGAAppColor.swift */,
 			);
 			path = AppColor;
@@ -14073,6 +14076,7 @@
 				BFFE228B292F8DB30063CFF2 /* MeetingsListHeaderView.swift in Sources */,
 				6D8820772B1BE50200F0BE18 /* MEGAAppColor+Chat.swift in Sources */,
 				6D88207C2B1C07C700F0BE18 /* MEGAAppColor+Photos.swift in Sources */,
+				24F583B62B46E18C00AA0562 /* MEGAAppColor+Videos.swift in Sources */,
 				6D8820702B1B1B5B00F0BE18 /* MEGAAppColor.swift in Sources */,
 				A85B7AC42A14F5C7002B1D6A /* MEGAApplication.swift in Sources */,
 				831FBEA220EF697200AC1B91 /* MEGAArchiveChatRequestDelegate.m in Sources */,
