@@ -11,13 +11,17 @@ final class MeetingParticipantTableViewHeader: UITableViewHeaderFooterView {
         switch selectedTab {
         case .inCall:
             titleLabel.text = Strings.Localizable.Meetings.Panel.participantsCount(participantsCount)
-            actionButton.isHidden = true
+            actionButton.setTitle(Strings.Localizable.Calls.Panel.ParticipantsInCall.Header.muteAll, for: .normal)
+            actionButton.setTitle(Strings.Localizable.Calls.Panel.ParticipantsInCall.Header.allMuted, for: .disabled)
+            actionButton.isHidden = false
             callAllIcon.isHidden = true
         case .notInCall:
+            actionButton.isEnabled = true
             titleLabel.text = Strings.Localizable.Meetings.Panel.participantsNotInCallCount(participantsCount)
             actionButton.setTitle(Strings.Localizable.Calls.Panel.ParticipantsNotInCall.Header.callAll, for: .normal)
             actionButton.isHidden = callAllIcon.isHidden && participantsCount > 0 ? false : true
         case .waitingRoom:
+            actionButton.isEnabled = true
             titleLabel.text = Strings.Localizable.Meetings.Panel.participantsInWaitingRoomCount(participantsCount)
             actionButton.setTitle(Strings.Localizable.Chat.Call.WaitingRoom.Alert.Button.admitAll, for: .normal)
             actionButton.isHidden = participantsCount > 0 ? false : true
@@ -27,6 +31,10 @@ final class MeetingParticipantTableViewHeader: UITableViewHeaderFooterView {
     
     func hideCallAllIcon(_ hide: Bool) {
         callAllIcon.isHidden = hide
+    }
+    
+    func disableMuteAllButton(_ disable: Bool) {
+        actionButton.isEnabled = !disable
     }
     
     @IBAction func actionButtonTapped(_ sender: UIButton) {

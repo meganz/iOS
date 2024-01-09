@@ -1,5 +1,6 @@
 import ChatRepo
 import MEGADomain
+import MEGAL10n
 import MEGAPermissions
 import MEGAPresentation
 import MEGARepo
@@ -26,6 +27,8 @@ protocol MeetingFloatingPanelRouting: AnyObject, Routing {
     func didSwitchToGridView()
     func showConfirmDenyAction(for username: String, isCallUIVisible: Bool, confirmDenyAction: @escaping () -> Void, cancelDenyAction: @escaping () -> Void)
     func showWaitingRoomParticipantsList(for call: CallEntity)
+    func showMuteSuccess(for participant: CallParticipantEntity?)
+    func showMuteError(for participant: CallParticipantEntity?)
 }
 
 extension MeetingFloatingPanelRouting {
@@ -164,7 +167,7 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
                          participant: CallParticipantEntity,
                          isMyselfModerator: Bool,
                          meetingFloatingPanelModel: MeetingFloatingPanelViewModel) {
-        let participantInfoRouter = MeetingParticpiantInfoViewRouter(
+        let participantInfoRouter = MeetingParticipantInfoViewRouter(
             presenter: presenter,
             sender: sender,
             participant: participant,
@@ -226,5 +229,21 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
         guard let presenter = baseViewController?.presenterViewController() else { return }
 
         callWaitingRoomDialog.showAlertForConfirmDeny(isCallUIVisible: isCallUIVisible, named: username, presenterViewController: presenter, confirmAction: confirmDenyAction, cancelAction: cancelDenyAction)
+    }
+    
+    func showMuteSuccess(for participant: CallParticipantEntity?) {
+        if let participant {
+            SVProgressHUD.showSuccess(withStatus: Strings.Localizable.Calls.ParticipantsInCall.MuteParticipant.success(participant.name ?? ""))
+        } else {
+            SVProgressHUD.showSuccess(withStatus: Strings.Localizable.Calls.ParticipantsInCall.MuteAll.success)
+        }
+    }
+    
+    func showMuteError(for participant: CallParticipantEntity?) {
+        if let participant {
+            SVProgressHUD.showError(withStatus: Strings.Localizable.Calls.ParticipantsInCall.MuteParticipant.error(participant.name ?? ""))
+        } else {
+            SVProgressHUD.showError(withStatus: Strings.Localizable.Calls.ParticipantsInCall.MuteAll.error)
+        }
     }
 }

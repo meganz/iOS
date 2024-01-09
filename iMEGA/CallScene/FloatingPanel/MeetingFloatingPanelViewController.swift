@@ -185,6 +185,9 @@ final class MeetingFloatingPanelViewController: UIViewController {
         case .hideCallAllIcon(let hide):
             guard let header = participantsTableView.headerView(forSection: 1) as? MeetingParticipantTableViewHeader else { return }
             header.hideCallAllIcon(hide)
+        case .disableMuteAllButton(let disable):
+            guard let header = participantsTableView.headerView(forSection: 1) as? MeetingParticipantTableViewHeader else { return }
+            header.disableMuteAllButton(disable)
         }
     }
     
@@ -350,6 +353,12 @@ extension MeetingFloatingPanelViewController: UITableViewDataSource, UITableView
                 )
             }
             header.configure(for: callParticipantsListView.selectedTab, participantsCount: callParticipants.count)
+            if callParticipantsListView.selectedTab == .inCall {
+                let unmutedUsers = callParticipants.filter({ $0.audio == .on })
+                header.disableMuteAllButton(
+                    unmutedUsers.isEmpty || unmutedUsers.count == 1 && unmutedUsers.first?.participantId == accountUseCase.currentUserHandle
+                )
+            }
             header.actionButtonTappedHandler = { [weak self] in
                 self?.viewModel.dispatch(.onHeaderActionTap)
             }

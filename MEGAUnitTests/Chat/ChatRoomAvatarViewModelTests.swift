@@ -10,10 +10,12 @@ final class ChatRoomAvatarViewModelTests: XCTestCase {
         let chatRoom = ChatRoomEntity(chatType: .oneToOne)
         let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: "base64Handle")
         let userImage = UIImage(systemName: "folder") ?? UIImage()
+        let mockAccountUseCase = MockAccountUseCase(currentUser: UserEntity(handle: 1))
         let userImageUseCase = MockUserImageUseCase(result: .success(userImage))
         let sut = makeChatRoomAvatarViewModel(
             chatRoom: chatRoom,
             userImageUseCase: userImageUseCase,
+            accountUseCase: mockAccountUseCase,
             megaHandleUseCase: megaHandleUseCase
         )
         

@@ -28,6 +28,7 @@ public protocol CallRepositoryProtocol {
     func callWaitingRoomUsersUpdate(forCall call: CallEntity) -> AnyPublisher<CallEntity, Never>
     func onCallUpdate() -> AnyPublisher<CallEntity, Never>
     func callAbsentParticipant(inChat chatId: ChatIdEntity, userId: HandleEntity, timeout: Int)
+    func muteUser(inChat chatRoom: ChatRoomEntity, clientId: ChatIdEntity) async throws
 }
 
 public protocol CallCallbacksRepositoryProtocol {

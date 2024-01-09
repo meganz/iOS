@@ -17,6 +17,7 @@ final class MockCallUseCase: CallUseCaseProtocol {
     var makePeerAsModerator_CalledTimes = 0
     var removePeerAsModerator_CalledTimes = 0
     var callAbsentParticipant_CalledTimes = 0
+    var muteParticipant_CalledTimes = 0
 
     var call: CallEntity?
     var callCompletion: Result<CallEntity, CallErrorEntity>
@@ -31,17 +32,20 @@ final class MockCallUseCase: CallUseCaseProtocol {
     var participantHandle: HandleEntity = .invalid
     var callWaitingRoomUsersUpdateSubject = PassthroughSubject<CallEntity, Never>()
     var callUpdateSubject: PassthroughSubject<CallEntity, Never>
+    var muteParticipantCompletion: Result<Void, GenericErrorEntity>
     
     init(
         call: CallEntity? = CallEntity(),
         callCompletion: Result<CallEntity, CallErrorEntity> = .failure(.generic),
         answerCallCompletion: Result<CallEntity, CallErrorEntity> = .failure(.generic),
-        callUpdateSubject: PassthroughSubject<CallEntity, Never> = .init()
+        callUpdateSubject: PassthroughSubject<CallEntity, Never> = .init(),
+        muteParticipantCompletion: Result<Void, GenericErrorEntity> = .success(())
     ) {
         self.call = call
         self.callCompletion = callCompletion
         self.answerCallCompletion = answerCallCompletion
         self.callUpdateSubject = callUpdateSubject
+        self.muteParticipantCompletion = muteParticipantCompletion
     }
     
     func startListeningForCallInChat<T: CallCallbacksUseCaseProtocol>(_ chatId: HandleEntity, callbacksDelegate: T) {
@@ -171,6 +175,15 @@ final class MockCallUseCase: CallUseCaseProtocol {
     
     func callAbsentParticipant(inChat chatId: ChatIdEntity, userId: HandleEntity, timeout: Int) {
         callAbsentParticipant_CalledTimes += 1
+    }
+    
+    func muteUser(inChat chatRoom: ChatRoomEntity, clientId: ChatIdEntity) async throws {
+        switch muteParticipantCompletion {
+        case .success:
+            muteParticipant_CalledTimes += 1
+        case .failure(let error):
+            throw error
+        }
     }
 }
 

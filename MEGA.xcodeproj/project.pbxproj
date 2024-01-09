@@ -2219,8 +2219,8 @@
 		BFAD0FAB2A2EF4C8003F5F83 /* ScheduleMeetingCreationCustomOptionsSelectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD0FA92A2EF415003F5F83 /* ScheduleMeetingCreationCustomOptionsSelectionHeaderView.swift */; };
 		BFAD0FAE2A2F0DE4003F5F83 /* ScheduleMeetingCreationCustomOptionsWheelPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD0FAC2A2F0DD6003F5F83 /* ScheduleMeetingCreationCustomOptionsWheelPickerView.swift */; };
 		BFAD0FB02A304209003F5F83 /* ScheduleMeetingCreationOptionSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD0FAF2A304209003F5F83 /* ScheduleMeetingCreationOptionSelectionView.swift */; };
-		BFAD512C260BDE8800DFBD1B /* MeetingParticpiantInfoViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD512B260BDE8800DFBD1B /* MeetingParticpiantInfoViewRouter.swift */; };
-		BFAD513E260BE26C00DFBD1B /* MeetingParticpiantInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD513D260BE26B00DFBD1B /* MeetingParticpiantInfoViewModel.swift */; };
+		BFAD512C260BDE8800DFBD1B /* MeetingParticipantInfoViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD512B260BDE8800DFBD1B /* MeetingParticipantInfoViewRouter.swift */; };
+		BFAD513E260BE26C00DFBD1B /* MeetingParticipantInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAD513D260BE26B00DFBD1B /* MeetingParticipantInfoViewModel.swift */; };
 		BFAD882926911E7200CA592F /* EncourageGuestUserToJoinMegaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFAD882826911E7100CA592F /* EncourageGuestUserToJoinMegaViewController.xib */; };
 		BFAFAF0F2519595300C92887 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFAFAF0D2519595300C92887 /* HomeViewController.xib */; };
 		BFAFAF102519595300C92887 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAFAF0E2519595300C92887 /* HomeViewController.swift */; };
@@ -4847,8 +4847,8 @@
 		BFAD0FA92A2EF415003F5F83 /* ScheduleMeetingCreationCustomOptionsSelectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationCustomOptionsSelectionHeaderView.swift; sourceTree = "<group>"; };
 		BFAD0FAC2A2F0DD6003F5F83 /* ScheduleMeetingCreationCustomOptionsWheelPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationCustomOptionsWheelPickerView.swift; sourceTree = "<group>"; };
 		BFAD0FAF2A304209003F5F83 /* ScheduleMeetingCreationOptionSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationOptionSelectionView.swift; sourceTree = "<group>"; };
-		BFAD512B260BDE8800DFBD1B /* MeetingParticpiantInfoViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingParticpiantInfoViewRouter.swift; sourceTree = "<group>"; };
-		BFAD513D260BE26B00DFBD1B /* MeetingParticpiantInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingParticpiantInfoViewModel.swift; sourceTree = "<group>"; };
+		BFAD512B260BDE8800DFBD1B /* MeetingParticipantInfoViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingParticipantInfoViewRouter.swift; sourceTree = "<group>"; };
+		BFAD513D260BE26B00DFBD1B /* MeetingParticipantInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingParticipantInfoViewModel.swift; sourceTree = "<group>"; };
 		BFAD882826911E7100CA592F /* EncourageGuestUserToJoinMegaViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EncourageGuestUserToJoinMegaViewController.xib; sourceTree = "<group>"; };
 		BFAFAF0D2519595300C92887 /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
 		BFAFAF0E2519595300C92887 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -11836,8 +11836,8 @@
 				BFD6534A25EDBF8A00052DE8 /* MeetingContactInfoHeaderView.swift */,
 				BFD6535425EDBFA400052DE8 /* MeetingContactInfoHeaderView.xib */,
 				BFD6535E25EDE8E500052DE8 /* MeetingParticipantInfoViewController.swift */,
-				BFAD513D260BE26B00DFBD1B /* MeetingParticpiantInfoViewModel.swift */,
-				BFAD512B260BDE8800DFBD1B /* MeetingParticpiantInfoViewRouter.swift */,
+				BFAD513D260BE26B00DFBD1B /* MeetingParticipantInfoViewModel.swift */,
+				BFAD512B260BDE8800DFBD1B /* MeetingParticipantInfoViewRouter.swift */,
 			);
 			path = ParticpiantInfo;
 			sourceTree = "<group>";
@@ -14077,6 +14077,8 @@
 				839999DB264AE52700520F38 /* MeetingOptionsMenuViewController.swift in Sources */,
 				839999ED264AE54A00520F38 /* MeetingOptionsMenuViewModel.swift in Sources */,
 				BFD6536025EDE8E500052DE8 /* MeetingParticipantInfoViewController.swift in Sources */,
+				BFAD513E260BE26C00DFBD1B /* MeetingParticipantInfoViewModel.swift in Sources */,
+				BFAD512C260BDE8800DFBD1B /* MeetingParticipantInfoViewRouter.swift in Sources */,
 				836651532649766900BC02F0 /* MeetingParticipantsLayoutRouter.swift in Sources */,
 				836651502649766900BC02F0 /* MeetingParticipantsLayoutViewController.swift in Sources */,
 				836651512649766900BC02F0 /* MeetingParticipantsLayoutViewModel.swift in Sources */,
@@ -14084,8 +14086,6 @@
 				BF66DFE22613E7BE00066F35 /* MeetingParticipantTableViewCell.swift in Sources */,
 				839BA9DF2AB32B87001F852C /* MeetingParticipantTableViewHeader.swift in Sources */,
 				BF66DFE12613E7BE00066F35 /* MeetingParticipantViewModel.swift in Sources */,
-				BFAD513E260BE26C00DFBD1B /* MeetingParticpiantInfoViewModel.swift in Sources */,
-				BFAD512C260BDE8800DFBD1B /* MeetingParticpiantInfoViewRouter.swift in Sources */,
 				BFD6564F25F6D22300052DE8 /* MeetingQuickActionView.swift in Sources */,
 				BFFE228B292F8DB30063CFF2 /* MeetingsListHeaderView.swift in Sources */,
 				6D9A731D2B4619D200894E97 /* MEGAAppColor+Account.swift in Sources */,

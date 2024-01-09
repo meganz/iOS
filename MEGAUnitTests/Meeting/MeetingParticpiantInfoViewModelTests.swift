@@ -12,9 +12,9 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
         let chatRoomUserUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
         let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
         let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity(100))
-        let router = MockMeetingParticpiantInfoViewRouter()
+        let router = MockMeetingParticipantInfoViewRouter()
 
-        let viewModel = MeetingParticpiantInfoViewModel(participant: participant,
+        let viewModel = MeetingParticipantInfoViewModel(participant: participant,
                                                         userImageUseCase: userImageUseCase,
                                                         chatRoomUseCase: chatRoomUseCase,
                                                         chatRoomUserUseCase: chatRoomUserUseCase,
@@ -38,9 +38,9 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
         let chatRoomUserUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
         let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
         let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity(100))
-        let router = MockMeetingParticpiantInfoViewRouter()
+        let router = MockMeetingParticipantInfoViewRouter()
         
-        let viewModel = MeetingParticpiantInfoViewModel(participant: participant,
+        let viewModel = MeetingParticipantInfoViewModel(participant: participant,
                                                         userImageUseCase: userImageUseCase,
                                                         chatRoomUseCase: chatRoomUseCase,
                                                         chatRoomUserUseCase: chatRoomUserUseCase,
@@ -64,9 +64,9 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
         let chatRoomUserUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
         let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
         let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity(100))
-        let router = MockMeetingParticpiantInfoViewRouter()
+        let router = MockMeetingParticipantInfoViewRouter()
         
-        let viewModel = MeetingParticpiantInfoViewModel(participant: participant,
+        let viewModel = MeetingParticipantInfoViewModel(participant: participant,
                                                         userImageUseCase: userImageUseCase,
                                                         chatRoomUseCase: chatRoomUseCase,
                                                         chatRoomUserUseCase: chatRoomUserUseCase,
@@ -91,9 +91,9 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
         let chatRoomUserUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
         let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
         let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity(100))
-        let router = MockMeetingParticpiantInfoViewRouter()
+        let router = MockMeetingParticipantInfoViewRouter()
         
-        let viewModel = MeetingParticpiantInfoViewModel(participant: participant,
+        let viewModel = MeetingParticipantInfoViewModel(participant: participant,
                                                         userImageUseCase: userImageUseCase,
                                                         chatRoomUseCase: chatRoomUseCase,
                                                         chatRoomUserUseCase: chatRoomUserUseCase,
@@ -118,9 +118,9 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
         let chatRoomUserUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
         let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
         let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity(100))
-        let router = MockMeetingParticpiantInfoViewRouter()
+        let router = MockMeetingParticipantInfoViewRouter()
         
-        let viewModel = MeetingParticpiantInfoViewModel(participant: participant,
+        let viewModel = MeetingParticipantInfoViewModel(participant: participant,
                                                         userImageUseCase: userImageUseCase,
                                                         chatRoomUseCase: chatRoomUseCase,
                                                         chatRoomUserUseCase: chatRoomUserUseCase,
@@ -145,9 +145,9 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
         let chatRoomUserUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
         let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
         let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity(100))
-        let router = MockMeetingParticpiantInfoViewRouter()
+        let router = MockMeetingParticipantInfoViewRouter()
         
-        let viewModel = MeetingParticpiantInfoViewModel(participant: participant,
+        let viewModel = MeetingParticipantInfoViewModel(participant: participant,
                                                         userImageUseCase: userImageUseCase,
                                                         chatRoomUseCase: chatRoomUseCase,
                                                         chatRoomUserUseCase: chatRoomUserUseCase,
@@ -171,9 +171,9 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
         let chatRoomUserUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
         let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
         let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity(100))
-        let router = MockMeetingParticpiantInfoViewRouter()
+        let router = MockMeetingParticipantInfoViewRouter()
         
-        let viewModel = MeetingParticpiantInfoViewModel(participant: participant,
+        let viewModel = MeetingParticipantInfoViewModel(participant: participant,
                                                         userImageUseCase: userImageUseCase,
                                                         chatRoomUseCase: chatRoomUseCase,
                                                         chatRoomUserUseCase: chatRoomUserUseCase,
@@ -197,9 +197,9 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
         let chatRoomUseCase = MockChatRoomUseCase()
         let chatRoomUserUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
         let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
-        let router = MockMeetingParticpiantInfoViewRouter()
+        let router = MockMeetingParticipantInfoViewRouter()
         
-        let viewModel = MeetingParticpiantInfoViewModel(participant: participant,
+        let viewModel = MeetingParticipantInfoViewModel(participant: participant,
                                                         userImageUseCase: userImageUseCase,
                                                         chatRoomUseCase: chatRoomUseCase,
                                                         chatRoomUserUseCase: chatRoomUserUseCase,
@@ -216,9 +216,9 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
         let chatRoomEntity = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoomEntity)
         let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
-        let router = MockMeetingParticpiantInfoViewRouter()
+        let router = MockMeetingParticipantInfoViewRouter()
         
-        let viewModel = MeetingParticpiantInfoViewModel(participant: participant,
+        let viewModel = MeetingParticipantInfoViewModel(participant: participant,
                                                         userImageUseCase: userImageUseCase,
                                                         chatRoomUseCase: chatRoomUseCase,
                                                         chatRoomUserUseCase: MockChatRoomUserUseCase(),
@@ -235,9 +235,9 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
         let chatRoomUseCase = MockChatRoomUseCase()
         let chatRoomUserUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
         let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
-        let router = MockMeetingParticpiantInfoViewRouter()
+        let router = MockMeetingParticipantInfoViewRouter()
         
-        let viewModel = MeetingParticpiantInfoViewModel(participant: participant,
+        let viewModel = MeetingParticipantInfoViewModel(participant: participant,
                                                         userImageUseCase: userImageUseCase,
                                                         chatRoomUseCase: chatRoomUseCase,
                                                         chatRoomUserUseCase: chatRoomUserUseCase,
@@ -254,9 +254,9 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
         let chatRoomUseCase = MockChatRoomUseCase()
         let chatRoomUserUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
         let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
-        let router = MockMeetingParticpiantInfoViewRouter()
+        let router = MockMeetingParticipantInfoViewRouter()
         
-        let viewModel = MeetingParticpiantInfoViewModel(participant: participant,
+        let viewModel = MeetingParticipantInfoViewModel(participant: participant,
                                                         userImageUseCase: userImageUseCase,
                                                         chatRoomUseCase: chatRoomUseCase,
                                                         chatRoomUserUseCase: chatRoomUserUseCase,
@@ -273,9 +273,9 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
         let chatRoomUseCase = MockChatRoomUseCase()
         let chatRoomUserUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
         let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
-        let router = MockMeetingParticpiantInfoViewRouter()
+        let router = MockMeetingParticipantInfoViewRouter()
         
-        let viewModel = MeetingParticpiantInfoViewModel(participant: participant,
+        let viewModel = MeetingParticipantInfoViewModel(participant: participant,
                                                         userImageUseCase: userImageUseCase,
                                                         chatRoomUseCase: chatRoomUseCase,
                                                         chatRoomUserUseCase: chatRoomUserUseCase,
@@ -285,6 +285,56 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
         
         viewModel.dispatch(.displayInMainView)
         XCTAssert(router.displayInMainView_calledTimes == 1)
+    }
+    
+    func testAction_muteParticipant_shouldShowActionSheetForMuteParticipant() {
+        let participant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, isModerator: false, isInContactList: false, canReceiveVideoHiRes: true)
+        let chatRoomUseCase = MockChatRoomUseCase()
+        let chatRoomUserUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
+        let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
+        let router = MockMeetingParticipantInfoViewRouter()
+        
+        let viewModel = MeetingParticipantInfoViewModel(
+            participant: participant,
+            userImageUseCase: userImageUseCase,
+            chatRoomUseCase: chatRoomUseCase,
+            chatRoomUserUseCase: chatRoomUserUseCase,
+            megaHandleUseCase: MockMEGAHandleUseCase(),
+            isMyselfModerator: true,
+            router: router
+        )
+        
+        viewModel.dispatch(.muteParticipant)
+        XCTAssert(router.muteParticipant_calledTimes == 1)
+    }
+    
+    func testAction_onViewReadyAndMyselfAsModerator_participantIsNotMutedAndNotInContactList() {
+        let participant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, isModerator: true, isInContactList: false, audio: .on, canReceiveVideoHiRes: true)
+        let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity())
+        let chatRoomUserUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
+        let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
+        let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity(100))
+        let router = MockMeetingParticipantInfoViewRouter()
+        
+        let viewModel = MeetingParticipantInfoViewModel(
+            participant: participant,
+            userImageUseCase: userImageUseCase,
+            chatRoomUseCase: chatRoomUseCase,
+            chatRoomUserUseCase: chatRoomUserUseCase,
+            megaHandleUseCase: megaHandleUseCase,
+            isMyselfModerator: true,
+            router: router
+        )
+        
+        test(viewModel: viewModel,
+             action: .onViewReady,
+             expectedCommands: [
+                .configView(email: "test@email.com", actions: [
+                    muteParticipantAction(), removeModeratorAction(), displayInMainViewAction(), removeContactAction()
+                ]),
+                .updateName(name: "Test"),
+                .updateAvatarImage(image: UIImage())
+             ])
     }
     
     // MARK: - Private methods
@@ -337,9 +387,16 @@ final class MeetingParticpiantInfoViewModelTests: XCTestCase {
                           image: UIImage.speakerView,
                           style: .default) {}
     }
+    
+    private func muteParticipantAction() -> ActionSheetAction {
+        ActionSheetAction(title: Strings.Localizable.Calls.Panel.ParticipantsInCall.ParticipantContextMenu.Actions.mute,
+                          detail: nil,
+                          image: UIImage(resource: .muteParticipant),
+                          style: .default) { }
+    }
 }
 
-final class MockMeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRouting {
+final class MockMeetingParticipantInfoViewRouter: MeetingParticipantInfoViewRouting {
     var showInfo_calledTimes = 0
     var openChatRoom_calledTimes = 0
     var showInviteSuccess_calledTimes = 0
@@ -348,6 +405,7 @@ final class MockMeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRout
     var removeParticipantAsModerator_calledTimes = 0
     var removeParticipant_calledTimes = 0
     var displayInMainView_calledTimes = 0
+    var muteParticipant_calledTimes = 0
 
     func showInfo() {
         showInfo_calledTimes += 1
@@ -371,5 +429,9 @@ final class MockMeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRout
     
     func displayInMainView() {
         displayInMainView_calledTimes += 1
+    }
+    
+    func muteParticipant(_ participant: CallParticipantEntity) {
+        muteParticipant_calledTimes += 1
     }
 }

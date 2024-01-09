@@ -171,7 +171,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
              expectedCommands: [
                 .configView(canInviteParticipants: true, isOneToOneCall: chatRoom.chatType == .oneToOne, isMeeting: chatRoom.chatType == .meeting, isVideoEnabled: false, cameraPosition: nil, allowNonHostToAddParticipantsEnabled: false, isMyselfAModerator: true),
                 .updatedAudioPortSelection(audioPort: audioSessionUseCase.currentSelectedAudioPort, bluetoothAudioRouteAvailable: audioSessionUseCase.isBluetoothAudioRouteAvailable),
-                .reloadViewData(participantsListView: ParticipantsListView(sections: [.hostControls, .invite, .participants], hostControlsRows: [], inviteSectionRow: [], tabs: [.inCall, .notInCall], selectedTab: .inCall, participants: [], existsWaitingRoom: false)),
+                .reloadViewData(participantsListView: ParticipantsListView(sections: [.hostControls, .invite, .participants], hostControlsRows: [], inviteSectionRow: [], tabs: [.inCall, .notInCall], selectedTab: .inCall, participants: [], existsWaitingRoom: false, currentUserHandle: 100)),
                 .microphoneMuted(muted: true)
              ])
         XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
@@ -287,7 +287,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
              expectedCommands: [
                 .configView(canInviteParticipants: false, isOneToOneCall: chatRoom.chatType == .oneToOne, isMeeting: chatRoom.chatType == .meeting, isVideoEnabled: false, cameraPosition: nil, allowNonHostToAddParticipantsEnabled: false, isMyselfAModerator: false),
                 .updatedAudioPortSelection(audioPort: audioSessionUseCase.currentSelectedAudioPort, bluetoothAudioRouteAvailable: audioSessionUseCase.isBluetoothAudioRouteAvailable),
-                .reloadViewData(participantsListView: ParticipantsListView(sections: [.hostControls, .invite, .participants], hostControlsRows: [], inviteSectionRow: [], tabs: [.inCall, .notInCall], selectedTab: .inCall, participants: [], existsWaitingRoom: false)),
+                .reloadViewData(participantsListView: ParticipantsListView(sections: [.hostControls, .invite, .participants], hostControlsRows: [], inviteSectionRow: [], tabs: [.inCall, .notInCall], selectedTab: .inCall, participants: [], existsWaitingRoom: false, currentUserHandle: 100)),
                 .microphoneMuted(muted: true)
              ])
         XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
@@ -1053,6 +1053,56 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         )
         XCTAssert(callUseCase.allowUsersJoinCall_CalledTimes == 1)
     }
+    
+    func testAction_muteParticipant_muteSuccess() {
+        let chatRoom = ChatRoomEntity(chatId: 100, ownPrivilege: .moderator, chatType: .meeting)
+        let call = CallEntity()
+        let router = MockMeetingFloatingPanelRouter()
+        let callUseCase = MockCallUseCase(call: call)
+        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase, callCoordinatorUseCase: MockCallCoordinatorUseCase())
+        let viewModel = MeetingFloatingPanelViewModel(
+            router: router,
+            containerViewModel: containerViewModel,
+            chatRoom: chatRoom,
+            callUseCase: callUseCase
+        )
+        
+        let participant = CallParticipantEntity(chatId: chatRoom.chatId, participantId: 1, audio: .on)
+        viewModel.dispatch(.muteParticipant(participant))
+        
+        evaluate {
+            router.showMuteSuccess_calledTimes == 1 &&
+            callUseCase.muteParticipant_CalledTimes == 1
+        }
+    }
+    
+    func testAction_muteParticipant_muteError() {
+        let chatRoom = ChatRoomEntity(chatId: 100, ownPrivilege: .moderator, chatType: .meeting)
+        let call = CallEntity()
+        let router = MockMeetingFloatingPanelRouter()
+        let callUseCase = MockCallUseCase(call: call, muteParticipantCompletion: .failure(GenericErrorEntity()))
+        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase, callCoordinatorUseCase: MockCallCoordinatorUseCase())
+        let viewModel = MeetingFloatingPanelViewModel(
+            router: router,
+            containerViewModel: containerViewModel,
+            chatRoom: chatRoom,
+            callUseCase: callUseCase
+        )
+        
+        let participant = CallParticipantEntity(chatId: chatRoom.chatId, participantId: 1, audio: .on)
+        viewModel.dispatch(.muteParticipant(participant))
+        
+        evaluate {
+            router.showMuteError_calledTimes == 1 &&
+            callUseCase.muteParticipant_CalledTimes == 0
+        }
+    }
+    
+    private func evaluate(expression: @escaping () -> Bool) {
+        let predicate = NSPredicate { _, _ in expression() }
+        let expectation = expectation(for: predicate, evaluatedWith: nil)
+        wait(for: [expectation], timeout: 5)
+    }
 }
 
 final class MockMeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
@@ -1067,6 +1117,8 @@ final class MockMeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     var invitedParticipantHandles: [HandleEntity]?
     var showConfirmDenyAction_calledTimes = 0
     var showWaitingRoomParticipantsList_calledTimes = 0
+    var showMuteSuccess_calledTimes = 0
+    var showMuteError_calledTimes = 0
 
     var viewModel: MeetingFloatingPanelViewModel? {
         return nil
@@ -1121,5 +1173,13 @@ final class MockMeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
     
     func showWaitingRoomParticipantsList(for call: CallEntity) {
         showWaitingRoomParticipantsList_calledTimes += 1
+    }
+    
+    func showMuteSuccess(for participant: CallParticipantEntity?) {
+        showMuteSuccess_calledTimes += 1
+    }
+    
+    func showMuteError(for participant: CallParticipantEntity?) {
+        showMuteError_calledTimes += 1
     }
 }
