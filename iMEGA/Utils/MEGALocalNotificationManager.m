@@ -164,8 +164,8 @@
                         body = [NSString stringWithFormat:@"📄 %@", node.name];
                     }
                 } else {
-                    MEGALogWarning(@"[Notification] Attachment message wiht nodelist with more than one node is not expected");
-                    body = [NSString stringWithFormat:LocalizedString(@"files", @""), nodeList.size];
+                    MEGALogWarning(@"[Notification] Attachment message with nodelist with more than one node is not expected");
+                    body = [NSString stringWithFormat:LocalizedString(@"general.format.count.file", @"Subtitle shown on folders that gives you information about its file content count. e.g 1 file, 2 files"), nodeList.size];
                 }
             } else {
                 MEGALogError(@"[Notification] Attachment message without nodelist");
