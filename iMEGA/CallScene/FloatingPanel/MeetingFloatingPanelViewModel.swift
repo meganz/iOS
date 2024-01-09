@@ -29,6 +29,7 @@ enum MeetingFloatingPanelAction: ActionType {
     case seeMoreParticipantsInWaitingRoomTapped
     case panelTransitionIsLongForm(Bool)
     case callAbsentParticipant(CallParticipantEntity)
+    case muteParticipant(CallParticipantEntity)
 }
 
 final class MeetingFloatingPanelViewModel: ViewModelType {
@@ -51,6 +52,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         case updateAllowNonHostToAddParticipants(enabled: Bool)
         case reloadViewData(participantsListView: ParticipantsListView)
         case hideCallAllIcon(Bool)
+        case disableMuteAllButton(Bool)
     }
     
     private let router: any MeetingFloatingPanelRouting
@@ -269,6 +271,8 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             panelIsLongForm = isLongForm
         case .callAbsentParticipant(let participant):
             callAbsentParticipants([participant])
+        case .muteParticipant(let participant):
+            muteParticipant(participant: participant)
         }
     }
     
@@ -546,7 +550,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     private func headerTapped() {
         switch selectedParticipantsListTab {
         case .inCall:
-            break
+            muteAllParticipants()
         case .notInCall:
             callAbsentParticipants(callParticipantsNotInCall)
         case .waitingRoom:
@@ -586,6 +590,22 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             guard let self else { return }
             invokeCommand?(.hideCallAllIcon(true))
             reloadParticipantsIfNeeded()
+        }
+    }
+    
+    private func muteAllParticipants() {
+        muteParticipant(participant: nil)
+        invokeCommand?(.disableMuteAllButton(true))
+    }
+    
+    private func muteParticipant(participant: CallParticipantEntity?) {
+        Task { @MainActor in
+            do {
+                try await callUseCase.muteUser(inChat: chatRoom, clientId: participant?.clientId ?? .invalid)
+                router.showMuteSuccess(for: participant)
+            } catch {
+                router.showMuteError(for: participant)
+            }
         }
     }
 
@@ -675,7 +695,9 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             tabs: tabsForParticipantList(),
             selectedTab: .inCall,
             participants: callParticipants,
-            existsWaitingRoom: chatRoom.isWaitingRoomEnabled && isMyselfAModerator)
+            existsWaitingRoom: chatRoom.isWaitingRoomEnabled && isMyselfAModerator,
+            currentUserHandle: accountUseCase.currentUserHandle
+        )
         
         invokeCommand?(.reloadViewData(participantsListView: participantsListView))
     }
@@ -695,7 +717,9 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             tabs: tabsForParticipantList(),
             selectedTab: .waitingRoom,
             participants: callParticipantsInWaitingRoom,
-            existsWaitingRoom: chatRoom.isWaitingRoomEnabled && isMyselfAModerator)
+            existsWaitingRoom: chatRoom.isWaitingRoomEnabled && isMyselfAModerator,
+            currentUserHandle: accountUseCase.currentUserHandle
+        )
         
         invokeCommand?(.reloadViewData(participantsListView: participantsListView))
     }
@@ -715,7 +739,9 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             tabs: tabsForParticipantList(),
             selectedTab: .notInCall,
             participants: callParticipantsNotInCall,
-            existsWaitingRoom: chatRoom.isWaitingRoomEnabled && isMyselfAModerator)
+            existsWaitingRoom: chatRoom.isWaitingRoomEnabled && isMyselfAModerator,
+            currentUserHandle: accountUseCase.currentUserHandle
+        )
         
         invokeCommand?(.reloadViewData(participantsListView: participantsListView))
     }
@@ -741,6 +767,12 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         case .waitingRoom:
             invokeCommand?(.reloadParticipantsList(participants: callParticipantsInWaitingRoom))
         }
+    }
+    
+    private func disableMuteAllButtonIfNeeded() {
+        guard selectedParticipantsListTab == .inCall else { return }
+        let unmutedUsers = callParticipants.filter({ $0.audio == .on })
+        invokeCommand?(.disableMuteAllButton(unmutedUsers.isEmpty || unmutedUsers.count == 1 && unmutedUsers.first?.participantId == accountUseCase.currentUserHandle))
     }
     
     private func prepareParticipantsTableViewData() {
@@ -827,6 +859,7 @@ extension MeetingFloatingPanelViewModel: CallCallbacksUseCaseProtocol {
         if let index = callParticipants.firstIndex(of: participant) {
             callParticipants[index] = participant
             reloadParticipantsIfNeeded()
+            disableMuteAllButtonIfNeeded()
         }
     }
         

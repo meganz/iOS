@@ -3,9 +3,9 @@ import UIKit
 
 class MeetingParticipantInfoViewController: ActionSheetViewController, ViewType {
     
-    private var viewModel: MeetingParticpiantInfoViewModel?
+    private var viewModel: MeetingParticipantInfoViewModel?
     
-    convenience init(viewModel: MeetingParticpiantInfoViewModel, sender: UIButton) {
+    convenience init(viewModel: MeetingParticipantInfoViewModel, sender: UIButton) {
         self.init(nibName: nil, bundle: nil)
         self.viewModel = viewModel
         configurePresentationStyle(from: sender as Any)
@@ -28,7 +28,7 @@ class MeetingParticipantInfoViewController: ActionSheetViewController, ViewType 
     }
     
     @MainActor
-    func executeCommand(_ command: MeetingParticpiantInfoViewModel.Command) {
+    func executeCommand(_ command: MeetingParticipantInfoViewModel.Command) {
         switch command {
         case .configView(let email, let actions):
             configureHeaderView(email: email)

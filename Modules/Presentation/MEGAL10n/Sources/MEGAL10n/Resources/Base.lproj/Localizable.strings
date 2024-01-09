@@ -3992,3 +3992,17 @@
 "chat.message.joinedTheMeetingByInvitationFrom"="[A] joined the meeting by invitation from [B].";
 /* Meeting subject text for sharing a meeting link through email */
 "meetings.info.shareMeetingLink.subject"="MEGA meeting invitation";
+/* Calls: Floating panel participants in call header to mute them all */
+"calls.panel.participantsInCall.header.muteAll"="Mute all";
+/* Calls: Floating panel participants in call header to show all participants are muted */
+"calls.panel.participantsInCall.header.allMuted"="All muted";
+/* Calls: Participant context menu action to mute in the call */
+"calls.panel.participantsInCall.participantContextMenu.actions.mute"="Mute";
+/* Calls: Mute all participants success message */
+"calls.participantsInCall.muteAll.success"="You’ve muted all participants";
+/* Calls: Mute specific participant success message */
+"calls.participantsInCall.muteParticipant.success"="You’ve muted %@";
+/* Calls: Mute all participants error message */
+"calls.participantsInCall.muteAll.error"="Error muting all participants";
+/* Calls: Mute specific participant error message */
+"calls.participantsInCall.muteParticipant.error"="Error muting %@";

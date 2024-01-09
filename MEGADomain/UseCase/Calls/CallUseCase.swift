@@ -26,6 +26,7 @@ protocol CallUseCaseProtocol {
     func callWaitingRoomUsersUpdate(forCall call: CallEntity) -> AnyPublisher<CallEntity, Never>
     func onCallUpdate() -> AnyPublisher<CallEntity, Never>
     func callAbsentParticipant(inChat chatId: ChatIdEntity, userId: HandleEntity, timeout: Int)
+    func muteUser(inChat chatRoom: ChatRoomEntity, clientId: ChatIdEntity) async throws
 }
 
 protocol CallCallbacksUseCaseProtocol: AnyObject {
@@ -170,6 +171,10 @@ final class CallUseCase<T: CallRepositoryProtocol>: NSObject, CallUseCaseProtoco
     
     func callAbsentParticipant(inChat chatId: ChatIdEntity, userId: HandleEntity, timeout: Int) {
         repository.callAbsentParticipant(inChat: chatId, userId: userId, timeout: timeout)
+    }
+    
+    func muteUser(inChat chatRoom: ChatRoomEntity, clientId: ChatIdEntity) async throws {
+        try await repository.muteUser(inChat: chatRoom, clientId: clientId)
     }
 }
 

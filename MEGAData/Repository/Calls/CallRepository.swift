@@ -251,6 +251,19 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
         chatSdk.ringIndividual(inACall: chatId, userId: userId, timeout: timeout)
     }
     
+    func muteUser(inChat chatRoom: ChatRoomEntity, clientId: ChatIdEntity) async throws {
+        try await withAsyncThrowingValue { completion in
+            chatSdk.mutePeers(chatRoom.chatId, client: clientId, delegate: ChatRequestDelegate(completion: { result in
+                switch result {
+                case .success:
+                    completion(.success(()))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }))
+        }
+    }
+    
     private func callUpdateListener(forCallId callId: HandleEntity, change: CallEntity.ChangeType) -> CallUpdateListener {
         guard let callUpdateListener = callUpdateListeners.filter({ $0.callId == callId && change == $0.changeType }).first else {
             let callUpdateListener = CallUpdateListener(sdk: chatSdk, callId: callId, changeType: change)

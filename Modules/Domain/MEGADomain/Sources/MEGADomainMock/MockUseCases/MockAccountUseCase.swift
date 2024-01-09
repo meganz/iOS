@@ -14,7 +14,7 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
     private let _currentAccountDetails: AccountDetailsEntity?
     private let _isOverQuota: Bool
 
-    public init(currentUser: UserEntity? = UserEntity(handle: 1),
+    public init(currentUser: UserEntity? = UserEntity(handle: .invalid),
                 isGuest: Bool = false,
                 isNewAccount: Bool = false,
                 isLoggedIn: Bool = true,

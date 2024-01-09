@@ -2,7 +2,7 @@ import MEGADomain
 import MEGAL10n
 import MEGAPresentation
 
-enum MeetingParticpiantInfoAction: ActionType {
+enum MeetingParticipantInfoAction: ActionType {
     case onViewReady
     case showInfo
     case sendMessage
@@ -10,9 +10,10 @@ enum MeetingParticpiantInfoAction: ActionType {
     case removeModerator
     case removeParticipant
     case displayInMainView
+    case muteParticipant
 }
 
-struct MeetingParticpiantInfoViewModel: ViewModelType {
+struct MeetingParticipantInfoViewModel: ViewModelType {
     enum Command: CommandType, Equatable {
         case configView(email: String?, actions: [ActionSheetAction])
         case updateAvatarImage(image: UIImage)
@@ -25,7 +26,7 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
     private let chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
     private let isMyselfModerator: Bool
-    private let router: any MeetingParticpiantInfoViewRouting
+    private let router: any MeetingParticipantInfoViewRouting
     
     init(participant: CallParticipantEntity,
          userImageUseCase: some UserImageUseCaseProtocol,
@@ -33,7 +34,7 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
          chatRoomUserUseCase: some ChatRoomUserUseCaseProtocol,
          megaHandleUseCase: some MEGAHandleUseCaseProtocol,
          isMyselfModerator: Bool,
-         router: some MeetingParticpiantInfoViewRouting) {
+         router: some MeetingParticipantInfoViewRouting) {
         self.participant = participant
         self.userImageUseCase = userImageUseCase
         self.chatRoomUseCase = chatRoomUseCase
@@ -45,7 +46,7 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
     
     var invokeCommand: ((Command) -> Void)?
     
-    func dispatch(_ action: MeetingParticpiantInfoAction) {
+    func dispatch(_ action: MeetingParticipantInfoAction) {
         switch action {
         case .onViewReady:
             invokeCommand?(.configView(email: participant.email, actions: actions()))
@@ -62,6 +63,8 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
             router.removeParticipant()
         case .displayInMainView:
             router.displayInMainView()
+        case .muteParticipant:
+            router.muteParticipant(participant)
         }
     }
     
@@ -75,6 +78,9 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
         }
                 
         if isMyselfModerator {
+            if participant.audio == .on {
+                actions.append(muteParticipantAction())
+            }
             if participant.isModerator {
                 actions.append(removeModeratorAction())
             } else {
@@ -101,6 +107,7 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
                 return
             }
             
+            participant.name = name
             invokeCommand?(.updateName(name: name))
             fetchUserAvatar(forParticipant: participant, name: name)
         }
@@ -188,6 +195,15 @@ struct MeetingParticpiantInfoViewModel: ViewModelType {
                           image: UIImage(resource: .speakerView),
                           style: .default) {
             dispatch(.displayInMainView)
+        }
+    }
+    
+    private func muteParticipantAction() -> ActionSheetAction {
+        ActionSheetAction(title: Strings.Localizable.Calls.Panel.ParticipantsInCall.ParticipantContextMenu.Actions.mute,
+                          detail: nil,
+                          image: UIImage(resource: .muteParticipant),
+                          style: .default) {
+            dispatch(.muteParticipant)
         }
     }
 }

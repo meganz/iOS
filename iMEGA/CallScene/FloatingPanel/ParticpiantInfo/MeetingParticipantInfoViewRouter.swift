@@ -5,16 +5,17 @@ import MEGAPresentation
 import MEGARepo
 import MEGASDKRepo
 
-protocol MeetingParticpiantInfoViewRouting: Routing {
+protocol MeetingParticipantInfoViewRouting: Routing {
     func showInfo()
     func openChatRoom(withChatId chatId: UInt64)
     func makeParticipantAsModerator()
     func removeModeratorPrivilege()
     func removeParticipant()
     func displayInMainView()
+    func muteParticipant(_ participant: CallParticipantEntity)
 }
 
-struct MeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRouting {
+struct MeetingParticipantInfoViewRouter: MeetingParticipantInfoViewRouting {
     private let sender: UIButton
     private weak var presenter: UIViewController?
     private let participant: CallParticipantEntity
@@ -47,7 +48,7 @@ struct MeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRouting {
         
         let megaHandleUseCase = MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo)
         
-        let viewModel = MeetingParticpiantInfoViewModel(participant: participant,
+        let viewModel = MeetingParticipantInfoViewModel(participant: participant,
                                                         userImageUseCase: userImageUseCase,
                                                         chatRoomUseCase: chatRoomUseCase,
                                                         chatRoomUserUseCase: chatRoomUserUseCase,
@@ -99,5 +100,9 @@ struct MeetingParticpiantInfoViewRouter: MeetingParticpiantInfoViewRouting {
 
     func displayInMainView() {
         meetingFloatingPanelModel?.dispatch(.displayParticipantInMainView(participant))
+    }
+    
+    func muteParticipant(_ participant: CallParticipantEntity) {
+        meetingFloatingPanelModel?.dispatch(.muteParticipant(participant))
     }
 }
