@@ -190,3 +190,5 @@
 #import "AdvancedTableViewController.h"
 #import "InviteFriendsViewController.h"
 #import "RubbishBinTableViewController.h"
+
+#import "AppExitHandlerManager.h"

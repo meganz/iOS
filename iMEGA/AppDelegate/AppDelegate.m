@@ -114,6 +114,7 @@
 #endif
     
     [UncaughtExceptionHandler registerHandler];
+    [self registerAppExitHandlers];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveSQLiteDiskFullNotification) name:MEGASQLiteDiskFullNotification object:nil];
     
     [SAMKeychain setAccessibilityType:kSecAttrAccessibleAfterFirstUnlock];
@@ -274,7 +275,7 @@
     }
     
     [self.ratingRequestMonitor startMonitoring];
-    
+
     return YES;
 }
 
