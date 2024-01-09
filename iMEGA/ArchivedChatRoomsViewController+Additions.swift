@@ -9,7 +9,7 @@ extension ArchivedChatRoomsViewController: ChatMenuDelegate, MeetingContextMenuD
         CMConfigEntity(menuType: .menu(type: .chat),
                        isDoNotDisturbEnabled: globalDNDNotificationControl?.isGlobalDNDEnabled ?? false,
                        timeRemainingToDeactiveDND: globalDNDNotificationControl?.timeRemainingToDeactiveDND ?? "",
-                       chatStatus: ChatStatus(rawValue: onlineStatus.rawValue)?.toChatStatusEntity() ?? .invalid)
+                       chatStatus: onlineStatus.toChatStatusEntity())
     }
     
     private var sdk: MEGAChatSdk {

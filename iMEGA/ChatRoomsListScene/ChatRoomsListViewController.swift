@@ -71,7 +71,7 @@ final class ChatRoomsListViewController: UIViewController {
     }
     
     private func updateTitleView() {
-        if let statusString = viewModel.chatStatus?.toChatStatus().localizedIdentifier {
+        if let statusString = viewModel.chatStatus?.localizedIdentifier {
             navigationItem.titleView = UILabel().customNavigationBarLabel(title: viewModel.title, subtitle: statusString)
         } else {
             navigationItem.title = viewModel.title

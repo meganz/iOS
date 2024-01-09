@@ -10,11 +10,11 @@ enum ParticipantNotInCallViewAction: ActionType {
 
 final class ParticipantNotInCallViewModel: ViewModelType {
     enum Command: CommandType, Equatable {
-        case configView(ParticipantNotInCallState, ChatStatus)
+        case configView(ParticipantNotInCallState, ChatStatusEntity)
         case updateAvatarImage(image: UIImage)
         case updateName(name: String)
         case updatePrivilege(isModerator: Bool)
-        case updateStatus(ChatStatus)
+        case updateStatus(ChatStatusEntity)
         case updateState(ParticipantNotInCallState)
     }
     
@@ -79,7 +79,7 @@ final class ParticipantNotInCallViewModel: ViewModelType {
             let chatStatus = chatRoomUseCase.userStatus(forUserHandle: participant.participantId)
             listeningForChatStatusUpdate()
             invokeCommand?(
-                .configView(participant.absentParticipantState.toParticipantNotInCallState(), chatStatus.toChatStatus())
+                .configView(participant.absentParticipantState.toParticipantNotInCallState(), chatStatus)
             )
             fetchName(forParticipant: participant) { [weak self] name in
                 guard let self else { return }
@@ -99,7 +99,7 @@ final class ParticipantNotInCallViewModel: ViewModelType {
                 MEGALogDebug("error fetching the changed status \(error)")
             }, receiveValue: { [weak self] statusForUser in
                 guard let self, statusForUser.0 == self.participant.participantId else { return }
-                invokeCommand?(.updateStatus(statusForUser.1.toChatStatus()))
+                invokeCommand?(.updateStatus(statusForUser.1))
             })
             .store(in: &subscriptions)
     }

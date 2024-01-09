@@ -116,7 +116,7 @@ final class ContextMenuManager: NSObject {
             
         case .chatStatus(let action):
             let currentStatus =  MEGAChatSdk.shared.onlineStatus()
-            guard ChatStatus(rawValue: currentStatus.rawValue) != action.toChatStatus() else { return }
+            guard currentStatus.toChatStatusEntity() != action else { return }
             
             chatMenuDelegate?.chatStatusMenu(didSelect: action)
             

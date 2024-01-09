@@ -14,7 +14,7 @@ extension CMEntity {
         ContextMenuModel(type: type,
                          displayInline: displayInline,
                          children: toContextMenuModels(children),
-                         currentChatStatus: currentChatStatus?.toChatStatus().localizedIdentifier,
+                         currentChatStatus: currentChatStatus?.localizedIdentifier,
                          currentSortType: currentSortType?.toSortOrderType().localizedString,
                          dndRemainingTime: dndRemainingTime,
                          currentFilterType: currentFilterType?.toFilterType().localizedString)
@@ -212,7 +212,7 @@ extension ContextMenuModel {
     }
 
     private func dataForChatStatusAction(action: ChatStatusEntity) -> ContextMenuDataModel {
-        return ContextMenuDataModel(identifier: action.toChatStatus().identifier ?? "", title: action.toChatStatus().localizedIdentifier)
+        ContextMenuDataModel(identifier: action.identifier ?? "", title: action.localizedIdentifier)
     }
 
     private func dataForChatDoNotDisturbEnabledAction(option: DNDTurnOnOptionEntity) -> ContextMenuDataModel {

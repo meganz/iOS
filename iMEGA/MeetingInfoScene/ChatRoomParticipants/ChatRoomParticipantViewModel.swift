@@ -15,7 +15,7 @@ final class ChatRoomParticipantViewModel: ObservableObject, Identifiable {
     private var subscriptions = Set<AnyCancellable>()
 
     @Published var name: String = ""
-    @Published var chatStatus: ChatStatus = .invalid
+    @Published var chatStatus: ChatStatusEntity = .invalid
     @Published var participantPrivilege: ChatRoomParticipantPrivilege = .unknown
     @Published var showPrivilegeOptions = false
 
@@ -59,7 +59,7 @@ final class ChatRoomParticipantViewModel: ObservableObject, Identifiable {
             self.requestPrivilegeChange(forChat: chatRoom)
         }
         
-        self.chatStatus = chatRoomUseCase.userStatus(forUserHandle: chatParticipantId).toChatStatus()
+        self.chatStatus = chatRoomUseCase.userStatus(forUserHandle: chatParticipantId)
         self.listeningForChatStatusUpdate()
         
         loadName()
@@ -87,7 +87,7 @@ final class ChatRoomParticipantViewModel: ObservableObject, Identifiable {
                 MEGALogDebug("error fetching the changed status \(error)")
             }, receiveValue: { [weak self] statusForUser in
                 guard let self, statusForUser.0 == self.chatParticipantId else { return }
-                self.chatStatus = statusForUser.1.toChatStatus()
+                chatStatus = statusForUser.1
             })
             .store(in: &subscriptions)
     }

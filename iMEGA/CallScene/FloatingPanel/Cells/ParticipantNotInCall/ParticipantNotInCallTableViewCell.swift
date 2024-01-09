@@ -1,3 +1,4 @@
+import MEGADomain
 import MEGAL10n
 import MEGAPresentation
 import UIKit
@@ -44,8 +45,8 @@ class ParticipantNotInCallTableViewCell: UITableViewCell, ViewType {
         }
     }
     
-    private func updateParticipantChatStatusView(_ status: ChatStatus) {
-        participantStatusView.backgroundColor = status.color
+    private func updateParticipantChatStatusView(_ status: ChatStatusEntity) {
+        participantStatusView.backgroundColor = status.uiColor
     }
     
     @MainActor
