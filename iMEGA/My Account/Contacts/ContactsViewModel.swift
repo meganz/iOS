@@ -16,7 +16,8 @@ import MEGAPresentation
         selectedUsersArray: NSMutableArray?,
         visibleUsersArray: NSMutableArray?
     ) -> Bool {
-        guard sdk.isContactVerificationWarningEnabled else {
+        guard sdk.isContactVerificationWarningEnabled,
+              [ContactsMode.shareFoldersWith, ContactsMode.folderSharedWith].contains(contactsMode) else {
             return false
         }
 
