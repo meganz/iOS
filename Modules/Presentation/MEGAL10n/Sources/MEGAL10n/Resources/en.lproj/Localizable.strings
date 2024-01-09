@@ -3990,3 +3990,5 @@
 "chat.message.wasRemovedFromTheMeetingBy"="[A] was removed from the meeting by [B].";
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the meeting by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the meeting by invitation from Frank. */
 "chat.message.joinedTheMeetingByInvitationFrom"="[A] joined the meeting by invitation from [B].";
+/* Meeting subject text for sharing a meeting link through email */
+"meetings.info.shareMeetingLink.subject"="MEGA meeting invitation";

@@ -127,9 +127,11 @@ extension GroupChatDetailsViewController {
     @objc func shareLinkActivityItem(_ url: URL) -> ChatLinkPresentationItemSource {
         let chatUseCase = ChatUseCase(chatRepo: ChatRepository.newRepo)
         var title = ""
+        var subject = ""
         var message = ""
         if chatRoom.isMeeting {
             title = (chatRoom.title ?? "") + "\n" + url.absoluteString
+            subject = Strings.Localizable.Meetings.Info.ShareMeetingLink.subject
             message = Strings.Localizable.Meetings.Info.ShareMeetingLink.invitation((chatUseCase.myFullName() ?? "")) + "\n" +
             Strings.Localizable.Meetings.Info.ShareMeetingLink.meetingName(chatRoom.title ?? "") + "\n" +
             Strings.Localizable.Meetings.Info.ShareMeetingLink.meetingLink(url.absoluteString)
@@ -137,7 +139,12 @@ extension GroupChatDetailsViewController {
             title = chatRoom.title ?? ""
             message = title + "\n" + url.absoluteString
         }
-        return ChatLinkPresentationItemSource(title: title, message: message, url: url)
+        return ChatLinkPresentationItemSource(
+            title: title,
+            subject: subject,
+            message: message,
+            url: url
+        )
     }
 }
 
