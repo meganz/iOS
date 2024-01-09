@@ -21,7 +21,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     private var abTestProvider: any ABTestProviderProtocol
     private var planList: [AccountPlanEntity] = []
     private var accountDetails: AccountDetailsEntity
-    private(set) var isExternalAdsActive: Bool = false
+    @Published var isExternalAdsActive: Bool = false
     
     private(set) var alertType: UpgradeAccountPlanAlertType?
     @Published var isAlertPresented = false {
@@ -85,6 +85,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     }
     
     // MARK: - Setup
+    @MainActor
     func setUpExternalAds() async {
         guard featureFlagProvider.isFeatureFlagEnabled(for: .inAppAds) else {
             isExternalAdsActive = false
