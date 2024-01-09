@@ -4,13 +4,14 @@ import SwiftUI
 
 public struct PlanPricingView: View {
     public var plan: AccountPlanEntity
+    public var primaryTextColor: Color
     
     public var body: some View {
         VStack {
             Text(plan.formattedPrice)
                 .font(.title2)
                 .bold()
-                .foregroundColor(Color("upgrade_account_primaryText"))
+                .foregroundColor(primaryTextColor)
             
             Text(currencyPerTermString)
                 .font(.subheadline)

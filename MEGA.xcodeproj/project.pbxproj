@@ -734,6 +734,7 @@
 		5DFC8DC524ECF37800DDA006 /* MEGAavatarGeneratingUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DFC8DC424ECF37800DDA006 /* MEGAavatarGeneratingUseCaseTests.swift */; };
 		6D00BD282B1E5D9600370AC7 /* DIContainer+Photos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D00BD272B1E5D9600370AC7 /* DIContainer+Photos.swift */; };
 		6D39A57929EF456D00348D1C /* ChatContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D39A57829EF456D00348D1C /* ChatContentViewModel.swift */; };
+		6D3D91DE2B4B59C500210D65 /* MEGAAppColor+Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D9A731C2B4619D200894E97 /* MEGAAppColor+Account.swift */; };
 		6D5A19B02A10D33E00FDD5B3 /* MyAccountHallViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5A19AF2A10D33E00FDD5B3 /* MyAccountHallViewModelTests.swift */; };
 		6D60255B28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D60255A28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift */; };
 		6D60255D28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D60255A28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift */; };
@@ -750,6 +751,7 @@
 		6D8820792B1C069500F0BE18 /* MEGAAppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D88206F2B1B1B5B00F0BE18 /* MEGAAppColor.swift */; };
 		6D88207C2B1C07C700F0BE18 /* MEGAAppColor+Photos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D88207B2B1C07C700F0BE18 /* MEGAAppColor+Photos.swift */; };
 		6D88207F2B1C0E6E00F0BE18 /* MEGADesignToken in Frameworks */ = {isa = PBXBuildFile; productRef = 6D88207E2B1C0E6E00F0BE18 /* MEGADesignToken */; };
+		6D9A731D2B4619D200894E97 /* MEGAAppColor+Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D9A731C2B4619D200894E97 /* MEGAAppColor+Account.swift */; };
 		6DB163F02880F953004EFBC7 /* PhotosViewModel+Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB163EF2880F953004EFBC7 /* PhotosViewModel+Filter.swift */; };
 		6DB772CE28836A8500B75A93 /* PhotosViewController+Empty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB772CD28836A8500B75A93 /* PhotosViewController+Empty.swift */; };
 		6DD7B2362A776313007EBB20 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6DD7B2352A776313007EBB20 /* Images.xcassets */; };
@@ -3366,6 +3368,7 @@
 		6D88206F2B1B1B5B00F0BE18 /* MEGAAppColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAAppColor.swift; sourceTree = "<group>"; };
 		6D8820762B1BE50200F0BE18 /* MEGAAppColor+Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAAppColor+Chat.swift"; sourceTree = "<group>"; };
 		6D88207B2B1C07C700F0BE18 /* MEGAAppColor+Photos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAAppColor+Photos.swift"; sourceTree = "<group>"; };
+		6D9A731C2B4619D200894E97 /* MEGAAppColor+Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAAppColor+Account.swift"; sourceTree = "<group>"; };
 		6DB163EF2880F953004EFBC7 /* PhotosViewModel+Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewModel+Filter.swift"; sourceTree = "<group>"; };
 		6DB772CD28836A8500B75A93 /* PhotosViewController+Empty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewController+Empty.swift"; sourceTree = "<group>"; };
 		6DD7B2342A7761BD007EBB20 /* MEGAAssets */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAAssets; sourceTree = "<group>"; };
@@ -8150,6 +8153,7 @@
 		6D88206E2B1B1B4500F0BE18 /* AppColor */ = {
 			isa = PBXGroup;
 			children = (
+				6D9A731C2B4619D200894E97 /* MEGAAppColor+Account.swift */,
 				6D8820762B1BE50200F0BE18 /* MEGAAppColor+Chat.swift */,
 				6D88207B2B1C07C700F0BE18 /* MEGAAppColor+Photos.swift */,
 				24F583B52B46E18C00AA0562 /* MEGAAppColor+Videos.swift */,
@@ -14074,6 +14078,7 @@
 				BFAD512C260BDE8800DFBD1B /* MeetingParticpiantInfoViewRouter.swift in Sources */,
 				BFD6564F25F6D22300052DE8 /* MeetingQuickActionView.swift in Sources */,
 				BFFE228B292F8DB30063CFF2 /* MeetingsListHeaderView.swift in Sources */,
+				6D9A731D2B4619D200894E97 /* MEGAAppColor+Account.swift in Sources */,
 				6D8820772B1BE50200F0BE18 /* MEGAAppColor+Chat.swift in Sources */,
 				6D88207C2B1C07C700F0BE18 /* MEGAAppColor+Photos.swift in Sources */,
 				24F583B62B46E18C00AA0562 /* MEGAAppColor+Videos.swift in Sources */,
@@ -15098,6 +15103,7 @@
 				943F8B271EF283BD00AFD89F /* LaunchViewController.m in Sources */,
 				941135591F01006A00D33428 /* LTHKeychainUtils.m in Sources */,
 				9411355A1F01006A00D33428 /* LTHPasscodeViewController.m in Sources */,
+				6D3D91DE2B4B59C500210D65 /* MEGAAppColor+Account.swift in Sources */,
 				99620A052B44D65E00AE5ADF /* MEGAAppColor+Chat.swift in Sources */,
 				6D8820792B1C069500F0BE18 /* MEGAAppColor.swift in Sources */,
 				7764AAB4246EE62900134C88 /* MegaAvatarView.swift in Sources */,

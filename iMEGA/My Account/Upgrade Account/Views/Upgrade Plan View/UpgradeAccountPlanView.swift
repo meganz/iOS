@@ -9,6 +9,7 @@ struct UpgradeAccountPlanView: View {
     @StateObject var viewModel: UpgradeAccountPlanViewModel
     @Environment(\.presentationMode) private var presentationMode
     var invokeDismiss: (() -> Void)?
+    let accountConfigs: AccountsConfig
     
     var body: some View {
         ZStack {
@@ -22,7 +23,7 @@ struct UpgradeAccountPlanView: View {
             viewModel.isDismiss = true
         } label: {
             Text(Strings.Localizable.cancel)
-                .foregroundColor(Color.upgradeAccountPrimaryGrayText)
+                .foregroundColor(MEGAAppColor.Account.upgradeAccountPrimaryGrayText.color)
         }
         .padding()
     }
@@ -34,12 +35,14 @@ struct UpgradeAccountPlanView: View {
             ScrollView {
                 LazyVStack(pinnedViews: .sectionFooters) {
                     UpgradeSectionHeaderView(currentPlanName: viewModel.currentPlanName,
-                                             selectedCycleTab: $viewModel.selectedCycleTab)
+                                             selectedCycleTab: $viewModel.selectedCycleTab,
+                                             subMessageBackgroundColor: MEGAAppColor.Account.upgradeAccountSubMessageBackground.color)
                     
                     Section {
                         ForEach(viewModel.filteredPlanList, id: \.self) { plan in
-                            AccountPlanView(viewModel: viewModel.createAccountPlanViewModel(plan))
-                                .padding(.bottom, 5)
+                            AccountPlanView(viewModel: viewModel.createAccountPlanViewModel(plan),
+                                            config: accountConfigs)
+                            .padding(.bottom, 5)
                         }
                         
                         if viewModel.recommendedPlanType == nil {
@@ -55,8 +58,8 @@ struct UpgradeAccountPlanView: View {
                         if viewModel.isShowBuyButton {
                             VStack {
                                 PrimaryActionButtonView(title: Strings.Localizable.UpgradeAccountPlan.Button.BuyAccountPlan.title(viewModel.selectedPlanName)) {
-                                        viewModel.didTap(.buyPlan)
-                                    }
+                                    viewModel.didTap(.buyPlan)
+                                }
                             }
                             .padding(.vertical)
                             .frame(maxWidth: .infinity)
@@ -70,7 +73,7 @@ struct UpgradeAccountPlanView: View {
                         PlainFooterButtonView(title: Strings.Localizable.UpgradeAccountPlan.Button.Restore.title) {
                             viewModel.didTap(.restorePlan)
                         }
-
+                        
                         PlainFooterButtonView(title: Strings.Localizable.UpgradeAccountPlan.Button.TermsAndPolicies.title) {
                             viewModel.didTap(.termsAndPolicies)
                         }
@@ -94,7 +97,7 @@ struct UpgradeAccountPlanView: View {
         }
         .alert(isPresented: $viewModel.isAlertPresented) {
             if let alertType = viewModel.alertType,
-                let secondaryButtonTitle = alertType.secondaryButtonTitle {
+               let secondaryButtonTitle = alertType.secondaryButtonTitle {
                 return Alert(
                     title: Text(alertType.title),
                     message: Text(alertType.message),
@@ -117,7 +120,7 @@ struct UpgradeAccountPlanView: View {
     private func snackBarView() -> some View {
         VStack {
             Spacer()
-
+            
             if viewModel.isShowSnackBar {
                 SnackBarView(viewModel: viewModel.snackBarViewModel())
             }
@@ -146,7 +149,7 @@ struct UpgradeAccountPlanView: View {
                             viewModel.isTermsAndPoliciesPresented = false
                         } label: {
                             Text(Strings.Localizable.close)
-                                .foregroundColor(Color.upgradeAccountPrimaryGrayText)
+                                .foregroundColor(MEGAAppColor.Account.upgradeAccountPrimaryGrayText.color)
                         }
                     }
                 }
