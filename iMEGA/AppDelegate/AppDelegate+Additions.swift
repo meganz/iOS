@@ -582,5 +582,15 @@ extension AppDelegate {
         let range = NSRange(location: 0, length: inputType.utf16.count)
         return regex.firstMatch(in: inputType, options: [], range: range) != nil
     }
-    
+}
+
+// MARK: - Handlers for app exit event
+extension AppDelegate {
+    /// Perform custom clean up actions upon app termination by exit()
+    @objc func registerAppExitHandlers() {
+        AppExitHandlerManager().registerExitHandler {
+            MEGAChatSdk.shared.deleteMegaChatApi()
+            MEGASdk.shared.deleteMegaApi()
+        }
+    }
 }
