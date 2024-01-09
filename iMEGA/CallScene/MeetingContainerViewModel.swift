@@ -330,8 +330,10 @@ final class MeetingContainerViewModel: ViewModelType {
                     return
                 }
                 var title = (chatRoom.title ?? "") + "\n" + link
+                var subject = ""
                 var message = ""
                 if chatRoom.isMeeting {
+                    subject = Strings.Localizable.Meetings.Info.ShareMeetingLink.subject
                     message =
                     Strings.Localizable.Meetings.Info.ShareMeetingLink.invitation((chatUseCase.myFullName() ?? "")) + "\n" +
                     Strings.Localizable.Meetings.Info.ShareMeetingLink.meetingName(chatRoom.title ?? "")
@@ -350,7 +352,12 @@ final class MeetingContainerViewModel: ViewModelType {
                     presenter: presenter,
                     sender: sender,
                     link: link,
-                    metadataItemSource: ChatLinkPresentationItemSource(title: title, message: message, url: url),
+                    metadataItemSource: ChatLinkPresentationItemSource(
+                        title: title,
+                        subject: subject,
+                        message: message,
+                        url: url
+                    ),
                     isGuestAccount: accountUseCase.isGuest,
                     completion: completion
                 )
