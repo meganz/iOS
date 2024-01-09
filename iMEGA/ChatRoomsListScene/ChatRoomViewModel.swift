@@ -380,7 +380,7 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
                 MEGALogDebug("error fetching the changed status \(error)")
             }, receiveValue: { [weak self] statusForUser in
                 guard let self, statusForUser.0 == self.chatListItem.peerHandle else { return }
-                self.chatStatus = statusForUser.1
+                chatStatus = statusForUser.1
             })
             .store(in: &subscriptions)
     }

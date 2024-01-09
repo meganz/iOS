@@ -759,7 +759,7 @@ final class ChatRoomsListViewModel: ObservableObject {
                 MEGALogDebug("error fetching the changed status \(error)")
             }, receiveValue: { [weak self] statusForUser in
                 guard let self, let myHandle = self.accountUseCase.currentUserHandle, statusForUser.0 == myHandle else { return }
-                self.chatStatus = statusForUser.1
+                chatStatus = statusForUser.1
             })
             .store(in: &subscriptions)
     }

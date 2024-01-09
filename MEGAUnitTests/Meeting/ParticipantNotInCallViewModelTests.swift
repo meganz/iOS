@@ -14,7 +14,12 @@ final class ParticipantNotInCallViewModelTests: XCTestCase {
         
         test(viewModel: viewModel,
              action: .onViewReady,
-             expectedCommands: [.configView(participant.absentParticipantState.toParticipantNotInCallState(), chatRoomUseCase.userStatusEntity.toChatStatus())]
+             expectedCommands: [
+                .configView(
+                    participant.absentParticipantState.toParticipantNotInCallState(),
+                    chatRoomUseCase.userStatusEntity
+                )
+             ]
         )
     }
     
@@ -46,7 +51,10 @@ final class ParticipantNotInCallViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .onViewReady,
              expectedCommands: [
-                .configView(participant.absentParticipantState.toParticipantNotInCallState(), chatRoomUseCase.userStatusEntity.toChatStatus()),
+                .configView(
+                    participant.absentParticipantState.toParticipantNotInCallState(),
+                    chatRoomUseCase.userStatusEntity
+                ),
                 .updateName(name: "Test"),
                 .updateAvatarImage(image: UIImage())
              ])

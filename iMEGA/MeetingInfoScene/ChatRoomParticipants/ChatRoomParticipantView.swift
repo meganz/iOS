@@ -25,7 +25,7 @@ struct ChatRoomParticipantView: View {
                         HStack {
                             Text(viewModel.name)
                                 .font(.subheadline)
-                            Color(viewModel.chatStatus.color ?? .clear)
+                            Color(viewModel.chatStatus.uiColor)
                                 .frame(width: Constants.statusViewSize, height: Constants.statusViewSize)
                                 .clipShape(Circle())
                         }
