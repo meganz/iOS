@@ -952,7 +952,11 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                 }
 
                 let avatar = try await self.userImageUseCase.fetchAvatar(base64Handle: base64Handle, forceDownload: true)
-                await self.updateAvatar(handle: handle, image: avatar)
+                guard let image = UIImage(contentsOfFile: avatar) else {
+                    throw UserImageLoadErrorEntity.unableToFetch
+                }
+
+                await self.updateAvatar(handle: handle, image: image)
             } catch {
                 MEGALogDebug("Failed to fetch avatar for \(handle) with \(error)")
             }

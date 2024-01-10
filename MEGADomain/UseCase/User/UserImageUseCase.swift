@@ -11,7 +11,7 @@ protocol UserImageUseCaseProtocol {
                          name: String,
                          completion: @escaping (Result<UIImage, UserImageLoadErrorEntity>) -> Void)
     func clearAvatarCache(base64Handle: Base64HandleEntity)
-    func fetchAvatar(base64Handle: Base64HandleEntity, forceDownload: Bool) async throws -> UIImage
+    func fetchAvatar(base64Handle: Base64HandleEntity, forceDownload: Bool) async throws -> ImageFilePathEntity
     func createAvatar(withUserHandle handle: HandleEntity,
                       base64Handle: Base64HandleEntity?,
                       avatarBackgroundHexColor: String,
@@ -92,18 +92,14 @@ struct UserImageUseCase<T: UserImageRepositoryProtocol, U: UserStoreRepositoryPr
         fileSystemRepo.removeFile(at: destinationURL)
     }
     
-    func fetchAvatar(base64Handle: Base64HandleEntity, forceDownload: Bool = false) async throws -> UIImage {
-        let destinationURLPath = thumbnailRepo.generateCachingURL(for: base64Handle, type: .thumbnail).path
-        if let image = fetchImage(fromPath: destinationURLPath), !forceDownload {
-            return image
-        } else {
+    func fetchAvatar(base64Handle: Base64HandleEntity, forceDownload: Bool = false) async throws -> ImageFilePathEntity {
+        let destinationURL = thumbnailRepo.generateCachingURL(for: base64Handle, type: .thumbnail)
+        let destinationURLPath = destinationURL.path
+        if forceDownload {
             let imageFilePath = try await userImageRepo.avatar(forUserHandle: base64Handle, destinationPath: destinationURLPath)
-
-            guard let image = UIImage(contentsOfFile: imageFilePath) else {
-                throw UserImageLoadErrorEntity.unableToFetch
-            }
-
-            return image
+            return imageFilePath
+        } else {
+            return destinationURLPath
         }
     }
     

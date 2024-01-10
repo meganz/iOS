@@ -191,7 +191,10 @@ final class ParticipantNotInCallViewModel: ViewModelType {
         
         let downloadedAvatar = try await userImageUseCase.fetchAvatar(base64Handle: base64Handle, forceDownload: true)
         try Task.checkCancellation()
-        await updateAvatar(image: downloadedAvatar)
+        guard let image = UIImage(contentsOfFile: downloadedAvatar) else {
+            throw UserImageLoadErrorEntity.unableToFetch
+        }
+        await updateAvatar(image: image)
     }
     
     private func createAvatarUsingName(forParticipant participant: CallParticipantEntity) async throws -> UIImage? {

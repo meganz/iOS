@@ -129,7 +129,9 @@ final class ChatRoomAvatarViewModel: ObservableObject {
         }
                 
         let primaryAvatar = try await userAvatar(forHandle: primaryUserHandle, forceDownload: forceDownload)
-        await updateAvatar(primary: primaryAvatar, secondary: nil)
+        if let primaryImage = UIImage(contentsOfFile: primaryAvatar) {
+            await updateAvatar(primary: primaryImage, secondary: nil)
+        }
     }
     
     private func createTwoOrMorePeerAvatar(forceDownload: Bool) async throws {
@@ -143,7 +145,10 @@ final class ChatRoomAvatarViewModel: ObservableObject {
                 
         let primaryAvatar = try await userAvatar(forHandle: primaryUserHandle, forceDownload: forceDownload)
         let secondaryAvatar = try await userAvatar(forHandle: secondaryUserHandle, forceDownload: forceDownload)
-        await updateAvatar( primary: primaryAvatar, secondary: secondaryAvatar)
+        if let primaryImage = UIImage(contentsOfFile: primaryAvatar),
+           let secondaryImage = UIImage(contentsOfFile: secondaryAvatar) {
+            await updateAvatar(primary: primaryImage, secondary: secondaryImage)
+        }
     }
     
     private func createOneToOneAvatar(forceDownload: Bool) async throws {
@@ -152,7 +157,9 @@ final class ChatRoomAvatarViewModel: ObservableObject {
         }
                 
         let oneToOneAvatar = try await userAvatar(forHandle: peerHandle, forceDownload: forceDownload)
-        await updateAvatar(primary: oneToOneAvatar, secondary: nil)
+        if let primaryImage = UIImage(contentsOfFile: oneToOneAvatar) {
+            await updateAvatar(primary: primaryImage, secondary: nil)
+        }
     }
         
     private func createAvatar(withHandle handle: HandleEntity) async throws -> UIImage? {
@@ -189,7 +196,7 @@ final class ChatRoomAvatarViewModel: ObservableObject {
         )
     }
     
-    private func userAvatar(forHandle handle: HandleEntity, forceDownload: Bool = false) async throws -> UIImage {
+    private func userAvatar(forHandle handle: HandleEntity, forceDownload: Bool = false) async throws -> ImageFilePathEntity {
         guard let base64Handle = megaHandleUseCase.base64Handle(forUserHandle: handle) else {
             throw UserImageLoadErrorEntity.base64EncodingError
         }
