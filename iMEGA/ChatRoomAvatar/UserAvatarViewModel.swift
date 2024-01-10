@@ -81,7 +81,11 @@ final class UserAvatarViewModel: ObservableObject {
         try Task.checkCancellation()
         
         let downloadedAvatar = try await userAvatar(forHandle: userId, forceDownload: forceDownload)
-        await updatePrimaryAvatar(downloadedAvatar)
+        guard let image = UIImage(contentsOfFile: downloadedAvatar) else {
+            throw UserImageLoadErrorEntity.unableToFetch
+        }
+
+        await updatePrimaryAvatar(image)
     }
     
     private func createAvatar(withHandle handle: HandleEntity, isRightToLeftLanguage: Bool) async throws -> UIImage? {
@@ -120,7 +124,7 @@ final class UserAvatarViewModel: ObservableObject {
             isRightToLeftLanguage: isRightToLeftLanguage)
     }
     
-    private func userAvatar(forHandle handle: HandleEntity, forceDownload: Bool = false) async throws -> UIImage {
+    private func userAvatar(forHandle handle: HandleEntity, forceDownload: Bool = false) async throws -> ImageFilePathEntity {
         guard let base64Handle = MEGASdk.base64Handle(forUserHandle: handle) else {
             throw UserImageLoadErrorEntity.base64EncodingError
         }
