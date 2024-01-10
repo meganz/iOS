@@ -431,42 +431,12 @@ extension CloudDriveViewController {
     }
     
     @objc public func didSelectNode(_ node: MEGANode) {
-        if node.isTakenDown() {
-            showTakenDownAlert(isFolder: node.isFolder())
-        } else if let navigationController {
-            let router = HomeScreenFactory().makeRouter(
-                navController: navigationController,
-                tracker: DIContainer.tracker
-            )
-            router.didTapNode(node.handle, displayMode: displayMode.carriedOverDisplayMode)
-        }
-    }
-    
-    func showTakenDownAlert(isFolder: Bool) {
-        let alert = UIAlertController(model: takenDownModel(isFolder: isFolder))
-        navigationController?.present(alert, animated: true)
-    }
-    
-    func takenDownModel(isFolder: Bool) -> AlertModel {
-        let message = isFolder ? Strings.localized("This folder has been the subject of a takedown notice.", comment: "Popup notification text on mouse-over taken down folder.") : Strings.localized("This file has been the subject of a takedown notice.", comment: "Popup notification text on mouse-over of taken down file.")
-        return .init(
-            title: nil,
-            message: message,
-            actions: [
-                .init(
-                    title: Strings.localized("Dispute Takedown", comment: "File Manager -> Context menu item for taken down file or folder, for dispute takedown."),
-                    style: .default,
-                    handler: {
-                        NSURL(string: MEGADisputeURL)?.mnz_presentSafariViewController()
-                    }
-                ),
-                .init(
-                    title: Strings.Localizable.cancel,
-                    style: .cancel,
-                    handler: {}
-                )
-            ]
+        guard let navigationController else { return }
+        let router = HomeScreenFactory().makeRouter(
+            navController: navigationController,
+            tracker: DIContainer.tracker
         )
+        router.didTapNode(node.handle, displayMode: displayMode.carriedOverDisplayMode)
     }
 }
 

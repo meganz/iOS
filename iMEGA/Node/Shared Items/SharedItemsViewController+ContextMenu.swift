@@ -28,7 +28,7 @@ extension SharedItemsViewController: DisplayMenuDelegate {
     }
     
     @objc func willPerformPreviewActionForMenuWith(animator: any UIContextMenuInteractionCommitAnimating) {
-        guard let cloudDriveVC = animator.previewViewController as? CloudDriveViewController else { return }
+        guard let cloudDriveVC = animator.previewViewController  else { return }
         animator.addCompletion {
             self.navigationController?.pushViewController(cloudDriveVC, animated: true)
         }
