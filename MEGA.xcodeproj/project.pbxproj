@@ -1342,6 +1342,7 @@
 		9495DBBD2A40C08300FA22EE /* UIApplication+PermissionModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9495DBBC2A40C08300FA22EE /* UIApplication+PermissionModal.swift */; };
 		949704B32AB425C500B2CA3A /* RenameViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949704B22AB425C500B2CA3A /* RenameViewModelTests.swift */; };
 		949704B72AB427BE00B2CA3A /* MockRenameViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949704B62AB427BE00B2CA3A /* MockRenameViewRouter.swift */; };
+		949829CF2B470AB500D1686F /* SearchResultMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949829CE2B470AB500D1686F /* SearchResultMapper.swift */; };
 		949B0C792AAFA8E90090CA84 /* RenameRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949B0C782AAFA8E90090CA84 /* RenameRouter.swift */; };
 		949B0C7C2AAFA8F40090CA84 /* RenameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949B0C7B2AAFA8F40090CA84 /* RenameViewModel.swift */; };
 		949B0C7E2AAFA9070090CA84 /* RenameAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949B0C7D2AAFA9070090CA84 /* RenameAlertController.swift */; };
@@ -3948,6 +3949,7 @@
 		9495DBBC2A40C08300FA22EE /* UIApplication+PermissionModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+PermissionModal.swift"; sourceTree = "<group>"; };
 		949704B22AB425C500B2CA3A /* RenameViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameViewModelTests.swift; sourceTree = "<group>"; };
 		949704B62AB427BE00B2CA3A /* MockRenameViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRenameViewRouter.swift; sourceTree = "<group>"; };
+		949829CE2B470AB500D1686F /* SearchResultMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultMapper.swift; sourceTree = "<group>"; };
 		949B0C782AAFA8E90090CA84 /* RenameRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameRouter.swift; sourceTree = "<group>"; };
 		949B0C7B2AAFA8F40090CA84 /* RenameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameViewModel.swift; sourceTree = "<group>"; };
 		949B0C7D2AAFA9070090CA84 /* RenameAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameAlertController.swift; sourceTree = "<group>"; };
@@ -9585,6 +9587,7 @@
 				947DC5E22AC1C863002C1D7C /* HomeSearchResultsAdditions.swift */,
 				94712EEF2A9C8E4800B5F2C9 /* HomeSearchResultsProvider.swift */,
 				94FAFF1A2AFA6CA50056A177 /* Node+ResultProperties.swift */,
+				949829CE2B470AB500D1686F /* SearchResultMapper.swift */,
 			);
 			path = Provider;
 			sourceTree = "<group>";
@@ -14700,6 +14703,7 @@
 				94485B5429B9F8BE006B919E /* SearchNodeRepository.swift in Sources */,
 				94CD25A92ACD7A1C0079FABD /* SearchOperation.swift in Sources */,
 				5D4244E0251305BD00EE544D /* SearchResultFileTableViewCell.swift in Sources */,
+				949829CF2B470AB500D1686F /* SearchResultMapper.swift in Sources */,
 				947381BA2A9626D000C4E8EC /* SearchResultsBridge.swift in Sources */,
 				94B4A0462B160DC10089FC94 /* SearchWithFilterOperation.swift in Sources */,
 				5D1B23F324AF335000ACE1C5 /* SecondaryThemeButtonTextColorFactory.swift in Sources */,

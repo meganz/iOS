@@ -59,19 +59,20 @@ struct NodeBrowserConfig {
 
 struct CloudDriveViewControllerFactory {
     
-    let featureFlagProvider: any FeatureFlagProviderProtocol
-    let abTestProvider: any ABTestProviderProtocol
-    let navigationController: UINavigationController
-    let viewModeStore: any ViewModeStoring
-    let router: any NodeRouting
-    let tracker: any AnalyticsTracking
-    let mediaAnalyticsUseCase: any MediaDiscoveryAnalyticsUseCaseProtocol
-    let mediaDiscoveryUseCase: any MediaDiscoveryUseCaseProtocol
-    let homeScreenFactory: HomeScreenFactory
-    let nodeRepository: any NodeRepositoryProtocol
-    let preferences: any PreferenceUseCaseProtocol
-    let sdk: MEGASdk
-    let userDefaults: UserDefaults
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private let abTestProvider: any ABTestProviderProtocol
+    private let navigationController: UINavigationController
+    private let viewModeStore: any ViewModeStoring
+    private let router: any NodeRouting
+    private let tracker: any AnalyticsTracking
+    private let mediaAnalyticsUseCase: any MediaDiscoveryAnalyticsUseCaseProtocol
+    private let mediaDiscoveryUseCase: any MediaDiscoveryUseCaseProtocol
+    private let homeScreenFactory: HomeScreenFactory
+    private let nodeRepository: any NodeRepositoryProtocol
+    private let preferences: any PreferenceUseCaseProtocol
+    private let resultsMapper: SearchResultMapper
+    private let sdk: MEGASdk
+    private let userDefaults: UserDefaults
     
     init(
         featureFlagProvider: some FeatureFlagProviderProtocol,
@@ -83,6 +84,7 @@ struct CloudDriveViewControllerFactory {
         mediaAnalyticsUseCase: some MediaDiscoveryAnalyticsUseCaseProtocol,
         mediaDiscoveryUseCase: some MediaDiscoveryUseCaseProtocol,
         homeScreenFactory: HomeScreenFactory,
+        resultsMapper: SearchResultMapper,
         nodeRepository: some NodeRepositoryProtocol,
         preferences: some PreferenceUseCaseProtocol,
         sdk: MEGASdk,
@@ -97,6 +99,7 @@ struct CloudDriveViewControllerFactory {
         self.mediaAnalyticsUseCase = mediaAnalyticsUseCase
         self.mediaDiscoveryUseCase = mediaDiscoveryUseCase
         self.homeScreenFactory = homeScreenFactory
+        self.resultsMapper = resultsMapper
         self.nodeRepository = nodeRepository
         self.preferences = preferences
         self.sdk = sdk
@@ -105,12 +108,12 @@ struct CloudDriveViewControllerFactory {
     
     static func make(nc: UINavigationController? = nil) -> CloudDriveViewControllerFactory {
         let sdk = MEGASdk.shared
-        let factory = HomeScreenFactory()
+        let homeFactory = HomeScreenFactory()
         let tracker = DIContainer.tracker
         
         let navController = nc ?? MEGANavigationController(rootViewController: UIViewController())
         
-        let router = factory.makeRouter(
+        let router = homeFactory.makeRouter(
             navController: navController,
             tracker: tracker
         )
@@ -134,16 +137,26 @@ struct CloudDriveViewControllerFactory {
                 filesSearchRepository: FilesSearchRepository(sdk: sdk),
                 nodeUpdateRepository: NodeUpdateRepository(sdk: sdk)
             ),
-            homeScreenFactory: factory,
+            homeScreenFactory: homeFactory,
+            resultsMapper: SearchResultMapper(
+                sdk: sdk,
+                nodeDetailUseCase: homeFactory.makeNodeDetailUseCase(),
+                nodeUseCase: homeFactory.makeNodeUseCase(),
+                mediaUseCase: homeFactory.makeMediaUseCase()
+            ),
             nodeRepository: NodeRepository.newRepo,
             preferences: PreferenceUseCase.default,
             sdk: sdk,
             userDefaults: .standard
         )
     }
-    private var useNewCloudDrive: Bool {
-        userDefaults.bool(forKey: Helper.cloudDriveABTestCacheKey()) ||
+    
+    private func useNewCloudDrive(config: NodeBrowserConfig) -> Bool {
+        let featureEnabled = userDefaults.bool(forKey: Helper.cloudDriveABTestCacheKey()) ||
         featureFlagProvider.isFeatureFlagEnabled(for: .newCloudDrive)
+        // disable new Cloud Drive for recents as it's very different
+        // config with sections, the ticket to implement the needed behaviour: [FM-1691]
+        return featureEnabled && config.displayMode != .recents
     }
     
     /// build bare is return a plain UIViewController, bare-less version returns one wrapped in the UINavigationController
@@ -172,7 +185,7 @@ struct CloudDriveViewControllerFactory {
         nodeSource: NodeSource,
         config: NodeBrowserConfig
     ) -> UIViewController? {
-        if useNewCloudDrive {
+        if useNewCloudDrive(config: config) {
             newCloudDriveViewController(
                 nodeSource: nodeSource,
                 config: config
@@ -239,7 +252,7 @@ struct CloudDriveViewControllerFactory {
         case .node(let provider):
             // in here we produce a closure that can asynchronously check
             // if given folder node contains only media (videos/images)
-            return  {
+            return {
                 guard
                     let node = provider(),
                     let children = await nodeRepository.children(of: node)
@@ -274,6 +287,7 @@ struct CloudDriveViewControllerFactory {
             // able to launch the app in the offline mode, during which, root node is nil
             overriddenConfig.mediaDiscoveryAutomaticDetectionEnabled = {
                 guard
+                    config.displayMode != .rubbishBin,
                     let node = parentNodeProvider(),
                     node.nodeType != .root
                 else {
@@ -294,12 +308,22 @@ struct CloudDriveViewControllerFactory {
     ) -> SearchResultsViewModel {
         // not all actions are triggered using bridge yet
         let bridge = SearchResultsBridge()
+        
+        // display mode is pass down through the folder hierarchy for rubbish bin and backups
+        // this makes sure the actions that can be performed on the nodes
+        // are valid
+        let carriedOverDisplayMode = config.displayMode?.carriedOverDisplayMode
+        
         let searchBridge = SearchBridge(
             selection: {
                 router.didTapNode($0.id, displayMode: config.displayMode?.carriedOverDisplayMode)
             },
             context: { result, button in
-                router.didTapMoreAction(on: result.id, button: button)
+                router.didTapMoreAction(
+                    on: result.id,
+                    button: button,
+                    displayMode: carriedOverDisplayMode
+                )
             },
             resignKeyboard: { [weak bridge] in
                 bridge?.hideKeyboard()
@@ -354,7 +378,10 @@ struct CloudDriveViewControllerFactory {
                 searchBridge: searchBridge
             )
         case .recentActionBucket(let bucket):
-            RecentActionBucketProvider(bucket: bucket)
+            RecentActionBucketProvider(
+                bucket: bucket,
+                mapper: resultsMapper
+            )
         }
     }
     

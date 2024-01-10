@@ -204,7 +204,8 @@ final class HomeScreenFactory: NSObject {
                 viewController: navController,
                 nodeActionListener: nodeActionListener(tracker)
             ),
-            backupsUseCase: makeBackupsUseCase()
+            backupsUseCase: makeBackupsUseCase(),
+            nodeUseCase: makeNodeUseCase()
         )
     }
     
@@ -229,7 +230,8 @@ final class HomeScreenFactory: NSObject {
                 viewController: navigationController,
                 nodeActionListener: nodeActionListener(tracker)
             ),
-            backupsUseCase: makeBackupsUseCase()
+            backupsUseCase: makeBackupsUseCase(),
+            nodeUseCase: makeNodeUseCase()
         )
         
         // this bridge is needed to do a searchBar <-> searchResults -> homeScreen communication without coupling this to
@@ -390,7 +392,7 @@ final class HomeScreenFactory: NSObject {
         ]
     }
     
-    private func makeNodeDetailUseCase() -> some NodeDetailUseCaseProtocol {
+    func makeNodeDetailUseCase() -> some NodeDetailUseCaseProtocol {
         NodeDetailUseCase(
             sdkNodeClient: .live,
             nodeThumbnailHomeUseCase: NodeThumbnailHomeUseCase(
@@ -410,7 +412,7 @@ final class HomeScreenFactory: NSObject {
         )
     }
 
-    private func makeNodeUseCase() -> some NodeUseCaseProtocol {
+    func makeNodeUseCase() -> some NodeUseCaseProtocol {
         NodeUseCase(
             nodeDataRepository: NodeDataRepository.newRepo,
             nodeValidationRepository: NodeValidationRepository.newRepo,
@@ -418,7 +420,7 @@ final class HomeScreenFactory: NSObject {
         )
     }
 
-    private func makeMediaUseCase() -> some MediaUseCaseProtocol {
+    func makeMediaUseCase() -> some MediaUseCaseProtocol {
         MediaUseCase(
             fileSearchRepo: FilesSearchRepository.newRepo,
             videoMediaUseCase: VideoMediaUseCase(videoMediaRepository: VideoMediaRepository.newRepo)
