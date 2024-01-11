@@ -4,20 +4,31 @@ import MEGASDKRepo
 final class NodeOpener {
 
     private weak var navigationController: UINavigationController?
-
+    private var sdk = MEGASdk.sharedSdk
     init(navigationController: UINavigationController?) {
         self.navigationController = navigationController
     }
 
-    func openNode(_ nodeHandle: HandleEntity, config: CloudDriveViewControllerFactory.NodeBrowserConfig = .default) {
-        guard let node = MEGASdk.sharedSdk.node(forHandle: nodeHandle) else { return }
-        switch node.isFolder() {
-        case true: openFolderNode(node, config: config)
-        case false: openFileNode(node, allNodes: nil)
+    /// navigation to folder or open a file
+    /// when file is a media, media browser with scroll through nodes in the allNodes array
+    func openNode(
+        nodeHandle: HandleEntity,
+        allNodes: [HandleEntity] = [],
+        config: CloudDriveViewControllerFactory.NodeBrowserConfig = .default
+    ) {
+        guard
+            let megaNode = sdk.node(forHandle: nodeHandle)
+        else { return }
+        
+        let allMegaNodes = allNodes.compactMap { sdk.node(forHandle: $0) }
+        
+        switch megaNode.isFolder() {
+        case true: openFolderNode(megaNode, config: config)
+        case false: openFileNode(megaNode, allNodes: allMegaNodes)
         }
     }
     
-    func openNode(_ node: MEGANode, allNodes: [MEGANode]?, config: CloudDriveViewControllerFactory.NodeBrowserConfig = .default) {
+    func openNode(node: MEGANode, allNodes: [MEGANode]?, config: CloudDriveViewControllerFactory.NodeBrowserConfig = .default) {
         switch node.isFolder() {
         case true: openFolderNode(node, config: config)
         case false: openFileNode(node, allNodes: allNodes)
@@ -26,7 +37,7 @@ final class NodeOpener {
     
     func openNodeActions(_ nodeHandle: HandleEntity, sender: Any) {
         guard let navigationController = navigationController else { return }
-        guard let node = MEGASdk.sharedSdk.node(forHandle: nodeHandle) else { return }
+        guard let node = sdk.node(forHandle: nodeHandle) else { return }
         
         let backupsUC = BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
         let isBackupNode = backupsUC.isBackupNode(node.toNodeEntity())

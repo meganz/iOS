@@ -183,7 +183,11 @@ struct CloudDriveViewControllerFactory {
         let bridge = SearchResultsBridge()
         let searchBridge = SearchBridge(
             selection: {
-                router.didTapNode($0.id, displayMode: options.displayMode?.carriedOverDisplayMode)
+                router.didTapNode(
+                    nodeHandle: $0.id,
+                    allNodeHandles: [], // photo browser does not work until we pass in this array here
+                    displayMode: options.displayMode?.carriedOverDisplayMode
+                )
             },
             context: { result, button in
                 router.didTapMoreAction(on: result.id, button: button)
