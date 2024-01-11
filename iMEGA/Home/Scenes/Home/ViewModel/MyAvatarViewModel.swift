@@ -202,3 +202,23 @@ extension MyAvatarViewModel: MyAvatarViewModelType {
         var notificationNumber: String
     }
 }
+
+// MARK: - MyAvatarUpdatesObserver
+protocol MyAvatarUpdatesObserver {
+    var notifyUpdate: ((any MyAvatarViewModelOutputs) -> Void)? { get set }
+}
+
+protocol MyAvatarObserver: MyAvatarViewModelInputs & MyAvatarUpdatesObserver {}
+
+extension MyAvatarViewModel: MyAvatarObserver {}
+
+final class MockMyAvatarUpdatesObserver: MyAvatarObserver {
+    var notifyUpdate: ((any MyAvatarViewModelOutputs) -> Void)?
+
+    init(notifyUpdate: ((any MyAvatarViewModelOutputs) -> Void)? = nil) {
+        self.notifyUpdate = notifyUpdate
+    }
+
+    func viewIsReady() {}
+    func viewIsAppearing() {}
+}

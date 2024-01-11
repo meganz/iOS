@@ -126,7 +126,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
     private var searchPath: SearchFileRootPath {
         guard 
             let parentNode,
-            parentNode == nodeRepository.rootNode()
+            parentNode != nodeRepository.rootNode()
         else {
             return .root
         }

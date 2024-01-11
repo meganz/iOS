@@ -1245,6 +1245,9 @@
 		942A64F729C390410017F439 /* BrowserViewController+TargetAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942A64F629C390410017F439 /* BrowserViewController+TargetAction.swift */; };
 		942A64F829C395ED0017F439 /* BrowserViewController+TargetAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942A64F629C390410017F439 /* BrowserViewController+TargetAction.swift */; };
 		942F4FD81F500A8F001FC4AC /* MEGASdk+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 942F4FD71F500A8F001FC4AC /* MEGASdk+MNZCategory.m */; };
+		942FD9C82B48165D00F14E38 /* BadgeButtonSwiftUIWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942FD9C72B48165D00F14E38 /* BadgeButtonSwiftUIWrapper.swift */; };
+		942FD9CE2B4832FF00F14E38 /* MyAvatarIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942FD9CD2B4832FF00F14E38 /* MyAvatarIconView.swift */; };
+		942FD9D12B48330900F14E38 /* MyAvatarIconViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942FD9D02B48330900F14E38 /* MyAvatarIconViewModel.swift */; };
 		943092F42913E26D0092B99A /* NodeActionsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943092F32913E26D0092B99A /* NodeActionsRepository.swift */; };
 		943092F52914376A0092B99A /* NodeActionsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943092F32913E26D0092B99A /* NodeActionsRepository.swift */; };
 		943092FA291440010092B99A /* NodeValidationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943092F9291440010092B99A /* NodeValidationRepository.swift */; };
@@ -1358,6 +1361,7 @@
 		94B6E8882A83F8530082D9B1 /* MEGAPickerFileProviderRepo in Frameworks */ = {isa = PBXBuildFile; productRef = 94B6E8872A83F8530082D9B1 /* MEGAPickerFileProviderRepo */; };
 		94B6EDA02A864F1900B72DE5 /* NodeInfoVerifyAccountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B6ED9F2A864F1900B72DE5 /* NodeInfoVerifyAccountTableViewCell.swift */; };
 		94B761FC29E5C800003EBC92 /* NodeVersionsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B761FB29E5C800003EBC92 /* NodeVersionsViewController+Additions.swift */; };
+		94BD69972B4EB88D00BF08D6 /* SearchBarUIHostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BD69962B4EB88D00BF08D6 /* SearchBarUIHostingController.swift */; };
 		94BEAFA52B0CB0EF008E7352 /* ViewModeStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BEAFA42B0CB0EF008E7352 /* ViewModeStore.swift */; };
 		94BEC88629DC154A00075AE9 /* SaveMediaToPhotosErrorEntity+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94BEC88529DC154A00075AE9 /* SaveMediaToPhotosErrorEntity+Additions.swift */; };
 		94C7A3812A796E0C0090AEFC /* ItemListViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C7A3802A796E0C0090AEFC /* ItemListViewController+Additions.swift */; };
@@ -3841,6 +3845,9 @@
 		942F4FD61F500A8F001FC4AC /* MEGASdk+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGASdk+MNZCategory.h"; sourceTree = "<group>"; };
 		942F4FD71F500A8F001FC4AC /* MEGASdk+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MEGASdk+MNZCategory.m"; sourceTree = "<group>"; };
 		942FD07A1EF3EEA000E99FB1 /* MEGAShare.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = MEGAShare.entitlements; path = iMEGA/Extensions/MEGAShare/MEGAShare.entitlements; sourceTree = SOURCE_ROOT; };
+		942FD9C72B48165D00F14E38 /* BadgeButtonSwiftUIWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeButtonSwiftUIWrapper.swift; sourceTree = "<group>"; };
+		942FD9CD2B4832FF00F14E38 /* MyAvatarIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAvatarIconView.swift; sourceTree = "<group>"; };
+		942FD9D02B48330900F14E38 /* MyAvatarIconViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAvatarIconViewModel.swift; sourceTree = "<group>"; };
 		943092F32913E26D0092B99A /* NodeActionsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeActionsRepository.swift; sourceTree = "<group>"; };
 		943092F9291440010092B99A /* NodeValidationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeValidationRepository.swift; sourceTree = "<group>"; };
 		94312E4F29352329005F0F1C /* AudioSessionUseCase+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioSessionUseCase+Additions.swift"; sourceTree = "<group>"; };
@@ -3959,6 +3966,7 @@
 		94B4A0452B160DC10089FC94 /* SearchWithFilterOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchWithFilterOperation.swift; sourceTree = "<group>"; };
 		94B6ED9F2A864F1900B72DE5 /* NodeInfoVerifyAccountTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoVerifyAccountTableViewCell.swift; sourceTree = "<group>"; };
 		94B761FB29E5C800003EBC92 /* NodeVersionsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeVersionsViewController+Additions.swift"; sourceTree = "<group>"; };
+		94BD69962B4EB88D00BF08D6 /* SearchBarUIHostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarUIHostingController.swift; sourceTree = "<group>"; };
 		94BEAFA42B0CB0EF008E7352 /* ViewModeStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModeStore.swift; sourceTree = "<group>"; };
 		94BEC88529DC154A00075AE9 /* SaveMediaToPhotosErrorEntity+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SaveMediaToPhotosErrorEntity+Additions.swift"; sourceTree = "<group>"; };
 		94C7A3802A796E0C0090AEFC /* ItemListViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ItemListViewController+Additions.swift"; sourceTree = "<group>"; };
@@ -7336,7 +7344,9 @@
 			children = (
 				5B1F74D02126E2B000F09A16 /* AwaitingEmailConfirmation */,
 				5BE7BEE123745F9D00BBD23F /* EmptyState */,
+				942FD9CC2B4832ED00F14E38 /* MyAvatarIconView */,
 				5D66F8C524E507900088E5FF /* BadgeButton.swift */,
+				942FD9C72B48165D00F14E38 /* BadgeButtonSwiftUIWrapper.swift */,
 				A81E86CE225B3CF900950678 /* CopyableLabel.h */,
 				A81E86CF225B3CF900950678 /* CopyableLabel.m */,
 				C4F31EF825C1C50B00E15146 /* CustomTitleView.swift */,
@@ -9484,6 +9494,15 @@
 			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		942FD9CC2B4832ED00F14E38 /* MyAvatarIconView */ = {
+			isa = PBXGroup;
+			children = (
+				942FD9CD2B4832FF00F14E38 /* MyAvatarIconView.swift */,
+				942FD9D02B48330900F14E38 /* MyAvatarIconViewModel.swift */,
+			);
+			path = MyAvatarIconView;
+			sourceTree = "<group>";
+		};
 		943F8B101EF26E9C00AFD89F /* MEGAShare */ = {
 			isa = PBXGroup;
 			children = (
@@ -9672,6 +9691,14 @@
 				949B0C7B2AAFA8F40090CA84 /* RenameViewModel.swift */,
 			);
 			path = Rename;
+			sourceTree = "<group>";
+		};
+		94BD69942B4EB86200BF08D6 /* SearchBarUIHostingController */ = {
+			isa = PBXGroup;
+			children = (
+				94BD69962B4EB88D00BF08D6 /* SearchBarUIHostingController.swift */,
+			);
+			path = SearchBarUIHostingController;
 			sourceTree = "<group>";
 		};
 		94CD25A72ACD7A090079FABD /* Search */ = {
@@ -10411,6 +10438,7 @@
 		B639952A2898CBA400EA88F1 /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				94BD69942B4EB86200BF08D6 /* SearchBarUIHostingController */,
 				25D840672A9EE0C30026D288 /* PermissionAlertViewModifier */,
 				B63995322898CBEB00EA88F1 /* WarningView */,
 			);
@@ -13513,6 +13541,7 @@
 				944AD0B328EF651F00AB1E59 /* BackupsOCWrapper.swift in Sources */,
 				944AD0B128EF039700AB1E59 /* BackupsRepository.swift in Sources */,
 				5D66F8C624E507900088E5FF /* BadgeButton.swift in Sources */,
+				942FD9C82B48165D00F14E38 /* BadgeButtonSwiftUIWrapper.swift in Sources */,
 				5DAC09DC24CFE20E001B6476 /* BannerCarouselCollectionViewCell.swift in Sources */,
 				C46527D426526BBA00371270 /* BannerContainerViewController.swift in Sources */,
 				C46527F126526C2300371270 /* BannerContainerViewModel.swift in Sources */,
@@ -13967,6 +13996,7 @@
 				5DD4B2F1257DEAE000A01306 /* HomeBannerRouter.swift in Sources */,
 				947DC5E12AC1C826002C1D7C /* HomeChips+Tracking.swift in Sources */,
 				947DC5DF2AC1C7F5002C1D7C /* HomeChips.swift in Sources */,
+				94BD69972B4EB88D00BF08D6 /* SearchBarUIHostingController.swift in Sources */,
 				5D8C5AB724F0A39300EDD7A9 /* HomeLocalisation.swift in Sources */,
 				BF74E1E3253668E1001F663C /* HomeRouter.swift in Sources */,
 				5DA32DBA24EA27DC0075B613 /* HomeScreenFactory.swift in Sources */,
@@ -14275,6 +14305,8 @@
 				5B78F0B21F3C5362007ED721 /* MyAccountHallViewController.m in Sources */,
 				949CC1552B0F75370047D581 /* MyAccountHallViewModel+DeviceCenter.swift in Sources */,
 				6D64B70D2A09BCB1002ECBD1 /* MyAccountHallViewModel.swift in Sources */,
+				942FD9CE2B4832FF00F14E38 /* MyAvatarIconView.swift in Sources */,
+				942FD9D12B48330900F14E38 /* MyAvatarIconViewModel.swift in Sources */,
 				C45F97FD264A9FA60004DCA5 /* MyAvatarManager.swift in Sources */,
 				5D48593C2526C3F1007BF705 /* MyAvatarViewModel.swift in Sources */,
 				C4EACA912772502B00C6ACA3 /* MyChatFilesFolderNodeAccess.swift in Sources */,
