@@ -24,7 +24,7 @@ func mergeReleaseMR(_ version: String) async throws {
     
     let releaseMR = mergeRequests.first(where: {
         let sanitizedTitle = $0.title.lowercased()
-        return sanitizedTitle.contains("release") && sanitizedTitle.contains(version)
+        return (sanitizedTitle.contains("release") || sanitizedTitle.contains("hotfix")) && sanitizedTitle.contains(version)
     })
     
     guard let releaseMR else {
