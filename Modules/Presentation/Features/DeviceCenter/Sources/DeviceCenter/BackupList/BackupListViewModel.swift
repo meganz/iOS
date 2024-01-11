@@ -8,6 +8,10 @@ public extension Notification.Name {
     static let shouldChangeCameraUploadsBackupName = Notification.Name("shouldChangeCameraUploadsBackupName")
 }
 
+enum SortType: Int {
+    case ascending = 0, descending, largest, smallest, newest, oldest, label, favourite
+}
+
 public final class BackupListViewModel: ObservableObject {
     private let deviceCenterUseCase: any DeviceCenterUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
@@ -44,6 +48,8 @@ public final class BackupListViewModel: ObservableObject {
         } ?? false
     }
     
+    private var sortTypeSelected: SortType = .ascending
+    
     var isFilteredBackupsEmpty: Bool {
         filteredBackups.isEmpty
     }
@@ -60,6 +66,12 @@ public final class BackupListViewModel: ObservableObject {
     @Published var searchText: String = ""
     @Published var hasNetworkConnection: Bool = false
     @Published var showEmptyStateView: Bool = false
+    
+    @Published var sortIndexSelected: Int = 0 {
+        didSet {
+            onSortTypeChanged()
+        }
+    }
     
     init(
         isCurrentDevice: Bool,
@@ -169,6 +181,8 @@ public final class BackupListViewModel: ObservableObject {
         } else {
             resetBackups()
         }
+        
+        handleSortAction(sortTypeSelected)
     }
     
     @MainActor
@@ -229,6 +243,8 @@ public final class BackupListViewModel: ObservableObject {
                 }
                 return nil
             } ?? []
+        
+        handleSortAction(sortTypeSelected)
     }
     
     func loadAssets(for backup: BackupEntity) -> ItemAssets? {
@@ -270,6 +286,14 @@ public final class BackupListViewModel: ObservableObject {
     func showCameraUploadsSettingsFlow() {
         Task {
             await executeDeviceAction(type: .cameraUploads)
+        }
+    }
+    
+    private func handleSortAction(_ type: SortType) {
+        if isSearchActive && searchText.isNotEmpty {
+            filteredBackups = filteredBackups.sorted(by: type)
+        } else {
+            backupModels = backupModels.sorted(by: type)
         }
     }
     
@@ -325,5 +349,11 @@ public final class BackupListViewModel: ObservableObject {
                     await self?.syncDevicesAndLoadBackups()
                 }
             }
+    }
+    
+    private func onSortTypeChanged() {
+        guard let sortType = SortType(rawValue: sortIndexSelected) else { return }
+        sortTypeSelected = sortType
+        handleSortAction(sortTypeSelected)
     }
 }

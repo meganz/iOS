@@ -202,6 +202,36 @@ extension MyAccountHallViewModel {
                         type: .sortDescending,
                         title: Strings.Localizable.nameDescending,
                         icon: DeviceCenterActionIconAssets.descending
+                    ),
+                    DeviceCenterAction(
+                        type: .sortLargest,
+                        title: Strings.Localizable.largest,
+                        icon: DeviceCenterActionIconAssets.largest
+                    ),
+                    DeviceCenterAction(
+                        type: .sortSmallest,
+                        title: Strings.Localizable.smallest,
+                        icon: DeviceCenterActionIconAssets.smallest
+                    ),
+                    DeviceCenterAction(
+                        type: .sortNewest,
+                        title: Strings.Localizable.newest,
+                        icon: DeviceCenterActionIconAssets.newest
+                    ),
+                    DeviceCenterAction(
+                        type: .sortOldest,
+                        title: Strings.Localizable.oldest,
+                        icon: DeviceCenterActionIconAssets.oldest
+                    ),
+                    DeviceCenterAction(
+                        type: .sortLabel,
+                        title: Strings.Localizable.CloudDrive.Sort.label,
+                        icon: DeviceCenterActionIconAssets.label
+                    ),
+                    DeviceCenterAction(
+                        type: .sortFavourite,
+                        title: Strings.Localizable.favourite,
+                        icon: DeviceCenterActionIconAssets.favourite
                     )
                 ]
             )
@@ -238,6 +268,12 @@ extension MyAccountHallViewModel {
         static let sort = "sort"
         static let ascending = "ascending"
         static let descending = "descending"
+        static let largest = "largest"
+        static let smallest = "smallest"
+        static let newest = "newest"
+        static let oldest = "oldest"
+        static let label = "label"
+        static let favourite = "favourite"
     }
     
     private struct BackUpStatusIconAssets {

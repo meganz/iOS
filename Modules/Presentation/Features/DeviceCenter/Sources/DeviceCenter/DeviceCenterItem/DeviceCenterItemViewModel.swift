@@ -89,11 +89,6 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
         }
     }
     
-    private func nodeForEntityType() -> NodeEntity? {
-        guard case .backup(let backupEntity) = itemType else { return nil }
-        return nodeUseCase?.nodeForHandle(backupEntity.rootHandle)
-    }
-    
     private func loadAvailableActionsForBackup(_ backup: BackupEntity) {
         guard let nodeEntity = nodeUseCase?.nodeForHandle(backup.rootHandle) else { return }
         
@@ -175,13 +170,14 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
         case .cameraUploads:
             handleCameraUploadAction()
         case .info, .copy, .download, .shareLink, .manageLink, .removeLink, .shareFolder, .manageShare, .showInCloudDrive, .favourite, .label, .move, .moveToTheRubbishBin:
-            guard let node = nodeForEntityType() else { return }
+            guard let node = nodeForItemType() else { return }
+
             Task { [weak self] in
                 guard let self else { return }
                 await self.deviceCenterBridge.nodeActionTapped(node, type)
             }
         case .rename:
-            guard let node = nodeForEntityType(), let renameEntity = makeRenameEntity(node) else { return }
+            guard let node = nodeForItemType(), let renameEntity = makeRenameEntity(node) else { return }
             
             deviceCenterBridge.renameActionTapped(
                 renameEntity
@@ -212,6 +208,17 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
         deviceCenterBridge.renameActionTapped(renameEntity)
     }
     
+    func nodeForItemType() -> NodeEntity? {
+        switch itemType {
+        case .backup(let backupEntity):
+            return nodeUseCase?.nodeForHandle(backupEntity.rootHandle)
+        case .device(let deviceEntity):
+            guard let backupNode = deviceEntity.backups?.first else { return nil }
+            return nodeUseCase?.nodeForHandle(backupNode.rootHandle)
+        default: return nil
+        }
+    }
+    
     func loadAvailableActions() {
         switch itemType {
         case .backup(let backupEntity):
@@ -227,7 +234,7 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
         case .backup(let backup):
             Task { [weak self] in
                 guard let self,
-                      let nodeEntity = self.nodeForEntityType() else { return }
+                      let nodeEntity = self.nodeForItemType() else { return }
                 switch backup.type {
                 case .cameraUpload, .mediaUpload, .twoWay:
                     await self.deviceCenterBridge.nodeActionTapped(nodeEntity, .showInCloudDrive)

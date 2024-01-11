@@ -76,7 +76,6 @@ struct BackupListContentView: View {
 
 struct DeviceCenterMenu: View {
     @ObservedObject var viewModel: BackupListViewModel
-    
     var title: String = ""
     let menuIconName: String
     let menuOptions: [DeviceCenterAction]
@@ -92,7 +91,16 @@ struct DeviceCenterMenu: View {
                 }
 
                 if let subActions = option.subActions {
-                    DeviceCenterMenu(viewModel: viewModel, title: option.title, menuIconName: option.icon, menuOptions: subActions)
+                    Menu {
+                        Picker(selection: $viewModel.sortIndexSelected, label: Text(option.title)) {
+                            ForEach(Array(subActions.enumerated()), id: \.element) { index, option in
+                                Label(option.title, image: option.icon)
+                                    .tag(index)
+                            }
+                        }
+                    } label: {
+                        Label(option.title, image: option.icon)
+                    }
                 } else {
                     Button {
                         Task {

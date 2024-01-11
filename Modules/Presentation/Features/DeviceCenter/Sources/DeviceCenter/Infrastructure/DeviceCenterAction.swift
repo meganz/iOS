@@ -14,6 +14,12 @@ public enum DeviceCenterActionType {
     case sort
     case sortAscending
     case sortDescending
+    case sortLargest
+    case sortSmallest
+    case sortNewest
+    case sortOldest
+    case sortLabel
+    case sortFavourite
     case favourite
     case label
     case labelRed
@@ -28,7 +34,7 @@ public enum DeviceCenterActionType {
     case moveToTheRubbishBin
 }
 
-public struct DeviceCenterAction {
+public struct DeviceCenterAction: Hashable {
     let type: DeviceCenterActionType
     let title: String
     let subtitle: String?
@@ -43,5 +49,13 @@ public struct DeviceCenterAction {
         self.dynamicSubtitle = dynamicSubtitle
         self.icon = icon
         self.subActions = subActions
+    }
+    
+    public static func == (lhs: DeviceCenterAction, rhs: DeviceCenterAction) -> Bool {
+        lhs.type == rhs.type
+    }
+
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(type)
     }
 }
