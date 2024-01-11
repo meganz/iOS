@@ -1,8 +1,10 @@
 import Combine
 import Foundation
 import MEGADomain
+import MEGASwift
 
 public struct MockThumbnailUseCase: ThumbnailUseCaseProtocol {
+        
     let cachedThumbnails: [ThumbnailEntity]
     let generatedCachingThumbnail: ThumbnailEntity
     let loadThumbnailResult: Result<ThumbnailEntity, Error>
@@ -40,34 +42,19 @@ public struct MockThumbnailUseCase: ThumbnailUseCaseProtocol {
         }
     }
     
-    public func loadThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) -> Future<ThumbnailEntity, Error> {
-        Future { promise in
-            switch type {
-            case .thumbnail:
-                promise(loadThumbnailResult)
-            case .preview, .original:
-                promise(loadPreviewResult)
-            }
-        }
-    }
-    
-    public func requestPreview(for node: NodeEntity) -> AnyPublisher<ThumbnailEntity, Error> {
+    public func requestPreview(for node: MEGADomain.NodeEntity) -> AnyAsyncThrowingSequence<MEGADomain.ThumbnailEntity, Error> {
+        let (stream, continuation) = AsyncThrowingStream.makeStream(of: ThumbnailEntity.self, throwing: Error.self, bufferingPolicy: .unbounded)
+
         if case .success = loadThumbnailResult, case .success = loadPreviewResult {
-            return loadThumbnailResult
-                .publisher
-                .append(loadPreviewResult.publisher)
-                .eraseToAnyPublisher()
+            continuation.yield(with: loadThumbnailResult)
+            continuation.yield(with: loadPreviewResult)
         } else if case .success = loadThumbnailResult {
-            return loadThumbnailResult.publisher.eraseToAnyPublisher()
+            continuation.yield(with: loadThumbnailResult)
         } else {
-            return loadPreviewResult.publisher.eraseToAnyPublisher()
+            continuation.yield(with: loadPreviewResult)
         }
-    }
-    
-    public func requestThumbnailAndPreview(for node: NodeEntity) -> AnyPublisher<(ThumbnailEntity?, ThumbnailEntity?), Error> {
-        loadThumbnailAndPreviewResult
-            .publisher
-            .eraseToAnyPublisher()
+        continuation.finish()
+        return stream.eraseToAnyAsyncThrowingSequence()
     }
     
     public func cachedPreviewOrOriginalPath(for node: NodeEntity) -> String? {

@@ -26,26 +26,13 @@ public protocol ThumbnailUseCaseProtocol {
     /// - Returns: The url of the cached thumbnail in thumbnail repository
     /// - Throws: `ThumbnailErrorEntity` or `GenericErrorEntity` error.
     func loadThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) async throws -> ThumbnailEntity
-    
-    /// Load thumbnail asynchronously with Combine
-    /// - Parameters:
-    ///   - node: The node entity for which the thumbnail to be loaded
-    ///   - type: `ThumbnailTypeEntity` thumbnail type
-    /// - Returns: A `Future` publisher of the url of the cached thumbnail in thumbnail repository. Or it fails with `ThumbnailErrorEntity` or `GenericErrorEntity` error.
-    func loadThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) -> Future<ThumbnailEntity, Error>
-    
+        
     /// Request high quality preview of a node. It will publish values multiple times until the high quality preview URL is published.
     /// For example, it may publish this value flow: "thumbnail URL" -> "Preview URL"
     /// - Parameter node: The node entity for which the preview to be loaded
-    /// - Returns: A publisher to publish preview URL, and it will publish any low quality thumbnail URL first if they are available
-    func requestPreview(for node: NodeEntity) -> AnyPublisher<ThumbnailEntity, Error>
-    
-    /// Request thumbnail and preview of a node. It will publish values multiple times until both thumbnail and preview are loaded.
-    /// For example, it may publish this value flow: "(nil, nil)" -> "(thumbnail URL, nil)" -> "(thumbnail URL, Preview URL)".
-    /// - Parameter node: The node entity for which the thumbnail and preview to be loaded
-    /// - Returns: A publisher to publish thumbnail and preview URL values
-    func requestThumbnailAndPreview(for node: NodeEntity) -> AnyPublisher<(ThumbnailEntity?, ThumbnailEntity?), Error>
-    
+    /// - Returns: An AsyncSequence to publish preview URL, and it will publish any low quality thumbnail URL first if they are available
+    func requestPreview(for node: NodeEntity) -> AnyAsyncThrowingSequence<ThumbnailEntity, Error>
+        
     /// Find cached preview or original in thumbnail repository
     /// - Parameters:
     ///   - node: The node to be checked
@@ -77,46 +64,44 @@ public struct ThumbnailUseCase<T: ThumbnailRepositoryProtocol>: ThumbnailUseCase
         return try await ThumbnailEntity(url: repository.loadThumbnail(for: node, type: type),
                                          type: type)
     }
-    
-    public func loadThumbnail(for node: NodeEntity, type: ThumbnailTypeEntity) -> Future<ThumbnailEntity, Error> {
-        Future { promise in
-            Task {
-                do {
-                    let url = try await repository.loadThumbnail(for: node, type: type)
-                    promise(.success(ThumbnailEntity(url: url, type: type)))
-                } catch {
-                    promise(.failure(error))
+        
+    public func requestPreview(for node: NodeEntity) -> AnyAsyncThrowingSequence<ThumbnailEntity, Error> {
+        let (stream, continuation) = AsyncThrowingStream
+            .makeStream(of: ThumbnailEntity.self, throwing: Error.self, bufferingPolicy: .bufferingNewest(1))
+        
+        let task = Task {
+            try await withThrowingTaskGroup(of: ThumbnailEntity.self) { group in
+                
+                [ThumbnailTypeEntity.thumbnail, .preview]
+                    .forEach { type in
+                        _ = group.addTaskUnlessCancelled { try await loadThumbnail(for: node, type: type) }
+                    }
+                try Task.checkCancellation()
+                
+                while let results = await group.nextResult() {
+                    try Task.checkCancellation()
+                    switch results {
+                    case .success(let thumbnail):
+                        continuation.yield(thumbnail)
+                        if thumbnail.type == .preview {
+                            group.cancelAll()
+                            continuation.finish()
+                            break
+                        }
+                    case .failure:
+                        break
+                    }
                 }
+                
+                try Task.checkCancellation()
+                
+                continuation.finish(throwing: ThumbnailErrorEntity.noThumbnails)
             }
         }
-    }
-    
-    public func requestPreview(for node: NodeEntity) -> AnyPublisher<ThumbnailEntity, Error> {
-        requestThumbnailAndPreview(for: node)
-            .combinePrevious((nil, nil))
-            .filter { result in
-                result.previous.1 == nil
-            }
-            .compactMap { result -> ThumbnailEntity? in
-                if let preview = result.current.1 {
-                    return preview
-                } else {
-                    return result.current.0
-                }
-            }
-            .eraseToAnyPublisher()
-    }
-    
-    public func requestThumbnailAndPreview(for node: NodeEntity) -> AnyPublisher<(ThumbnailEntity?, ThumbnailEntity?), Error> {
-        loadThumbnail(for: node, type: .thumbnail)
-            .map(Optional.some)
-            .prepend(nil)
-            .combineLatest(
-                loadThumbnail(for: node, type: .preview)
-                    .map(Optional.some)
-                    .prepend(nil)
-            )
-            .eraseToAnyPublisher()
+        
+        continuation.onTermination = { @Sendable _ in task.cancel() }
+        
+        return stream.eraseToAnyAsyncThrowingSequence()
     }
     
     public func cachedPreviewOrOriginalPath(for node: NodeEntity) -> String? {
