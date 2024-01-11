@@ -155,7 +155,7 @@ extension HomeSearchResultViewModel: HomeAccountSearchResultViewModelInputs {
     // MARK: - Did Select Node
 
     func didSelectNode(_ nodeHandle: HandleEntity) {
-        router.didTapNode(nodeHandle)
+        router.didTapNode(nodeHandle: nodeHandle)
         if let node = sdk.node(forHandle: nodeHandle) {
             let event = SearchItemSelectedEvent(
                 searchItemType: node.isFolder() ? .folder : .file
