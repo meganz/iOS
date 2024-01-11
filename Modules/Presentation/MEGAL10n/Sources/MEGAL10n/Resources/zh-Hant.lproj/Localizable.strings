@@ -284,10 +284,6 @@
 "transfersEmptyState_titleUpload"="沒有上傳";
 /* Title of the Cloud Drive section */
 "cloudDrive"="雲端硬碟";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
-"oneFile"="%d個檔案";
-/* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
-"files"="%d個檔案";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="已入佇列";
 /* A label to indicate a paused state for a transfer item (upload/download). */
@@ -378,8 +374,6 @@
 "generatingLinks"="產生連結中⋯";
 /* Message shown when the link has been copied to the pasteboard */
 "linkCopied"="已複製連結";
-/* Message shown when some links have been copied to the pasteboard */
-"linksCopied"="已複製連結";
 /* Text of the button after the links were copied to the clipboard */
 "copiedToTheClipboard"="已複製至剪貼簿";
 /* A title for the Copyright Warning dialog. */
@@ -426,14 +420,6 @@
 "general.sendToChat"="發送至對話";
 /* Column header of my contacts/chats at copy dialog */
 "My chats"="我的對話";
-/* Toast text upon sending a single file to chat */
-"fileSentToChat"="檔案已發送至對話中";
-/* Success message when the attachment has been sent to a many chats */
-"fileSentToXChats"="檔案已發送至%1$d個對話中";
-/* Toast text upon sending multiple files to chat */
-"filesSentToChat"="檔案已發送至對話中";
-/* success message when sending multiple files. Please do not modify the %d placeholder. */
-"xfilesSentSuccesfully"="已發送%d個檔案";
 /* Title show when a file is being downloaded */
 "downloading"="下載中";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -612,10 +598,6 @@
 "Photos uploaded, video uploads are off, 1 video not uploaded"="相片已上傳，影片上傳關閉；1個影片未上傳";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
 "Photos uploaded, video uploads are off, %lu videos not uploaded"="照片已上傳，影片上傳關閉；%lu個影片未上傳";
-/* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
-"oneItemSelected"="已選擇%lu項目";
-/* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
-"itemsSelected"="已選擇%lu個項目";
 /* String shown when multi selection is enabled and only one item has been selected. */
 "1 selected"="已選取1個";
 /* String shown when multi selection is enabled and the user has more than one item selected. */
@@ -924,8 +906,6 @@
 "filesFolderRemovedToRubbishBinMessage"="已自MEGA移除%d個檔案與1個資料夾";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="已自MEGA移除[A]個檔案與[B]個資料夾";
-/* Success message shown when [A] = {1+} files and [B] = "{1+} file{s} {and} {1+} folder{s} have been removed from MEGA" */
-"sharedItems.rubbish.confirmation.message"="已從MEGA移除%@";
 /* Hint text to suggest that the user have to write the new password on it */
 "newPassword"="新密碼";
 /* Hint text where the user have to re-write the new password to confirm it */
@@ -1239,7 +1219,7 @@
 /* A log message in the chat conversation to tell the reader that a participant [A] left the group chat. For example: Alice left the group chat. */
 "leftTheGroupChat"="[A]離開群組對話";
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the chat by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the group chat by invitation from Frank. */
-"joinedTheGroupChatByInvitationFrom"="[A]接受[B]的邀請，已加入此群組對話。";
+"joinedTheGroupChatByInvitationFrom"="[A]接受了[B]的邀請加入此群組對話。";
 /* A log message in the chat conversation to tell the reader that a participant [A] cleared the history of the chat. For example, Alice cleared the chat history. */
 "clearedTheChatHistory"="[A]清除對話記錄。";
 /* A log message in the chat conversation to tell the reader that a participant [A] changed group chat name to [B]. Please keep the [A] and '[B]' placeholders, they will be replaced at runtime. For example: Alice changed group chat name to 'MEGA'. */
@@ -3255,7 +3235,7 @@
 /* In App notification for meetings */
 "inapp.notifications.meetings.header"="會議";
 /* In app notification description for one off new meeting invitation */
-"inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email] 邀請[/B]您參加會議，排程時間：";
+"inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email][/B]邀請您參加會議，排程時間：";
 /* In app notification description for scheduled meeting when multiple fields updated for one off meeting */
 "inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email]已更新[/B]會議時間為";
 /* In app notification description for scheduled meeting description field update */
@@ -3630,6 +3610,8 @@
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Pro方案功能";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
 "upgradeAccountPlan.message.text.featuresOfProPlan"="• 受密碼保護的連結\n\n• 連結可設定到期日期\n\n• 傳輸配額共享\n\n• 自動備份\n\n• Pro Lite最多可回溯90天，Pro I、II、III最多可回溯180天（即將推出）\n\n• 可安排7天到10年之間的垃圾筒自動清理排程";
+/* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• 受密碼保護的連結\n\n• 共享連結可設定到期日期\n\n• 傳輸配額共享\n\n• 自動備份\n\n• Pro Lite最多回溯90天，Pro I、II、III最多回溯180天\n\n• 可排定7天到10年的垃圾筒自動清理排程\n\n• 無廣告";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="訂閱詳情";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3719,7 +3701,7 @@
 /* Edit Schedule meeting navigaion title. */
 "meetings.scheduled.editMeeting.title"="編輯會議";
 /* Schedule meeting calendar invite description */
-"meetings.scheduleMeeting.calendarInvite.description"="透過電子郵件發送行事曆邀請給與會者，以便他們可以將會議加到他們的行事曆。";
+"meetings.scheduleMeeting.calendarInvite.description"="透過電子郵件向與會者發送行事曆邀請，以便他們可以將會議加到行事曆中。";
 /* Start meeting tip view message bold text */
 "meetings.scheduleMeeting.startMeetingTip.startMeeting"="開始會議";
 /* Recurring meeting tip view message bold text */
@@ -3838,6 +3820,8 @@
 "home.search.filter.presentations"="簡報";
 /* Filter name for searching on the home screen */
 "home.search.filter.archives"="封存檔案";
+/* Filter name for searching on the home screen */
+"home.search.filter.spreadsheets"="試算表";
 /* Filter name for searching on the home screen */
 "home.search.filter.modificationDate.today"="今天";
 /* Filter name for searching on the home screen */
@@ -3978,3 +3962,27 @@
 "meetings.info.shareMeetingLink.meetingTime"="日期和時間：%@";
 /* Meeting link text for sharing a scheduled meeting link through external app */
 "meetings.info.shareMeetingLink.meetingLink"="會議連結：%@";
+/* A log message in the chat conversation to tell the reader that a participant [A] joined the meeting. For example: Alice joined the meeting. */
+"chat.message.joinedTheMeeting"="[A]加入了會議。";
+/* A log message in the chat conversation to tell the reader that a participant [A] left the meeting. For example: Alice left the meeting. */
+"chat.message.leftTheMeeting"="[A]離開了會議。";
+/* A log message in a chat conversation to tell the reader that a participant [A] was removed from the meeting by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the meeting by Frank. */
+"chat.message.wasRemovedFromTheMeetingBy"="[B]將[A]從會議中移除。";
+/* A log message in a chat conversation to tell the reader that a participant [A] was added to the meeting by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the meeting by invitation from Frank. */
+"chat.message.joinedTheMeetingByInvitationFrom"="[A]接受了[B]的邀請加入會議。";
+/* Meeting subject text for sharing a meeting link through email */
+"meetings.info.shareMeetingLink.subject"="MEGA會議邀請";
+/* Calls: Floating panel participants in call header to mute them all */
+"calls.panel.participantsInCall.header.muteAll"="全部靜音";
+/* Calls: Floating panel participants in call header to show all participants are muted */
+"calls.panel.participantsInCall.header.allMuted"="已全部靜音";
+/* Calls: Participant context menu action to mute in the call */
+"calls.panel.participantsInCall.participantContextMenu.actions.mute"="靜音";
+/* Calls: Mute all participants success message */
+"calls.participantsInCall.muteAll.success"="您已將所有與會者設為靜音";
+/* Calls: Mute specific participant success message */
+"calls.participantsInCall.muteParticipant.success"="您已將%@設為靜音";
+/* Calls: Mute all participants error message */
+"calls.participantsInCall.muteAll.error"="將所有與會者設靜音時出錯";
+/* Calls: Mute specific participant error message */
+"calls.participantsInCall.muteParticipant.error"="將%@設為靜音時出錯";

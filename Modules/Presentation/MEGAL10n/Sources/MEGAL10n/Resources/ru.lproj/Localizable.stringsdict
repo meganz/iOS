@@ -3522,5 +3522,65 @@
         <string>%d элемента выбрано</string>
       </dict>
     </dict>
+    <key>chat.message.filesSentToAChat</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Файл отправлен в чат</string>
+        <key>few</key>
+        <string>Файлы отправлены в чат</string>
+        <key>many</key>
+        <string>Файлы отправлены в чат</string>
+        <key>other</key>
+        <string>Файлы отправлены в чат</string>
+      </dict>
+    </dict>
+    <key>chat.message.fileSentToMultipleChats</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Файл отправлен в %d чат</string>
+        <key>few</key>
+        <string>Файл отправлен в %d чата</string>
+        <key>many</key>
+        <string>Файл отправлен в %d чатов</string>
+        <key>other</key>
+        <string>Файл отправлен в %d чата</string>
+      </dict>
+    </dict>
+    <key>chat.message.filesSent</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d файл отправлен в чаты</string>
+        <key>few</key>
+        <string>%d файла отправлено в чаты</string>
+        <key>many</key>
+        <string>%d файлов отправлено в чаты</string>
+        <key>other</key>
+        <string>%d файла отправлено в чаты</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

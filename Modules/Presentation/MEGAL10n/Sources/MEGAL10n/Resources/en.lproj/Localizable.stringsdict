@@ -2861,9 +2861,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d file sent</string>
+        <string>%d file sent to chats</string>
         <key>other</key>
-        <string>%d files sent</string>
+        <string>%d files sent to chats</string>
       </dict>
     </dict>
   </dict>

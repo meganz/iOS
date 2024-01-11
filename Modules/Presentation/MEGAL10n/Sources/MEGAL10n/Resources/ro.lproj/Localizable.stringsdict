@@ -1075,11 +1075,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Șterge(%d)</string>
+        <string>Șterge (%d)</string>
         <key>few</key>
-        <string>Șterge(%d)</string>
+        <string>Șterge (%d)</string>
         <key>other</key>
-        <string>Șterge(%d)</string>
+        <string>Șterge (%d)</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.deleteAlbumTitle</key>
@@ -3168,6 +3168,60 @@
         <string>%d elemente selectate</string>
         <key>other</key>
         <string>%d de elemente selectate</string>
+      </dict>
+    </dict>
+    <key>chat.message.filesSentToAChat</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Fișier trimis la chat</string>
+        <key>few</key>
+        <string>Fișierele trimise la chat</string>
+        <key>other</key>
+        <string>Fișierele trimise la chat</string>
+      </dict>
+    </dict>
+    <key>chat.message.fileSentToMultipleChats</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Fișier trimis la %d chat</string>
+        <key>few</key>
+        <string>Fișier trimis la %d chat-uri</string>
+        <key>other</key>
+        <string>Fișier trimis la %d de chat-uri</string>
+      </dict>
+    </dict>
+    <key>chat.message.filesSent</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d fișier trimis la chat-uri</string>
+        <key>few</key>
+        <string>%d fișiere trimise la chat-uri</string>
+        <key>other</key>
+        <string>%d de fișiere trimise la chat-uri</string>
       </dict>
     </dict>
   </dict>

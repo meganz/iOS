@@ -2818,5 +2818,53 @@
         <string>%d Elemente ausgewählt</string>
       </dict>
     </dict>
+    <key>chat.message.filesSentToAChat</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Datei an den Chat gesendet</string>
+        <key>other</key>
+        <string>Dateien an den Chat gesendet</string>
+      </dict>
+    </dict>
+    <key>chat.message.fileSentToMultipleChats</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Datei an %d Chat gesendet</string>
+        <key>other</key>
+        <string>Datei an %d Chats gesendet</string>
+      </dict>
+    </dict>
+    <key>chat.message.filesSent</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d Datei an Chats gesendet</string>
+        <key>other</key>
+        <string>%d Dateien an Chats gesendet</string>
+      </dict>
+    </dict>
   </dict>
 </plist>
