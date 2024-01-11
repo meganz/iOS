@@ -259,7 +259,7 @@
 /* Detail message shown when you try to call someone that is not you contact in MEGA. The [X] placeholder will be replaced on runtime for the email of the user */
 "dialog.callAttempt.contactNotInMEGA"="Seu contato [X] não está no MEGA. Para realizar uma ligação através do chat criptografado do MEGA, você precisa convidar seu contato";
 /* Text shown when the user sends a contact invitation */
-"inviteSent"="Solicitação de contato enviada";
+"inviteSent"="Invitation sent";
 /* Button title to allow the user postpone an action */
 "later"="Depois";
 /* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
@@ -284,10 +284,6 @@
 "transfersEmptyState_titleUpload"="Não há uploads";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Nuvem de arquivos";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
-"oneFile"="%d arquivo";
-/* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
-"files"="%d arquivos";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="Em fila";
 /* A label to indicate a paused state for a transfer item (upload/download). */
@@ -378,8 +374,6 @@
 "generatingLinks"="Gerando links…";
 /* Message shown when the link has been copied to the pasteboard */
 "linkCopied"="O link foi copiado";
-/* Message shown when some links have been copied to the pasteboard */
-"linksCopied"="Os links foram copiados";
 /* Text of the button after the links were copied to the clipboard */
 "copiedToTheClipboard"="Copiado ao bloco de notas";
 /* A title for the Copyright Warning dialog. */
@@ -426,14 +420,6 @@
 "general.sendToChat"="Enviar ao Chat";
 /* Column header of my contacts/chats at copy dialog */
 "My chats"="Meus chats";
-/* Toast text upon sending a single file to chat */
-"fileSentToChat"="Arquivo enviado ao chat";
-/* Success message when the attachment has been sent to a many chats */
-"fileSentToXChats"="Arquivo enviado para %1$d chats";
-/* Toast text upon sending multiple files to chat */
-"filesSentToChat"="Arquivos enviados ao chat";
-/* success message when sending multiple files. Please do not modify the %d placeholder. */
-"xfilesSentSuccesfully"="%d arquivos enviados";
 /* Title show when a file is being downloaded */
 "downloading"="Fazendo o download";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -612,10 +598,6 @@
 "Photos uploaded, video uploads are off, 1 video not uploaded"="Upload de fotos concluído. O upload de vídeos está desativado, portanto o upload de 1 vídeo não foi feito";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
 "Photos uploaded, video uploads are off, %lu videos not uploaded"="Upload de fotos concluído. O upload de vídeos está desativado, portanto o upload de %lu vídeos não foi feito";
-/* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
-"oneItemSelected"="%lu item selecionado";
-/* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
-"itemsSelected"="%lu itens selecionados";
 /* String shown when multi selection is enabled and only one item has been selected. */
 "1 selected"="1 selecionado";
 /* String shown when multi selection is enabled and the user has more than one item selected. */
@@ -924,8 +906,6 @@
 "filesFolderRemovedToRubbishBinMessage"="%d arquivos e 1 pasta removida do MEGA";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="[A] arquivos e [B] pastas removidas do MEGA";
-/* Success message shown when [A] = {1+} files and [B] = "{1+} file{s} {and} {1+} folder{s} have been removed from MEGA" */
-"sharedItems.rubbish.confirmation.message"="%@ foram eliminados do MEGA";
 /* Hint text to suggest that the user have to write the new password on it */
 "newPassword"="Nova senha";
 /* Hint text where the user have to re-write the new password to confirm it */
@@ -2495,9 +2475,9 @@
 /* Cookie dialog title to manage cookies */
 "dialog.cookies.title.manageCookies"="Gerenciar cookies";
 /* Cookie dialog description with cookie policy. */
-"dialog.cookies.description.cookiePolicy"="We use cookies and similar technologies to help us improve our services. Learn more in our [A]Cookie Policy[/A].";
+"dialog.cookies.description.cookiePolicy"="Usamos cookies e tecnologias semelhantes para melhorar os nossos serviços. Para mais informações, acesse a nossa [A]Política de cookies[/A].";
 /* Cookie dialog description with advertisement cookie policy. */
-"dialog.cookies.description.adsCookiePolicy"="We use cookies and similar technologies to help us improve our services and for advertising purposes. By continuing to use MEGA you agree with the terms of our updated [A]Cookie Policy[/A].";
+"dialog.cookies.description.adsCookiePolicy"="Nós usamos cookies e tecnologias similares para melhorar os nossos serviços e com fins publicitários. Ao continuar usado o MEGA, você concorda com os termos da nossa [A]Política de cookies[/A] atualizada.";
 /* Cookie dialog button label. */
 "dialog.cookies.accept"="Aceitar cookies";
 /* Cookie dialog footer description */
@@ -3255,7 +3235,7 @@
 /* In App notification for meetings */
 "inapp.notifications.meetings.header"="Reuniões";
 /* In app notification description for one off new meeting invitation */
-"inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email] convidou [/B]você para uma reunião agendada para:";
+"inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email][/B] invited you to a meeting scheduled for:";
 /* In app notification description for scheduled meeting when multiple fields updated for one off meeting */
 "inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] atualizou[/B] a reunião para";
 /* In app notification description for scheduled meeting description field update */
@@ -3367,7 +3347,7 @@
 /* Schedule meeting add participants field */
 "meetings.scheduleMeeting.addParticipants"="Adicionar participantes";
 /* Schedule meeting send calendar invite field */
-"meetings.scheduleMeeting.sendCalendarInvite"="Enviar convite de calendário";
+"meetings.scheduleMeeting.sendCalendarInvite"="Send calendar invitation";
 /* Schedule meeting open invite field */
 "meetings.scheduleMeeting.openInvite"="Permitir adicionar participantes a usuários que não forem anfitriões";
 /* Schedule meeting description field placeholder */
@@ -3630,6 +3610,8 @@
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Características dos planos Pro";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
 "upgradeAccountPlan.message.text.featuresOfProPlan"="• Links protegidos por senha\n\n• Links com datas de validade\n\n• Compartilhamento da cota de transferência\n\n• Backups automáticos\n\n• Retroceso até 90 dias no plano Pro  Lite e até 180 dias nos planos Pro I, II e III (em breve)\n\n• Agendamento da limpeza da lixeira entre 7 dias e 10 anos";
+/* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Automatic backups\n\n• Rewind up to 90 days on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Schedule rubbish bin clearing between 7 days and 10 years\n\n• Ad free";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Informações da assinatura";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3719,7 +3701,7 @@
 /* Edit Schedule meeting navigaion title. */
 "meetings.scheduled.editMeeting.title"="Editar reunião";
 /* Schedule meeting calendar invite description */
-"meetings.scheduleMeeting.calendarInvite.description"="Envie por email um convite de calendário aos participantes para que possam adicionar a reunião aos seus calendários.";
+"meetings.scheduleMeeting.calendarInvite.description"="Email a calendar invitation to participants so they can add the meeting to their calendars.";
 /* Start meeting tip view message bold text */
 "meetings.scheduleMeeting.startMeetingTip.startMeeting"="Começar a reunião";
 /* Recurring meeting tip view message bold text */
@@ -3838,6 +3820,8 @@
 "home.search.filter.presentations"="Apresentações";
 /* Filter name for searching on the home screen */
 "home.search.filter.archives"="Arquivos";
+/* Filter name for searching on the home screen */
+"home.search.filter.spreadsheets"="Planilhas";
 /* Filter name for searching on the home screen */
 "home.search.filter.modificationDate.today"="Hoje";
 /* Filter name for searching on the home screen */
@@ -3978,3 +3962,27 @@
 "meetings.info.shareMeetingLink.meetingTime"="Date and time: %@";
 /* Meeting link text for sharing a scheduled meeting link through external app */
 "meetings.info.shareMeetingLink.meetingLink"="Meeting link: %@";
+/* A log message in the chat conversation to tell the reader that a participant [A] joined the meeting. For example: Alice joined the meeting. */
+"chat.message.joinedTheMeeting"="[A] joined the meeting.";
+/* A log message in the chat conversation to tell the reader that a participant [A] left the meeting. For example: Alice left the meeting. */
+"chat.message.leftTheMeeting"="[A] left the meeting.";
+/* A log message in a chat conversation to tell the reader that a participant [A] was removed from the meeting by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the meeting by Frank. */
+"chat.message.wasRemovedFromTheMeetingBy"="[A] was removed from the meeting by [B].";
+/* A log message in a chat conversation to tell the reader that a participant [A] was added to the meeting by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the meeting by invitation from Frank. */
+"chat.message.joinedTheMeetingByInvitationFrom"="[A] joined the meeting by invitation from [B].";
+/* Meeting subject text for sharing a meeting link through email */
+"meetings.info.shareMeetingLink.subject"="MEGA meeting invitation";
+/* Calls: Floating panel participants in call header to mute them all */
+"calls.panel.participantsInCall.header.muteAll"="Mute all";
+/* Calls: Floating panel participants in call header to show all participants are muted */
+"calls.panel.participantsInCall.header.allMuted"="All muted";
+/* Calls: Participant context menu action to mute in the call */
+"calls.panel.participantsInCall.participantContextMenu.actions.mute"="Silenciar";
+/* Calls: Mute all participants success message */
+"calls.participantsInCall.muteAll.success"="You’ve muted all participants";
+/* Calls: Mute specific participant success message */
+"calls.participantsInCall.muteParticipant.success"="You’ve muted %@";
+/* Calls: Mute all participants error message */
+"calls.participantsInCall.muteAll.error"="Error muting all participants";
+/* Calls: Mute specific participant error message */
+"calls.participantsInCall.muteParticipant.error"="Error muting %@";

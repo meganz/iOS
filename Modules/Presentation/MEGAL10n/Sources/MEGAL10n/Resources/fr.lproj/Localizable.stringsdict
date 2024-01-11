@@ -3170,5 +3170,59 @@
         <string>%d éléments ont été sélectionnés</string>
       </dict>
     </dict>
+    <key>chat.message.filesSentToAChat</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Le fichier a été envoyé vers la conversation</string>
+        <key>many</key>
+        <string>Les fichiers ont été envoyés vers la conversation</string>
+        <key>other</key>
+        <string>Les fichiers ont été envoyés vers la conversation</string>
+      </dict>
+    </dict>
+    <key>chat.message.fileSentToMultipleChats</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Le fichier a été envoyé vers %d conversation</string>
+        <key>many</key>
+        <string>Le fichier a été envoyé vers %d de conversations</string>
+        <key>other</key>
+        <string>Le fichier a été envoyé vers %d conversations</string>
+      </dict>
+    </dict>
+    <key>chat.message.filesSent</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d fichier a été envoyé vers les conversations</string>
+        <key>many</key>
+        <string>%d de fichiers ont été envoyés vers les conversations</string>
+        <key>other</key>
+        <string>%d fichiers ont été envoyés vers les conversations</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

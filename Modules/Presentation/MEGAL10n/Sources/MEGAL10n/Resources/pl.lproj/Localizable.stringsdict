@@ -3522,5 +3522,65 @@
         <string>Wybrano %d elementów</string>
       </dict>
     </dict>
+    <key>chat.message.filesSentToAChat</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Plik wysłany do czatu</string>
+        <key>few</key>
+        <string>Pliki wysyłane do czatu</string>
+        <key>many</key>
+        <string>Pliki wysyłane do czatu</string>
+        <key>other</key>
+        <string>Pliki wysyłane do czatu</string>
+      </dict>
+    </dict>
+    <key>chat.message.fileSentToMultipleChats</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Plik wysłany do czatu %d</string>
+        <key>few</key>
+        <string>Plik wysłany do %d czatów</string>
+        <key>many</key>
+        <string>Plik wysłany do %d czatów</string>
+        <key>other</key>
+        <string>Plik wysłany do %d czatów</string>
+      </dict>
+    </dict>
+    <key>chat.message.filesSent</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d plik wysłany do czatów</string>
+        <key>few</key>
+        <string>%d plików wysłanych do czatów</string>
+        <key>many</key>
+        <string>%d plików wysłanych do czatów</string>
+        <key>other</key>
+        <string>%d plików wysłanych do czatów</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

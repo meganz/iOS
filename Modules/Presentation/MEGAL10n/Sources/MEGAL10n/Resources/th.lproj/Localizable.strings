@@ -259,7 +259,7 @@
 /* Detail message shown when you try to call someone that is not you contact in MEGA. The [X] placeholder will be replaced on runtime for the email of the user */
 "dialog.callAttempt.contactNotInMEGA"="ผู้ติดต่อของคุณ [X] ไม่ได้อยู่ใน MEGA ต้องเชิญผู้ติดต่อให้โทรผ่านการสนทนาที่เข้ารหัสของ MEGA ก่อน";
 /* Text shown when the user sends a contact invitation */
-"inviteSent"="ส่งคำเชิญแล้ว";
+"inviteSent"="Invitation sent";
 /* Button title to allow the user postpone an action */
 "later"="ภายหลัง";
 /* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
@@ -284,10 +284,6 @@
 "transfersEmptyState_titleUpload"="ยังไม่มีการอัปโหลด";
 /* Title of the Cloud Drive section */
 "cloudDrive"="คลาวด์ไดรฟ์";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
-"oneFile"="%d ไฟล์";
-/* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
-"files"="%d ไฟล์";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="อยู่ในคิว";
 /* A label to indicate a paused state for a transfer item (upload/download). */
@@ -378,8 +374,6 @@
 "generatingLinks"="กำลังสร้างลิงก์…";
 /* Message shown when the link has been copied to the pasteboard */
 "linkCopied"="คัดลอกลิงก์แล้ว";
-/* Message shown when some links have been copied to the pasteboard */
-"linksCopied"="คัดลอกลิงก์แล้ว";
 /* Text of the button after the links were copied to the clipboard */
 "copiedToTheClipboard"="คัดลอกไปที่คลิปบอร์ดแล้ว";
 /* A title for the Copyright Warning dialog. */
@@ -426,14 +420,6 @@
 "general.sendToChat"="ส่งไปยังแชท";
 /* Column header of my contacts/chats at copy dialog */
 "My chats"="การแชทของฉัน";
-/* Toast text upon sending a single file to chat */
-"fileSentToChat"="ไฟล์ถูกส่งไปยังแชทแล้ว";
-/* Success message when the attachment has been sent to a many chats */
-"fileSentToXChats"="ไฟล์ถูกส่งไปยัง %1$d แชท";
-/* Toast text upon sending multiple files to chat */
-"filesSentToChat"="ไฟล์ถูกส่งไปยังแชทแล้ว";
-/* success message when sending multiple files. Please do not modify the %d placeholder. */
-"xfilesSentSuccesfully"="ส่งไฟล์ %d รายการแล้ว";
 /* Title show when a file is being downloaded */
 "downloading"="กำลังดาวน์โหลด";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -612,10 +598,6 @@
 "Photos uploaded, video uploads are off, 1 video not uploaded"="อัปโหลดรูปภาพ, การอัปโหลดวิดีโอ ถูกปิด; ไม่ได้อัปโหลดวิดีโอ 1 รายการ";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
 "Photos uploaded, video uploads are off, %lu videos not uploaded"="อัปโหลดรูปภาพ, การอัปโหลดวิดีโอ ถูกปิด; ไม่ได้อัปโหลดวิดีโอ %lu รายการ";
-/* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
-"oneItemSelected"="%lu รายการที่เลือกแล้ว";
-/* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
-"itemsSelected"="%lu รายการที่เลือก";
 /* String shown when multi selection is enabled and only one item has been selected. */
 "1 selected"="เลือก 1 รายการ";
 /* String shown when multi selection is enabled and the user has more than one item selected. */
@@ -924,8 +906,6 @@
 "filesFolderRemovedToRubbishBinMessage"="%d ไฟล์และ 1 โฟลเดอร์ถูกลบออกจาก MEGA";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="[A] ไฟล์และ [B] โฟลเดอร์ถูกลบออกจาก MEGA";
-/* Success message shown when [A] = {1+} files and [B] = "{1+} file{s} {and} {1+} folder{s} have been removed from MEGA" */
-"sharedItems.rubbish.confirmation.message"="%@ ถูกลบออกจาก MEGA แล้ว";
 /* Hint text to suggest that the user have to write the new password on it */
 "newPassword"="รหัสผ่านใหม่";
 /* Hint text where the user have to re-write the new password to confirm it */
@@ -3255,7 +3235,7 @@
 /* In App notification for meetings */
 "inapp.notifications.meetings.header"="การประชุม";
 /* In app notification description for one off new meeting invitation */
-"inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email] เชิญ[/B]คุณเข้าร่วมการประชุมตามเวลาที่กำหนดไว้:";
+"inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email][/B] invited you to a meeting scheduled for:";
 /* In app notification description for scheduled meeting when multiple fields updated for one off meeting */
 "inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] อัปเดต[/B]การประชุมใหม่เป็น";
 /* In app notification description for scheduled meeting description field update */
@@ -3367,7 +3347,7 @@
 /* Schedule meeting add participants field */
 "meetings.scheduleMeeting.addParticipants"="เพิ่มผู้เข้าร่วม";
 /* Schedule meeting send calendar invite field */
-"meetings.scheduleMeeting.sendCalendarInvite"="ส่งไปคำเชิญปฏิทิน";
+"meetings.scheduleMeeting.sendCalendarInvite"="ส่งคำเชิญปฏิทินทางอีเมล";
 /* Schedule meeting open invite field */
 "meetings.scheduleMeeting.openInvite"="อนุญาตให้ผู้ที่ไม่ใช่ผู้จัดการประชุมเพิ่มผู้เข้าร่วมได้";
 /* Schedule meeting description field placeholder */
@@ -3630,6 +3610,8 @@
 "upgradeAccountPlan.header.title.featuresOfProPlan"="ฟีเจอร์สำหรับแผน Pro";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
 "upgradeAccountPlan.message.text.featuresOfProPlan"="• ป้องกันลิงก์ด้วยการกำหนดรหัสผ่านได้\n\n• ตั้งค่าวันหมดอายุลิงก์ได้\n\n• แชร์โควต้าการถ่ายโอนได้\n\n• ตั้งค่าการสำรองข้อมูลอัตโนมัติได้\n\n• ใช้ฟีเจอร์ย้อนกลับไฟล์ได้ โดย Pro Lite ย้อนกลับได้ถึง 90 วัน ส่วน Pro I, II และ III ย้อนกลับได้ถึง 180 วัน (จะมาในเร็ว ๆ นี้)\n\n• สร้างกำหนดการล้างถังขยะได้ตั้งแต่ 7 วันถึง 10 ปี";
+/* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Automatic backups\n\n• Rewind up to 90 days on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Schedule rubbish bin clearing between 7 days and 10 years\n\n• Ad free";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="รายละเอียดการสมัครใช้งาน";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3719,7 +3701,7 @@
 /* Edit Schedule meeting navigaion title. */
 "meetings.scheduled.editMeeting.title"="แก้ไขการประชุม";
 /* Schedule meeting calendar invite description */
-"meetings.scheduleMeeting.calendarInvite.description"="ส่งอีเมลคำเชิญในปฏิทินไปที่ผู้เข้าร่วมเพื่อให้สามารถเพิ่มการประชุมลงในปฏิทินได้";
+"meetings.scheduleMeeting.calendarInvite.description"="Email a calendar invitation to participants so they can add the meeting to their calendars.";
 /* Start meeting tip view message bold text */
 "meetings.scheduleMeeting.startMeetingTip.startMeeting"="เริ่มการประชุม";
 /* Recurring meeting tip view message bold text */
@@ -3838,6 +3820,8 @@
 "home.search.filter.presentations"="ไฟล์นำเสนอ";
 /* Filter name for searching on the home screen */
 "home.search.filter.archives"="ไฟล์บีบอัด";
+/* Filter name for searching on the home screen */
+"home.search.filter.spreadsheets"="สเปรดชีต";
 /* Filter name for searching on the home screen */
 "home.search.filter.modificationDate.today"="วันนี้";
 /* Filter name for searching on the home screen */
@@ -3978,3 +3962,27 @@
 "meetings.info.shareMeetingLink.meetingTime"="วันที่และเวลา: %@";
 /* Meeting link text for sharing a scheduled meeting link through external app */
 "meetings.info.shareMeetingLink.meetingLink"="ลิงก์ประชุม: %@";
+/* A log message in the chat conversation to tell the reader that a participant [A] joined the meeting. For example: Alice joined the meeting. */
+"chat.message.joinedTheMeeting"="[A] joined the meeting.";
+/* A log message in the chat conversation to tell the reader that a participant [A] left the meeting. For example: Alice left the meeting. */
+"chat.message.leftTheMeeting"="[A] left the meeting.";
+/* A log message in a chat conversation to tell the reader that a participant [A] was removed from the meeting by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the meeting by Frank. */
+"chat.message.wasRemovedFromTheMeetingBy"="[A] was removed from the meeting by [B].";
+/* A log message in a chat conversation to tell the reader that a participant [A] was added to the meeting by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the meeting by invitation from Frank. */
+"chat.message.joinedTheMeetingByInvitationFrom"="[A] joined the meeting by invitation from [B].";
+/* Meeting subject text for sharing a meeting link through email */
+"meetings.info.shareMeetingLink.subject"="เชิญเข้าร่วมการประชุม MEGA";
+/* Calls: Floating panel participants in call header to mute them all */
+"calls.panel.participantsInCall.header.muteAll"="Mute all";
+/* Calls: Floating panel participants in call header to show all participants are muted */
+"calls.panel.participantsInCall.header.allMuted"="All muted";
+/* Calls: Participant context menu action to mute in the call */
+"calls.panel.participantsInCall.participantContextMenu.actions.mute"="ปิดเสียง";
+/* Calls: Mute all participants success message */
+"calls.participantsInCall.muteAll.success"="You’ve muted all participants";
+/* Calls: Mute specific participant success message */
+"calls.participantsInCall.muteParticipant.success"="You’ve muted %@";
+/* Calls: Mute all participants error message */
+"calls.participantsInCall.muteAll.error"="Error muting all participants";
+/* Calls: Mute specific participant error message */
+"calls.participantsInCall.muteParticipant.error"="Error muting %@";

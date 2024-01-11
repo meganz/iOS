@@ -284,10 +284,6 @@
 "transfersEmptyState_titleUpload"="Нет загрузок в облако";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Облачный диск";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
-"oneFile"="%d файл";
-/* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
-"files"="%d файла";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="В очереди";
 /* A label to indicate a paused state for a transfer item (upload/download). */
@@ -378,8 +374,6 @@
 "generatingLinks"="Генерация ссылок…";
 /* Message shown when the link has been copied to the pasteboard */
 "linkCopied"="Ссылка скопирована";
-/* Message shown when some links have been copied to the pasteboard */
-"linksCopied"="Ссылки скопированы";
 /* Text of the button after the links were copied to the clipboard */
 "copiedToTheClipboard"="Скопировано в буфер обмена";
 /* A title for the Copyright Warning dialog. */
@@ -426,14 +420,6 @@
 "general.sendToChat"="Отправить в чат";
 /* Column header of my contacts/chats at copy dialog */
 "My chats"="Мои чаты";
-/* Toast text upon sending a single file to chat */
-"fileSentToChat"="Файл отправлен в чат";
-/* Success message when the attachment has been sent to a many chats */
-"fileSentToXChats"="Файл отправлен в чаты (%1$d)";
-/* Toast text upon sending multiple files to chat */
-"filesSentToChat"="Файлы отправлены в чат";
-/* success message when sending multiple files. Please do not modify the %d placeholder. */
-"xfilesSentSuccesfully"="Файлы отправлены (%d)";
 /* Title show when a file is being downloaded */
 "downloading"="Скачивание";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -612,10 +598,6 @@
 "Photos uploaded, video uploads are off, 1 video not uploaded"="Фото загружены, загрузка видео отключена; 1 видео не загружено";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
 "Photos uploaded, video uploads are off, %lu videos not uploaded"="Фото загружены, загрузка видео отключена; %lu видео не загружено";
-/* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
-"oneItemSelected"="Элементов выбрано: %lu";
-/* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
-"itemsSelected"="Элементов выбрано: %lu";
 /* String shown when multi selection is enabled and only one item has been selected. */
 "1 selected"="1 выбран";
 /* String shown when multi selection is enabled and the user has more than one item selected. */
@@ -924,8 +906,6 @@
 "filesFolderRemovedToRubbishBinMessage"="%d файлов(а) и 1 папка были удалены с MEGA";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="[A] файлов(а) и [B] папок(и) были удалены с MEGA";
-/* Success message shown when [A] = {1+} files and [B] = "{1+} file{s} {and} {1+} folder{s} have been removed from MEGA" */
-"sharedItems.rubbish.confirmation.message"="%@ удалено из MEGA";
 /* Hint text to suggest that the user have to write the new password on it */
 "newPassword"="Новый пароль";
 /* Hint text where the user have to re-write the new password to confirm it */
@@ -1281,7 +1261,7 @@
 /* Title to perform the action of sending a message to a contact. */
 "sendMessage"="Отправить Сообщение";
 /* Title for a section on the fingerprint warning dialog. Below it is a button which will allow the user to verify their contact's fingerprint credentials. */
-"verifyCredentials"="Подтвердить Учетные Данные";
+"verifyCredentials"="Подтверждение учётных данных";
 /* Title of button which marks contact as verified on Verify Contact screen */
 "account.verifyContact.confirmButtonText"="Отметить как подтверждённые";
 /* Button title */
@@ -3255,7 +3235,7 @@
 /* In App notification for meetings */
 "inapp.notifications.meetings.header"="Встречи";
 /* In app notification description for one off new meeting invitation */
-"inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email] пригласил[/B] вас на встречу, назначенную на:";
+"inapp.notifications.scheduledMeetings.oneOff.new.description"="Пользователь [B][Email][/B] пригласил вас на встречу, назначенную на:";
 /* In app notification description for scheduled meeting when multiple fields updated for one off meeting */
 "inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] изменил[/B] подробности встречи:";
 /* In app notification description for scheduled meeting description field update */
@@ -3630,6 +3610,8 @@
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Особенности планов Pro";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
 "upgradeAccountPlan.message.text.featuresOfProPlan"="• Защищённые паролем ссылки\n\n• Ссылки со сроком действия\n\n• Обмен квотой передач\n\n• Автоматическое резервное копирование\n\n• Перемотка на период до 90 дней на Pro Lite и до 180 дней на Pro I, II и III (скоро)\n\n• Срок очистки корзины от 7 дней до 10 лет";
+/* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Защищённые паролем ссылки\n\n• Ссылки со сроком действия\n\n• Обмен квотой передач\n\n• Автоматическое резервное копирование\n\n• Перемотка на период до 90 дней на Pro Lite и до 180 дней на Pro I, II и III\n\n• Срок очистки корзины от 7 дней до 10 лет\n\n• Без рекламы";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Подробная информация о подписке";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3839,6 +3821,8 @@
 /* Filter name for searching on the home screen */
 "home.search.filter.archives"="Архивы";
 /* Filter name for searching on the home screen */
+"home.search.filter.spreadsheets"="Таблицы";
+/* Filter name for searching on the home screen */
 "home.search.filter.modificationDate.today"="Сегодня";
 /* Filter name for searching on the home screen */
 "home.search.filter.modificationDate.last7days"="Последние 7 дней";
@@ -3978,3 +3962,27 @@
 "meetings.info.shareMeetingLink.meetingTime"="Дата и время: %@";
 /* Meeting link text for sharing a scheduled meeting link through external app */
 "meetings.info.shareMeetingLink.meetingLink"="Ссылка на встречу: %@";
+/* A log message in the chat conversation to tell the reader that a participant [A] joined the meeting. For example: Alice joined the meeting. */
+"chat.message.joinedTheMeeting"="Пользователь [A] присоединился к встрече.";
+/* A log message in the chat conversation to tell the reader that a participant [A] left the meeting. For example: Alice left the meeting. */
+"chat.message.leftTheMeeting"="Пользователь [A] покинул встречу.";
+/* A log message in a chat conversation to tell the reader that a participant [A] was removed from the meeting by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the meeting by Frank. */
+"chat.message.wasRemovedFromTheMeetingBy"="Пользователь [A] был удалён из встречи модератором [B].";
+/* A log message in a chat conversation to tell the reader that a participant [A] was added to the meeting by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the meeting by invitation from Frank. */
+"chat.message.joinedTheMeetingByInvitationFrom"="Пользователь [A] присоединился к встрече по приглашению [B].";
+/* Meeting subject text for sharing a meeting link through email */
+"meetings.info.shareMeetingLink.subject"="Приглашения на встречу MEGA";
+/* Calls: Floating panel participants in call header to mute them all */
+"calls.panel.participantsInCall.header.muteAll"="Приглушить всех";
+/* Calls: Floating panel participants in call header to show all participants are muted */
+"calls.panel.participantsInCall.header.allMuted"="Приглушены все";
+/* Calls: Participant context menu action to mute in the call */
+"calls.panel.participantsInCall.participantContextMenu.actions.mute"="Приглушить";
+/* Calls: Mute all participants success message */
+"calls.participantsInCall.muteAll.success"="Вы приглушили всех участников";
+/* Calls: Mute specific participant success message */
+"calls.participantsInCall.muteParticipant.success"="Вы приглушили %@";
+/* Calls: Mute all participants error message */
+"calls.participantsInCall.muteAll.error"="Не удалось приглушить всех участников";
+/* Calls: Mute specific participant error message */
+"calls.participantsInCall.muteParticipant.error"="Не удалось приглушить %@";

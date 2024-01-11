@@ -259,7 +259,7 @@
 /* Detail message shown when you try to call someone that is not you contact in MEGA. The [X] placeholder will be replaced on runtime for the email of the user */
 "dialog.callAttempt.contactNotInMEGA"="Uw contactpersoon [X] is niet op MEGA. Om via de gecodeerde chat van MEGA te kunnen bellen, moet u uw contactpersoon uitnodigen";
 /* Text shown when the user sends a contact invitation */
-"inviteSent"="Uitnodiging Verstuurd";
+"inviteSent"="Uitnodiging verstuurd";
 /* Button title to allow the user postpone an action */
 "later"="Later";
 /* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
@@ -284,10 +284,6 @@
 "transfersEmptyState_titleUpload"="Geen Uploads";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Cloud Schijf";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
-"oneFile"="%d bestand";
-/* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
-"files"="%d bestanden";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="Wachtrij";
 /* A label to indicate a paused state for a transfer item (upload/download). */
@@ -378,8 +374,6 @@
 "generatingLinks"="Links genereren…";
 /* Message shown when the link has been copied to the pasteboard */
 "linkCopied"="Gekopieerde link";
-/* Message shown when some links have been copied to the pasteboard */
-"linksCopied"="Gekopieerde links";
 /* Text of the button after the links were copied to the clipboard */
 "copiedToTheClipboard"="Gekopieerd naar het klembord";
 /* A title for the Copyright Warning dialog. */
@@ -426,14 +420,6 @@
 "general.sendToChat"="Versturen naar Gesprek";
 /* Column header of my contacts/chats at copy dialog */
 "My chats"="Mijn gesprekken";
-/* Toast text upon sending a single file to chat */
-"fileSentToChat"="Bestand verstuurd naar gesprek";
-/* Success message when the attachment has been sent to a many chats */
-"fileSentToXChats"="Bestand verzonden naar %1$d gesprekken";
-/* Toast text upon sending multiple files to chat */
-"filesSentToChat"="Bestanden verstuurd naar gesprek";
-/* success message when sending multiple files. Please do not modify the %d placeholder. */
-"xfilesSentSuccesfully"="%d bestanden verstuurd";
 /* Title show when a file is being downloaded */
 "downloading"="Aan het downloaden";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -612,10 +598,6 @@
 "Photos uploaded, video uploads are off, 1 video not uploaded"="Foto's geüpload, video uploads staan uitgeschakeld; 1 video niet geüpload";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
 "Photos uploaded, video uploads are off, %lu videos not uploaded"="Foto's geüpload, video uploads staan uitgeschakeld; %lu video's niet geüpload";
-/* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
-"oneItemSelected"="%lu item geselecteerd";
-/* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
-"itemsSelected"="%lu items geselecteerd";
 /* String shown when multi selection is enabled and only one item has been selected. */
 "1 selected"="1 geselecteerd";
 /* String shown when multi selection is enabled and the user has more than one item selected. */
@@ -924,8 +906,6 @@
 "filesFolderRemovedToRubbishBinMessage"="%d bestanden en 1 map zijn verwijderd van MEGA";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="[A] bestanden en [B] mappen zijn verwijderd van MEGA";
-/* Success message shown when [A] = {1+} files and [B] = "{1+} file{s} {and} {1+} folder{s} have been removed from MEGA" */
-"sharedItems.rubbish.confirmation.message"="%@ verwijderd van MEGA";
 /* Hint text to suggest that the user have to write the new password on it */
 "newPassword"="Nieuw wachtwoord";
 /* Hint text where the user have to re-write the new password to confirm it */
@@ -3255,7 +3235,7 @@
 /* In App notification for meetings */
 "inapp.notifications.meetings.header"="Vergaderingen";
 /* In app notification description for one off new meeting invitation */
-"inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email]heeft u uitgenodigd [/B]voor een vergadering gepland voor:";
+"inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email][/B] heeft u uitgenodigd gepland voor:";
 /* In app notification description for scheduled meeting when multiple fields updated for one off meeting */
 "inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] heeft de vergadering bijgewerkt[/B] naar";
 /* In app notification description for scheduled meeting description field update */
@@ -3367,7 +3347,7 @@
 /* Schedule meeting add participants field */
 "meetings.scheduleMeeting.addParticipants"="Deelnemers toevoegen";
 /* Schedule meeting send calendar invite field */
-"meetings.scheduleMeeting.sendCalendarInvite"="Kalender uitnodiging versturen";
+"meetings.scheduleMeeting.sendCalendarInvite"="Agenda-uitnodiging verzenden";
 /* Schedule meeting open invite field */
 "meetings.scheduleMeeting.openInvite"="Toestaan ​​dat non-hosts deelnemers kan toevoegen";
 /* Schedule meeting description field placeholder */
@@ -3630,6 +3610,8 @@
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Kenmerken van Pro abonnementen";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
 "upgradeAccountPlan.message.text.featuresOfProPlan"="• Met wachtwoord beveiligde koppelingen\n\n • Koppelingen met vervaldata • \n\nHet delen van quota's •\n\n Automatische back-ups • \n\nTerugspoelen tot 90 dagen met ProLite en tot 180 dagen met Pro I, II en III (binnenkort beschikbaar) •\n\n Plan het opruimen van de prullenbak tussen 7 dagen en 10 jaar";
+/* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Met wachtwoord beveiligde koppelingen\n\n• Koppelingen met vervaldata\n\n• Het delen van overdrachtstegoed• \n\n Automatische back-ups\n\n• Terugspoelen tot 90 dagen op Pro Lite en tot 180 dagen op Pro I, II en III\n\n• Plan het opruimen van de prullenbak tussen 7 dagen en 10 jaar\n\n• Advertentie vrij";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Abonnement details";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3719,7 +3701,7 @@
 /* Edit Schedule meeting navigaion title. */
 "meetings.scheduled.editMeeting.title"="Vergadering wijzigen";
 /* Schedule meeting calendar invite description */
-"meetings.scheduleMeeting.calendarInvite.description"="E-mail een agenda-uitnodiging naar deelnemers zodat ze de vergadering aan hun agenda kunnen toevoegen.";
+"meetings.scheduleMeeting.calendarInvite.description"="E-mail een agenda-uitnodiging naar deelnemers, zodat zij de vergadering aan hun agenda kunnen toevoegen.";
 /* Start meeting tip view message bold text */
 "meetings.scheduleMeeting.startMeetingTip.startMeeting"="Begin vergadering";
 /* Recurring meeting tip view message bold text */
@@ -3838,6 +3820,8 @@
 "home.search.filter.presentations"="Presentaties";
 /* Filter name for searching on the home screen */
 "home.search.filter.archives"="Archieven";
+/* Filter name for searching on the home screen */
+"home.search.filter.spreadsheets"="Spreadsheets";
 /* Filter name for searching on the home screen */
 "home.search.filter.modificationDate.today"="Vandaag";
 /* Filter name for searching on the home screen */
@@ -3975,6 +3959,30 @@
 /* Meeting name text for sharing a scheduled meeting link through external app */
 "meetings.info.shareMeetingLink.meetingName"="Vergader naam: %@";
 /* Meeting time text for sharing a scheduled meeting link through external app */
-"meetings.info.shareMeetingLink.meetingTime"="Date and time: %@";
+"meetings.info.shareMeetingLink.meetingTime"="Datum en tijd: %@";
 /* Meeting link text for sharing a scheduled meeting link through external app */
 "meetings.info.shareMeetingLink.meetingLink"="Vergader link: %@";
+/* A log message in the chat conversation to tell the reader that a participant [A] joined the meeting. For example: Alice joined the meeting. */
+"chat.message.joinedTheMeeting"="[A] is aangesloten tot de vergadering.";
+/* A log message in the chat conversation to tell the reader that a participant [A] left the meeting. For example: Alice left the meeting. */
+"chat.message.leftTheMeeting"="[A] heeft de vergadering verlaten.";
+/* A log message in a chat conversation to tell the reader that a participant [A] was removed from the meeting by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the meeting by Frank. */
+"chat.message.wasRemovedFromTheMeetingBy"="[A] was verwijderd van de meeting door [B].";
+/* A log message in a chat conversation to tell the reader that a participant [A] was added to the meeting by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the meeting by invitation from Frank. */
+"chat.message.joinedTheMeetingByInvitationFrom"="[A] is aangesloten tot de vergadering door uitnodiging van [B].";
+/* Meeting subject text for sharing a meeting link through email */
+"meetings.info.shareMeetingLink.subject"="Uitnodiging voor MEGA-vergadering";
+/* Calls: Floating panel participants in call header to mute them all */
+"calls.panel.participantsInCall.header.muteAll"="Alles dempen";
+/* Calls: Floating panel participants in call header to show all participants are muted */
+"calls.panel.participantsInCall.header.allMuted"="Alles gedempt";
+/* Calls: Participant context menu action to mute in the call */
+"calls.panel.participantsInCall.participantContextMenu.actions.mute"="Dempen";
+/* Calls: Mute all participants success message */
+"calls.participantsInCall.muteAll.success"="U heeft alle deelnemers gedempt";
+/* Calls: Mute specific participant success message */
+"calls.participantsInCall.muteParticipant.success"="U heeft %@ gedempt";
+/* Calls: Mute all participants error message */
+"calls.participantsInCall.muteAll.error"="Fout bij dempen van alle deelnemers";
+/* Calls: Mute specific participant error message */
+"calls.participantsInCall.muteParticipant.error"="Fout bij dempen %@";

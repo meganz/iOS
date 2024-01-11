@@ -259,7 +259,7 @@
 /* Detail message shown when you try to call someone that is not you contact in MEGA. The [X] placeholder will be replaced on runtime for the email of the user */
 "dialog.callAttempt.contactNotInMEGA"="Contactul tău [X] nu este pe MEGA. Pentru a apela prin intermediul chatului criptat MEGA, trebuie să-ți inviți contactul.";
 /* Text shown when the user sends a contact invitation */
-"inviteSent"="Invitație trimisă";
+"inviteSent"="Invitația a fost trimisă";
 /* Button title to allow the user postpone an action */
 "later"="Mai târziu";
 /* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
@@ -284,10 +284,6 @@
 "transfersEmptyState_titleUpload"="Nicio încărcare";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Unitate cloud";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
-"oneFile"="%d fișier";
-/* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
-"files"="%d de fișiere";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="În coada de așteptare";
 /* A label to indicate a paused state for a transfer item (upload/download). */
@@ -378,8 +374,6 @@
 "generatingLinks"="Se generează linkurile…";
 /* Message shown when the link has been copied to the pasteboard */
 "linkCopied"="Link copiat";
-/* Message shown when some links have been copied to the pasteboard */
-"linksCopied"="Linkuri copiate";
 /* Text of the button after the links were copied to the clipboard */
 "copiedToTheClipboard"="Copiat în clipboard";
 /* A title for the Copyright Warning dialog. */
@@ -426,14 +420,6 @@
 "general.sendToChat"="Trimite în chat";
 /* Column header of my contacts/chats at copy dialog */
 "My chats"="Chaturile mele";
-/* Toast text upon sending a single file to chat */
-"fileSentToChat"="Fișiere trimise în chat";
-/* Success message when the attachment has been sent to a many chats */
-"fileSentToXChats"="Fișier trimis către %1$d chaturi";
-/* Toast text upon sending multiple files to chat */
-"filesSentToChat"="Fișiere trimise în chat";
-/* success message when sending multiple files. Please do not modify the %d placeholder. */
-"xfilesSentSuccesfully"="%d fișiere trimise";
 /* Title show when a file is being downloaded */
 "downloading"="Se descarcă";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -612,10 +598,6 @@
 "Photos uploaded, video uploads are off, 1 video not uploaded"="Fotografiile au fost încărcate, încărcările video sunt dezactivate; 1 videoclip nu a fost încărcat";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
 "Photos uploaded, video uploads are off, %lu videos not uploaded"="Fotografiile au fost încărcate, încărcările video sunt dezactivate; %lu videoclipuri nu au fost încărcate";
-/* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
-"oneItemSelected"="%lu element selectat";
-/* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
-"itemsSelected"="%lu elemente selectate";
 /* String shown when multi selection is enabled and only one item has been selected. */
 "1 selected"="1 selectat";
 /* String shown when multi selection is enabled and the user has more than one item selected. */
@@ -881,7 +863,7 @@
 /* During account cancellation (deletion) */
 "cancellationLinkHasExpired"="Linkul de anulare a expirat.";
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
-"enterYourPasswordToConfirmThatYouWanToClose"="Acesta este ultimul pas pentru a-ți șterge contul. Vei pierde definitiv toate datele stocate în unitatea cloud. Te rugăm să introduci parola mai jos.";
+"enterYourPasswordToConfirmThatYouWanToClose"="Acesta este ultimul pas pentru a vă șterge contul. Veți pierde definitiv toate datele stocate în cloud. Vă rugăm să introduceți parola mai jos.";
 /* During account cancellation (deletion) */
 "accountCanceledSuccessfully"="Contul tău a fost șters";
 /* Account closure, password check dialog when user click on closure email. */
@@ -924,8 +906,6 @@
 "filesFolderRemovedToRubbishBinMessage"="%d fișiere și 1 folder eliminate de pe MEGA";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="[A] fișiere și [B] foldere eliminate de pe MEGA";
-/* Success message shown when [A] = {1+} files and [B] = "{1+} file{s} {and} {1+} folder{s} have been removed from MEGA" */
-"sharedItems.rubbish.confirmation.message"="%@ au fost eliminat din MEGA";
 /* Hint text to suggest that the user have to write the new password on it */
 "newPassword"="Parolă nouă";
 /* Hint text where the user have to re-write the new password to confirm it */
@@ -1287,7 +1267,7 @@
 /* Button title */
 "verified"="Verificat";
 /* A button title to delete the history of a chat. */
-"clearChatHistory"="Șterge istoricul chatului";
+"clearChatHistory"="Șterge istoricul conversațiilor";
 /* A confirmation message for a user to confirm that they want to clear the history of a chat. */
 "clearTheFullMessageHistory"="Sigur vrei să ștergi istoricul complet al mesajelor din această conversație?";
 /* Message show when the history of a chat has been successfully deleted. */
@@ -2307,7 +2287,7 @@
 /* Over Disk Quota warning message to tell user to how long left before upgrading */
 "<body>You have <warn>%@</warn> left to upgrade.</body>"="<body>Ai <warn>%@</warn> rămas(e) pentru a face upgrade.</body>";
 /* Over Disk Quota warnig message to tell user your data is subject to deletion. */
-"After that, your data is subject to deletion."="După aceea, datele tale sunt supuse ștergerii.";
+"After that, your data is subject to deletion."="După aceea, datele dvs. sunt supuse ștergerii.";
 /* Title for action to modify the registered phone number. */
 "Modify Phone Number"="Modifică numărul de telefon";
 /* Title for action to remove the registered phone number. */
@@ -2413,13 +2393,13 @@
 /* Text show under the setting 'History Retention' to explain what will happen if enabled */
 "Automatically delete messages older than a certain amount of time"="Șterge automat mesajele mai vechi de o anumită perioadă de timp.";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 day' */
-"Automatically delete messages older than one day"="Ștergeți automat mesajele mai vechi de o zi.";
+"Automatically delete messages older than one day"="Șterge automat mesajele mai vechi de o zi.";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 week' */
-"Automatically delete messages older than one week"="Ștergeți automat mesajele mai vechi de o săptămână.";
+"Automatically delete messages older than one week"="Șterge automat mesajele mai vechi de o săptămână.";
 /* Text show under the setting 'History Retention' to explain that it is configured to '1 month' */
 "Automatically delete messages older than one month"="Șterge automat mesajele mai vechi de o lună.";
 /* Text show under the setting 'History Retention' to explain what is the custom value configured. This value is represented by '%1'. The possible values go from 1 hour, to days, weeks or months, up to 1 year. */
-"chat.manageHistory.message.deleteMessageOlderThanCustomValue"="Șterge automat mesajele mai vechi de %@";
+"chat.manageHistory.message.deleteMessageOlderThanCustomValue"="Șterge automat mesajele mai vechi %@";
 /* Text show under the setting 'Clear Chat History' to explain what will happen if used */
 "Delete all messages and files shared in this conversation from both parties. This action is irreversible"="Șterge toate mesajele și fișierele partajate în această conversație. Această acțiune este ireversibilă.";
 /* Title show on the sheet to configure default values of the 'History Retention' setting */
@@ -3255,7 +3235,7 @@
 /* In App notification for meetings */
 "inapp.notifications.meetings.header"="Întâlniri";
 /* In app notification description for one off new meeting invitation */
-"inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email] te-a invitat[/B] la o întâlnire programată pentru:";
+"inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email][/B] v-a invitat la o întâlnire programată pentru:";
 /* In app notification description for scheduled meeting when multiple fields updated for one off meeting */
 "inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] a actualizat [/B] Întâlnirea la";
 /* In app notification description for scheduled meeting description field update */
@@ -3630,6 +3610,8 @@
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Caracteristicile planurilor Pro";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
 "upgradeAccountPlan.message.text.featuresOfProPlan"="• Link-uri protejate prin parolă\n\n• Link-uri cu date de expirare\n\n• Împărțirea cotelor de transfer\n\n• Copii de rezervă automate\n\n• Derulați înapoi până la 90 de zile pe Pro Lite și până la 180 de zile pe Pro I, II și III (în curând)\n\n• Programați curățarea coșului de gunoi între 7 zile și 10 ani";
+/* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Link-uri protejate prin parolă\n\n• Link-uri cu date de expirare\n\n• Împărțirea cotelor de transfer\n\n• Copii de rezervă automate\n\n• Derulează înapoi până la 90 de zile pe Pro Lite și până la 180 de zile pe Pro I, II și III\n\n• Programați curățarea coșului de gunoi între 7 zile și 10 ani\n\n• Fără reclame";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Detaliile abonamentului";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3719,7 +3701,7 @@
 /* Edit Schedule meeting navigaion title. */
 "meetings.scheduled.editMeeting.title"="Editează întâlnirea";
 /* Schedule meeting calendar invite description */
-"meetings.scheduleMeeting.calendarInvite.description"="Trimită prin e-mail invitația pentru calendar participanților, astfel încât aceștia să poată adăuga întâlnirea în calendarele lor.";
+"meetings.scheduleMeeting.calendarInvite.description"="Trimiteți invitație pentru calendar participanților prin e-mail, astfel încât aceștia să poată adăuga întâlnirea în calendarele lor.";
 /* Start meeting tip view message bold text */
 "meetings.scheduleMeeting.startMeetingTip.startMeeting"="Începe o întâlnire";
 /* Recurring meeting tip view message bold text */
@@ -3838,6 +3820,8 @@
 "home.search.filter.presentations"="Prezentări";
 /* Filter name for searching on the home screen */
 "home.search.filter.archives"="Arhive";
+/* Filter name for searching on the home screen */
+"home.search.filter.spreadsheets"="Foi de calcul";
 /* Filter name for searching on the home screen */
 "home.search.filter.modificationDate.today"="Astăzi";
 /* Filter name for searching on the home screen */
@@ -3977,4 +3961,28 @@
 /* Meeting time text for sharing a scheduled meeting link through external app */
 "meetings.info.shareMeetingLink.meetingTime"="Data și ora: %@";
 /* Meeting link text for sharing a scheduled meeting link through external app */
-"meetings.info.shareMeetingLink.meetingLink"="Întâlnire link: %@";
+"meetings.info.shareMeetingLink.meetingLink"="Link pentru întâlnire: %@";
+/* A log message in the chat conversation to tell the reader that a participant [A] joined the meeting. For example: Alice joined the meeting. */
+"chat.message.joinedTheMeeting"="[A] s-a alăturat întâlnirii.";
+/* A log message in the chat conversation to tell the reader that a participant [A] left the meeting. For example: Alice left the meeting. */
+"chat.message.leftTheMeeting"="[A] a părăsit Întâlnirea.";
+/* A log message in a chat conversation to tell the reader that a participant [A] was removed from the meeting by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the meeting by Frank. */
+"chat.message.wasRemovedFromTheMeetingBy"="[A] a fost eliminat de la întâlnire de [B].";
+/* A log message in a chat conversation to tell the reader that a participant [A] was added to the meeting by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the meeting by invitation from Frank. */
+"chat.message.joinedTheMeetingByInvitationFrom"="[A] s-a alăturat întâlnirii prin invitație de [B].";
+/* Meeting subject text for sharing a meeting link through email */
+"meetings.info.shareMeetingLink.subject"="Invitație la întâlnire MEGA";
+/* Calls: Floating panel participants in call header to mute them all */
+"calls.panel.participantsInCall.header.muteAll"="Amuțire toate";
+/* Calls: Floating panel participants in call header to show all participants are muted */
+"calls.panel.participantsInCall.header.allMuted"="Toate au fost amuțite";
+/* Calls: Participant context menu action to mute in the call */
+"calls.panel.participantsInCall.participantContextMenu.actions.mute"="Amuțește";
+/* Calls: Mute all participants success message */
+"calls.participantsInCall.muteAll.success"="V-ați amuțit toți participanții";
+/* Calls: Mute specific participant success message */
+"calls.participantsInCall.muteParticipant.success"="V-ați amuțit %@";
+/* Calls: Mute all participants error message */
+"calls.participantsInCall.muteAll.error"="Eroare de mutare a tuturor participanților";
+/* Calls: Mute specific participant error message */
+"calls.participantsInCall.muteParticipant.error"="Eroare de mutare %@";

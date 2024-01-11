@@ -259,7 +259,7 @@
 /* Detail message shown when you try to call someone that is not you contact in MEGA. The [X] placeholder will be replaced on runtime for the email of the user */
 "dialog.callAttempt.contactNotInMEGA"="Tên liên lạc [X] không có trên MEGA. Để có thể gọi điện và chát thông qua MEGA, bạn cần phải mời người này đăng ký tài khoản";
 /* Text shown when the user sends a contact invitation */
-"inviteSent"="Lời mời đã gửi đi";
+"inviteSent"="Invitation sent";
 /* Button title to allow the user postpone an action */
 "later"="Lúc khác";
 /* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
@@ -284,10 +284,6 @@
 "transfersEmptyState_titleUpload"="Không có phiên tải lên";
 /* Title of the Cloud Drive section */
 "cloudDrive"="Ổ Mây";
-/* Subtitle shown on folders that gives you information about its content. This case "{1} file" */
-"oneFile"="%d tệp";
-/* Subtitle shown on folders that gives you information about its content. This case "{1+} files" */
-"files"="%d tệp tin";
 /* Text shown when one file has been selected to be downloaded but it's on the queue to be downloaded, it's pending for download */
 "queued"="Đang chờ";
 /* A label to indicate a paused state for a transfer item (upload/download). */
@@ -378,8 +374,6 @@
 "generatingLinks"="Đang tạo các đường liên kết…";
 /* Message shown when the link has been copied to the pasteboard */
 "linkCopied"="Đã sao chép liên kết";
-/* Message shown when some links have been copied to the pasteboard */
-"linksCopied"="Đã sao chép các liên kết";
 /* Text of the button after the links were copied to the clipboard */
 "copiedToTheClipboard"="Đã lưu vào bộ ghi nhớ";
 /* A title for the Copyright Warning dialog. */
@@ -426,14 +420,6 @@
 "general.sendToChat"="Gửi đến chát";
 /* Column header of my contacts/chats at copy dialog */
 "My chats"="Các cuộc chát";
-/* Toast text upon sending a single file to chat */
-"fileSentToChat"="Tệp tin đã được gửi tới chát";
-/* Success message when the attachment has been sent to a many chats */
-"fileSentToXChats"="Tệp đã gửi tới cho %1$d cuộc chát";
-/* Toast text upon sending multiple files to chat */
-"filesSentToChat"="Các tệp tin được gửi tới chát";
-/* success message when sending multiple files. Please do not modify the %d placeholder. */
-"xfilesSentSuccesfully"="%d tệp tin đã được gửi đi";
 /* Title show when a file is being downloaded */
 "downloading"="Đang tải xuống";
 /* Title shown on the navigation bar to explain that you have to choose a destination for the files and/or folders in case you copy, move, import or do some action with them. */
@@ -612,10 +598,6 @@
 "Photos uploaded, video uploads are off, 1 video not uploaded"="Ảnh đã được tải lên, tùy chọn tải lên cho video bị tắt; 1 video không tải lên được";
 /* Message shown the pending video files when photos uploaded and video upload is not enabled. Plural. */
 "Photos uploaded, video uploads are off, %lu videos not uploaded"="Ảnh đã được tải lên, tùy chọn tải lên cho video bị tắt; %lu video không tải lên được";
-/* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected one photo */
-"oneItemSelected"="%lu mục đã được chọn";
-/* Title shown on the Camera Uploads section when the edit mode is enabled and you have selected more than one photo */
-"itemsSelected"="%lu mục đã được chọn";
 /* String shown when multi selection is enabled and only one item has been selected. */
 "1 selected"="1 mục đã chọn";
 /* String shown when multi selection is enabled and the user has more than one item selected. */
@@ -924,8 +906,6 @@
 "filesFolderRemovedToRubbishBinMessage"="Đã xóa %d tệp tin và 1 thư mục khỏi MEGA";
 /* Success message shown when [A] = {1+} files and [B] = {1+} folders have been removed from MEGA */
 "filesFoldersRemovedToRubbishBinMessage"="Đã xóa [A] tệp tin và [B] thư mục khỏi MEGA";
-/* Success message shown when [A] = {1+} files and [B] = "{1+} file{s} {and} {1+} folder{s} have been removed from MEGA" */
-"sharedItems.rubbish.confirmation.message"="Đã xóa %@ khỏi MEGA";
 /* Hint text to suggest that the user have to write the new password on it */
 "newPassword"="Mật khẩu mới";
 /* Hint text where the user have to re-write the new password to confirm it */
@@ -2561,7 +2541,7 @@
 /* Title of the button to open Settings */
 "dialog.turnOnNotifications.button.primary"="Đi tới Cài đặt";
 /* Dialog title for the change launch tab screen */
-"Change Launch Tab"="Thay đổi phần khởi chạy";
+"Change Launch Tab"="Thay đổi phần khởi chạy";
 /* Dialog description for the change launch tab screen */
 "You can now select which section the app opens at launch. Choose the one that better suits your needs, whether it’s Chat, Cloud Drive, or Home."="Giờ bạn có thể chọn lựa phần trong app muốn được hiển thị mỗi khi khởi động. Chọn phần phù hợp với cách sử dụng cá nhân, như Chát, Ổ mây, hoặc Trang chủ.";
 /* Dialog button text for the change launch tab screen */
@@ -3255,7 +3235,7 @@
 /* In App notification for meetings */
 "inapp.notifications.meetings.header"="Họp";
 /* In app notification description for one off new meeting invitation */
-"inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email] đã mời[/B] bạn cho một cuộc họp được lên lịch vào:";
+"inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email][/B] invited you to a meeting scheduled for:";
 /* In app notification description for scheduled meeting when multiple fields updated for one off meeting */
 "inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] đã cập nhật[/B] cuộc họp thành";
 /* In app notification description for scheduled meeting description field update */
@@ -3367,7 +3347,7 @@
 /* Schedule meeting add participants field */
 "meetings.scheduleMeeting.addParticipants"="Thêm thành viên";
 /* Schedule meeting send calendar invite field */
-"meetings.scheduleMeeting.sendCalendarInvite"="Gửi thư mời lịch";
+"meetings.scheduleMeeting.sendCalendarInvite"="Send calendar invitation";
 /* Schedule meeting open invite field */
 "meetings.scheduleMeeting.openInvite"="Cho phép các thành viên không chủ trì mời thêm người";
 /* Schedule meeting description field placeholder */
@@ -3473,9 +3453,9 @@
 /* Device Center backup error: Individual file sync issue */
 "device.center.backup.error.fileSyncIndividual"="Đồng bộ không thể thực hiện với tệp tin riêng lẻ. Bạn cần phải thiết lập đồng bộ từ một thư mục.";
 /* Device Center backup error: Initial scan failure */
-"device.center.backup.error.initialScanFailed"="Quét ban đầu không thành công. Bạn sẽ cần kích hoạt lại đồng bộ hóa hoặc sao lưu của mình từ ứng dụng Máy tính để bàn.";
+"device.center.backup.error.initialScanFailed"="Quét khởi đầu đã không thành công. Bạn sẽ cần kích hoạt lại đồng bộ hóa hoặc sao lưu của mình từ Ứng dụng cho máy tính.";
 /* Device Center backup error: Device folder not located */
-"device.center.backup.error.folderDeviceUnlocatedNow"="Không thể định vị thư mục trong thiết bị của bạn ngay bây giờ, hãy thử lại sau.";
+"device.center.backup.error.folderDeviceUnlocatedNow"="Hiện không thể định vị được thư mục trong thiết bị của bạn, hãy thử lại sau.";
 /* Device Center backup error: Device folder can't be located */
 "device.center.backup.error.folderDeviceUnlocated"="Không tìm thấy vị trí của thư mục trong thiết bị của bạn.";
 /* Device Center backup error: MEGA folder moved or deleted */
@@ -3483,7 +3463,7 @@
 /* Device Center backup error: Storage quota limit */
 "device.center.backup.error.storageQuotaReached"="Vượt mức giới hạn không gian lưu trữ.";
 /* Device Center backup error: Plan expired */
-"device.center.backup.error.planExpired"="Không thể đồng bộ hóa hoặc sao lưu thư mục này vì gói của bạn đã hết hạn.";
+"device.center.backup.error.planExpired"="Không thể đồng bộ hóa hoặc sao lưu thư mục này vì gói đăng ký của bạn đã hết hạn.";
 /* Device Center backup error: Shared folder quota reached */
 "device.center.backup.error.userSharedQuotaReached"="Thư mục không thể đồng bộ được do tài khoản của người chia sẻ thư mục này đã vượt mức băng thông lưu trữ của họ.";
 /* Device Center backup error: Shared folder without full access */
@@ -3499,19 +3479,19 @@
 /* Device Center backup error: Can't sync VirtualBox folders */
 "device.center.backup.error.virtualboxFolders"="MEGA không thể đồng bộ hóa hoặc sao lưu các thư mục VirtualBox.";
 /* Device Center backup error: Account blocked */
-"device.center.backup.error.accountBlocked"="Không thể đồng bộ hóa hoặc sao lưu thư mục này vì tài khoản đã bị chặn.";
+"device.center.backup.error.accountBlocked"="Không thể đồng bộ hóa hoặc sao lưu thư mục này vì tài khoản của bạn đã bị chặn.";
 /* Device Center backup error: Contact support for sync issues */
-"device.center.backup.error.problemSyncingContactSupport"="Sự cố khi đồng bộ hóa hoặc sao lưu thư mục này. Thử lại sau. Nếu sự cố vẫn tiếp diễn, hãy liên hệ với bộ phận Hỗ trợ.";
+"device.center.backup.error.problemSyncingContactSupport"="Có sự cố khi đồng bộ hóa hoặc sao lưu thư mục này. Thử lại sau. Nếu sự cố vẫn tiếp diễn, hãy liên hệ với bộ phận Hỗ trợ.";
 /* Device Center backup error: Account reloaded */
 "device.center.backup.error.accountReloaded"="Đã tải lại tài khoản. Mọi cập nhật bị bỏ lỡ đối với các bản sao lưu hoặc đồng bộ hóa của bạn chưa có được áp dụng.";
 /* Device Center backup error: Logged out of Desktop app */
-"device.center.backup.error.loggedOut"="Đồng bộ hóa hoặc sao lưu đã bị dừng khi bạn dường như đã đăng xuất khỏi ứng dụng Máy tính để bàn. Đăng nhập lại thông qua ứng dụng Máy tính để bàn và tiếp tục đồng bộ hóa hoặc sao lưu.";
+"device.center.backup.error.loggedOut"="Đồng bộ hóa hoặc sao lưu đã bị dừng do có vẻ như bạn đã đăng xuất khỏi Ứng dụng cho máy tính. Đăng nhập vào lại Ứng dụng cho máy tính để tiếp tục đồng bộ hóa hoặc sao lưu.";
 /* Device Center backup error: Changes to MEGA folder */
-"device.center.backup.error.changesToMegaFolder"="Sự cố đồng bộ hóa hoặc sao lưu thư mục này do thay đổi thư mục MEGA. Dừng đồng bộ hóa hoặc sao lưu và thử thiết lập lại trong ứng dụng Máy tính để bàn hoặc liên hệ với Bộ phận hỗ trợ.";
+"device.center.backup.error.changesToMegaFolder"="Có sự cố đồng bộ hóa hoặc sao lưu thư mục này do các thay đổi của thư mục MEGA. Dừng đồng bộ hóa hoặc sao lưu và thử thiết lập lại trong Ứng dụng đành cho máy tính hoặc liên hệ với bộ phận Hỗ trợ.";
 /* Device Center backup error: External drive folder not located */
 "device.center.backup.error.externalDriveUnlocated"="Không tìm thấy vị trí của thư mục trong ổ đĩa ngoài.";
 /* Device Center backup error: Synced folder at same path */
-"device.center.backup.error.alreadySyncedPath"="Đã có một thư mục được đồng bộ hóa ở cùng một đường dẫn.";
+"device.center.backup.error.alreadySyncedPath"="Đã có một thư mục được đồng bộ hóa với cùng đường dẫn.";
 /* Device Center backup error: Renaming issue */
 "device.center.backup.error.renamingFailed"="Đổi tên không thành công.";
 /* Device Center backup error: Ignored sync */
@@ -3521,17 +3501,17 @@
 /* Device Center backup error: Unknown drive path for sync */
 "device.center.backup.error.unknownDrivePath"="Không rõ đường dẫn ổ đĩa cho đồng bộ này.";
 /* Device Center backup error: Invalid scan interval */
-"device.center.backup.error.invalidScanInterval"="Khoảng thời gian quét không hợp lệ. Kiểm tra thiết lập khoảng thời gian quét và thử lại.";
+"device.center.backup.error.invalidScanInterval"="Khoảng thời gian quét khởi đầu không hợp lệ. Kiểm tra thiết lập khoảng thời gian quét và thử lại.";
 /* Device Center backup error: Sync or backup issue, setup again */
-"device.center.backup.error.syncOrBackupSetupAgain"="Sự cố khi đồng bộ hóa hoặc sao lưu thư mục này. Dừng đồng bộ hóa hoặc sao lưu và thử thiết lập lại trong ứng dụng Máy tính để bàn hoặc liên hệ với Bộ phận hỗ trợ.";
+"device.center.backup.error.syncOrBackupSetupAgain"="Có sự cố khi đồng bộ hóa hoặc sao lưu thư mục này. Hãy thử dừng đồng bộ hóa hoặc sao lưu và thử thiết lập lại trong Ứng dụng cho máy tính hoặc liên hệ với bộ phận Hỗ Trợ.";
 /* Device Center backup error: Can't read sync location */
-"device.center.backup.error.cantReadSyncLocation"="Không thể đọc vị trí đồng bộ hóa. Kiểm tra vị trí có thể truy cập được và quyền cho vị trí thư mục được cấp.";
+"device.center.backup.error.cantReadSyncLocation"="Không thể đọc được vị trí thư mục. Kiểm tra xem vị trí có thể truy cập được hay không và quyền đi tới vị trí thư mục đã được cấp phép.";
 /* Device Center backup error: Insufficient space for download */
 "device.center.backup.error.insufficientDownloadSpace"="Không đủ dung lượng cho việc tải xuống.";
 /* Device Center backup error: Unable to add filesystem watch */
-"device.center.backup.error.addFilesystemWatch"="Không thể thêm đồng hồ hệ thống tệp. Đảm bảo có đủ dung lượng trống và bộ nhớ và bạn đã cấp quyền cho vị trí thư mục.";
+"device.center.backup.error.addFilesystemWatch"="Không thể thêm đồng hồ hệ thống tệp. Hãy đảm bảo có đủ không gian và bộ nhớ trống, và bạn đã có cấp quyền truy cập vị trí thư mục.";
 /* Device Center backup error: Couldn't communicate with folder location */
-"device.center.backup.error.communicateWithFolderLocation"="Không thể giao tiếp với vị trí thư mục. Kiểm tra vị trí có thể truy cập được và quyền cho vị trí thư mục được cấp.";
+"device.center.backup.error.communicateWithFolderLocation"="Không thể giao tiếp với vị trí thư mục. Kiểm tra xem vị trí có thể truy cập được hay không và quyền đi tới vị trí thư mục đã được cấp phép.";
 /* Show in Cloud Drive section action title */
 "device.center.show.in.cloud.drive.action.title"="Hiện vị trí trong Ổ Mây";
 /* Show in Backups section action title */
@@ -3630,6 +3610,8 @@
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Các tính năng của gói Pro";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
 "upgradeAccountPlan.message.text.featuresOfProPlan"="• Liên kết được bảo vệ bằng mật khẩu\n\n• Liên kết có ngày hết hạn\n\n• Chia sẻ băng thông truyền tải\n\n• Sao lưu tự động\n\n• Tua lại tối đa lên đến 90 ngày với Pro Lite và tối đa 180 ngày với Pro I, II và III (sắp ra mắt)\n\n• Lên lịch dọn thùng rác từ 7 ngày đến 10 năm";
+/* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Automatic backups\n\n• Rewind up to 90 days on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Schedule rubbish bin clearing between 7 days and 10 years\n\n• Ad free";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Chi tiết gói đăng ký";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3719,7 +3701,7 @@
 /* Edit Schedule meeting navigaion title. */
 "meetings.scheduled.editMeeting.title"="Chỉnh sửa cuộc họp";
 /* Schedule meeting calendar invite description */
-"meetings.scheduleMeeting.calendarInvite.description"="Gửi email lời mời lịch hẹn cho những người tham gia biết và thêm cuộc họp vào lịch của họ.";
+"meetings.scheduleMeeting.calendarInvite.description"="Email a calendar invitation to participants so they can add the meeting to their calendars.";
 /* Start meeting tip view message bold text */
 "meetings.scheduleMeeting.startMeetingTip.startMeeting"="Bắt đầu cuộc họp";
 /* Recurring meeting tip view message bold text */
@@ -3839,6 +3821,8 @@
 /* Filter name for searching on the home screen */
 "home.search.filter.archives"="Nén";
 /* Filter name for searching on the home screen */
+"home.search.filter.spreadsheets"="Bảng tính";
+/* Filter name for searching on the home screen */
 "home.search.filter.modificationDate.today"="Hôm nay";
 /* Filter name for searching on the home screen */
 "home.search.filter.modificationDate.last7days"="7 ngày qua";
@@ -3881,13 +3865,13 @@
 /* A button label to close the waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.close"="Đóng";
 /* Error shown when moving folder to inside itself */
-"Error.nodeCopyOrMove.circularDependency"="Bạn không thể di chuyển thư mục này vì đích là cùng một thư mục.";
+"Error.nodeCopyOrMove.circularDependency"="Bạn không thể di chuyển thư mục này vì đích đến là cùng một thư mục.";
 /* Auto media discovery banner title */
 "photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="Vì thư mục này chỉ có chứa hoàn toàn là hình ảnh và videos, chúng tôi tự động đặt theo kiểu quan sát phương tiện số. Giúp bạn trải nghiệm nội dung hình ảnh của mình với bố cục sống động hơn. Tính năng này có thể tắt đi trong Thiết Đặt.";
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="Nhận được nhiều hơn với gói Pro";
 /* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
-"onboarding.upgradeAccount.header.subTitle"="Nâng cấp lên gói Pro để có nhiều dung lượng hơn và nhiều tính năng bổ sung. Kế hoạch của chúng tôi bắt đầu từ %@ một tháng.";
+"onboarding.upgradeAccount.header.subTitle"="Nâng cấp lên gói Pro để có nhiều không gian lưu trữ hơn với nhiều tính năng bổ sung. Các gói của chúng tôi có giá từ %@ một tháng.";
 /* Upgrade account screen content header for pro plan feature list */
 "onboarding.upgradeAccount.content.proPlanFeatureHeader"="Một số tính năng được mong đợi là:";
 /* Upgrade account screen content title about pro plan featuring as Generous Storage */
@@ -3975,6 +3959,30 @@
 /* Meeting name text for sharing a scheduled meeting link through external app */
 "meetings.info.shareMeetingLink.meetingName"="Tên cuộc họp: %@";
 /* Meeting time text for sharing a scheduled meeting link through external app */
-"meetings.info.shareMeetingLink.meetingTime"="Date and time: %@";
+"meetings.info.shareMeetingLink.meetingTime"="Ngày và giờ: %@";
 /* Meeting link text for sharing a scheduled meeting link through external app */
 "meetings.info.shareMeetingLink.meetingLink"="Đường liên kết cuộc họp: %@";
+/* A log message in the chat conversation to tell the reader that a participant [A] joined the meeting. For example: Alice joined the meeting. */
+"chat.message.joinedTheMeeting"="[A] đã tham gia cuộc họp.";
+/* A log message in the chat conversation to tell the reader that a participant [A] left the meeting. For example: Alice left the meeting. */
+"chat.message.leftTheMeeting"="[A] đã rời khỏi cuộc họp.";
+/* A log message in a chat conversation to tell the reader that a participant [A] was removed from the meeting by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the meeting by Frank. */
+"chat.message.wasRemovedFromTheMeetingBy"="[A] đã bị loại khỏi cuộc họp bởi [B].";
+/* A log message in a chat conversation to tell the reader that a participant [A] was added to the meeting by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the meeting by invitation from Frank. */
+"chat.message.joinedTheMeetingByInvitationFrom"="[A] đã tham gia cuộc họp từ lời mời của [B].";
+/* Meeting subject text for sharing a meeting link through email */
+"meetings.info.shareMeetingLink.subject"="MEGA meeting invitation";
+/* Calls: Floating panel participants in call header to mute them all */
+"calls.panel.participantsInCall.header.muteAll"="Tắt tiếng tất cả";
+/* Calls: Floating panel participants in call header to show all participants are muted */
+"calls.panel.participantsInCall.header.allMuted"="Đã tắt tiếng tất cả";
+/* Calls: Participant context menu action to mute in the call */
+"calls.panel.participantsInCall.participantContextMenu.actions.mute"="Tắt tiếng";
+/* Calls: Mute all participants success message */
+"calls.participantsInCall.muteAll.success"="Bạn đã tắt tiếng tất cả các người tham gia";
+/* Calls: Mute specific participant success message */
+"calls.participantsInCall.muteParticipant.success"="Bạn đã tắt tiếng của %@";
+/* Calls: Mute all participants error message */
+"calls.participantsInCall.muteAll.error"="Lỗi tắt tiếng tất cả các người tham gia";
+/* Calls: Mute specific participant error message */
+"calls.participantsInCall.muteParticipant.error"="Lỗi tắt tiếng của %@";
