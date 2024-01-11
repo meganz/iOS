@@ -811,6 +811,20 @@ extension UIColor {
         }
     }
     
+    @objc(mnz_badgeRedForTraitCollection:)
+    class func mnz_badgeRed(for traitCollection: UITraitCollection) -> UIColor {
+        switch traitCollection.userInterfaceStyle {
+        case .unspecified, .light:
+            return MEGAAppColor.Red._F30C14_badge.uiColor
+            
+        case .dark:
+            return MEGAAppColor.Red._F7363D_badge.uiColor
+            
+        @unknown default:
+            return MEGAAppColor.White._FFFFFF.uiColor
+        }
+    }
+    
     // MARK: White
     
     @objc class func mnz_whiteF7F7F7() -> UIColor {

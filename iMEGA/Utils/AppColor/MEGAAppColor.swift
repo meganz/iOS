@@ -172,7 +172,7 @@ enum MEGAAppColor {
         
         private var designTokenColor: UIColor {
             switch self {
-            case ._1D1D1D: TokenColors.Background.blur
+            case ._1D1D1D: TokenColors.Background.surface1
             case ._3A3A3C: TokenColors.Background.blur
             case ._3C3C43: TokenColors.Background.blur
             case ._3D3D3D: TokenColors.Background.blur
@@ -410,9 +410,11 @@ enum MEGAAppColor {
         case _CA75D1
         case _CE0A11
         case _F30C14
+        case _F30C14_badge
         case _F95C61
         case _F288C2
         case _F7363D
+        case _F7363D_badge
         case _FF0000
         case _FF3B30
         case _FF453A
@@ -430,9 +432,11 @@ enum MEGAAppColor {
             case ._CA75D1: TokenColors.Background.blur
             case ._CE0A11: TokenColors.Background.blur
             case ._F30C14: TokenColors.Button.brand
+            case ._F30C14_badge: TokenColors.Components.interactive
             case ._F95C61: TokenColors.Background.blur
             case ._F288C2: TokenColors.Background.blur
             case ._F7363D: TokenColors.Button.brand
+            case ._F7363D_badge: TokenColors.Components.interactive
             case ._FF0000: TokenColors.Background.blur
             case ._FF3B30: TokenColors.Background.blur
             case ._FF453A: TokenColors.Background.blur
@@ -443,10 +447,10 @@ enum MEGAAppColor {
             switch self {
             case ._CA75D1: UIColor.redCA75D1
             case ._CE0A11: UIColor.redCE0A11
-            case ._F30C14: UIColor.redF30C14
+            case ._F30C14, ._F30C14_badge: UIColor.redF30C14
             case ._F95C61: UIColor.redF95C61
             case ._F288C2: UIColor.redF288C2
-            case ._F7363D: UIColor.redF7363D
+            case ._F7363D, ._F7363D_badge: UIColor.redF7363D
             case ._FF0000: UIColor.redFF3B30
             case ._FF3B30: UIColor.redFF3B30
             case ._FF453A: UIColor.redFF453A

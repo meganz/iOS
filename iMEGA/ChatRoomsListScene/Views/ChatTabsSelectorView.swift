@@ -22,14 +22,14 @@ struct ChatTabsSelectorView: View {
                 })
                 .overlay(alignment: .trailing, content: {
                     Circle()
-                        .fill(MEGAAppColor.Red._FF3B30.color)
+                        .fill(MEGAAppColor.Red._F30C14_badge.color)
                         .frame(width: 5, height: 5)
                         .offset(x: 9, y: -3)
                         .opacity(shouldDisplayUnreadBadgeForChats ? 1 : 0)
                 })
                 Divider()
                     .frame(maxHeight: 1)
-                    .background(chatViewMode == .chats ? MEGAAppColor.Chat.chatTabSelectedBackground.color : MEGAAppColor.Chat.chatTabNormalBackground.color)
+                    .background(chatViewMode == .chats ? MEGAAppColor.Red._F30C14.color : MEGAAppColor.Chat.chatTabNormalBackground.color)
             }
             
             VStack {
@@ -43,14 +43,14 @@ struct ChatTabsSelectorView: View {
                 })
                 .overlay(alignment: .trailing, content: {
                     Circle()
-                        .fill(MEGAAppColor.Red._FF3B30.color)
+                        .fill(MEGAAppColor.Red._F30C14_badge.color)
                         .frame(width: 5, height: 5)
                         .offset(x: 9, y: -3)
                         .opacity(shouldDisplayUnreadBadgeForMeetings ? 1 : 0)
                 })
                 Divider()
                     .frame(maxHeight: 1)
-                    .background(chatViewMode == .meetings ? MEGAAppColor.Chat.chatTabSelectedBackground.color : MEGAAppColor.Chat.chatTabNormalBackground.color)
+                    .background(chatViewMode == .meetings ? MEGAAppColor.Red._F30C14.color : MEGAAppColor.Chat.chatTabNormalBackground.color)
             }
         }
         .frame(maxHeight: 44)

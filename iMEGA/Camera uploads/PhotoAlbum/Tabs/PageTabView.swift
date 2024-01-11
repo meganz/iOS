@@ -7,6 +7,11 @@ struct PageTabView: View {
     @Environment(\.colorScheme) var colorScheme
     
     private let textForgroundRedColor = MEGAAppColor.Red._F7363D.color
+    
+    private var bottomIndicatorColor: Color {
+        colorScheme == .dark ? MEGAAppColor.Red._F30C14.color : MEGAAppColor.Red._F7363D.color
+    }
+    
     private var tabForgroundColor: Color {
         if !viewModel.isEditing {
             return tabTextColor
@@ -16,7 +21,7 @@ struct PageTabView: View {
     }
     
     private var tabTextColor: Color {
-        colorScheme == .dark ? MEGAAppColor.White._FFFFFF.color : MEGAAppColor.Black._000000.color
+        colorScheme == .dark ? MEGAAppColor.Gray._D1D1D1.color : MEGAAppColor.Gray._515151.color
     }
     
     init(viewModel: PagerTabViewModel) {
@@ -57,7 +62,7 @@ struct PageTabView: View {
             .frame(height: 40)
             .background(Color.photosPageTabForeground)
             .overlay(
-                BottomIndicator(width: proxy.size.width, height: 1, offset: viewModel.tabOffset, color: textForgroundRedColor),
+                BottomIndicator(width: proxy.size.width, height: 1, offset: viewModel.tabOffset, color: bottomIndicatorColor),
                 alignment: .bottom
             )
         }

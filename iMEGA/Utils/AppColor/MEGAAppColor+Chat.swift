@@ -66,9 +66,9 @@ extension MEGAAppColor {
             case .chatAvatarBackground:
                 TokenColors.Background.blur
             case .chatTabSelectedText: 
-                TokenColors.Text.primary
+                TokenColors.Button.brand
             case .chatTabNormalText:
-                TokenColors.Text.primary
+                TokenColors.Icon.secondary
             case .chatTabSelectedBackground:
                 TokenColors.Background.blur
             case .chatTabNormalBackground: 
