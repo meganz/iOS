@@ -225,3 +225,13 @@ final class ParticipantNotInCallViewModel: ViewModelType {
         invokeCommand?(.updateAvatarImage(image: image))
     }
 }
+
+public extension AbsentParticipantState {
+    func toParticipantNotInCallState() -> ParticipantNotInCallState {
+        switch self {
+        case .notInCall: .notInCall
+        case .calling: .calling
+        case .noResponse: .noResponse
+        }
+    }
+}

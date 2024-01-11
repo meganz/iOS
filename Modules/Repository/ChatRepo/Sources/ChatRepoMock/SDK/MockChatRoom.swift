@@ -31,8 +31,8 @@ public final class MockChatRoom: MEGAChatRoom {
         ownPrivilage
     }
     
-    public override func peerPrivilege(byHandle userHande: UInt64) -> Int {
-        peerPrivilage.rawValue
+    public override func peerPrivilege(byHandle userHande: UInt64) -> MEGAChatRoomPrivilege {
+        peerPrivilage
     }
     
     public override var isPreview: Bool {

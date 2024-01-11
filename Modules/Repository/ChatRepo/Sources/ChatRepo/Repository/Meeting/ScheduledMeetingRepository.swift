@@ -22,7 +22,7 @@ public final class ScheduledMeetingRepository: ScheduledMeetingRepositoryProtoco
                 guard
                     !scheduledMeeting.isCancelled,
                     let chatRoom = chatSDK.chatRoom(forChatId: scheduledMeeting.chatId),
-                    !chatRoom.isArchived, chatRoom.ownPrivilege.toOwnPrivilegeEntity().isUserInChat
+                    !chatRoom.isArchived, chatRoom.ownPrivilege.toChatRoomPrivilegeEntity().isUserInChat
                 else {
                     return nil
                 }

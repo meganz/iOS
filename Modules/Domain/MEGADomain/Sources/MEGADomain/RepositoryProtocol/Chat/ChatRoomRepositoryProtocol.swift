@@ -36,4 +36,5 @@ public protocol ChatRoomRepositoryProtocol: RepositoryProtocol {
     func loadMessages(forChat chat: ChatRoomEntity, count: Int) -> ChatSourceEntity
     func chatRoomMessageLoaded(forChatRoom chatRoom: ChatRoomEntity) -> AnyPublisher<ChatMessageEntity?, Never>
     func hasScheduledMeetingChange(_ change: ChatMessageScheduledMeetingChangeType, for message: ChatMessageEntity, inChatRoom chatRoom: ChatRoomEntity) -> Bool
+    func userEmail(for handle: HandleEntity) async -> String?
 }

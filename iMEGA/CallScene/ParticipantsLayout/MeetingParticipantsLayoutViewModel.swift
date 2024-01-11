@@ -100,11 +100,8 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     
     private(set) var callParticipants = [CallParticipantEntity]() {
         didSet {
-            if let myself = CallParticipantEntity.myself(chatId: call.chatId) {
-                requestAvatarChanges(forParticipants: callParticipants + [myself], chatId: call.chatId)
-            } else {
-                requestAvatarChanges(forParticipants: callParticipants, chatId: call.chatId)
-            }
+            let myself = CallParticipantEntity.myself(handle: accountUseCase.currentUserHandle ?? .invalid, userName: chatUseCase.myFullName(), chatRoom: chatRoom)
+            requestAvatarChanges(forParticipants: callParticipants + [myself], chatId: call.chatId)
         }
     }
     private var indexOfVisibleParticipants = [Int]()
@@ -141,6 +138,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     
     private weak var containerViewModel: MeetingContainerViewModel?
 
+    private let chatUseCase: any ChatUseCaseProtocol
     private let callUseCase: any CallUseCaseProtocol
     private var callSessionUseCase: any CallSessionUseCaseProtocol
     private let captureDeviceUseCase: any CaptureDeviceUseCaseProtocol
@@ -187,6 +185,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     
     init(
         containerViewModel: MeetingContainerViewModel,
+        chatUseCase: some ChatUseCaseProtocol,
         callUseCase: some CallUseCaseProtocol,
         callSessionUseCase: some CallSessionUseCaseProtocol,
         captureDeviceUseCase: some CaptureDeviceUseCaseProtocol,
@@ -203,7 +202,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         call: CallEntity,
         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default
     ) {
-        
+        self.chatUseCase = chatUseCase
         self.containerViewModel = containerViewModel
         self.callUseCase = callUseCase
         self.callSessionUseCase = callSessionUseCase
@@ -523,13 +522,12 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                 addMeetingParticipantStatusPipelineSubscription()
             }
         case .onViewReady:
-            if let myself = CallParticipantEntity.myself(chatId: call.chatId) {
-                fetchAvatar(for: myself, name: myself.name ?? "Unknown") { [weak self] image in
-                    self?.invokeCommand?(.updateMyAvatar(image))
-                }
-                
-                requestAvatarChanges(forParticipants: callParticipants + [myself], chatId: call.chatId)
+            let myself = CallParticipantEntity.myself(handle: accountUseCase.currentUserHandle ?? .invalid, userName: chatUseCase.myFullName(), chatRoom: chatRoom)
+            fetchAvatar(for: myself, name: myself.name ?? "Unknown") { [weak self] image in
+                self?.invokeCommand?(.updateMyAvatar(image))
             }
+            
+            requestAvatarChanges(forParticipants: callParticipants + [myself], chatId: call.chatId)
             invokeCommand?(.configLocalUserView(position: isBackCameraSelected() ? .back : .front))
         case .tapOnView(let onParticipantsView):
             if onParticipantsView && layoutMode == .speaker && !callParticipants.isEmpty {
@@ -965,9 +963,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     
     @MainActor
     private func updateAvatar(handle: HandleEntity, image: UIImage) {
-        guard let myself = CallParticipantEntity.myself(chatId: call.chatId) else {
-            return
-        }
+        let myself = CallParticipantEntity.myself(handle: accountUseCase.currentUserHandle ?? .invalid, userName: chatUseCase.myFullName(), chatRoom: chatRoom)
         
         if handle == myself.participantId {
             invokeCommand?(.updateMyAvatar(image))

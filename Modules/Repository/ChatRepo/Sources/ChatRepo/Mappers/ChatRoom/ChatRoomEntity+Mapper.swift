@@ -17,7 +17,7 @@ fileprivate extension ChatRoomEntity {
     init(with chatRoom: MEGAChatRoom) {
         self.init(
             chatId: chatRoom.chatId,
-            ownPrivilege: chatRoom.ownPrivilege.toOwnPrivilegeEntity(),
+            ownPrivilege: chatRoom.ownPrivilege.toChatRoomPrivilegeEntity(),
             changeType: chatRoom.changes.toChatRoomChangeTypeEntity(),
             peerCount: chatRoom.peerCount,
             authorizationToken: chatRoom.authorizationToken,
@@ -41,7 +41,7 @@ fileprivate extension ChatRoomEntity {
 }
 
 public extension MEGAChatRoomPrivilege {
-    func toOwnPrivilegeEntity() -> ChatRoomPrivilegeEntity {
+    func toChatRoomPrivilegeEntity() -> ChatRoomPrivilegeEntity {
         switch self {
         case .unknown:
             return .unknown

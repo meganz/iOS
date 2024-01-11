@@ -1057,7 +1057,6 @@
 		83850A4526B2BC1100C62304 /* MEGAProviderDelegate+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83850A4426B2BC1000C62304 /* MEGAProviderDelegate+Additions.swift */; };
 		838A7B5625D55EFA00767DB0 /* CallUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838A7B5525D55EFA00767DB0 /* CallUseCase.swift */; };
 		838A7B6925D5678C00767DB0 /* CallRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838A7B6825D5678C00767DB0 /* CallRepository.swift */; };
-		838B976826B1615F000E480E /* CallParticipantEntity+Mapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838B976726B1615F000E480E /* CallParticipantEntity+Mapping.swift */; };
 		838CC2652B2B2ECE001C85E9 /* ChatLinkPresentationItemSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838CC2642B2B2ECE001C85E9 /* ChatLinkPresentationItemSource.swift */; };
 		838CCF6C298C006200C83502 /* ScheduledMeetingDateBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838CCF6B298C006200C83502 /* ScheduledMeetingDateBuilder.swift */; };
 		838E55412A2E00DF00C3C2F8 /* ScheduleMeetingEndRecurrenceOptionsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838E55402A2E00DF00C3C2F8 /* ScheduleMeetingEndRecurrenceOptionsViewModelTests.swift */; };
@@ -2138,7 +2137,7 @@
 		BF7EBD512452B0A00015255F /* AddToChatMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7EBD502452B0A00015255F /* AddToChatMenu.swift */; };
 		BF8895B62630F3A4002A18CA /* MockChatRoomUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8895B52630F3A4002A18CA /* MockChatRoomUseCase.swift */; };
 		BF8895CA2630F4B3002A18CA /* MockUserImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8895C92630F4B3002A18CA /* MockUserImageUseCase.swift */; };
-		BF8895D42630F810002A18CA /* MeetingParticpiantInfoViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8895D32630F810002A18CA /* MeetingParticpiantInfoViewModelTests.swift */; };
+		BF8895D42630F810002A18CA /* MeetingParticipantInfoViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8895D32630F810002A18CA /* MeetingParticipantInfoViewModelTests.swift */; };
 		BF8895DE26311821002A18CA /* MeetingContainerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8895DD26311821002A18CA /* MeetingContainerViewModelTests.swift */; };
 		BF8895E82631213C002A18CA /* MockCallCoordinatorUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8895E72631213C002A18CA /* MockCallCoordinatorUseCase.swift */; };
 		BF8895F226312EA1002A18CA /* MockCallUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8895F126312EA1002A18CA /* MockCallUseCase.swift */; };
@@ -2306,7 +2305,6 @@
 		BFE556FC27E183B40028EF1F /* MEGANode+Additions_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE556F627E183B40028EF1F /* MEGANode+Additions_Tests.swift */; };
 		BFE556FD27E183B40028EF1F /* NodeHandle+Additions_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE556F727E183B40028EF1F /* NodeHandle+Additions_Tests.swift */; };
 		BFE556FE27E183B40028EF1F /* MEGANode+FilePaths_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE556F827E183B40028EF1F /* MEGANode+FilePaths_Tests.swift */; };
-		BFE5570027E183B40028EF1F /* CallParticipantEntity+Mapper_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE556FB27E183B40028EF1F /* CallParticipantEntity+Mapper_Tests.swift */; };
 		BFE64BA2286C18D200F2B69F /* AboutTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE64BA1286C18D200F2B69F /* AboutTableViewController+Additions.swift */; };
 		BFE64BA6286C1D1F00F2B69F /* FirebaseAppDistribution-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = BFE64BA5286C1D1F00F2B69F /* FirebaseAppDistribution-Beta */; };
 		BFE6906F25350E2D00CD21F9 /* DocumentExplorerViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE6906E25350E2D00CD21F9 /* DocumentExplorerViewConfiguration.swift */; };
@@ -3687,7 +3685,6 @@
 		83850A4426B2BC1000C62304 /* MEGAProviderDelegate+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MEGAProviderDelegate+Additions.swift"; sourceTree = "<group>"; };
 		838A7B5525D55EFA00767DB0 /* CallUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallUseCase.swift; sourceTree = "<group>"; };
 		838A7B6825D5678C00767DB0 /* CallRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallRepository.swift; sourceTree = "<group>"; };
-		838B976726B1615F000E480E /* CallParticipantEntity+Mapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CallParticipantEntity+Mapping.swift"; sourceTree = "<group>"; };
 		838CC2642B2B2ECE001C85E9 /* ChatLinkPresentationItemSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLinkPresentationItemSource.swift; sourceTree = "<group>"; };
 		838CCF6B298C006200C83502 /* ScheduledMeetingDateBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduledMeetingDateBuilder.swift; sourceTree = "<group>"; };
 		838E55402A2E00DF00C3C2F8 /* ScheduleMeetingEndRecurrenceOptionsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingEndRecurrenceOptionsViewModelTests.swift; sourceTree = "<group>"; };
@@ -4775,7 +4772,7 @@
 		BF7EBD502452B0A00015255F /* AddToChatMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatMenu.swift; sourceTree = "<group>"; };
 		BF8895B52630F3A4002A18CA /* MockChatRoomUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockChatRoomUseCase.swift; sourceTree = "<group>"; };
 		BF8895C92630F4B3002A18CA /* MockUserImageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserImageUseCase.swift; sourceTree = "<group>"; };
-		BF8895D32630F810002A18CA /* MeetingParticpiantInfoViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingParticpiantInfoViewModelTests.swift; sourceTree = "<group>"; };
+		BF8895D32630F810002A18CA /* MeetingParticipantInfoViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingParticipantInfoViewModelTests.swift; sourceTree = "<group>"; };
 		BF8895DD26311821002A18CA /* MeetingContainerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingContainerViewModelTests.swift; sourceTree = "<group>"; };
 		BF8895E72631213C002A18CA /* MockCallCoordinatorUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCallCoordinatorUseCase.swift; sourceTree = "<group>"; };
 		BF8895F126312EA1002A18CA /* MockCallUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCallUseCase.swift; sourceTree = "<group>"; };
@@ -4932,7 +4929,6 @@
 		BFE556F627E183B40028EF1F /* MEGANode+Additions_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MEGANode+Additions_Tests.swift"; sourceTree = "<group>"; };
 		BFE556F727E183B40028EF1F /* NodeHandle+Additions_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NodeHandle+Additions_Tests.swift"; sourceTree = "<group>"; };
 		BFE556F827E183B40028EF1F /* MEGANode+FilePaths_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MEGANode+FilePaths_Tests.swift"; sourceTree = "<group>"; };
-		BFE556FB27E183B40028EF1F /* CallParticipantEntity+Mapper_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CallParticipantEntity+Mapper_Tests.swift"; sourceTree = "<group>"; };
 		BFE64BA1286C18D200F2B69F /* AboutTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AboutTableViewController+Additions.swift"; sourceTree = "<group>"; };
 		BFE6906E25350E2D00CD21F9 /* DocumentExplorerViewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentExplorerViewConfiguration.swift; sourceTree = "<group>"; };
 		BFE6907A25350E4900CD21F9 /* AudioExploreViewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioExploreViewConfiguration.swift; sourceTree = "<group>"; };
@@ -9883,7 +9879,6 @@
 		A83BB99328E5F181001A7C68 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
-				A859043129F2CE9D00632F0C /* Call */,
 				9463EEDA2AA91A57000FB399 /* ChatRoomPrivilegeEntity+Mapper.swift */,
 				9479F02428BF93C9008578BE /* DNDTurnOnOptionEntity+Mapper.swift */,
 			);
@@ -9910,14 +9905,6 @@
 				A84E92E226FB5F7400606AA7 /* FileVersionsRepository.swift */,
 			);
 			path = Versions;
-			sourceTree = "<group>";
-		};
-		A859043129F2CE9D00632F0C /* Call */ = {
-			isa = PBXGroup;
-			children = (
-				838B976726B1615F000E480E /* CallParticipantEntity+Mapping.swift */,
-			);
-			path = Call;
 			sourceTree = "<group>";
 		};
 		A859043529F2D1A000632F0C /* Offline */ = {
@@ -11963,7 +11950,6 @@
 		BFE556F927E183B40028EF1F /* Model Mapping */ = {
 			isa = PBXGroup;
 			children = (
-				BFE556FB27E183B40028EF1F /* CallParticipantEntity+Mapper_Tests.swift */,
 				B6FB5F8329A3254A0023BA6A /* ChangeTypeEntityMapperTests.swift */,
 				320262ED298C97EE0049688C /* FilterTypeEntityMappingTests.swift */,
 				0E45ACB329BEB72600541278 /* NodeEntityMapppingTests.swift */,
@@ -12001,9 +11987,9 @@
 				2FE54376264DECBB00FF4955 /* MeetingCreatingViewModelTests.swift */,
 				BFA6CD59263223B100791E02 /* MeetingFloatingPanelViewModelTests.swift */,
 				996A48FE2A8CBD9600264298 /* MeetingInfoViewModelTests.swift */,
+				BF8895D32630F810002A18CA /* MeetingParticipantInfoViewModelTests.swift */,
 				8394EB802643DBD10064F741 /* MeetingParticipantsLayoutViewModelTests.swift */,
 				BFF0EE092630E2D300FAEFF9 /* MeetingParticipantViewModelTests.swift */,
-				BF8895D32630F810002A18CA /* MeetingParticpiantInfoViewModelTests.swift */,
 				833041902AC2F7EA00DDE70A /* ParticipantInWaitingRoomViewModelTests.swift */,
 				83DAF93B2B1F5E72004C2122 /* ParticipantNotInCallViewModelTests.swift */,
 				BF418B7D2A43DE14004C5A5D /* ScheduledMeetingDateBuilderTests.swift */,
@@ -13551,7 +13537,6 @@
 				8338E0F32666552900D1458B /* CallManagerUseCase.swift in Sources */,
 				8366518A26497B3600BC02F0 /* CallNotificationView.swift in Sources */,
 				8366518826497B3600BC02F0 /* CallParticipantCell.swift in Sources */,
-				838B976826B1615F000E480E /* CallParticipantEntity+Mapping.swift in Sources */,
 				838A7B6925D5678C00767DB0 /* CallRepository.swift in Sources */,
 				8330A99A28882E78003E80DB /* CallsSettingsSoundNotificationsView.swift in Sources */,
 				8330A99728882E4A003E80DB /* CallsSettingsView.swift in Sources */,
@@ -15345,7 +15330,6 @@
 				99E1A9292A383EC000974FC9 /* BadgeButtonTests.swift in Sources */,
 				C46D4A8126557B1200748BD3 /* BannerContainerViewModelTests.swift in Sources */,
 				992003582B0C09620058FF5F /* CallParticipantCellTests.swift in Sources */,
-				BFE5570027E183B40028EF1F /* CallParticipantEntity+Mapper_Tests.swift in Sources */,
 				8330A99F2888479B003E80DB /* CallsSettingsViewModelTests.swift in Sources */,
 				25A58F902B0C635400050882 /* CameraUploadBannerStatusViewStatesToPreviewEntityTests.swift in Sources */,
 				B6CED49622B8AFC3009C4861 /* CameraUploadConcurrentCountCalculatorTests.m in Sources */,
@@ -15418,9 +15402,9 @@
 				BFA6CD5A263223B100791E02 /* MeetingFloatingPanelViewModelTests.swift in Sources */,
 				996A49022A8CBDAE00264298 /* MeetingInfoViewModel+Additions.swift in Sources */,
 				996A48FF2A8CBD9600264298 /* MeetingInfoViewModelTests.swift in Sources */,
+				BF8895D42630F810002A18CA /* MeetingParticipantInfoViewModelTests.swift in Sources */,
 				8394EB812643DBD10064F741 /* MeetingParticipantsLayoutViewModelTests.swift in Sources */,
 				BFF0EE0A2630E2D300FAEFF9 /* MeetingParticipantViewModelTests.swift in Sources */,
-				BF8895D42630F810002A18CA /* MeetingParticpiantInfoViewModelTests.swift in Sources */,
 				5DFC8DC524ECF37800DDA006 /* MEGAavatarGeneratingUseCaseTests.swift in Sources */,
 				5D667EF024ED03340092474D /* MEGAavatarLoadingUseCaseTests.swift in Sources */,
 				248A031B2A79026800F183A2 /* MEGAAVViewControllerTests.swift in Sources */,

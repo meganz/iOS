@@ -180,20 +180,20 @@ final class CallUseCase<T: CallRepositoryProtocol>: NSObject, CallUseCaseProtoco
 
 extension CallUseCase: CallCallbacksRepositoryProtocol {
 
-    func createdSession(_ session: ChatSessionEntity, in chatId: HandleEntity) {
-        callbacksDelegate?.participantJoined(participant: CallParticipantEntity(session: session, chatId: chatId))
+    func createdSession(_ session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity) {
+        callbacksDelegate?.participantJoined(participant: CallParticipantEntity(session: session, chatRoom: chatRoom, privilege: privilege))
     }
     
-    func destroyedSession(_ session: ChatSessionEntity, in chatId: HandleEntity) {
-        callbacksDelegate?.participantLeft(participant: CallParticipantEntity(session: session, chatId: chatId))
+    func destroyedSession(_ session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity) {
+        callbacksDelegate?.participantLeft(participant: CallParticipantEntity(session: session, chatRoom: chatRoom, privilege: privilege))
     }
     
-    func avFlagsUpdated(for session: ChatSessionEntity, in chatId: HandleEntity) {
-        callbacksDelegate?.updateParticipant(CallParticipantEntity(session: session, chatId: chatId))
+    func avFlagsUpdated(for session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity) {
+        callbacksDelegate?.updateParticipant(CallParticipantEntity(session: session, chatRoom: chatRoom, privilege: privilege))
     }
     
-    func audioLevel(for session: ChatSessionEntity, in chatId: HandleEntity) {
-        callbacksDelegate?.audioLevel(for: CallParticipantEntity(session: session, chatId: chatId))
+    func audioLevel(for session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity) {
+        callbacksDelegate?.audioLevel(for: CallParticipantEntity(session: session, chatRoom: chatRoom, privilege: privilege))
     }
     
     func callTerminated(_ call: CallEntity) {
@@ -220,12 +220,12 @@ extension CallUseCase: CallCallbacksRepositoryProtocol {
         callbacksDelegate?.inProgress()
     }
     
-    func onHiResSessionChanged(_ session: ChatSessionEntity, in chatId: HandleEntity) {
-        callbacksDelegate?.highResolutionChanged(for: CallParticipantEntity(session: session, chatId: chatId))
+    func onHiResSessionChanged(_ session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity) {
+        callbacksDelegate?.highResolutionChanged(for: CallParticipantEntity(session: session, chatRoom: chatRoom, privilege: privilege))
     }
     
-    func onLowResSessionChanged(_ session: ChatSessionEntity, in chatId: HandleEntity) {
-        callbacksDelegate?.lowResolutionChanged(for: CallParticipantEntity(session: session, chatId: chatId))
+    func onLowResSessionChanged(_ session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity) {
+        callbacksDelegate?.lowResolutionChanged(for: CallParticipantEntity(session: session, chatRoom: chatRoom, privilege: privilege))
     }
     
     func localAvFlagsUpdated(video: Bool, audio: Bool) {

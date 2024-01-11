@@ -27,7 +27,7 @@ public struct AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseProtoc
     public var currentUserHandle: HandleEntity? {
         repository.currentUserHandle
     }
-    
+
     public func currentUser() async -> UserEntity? {
         await repository.currentUser()
     }

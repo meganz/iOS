@@ -7,7 +7,7 @@ final class ParticipantInWaitingRoomViewModelTests: XCTestCase {
     var admitParticipantHandler_calledTimes = 0
     var denyParticipantHandler_calledTimes = 0
     
-    let participant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, isModerator: true, isInContactList: false)
+    let participant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, isModerator: true)
     let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
     let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(chatType: .group))
     let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity(100))

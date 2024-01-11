@@ -39,11 +39,10 @@ public final class ChatRoomRepository: ChatRoomRepositoryProtocol {
     }
     
     public func peerPrivilege(forUserHandle userHandle: HandleEntity, chatRoom: ChatRoomEntity) -> ChatRoomPrivilegeEntity {
-        guard let megaChatRoom = sdk.chatRoom(forChatId: chatRoom.chatId),
-              let privilege = MEGAChatRoomPrivilege(rawValue: megaChatRoom.peerPrivilege(byHandle: userHandle))?.toOwnPrivilegeEntity() else {
+        guard let megaChatRoom = sdk.chatRoom(forChatId: chatRoom.chatId) else {
             return .unknown
         }
-        return privilege
+        return megaChatRoom.peerPrivilege(byHandle: userHandle).toChatRoomPrivilegeEntity()
     }
     
     public func userStatus(forUserHandle userHandle: HandleEntity) -> ChatStatusEntity {
@@ -306,7 +305,7 @@ public final class ChatRoomRepository: ChatRoomRepositoryProtocol {
             let delegate = ChatRequestDelegate { result in
                 switch result {
                 case .success(let request):
-                    let peerPrivilege = MEGAChatRoomPrivilege(rawValue: request.privilege)?.toOwnPrivilegeEntity() ?? .unknown
+                    let peerPrivilege = MEGAChatRoomPrivilege(rawValue: request.privilege)?.toChatRoomPrivilegeEntity() ?? .unknown
                     completion(.success(peerPrivilege))
                 case .failure(let error):
                     completion(.failure(error))
@@ -339,6 +338,23 @@ public final class ChatRoomRepository: ChatRoomRepositoryProtocol {
         }
         
         return message.hasScheduledMeetingChange(for: megaChange)
+    }
+    
+    public func userEmail(for handle: HandleEntity) async -> String? {
+        if let email = sdk.contactEmail(byHandle: handle) {
+            return email
+        } else {
+            return await withAsyncValue { completion in
+                sdk.userEmail(byUserHandle: handle, delegate: ChatRequestDelegate { result in
+                    switch result {
+                    case .success(let request):
+                        completion(.success(request.text))
+                    case .failure:
+                        completion(.success(nil))
+                    }
+                })
+            }
+        }
     }
 }
 

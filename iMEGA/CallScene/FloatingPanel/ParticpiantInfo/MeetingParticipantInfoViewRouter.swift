@@ -6,7 +6,7 @@ import MEGARepo
 import MEGASDKRepo
 
 protocol MeetingParticipantInfoViewRouting: Routing {
-    func showInfo()
+    func showInfo(withEmail email: String?)
     func openChatRoom(withChatId chatId: UInt64)
     func makeParticipantAsModerator()
     func removeModeratorPrivilege()
@@ -53,6 +53,7 @@ struct MeetingParticipantInfoViewRouter: MeetingParticipantInfoViewRouting {
                                                         chatRoomUseCase: chatRoomUseCase,
                                                         chatRoomUserUseCase: chatRoomUserUseCase,
                                                         megaHandleUseCase: megaHandleUseCase,
+                                                        contactsUseCase: ContactsUseCase(repository: ContactsRepository.newRepo),
                                                         isMyselfModerator: isMyselfModerator,
                                                         router: self)
         let participantInfoViewController = MeetingParticipantInfoViewController(viewModel: viewModel, sender: sender)
@@ -68,13 +69,13 @@ struct MeetingParticipantInfoViewRouter: MeetingParticipantInfoViewRouting {
     
     // MARK: - Actions
     
-    func showInfo() {
+    func showInfo(withEmail email: String?) {
         guard let contactDetailsVC = UIStoryboard(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "ContactDetailsViewControllerID") as? ContactDetailsViewController else {
             return
         }
         
         contactDetailsVC.contactDetailsMode = .meeting
-        contactDetailsVC.userEmail = participant.email
+        contactDetailsVC.userEmail = email
         contactDetailsVC.userHandle = participant.participantId
         
         presenter?.present(MEGANavigationController(rootViewController: contactDetailsVC), animated: true)

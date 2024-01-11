@@ -41,7 +41,8 @@ final class MeetingParticipantsLayoutRouter: NSObject, MeetingParticipantsLayout
         let analyticsEventUseCase = AnalyticsEventUseCase(repository: AnalyticsRepository(sdk: .sharedSdk))
 
         let vm = MeetingParticipantsLayoutViewModel(
-            containerViewModel: containerViewModel,
+            containerViewModel: containerViewModel, 
+            chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
             callUseCase: CallUseCase(repository: CallRepository(chatSdk: .sharedChatSdk, callActionManager: CallActionManager.shared)),
             callSessionUseCase: CallSessionUseCase(repository: CallSessionRepository.newRepo),
             captureDeviceUseCase: CaptureDeviceUseCase(repo: CaptureDeviceRepository()),

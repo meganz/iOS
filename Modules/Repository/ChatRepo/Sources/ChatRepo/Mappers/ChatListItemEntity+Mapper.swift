@@ -13,7 +13,7 @@ fileprivate extension ChatListItemEntity {
             chatId: chatListItem.chatId,
             title: chatListItem.title,
             changeType: chatListItem.changes.toChatListItemChangeEntity(),
-            ownPrivilege: chatListItem.ownPrivilege.toOwnPrivilegeEntity(),
+            ownPrivilege: chatListItem.ownPrivilege.toChatRoomPrivilegeEntity(),
             unreadCount: chatListItem.unreadCount,
             previewersCount: chatListItem.previewersCount,
             group: chatListItem.isGroup,

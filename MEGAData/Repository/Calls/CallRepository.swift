@@ -175,11 +175,11 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
     }
     
     func createActiveSessions() {
-        guard let call = call, !call.clientSessions.isEmpty else {
+        guard let call, !call.clientSessions.isEmpty, let chatRoom = chatSdk.chatRoom(forChatId: call.chatId) else {
             return
         }
         call.clientSessions.forEach {
-            callbacksDelegate?.createdSession($0, in: call.chatId)
+            callbacksDelegate?.createdSession($0, in: chatRoom.toChatRoomEntity(), privilege: chatRoom.peerPrivilege(byHandle: $0.peerId).toChatRoomPrivilegeEntity())
         }
     }
     
@@ -339,12 +339,14 @@ extension CallRepository: MEGAChatCallDelegate {
             return
         }
                 
+        guard let chatRoom = api.chatRoom(forChatId: chatId) else { return }
+        
         if session.hasChanged(.status) {
             switch session.status {
             case .inProgress:
-                callbacksDelegate?.createdSession(session.toChatSessionEntity(), in: chatId)
+                callbacksDelegate?.createdSession(session.toChatSessionEntity(), in: chatRoom.toChatRoomEntity(), privilege: chatRoom.peerPrivilege(byHandle: session.peerId).toChatRoomPrivilegeEntity())
             case .destroyed:
-                callbacksDelegate?.destroyedSession(session.toChatSessionEntity(), in: chatId)
+                callbacksDelegate?.destroyedSession(session.toChatSessionEntity(), in: chatRoom.toChatRoomEntity(), privilege: chatRoom.peerPrivilege(byHandle: session.peerId).toChatRoomPrivilegeEntity())
             default:
                 break
             }
@@ -352,19 +354,19 @@ extension CallRepository: MEGAChatCallDelegate {
         
         if session.status == .inProgress {
             if session.hasChanged(.remoteAvFlags) {
-                callbacksDelegate?.avFlagsUpdated(for: session.toChatSessionEntity(), in: chatId)
+                callbacksDelegate?.avFlagsUpdated(for: session.toChatSessionEntity(), in: chatRoom.toChatRoomEntity(), privilege: chatRoom.peerPrivilege(byHandle: session.peerId).toChatRoomPrivilegeEntity())
             }
             
             if session.hasChanged(.audioLevel) {
-                callbacksDelegate?.audioLevel(for: session.toChatSessionEntity(), in: chatId)
+                callbacksDelegate?.audioLevel(for: session.toChatSessionEntity(), in: chatRoom.toChatRoomEntity(), privilege: chatRoom.peerPrivilege(byHandle: session.peerId).toChatRoomPrivilegeEntity())
             }
             
             if session.hasChanged(.onHiRes) {
-                callbacksDelegate?.onHiResSessionChanged(session.toChatSessionEntity(), in: chatId)
+                callbacksDelegate?.onHiResSessionChanged(session.toChatSessionEntity(), in: chatRoom.toChatRoomEntity(), privilege: chatRoom.peerPrivilege(byHandle: session.peerId).toChatRoomPrivilegeEntity())
             }
             
             if session.hasChanged(.onLowRes) {
-                callbacksDelegate?.onLowResSessionChanged(session.toChatSessionEntity(), in: chatId)
+                callbacksDelegate?.onLowResSessionChanged(session.toChatSessionEntity(), in: chatRoom.toChatRoomEntity(), privilege: chatRoom.peerPrivilege(byHandle: session.peerId).toChatRoomPrivilegeEntity())
             }
         }
     }
@@ -451,7 +453,7 @@ extension CallRepository: MEGAChatDelegate {
             guard let chatRoom = chatSdk.chatRoom(forChatId: chatId) else {
                 return
             }
-            callbacksDelegate?.ownPrivilegeChanged(to: item.ownPrivilege.toOwnPrivilegeEntity(), in: chatRoom.toChatRoomEntity())
+            callbacksDelegate?.ownPrivilegeChanged(to: item.ownPrivilege.toChatRoomPrivilegeEntity(), in: chatRoom.toChatRoomEntity())
         case .title:
             guard let chatRoom = chatSdk.chatRoom(forChatId: item.chatId) else { return }
             callbacksDelegate?.chatTitleChanged(chatRoom: chatRoom.toChatRoomEntity())

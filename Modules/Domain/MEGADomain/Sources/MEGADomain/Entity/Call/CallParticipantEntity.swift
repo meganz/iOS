@@ -26,9 +26,7 @@ public final class CallParticipantEntity {
     public let participantId: HandleEntity
     public var clientId: HandleEntity
     public var name: String?
-    public var email: String?
     public var isModerator: Bool
-    public var isInContactList: Bool
     public var video: CallParticipantAudioVideoFlag
     public var audio: CallParticipantAudioVideoFlag
     public var isVideoHiRes: Bool
@@ -56,9 +54,7 @@ public final class CallParticipantEntity {
         chatId: HandleEntity,
         participantId: HandleEntity,
         clientId: HandleEntity,
-        email: String?,
         isModerator: Bool,
-        isInContactList: Bool,
         video: CallParticipantAudioVideoFlag,
         audio: CallParticipantAudioVideoFlag,
         isVideoHiRes: Bool,
@@ -81,9 +77,7 @@ public final class CallParticipantEntity {
         self.chatId = chatId
         self.participantId = participantId
         self.clientId = clientId
-        self.email = email
         self.isModerator = isModerator
-        self.isInContactList = isInContactList
         self.video = video
         self.audio = audio
         self.isVideoHiRes = isVideoHiRes

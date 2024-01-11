@@ -23,6 +23,7 @@ extension MeetingFloatingPanelViewModel {
         accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
         chatRoomUseCase: some ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
         megaHandleUseCase: some MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
+        chatUseCase: some ChatUseCaseProtocol = MockChatUseCase(),
         selectWaitingRoomList: Bool = false,
         isTesting: Bool = true
     ) {
@@ -40,6 +41,7 @@ extension MeetingFloatingPanelViewModel {
             accountUseCase: accountUseCase,
             chatRoomUseCase: chatRoomUseCase,
             megaHandleUseCase: megaHandleUseCase,
+            chatUseCase: chatUseCase,
             selectWaitingRoomList: selectWaitingRoomList
         )
     }
