@@ -188,7 +188,10 @@
         if (self.node.size.longLongValue < MEGAMaxFileLinkAutoOpenSize && ![FileExtensionGroupOCWrapper verifyIsMultiMedia:self.node.name]) {
             [self dismissViewControllerAnimated:YES completion:^{
                 NSString *link = self.linkEncryptedString ? self.linkEncryptedString : self.publicLinkString;
-                [UIApplication.mnz_presentingViewController presentViewController:[self.node mnz_viewControllerForNodeInFolderLink:YES fileLink:link] animated:YES completion:nil];
+                UIViewController *nodeViewController = [self.node mnz_viewControllerForNodeInFolderLink:YES fileLink:link];
+                if (nodeViewController) {
+                    [UIApplication.mnz_presentingViewController presentViewController:nodeViewController animated:YES completion:nil];
+                }
             }];
         }
     }

@@ -7,7 +7,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)navigateToParentAndPresent;
 - (void)mnz_openNodeInNavigationController:(UINavigationController *_Nullable)navigationController folderLink:(BOOL)isFolderLink fileLink:(NSString *_Nullable)fileLink messageId:(nullable NSNumber * )messageId chatId:(nullable NSNumber *)chatId allNodes:(NSArray *_Nullable)allNodes;
 - (nullable UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink fileLink:(NSString *_Nullable)fileLink inViewController:(UIViewController *_Nullable)viewController;
-- (UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink fileLink:(NSString *_Nullable)fileLink;
+- (nullable UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink fileLink:(NSString *_Nullable)fileLink;
 
 #pragma mark - Actions
 

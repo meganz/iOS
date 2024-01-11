@@ -13,9 +13,9 @@ final class CrashlyticsLogger: NSObject {
         case tranfersWidget
         var rawValue: String {
             switch self {
-            case .general: return "General"
-            case .audioPlayer: return "Audio Player"
-            case .tranfersWidget: return "Transfers Widget"
+            case .general: "General"
+            case .audioPlayer: "Audio Player"
+            case .tranfersWidget: "Transfers Widget"
             }
         }
     }
