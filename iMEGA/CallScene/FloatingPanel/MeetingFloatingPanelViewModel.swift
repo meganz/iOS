@@ -74,6 +74,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     private let accountUseCase: any AccountUseCaseProtocol
     private var chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
+    private let chatUseCase: any ChatUseCaseProtocol
     private weak var containerViewModel: MeetingContainerViewModel?
     private var callParticipants = [CallParticipantEntity]()
     private var callParticipantsNotInCall = [CallParticipantEntity]()
@@ -130,6 +131,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
          accountUseCase: some AccountUseCaseProtocol,
          chatRoomUseCase: some ChatRoomUseCaseProtocol,
          megaHandleUseCase: some MEGAHandleUseCaseProtocol,
+         chatUseCase: some ChatUseCaseProtocol,
          selectWaitingRoomList: Bool
     ) {
         self.router = router
@@ -145,6 +147,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         self.accountUseCase = accountUseCase
         self.chatRoomUseCase = chatRoomUseCase
         self.megaHandleUseCase = megaHandleUseCase
+        self.chatUseCase = chatUseCase
         self.selectWaitingRoomList = selectWaitingRoomList
         self.selectedParticipantsListTab = selectWaitingRoomList ? .waitingRoom : .inCall
     }
@@ -649,7 +652,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     private func updateParticipantsNotInCallWithWaitingRoom(change: CallEntity.ChangeType, waitingRoomList: [HandleEntity]) {
         if change == .waitingRoomUsersEntered {
             let participantsJoinedWaitingRoom = waitingRoomList.compactMap {
-                CallParticipantEntity(chatId: chatRoom.chatId, userHandle: $0)
+                CallParticipantEntity(userHandle: $0, chatRoom: chatRoom, privilege: chatRoomUseCase.peerPrivilege(forUserHandle: $0, chatRoom: chatRoom))
             }
             participantsJoinedWaitingRoom.forEach { participant in
                 callParticipantsNotInCall.remove(object: participant)
@@ -660,9 +663,9 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
                 if call.participants.notContains(participantId) {
                     callParticipantsNotInCall.append(
                         CallParticipantEntity(
-                            chatId: call.chatId,
                             userHandle: participantId,
-                            peerPrivilege: chatRoomUseCase.peerPrivilege(forUserHandle: participantId, chatRoom: chatRoom)
+                            chatRoom: chatRoom, 
+                            privilege: chatRoomUseCase.peerPrivilege(forUserHandle: participantId, chatRoom: chatRoom)
                         )
                     )
                 }
@@ -797,11 +800,11 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             MEGALogError("Failed to fetch call to populate participants")
             return
         }
-        if let myself = CallParticipantEntity.myself(chatId: chatRoom.chatId) {
-            myself.video = call.hasLocalVideo ? .on : .off
-            callParticipants.append(myself)
-        }
-        let participants = call.clientSessions.compactMap({CallParticipantEntity(session: $0, chatId: chatRoom.chatId)})
+        let myself = CallParticipantEntity.myself(handle: accountUseCase.currentUserHandle ?? .invalid, userName: chatUseCase.myFullName(), chatRoom: chatRoom)
+        myself.video = call.hasLocalVideo ? .on : .off
+        callParticipants.append(myself)
+        
+        let participants = call.clientSessions.compactMap({CallParticipantEntity(session: $0, chatRoom: chatRoom, privilege: chatRoomUseCase.peerPrivilege(forUserHandle: $0.peerId, chatRoom: chatRoom))})
         if !participants.isEmpty {
             callParticipants.append(contentsOf: participants)
         }
@@ -818,13 +821,13 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         guard waitingRoomNonModeratorUserHandles != callParticipantsInWaitingRoomUserHandles else { return }
         
         callParticipantsInWaitingRoom = waitingRoomNonModeratorUserHandles.compactMap {
-            CallParticipantEntity(chatId: chatRoom.chatId, userHandle: $0)
+            CallParticipantEntity(userHandle: $0, chatRoom: chatRoom, privilege: chatRoomUseCase.peerPrivilege(forUserHandle: $0, chatRoom: chatRoom))
         }
     }
     
     private func populateParticipantsNotInCall() {
         callParticipantsNotInCall = chatRoom.peers.compactMap {
-            CallParticipantEntity(chatId: chatRoom.chatId, userHandle: $0.handle, peerPrivilege: $0.privilege)
+            CallParticipantEntity(userHandle: $0.handle, chatRoom: chatRoom, privilege: chatRoomUseCase.peerPrivilege(forUserHandle: $0.handle, chatRoom: chatRoom))
         }
         
         callParticipants.forEach { callPartipant in

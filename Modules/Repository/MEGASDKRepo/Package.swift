@@ -22,6 +22,7 @@ let package = Package(
         .package(path: "../../Domain/MEGAAnalyticsDomain"),
         .package(path: "../../DataSource/MEGASdk"),
         .package(path: "../../Infrastracture/MEGATest"),
+        .package(path: "../../Infrastracture/MEGAMacro"),
         .package(url: "https://github.com/meganz/SAMKeychain.git", from: "2.0.0"),
         .package(url: "https://github.com/firebase/firebase-ios-sdk.git", from: "9.0.0"),
         .package(path: "../../Repository/MEGARepo")
@@ -33,6 +34,7 @@ let package = Package(
                 "MEGAAnalyticsDomain",
                 "MEGADomain",
                 "MEGASdk",
+                "MEGAMacro",
                 "SAMKeychain",
                 .product(name: "FirebaseCrashlytics", package: "firebase-ios-sdk"),
                 .product(name: "FirebaseAppDistribution-Beta", package: "firebase-ios-sdk"),

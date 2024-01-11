@@ -113,7 +113,7 @@ final class MeetingInfoRouter: NSObject, MeetingInfoRouting {
         contactDetailsVC.userHandle = userHandle
         contactDetailsVC.groupChatRoom = chatRoom.toMEGAChatRoom()
         contactDetailsVC.didUpdatePeerPermission = { peerPrivilege in
-            didUpdatePeerPermission(peerPrivilege.toOwnPrivilegeEntity().toChatRoomParticipantPrivilege())
+            didUpdatePeerPermission(peerPrivilege.toChatRoomPrivilegeEntity().toChatRoomParticipantPrivilege())
         }
         
         presenter.pushViewController(contactDetailsVC, animated: true)

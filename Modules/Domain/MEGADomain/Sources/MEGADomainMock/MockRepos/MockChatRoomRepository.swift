@@ -26,7 +26,8 @@ public final class MockChatRoomRepository: ChatRoomRepositoryProtocol {
     private let loadMessages: MEGADomain.ChatSourceEntity
     private let chatRoomMessageLoadedPublisher: AnyPublisher<MEGADomain.ChatMessageEntity?, Never>
     private let hasScheduledMeetingChange: Bool
-    
+    private let userEmail: String?
+
     public init(
         chatRoom: ChatRoomEntity? = nil,
         peerHandles: [MEGADomain.HandleEntity] = [],
@@ -49,7 +50,8 @@ public final class MockChatRoomRepository: ChatRoomRepositoryProtocol {
         updateChatPrivilegeResult: Result<ChatRoomPrivilegeEntity, ChatRoomErrorEntity> = .failure(.generic),
         loadMessages: MEGADomain.ChatSourceEntity = .local,
         chatRoomMessageLoadedPublisher: AnyPublisher<MEGADomain.ChatMessageEntity?, Never> = Empty().eraseToAnyPublisher(),
-        hasScheduledMeetingChange: Bool = false
+        hasScheduledMeetingChange: Bool = false,
+        userEmail: String? = nil
     ) {
         self.chatRoom = chatRoom
         self.peerHandles = peerHandles
@@ -73,6 +75,7 @@ public final class MockChatRoomRepository: ChatRoomRepositoryProtocol {
         self.loadMessages = loadMessages
         self.chatRoomMessageLoadedPublisher = chatRoomMessageLoadedPublisher
         self.hasScheduledMeetingChange = hasScheduledMeetingChange
+        self.userEmail = userEmail
     }
     
     public func chatRoom(forChatId chatId: MEGADomain.HandleEntity) -> MEGADomain.ChatRoomEntity? {
@@ -210,5 +213,9 @@ public final class MockChatRoomRepository: ChatRoomRepositoryProtocol {
     
     public func hasScheduledMeetingChange(_ change: MEGADomain.ChatMessageScheduledMeetingChangeType, for message: MEGADomain.ChatMessageEntity, inChatRoom chatRoom: MEGADomain.ChatRoomEntity) -> Bool {
         hasScheduledMeetingChange
+    }
+    
+    public func userEmail(for handle: MEGADomain.HandleEntity) async -> String? {
+        userEmail
     }
 }

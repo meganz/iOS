@@ -180,4 +180,8 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     func shouldOpenWaitingRoom(forChatId chatId: HandleEntity) -> Bool {
         shouldOpenWaitRoom
     }
+    
+    func userEmail(for handle: HandleEntity) async -> String? {
+        contactEmail
+    }
 }

@@ -7,9 +7,9 @@ protocol IntentPersonUseCaseProtocol {
 }
 
 public struct IntentPersonUseCase: IntentPersonUseCaseProtocol {
-    private let repository: any ContactsRepositoryProtocol
+    private let repository: any DeviceContactsRepositoryProtocol
 
-    public init(repository: some ContactsRepositoryProtocol) {
+    public init(repository: some DeviceContactsRepositoryProtocol) {
         self.repository = repository
     }
 

@@ -1,13 +1,13 @@
 import MEGADomain
 
 public struct MockContactsUseCase: ContactsUseCaseProtocol {
-    public var authorized: Bool
+    private let contact: UserEntity?
     
-    public var isAuthorizedToAccessPhoneContacts: Bool {
-        authorized
+    public init(contact: UserEntity? = nil) {
+        self.contact = contact
     }
     
-    public init(authorized: Bool = true) {
-        self.authorized = authorized
+    public func contact(forUserHandle handle: HandleEntity) -> UserEntity? {
+        contact
     }
 }

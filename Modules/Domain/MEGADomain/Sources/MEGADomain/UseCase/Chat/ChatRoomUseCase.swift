@@ -34,6 +34,7 @@ public protocol ChatRoomUseCaseProtocol {
     func closeChatRoom(_ chatRoom: ChatRoomEntity)
     func hasScheduledMeetingChange(_ change: ChatMessageScheduledMeetingChangeType, for message: ChatMessageEntity, inChatRoom chatRoom: ChatRoomEntity) -> Bool
     func shouldOpenWaitingRoom(forChatId chatId: HandleEntity) -> Bool
+    func userEmail(for handle: HandleEntity) async -> String?
 }
 
 public struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol>: ChatRoomUseCaseProtocol {
@@ -206,5 +207,9 @@ public struct ChatRoomUseCase<T: ChatRoomRepositoryProtocol>: ChatRoomUseCasePro
         guard let chatRoom = chatRoomRepo.chatRoom(forChatId: chatId) else { return false }
         let isModerator = chatRoom.ownPrivilege == .moderator
         return !isModerator && chatRoom.isWaitingRoomEnabled
+    }
+    
+    public func userEmail(for handle: HandleEntity) async -> String? {
+        await chatRoomRepo.userEmail(for: handle)
     }
 }

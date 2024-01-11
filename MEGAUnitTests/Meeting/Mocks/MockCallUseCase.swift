@@ -189,36 +189,36 @@ final class MockCallUseCase: CallUseCaseProtocol {
 
 extension MockCallUseCase: CallCallbacksRepositoryProtocol {
     
-    func createdSession(_ session: ChatSessionEntity, in chatId: HandleEntity) {
-        guard let chatSession = chatSession, let chatRoom = chatRoom else {
+    func createdSession(_ session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity) {
+        guard let chatSession = chatSession, let chat = self.chatRoom else {
             MEGALogDebug("Error getting mock properties")
             return
         }
-        callbacksDelegate?.participantJoined(participant: CallParticipantEntity(session: chatSession, chatId: chatRoom.chatId))
+        callbacksDelegate?.participantJoined(participant: CallParticipantEntity(session: chatSession, chatRoom: chat, privilege: privilege))
     }
     
-    func destroyedSession(_ session: ChatSessionEntity, in chatId: HandleEntity) {
-        guard let chatSession = chatSession, let chatRoom = chatRoom else {
+    func destroyedSession(_ session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity) {
+        guard let chatSession = chatSession, let chat = self.chatRoom else {
             MEGALogDebug("Error getting mock properties")
             return
         }
-        callbacksDelegate?.participantLeft(participant: CallParticipantEntity(session: chatSession, chatId: chatRoom.chatId))
+        callbacksDelegate?.participantLeft(participant: CallParticipantEntity(session: chatSession, chatRoom: chat, privilege: privilege))
     }
     
-    func avFlagsUpdated(for session: ChatSessionEntity, in chatId: HandleEntity) {
-        guard let chatSession = chatSession, let chatRoom = chatRoom else {
+    func avFlagsUpdated(for session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity) {
+        guard let chatSession = chatSession, let chat = self.chatRoom else {
             MEGALogDebug("Error getting mock properties")
             return
         }
-        callbacksDelegate?.updateParticipant(CallParticipantEntity(session: chatSession, chatId: chatRoom.chatId))
+        callbacksDelegate?.updateParticipant(CallParticipantEntity(session: chatSession, chatRoom: chat, privilege: privilege))
     }
     
-    func audioLevel(for session: ChatSessionEntity, in chatId: HandleEntity) {
-        guard let chatSession = chatSession, let chatRoom = chatRoom else {
+    func audioLevel(for session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity) {
+        guard let chatSession = chatSession, let chat = self.chatRoom else {
             MEGALogDebug("Error getting mock properties")
             return
         }
-        callbacksDelegate?.audioLevel(for: CallParticipantEntity(session: chatSession, chatId: chatRoom.chatId))
+        callbacksDelegate?.audioLevel(for: CallParticipantEntity(session: chatSession, chatRoom: chat, privilege: privilege))
     }
     
     func callTerminated(_ call: CallEntity) {
@@ -249,20 +249,20 @@ extension MockCallUseCase: CallCallbacksRepositoryProtocol {
         callbacksDelegate?.inProgress()
     }
     
-    func onHiResSessionChanged(_ session: ChatSessionEntity, in chatId: HandleEntity) {
-        guard let chatSession = chatSession, let chatRoom = chatRoom else {
+    func onHiResSessionChanged(_ session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity) {
+        guard let chatSession = chatSession, let chat = self.chatRoom else {
             MEGALogDebug("Error getting mock properties")
             return
         }
-        callbacksDelegate?.highResolutionChanged(for: CallParticipantEntity(session: chatSession, chatId: chatRoom.chatId))
+        callbacksDelegate?.highResolutionChanged(for: CallParticipantEntity(session: chatSession, chatRoom: chat, privilege: privilege))
     }
     
-    func onLowResSessionChanged(_ session: ChatSessionEntity, in chatId: HandleEntity) {
-        guard let chatSession = chatSession, let chatRoom = chatRoom else {
+    func onLowResSessionChanged(_ session: ChatSessionEntity, in chatRoom: ChatRoomEntity, privilege: ChatRoomPrivilegeEntity) {
+        guard let chatSession = chatSession, let chat = self.chatRoom else {
             MEGALogDebug("Error getting mock properties")
             return
         }
-        callbacksDelegate?.lowResolutionChanged(for: CallParticipantEntity(session: chatSession, chatId: chatRoom.chatId))
+        callbacksDelegate?.lowResolutionChanged(for: CallParticipantEntity(session: chatSession, chatRoom: chat, privilege: privilege))
     }
     
     func localAvFlagsUpdated(video: Bool, audio: Bool) {

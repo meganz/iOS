@@ -86,7 +86,8 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
             localVideoUseCase: CallLocalVideoUseCase(repository: CallLocalVideoRepository(chatSdk: .shared)),
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             chatRoomUseCase: chatRoomUseCase,
-            megaHandleUseCase: megaHandleUseCase,
+            megaHandleUseCase: megaHandleUseCase, 
+            chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
             selectWaitingRoomList: selectWaitingRoomList
         )
         

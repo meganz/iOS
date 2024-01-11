@@ -4,7 +4,7 @@ import MEGAIntentDomain
 import MEGARepo
 
 final class IntentHandler: INExtension {
-    lazy var intentPersonUseCase = IntentPersonUseCase(repository: ContactsRepository.newRepo)
+    lazy var intentPersonUseCase = IntentPersonUseCase(repository: DeviceContactsRepository.newRepo)
 
     override init() {
         super.init()

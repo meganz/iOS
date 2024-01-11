@@ -1,9 +1,9 @@
 import Contacts
 import MEGADomain
 
-public struct ContactsRepository: ContactsRepositoryProtocol {
-    public static var newRepo: ContactsRepository {
-        ContactsRepository()
+public struct DeviceContactsRepository: DeviceContactsRepositoryProtocol {
+    public static var newRepo: DeviceContactsRepository {
+        DeviceContactsRepository()
     }
 
     public var isAuthorizedToAccessPhoneContacts: Bool {

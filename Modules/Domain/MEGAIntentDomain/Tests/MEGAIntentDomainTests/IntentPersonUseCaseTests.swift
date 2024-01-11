@@ -71,7 +71,7 @@ class IntentPersonUseCaseTests: XCTestCase {
 }
 
 private extension IntentPersonUseCaseTests {
-    struct MockContactsRepository: ContactsRepositoryProtocol {
+    struct MockContactsRepository: DeviceContactsRepositoryProtocol {
         static var newRepo: MockContactsRepository {
             MockContactsRepository(contacts: [])
         }

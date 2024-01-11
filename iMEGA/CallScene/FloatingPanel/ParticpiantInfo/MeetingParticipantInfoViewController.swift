@@ -30,8 +30,8 @@ class MeetingParticipantInfoViewController: ActionSheetViewController, ViewType 
     @MainActor
     func executeCommand(_ command: MeetingParticipantInfoViewModel.Command) {
         switch command {
-        case .configView(let email, let actions):
-            configureHeaderView(email: email)
+        case .configView(let actions):
+            configureHeaderView()
             self.actions = actions
         case .updateAvatarImage(let image):
             guard let meetingContactInfoHeaderView = headerView?.subviews.first(where: { $0 is MeetingContactInfoHeaderView }) as? MeetingContactInfoHeaderView else { return }
@@ -39,14 +39,16 @@ class MeetingParticipantInfoViewController: ActionSheetViewController, ViewType 
         case .updateName(let name):
             guard let meetingContactInfoHeaderView = headerView?.subviews.first(where: { $0 is MeetingContactInfoHeaderView }) as? MeetingContactInfoHeaderView else { return }
             meetingContactInfoHeaderView.nameLabel.text = name
+        case .updateEmail(let email):
+            guard let meetingContactInfoHeaderView = headerView?.subviews.first(where: { $0 is MeetingContactInfoHeaderView }) as? MeetingContactInfoHeaderView else { return }
+            meetingContactInfoHeaderView.emailLabel.text = email
         }
     }
     
-    private func configureHeaderView(email: String?) {
+    private func configureHeaderView() {
         guard let headerView = headerView else { return }
         
         let meetingContactInfoHeaderView = MeetingContactInfoHeaderView.instanceFromNib
-        meetingContactInfoHeaderView.emailLabel.text = email
         headerView.wrap(meetingContactInfoHeaderView)
         
         headerView.frame = CGRect(origin: .zero, size: CGSize(width: view.bounds.width, height: meetingContactInfoHeaderView.bounds.height))

@@ -13,11 +13,12 @@ enum MeetingParticipantInfoAction: ActionType {
     case muteParticipant
 }
 
-struct MeetingParticipantInfoViewModel: ViewModelType {
+final class MeetingParticipantInfoViewModel: ViewModelType {
     enum Command: CommandType, Equatable {
-        case configView(email: String?, actions: [ActionSheetAction])
+        case configView(actions: [ActionSheetAction])
         case updateAvatarImage(image: UIImage)
         case updateName(name: String)
+        case updateEmail(email: String?)
     }
     
     private let participant: CallParticipantEntity
@@ -25,14 +26,17 @@ struct MeetingParticipantInfoViewModel: ViewModelType {
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
+    private let contactsUseCase: any ContactsUseCaseProtocol
     private let isMyselfModerator: Bool
     private let router: any MeetingParticipantInfoViewRouting
+    private var email: String?
     
     init(participant: CallParticipantEntity,
          userImageUseCase: some UserImageUseCaseProtocol,
          chatRoomUseCase: some ChatRoomUseCaseProtocol,
          chatRoomUserUseCase: some ChatRoomUserUseCaseProtocol,
          megaHandleUseCase: some MEGAHandleUseCaseProtocol,
+         contactsUseCase: some ContactsUseCaseProtocol,
          isMyselfModerator: Bool,
          router: some MeetingParticipantInfoViewRouting) {
         self.participant = participant
@@ -40,6 +44,7 @@ struct MeetingParticipantInfoViewModel: ViewModelType {
         self.chatRoomUseCase = chatRoomUseCase
         self.chatRoomUserUseCase = chatRoomUserUseCase
         self.megaHandleUseCase = megaHandleUseCase
+        self.contactsUseCase = contactsUseCase
         self.isMyselfModerator = isMyselfModerator
         self.router = router
     }
@@ -49,10 +54,14 @@ struct MeetingParticipantInfoViewModel: ViewModelType {
     func dispatch(_ action: MeetingParticipantInfoAction) {
         switch action {
         case .onViewReady:
-            invokeCommand?(.configView(email: participant.email, actions: actions()))
-            fetchName(forParticipant: participant)
+            invokeCommand?(.configView(actions: actions()))
+            Task { @MainActor in
+                email = await chatRoomUseCase.userEmail(for: participant.participantId)
+                invokeCommand?(.updateEmail(email: email))
+                fetchName(forParticipant: participant)
+            }
         case .showInfo:
-            router.showInfo()
+            router.showInfo(withEmail: email)
         case .sendMessage:
             sendMessage()
         case .makeModerator:
@@ -73,7 +82,7 @@ struct MeetingParticipantInfoViewModel: ViewModelType {
     private func actions() -> [ActionSheetAction] {
         var actions: [ActionSheetAction] = []
         
-        if participant.isInContactList {
+        if contactsUseCase.contact(forUserHandle: participant.participantId) != nil {
             actions.append(contentsOf: [infoAction(), sendMessageAction()])
         }
                 
@@ -122,10 +131,10 @@ struct MeetingParticipantInfoViewModel: ViewModelType {
         userImageUseCase.fetchUserAvatar(withUserHandle: participant.participantId,
                                          base64Handle: base64Handle,
                                          avatarBackgroundHexColor: avatarBackgroundHexColor,
-                                         name: name) { result in
+                                         name: name) { [weak self] result in
             switch result {
             case .success(let image):
-                invokeCommand?(.updateAvatarImage(image: image))
+                self?.invokeCommand?(.updateAvatarImage(image: image))
             case .failure:
                 break
             }
@@ -148,8 +157,8 @@ struct MeetingParticipantInfoViewModel: ViewModelType {
         ActionSheetAction(title: Strings.Localizable.info,
                           detail: nil,
                           image: UIImage(resource: .infoMeetings),
-                          style: .default) {
-            dispatch(.showInfo)
+                          style: .default) { [weak self] in
+            self?.dispatch(.showInfo)
         }
     }
     
@@ -157,8 +166,8 @@ struct MeetingParticipantInfoViewModel: ViewModelType {
         ActionSheetAction(title: Strings.Localizable.sendMessage,
                           detail: nil,
                           image: UIImage(resource: .sendMessageMeetings),
-                          style: .default) {
-            dispatch(.sendMessage)
+                          style: .default) { [weak self] in
+            self?.dispatch(.sendMessage)
         }
     }
     
@@ -166,8 +175,8 @@ struct MeetingParticipantInfoViewModel: ViewModelType {
         ActionSheetAction(title: Strings.Localizable.Meetings.Participant.makeModerator,
                           detail: nil,
                           image: UIImage(resource: .moderatorMeetings),
-                          style: .default) {
-            dispatch(.makeModerator)
+                          style: .default) { [weak self] in
+            self?.dispatch(.makeModerator)
         }
     }
     
@@ -175,8 +184,8 @@ struct MeetingParticipantInfoViewModel: ViewModelType {
         ActionSheetAction(title: Strings.Localizable.Meetings.Participant.removeModerator,
                           detail: nil,
                           image: UIImage(resource: .removeModerator),
-                          style: .default) {
-            dispatch(.removeModerator)
+                          style: .default) { [weak self] in
+            self?.dispatch(.removeModerator)
         }
     }
     
@@ -184,8 +193,8 @@ struct MeetingParticipantInfoViewModel: ViewModelType {
         ActionSheetAction(title: Strings.Localizable.removeParticipant,
                           detail: nil,
                           image: UIImage(resource: .delete),
-                          style: .destructive) {
-            dispatch(.removeParticipant)
+                          style: .destructive) { [weak self] in
+            self?.dispatch(.removeParticipant)
         }
     }
     
@@ -193,8 +202,8 @@ struct MeetingParticipantInfoViewModel: ViewModelType {
         ActionSheetAction(title: Strings.Localizable.Meetings.DisplayInMainView.title,
                           detail: nil,
                           image: UIImage(resource: .speakerView),
-                          style: .default) {
-            dispatch(.displayInMainView)
+                          style: .default) { [weak self] in
+            self?.dispatch(.displayInMainView)
         }
     }
     
@@ -202,8 +211,8 @@ struct MeetingParticipantInfoViewModel: ViewModelType {
         ActionSheetAction(title: Strings.Localizable.Calls.Panel.ParticipantsInCall.ParticipantContextMenu.Actions.mute,
                           detail: nil,
                           image: UIImage(resource: .muteParticipant),
-                          style: .default) {
-            dispatch(.muteParticipant)
+                          style: .default) { [weak self] in
+            self?.dispatch(.muteParticipant)
         }
     }
 }
