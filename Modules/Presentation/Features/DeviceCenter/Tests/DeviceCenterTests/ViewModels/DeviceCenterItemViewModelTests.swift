@@ -118,6 +118,7 @@ final class DeviceCenterItemViewModelTests: XCTestCase {
             id: 1,
             name: "backup1",
             deviceId: mockCurrentDeviceId,
+            rootHandle: 1,
             type: backupType,
             status: .upToDate
         )
@@ -127,12 +128,14 @@ final class DeviceCenterItemViewModelTests: XCTestCase {
             backups: [backup],
             status: .upToDate
         )
+        let node = NodeEntity(
+            handle: 1,
+            isOutShare: isOutShared,
+            isExported: isExported
+        )
         let nodeUseCase = MockNodeDataUseCase(
-            node: NodeEntity(
-                handle: 1,
-                isOutShare: isOutShared,
-                isExported: isExported
-            )
+            nodes: [node],
+            node: node
         )
         let deviceCenterUseCase = MockDeviceCenterUseCase(
             devices: [device],

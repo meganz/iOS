@@ -7,7 +7,7 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
     public var versions: Bool
     public var downloadedToReturn: Bool
     public var inRubbishBinToReturn: Bool
-    private var multimediaNodes: [NodeEntity]
+    private var nodes: [NodeEntity]
     private var nodeEntity: NodeEntity?
     
     public var isMultimediaFileNode_CalledTimes = 0
@@ -18,7 +18,7 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
                 versions: Bool = false,
                 downloaded: Bool = false,
                 inRubbishBin: Bool = false,
-                multimediaNodes: [NodeEntity] = [],
+                nodes: [NodeEntity] = [],
                 node: NodeEntity? = nil) {
         self.nodeAccessLevelVariable = nodeAccessLevelVariable
         self.labelStringToReturn = labelString
@@ -26,7 +26,7 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
         self.versions = versions
         self.downloadedToReturn = downloaded
         self.inRubbishBinToReturn = inRubbishBin
-        self.multimediaNodes = multimediaNodes
+        self.nodes = nodes
         self.nodeEntity = node
     }
     
@@ -61,7 +61,9 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
     }
     
     public func nodeForHandle(_ handle: HandleEntity) -> NodeEntity? {
-        nodeEntity
+        nodes.first {
+            $0.handle == handle
+        }
     }
     
     public func parentForHandle(_ handle: HandleEntity) -> NodeEntity? {

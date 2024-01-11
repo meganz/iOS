@@ -175,6 +175,7 @@ final class BackupListViewModelTests: XCTestCase {
             id: 1,
             name: "backup1",
             deviceId: mockCurrentDeviceId,
+            rootHandle: 1,
             type: .cameraUpload
         )
         
@@ -201,6 +202,7 @@ final class BackupListViewModelTests: XCTestCase {
             id: 1,
             name: "backup1",
             deviceId: mockCurrentDeviceId,
+            rootHandle: 1,
             type: .backupUpload
         )
         
@@ -387,6 +389,11 @@ final class BackupListViewModelTests: XCTestCase {
         line: UInt = #line
     ) -> BackupListViewModel {
         
+        let node = NodeEntity(
+            handle: 1,
+            isOutShare: isOutShared,
+            isExported: isExported
+        )
         let backupStatusEntities = backupStatusEntities()
         let backupTypeEntities = backupTypeEntities()
         let networkMonitorUseCase = MockNetworkMonitorUseCase()
@@ -405,12 +412,11 @@ final class BackupListViewModelTests: XCTestCase {
             updateInterval: updateInterval,
             deviceCenterUseCase: deviceCenterUseCase,
             nodeUseCase: MockNodeDataUseCase(
-                node: NodeEntity(
-                    handle: 1,
-                    isOutShare: isOutShared,
-                    isExported: isExported
-                )
-            ), 
+                nodes: [
+                    node
+                ],
+                node: node
+            ),
             cameraUploadsUseCase: cameraUploadsUseCase,
             networkMonitorUseCase: networkMonitorUseCase,
             router: MockBackupListViewRouter(),
