@@ -1055,7 +1055,6 @@
 		83850A4126B2AACD00C62304 /* EnterMeetingLinkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83850A3E26B2AACC00C62304 /* EnterMeetingLinkViewModel.swift */; };
 		83850A4326B2BA3000C62304 /* MEGAChatResultDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83850A4226B2BA3000C62304 /* MEGAChatResultDelegate.swift */; };
 		83850A4526B2BC1100C62304 /* MEGAProviderDelegate+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83850A4426B2BC1000C62304 /* MEGAProviderDelegate+Additions.swift */; };
-		838A7B5625D55EFA00767DB0 /* CallUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838A7B5525D55EFA00767DB0 /* CallUseCase.swift */; };
 		838A7B6925D5678C00767DB0 /* CallRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838A7B6825D5678C00767DB0 /* CallRepository.swift */; };
 		838CC2652B2B2ECE001C85E9 /* ChatLinkPresentationItemSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838CC2642B2B2ECE001C85E9 /* ChatLinkPresentationItemSource.swift */; };
 		838CCF6C298C006200C83502 /* ScheduledMeetingDateBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838CCF6B298C006200C83502 /* ScheduledMeetingDateBuilder.swift */; };
@@ -3687,7 +3686,6 @@
 		83850A3E26B2AACC00C62304 /* EnterMeetingLinkViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterMeetingLinkViewModel.swift; sourceTree = "<group>"; };
 		83850A4226B2BA3000C62304 /* MEGAChatResultDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAChatResultDelegate.swift; sourceTree = "<group>"; };
 		83850A4426B2BC1000C62304 /* MEGAProviderDelegate+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MEGAProviderDelegate+Additions.swift"; sourceTree = "<group>"; };
-		838A7B5525D55EFA00767DB0 /* CallUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallUseCase.swift; sourceTree = "<group>"; };
 		838A7B6825D5678C00767DB0 /* CallRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallRepository.swift; sourceTree = "<group>"; };
 		838CC2642B2B2ECE001C85E9 /* ChatLinkPresentationItemSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLinkPresentationItemSource.swift; sourceTree = "<group>"; };
 		838CCF6B298C006200C83502 /* ScheduledMeetingDateBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduledMeetingDateBuilder.swift; sourceTree = "<group>"; };
@@ -8962,7 +8960,6 @@
 			isa = PBXGroup;
 			children = (
 				8338E0F22666552900D1458B /* CallManagerUseCase.swift */,
-				838A7B5525D55EFA00767DB0 /* CallUseCase.swift */,
 			);
 			path = Calls;
 			sourceTree = "<group>";
@@ -10438,8 +10435,8 @@
 		B639952A2898CBA400EA88F1 /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
-				94BD69942B4EB86200BF08D6 /* SearchBarUIHostingController */,
 				25D840672A9EE0C30026D288 /* PermissionAlertViewModifier */,
+				94BD69942B4EB86200BF08D6 /* SearchBarUIHostingController */,
 				B63995322898CBEB00EA88F1 /* WarningView */,
 			);
 			path = SwiftUI;
@@ -13572,7 +13569,6 @@
 				83AE36C22886D033002F1755 /* CallsSettingsViewModel.swift in Sources */,
 				8330A99328882E12003E80DB /* CallsSettingsViewRouter.swift in Sources */,
 				83C49BB02652627500A7764B /* CallTitleView.swift in Sources */,
-				838A7B5625D55EFA00767DB0 /* CallUseCase.swift in Sources */,
 				831807B92AA222CB00C91119 /* CallWaitingRoomUsersDialog.swift in Sources */,
 				B6D9D7E9216AB0C700D7B08A /* CameraScanner.m in Sources */,
 				B63F3198223BA47400B0C6A6 /* CameraUpload.xcdatamodeld in Sources */,
@@ -13996,7 +13992,6 @@
 				5DD4B2F1257DEAE000A01306 /* HomeBannerRouter.swift in Sources */,
 				947DC5E12AC1C826002C1D7C /* HomeChips+Tracking.swift in Sources */,
 				947DC5DF2AC1C7F5002C1D7C /* HomeChips.swift in Sources */,
-				94BD69972B4EB88D00BF08D6 /* SearchBarUIHostingController.swift in Sources */,
 				5D8C5AB724F0A39300EDD7A9 /* HomeLocalisation.swift in Sources */,
 				BF74E1E3253668E1001F663C /* HomeRouter.swift in Sources */,
 				5DA32DBA24EA27DC0075B613 /* HomeScreenFactory.swift in Sources */,
@@ -14712,6 +14707,7 @@
 				BF7D43B4253CFF6F003DF1DA /* SDKNodesUpdateListenerRepository.swift in Sources */,
 				BF7D43D8253D31D7003DF1DA /* SDKTransferListenerRepository.swift in Sources */,
 				5DA32DBE24EA92160075B613 /* SDKUserAlertsClient.swift in Sources */,
+				94BD69972B4EB88D00BF08D6 /* SearchBarUIHostingController.swift in Sources */,
 				940DE0272AB46245008C9DB5 /* SearchConfig+Home.swift in Sources */,
 				5D11B73E2531F1FD00FD4143 /* SearchFileHistoryUseCase.swift in Sources */,
 				5D5DE4F82511F88900F2B4FD /* SearchFileUseCase.swift in Sources */,
