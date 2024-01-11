@@ -43,7 +43,7 @@ struct NodeBrowserConfig {
     var shouldRemovePlayerDelegate: Bool?
     // this should enabled for non-root nodes
     var mediaDiscoveryAutomaticDetectionEnabled: () -> Bool = { false }
-    
+
     static var `default`: Self {
         .init()
     }
@@ -58,7 +58,6 @@ struct NodeBrowserConfig {
 }
 
 struct CloudDriveViewControllerFactory {
-    
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let abTestProvider: any ABTestProviderProtocol
     private let navigationController: UINavigationController
@@ -73,7 +72,9 @@ struct CloudDriveViewControllerFactory {
     private let resultsMapper: SearchResultMapper
     private let sdk: MEGASdk
     private let userDefaults: UserDefaults
-    
+    private let avatarViewModel: MyAvatarViewModel
+    private let userProfileOpener: (UINavigationController) -> Void
+
     init(
         featureFlagProvider: some FeatureFlagProviderProtocol,
         abTestProvider: some ABTestProviderProtocol,
@@ -88,7 +89,8 @@ struct CloudDriveViewControllerFactory {
         nodeRepository: some NodeRepositoryProtocol,
         preferences: some PreferenceUseCaseProtocol,
         sdk: MEGASdk,
-        userDefaults: UserDefaults
+        userDefaults: UserDefaults,
+        userProfileOpener: @escaping (UINavigationController) -> Void
     ) {
         self.featureFlagProvider = featureFlagProvider
         self.abTestProvider = abTestProvider
@@ -104,8 +106,29 @@ struct CloudDriveViewControllerFactory {
         self.preferences = preferences
         self.sdk = sdk
         self.userDefaults = userDefaults
+        self.userProfileOpener = userProfileOpener
+
+        self.avatarViewModel = MyAvatarViewModel(
+            megaNotificationUseCase: MEGANotificationUseCase(
+                userAlertsClient: .live
+            ),
+            megaAvatarUseCase: MEGAavatarUseCase(
+                megaAvatarClient: .live,
+                avatarFileSystemClient: .live,
+                accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
+                thumbnailRepo: ThumbnailRepository.newRepo,
+                handleUseCase: MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo)
+            ),
+            megaAvatarGeneratingUseCase: MEGAAavatarGeneratingUseCase(
+                storeUserClient: .live,
+                megaAvatarClient: .live,
+                accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)
+            )
+        )
+
+        self.avatarViewModel.inputs.viewIsReady()
     }
-    
+
     static func make(nc: UINavigationController? = nil) -> CloudDriveViewControllerFactory {
         let sdk = MEGASdk.shared
         let homeFactory = HomeScreenFactory()
@@ -137,6 +160,7 @@ struct CloudDriveViewControllerFactory {
                 filesSearchRepository: FilesSearchRepository(sdk: sdk),
                 nodeUpdateRepository: NodeUpdateRepository(sdk: sdk)
             ),
+
             homeScreenFactory: homeFactory,
             resultsMapper: SearchResultMapper(
                 sdk: sdk,
@@ -147,7 +171,16 @@ struct CloudDriveViewControllerFactory {
             nodeRepository: NodeRepository.newRepo,
             preferences: PreferenceUseCase.default,
             sdk: sdk,
-            userDefaults: .standard
+            userDefaults: .standard,
+            userProfileOpener: { navigationController in
+                MyAccountHallRouter(
+                    myAccountHallUseCase: MyAccountHallUseCase(repository: AccountRepository.newRepo),
+                    purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
+                    shareUseCase: ShareUseCase(repo: ShareRepository.newRepo),
+                    networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
+                    navigationController: navigationController
+                ).start()
+            }
         )
     }
     
@@ -212,7 +245,7 @@ struct CloudDriveViewControllerFactory {
             image: UIImage.cloudDriveIcon,
             selectedImage: nil
         )
-        
+
         if
             let legacy = vc as? (any MyAvatarPresenterProtocol),
             config.showsAvatar == true {
@@ -232,19 +265,32 @@ struct CloudDriveViewControllerFactory {
         // MEGARecentActionBucket to load arbitrary list of nodes
         
         let overriddenConfig = makeOverriddenConfigIfNeeded(nodeSource: nodeSource, config: config)
-        
+        let searchResultsVM = self.makeSearchResultsViewModel(
+            nodeSource: nodeSource,
+            config: overriddenConfig
+        )
+        let searchControllerWrapper = SearchControllerWrapper(
+            onSearch: { searchResultsVM.bridge.queryChanged($0) },
+            onCancel: { searchResultsVM.bridge.queryCleaned() }
+        )
         let view = NodeBrowserView(
             viewModel: .init(
-                searchResultsViewModel: makeSearchResultsViewModel(
-                    nodeSource: nodeSource,
-                    config: overriddenConfig
-                ),
-                mediaDiscoveryViewModel: makeOptionalMediaDiscoveryViewModel(nodeSource),
+                searchResultsViewModel: searchResultsVM,
+                mediaDiscoveryViewModel: self.makeOptionalMediaDiscoveryViewModel(nodeSource),
                 config: overriddenConfig,
-                hasOnlyMediaNodesChecker: makeHasOnlyMediaChecker(nodeSource: nodeSource)
+                nodeSource: nodeSource,
+                avatarViewModel: self.avatarViewModel,
+                hasOnlyMediaNodesChecker: self.makeHasOnlyMediaChecker(nodeSource: nodeSource),
+                onOpenUserProfile: { self.userProfileOpener(self.navigationController) },
+                onUpdateSearchBarVisibility: { searchControllerWrapper.onUpdateSearchBarVisibility?($0) },
+                onBack: { self.navigationController.popViewController(animated: true) }
             )
         )
-        return UIHostingController(rootView: view)
+        let vc = SearchBarUIHostingController(
+            rootView: view,
+            wrapper: searchControllerWrapper
+        )
+        return vc
     }
     
     private func makeHasOnlyMediaChecker(nodeSource: NodeSource) -> () async -> Bool {
@@ -293,7 +339,7 @@ struct CloudDriveViewControllerFactory {
                 else {
                     return false
                 }
-                
+
                 return preferences[.shouldDisplayMediaDiscoveryWhenMediaOnly] ?? true
             }
             return overriddenConfig
