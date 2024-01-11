@@ -9,13 +9,16 @@ protocol NodeRouting {
         on node: HandleEntity,
         button: UIButton
     )
-    func didTapNode(_ nodeHandle: HandleEntity, displayMode: DisplayMode?)
     
-    func didTapNode(_ nodeHandle: HandleEntity)
+    func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity], displayMode: DisplayMode?) 
+    
+    func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity])
+    
+    func didTapNode(nodeHandle: HandleEntity)
 }
 
 final class HomeSearchResultRouter: NodeRouting {
-
+    
     private weak var navigationController: UINavigationController?
 
     private var nodeActionViewControllerDelegate: NodeActionViewControllerGenericDelegate
@@ -49,12 +52,20 @@ final class HomeSearchResultRouter: NodeRouting {
         ) else { return }
         navigationController?.present(nodeActionViewController, animated: true, completion: nil)
     }
-
-    func didTapNode(_ nodeHandle: HandleEntity, displayMode: DisplayMode? = nil) {
-        nodeOpener.openNode(nodeHandle, config: .withOptionalDisplayMode(displayMode))
+    
+    func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity], displayMode: DisplayMode?) {
+        nodeOpener.openNode(
+            nodeHandle: nodeHandle,
+            allNodes: allNodeHandles,
+            config: .withOptionalDisplayMode(displayMode)
+        )
     }
     
-    func didTapNode(_ nodeHandle: HandleEntity) {
-        didTapNode(nodeHandle, displayMode: nil)
+    func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity]) {
+        didTapNode(nodeHandle: nodeHandle, allNodeHandles: allNodeHandles, displayMode: nil)
+    }
+    
+    func didTapNode(nodeHandle: HandleEntity) {
+        didTapNode(nodeHandle: nodeHandle, allNodeHandles: [])
     }
 }

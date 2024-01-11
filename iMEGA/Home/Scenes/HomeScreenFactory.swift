@@ -236,7 +236,7 @@ final class HomeScreenFactory: NSObject {
         // MEGA app level delegates. Using simple closures to pass data back and forth
         let searchBridge = SearchBridge(
             selection: { [weak sdk] result in
-                router.didTapNode(result.id)
+                router.didTapNode(nodeHandle: result.id)
                 // map from result id to a node to check if this is folder or a file
                 if let node = sdk?.node(forHandle: result.id) {
                     let event = SearchItemSelectedEvent(

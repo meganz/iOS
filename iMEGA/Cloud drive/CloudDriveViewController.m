@@ -604,21 +604,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [self presentViewController:nodeInfoNavigation animated:YES completion:nil];
 }
 
-- (MEGAPhotoBrowserViewController *)photoBrowserForMediaNode:(MEGANode *)node {
-    NSArray *nodesArray = (self.searchController.isActive && !self.searchController.searchBar.text.mnz_isEmpty) ? self.searchNodesArray : [self.nodes mnz_nodesArrayFromNodeList];
-    NSMutableArray<MEGANode *> *mediaNodesArray = [[NSMutableArray alloc] initWithCapacity:nodesArray.count];
-    for (MEGANode *n in nodesArray) {
-        if ([FileExtensionGroupOCWrapper verifyIsVisualMedia:n.name]) {
-            [mediaNodesArray addObject:n];
-        }
-    }
-    
-    DisplayMode displayMode = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:node] == MEGAShareTypeAccessOwner ? self.displayMode : DisplayModeSharedItem;
-    MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:displayMode presentingNode:node];
-    
-    return photoBrowserVC;
-}
-
 - (void)reloadList {
     if (self.viewModePreference_ObjC == ViewModePreferenceEntityList) {
         [self.cdTableView.tableView reloadData];
