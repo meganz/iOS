@@ -160,7 +160,8 @@ final class HomeRouter: HomeRouterProtocol {
     func showNode(_ base64Handle: Base64HandleEntity) {
         navigationController?.popToRootViewController(animated: false)
         let handle = MEGASdk.handle(forBase64Handle: base64Handle)
-        NodeOpener(navigationController: navigationController).openNode(handle)
+        NodeOpener(navigationController: navigationController)
+            .openNode(nodeHandle: handle)
     }
     
     func showDownloadTransfer(node: MEGANode) {

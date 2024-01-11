@@ -36,11 +36,15 @@ extension CloudDriveViewController {
         }
     }
     
+    private var sdk: MEGASdk {
+        MEGASdk.shared
+    }
+    
     @objc func createNodeInfoViewModel(withNode node: MEGANode) -> NodeInfoViewModel {
         NodeInfoViewModel(
             withNode: node,
             shareUseCase: ShareUseCase(repo: ShareRepository.newRepo),
-            shouldDisplayContactVerificationInfo: MEGASdk.shared.isContactVerificationWarningEnabled
+            shouldDisplayContactVerificationInfo: sdk.isContactVerificationWarningEnabled
         )
     }
     
@@ -129,9 +133,9 @@ extension CloudDriveViewController {
     
     private func shareType(for nodes: [MEGANode]) -> MEGAShareType {
         var currentNodeShareType: MEGAShareType = .accessUnknown
-    
+        
         nodes.forEach { node in
-            currentNodeShareType = MEGASdk.shared.accessLevel(for: node)
+            currentNodeShareType = sdk.accessLevel(for: node)
             
             if currentNodeShareType == .accessRead && currentNodeShareType.rawValue < shareType.rawValue {
                 return
@@ -155,7 +159,7 @@ extension CloudDriveViewController {
         
         toolbarActions(for: shareType, isBackupNode: isBackupNode)
     }
-
+    
     @objc func updateParentNodeIfNeeded(_ updatedNodeList: MEGANodeList) {
         guard let updatedParentNode = updatedParentNodeIfBelongs(updatedNodeList) else { return }
         
@@ -230,7 +234,7 @@ extension CloudDriveViewController {
         navigationItem.title = navigationTitle
         setMenuCapableBackButtonWith(menuTitle: navigationTitle)
     }
-
+    
     @objc func updateToolbarButtonsEnabled(_ enabled: Bool, selectedNodesArray: [MEGANode]) {
         let enableIfNotDisputed = !selectedNodesArray.contains(where: { $0.isTakenDown() }) && enabled
         
@@ -241,7 +245,7 @@ extension CloudDriveViewController {
         deleteBarButtonItem?.isEnabled = enabled
         restoreBarButtonItem?.isEnabled = enableIfNotDisputed
         actionsBarButtonItem?.isEnabled = enabled
-
+        
         if self.displayMode == DisplayMode.rubbishBin && enabled {
             for node in selectedNodesArray where !node.mnz_isRestorable() {
                 restoreBarButtonItem?.isEnabled = false
@@ -324,7 +328,7 @@ extension CloudDriveViewController {
                 return findItemIndexForFileNode(for: node, source: source)
             }
         }
-            
+        
         return 0
     }
     
@@ -366,7 +370,7 @@ extension CloudDriveViewController {
         GetLinkRouter(presenter: self,
                       nodes: nodes).start()
     }
-
+    
     @objc func setupContactNotVerifiedBanner() {
         let hostingView = UIHostingController(
             rootView: WarningView(
@@ -387,11 +391,11 @@ extension CloudDriveViewController {
             hostingViewUIView.bottomAnchor.constraint(equalTo: contactNotVerifiedBannerView.bottomAnchor)
         ])
     }
-
+    
     @objc func showUpgradePlanView() {
         UpgradeAccountRouter().presentUpgradeTVC()
     }
-        
+    
     @objc func setUpInvokeCommands() {
         viewModel.invokeCommand = { [weak self] command in
             
@@ -430,13 +434,49 @@ extension CloudDriveViewController {
         }
     }
     
+    private static func searchResultsNodes(from searchNodesArray: NSMutableArray?) -> [MEGANode] {
+        var nodes = [MEGANode]()
+        guard let searchNodesArray else {
+            return nodes
+        }
+        for node in searchNodesArray {
+            if let megaNode = node as? MEGANode {
+                nodes.append(megaNode)
+            }
+        }
+        return nodes
+    }
+    
+    // provide all currently displayed nodes
+    // used when showing image browser to be able to screen through visual media
+    private var nodesToFilter: [MEGANode] {
+        if  let searchController,
+            searchController.isActive,
+            searchController.searchBar.text?.mnz_isEmpty() == false {
+            Self.searchResultsNodes(from: self.searchNodesArray)
+        } else {
+            self.nodes?.mnz_nodesArrayFromNodeList() ?? []
+        }
+    }
+    
+    private var allVisualMediaNodes: [MEGANode] {
+        nodesToFilter.filter {
+            $0.name?.fileExtensionGroup.isVisualMedia == true
+        }
+    }
+    
     @objc public func didSelectNode(_ node: MEGANode) {
         guard let navigationController else { return }
         let router = HomeScreenFactory().makeRouter(
             navController: navigationController,
             tracker: DIContainer.tracker
         )
-        router.didTapNode(node.handle, displayMode: displayMode.carriedOverDisplayMode)
+        
+        router.didTapNode(
+            nodeHandle: node.handle,
+            allNodeHandles: allVisualMediaNodes.map { $0.handle },
+            displayMode: sdk.accessLevel(for: node) == .accessOwner ? displayMode.carriedOverDisplayMode : .sharedItem
+        )
     }
 }
 

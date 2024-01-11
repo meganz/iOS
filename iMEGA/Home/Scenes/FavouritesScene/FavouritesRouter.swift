@@ -37,7 +37,7 @@ extension FavouritesRouter: FavouritesRouting {
     
     func openNode(_ nodeHandle: HandleEntity) {
         let nodeOpener = NodeOpener(navigationController: navigationController)
-        nodeOpener.openNode(nodeHandle)
+        nodeOpener.openNode(nodeHandle: nodeHandle, allNodes: [])
     }
     
     func openNodeActions(nodeHandle: HandleEntity, sender: Any) {
