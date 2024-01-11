@@ -1,5 +1,6 @@
 import Accounts
 import Combine
+import FirebaseCrashlytics
 import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAL10n
@@ -65,9 +66,24 @@ extension MEGAPhotoBrowserViewController {
                 return
             }
             
-            let controller = node.mnz_viewControllerForNode(
+            guard let controller = node.mnz_viewControllerForNode(
                 inFolderLink: displayMode == .nodeInsideFolderLink,
-                fileLink: nil)
+                fileLink: nil) else {
+                let alertController = UIAlertController(
+                    title: Strings.Localizable.unknownError,
+                    message: Strings.Localizable.somethingWentWrong,
+                    preferredStyle: .alert)
+                alertController.addAction(UIAlertAction(title: Strings.Localizable.ok, style: .cancel))
+                self.present(alertController, animated: true)
+                
+                let error = NSError.init(
+                    domain: "nz.mega.megaphotobrowserviewcontroller",
+                    code: 0,
+                    userInfo: [NSLocalizedDescriptionKey: "Unexpected error when open video from node: \(node.toNodeEntity())"]
+                )
+                Crashlytics.crashlytics().record(error: error)
+                return
+            }
             
             controller.modalPresentationStyle = .overFullScreen
             present(controller, animated: true)
@@ -77,9 +93,11 @@ extension MEGAPhotoBrowserViewController {
                 message: Strings.Localizable.messageFileNotSupported,
                 preferredStyle: .alert)
             controller.addAction(UIAlertAction(title: Strings.Localizable.ok, style: .cancel, handler: {[weak self] _ in
-                self?.view.layoutIfNeeded()
-                self?.reloadUI()
+                guard let self else { return }
+                self.view.layoutIfNeeded()
+                self.reloadUI()
             }))
+            self.present(controller, animated: true)
         }
     }
     
