@@ -36,8 +36,6 @@ struct PhotoCard<Content: View>: View {
         }
         .cornerRadius(12)
         .contentShape(Rectangle())
-        .onAppear {
-            viewModel.loadThumbnail()
-        }
+        .task { await viewModel.loadThumbnail() }
     }
 }

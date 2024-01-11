@@ -18,40 +18,40 @@ class PhotoCardViewModel: ObservableObject {
         thumbnailContainer = placeholderImageContainer
     }
     
-    func loadThumbnail() {
-        guard let photo = coverPhoto else {
-            return
-        }
-        
-        guard isShowingThumbnail(placeholderImageContainer) else {
+    func loadThumbnail() async {
+        guard let photo = coverPhoto,
+              isShowingThumbnail(placeholderImageContainer) else {
             return
         }
         
         if let container = thumbnailUseCase.cachedThumbnailContainer(for: photo, type: .preview) {
-            thumbnailContainer = container
-        } else {
-            if let container = thumbnailUseCase.cachedThumbnailContainer(for: photo, type: .thumbnail) {
-                thumbnailContainer = container
-            }
-            
-            loadThumbnailFromRemote(for: photo)
+            return await updateThumbnailContainerIfNeeded(container)
+        }
+        
+        do {
+            try await requestThumbnailPreview(photo: photo)
+        } catch {
+            MEGALogDebug("[PhotoCardViewModel] Cancelled loading thumbnail for \(photo.handle)")
         }
     }
     
     // MARK: - Private
-    private func loadThumbnailFromRemote(for photo: NodeEntity) {
-        thumbnailUseCase
-            .requestPreview(for: photo)
-            .map {
-                $0.toURLImageContainer()
-            }
-            .replaceError(with: nil)
-            .compactMap { $0 }
-            .filter { [weak self] in
-                self?.isShowingThumbnail($0) == false
-            }
-            .receive(on: DispatchQueue.main)
-            .assign(to: &$thumbnailContainer)
+    private func requestThumbnailPreview(photo: NodeEntity) async throws {
+        for try await imageContainer in thumbnailUseCase.requestPreview(for: photo)
+            .compactMap({ $0.toURLImageContainer()}) {
+            try Task.checkCancellation()
+            await updateThumbnailContainerIfNeeded(imageContainer)
+        }
+    }
+    
+    private func updateThumbnailContainerIfNeeded(_ container: any ImageContaining) async {
+        guard !isShowingThumbnail(container) else { return }
+        await updateThumbnailContainer(container)
+    }
+    
+    @MainActor
+    private func updateThumbnailContainer(_ container: any ImageContaining) {
+        thumbnailContainer = container
     }
     
     private func isShowingThumbnail(_ container: some ImageContaining) -> Bool {

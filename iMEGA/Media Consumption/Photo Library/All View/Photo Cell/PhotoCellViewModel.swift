@@ -84,47 +84,37 @@ class PhotoCellViewModel: ObservableObject {
             .removeDuplicates()
         
         do {
-            try await startLoadingThumbnailAsyncPublisher(thumbnailTypePublisher: thumbnailTypePublisher)
+            for await thumbnailType in thumbnailTypePublisher.values {
+                try Task.checkCancellation()
+                switch (thumbnailType, thumbnailContainer.type) {
+                case (.thumbnail, .thumbnail), (.preview, .preview):
+                    break
+                default:
+                    try await loadThumbnail(type: thumbnailType)
+                }
+            }
         } catch {
             MEGALogDebug("[PhotoCellViewModel] Cancelled loading thumbnail for \(photo.handle)")
         }
     }
     
-    private func startLoadingThumbnailAsyncPublisher(thumbnailTypePublisher: some Publisher<ThumbnailTypeEntity, Never>) async throws {
-        for await thumbnailType in thumbnailTypePublisher.values {
-            try Task.checkCancellation()
-            switch (thumbnailType, thumbnailContainer.type) {
-            case (.thumbnail, .thumbnail), (.preview, .preview):
-                break
-            default:
-                try await loadThumbnail(for: thumbnailType)
-            }
-        }
-    }
-
-    private func loadThumbnail(for type: ThumbnailTypeEntity) async throws {
+    private func loadThumbnail(type: ThumbnailTypeEntity) async throws {
         switch type {
         case .thumbnail:
-            if let container = thumbnailUseCase.cachedThumbnailContainer(for: photo, type: .thumbnail) {
-                await updateThumbnailContainerIfNeeded(container)
-            } else if let container = try? await thumbnailUseCase.loadThumbnailContainer(for: photo, type: .thumbnail) {
+            if let container = try? await thumbnailUseCase.loadThumbnailContainer(for: photo, type: .thumbnail) {
                 await updateThumbnailContainerIfNeeded(container)
             }
         case .preview, .original:
             if let container = thumbnailUseCase.cachedThumbnailContainer(for: photo, type: .preview) {
-                await updateThumbnailContainerIfNeeded(container)
-            } else {
-                if let container = thumbnailUseCase.cachedThumbnailContainer(for: photo, type: .thumbnail) {
-                    await updateThumbnailContainerIfNeeded(container)
-                }
+                return await updateThumbnailContainerIfNeeded(container)
+            }
+            
+            for try await imageContainer in thumbnailUseCase
+                .requestPreview(for: photo)
+                .compactMap({ $0.toURLImageContainer()}) {
                 
-                let requestPreviewPublisher = thumbnailUseCase
-                    .requestPreview(for: photo)
-                    .map { $0.toURLImageContainer() }
-                    .replaceError(with: nil)
-                    .compactMap { $0 }
-                
-                try await requestPreviewAsyncPublisher(requestPreviewPublisher: requestPreviewPublisher)
+                try Task.checkCancellation()
+                await updateThumbnailContainerIfNeeded(imageContainer)
             }
         }
     }
@@ -138,14 +128,7 @@ class PhotoCellViewModel: ObservableObject {
     private func updateThumbnailContainer(_ container: any ImageContaining) {
         thumbnailContainer = container
     }
-    
-    private func requestPreviewAsyncPublisher(requestPreviewPublisher: some Publisher<URLImageContainer, Never>) async throws {
-        for await container in requestPreviewPublisher.values {
-            try Task.checkCancellation()
-            await updateThumbnailContainerIfNeeded(container)
-        }
-    }
-        
+
     private func isShowingThumbnail(_ container: some ImageContaining) -> Bool {
         thumbnailContainer.isEqual(container)
     }
