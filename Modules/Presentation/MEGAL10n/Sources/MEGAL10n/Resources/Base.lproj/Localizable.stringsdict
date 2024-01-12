@@ -2866,5 +2866,21 @@
         <string>%d files sent to chats</string>
       </dict>
     </dict>
+    <key>contacts.invite.emailAddress.inviteNumberOfContacts</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Invite %d contact</string>
+        <key>other</key>
+        <string>Invite %d contacts</string>
+      </dict>
+    </dict>
   </dict>
 </plist>
