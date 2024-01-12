@@ -128,10 +128,11 @@ class EnterEmailViewController: UIViewController {
         inviteContactsButton.mnz_setupPrimary(traitCollection)
         let emailTag = tagsField.text?.mnz_isValidEmail() == true ? 1 : 0
         let tagsNumber = tagsField.tags.count + emailTag
-        let inviteContactsString = tagsNumber == 1 ?
-        Strings.Localizable.invite1Contact.replacingOccurrences(of: "[X]", with: String(tagsNumber)) :
-        Strings.Localizable.inviteXContacts.replacingOccurrences(of: "[X]", with: String(tagsNumber))
-        inviteContactsButton.setTitle(inviteContactsString, for: .normal)
+        
+        inviteContactsButton.setTitle(
+            Strings.Localizable.Contacts.Invite.EmailAddress.inviteNumberOfContacts(tagsNumber),
+            for: .normal
+        )
     }
 
     private func customizeTagsField(shouldClearExistingText: Bool = true) {
