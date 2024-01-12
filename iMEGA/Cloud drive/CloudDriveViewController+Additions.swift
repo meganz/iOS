@@ -475,7 +475,7 @@ extension CloudDriveViewController {
         router.didTapNode(
             nodeHandle: node.handle,
             allNodeHandles: allVisualMediaNodes.map { $0.handle },
-            displayMode: sdk.accessLevel(for: node) == .accessOwner ? displayMode.carriedOverDisplayMode : .sharedItem
+            displayMode: displayMode.carriedOverDisplayMode
         )
     }
 }
