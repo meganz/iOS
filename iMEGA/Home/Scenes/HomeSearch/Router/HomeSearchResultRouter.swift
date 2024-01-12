@@ -17,9 +17,11 @@ protocol NodeRouting {
         displayMode: DisplayMode?
     )
     
-    func didTapNode(_ nodeHandle: HandleEntity, displayMode: DisplayMode?)
+    func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity], displayMode: DisplayMode?) 
     
-    func didTapNode(_ nodeHandle: HandleEntity)
+    func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity])
+    
+    func didTapNode(nodeHandle: HandleEntity)
 }
 
 final class HomeSearchResultRouter: NodeRouting {
@@ -70,14 +72,27 @@ final class HomeSearchResultRouter: NodeRouting {
         navigationController?.present(nodeActionViewController, animated: true, completion: nil)
     }
     
-    func didTapNode(_ nodeHandle: HandleEntity, displayMode: DisplayMode? = nil) {
+    func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity], displayMode: DisplayMode?) {
         guard let node = nodeUseCase.nodeForHandle(nodeHandle) else { return }
         if node.isTakenDown {
             showTakenDownAlert(isFolder: node.isFolder)
         } else {
-            nodeOpener.openNode(nodeHandle, config: .withOptionalDisplayMode(displayMode))
+            nodeOpener.openNode(
+                nodeHandle: nodeHandle,
+                allNodes: allNodeHandles,
+                config: .withOptionalDisplayMode(displayMode)
+            )
         }
     }
+    
+    func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity]) {
+        didTapNode(nodeHandle: nodeHandle, allNodeHandles: allNodeHandles, displayMode: nil)
+    }
+    
+    func didTapNode(nodeHandle: HandleEntity) {
+        didTapNode(nodeHandle: nodeHandle, allNodeHandles: [])
+    }
+    
     func showTakenDownAlert(isFolder: Bool) {
         let alert = UIAlertController(model: takenDownModel(isFolder: isFolder))
         navigationController?.present(alert, animated: true)
@@ -103,9 +118,5 @@ final class HomeSearchResultRouter: NodeRouting {
                 )
             ]
         )
-    }
-    
-    func didTapNode(_ nodeHandle: HandleEntity) {
-        didTapNode(nodeHandle, displayMode: nil)
     }
 }
