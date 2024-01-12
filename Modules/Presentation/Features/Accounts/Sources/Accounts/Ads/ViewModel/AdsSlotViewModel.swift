@@ -18,6 +18,9 @@ final public class AdsSlotViewModel: ObservableObject {
     private(set) var closedAds: Set<AdsSlotEntity> = []
     
     private(set) var monitorAdsSlotChangesTask: Task<Void, Never>?
+    private(set) var hideAdsForUpgradedAccountTask: Task<Void, Never>?
+    
+    private var subscriptions = Set<AnyCancellable>()
     
     public init(
         adsUseCase: some AdsUseCaseProtocol,
@@ -36,6 +39,28 @@ final public class AdsSlotViewModel: ObservableObject {
     deinit {
         monitorAdsSlotChangesTask?.cancel()
         monitorAdsSlotChangesTask = nil
+        hideAdsForUpgradedAccountTask?.cancel()
+        hideAdsForUpgradedAccountTask = nil
+    }
+    
+    // MARK: Setup
+    func setupSubscriptions() {
+        NotificationCenter.default
+            .publisher(for: .accountDidPurchasedPlan)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let self else { return }
+                hideAdsForUpgradedAccount()
+            }
+            .store(in: &subscriptions)
+    }
+    
+    // MARK: Upgraded Account notif
+    private func hideAdsForUpgradedAccount() {
+        hideAdsForUpgradedAccountTask = Task { [weak self] in
+            guard let self else { return }
+            await updateAdsSlot(nil)
+        }
     }
     
     // MARK: Feature Flag

@@ -17,6 +17,17 @@ final class AdsSlotViewModelTests: XCTestCase {
         super.tearDown()
     }
     
+    // MARK: - Subscription
+    func testAccountDidPurchasedPlanNotif_purchasedAccountSuccess_shouldHideAds() async {
+        let sut = makeSUT()
+        sut.setupSubscriptions()
+        
+        NotificationCenter.default.post(name: .accountDidPurchasedPlan, object: nil)
+        
+        await sut.hideAdsForUpgradedAccountTask?.value
+        XCTAssertFalse(sut.displayAds)
+    }
+    
     // MARK: - Feature flag
     func testIsFeatureFlagForInAppAdsEnabled_inAppAdsEnabled_shouldBeEnabled() {
         let sut = makeSUT(featureFlags: [.inAppAds: true])
