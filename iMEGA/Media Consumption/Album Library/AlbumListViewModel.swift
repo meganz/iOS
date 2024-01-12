@@ -82,6 +82,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     }
     
     func createUserAlbum(with name: String?) {
+        tracker.trackAnalyticsEvent(with: DIContainer.createAlbumDialogButtonPressedEvent)
         guard let name = name else { return }
         guard name.isNotEmpty else {
             createUserAlbum(with: newAlbumName())
@@ -103,6 +104,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     }
     
     func onCreateAlbum() {
+        tracker.trackAnalyticsEvent(with: DIContainer.createNewAlbumDialogEvent)
         guard selection.editMode.isEditing == false else { return }
         showCreateAlbumAlert.toggle()
     }
@@ -276,6 +278,7 @@ final class AlbumListViewModel: NSObject, ObservableObject {
     }
     
     func onNewAlbumContentAdded(_ album: AlbumEntity, photos: [NodeEntity]) {
+        tracker.trackAnalyticsEvent(with: DIContainer.addItemsToNewAlbumButtonEvent)
         newAlbumContent = AlbumContent(album: album, photos: photos)
     }
     

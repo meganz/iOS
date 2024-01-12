@@ -15,4 +15,7 @@ extension DIContainer {
     static let albumListShareLinkMenuItemEvent = AlbumListShareLinkMenuItemEvent()
     static let photoPreviewScreenEvent = PhotoPreviewScreenEvent()
     static let photoPreviewSaveToDeviceMenuToolbarEvent = PhotoPreviewSaveToDeviceMenuToolbarEvent()
+    static let createAlbumDialogButtonPressedEvent = CreateAlbumDialogButtonPressedEvent()
+    static let addItemsToNewAlbumButtonEvent = AddItemsToNewAlbumButtonEvent()
+    static let createNewAlbumDialogEvent = CreateNewAlbumDialogEvent()
 }
