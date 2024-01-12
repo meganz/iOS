@@ -761,6 +761,7 @@
 		6DD7B2392A776313007EBB20 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6DD7B2352A776313007EBB20 /* Images.xcassets */; };
 		6DD7B23A2A776313007EBB20 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6DD7B2352A776313007EBB20 /* Images.xcassets */; };
 		6DE5563629F61ED40015A950 /* ChatContentViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE5563529F61ED40015A950 /* ChatContentViewModelTests.swift */; };
+		6DF467A72B50ED5F0065CA76 /* MEGAAppColor+PSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DF467A62B50ED5F0065CA76 /* MEGAAppColor+PSA.swift */; };
 		6DFF9C0D29E4BC2D005C9C21 /* ChatRoomsListRouting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFF9C0C29E4BC2D005C9C21 /* ChatRoomsListRouting.swift */; };
 		7271896027FF128B00B2DB08 /* MEGAReachabilityManager+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7271895F27FF128B00B2DB08 /* MEGAReachabilityManager+Additions.swift */; };
 		7288C2C927F5BFBF0010DC19 /* HelpTableViewController+Feedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7288C2C827F5BFBF0010DC19 /* HelpTableViewController+Feedback.swift */; };
@@ -3380,6 +3381,7 @@
 		6DD7B2342A7761BD007EBB20 /* MEGAAssets */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAAssets; sourceTree = "<group>"; };
 		6DD7B2352A776313007EBB20 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Modules/Presentation/MEGAAssets/Sources/MEGAAssets/Resources/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		6DE5563529F61ED40015A950 /* ChatContentViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatContentViewModelTests.swift; sourceTree = "<group>"; };
+		6DF467A62B50ED5F0065CA76 /* MEGAAppColor+PSA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAAppColor+PSA.swift"; sourceTree = "<group>"; };
 		6DFF9C0C29E4BC2D005C9C21 /* ChatRoomsListRouting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomsListRouting.swift; sourceTree = "<group>"; };
 		7271895F27FF128B00B2DB08 /* MEGAReachabilityManager+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAReachabilityManager+Additions.swift"; sourceTree = "<group>"; };
 		7288C2C827F5BFBF0010DC19 /* HelpTableViewController+Feedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HelpTableViewController+Feedback.swift"; sourceTree = "<group>"; };
@@ -8170,6 +8172,7 @@
 				6D9A731C2B4619D200894E97 /* MEGAAppColor+Account.swift */,
 				6D8820762B1BE50200F0BE18 /* MEGAAppColor+Chat.swift */,
 				6D88207B2B1C07C700F0BE18 /* MEGAAppColor+Photos.swift */,
+				6DF467A62B50ED5F0065CA76 /* MEGAAppColor+PSA.swift */,
 				6D86E81C2B4F7876002FAA8B /* MEGAAppColor+SharedItems.swift */,
 				24F583B52B46E18C00AA0562 /* MEGAAppColor+Videos.swift */,
 				6D88206F2B1B1B5B00F0BE18 /* MEGAAppColor.swift */,
@@ -14121,6 +14124,7 @@
 				6D9A731D2B4619D200894E97 /* MEGAAppColor+Account.swift in Sources */,
 				6D8820772B1BE50200F0BE18 /* MEGAAppColor+Chat.swift in Sources */,
 				6D88207C2B1C07C700F0BE18 /* MEGAAppColor+Photos.swift in Sources */,
+				6DF467A72B50ED5F0065CA76 /* MEGAAppColor+PSA.swift in Sources */,
 				6D86E81D2B4F7876002FAA8B /* MEGAAppColor+SharedItems.swift in Sources */,
 				24F583B62B46E18C00AA0562 /* MEGAAppColor+Videos.swift in Sources */,
 				6D8820702B1B1B5B00F0BE18 /* MEGAAppColor.swift in Sources */,
