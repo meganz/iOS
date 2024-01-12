@@ -8,9 +8,10 @@ class NodeBrowserViewModel: ObservableObject {
     
     let searchResultsViewModel: SearchResultsViewModel
     let mediaDiscoveryViewModel: MediaDiscoveryContentViewModel? // not available for recent buckets yet
+    let warningViewModel: WarningViewModel?
     let config: NodeBrowserConfig
     var hasOnlyMediaNodesChecker: () async -> Bool
-    
+
     @Published var shouldShowMediaDiscoveryAutomatically: Bool?
     @Published var viewMode: ViewModePreferenceEntity = .list
 
@@ -26,6 +27,7 @@ class NodeBrowserViewModel: ObservableObject {
     init(
         searchResultsViewModel: SearchResultsViewModel,
         mediaDiscoveryViewModel: MediaDiscoveryContentViewModel?,
+        warningViewModel: WarningViewModel?,
         config: NodeBrowserConfig,
         nodeSource: NodeSource,
         avatarViewModel: MyAvatarViewModel,
@@ -38,6 +40,7 @@ class NodeBrowserViewModel: ObservableObject {
     ) {
         self.searchResultsViewModel = searchResultsViewModel
         self.mediaDiscoveryViewModel = mediaDiscoveryViewModel
+        self.warningViewModel = warningViewModel
         self.config = config
         self.nodeSource = nodeSource
         self.avatarViewModel = avatarViewModel
