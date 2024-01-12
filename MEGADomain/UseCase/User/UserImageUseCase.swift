@@ -95,11 +95,11 @@ struct UserImageUseCase<T: UserImageRepositoryProtocol, U: UserStoreRepositoryPr
     func fetchAvatar(base64Handle: Base64HandleEntity, forceDownload: Bool = false) async throws -> ImageFilePathEntity {
         let destinationURL = thumbnailRepo.generateCachingURL(for: base64Handle, type: .thumbnail)
         let destinationURLPath = destinationURL.path
-        if forceDownload {
+        if fileSystemRepo.fileExists(at: destinationURL), !forceDownload {
+            return destinationURLPath
+        } else {
             let imageFilePath = try await userImageRepo.avatar(forUserHandle: base64Handle, destinationPath: destinationURLPath)
             return imageFilePath
-        } else {
-            return destinationURLPath
         }
     }
     
