@@ -18,6 +18,10 @@ struct NodeBrowserView: View {
 
     private var content: some View {
         VStack {
+            if let warningViewModel = viewModel.warningViewModel {
+                WarningView(viewModel: warningViewModel)
+                    .frame(height: 80)
+            }
             if viewModel.isMediaDiscoveryShown, let mediaDiscoveryViewModel = viewModel.mediaDiscoveryViewModel {
                 MediaDiscoveryContentView(viewModel: mediaDiscoveryViewModel)
             } else {

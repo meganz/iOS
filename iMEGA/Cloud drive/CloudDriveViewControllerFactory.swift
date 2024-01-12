@@ -254,7 +254,7 @@ struct CloudDriveViewControllerFactory {
         
         return navigationController
     }
-    
+
     private func newCloudDriveViewController(
         nodeSource: NodeSource,
         config: NodeBrowserConfig
@@ -263,7 +263,6 @@ struct CloudDriveViewControllerFactory {
         // it's an nil safe check for root node basically
         // it would be very much useful to make media discovery work with
         // MEGARecentActionBucket to load arbitrary list of nodes
-        
         let overriddenConfig = makeOverriddenConfigIfNeeded(nodeSource: nodeSource, config: config)
         let searchResultsVM = self.makeSearchResultsViewModel(
             nodeSource: nodeSource,
@@ -277,6 +276,10 @@ struct CloudDriveViewControllerFactory {
             viewModel: .init(
                 searchResultsViewModel: searchResultsVM,
                 mediaDiscoveryViewModel: self.makeOptionalMediaDiscoveryViewModel(nodeSource),
+                warningViewModel: self.makeOptionalWarningViewModel(
+                    nodeSource,
+                    isFromUnverifiedContactSharedFolder: config.isFromUnverifiedContactSharedFolder == true
+                ),
                 config: overriddenConfig,
                 nodeSource: nodeSource,
                 avatarViewModel: self.avatarViewModel,
@@ -319,7 +322,20 @@ struct CloudDriveViewControllerFactory {
             isShowingAutomatically: false // this is set later in .task modifier when we decide if need to show the banner explaining automatic MD presentation
         )
     }
-    
+
+    private func makeOptionalWarningViewModel(
+        _ nodeSource: NodeSource,
+        isFromUnverifiedContactSharedFolder: Bool
+    ) -> WarningViewModel? {
+        guard case let .node(parentNodeProvider) = nodeSource,
+              isFromUnverifiedContactSharedFolder
+        else {
+            return nil
+        }
+
+        return makeWarningViewModel(parentNodeProvider: parentNodeProvider)
+    }
+
     private func makeOverriddenConfigIfNeeded(
         nodeSource: NodeSource,
         config: NodeBrowserConfig
@@ -333,7 +349,6 @@ struct CloudDriveViewControllerFactory {
             // able to launch the app in the offline mode, during which, root node is nil
             overriddenConfig.mediaDiscoveryAutomaticDetectionEnabled = {
                 guard
-                    config.displayMode != .rubbishBin,
                     let node = parentNodeProvider(),
                     node.nodeType != .root
                 else {
@@ -416,7 +431,11 @@ struct CloudDriveViewControllerFactory {
             keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: .default)
         )
     }
-    
+
+    private func makeWarningViewModel(parentNodeProvider: ParentNodeProvider) -> WarningViewModel {
+        WarningViewModel(warningType: .contactNotVerifiedSharedFolder(parentNodeProvider()?.name ?? ""))
+    }
+
     private func resultProvider(
         for nodeSource: NodeSource,
         searchBridge: SearchBridge
