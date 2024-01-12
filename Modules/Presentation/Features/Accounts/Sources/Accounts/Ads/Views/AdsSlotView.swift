@@ -54,6 +54,7 @@ public struct AdsSlotView<T: View>: View {
         }
         .task {
             await viewModel.setupABTestVariant()
+            viewModel.setupSubscriptions()
             viewModel.monitorAdsSlotChanges()
         }
         .ignoresSafeArea()

@@ -98,6 +98,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     }
     
     private func registerDelegates() {
+        guard registerDelegateTask == nil else { return }
         registerDelegateTask = Task {
             await purchaseUseCase.registerRestoreDelegate()
             await purchaseUseCase.registerPurchaseDelegate()
@@ -145,6 +146,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
                 
                 switch result {
                 case .success:
+                    postAccountDidPurchasedPlanNotification()
                     postRefreshAccountDetailsNotification()
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
@@ -287,6 +289,10 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     // MARK: - Private
     private func postRefreshAccountDetailsNotification() {
         NotificationCenter.default.post(name: .refreshAccountDetails, object: nil)
+    }
+    
+    private func postAccountDidPurchasedPlanNotification() {
+        NotificationCenter.default.post(name: .accountDidPurchasedPlan, object: nil)
     }
     
     private func postDismissOnboardingProPlanDialog() {
