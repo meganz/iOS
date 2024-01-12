@@ -79,11 +79,18 @@ final class AlbumListViewModelTests: XCTestCase {
     }
         
     func testHasCustomAlbum_whenUserCreateNewAlbum_shouldReturnTrue() async {
+        
         let photoAlbumContainerViewModel = PhotoAlbumContainerViewModel()
-        let sut = albumListViewModel(photoAlbumContainerViewModel: photoAlbumContainerViewModel)
+        let tracker = MockTracker()
+        let sut = albumListViewModel(
+            tracker: tracker,
+            photoAlbumContainerViewModel: photoAlbumContainerViewModel)
         sut.createUserAlbum(with: "userAlbum")
         await sut.createAlbumTask?.value
         XCTAssertTrue(photoAlbumContainerViewModel.shouldShowSelectBarButton)
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [DIContainer.createAlbumDialogButtonPressedEvent])
     }
     
     func testCreateUserAlbum_whenUserCreatingAnAlbum_setShouldShowSelectBarButtonToFalse() async throws {
@@ -93,12 +100,19 @@ final class AlbumListViewModelTests: XCTestCase {
         let useCase = MockAlbumListUseCase(albums: [], createdUserAlbums: [newAlbumName: newUserAlbum])
         
         let photoAlbumContainerViewModel = PhotoAlbumContainerViewModel()
-        let sut = albumListViewModel(usecase: useCase, photoAlbumContainerViewModel: photoAlbumContainerViewModel)
+        let tracker = MockTracker()
+        let sut = albumListViewModel(
+            usecase: useCase, 
+            tracker: tracker,
+            photoAlbumContainerViewModel: photoAlbumContainerViewModel)
 
         sut.createUserAlbum(with: newAlbumName)
         XCTAssertTrue(photoAlbumContainerViewModel.disableSelectBarButton)
         await sut.createAlbumTask?.value
         XCTAssertFalse(photoAlbumContainerViewModel.disableSelectBarButton)
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [DIContainer.createAlbumDialogButtonPressedEvent])
     }
     
     func testNewAlbumName_whenAlbumContainsNoNewAlbum() async {
@@ -234,7 +248,8 @@ final class AlbumListViewModelTests: XCTestCase {
     }
     
     func testOnAlbumContentAdded_whenContentAddedInNewAlbum_shouldReloadAlbums() async {
-        let sut = albumListViewModel()
+        let tracker = MockTracker()
+        let sut = albumListViewModel(tracker: tracker)
 
         let sampleAlbum = AlbumEntity(id: 1, name: "hello", coverNode: nil, count: 0, type: .user)
         let nodes = [NodeEntity(handle: 1)]
@@ -242,6 +257,10 @@ final class AlbumListViewModelTests: XCTestCase {
         
         XCTAssertEqual(sut.newAlbumContent?.album, sampleAlbum)
         XCTAssertEqual(sut.newAlbumContent?.photos, nodes)
+        
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [DIContainer.addItemsToNewAlbumButtonEvent])
     }
     
     func testValidateAlbum_withSystemAlbumNames_returnsErrorMessage() {
@@ -264,7 +283,8 @@ final class AlbumListViewModelTests: XCTestCase {
     }
     
     func testNavigateToNewAlbum_onNewAlbumContentAdded_shouldNavigateToAlbumContentIfSet() {
-        let sut = albumListViewModel()
+        let tracker = MockTracker()
+        let sut = albumListViewModel(tracker: tracker)
         let userAlbum = AlbumEntity(id: 1, name: "User", coverNode: nil, count: 0, type: .user)
         let newAlbumPhotos = [NodeEntity(name: "a.jpg", handle: 1, modificationTime: Date.distantFuture),
                               NodeEntity(name: "b.jpg", handle: 2, modificationTime: Date.distantPast)]
@@ -278,6 +298,9 @@ final class AlbumListViewModelTests: XCTestCase {
         XCTAssertEqual(sut.newAlbumContent?.photos, newAlbumPhotos)
         XCTAssertEqual(sut.album?.count, newAlbumPhotos.count)
         XCTAssertEqual(sut.album?.coverNode, newAlbumPhotos.first)
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [DIContainer.addItemsToNewAlbumButtonEvent])
     }
     
     func testNavigateToNewAlbum_onNewAlbumContentAddedNotCalled_shouldNotNavigate() {
@@ -325,20 +348,28 @@ final class AlbumListViewModelTests: XCTestCase {
     }
     
     func testOnCreateAlbum_whenIsEditModeActive_shouldReturnFalseForShowCreateAlbumAlert() {
-        let sut = albumListViewModel()
+        let tracker = MockTracker()
+        let sut = albumListViewModel(tracker: tracker)
         
         sut.selection.editMode = .active
         XCTAssertFalse(sut.showCreateAlbumAlert)
         sut.onCreateAlbum()
         XCTAssertFalse(sut.showCreateAlbumAlert)
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [DIContainer.createNewAlbumDialogEvent])
     }
     
     func testOnCreateAlbum_whenIsEditModeNotActive_shouldToggleShowCreateAlbumAlert() {
-        let sut = albumListViewModel()
+        let tracker = MockTracker()
+        let sut = albumListViewModel(tracker: tracker)
         
         XCTAssertFalse(sut.showCreateAlbumAlert)
         sut.onCreateAlbum()
         XCTAssertTrue(sut.showCreateAlbumAlert)
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [DIContainer.createNewAlbumDialogEvent])
     }
     
     func testAlbumNames_whenExistingAlbumNamesNeeded_shouldReturnAlbumNames() async {
