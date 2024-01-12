@@ -24,14 +24,14 @@ final class NodeOpener {
         
         switch megaNode.isFolder() {
         case true: openFolderNode(megaNode, config: config)
-        case false: openFileNode(megaNode, allNodes: allMegaNodes)
+        case false: openFileNode(megaNode, allNodes: allMegaNodes, displayMode: config.displayMode)
         }
     }
     
     func openNode(node: MEGANode, allNodes: [MEGANode]?, config: CloudDriveViewControllerFactory.NodeBrowserConfig = .default) {
         switch node.isFolder() {
         case true: openFolderNode(node, config: config)
-        case false: openFileNode(node, allNodes: allNodes)
+        case false: openFileNode(node, allNodes: allNodes, displayMode: config.displayMode)
         }
     }
     
@@ -53,7 +53,7 @@ final class NodeOpener {
     
     // MARK: - Private
     
-    private func openFileNode(_ node: MEGANode, allNodes: [MEGANode]?) {
+    private func openFileNode(_ node: MEGANode, allNodes: [MEGANode]?, displayMode: DisplayMode?) {
         guard node.name?.fileExtensionGroup.isVisualMedia == true else {
             node.mnz_open(in: navigationController, folderLink: false, fileLink: nil, messageId: nil, chatId: nil, allNodes: allNodes)
             return
@@ -62,10 +62,13 @@ final class NodeOpener {
         let nodes = allNodes ?? [node]
         let index = nodes.firstIndex(where: { $0.handle == node.handle }) ?? 0
         let mediaNodes = NSMutableArray(array: nodes)
+        let isOwner = sdk.accessLevel(for: node) == .accessOwner
+        let passedThroughDisplayMode: DisplayMode = displayMode?.carriedOverDisplayMode ?? .cloudDrive
+        let displayMode: DisplayMode = isOwner ? passedThroughDisplayMode : .sharedItem
         let photoBrowserForMediaNode = MEGAPhotoBrowserViewController.photoBrowser(
             withMediaNodes: mediaNodes,
             api: MEGASdk.sharedSdk,
-            displayMode: .cloudDrive,
+            displayMode: displayMode,
             preferredIndex: UInt(truncatingIfNeeded: index)
         )
         navigationController?.present(photoBrowserForMediaNode, animated: true, completion: nil)
