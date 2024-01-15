@@ -64,11 +64,11 @@ class VerifyEmailViewController: UIViewController {
         hintLabel.textColor = UIColor .mnz_subtitles(for: traitCollection)
     }
 
-    func addGradientBackground () {
+    func addGradientBackground() {
         let gradient = CAGradientLayer()
         gradient.frame = warningGradientView.bounds
-        gradient.colors = [UIColor.verifyEmailFirstGradient.cgColor,
-                           UIColor.verifyEmailSecondGradient.cgColor]
+        gradient.colors = [MEGAAppColor.SharedView.verifyEmailFirstGradient.uiColor.cgColor,
+                           MEGAAppColor.SharedView.verifyEmailSecondGradient.uiColor.cgColor]
         gradient.locations = [0, 1]
         gradient.startPoint = CGPoint(x: 0.5, y: 0)
         gradient.endPoint = CGPoint(x: 0.5, y: 1)
