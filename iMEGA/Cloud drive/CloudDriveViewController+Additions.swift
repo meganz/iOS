@@ -439,6 +439,7 @@ extension CloudDriveViewController {
         guard let searchNodesArray else {
             return nodes
         }
+        // this is done with for loop, as lightweight ObjC generics do not port to Swift when used on NSMutableArray
         for node in searchNodesArray {
             if let megaNode = node as? MEGANode {
                 nodes.append(megaNode)
@@ -447,24 +448,34 @@ extension CloudDriveViewController {
         return nodes
     }
     
+    private func nodeIsVisualMedia(_ node: MEGANode) -> Bool {
+        node.name?.fileExtensionGroup.isVisualMedia == true
+    }
+    
     // provide all currently displayed nodes
-    // - used when showing image browser, to be able to scroll through visual media
-    private var nodesToFilter: [MEGANode] {
+    // - used when showing image browser, to be able to scroll through visual media (this should pass in only search results when search active)
+    // - used when showing audio player
+    // no node filtering (based on type) should be done at this stage
+    private func allNodesForOpening(node: MEGANode) -> [MEGANode] {
+        if nodeIsVisualMedia(node) {
+            return searchResultsAwareAllNodesForOpeningVisualMedia()
+        }
+        
+        return self.nodes?.mnz_nodesArrayFromNodeList() ?? []
+    }
+    
+    // when opening visual media (image browser), we are passing in
+    // only nodes available in the list, respecting searching results
+    func searchResultsAwareAllNodesForOpeningVisualMedia() -> [MEGANode] {
         if  let searchController,
             searchController.isActive,
             searchController.searchBar.text?.mnz_isEmpty() == false {
-            Self.searchResultsNodes(from: self.searchNodesArray)
+            return Self.searchResultsNodes(from: self.searchNodesArray)
         } else {
-            self.nodes?.mnz_nodesArrayFromNodeList() ?? []
+            return self.nodes?.mnz_nodesArrayFromNodeList() ?? []
         }
     }
-    
-    private var allVisualMediaNodes: [MEGANode] {
-        nodesToFilter.filter {
-            $0.name?.fileExtensionGroup.isVisualMedia == true
-        }
-    }
-    
+ 
     @objc public func didSelectNode(_ node: MEGANode) {
         if node.isTakenDown() {
             showTakenDownAlert(isFolder: node.isFolder())
@@ -475,7 +486,7 @@ extension CloudDriveViewController {
             )
             router.didTapNode(
                 nodeHandle: node.handle,
-                allNodeHandles: allVisualMediaNodes.map { $0.handle },
+                allNodeHandles: allNodesForOpening(node: node).map { $0.handle },
                 displayMode: displayMode.carriedOverDisplayMode
             )
         }
