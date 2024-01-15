@@ -138,17 +138,15 @@ final class ChatRoomAvatarViewModel: ObservableObject {
         let primaryUserHandle = chatRoom.peers[0].handle
         let secondaryUserHandle = chatRoom.peers[1].handle
         
-        if let primaryDefaultAvatar = try await createAvatar(withHandle: primaryUserHandle),
-           let secondaryDefaultAvatar = try await createAvatar(withHandle: secondaryUserHandle) {
-            await updateAvatar(primary: primaryDefaultAvatar, secondary: secondaryDefaultAvatar)
-        }
+        let primaryDefaultAvatar = try await createAvatar(withHandle: primaryUserHandle)
+        let secondaryDefaultAvatar = try await createAvatar(withHandle: secondaryUserHandle)
+        await updateAvatar(primary: primaryDefaultAvatar, secondary: secondaryDefaultAvatar)
                 
         let primaryAvatar = try await userAvatar(forHandle: primaryUserHandle, forceDownload: forceDownload)
         let secondaryAvatar = try await userAvatar(forHandle: secondaryUserHandle, forceDownload: forceDownload)
-        if let primaryImage = UIImage(contentsOfFile: primaryAvatar),
-           let secondaryImage = UIImage(contentsOfFile: secondaryAvatar) {
-            await updateAvatar(primary: primaryImage, secondary: secondaryImage)
-        }
+        let primaryImage = UIImage(contentsOfFile: primaryAvatar) ?? primaryDefaultAvatar
+        let secondaryImage = UIImage(contentsOfFile: secondaryAvatar) ?? secondaryDefaultAvatar
+        await updateAvatar(primary: primaryImage, secondary: secondaryImage)
     }
     
     private func createOneToOneAvatar(forceDownload: Bool) async throws {
