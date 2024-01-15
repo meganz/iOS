@@ -20,7 +20,7 @@ class PasteImagePreviewView: UIView {
         imageView.image = UIPasteboard.general.loadImage()
         imageView.contentMode = .scaleAspectFit
         imageView.layer.borderWidth = 1
-        imageView.layer.borderColor = UIColor.pasteImageBorder.cgColor
+        imageView.layer.borderColor = MEGAAppColor.SharedView.pasteImageBorder.uiColor.cgColor
         return imageView
     }()
     

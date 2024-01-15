@@ -43,13 +43,13 @@ struct ExplorerCardConfiguration {
 
 extension ExplorerCardConfiguration {
     private static let foregroundColorsLight = [UIColor(white: 1.0, alpha: 0.95), MEGAAppColor.White._FFFFFF.uiColor]
-    private static let foregroundColorsDark = [UIColor.explorerForegroundDark, MEGAAppColor.Black._000000.uiColor]
+    private static let foregroundColorsDark = [MEGAAppColor.SharedView.explorerForegroundDark.uiColor, MEGAAppColor.Black._000000.uiColor]
     
     static func favouritesExplorerCardConfiguration(forTraitCollection traitCollection: UITraitCollection) -> ExplorerCardConfiguration {
         let title = Strings.Localizable.Home.Favourites.title
         let image = UIImage.explorerCardFavourites
-        let borderColors = [UIColor.gradientRed,
-                            UIColor.gradientPink]
+        let borderColors = [MEGAAppColor.SharedView.gradientRed.uiColor,
+                            MEGAAppColor.SharedView.gradientPink.uiColor]
         
         return ExplorerCardConfiguration(title: title,
                                          iconForegroundImage: image,
@@ -63,8 +63,8 @@ extension ExplorerCardConfiguration {
     static func documentsExplorerCardConfiguration(forTraitCollection traitCollection: UITraitCollection) -> ExplorerCardConfiguration {
         let title = Strings.Localizable.docs
         let image = UIImage.explorerCardDocs
-        let borderColors = [UIColor.explorerDocumentsFirstGradient,
-                            UIColor.explorerDocumentsSecondGradient]
+        let borderColors = [MEGAAppColor.SharedView.explorerDocumentsFirstGradient.uiColor,
+                            MEGAAppColor.SharedView.explorerDocumentsSecondGradient.uiColor]
         
         return ExplorerCardConfiguration(title: title,
                                          iconForegroundImage: image,
@@ -78,8 +78,8 @@ extension ExplorerCardConfiguration {
     static func audioExplorerCardConfiguration(forTraitCollection traitCollection: UITraitCollection) -> ExplorerCardConfiguration {
         let title = Strings.Localizable.audio
         let image = UIImage.explorerCardAudio
-        let borderColors = [UIColor.explorerAudioFirstGradient,
-                            UIColor.explorerAudioSecondGradient]
+        let borderColors = [MEGAAppColor.SharedView.explorerAudioFirstGradient.uiColor,
+                            MEGAAppColor.SharedView.explorerAudioSecondGradient.uiColor]
         return ExplorerCardConfiguration(title: title,
                                          iconForegroundImage: image,
                                          iconBackgroundImage: nil,
@@ -93,8 +93,8 @@ extension ExplorerCardConfiguration {
         let title = Strings.Localizable.videos
         let iconForegroundImage = UIImage.explorerCardVideoPlayBlue
         let iconBackgroundImage = UIImage.explorerCardVideoFilmStripsBlue
-        let borderColors = [UIColor.explorerGradientLightBlue,
-                            UIColor.explorerGradientDarkBlue]
+        let borderColors = [MEGAAppColor.SharedView.explorerGradientLightBlue.uiColor,
+                            MEGAAppColor.SharedView.explorerGradientDarkBlue.uiColor]
 
         return ExplorerCardConfiguration(title: title,
                                          iconForegroundImage: iconForegroundImage,
