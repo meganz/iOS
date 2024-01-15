@@ -52,14 +52,36 @@ final class NodeOpener {
     }
     
     // MARK: - Private
-    
-    private func openFileNode(_ node: MEGANode, allNodes: [MEGANode]?, displayMode: DisplayMode?) {
+    // CRITICAL SECTION OF THE CODE
+    // allNodes has to have all siblings of the node
+    // for the image and audio player work properly
+    private func openFileNode(
+        _ node: MEGANode,
+        allNodes: [MEGANode]?,
+        displayMode: DisplayMode?
+    ) {
+        // if we do not have an image or video, we will jump deeper to see
+        // if we have audio or other type of file
         guard node.name?.fileExtensionGroup.isVisualMedia == true else {
             node.mnz_open(in: navigationController, folderLink: false, fileLink: nil, messageId: nil, chatId: nil, allNodes: allNodes)
             return
         }
         
-        let nodes = allNodes ?? [node]
+        // open MEGAPhotoBrowserViewController on the node and allow scrolling
+        // through all visual media in the allNodes array
+        openVisualMedia(node: node, allNodes: allNodes, displayMode: displayMode)
+    }
+    
+    private func openVisualMedia(
+        node: MEGANode,
+        allNodes: [MEGANode]?,
+        displayMode: DisplayMode?
+    ) {
+        // filter the visual media from allNodes so that photo browser displays only images and videos
+        let allVisualMediaNodes: [MEGANode] = allNodes?.filter { node in
+            node.name?.fileExtensionGroup.isVisualMedia == true
+        } ?? []
+        let nodes = allNodes != nil ? allVisualMediaNodes : [node]
         let index = nodes.firstIndex(where: { $0.handle == node.handle }) ?? 0
         let mediaNodes = NSMutableArray(array: nodes)
         let isOwner = sdk.accessLevel(for: node) == .accessOwner
