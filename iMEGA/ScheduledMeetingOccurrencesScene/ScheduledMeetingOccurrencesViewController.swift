@@ -26,7 +26,11 @@ final class ScheduledMeetingOccurrencesViewController: UIViewController {
     }
     
     private func updateTitle() {
-        navigationItem.titleView = UILabel().customNavigationBarLabel(title: viewModel.title, subtitle: viewModel.subtitle)
+        navigationItem.titleView = UILabel.customNavigationBarLabel(
+            title: viewModel.title,
+            subtitle: viewModel.subtitle,
+            traitCollection: traitCollection
+        )
         navigationItem.titleView?.sizeToFit()
     }
     

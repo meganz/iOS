@@ -187,9 +187,6 @@
     
     [self setupTableViewHeaderAndFooter];
     self.navigationController.toolbarHidden = NO;
-    [self.navigationItem.rightBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleBody],
-                                                                     NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}
-                                                          forState:UIControlStateNormal];
 }
 
 - (void)setupCurrentPlanView {

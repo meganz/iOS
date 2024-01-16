@@ -16,6 +16,7 @@ enum MEGAAppColor {
         case _FFFFFF00
         case _FFFFFF30
         case _FFFFFF32
+        case _FFFFFF80
         
         var uiColor: UIColor {
             DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) ? designTokenColor : legacyColor
@@ -27,7 +28,7 @@ enum MEGAAppColor {
         
         private var designTokenColor: UIColor {
             switch self {
-            case ._FFFFFF: TokenColors.Background.blur
+            case ._FFFFFF: TokenColors.Text.primary
             case ._EEEEEE: TokenColors.Background.blur
             case ._EFEFEF: TokenColors.Background.blur
             case ._F2F2F2: TokenColors.Background.blur
@@ -38,6 +39,7 @@ enum MEGAAppColor {
             case ._FFFFFF00: TokenColors.Background.blur
             case ._FFFFFF30: TokenColors.Background.blur
             case ._FFFFFF32: TokenColors.Background.blur
+            case ._FFFFFF80: TokenColors.Text.secondary
             }
         }
         
@@ -54,6 +56,7 @@ enum MEGAAppColor {
             case ._FFFFFF00: UIColor.whiteFFFFFF00
             case ._FFFFFF30: UIColor.whiteFFFFFF30
             case ._FFFFFF32: UIColor.whiteFFFFFF32
+            case ._FFFFFF80: UIColor.whiteFFFFFF80
             }
         }
     }
@@ -64,6 +67,7 @@ enum MEGAAppColor {
         case _00000032
         case _00000060
         case _00000075
+        case _00000080
         case _000000
         case _1C1C1E
         case _2C2C2E
@@ -89,7 +93,8 @@ enum MEGAAppColor {
             case ._00000032: TokenColors.Background.blur
             case ._00000060: TokenColors.Background.blur
             case ._00000075: TokenColors.Background.blur
-            case ._000000: TokenColors.Background.blur
+            case ._00000080: TokenColors.Text.secondary
+            case ._000000: TokenColors.Text.primary
             case ._1C1C1E: TokenColors.Background.blur
             case ._222222: TokenColors.Background.blur
             case ._2C2C2E: TokenColors.Background.blur
@@ -108,6 +113,7 @@ enum MEGAAppColor {
             case ._00000032: UIColor.black00000032
             case ._00000060: UIColor.black00000060
             case ._00000075: UIColor.black00000075
+            case ._00000080: UIColor.black00000080
             case ._000000: UIColor.black000000
             case ._1C1C1E: UIColor.black1C1C1E
             case ._222222: UIColor.black222222
@@ -136,6 +142,9 @@ enum MEGAAppColor {
         case _363638
         case _474747
         case _515151
+        case _515151_disabledBarButtonTitle
+        case _515151_navigationBarTint
+        case _515151_barButtonTitle
         case _535356
         case _545457
         case _545458
@@ -152,6 +161,9 @@ enum MEGAAppColor {
         case _C4CCCC
         case _C9C9C9
         case _D1D1D1
+        case _D1D1D1_disabledBarButtonTitle
+        case _D1D1D1_navigationBarTint
+        case _D1D1D1_barButtonTitle
         case _DBDBDB
         case _E2E2E2
         case _E4EBEA
@@ -186,6 +198,9 @@ enum MEGAAppColor {
             case ._363638: TokenColors.Background.blur
             case ._474747: TokenColors.Background.blur
             case ._515151: TokenColors.Icon.secondary
+            case ._515151_disabledBarButtonTitle: TokenColors.Text.disabled
+            case ._515151_navigationBarTint: TokenColors.Icon.primary
+            case ._515151_barButtonTitle: TokenColors.Text.primary
             case ._535356: TokenColors.Background.blur
             case ._545457: TokenColors.Background.blur
             case ._545458: TokenColors.Background.blur
@@ -202,6 +217,9 @@ enum MEGAAppColor {
             case ._C4CCCC: TokenColors.Background.blur
             case ._C9C9C9: TokenColors.Background.blur
             case ._D1D1D1: TokenColors.Icon.secondary
+            case ._D1D1D1_disabledBarButtonTitle: TokenColors.Text.disabled
+            case ._D1D1D1_navigationBarTint: TokenColors.Icon.primary
+            case ._D1D1D1_barButtonTitle: TokenColors.Text.primary
             case ._DBDBDB: TokenColors.Background.blur
             case ._E2E2E2: TokenColors.Background.blur
             case ._E4EBEA: TokenColors.Background.blur
@@ -230,6 +248,9 @@ enum MEGAAppColor {
             case ._363638: UIColor.gray363638
             case ._474747: UIColor.gray474747
             case ._515151: UIColor.gray515151
+            case ._515151_disabledBarButtonTitle: UIColor.gray51515130
+            case ._515151_navigationBarTint: UIColor.gray515151
+            case ._515151_barButtonTitle: UIColor.gray515151
             case ._535356: UIColor.gray535356
             case ._545457: UIColor.gray545457
             case ._545458: UIColor.gray545458
@@ -246,6 +267,9 @@ enum MEGAAppColor {
             case ._C4CCCC: UIColor.grayC4CCCC
             case ._C9C9C9: UIColor.grayC9C9C9
             case ._D1D1D1: UIColor.grayD1D1D1
+            case ._D1D1D1_disabledBarButtonTitle: UIColor.grayD1D1D130
+            case ._D1D1D1_navigationBarTint: UIColor.grayD1D1D1
+            case ._D1D1D1_barButtonTitle: UIColor.grayD1D1D1
             case ._DBDBDB: UIColor.grayDBDBDB
             case ._E2E2E2: UIColor.grayE2E2E2
             case ._E4EBEA: UIColor.grayE4EBEA
