@@ -1321,6 +1321,13 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
             self.tonePlayer.play(tone: .callEnded)
         }
     }
+    
+    func muted(by clientHandle: HandleEntity) {
+        guard let participant = callParticipants.first(where: { $0.clientId == clientHandle }), let name = participant.name else {
+            return
+        }
+        containerViewModel?.dispatch(.showMutedBy(name))
+    }
 }
 
 // MARK: - CallLocalVideoCallbacksUseCaseProtocol

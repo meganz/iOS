@@ -284,4 +284,8 @@ extension MockCallUseCase: CallCallbacksRepositoryProtocol {
     func waitingRoomUsersAllow(with handles: [HandleEntity]) {
         callbacksDelegate?.waitingRoomUsersAllow(with: handles)
     }
+    
+    func mutedByClient(handle: HandleEntity) {
+        callbacksDelegate?.mutedByClient(handle: handle)
+    }
 }

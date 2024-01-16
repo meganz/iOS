@@ -49,4 +49,5 @@ public protocol CallCallbacksRepositoryProtocol {
     func networkQualityChanged(_ quality: NetworkQuality)
     func outgoingRingingStopReceived()
     func waitingRoomUsersAllow(with handles: [HandleEntity])
+    func mutedByClient(handle: HandleEntity)
 }

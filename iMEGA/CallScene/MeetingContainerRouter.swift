@@ -27,6 +27,7 @@ protocol MeetingContainerRouting: AnyObject, Routing {
     func showHangOrEndCallDialog(containerViewModel: MeetingContainerViewModel)
     func selectWaitingRoomList(containerViewModel: MeetingContainerViewModel)
     func showScreenShareWarning()
+    func showMutedMessage(by name: String)
 }
 
 final class MeetingContainerRouter: MeetingContainerRouting {
@@ -286,6 +287,10 @@ final class MeetingContainerRouter: MeetingContainerRouting {
         SVProgressHUD.setForegroundColor(MEGAAppColor.White._FFFFFF.uiColor)
         SVProgressHUD.setForegroundImageColor(MEGAAppColor.White._FFFFFF.uiColor)
         SVProgressHUD.showError(withStatus: Strings.Localizable.Calls.ScreenShare.Waring.title)
+    }
+    
+    func showMutedMessage(by name: String) {
+        SVProgressHUD.showSuccess(withStatus: Strings.Localizable.Calls.ParticipantsInCall.mutedBy(name))
     }
     
     // MARK: - Private methods.

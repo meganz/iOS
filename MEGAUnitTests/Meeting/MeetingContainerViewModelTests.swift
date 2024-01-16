@@ -285,6 +285,15 @@ final class MeetingContainerViewModelTests: XCTestCase {
         XCTAssertEqual(callCoordinatorUseCase.muteUnmute_Calls[0], false)
     }
     
+    func testAction_mutedByClient_shouldShowMutedMessage() {
+        let chatRoom = ChatRoomEntity(chatType: .meeting)
+        let router = MockMeetingContainerRouter()
+        viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom)
+
+        test(viewModel: viewModel, action: .showMutedBy("Host name"), expectedCommands: [])
+        XCTAssert(router.showMutedMessage_calledTimes == 1)
+    }
+    
     // MARK: - Private methods
     
     private func assertWhenMuteUnmuteOperationFailed(
@@ -330,7 +339,8 @@ final class MockMeetingContainerRouter: MeetingContainerRouting {
     var showHangOrEndCallDialog_calledTimes = 0
     var selectWaitingRoomList_calledTimes = 0
     var showScreenShareWarning_calledTimes = 0
-    
+    var showMutedMessage_calledTimes = 0
+
     func showMeetingUI(containerViewModel: MeetingContainerViewModel) {
         showMeetingUI_calledTimes += 1
     }
@@ -402,5 +412,9 @@ final class MockMeetingContainerRouter: MeetingContainerRouting {
     
     func showScreenShareWarning() {
         showScreenShareWarning_calledTimes += 1
+    }
+    
+    func showMutedMessage(by name: String) {
+        showMutedMessage_calledTimes += 1
     }
 }
