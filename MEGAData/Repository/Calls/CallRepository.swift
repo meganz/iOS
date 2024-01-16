@@ -380,6 +380,9 @@ extension CallRepository: MEGAChatCallDelegate {
         
         if call.hasChanged(for: .localAVFlags) {
             callbacksDelegate?.localAvFlagsUpdated(video: call.hasLocalVideo, audio: call.hasLocalAudio)
+            if call.auxHandle != .invalid {
+                callbacksDelegate?.mutedByClient(handle: call.auxHandle)
+            }
         }
         
         if call.hasChanged(for: .networkQuality) {

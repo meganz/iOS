@@ -46,6 +46,7 @@ public protocol CallCallbacksUseCaseProtocol: AnyObject {
     func chatTitleChanged(chatRoom: ChatRoomEntity)
     func networkQualityChanged(_ quality: NetworkQuality)
     func outgoingRingingStopReceived()
+    func mutedByClient(handle: HandleEntity)
 }
 
 // Default implementation for optional callbacks
@@ -63,6 +64,7 @@ public extension CallCallbacksUseCaseProtocol {
     func networkQualityChanged(_ quality: NetworkQuality) { }
     func outgoingRingingStopReceived() { }
     func waitingRoomUsersAllow(with handles: [HandleEntity]) { }
+    func mutedByClient(handle: HandleEntity) { }
 }
 
 public final class CallUseCase<T: CallRepositoryProtocol>: CallUseCaseProtocol {
@@ -245,5 +247,9 @@ extension CallUseCase: CallCallbacksRepositoryProtocol {
     
     public func waitingRoomUsersAllow(with handles: [HandleEntity]) {
         callbacksDelegate?.waitingRoomUsersAllow(with: handles)
+    }
+    
+    public func mutedByClient(handle: HandleEntity) {
+        callbacksDelegate?.mutedByClient(handle: handle)
     }
 }

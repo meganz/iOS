@@ -3986,3 +3986,5 @@
 "calls.participantsInCall.muteAll.error"="Error muting all participants";
 /* Calls: Mute specific participant error message */
 "calls.participantsInCall.muteParticipant.error"="Error muting %@";
+/* Calls: Muted by a host message */
+"calls.participantsInCall.mutedBy"="You’ve been muted by %@";

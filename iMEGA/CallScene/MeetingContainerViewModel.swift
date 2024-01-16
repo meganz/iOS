@@ -28,6 +28,7 @@ enum MeetingContainerAction: ActionType {
     case participantJoinedWaitingRoom
     case showScreenShareWarning
     case leaveCallFromRecordingAlert
+    case showMutedBy(String)
 }
 
 final class MeetingContainerViewModel: ViewModelType {
@@ -183,6 +184,8 @@ final class MeetingContainerViewModel: ViewModelType {
             router.showScreenShareWarning()
         case .leaveCallFromRecordingAlert:
             endCall()
+        case .showMutedBy(let name):
+            router.showMutedMessage(by: name)
         }
     }
     
