@@ -21,11 +21,7 @@ extension BrowserViewController {
     private
     func updateTitle(title: String, shouldPlaceInTitleView: Bool) {
         if shouldPlaceInTitleView {
-            let label = UILabel().customNavigationBarLabel(
-                title: parentNode.name ?? "",
-                subtitle: title,
-                color: UIColor.label
-            )
+            let label = UILabel.customNavigationBarLabel(title: parentNode.name ?? "", subtitle: title, traitCollection: traitCollection)
         
             if let titleView = navigationItem.titleView {
                 label.frame = .init(

@@ -117,7 +117,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         super.traitCollectionDidChange(previousTraitCollection)
         
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
-            forceDarkNavigationUI()
+            updateNavigationBarAppearance()
         }
     }
     
@@ -156,7 +156,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
             navigationController?.setNavigationBarHidden(!(navigationController?.navigationBar.isHidden ?? false), animated: true)
             localUserView.updateOffsetWithNavigation(hidden: statusBarHidden)
             recordingImageView.isHidden = titleView.recordingImageView.isHidden || !titleView.recordingImageView.isHidden && !statusBarHidden
-            forceDarkNavigationUI()
+            updateNavigationBarAppearance()
         case .switchLayoutMode(let layoutMode, let participantsCount):
             configureLayout(mode: layoutMode, participantsCount: participantsCount)
         case .disableSwitchLayoutModeButton(let disable):
@@ -390,7 +390,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         viewModel.dispatch(.renameTitleDidChange(text))
     }
 
-    private func forceDarkNavigationUI() {
+    private func updateNavigationBarAppearance() {
         guard let navigationBar = navigationController?.navigationBar else { return }
         AppearanceManager.forceNavigationBarUpdate(navigationBar, traitCollection: traitCollection)
     }

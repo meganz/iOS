@@ -240,7 +240,7 @@
         self.navigationItem.title = [self selectedCountTitle];
     } else {
         if (self.parentNode.name && !self.isFolderLinkNotValid) {
-            self.navigationItem.titleView = [UILabel.new customNavigationBarLabelWithTitle:self.parentNode.name subtitle:LocalizedString(@"folderLink", @"") color:UIColor.labelColor];
+            self.navigationItem.titleView = [UILabel customNavigationBarLabelWithTitle:self.parentNode.name subtitle:LocalizedString(@"folderLink", @"") traitCollection:self.traitCollection];
         } else {
             self.navigationItem.title = LocalizedString(@"folderLink", @"");
         }
@@ -250,7 +250,7 @@
 - (void)showUnavailableLinkViewWithError:(UnavailableLinkError)error {
     [SVProgressHUD dismiss];
     
-    self.navigationItem.titleView = [UILabel.new customNavigationBarLabelWithTitle:self.parentNode.name subtitle: LocalizedString(@"Unavailable", @"Text used to show the user that some resource is not available") color:UIColor.labelColor];
+    self.navigationItem.titleView = [UILabel customNavigationBarLabelWithTitle:self.parentNode.name subtitle:LocalizedString(@"Unavailable", @"Text used to show the user that some resource is not available") traitCollection:self.traitCollection];
     
     [self disableUIItems];
     

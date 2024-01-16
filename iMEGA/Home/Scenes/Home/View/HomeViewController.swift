@@ -104,14 +104,14 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
     var searchResultViewController: UIViewController!
     var searchResultsBridge: SearchResultsBridge!
     
-    var contextMenuManager: ContextMenuManager?
+    private var contextMenuManager: ContextMenuManager?
 
     // MARK: - ViewController Lifecycles
-    func currentViewMode() -> ViewModePreferenceEntity {
+    private func currentViewMode() -> ViewModePreferenceEntity {
         viewModeStore!.viewMode(for: viewModeLocation)
     }
     
-    var viewModeLocation: ViewModeLocation_ObjWrapper {
+    private var viewModeLocation: ViewModeLocation_ObjWrapper {
         .init(customLocation: CustomViewModeLocation.HomeSearch)
     }
     
@@ -136,7 +136,7 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
         }
     }
     
-    func configureViewMode() {
+    private func configureViewMode() {
         let currentViewMode = currentViewMode()
         
         updateContextMenuButtonMenu(viewMode: currentViewMode)
@@ -148,7 +148,7 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
         }
     }
     
-    func updateContextMenuButtonMenu(viewMode: ViewModePreferenceEntity) {
+    private func updateContextMenuButtonMenu(viewMode: ViewModePreferenceEntity) {
         let config = CMConfigEntity(
             menuType: .menu(type: .home),
             viewMode: viewMode
@@ -162,7 +162,7 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
         }
     }
     
-    func updateViewModeState(viewMode: ViewModePreferenceEntity) {
+    private func updateViewModeState(viewMode: ViewModePreferenceEntity) {
         if let layout = viewMode.pageLayout {
             changeLayout(to: layout)
         }
@@ -440,15 +440,17 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
     }
 
     private func setupNavigationBarColor(with trait: UITraitCollection) {
-        let color: UIColor
+        let backgroundColor: UIColor
         switch trait.theme {
         case .light:
-            color = constraintToTopPosition.isActive ? MEGAAppColor.White._FFFFFF.uiColor : MEGAAppColor.White._F7F7F7.uiColor
+            backgroundColor = constraintToTopPosition.isActive ? MEGAAppColor.White._FFFFFF.uiColor : MEGAAppColor.White._F7F7F7.uiColor
+            
         case .dark:
-            color = constraintToTopPosition.isActive ? .mnz_black1C1C1E() : MEGAAppColor.Black._000000.uiColor
+            backgroundColor = constraintToTopPosition.isActive ? .mnz_black1C1C1E() : MEGAAppColor.Black._000000.uiColor
         }
         
-        updateNavigationBarColor(color)
+        updateNavigationBarTitleColor(for: trait)
+        updateNavigationBarBackgroundColor(backgroundColor)
     }
 
     // MARK: - Tap Actions
@@ -482,12 +484,17 @@ extension HomeViewController: SlidePanelAnimationControllerDelegate {
             return (MEGAAppColor.White._FFFFFF.uiColor, MEGAAppColor.White._F7F7F7.uiColor)
         }
     }
+    
+    private func updateNavigationBarTitleColor(for traitCollection: UITraitCollection) {
+        guard let navigationBar = navigationController?.navigationBar else { return }
+        AppearanceManager.forceNavigationBarTitleUpdate(navigationBar, traitCollection: traitCollection)
+    }
 
-    private func updateNavigationBarColor(_ color: UIColor) {
-        let navigationBar = navigationController?.navigationBar
-        navigationBar?.standardAppearance.backgroundColor = color
-        navigationBar?.scrollEdgeAppearance?.backgroundColor = color
-        navigationBar?.isTranslucent = false
+    private func updateNavigationBarBackgroundColor(_ color: UIColor) {
+        guard let navigationBar = navigationController?.navigationBar else { return }
+        navigationBar.standardAppearance.backgroundColor = color
+        navigationBar.scrollEdgeAppearance?.backgroundColor = color
+        navigationBar.isTranslucent = false
     }
 
     func didUpdateAnimationProgress(
@@ -506,7 +513,7 @@ extension HomeViewController: SlidePanelAnimationControllerDelegate {
             color = startColor.toColor(endColor, percentage: animationProgress * 100)
         default: fatalError("No other combinations")
         }
-        updateNavigationBarColor(color)
+        updateNavigationBarBackgroundColor(color)
     }
 
     func animateToTopPosition() {
@@ -721,6 +728,8 @@ extension HomeViewController: TraitEnvironmentAware {
     }
 
     func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
+        // Note: For Home page, we don't use `AppearanceManager.forceNavigationBarUpdate(_:traitCollection:)` to update its navigation bar
+        // because Home page has special navigation bar color configuration driven by `SlidePanelView`
         refreshView(with: currentTrait)
     }
 }

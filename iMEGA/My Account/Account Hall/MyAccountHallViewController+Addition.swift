@@ -21,13 +21,7 @@ extension MyAccountHallViewController {
     }
     
     @objc func setupNavigationBarColor(with trait: UITraitCollection) {
-        let color: UIColor
-        switch trait.theme {
-        case .light:
-            color = MEGAAppColor.White._F7F7F7.uiColor
-        case .dark:
-            color = MEGAAppColor.Black._161616.uiColor
-        }
+        let color =  UIColor.mnz_mainBars(for: trait)
         
         navigationController?.navigationBar.standardAppearance.backgroundColor = color
         navigationController?.navigationBar.scrollEdgeAppearance?.backgroundColor = color

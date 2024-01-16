@@ -1,4 +1,4 @@
-import Foundation
+import MEGAPresentation
 
 class ExtensionAppearanceManager: NSObject {
     
@@ -62,10 +62,24 @@ class ExtensionAppearanceManager: NSObject {
     @objc class func forceNavigationBarUpdate(_ navigationBar: UINavigationBar, traitCollection: UITraitCollection) {
         navigationBar.standardAppearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
         navigationBar.scrollEdgeAppearance?.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
-        navigationBar.standardAppearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)]
-        navigationBar.standardAppearance.doneButtonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)]
         
-        navigationBar.tintColor = UIColor.mnz_primaryGray(for: traitCollection)
+        forceNavigationBarTitleUpdate(navigationBar, traitCollection: traitCollection)
+        
+        navigationBar.standardAppearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.mnz_navigationBarButtonTitle(isEnabled: true, for: traitCollection)]
+        
+        // Mike: For `barButtonItemAppearance.disabled`, we only set it when `.designToken` is turned on. Otherwise the `disabled` state color will be handled by the OS.
+        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) {
+            navigationBar.standardAppearance.buttonAppearance.disabled.titleTextAttributes = [.foregroundColor: UIColor.mnz_navigationBarButtonTitle(isEnabled: false, for: traitCollection)]
+        }
+        
+        navigationBar.standardAppearance.doneButtonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.mnz_navigationBarButtonTitle(isEnabled: true, for: traitCollection)]
+        
+        navigationBar.tintColor = UIColor.mnz_navigationBarTint(for: traitCollection)
+    }
+    
+    @objc class func forceNavigationBarTitleUpdate(_ navigationBar: UINavigationBar, traitCollection: UITraitCollection) {
+        navigationBar.standardAppearance.titleTextAttributes = [.foregroundColor: UIColor.mnz_navigationBarTitle(for: traitCollection)]
+        navigationBar.scrollEdgeAppearance?.titleTextAttributes = [.foregroundColor: UIColor.mnz_navigationBarTitle(for: traitCollection)]
     }
     
     @objc class func forceSearchBarUpdate(_ searchBar: UISearchBar, traitCollection: UITraitCollection) {
@@ -89,18 +103,29 @@ class ExtensionAppearanceManager: NSObject {
     // MARK: - Private
     
     private class func setupNavigationBarAppearance(_ traitCollection: UITraitCollection) {
-        UINavigationBar.appearance().tintColor = UIColor.mnz_primaryGray(for: traitCollection)
+        UINavigationBar.appearance().tintColor = UIColor.mnz_navigationBarTint(for: traitCollection)
         UINavigationBar.appearance().isTranslucent = false
 
         let navigationBarAppearance = UINavigationBarAppearance()
         navigationBarAppearance.configureWithOpaqueBackground()
         navigationBarAppearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
+        navigationBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.mnz_navigationBarTitle(for: traitCollection)]
         
         navigationBarAppearance.shadowImage = nil
         navigationBarAppearance.shadowColor = nil
         
         let backArrowImage = UIImage.backArrow
         navigationBarAppearance.setBackIndicatorImage(backArrowImage, transitionMaskImage: backArrowImage)
+        
+        let barButtonItemAppearance = UIBarButtonItemAppearance()
+        barButtonItemAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.mnz_navigationBarButtonTitle(isEnabled: true, for: traitCollection)]
+        // Mike: For `barButtonItemAppearance.disabled`, we only set it when `.designToken` is turned on. Otherwise the `disabled` state color will be handled by the OS.
+        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) {
+            barButtonItemAppearance.disabled.titleTextAttributes = [.foregroundColor: UIColor.mnz_navigationBarButtonTitle(isEnabled: false, for: traitCollection)]
+        }
+        
+        navigationBarAppearance.buttonAppearance = barButtonItemAppearance
+        navigationBarAppearance.doneButtonAppearance = barButtonItemAppearance
         
         UINavigationBar.appearance().standardAppearance = navigationBarAppearance
         UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance

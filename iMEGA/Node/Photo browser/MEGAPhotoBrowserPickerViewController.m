@@ -45,14 +45,14 @@
         numberOfFiles = @"";
     }
     
-    UILabel *titleLabel = [UILabel.new customNavigationBarLabelWithTitle:folderName subtitle:numberOfFiles color:UIColor.labelColor];
+    UILabel *titleLabel = [UILabel customNavigationBarLabelWithTitle:folderName subtitle:numberOfFiles traitCollection:self.traitCollection];
     titleLabel.adjustsFontSizeToFitWidth = YES;
     titleLabel.minimumScaleFactor = 0.8f;
     self.navigationItem.titleView = titleLabel;
     [self.navigationItem.titleView sizeToFit];
     
     self.statusBarBackground.backgroundColor = self.navigationBar.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
-    self.navigationBar.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+    self.navigationBar.tintColor = [UIColor mnz_navigationBarTintFor:self.traitCollection];
     self.view.backgroundColor = UIColor.systemBackgroundColor;
 }
 

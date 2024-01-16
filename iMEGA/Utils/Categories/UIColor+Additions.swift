@@ -111,6 +111,30 @@ extension UIColor {
             return MEGAAppColor.White._FFFFFF.uiColor
         }
     }
+        
+    @objc class func mnz_navigationBarTitle(for traitCollection: UITraitCollection) -> UIColor {
+        switch traitCollection.userInterfaceStyle {
+        case .unspecified, .light: MEGAAppColor.Black._000000.uiColor
+        case .dark: MEGAAppColor.White._FFFFFF.uiColor
+        @unknown default: MEGAAppColor.Black._000000.uiColor
+        }
+    }
+    
+    @objc class func mnz_navigationBarTint(for traitCollection: UITraitCollection) -> UIColor {
+        switch traitCollection.userInterfaceStyle {
+        case .unspecified, .light: MEGAAppColor.Gray._515151_navigationBarTint.uiColor
+        case .dark: MEGAAppColor.Gray._D1D1D1_navigationBarTint.uiColor
+        @unknown default: MEGAAppColor.White._FFFFFF.uiColor
+        }
+    }
+    
+    class func mnz_navigationBarButtonTitle(isEnabled: Bool, for traitCollection: UITraitCollection) -> UIColor {
+        switch traitCollection.userInterfaceStyle {
+        case .unspecified, .light: isEnabled ? MEGAAppColor.Gray._515151_barButtonTitle.uiColor : MEGAAppColor.Gray._515151_disabledBarButtonTitle.uiColor
+        case .dark: isEnabled ? MEGAAppColor.Gray._D1D1D1_barButtonTitle.uiColor : MEGAAppColor.Gray._D1D1D1_disabledBarButtonTitle.uiColor
+        @unknown default: MEGAAppColor.White._FFFFFF.uiColor
+        }
+    }
     
     // MARK: Background grouped
     
@@ -446,9 +470,9 @@ extension UIColor {
     @objc(mnz_subtitlesForTraitCollection:)
     class func mnz_subtitles(for traitCollection: UITraitCollection) -> UIColor {
         switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light: return UIColor(red: 0, green: 0, blue: 0, alpha: 0.8)
-        case .dark: return UIColor(white: 1, alpha: 0.8)
-        @unknown default: return UIColor(red: 0, green: 0, blue: 0, alpha: 0.8)
+        case .unspecified, .light: MEGAAppColor.Black._00000080.uiColor
+        case .dark: MEGAAppColor.White._FFFFFF80.uiColor
+        @unknown default: MEGAAppColor.Black._00000080.uiColor
         }
     }
     

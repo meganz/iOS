@@ -2416,6 +2416,8 @@
 		C480AF5825711BC100898D48 /* AudioPlaylistSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C480AF5725711BC100898D48 /* AudioPlaylistSource.swift */; };
 		C482B7D4271F360A0074CFC4 /* MEGAError+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = B6A4A11021A2544C007E7EEC /* MEGAError+MNZCategory.m */; };
 		C485DA612577F45E0076D362 /* AudioPlaylistIndexedDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C485DA602577F45E0076D362 /* AudioPlaylistIndexedDelegate.swift */; };
+		C489EBE52B5503FD00EE30D8 /* UILabel+CustomNavigationTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C489EBE42B5503FD00EE30D8 /* UILabel+CustomNavigationTitleLabel.swift */; };
+		C489EBEA2B550A3700EE30D8 /* UILabel+CustomNavigationTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C489EBE42B5503FD00EE30D8 /* UILabel+CustomNavigationTitleLabel.swift */; };
 		C48AED3D27106F6500DD9F85 /* FileNodeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C48AED3C27106F6500DD9F85 /* FileNodeCollectionViewCell.xib */; };
 		C48AED3F27106F7F00DD9F85 /* FolderNodeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C48AED3E27106F7F00DD9F85 /* FolderNodeCollectionViewCell.xib */; };
 		C48AED412710922D00DD9F85 /* NodeCollectionViewCell+Nib.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48AED402710922C00DD9F85 /* NodeCollectionViewCell+Nib.swift */; };
@@ -5033,6 +5035,7 @@
 		C480AF4925711A9200898D48 /* AudioPlaylistIndexedSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlaylistIndexedSource.swift; sourceTree = "<group>"; };
 		C480AF5725711BC100898D48 /* AudioPlaylistSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlaylistSource.swift; sourceTree = "<group>"; };
 		C485DA602577F45E0076D362 /* AudioPlaylistIndexedDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlaylistIndexedDelegate.swift; sourceTree = "<group>"; };
+		C489EBE42B5503FD00EE30D8 /* UILabel+CustomNavigationTitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+CustomNavigationTitleLabel.swift"; sourceTree = "<group>"; };
 		C48AED3C27106F6500DD9F85 /* FileNodeCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FileNodeCollectionViewCell.xib; sourceTree = "<group>"; };
 		C48AED3E27106F7F00DD9F85 /* FolderNodeCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FolderNodeCollectionViewCell.xib; sourceTree = "<group>"; };
 		C48AED402710922C00DD9F85 /* NodeCollectionViewCell+Nib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeCollectionViewCell+Nib.swift"; sourceTree = "<group>"; };
@@ -6908,6 +6911,7 @@
 				4115D6431E718B1F004BB0FF /* UIImage+MNZCategory.m */,
 				41E150021DB7CB1400383645 /* UIImageView+MNZCategory.h */,
 				41E150031DB7CB1400383645 /* UIImageView+MNZCategory.m */,
+				C489EBE42B5503FD00EE30D8 /* UILabel+CustomNavigationTitleLabel.swift */,
 				772BA5702243C7D100F062CB /* UITableView+MNZCategory.h */,
 				772BA5712243C7D100F062CB /* UITableView+MNZCategory.m */,
 				5B0CD4282188D71100F97A2C /* UITextField+MNZCategory.h */,
@@ -14895,6 +14899,7 @@
 				B65D17D7289A233C00D5AD33 /* UIImage+Doc.swift in Sources */,
 				4115D6441E718B1F004BB0FF /* UIImage+MNZCategory.m in Sources */,
 				41E150041DB7CB1400383645 /* UIImageView+MNZCategory.m in Sources */,
+				C489EBE52B5503FD00EE30D8 /* UILabel+CustomNavigationTitleLabel.swift in Sources */,
 				2FF46AF824D251EA00D6C504 /* UINavigationController+FDFullscreenPopGesture.m in Sources */,
 				B65D17D5289A226A00D5AD33 /* UINavigationViewController+Additions.swift in Sources */,
 				A8A715C226307B0A00DDC8E2 /* UIPasteboard+WebP.swift in Sources */,
@@ -15280,6 +15285,7 @@
 				94892CA11EFBF20800AEAC25 /* UIFont+MNZCategory.m in Sources */,
 				5B53F2922407BF160037FEBA /* UIImage+MNZCategory.m in Sources */,
 				5BEACE241FB473940010E02F /* UIImageView+MNZCategory.m in Sources */,
+				C489EBEA2B550A3700EE30D8 /* UILabel+CustomNavigationTitleLabel.swift in Sources */,
 				77F3C30321C12F800049A1BA /* UITextField+MNZCategory.m in Sources */,
 				947C6CC82A5D92DE00CF929E /* UIViewController+BackBarButtonItem.swift in Sources */,
 				BFE54779231F0F29007FB8F6 /* UIViewController+MNZCategory.m in Sources */,

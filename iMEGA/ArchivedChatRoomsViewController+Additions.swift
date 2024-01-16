@@ -169,7 +169,11 @@ extension ArchivedChatRoomsViewController: ChatMenuDelegate, MeetingContextMenuD
     }
     
     private func customTitleViewWith(title: String, subtitle: String) -> UIView {
-        let label = UILabel().customNavigationBarLabel(title: title, subtitle: subtitle)
+        let label = UILabel.customNavigationBarLabel(
+            title: title,
+            subtitle: subtitle,
+            traitCollection: traitCollection
+        )
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.8
         label.sizeToFit()

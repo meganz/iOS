@@ -53,7 +53,6 @@ final class VideoRevampTabContainerViewController: UIViewController {
         
         if let navigationBar = navigationController?.navigationBar {
             AppearanceManager.forceNavigationBarUpdate(navigationBar, traitCollection: traitCollection)
-            navigationController?.navigationBar.tintColor = .label
         }
     }
     
