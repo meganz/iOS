@@ -261,7 +261,18 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
                 case .normal: break
                 }
                 
-                self.startUploadBarButtonItem.menu = homeUploadingViewModel.contextMenu
+                guard let contextMenu = homeUploadingViewModel.contextMenu else {
+                    self.startUploadBarButtonItem.menu = nil
+                    return
+                }
+            
+                let uploadFileMenu = UIDeferredMenuElement.uncached { completion in
+                    // Track tap on upload file button
+                    self.homeViewModel?.didTapUploadFilesButton()
+                    
+                    completion(contextMenu.children)
+                }
+                self.startUploadBarButtonItem.menu = UIMenu(children: [uploadFileMenu])
             }
         }
         uploadViewModel?.inputs.viewIsReady()
@@ -460,6 +471,9 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
     }
 
     @objc fileprivate func didTapNewChat() {
+        // Track tap on new chat button
+        homeViewModel?.didTapStartConversationButton()
+        
         router.didTap(on: .newChat)
     }
     
