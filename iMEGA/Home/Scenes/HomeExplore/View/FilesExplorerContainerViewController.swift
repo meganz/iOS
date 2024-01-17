@@ -46,7 +46,7 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
         self.viewModel = viewModel
         self.viewPreference = viewPreference
         super.init(nibName: nil, bundle: nil)
-        if self.viewModel.getExplorerType() == .document, UserDefaults.standard.integer(forKey: MEGAExplorerViewModePreference) == ViewModePreferenceEntity.thumbnail.rawValue, viewPreference != .list {
+        if self.viewModel.getExplorerType() == .allDocs, UserDefaults.standard.integer(forKey: MEGAExplorerViewModePreference) == ViewModePreferenceEntity.thumbnail.rawValue, viewPreference != .list {
             currentState = states[FilesExplorerContainerGridViewState.identifier]!
         } else {
             currentState = states[FilesExplorerContainerListViewState.identifier]!
@@ -122,7 +122,7 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
     
     func showMoreButton(_ show: Bool) {
         contextBarButtonItem.isEnabled = show
-        if viewModel.getExplorerType() == .document {
+        if viewModel.getExplorerType() == .allDocs {
             uploadAddBarButonItem.isEnabled = show
         }
     }
@@ -139,7 +139,7 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
     private func configureNavigationBarButtons() {
         contextBarButtonItem.image = UIImage.moreList
         
-        if viewModel.getExplorerType() == .document {
+        if viewModel.getExplorerType() == .allDocs {
             uploadAddBarButonItem.image = UIImage.navigationbarAdd
 
             navigationItem.rightBarButtonItems = [contextBarButtonItem, uploadAddBarButonItem]

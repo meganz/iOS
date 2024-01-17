@@ -182,7 +182,7 @@ final class HomeRouter: HomeRouterProtocol {
     // MARK: - Show Documents Explorer View Controller
     
     func documentsExplorerSelected() {
-        FilesExplorerRouter(navigationController: navigationController, explorerType: .document).start()
+        FilesExplorerRouter(navigationController: navigationController, explorerType: .allDocs).start()
     }
     
     // MARK: - Show Audio Explorer View Controller

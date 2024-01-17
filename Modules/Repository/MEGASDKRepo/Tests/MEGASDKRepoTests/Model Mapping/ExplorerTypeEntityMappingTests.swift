@@ -4,7 +4,7 @@ import XCTest
 final class ExplorerTypeEntityMappingTests: XCTestCase {
     
     func testMapToNodeFormatEntity() {
-        let sut: [ExplorerTypeEntity] = [.audio, .video, .favourites, .document]
+        let sut: [ExplorerTypeEntity] = [.audio, .video, .favourites, .allDocs]
         for type in sut {
             switch type {
             case .audio:
@@ -13,8 +13,8 @@ final class ExplorerTypeEntityMappingTests: XCTestCase {
                 XCTAssertEqual(type.toNodeFormatEntity(), .video)
             case .favourites:
                 XCTAssertEqual(type.toNodeFormatEntity(), .unknown)
-            case .document:
-                XCTAssertEqual(type.toNodeFormatEntity(), .document)
+            case .allDocs:
+                XCTAssertEqual(type.toNodeFormatEntity(), .allDocs)
             }
         }
     }
