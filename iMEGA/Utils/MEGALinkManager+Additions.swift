@@ -163,7 +163,7 @@ extension MEGALinkManager {
     }
     
     @objc class func initFullScreenPlayer(node: MEGANode?, fileLink: String?, filePaths: [String]?, isFolderLink: Bool, presenter: UIViewController) {
-        CrashlyticsLogger.log(category: .audioPlayer, "Initializing Full Screen Player - node: \(String(describing: node)), fileLink: \(String(describing: fileLink)), filePaths: \(String(describing:filePaths)), isFolderLink: \(isFolderLink)")
+        CrashlyticsLogger.log(category: .audioPlayer, "Initializing Full Screen Player - node: \(String(describing: node)), fileLink: \(String(describing: fileLink)), filePaths: \(String(describing: filePaths)), isFolderLink: \(isFolderLink)")
         AudioPlayerManager.shared.initFullScreenPlayer(
             node: node,
             fileLink: fileLink,
@@ -236,13 +236,8 @@ extension MEGALinkManager {
     }
 
     @objc class func openDefaultLink(_ url: NSURL) {
-        // This workaround is needed because if we come to open a link from a cold start (i.e. the app is not in the background)
-        // the view controller return by 'mnz_visibleViewController()' will have 'isViewLoaded' as 'false', so the link won't be
-        // presented in a SafariVC. In order to fix the issue, we advance one run loop.
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-            url.mnz_presentSafariViewController()
-            resetLinkAndURLType()
-        }
+        url.mnz_presentSafariViewController()
+        resetLinkAndURLType()
     }
 }
 

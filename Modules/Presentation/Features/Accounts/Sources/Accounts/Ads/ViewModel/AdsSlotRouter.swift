@@ -30,8 +30,6 @@ public struct AdsSlotRouter<T: View> {
     }
     
     public func start() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-            presenter?.present(build(), animated: true)
-        }
+        presenter?.present(build(), animated: true)
     }
 }
