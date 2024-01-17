@@ -2378,7 +2378,6 @@
 		C45E402125DD1C230060E116 /* AudioPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45E402025DD1C230060E116 /* AudioPlayerManager.swift */; };
 		C45F97F3264A79AA0004DCA5 /* CloudDriveViewController+MyAvatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45F97F2264A79AA0004DCA5 /* CloudDriveViewController+MyAvatar.swift */; };
 		C45F97FD264A9FA60004DCA5 /* MyAvatarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45F97FC264A9FA60004DCA5 /* MyAvatarManager.swift */; };
-		C45F9807264AA88C0004DCA5 /* ArchivedChatRoomsViewController+MyAvatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45F9806264AA88C0004DCA5 /* ArchivedChatRoomsViewController+MyAvatar.swift */; };
 		C45F9819264AA9980004DCA5 /* PhotosViewController+MyAvatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45F9818264AA9980004DCA5 /* PhotosViewController+MyAvatar.swift */; };
 		C45F982B264AAD4B0004DCA5 /* SharedItemsViewController+MyAvatar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45F982A264AAD4B0004DCA5 /* SharedItemsViewController+MyAvatar.swift */; };
 		C46050592727FC7300D67A44 /* BackupRootNodeAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46050582727FC7300D67A44 /* BackupRootNodeAccess.swift */; };
@@ -3627,7 +3626,6 @@
 		836A782F28E2F2B500B6849F /* ChatRoomsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomsListView.swift; sourceTree = "<group>"; };
 		836A783128E34C2900B6849F /* ChatRoomsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomsListViewModel.swift; sourceTree = "<group>"; };
 		836A783328E34E5B00B6849F /* MainTabBarController+Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabBarController+Chat.swift"; sourceTree = "<group>"; };
-		836A987C20F8C8DA00EC719B /* ChatRoomsType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatRoomsType.h; sourceTree = "<group>"; };
 		836AEDDB2018830E00868FC7 /* PasswordReminderViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PasswordReminderViewController.h; sourceTree = "<group>"; };
 		836AEDDC2018830E00868FC7 /* PasswordReminderViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PasswordReminderViewController.m; sourceTree = "<group>"; };
 		836AEDDE20188F3C00868FC7 /* TestPasswordViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestPasswordViewController.h; sourceTree = "<group>"; };
@@ -5000,7 +4998,6 @@
 		C45E402025DD1C230060E116 /* AudioPlayerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerManager.swift; sourceTree = "<group>"; };
 		C45F97F2264A79AA0004DCA5 /* CloudDriveViewController+MyAvatar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+MyAvatar.swift"; sourceTree = "<group>"; };
 		C45F97FC264A9FA60004DCA5 /* MyAvatarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAvatarManager.swift; sourceTree = "<group>"; };
-		C45F9806264AA88C0004DCA5 /* ArchivedChatRoomsViewController+MyAvatar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArchivedChatRoomsViewController+MyAvatar.swift"; sourceTree = "<group>"; };
 		C45F9818264AA9980004DCA5 /* PhotosViewController+MyAvatar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewController+MyAvatar.swift"; sourceTree = "<group>"; };
 		C45F982A264AAD4B0004DCA5 /* SharedItemsViewController+MyAvatar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedItemsViewController+MyAvatar.swift"; sourceTree = "<group>"; };
 		C46050582727FC7300D67A44 /* BackupRootNodeAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupRootNodeAccess.swift; sourceTree = "<group>"; };
@@ -6986,7 +6983,6 @@
 				83DBDDD229D2DA4B00CF433B /* ScheduleMeetingScene */,
 				41136FB91E1692650031C516 /* Views */,
 				94E7180A283D6603000EDDDF /* ArchivedChatRoomsViewController+Additions.swift */,
-				C45F9806264AA88C0004DCA5 /* ArchivedChatRoomsViewController+MyAvatar.swift */,
 				415E69081DABCDF90043B75F /* ArchivedChatRoomsViewController.h */,
 				415E69091DABCDF90043B75F /* ArchivedChatRoomsViewController.m */,
 				BF67C50A264B9A67003CE3C6 /* ArchivedChatRoomsViewController.swift */,
@@ -7100,7 +7096,6 @@
 				83ACBDB72212EDC800ACBBDC /* CallPeerVideo.h */,
 				8394CFA4211AE5B700A1634A /* CallType.h */,
 				2FCC5BC1238740ED00E1E5A0 /* ChatImageUploadQuality.h */,
-				836A987C20F8C8DA00EC719B /* ChatRoomsType.h */,
 				A85D93BD20457DAA0066F45B /* ChatVideoUploadQuality.h */,
 				83209DF6231D05B700F5E2DB /* ContacLinkQRType.h */,
 				948D92672B2373CE0020E894 /* DisplayMode.h */,
@@ -13483,7 +13478,6 @@
 				245CB1A82A32DDFD005F6527 /* AppMetaData.swift in Sources */,
 				24BD7B062A36FD430052668B /* AppMetaDataFactory.swift in Sources */,
 				94E7180B283D6603000EDDDF /* ArchivedChatRoomsViewController+Additions.swift in Sources */,
-				C45F9807264AA88C0004DCA5 /* ArchivedChatRoomsViewController+MyAvatar.swift in Sources */,
 				415E690A1DABCDF90043B75F /* ArchivedChatRoomsViewController.m in Sources */,
 				BF67C50B264B9A68003CE3C6 /* ArchivedChatRoomsViewController.swift in Sources */,
 				24AD308D2AA9AB0B004D4BF4 /* AssetCreationRequestLocationManager.swift in Sources */,
