@@ -4,7 +4,10 @@ extension ExplorerTypeEntity {
     public func toNodeFormatEntity() -> NodeFormatEntity {
         switch self {
         case .audio: return .audio
-        case .document: return .document
+        // mapping from internal Explorer type to
+        // external (SDK-defined) backwards compatible .allDocs Node type
+        // that contains pdf/spreadsheets/presentation/documents
+        case .allDocs: return .allDocs
         case .video: return .video
         case .favourites: return .unknown
         }

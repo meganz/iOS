@@ -42,7 +42,7 @@ final class FilesExplorerViewModel {
     private var contextMenuManager: ContextMenuManager?
     private var viewConfiguration: any FilesExplorerViewConfiguration {
         switch explorerType {
-        case .document:
+        case .allDocs:
             return DocumentExplorerViewConfiguration()
         case .audio:
             return AudioExploreViewConfiguration()
@@ -106,11 +106,11 @@ final class FilesExplorerViewModel {
     }
     
     private func configureContextMenus() {
-        if explorerType == .document {
+        if explorerType == .allDocs {
             contextMenuManager = ContextMenuManager(displayMenuDelegate: self, uploadAddMenuDelegate: self, createContextMenuUseCase: createContextMenuUseCase)
             
             configForUploadAddMenu = CMConfigEntity(menuType: .menu(type: .uploadAdd),
-                                                    isDocumentExplorer: explorerType == .document)
+                                                    isDocumentExplorer: explorerType == .allDocs)
             
             guard let configForUploadAddMenu,
                   let menu = contextMenuManager?.contextMenu(with: configForUploadAddMenu) else { return }
@@ -124,7 +124,7 @@ final class FilesExplorerViewModel {
                                               viewMode: viewTypePreference == .list ? .list : .thumbnail,
                                               sortType: Helper.sortType(for: nil).toSortOrderEntity(),
                                               isFavouritesExplorer: explorerType == .favourites,
-                                              isDocumentExplorer: explorerType == .document,
+                                              isDocumentExplorer: explorerType == .allDocs,
                                               isAudiosExplorer: explorerType == .audio,
                                               isVideosExplorer: explorerType == .video)
         
