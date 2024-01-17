@@ -229,7 +229,6 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
         guard let archivedChatRoomsViewController = UIStoryboard(name: "Chat", bundle: nil).instantiateViewController(withIdentifier: "ArchivedChatRoomsViewControllerID") as? ArchivedChatRoomsViewController else {
             return
         }
-        archivedChatRoomsViewController.chatRoomsType = .archived
         navigationController?.pushViewController(archivedChatRoomsViewController, animated: true)
     }
     
