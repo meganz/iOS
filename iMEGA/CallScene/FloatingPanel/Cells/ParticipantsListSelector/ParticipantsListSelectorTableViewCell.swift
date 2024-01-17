@@ -17,8 +17,10 @@ class ParticipantsListSelectorTableViewCell: UITableViewCell {
     func configureFor(tabs: [ParticipantsListTab], selectedTab: ParticipantsListTab) {
         self.tabs = tabs
         
-        if tabs.count == 2 {
+        if tabs.count == 2 && segmentedControl.numberOfSegments == 3 {
             segmentedControl.removeSegment(at: 2, animated: false)
+        } else if tabs.count == 3 && segmentedControl.numberOfSegments == 2 {
+            segmentedControl.insertSegment(withTitle: tabs[2].title, at: 2, animated: false)
         }
         
         for (index, tab) in tabs.enumerated() {

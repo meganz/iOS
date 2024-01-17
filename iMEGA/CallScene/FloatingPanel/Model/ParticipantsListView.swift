@@ -24,6 +24,7 @@ struct ParticipantsListView: Equatable {
     let participants: [CallParticipantEntity]
     let existsWaitingRoom: Bool
     let currentUserHandle: HandleEntity?
+    let isMyselfModerator: Bool
     
     init(
         sections: [FloatingPanelTableViewSection],
@@ -33,7 +34,8 @@ struct ParticipantsListView: Equatable {
         selectedTab: ParticipantsListTab,
         participants: [CallParticipantEntity],
         existsWaitingRoom: Bool,
-        currentUserHandle: HandleEntity? = .invalidHandle
+        currentUserHandle: HandleEntity? = .invalidHandle,
+        isMyselfModerator: Bool = false
     ) {
         self.sections = sections
         self.hostControlsRows = hostControlsRows
@@ -43,5 +45,6 @@ struct ParticipantsListView: Equatable {
         self.participants = participants
         self.existsWaitingRoom = existsWaitingRoom
         self.currentUserHandle = currentUserHandle
+        self.isMyselfModerator = isMyselfModerator
     }
 }

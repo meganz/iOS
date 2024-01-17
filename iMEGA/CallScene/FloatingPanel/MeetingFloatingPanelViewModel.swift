@@ -699,7 +699,8 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             selectedTab: .inCall,
             participants: callParticipants,
             existsWaitingRoom: chatRoom.isWaitingRoomEnabled && isMyselfAModerator,
-            currentUserHandle: accountUseCase.currentUserHandle
+            currentUserHandle: accountUseCase.currentUserHandle,
+            isMyselfModerator: isMyselfAModerator
         )
         
         invokeCommand?(.reloadViewData(participantsListView: participantsListView))
@@ -764,7 +765,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     private func reloadParticipantsIfNeeded() {
         switch selectedParticipantsListTab {
         case .inCall:
-            invokeCommand?(.reloadParticipantsList(participants: callParticipants))
+            loadParticipantsInCall()
         case .notInCall:
             invokeCommand?(.reloadParticipantsList(participants: callParticipantsNotInCall))
         case .waitingRoom:
