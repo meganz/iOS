@@ -14,6 +14,7 @@ public protocol AccountRepositoryProtocol: RepositoryProtocol {
     func upgradeSecurity() async throws -> Bool
     func incomingContactsRequestsCount() -> Int
     func relevantUnseenUserAlertsCount() -> UInt
+    func getMiscFlags() async throws
     
     var currentAccountDetails: AccountDetailsEntity? { get }
     func refreshCurrentAccountDetails() async throws -> AccountDetailsEntity

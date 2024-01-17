@@ -317,6 +317,22 @@ final class AccountRepositoryTests: XCTestCase {
         XCTAssertFalse(sdk.hasRequestDelegate)
     }
 
+    func testGetMiscFlag_whenApiOk_shouldNotThrow() async {
+        let mockSdk = MockSdk(requestResult: .success(MockRequest(handle: 1)))
+        let sut = makeSUT(sdk: mockSdk)
+
+        await XCTAsyncAssertNoThrow(try await sut.getMiscFlags())
+    }
+    
+    func testGetMiscFlag_whenFail_shouldThrowGenericError() async {
+        let mockSdk = MockSdk(requestResult: .failure(MockError.failingError))
+        let sut = makeSUT(sdk: mockSdk)
+        
+        await XCTAsyncAssertThrowsError(try await sut.getMiscFlags()) { errorThrown in
+            XCTAssertEqual(errorThrown as? AccountErrorEntity, .generic)
+        }
+    }
+
     // MARK: - Helpers
     
     private func makeSUT(sdk: MEGASdk) -> AccountRepository {

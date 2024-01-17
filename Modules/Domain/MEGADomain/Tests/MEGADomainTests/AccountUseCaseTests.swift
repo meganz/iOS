@@ -49,4 +49,18 @@ final class AccountUseCaseTests: XCTestCase {
             XCTAssertEqual(errorThrown as? AccountDetailsErrorEntity, .generic)
         }
     }
+    
+    func testGetMiscFlag_whenSuccess_shouldNotThrow() async {
+        let sut = AccountUseCase(repository: MockAccountRepository(miscFlagsResult: .success))
+        
+        await XCTAsyncAssertNoThrow(try await sut.getMiscFlags())
+    }
+    
+    func testGetMiscFlag_whenFail_shouldThrowGenericError() async throws {
+        let sut = AccountUseCase(repository: MockAccountRepository(miscFlagsResult: .failure(.generic)))
+        
+        await XCTAsyncAssertThrowsError(try await sut.getMiscFlags()) { errorThrown in
+            XCTAssertEqual(errorThrown as? AccountErrorEntity, .generic)
+        }
+    }
 }

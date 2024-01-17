@@ -23,7 +23,6 @@ public struct AdsRepository: AdsRepositoryProtocol {
                 case .success(let request):
                     completion(.success(request.megaStringDictionary ?? [:]))
                 case .failure(let error):
-                    print(error)
                     completion(.failure(error))
                 }
             })
@@ -38,7 +37,6 @@ public struct AdsRepository: AdsRepositoryProtocol {
                 case .success(let request):
                     completion(.success(request.numDetails))
                 case .failure(let error):
-                    print(error)
                     completion(.failure(error))
                 }
             })

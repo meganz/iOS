@@ -13,6 +13,7 @@ public protocol AccountUseCaseProtocol {
     var currentAccountDetails: AccountDetailsEntity? { get }
     var isOverQuota: Bool { get }
     func refreshCurrentAccountDetails() async throws -> AccountDetailsEntity
+    func getMiscFlags() async throws
 }
 
 // MARK: - Use case implementation
@@ -75,5 +76,9 @@ public struct AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseProtoc
     
     public func upgradeSecurity() async throws -> Bool {
         try await repository.upgradeSecurity()
+    }
+    
+    public func getMiscFlags() async throws {
+        try await repository.getMiscFlags()
     }
 }
