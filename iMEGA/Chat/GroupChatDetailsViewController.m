@@ -146,8 +146,8 @@
     if (self.chatRoom.ownPrivilege < MEGAChatRoomPrivilegeRo) {
         self.participantsLabel.text = LocalizedString(@"Inactive chat", @"Subtitle of chat screen when the chat is inactive");
     } else {
-        NSInteger peers = self.chatRoom.peerCount + (!self.chatRoom.isPreview ? 1 : 0);
-        self.participantsLabel.text = (peers == 1) ? [NSString stringWithFormat:LocalizedString(@"%d participant", @"Singular of participant. 1 participant"), 1] : [NSString stringWithFormat:LocalizedString(@"%d participants", @"Singular of participant. 1 participant"), (int)peers];
+         NSInteger peers = self.chatRoom.peerCount + (!self.chatRoom.isPreview ? 1 : 0);
+        self.participantsLabel.text = [NSString stringWithFormat:LocalizedString(@"chat.info.numberOfParticipants", @"Number of participants. ex. 1 participant or 2 participants"), (int)peers];
     }
 }
 

@@ -54,10 +54,9 @@ class ChatTitleView: UIView {
                 subtitleLabel.text = Strings.Localizable.inactiveChat
             } else if chatRoom.hasCustomTitle {
                 subtitleLabel.text = chatRoom.participantNames
-            } else if chatRoom.peerCount > 0 {
-                subtitleLabel.text = Strings.Localizable.dParticipants(Int(chatRoom.peerCount) + 1)
             } else {
-                subtitleLabel.text = Strings.Localizable.dParticipant(1)
+                let participantsCount = Int(chatRoom.peerCount) + 1
+                subtitleLabel.text = Strings.Localizable.Chat.Info.numberOfParticipants(participantsCount)
             }
             
         } else {

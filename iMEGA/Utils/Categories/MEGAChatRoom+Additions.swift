@@ -125,7 +125,7 @@ extension MEGAChatRoom {
                 totalCount += 1
             }
             if participantsNames.mnz_isEmpty() {
-                participantsNames = Strings.Localizable.dParticipants(Int(bitPattern: totalCount))
+                participantsNames = Strings.Localizable.Chat.Info.numberOfParticipants(Int(totalCount))
             } else {
                 participantsNames += " and \(totalCount - namesAdded) more"
             }
