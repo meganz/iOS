@@ -572,7 +572,7 @@
             }
         }
     } else {
-        [self showLink:url];
+        [self showLinkForNoLoggedInUser:url];
     }
 }
 

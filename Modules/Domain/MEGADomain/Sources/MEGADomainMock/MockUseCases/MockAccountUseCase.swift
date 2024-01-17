@@ -4,6 +4,7 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
     private let totalNodesCountVariable: UInt64
     private let getMyChatFilesFolderResult: (Result<NodeEntity, AccountErrorEntity>)
     private let accountDetailsResult: (Result<AccountDetailsEntity, AccountDetailsErrorEntity>)
+    private let miscFlagsResult: Result<Void, AccountErrorEntity>
     private let isUpgradeSecuritySuccess: Bool
     private let _bandwidthOverquotaDelay: Int64
     private let _currentUser: UserEntity?
@@ -23,6 +24,7 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
                 getMyChatFilesFolderResult: Result<NodeEntity, AccountErrorEntity> = .failure(.nodeNotFound),
                 currentAccountDetails: AccountDetailsEntity? = nil,
                 accountDetailsResult: Result<AccountDetailsEntity, AccountDetailsErrorEntity> = .failure(.generic),
+                miscFlagsResult: Result<Void, AccountErrorEntity> = .failure(.generic),
                 isUpgradeSecuritySuccess: Bool = false,
                 bandwidthOverquotaDelay: Int64 = 0,
                 isOverQuota: Bool = false
@@ -39,6 +41,7 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
         self.getMyChatFilesFolderResult = getMyChatFilesFolderResult
         self.accountDetailsResult = accountDetailsResult
         self.isUpgradeSecuritySuccess = isUpgradeSecuritySuccess
+        self.miscFlagsResult = miscFlagsResult
     }
     
     public var currentUserHandle: HandleEntity? {
@@ -94,5 +97,11 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
     
     public func upgradeSecurity() async throws -> Bool {
         isUpgradeSecuritySuccess
+    }
+    
+    public func getMiscFlags() async throws {
+        if case .failure(let error) = miscFlagsResult {
+            throw error
+        }
     }
 }

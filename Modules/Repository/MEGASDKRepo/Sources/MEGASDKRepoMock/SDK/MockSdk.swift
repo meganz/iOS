@@ -477,6 +477,15 @@ public final class MockSdk: MEGASdk {
         }
     }
     
+    public override func getMiscFlags(with delegate: MEGARequestDelegate) {
+        switch requestResult {
+        case .success(let request):
+            delegate.onRequestFinish?(self, request: request, error: MEGAError())
+        case .failure(let error):
+            delegate.onRequestFinish?(self, request: MockRequest(handle: 1), error: error)
+        }
+    }
+    
     // MARK: - SMS
     
     public override func smsAllowedState() -> SMSState {

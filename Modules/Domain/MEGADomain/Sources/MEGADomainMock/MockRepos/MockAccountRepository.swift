@@ -5,6 +5,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol {
     private let nodesCount: UInt64
     private let getMyChatFilesFolderResult: (Result<NodeEntity, AccountErrorEntity>)
     private let accountDetailsResult: (Result<AccountDetailsEntity, AccountDetailsErrorEntity>)
+    private let miscFlagsResult: Result<Void, AccountErrorEntity>
     private let _currentAccountDetails: AccountDetailsEntity?
     private let isUpgradeSecuritySuccess: Bool
     private let _isLoggedIn: Bool
@@ -37,6 +38,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol {
                 getMyChatFilesFolderResult: Result<NodeEntity, AccountErrorEntity> = .failure(.nodeNotFound),
                 currentAccountDetails: AccountDetailsEntity? = nil,
                 accountDetailsResult: Result<AccountDetailsEntity, AccountDetailsErrorEntity> = .failure(.generic),
+                miscFlagsResult: Result<Void, AccountErrorEntity> = .failure(.generic),
                 requestResultPublisher: AnyPublisher<Result<AccountRequestEntity, Error>, Never> = Empty().eraseToAnyPublisher(),
                 contactRequestPublisher: AnyPublisher<[ContactRequestEntity], Never> = Empty().eraseToAnyPublisher(),
                 userAlertUpdatePublisher: AnyPublisher<[UserAlertEntity], Never> = Empty().eraseToAnyPublisher(),
@@ -59,6 +61,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol {
         self.requestResultPublisher = requestResultPublisher
         self.contactRequestPublisher = contactRequestPublisher
         self.userAlertUpdatePublisher = userAlertUpdatePublisher
+        self.miscFlagsResult = miscFlagsResult
     }
     
     public var currentUserHandle: HandleEntity? {
@@ -136,5 +139,11 @@ public final class MockAccountRepository: AccountRepositoryProtocol {
     
     public func deRegisterMEGAGlobalDelegate() async {
         deRegisterMEGAGlobalDelegateCalled += 1
+    }
+    
+    public func getMiscFlags() async throws {
+        if case .failure(let error) = miscFlagsResult {
+            throw error
+        }
     }
 }

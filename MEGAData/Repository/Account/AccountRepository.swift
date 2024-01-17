@@ -148,6 +148,19 @@ final class AccountRepository: NSObject, AccountRepositoryProtocol {
             })
         }
     }
+    
+    func getMiscFlags() async throws {
+        try await withAsyncThrowingValue(in: { completion in
+            sdk.getMiscFlags(with: RequestDelegate { result in
+                switch result {
+                case .success:
+                    completion(.success)
+                case .failure:
+                    completion(.failure(AccountErrorEntity.generic))
+                }
+            })
+        })
+    }
 }
 
 // MARK: - MEGARequestDelegate
