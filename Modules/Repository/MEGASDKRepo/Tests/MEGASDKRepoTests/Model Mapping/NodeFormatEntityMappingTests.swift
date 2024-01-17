@@ -1,23 +1,40 @@
 import MEGADomain
+import MEGASdk
 import XCTest
 
 final class NodeFormatEntityMappingTests: XCTestCase {
     
     func testMapToMEGANodeFormatType() {
-        let sut: [NodeFormatEntity] = [.unknown, .audio, .video, .document, .photo]
-        for type in sut {
-            switch type {
-            case .unknown:
-                XCTAssertEqual(type.toMEGANodeFormatType(), .unknown)
-            case .audio:
-                XCTAssertEqual(type.toMEGANodeFormatType(), .audio)
-            case .video:
-                XCTAssertEqual(type.toMEGANodeFormatType(), .video)
-            case .document:
-                XCTAssertEqual(type.toMEGANodeFormatType(), .document)
-            case .photo:
-                XCTAssertEqual(type.toMEGANodeFormatType(), .photo)
-            }
+        let sut: [NodeFormatEntity] = [
+            .unknown,
+            .photo,
+            .audio,
+            .video,
+            .document,
+            .pdf,
+            .presentation,
+            .archive,
+            .program,
+            .misc,
+            .spreadsheet,
+            .allDocs
+        ]
+        let expectedValues: [MEGANodeFormatType] = [
+            .unknown,
+            .photo,
+            .audio,
+            .video,
+            .document,
+            .pdf,
+            .presentation,
+            .archive,
+            .program,
+            .misc,
+            .spreadsheet,
+            .allDocs
+        ]
+        for type in zip(sut, expectedValues) {
+            XCTAssertEqual(type.0.toMEGANodeFormatType(), type.1, "mapper does not work for \(type.0)")
         }
     }
 }
