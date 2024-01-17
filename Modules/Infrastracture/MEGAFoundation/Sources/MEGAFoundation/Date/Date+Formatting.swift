@@ -1,4 +1,5 @@
 import Foundation
+import MEGASwift
 
 public enum DateStyle {
     public static var dateStyleFactory: some DateStyleFactory = DateStyleFactoryImpl()
@@ -35,14 +36,14 @@ public struct DateStyleFactoryImpl: DateStyleFactory {
 
 /// A  date formatter pool that holds date formatter used in MEGA. As `DateFormatter` is a heavy object, so making a cache pool to hold popular
 /// date formatters saving time.
-/// NOTE: This shared object is *NOT* thread safe.
+/// NOTE: This shared object is thread safe.
 public final class DateFormatterPool {
 
     // MARK: - Cache for date formatter
 
-    private lazy var stringTemplateFormatterCache: [DateStyle.StringTemplateStyle: DateFormatter] = [:]
+    @Atomic private var stringTemplateFormatterCache = [DateStyle.StringTemplateStyle: DateFormatter]()
 
-    private lazy var styleFormatterCache: [DateStyle.DateFormatStyle: DateFormatter] = [:]
+    @Atomic private var styleFormatterCache = [DateStyle.DateFormatStyle: DateFormatter]()
 
     // MARK: - Static
 
@@ -54,7 +55,7 @@ public final class DateFormatterPool {
 
     // MARK: - Getting a date formatter by `styles`
 
-    /// Returns a date formatter with given string template formatting. It search for cache by given `formatting`, and return immediatly. If not found,
+    /// Returns a date formatter with given string template formatting. It search for cache by given `formatting`, and return immediately. If not found,
     /// create a new one and save to cache.
     /// NOTE: As `DateFormatter` is an reference object, do *NOT* modify any property while using.
     /// - Parameter formattingStyle: A struct that holds date formatting template.
@@ -64,11 +65,13 @@ public final class DateFormatterPool {
             return cachedStyle
         }
         let styleFormatter = formattingStyle.buildDateFormatter()
-        stringTemplateFormatterCache[formattingStyle] = styleFormatter
+        $stringTemplateFormatterCache.mutate {
+            $0[formattingStyle] = styleFormatter
+        }
         return styleFormatter
     }
 
-    /// Returns a date formatter with given string formatting style. It search for cache by given `style`, and return immediatly. If not found,
+    /// Returns a date formatter with given string formatting style. It search for cache by given `style`, and return immediately. If not found,
     /// create a new one and save to cache.
     /// NOTE: As `DateFormatter` is an reference object, do *NOT* modify any property while using.
     /// - Parameter formattingStyle: A struct that holds date formatting styles.
@@ -78,7 +81,9 @@ public final class DateFormatterPool {
             return cachedStyle
         }
         let styleFormatter = formattingStyle.buildDateFormatter()
-        styleFormatterCache[formattingStyle] = styleFormatter
+        $styleFormatterCache.mutate {
+            $0[formattingStyle] = styleFormatter
+        }
         return styleFormatter
     }
 }

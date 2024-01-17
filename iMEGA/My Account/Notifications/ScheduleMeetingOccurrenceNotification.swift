@@ -6,6 +6,8 @@ final class ScheduleMeetingOccurrenceNotification: NSObject {
     // MARK: - Properties.
 
     let alert: MEGAUserAlert
+    private let scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol
+    private let chatRoomUseCase: any ChatRoomUseCaseProtocol
     private(set) var message: NSAttributedString?
     private(set) var isMessageLoaded = false
     private let createAttributedStringForBoldTags: (String) -> NSAttributedString?
@@ -15,10 +17,18 @@ final class ScheduleMeetingOccurrenceNotification: NSObject {
     
     init(
         alert: MEGAUserAlert,
+        scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol = ScheduledMeetingUseCase(
+            repository: ScheduledMeetingRepository(chatSDK: .shared)
+        ),
+        chatRoomUseCase: some ChatRoomUseCaseProtocol = ChatRoomUseCase(
+            chatRoomRepo: ChatRoomRepository(sdk: .shared)
+        ),
         createAttributedStringForBoldTags: @escaping (String) -> NSAttributedString?,
         alternateMessage: @escaping () -> NSAttributedString?
     ) {
         self.alert = alert
+        self.scheduledMeetingUseCase = scheduledMeetingUseCase
+        self.chatRoomUseCase = chatRoomUseCase
         self.createAttributedStringForBoldTags = createAttributedStringForBoldTags
         self.alternateMessage = alternateMessage
     }
@@ -27,9 +37,6 @@ final class ScheduleMeetingOccurrenceNotification: NSObject {
     
     func loadMessage() async throws {
         defer { isMessageLoaded = true }
-        let scheduledMeetingUseCase = ScheduledMeetingUseCase(
-            repository: ScheduledMeetingRepository(chatSDK: MEGAChatSdk.shared)
-        )
         
         guard let scheduledMeeting = scheduledMeetingUseCase.scheduledMeeting(
             for: alert.scheduledMeetingId,
@@ -49,13 +56,19 @@ final class ScheduleMeetingOccurrenceNotification: NSObject {
             } else if alert.hasScheduledMeetingChangeType(.startDate)
                         || alert.hasScheduledMeetingChangeType(.endDate) {
                 message = createAttributedStringForBoldTags(
-                    occcurrenceUpdatedMessage(
+                    occurrenceUpdatedMessage(
                         withStartDate: scheduledMeeting.startDate,
                         endDate: scheduledMeeting.endDate
                     )
                 )
             }
-            
+        } else if alert.type == .scheduledMeetingNew {
+            message = createAttributedStringForBoldTags(
+                occurrenceUpdatedMessage(
+                    withStartDate: scheduledMeeting.startDate,
+                    endDate: scheduledMeeting.endDate
+                )
+            )
         } else {
             let occurrences = try? await scheduledMeetingUseCase.scheduledMeetingOccurrencesByChat(chatId: alert.nodeHandle)
                             
@@ -73,7 +86,7 @@ final class ScheduleMeetingOccurrenceNotification: NSObject {
                     )
                 } else {
                     message = createAttributedStringForBoldTags(
-                        occcurrenceUpdatedMessage(
+                        occurrenceUpdatedMessage(
                             withStartDate: occurrence.startDate,
                             endDate: occurrence.endDate
                         )
@@ -102,7 +115,7 @@ final class ScheduleMeetingOccurrenceNotification: NSObject {
         )
     }
     
-    private func occcurrenceUpdatedMessage(withStartDate startDate: Date, endDate: Date) -> String {
+    private func occurrenceUpdatedMessage(withStartDate startDate: Date, endDate: Date) -> String {
         occurrenceMessage(
             withStartDate: startDate,
             endDate: endDate,
@@ -116,19 +129,18 @@ final class ScheduleMeetingOccurrenceNotification: NSObject {
         localizedString: String
     ) -> String {
         var content = localizedString.replacingOccurrences(of: "[Email]", with: alert.email ?? "")
-
-        let chatRoomUseCase = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo)
-        
-        let scheduledMeeting: MEGAChatScheduledMeeting? = MEGAChatSdk.shared.scheduledMeeting(alert.nodeHandle, scheduledId: alert.scheduledMeetingId)
-        
+                
         guard let chatRoomEntity = chatRoomUseCase.chatRoom(forChatId: alert.nodeHandle),
-              let scheduledMeetingEntity = scheduledMeeting?.toScheduledMeetingEntity() else {
+              let scheduledMeeting = scheduledMeetingUseCase.scheduledMeeting(
+                for: alert.scheduledMeetingId,
+                chatId: alert.nodeHandle
+              ) else {
             return content
         }
         
         content += "\n"
         
-        let scheduledMeetingDateBuilder = ScheduledMeetingDateBuilder(scheduledMeeting: scheduledMeetingEntity, chatRoom: chatRoomEntity)
+        let scheduledMeetingDateBuilder = ScheduledMeetingDateBuilder(scheduledMeeting: scheduledMeeting, chatRoom: chatRoomEntity)
         content += scheduledMeetingDateBuilder.buildDateDescriptionString()
         return content
     }
