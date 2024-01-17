@@ -229,7 +229,8 @@
                 [self.window setRootViewController:[LTHPasscodeViewController sharedUser]];
             } else {
                 _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
-                UIViewController *mainController = [self adsMainTabBarController: _mainTBC];
+                UIViewController *mainController = [self adsMainTabBarController:_mainTBC
+                                                                        onAppear:nil];
                 [self.window setRootViewController:mainController];
             }
         }
@@ -604,8 +605,8 @@
                 if (completion) completion();
             }];
         }
-    } else {
-        if (completion) completion();
+    } else if (completion) {
+        completion();
     }
 }
 
@@ -648,10 +649,33 @@
 - (void)showMainTabBar {
     if (![self.window.rootViewController isKindOfClass:[LTHPasscodeViewController class]]) {
         
+        void (^mainOnAppear)(void) = ^() {
+            if (![LTHPasscodeViewController doesPasscodeExist]) {
+                if (self->isAccountFirstLogin) {
+                    self->isAccountFirstLogin = NO;
+                    if (self.isNewAccount) {
+                        if (MEGAPurchase.sharedInstance.products.count > 0) {
+                            [self showChooseAccountPlanTypeView];
+                        } else {
+                            [MEGAPurchase.sharedInstance.pricingsDelegateMutableArray addObject:self];
+                            self.chooseAccountTypeLater = YES;
+                        }
+                        self.newAccount = NO;
+                    }
+            
+                    [MEGALinkManager processSelectedOptionOnLink];
+                    [self showCookieDialogIfNeeded];
+                } else {
+                    [self processActionsAfterSetRootVC];
+                }
+            }
+        };
+        
         if (![self isAdsMainTabBarRootView]) {
             _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
             
-            UIViewController *mainController = [self adsMainTabBarController: _mainTBC];
+            UIViewController *mainController = [self adsMainTabBarController:_mainTBC
+                                                                    onAppear:mainOnAppear];
             [self.window setRootViewController:mainController];
             
             if ([LTHPasscodeViewController doesPasscodeExist]) {
@@ -662,26 +686,6 @@
                                                                              withLogout:YES
                                                                          andLogoutTitle:LocalizedString(@"logoutLabel", @"")];
                 }
-            }
-        }
-        
-        if (![LTHPasscodeViewController doesPasscodeExist]) {
-            if (isAccountFirstLogin) {
-                isAccountFirstLogin = NO;
-                if (self.isNewAccount) {
-                    if (MEGAPurchase.sharedInstance.products.count > 0) {
-                        [self showChooseAccountPlanTypeView];
-                    } else {
-                        [MEGAPurchase.sharedInstance.pricingsDelegateMutableArray addObject:self];
-                        self.chooseAccountTypeLater = YES;
-                    }
-                    self.newAccount = NO;
-                }
-        
-                [MEGALinkManager processSelectedOptionOnLink];
-                [self showCookieDialogIfNeeded];
-            } else {
-                [self processActionsAfterSetRootVC];
             }
         }
     }
@@ -1037,7 +1041,8 @@
 - (void)passcodeWasEnteredSuccessfully {
     if (![MEGAReachabilityManager isReachable] || [self.window.rootViewController isKindOfClass:[LTHPasscodeViewController class]]) {
         _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
-        UIViewController *mainController = [self adsMainTabBarController: _mainTBC];
+        UIViewController *mainController = [self adsMainTabBarController:_mainTBC
+                                                                onAppear:nil];
         [self.window setRootViewController:mainController];
     } else {
         [self showLink:MEGALinkManager.linkURL];
