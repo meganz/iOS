@@ -58,7 +58,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .selectParticipantsList(selectedTab: .inCall),
              expectedCommands: [
-                .reloadViewData(participantsListView: ParticipantsListView(sections: [.hostControls, .invite, .participants], hostControlsRows: [], inviteSectionRow: [], tabs: [.inCall, .notInCall], selectedTab: .inCall, participants: [], existsWaitingRoom: false))
+                .reloadViewData(participantsListView: ParticipantsListView(sections: [.hostControls, .invite, .participants], hostControlsRows: [], inviteSectionRow: [], tabs: [.inCall, .notInCall], selectedTab: .inCall, participants: [], existsWaitingRoom: false, isMyselfModerator: true))
              ])
     }
     
@@ -69,7 +69,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         test(viewModel: viewModel,
              action: .selectParticipantsList(selectedTab: .inCall),
              expectedCommands: [
-                .reloadViewData(participantsListView: ParticipantsListView(sections: [.hostControls, .invite, .participants], hostControlsRows: [.listSelector, .allowNonHostToInvite], inviteSectionRow: [.invite], tabs: [.inCall, .notInCall], selectedTab: .inCall, participants: [], existsWaitingRoom: false))
+                .reloadViewData(participantsListView: ParticipantsListView(sections: [.hostControls, .invite, .participants], hostControlsRows: [.listSelector, .allowNonHostToInvite], inviteSectionRow: [.invite], tabs: [.inCall, .notInCall], selectedTab: .inCall, participants: [], existsWaitingRoom: false, isMyselfModerator: true))
              ])
     }
     
@@ -171,7 +171,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
              expectedCommands: [
                 .configView(canInviteParticipants: true, isOneToOneCall: chatRoom.chatType == .oneToOne, isMeeting: chatRoom.chatType == .meeting, isVideoEnabled: false, cameraPosition: nil, allowNonHostToAddParticipantsEnabled: false, isMyselfAModerator: true),
                 .updatedAudioPortSelection(audioPort: audioSessionUseCase.currentSelectedAudioPort, bluetoothAudioRouteAvailable: audioSessionUseCase.isBluetoothAudioRouteAvailable),
-                .reloadViewData(participantsListView: ParticipantsListView(sections: [.hostControls, .invite, .participants], hostControlsRows: [], inviteSectionRow: [], tabs: [.inCall, .notInCall], selectedTab: .inCall, participants: [CallParticipantEntity.myself(handle: 100, userName: "", chatRoom: chatRoom)], existsWaitingRoom: false, currentUserHandle: 100)),
+                .reloadViewData(participantsListView: ParticipantsListView(sections: [.hostControls, .invite, .participants], hostControlsRows: [], inviteSectionRow: [], tabs: [.inCall, .notInCall], selectedTab: .inCall, participants: [CallParticipantEntity.myself(handle: 100, userName: "", chatRoom: chatRoom)], existsWaitingRoom: false, currentUserHandle: 100, isMyselfModerator: true)),
                 .microphoneMuted(muted: true)
              ])
         XCTAssert(callUseCase.startListeningForCall_CalledTimes == 1)
@@ -1017,7 +1017,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         test(viewModel: viewModel, 
              action: .callAbsentParticipant(participant),
              expectedCommands: [.hideCallAllIcon(true),
-                                .reloadParticipantsList(participants: [])]
+                                .reloadViewData(participantsListView: ParticipantsListView(sections: [.hostControls, .invite, .participants], hostControlsRows: [], inviteSectionRow: [], tabs: [.inCall, .notInCall], selectedTab: .inCall, participants: [], existsWaitingRoom: false))]
         )
         XCTAssert(callUseCase.callAbsentParticipant_CalledTimes == 1)
         XCTAssert(participant.absentParticipantState == .calling)

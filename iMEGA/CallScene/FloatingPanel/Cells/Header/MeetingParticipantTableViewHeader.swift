@@ -7,13 +7,13 @@ final class MeetingParticipantTableViewHeader: UITableViewHeaderFooterView {
     
     var actionButtonTappedHandler: (() -> Void)?
     
-    func configure(for selectedTab: ParticipantsListTab, participantsCount: Int) {
+    func configure(for selectedTab: ParticipantsListTab, participantsCount: Int, isMyselfModerator: Bool) {
         switch selectedTab {
         case .inCall:
             titleLabel.text = Strings.Localizable.Meetings.Panel.participantsCount(participantsCount)
             actionButton.setTitle(Strings.Localizable.Calls.Panel.ParticipantsInCall.Header.muteAll, for: .normal)
             actionButton.setTitle(Strings.Localizable.Calls.Panel.ParticipantsInCall.Header.allMuted, for: .disabled)
-            actionButton.isHidden = false
+            actionButton.isHidden = !isMyselfModerator
             callAllIcon.isHidden = true
         case .notInCall:
             actionButton.isEnabled = true

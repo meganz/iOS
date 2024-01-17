@@ -352,7 +352,7 @@ extension MeetingFloatingPanelViewController: UITableViewDataSource, UITableView
                     callParticipants.filter({ $0.absentParticipantState != .calling }).isNotEmpty
                 )
             }
-            header.configure(for: callParticipantsListView.selectedTab, participantsCount: callParticipants.count)
+            header.configure(for: callParticipantsListView.selectedTab, participantsCount: callParticipants.count, isMyselfModerator: callParticipantsListView.isMyselfModerator)
             if callParticipantsListView.selectedTab == .inCall {
                 let unmutedUsers = callParticipants.filter({ $0.audio == .on })
                 header.disableMuteAllButton(

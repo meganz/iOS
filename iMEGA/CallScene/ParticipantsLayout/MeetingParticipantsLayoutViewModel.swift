@@ -1322,8 +1322,8 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
         }
     }
     
-    func muted(by clientHandle: HandleEntity) {
-        guard let participant = callParticipants.first(where: { $0.clientId == clientHandle }), let name = participant.name else {
+    func mutedByClient(handle: HandleEntity) {
+        guard let participant = callParticipants.first(where: { $0.clientId == handle }), let name = participant.name else {
             return
         }
         containerViewModel?.dispatch(.showMutedBy(name))
