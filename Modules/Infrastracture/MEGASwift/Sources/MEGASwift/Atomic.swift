@@ -16,6 +16,9 @@ import Foundation
 /// $counter.mutate { $0 += 1 }  // Thread-safe write
 /// let value = counter          // Thread-safe read
 /// ```
+///
+/// Note:
+/// Avoid using it in the context of the **Main Thread**, due to the usage of synchronous access
 @propertyWrapper
 public final class Atomic<T: Sendable> {
     

@@ -15,11 +15,12 @@ let package = Package(
             targets: ["MEGAFoundation"])
     ],
     dependencies: [
+        .package(path: "../MEGASwift")
     ],
     targets: [
         .target(
             name: "MEGAFoundation",
-            dependencies: [],
+            dependencies: ["MEGASwift"],
             swiftSettings: settings),
         .testTarget(
             name: "MEGAFoundationTests",

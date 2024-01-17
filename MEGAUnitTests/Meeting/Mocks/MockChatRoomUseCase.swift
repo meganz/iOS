@@ -36,11 +36,11 @@ struct MockChatRoomUseCase: ChatRoomUseCaseProtocol {
     var shouldOpenWaitRoom: Bool = true
     
     func chatRoom(forUserHandle userHandle: UInt64) -> ChatRoomEntity? {
-        return chatRoomEntity
+        chatRoomEntity
     }
     
     func chatRoom(forChatId chatId: UInt64) -> ChatRoomEntity? {
-        return chatRoomEntity
+        chatRoomEntity
     }
     
     func peerPrivilege(forUserHandle userHandle: HandleEntity, chatRoom: ChatRoomEntity) -> ChatRoomPrivilegeEntity {
