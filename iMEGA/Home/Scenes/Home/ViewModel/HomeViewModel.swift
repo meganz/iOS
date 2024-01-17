@@ -30,7 +30,17 @@ import MEGASDKRepo
         }
     }
     
+    // MARK: - Analytics tracker
+    
     func didStartSearchSession() {
         tracker.trackAnalyticsEvent(with: HomeScreenSearchMenuToolbarEvent())
+    }
+    
+    func didTapStartConversationButton() {
+        tracker.trackAnalyticsEvent(with: IOSStartConversationButtonEvent())
+    }
+    
+    func didTapUploadFilesButton() {
+        tracker.trackAnalyticsEvent(with: IOSUploadFilesButtonEvent())
     }
 }
