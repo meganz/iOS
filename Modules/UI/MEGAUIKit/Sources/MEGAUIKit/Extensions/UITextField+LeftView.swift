@@ -2,14 +2,17 @@ import UIKit
 
 public extension UITextField {
 
-    func setLeftImage(_ image: UIImage, padding: CGFloat = 8) {
-        self.leftView = imageIconView(with: image, padding: padding)
+    func setLeftImage(_ image: UIImage, padding: CGFloat = 8, tintColor: UIColor? = nil) {
+        self.leftView = imageIconView(with: image, padding: padding, tintColor: tintColor)
         leftViewMode = .always
     }
-
-    private func imageIconView(with image: UIImage, padding: CGFloat = 8) -> UIView {
+    
+    private func imageIconView(with image: UIImage, padding: CGFloat = 8, tintColor: UIColor? = nil) -> UIView {
         var imageview: UIImageView {
             let imageview = UIImageView(image: image)
+            if let tintColor {
+                imageview.renderImage(withColor: tintColor)
+            }
             imageview.translatesAutoresizingMaskIntoConstraints = false
             return imageview
         }
