@@ -30,6 +30,8 @@
         [cancel setTitleTextAttributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleBody], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]} forState:UIControlStateNormal];
         self.navigationItem.rightBarButtonItem = cancel;
     }
+    
+    [AppearanceManager forceSearchBarUpdate:self.searchBar traitCollection:self.traitCollection];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -47,6 +49,14 @@
     [self.searchBar resignFirstResponder];
 
     [super viewDidDisappear:animated];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    
+    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+        [AppearanceManager forceSearchBarUpdate:self.searchBar traitCollection:self.traitCollection];
+    }
 }
 
 #pragma mark - Private

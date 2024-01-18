@@ -104,6 +104,8 @@
     [self.tableView registerNib:[UINib nibWithNibName:@"NodeTableViewCell" bundle:nil] forCellReuseIdentifier:@"nodeCell"];
     
     [self configureButtons];
+    
+    [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
