@@ -13,11 +13,12 @@ let package = Package(
             targets: ["MEGAUI"])
     ],
     dependencies: [
+        .package(url: "https://github.com/meganz/MEGADesignToken", branch: "main")
     ],
     targets: [
         .target(
             name: "MEGAUI",
-            dependencies: [],
+            dependencies: ["MEGADesignToken"],
             swiftSettings: [.enableUpcomingFeature("ExistentialAny")]),
         .testTarget(
             name: "MEGAUITests",
