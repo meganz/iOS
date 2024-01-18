@@ -371,25 +371,47 @@ extension CloudDriveViewController {
                       nodes: nodes).start()
     }
     
-    @objc func setupContactNotVerifiedBanner() {
-        let hostingView = UIHostingController(
-            rootView: WarningView(
-                viewModel: .init(warningType: .contactNotVerifiedSharedFolder(parentNode?.name ?? ""))
-            )
-        )
+    @objc func configureWarningBanner() {
+        if !isFromUnverifiedContactSharedFolder && warningViewModel == nil {
+            warningBannerView.isHidden = true
+        } else {
+            if isFromUnverifiedContactSharedFolder {
+                warningViewModel = WarningViewModel(
+                    warningType: .contactNotVerifiedSharedFolder(
+                        parentNode?.name ?? ""
+                    )
+                )
+            }
+            
+            setupWarningBanner()
+        }
+    }
+
+    private func setupWarningBanner() {
+        guard let warningViewModel else {
+            warningBannerView.isHidden = true
+            return
+        }
+        let hostingController = UIHostingController(rootView: WarningView(viewModel: warningViewModel))
         
-        guard let hostingViewUIView = hostingView.view else { return }
-        
-        contactNotVerifiedBannerView.isHidden = !isFromUnverifiedContactSharedFolder
-        contactNotVerifiedBannerView.addSubview(hostingViewUIView)
-        hostingViewUIView.translatesAutoresizingMaskIntoConstraints = false
-        
+        warningBannerView.isHidden = false
+
+        guard let hostingView = hostingController.view else { return }
+
+        warningBannerView.addSubview(hostingView)
+        hostingView.translatesAutoresizingMaskIntoConstraints = false
+
         NSLayoutConstraint.activate([
-            hostingViewUIView.topAnchor.constraint(equalTo: contactNotVerifiedBannerView.topAnchor),
-            hostingViewUIView.leadingAnchor.constraint(equalTo: contactNotVerifiedBannerView.leadingAnchor),
-            hostingViewUIView.trailingAnchor.constraint(equalTo: contactNotVerifiedBannerView.trailingAnchor),
-            hostingViewUIView.bottomAnchor.constraint(equalTo: contactNotVerifiedBannerView.bottomAnchor)
+            hostingView.topAnchor.constraint(equalTo: warningBannerView.topAnchor),
+            hostingView.leadingAnchor.constraint(equalTo: warningBannerView.leadingAnchor),
+            hostingView.trailingAnchor.constraint(equalTo: warningBannerView.trailingAnchor),
+            hostingView.bottomAnchor.constraint(equalTo: warningBannerView.bottomAnchor)
         ])
+        
+        warningViewModel.onHeightChange = { [weak self] newHeight in
+            self?.warningBannerViewHeight?.constant = newHeight
+            self?.warningBannerView.layoutIfNeeded()
+        }
     }
     
     @objc func showUpgradePlanView() {
@@ -486,7 +508,8 @@ extension CloudDriveViewController {
         router.didTapNode(
             nodeHandle: node.handle,
             allNodeHandles: allNodesForOpening(node: node).map { $0.handle },
-            displayMode: displayMode.carriedOverDisplayMode
+            displayMode: displayMode.carriedOverDisplayMode,
+            warningViewModel: warningViewModel
         )
     }
 }

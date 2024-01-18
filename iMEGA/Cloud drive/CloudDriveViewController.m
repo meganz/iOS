@@ -161,7 +161,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     
     self.wasSelectingFavoriteUnfavoriteNodeActionOption = NO;
 
-    [self setupContactNotVerifiedBanner];
+    [self configureWarningBanner];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

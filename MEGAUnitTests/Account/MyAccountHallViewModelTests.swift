@@ -187,6 +187,27 @@ final class MyAccountHallViewModelTests: XCTestCase {
         )
     }
     
+    func testDidTapShowIn_whenShowInActionTapped_callsRouterOnce() async throws {
+        let deviceCenterBridge = DeviceCenterBridge()
+        let (sut, router) = makeSUT(deviceCenterBridge: deviceCenterBridge)
+        
+        test(viewModel: sut,
+             actions: [MyAccountHallAction.didTapDeviceCenterButton],
+             expectedCommands: [])
+        
+        deviceCenterBridge.showInTapped(
+            NavigateToContentActionEntity(
+                type: .showInBackups,
+                node: MockNode(handle: 1).toNodeEntity(),
+                error: nil
+            )
+        )
+        
+        XCTAssertEqual(
+            router.didTapShowInAction_calledTimes, 1, "Show in action should have called the router once"
+        )
+    }
+    
     private func makeSUT(
         isMasterBusinessAccount: Bool = false,
         currentAccountDetails: AccountDetailsEntity? = nil,

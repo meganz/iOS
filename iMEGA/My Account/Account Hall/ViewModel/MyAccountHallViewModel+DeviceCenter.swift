@@ -21,6 +21,10 @@ extension MyAccountHallViewModel {
                 self?.router.showError(error)
             }
         }
+        
+        deviceCenterBridge.showInTapped = { [weak self] showInActionEntity in
+            self?.router.didTapNavigateToContent(showInActionEntity)
+        }
     }
     
     func makeDeviceCenterAssetData() -> DeviceCenterAssets {

@@ -12,4 +12,5 @@ public class DeviceCenterBridge {
     public var cameraUploadActionTapped: (@escaping CameraUploadStatusChanged) -> Void = { _ in }
     public var renameActionTapped: (RenameActionEntity) -> Void = { _ in }
     public var nodeActionTapped: (NodeEntity, DeviceCenterActionType) async -> Void = { _, _ in }
+    public var showInTapped: (NavigateToContentActionEntity) -> Void = { _ in }
 }

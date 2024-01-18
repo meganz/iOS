@@ -5,6 +5,7 @@ enum WarningType: CustomStringConvertible {
     case limitedPhotoAccess
     case contactsNotVerified
     case contactNotVerifiedSharedFolder(String)
+    case backupStatusError(String)
 
     var description: String {
         switch self {
@@ -16,6 +17,8 @@ enum WarningType: CustomStringConvertible {
             return Strings.Localizable.ShareFolder.contactsNotVerified
         case .contactNotVerifiedSharedFolder(let nodeName):
             return Strings.Localizable.SharedItems.ContactVerification.contactNotVerifiedBannerMessage(nodeName)
+        case .backupStatusError(let errorMessage):
+            return errorMessage
         }
     }
 }
@@ -25,16 +28,19 @@ enum WarningType: CustomStringConvertible {
     let router: (any WarningViewRouting)?
     let isShowCloseButton: Bool
     var hideWarningViewAction: (() -> Void)?
+    var onHeightChange: ((CGFloat) -> Void)?
     @Published var isHideWarningView: Bool = false
     
     init(warningType: WarningType,
          router: (any WarningViewRouting)? = nil,
          isShowCloseButton: Bool = false,
-         hideWarningViewAction: (() -> Void)? = nil) {
+         hideWarningViewAction: (() -> Void)? = nil,
+         onHeightChange: ((CGFloat) -> Void)? = nil) {
         self.warningType = warningType
         self.router = router
         self.isShowCloseButton = isShowCloseButton
         self.hideWarningViewAction = hideWarningViewAction
+        self.onHeightChange = onHeightChange
     }
     
     func tapAction() {
@@ -43,7 +49,8 @@ enum WarningType: CustomStringConvertible {
             router?.goToSettings()
         case .noInternetConnection,
              .contactsNotVerified,
-             .contactNotVerifiedSharedFolder:
+             .contactNotVerifiedSharedFolder,
+             .backupStatusError:
             break
         }
     }
