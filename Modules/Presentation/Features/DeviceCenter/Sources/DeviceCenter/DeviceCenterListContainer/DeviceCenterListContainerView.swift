@@ -46,8 +46,8 @@ struct ListViewContainer<Content>: View where Content: View {
                 ActionSheetHeaderView(
                     iconName: selectedItem.iconName ?? "",
                     title: selectedItem.name,
-                    detailImageName: selectedItem.hasErrorStatus ? "" : selectedItem.statusIconName ?? "",
-                    subtitle: selectedItem.isBackup && selectedItem.hasErrorStatus ? selectedItem.statusSubtitle ?? "" : selectedItem.statusTitle,
+                    detailImageName: selectedItem.statusIconName ?? "",
+                    subtitle: selectedItem.statusTitle,
                     subtitleColor: selectedItem.statusColor
                 ),
             actionButtons: {

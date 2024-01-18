@@ -9,6 +9,7 @@ public protocol MyAccountHallRouting: Routing {
     func didTapCameraUploadsAction(statusChanged: @escaping () -> Void)
     func didTapRenameAction(_ renameEntity: RenameActionEntity)
     func didTapNodeAction(type: DeviceCenterActionType, node: NodeEntity)
+    func didTapNavigateToContent(_ navigateToContentEntity: NavigateToContentActionEntity)
     func showError(_ error: any Error)
 }
 
@@ -53,43 +54,62 @@ final class MyAccountHallRouter: MyAccountHallRouting {
     }
     
     @MainActor
-    private func pushCDViewController(_ node: NodeEntity, isBackup: Bool) {
+    private func pushCDViewController(
+        _ node: NodeEntity, 
+        isBackup: Bool,
+        warningMessage: String? = nil
+    ) {
         guard let viewController = self.createCloudDriveVCForNode(
             node,
-            isBackup: isBackup
+            isBackup: isBackup,
+            warningMessage: warningMessage
         ) else { return }
         
         self.navigationController?.pushViewController(viewController, animated: true)
     }
 
-    private func didTapShowInBackupsAction(_ node: NodeEntity) {
+    private func didTapShowInBackupsAction(
+        _ node: NodeEntity,
+        warningMessage: String?
+    ) {
         Task {
             await pushCDViewController(
                 node,
-                isBackup: true
+                isBackup: true,
+                warningMessage: warningMessage
             )
         }
     }
 
-    private func didTapShowInCloudDriveAction(_ node: NodeEntity) {
+    private func didTapShowInCloudDriveAction(
+        _ node: NodeEntity,
+        warningMessage: String?
+    ) {
         Task {
             await pushCDViewController(
                 node,
-                isBackup: false
+                isBackup: false,
+                warningMessage: warningMessage
             )
         }
     }
     
     private func createCloudDriveVCForNode(
         _ node: NodeEntity,
-        isBackup: Bool
+        isBackup: Bool,
+        warningMessage: String?
     ) -> UIViewController? {
         let factory = CloudDriveViewControllerFactory.make(nc: navigationController)
+        
+        let warningViewModel =
+            warningMessage != nil ?
+                WarningViewModel(warningType: .backupStatusError(warningMessage ?? "")): nil
         
         return factory.buildBare(
             parentNode: node,
             config: .init(
-                displayMode: isBackup ? .backup : .cloudDrive
+                displayMode: isBackup ? .backup : .cloudDrive,
+                warningViewModel: warningViewModel
             )
         )
     }
@@ -298,8 +318,6 @@ final class MyAccountHallRouter: MyAccountHallRouting {
         node: NodeEntity
     ) {
         switch type {
-        case .showInCloudDrive: didTapShowInCloudDriveAction(node)
-        case .showInBackups: didTapShowInBackupsAction(node)
         case .shareLink, .manageLink: didTapShareLinkAction(node)
         case .removeLink: didTapRemoveLinkAction(node)
         case .shareFolder: didTapShareFolderAction(node)
@@ -312,5 +330,22 @@ final class MyAccountHallRouter: MyAccountHallRouting {
     
     func showError(_ error: any Error) {
         errorPresenter(error.localizedDescription)
+    }
+    
+    func didTapNavigateToContent(_ navigateToContentEntity: NavigateToContentActionEntity) {
+        switch navigateToContentEntity.type {
+        case .showInCloudDrive:
+            didTapShowInCloudDriveAction(
+                navigateToContentEntity.node,
+                warningMessage: navigateToContentEntity.error
+            )
+        case .showInBackups:
+            didTapShowInBackupsAction(
+                navigateToContentEntity.node,
+                warningMessage: navigateToContentEntity.error
+            )
+        default: break
+        }
+        
     }
 }

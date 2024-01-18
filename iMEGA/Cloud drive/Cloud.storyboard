@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="B1s-m2-ahE">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="B1s-m2-ahE">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -657,18 +657,18 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                                         <subviews>
                                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K7S-dn-qcF">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="0.0"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="80" id="9Xd-mr-pWg"/>
+                                                    <constraint firstAttribute="height" id="ybW-lp-d8n"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
                                     </stackView>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstItem="nks-eK-WKJ" firstAttribute="centerY" secondItem="udP-7t-bdN" secondAttribute="centerY" id="Jci-Dx-2SU"/>
                                     <constraint firstItem="nks-eK-WKJ" firstAttribute="leading" secondItem="udP-7t-bdN" secondAttribute="leading" id="JfF-bo-WJB"/>
                                     <constraint firstAttribute="trailing" secondItem="nks-eK-WKJ" secondAttribute="trailing" id="YYp-h2-fgY"/>
-                                    <constraint firstItem="nks-eK-WKJ" firstAttribute="centerY" secondItem="udP-7t-bdN" secondAttribute="centerY" id="fHE-LR-t0I"/>
                                     <constraint firstAttribute="bottom" secondItem="nks-eK-WKJ" secondAttribute="bottom" id="qNy-jp-cpd"/>
                                 </constraints>
                             </view>
@@ -689,7 +689,6 @@
                     <connections>
                         <outlet property="actionsBarButtonItem" destination="cH7-iH-c9P" id="nZM-7E-XQf"/>
                         <outlet property="carbonCopyBarButtonItem" destination="vGK-lg-Cye" id="AWV-kg-ow1"/>
-                        <outlet property="contactNotVerifiedBannerView" destination="K7S-dn-qcF" id="4mr-VA-zQC"/>
                         <outlet property="containerStackView" destination="nks-eK-WKJ" id="UA4-SC-wQW"/>
                         <outlet property="deleteBarButtonItem" destination="T78-eD-QmZ" id="CFD-Ds-54c"/>
                         <outlet property="downloadBarButtonItem" destination="JAE-WG-FSu" id="Z1m-5a-lse"/>
@@ -701,6 +700,8 @@
                         <outlet property="selectAllBarButtonItem" destination="i2g-E4-PNq" id="eKA-Xr-jla"/>
                         <outlet property="shareLinkBarButtonItem" destination="ZLw-VN-spf" id="9Sa-ye-tR2"/>
                         <outlet property="toolbar" destination="fEo-QQ-FwW" id="y3P-bl-i38"/>
+                        <outlet property="warningBannerView" destination="K7S-dn-qcF" id="Qsb-cZ-cmz"/>
+                        <outlet property="warningBannerViewHeight" destination="ybW-lp-d8n" id="BnQ-y9-Jox"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mUB-Tm-S4E" userLabel="First Responder" sceneMemberID="firstResponder"/>

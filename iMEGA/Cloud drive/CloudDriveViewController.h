@@ -5,7 +5,7 @@
 #import "CloudDriveTableViewController.h"
 #import "CloudDriveCollectionViewController.h"
 
-@class MEGANode, MEGAUser, MyAvatarManager, ContextMenuManager, CloudDriveViewModel;
+@class MEGANode, MEGAUser, MyAvatarManager, ContextMenuManager, CloudDriveViewModel, WarningViewModel;
 
 static const NSUInteger kMinimumLettersToStartTheSearch = 1;
 
@@ -41,9 +41,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (assign, nonatomic) BOOL isEditingModeBeingDisabled;
 @property (assign, nonatomic) BOOL wasSelectingFavoriteUnfavoriteNodeActionOption;
 
+@property (strong, nonatomic, nullable) WarningViewModel *warningViewModel;
+
 @property (nonatomic, strong, nullable) MyAvatarManager * myAvatarManager;
 
-@property (strong, nonatomic) IBOutlet UIView *contactNotVerifiedBannerView;
+@property (strong, nonatomic) IBOutlet UIView *warningBannerView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *warningBannerViewHeight;
 @property (strong, nonatomic) UIBarButtonItem *contextBarButtonItem;
 @property (strong, nonatomic) UIBarButtonItem *uploadAddBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadBarButtonItem;

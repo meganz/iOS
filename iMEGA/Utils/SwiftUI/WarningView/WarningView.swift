@@ -4,30 +4,36 @@ struct WarningView: View {
     @ObservedObject var viewModel: WarningViewModel
     
     var body: some View {
-        ZStack {
-            MEGAAppColor.Banner.bannerWarningBackground.color
-                .edgesIgnoringSafeArea(.all)
-            
-            HStack {
-                Text(viewModel.warningType.description)
-                    .font(.caption2.bold())
-                    .fixedSize(horizontal: false, vertical: true)
-                    .foregroundColor(MEGAAppColor.Banner.bannerWarningText.color)
-                    .multilineTextAlignment(.leading)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 5))
-                    .onTapGesture {
-                        viewModel.tapAction()
-                    }
-                
-                if viewModel.isShowCloseButton {
-                    Spacer()
-                    warningCloseButton
+        HStack {
+            Text(viewModel.warningType.description)
+                .font(.caption2.bold())
+                .fixedSize(horizontal: false, vertical: true)
+                .foregroundColor(MEGAAppColor.Banner.bannerWarningText.color)
+                .multilineTextAlignment(.leading)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 5))
+                .onTapGesture {
+                    viewModel.tapAction()
                 }
+            
+            if viewModel.isShowCloseButton {
+                Spacer()
+                warningCloseButton
             }
         }
-        .frame(height: viewModel.isHideWarningView ? 0 : nil)
+        .padding(5.0)
         .opacity(viewModel.isHideWarningView ? 0 : 1)
+            .background(
+                GeometryReader { geometry in
+                    MEGAAppColor.Banner.bannerWarningBackground.color
+                        .onAppear {
+                            viewModel.onHeightChange?(geometry.size.height)
+                        }
+                        .onChange(of: geometry.size.height) { newHeight in
+                            viewModel.onHeightChange?(newHeight)
+                        }
+                }
+            )
     }
     
     private var warningCloseButton: some View {

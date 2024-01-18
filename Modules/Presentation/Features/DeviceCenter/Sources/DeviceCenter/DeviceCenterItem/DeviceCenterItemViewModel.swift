@@ -232,15 +232,26 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
     func showDetail() {
         switch itemType {
         case .backup(let backup):
-            Task { [weak self] in
-                guard let self,
-                      let nodeEntity = self.nodeForItemType() else { return }
-                switch backup.type {
-                case .cameraUpload, .mediaUpload, .twoWay:
-                    await self.deviceCenterBridge.nodeActionTapped(nodeEntity, .showInCloudDrive)
-                default:
-                    await self.deviceCenterBridge.nodeActionTapped(nodeEntity, .showInBackups)
-                }
+            guard let nodeEntity = self.nodeForItemType() else { return }
+            let statusErrorMessage = backupStatusDetailedErrorMessage()
+            
+            switch backup.type {
+            case .cameraUpload, .mediaUpload, .twoWay:
+                deviceCenterBridge.showInTapped(
+                    NavigateToContentActionEntity(
+                        type: .showInCloudDrive,
+                        node: nodeEntity,
+                        error: statusErrorMessage
+                    )
+                )
+            default:
+                deviceCenterBridge.showInTapped(
+                    NavigateToContentActionEntity(
+                        type: .showInBackups,
+                        node: nodeEntity,
+                        error: statusErrorMessage
+                    )
+                )
             }
         case .device(let device):
             guard let router else { return }
@@ -317,7 +328,7 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
         case .mismatchOfRootRSID: return Strings.Localizable.Device.Center.Backup.Error.syncOrBackupSetupAgain
         case .filesystemFileIdsAreUnstable: return Strings.Localizable.Device.Center.Backup.Error.syncOrBackupSetupAgain
         case .filesystemIDUnavailable: return Strings.Localizable.Device.Center.Backup.Error.syncOrBackupSetupAgain
-        default: return nil
+        default: return Strings.Localizable.Device.Center.Backup.Error.unknown
         }
     }
 }

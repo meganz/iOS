@@ -7,6 +7,7 @@ final class MockMyAccountHallRouter: MyAccountHallRouting {
     var didTapCameraUploadsAction_calledTimes = 0
     var didTapRenameAction_calledTimes = 0
     var didTapNodeAction_calledTimes = 0
+    var didTapShowInAction_calledTimes = 0
     
     func navigateToDeviceCenter(deviceCenterBridge: DeviceCenterBridge, deviceCenterAssets: DeviceCenterAssets) {
         navigateToDeviceCenter_calledTimes += 1
@@ -22,6 +23,10 @@ final class MockMyAccountHallRouter: MyAccountHallRouting {
     
     func didTapNodeAction(type: DeviceCenterActionType, node: NodeEntity) {
         didTapNodeAction_calledTimes += 1
+    }
+    
+    func didTapNavigateToContent(_ navigateToContentEntity: NavigateToContentActionEntity) {
+        didTapShowInAction_calledTimes += 1
     }
     
     func showError(_ error: Error) {}

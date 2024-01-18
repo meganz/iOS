@@ -41,6 +41,7 @@ struct NodeBrowserConfig {
     var isFromSharedItem: Bool?
     var showsAvatar: Bool?
     var shouldRemovePlayerDelegate: Bool?
+    var warningViewModel: WarningViewModel?
     // this should enabled for non-root nodes
     var mediaDiscoveryAutomaticDetectionEnabled: () -> Bool = { false }
 
@@ -53,6 +54,13 @@ struct NodeBrowserConfig {
     static func withOptionalDisplayMode(_ displayMode: DisplayMode?) -> Self {
         var config = Self.default
         config.displayMode = displayMode
+        return config
+    }
+    
+    static func withOptionalDisplayMode(_ displayMode: DisplayMode?, warningViewModel: WarningViewModel?) -> Self {
+        var config = Self.default
+        config.displayMode = displayMode
+        config.warningViewModel = warningViewModel
         return config
     }
 }
@@ -380,7 +388,8 @@ struct CloudDriveViewControllerFactory {
                 router.didTapNode(
                     nodeHandle: $0.id,
                     allNodeHandles: [], // photo browser does not work until we pass in this array here
-                    displayMode: config.displayMode?.carriedOverDisplayMode
+                    displayMode: config.displayMode?.carriedOverDisplayMode, 
+                    warningViewModel: config.warningViewModel
                 )
             },
             context: { result, button in
@@ -508,6 +517,10 @@ struct CloudDriveViewControllerFactory {
         
         if let shouldRemovePlayerDelegate = options.shouldRemovePlayerDelegate {
             vc.shouldRemovePlayerDelegate = shouldRemovePlayerDelegate
+        }
+        
+        if let warningViewModel = options.warningViewModel {
+            vc.warningViewModel = warningViewModel
         }
         
         return vc
