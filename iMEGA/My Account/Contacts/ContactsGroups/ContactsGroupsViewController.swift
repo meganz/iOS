@@ -26,6 +26,8 @@ class ContactsGroupsViewController: UIViewController {
         navigationItem.searchController = searchController
         tableView.tableFooterView = UIView()  // This remove the separator line between empty cells
         
+        AppearanceManager.forceSearchBarUpdate(searchController.searchBar, traitCollection: traitCollection)
+        
         updateAppearance()
         
         fetchGroupChatsList()

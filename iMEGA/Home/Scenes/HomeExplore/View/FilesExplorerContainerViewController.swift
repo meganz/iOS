@@ -205,6 +205,7 @@ class FilesExplorerContainerViewController: UIViewController, TextFileEditable {
         if navigationItem.searchController == nil {
             navigationItem.searchController = searchController
         }
+        AppearanceManager.forceSearchBarUpdate(searchController.searchBar, traitCollection: traitCollection)
     }
 }
 
