@@ -1,3 +1,5 @@
+import MEGADesignToken
+import MEGAPresentation
 import MEGAUIKit
 import UIKit
 
@@ -52,6 +54,10 @@ final class MEGASearchBarView: UIView, NibOwnerLoadable {
 
     weak var editingDelegate: (any MEGASearchBarViewEditingDelegate)?
 
+    private var isDesignTokenEnabled: Bool {
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken)
+    }
+    
     func setMenu(menu: UIMenu) {
         contextButton.menu = menu
     }
@@ -86,8 +92,16 @@ final class MEGASearchBarView: UIView, NibOwnerLoadable {
         }
 
         func initialise(searchField: UITextField) {
-            searchField.setLeftImage(UIImage.searchBarIcon)
-            searchField.placeholder = HomeLocalisation.searchYourFiles.rawValue
+            if isDesignTokenEnabled {
+                searchField.setLeftImage(UIImage.searchBarIcon, tintColor: TokenColors.Text.placeholder)
+                searchField.attributedPlaceholder = NSAttributedString(
+                    string: HomeLocalisation.searchYourFiles.rawValue,
+                    attributes: [NSAttributedString.Key.foregroundColor: TokenColors.Text.placeholder]
+                )
+            } else {
+                searchField.setLeftImage(UIImage.searchBarIcon)
+                searchField.placeholder = HomeLocalisation.searchYourFiles.rawValue
+            }
             searchField.returnKeyType = .search
             searchField.delegate = self
         }
@@ -108,6 +122,14 @@ final class MEGASearchBarView: UIView, NibOwnerLoadable {
     }
 
     private func setupView(with trait: UITraitCollection) {
+        if isDesignTokenEnabled {
+            setupViewForDesignToken()
+        } else {
+            setupViewForLegacyColor(with: traitCollection)
+        }
+    }
+    
+    private func setupViewForLegacyColor(with trait: UITraitCollection) {
         let backgroundStyler = trait.theme.customViewStyleFactory.styler(of: .searchController)
         backgroundStyler(self)
         backgroundStyler(contentView)
@@ -119,16 +141,19 @@ final class MEGASearchBarView: UIView, NibOwnerLoadable {
         cancelButtonStyler(cancelButton)
         cancelButtonStyler(contextButton)
     }
-
-    private func setupBackgroundColor(with trait: UITraitCollection) {
-        switch trait.theme {
-        case .dark:
-            backgroundColor = MEGAAppColor.Black._000000.uiColor
-            subviews.first?.backgroundColor = MEGAAppColor.Black._000000.uiColor
-        default:
-            backgroundColor = MEGAAppColor.White._F7F7F7.uiColor
-            subviews.first?.backgroundColor = MEGAAppColor.White._F7F7F7.uiColor
-        }
+    
+    private func setupViewForDesignToken() {
+        backgroundColor = TokenColors.Background.surface1
+        contentView.backgroundColor = TokenColors.Background.surface1
+        
+        searchField.mnz_cornerRadius = 10
+        searchField.textColor = TokenColors.Text.primary
+        searchField.backgroundColor = TokenColors.Background.surface2
+        
+        cancelButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .body)
+        cancelButton.setTitleColor(TokenColors.Text.primary, for: .normal)
+        contextButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .body)
+        contextButton.setTitleColor(TokenColors.Text.primary, for: .normal)
     }
     
     override func becomeFirstResponder() -> Bool {
