@@ -13,14 +13,14 @@ final class NodeOpener {
     /// when file is a media, media browser with scroll through nodes in the allNodes array
     func openNode(
         nodeHandle: HandleEntity,
-        allNodes: [HandleEntity] = [],
+        allNodes: [HandleEntity]? = nil,
         config: NodeBrowserConfig = .default
     ) {
         guard
             let megaNode = sdk.node(forHandle: nodeHandle)
         else { return }
         
-        let allMegaNodes = allNodes.compactMap { sdk.node(forHandle: $0) }
+        let allMegaNodes = allNodes?.compactMap { sdk.node(forHandle: $0) }
         
         switch megaNode.isFolder() {
         case true: openFolderNode(megaNode, config: config)
@@ -81,7 +81,13 @@ final class NodeOpener {
         let allVisualMediaNodes: [MEGANode] = allNodes?.filter { node in
             node.name?.fileExtensionGroup.isVisualMedia == true
         } ?? []
-        let nodes = allNodes != nil ? allVisualMediaNodes : [node]
+        // `nodes` array cannot be empty (but can, and is often nil)
+        // as photo browser assumes node is inside this array.
+        // best to enforce it in here just before we initiate MEGAPhotoBrowserViewController
+        // there's no easy way to enforce it in the method interface,
+        // and we would need to check
+        // type of node and allNode at each call site
+        let nodes = allVisualMediaNodes.isNotEmpty ? allVisualMediaNodes : [node]
         let index = nodes.firstIndex(where: { $0.handle == node.handle }) ?? 0
         let mediaNodes = NSMutableArray(array: nodes)
         let isOwner = sdk.accessLevel(for: node) == .accessOwner
