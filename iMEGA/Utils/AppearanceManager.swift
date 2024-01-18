@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAPresentation
 
 class AppearanceManager: NSObject {
@@ -101,8 +102,20 @@ class AppearanceManager: NSObject {
     }
     
     @objc class func forceSearchBarUpdate(_ searchBar: UISearchBar, traitCollection: UITraitCollection) {
-        searchBar.tintColor = UIColor.mnz_primaryGray(for: traitCollection)
-        searchBar.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
+        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) {
+            searchBar.tintColor = TokenColors.Text.placeholder
+            searchBar.backgroundColor = TokenColors.Background.surface1
+            searchBar.searchTextField.backgroundColor = TokenColors.Background.surface2
+            searchBar.searchTextField.leftView?.tintColor = TokenColors.Text.placeholder
+            searchBar.searchTextField.textColor = TokenColors.Text.primary
+            searchBar.searchTextField.attributedPlaceholder = NSAttributedString(
+                string: searchBar.placeholder ?? "",
+                attributes: [NSAttributedString.Key.foregroundColor: TokenColors.Text.placeholder]
+            )
+        } else {
+            searchBar.tintColor = UIColor.mnz_primaryGray(for: traitCollection)
+            searchBar.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
+        }
     }
     
     @objc class func forceToolbarUpdate(_ toolbar: UIToolbar, traitCollection: UITraitCollection) {

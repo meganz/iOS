@@ -160,6 +160,8 @@
     if ([[NSProcessInfo processInfo] operatingSystemVersion].majorVersion >= 15) {
         self.tableView.sectionHeaderTopPadding = 0.0f;
     }
+    
+    [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
