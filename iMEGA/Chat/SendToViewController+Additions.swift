@@ -18,7 +18,7 @@ extension SendToViewController {
         } else {
             statusMessage = nodesCount == 1 ?
                 Strings.Localizable.Chat.Message.fileSentToMultipleChats(selectedChatCount) :
-                Strings.Localizable.Chat.Message.filesSent(nodesCount)
+                Strings.Localizable.Chat.Message.multipleFilesSentToMultipleChats(selectedChatCount)
         }
         
         SVProgressHUD.showSuccess(withStatus: statusMessage)
