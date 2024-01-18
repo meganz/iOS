@@ -162,6 +162,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     self.wasSelectingFavoriteUnfavoriteNodeActionOption = NO;
 
     [self configureWarningBanner];
+    
+    [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

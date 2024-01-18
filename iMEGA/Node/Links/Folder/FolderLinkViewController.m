@@ -122,6 +122,8 @@
     [self updateAppearance];
 
     [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
+    
+    [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

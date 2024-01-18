@@ -50,6 +50,8 @@ final class RegionListViewController: UIViewController, ViewType {
         }
         
         viewModel.dispatch(.onViewReady)
+        
+        AppearanceManager.forceSearchBarUpdate(searchController.searchBar, traitCollection: traitCollection)
     }
 
     override func viewWillAppear(_ animated: Bool) {

@@ -48,6 +48,8 @@ class GiphySelectionViewController: UIViewController {
         toolbarItems = [UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
                         giphyIconItem,
                         UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)]
+        
+        AppearanceManager.forceSearchBarUpdate(searchController.searchBar, traitCollection: self.traitCollection)
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {
