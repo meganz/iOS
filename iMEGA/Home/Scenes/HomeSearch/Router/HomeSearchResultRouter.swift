@@ -16,11 +16,11 @@ protocol NodeRouting {
         button: UIButton,
         displayMode: DisplayMode?
     )
-    
-    func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity], displayMode: DisplayMode?) 
-    
-    func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity])
-    
+
+    func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity]?, displayMode: DisplayMode?)
+
+    func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity]?)
+
     func didTapNode(nodeHandle: HandleEntity)
 }
 
@@ -71,8 +71,8 @@ final class HomeSearchResultRouter: NodeRouting {
         ) else { return }
         navigationController?.present(nodeActionViewController, animated: true, completion: nil)
     }
-    
-    func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity], displayMode: DisplayMode?) {
+
+    func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity]?, displayMode: DisplayMode?) {
         guard let node = nodeUseCase.nodeForHandle(nodeHandle) else { return }
         if node.isTakenDown {
             showTakenDownAlert(isFolder: node.isFolder)
@@ -85,12 +85,12 @@ final class HomeSearchResultRouter: NodeRouting {
         }
     }
     
-    func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity]) {
+    func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity]?) {
         didTapNode(nodeHandle: nodeHandle, allNodeHandles: allNodeHandles, displayMode: nil)
     }
     
     func didTapNode(nodeHandle: HandleEntity) {
-        didTapNode(nodeHandle: nodeHandle, allNodeHandles: [])
+        didTapNode(nodeHandle: nodeHandle, allNodeHandles: nil, displayMode: nil)
     }
     
     func showTakenDownAlert(isFolder: Bool) {

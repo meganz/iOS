@@ -318,7 +318,7 @@ struct CloudDriveViewControllerFactory {
             selection: {
                 router.didTapNode(
                     nodeHandle: $0.id,
-                    allNodeHandles: [], // photo browser does not work until we pass in this array here
+                    allNodeHandles: nil,
                     displayMode: config.displayMode?.carriedOverDisplayMode
                 )
             },
