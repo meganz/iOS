@@ -1,3 +1,4 @@
+import MEGAPresentation
 import MEGASwiftUI
 import SwiftUI
 
@@ -17,7 +18,8 @@ struct SearchableView<WrappedView: View>: View {
                 text: $searchText,
                 isEditing: $isEditing,
                 placeholder: searchAssets.placeHolder,
-                cancelTitle: searchAssets.cancelTitle
+                cancelTitle: searchAssets.cancelTitle,
+                isDesignTokenEnabled: DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken)
             )
             .padding(8)
             .background(colorScheme == .dark ? searchAssets.darkBGColor : searchAssets.lightBGColor)

@@ -1,4 +1,5 @@
 import MEGAL10n
+import MEGAPresentation
 import MEGASwiftUI
 import SwiftUI
 
@@ -76,7 +77,8 @@ struct ChatRoomsListView: View {
             text: $viewModel.searchText,
             isEditing: $viewModel.isSearchActive,
             placeholder: Strings.Localizable.search,
-            cancelTitle: Strings.Localizable.cancel)
+            cancelTitle: Strings.Localizable.cancel,
+            isDesignTokenEnabled: DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken))
         .listRowSeparator(.hidden)
     }
     
