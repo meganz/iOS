@@ -6,6 +6,7 @@ import UIKit
 enum MEGAAppColor {
     enum White {
         case _FFFFFF
+        case _FFFFFF_toolbarShadow
         case _EEEEEE
         case _EFEFEF
         case _F2F2F2
@@ -29,6 +30,7 @@ enum MEGAAppColor {
         private var designTokenColor: UIColor {
             switch self {
             case ._FFFFFF: TokenColors.Text.primary
+            case ._FFFFFF_toolbarShadow: TokenColors.Border.strong
             case ._EEEEEE: TokenColors.Background.blur
             case ._EFEFEF: TokenColors.Background.blur
             case ._F2F2F2: TokenColors.Background.blur
@@ -46,6 +48,7 @@ enum MEGAAppColor {
         private var legacyColor: UIColor {
             switch self {
             case ._FFFFFF: UIColor.whiteFFFFFF
+            case ._FFFFFF_toolbarShadow: UIColor.whiteFFFFFF // Toolbar shadow is only applied when .designToken feature flag is on so this legacy color will never be used.
             case ._EEEEEE: UIColor.whiteEEEEEE
             case ._EFEFEF: UIColor.whiteEFEFEF
             case ._F2F2F2: UIColor.whiteF2F2F2
@@ -69,6 +72,7 @@ enum MEGAAppColor {
         case _00000075
         case _00000080
         case _000000
+        case _000000_toolbarShadow
         case _1C1C1E
         case _2C2C2E
         case _222222
@@ -95,6 +99,7 @@ enum MEGAAppColor {
             case ._00000075: TokenColors.Background.blur
             case ._00000080: TokenColors.Text.secondary
             case ._000000: TokenColors.Text.primary
+            case ._000000_toolbarShadow: TokenColors.Border.strong
             case ._1C1C1E: TokenColors.Background.blur
             case ._222222: TokenColors.Background.blur
             case ._2C2C2E: TokenColors.Background.blur
@@ -115,6 +120,7 @@ enum MEGAAppColor {
             case ._00000075: UIColor.black00000075
             case ._00000080: UIColor.black00000080
             case ._000000: UIColor.black000000
+            case ._000000_toolbarShadow: UIColor.black000000 // Toolbar shadow is only applied when .designToken feature flag is on so this legacy color will never be used.
             case ._1C1C1E: UIColor.black1C1C1E
             case ._222222: UIColor.black222222
             case ._2C2C2E: UIColor.black2C2C2E

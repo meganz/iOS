@@ -32,8 +32,6 @@ class AppearanceManager: NSObject {
         
         UIView.appearance(whenContainedInInstancesOf: [UIAlertController.self]).tintColor = UIColor.label
         
-        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UIToolbar.self]).tintColor = UIColor.mnz_primaryGray(for: traitCollection)
-        
         UITextField.appearance().tintColor = UIColor.mnz_turquoise(for: traitCollection)
         
         UITextView.appearance().tintColor = UIColor.mnz_turquoise(for: traitCollection)
@@ -109,15 +107,12 @@ class AppearanceManager: NSObject {
     
     @objc class func forceToolbarUpdate(_ toolbar: UIToolbar, traitCollection: UITraitCollection) {
         let appearance = makeUIToolbarAppearance(traitCollection)
-        appearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.mnz_primaryGray(for: traitCollection)]
-
         toolbar.standardAppearance = appearance
         toolbar.scrollEdgeAppearance = appearance
-
         let numberOfBarButtonItems: Int = toolbar.items?.count ?? 0
         for i in 0..<numberOfBarButtonItems {
             let barButtonItem = toolbar.items?[i]
-            barButtonItem?.tintColor = UIColor.mnz_primaryGray(for: traitCollection)
+            barButtonItem?.tintColor = UIColor.mnz_toolbarTint(for: traitCollection)
         }
     }
     
@@ -188,12 +183,25 @@ class AppearanceManager: NSObject {
 
         UIToolbar.appearance().standardAppearance = toolbarAppearance
         UIToolbar.appearance().scrollEdgeAppearance = toolbarAppearance
+        UIToolbar.appearance().tintColor = UIColor.mnz_toolbarTint(for: traitCollection)
     }
 
     private class func makeUIToolbarAppearance(_ traitCollection: UITraitCollection) -> UIToolbarAppearance {
-        let toolbarAppearance = UIToolbarAppearance.init()
+        let toolbarAppearance = UIToolbarAppearance()
+        
         toolbarAppearance.configureWithDefaultBackground()
         toolbarAppearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
+        
+        toolbarAppearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.mnz_toolbarButtonTitle(isEnabled: true, for: traitCollection)]
+        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) {
+            toolbarAppearance.buttonAppearance.disabled.titleTextAttributes = [.foregroundColor: UIColor.mnz_toolbarButtonTitle(isEnabled: false, for: traitCollection)]
+        }
+        
+        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) {
+            toolbarAppearance.shadowImage = nil
+            toolbarAppearance.shadowColor = UIColor.mnz_toolbarShadow(for: traitCollection)
+        }
+        
         return toolbarAppearance
     }
     
