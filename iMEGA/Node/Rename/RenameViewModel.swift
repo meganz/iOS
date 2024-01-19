@@ -26,8 +26,6 @@ struct RenameViewModel {
         switch renameEntity.actionType {
         case .device(let deviceId, _):
             return await renameEntityIfNeeded(deviceId, newName: newName, renameAction: renameUseCase.renameDevice)
-        case .node(let node):
-            return await renameEntityIfNeeded(node, newName: newName, renameAction: renameUseCase.renameNode)
         }
     }
 
@@ -57,11 +55,8 @@ struct RenameViewModel {
     
     func isNewNameWithinMaxLength(_ newName: String) -> Bool {
         switch renameEntity.actionType {
-            
         case .device(_, let maxCharacters):
             return newName.count <= maxCharacters
-        default:
-            return true
         }
     }
     

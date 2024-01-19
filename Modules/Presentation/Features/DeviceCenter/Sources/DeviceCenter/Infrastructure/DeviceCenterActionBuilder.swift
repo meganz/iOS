@@ -74,7 +74,6 @@ final class DeviceCenterActionBuilder {
         
         actions.append(
             contentsOf: [
-                .renameAction(),
                 .moveAction(),
                 .copyAction(),
                 .moveToTheRubbishBinAction()
@@ -107,7 +106,6 @@ final class DeviceCenterActionBuilder {
         
         actions.append(
             contentsOf: [
-                .renameAction(),
                 .moveAction(),
                 .copyAction(),
                 .moveToTheRubbishBinAction()

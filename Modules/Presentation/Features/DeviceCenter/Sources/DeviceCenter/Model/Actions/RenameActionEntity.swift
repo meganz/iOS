@@ -20,7 +20,6 @@ public struct RenameActionEntity {
 
     public enum RenameActionType {
         case device(deviceId: String, maxCharacters: Int)
-        case node(node: NodeEntity)
     }
 
     public init(
