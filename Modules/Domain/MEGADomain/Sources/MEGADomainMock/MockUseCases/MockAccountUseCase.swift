@@ -1,3 +1,4 @@
+import Foundation
 import MEGADomain
 
 public struct MockAccountUseCase: AccountUseCaseProtocol {
@@ -5,6 +6,7 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
     private let getMyChatFilesFolderResult: (Result<NodeEntity, AccountErrorEntity>)
     private let accountDetailsResult: (Result<AccountDetailsEntity, AccountDetailsErrorEntity>)
     private let miscFlagsResult: Result<Void, AccountErrorEntity>
+    private let sessionTransferURLResult: Result<URL, AccountErrorEntity>
     private let isUpgradeSecuritySuccess: Bool
     private let _bandwidthOverquotaDelay: Int64
     private let _currentUser: UserEntity?
@@ -25,6 +27,7 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
                 currentAccountDetails: AccountDetailsEntity? = nil,
                 accountDetailsResult: Result<AccountDetailsEntity, AccountDetailsErrorEntity> = .failure(.generic),
                 miscFlagsResult: Result<Void, AccountErrorEntity> = .failure(.generic),
+                sessionTransferURLResult: Result<URL, AccountErrorEntity> = .failure(.generic),
                 isUpgradeSecuritySuccess: Bool = false,
                 bandwidthOverquotaDelay: Int64 = 0,
                 isOverQuota: Bool = false
@@ -42,6 +45,7 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
         self.accountDetailsResult = accountDetailsResult
         self.isUpgradeSecuritySuccess = isUpgradeSecuritySuccess
         self.miscFlagsResult = miscFlagsResult
+        self.sessionTransferURLResult = sessionTransferURLResult
     }
     
     public var currentUserHandle: HandleEntity? {
@@ -102,6 +106,13 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
     public func getMiscFlags() async throws {
         if case .failure(let error) = miscFlagsResult {
             throw error
+        }
+    }
+    
+    public func sessionTransferURL(path: String) async throws -> URL {
+        switch sessionTransferURLResult {
+        case .success(let url): return url
+        case .failure(let error): throw error
         }
     }
 }

@@ -469,21 +469,15 @@ public final class MockSdk: MEGASdk {
     }
     
     public override func creditCardCancelSubscriptions(_ reason: String?, delegate: MEGARequestDelegate) {
-        switch requestResult {
-        case .success(let request):
-            delegate.onRequestFinish?(self, request: request, error: MEGAError())
-        case .failure(let error):
-            delegate.onRequestFinish?(self, request: MockRequest(handle: 1), error: error)
-        }
+        processRequestResult(delegate: delegate)
     }
     
     public override func getMiscFlags(with delegate: MEGARequestDelegate) {
-        switch requestResult {
-        case .success(let request):
-            delegate.onRequestFinish?(self, request: request, error: MEGAError())
-        case .failure(let error):
-            delegate.onRequestFinish?(self, request: MockRequest(handle: 1), error: error)
-        }
+        processRequestResult(delegate: delegate)
+    }
+    
+    public override func getSessionTransferURL(_ path: String, delegate: MEGARequestDelegate) {
+        processRequestResult(delegate: delegate)
     }
     
     // MARK: - SMS
@@ -552,15 +546,15 @@ public final class MockSdk: MEGASdk {
     // MARK: - ADS
     
     public override func fetchAds(_ adFlags: AdsFlag, adUnits: MEGAStringList, publicHandle: MEGAHandle, delegate: any MEGARequestDelegate) {
-        switch requestResult {
-        case .success(let request):
-            delegate.onRequestFinish?(self, request: request, error: MEGAError())
-        case .failure(let error):
-            delegate.onRequestFinish?(self, request: MockRequest(handle: 1), error: error)
-        }
+        processRequestResult(delegate: delegate)
     }
     
     public override func queryAds(_ adFlags: AdsFlag, publicHandle: MEGAHandle, delegate: any MEGARequestDelegate) {
+        processRequestResult(delegate: delegate)
+    }
+    
+    // MARK: - Helper
+    private func processRequestResult(delegate: any MEGARequestDelegate) {
         switch requestResult {
         case .success(let request):
             delegate.onRequestFinish?(self, request: request, error: MEGAError())
