@@ -192,3 +192,5 @@
 #import "RubbishBinTableViewController.h"
 
 #import "AppExitHandlerManager.h"
+
+#import "PasswordReminderViewController.h"

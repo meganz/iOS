@@ -146,6 +146,7 @@
 		240380542A30687500C06E61 /* ReportIssueMessageViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240380532A30687500C06E61 /* ReportIssueMessageViewModelTests.swift */; };
 		240380562A306B8B00C06E61 /* ReportIssueMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240380552A306B8B00C06E61 /* ReportIssueMessageViewModel.swift */; };
 		2407FDA62B05C73C00F26248 /* URL+MNZCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2407FDA52B05C73C00F26248 /* URL+MNZCategory.swift */; };
+		240A15402B5503730000CD08 /* PasswordReminderViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240A153F2B5503730000CD08 /* PasswordReminderViewController+Additions.swift */; };
 		240D80FB2AB1A1DC00FBD2C4 /* AudioPlayerItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240D80FA2AB1A1DC00FBD2C4 /* AudioPlayerItemTests.swift */; };
 		2412B5352A414EC7000EB46E /* MEGANode+initAudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2412B5342A414EC7000EB46E /* MEGANode+initAudioPlayer.swift */; };
 		24189DCE2AA705C70071F160 /* MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24189DCD2AA705C70071F160 /* MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift */; };
@@ -2699,6 +2700,7 @@
 		240380532A30687500C06E61 /* ReportIssueMessageViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportIssueMessageViewModelTests.swift; sourceTree = "<group>"; };
 		240380552A306B8B00C06E61 /* ReportIssueMessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportIssueMessageViewModel.swift; sourceTree = "<group>"; };
 		2407FDA52B05C73C00F26248 /* URL+MNZCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+MNZCategory.swift"; sourceTree = "<group>"; };
+		240A153F2B5503730000CD08 /* PasswordReminderViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PasswordReminderViewController+Additions.swift"; sourceTree = "<group>"; };
 		240D80FA2AB1A1DC00FBD2C4 /* AudioPlayerItemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerItemTests.swift; sourceTree = "<group>"; };
 		2412B5342A414EC7000EB46E /* MEGANode+initAudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANode+initAudioPlayer.swift"; sourceTree = "<group>"; };
 		24189DCD2AA705C70071F160 /* MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift"; sourceTree = "<group>"; };
@@ -9270,6 +9272,7 @@
 			isa = PBXGroup;
 			children = (
 				83D64E2C20178A0400E24155 /* PasswordReminder.storyboard */,
+				240A153F2B5503730000CD08 /* PasswordReminderViewController+Additions.swift */,
 				836AEDDB2018830E00868FC7 /* PasswordReminderViewController.h */,
 				836AEDDC2018830E00868FC7 /* PasswordReminderViewController.m */,
 				836AEDDE20188F3C00868FC7 /* TestPasswordViewController.h */,
@@ -14445,6 +14448,7 @@
 				A87FF3C522F8244300EFD95C /* PasscodeDurationInfo.swift in Sources */,
 				41B3B8301AD591A80093A88D /* PasscodeTableViewController.m in Sources */,
 				A87FF3C122F8111D00EFD95C /* PasscodeTimeDurationTableViewController.swift in Sources */,
+				240A15402B5503730000CD08 /* PasswordReminderViewController+Additions.swift in Sources */,
 				836AEDDD2018830E00868FC7 /* PasswordReminderViewController.m in Sources */,
 				5BB68CA120359B5400B03C00 /* PasswordStrengthIndicatorView.m in Sources */,
 				C4B4B1652B27C3ED00F78710 /* PasswordView+Additions.swift in Sources */,

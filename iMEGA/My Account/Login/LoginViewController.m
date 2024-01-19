@@ -132,6 +132,8 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
         }
     }
     
+    [self requestStopAudioPlayerSession];
+    
     [self.emailInputView.inputTextField resignFirstResponder];
     [self.passwordView.passwordTextField resignFirstResponder];
     

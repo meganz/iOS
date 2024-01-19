@@ -141,6 +141,7 @@
     }
     [OverDiskQuotaService.sharedService invalidate];
     [[SearchFileUseCase.alloc init] clearFileSearchHistoryEntries];
+    [self requestStopAudioPlayerSession];
 }
 
 - (void)configureUI {
