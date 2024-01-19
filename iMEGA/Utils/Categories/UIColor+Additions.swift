@@ -121,19 +121,11 @@ extension UIColor {
     }
     
     @objc class func mnz_navigationBarTint(for traitCollection: UITraitCollection) -> UIColor {
-        switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light: MEGAAppColor.Gray._515151_navigationBarTint.uiColor
-        case .dark: MEGAAppColor.Gray._D1D1D1_navigationBarTint.uiColor
-        @unknown default: MEGAAppColor.White._FFFFFF.uiColor
-        }
+        barTint(for: traitCollection)
     }
     
     class func mnz_navigationBarButtonTitle(isEnabled: Bool, for traitCollection: UITraitCollection) -> UIColor {
-        switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light: isEnabled ? MEGAAppColor.Gray._515151_barButtonTitle.uiColor : MEGAAppColor.Gray._515151_disabledBarButtonTitle.uiColor
-        case .dark: isEnabled ? MEGAAppColor.Gray._D1D1D1_barButtonTitle.uiColor : MEGAAppColor.Gray._D1D1D1_disabledBarButtonTitle.uiColor
-        @unknown default: MEGAAppColor.White._FFFFFF.uiColor
-        }
+        barButtonTitle(isEnabled: isEnabled, for: traitCollection)
     }
     
     // MARK: Background grouped
@@ -602,6 +594,22 @@ extension UIColor {
         }
     }
     
+    @objc class func mnz_toolbarTint(for traitCollection: UITraitCollection) -> UIColor {
+        barTint(for: traitCollection)
+    }
+    
+    class func mnz_toolbarButtonTitle(isEnabled: Bool, for traitCollection: UITraitCollection) -> UIColor {
+        barButtonTitle(isEnabled: isEnabled, for: traitCollection)
+    }
+    
+    class func mnz_toolbarShadow(for traitCollection: UITraitCollection) -> UIColor {
+        switch traitCollection.userInterfaceStyle {
+        case .unspecified, .light: MEGAAppColor.Black._000000_toolbarShadow.uiColor
+        case .dark: MEGAAppColor.White._FFFFFF_toolbarShadow.uiColor
+        @unknown default: MEGAAppColor.Black._000000_toolbarShadow.uiColor
+        }
+    }
+    
     // MARK: - Voice recording view
     
     class func mnz_voiceRecordingViewBackground(_ traitCollection: UITraitCollection) -> UIColor {
@@ -881,5 +889,22 @@ extension UIColor {
     
     class func mnz_brown544b27() -> UIColor {
         MEGAAppColor.Brown._544B27.uiColor
+    }
+    
+    // MARK: Private
+    private class func barButtonTitle(isEnabled: Bool, for traitCollection: UITraitCollection) -> UIColor {
+        switch traitCollection.userInterfaceStyle {
+        case .unspecified, .light: isEnabled ? MEGAAppColor.Gray._515151_barButtonTitle.uiColor : MEGAAppColor.Gray._515151_disabledBarButtonTitle.uiColor
+        case .dark: isEnabled ? MEGAAppColor.Gray._D1D1D1_barButtonTitle.uiColor : MEGAAppColor.Gray._D1D1D1_disabledBarButtonTitle.uiColor
+        @unknown default: MEGAAppColor.White._FFFFFF.uiColor
+        }
+    }
+    
+    private class func barTint(for traitCollection: UITraitCollection) -> UIColor {
+        switch traitCollection.userInterfaceStyle {
+        case .unspecified, .light: MEGAAppColor.Gray._515151_navigationBarTint.uiColor
+        case .dark: MEGAAppColor.Gray._D1D1D1_navigationBarTint.uiColor
+        @unknown default: MEGAAppColor.White._FFFFFF.uiColor
+        }
     }
 }
