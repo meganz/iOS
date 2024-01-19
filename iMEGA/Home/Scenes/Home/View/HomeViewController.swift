@@ -125,6 +125,11 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
             createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo)
         )
         searchBarView.shouldShowContextButton = newSearchEnabled
+        
+        if AudioPlayerManager.shared.isPlayerAlive() {
+            let streamingInfoUseCase = StreamingInfoUseCase()
+            streamingInfoUseCase.startServer()
+        }
     }
     
     func updateIsNewSearchEnabled(_ enabled: Bool) {

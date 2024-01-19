@@ -17,4 +17,11 @@ extension LoginViewController {
         loginButtonTopCostraint.constant =  UIDevice.current.orientation.isLandscape ? Constants.landscapeLoginButtonTopPadding
         : Constants.portraitLoginButtonTopPadding
     }
+    
+    @objc func requestStopAudioPlayerSession() {
+        if AudioPlayerManager.shared.isPlayerAlive() {
+            let streamingInfoUseCase = StreamingInfoUseCase()
+            streamingInfoUseCase.stopServer()
+        }
+    }
 }
