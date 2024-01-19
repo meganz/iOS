@@ -192,7 +192,7 @@ final class BackupListViewModelTests: XCTestCase {
         
         let actions = viewModel.actionsForBackup(backup)
         let actionsType = actions?.compactMap {$0.type}
-        let expectedActions: [DeviceCenterActionType] = [.info, .favourite, .label, .download, .shareLink, .shareFolder, .rename, .move, .copy, .moveToTheRubbishBin]
+        let expectedActions: [DeviceCenterActionType] = [.info, .favourite, .label, .download, .shareLink, .shareFolder, .move, .copy, .moveToTheRubbishBin]
         
         XCTAssertEqual(actionsType, expectedActions, "Actions for camera upload backup are incorrect")
     }
@@ -397,13 +397,6 @@ final class BackupListViewModelTests: XCTestCase {
         let backupStatusEntities = backupStatusEntities()
         let backupTypeEntities = backupTypeEntities()
         let networkMonitorUseCase = MockNetworkMonitorUseCase()
-        let cameraUploadsUseCase = MockCameraUploadsUseCase(
-            cuNode: NodeEntity(
-                name: "Camera Uploads",
-                handle: 1
-            ), 
-            isCameraUploadsNode: true
-        )
         let sut = BackupListViewModel(
             isCurrentDevice: true,
             selectedDeviceId: currentDeviceId,
@@ -417,7 +410,6 @@ final class BackupListViewModelTests: XCTestCase {
                 ],
                 node: node
             ),
-            cameraUploadsUseCase: cameraUploadsUseCase,
             networkMonitorUseCase: networkMonitorUseCase,
             router: MockBackupListViewRouter(),
             deviceCenterBridge: DeviceCenterBridge(),

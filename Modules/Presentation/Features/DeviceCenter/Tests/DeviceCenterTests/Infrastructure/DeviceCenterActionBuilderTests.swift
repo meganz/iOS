@@ -91,7 +91,6 @@ final class DeviceCenterActionBuilderTests: XCTestCase {
                 .manageLinkAction(),
                 .removeLinkAction(),
                 .manageFolderAction(),
-                .renameAction(),
                 .moveAction(),
                 .copyAction(),
                 .moveToTheRubbishBinAction()
@@ -115,7 +114,6 @@ final class DeviceCenterActionBuilderTests: XCTestCase {
                 .downloadAction(),
                 .shareLinkAction(),
                 .manageFolderAction(),
-                .renameAction(),
                 .moveAction(),
                 .copyAction(),
                 .moveToTheRubbishBinAction()
@@ -138,7 +136,6 @@ final class DeviceCenterActionBuilderTests: XCTestCase {
                 .downloadAction(),
                 .shareLinkAction(),
                 .shareFolderAction(),
-                .renameAction(),
                 .moveAction(),
                 .copyAction(),
                 .moveToTheRubbishBinAction()
