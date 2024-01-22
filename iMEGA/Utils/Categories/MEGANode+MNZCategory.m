@@ -756,6 +756,7 @@
                                                @"torrent":@"Torrent",
                                                @"ttf":@"general.filetype.ttf",
                                                @"txt":@"general.filetype.textDocument",
+                                               @"org":@"general.filetype.textDocument",
                                                @"vcf":@"vCard",
                                                @"wav":@"general.filetype.wav",
                                                @"webm":@"general.filetype.webm",
