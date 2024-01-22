@@ -1,5 +1,6 @@
 import Foundation
 import MEGADomain
+import MEGAL10n
 import MEGAPresentation
 import MEGARepo
 import MEGASDKRepo
@@ -280,6 +281,7 @@ struct CloudDriveViewControllerFactory {
             onSearch: { searchResultsVM.bridge.queryChanged($0) },
             onCancel: { searchResultsVM.bridge.queryCleaned() }
         )
+        
         let view = NodeBrowserView(
             viewModel: .init(
                 searchResultsViewModel: searchResultsVM,
@@ -292,6 +294,14 @@ struct CloudDriveViewControllerFactory {
                 nodeSource: nodeSource,
                 avatarViewModel: self.avatarViewModel,
                 hasOnlyMediaNodesChecker: self.makeHasOnlyMediaChecker(nodeSource: nodeSource),
+                titleBuilder: { isEditing, selectedNodesCount in
+                    titleFor(
+                        nodeSource,
+                        config: overriddenConfig,
+                        isEditModeActive: isEditing,
+                        selectedNodesArrayCount: selectedNodesCount
+                    ) ?? ""
+                },
                 onOpenUserProfile: { self.userProfileOpener(self.navigationController) },
                 onUpdateSearchBarVisibility: { searchControllerWrapper.onUpdateSearchBarVisibility?($0) },
                 onBack: { self.navigationController.popViewController(animated: true) }
@@ -299,7 +309,11 @@ struct CloudDriveViewControllerFactory {
         )
         let vc = SearchBarUIHostingController(
             rootView: view,
-            wrapper: searchControllerWrapper
+            wrapper: searchControllerWrapper,
+            backButtonTitle: titleFor(
+                nodeSource,
+                config: overriddenConfig
+            )
         )
         return vc
     }
@@ -424,7 +438,7 @@ struct CloudDriveViewControllerFactory {
         bridge.updateBottomInsetTrampoline = { [weak searchBridge] inset in
             searchBridge?.updateBottomInset(inset)
         }
-        
+
         return SearchResultsViewModel(
             resultsProvider: resultProvider(
                 for: nodeSource,
@@ -478,7 +492,34 @@ struct CloudDriveViewControllerFactory {
             return .init(customLocation: CustomViewModeLocation.Generic)
         }
     }
-    
+
+    private func titleFor(
+        _ nodeSource: NodeSource,
+        config: NodeBrowserConfig,
+        isEditModeActive: Bool = false,
+        selectedNodesArrayCount: Int = 0
+    ) -> String? {
+        switch nodeSource {
+        case .node(let parentNodeProvider):
+            guard let parentNodeProvider = parentNodeProvider() else { return nil }
+            return CloudDriveNavigationTitleBuilder.build(
+                parentNode: parentNodeProvider,
+                isEditModeActive: isEditModeActive,
+                // we have config.displayMode == nil for cloud drive
+                displayMode: config.displayMode ?? .cloudDrive,
+                selectedNodesArrayCount: selectedNodesArrayCount,
+                // we don't use new CD for recents that's why we don't need to pass nodes here
+                nodes: nil,
+                backupsUseCase: BackupsUseCase(
+                    backupsRepository: BackupsRepository.newRepo,
+                    nodeRepository: NodeRepository.newRepo
+                )
+            )
+        default:
+            return nil
+        }
+    }
+
     private func legacyCloudDriveViewController(
         nodeSource: NodeSource,
         options: NodeBrowserConfig

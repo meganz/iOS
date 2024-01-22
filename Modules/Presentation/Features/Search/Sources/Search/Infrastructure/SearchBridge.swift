@@ -33,4 +33,7 @@ public class SearchBridge {
     public var updateBottomInset: (CGFloat) -> Void = { _ in  }
     public var layoutChanged: (PageLayout) -> Void = { _ in  }
     public var searchResultChanged: (SearchResult) -> Void = { _ in  }
+    public var selectionChanged: (Set<ResultId>) -> Void = { _ in }
+    public var editingChanged: (Bool) -> Void = { _ in }
+    public var editingCancelled: () -> Void = { }
 }
