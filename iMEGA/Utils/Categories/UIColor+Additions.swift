@@ -45,17 +45,13 @@ extension UIColor {
     @objc class func mnz_backgroundElevated(_ traitCollection: UITraitCollection) -> UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
-            return white
+            return MEGAAppColor.White._FFFFFF_pageBackground.uiColor
             
         case .dark:
-            if traitCollection.accessibilityContrast == .high {
-                return MEGAAppColor.Black._2C2C2E.uiColor
-            } else {
-                return mnz_black1C1C1E()
-            }
+            return MEGAAppColor.Black._1C1C1E_pageBackground.uiColor
             
         @unknown default:
-            return white
+            return MEGAAppColor.White._FFFFFF_pageBackground.uiColor
         }
     }
     
@@ -111,7 +107,7 @@ extension UIColor {
             return MEGAAppColor.White._FFFFFF.uiColor
         }
     }
-        
+    
     @objc class func mnz_navigationBarTitle(for traitCollection: UITraitCollection) -> UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light: MEGAAppColor.Black._000000.uiColor
@@ -128,23 +124,61 @@ extension UIColor {
         barButtonTitle(isEnabled: isEnabled, for: traitCollection)
     }
     
+    // MARK: Cell related colors
+    
+    class func cellTitleColor(for traitCollection: UITraitCollection) -> UIColor {
+        switch traitCollection.userInterfaceStyle {
+        case .unspecified, .light:
+            return MEGAAppColor.Black._000000.uiColor
+            
+        case .dark:
+            return MEGAAppColor.White._FFFFFF.uiColor
+            
+        @unknown default:
+            return MEGAAppColor.Black._000000.uiColor
+        }
+    }
+    
+    class func cellAccessoryColor(for traitCollection: UITraitCollection) -> UIColor {
+        switch traitCollection.userInterfaceStyle {
+        case .unspecified, .light:
+            return MEGAAppColor.Gray._848484.uiColor
+            
+        case .dark:
+            return MEGAAppColor.Gray._B5B5B5.uiColor
+            
+        @unknown default:
+            return MEGAAppColor.Gray._848484.uiColor
+        }
+    }
+    
     // MARK: Background grouped
     
     @objc(mnz_backgroundGroupedForTraitCollection:)
     class func mnz_backgroundGrouped(for traitCollection: UITraitCollection) -> UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
-            if traitCollection.accessibilityContrast == .high {
-                return MEGAAppColor.Gray._E6E6E6.uiColor
-            } else {
-                return MEGAAppColor.White._F7F7F7.uiColor
-            }
+            return MEGAAppColor.White._F7F7F7.uiColor
             
         case .dark:
             return MEGAAppColor.Black._000000.uiColor
             
         @unknown default:
             return MEGAAppColor.White._FFFFFF.uiColor
+        }
+    }
+    
+    @objc(pageBackgroundForTraitCollection:)
+    class func pageBackgroundColor(for traitCollection: UITraitCollection) -> UIColor {
+        switch traitCollection.userInterfaceStyle {
+        case .unspecified, .light:
+            return MEGAAppColor.White._F7F7F7_pageBackground.uiColor
+            
+        case .dark:
+            return MEGAAppColor.Black._000000_pageBackground.uiColor
+            
+        @unknown default:
+            return MEGAAppColor.White._F7F7F7_pageBackground.uiColor
         }
     }
     
@@ -356,18 +390,10 @@ extension UIColor {
     class func mnz_separator(for traitCollection: UITraitCollection) -> UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
-            if traitCollection.accessibilityContrast == .high {
-                return MEGAAppColor.Gray._3C3C43.uiColor.withAlphaComponent(0.5)
-            } else {
-                return MEGAAppColor.Gray._3C3C43.uiColor.withAlphaComponent(0.3)
-            }
-            
+            return MEGAAppColor.Gray._3C3C4330.uiColor
+             
         case .dark:
-            if traitCollection.accessibilityContrast == .high {
-                return MEGAAppColor.Gray._545458.uiColor
-            } else {
-                return MEGAAppColor.Gray._545458.uiColor.withAlphaComponent(0.65)
-            }
+            return MEGAAppColor.Gray._54545865.uiColor
             
         @unknown default:
             return MEGAAppColor.White._FFFFFF.uiColor

@@ -6,11 +6,13 @@ import UIKit
 enum MEGAAppColor {
     enum White {
         case _FFFFFF
+        case _FFFFFF_pageBackground
         case _FFFFFF_toolbarShadow
         case _EEEEEE
         case _EFEFEF
         case _F2F2F2
         case _F7F7F7
+        case _F7F7F7_pageBackground
         case _FAFAFA
         case _FCFCFC
         case _FFD60008
@@ -30,11 +32,13 @@ enum MEGAAppColor {
         private var designTokenColor: UIColor {
             switch self {
             case ._FFFFFF: TokenColors.Text.primary
+            case ._FFFFFF_pageBackground: TokenColors.Background.page
             case ._FFFFFF_toolbarShadow: TokenColors.Border.strong
             case ._EEEEEE: TokenColors.Background.blur
             case ._EFEFEF: TokenColors.Background.blur
             case ._F2F2F2: TokenColors.Background.blur
             case ._F7F7F7: TokenColors.Background.surface1
+            case ._F7F7F7_pageBackground: TokenColors.Background.page
             case ._FAFAFA: TokenColors.Background.blur
             case ._FCFCFC: TokenColors.Background.blur
             case ._FFD60008: TokenColors.Background.blur
@@ -47,12 +51,12 @@ enum MEGAAppColor {
         
         private var legacyColor: UIColor {
             switch self {
-            case ._FFFFFF: UIColor.whiteFFFFFF
+            case ._FFFFFF, ._FFFFFF_pageBackground: UIColor.whiteFFFFFF
             case ._FFFFFF_toolbarShadow: UIColor.whiteFFFFFF // Toolbar shadow is only applied when .designToken feature flag is on so this legacy color will never be used.
             case ._EEEEEE: UIColor.whiteEEEEEE
             case ._EFEFEF: UIColor.whiteEFEFEF
             case ._F2F2F2: UIColor.whiteF2F2F2
-            case ._F7F7F7: UIColor.whiteF7F7F7
+            case ._F7F7F7, ._F7F7F7_pageBackground: UIColor.whiteF7F7F7
             case ._FAFAFA: UIColor.whiteFAFAFA
             case ._FCFCFC: UIColor.whiteFCFCFC
             case ._FFD60008: UIColor.whiteFFD60008
@@ -72,8 +76,10 @@ enum MEGAAppColor {
         case _00000075
         case _00000080
         case _000000
+        case _000000_pageBackground
         case _000000_toolbarShadow
         case _1C1C1E
+        case _1C1C1E_pageBackground
         case _2C2C2E
         case _222222
         case _29292C
@@ -99,8 +105,10 @@ enum MEGAAppColor {
             case ._00000075: TokenColors.Background.blur
             case ._00000080: TokenColors.Text.secondary
             case ._000000: TokenColors.Text.primary
+            case ._000000_pageBackground: TokenColors.Background.page
             case ._000000_toolbarShadow: TokenColors.Border.strong
             case ._1C1C1E: TokenColors.Background.blur
+            case ._1C1C1E_pageBackground: TokenColors.Background.page
             case ._222222: TokenColors.Background.blur
             case ._2C2C2E: TokenColors.Background.blur
             case ._29292C: TokenColors.Background.blur
@@ -119,9 +127,9 @@ enum MEGAAppColor {
             case ._00000060: UIColor.black00000060
             case ._00000075: UIColor.black00000075
             case ._00000080: UIColor.black00000080
-            case ._000000: UIColor.black000000
+            case ._000000, ._000000_pageBackground: UIColor.black000000
             case ._000000_toolbarShadow: UIColor.black000000 // Toolbar shadow is only applied when .designToken feature flag is on so this legacy color will never be used.
-            case ._1C1C1E: UIColor.black1C1C1E
+            case ._1C1C1E, ._1C1C1E_pageBackground: UIColor.black1C1C1E
             case ._222222: UIColor.black222222
             case ._2C2C2E: UIColor.black2C2C2E
             case ._29292C: UIColor.black29292C
@@ -137,6 +145,7 @@ enum MEGAAppColor {
         case _1D1D1D
         case _3A3A3C
         case _3C3C43
+        case _3C3C4330
         case _3D3D3D
         case _3F3F42
         case _8E8E93
@@ -154,6 +163,7 @@ enum MEGAAppColor {
         case _535356
         case _545457
         case _545458
+        case _54545865
         case _555555
         case _676767
         case _808080
@@ -192,7 +202,7 @@ enum MEGAAppColor {
             switch self {
             case ._1D1D1D: TokenColors.Background.surface1
             case ._3A3A3C: TokenColors.Background.blur
-            case ._3C3C43: TokenColors.Background.blur
+            case ._3C3C43, ._3C3C4330: TokenColors.Border.strong
             case ._3D3D3D: TokenColors.Background.blur
             case ._3F3F42: TokenColors.Background.blur
             case ._8E8E93: TokenColors.Background.blur
@@ -209,14 +219,14 @@ enum MEGAAppColor {
             case ._515151_barButtonTitle: TokenColors.Text.primary
             case ._535356: TokenColors.Background.blur
             case ._545457: TokenColors.Background.blur
-            case ._545458: TokenColors.Background.blur
+            case ._545458, ._54545865: TokenColors.Border.strong
             case ._555555: TokenColors.Background.blur
             case ._676767: TokenColors.Background.blur
             case ._808080: TokenColors.Background.blur
-            case ._848484: TokenColors.Background.blur
+            case ._848484: TokenColors.Icon.secondary
             case ._949494: TokenColors.Background.blur
             case ._999999: TokenColors.Background.blur
-            case ._B5B5B5: TokenColors.Background.blur
+            case ._B5B5B5: TokenColors.Icon.secondary
             case ._BABABC: TokenColors.Background.blur
             case ._BBBBBB: TokenColors.Background.blur
             case ._C4C4C4: TokenColors.Background.blur
@@ -243,6 +253,7 @@ enum MEGAAppColor {
             case ._1D1D1D: UIColor.gray1D1D1D
             case ._3A3A3C: UIColor.gray3A3A3C
             case ._3C3C43: UIColor.gray3C3C43
+            case ._3C3C4330: UIColor.gray3C3C4330
             case ._3D3D3D: UIColor.gray3D3D3D
             case ._3F3F42: UIColor.gray3F3F42
             case ._8E8E93: UIColor.gray8E8E93
@@ -260,6 +271,7 @@ enum MEGAAppColor {
             case ._535356: UIColor.gray535356
             case ._545457: UIColor.gray545457
             case ._545458: UIColor.gray545458
+            case ._54545865: UIColor.gray54545865
             case ._555555: UIColor.gray555555
             case ._676767: UIColor.gray676767
             case ._808080: UIColor.gray808080
