@@ -199,42 +199,22 @@ extension CloudDriveViewController {
     }
     
     @objc func updateNavigationBarTitle() {
-        var selectedNodesArrayCount = 0
-        var navigationTitle = ""
-        
-        if let selectedNodesArray { selectedNodesArrayCount = selectedNodesArray.count }
-        
-        if viewModel.editModeActive {
-            navigationTitle = selectedNodesArrayCount == 0 ? Strings.Localizable.selectTitle : Strings.Localizable.General.Format.itemsSelected(selectedNodesArrayCount)
-        } else {
-            switch displayMode {
-            case .cloudDrive:
-                navigationTitle = parentNode == nil || parentNode?.type == .root ? Strings.Localizable.cloudDrive : parentNode?.name ?? ""
-                
-            case .rubbishBin:
-                navigationTitle = parentNode?.type == .rubbish ? Strings.Localizable.rubbishBinLabel : parentNode?.name ?? ""
-                
-            case .backup:
-                var isBackupsRootNode = false
-                if let parentNode {
-                    isBackupsRootNode = BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo).isBackupsRootNode(parentNode.toNodeEntity())
-                }
-                
-                navigationTitle = isBackupsRootNode ? Strings.Localizable.Backups.title : parentNode?.name ?? ""
-                
-            case .recents:
-                if let nodes {
-                    navigationTitle = Strings.Localizable.Recents.Section.Title.items(nodes.size)
-                }
-                
-            default: break
-            }
-        }
-        
+        let navigationTitle = CloudDriveNavigationTitleBuilder.build(
+            parentNode: parentNode?.toNodeEntity(),
+            isEditModeActive: viewModel.editModeActive,
+            displayMode: displayMode,
+            selectedNodesArrayCount: selectedNodesArray?.count ?? 0,
+            nodes: nodes?.toNodeListEntity(),
+            backupsUseCase: BackupsUseCase(
+                backupsRepository: BackupsRepository.newRepo,
+                nodeRepository: NodeRepository.newRepo
+            )
+        )
+
         navigationItem.title = navigationTitle
         setMenuCapableBackButtonWith(menuTitle: navigationTitle)
     }
-    
+
     @objc func updateToolbarButtonsEnabled(_ enabled: Bool, selectedNodesArray: [MEGANode]) {
         let enableIfNotDisputed = !selectedNodesArray.contains(where: { $0.isTakenDown() }) && enabled
         

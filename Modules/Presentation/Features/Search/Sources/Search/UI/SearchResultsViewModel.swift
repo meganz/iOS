@@ -127,6 +127,10 @@ public class SearchResultsViewModel: ObservableObject {
             self?.bottomInset = inset
         }
 
+        self.bridge.editingCancelled = { [weak self] in
+            self?.editing = false
+        }
+
         setupKeyboardVisibilityHandling()
     }
 
@@ -181,7 +185,7 @@ public class SearchResultsViewModel: ObservableObject {
         // clear items, chips, initialLoadDone so that we load fresh
         // data when view appears again
         initialLoadDone = false
-        editing = false
+        handleEditingChanged(false)
         currentQuery = .initial
         listItems = []
         lastAvailableChips = []
@@ -301,9 +305,14 @@ public class SearchResultsViewModel: ObservableObject {
 
     func actionPressedOn(_ result: SearchResult) {
         if !editing {
-            editing = true
+            handleEditingChanged(true)
         }
         toggleSelected(result)
+    }
+
+    func handleEditingChanged(_ isEditing: Bool) {
+        editing = isEditing
+        bridge.editingChanged(isEditing)
     }
 
     // The total number of columns we should display is calculated based on how many columns
@@ -331,7 +340,8 @@ public class SearchResultsViewModel: ObservableObject {
         } else {
             selected.insert(result.id)
         }
-        
+
+        bridge.selectionChanged(selected)
     }
     
     private func rowActions(for result: SearchResult) -> SearchResultRowViewModel.UserActions {
