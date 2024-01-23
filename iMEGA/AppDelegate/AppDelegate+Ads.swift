@@ -8,11 +8,11 @@ extension AppDelegate {
         window.rootViewController?.isKind(of: UIHostingController<AdsSlotView<MainTabBarWrapper>>.self) ?? false
     }
 
-    @objc func adsMainTabBarController(_ tabBar: MainTabBarController, onAppear: (() -> Void)?) -> UIViewController {
+    @objc func adsMainTabBarController(_ tabBar: MainTabBarController, onViewFirstAppeared: (() -> Void)?) -> UIViewController {
         AdsSlotRouter(
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             adsSlotViewController: tabBar,
             contentView: MainTabBarWrapper(mainTabBar: tabBar)
-        ).build(onViewAppeared: onAppear)
+        ).build(onViewFirstAppeared: onViewFirstAppeared)
     }
 }

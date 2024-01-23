@@ -11,10 +11,10 @@ public struct AdsSlotRouter<T: View> {
     
     private class HostingController<S: View>: UIHostingController<AdsSlotView<S>> {
         
-        private let onViewAppeared: (() -> Void)?
+        private var onViewFirstAppeared: (() -> Void)?
         
-        init(rootView: AdsSlotView<S>, onViewAppeared: (() -> Void)? = nil) {
-            self.onViewAppeared = onViewAppeared
+        init(rootView: AdsSlotView<S>, onViewFirstAppeared: (() -> Void)? = nil) {
+            self.onViewFirstAppeared = onViewFirstAppeared
             super.init(rootView: rootView)
         }
         
@@ -24,7 +24,8 @@ public struct AdsSlotRouter<T: View> {
         
         override func viewDidAppear(_ animated: Bool) {
             super.viewDidAppear(animated)
-            onViewAppeared?()
+            onViewFirstAppeared?()
+            onViewFirstAppeared = nil
         }
     }
     
@@ -40,14 +41,14 @@ public struct AdsSlotRouter<T: View> {
         self.presenter = presenter
     }
     
-    public func build(onViewAppeared: (() -> Void)? = nil) -> UIViewController {
+    public func build(onViewFirstAppeared: (() -> Void)? = nil) -> UIViewController {
         let viewModel = AdsSlotViewModel(adsUseCase: AdsUseCase(repository: AdsRepository.newRepo),
                                          accountUseCase: accountUseCase,
                                          adsSlotChangeStream: AdsSlotChangeStream(adsSlotViewController: adsSlotViewController))
         let adsSlotView = AdsSlotView(viewModel: viewModel, contentView: contentView)
         return HostingController(
             rootView: adsSlotView,
-            onViewAppeared: onViewAppeared)
+            onViewFirstAppeared: onViewFirstAppeared)
     }
     
     public func start() {
