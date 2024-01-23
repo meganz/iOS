@@ -42,18 +42,10 @@ struct VideoThumbnailView: View {
             
             Spacer()
             
-            HStack {
-                Text(previewEntity.duration)
-                    .font(.caption)
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(videoConfig.colorAssets.whiteColor)
-                    .fixedSize(horizontal: true, vertical: false)
-            }
-            .padding(.vertical, 1)
-            .padding(.horizontal, 4)
-            .background(videoConfig.colorAssets.videoThumbnailDurationTextBackgroundColor)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .cornerRadius(4)
+            VideoDurationView(
+                duration: previewEntity.duration,
+                videoConfig: videoConfig
+            )
         }
         .padding(.all, 8)
     }
