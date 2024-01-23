@@ -57,6 +57,64 @@ extension NodeVersionsViewController {
         let section = previousVersionsSection()
         return section.hasNode(base64Handle)
     }
+    
+    @objc func currentVersionRemoved() {
+        
+        // Since the current node was removed, we cannot actually get
+        // node versions from self.node. We try to find in the cached versions,
+        // the node that is next newest version. If it does not exist or
+        // there's only one version, we dismiss ourselves.
+        // If it exist and there are more than one versions, we
+        // reload page
+        guard let newCurrentNode = self.previousVersionsSection().items.first?.node else {
+            // we should only show NodeVersionsVC when there are more than 1 versions
+            // so if we are at 1 or less, we dismiss
+            self.dismiss(animated: true)
+            return
+        }
+        
+        self.node = newCurrentNode
+        reloadUI()
+    }
+    
+    @objc func reloadUI() {
+        captureVersions()
+        
+        if self.node.mnz_numberOfVersions() == 0 {
+            self.dismiss(animated: true)
+        } else {
+            self.tableView?.reloadData()
+        }
+    }
+    
+    func captureVersions() {
+        // in here we basically split all versions in two TableView sections
+        // first one is just current version
+        // and second section contains all but the current version
+        // then we atomically cache the data which is used by table view
+        var previousVersions: [NodeVersionItem] = []
+        
+        var currentVersion: MEGANode?
+        
+        self.node.mnz_versions().enumerated().forEach { tuple in
+            let version = tuple.element
+            if tuple.offset == 0 {
+                currentVersion = version
+            } else {
+                let item = NodeVersionItem(node: version)
+                previousVersions.append(item)
+            }
+        }
+        
+        if let currentVersion {
+            self.sections = [
+                NodeVersionSection(items: [
+                    NodeVersionItem(node: currentVersion)
+                ]),
+                NodeVersionSection(items: previousVersions)
+            ]
+        }
+    }
 }
 
 @objc class NodeVersionItem: NSObject {
