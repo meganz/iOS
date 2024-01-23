@@ -1,6 +1,7 @@
 import MEGADomain
 import MEGAL10n
 import MEGASDKRepo
+import Settings
 
 extension UpgradeTableViewController {
     
@@ -39,6 +40,14 @@ extension UpgradeTableViewController {
             )
         }
         return attributedQuota
+    }
+    
+    // MARK: - Terms and policies
+    @objc func showTermsAndPolicies() {
+        TermsAndPoliciesRouter(
+            accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
+            navigationController: navigationController
+        ).start()
     }
 }
 

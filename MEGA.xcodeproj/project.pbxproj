@@ -567,7 +567,6 @@
 		5BC3D062242A45BA0048123A /* UIColor+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC3D05F242A36240048123A /* UIColor+Additions.swift */; };
 		5BC4912F20AC457F00F7F952 /* SetupTwoFactorAuthenticationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BC4912E20AC457F00F7F952 /* SetupTwoFactorAuthenticationTableViewController.m */; };
 		5BC609E226B9475D002F12A4 /* NodeOpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC609E126B9475D002F12A4 /* NodeOpener.swift */; };
-		5BCF7E552631733200BE769B /* TermsAndPoliciesRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BCF7E542631733200BE769B /* TermsAndPoliciesRouter.swift */; };
 		5BD12734248A700800CA95A8 /* ContactsTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD12733248A700800CA95A8 /* ContactsTableViewHeader.swift */; };
 		5BD5CCDD1EB9DA4800175A25 /* ChangeNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD5CCDC1EB9DA4800175A25 /* ChangeNameViewController.m */; };
 		5BE484BF215BB3CD003B291D /* ChatSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BE484BE215BB3CD003B291D /* ChatSettings.storyboard */; };
@@ -3202,7 +3201,6 @@
 		5BC4912E20AC457F00F7F952 /* SetupTwoFactorAuthenticationTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetupTwoFactorAuthenticationTableViewController.m; sourceTree = "<group>"; };
 		5BC4913020AC684500F7F952 /* TwoFactorAuthentication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwoFactorAuthentication.h; sourceTree = "<group>"; };
 		5BC609E126B9475D002F12A4 /* NodeOpener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeOpener.swift; sourceTree = "<group>"; };
-		5BCF7E542631733200BE769B /* TermsAndPoliciesRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsAndPoliciesRouter.swift; sourceTree = "<group>"; };
 		5BD12733248A700800CA95A8 /* ContactsTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsTableViewHeader.swift; sourceTree = "<group>"; };
 		5BD5CCDB1EB9DA4800175A25 /* ChangeNameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeNameViewController.h; sourceTree = "<group>"; };
 		5BD5CCDC1EB9DA4800175A25 /* ChangeNameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeNameViewController.m; sourceTree = "<group>"; };
@@ -6582,7 +6580,6 @@
 				41ADA9EE1ADE7AB400641BB4 /* Help */,
 				BFEF8CA92887A0D000F8F9F1 /* QASettings */,
 				41AA1A191AC07EB900D32691 /* Security */,
-				5BCF7E3F2631707500BE769B /* TermsAndPoliciesScene */,
 				9D3563D328B5515A00CB3365 /* SettingBuilder.swift */,
 				9D3563D528B551C600CB3365 /* SettingCellViewModel.swift */,
 				415226831A692ECC00EC7BB6 /* Settings.storyboard */,
@@ -7416,14 +7413,6 @@
 				5BBC13E326CE64940010115B /* Node */,
 			);
 			path = Cells;
-			sourceTree = "<group>";
-		};
-		5BCF7E3F2631707500BE769B /* TermsAndPoliciesScene */ = {
-			isa = PBXGroup;
-			children = (
-				5BCF7E542631733200BE769B /* TermsAndPoliciesRouter.swift */,
-			);
-			path = TermsAndPoliciesScene;
 			sourceTree = "<group>";
 		};
 		5BE7BEE123745F9D00BBD23F /* EmptyState */ = {
@@ -14866,7 +14855,6 @@
 				5D3AD473252C3771006986AF /* TableViewEmptyStateConfiguration.swift in Sources */,
 				5D3AD471252C3723006986AF /* TableViewProxy.swift in Sources */,
 				BF33EF7424451A4700CD35AC /* TapAndHoldMessageView.swift in Sources */,
-				5BCF7E552631733200BE769B /* TermsAndPoliciesRouter.swift in Sources */,
 				836AEDE020188F3C00868FC7 /* TestPasswordViewController.m in Sources */,
 				83DBDDE529D730DA00CF433B /* TextDescriptionView.swift in Sources */,
 				12466831275DBE0500C94335 /* TextEditorModel.swift in Sources */,
