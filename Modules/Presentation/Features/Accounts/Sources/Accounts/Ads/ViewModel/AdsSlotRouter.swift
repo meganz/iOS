@@ -9,6 +9,25 @@ public struct AdsSlotRouter<T: View> {
     private let contentView: T
     private let accountUseCase: any AccountUseCaseProtocol
     
+    private class HostingController<S: View>: UIHostingController<AdsSlotView<S>> {
+        
+        private let onViewAppeared: (() -> Void)?
+        
+        init(rootView: AdsSlotView<S>, onViewAppeared: (() -> Void)? = nil) {
+            self.onViewAppeared = onViewAppeared
+            super.init(rootView: rootView)
+        }
+        
+        required dynamic init?(coder aDecoder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+        
+        override func viewDidAppear(_ animated: Bool) {
+            super.viewDidAppear(animated)
+            onViewAppeared?()
+        }
+    }
+    
     public init(
         accountUseCase: some AccountUseCaseProtocol,
         adsSlotViewController: some AdsSlotViewControllerProtocol,
@@ -21,12 +40,14 @@ public struct AdsSlotRouter<T: View> {
         self.presenter = presenter
     }
     
-    public func build() -> UIViewController {
-        let viewModel = AdsSlotViewModel(adsUseCase: AdsUseCase(repository: AdsRepository.newRepo), 
+    public func build(onViewAppeared: (() -> Void)? = nil) -> UIViewController {
+        let viewModel = AdsSlotViewModel(adsUseCase: AdsUseCase(repository: AdsRepository.newRepo),
                                          accountUseCase: accountUseCase,
                                          adsSlotChangeStream: AdsSlotChangeStream(adsSlotViewController: adsSlotViewController))
         let adsSlotView = AdsSlotView(viewModel: viewModel, contentView: contentView)
-        return UIHostingController(rootView: adsSlotView)
+        return HostingController(
+            rootView: adsSlotView,
+            onViewAppeared: onViewAppeared)
     }
     
     public func start() {

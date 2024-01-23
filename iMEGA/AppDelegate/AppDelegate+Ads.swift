@@ -13,7 +13,6 @@ extension AppDelegate {
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             adsSlotViewController: tabBar,
             contentView: MainTabBarWrapper(mainTabBar: tabBar)
-                .onAppear(perform: onAppear)
-        ).build()
+        ).build(onViewAppeared: onAppear)
     }
 }
