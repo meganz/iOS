@@ -29,6 +29,7 @@ class CookieSettingsTableViewController: UITableViewController {
     
     var router: CookieSettingsRouter!
     var viewModel: CookieSettingsViewModel!
+    var snackBarContainer: UIView?
     
     private var footersArray: [String] = ["", "", "", "", "", ""]
     
@@ -43,6 +44,12 @@ class CookieSettingsTableViewController: UITableViewController {
         configView()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        removeSnackBarPresenter()
+    }
+
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         
@@ -74,6 +81,9 @@ class CookieSettingsTableViewController: UITableViewController {
             
         case .cookieSettingsSaved:
             router.dismiss()
+            
+        case .showSnackBar(let message):
+            SnackBarRouter.shared.present(snackBar: SnackBar(message: message))
             
         case .showResult(let resultCommand):
             executeCommand(resultCommand)
@@ -115,7 +125,7 @@ class CookieSettingsTableViewController: UITableViewController {
     }
     
     @IBAction func cookiePolicyTouchUpInside(_ sender: UIBarButtonItem) {
-        router.didTap(on: .showCookiePolicy)
+        viewModel.dispatch(.showCookiePolicy)
     }
     
     @IBAction func privacyPolicyTouchUpInside(_ sender: UIBarButtonItem) {
@@ -146,6 +156,8 @@ class CookieSettingsTableViewController: UITableViewController {
         }
 
         updateAppearance()
+        
+        configureSnackBarPresenter()
     }
     
     private func configToolbar() {
