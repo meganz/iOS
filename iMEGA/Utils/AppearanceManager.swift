@@ -1,6 +1,8 @@
 import MEGAPresentation
 
 class AppearanceManager: NSObject {
+    
+#if MAIN_APP_TARGET
     private static let shared = AppearanceManager()
     private var pendingTraitCollection: UITraitCollection?
     
@@ -14,11 +16,19 @@ class AppearanceManager: NSObject {
         )
     }
     
+    @objc private func appDidBecomeActive() {
+        guard let pendingTraitCollection else { return }
+        AppearanceManager.setupAppearance(pendingTraitCollection)
+    }
+#endif
+    
     @objc class func setupAppearance(_ traitCollection: UITraitCollection) {
+#if MAIN_APP_TARGET
         guard UIApplication.shared.applicationState == .active else {
             shared.pendingTraitCollection = traitCollection
             return
         }
+#endif
         setupNavigationBarAppearance(traitCollection)
         
         UISearchBar.appearance().isTranslucent = false
@@ -78,21 +88,12 @@ class AppearanceManager: NSObject {
     }
     
     @objc class func forceNavigationBarUpdate(_ navigationBar: UINavigationBar, traitCollection: UITraitCollection) {
-        navigationBar.standardAppearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
-        navigationBar.scrollEdgeAppearance?.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
-        
-        forceNavigationBarTitleUpdate(navigationBar, traitCollection: traitCollection)
-        
-        navigationBar.standardAppearance.buttonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.mnz_navigationBarButtonTitle(isEnabled: true, for: traitCollection)]
-        
-        // Mike: For `barButtonItemAppearance.disabled`, we only set it when `.designToken` is turned on. Otherwise the `disabled` state color will be handled by the OS.
-        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) {
-            navigationBar.standardAppearance.buttonAppearance.disabled.titleTextAttributes = [.foregroundColor: UIColor.mnz_navigationBarButtonTitle(isEnabled: false, for: traitCollection)]
-        }
-        
-        navigationBar.standardAppearance.doneButtonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.mnz_navigationBarButtonTitle(isEnabled: true, for: traitCollection)]
-
         navigationBar.tintColor = UIColor.mnz_navigationBarTint(for: traitCollection)
+        
+        let navigationBarAppearance = makeNavigationBarAppearance(traitCollection)
+        
+        navigationBar.standardAppearance = navigationBarAppearance
+        navigationBar.scrollEdgeAppearance = navigationBarAppearance
     }
     
     @objc class func forceNavigationBarTitleUpdate(_ navigationBar: UINavigationBar, traitCollection: UITraitCollection) {
@@ -148,6 +149,13 @@ class AppearanceManager: NSObject {
         UINavigationBar.appearance().tintColor = UIColor.mnz_navigationBarTint(for: traitCollection)
         UINavigationBar.appearance().isTranslucent = false
         
+        let navigationBarAppearance = makeNavigationBarAppearance(traitCollection)
+        
+        UINavigationBar.appearance().standardAppearance = navigationBarAppearance
+        UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
+    }
+    
+    private class func makeNavigationBarAppearance(_ traitCollection: UITraitCollection) -> UINavigationBarAppearance {
         let navigationBarAppearance = UINavigationBarAppearance()
         navigationBarAppearance.configureWithOpaqueBackground()
         navigationBarAppearance.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
@@ -165,12 +173,12 @@ class AppearanceManager: NSObject {
         if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) {
             barButtonItemAppearance.disabled.titleTextAttributes = [.foregroundColor: UIColor.mnz_navigationBarButtonTitle(isEnabled: false, for: traitCollection)]
         }
-
-        navigationBarAppearance.buttonAppearance = barButtonItemAppearance
-        navigationBarAppearance.doneButtonAppearance = barButtonItemAppearance
         
-        UINavigationBar.appearance().standardAppearance = navigationBarAppearance
-        UINavigationBar.appearance().scrollEdgeAppearance = navigationBarAppearance
+        navigationBarAppearance.buttonAppearance = barButtonItemAppearance
+        
+        navigationBarAppearance.doneButtonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.mnz_navigationBarButtonTitle(isEnabled: true, for: traitCollection)]
+        
+        return navigationBarAppearance
     }
     
     private class func setupActivityIndicatorAppearance(_ traitCollection: UITraitCollection) {
@@ -203,10 +211,5 @@ class AppearanceManager: NSObject {
         }
         
         return toolbarAppearance
-    }
-    
-    @objc private func appDidBecomeActive() {
-        guard let pendingTraitChange = pendingTraitCollection else { return }
-        AppearanceManager.setupAppearance(pendingTraitChange)
     }
 }
