@@ -591,7 +591,6 @@
 		5BEACE241FB473940010E02F /* UIImageView+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E150031DB7CB1400383645 /* UIImageView+MNZCategory.m */; };
 		5BEACE2A1FB474060010E02F /* MEGAUser+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 411C8B6A1DECBD87006A0D8C /* MEGAUser+MNZCategory.m */; };
 		5BF4B3B720AB081A00A6E6D7 /* TwoFactorAuthenticationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF4B3B620AB081A00A6E6D7 /* TwoFactorAuthenticationViewController.m */; };
-		5BF5388423743AD80023F2E4 /* ExtensionAppearanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BF538822374394F0023F2E4 /* ExtensionAppearanceManager.swift */; };
 		5BFA346B1FAB4169005BFC4E /* MEGARemoveRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFA34691FAB4168005BFC4E /* MEGARemoveRequestDelegate.m */; };
 		5BFA346E1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BFA346D1FAB6282005BFC4E /* MEGAMoveRequestDelegate.m */; };
 		5D01995724AD64C1006ED2A0 /* InterfaceStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D01995624AD64C1006ED2A0 /* InterfaceStyle.swift */; };
@@ -2415,6 +2414,7 @@
 		C47E7C1C25D1A84200DB6FF5 /* MockOfflineFileInfoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47E7C1B25D1A84200DB6FF5 /* MockOfflineFileInfoRepository.swift */; };
 		C47E7C2E25D1A8C800DB6FF5 /* MockStreaminginfoRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47E7C2D25D1A8C800DB6FF5 /* MockStreaminginfoRepository.swift */; };
 		C47E7C4025D1AC3400DB6FF5 /* MockAudioPlayerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47E7C3F25D1AC3400DB6FF5 /* MockAudioPlayerHandler.swift */; };
+		C47F1D532B5A03E8007B449A /* AppearanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1FEE27231FE4FA001271AF /* AppearanceManager.swift */; };
 		C480AF422570F0F400898D48 /* PlaylistItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C480AF412570F0F400898D48 /* PlaylistItemTableViewCell.swift */; };
 		C480AF4A25711A9200898D48 /* AudioPlaylistIndexedSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C480AF4925711A9200898D48 /* AudioPlaylistIndexedSource.swift */; };
 		C480AF5825711BC100898D48 /* AudioPlaylistSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C480AF5725711BC100898D48 /* AudioPlaylistSource.swift */; };
@@ -3221,7 +3221,6 @@
 		5BF4B3B520AB081A00A6E6D7 /* TwoFactorAuthenticationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TwoFactorAuthenticationViewController.h; sourceTree = "<group>"; };
 		5BF4B3B620AB081A00A6E6D7 /* TwoFactorAuthenticationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TwoFactorAuthenticationViewController.m; sourceTree = "<group>"; };
 		5BF5387F23741DB70023F2E4 /* MEGA.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; name = MEGA.entitlements; path = ../../MEGA.entitlements; sourceTree = "<group>"; };
-		5BF538822374394F0023F2E4 /* ExtensionAppearanceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExtensionAppearanceManager.swift; sourceTree = "<group>"; };
 		5BFA34691FAB4168005BFC4E /* MEGARemoveRequestDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MEGARemoveRequestDelegate.m; path = API/Requests/MEGARemoveRequestDelegate.m; sourceTree = "<group>"; };
 		5BFA346A1FAB4169005BFC4E /* MEGARemoveRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGARemoveRequestDelegate.h; path = API/Requests/MEGARemoveRequestDelegate.h; sourceTree = "<group>"; };
 		5BFA346C1FAB6282005BFC4E /* MEGAMoveRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MEGAMoveRequestDelegate.h; path = API/Requests/MEGAMoveRequestDelegate.h; sourceTree = "<group>"; };
@@ -9542,7 +9541,6 @@
 				775D9C0820EA0CF3001BF1E8 /* Model */,
 				942FD0791EF3EE8800E99FB1 /* Supporting Files */,
 				B5120F4F2A1620C800A56354 /* Views */,
-				5BF538822374394F0023F2E4 /* ExtensionAppearanceManager.swift */,
 				949CEACD1F05121D00A3A580 /* OpenAppRequiredViewController.h */,
 				949CEACE1F05121D00A3A580 /* OpenAppRequiredViewController.m */,
 				94598D741F0CD53A00B57144 /* Share.storyboard */,
@@ -15137,6 +15135,7 @@
 				C46157C12538A8EE00F3970D /* ActionSheetSwitchCell.swift in Sources */,
 				8340CAF8284E48F8007C3B39 /* ActionsView.swift in Sources */,
 				8340CAFB284E4F0C007C3B39 /* ActionViewModel.swift in Sources */,
+				C47F1D532B5A03E8007B449A /* AppearanceManager.swift in Sources */,
 				5BE689BC2419189700462134 /* AppearancePreference+CoreDataClass.swift in Sources */,
 				5BE689B92419189300462134 /* AppearancePreference+CoreDataProperties.swift in Sources */,
 				B60C7B2E2A29CCDB00AAA21F /* AppEnvironmentConfigurator.swift in Sources */,
@@ -15167,7 +15166,6 @@
 				5B79E88F26E6973A0070D782 /* EmptyStateType.swift in Sources */,
 				12FF88F02846F03300D99BED /* EmptyStateView+Timeline.swift in Sources */,
 				12FF88E12846E2CC00D99BED /* EmptyStateView.m in Sources */,
-				5BF5388423743AD80023F2E4 /* ExtensionAppearanceManager.swift in Sources */,
 				B5CC280E298B453F00A966A0 /* FeatureFlagViewModel.swift in Sources */,
 				A8F1D1092A5ECB23000DEB6F /* FileExtensionGroupOCWrapper.swift in Sources */,
 				27AFAC562A53739500C0D6A0 /* FileExtensionOCWrapper.swift in Sources */,
