@@ -28,17 +28,6 @@ final class AdsSlotViewModelTests: XCTestCase {
         XCTAssertFalse(sut.displayAds)
     }
     
-    // MARK: - Feature flag
-    func testIsFeatureFlagForInAppAdsEnabled_inAppAdsEnabled_shouldBeEnabled() {
-        let sut = makeSUT(featureFlags: [.inAppAds: true])
-        XCTAssertTrue(sut.isFeatureFlagForInAppAdsEnabled)
-    }
-    
-    func testIsFeatureFlagForInAppAdsEnabled_inAppAdsDisabled_shouldBeDisabled() {
-        let sut = makeSUT(featureFlags: [.inAppAds: false])
-        XCTAssertFalse(sut.isFeatureFlagForInAppAdsEnabled)
-    }
-    
     // MARK: - Ads slot
     func testLoadAdsForAdsSlot_featureFlagEnabled_abTestAdsEnabled_shouldHaveNewUrlAndDisplayAds() async {
         let expectedAdsSlotConfig = randomAdsSlotConfig
@@ -64,20 +53,6 @@ final class AdsSlotViewModelTests: XCTestCase {
                           adsList: adsList,
                           featureFlags: [.inAppAds: true],
                           abTestProvider: MockABTestProvider(list: [.ads: .baseline]))
-        
-        await sut.setupABTestVariant()
-        sut.monitorAdsSlotChanges()
-        await sut.monitorAdsSlotChangesTask?.value
-        
-        XCTAssertNil(sut.adsUrl)
-        XCTAssertFalse(sut.displayAds)
-    }
-
-    func testLoadAdsForAdsSlot_featureFlagDisabled_shouldHaveNilUrlAndDontDisplayAds() async {
-        let stream = makeMockAdsSlotChangeStream(adsSlotConfigs: [randomAdsSlotConfig])
-        let sut = makeSUT(adsSlotChangeStream: stream,
-                          adsList: adsList,
-                          featureFlags: [.inAppAds: false])
         
         await sut.setupABTestVariant()
         sut.monitorAdsSlotChanges()

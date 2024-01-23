@@ -103,8 +103,10 @@ extension AppDelegate {
         }
     }
     
+    private var isInAppAdvertisementEnabled: Bool { true }
+    
     private func isExternalAdsActive() async -> Bool {
-        guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .inAppAds) else {
+        guard isInAppAdvertisementEnabled else {
             return false
         }
         

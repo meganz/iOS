@@ -79,7 +79,16 @@ class CookieSettingsViewModelTests: XCTestCase {
         expectedCookiesBit.remove(.ads)
         
         let noAdsCheckCookieBit = CookiesBitmap.all
-        let sut = makeSUT(cookieSettings: .success(noAdsCheckCookieBit.rawValue), featureFlags: [.inAppAds: true])
+        let sut = makeSUT(
+            cookieSettings: .success(noAdsCheckCookieBit.rawValue),
+            featureFlags: [.inAppAds: true],
+            abTestProvider: MockABTestProvider(
+                list: [
+                    .ads: .variantA,
+                    .externalAds: .variantA
+                ]
+            )
+        )
         
         test(viewModel: sut,
              action: .configView,
@@ -92,7 +101,16 @@ class CookieSettingsViewModelTests: XCTestCase {
         
         var withAdsCheckCookieBit = CookiesBitmap.all
         withAdsCheckCookieBit.insert(.adsCheckCookie)
-        let sut = makeSUT(cookieSettings: .success(withAdsCheckCookieBit.rawValue), featureFlags: [.inAppAds: true])
+        let sut = makeSUT(
+            cookieSettings: .success(withAdsCheckCookieBit.rawValue),
+            featureFlags: [.inAppAds: true],
+            abTestProvider: MockABTestProvider(
+                list: [
+                    .ads: .variantA,
+                    .externalAds: .variantA
+                ]
+            )
+        )
         
         test(viewModel: sut,
              action: .configView,
@@ -212,8 +230,8 @@ class CookieSettingsViewModelTests: XCTestCase {
         cookieBannerEnable: Bool = true,
         cookieSettings: Result<Int, CookieSettingsErrorEntity> = .success(31),
         sessionTransferURLResult: Result<URL, AccountErrorEntity> = .failure(.generic),
-        featureFlags: [FeatureFlagKey: Bool] = [FeatureFlagKey.inAppAds: false],
-        abTestProvider: MockABTestProvider = MockABTestProvider(list: [.ads: .variantA, .externalAds: .variantA]),
+        featureFlags: [FeatureFlagKey: Bool] = [FeatureFlagKey.inAppAds: true],
+        abTestProvider: MockABTestProvider = MockABTestProvider(list: [.ads: .baseline]),
         mockRouter: CookieSettingsRouting = MockCookieSettingsRouter(),
         file: StaticString = #filePath,
         line: UInt = #line

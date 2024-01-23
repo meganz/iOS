@@ -64,12 +64,9 @@ final public class AdsSlotViewModel: ObservableObject {
     }
     
     // MARK: Feature Flag
-    var isFeatureFlagForInAppAdsEnabled: Bool {
-        featureFlagProvider.isFeatureFlagEnabled(for: .inAppAds)
-    }
+    var isInAppAdvertisementEnabled: Bool { true }
     
     // MARK: AB Test
-
     func setupABTestVariant() async {
         isAdsEnabled = await abTestProvider.abTestVariant(for: .ads) == .variantA
     }
@@ -86,7 +83,7 @@ final public class AdsSlotViewModel: ObservableObject {
     }
     
     func updateAdsSlot(_ newAdsSlotConfig: AdsSlotConfig?) async {
-        guard isFeatureFlagForInAppAdsEnabled, isAdsEnabled else {
+        guard isInAppAdvertisementEnabled, isAdsEnabled else {
             adsSlotConfig = nil
             await configureAds(url: nil)
             return
@@ -114,7 +111,7 @@ final public class AdsSlotViewModel: ObservableObject {
     }
     
     func loadNewAds() async {
-        guard isFeatureFlagForInAppAdsEnabled, let adsSlotConfig, isAdsEnabled else {
+        guard isInAppAdvertisementEnabled, let adsSlotConfig, isAdsEnabled else {
             await configureAds(url: nil)
             return
         }

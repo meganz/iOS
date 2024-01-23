@@ -662,17 +662,6 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
     }
     
     // MARK: - Ads
-    func testSetupExternalAds_featureFlagDisabled_shouldBeFalse() async {
-        let sut = makeSUT(
-            accountDetails: AccountDetailsEntity(proLevel: .free),
-            featureFlags: [.inAppAds: false],
-            abTestProvider: MockABTestProvider(list: [.ads: .variantA, .externalAds: .variantA])
-        )
-        
-        await sut.setUpExternalAds()
-        
-        XCTAssertFalse(sut.isExternalAdsActive)
-    }
     
     func testSetupExternalAds_featureFlagEnabled_adsEnabledAndExternalAdsDisabled_shouldBeFalse() async {
         let sut = makeSUT(
