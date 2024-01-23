@@ -453,7 +453,7 @@
 }
 
 - (IBAction)termsAndPoliciesTouchUpInside:(id)sender {
-    [[TermsAndPoliciesRouter.alloc initWithNavigationController:self.navigationController] start];
+    [self showTermsAndPolicies];
 }
 
 - (void)restoreTouchUpInside {
