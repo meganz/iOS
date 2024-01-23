@@ -146,8 +146,10 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
     }
     
     // MARK: - Ads Cookie Flags
+    private var isInAppAdvertisementEnabled: Bool { true }
+    
     private func setUpExternalAds() async {
-        guard featureFlagProvider.isFeatureFlagEnabled(for: .inAppAds) else {
+        guard isInAppAdvertisementEnabled else {
             isExternalAdsActive = false
             return
         }

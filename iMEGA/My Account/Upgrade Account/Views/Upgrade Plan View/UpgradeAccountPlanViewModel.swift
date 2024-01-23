@@ -85,9 +85,11 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     }
     
     // MARK: - Setup
+    private var isInAppAdvertisementEnabled: Bool { true }
+    
     @MainActor
     func setUpExternalAds() async {
-        guard featureFlagProvider.isFeatureFlagEnabled(for: .inAppAds) else {
+        guard isInAppAdvertisementEnabled else {
             isExternalAdsActive = false
             return
         }

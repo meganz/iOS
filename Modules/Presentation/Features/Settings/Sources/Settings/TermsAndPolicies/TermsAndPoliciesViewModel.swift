@@ -1,5 +1,5 @@
-import Foundation
 import Combine
+import Foundation
 import MEGADomain
 import MEGAPresentation
 
@@ -23,11 +23,13 @@ final public class TermsAndPoliciesViewModel: ObservableObject {
     }
     
     // MARK: - Cookie policy
+    private var isInAppAdvertisementEnabled: Bool { true }
+    
     @MainActor
     func setupCookiePolicyURL() async {
         guard let cookiePolicyURL = URL(string: "https://mega.nz/cookie") else { return }
         
-        guard featureFlagProvider.isFeatureFlagEnabled(for: .inAppAds) else {
+        guard isInAppAdvertisementEnabled else {
             cookieUrl = cookiePolicyURL
             return
         }
