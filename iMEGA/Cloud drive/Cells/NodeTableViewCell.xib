@@ -82,6 +82,9 @@
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vGo-wh-R44">
                                                 <rect key="frame" x="0.0" y="5" width="12" height="12"/>
+                                                <accessibility key="accessibilityConfiguration">
+                                                    <bool key="isElement" value="YES"/>
+                                                </accessibility>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="12" id="T4z-45-ZHU"/>
                                                     <constraint firstAttribute="width" constant="12" id="lBy-2Z-Pow"/>
@@ -99,6 +102,9 @@
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="favouriteSmall" translatesAutoresizingMaskIntoConstraints="NO" id="pIz-hg-PVL">
                                                 <rect key="frame" x="0.0" y="5" width="12" height="12"/>
+                                                <accessibility key="accessibilityConfiguration">
+                                                    <bool key="isElement" value="YES"/>
+                                                </accessibility>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="12" id="6Cs-oc-4Fr"/>
                                                     <constraint firstAttribute="height" constant="12" id="sTO-9j-uF6"/>
@@ -117,6 +123,9 @@
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="linked" translatesAutoresizingMaskIntoConstraints="NO" id="QMV-1U-QJX">
                                                 <rect key="frame" x="0.0" y="5" width="12" height="12"/>
                                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <accessibility key="accessibilityConfiguration">
+                                                    <bool key="isElement" value="YES"/>
+                                                </accessibility>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="12" id="EHj-YD-ngF"/>
                                                     <constraint firstAttribute="height" constant="12" id="Vbb-8c-Ye6"/>

@@ -77,6 +77,9 @@
         NSString *labelString = [[MEGANode stringForNodeLabel:node.label] stringByAppendingString:@"Small"];
         self.labelImageView.image = [UIImage imageNamed:labelString];
     }
+    
+    [self setAccessibilityLabelsForIconsIn:node];
+    
     BOOL isDownloaded = (node.isFile && [[MEGAStore shareInstance] offlineNodeWithNode:node]);
     self.downloadedImageView.hidden = !isDownloaded;
     if (self.downloadedView != nil) {
