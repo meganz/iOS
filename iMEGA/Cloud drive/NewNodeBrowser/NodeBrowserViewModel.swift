@@ -96,6 +96,7 @@ class NodeBrowserViewModel: ObservableObject {
     func viewTask() async {
         await determineIfHasVisualMediaIfNeeded()
         determineIfShowingAutomaticallyMediaDiscovery()
+        onUpdateSearchBarVisibility(!isMediaDiscoveryShown(for: viewMode))
     }
     
     private func determineIfShowingAutomaticallyMediaDiscovery() {
