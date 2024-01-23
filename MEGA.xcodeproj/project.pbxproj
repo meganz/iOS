@@ -1195,8 +1195,6 @@
 		83FEA8B525C1B3990063A560 /* FolderLinkCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FEA8B125C1B3970063A560 /* FolderLinkCollectionViewController.swift */; };
 		83FEA8B625C1B3990063A560 /* FolderLinkTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FEA8B425C1B3980063A560 /* FolderLinkTableViewController.swift */; };
 		83FF502F247E86CD00EAC08B /* CustomModalAlertViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A819B33E1EAFA7E2004592F9 /* CustomModalAlertViewController.m */; };
-		94004A762AA23FDB004C873B /* SearchMock in Frameworks */ = {isa = PBXBuildFile; productRef = 94004A752AA23FDB004C873B /* SearchMock */; };
-		94004A792AA24040004C873B /* Search in Frameworks */ = {isa = PBXBuildFile; productRef = 94004A782AA24040004C873B /* Search */; };
 		940445B4298B044A00A5ECA1 /* APIEnvironmentRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940445B3298B044A00A5ECA1 /* APIEnvironmentRepositoryTests.swift */; };
 		9405E70E28A3AC43005A16D1 /* BackupNodesValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9405E70D28A3AC43005A16D1 /* BackupNodesValidator.swift */; };
 		940931FC2A56ED5F0093C169 /* DeviceCenter in Frameworks */ = {isa = PBXBuildFile; productRef = 940931FB2A56ED5F0093C169 /* DeviceCenter */; };
@@ -1227,7 +1225,6 @@
 		941135661F01541100D33428 /* NSFileManager+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 41DC6F711D54E7080081832C /* NSFileManager+MNZCategory.m */; };
 		9418A7A22ACF84210014C01C /* MEGADesignToken in Frameworks */ = {isa = PBXBuildFile; productRef = 9418A7A12ACF84210014C01C /* MEGADesignToken */; };
 		9418DB292A4EE5FB002B0077 /* MEGAPermissions in Frameworks */ = {isa = PBXBuildFile; productRef = 9418DB282A4EE5FB002B0077 /* MEGAPermissions */; };
-		9418DB2B2A4EE611002B0077 /* MEGAPermissionsMock in Frameworks */ = {isa = PBXBuildFile; productRef = 9418DB2A2A4EE611002B0077 /* MEGAPermissionsMock */; };
 		9419E0472A50175F00813577 /* NodeLoadOperation+NodeAccessConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9419E0462A50175F00813577 /* NodeLoadOperation+NodeAccessConfiguration.swift */; };
 		9419E0482A50175F00813577 /* NodeLoadOperation+NodeAccessConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9419E0462A50175F00813577 /* NodeLoadOperation+NodeAccessConfiguration.swift */; };
 		9422494228DB77A2009626E6 /* ContactLinkContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9422494128DB77A2009626E6 /* ContactLinkContentView.swift */; };
@@ -1820,6 +1817,8 @@
 		B6790E06256B81C600154F6D /* MEGANode+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790E05256B81C600154F6D /* MEGANode+Additions.swift */; };
 		B67B189925CAAEBA0022D6C0 /* CGSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D33D671250DBA0B00D74666 /* CGSize.swift */; };
 		B67B18C625CAB7B60022D6C0 /* FileSystemImageCacheClient+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67B18C525CAB7B60022D6C0 /* FileSystemImageCacheClient+Additions.swift */; };
+		B67D44DE2B605EF500738E04 /* MEGAPermissionsMock in Frameworks */ = {isa = PBXBuildFile; productRef = B67D44DD2B605EF500738E04 /* MEGAPermissionsMock */; };
+		B67D44E12B605F7600738E04 /* SearchMock in Frameworks */ = {isa = PBXBuildFile; productRef = B67D44E02B605F7600738E04 /* SearchMock */; };
 		B67DA38A2330AF9900E62067 /* AddPhoneNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67DA3892330AF9900E62067 /* AddPhoneNumberViewController.swift */; };
 		B6826B682898F4E900B2B8D0 /* MEGAUI in Frameworks */ = {isa = PBXBuildFile; productRef = B6826B672898F4E900B2B8D0 /* MEGAUI */; };
 		B6831C1525B65C7E0072827F /* CustomModalAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A819B3411EAFA844004592F9 /* CustomModalAlertViewController.xib */; };
@@ -5167,6 +5166,7 @@
 				BF6149522A9FF33300AB051A /* MEGAL10n in Frameworks */,
 				BF6149542A9FF33300AB051A /* MEGAL10nObjc in Frameworks */,
 				9418DB292A4EE5FB002B0077 /* MEGAPermissions in Frameworks */,
+				B67D44DE2B605EF500738E04 /* MEGAPermissionsMock in Frameworks */,
 				946ACCC5299C0B0000E6C0F5 /* MEGAPresentation in Frameworks */,
 				B5D8DD8F2AC54DE200F1D18B /* MEGAPresentationMock in Frameworks */,
 				A891E8A529C1E09D0020072A /* MEGASdk in Frameworks */,
@@ -5185,6 +5185,7 @@
 				BFA275E327ED315E00E15B92 /* SDAVAssetExportSession in Frameworks */,
 				BF1164B027F68EC500E5C5A4 /* SDWebImageWebPCoder in Frameworks */,
 				945928F52AA23C1B0037694C /* Search in Frameworks */,
+				B67D44E12B605F7600738E04 /* SearchMock in Frameworks */,
 				940931FE2A56ED680093C169 /* Settings in Frameworks */,
 				2446DEE92B0F099D00FA3FB8 /* Video in Frameworks */,
 				A8B51AE927F3565E0030F1EA /* WSTagsField in Frameworks */,
@@ -5304,10 +5305,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9418DB2B2A4EE611002B0077 /* MEGAPermissionsMock in Frameworks */,
 				1678D7F22A45487E00336C52 /* MEGATest in Frameworks */,
-				94004A792AA24040004C873B /* Search in Frameworks */,
-				94004A762AA23FDB004C873B /* SearchMock in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12593,6 +12591,8 @@
 				B5D58D542AC67C89004ECD36 /* Accounts */,
 				9418A7A12ACF84210014C01C /* MEGADesignToken */,
 				2446DEE82B0F099D00FA3FB8 /* Video */,
+				B67D44DD2B605EF500738E04 /* MEGAPermissionsMock */,
+				B67D44E02B605F7600738E04 /* SearchMock */,
 			);
 			productName = iMEGA;
 			productReference = 1373618A1A6664C300B740E8 /* MEGA.app */;
@@ -12812,9 +12812,6 @@
 			name = MEGAUnitTests;
 			packageProductDependencies = (
 				1678D7F12A45487E00336C52 /* MEGATest */,
-				9418DB2A2A4EE611002B0077 /* MEGAPermissionsMock */,
-				94004A752AA23FDB004C873B /* SearchMock */,
-				94004A782AA24040004C873B /* Search */,
 			);
 			productName = MEGAUnitTests;
 			productReference = B6CED48B22B8AC70009C4861 /* MEGAUnitTests.xctest */;
@@ -17537,14 +17534,6 @@
 			package = 9418A7A02ACF84210014C01C /* XCRemoteSwiftPackageReference "MEGADesignToken" */;
 			productName = MEGADesignToken;
 		};
-		94004A752AA23FDB004C873B /* SearchMock */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = SearchMock;
-		};
-		94004A782AA24040004C873B /* Search */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Search;
-		};
 		940931FB2A56ED5F0093C169 /* DeviceCenter */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = DeviceCenter;
@@ -17581,10 +17570,6 @@
 		9418DB282A4EE5FB002B0077 /* MEGAPermissions */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAPermissions;
-		};
-		9418DB2A2A4EE611002B0077 /* MEGAPermissionsMock */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MEGAPermissionsMock;
 		};
 		945928F42AA23C1B0037694C /* Search */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -17831,6 +17816,14 @@
 		B66BC70728A0F9CB00D4CB04 /* MEGADomainMock */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGADomainMock;
+		};
+		B67D44DD2B605EF500738E04 /* MEGAPermissionsMock */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGAPermissionsMock;
+		};
+		B67D44E02B605F7600738E04 /* SearchMock */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SearchMock;
 		};
 		B6826B672898F4E900B2B8D0 /* MEGAUI */ = {
 			isa = XCSwiftPackageProductDependency;
