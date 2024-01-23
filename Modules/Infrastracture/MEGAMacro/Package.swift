@@ -1,7 +1,7 @@
 // swift-tools-version: 5.9
 
-import PackageDescription
 import CompilerPluginSupport
+import PackageDescription
 
 let settings: [SwiftSetting] = [.unsafeFlags(["-warnings-as-errors"]), .enableExperimentalFeature("ExistentialAny")]
 
@@ -17,11 +17,11 @@ let package = Package(
         .executable(
             name: "MEGAMacroClient",
             targets: ["MEGAMacroClient"]
-        ),
+        )
     ],
     dependencies: [
         // Depend on the Swift 5.9 release of SwiftSyntax
-        .package(url: "https://github.com/apple/swift-syntax.git", from: "509.0.0"),
+        .package(url: "https://github.com/apple/swift-syntax.git", exact: "509.0.0")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -47,9 +47,9 @@ let package = Package(
             name: "MEGAMacroTests",
             dependencies: [
                 "MEGAMacroMacros",
-                .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
+                .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax")
             ],
             swiftSettings: settings
-        ),
+        )
     ]
 )
