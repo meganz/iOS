@@ -1525,6 +1525,7 @@
 		A86280BC291E8D510010D6E0 /* MEGADomain in Frameworks */ = {isa = PBXBuildFile; productRef = A86280BB291E8D510010D6E0 /* MEGADomain */; };
 		A86AC4AE26710AA600E8E89A /* ChangeName.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A86AC4AD26710AA600E8E89A /* ChangeName.storyboard */; };
 		A86E34B3217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A86E34B2217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.m */; };
+		A86F10652B5965E4007E24C6 /* CommonParticipantViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A86F10642B5965E4007E24C6 /* CommonParticipantViewModelProtocol.swift */; };
 		A870B31C27AC2FBB0052B6D0 /* SpotlightIndexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A870B31B27AC2FBB0052B6D0 /* SpotlightIndexer.swift */; };
 		A873E84426E117A400CBB174 /* AppFirstLaunchSecurityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A873E84326E117A400CBB174 /* AppFirstLaunchSecurityChecker.swift */; };
 		A873E84626E117A400CBB174 /* AppFirstLaunchSecurityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A873E84326E117A400CBB174 /* AppFirstLaunchSecurityChecker.swift */; };
@@ -4137,6 +4138,7 @@
 		A86C09D72A4B0A78001D0815 /* MEGAChatSDK */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAChatSDK; sourceTree = "<group>"; };
 		A86E34B1217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MEGAChatGenericRequestDelegate.h; sourceTree = "<group>"; };
 		A86E34B2217F705700EFCAB0 /* MEGAChatGenericRequestDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MEGAChatGenericRequestDelegate.m; sourceTree = "<group>"; };
+		A86F10642B5965E4007E24C6 /* CommonParticipantViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonParticipantViewModelProtocol.swift; sourceTree = "<group>"; };
 		A870B31B27AC2FBB0052B6D0 /* SpotlightIndexer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotlightIndexer.swift; sourceTree = "<group>"; };
 		A873E84326E117A400CBB174 /* AppFirstLaunchSecurityChecker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppFirstLaunchSecurityChecker.swift; sourceTree = "<group>"; };
 		A873E85A26E2228400CBB174 /* FileVersioningViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileVersioningViewModel.swift; sourceTree = "<group>"; };
@@ -9059,6 +9061,7 @@
 				8365B2A12AB855F40057489A /* ParticipantsListSelector */,
 				BF66DFDD2613E7BE00066F35 /* ParticpantCell */,
 				83CB60E42AC58A3000042EBD /* SeeAllParticipantsInWaitingRoom */,
+				A86F10642B5965E4007E24C6 /* CommonParticipantViewModelProtocol.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -13757,6 +13760,7 @@
 				5D1B23F524AF34EE00ACE1C5 /* ColorFactory.swift in Sources */,
 				5D64660624890BBE006030A5 /* ColorProviding.swift in Sources */,
 				5DD6B17624D7C34700F14515 /* ColorStyle.swift in Sources */,
+				A86F10652B5965E4007E24C6 /* CommonParticipantViewModelProtocol.swift in Sources */,
 				A8A923A62861DFAC006F66C3 /* CompressingLogFileManager+additions.swift in Sources */,
 				A899F0E8278F3567001A2D43 /* CompressingLogFileManager.m in Sources */,
 				BF33EF902447E70200CD35AC /* CondensationView.swift in Sources */,
