@@ -212,11 +212,15 @@ extension SearchQueryEntity {
         if let firstNodeTypeChip = chips.first(where: { $0.type.isNodeTypeChip })?.type,
            case let SearchChipEntity.ChipType.nodeType(nodeType) = firstNodeTypeChip {
             filter.nodeType = Int32(nodeType)
+        } else {
+            filter.nodeType = Int32(MEGANodeType.unknown.rawValue)
         }
 
         if let firstNodeFormatChip = chips.first(where: { $0.type.isNodeFormatChip })?.type,
            case let SearchChipEntity.ChipType.nodeFormat(nodeFormat) = firstNodeFormatChip {
             filter.category = Int32(nodeFormat)
+        } else {
+            filter.category = Int32(MEGANodeFormatType.unknown.rawValue)
         }
 
         // SDK support both creation and modification date
