@@ -8,7 +8,7 @@ protocol CookieSettingsRouting: Routing {
 }
 
 enum CookieSettingsSource {
-    case showCookiePolicy
+    case showCookiePolicy(url: URL)
     case showPrivacyPolicy
 }
 
@@ -26,6 +26,7 @@ final class CookieSettingsRouter: NSObject, CookieSettingsRouting {
         }
 
         let viewModel = CookieSettingsViewModel(
+            accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
             cookieSettingsUseCase: CookieSettingsUseCase(repository: CookieSettingsRepository.newRepo),
             router: self
         )
@@ -46,11 +47,11 @@ final class CookieSettingsRouter: NSObject, CookieSettingsRouting {
     func didTap(on source: CookieSettingsSource) {
         switch source {
             
-        case .showCookiePolicy:
-            NSURL.init(string: "https://mega.nz/cookie")?.mnz_presentSafariViewController()
+        case .showCookiePolicy(let url):
+            NSURL(string: url.absoluteString)?.mnz_presentSafariViewController()
             
         case .showPrivacyPolicy:
-            NSURL.init(string: "https://mega.nz/privacy")?.mnz_presentSafariViewController()
+            NSURL(string: "https://mega.nz/privacy")?.mnz_presentSafariViewController()
         }
     }
     

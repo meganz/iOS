@@ -1681,6 +1681,7 @@
 		B5C3ABAF2A71232B008C3708 /* UsageViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C3ABAE2A71232B008C3708 /* UsageViewControllerTests.swift */; };
 		B5C5228C27EAC0080060EC3E /* PhotosBannerViewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C5228B27EAC0080060EC3E /* PhotosBannerViewProvider.swift */; };
 		B5C5E80127CCBA8C0021B27B /* ConfirmAccountViewcontroller+DeleteAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C5E80027CCBA8C0021B27B /* ConfirmAccountViewcontroller+DeleteAccount.swift */; };
+		B5C640822B5E1EA0005F8AEB /* CookieSettingsTableViewController+SnackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C640812B5E1EA0005F8AEB /* CookieSettingsTableViewController+SnackBar.swift */; };
 		B5CC280E298B453F00A966A0 /* FeatureFlagViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E9D3FB28ACEB0800504F1F /* FeatureFlagViewModel.swift */; };
 		B5CC2A1C299347BA00A966A0 /* AccountRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CC2A1B299347BA00A966A0 /* AccountRepositoryTests.swift */; };
 		B5CC2AA32995EF8A00A966A0 /* SharedItemsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CC2AA22995EF8A00A966A0 /* SharedItemsViewModel.swift */; };
@@ -4303,6 +4304,7 @@
 		B5C3ABAE2A71232B008C3708 /* UsageViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageViewControllerTests.swift; sourceTree = "<group>"; };
 		B5C5228B27EAC0080060EC3E /* PhotosBannerViewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosBannerViewProvider.swift; sourceTree = "<group>"; };
 		B5C5E80027CCBA8C0021B27B /* ConfirmAccountViewcontroller+DeleteAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ConfirmAccountViewcontroller+DeleteAccount.swift"; sourceTree = "<group>"; };
+		B5C640812B5E1EA0005F8AEB /* CookieSettingsTableViewController+SnackBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CookieSettingsTableViewController+SnackBar.swift"; sourceTree = "<group>"; };
 		B5CC2A1B299347BA00A966A0 /* AccountRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountRepositoryTests.swift; sourceTree = "<group>"; };
 		B5CC2AA22995EF8A00A966A0 /* SharedItemsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItemsViewModel.swift; sourceTree = "<group>"; };
 		B5CC2AA42995F15200A966A0 /* SharedItemsViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItemsViewRouter.swift; sourceTree = "<group>"; };
@@ -7156,6 +7158,7 @@
 			children = (
 				5B366C4125767D2E00FD3806 /* CookieSettings.storyboard */,
 				5B366C4A2576846500FD3806 /* CookieSettingsRouter.swift */,
+				B5C640812B5E1EA0005F8AEB /* CookieSettingsTableViewController+SnackBar.swift */,
 				5B366C5825769BC800FD3806 /* CookieSettingsTableViewController.swift */,
 				5BB54FD4259BAF1C007DF40C /* CookieSettingsViewModel.swift */,
 			);
@@ -13778,6 +13781,7 @@
 				9479F02B28BFAB26008578BE /* ContextMenuModel+Mapper.swift in Sources */,
 				9479F02728BFA4C3008578BE /* ContextMenuModel.swift in Sources */,
 				5B366C4B2576846500FD3806 /* CookieSettingsRouter.swift in Sources */,
+				B5C640822B5E1EA0005F8AEB /* CookieSettingsTableViewController+SnackBar.swift in Sources */,
 				5B366C5925769BC800FD3806 /* CookieSettingsTableViewController.swift in Sources */,
 				5BB54FD7259BAF1C007DF40C /* CookieSettingsViewModel.swift in Sources */,
 				A81E86D0225B3CF900950678 /* CopyableLabel.m in Sources */,
