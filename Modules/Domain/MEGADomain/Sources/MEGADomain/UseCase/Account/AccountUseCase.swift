@@ -1,3 +1,5 @@
+import Foundation
+
 // MARK: - Use case protocol
 public protocol AccountUseCaseProtocol {
     var currentUserHandle: HandleEntity? { get }
@@ -14,6 +16,7 @@ public protocol AccountUseCaseProtocol {
     var isOverQuota: Bool { get }
     func refreshCurrentAccountDetails() async throws -> AccountDetailsEntity
     func getMiscFlags() async throws
+    func sessionTransferURL(path: String) async throws -> URL
 }
 
 // MARK: - Use case implementation
@@ -80,5 +83,9 @@ public struct AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseProtoc
     
     public func getMiscFlags() async throws {
         try await repository.getMiscFlags()
+    }
+    
+    public func sessionTransferURL(path: String) async throws -> URL {
+        try await repository.sessionTransferURL(path: path)
     }
 }

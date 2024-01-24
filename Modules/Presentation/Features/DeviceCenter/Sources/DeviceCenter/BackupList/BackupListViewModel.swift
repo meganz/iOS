@@ -15,7 +15,6 @@ enum SortType: Int {
 public final class BackupListViewModel: ObservableObject {
     private let deviceCenterUseCase: any DeviceCenterUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
-    private let cameraUploadsUseCase: any CameraUploadsUseCaseProtocol
     private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
     private let router: any BackupListRouting
     private let deviceCenterBridge: DeviceCenterBridge
@@ -81,7 +80,6 @@ public final class BackupListViewModel: ObservableObject {
         updateInterval: UInt64,
         deviceCenterUseCase: some DeviceCenterUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
-        cameraUploadsUseCase: some CameraUploadsUseCaseProtocol,
         networkMonitorUseCase: some NetworkMonitorUseCaseProtocol,
         router: some BackupListRouting,
         deviceCenterBridge: DeviceCenterBridge,
@@ -100,7 +98,6 @@ public final class BackupListViewModel: ObservableObject {
         self.updateInterval = updateInterval
         self.deviceCenterUseCase = deviceCenterUseCase
         self.nodeUseCase = nodeUseCase
-        self.cameraUploadsUseCase = cameraUploadsUseCase
         self.networkMonitorUseCase = networkMonitorUseCase
         self.router = router
         self.deviceCenterBridge = deviceCenterBridge
@@ -235,7 +232,6 @@ public final class BackupListViewModel: ObservableObject {
                     return DeviceCenterItemViewModel(
                         deviceCenterUseCase: deviceCenterUseCase,
                         nodeUseCase: nodeUseCase,
-                        cameraUploadsUseCase: cameraUploadsUseCase,
                         deviceCenterBridge: deviceCenterBridge,
                         itemType: .backup(backup),
                         assets: assets

@@ -1,4 +1,5 @@
 import Combine
+import Foundation
 
 public protocol AccountRepositoryProtocol: RepositoryProtocol {
     var currentUserHandle: HandleEntity? { get }
@@ -15,6 +16,7 @@ public protocol AccountRepositoryProtocol: RepositoryProtocol {
     func incomingContactsRequestsCount() -> Int
     func relevantUnseenUserAlertsCount() -> UInt
     func getMiscFlags() async throws
+    func sessionTransferURL(path: String) async throws -> URL
     
     var currentAccountDetails: AccountDetailsEntity? { get }
     func refreshCurrentAccountDetails() async throws -> AccountDetailsEntity

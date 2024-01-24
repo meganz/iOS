@@ -332,6 +332,37 @@ final class AccountRepositoryTests: XCTestCase {
             XCTAssertEqual(errorThrown as? AccountErrorEntity, .generic)
         }
     }
+    
+    func testSessionTransferURL_whenApiOk_shouldReturnURL() async throws {
+        let urlPath = "https://mega.nz"
+        let expectedURL = try XCTUnwrap(URL(string: urlPath))
+        let mockSdk = MockSdk(requestResult: .success(MockRequest(handle: 1, link: urlPath)))
+        let sut = makeSUT(sdk: mockSdk)
+        
+        let urlResult = try await sut.sessionTransferURL(path: urlPath)
+        
+        XCTAssertEqual(urlResult, expectedURL)
+    }
+    
+    func testSessionTransferURL_whenFail_shouldThrowGenericError() async throws {
+        let urlPath = "https://mega.nz"
+        let mockSdk = MockSdk(requestResult: .failure(MockError.failingError))
+        let sut = makeSUT(sdk: mockSdk)
+        
+        await XCTAsyncAssertThrowsError(try await sut.sessionTransferURL(path: urlPath)) { errorThrown in
+            XCTAssertEqual(errorThrown as? AccountErrorEntity, .generic)
+        }
+    }
+    
+    func testSessionTransferURL_whenApiOkButInvalidURLLink_shouldThrowGenericError() async throws {
+        let urlPath = "https://mega.nz"
+        let mockSdk = MockSdk(requestResult: .success(MockRequest(handle: 1, link: nil)))
+        let sut = makeSUT(sdk: mockSdk)
+        
+        await XCTAsyncAssertThrowsError(try await sut.sessionTransferURL(path: urlPath)) { errorThrown in
+            XCTAssertEqual(errorThrown as? AccountErrorEntity, .generic)
+        }
+    }
 
     // MARK: - Helpers
     

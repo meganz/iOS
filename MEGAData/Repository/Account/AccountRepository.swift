@@ -161,6 +161,24 @@ final class AccountRepository: NSObject, AccountRepositoryProtocol {
             })
         })
     }
+    
+    func sessionTransferURL(path: String) async throws -> URL {
+        try await withAsyncThrowingValue(in: { completion in
+            sdk.getSessionTransferURL(path, delegate: RequestDelegate { result in
+                switch result {
+                case .success(let request):
+                    guard let link = request.link,
+                          let url = URL(string: link) else {
+                        completion(.failure(AccountErrorEntity.generic))
+                        return
+                    }
+                    completion(.success(url))
+                case .failure:
+                    completion(.failure(AccountErrorEntity.generic))
+                }
+            })
+        })
+    }
 }
 
 // MARK: - MEGARequestDelegate

@@ -72,7 +72,9 @@ struct NodeBrowserView: View {
     @ToolbarContentBuilder
     private var toolbarNavigationTitle: some ToolbarContent {
         ToolbarItem(placement: .principal) {
-            Text(viewModel.title ?? "").font(.headline)
+            Text(viewModel.title ?? "")
+                .lineLimit(1)
+                .font(.headline)
         }
     }
 
