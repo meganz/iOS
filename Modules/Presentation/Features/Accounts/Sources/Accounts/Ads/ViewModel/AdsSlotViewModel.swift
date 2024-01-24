@@ -126,10 +126,20 @@ final public class AdsSlotViewModel: ObservableObject {
                 return
             }
             
-            await configureAds(url: URL(string: adsValue), shouldDisplayAds: adsSlotConfig.displayAds)
+            let adsURLString = await appendAdCookieStatusToURL(url: adsValue)
+            
+            await configureAds(url: URL(string: adsURLString), shouldDisplayAds: adsSlotConfig.displayAds)
         } catch {
             await configureAds(url: nil)
         }
+    }
+    
+    func appendAdCookieStatusToURL(url: String) async -> String {
+        let isAdsCookieEnabled = await adsSlotConfig?.isAdsCookieEnabled()
+        let adCookieParameter = isAdsCookieEnabled == true ? "1" : "0"
+        // Considering the scenario where the first parameter is added using a ? instead of an &
+        let separator = url.contains("?") ? "&" : "?"
+        return url + separator + "ac=" + adCookieParameter
     }
     
     func didTapAdsContent() async {
