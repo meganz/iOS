@@ -31,4 +31,10 @@ extension NodeTableViewCell {
     @objc func configureMoreButtonUI() {
         moreButton.tintColor = MEGAAppColor.Gray._BBBBBB.uiColor
     }
+    
+    @objc func setAccessibilityLabelsForIcons(in node: MEGANode) {
+        labelImageView.accessibilityLabel = MEGANode.string(for: node.label)
+        favouriteImageView.accessibilityLabel = Strings.Localizable.favourite
+        linkImageView.accessibilityLabel = Strings.Localizable.shared
+    }
 }

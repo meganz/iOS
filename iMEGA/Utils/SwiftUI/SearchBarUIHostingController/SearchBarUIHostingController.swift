@@ -8,10 +8,16 @@ import SwiftUI
 // use .searchable.
 class SearchBarUIHostingController<Content>: UIHostingController<Content> where Content: View {
     var wrapper: SearchControllerWrapper?
+    var backButtonTitle: String?
 
-    init(rootView: Content, wrapper: SearchControllerWrapper) {
+    init(
+        rootView: Content,
+        wrapper: SearchControllerWrapper,
+        backButtonTitle: String?
+    ) {
         super.init(rootView: rootView)
         self.wrapper = wrapper
+        self.backButtonTitle = backButtonTitle
     }
 
     @MainActor required dynamic init?(coder aDecoder: NSCoder) {
@@ -24,6 +30,10 @@ class SearchBarUIHostingController<Content>: UIHostingController<Content> where 
         navigationItem.hidesSearchBarWhenScrolling = false
         navigationItem.hidesBackButton = true
         definesPresentationContext = true
+
+        if let backButtonTitle {
+            setMenuCapableBackButtonWith(menuTitle: backButtonTitle)
+        }
 
         wrapper?.onUpdateSearchBarVisibility = { [weak self] isVisible in
             guard let self, let wrapper = self.wrapper else { return }

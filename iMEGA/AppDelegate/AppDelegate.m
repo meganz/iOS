@@ -230,7 +230,7 @@
             } else {
                 _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
                 UIViewController *mainController = [self adsMainTabBarController:_mainTBC
-                                                                        onAppear:nil];
+                                                             onViewFirstAppeared:nil];
                 [self.window setRootViewController:mainController];
             }
         }
@@ -675,7 +675,7 @@
             _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
             
             UIViewController *mainController = [self adsMainTabBarController:_mainTBC
-                                                                    onAppear:mainOnAppear];
+                                                         onViewFirstAppeared:mainOnAppear];
             [self.window setRootViewController:mainController];
             
             if ([LTHPasscodeViewController doesPasscodeExist]) {
@@ -1042,7 +1042,7 @@
     if (![MEGAReachabilityManager isReachable] || [self.window.rootViewController isKindOfClass:[LTHPasscodeViewController class]]) {
         _mainTBC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TabBarControllerID"];
         UIViewController *mainController = [self adsMainTabBarController:_mainTBC
-                                                                onAppear:nil];
+                                                     onViewFirstAppeared:nil];
         [self.window setRootViewController:mainController];
     } else {
         [self showLink:MEGALinkManager.linkURL];

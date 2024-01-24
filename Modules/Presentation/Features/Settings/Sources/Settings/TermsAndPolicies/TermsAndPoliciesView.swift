@@ -1,35 +1,31 @@
+import MEGAL10n
 import SwiftUI
 
 public struct TermsAndPoliciesView: View {
-    private let privacyUrl = URL(string: "https://mega.io/privacy") ?? URL(fileURLWithPath: "")
-    private let cookieUrl = URL(string: "https://mega.nz/cookie") ?? URL(fileURLWithPath: "")
-    private let termsUrl = URL(string: "https://mega.io/terms") ?? URL(fileURLWithPath: "")
+    @StateObject var viewModel: TermsAndPoliciesViewModel
     
-    private let privacyPolicyText: String
-    private let cookiePolicyText: String
-    private let termsOfServicesText: String
-    
-    public init(privacyPolicyText: String,
-                cookiePolicyText: String,
-                termsOfServicesText: String) {
-        self.privacyPolicyText = privacyPolicyText
-        self.cookiePolicyText = cookiePolicyText
-        self.termsOfServicesText = termsOfServicesText
+    public init(viewModel: TermsAndPoliciesViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
     }
     
     public var body: some View {
         List {
-            Link(destination: privacyUrl) {
-                NavigationLink(privacyPolicyText, destination: EmptyView())
+            Link(destination: viewModel.privacyUrl) {
+                NavigationLink(Strings.Localizable.privacyPolicyLabel, destination: EmptyView())
             }
-            Link(destination: cookieUrl) {
-                NavigationLink(cookiePolicyText, destination: EmptyView())
+            Link(destination: viewModel.cookieUrl) {
+                NavigationLink(Strings.Localizable.General.cookiePolicy, destination: EmptyView())
             }
-            Link(destination: termsUrl) {
-                NavigationLink(termsOfServicesText, destination: EmptyView())
+            Link(destination: viewModel.termsUrl) {
+                NavigationLink(Strings.Localizable.termsOfServicesLabel, destination: EmptyView())
             }
+        }
+        .task {
+            await viewModel.setupCookiePolicyURL()
         }
         .foregroundColor(.primary)
         .listStyle(.grouped)
+        .navigationTitle(Strings.Localizable.Settings.Section.termsAndPolicies)
     }
 }
+

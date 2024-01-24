@@ -25,7 +25,6 @@ MEGADelegate
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *editBarButtonItem;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @end
 
 @implementation NodeVersionsViewController
@@ -49,29 +48,6 @@ MEGADelegate
     if (!self.node.mnz_isInRubbishBin) {
         self.navigationItem.rightBarButtonItems = @[self.editBarButtonItem];
     }
-    
-    [self captureVersions];
-}
-
-- (void)captureVersions {
-    NSMutableArray<NodeVersionItem *> *previousVersions = [NSMutableArray new];
-    __block MEGANode *currentVersion;
-    
-    [self.node.mnz_versions enumerateObjectsUsingBlock:^(MEGANode * _Nonnull version, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (idx == 0) {
-            currentVersion = version;
-        } else {
-            NodeVersionItem *item = [[NodeVersionItem alloc] initWithNode:version];
-            [previousVersions addObject:item];
-        }
-    }];
-    
-    self.sections = @[
-        [[NodeVersionSection alloc] initWithItems:@[
-            [[NodeVersionItem alloc] initWithNode:currentVersion]
-        ]],
-        [[NodeVersionSection alloc] initWithItems:[NSArray arrayWithArray:previousVersions]]
-    ];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -103,15 +79,6 @@ MEGADelegate
 }
 
 #pragma mark - Private
-
-- (void)reloadUI {
-    [self captureVersions];
-    if (self.node.mnz_numberOfVersions == 0) {
-        [self dismissViewControllerAnimated:true completion:nil];
-    }  else {
-        [self.tableView reloadData];
-    }
-}
 
 - (void)updateAppearance {
     self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
@@ -438,6 +405,7 @@ MEGADelegate
         MEGANode *nodeUpdated = [nodeList nodeAtIndex:i];
         if ([nodeUpdated hasChangedType:MEGANodeChangeTypeRemoved]) {
             if (nodeUpdated.handle == self.node.handle) {
+                self.node = nodeUpdated;
                 [self currentVersionRemoved];
                 break;
             } else {
@@ -456,15 +424,6 @@ MEGADelegate
                 break;
             }
         }
-    }
-}
-
-- (void)currentVersionRemoved {
-    if (self.node.mnz_versions.count == 1) {
-        [self dismissViewControllerAnimated:YES completion:nil];
-    } else {
-        self.node = self.node.mnz_versions[1];
-        [self reloadUI];
     }
 }
 

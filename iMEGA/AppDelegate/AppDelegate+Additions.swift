@@ -103,8 +103,10 @@ extension AppDelegate {
         }
     }
     
+    private var isInAppAdvertisementEnabled: Bool { true }
+    
     private func isExternalAdsActive() async -> Bool {
-        guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .inAppAds) else {
+        guard isInAppAdvertisementEnabled else {
             return false
         }
         
@@ -123,13 +125,32 @@ extension AppDelegate {
     }
         
     private func showCookieDialog(type: CustomModalAlertViewController.CookieDialogType) {
-        
         guard shouldPresentModal else { return }
-        
-        let cookieDialogCustomModalAlert = CustomModalAlertViewController()
-        cookieDialogCustomModalAlert.configureForCookieDialog(type: type)
 
-        UIApplication.mnz_presentingViewController().present(cookieDialogCustomModalAlert, animated: true, completion: nil)
+        Task {
+            let cookiePolicyURL = await cookiePolicyURL(isExternalAds: type == .adsCookiePolicy)
+            
+            let cookieDialogView = CustomModalAlertViewController()
+            cookieDialogView.configureForCookieDialog(type: type, cookiePolicyURLString: cookiePolicyURL)
+            UIApplication.mnz_presentingViewController().present(cookieDialogView, animated: true, completion: nil)
+        }
+    }
+    
+    private func cookiePolicyURL(isExternalAds: Bool) async -> String {
+        let invalidURLString = "invalid://urlLink"
+        guard let cookiePolicyURL = URL(string: "https://mega.nz/cookie") else { return invalidURLString }
+        
+        // If external Ads is not active, cookie policy will not require session
+        guard isExternalAds else { return cookiePolicyURL.absoluteString }
+        
+        // If external Ads is active, cookie policy will be directed to link with session
+        let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
+        do {
+            let url = try await accountUseCase.sessionTransferURL(path: cookiePolicyURL.lastPathComponent)
+            return url.absoluteString
+        } catch {
+            return invalidURLString
+        }
     }
 
     @objc func showLaunchTabDialogIfNeeded() {

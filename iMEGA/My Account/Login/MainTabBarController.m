@@ -27,6 +27,7 @@
     [self loadTabViewControllers];
     [self setupHomeSearchForABTestingWithCompletionHandler:^{}];
     [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
+    [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -50,7 +51,6 @@
     [self.view setNeedsLayout];
     [AudioPlayerManager.shared addMiniPlayerHandler:self];
     [self configureSnackBarPresenter];
-    [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -60,7 +60,6 @@
     
     [AudioPlayerManager.shared removeMiniPlayerHandler:self];
     [self removeSnackBarPresenter];
-    [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

@@ -14,11 +14,6 @@
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGASdkManager.h"
-#ifdef MNZ_SHARE_EXTENSION
-#import "MEGAShare-Swift.h"
-#else
-#import "MEGA-Swift.h"
-#endif
 #import "MEGAUser+MNZCategory.h"
 
 #import "ContactTableViewCell.h"
@@ -135,12 +130,8 @@
     [super traitCollectionDidChange:previousTraitCollection];
     
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-#ifdef MNZ_SHARE_EXTENSION
-        [ExtensionAppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
-        [ExtensionAppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
-#else
+        [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
         [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
-#endif
         
         [self updateAppearance];
         

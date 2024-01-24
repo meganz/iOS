@@ -131,9 +131,7 @@ struct UpgradeAccountPlanView: View {
         @ViewBuilder
         func contentView() -> some View {
             TermsAndPoliciesView(
-                privacyPolicyText: Strings.Localizable.privacyPolicyLabel,
-                cookiePolicyText: Strings.Localizable.General.cookiePolicy,
-                termsOfServicesText: Strings.Localizable.termsOfServicesLabel
+                viewModel: TermsAndPoliciesViewModel(accountUseCase: AccountUseCase(repository: AccountRepository.newRepo))
             )
             .interactiveDismissDisabled()
         }
