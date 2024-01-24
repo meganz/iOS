@@ -130,6 +130,23 @@ extension UIColor {
         barButtonTitle(isEnabled: isEnabled, for: traitCollection)
     }
     
+    @objc class func mnz_cellBackground(_ traitCollection: UITraitCollection) -> UIColor {
+        switch traitCollection.userInterfaceStyle {
+        case .unspecified, .light:
+            return MEGAAppColor.White._FFFFFF_pageBackground.uiColor
+            
+        case .dark:
+            if traitCollection.accessibilityContrast == .high {
+                return MEGAAppColor.Gray._3A3A3C_pageBackground.uiColor
+            } else {
+                return MEGAAppColor.Black._2C2C2E_pageBackground.uiColor
+            }
+            
+        @unknown default:
+            return MEGAAppColor.White._FFFFFF_pageBackground.uiColor
+        }
+    }
+    
     // MARK: Cell related colors
     
     @objc class func cellTitleColor(for traitCollection: UITraitCollection) -> UIColor {

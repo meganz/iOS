@@ -1,5 +1,7 @@
 import Foundation
+import MEGADesignToken
 import MEGAL10n
+import MEGAPresentation
 
 enum CookieSettingsSection: Int {
     case acceptCookies
@@ -32,6 +34,10 @@ class CookieSettingsTableViewController: UITableViewController {
     var snackBarContainer: UIView?
     
     private var footersArray: [String] = ["", "", "", "", "", ""]
+    
+    private var isDesignTokenEnabled: Bool {
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken)
+    }
     
     // MARK: - View lifecycle
     override func viewDidLoad() {
@@ -175,15 +181,35 @@ class CookieSettingsTableViewController: UITableViewController {
         
         saveBarButtonItem.tintColor = .mnz_primaryGray(for: traitCollection)
         
-        essentialCookiesDetailLabel.textColor = UIColor.secondaryLabel
+        if isDesignTokenEnabled {
+            acceptCookiesLabel.textColor = TokenColors.Text.primary
+            acceptCookiesSwitch.onTintColor = TokenColors.Support.success
+            
+            essentialCookiesLabel.textColor = TokenColors.Text.primary
+            essentialCookiesDetailLabel.textColor = TokenColors.Text.secondary
+            
+            performanceAndAnalyticsCookiesLabel.textColor = TokenColors.Text.primary
+            performanceAndAnalyticsSwitch.onTintColor = TokenColors.Support.success
+            
+            advertisingCookiesLabel.textColor = TokenColors.Text.primary
+            advertisingCookiesSwitch.onTintColor = TokenColors.Support.success
+        } else {
+            essentialCookiesDetailLabel.textColor = UIColor.secondaryLabel
+        }
         
         tableView.reloadData()
+    }
+    
+    private func updateAppearanceForTableViewHeaderFooterView(_ view: UITableViewHeaderFooterView) {
+        if isDesignTokenEnabled {
+            view.textLabel?.textColor = TokenColors.Text.secondary
+        }
     }
     
     // MARK: - UITableViewDelegate
     
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.backgroundColor = .mnz_tertiaryBackground(traitCollection)
+        cell.backgroundColor = .mnz_cellBackground(traitCollection)
     }
     
     // MARK: - UITableViewDataSource
@@ -209,6 +235,11 @@ class CookieSettingsTableViewController: UITableViewController {
         default:
             return ""
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+        guard let footerView = view as? UITableViewHeaderFooterView else { return }
+        updateAppearanceForTableViewHeaderFooterView(footerView)
     }
 }
 

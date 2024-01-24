@@ -85,6 +85,7 @@ enum MEGAAppColor {
         case _1C1C1E
         case _1C1C1E_pageBackground
         case _2C2C2E
+        case _2C2C2E_pageBackground
         case _222222
         case _29292C
         case _161616
@@ -116,6 +117,7 @@ enum MEGAAppColor {
             case ._1C1C1E_pageBackground: TokenColors.Background.page
             case ._222222: TokenColors.Background.blur
             case ._2C2C2E: TokenColors.Background.blur
+            case ._2C2C2E_pageBackground: TokenColors.Background.page
             case ._29292C: TokenColors.Background.blur
             case ._161616: TokenColors.Background.surface1
             case ._252525: TokenColors.Background.blur
@@ -136,7 +138,7 @@ enum MEGAAppColor {
             case ._000000_toolbarShadow: UIColor.black000000 // Toolbar shadow is only applied when .designToken feature flag is on so this legacy color will never be used.
             case ._1C1C1E, ._1C1C1E_pageBackground: UIColor.black1C1C1E
             case ._222222: UIColor.black222222
-            case ._2C2C2E: UIColor.black2C2C2E
+            case ._2C2C2E, ._2C2C2E_pageBackground: UIColor.black2C2C2E
             case ._29292C: UIColor.black29292C
             case ._161616: UIColor.black161616
             case ._252525: UIColor.black252525
@@ -149,6 +151,7 @@ enum MEGAAppColor {
     enum Gray {
         case _1D1D1D
         case _3A3A3C
+        case _3A3A3C_pageBackground
         case _3C3C43
         case _3C3C4330
         case _3D3D3D
@@ -207,6 +210,7 @@ enum MEGAAppColor {
             switch self {
             case ._1D1D1D: TokenColors.Background.surface1
             case ._3A3A3C: TokenColors.Background.blur
+            case ._3A3A3C_pageBackground: TokenColors.Background.page
             case ._3C3C43, ._3C3C4330: TokenColors.Border.strong
             case ._3D3D3D: TokenColors.Background.blur
             case ._3F3F42: TokenColors.Background.blur
@@ -256,7 +260,7 @@ enum MEGAAppColor {
         private var legacyColor: UIColor {
             switch self {
             case ._1D1D1D: UIColor.gray1D1D1D
-            case ._3A3A3C: UIColor.gray3A3A3C
+            case ._3A3A3C, ._3A3A3C_pageBackground: UIColor.gray3A3A3C
             case ._3C3C43: UIColor.gray3C3C43
             case ._3C3C4330: UIColor.gray3C3C4330
             case ._3D3D3D: UIColor.gray3D3D3D
