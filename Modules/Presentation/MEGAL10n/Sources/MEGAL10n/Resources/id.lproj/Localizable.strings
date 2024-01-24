@@ -259,7 +259,7 @@
 /* Detail message shown when you try to call someone that is not you contact in MEGA. The [X] placeholder will be replaced on runtime for the email of the user */
 "dialog.callAttempt.contactNotInMEGA"="Kontak anda [X] tidak ada di MEGA. Untuk menelepon melalui obrolan terenkripsi MEGA, anda perlu mengundang kontak anda";
 /* Text shown when the user sends a contact invitation */
-"inviteSent"="Invitation sent";
+"inviteSent"="Undangan dikirim";
 /* Button title to allow the user postpone an action */
 "later"="Nanti";
 /* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
@@ -614,8 +614,6 @@
 "Recently Added"="Baru-baru ini ditambahkan";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
 "oneFolderShared"="1 folder";
-/* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
-"foldersShared"="%d folder";
 /* Item menu option to add a contact writting his/her email */
 "addFromEmail"="Masukan alamat email";
 /* Title of Shared Items section */
@@ -941,7 +939,7 @@
 /* Hint text to suggest that the user have to write the new email on it */
 "newEmail"="Alamat email baru";
 /* Button text for the user to confirm their change of email address. */
-"confirmEmail"="Konfirmasi email";
+"confirmEmail"="Konfirmasi alamat email";
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="Konfirmasi email baru";
 /* The title of the alert dialog to change the email associated to an account. */
@@ -1538,8 +1536,6 @@
 "users"="Pengguna";
 /* user (singular) label indicating is receiving some info, for example shared folders */
 "user"="Pengguna";
-/* Message to display the number of historical versions of files. Please keep [X] as it will be replaced at the runtime. */
-"xVersions"="Versi [X]";
 /* Question to ensure user wants to delete file version. */
 "deleteVersion"="Apakah Anda ingin menghapus versi ini?";
 /* Message to notify user the file version will be permanently removed */
@@ -1930,10 +1926,6 @@
 "This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform."="Lokasi ini akan dibuka menggunakan penyedia peta pihak ketiga di luar platform MEGA terenkripsi ujung ke ujung.";
 /* Text shown in location-type messages */
 "Pinned Location"="Lokasi yang Disematkan";
-/* Plural of participant. 2 participants */
-"%d participants"="%d peserta";
-/* Singular of participant. 1 participant */
-"%d participant"="%d peserta";
 /* Text shown in the chat toolbar while the user is recording a voice clip. The < character should be > in RTL languages. */
 "< Slide to cancel"="< Geser untuk membatalkan";
 /* Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip */
@@ -2008,8 +2000,6 @@
 "Open Settings"="Buka Pengaturan";
 /* Text encouraging the user to invite contacts to MEGA */
 "Invite contacts and start chatting securely with MEGA’s encrypted chat."="Undang kontak dan mulailah mengobrol dengan aman dengan obrolan terenkripsi MEGA.";
-/* Text showing the user how many contacts would be invited */
-"Invite [X] contacts"="Undang kontak [X]";
 /* Text showing the user how to write more than one email in order to invite them to MEGA */
 "Tap space to enter multiple emails"="Ketuk ruang untuk memasukkan banyak email";
 /* Text used as a section title or similar */
@@ -2128,8 +2118,6 @@
 "This link is not related to this account. Please log in with the correct account."="Link ini tidak terkait dengan akun ini. Silahkan masuk dengan akun yang benar.";
 /* Text emncouraging the user to add contacts in MEGA */
 "Invite contact now"="Undang kontak sekarang";
-/* Text showing the user one contact would be invited */
-"Invite 1 contact"="Undang 1 kontak";
 /* Error message if user click next button without enter a valid phone number */
 "Please enter a valid phone number"="Harap berikan nomor telfon yang valid.";
 /* Error message that will show to user when user reached the sms verification daily limit */
@@ -3235,7 +3223,7 @@
 /* In App notification for meetings */
 "inapp.notifications.meetings.header"="Pertemuan";
 /* In app notification description for one off new meeting invitation */
-"inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email][/B] invited you to a meeting scheduled for:";
+"inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email][/B] mengundang anda ke pertemuan yang dijadwalkan untuk:";
 /* In app notification description for scheduled meeting when multiple fields updated for one off meeting */
 "inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] memperbarui[/B] rapat ke ";
 /* In app notification description for scheduled meeting description field update */
@@ -3347,7 +3335,7 @@
 /* Schedule meeting add participants field */
 "meetings.scheduleMeeting.addParticipants"="Tambahkan peserta";
 /* Schedule meeting send calendar invite field */
-"meetings.scheduleMeeting.sendCalendarInvite"="Send calendar invitation";
+"meetings.scheduleMeeting.sendCalendarInvite"="Kirim undangan kalender";
 /* Schedule meeting open invite field */
 "meetings.scheduleMeeting.openInvite"="Izinkan non-host untuk menambahkan peserta";
 /* Schedule meeting description field placeholder */
@@ -3463,55 +3451,55 @@
 /* Device Center backup error: Storage quota limit */
 "device.center.backup.error.storageQuotaReached"="Batas kuota penyimpanan tercapai.";
 /* Device Center backup error: Plan expired */
-"device.center.backup.error.planExpired"="Unable to sync or back up this folder as your plan has expired.";
+"device.center.backup.error.planExpired"="Tidak dapat menyinkronkan atau membuat cadangan folder ini karena paket anda telah kedaluwarsa.";
 /* Device Center backup error: Shared folder quota reached */
-"device.center.backup.error.userSharedQuotaReached"="Folder can’t be synced as the user who shared this folder has reached their storage quota limit.";
+"device.center.backup.error.userSharedQuotaReached"="Folder tidak dapat disinkronkan karena pengguna yang berbagi folder ini telah mencapai batas kuota penyimpanan mereka.";
 /* Device Center backup error: Shared folder without full access */
 "device.center.backup.error.sharedFolderNoFullAccess"="Folder tidak dapat disinkronkan karena merupakan folder bersama tanpa akses penuh.";
 /* Device Center backup error: Files can't be synced */
-"device.center.backup.error.filesInFolder"="Files in this folder can’t be synced or backed up. You will need to re-enable the sync or backup from the Desktop app.";
+"device.center.backup.error.filesInFolder"="File dalam folder ini tidak dapat disinkronkan atau dicadangkan. Anda harus mengaktifkan kembali sinkronisasi atau cadangan dari aplikasi Desktop.";
 /* Device Center backup error: Folder contains synced folders */
 "device.center.backup.error.containsSyncedFolders"="Folder tidak dapat disinkronkan karena sudah berisi folder yang disinkronkan.";
 /* Device Center backup error: Folder inside another synced folder */
 "device.center.backup.error.insideSyncedFolder"="Folder tidak dapat disinkronkan karena sudah berada di dalam folder yang disinkronkan.";
 /* Device Center backup error: MEGA folder in rubbish bin */
-"device.center.backup.error.folderInRubbish"="Folder can’t be synced or backed up as the MEGA folder is in the Rubbish bin.";
+"device.center.backup.error.folderInRubbish"="Folder tidak dapat disinkronkan atau dicadangkan karena folder MEGA ada di Tempat sampah.";
 /* Device Center backup error: Can't sync VirtualBox folders */
-"device.center.backup.error.virtualboxFolders"="MEGA can’t sync or back up VirtualBox folders.";
+"device.center.backup.error.virtualboxFolders"="MEGA tidak dapat menyinkronkan atau mencadangkan folder VirtualBox.";
 /* Device Center backup error: Account blocked */
-"device.center.backup.error.accountBlocked"="Unable to sync or back up this folder as the account has been blocked.";
+"device.center.backup.error.accountBlocked"="Tidak dapat menyinkronkan atau mencadangkan folder ini karena akun telah diblokir.";
 /* Device Center backup error: Contact support for sync issues */
-"device.center.backup.error.problemSyncingContactSupport"="Problem syncing or backing up this folder. Try again later. If the issue continues, contact Support.";
+"device.center.backup.error.problemSyncingContactSupport"="Masalah saat menyinkronkan atau membuat cadangan folder ini. Coba lagi nanti. Jika masalah berlanjut, hubungi Bantuan.";
 /* Device Center backup error: Account reloaded */
 "device.center.backup.error.accountReloaded"="Akun dimuat ulang. Pembaruan apa pun yang terlewat untuk cadangan atau sinkronisasi anda belum diterapkan.";
 /* Device Center backup error: Logged out of Desktop app */
-"device.center.backup.error.loggedOut"="Sync or backup has been stopped as you appear to have logged out of the Desktop app. Log back in via the Desktop app, and resume the sync or backup.";
+"device.center.backup.error.loggedOut"="Sinkronisasi atau pencadangan telah dihentikan karena anda tampaknya keluar dari aplikasi Desktop. Masuk kembali melalui aplikasi Desktop, dan lanjutkan sinkronisasi atau pencadangan.";
 /* Device Center backup error: Changes to MEGA folder */
-"device.center.backup.error.changesToMegaFolder"="Problem syncing or backing up this folder because of changes to the MEGA folder. Stop the sync or backup and try setting it up again in the Desktop app, or contact Support.";
+"device.center.backup.error.changesToMegaFolder"="Masalah menyinkronkan atau membuat cadangan folder ini karena perubahan pada folder MEGA. Hentikan sinkronisasi atau pencadangan dan coba atur lagi di aplikasi Desktop, atau hubungi Dukungan.";
 /* Device Center backup error: External drive folder not located */
 "device.center.backup.error.externalDriveUnlocated"="Folder di drive eksternal tidak dapat ditemukan.";
 /* Device Center backup error: Synced folder at same path */
-"device.center.backup.error.alreadySyncedPath"="There’s already a synced folder at the same path.";
+"device.center.backup.error.alreadySyncedPath"="Sudah ada folder yang disinkronkan di jalur yang sama.";
 /* Device Center backup error: Renaming issue */
-"device.center.backup.error.renamingFailed"="Renaming failed.";
+"device.center.backup.error.renamingFailed"="Mengganti nama gagal.";
 /* Device Center backup error: Ignored sync */
-"device.center.backup.error.syncIgnored"="Couldn’t create a sync. The file has been ignored.";
+"device.center.backup.error.syncIgnored"="Tidak dapat membuat sinkronisasi. File telah diabaikan.";
 /* Device Center backup error: Sync configuration unreadable */
-"device.center.backup.error.couldntReadSyncConfig"="Couldn’t read sync configuration. Check the folder permissions and try again later.";
+"device.center.backup.error.couldntReadSyncConfig"="Tidak dapat membaca konfigurasi sinkronisasi. Periksa izin folder dan coba lagi nanti.";
 /* Device Center backup error: Unknown drive path for sync */
-"device.center.backup.error.unknownDrivePath"="Sync’s drive path is unknown.";
+"device.center.backup.error.unknownDrivePath"="Jalur drive Sync tidak diketahui.";
 /* Device Center backup error: Invalid scan interval */
-"device.center.backup.error.invalidScanInterval"="Invalid scan interval. Check the scan interval setup and try again.";
+"device.center.backup.error.invalidScanInterval"="Interval pemindaian tidak valid. Periksa pengaturan interval pemindaian dan coba lagi.";
 /* Device Center backup error: Sync or backup issue, setup again */
-"device.center.backup.error.syncOrBackupSetupAgain"="Problem syncing or backing up this folder. Stop the sync or backup and try setting it up again in the Desktop app, or contact Support.";
+"device.center.backup.error.syncOrBackupSetupAgain"="Masalah saat menyinkronkan atau membuat cadangan folder ini. Hentikan sinkronisasi atau pencadangan dan coba atur lagi di aplikasi Desktop, atau hubungi Bantuan.";
 /* Device Center backup error: Can't read sync location */
-"device.center.backup.error.cantReadSyncLocation"="Couldn’t read sync location. Check the location is accessible and permissions for the folder location are granted.";
+"device.center.backup.error.cantReadSyncLocation"="Tidak dapat membaca lokasi sinkronisasi. Periksa lokasi dapat diakses dan izin untuk lokasi folder diberikan.";
 /* Device Center backup error: Insufficient space for download */
-"device.center.backup.error.insufficientDownloadSpace"="Insufficient space for download.";
+"device.center.backup.error.insufficientDownloadSpace"="Ruang tidak mencukupi untuk mengunduh.";
 /* Device Center backup error: Unable to add filesystem watch */
-"device.center.backup.error.addFilesystemWatch"="Unable to add a file system watch. Ensure there is sufficient free space and memory, and that you have granted permissions for the folder location.";
+"device.center.backup.error.addFilesystemWatch"="Tidak dapat menambahkan pengawasan sistem file. Pastikan ada ruang kosong dan memori yang cukup, dan bahwa anda telah memberikan izin untuk lokasi folder.";
 /* Device Center backup error: Couldn't communicate with folder location */
-"device.center.backup.error.communicateWithFolderLocation"="Couldn’t communicate with the folder location. Check the location is accessible and permissions for the folder location are granted.";
+"device.center.backup.error.communicateWithFolderLocation"="Tidak dapat berkomunikasi dengan lokasi folder. Periksa lokasi dapat diakses dan izin untuk lokasi folder diberikan.";
 /* Show in Cloud Drive section action title */
 "device.center.show.in.cloud.drive.action.title"="Tunjukkan di Cloud Drive";
 /* Show in Backups section action title */
@@ -3523,13 +3511,13 @@
 /* Device Center rename device action enter a different name message */
 "device.center.rename.device.different.name"="Masukkan nama yang berbeda";
 /* Device Center rename device action invalid long name message */
-"device.center.rename.device.invalid.long.name"="Device name can only be up to 32 characters";
+"device.center.rename.device.invalid.long.name"="Nama perangkat hanya bisa maksimal 32 karakter";
 /* Device Center camera upload status enabled */
 "device.center.camera.uploads.action.status.enabled"="Diaktifkan";
 /* Device Center camera upload status disabled */
 "device.center.camera.uploads.action.status.disabled"="Membatalkan";
 /* Device center current device empty state message */
-"device.center.current.device.empty.state.message"="Nothing set up yet";
+"device.center.current.device.empty.state.message"="Belum ada yang disiapkan";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="Akhiri pengulangan";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3701,7 +3689,7 @@
 /* Edit Schedule meeting navigaion title. */
 "meetings.scheduled.editMeeting.title"="Mengubah rapat";
 /* Schedule meeting calendar invite description */
-"meetings.scheduleMeeting.calendarInvite.description"="Email a calendar invitation to participants so they can add the meeting to their calendars.";
+"meetings.scheduleMeeting.calendarInvite.description"="Email undangan kalender kepada peserta sehingga mereka dapat menambahkan rapat ke kalender mereka.";
 /* Start meeting tip view message bold text */
 "meetings.scheduleMeeting.startMeetingTip.startMeeting"="Mulai pertemuan";
 /* Recurring meeting tip view message bold text */
@@ -3731,7 +3719,7 @@
 /* Album failed to save to cloud drive alert message */
 "albumLink.alert.message.albumFailedToSaveToCloudDrive"="“%@” tidak dapat disimpan ke drive Cloud. Coba lagi nanti dan jika masalah berlanjut, hubungi orang yang membagikan tautan tersebut kepada anda.";
 /* Text displayed on banner we show when sharing folder with unverified contacts */
-"shareFolder.contactsNotVerified"="Some of the contacts you’re sharing information with haven’t been verified by you. To ensure extra security, we recommend that you verify their credentials in Contacts by tapping on ⓘ next to the contact you want to verify.";
+"shareFolder.contactsNotVerified"="Beberapa kontak yang anda bagikan informasi belum diverifikasi oleh anda. Untuk memastikan keamanan ekstra, kami sarankan anda memverifikasi kredensialnya di Kontak dengan mengetuk ⓘ di sebelah kontak yang ingin anda verifikasi.";
 /* Rename public album alert title */
 "albumLink.alert.renameAlbum.title"="Ganti nama album";
 /* Rename public album alert message */
@@ -3819,7 +3807,7 @@
 /* Filter name for searching on the home screen */
 "home.search.filter.presentations"="Presentasi";
 /* Filter name for searching on the home screen */
-"home.search.filter.archives"="Archives";
+"home.search.filter.archives"="Arsip";
 /* Filter name for searching on the home screen */
 "home.search.filter.spreadsheets"="Spreadsheet";
 /* Filter name for searching on the home screen */
@@ -3837,11 +3825,11 @@
 /* Type chips group title which is displayed in node type chips group pill */
 "home.search.chipsGroup.nodeType.pillTitle"="Tipe";
 /* Type chips group picker title which is displayed in the picker shown when user taps on the  node type chips group pill */
-"home.search.chipsGroup.nodeType.pickerTitle"="Select type";
+"home.search.chipsGroup.nodeType.pickerTitle"="Pilih jenis";
 /* Type chips group title which is displayed in modified date chips group pill */
 "home.search.chipsGroup.modificationDate.pillTitle"="Tanggal modifikasi";
 /* Type chips group picker title which is displayed in the picker shown when user taps on the modified date chips group pill */
-"home.search.chipsGroup.modificationDate.pickerTitle"="Select modified date";
+"home.search.chipsGroup.modificationDate.pickerTitle"="Pilih tanggal modifikasi";
 /* Empty screen copy when no filter is selected on the home screen search */
 "home.search.empty.no-chip-selected"="Tidak ada hasil";
 /* Empty screen copy when Images filter is selected on the home screen search */
@@ -3853,31 +3841,31 @@
 /* Empty screen copy when Video filter is selected on the home screen search */
 "home.search.empty.no-videos"="Tidak ada file video";
 /* Empty screen copy when Folders filter is selected on the home screen search */
-"home.search.empty.no-folders"="No folders";
+"home.search.empty.no-folders"="Tidak ada folder";
 /* Empty screen copy when PDF filter is selected on the home screen search */
-"home.search.empty.no-pdfs"="No PDFs";
+"home.search.empty.no-pdfs"="Tidak ada PDF";
 /* Empty screen copy when Presentations filter is selected on the home screen search */
-"home.search.empty.no-presentations"="No presentations";
+"home.search.empty.no-presentations"="Tidak ada presentasi";
 /* Empty screen copy when Archives filter is selected on the home screen search */
-"home.search.empty.no-archives"="No archives";
+"home.search.empty.no-archives"="Tidak ada arsip";
 /* A title label for waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.title"="Ruang tunggu";
 /* A button label to close the waiting room participants list view. */
 "chat.call.waitingRoom.participantsList.close"="Tutup";
 /* Error shown when moving folder to inside itself */
-"Error.nodeCopyOrMove.circularDependency"="You can’t move this folder as the destination is the same folder.";
+"Error.nodeCopyOrMove.circularDependency"="Anda tidak dapat memindahkan folder ini karena tujuan adalah folder yang sama.";
 /* Auto media discovery banner title */
 "photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="Karena folder ini hanya berisi gambar dan video, kami secara otomatis membukanya dalam tampilan penemuan media. Anda dapat menikmati konten visual anda dengan tata letak yang lebih mendalam. Anda dapat menonaktifkan ini di Pengaturan.";
 /* Upgrade account screen header title after user onboarding */
 "onboarding.upgradeAccount.header.title"="Dapatkan lebih banyak dengan paket Pro";
 /* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
-"onboarding.upgradeAccount.header.subTitle"="Upgrade to a Pro plan for more storage and lots of extra features. Our plans start at %@ a month.";
+"onboarding.upgradeAccount.header.subTitle"="Tingkatkan ke paket Pro untuk lebih banyak penyimpanan dan banyak fitur tambahan. Paket kami mulai dari %@ sebulan.";
 /* Upgrade account screen content header for pro plan feature list */
 "onboarding.upgradeAccount.content.proPlanFeatureHeader"="Beberapa fitur yang dinantikan adalah:";
 /* Upgrade account screen content title about pro plan featuring as Generous Storage */
 "onboarding.upgradeAccount.content.generousStorage.title"="Penyimpanan murah hati";
 /* Upgrade account screen content message about pro plan featuring as Generous Storage. [A] will be replaced by the storage capacity of the lowest pro plan and [B] will be replaced by its storage unit. Example: Store unlimited data, starting from 400 GB. */
-"onboarding.upgradeAccount.content.generousStorage.message"="Store unlimited data, starting from [A] [B].";
+"onboarding.upgradeAccount.content.generousStorage.message"="Simpan data tak terbatas, mulai dari [A] [B].";
 /* Upgrade account screen content title about pro plan featuring the Transfer Sharing */
 "onboarding.upgradeAccount.content.transferSharing.title"="Berbagi transfer";
 /* Upgrade account screen content message about pro plan featuring the Transfer Sharing */
@@ -3893,15 +3881,15 @@
 /* Camera uploads banner enable state description */
 "cameraUploads.banner.enableState.description"="Cadangkan foto dan video anda secara otomatis ke Drive Cloud anda.";
 /* In app notification description for Shared Items when user left a shared folder. [A] will be replaced by the user's email who left. [B] will be replaced by shared folder name. */
-"inapp.notifications.sharedItems.userLeftTheSharedFolder.message"="User [A] has left the shared folder [B]";
+"inapp.notifications.sharedItems.userLeftTheSharedFolder.message"="Pengguna [A] telah meninggalkan folder bersama [B]";
 /* Shared Screen label in the main view when one user is sharing screen */
-"calls.screenShare.mainView.presentingLabel"="%@ is presenting";
+"calls.screenShare.mainView.presentingLabel"="%@ sedang mempresentasikan";
 /* A warning HUB to show in the call UI when the user A try to tap user B who is sharing screen and the shared screen is in the main view */
 "calls.screenShare.waring.title"="Orang ini sedang berbagi layar";
 /* Alert title informing user that call screen is being recorded */
 "calls.screenRecording.alert.title"="Panggilan ini sedang direkam";
 /* Alert message for user confirmation that agrees on call screen recording */
-"calls.screenRecording.alert.message"="By staying in the call you give permission to be recorded.";
+"calls.screenRecording.alert.message"="Dengan tetap dalam panggilan anda memberikan izin untuk direkam.";
 /* Alert button for user not accepting call screen recording and therefor leaving the call */
 "calls.screenRecording.alert.action.leave"="Tinggalkan panggilan";
 /* Alert button for user accepting call screen recording */
@@ -3909,19 +3897,19 @@
 /* Alert button for user accepting call screen recording */
 "calls.screenRecording.alert.action.learnMore"="Belajar lagi";
 /* Notification message about someone started to record call screen */
-"calls.screenRecording.notification.recording.started"="%@ started recording";
+"calls.screenRecording.notification.recording.started"="%@ mulai merekam";
 /* Notification message about someone stopped to record call screen */
-"calls.screenRecording.notification.recording.stopped"="%@ stopped recording";
+"calls.screenRecording.notification.recording.stopped"="%@ berhenti merekam";
 /* Text for a UI label indicating that the call screen is being recorded */
-"calls.screenRecording.screenIndicator.label"="";
+"calls.screenRecording.screenIndicator.label"="REC";
 /* Camera uploads status banner - uploads in progress title */
-"cameraUploads.banner.status.uploadInProgress.title"="Upload in progress";
+"cameraUploads.banner.status.uploadInProgress.title"="Pengunggahan sedang berlangsung";
 /* Camera uploads status banner - uploads complete title */
 "cameraUploads.banner.status.uploadsComplete.title"="Unggahan kamera selesai";
 /* Camera uploads status banner - uploads paused due to no wifi connection title */
-"cameraUploads.banner.status.uploadsPausedDueToWifi.title"="Upload paused due to no Wi-Fi connection";
+"cameraUploads.banner.status.uploadsPausedDueToWifi.title"="Unggahan dijeda karena tidak ada koneksi Wi-Fi";
 /* Camera uploads status banner - uploads complete description */
-"cameraUploads.banner.status.uploadsComplete.subHeading"="All items backed up";
+"cameraUploads.banner.status.uploadsComplete.subHeading"="Semua item dicadangkan";
 /* Camera uploads status banner - uploads partially completed due to limited access to photo library */
 "cameraUploads.banner.status.uploadsPartialComplete.limitedPhotoLibraryAccess.subHeading"="MEGA memiliki akses terbatas ke perpustakaan foto anda dan tidak dapat mencadangkan semua foto. Ketuk untuk mengubah izin.";
 /* Title of Terms of Violation alert */
@@ -3937,52 +3925,54 @@
 /* Calls: Floating panel participants not in call label to describe no response state */
 "calls.panel.participantsNotInCall.participant.state.noResponse"="Tidak ada respon";
 /* Calls: Floating panel participants empty list not in call state */
-"calls.panel.participantsNotInCall.emptyState"="All the invited participants have joined the call.";
+"calls.panel.participantsNotInCall.emptyState"="Semua peserta yang diundang telah bergabung dalam panggilan.";
 /* Videos: video scene title */
 "videos.navigationbar.title"="Video";
 /* Videos: video tab title all videos */
-"videos.tab.title.all"="All videos";
+"videos.tab.title.all"="Semua video";
 /* Videos: video tab title playlists */
-"videos.tab.title.playlist"="Playlists";
+"videos.tab.title.playlist"="Daftar putar";
 /* Videos: video content empty state */
-"videos.tab.all.content.emptyState"="No videos";
+"videos.tab.all.content.emptyState"="Tidak ada video";
 /* Videos: video playlist add new playlist button text description */
-"videos.tab.playlist.content.newPlaylist"="New playlist";
+"videos.tab.playlist.content.newPlaylist"="Daftar putar baru";
 /* Videos: video playlist playlist cell title */
 "videos.tab.playlist.content.playlistCell.title.favorites"="Favorit";
 /* Videos: video playlist playlist cell subtitle */
-"videos.tab.playlist.content.playlistCell.subtitle.emptyPlaylist"="Empty playlist";
+"videos.tab.playlist.content.playlistCell.subtitle.emptyPlaylist"="Daftar putar kosong";
 /* Calls: Floating panel participants empty list waiting room state */
-"calls.panel.participantsInWaitingRoom.emptyState"="There is no one in the waiting room";
+"calls.panel.participantsInWaitingRoom.emptyState"="Tidak ada seorang pun di ruang tunggu";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
-"meetings.info.shareMeetingLink.invitation"="%@ is inviting you to a MEGA meeting";
+"meetings.info.shareMeetingLink.invitation"="%@ mengundang anda ke pertemuan MEGA";
 /* Meeting name text for sharing a scheduled meeting link through external app */
-"meetings.info.shareMeetingLink.meetingName"="Meeting name: %@";
+"meetings.info.shareMeetingLink.meetingName"="Nama rapat: %@";
 /* Meeting time text for sharing a scheduled meeting link through external app */
-"meetings.info.shareMeetingLink.meetingTime"="Date and time: %@";
+"meetings.info.shareMeetingLink.meetingTime"="Tanggal dan waktu: %@";
 /* Meeting link text for sharing a scheduled meeting link through external app */
-"meetings.info.shareMeetingLink.meetingLink"="Meeting link: %@";
+"meetings.info.shareMeetingLink.meetingLink"="Tautan pertemuan: %@";
 /* A log message in the chat conversation to tell the reader that a participant [A] joined the meeting. For example: Alice joined the meeting. */
-"chat.message.joinedTheMeeting"="[A] joined the meeting.";
+"chat.message.joinedTheMeeting"="[A] bergabung di pertemuan.";
 /* A log message in the chat conversation to tell the reader that a participant [A] left the meeting. For example: Alice left the meeting. */
-"chat.message.leftTheMeeting"="[A] left the meeting.";
+"chat.message.leftTheMeeting"="[A] meninggalkan pertemuan.";
 /* A log message in a chat conversation to tell the reader that a participant [A] was removed from the meeting by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the meeting by Frank. */
-"chat.message.wasRemovedFromTheMeetingBy"="[A] was removed from the meeting by [B].";
+"chat.message.wasRemovedFromTheMeetingBy"="[A] dihapus dari rapat oleh [B].";
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the meeting by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the meeting by invitation from Frank. */
-"chat.message.joinedTheMeetingByInvitationFrom"="[A] joined the meeting by invitation from [B].";
+"chat.message.joinedTheMeetingByInvitationFrom"="[A] bergabung dengan pertemuan melalui undangan dari [B].";
 /* Meeting subject text for sharing a meeting link through email */
-"meetings.info.shareMeetingLink.subject"="MEGA meeting invitation";
+"meetings.info.shareMeetingLink.subject"="Undangan pertemuan MEGA";
 /* Calls: Floating panel participants in call header to mute them all */
-"calls.panel.participantsInCall.header.muteAll"="Mute all";
+"calls.panel.participantsInCall.header.muteAll"="Bisukan semua";
 /* Calls: Floating panel participants in call header to show all participants are muted */
-"calls.panel.participantsInCall.header.allMuted"="All muted";
+"calls.panel.participantsInCall.header.allMuted"="Semua dibisukan";
 /* Calls: Participant context menu action to mute in the call */
 "calls.panel.participantsInCall.participantContextMenu.actions.mute"="Matikan Suara";
 /* Calls: Mute all participants success message */
-"calls.participantsInCall.muteAll.success"="You’ve muted all participants";
+"calls.participantsInCall.muteAll.success"="Anda telah membisukan semua peserta";
 /* Calls: Mute specific participant success message */
-"calls.participantsInCall.muteParticipant.success"="You’ve muted %@";
+"calls.participantsInCall.muteParticipant.success"="Anda telah dibisukan %@";
 /* Calls: Mute all participants error message */
-"calls.participantsInCall.muteAll.error"="Error muting all participants";
+"calls.participantsInCall.muteAll.error"="Kesalahan membisukan semua peserta";
 /* Calls: Mute specific participant error message */
-"calls.participantsInCall.muteParticipant.error"="Error muting %@";
+"calls.participantsInCall.muteParticipant.error"="Kesalahan membisukan %@";
+/* Calls: Muted by a host message */
+"calls.participantsInCall.mutedBy"="Anda telah dibisukan oleh %@";

@@ -614,8 +614,6 @@
 "Recently Added"="最近添加";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
 "oneFolderShared"="1个文件夹";
-/* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
-"foldersShared"="%d个文件夹";
 /* Item menu option to add a contact writting his/her email */
 "addFromEmail"="请输入电子邮件地址";
 /* Title of Shared Items section */
@@ -1538,8 +1536,6 @@
 "users"="用户";
 /* user (singular) label indicating is receiving some info, for example shared folders */
 "user"="用户";
-/* Message to display the number of historical versions of files. Please keep [X] as it will be replaced at the runtime. */
-"xVersions"="[X]个版本";
 /* Question to ensure user wants to delete file version. */
 "deleteVersion"="您想要删除这个版本吗？";
 /* Message to notify user the file version will be permanently removed */
@@ -1930,10 +1926,6 @@
 "This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform."="此位置将使用MEGA平台外的第三方地图提供商打开。";
 /* Text shown in location-type messages */
 "Pinned Location"="置顶位置";
-/* Plural of participant. 2 participants */
-"%d participants"="%d个参与者";
-/* Singular of participant. 1 participant */
-"%d participant"="%d位参与者";
 /* Text shown in the chat toolbar while the user is recording a voice clip. The < character should be > in RTL languages. */
 "< Slide to cancel"="< 滑动以取消";
 /* Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip */
@@ -2008,8 +2000,6 @@
 "Open Settings"="打开设置";
 /* Text encouraging the user to invite contacts to MEGA */
 "Invite contacts and start chatting securely with MEGA’s encrypted chat."="邀请联系人并在MEGA上开始加密聊天。";
-/* Text showing the user how many contacts would be invited */
-"Invite [X] contacts"="邀请[X]个联系人";
 /* Text showing the user how to write more than one email in order to invite them to MEGA */
 "Tap space to enter multiple emails"="点击空格输入多个电子邮件地址";
 /* Text used as a section title or similar */
@@ -2128,8 +2118,6 @@
 "This link is not related to this account. Please log in with the correct account."="此链接未关联该帐户。请使用正确的MEGA帐户登录。";
 /* Text emncouraging the user to add contacts in MEGA */
 "Invite contact now"="立即邀请联系人";
-/* Text showing the user one contact would be invited */
-"Invite 1 contact"="邀请1位联系人";
 /* Error message if user click next button without enter a valid phone number */
 "Please enter a valid phone number"="请填写一个有效的手机号码。";
 /* Error message that will show to user when user reached the sms verification daily limit */
@@ -3611,7 +3599,7 @@
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
 "upgradeAccountPlan.message.text.featuresOfProPlan"="• 受密码保护的共享链接\n\n• 共享链接可设置到期日期\n\n• 传输流量共享\n\n• 自动备份\n\n• Pro Lite方案可还原长达90天，Pro I、II和III方案可还原长达180天（即将推出）\n\n• 可安排在7天到10年之间自动清理回收站";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Automatic backups\n\n• Rewind up to 90 days on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Schedule rubbish bin clearing between 7 days and 10 years\n\n• Ad free";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• 受密码保护的链接\n\n• 带有到期日期的链接\n\n• 传输流量共享\n\n• 自动备份\n\n• Pro Lite最多还原90天，Pro I、II和III最多还原180天\n\n• 安排7天到10年内清理垃圾桶\n\n• 无广告";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="订阅详情";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3967,9 +3955,9 @@
 /* A log message in the chat conversation to tell the reader that a participant [A] left the meeting. For example: Alice left the meeting. */
 "chat.message.leftTheMeeting"="[A]已离开会议。";
 /* A log message in a chat conversation to tell the reader that a participant [A] was removed from the meeting by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the meeting by Frank. */
-"chat.message.wasRemovedFromTheMeetingBy"="[A] was removed from the meeting by [B].";
+"chat.message.wasRemovedFromTheMeetingBy"="[B]将[A]从会议中移除。";
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the meeting by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the meeting by invitation from Frank. */
-"chat.message.joinedTheMeetingByInvitationFrom"="[A] joined the meeting by invitation from [B].";
+"chat.message.joinedTheMeetingByInvitationFrom"="[A]接受了[B]的邀请加入会议。";
 /* Meeting subject text for sharing a meeting link through email */
 "meetings.info.shareMeetingLink.subject"="MEGA会议邀请";
 /* Calls: Floating panel participants in call header to mute them all */
@@ -3981,8 +3969,10 @@
 /* Calls: Mute all participants success message */
 "calls.participantsInCall.muteAll.success"="您已将所有参与者设为静音";
 /* Calls: Mute specific participant success message */
-"calls.participantsInCall.muteParticipant.success"="You’ve muted %@";
+"calls.participantsInCall.muteParticipant.success"="您已将%@静音";
 /* Calls: Mute all participants error message */
-"calls.participantsInCall.muteAll.error"="Error muting all participants";
+"calls.participantsInCall.muteAll.error"="将所有参与者设为静音时出错";
 /* Calls: Mute specific participant error message */
-"calls.participantsInCall.muteParticipant.error"="Error muting %@";
+"calls.participantsInCall.muteParticipant.error"="将%@设为静音时出错";
+/* Calls: Muted by a host message */
+"calls.participantsInCall.mutedBy"="%@已将您静音";

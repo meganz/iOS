@@ -3181,9 +3181,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>File sent to chat</string>
+        <string>Arquivo enviado ao chat</string>
+        <key>many</key>
+        <string>Arquivos enviados ao chat</string>
         <key>other</key>
-        <string>Files sent to chat</string>
+        <string>Arquivos enviados ao chat</string>
       </dict>
     </dict>
     <key>chat.message.fileSentToMultipleChats</key>
@@ -3197,9 +3199,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>File sent to %d chat</string>
+        <string>Arquivo enviado para %d chat</string>
+        <key>many</key>
+        <string>Arquivo enviado para %d de chats</string>
         <key>other</key>
-        <string>File sent to %d chats</string>
+        <string>Arquivo enviado para %d chats</string>
       </dict>
     </dict>
     <key>chat.message.filesSent</key>
@@ -3213,9 +3217,65 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>%d file sent to chats</string>
+        <string>%d arquivo enviado para chats</string>
+        <key>many</key>
+        <string>%d arquivos enviados para chats</string>
         <key>other</key>
-        <string>%d files sent to chats</string>
+        <string>%d arquivos enviados para chats</string>
+      </dict>
+    </dict>
+    <key>chat.message.multipleFilesSentToMultipleChats</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@chatCount@</string>
+      <key>chatCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Arquivos enviados para %d chat</string>
+        <key>many</key>
+        <string>Arquivos enviados para %d de chats</string>
+        <key>other</key>
+        <string>Arquivos enviados para %d chats</string>
+      </dict>
+    </dict>
+    <key>contacts.invite.emailAddress.inviteNumberOfContacts</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Convidar %d contato</string>
+        <key>many</key>
+        <string>Convidar %d de contatos</string>
+        <key>other</key>
+        <string>Convidar %d contatos</string>
+      </dict>
+    </dict>
+    <key>chat.info.numberOfParticipants</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d participante</string>
+        <key>many</key>
+        <string>%d participantes</string>
+        <key>other</key>
+        <string>%d participantes</string>
       </dict>
     </dict>
   </dict>
