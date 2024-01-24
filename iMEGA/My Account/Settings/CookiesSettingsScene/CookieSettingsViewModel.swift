@@ -36,6 +36,8 @@ enum CookieSettingsAction: ActionType {
     case performanceAndAnalyticsSwitchValueChanged(Bool)
     case advertisingSwitchValueChanged(Bool)
     
+    case showCookiePolicy
+    
     case save
 }
 
@@ -46,6 +48,8 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
         case updateFooters(Array<String>)
             
         case cookieSettingsSaved
+        
+        case showSnackBar(String)
         
         case showResult(ResultCommand)
         enum ResultCommand: Equatable {
@@ -65,6 +69,7 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
         }
     }
     
+    private let accountUseCase: any AccountUseCaseProtocol
     private let cookieSettingsUseCase: any CookieSettingsUseCaseProtocol
     private let router: any CookieSettingsRouting
     private let featureFlagProvider: any FeatureFlagProviderProtocol
@@ -79,6 +84,7 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
     private(set) var isExternalAdsActive: Bool = false
     
     private(set) var configViewTask: Task<Void, Never>?
+    private(set) var showCookiePolicyURLTask: Task<Void, Never>?
     
     private let cookieSettingToPosition: [CookiesBitmap: CookiesBitPosition] = [
         .essential: .essential,
@@ -91,11 +97,13 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
     // MARK: - Init
     
     init(
-        cookieSettingsUseCase: any CookieSettingsUseCaseProtocol,
+        accountUseCase: some AccountUseCaseProtocol,
+        cookieSettingsUseCase: some CookieSettingsUseCaseProtocol,
         router: some CookieSettingsRouting,
         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
         abTestProvider: some ABTestProviderProtocol = DIContainer.abTestProvider
     ) {
+        self.accountUseCase = accountUseCase
         self.cookieSettingsUseCase = cookieSettingsUseCase
         self.router = router
         self.featureFlagProvider = featureFlagProvider
@@ -105,6 +113,8 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
     deinit {
         configViewTask?.cancel()
         configViewTask = nil
+        showCookiePolicyURLTask?.cancel()
+        showCookiePolicyURLTask = nil
     }
         
     func dispatch(_ action: CookieSettingsAction) {
@@ -126,6 +136,9 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
         case .advertisingSwitchValueChanged(let isOn):
             guard isExternalAdsActive else { return }
             cookiesConfigArray[CookiesBitPosition.advertising.rawValue].value = isOn
+            
+        case .showCookiePolicy:
+            showCookiePolicyURL()
 
         case .save:
             save()
@@ -133,8 +146,10 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
     }
     
     // MARK: - Ads Cookie Flags
+    private var isInAppAdvertisementEnabled: Bool { true }
+    
     private func setUpExternalAds() async {
-        guard featureFlagProvider.isFeatureFlagEnabled(for: .inAppAds) else {
+        guard isInAppAdvertisementEnabled else {
             isExternalAdsActive = false
             return
         }
@@ -142,6 +157,27 @@ final class CookieSettingsViewModel: NSObject, ViewModelType {
         let isAdsEnabled = await abTestProvider.abTestVariant(for: .ads) == .variantA
         let isExternalAdsEnabled = await abTestProvider.abTestVariant(for: .externalAds) == .variantA
         isExternalAdsActive = isAdsEnabled && isExternalAdsEnabled
+    }
+    
+    // MARK: - Cookie policy
+    private func showCookiePolicyURL() {
+        guard let cookiePolicyURL = URL(string: "https://mega.nz/cookie") else { return }
+        
+        guard isExternalAdsActive else {
+            self.router.didTap(on: .showCookiePolicy(url: cookiePolicyURL))
+            return
+        }
+        
+        showCookiePolicyURLTask = Task { @MainActor [weak self] in
+            guard let self else { return }
+            do {
+                let cookiePath = cookiePolicyURL.lastPathComponent
+                let sessionTransferURL = try await self.accountUseCase.sessionTransferURL(path: cookiePath)
+                self.router.didTap(on: .showCookiePolicy(url: sessionTransferURL))
+            } catch {
+                self.invokeCommand?(.showSnackBar(Strings.Localizable.somethingWentWrong))
+            }
+        }
     }
     
     // MARK: - Private

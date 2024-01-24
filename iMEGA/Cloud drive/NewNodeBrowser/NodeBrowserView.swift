@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAL10n
 import MEGASwiftUI
 import Search
 import SwiftUI
@@ -7,12 +8,18 @@ struct NodeBrowserView: View {
     @StateObject var viewModel: NodeBrowserViewModel
 
     var body: some View {
-        if viewModel.isBackButtonShown {
+        switch viewModel.viewState {
+        case .editing:
             content
-                .toolbar { toolbarContentWithBackButton }
-        } else {
-            content
-               .toolbar { toolbarContentWithoutBackButton }
+                .toolbar { toolbarContentEditing }
+        case .regular(let isBackButtonShown):
+            if isBackButtonShown {
+                content
+                    .toolbar { toolbarContent }
+            } else {
+                content
+                   .toolbar { toolbarContentWithLeadingAvatar }
+            }
         }
     }
 
@@ -29,19 +36,38 @@ struct NodeBrowserView: View {
             }
         }
         .navigationBarTitleDisplayMode(.inline)
-        .navigationBarBackButtonHidden(true)
         .task { await viewModel.viewTask() }
     }
 
     @ToolbarContentBuilder
-    private var toolbarContentWithBackButton: some ToolbarContent {
-        toolbarLeadingBackButton
+    private var toolbarContentEditing: some ToolbarContent {
+        ToolbarItem(placement: .topBarLeading) {
+            Button(
+                action: { viewModel.selectAll() },
+                label: { Image(.selectAllItems) }
+            )
+        }
+
+        ToolbarItem(placement: .principal) {
+            Text(viewModel.title).font(.headline)
+        }
+
+        ToolbarItem(placement: .primaryAction) {
+            Text(Strings.Localizable.cancel).font(.subheadline)
+                .onTapGesture {
+                    viewModel.stopEditing()
+                }
+        }
+    }
+
+    @ToolbarContentBuilder
+    private var toolbarContent: some ToolbarContent {
         toolbarNavigationTitle
         toolbarTrailingActions
     }
 
     @ToolbarContentBuilder
-    private var toolbarContentWithoutBackButton: some ToolbarContent {
+    private var toolbarContentWithLeadingAvatar: some ToolbarContent {
         toolbarLeadingAvatarImage
         toolbarNavigationTitle
         toolbarTrailingActions
@@ -72,9 +98,9 @@ struct NodeBrowserView: View {
     @ToolbarContentBuilder
     private var toolbarNavigationTitle: some ToolbarContent {
         ToolbarItem(placement: .principal) {
-            Text(viewModel.title ?? "")
-                .lineLimit(1)
+            Text(viewModel.title)
                 .font(.headline)
+                .lineLimit(1)
         }
     }
 

@@ -41,7 +41,7 @@
 @property (nonatomic) NSDate *lastProgressChange;
 
 @property (nonatomic, strong) LaunchViewController *launchVC;
-@property (nonatomic, strong) UINavigationController *shareDestinationNavigatinVC;
+@property (nonatomic, strong) UINavigationController *shareDestinationNavigationVC;
 
 @property (nonatomic) NSString *session;
 @property (nonatomic) UIView *privacyView;
@@ -130,7 +130,7 @@
                                                  name:UIApplicationDidReceiveMemoryWarningNotification
                                                object:nil];
     
-    [ExtensionAppearanceManager setupAppearance:self.traitCollection];
+    [AppearanceManager setupAppearance:self.traitCollection];
     [SVProgressHUD setViewForExtension:self.view];
     [[AppFirstLaunchSecurityChecker newChecker] performSecurityCheck];
     self.session = [SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"];
@@ -253,8 +253,8 @@
     [super traitCollectionDidChange:previousTraitCollection];
     
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [ExtensionAppearanceManager setupAppearance:self.traitCollection];
-        [ExtensionAppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
+        [AppearanceManager setupAppearance:self.traitCollection];
+        [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
     }
 }
 
@@ -292,30 +292,30 @@
     [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:self.session delegate:self];
 }
 
-- (UINavigationController *)shareDestinationNavigatinVC {
-    if (_shareDestinationNavigatinVC == nil) {
+- (UINavigationController *)shareDestinationNavigationVC {
+    if (_shareDestinationNavigationVC == nil) {
         UIStoryboard *shareStoryboard = [UIStoryboard storyboardWithName:@"Share" bundle:[NSBundle bundleForClass:ShareDestinationTableViewController.class]];
-        _shareDestinationNavigatinVC = [shareStoryboard instantiateViewControllerWithIdentifier:@"FilesDestinationNavigationControllerID"];
+        _shareDestinationNavigationVC = [shareStoryboard instantiateViewControllerWithIdentifier:@"FilesDestinationNavigationControllerID"];
     }
     
-    return _shareDestinationNavigatinVC;
+    return _shareDestinationNavigationVC;
 }
 
 - (void)addShareDestinationView {
-    if (self.shareDestinationNavigatinVC.parentViewController == self) {
+    if (self.shareDestinationNavigationVC.parentViewController == self) {
         return;
     }
     
-    [self addChildViewController:self.shareDestinationNavigatinVC];
-    [self.shareDestinationNavigatinVC.view setFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
-    [self.view addSubview:self.shareDestinationNavigatinVC.view];
+    [self addChildViewController:self.shareDestinationNavigationVC];
+    [self.shareDestinationNavigationVC.view setFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
+    [self.view addSubview:self.shareDestinationNavigationVC.view];
 }
 
 - (void)removeShareDestinationView {
-    [_shareDestinationNavigatinVC setViewControllers:@[]];
-    [_shareDestinationNavigatinVC removeFromParentViewController];
-    [_shareDestinationNavigatinVC.view removeFromSuperview];
-    _shareDestinationNavigatinVC = nil;
+    [_shareDestinationNavigationVC setViewControllers:@[]];
+    [_shareDestinationNavigationVC removeFromParentViewController];
+    [_shareDestinationNavigationVC.view removeFromSuperview];
+    _shareDestinationNavigationVC = nil;
 }
 
 - (void)checkPasscode {

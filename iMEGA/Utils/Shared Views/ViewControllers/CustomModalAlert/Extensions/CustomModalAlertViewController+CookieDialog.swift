@@ -1,6 +1,7 @@
 import Foundation
 import MEGADomain
 import MEGAL10n
+import MEGAPresentation
 import MEGASDKRepo
 import MEGASwift
 
@@ -18,11 +19,11 @@ extension CustomModalAlertViewController {
         }
     }
     
-    func configureForCookieDialog(type: CookieDialogType) {
+    func configureForCookieDialog(type: CookieDialogType, cookiePolicyURLString: String) {
         image = UIImage.cookie
         viewTitle = Strings.Localizable.Dialog.Cookies.Title.manageCookies
-        detailAttributedTextWithLink = detailTextAttributedString(detail: type.description)
-
+        detailAttributedTextWithLink = detailTextAttributedString(detail: type.description, cookiePolicyURLString: cookiePolicyURLString)
+        
         firstButtonTitle = Strings.Localizable.Dialog.Cookies.accept
         dismissButtonStyle = MEGACustomButtonStyle.basic.rawValue
         dismissButtonTitle = Strings.Localizable.General.cookieSettings
@@ -66,9 +67,34 @@ extension CustomModalAlertViewController {
                 }
             })
         }
+        
+        viewModel = makeCookieDialogViewModel()
     }
     
-    private func detailTextAttributedString(detail: String) -> NSAttributedString {
+    private func makeCookieDialogViewModel() -> CustomModalAlertViewModel {
+        let invalidLinkTapAction = {
+            SnackBarRouter.shared.present(snackBar: SnackBar(message: Strings.Localizable.somethingWentWrong))
+        }
+        
+        let configureSnackBarPresenter = { [weak self] in
+            guard let self else { return }
+            SnackBarRouter.shared.configurePresenter(self)
+        }
+        
+        let removeSnackBarPresenter = {
+            SnackBarRouter.shared.removePresenter()
+        }
+        
+        return CustomModalAlertViewModel(
+            invalidLinkTapAction: invalidLinkTapAction,
+            configureSnackBarPresenter: configureSnackBarPresenter,
+            removeSnackBarPresenter: removeSnackBarPresenter,
+            tracker: DIContainer.tracker,
+            analyticsEvents: nil
+        )
+    }
+    
+    private func detailTextAttributedString(detail: String, cookiePolicyURLString: String) -> NSAttributedString {
         let cookiePolicy = detail.subString(from: "[A]", to: "[/A]")
         let detailText = detail
             .replacingOccurrences(of: "[A]", with: "")
@@ -87,7 +113,7 @@ extension CustomModalAlertViewController {
             ]
         )
         
-        guard let urlLink = URL(string: "https://mega.nz/cookie") else {
+        guard let urlLink = URL(string: cookiePolicyURLString) else {
             return detailTextAttributedString
         }
         detailTextAttributedString.addAttributes(

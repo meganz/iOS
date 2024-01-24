@@ -15,6 +15,7 @@ let package = Package(
     dependencies: [
         .package(path: "../../../Domain/MEGADomain"),
         .package(path: "../../MEGAPresentation"),
+        .package(path: "../../../Infrastracture/MEGATest"),
         .package(path: "../../../Localization/MEGAL10n"),
         .package(path: "../../../Repository/ChatRepo"),
         .package(path: "../../Repository/LogRepo")
@@ -26,6 +27,8 @@ let package = Package(
         .testTarget(
             name: "SettingsTests",
             dependencies: ["Settings",
+                           "MEGATest",
+                           .product(name: "MEGAPresentationMock", package: "MEGAPresentation"),
                            .product(name: "MEGADomainMock", package: "MEGADomain")])
     ]
 )

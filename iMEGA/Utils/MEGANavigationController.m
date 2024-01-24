@@ -23,13 +23,8 @@
     [super traitCollectionDidChange:previousTraitCollection];
     
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-#ifdef MNZ_SHARE_EXTENSION
-        [ExtensionAppearanceManager forceNavigationBarUpdate:self.navigationBar traitCollection:self.traitCollection];
-        [ExtensionAppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
-#else
         [AppearanceManager forceNavigationBarUpdate:self.navigationBar traitCollection:self.traitCollection];
         [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
-#endif
     }
 }
 

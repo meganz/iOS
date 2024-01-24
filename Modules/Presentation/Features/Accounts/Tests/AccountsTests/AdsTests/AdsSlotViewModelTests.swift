@@ -12,6 +12,8 @@ import XCTest
 final class AdsSlotViewModelTests: XCTestCase {
     var subscriptions = Set<AnyCancellable>()
     
+    private var adsCookieEnabled: Bool = false
+    
     override func tearDown() {
         subscriptions.removeAll()
         super.tearDown()
@@ -26,17 +28,6 @@ final class AdsSlotViewModelTests: XCTestCase {
         
         await sut.hideAdsForUpgradedAccountTask?.value
         XCTAssertFalse(sut.displayAds)
-    }
-    
-    // MARK: - Feature flag
-    func testIsFeatureFlagForInAppAdsEnabled_inAppAdsEnabled_shouldBeEnabled() {
-        let sut = makeSUT(featureFlags: [.inAppAds: true])
-        XCTAssertTrue(sut.isFeatureFlagForInAppAdsEnabled)
-    }
-    
-    func testIsFeatureFlagForInAppAdsEnabled_inAppAdsDisabled_shouldBeDisabled() {
-        let sut = makeSUT(featureFlags: [.inAppAds: false])
-        XCTAssertFalse(sut.isFeatureFlagForInAppAdsEnabled)
     }
     
     // MARK: - Ads slot
@@ -54,7 +45,8 @@ final class AdsSlotViewModelTests: XCTestCase {
         await sut.monitorAdsSlotChangesTask?.value
         
         XCTAssertNotNil(sut.adsUrl)
-        XCTAssertEqual(sut.adsUrl?.absoluteString, expectedAdsUrl)
+        let (baseURL, _) = self.separateURLAndParameters(from: sut.adsUrl?.absoluteString ?? "")
+        XCTAssertEqual(baseURL, expectedAdsUrl)
         XCTAssertEqual(sut.displayAds, expectedAdsSlotConfig.displayAds)
     }
     
@@ -64,20 +56,6 @@ final class AdsSlotViewModelTests: XCTestCase {
                           adsList: adsList,
                           featureFlags: [.inAppAds: true],
                           abTestProvider: MockABTestProvider(list: [.ads: .baseline]))
-        
-        await sut.setupABTestVariant()
-        sut.monitorAdsSlotChanges()
-        await sut.monitorAdsSlotChangesTask?.value
-        
-        XCTAssertNil(sut.adsUrl)
-        XCTAssertFalse(sut.displayAds)
-    }
-
-    func testLoadAdsForAdsSlot_featureFlagDisabled_shouldHaveNilUrlAndDontDisplayAds() async {
-        let stream = makeMockAdsSlotChangeStream(adsSlotConfigs: [randomAdsSlotConfig])
-        let sut = makeSUT(adsSlotChangeStream: stream,
-                          adsList: adsList,
-                          featureFlags: [.inAppAds: false])
         
         await sut.setupABTestVariant()
         sut.monitorAdsSlotChanges()
@@ -100,11 +78,11 @@ final class AdsSlotViewModelTests: XCTestCase {
     }
     
     func testLoadAdsForAdsSlotList_shouldMatchDisplayAdsValue() async {
-        var adsSlotConfigs = [AdsSlotConfig(adsSlot: .files, displayAds: true),  // show ads on cloud drive
-                              AdsSlotConfig(adsSlot: .home, displayAds: true),   // show ads on home
-                              AdsSlotConfig(adsSlot: .home, displayAds: false),  // hide ads on home
-                              AdsSlotConfig(adsSlot: .photos, displayAds: true), // show ads on photos
-                              AdsSlotConfig(adsSlot: .files, displayAds: false)] // hide ads on cloud drive
+        var adsSlotConfigs = [AdsSlotConfig(adsSlot: .files, displayAds: true, isAdsCookieEnabled: isAdsCookieEnabled),  // show ads on cloud drive
+                              AdsSlotConfig(adsSlot: .home, displayAds: true, isAdsCookieEnabled: isAdsCookieEnabled),   // show ads on home
+                              AdsSlotConfig(adsSlot: .home, displayAds: false, isAdsCookieEnabled: isAdsCookieEnabled),  // hide ads on home
+                              AdsSlotConfig(adsSlot: .photos, displayAds: true, isAdsCookieEnabled: isAdsCookieEnabled), // show ads on photos
+                              AdsSlotConfig(adsSlot: .files, displayAds: false, isAdsCookieEnabled: isAdsCookieEnabled)] // hide ads on cloud drive
         let stream = makeMockAdsSlotChangeStream(adsSlotConfigs: adsSlotConfigs)
         let sut = makeSUT(adsSlotChangeStream: stream, adsList: adsList)
         
@@ -122,9 +100,9 @@ final class AdsSlotViewModelTests: XCTestCase {
     }
     
     func testLoadAdsForAdsSlotList_shouldMatchAdsUrl() async {
-        var adsSlotConfigs = [AdsSlotConfig(adsSlot: .files, displayAds: true),  // show ads on cloud drive
-                              AdsSlotConfig(adsSlot: .photos, displayAds: true), // show ads on photos
-                              AdsSlotConfig(adsSlot: .home, displayAds: true)]   // show ads on home
+        var adsSlotConfigs = [AdsSlotConfig(adsSlot: .files, displayAds: true, isAdsCookieEnabled: isAdsCookieEnabled),  // show ads on cloud drive
+                              AdsSlotConfig(adsSlot: .photos, displayAds: true, isAdsCookieEnabled: isAdsCookieEnabled), // show ads on photos
+                              AdsSlotConfig(adsSlot: .home, displayAds: true, isAdsCookieEnabled: isAdsCookieEnabled)]   // show ads on home
         let stream = makeMockAdsSlotChangeStream(adsSlotConfigs: adsSlotConfigs)
         let ads = adsList
         let sut = makeSUT(adsSlotChangeStream: stream, adsList: ads)
@@ -133,7 +111,8 @@ final class AdsSlotViewModelTests: XCTestCase {
             .dropFirst()
             .sink { url in
                 let adsSlotConfig = adsSlotConfigs.removeFirst()
-                XCTAssertEqual(url?.absoluteString, ads[adsSlotConfig.adsSlot.rawValue])
+                let (baseURL, _) = self.separateURLAndParameters(from: url?.absoluteString ?? "")
+                XCTAssertEqual(baseURL, ads[adsSlotConfig.adsSlot.rawValue])
             }
             .store(in: &subscriptions)
         
@@ -143,9 +122,9 @@ final class AdsSlotViewModelTests: XCTestCase {
     }
     
     func testUpdateAdsSlot_sameAdsSlotConfig_adsUrlIsNil_shouldNotDisplayAds() async {
-        let adsSlotConfigs = [AdsSlotConfig(adsSlot: .home, displayAds: true),
-                                     AdsSlotConfig(adsSlot: .home, displayAds: false),
-                                     AdsSlotConfig(adsSlot: .home, displayAds: true)]
+        let adsSlotConfigs = [AdsSlotConfig(adsSlot: .home, displayAds: true, isAdsCookieEnabled: isAdsCookieEnabled),
+                              AdsSlotConfig(adsSlot: .home, displayAds: false, isAdsCookieEnabled: isAdsCookieEnabled),
+                              AdsSlotConfig(adsSlot: .home, displayAds: true, isAdsCookieEnabled: isAdsCookieEnabled)]
         let stream = makeMockAdsSlotChangeStream(adsSlotConfigs: adsSlotConfigs)
         let sut = makeSUT(adsSlotChangeStream: stream, adsList: [:])
         sut.adsUrl = nil
@@ -178,7 +157,7 @@ final class AdsSlotViewModelTests: XCTestCase {
     func testUpdateAdsSlot_configSameAdsSlotButDifferentDisplayAdsValue_shouldNotChangeURLButUpdateDisplayAdsValue() async {
         let currentAdsSlotConfig = randomAdsSlotConfig
         let expectedAdsSlotConfig = AdsSlotConfig(adsSlot: currentAdsSlotConfig.adsSlot,
-                                                  displayAds: !currentAdsSlotConfig.displayAds)
+                                                  displayAds: !currentAdsSlotConfig.displayAds, isAdsCookieEnabled: isAdsCookieEnabled)
         let stream = makeMockAdsSlotChangeStream(adsSlotConfigs: [currentAdsSlotConfig])
         let sut = makeSUT(adsSlotChangeStream: stream, adsList: adsList)
         await sut.setupABTestVariant()
@@ -194,8 +173,8 @@ final class AdsSlotViewModelTests: XCTestCase {
     }
     
     func testUpdateAdsSlot_differentAdsSlotConfig_shouldUpdateURLandDisplayAdsValue() async {
-        let currentAdsSlotConfig = AdsSlotConfig(adsSlot: .files, displayAds: true)
-        let expectedAdsSlotConfig = AdsSlotConfig(adsSlot: .home, displayAds: false)
+        let currentAdsSlotConfig = AdsSlotConfig(adsSlot: .files, displayAds: true, isAdsCookieEnabled: isAdsCookieEnabled)
+        let expectedAdsSlotConfig = AdsSlotConfig(adsSlot: .home, displayAds: false, isAdsCookieEnabled: isAdsCookieEnabled)
         let stream = makeMockAdsSlotChangeStream(adsSlotConfigs: [currentAdsSlotConfig])
         let sut = makeSUT(adsSlotChangeStream: stream, adsList: adsList)
         await sut.setupABTestVariant()
@@ -211,8 +190,8 @@ final class AdsSlotViewModelTests: XCTestCase {
     }
     
     func testDidTapAdsContent_withNewAccount_closeAdsThenChangedTab_shouldNotShowAdsSlotAgainOnPreviousTab() async {
-        let adsSlotConfigTabOne = AdsSlotConfig(adsSlot: .home, displayAds: true)
-        let adsSlotConfigTabTwo = AdsSlotConfig(adsSlot: .files, displayAds: true)
+        let adsSlotConfigTabOne = AdsSlotConfig(adsSlot: .home, displayAds: true, isAdsCookieEnabled: isAdsCookieEnabled)
+        let adsSlotConfigTabTwo = AdsSlotConfig(adsSlot: .files, displayAds: true, isAdsCookieEnabled: isAdsCookieEnabled)
         let stream = makeMockAdsSlotChangeStream(adsSlotConfigs: [adsSlotConfigTabOne])
         let sut = makeSUT(adsSlotChangeStream: stream, adsList: adsList, isNewAccount: true)
         await sut.setupABTestVariant()
@@ -237,7 +216,7 @@ final class AdsSlotViewModelTests: XCTestCase {
     }
     
     func testDidTapAdsContent_withExistingAccount_shouldLoadNewAdsAndDontCloseAdsSlot() async {
-        let adsSlotConfigCurrentTab = AdsSlotConfig(adsSlot: .home, displayAds: true)
+        let adsSlotConfigCurrentTab = AdsSlotConfig(adsSlot: .home, displayAds: true, isAdsCookieEnabled: isAdsCookieEnabled)
         let stream = makeMockAdsSlotChangeStream(adsSlotConfigs: [adsSlotConfigCurrentTab])
         let sut = makeSUT(adsSlotChangeStream: stream, adsList: adsList, isNewAccount: false)
         await sut.setupABTestVariant()
@@ -293,6 +272,27 @@ final class AdsSlotViewModelTests: XCTestCase {
 
     private var randomAdsSlotConfig: AdsSlotConfig {
         let adsSlot: AdsSlotEntity = [.files, .home, .photos, .sharedLink].randomElement() ?? .files
-        return AdsSlotConfig(adsSlot: adsSlot, displayAds: Bool.random())
+        return AdsSlotConfig(adsSlot: adsSlot, displayAds: Bool.random(), isAdsCookieEnabled: isAdsCookieEnabled)
+    }
+    
+    private func isAdsCookieEnabled() async -> Bool {
+        adsCookieEnabled
+    }
+    
+    private func separateURLAndParameters(from urlString: String) -> (baseURL: String?, parameters: [String: String]?) {
+        guard let url = URL(string: urlString),
+              let components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
+            return (nil, nil)
+        }
+
+        let baseURL = components.url?.absoluteString.replacingOccurrences(of: "?" + (components.query ?? ""), with: "")
+
+        let queryItems = components.queryItems
+        var parameters: [String: String] = [:]
+        queryItems?.forEach { item in
+            parameters[item.name] = item.value
+        }
+
+        return (baseURL, parameters)
     }
 }

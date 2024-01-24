@@ -79,7 +79,16 @@ class CookieSettingsViewModelTests: XCTestCase {
         expectedCookiesBit.remove(.ads)
         
         let noAdsCheckCookieBit = CookiesBitmap.all
-        let sut = makeSUT(cookieSettings: .success(noAdsCheckCookieBit.rawValue), featureFlags: [.inAppAds: true])
+        let sut = makeSUT(
+            cookieSettings: .success(noAdsCheckCookieBit.rawValue),
+            featureFlags: [.inAppAds: true],
+            abTestProvider: MockABTestProvider(
+                list: [
+                    .ads: .variantA,
+                    .externalAds: .variantA
+                ]
+            )
+        )
         
         test(viewModel: sut,
              action: .configView,
@@ -92,7 +101,16 @@ class CookieSettingsViewModelTests: XCTestCase {
         
         var withAdsCheckCookieBit = CookiesBitmap.all
         withAdsCheckCookieBit.insert(.adsCheckCookie)
-        let sut = makeSUT(cookieSettings: .success(withAdsCheckCookieBit.rawValue), featureFlags: [.inAppAds: true])
+        let sut = makeSUT(
+            cookieSettings: .success(withAdsCheckCookieBit.rawValue),
+            featureFlags: [.inAppAds: true],
+            abTestProvider: MockABTestProvider(
+                list: [
+                    .ads: .variantA,
+                    .externalAds: .variantA
+                ]
+            )
+        )
         
         test(viewModel: sut,
              action: .configView,
@@ -139,6 +157,71 @@ class CookieSettingsViewModelTests: XCTestCase {
              expectedCommands: [.cookieSettingsSaved])
     }
     
+    // MARK: Cookie Policy
+    func testAction_showCookiePolicy_sessionTransferSuccess_showPolicyWithSession() async throws {
+        let expectedURL = try XCTUnwrap(URL(string: "https://mega.nz/testCookie"))
+        let mockRouter = MockCookieSettingsRouter()
+        let sut = makeSUT(
+            sessionTransferURLResult: .success(expectedURL),
+            featureFlags: [.inAppAds: true],
+            abTestProvider: MockABTestProvider(
+                list: [
+                    .ads: .variantA,
+                    .externalAds: .variantA
+                ]
+            ),
+            mockRouter: mockRouter
+        )
+        
+        try await checkCookiePolicyDispatchResult(
+            sut: sut,
+            mockRouter: mockRouter,
+            expectedURL: expectedURL
+        )
+    }
+    
+    func testAction_showCookiePolicy_extenalAdsIsFalse_showPolicyWithoutSession() async throws {
+        let expectedURL = try XCTUnwrap(URL(string: "https://mega.nz/cookie"))
+        let mockRouter = MockCookieSettingsRouter()
+        let sut = makeSUT(
+            featureFlags: [.inAppAds: true],
+            abTestProvider: MockABTestProvider(
+                list: [.externalAds: .baseline]
+            ),
+            mockRouter: mockRouter
+        )
+        
+        try await checkCookiePolicyDispatchResult(
+            sut: sut,
+            mockRouter: mockRouter,
+            expectedURL: expectedURL
+        )
+    }
+    
+    private func checkCookiePolicyDispatchResult(
+        sut: CookieSettingsViewModel,
+        mockRouter: MockCookieSettingsRouter,
+        expectedURL: URL,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) async throws {
+        var commands = [CookieSettingsViewModel.Command]()
+        sut.invokeCommand = { viewCommand in
+            commands.append(viewCommand)
+        }
+        sut.dispatch(.configView)
+        await sut.configViewTask?.value
+        sut.dispatch(.showCookiePolicy)
+        await sut.showCookiePolicyURLTask?.value
+        
+        let source = try XCTUnwrap(mockRouter.source)
+        if case let CookieSettingsSource.showCookiePolicy(url) = source {
+            XCTAssertEqual(url, expectedURL, file: file, line: line)
+        } else {
+            XCTFail("Received incorrect tap source \(source)", file: file, line: line)
+        }
+    }
+    
     // MARK: Helper
     // All Cookie bits: .essential, .preference, .analytics, .ads, .thirdparty
     private let defaultCookieBits = CookiesBitmap.all.rawValue // 31
@@ -146,16 +229,19 @@ class CookieSettingsViewModelTests: XCTestCase {
     private func makeSUT(
         cookieBannerEnable: Bool = true,
         cookieSettings: Result<Int, CookieSettingsErrorEntity> = .success(31),
-        featureFlags: [FeatureFlagKey: Bool] = [FeatureFlagKey.inAppAds: false],
-        abTestProvider: MockABTestProvider = MockABTestProvider(list: [.ads: .variantA, .externalAds: .variantA]),
+        sessionTransferURLResult: Result<URL, AccountErrorEntity> = .failure(.generic),
+        featureFlags: [FeatureFlagKey: Bool] = [FeatureFlagKey.inAppAds: true],
+        abTestProvider: MockABTestProvider = MockABTestProvider(list: [.ads: .baseline]),
+        mockRouter: CookieSettingsRouting = MockCookieSettingsRouter(),
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> CookieSettingsViewModel {
-        let mockRouter = MockCookieSettingsRouter()
         let featureFlagProvider = MockFeatureFlagProvider(list: featureFlags)
+        let accountUseCase = MockAccountUseCase(sessionTransferURLResult: sessionTransferURLResult)
         let cookieSettingsUseCase = MockCookieSettingsUseCase(cookieBannerEnable: cookieBannerEnable, cookieSettings: cookieSettings)
         
-        let sut = CookieSettingsViewModel(cookieSettingsUseCase: cookieSettingsUseCase,
+        let sut = CookieSettingsViewModel(accountUseCase: accountUseCase,
+                                          cookieSettingsUseCase: cookieSettingsUseCase,
                                           router: mockRouter,
                                           featureFlagProvider: featureFlagProvider,
                                           abTestProvider: abTestProvider)
@@ -165,5 +251,9 @@ class CookieSettingsViewModelTests: XCTestCase {
 }
 
 final class MockCookieSettingsRouter: CookieSettingsRouting {
-    func didTap(on source: CookieSettingsSource) {}
+    private(set) var source: CookieSettingsSource?
+    
+    func didTap(on source: CookieSettingsSource) {
+        self.source = source
+    }
 }

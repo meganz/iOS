@@ -8,7 +8,7 @@ enum MeetingParticipantViewAction: ActionType {
     case contextMenuTapped(button: UIButton)
 }
 
-final class MeetingParticipantViewModel: ViewModelType {
+final class MeetingParticipantViewModel: ViewModelType, CommonParticipantViewModel {
     enum Command: CommandType, Equatable {
         case configView(isModerator: Bool, isMicMuted: Bool, isVideoOn: Bool, shouldHideContextMenu: Bool)
         case updateAvatarImage(image: UIImage)
@@ -16,16 +16,16 @@ final class MeetingParticipantViewModel: ViewModelType {
         case updatePrivilege(isModerator: Bool)
     }
     
-    private let participant: CallParticipantEntity
-    private var userImageUseCase: any UserImageUseCaseProtocol
+    let participant: CallParticipantEntity
+    var userImageUseCase: any UserImageUseCaseProtocol
     private let accountUseCase: any AccountUseCaseProtocol
-    private var chatRoomUseCase: any ChatRoomUseCaseProtocol
-    private var chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol
-    private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
+    var chatRoomUseCase: any ChatRoomUseCaseProtocol
+    var chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol
+    let megaHandleUseCase: any MEGAHandleUseCaseProtocol
     private let contextMenuTappedHandler: (CallParticipantEntity, UIButton) -> Void
     
-    private var subscriptions = Set<AnyCancellable>()
-    private var avatarRefetchTask: Task<Void, Never>?
+    var subscriptions = Set<AnyCancellable>()
+    var avatarRefetchTask: Task<Void, Never>?
     
     private var shouldHideContextMenu: Bool {
         if accountUseCase.isGuest {
@@ -76,134 +76,26 @@ final class MeetingParticipantViewModel: ViewModelType {
                             isVideoOn: participant.video == .on,
                             shouldHideContextMenu: shouldHideContextMenu)
             )
-            fetchName(forParticipant: participant) { [weak self] name in
+            loadNameTask = Task { @MainActor [weak self] in
                 guard let self else { return }
-                self.fetchUserAvatar(forParticipant: self.participant, name: name)
-                self.requestAvatarChange(forParticipant: self.participant)
+                if let name = await fetchName() {
+                    invokeCommand?(
+                        .updateName(name: isMe ? String(format: "%@ (%@)", name, Strings.Localizable.me) : name)
+                    )
+                    if let image = await fetchUserAvatar(name: name) {
+                        invokeCommand?(.updateAvatarImage(image: image))
+                    }
+                }
+                    
+                requestAvatarChange()
             }
         case .contextMenuTapped(let button):
             contextMenuTappedHandler(participant, button)
         }
     }
     
-    private func fetchName(forParticipant participant: CallParticipantEntity, completion: @escaping (String) -> Void) {
-        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: participant.chatId) else {
-            MEGALogDebug("ChatRoom not found for \(megaHandleUseCase.base64Handle(forUserHandle: participant.participantId) ?? "No name")")
-            return
-        }
-        
-        loadNameTask = Task { @MainActor in
-            guard let name = try? await chatRoomUserUseCase.userDisplayName(forPeerId: participant.participantId, in: chatRoom) else {
-                return
-            }
-            
-            self.invokeCommand?(
-                .updateName(
-                    name: self.isMe ? String(format: "%@ (%@)", name, Strings.Localizable.me) : name
-                )
-            )
-            completion(name)
-        }
-    }
-
-    private func fetchUserAvatar(forParticipant participant: CallParticipantEntity, name: String) {
-        guard let base64Handle = megaHandleUseCase.base64Handle(forUserHandle: participant.participantId),
-              let avatarBackgroundHexColor = MEGASdk.avatarColor(forBase64UserHandle: base64Handle) else {
-            MEGALogDebug("ChatRoom: base64 handle not found for handle \(participant.participantId)")
-            return
-        }
-        
-        userImageUseCase.fetchUserAvatar(withUserHandle: participant.participantId,
-                                         base64Handle: base64Handle,
-                                         avatarBackgroundHexColor: avatarBackgroundHexColor,
-                                         name: name) { [weak self] result in
-            guard let self else { return }
-            switch result {
-            case .success(let image):
-                self.invokeCommand?(.updateAvatarImage(image: image))
-            case .failure(let error):
-                MEGALogDebug("ChatRoom: failed to fetch avatar for \(base64Handle) - \(error)")
-            }
-        }
-    }
-    
-    private func requestAvatarChange(forParticipant participant: CallParticipantEntity) {
-        userImageUseCase
-            .requestAvatarChangeNotification(forUserHandles: [participant.participantId])
-            .sink(receiveCompletion: { error in
-                MEGALogDebug("error fetching the changed avatar \(error)")
-            }, receiveValue: { [weak self] _ in
-                guard let self else { return }
-                
-                if let base64Handle = self.megaHandleUseCase.base64Handle(forUserHandle: participant.participantId) {
-                    self.userImageUseCase.clearAvatarCache(base64Handle: base64Handle)
-                }
-                
-                self.avatarRefetchTask = self.createRefetchAvatarTask(forParticipant: participant)
-            })
-            .store(in: &subscriptions)
-    }
-    
-    private func createRefetchAvatarTask(forParticipant participant: CallParticipantEntity) -> Task<Void, Never> {
-        Task { [weak self] in
-            guard let self else { return }
-            
-            do {
-                try await self.updateAvatarUsingName(forParticipant: participant)
-                try Task.checkCancellation()
-                try await self.downloadAndUpdateAvatar(forParticipant: participant)
-            } catch {
-                MEGALogDebug("Failed to fetch avatar for \(participant.participantId) with \(error)")
-            }
-        }
-    }
-    
-    private func updateAvatarUsingName(forParticipant participant: CallParticipantEntity) async throws {
-        let nameAvatar = try await createAvatarUsingName(forParticipant: participant)
-        try Task.checkCancellation()
-        if let nameAvatar = nameAvatar {
-            await updateAvatar(image: nameAvatar)
-        }
-    }
-    
-    private func downloadAndUpdateAvatar(forParticipant participant: CallParticipantEntity) async throws {
-        guard let base64Handle = megaHandleUseCase.base64Handle(forUserHandle: participant.participantId) else {
-            throw UserImageLoadErrorEntity.base64EncodingError
-        }
-        
-        let downloadedAvatar = try await userImageUseCase.fetchAvatar(base64Handle: base64Handle, forceDownload: true)
-        try Task.checkCancellation()
-        guard let image = UIImage(contentsOfFile: downloadedAvatar) else {
-            throw UserImageLoadErrorEntity.unableToFetch
-        }
-        await updateAvatar(image: image)
-    }
-    
-    private func createAvatarUsingName(forParticipant participant: CallParticipantEntity) async throws -> UIImage? {
-        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: participant.chatId),
-              let name = try await chatRoomUserUseCase.userDisplayNames(
-                forPeerIds: [participant.participantId],
-                in: chatRoom
-              ).first else {
-            MEGALogDebug("Unable to find the name for handle \(participant.participantId)")
-            return nil
-        }
-        try Task.checkCancellation()
-        
-        guard let base64Handle = megaHandleUseCase.base64Handle(forUserHandle: participant.participantId),
-              let avatarBackgroundHexColor = MEGASdk.avatarColor(forBase64UserHandle: base64Handle) else {
-            return nil
-        }
-        let image = try await userImageUseCase.createAvatar(withUserHandle: participant.participantId,
-                                                            base64Handle: base64Handle,
-                                                            avatarBackgroundHexColor: avatarBackgroundHexColor,
-                                                            backgroundGradientHexColor: nil,
-                                                            name: name)
-        return image
-    }
-    
     @MainActor
-    private func updateAvatar(image: UIImage) {
+    func updateAvatar(image: UIImage) {
         invokeCommand?(.updateAvatarImage(image: image))
     }
 }
