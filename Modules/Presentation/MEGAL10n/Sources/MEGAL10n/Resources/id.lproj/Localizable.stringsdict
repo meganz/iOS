@@ -810,10 +810,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Photos uploaded. Video uploads are off: video not uploaded</string>
         <key>other</key>
-        <string>Photos uploaded. Video uploads are off: %d videos not uploaded</string>
+        <string>Foto diunggah. Upload video tidak aktif: %d video tidak diunggah</string>
       </dict>
     </dict>
     <key>cameraUploads.banner.status.filesPending.subHeading</key>
@@ -826,10 +824,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>%d file pending</string>
         <key>other</key>
-        <string>%d files pending</string>
+        <string>%d file tertunda</string>
       </dict>
     </dict>
     <key>cameraUploads.albums.delete</key>
@@ -2480,10 +2476,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>File sent to chat</string>
         <key>other</key>
-        <string>Files sent to chat</string>
+        <string>File dikirim ke obrolan</string>
       </dict>
     </dict>
     <key>chat.message.fileSentToMultipleChats</key>
@@ -2496,10 +2490,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>File sent to %d chat</string>
         <key>other</key>
-        <string>File sent to %d chats</string>
+        <string>File dikirim ke %d obrolan</string>
       </dict>
     </dict>
     <key>chat.message.filesSent</key>
@@ -2512,10 +2504,50 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>%d file sent to chats</string>
         <key>other</key>
-        <string>%d files sent to chats</string>
+        <string>%d file yang dikirim ke obrolan</string>
+      </dict>
+    </dict>
+    <key>chat.message.multipleFilesSentToMultipleChats</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@chatCount@</string>
+      <key>chatCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>File dikirim ke %d obrolan</string>
+      </dict>
+    </dict>
+    <key>contacts.invite.emailAddress.inviteNumberOfContacts</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Undang %d kontak</string>
+      </dict>
+    </dict>
+    <key>chat.info.numberOfParticipants</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d peserta</string>
       </dict>
     </dict>
   </dict>

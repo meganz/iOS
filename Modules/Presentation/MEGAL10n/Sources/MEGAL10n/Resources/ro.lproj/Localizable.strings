@@ -614,8 +614,6 @@
 "Recently Added"="Adăugate recent";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
 "oneFolderShared"="1 folder";
-/* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
-"foldersShared"="%d foldere";
 /* Item menu option to add a contact writting his/her email */
 "addFromEmail"="Introdu o adresă de e-mail";
 /* Title of Shared Items section */
@@ -1538,8 +1536,6 @@
 "users"="utilizatori";
 /* user (singular) label indicating is receiving some info, for example shared folders */
 "user"="utilizator";
-/* Message to display the number of historical versions of files. Please keep [X] as it will be replaced at the runtime. */
-"xVersions"="[X] versiuni";
 /* Question to ensure user wants to delete file version. */
 "deleteVersion"="Vrei să ștergi această versiune?";
 /* Message to notify user the file version will be permanently removed */
@@ -1930,10 +1926,6 @@
 "This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform."="Această locație va fi deschisă folosind un furnizor terță parte de hărți, în afara platformei MEGA criptată capăt-la-capăt.";
 /* Text shown in location-type messages */
 "Pinned Location"="Locație fixată";
-/* Plural of participant. 2 participants */
-"%d participants"="%d participanți";
-/* Singular of participant. 1 participant */
-"%d participant"="%d participant";
 /* Text shown in the chat toolbar while the user is recording a voice clip. The < character should be > in RTL languages. */
 "< Slide to cancel"="< Glisează pentru a anula";
 /* Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip */
@@ -2008,8 +2000,6 @@
 "Open Settings"="Deschide Configurări";
 /* Text encouraging the user to invite contacts to MEGA */
 "Invite contacts and start chatting securely with MEGA’s encrypted chat."="Invită contacte și începe să chatuiești în siguranță cu chatul criptat MEGA.";
-/* Text showing the user how many contacts would be invited */
-"Invite [X] contacts"="Invită [X] contacte";
 /* Text showing the user how to write more than one email in order to invite them to MEGA */
 "Tap space to enter multiple emails"="Atinge spațiu pentru a introduce mai multe e-mailuri";
 /* Text used as a section title or similar */
@@ -2128,8 +2118,6 @@
 "This link is not related to this account. Please log in with the correct account."="Acest link nu are legătură cu acest cont. Te rugăm să te autentifici cu contul corect.";
 /* Text emncouraging the user to add contacts in MEGA */
 "Invite contact now"="Invită contacte acum";
-/* Text showing the user one contact would be invited */
-"Invite 1 contact"="Invită 1 contact";
 /* Error message if user click next button without enter a valid phone number */
 "Please enter a valid phone number"="Te rugăm să furnizezi un număr de telefon valid.";
 /* Error message that will show to user when user reached the sms verification daily limit */
@@ -2175,7 +2163,7 @@
 /* tool bar title used in transfer widget, allow user to resume all transfers in the list */
 "Pause All"="Pune pe pauză toate";
 /* tool bar title used in transfer widget, allow user to Pause all transfers in the list */
-"Resume All"="Reia toate";
+"Resume All"="Reluați toate";
 /* tool bar title used in transfer widget, allow user to clear all items in the list */
 "Clear All"="Șterge toate";
 /* Alert header for asking permission to resume transfers */
@@ -3975,14 +3963,16 @@
 /* Calls: Floating panel participants in call header to mute them all */
 "calls.panel.participantsInCall.header.muteAll"="Amuțire toate";
 /* Calls: Floating panel participants in call header to show all participants are muted */
-"calls.panel.participantsInCall.header.allMuted"="Toate au fost amuțite";
+"calls.panel.participantsInCall.header.allMuted"="Toate microfoanele au fost dezactivate";
 /* Calls: Participant context menu action to mute in the call */
 "calls.panel.participantsInCall.participantContextMenu.actions.mute"="Amuțește";
 /* Calls: Mute all participants success message */
-"calls.participantsInCall.muteAll.success"="V-ați amuțit toți participanții";
+"calls.participantsInCall.muteAll.success"="Ați dezactivat microfonul pentru toți participanții";
 /* Calls: Mute specific participant success message */
-"calls.participantsInCall.muteParticipant.success"="V-ați amuțit %@";
+"calls.participantsInCall.muteParticipant.success"="Ați dezactivat microfonul lui %@";
 /* Calls: Mute all participants error message */
 "calls.participantsInCall.muteAll.error"="Eroare de mutare a tuturor participanților";
 /* Calls: Mute specific participant error message */
 "calls.participantsInCall.muteParticipant.error"="Eroare de mutare %@";
+/* Calls: Muted by a host message */
+"calls.participantsInCall.mutedBy"="Microfonul dvs. a fost dezactivat de %@";

@@ -614,8 +614,6 @@
 "Recently Added"="最近新增的";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
 "oneFolderShared"="1個資料夾";
-/* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
-"foldersShared"="%d個資料夾";
 /* Item menu option to add a contact writting his/her email */
 "addFromEmail"="輸入電子郵件地址";
 /* Title of Shared Items section */
@@ -1538,8 +1536,6 @@
 "users"="使用者";
 /* user (singular) label indicating is receiving some info, for example shared folders */
 "user"="使用者";
-/* Message to display the number of historical versions of files. Please keep [X] as it will be replaced at the runtime. */
-"xVersions"="[X]個版本";
 /* Question to ensure user wants to delete file version. */
 "deleteVersion"="要刪除這個版本嗎？";
 /* Message to notify user the file version will be permanently removed */
@@ -1930,10 +1926,6 @@
 "This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform."="此位置將使用第三方地圖服務商開啟，服務商不屬於點對點加密的MEGA平台。";
 /* Text shown in location-type messages */
 "Pinned Location"="固定位置";
-/* Plural of participant. 2 participants */
-"%d participants"="%d位與會者";
-/* Singular of participant. 1 participant */
-"%d participant"="%d位與會者";
 /* Text shown in the chat toolbar while the user is recording a voice clip. The < character should be > in RTL languages. */
 "< Slide to cancel"="< 滑動以取消";
 /* Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip */
@@ -2008,8 +2000,6 @@
 "Open Settings"="開啟設定";
 /* Text encouraging the user to invite contacts to MEGA */
 "Invite contacts and start chatting securely with MEGA’s encrypted chat."="邀請聯絡人並透過MEGA的加密功能安全的進行對話。";
-/* Text showing the user how many contacts would be invited */
-"Invite [X] contacts"="邀請[X]個聯絡人";
 /* Text showing the user how to write more than one email in order to invite them to MEGA */
 "Tap space to enter multiple emails"="點選空白處來加入多個電子郵件";
 /* Text used as a section title or similar */
@@ -2128,8 +2118,6 @@
 "This link is not related to this account. Please log in with the correct account."="此連結與此帳戶無關，請使用正確的帳戶登入。";
 /* Text emncouraging the user to add contacts in MEGA */
 "Invite contact now"="立即邀請聯絡人";
-/* Text showing the user one contact would be invited */
-"Invite 1 contact"="邀請1個聯絡人";
 /* Error message if user click next button without enter a valid phone number */
 "Please enter a valid phone number"="請填寫正確的手機號碼。";
 /* Error message that will show to user when user reached the sms verification daily limit */
@@ -3199,7 +3187,7 @@
 /* Chat Listing - row description for the created meeting */
 "chat.listing.description.meetingCreated.message"="%@：已建立會議";
 /* Button title to load more participants in meeting info view */
-"meetings.info.participants.seeAll"="檢視全部";
+"meetings.info.participants.seeAll"="查看全部";
 /* The button title that allows the user to leave a ad hoc meeting. */
 "meetings.info.leaveMeeting"="離開會議";
 /* Title for chat notifications option in meeting info */
@@ -3239,7 +3227,7 @@
 /* In app notification description for scheduled meeting when multiple fields updated for one off meeting */
 "inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email]已更新[/B]會議時間為";
 /* In app notification description for scheduled meeting description field update */
-"inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description"="[B][Email] 更新[/B]會議說明";
+"inapp.notifications.scheduledMeetings.oneOff.descriptionFieldUpdate.description"="[B][Email] 更新[/B]會議描述";
 /* In app notification description for one off cancelled meeting */
 "inapp.notifications.scheduledMeetings.oneOff.cancelled.description"="[B][Email]已取消[/B]以下會議排程";
 /* In app notification description representing the day was changed for one off meeting */
@@ -3255,7 +3243,7 @@
 /* In app notification description for multiple fields update in recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.mulitpleFieldsUpdate.description"="[B][Email]已更新[/B]會議為";
 /* In app notification description for description Field update in recurring meeting. */
-"inapp.notifications.scheduledMeetings.recurring.descriptionFieldUpdate.description"="[B][Email] 更新[/B]週期性會議說明";
+"inapp.notifications.scheduledMeetings.recurring.descriptionFieldUpdate.description"="[B][Email] 更新[/B]週期性會議描述";
 /* In app notification description when date field is updated for recurring meeting. */
 "inapp.notifications.scheduledMeetings.recurring.dayChanged.description"="[B][Email]已更新[/B]週期性會議日期為";
 /* In app notification description when time field is updated for recurring meeting. */
@@ -3351,7 +3339,7 @@
 /* Schedule meeting open invite field */
 "meetings.scheduleMeeting.openInvite"="允許非主持人新增參與者";
 /* Schedule meeting description field placeholder */
-"meetings.scheduleMeeting.description"="加入說明";
+"meetings.scheduleMeeting.description"="加入描述";
 /* Schedule meeting name error */
 "meetings.scheduleMeeting.meetingName.lenghtError"="輸入最多30 個字元（15個中文字）";
 /* Schedule meeting description error */
@@ -3986,3 +3974,5 @@
 "calls.participantsInCall.muteAll.error"="將所有與會者設靜音時出錯";
 /* Calls: Mute specific participant error message */
 "calls.participantsInCall.muteParticipant.error"="將%@設為靜音時出錯";
+/* Calls: Muted by a host message */
+"calls.participantsInCall.mutedBy"="%@已將您設為靜音";

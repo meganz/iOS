@@ -614,8 +614,6 @@
 "Recently Added"="Добавлены недавно";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
 "oneFolderShared"="1 папка";
-/* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
-"foldersShared"="Папок: %d";
 /* Item menu option to add a contact writting his/her email */
 "addFromEmail"="Ввести адрес электронной почты";
 /* Title of Shared Items section */
@@ -1538,8 +1536,6 @@
 "users"="пользователей(я)";
 /* user (singular) label indicating is receiving some info, for example shared folders */
 "user"="пользователь";
-/* Message to display the number of historical versions of files. Please keep [X] as it will be replaced at the runtime. */
-"xVersions"="Версий: [X]";
 /* Question to ensure user wants to delete file version. */
 "deleteVersion"="Удалить эту версию?";
 /* Message to notify user the file version will be permanently removed */
@@ -1930,10 +1926,6 @@
 "This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform."="Это местоположение будет открыто с помощью стороннего поставщика карт за пределами защищённой сквозным шифрованием платформы MEGA.";
 /* Text shown in location-type messages */
 "Pinned Location"="Закреплённое местоположение";
-/* Plural of participant. 2 participants */
-"%d participants"="Участники (%d)";
-/* Singular of participant. 1 participant */
-"%d participant"="%d участник";
 /* Text shown in the chat toolbar while the user is recording a voice clip. The < character should be > in RTL languages. */
 "< Slide to cancel"="< Сдвиньте для отмены";
 /* Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip */
@@ -2008,8 +2000,6 @@
 "Open Settings"="Открыть настройки";
 /* Text encouraging the user to invite contacts to MEGA */
 "Invite contacts and start chatting securely with MEGA’s encrypted chat."="Пригласите контакты и начните безопасно общаться в зашифрованном чате MEGA.";
-/* Text showing the user how many contacts would be invited */
-"Invite [X] contacts"="Пригласить контакты ([X])";
 /* Text showing the user how to write more than one email in order to invite them to MEGA */
 "Tap space to enter multiple emails"="Нажмите пробел, чтобы ввести несколько адресов";
 /* Text used as a section title or similar */
@@ -2128,8 +2118,6 @@
 "This link is not related to this account. Please log in with the correct account."="Ссылка не связана с этим аккаунтом. Пожалуйста, войдите в правильный аккаунт.";
 /* Text emncouraging the user to add contacts in MEGA */
 "Invite contact now"="Пригласить контакты сейчас";
-/* Text showing the user one contact would be invited */
-"Invite 1 contact"="Пригласить 1 контакт";
 /* Error message if user click next button without enter a valid phone number */
 "Please enter a valid phone number"="Пожалуйста, укажите действительный номер телефона.";
 /* Error message that will show to user when user reached the sms verification daily limit */
@@ -3986,3 +3974,5 @@
 "calls.participantsInCall.muteAll.error"="Не удалось приглушить всех участников";
 /* Calls: Mute specific participant error message */
 "calls.participantsInCall.muteParticipant.error"="Не удалось приглушить %@";
+/* Calls: Muted by a host message */
+"calls.participantsInCall.mutedBy"="You’ve been muted by %@";

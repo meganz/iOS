@@ -614,8 +614,6 @@
 "Recently Added"="최근 추가됨";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
 "oneFolderShared"="폴더 1개";
-/* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
-"foldersShared"="폴더 %d개";
 /* Item menu option to add a contact writting his/her email */
 "addFromEmail"="이메일 주소를 입력하세요";
 /* Title of Shared Items section */
@@ -1538,8 +1536,6 @@
 "users"="이용자";
 /* user (singular) label indicating is receiving some info, for example shared folders */
 "user"="이용자";
-/* Message to display the number of historical versions of files. Please keep [X] as it will be replaced at the runtime. */
-"xVersions"="[X]개의 버전";
 /* Question to ensure user wants to delete file version. */
 "deleteVersion"="이 버전을 삭제하시겠습니까?";
 /* Message to notify user the file version will be permanently removed */
@@ -1930,10 +1926,6 @@
 "This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform."="이 위치는 MEGA의 종단간 암호화 플랫폼 밖의 제3자 지도 제공자에서 열릴 것입니다.";
 /* Text shown in location-type messages */
 "Pinned Location"="고정된 위치";
-/* Plural of participant. 2 participants */
-"%d participants"="참여자 %d명";
-/* Singular of participant. 1 participant */
-"%d participant"="참여자 %d명";
 /* Text shown in the chat toolbar while the user is recording a voice clip. The < character should be > in RTL languages. */
 "< Slide to cancel"="< 취소하려면 슬라이드";
 /* Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip */
@@ -2008,8 +2000,6 @@
 "Open Settings"="설정 열기";
 /* Text encouraging the user to invite contacts to MEGA */
 "Invite contacts and start chatting securely with MEGA’s encrypted chat."="지인을 초대하고 MEGA의 암호화된 대화로 안전하게 대화를 시작하세요.";
-/* Text showing the user how many contacts would be invited */
-"Invite [X] contacts"="[X]명의 연락처 초대";
 /* Text showing the user how to write more than one email in order to invite them to MEGA */
 "Tap space to enter multiple emails"="여러 이메일을 입력하려면 스페이스를 탭하세요";
 /* Text used as a section title or similar */
@@ -2128,8 +2118,6 @@
 "This link is not related to this account. Please log in with the correct account."="이 링크는 이 계정과 연결되어 있지 않습니다. 올바른 계정으로 로그인 하세요.";
 /* Text emncouraging the user to add contacts in MEGA */
 "Invite contact now"="지금 연락처 초대";
-/* Text showing the user one contact would be invited */
-"Invite 1 contact"="1명의 연락처 초대";
 /* Error message if user click next button without enter a valid phone number */
 "Please enter a valid phone number"="유효한 전화번호를 입력하세요.";
 /* Error message that will show to user when user reached the sms verification daily limit */
@@ -3235,7 +3223,7 @@
 /* In App notification for meetings */
 "inapp.notifications.meetings.header"="회의";
 /* In app notification description for one off new meeting invitation */
-"inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email][/B] invited you to a meeting scheduled for:";
+"inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email][/B] 님이 당신을 다음과 같은 일정의 회의에 초대하였습니다:";
 /* In app notification description for scheduled meeting when multiple fields updated for one off meeting */
 "inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] 님이 회의를 수정[/B]하였습니다";
 /* In app notification description for scheduled meeting description field update */
@@ -3611,7 +3599,7 @@
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
 "upgradeAccountPlan.message.text.featuresOfProPlan"="• 암호로 보호된 링크\n\n• 만료일이 있는 링크\n\n• 전송 할당량 공유\n\n• 자동 백업\n\n• Pro Lite는 최대 90일, Pro I, II, 그리고 III은 최대 180일 되돌리기 기능 (출시 예정)\n\n• 7일과 10년 사이의 휴지통 비우기 예약";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Automatic backups\n\n• Rewind up to 90 days on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Schedule rubbish bin clearing between 7 days and 10 years\n\n• Ad free";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• 암호로 보호된 링크\n\n• 만료일이 있는 링크\n\n• 전송 할당량 공유\n\n• 자동 백업\n\n• Pro Lite는 최대 90일, Pro I, II, 그리고 III은 최대 180일 되돌리기 기능\n\n• 7일과 10년 사이의 휴지통 비우기 예약\n\n• 광고 없음";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="구독 세부정보";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3963,26 +3951,28 @@
 /* Meeting link text for sharing a scheduled meeting link through external app */
 "meetings.info.shareMeetingLink.meetingLink"="회의 링크: %@";
 /* A log message in the chat conversation to tell the reader that a participant [A] joined the meeting. For example: Alice joined the meeting. */
-"chat.message.joinedTheMeeting"="[A] joined the meeting.";
+"chat.message.joinedTheMeeting"="[A] 님이 회의에 참여하였습니다.";
 /* A log message in the chat conversation to tell the reader that a participant [A] left the meeting. For example: Alice left the meeting. */
-"chat.message.leftTheMeeting"="[A] left the meeting.";
+"chat.message.leftTheMeeting"="[A] 님이 회의를 떠났습니다.";
 /* A log message in a chat conversation to tell the reader that a participant [A] was removed from the meeting by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the meeting by Frank. */
-"chat.message.wasRemovedFromTheMeetingBy"="[A] was removed from the meeting by [B].";
+"chat.message.wasRemovedFromTheMeetingBy"="[A] 님은 [B] 님에 의해 회의에서 제거되었습니다";
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the meeting by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the meeting by invitation from Frank. */
-"chat.message.joinedTheMeetingByInvitationFrom"="[A] joined the meeting by invitation from [B].";
+"chat.message.joinedTheMeetingByInvitationFrom"="[A] 님이 [B] 님의 초대에 의해 회의에 참여하였습니다.";
 /* Meeting subject text for sharing a meeting link through email */
 "meetings.info.shareMeetingLink.subject"="MEGA 회의 초대장";
 /* Calls: Floating panel participants in call header to mute them all */
-"calls.panel.participantsInCall.header.muteAll"="Mute all";
+"calls.panel.participantsInCall.header.muteAll"="모두 음소거";
 /* Calls: Floating panel participants in call header to show all participants are muted */
-"calls.panel.participantsInCall.header.allMuted"="All muted";
+"calls.panel.participantsInCall.header.allMuted"="모두 음소거됨";
 /* Calls: Participant context menu action to mute in the call */
 "calls.panel.participantsInCall.participantContextMenu.actions.mute"="조용히";
 /* Calls: Mute all participants success message */
-"calls.participantsInCall.muteAll.success"="You’ve muted all participants";
+"calls.participantsInCall.muteAll.success"="당신이 모든 참여자를 음소거 하였습니다";
 /* Calls: Mute specific participant success message */
-"calls.participantsInCall.muteParticipant.success"="You’ve muted %@";
+"calls.participantsInCall.muteParticipant.success"="%@ 님을 음소거 하였습니다";
 /* Calls: Mute all participants error message */
-"calls.participantsInCall.muteAll.error"="Error muting all participants";
+"calls.participantsInCall.muteAll.error"="모든 참여자를 음소거 하던 중 오류";
 /* Calls: Mute specific participant error message */
-"calls.participantsInCall.muteParticipant.error"="Error muting %@";
+"calls.participantsInCall.muteParticipant.error"="%@ 님을 음소거 하던 중 오류";
+/* Calls: Muted by a host message */
+"calls.participantsInCall.mutedBy"="당신이 %@ 님에 의해 음소거 되었습니다";

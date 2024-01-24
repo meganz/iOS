@@ -614,8 +614,6 @@
 "Recently Added"="Aggiunto recentemente";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
 "oneFolderShared"="1 cartella";
-/* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
-"foldersShared"="%d cartelle";
 /* Item menu option to add a contact writting his/her email */
 "addFromEmail"="Inserisci un indirizzo email";
 /* Title of Shared Items section */
@@ -1538,8 +1536,6 @@
 "users"="utenti";
 /* user (singular) label indicating is receiving some info, for example shared folders */
 "user"="utente";
-/* Message to display the number of historical versions of files. Please keep [X] as it will be replaced at the runtime. */
-"xVersions"="[X] versioni";
 /* Question to ensure user wants to delete file version. */
 "deleteVersion"="Vuoi eliminare questa versione?";
 /* Message to notify user the file version will be permanently removed */
@@ -1930,10 +1926,6 @@
 "This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform."="Questa posizione verrà aperta utilizzando un provider di mappe di terze parti, fuori dalla criptazione end-to-end della piattaforma di MEGA.";
 /* Text shown in location-type messages */
 "Pinned Location"="Posizione fissata";
-/* Plural of participant. 2 participants */
-"%d participants"="%d partecipanti";
-/* Singular of participant. 1 participant */
-"%d participant"="%d partecipante";
 /* Text shown in the chat toolbar while the user is recording a voice clip. The < character should be > in RTL languages. */
 "< Slide to cancel"="< Scorri per annullare";
 /* Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip */
@@ -2008,8 +2000,6 @@
 "Open Settings"="Apri le Impostazioni";
 /* Text encouraging the user to invite contacts to MEGA */
 "Invite contacts and start chatting securely with MEGA’s encrypted chat."="Invita contatti e inizia a chattare in sicurezza attraverso le chat criptate di MEGA.";
-/* Text showing the user how many contacts would be invited */
-"Invite [X] contacts"="Invita [X] contatti";
 /* Text showing the user how to write more than one email in order to invite them to MEGA */
 "Tap space to enter multiple emails"="Tocca sullo spazio per inserire più indirizzi email";
 /* Text used as a section title or similar */
@@ -2128,8 +2118,6 @@
 "This link is not related to this account. Please log in with the correct account."="Il link non è relativo a questo account. Per favore, effettua l'accesso con l'account corretto.";
 /* Text emncouraging the user to add contacts in MEGA */
 "Invite contact now"="Invita contatti adesso";
-/* Text showing the user one contact would be invited */
-"Invite 1 contact"="Invita 1 contatto";
 /* Error message if user click next button without enter a valid phone number */
 "Please enter a valid phone number"="Per favore, fornisci un numero di telefono valido.";
 /* Error message that will show to user when user reached the sms verification daily limit */
@@ -3235,7 +3223,7 @@
 /* In App notification for meetings */
 "inapp.notifications.meetings.header"="Meeting";
 /* In app notification description for one off new meeting invitation */
-"inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email][/B] invited you to a meeting scheduled for:";
+"inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email][/B] ti ha invitato ad un meeting programmato per:";
 /* In app notification description for scheduled meeting when multiple fields updated for one off meeting */
 "inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] ha aggiornato[/B] il meeting in";
 /* In app notification description for scheduled meeting description field update */
@@ -3611,7 +3599,7 @@
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
 "upgradeAccountPlan.message.text.featuresOfProPlan"="• Link protetti da password\n\n• Link con date di scadenza\n\n• Condivisione della banda di trasferimento\n\n• Backup automatici\n\n• Ripristino fino a 90 giorni su Pro Lite e fino a 180 giorni su Pro I, II, e III (in arrivo)\n\n• Programma la pulizia del cestino tra 7 giorni e 10 anni";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Automatic backups\n\n• Rewind up to 90 days on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Schedule rubbish bin clearing between 7 days and 10 years\n\n• Ad free";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Link protetti da password\n\n• Link con date di scadenza\n\n• Condivisione della banda di trasferimento\n\n• Backup automatici\n\n• Ripristino fino a 90 giorni su Pro Lite e fino a 180 giorni su Pro I, II, e III\n\n• Programma la pulizia del cestino tra 7 giorni e 10 anni\n\n• Senza pubblicità";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Dettagli dell'abbonamento";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3963,26 +3951,28 @@
 /* Meeting link text for sharing a scheduled meeting link through external app */
 "meetings.info.shareMeetingLink.meetingLink"="Link del meeting: %@";
 /* A log message in the chat conversation to tell the reader that a participant [A] joined the meeting. For example: Alice joined the meeting. */
-"chat.message.joinedTheMeeting"="[A] joined the meeting.";
+"chat.message.joinedTheMeeting"="[A] adesso fa parte del meeting";
 /* A log message in the chat conversation to tell the reader that a participant [A] left the meeting. For example: Alice left the meeting. */
-"chat.message.leftTheMeeting"="[A] left the meeting.";
+"chat.message.leftTheMeeting"="[A] ha lasciato il meeting.";
 /* A log message in a chat conversation to tell the reader that a participant [A] was removed from the meeting by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the meeting by Frank. */
-"chat.message.wasRemovedFromTheMeetingBy"="[A] was removed from the meeting by [B].";
+"chat.message.wasRemovedFromTheMeetingBy"="[A] non fa più parte del meeting dopo la rimozione da parte di [B].";
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the meeting by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the meeting by invitation from Frank. */
-"chat.message.joinedTheMeetingByInvitationFrom"="[A] joined the meeting by invitation from [B].";
+"chat.message.joinedTheMeetingByInvitationFrom"="[A] adesso fa parte del meeting su invito di [B].";
 /* Meeting subject text for sharing a meeting link through email */
 "meetings.info.shareMeetingLink.subject"="Invito al meeting MEGA";
 /* Calls: Floating panel participants in call header to mute them all */
-"calls.panel.participantsInCall.header.muteAll"="Mute all";
+"calls.panel.participantsInCall.header.muteAll"="Muta tutti i partecipanti";
 /* Calls: Floating panel participants in call header to show all participants are muted */
-"calls.panel.participantsInCall.header.allMuted"="All muted";
+"calls.panel.participantsInCall.header.allMuted"="Tutti mutati";
 /* Calls: Participant context menu action to mute in the call */
 "calls.panel.participantsInCall.participantContextMenu.actions.mute"="Muta";
 /* Calls: Mute all participants success message */
-"calls.participantsInCall.muteAll.success"="You’ve muted all participants";
+"calls.participantsInCall.muteAll.success"="Hai mutato tutti i partecipanti";
 /* Calls: Mute specific participant success message */
-"calls.participantsInCall.muteParticipant.success"="You’ve muted %@";
+"calls.participantsInCall.muteParticipant.success"="Hai mutato %@";
 /* Calls: Mute all participants error message */
-"calls.participantsInCall.muteAll.error"="Error muting all participants";
+"calls.participantsInCall.muteAll.error"="Errore nel mutamento di tutti i partecipanti";
 /* Calls: Mute specific participant error message */
-"calls.participantsInCall.muteParticipant.error"="Error muting %@";
+"calls.participantsInCall.muteParticipant.error"="Errore nel mutamento di %@";
+/* Calls: Muted by a host message */
+"calls.participantsInCall.mutedBy"="%@ ti ha mutato";

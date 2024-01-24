@@ -2480,10 +2480,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>File sent to chat</string>
         <key>other</key>
-        <string>Files sent to chat</string>
+        <string>대화에 파일을 보냄</string>
       </dict>
     </dict>
     <key>chat.message.fileSentToMultipleChats</key>
@@ -2496,10 +2494,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>File sent to %d chat</string>
         <key>other</key>
-        <string>File sent to %d chats</string>
+        <string>%d개의 대화에 파일을 보냄</string>
       </dict>
     </dict>
     <key>chat.message.filesSent</key>
@@ -2512,10 +2508,52 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>%d file sent to chats</string>
         <key>other</key>
-        <string>%d files sent to chats</string>
+        <string>대화에 %d개의 파일을 보냄</string>
+      </dict>
+    </dict>
+    <key>chat.message.multipleFilesSentToMultipleChats</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@chatCount@</string>
+      <key>chatCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Files sent to %d chat</string>
+        <key>other</key>
+        <string>Files sent to %d chats</string>
+      </dict>
+    </dict>
+    <key>contacts.invite.emailAddress.inviteNumberOfContacts</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>%d명의 연락처를 초대</string>
+      </dict>
+    </dict>
+    <key>chat.info.numberOfParticipants</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>참여자 %d명</string>
       </dict>
     </dict>
   </dict>

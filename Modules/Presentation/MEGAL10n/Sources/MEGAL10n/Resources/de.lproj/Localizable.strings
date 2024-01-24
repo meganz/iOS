@@ -614,8 +614,6 @@
 "Recently Added"="Neu hinzugefügt";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
 "oneFolderShared"="1 Ordner";
-/* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
-"foldersShared"="%d Ordner";
 /* Item menu option to add a contact writting his/her email */
 "addFromEmail"="E-Mail hinzufügen";
 /* Title of Shared Items section */
@@ -1538,8 +1536,6 @@
 "users"="Benutzer";
 /* user (singular) label indicating is receiving some info, for example shared folders */
 "user"="Benutzer";
-/* Message to display the number of historical versions of files. Please keep [X] as it will be replaced at the runtime. */
-"xVersions"="[X] Versionen";
 /* Question to ensure user wants to delete file version. */
 "deleteVersion"="Diese Version löschen?";
 /* Message to notify user the file version will be permanently removed */
@@ -1930,10 +1926,6 @@
 "This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform."="Der Standort wird mit einer Dritt-App außerhalb der sicheren MEGA-Umgebung angezeigt. Bitte beachten Sie mögliche Konsequenzen für die Privatsphäre der betroffenen Personen.";
 /* Text shown in location-type messages */
 "Pinned Location"="Standort";
-/* Plural of participant. 2 participants */
-"%d participants"="%d Teilnehmer";
-/* Singular of participant. 1 participant */
-"%d participant"="%d Teilnehmer";
 /* Text shown in the chat toolbar while the user is recording a voice clip. The < character should be > in RTL languages. */
 "< Slide to cancel"="< Abbrechen";
 /* Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip */
@@ -2008,8 +2000,6 @@
 "Open Settings"="Einstellungen öffnen";
 /* Text encouraging the user to invite contacts to MEGA */
 "Invite contacts and start chatting securely with MEGA’s encrypted chat."="Laden Sie Kontakte ein und kommunizieren Sie sicher mit MEGAs Ende-zu-Ende-Verschlüsselung.";
-/* Text showing the user how many contacts would be invited */
-"Invite [X] contacts"="[X] Kontakte einladen";
 /* Text showing the user how to write more than one email in order to invite them to MEGA */
 "Tap space to enter multiple emails"="Mehrere E-Mail-Adressen durch Leerzeichen trennen";
 /* Text used as a section title or similar */
@@ -2128,8 +2118,6 @@
 "This link is not related to this account. Please log in with the correct account."="Der Link gehört nicht zu diesem Account. Bitte melden Sie sich mit dem korrekten Account an.";
 /* Text emncouraging the user to add contacts in MEGA */
 "Invite contact now"="Kontakte jetzt einladen";
-/* Text showing the user one contact would be invited */
-"Invite 1 contact"="Einen Kontakt einladen";
 /* Error message if user click next button without enter a valid phone number */
 "Please enter a valid phone number"="Bitte geben Sie eine gültige Telefonnummer an.";
 /* Error message that will show to user when user reached the sms verification daily limit */
@@ -3986,3 +3974,5 @@
 "calls.participantsInCall.muteAll.error"="Fehler beim Stummschalten aller Teilnehmer";
 /* Calls: Mute specific participant error message */
 "calls.participantsInCall.muteParticipant.error"="Fehler beim Stummschalten von %@";
+/* Calls: Muted by a host message */
+"calls.participantsInCall.mutedBy"="You’ve been muted by %@";

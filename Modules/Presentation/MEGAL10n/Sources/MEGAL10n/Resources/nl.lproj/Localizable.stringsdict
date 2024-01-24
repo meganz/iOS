@@ -2866,5 +2866,53 @@
         <string>%d bestanden verstuurd naar gesprek</string>
       </dict>
     </dict>
+    <key>chat.message.multipleFilesSentToMultipleChats</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@chatCount@</string>
+      <key>chatCount</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Bestand verzonden naar %d gesprek</string>
+        <key>other</key>
+        <string>Bestanden verzonden naar %d gesprekken</string>
+      </dict>
+    </dict>
+    <key>contacts.invite.emailAddress.inviteNumberOfContacts</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d contact uitnodigen</string>
+        <key>other</key>
+        <string>%d contacten uitnodigen</string>
+      </dict>
+    </dict>
+    <key>chat.info.numberOfParticipants</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>%d deelnemer</string>
+        <key>other</key>
+        <string>%d deelnemers</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

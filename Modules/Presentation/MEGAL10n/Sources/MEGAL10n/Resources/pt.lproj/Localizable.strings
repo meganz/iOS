@@ -79,7 +79,7 @@
 /* Alert title shown when you need to log in to continue with the action you want to do */
 "pleaseLogInToYourAccount"="Por favor, faça login na sua conta.";
 /* Error message when a user attempts to change their email without an active login session. */
-"needToBeLoggedInToCompleteYourEmailChange"="You need to be logged in to complete your email address change. Please log in again with your current email address, then tap on your confirmation link again.";
+"needToBeLoggedInToCompleteYourEmailChange"="Você precisa estar logado para completar a sua alteração de email. Por favor, faça login novamente com o seu email atual e, a continuação, pressione o link de confirmação.";
 /* Button title which triggers the action to login in your MEGA account */
 "login"="Fazer login";
 /* Message for login option on Create Account screen */
@@ -259,7 +259,7 @@
 /* Detail message shown when you try to call someone that is not you contact in MEGA. The [X] placeholder will be replaced on runtime for the email of the user */
 "dialog.callAttempt.contactNotInMEGA"="Seu contato [X] não está no MEGA. Para realizar uma ligação através do chat criptografado do MEGA, você precisa convidar seu contato";
 /* Text shown when the user sends a contact invitation */
-"inviteSent"="Invitation sent";
+"inviteSent"="Convite enviado";
 /* Button title to allow the user postpone an action */
 "later"="Depois";
 /* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
@@ -614,8 +614,6 @@
 "Recently Added"="Adicionado recentemente";
 /* Subtitle shown on the Contacts section under the name of the contact you have shared one folder with */
 "oneFolderShared"="1 pasta";
-/* Subtitle shown on the Contacts section under the name of the contact you have shared {Number of folders} with */
-"foldersShared"="%d pastas";
 /* Item menu option to add a contact writting his/her email */
 "addFromEmail"="Digite um email";
 /* Title of Shared Items section */
@@ -947,7 +945,7 @@
 /* The title of the alert dialog to change the email associated to an account. */
 "Change Email"="Alterar o email";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
-"oldAndNewEmailMatch"="The new and the old email addresses must not match";
+"oldAndNewEmailMatch"="O email novo e o email antigo não podem ser iguais";
 /* Error message shown when you have not written the same email when confirming a new one */
 "emailsDoNotMatch"="Os emails não coincidem";
 /* Error message when a use wants to validate the same email twice */
@@ -1538,8 +1536,6 @@
 "users"="usuários";
 /* user (singular) label indicating is receiving some info, for example shared folders */
 "user"="usuário";
-/* Message to display the number of historical versions of files. Please keep [X] as it will be replaced at the runtime. */
-"xVersions"="[X] versões";
 /* Question to ensure user wants to delete file version. */
 "deleteVersion"="Você quer deletar esta versão?";
 /* Message to notify user the file version will be permanently removed */
@@ -1930,10 +1926,6 @@
 "This location will be opened using a third party maps provider outside the end-to-end encrypted MEGA platform."="Essa localização será aberta usando um provedor de mapas de terceiros, externo à plataforma criptografada de ponta a ponta do MEGA.";
 /* Text shown in location-type messages */
 "Pinned Location"="Fixar localização";
-/* Plural of participant. 2 participants */
-"%d participants"="%d participantes";
-/* Singular of participant. 1 participant */
-"%d participant"="%d participante";
 /* Text shown in the chat toolbar while the user is recording a voice clip. The < character should be > in RTL languages. */
 "< Slide to cancel"="< Deslize para cancelar";
 /* Tooltip shown when the user presses but does not hold the microphone icon to send a voice clip */
@@ -2008,12 +2000,10 @@
 "Open Settings"="Acessar as configurações";
 /* Text encouraging the user to invite contacts to MEGA */
 "Invite contacts and start chatting securely with MEGA’s encrypted chat."="Adicione contatos e converse com segurança no chat criptografado do MEGA.";
-/* Text showing the user how many contacts would be invited */
-"Invite [X] contacts"="Adicionar [X] contatos";
 /* Text showing the user how to write more than one email in order to invite them to MEGA */
 "Tap space to enter multiple emails"="Use espaço para digitar vários emails";
 /* Text used as a section title or similar */
-"Enter Email"="Enter email address";
+"Enter Email"="Digite o(s) email(s)";
 /* Text to send as SMS message to user contacts inviting them to MEGA */
 "contact.invite.message"="Você recebeu uma solicitação do MEGA Chat. Cadastre uma conta no MEGA e obtenha 20 GB de armazenamento grátis para sempre.";
 /* Destination folder name of chat files */
@@ -2128,8 +2118,6 @@
 "This link is not related to this account. Please log in with the correct account."="Este link não corresponde a esta conta. Por favor, faça o login na conta correta.";
 /* Text emncouraging the user to add contacts in MEGA */
 "Invite contact now"="Adicionar contatos";
-/* Text showing the user one contact would be invited */
-"Invite 1 contact"="Adicionar um contato";
 /* Error message if user click next button without enter a valid phone number */
 "Please enter a valid phone number"="Por favor, forneça um número de telefone válido.";
 /* Error message that will show to user when user reached the sms verification daily limit */
@@ -2151,7 +2139,7 @@
 /* Label tell user to enter received txt to below input boxes */
 "Please type the verification code sent to"="Digite o código de verificação enviado a";
 /* Text message to remind user to resend verification code */
-"You didn't receive a code?"="You didn’t receive the code?";
+"You didn't receive a code?"="Não recebeu o código?";
 /* Message shown when verify phone number successfully */
 "Your phone number has been verified successfully"="O seu número de telefone foi verificado";
 /* Text describing account suspended state to the user */
@@ -3235,7 +3223,7 @@
 /* In App notification for meetings */
 "inapp.notifications.meetings.header"="Reuniões";
 /* In app notification description for one off new meeting invitation */
-"inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email][/B] invited you to a meeting scheduled for:";
+"inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email][/B] convidou você para uma reunião agendada para:";
 /* In app notification description for scheduled meeting when multiple fields updated for one off meeting */
 "inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] atualizou[/B] a reunião para";
 /* In app notification description for scheduled meeting description field update */
@@ -3347,7 +3335,7 @@
 /* Schedule meeting add participants field */
 "meetings.scheduleMeeting.addParticipants"="Adicionar participantes";
 /* Schedule meeting send calendar invite field */
-"meetings.scheduleMeeting.sendCalendarInvite"="Send calendar invitation";
+"meetings.scheduleMeeting.sendCalendarInvite"="Enviar convite de calendário";
 /* Schedule meeting open invite field */
 "meetings.scheduleMeeting.openInvite"="Permitir adicionar participantes a usuários que não forem anfitriões";
 /* Schedule meeting description field placeholder */
@@ -3611,7 +3599,7 @@
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
 "upgradeAccountPlan.message.text.featuresOfProPlan"="• Links protegidos por senha\n\n• Links com datas de validade\n\n• Compartilhamento da cota de transferência\n\n• Backups automáticos\n\n• Retroceso até 90 dias no plano Pro  Lite e até 180 dias nos planos Pro I, II e III (em breve)\n\n• Agendamento da limpeza da lixeira entre 7 dias e 10 anos";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Automatic backups\n\n• Rewind up to 90 days on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Schedule rubbish bin clearing between 7 days and 10 years\n\n• Ad free";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Links protegidos por senha\n\n• Links com datas de validade\n\n• Compartilhamento da cota de transferência\n\n• Backups automáticos\n\n• Retroceder até 90 dias no plano Pro Lite e até 180 dias nos planos Pro I, II e III\n\n• Agendamento da limpeza da lixeira entre 7 dias e 10 anos\n\n• Sem anúncios";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Informações da assinatura";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3701,7 +3689,7 @@
 /* Edit Schedule meeting navigaion title. */
 "meetings.scheduled.editMeeting.title"="Editar reunião";
 /* Schedule meeting calendar invite description */
-"meetings.scheduleMeeting.calendarInvite.description"="Email a calendar invitation to participants so they can add the meeting to their calendars.";
+"meetings.scheduleMeeting.calendarInvite.description"="Envie por email um convite de calendário aos participantes para que possam adicionar a reunião aos seus calendários.";
 /* Start meeting tip view message bold text */
 "meetings.scheduleMeeting.startMeetingTip.startMeeting"="Começar a reunião";
 /* Recurring meeting tip view message bold text */
@@ -3839,9 +3827,9 @@
 /* Type chips group picker title which is displayed in the picker shown when user taps on the  node type chips group pill */
 "home.search.chipsGroup.nodeType.pickerTitle"="Selecionar tipo";
 /* Type chips group title which is displayed in modified date chips group pill */
-"home.search.chipsGroup.modificationDate.pillTitle"="Modified date";
+"home.search.chipsGroup.modificationDate.pillTitle"="Data da alteração";
 /* Type chips group picker title which is displayed in the picker shown when user taps on the modified date chips group pill */
-"home.search.chipsGroup.modificationDate.pickerTitle"="Select modified date";
+"home.search.chipsGroup.modificationDate.pickerTitle"="Selecione a data da alteração";
 /* Empty screen copy when no filter is selected on the home screen search */
 "home.search.empty.no-chip-selected"="Não há resultados";
 /* Empty screen copy when Images filter is selected on the home screen search */
@@ -3941,48 +3929,50 @@
 /* Videos: video scene title */
 "videos.navigationbar.title"="Vídeos";
 /* Videos: video tab title all videos */
-"videos.tab.title.all"="All videos";
+"videos.tab.title.all"="Todos os vídeos";
 /* Videos: video tab title playlists */
-"videos.tab.title.playlist"="Playlists";
+"videos.tab.title.playlist"="Listas de reprodução";
 /* Videos: video content empty state */
 "videos.tab.all.content.emptyState"="Não há vídeos";
 /* Videos: video playlist add new playlist button text description */
-"videos.tab.playlist.content.newPlaylist"="New playlist";
+"videos.tab.playlist.content.newPlaylist"="Nova lista de reprodução";
 /* Videos: video playlist playlist cell title */
 "videos.tab.playlist.content.playlistCell.title.favorites"="Favoritos";
 /* Videos: video playlist playlist cell subtitle */
-"videos.tab.playlist.content.playlistCell.subtitle.emptyPlaylist"="Empty playlist";
+"videos.tab.playlist.content.playlistCell.subtitle.emptyPlaylist"="Lista de reprodução vazia";
 /* Calls: Floating panel participants empty list waiting room state */
-"calls.panel.participantsInWaitingRoom.emptyState"="There is no one in the waiting room";
+"calls.panel.participantsInWaitingRoom.emptyState"="Não há ninguém na sala de espera";
 /* Meeting invitation text for sharing a scheduled meeting link through external app */
-"meetings.info.shareMeetingLink.invitation"="%@ is inviting you to a MEGA meeting";
+"meetings.info.shareMeetingLink.invitation"="%@ está convidando você para uma reunião no MEGA";
 /* Meeting name text for sharing a scheduled meeting link through external app */
-"meetings.info.shareMeetingLink.meetingName"="Meeting name: %@";
+"meetings.info.shareMeetingLink.meetingName"="Nome da reunião: %@";
 /* Meeting time text for sharing a scheduled meeting link through external app */
-"meetings.info.shareMeetingLink.meetingTime"="Date and time: %@";
+"meetings.info.shareMeetingLink.meetingTime"="Data e hora: %@";
 /* Meeting link text for sharing a scheduled meeting link through external app */
-"meetings.info.shareMeetingLink.meetingLink"="Meeting link: %@";
+"meetings.info.shareMeetingLink.meetingLink"="Link da reunião: %@";
 /* A log message in the chat conversation to tell the reader that a participant [A] joined the meeting. For example: Alice joined the meeting. */
-"chat.message.joinedTheMeeting"="[A] joined the meeting.";
+"chat.message.joinedTheMeeting"="[A] entrou na reunião.";
 /* A log message in the chat conversation to tell the reader that a participant [A] left the meeting. For example: Alice left the meeting. */
-"chat.message.leftTheMeeting"="[A] left the meeting.";
+"chat.message.leftTheMeeting"="[A] saiu da reunião.";
 /* A log message in a chat conversation to tell the reader that a participant [A] was removed from the meeting by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the meeting by Frank. */
-"chat.message.wasRemovedFromTheMeetingBy"="[A] was removed from the meeting by [B].";
+"chat.message.wasRemovedFromTheMeetingBy"="[A] foi removido da reunião por [B].";
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the meeting by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the meeting by invitation from Frank. */
-"chat.message.joinedTheMeetingByInvitationFrom"="[A] joined the meeting by invitation from [B].";
+"chat.message.joinedTheMeetingByInvitationFrom"="[A] entrou na reunião a convite de [B].";
 /* Meeting subject text for sharing a meeting link through email */
-"meetings.info.shareMeetingLink.subject"="MEGA meeting invitation";
+"meetings.info.shareMeetingLink.subject"="Convite para a reunião no MEGA";
 /* Calls: Floating panel participants in call header to mute them all */
-"calls.panel.participantsInCall.header.muteAll"="Mute all";
+"calls.panel.participantsInCall.header.muteAll"="Silenciar a todos";
 /* Calls: Floating panel participants in call header to show all participants are muted */
-"calls.panel.participantsInCall.header.allMuted"="All muted";
+"calls.panel.participantsInCall.header.allMuted"="Todos foram silenciados";
 /* Calls: Participant context menu action to mute in the call */
 "calls.panel.participantsInCall.participantContextMenu.actions.mute"="Silenciar";
 /* Calls: Mute all participants success message */
-"calls.participantsInCall.muteAll.success"="You’ve muted all participants";
+"calls.participantsInCall.muteAll.success"="Você silenciou todos os participantes";
 /* Calls: Mute specific participant success message */
-"calls.participantsInCall.muteParticipant.success"="You’ve muted %@";
+"calls.participantsInCall.muteParticipant.success"="Você silenciou %@";
 /* Calls: Mute all participants error message */
-"calls.participantsInCall.muteAll.error"="Error muting all participants";
+"calls.participantsInCall.muteAll.error"="Erro ao silenciar todos os participantes";
 /* Calls: Mute specific participant error message */
-"calls.participantsInCall.muteParticipant.error"="Error muting %@";
+"calls.participantsInCall.muteParticipant.error"="Erro ao silenciar %@";
+/* Calls: Muted by a host message */
+"calls.participantsInCall.mutedBy"="Você foi silenciado por %@";
