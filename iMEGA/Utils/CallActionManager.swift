@@ -53,7 +53,7 @@ import MEGADomain
             guard let startCallRequestDelegate = self.startCallRequestDelegate else { return }
             self.chatSdk.setChatVideoInDevices("Front Camera")
             self.providerDelegate?.isOutgoingCall = self.isOneToOneChatRoom(forChatId: chatId)
-            self.chatSdk.startChatCall(chatId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: startCallRequestDelegate)
+            self.chatSdk.startCall(inChat: chatId, enableVideo: enableVideo, enableAudio: enableAudio, notRinging: false, delegate: startCallRequestDelegate)
         }
     }
     
@@ -77,7 +77,7 @@ import MEGADomain
             guard let startCallRequestDelegate = self.startCallRequestDelegate else { return }
             self.chatSdk.setChatVideoInDevices("Front Camera")
             
-            self.chatSdk.startChatCallNoRinging(chatId, scheduledId: scheduledId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: startCallRequestDelegate)
+            self.chatSdk.startCall(inChat: chatId, enableVideo: enableVideo, enableAudio: enableAudio, notRinging: true, delegate: startCallRequestDelegate)
         }
     }
     
@@ -111,7 +111,7 @@ import MEGADomain
                     }
                 }
                 chatSdk.setChatVideoInDevices("Front Camera")
-                chatSdk.startMeeting(inWaitingRoomChat: chatId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: delegate)
+                chatSdk.startCall(inChat: chatId, enableVideo: enableVideo, enableAudio: enableAudio, notRinging: false, delegate: delegate)
             }
         }
     }
@@ -146,7 +146,7 @@ import MEGADomain
                     }
                 }
                 chatSdk.setChatVideoInDevices("Front Camera")
-                chatSdk.startMeeting(inWaitingRoomChatNoRinging: chatId, scheduledId: scheduledId, enableVideo: enableVideo, enableAudio: enableAudio, delegate: delegate)
+                chatSdk.startCall(inChat: chatId, enableVideo: enableVideo, enableAudio: enableAudio, notRinging: true, delegate: delegate)
             }
         }
     }
