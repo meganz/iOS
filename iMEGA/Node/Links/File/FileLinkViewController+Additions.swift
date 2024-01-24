@@ -1,6 +1,7 @@
 import Accounts
 import Combine
 import MEGADomain
+import MEGASDKRepo
 
 extension FileLinkViewController {
     @objc func download() {
@@ -41,6 +42,24 @@ extension FileLinkViewController {
 // MARK: - Ads
 extension FileLinkViewController: AdsSlotViewControllerProtocol {
     public var adsSlotPublisher: AnyPublisher<AdsSlotConfig?, Never> {
-        Just(AdsSlotConfig(adsSlot: .sharedLink, displayAds: true)).eraseToAnyPublisher()
+        Just(
+            AdsSlotConfig(
+                adsSlot: .sharedLink,
+                displayAds: true,
+                isAdsCookieEnabled: calculateAdCookieStatus
+            )
+        ).eraseToAnyPublisher()
+    }
+    
+    private func calculateAdCookieStatus() async -> Bool {
+        do {
+            let cookieSettingsUseCase = CookieSettingsUseCase(repository: CookieSettingsRepository.newRepo)
+            let bitmap = try await cookieSettingsUseCase.cookieSettings()
+            
+            let cookiesBitmap = CookiesBitmap(rawValue: bitmap)
+            return cookiesBitmap.contains(.ads) && cookiesBitmap.contains(.adsCheckCookie)
+        } catch {
+            return false
+        }
     }
 }

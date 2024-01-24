@@ -1,6 +1,7 @@
 import Accounts
 import Combine
 import MEGADomain
+import MEGASDKRepo
 
 extension MainTabBarController: AdsSlotViewControllerProtocol {
     public var adsSlotPublisher: AnyPublisher<AdsSlotConfig?, Never> {
@@ -17,25 +18,29 @@ extension MainTabBarController: AdsSlotViewControllerProtocol {
             guard let cloudDriveViewController = mainTabBarTopViewController() as? CloudDriveViewController else {
                 return AdsSlotConfig(
                     adsSlot: .files,
-                    displayAds: false
+                    displayAds: false, 
+                    isAdsCookieEnabled: calculateAdCookieStatus
                 )
             }
             
             return AdsSlotConfig(
                 adsSlot: .files,
-                displayAds: cloudDriveViewController.displayMode == .cloudDrive
+                displayAds: cloudDriveViewController.displayMode == .cloudDrive, 
+                isAdsCookieEnabled: calculateAdCookieStatus
             )
             
         case TabType.cameraUploads.rawValue:
             return AdsSlotConfig(
                 adsSlot: .photos,
-                displayAds: isVisibleController(type: PhotoAlbumContainerViewController.self)
+                displayAds: isVisibleController(type: PhotoAlbumContainerViewController.self), 
+                isAdsCookieEnabled: calculateAdCookieStatus
             )
             
         case TabType.home.rawValue:
             return AdsSlotConfig(
                 adsSlot: .home,
-                displayAds: isVisibleController(type: HomeViewController.self)
+                displayAds: isVisibleController(type: HomeViewController.self), 
+                isAdsCookieEnabled: calculateAdCookieStatus
             )
             
         case TabType.chat.rawValue, TabType.sharedItems.rawValue:
@@ -57,5 +62,17 @@ extension MainTabBarController: AdsSlotViewControllerProtocol {
             return nil
         }
         return topViewController
+    }
+    
+    private func calculateAdCookieStatus() async -> Bool {
+        do {
+            let cookieSettingsUseCase = CookieSettingsUseCase(repository: CookieSettingsRepository.newRepo)
+            let bitmap = try await cookieSettingsUseCase.cookieSettings()
+            
+            let cookiesBitmap = CookiesBitmap(rawValue: bitmap)
+            return cookiesBitmap.contains(.ads) && cookiesBitmap.contains(.adsCheckCookie)
+        } catch {
+            return false
+        }
     }
 }
