@@ -265,8 +265,8 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
                 ChatRoomContextMenuOption(
                     title: existsInProgressCallInChatRoom ? Strings.Localizable.Meetings.Scheduled.ContextMenu.joinMeeting : Strings.Localizable.Meetings.Scheduled.ContextMenu.startMeeting,
                     image: existsInProgressCallInChatRoom ? .joinMeeting2 : .startMeeting2,
-                    action: { [weak self] in
-                        self?.startOrJoinMeetingTapped()
+                    action: {
+                        self.startOrJoinMeetingTapped()
                     }))
         }
         
@@ -777,25 +777,6 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
                     startMeetingInWaitingRoomChatNoRinging(for: scheduledMeeting, in: chatRoom)
                 } else {
                     startMeetingCallNoRinging(for: scheduledMeeting, in: chatRoom)
-                }
-            } else {
-                startCall(in: chatRoom)
-            }
-        }
-    }
-    
-    private func startCall(in chatRoom: ChatRoomEntity) {
-        callUseCase.startCall(for: chatRoom.chatId, enableVideo: false, enableAudio: true) { [weak self] result in
-            switch result {
-            case .success(let call):
-                self?.prepareAndShowCallUI(for: call, in: chatRoom)
-            case .failure(let error):
-                switch error {
-                case .tooManyParticipants:
-                    self?.router.showErrorMessage(Strings.Localizable.Error.noMoreParticipantsAreAllowedInThisGroupCall)
-                default:
-                    self?.router.showErrorMessage(Strings.Localizable.somethingWentWrong)
-                    MEGALogError("Not able to join scheduled meeting call")
                 }
             }
         }

@@ -160,20 +160,6 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
         return call
     }
     
-    func joinCall(for chatId: HandleEntity, enableVideo: Bool, enableAudio: Bool, completion: @escaping (Result<CallEntity, CallErrorEntity>) -> Void) {
-        guard let activeCall = chatSdk.chatCall(forChatId: chatId) else {
-            completion(.failure(.generic))
-            return
-        }
-        if activeCall.status == .userNoPresent {
-            startCall(for: chatId, enableVideo: enableVideo, enableAudio: enableAudio, completion: completion)
-        } else {
-            call = activeCall.toCallEntity()
-            callId = activeCall.callId
-            completion(.success(activeCall.toCallEntity()))
-        }
-    }
-    
     func createActiveSessions() {
         guard let call, !call.clientSessions.isEmpty, let chatRoom = chatSdk.chatRoom(forChatId: call.chatId) else {
             return
