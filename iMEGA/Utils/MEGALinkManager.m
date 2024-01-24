@@ -602,7 +602,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
                 photoBrowserVC.encryptedLink = MEGALinkManager.secondaryLinkURL.absoluteString;
                 photoBrowserVC.needsReload = YES;
 
-                [self presentViewControllerWithAds:photoBrowserVC adsSlotViewController:photoBrowserVC];
+                [self presentViewControllerWithAds:photoBrowserVC adsSlotViewController:photoBrowserVC presentationStyle:UIModalPresentationAutomatic];
             } else if ([FileExtensionGroupOCWrapper verifyIsMultiMedia:node.name] && node.mnz_isPlayable) {
                 [self initFullScreenPlayerWithNode:node fileLink:fileLinkURLString filePaths:nil isFolderLink:NO presenter:UIApplication.mnz_visibleViewController];
             } else {
@@ -626,13 +626,11 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     fileLinkVC.request = request;
     fileLinkVC.error = error;
     
-    [self presentViewControllerWithAds:fileLinkNavigationController adsSlotViewController:fileLinkVC];
+    [self presentViewControllerWithAds:fileLinkNavigationController adsSlotViewController:fileLinkVC presentationStyle:UIModalPresentationAutomatic];
 }
 
 + (void)showFolderLinkView {
     MEGANavigationController *folderNavigationController = [[UIStoryboard storyboardWithName:@"Links" bundle:nil] instantiateViewControllerWithIdentifier:@"FolderLinkNavigationControllerID"];
-    folderNavigationController.modalPresentationStyle = UIModalPresentationFullScreen;
-    
     FolderLinkViewController *folderlinkVC = folderNavigationController.viewControllers.firstObject;
     
     folderlinkVC.isFolderRootNode = YES;
@@ -641,7 +639,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     
     folderlinkVC.player = [AudioPlayerManager.shared currentPlayer];
     
-    [self presentViewControllerWithAds:folderNavigationController adsSlotViewController:folderlinkVC];
+    [self presentViewControllerWithAds:folderNavigationController adsSlotViewController:folderlinkVC presentationStyle:UIModalPresentationFullScreen];
 }
 
 + (void)showBackupLinkView {

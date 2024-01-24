@@ -8,6 +8,7 @@ public struct AdsSlotRouter<T: View> {
     private let adsSlotViewController: any AdsSlotViewControllerProtocol
     private let contentView: T
     private let accountUseCase: any AccountUseCaseProtocol
+    private let presentationStyle: UIModalPresentationStyle
     
     private class HostingController<S: View>: UIHostingController<AdsSlotView<S>> {
         
@@ -33,12 +34,14 @@ public struct AdsSlotRouter<T: View> {
         accountUseCase: some AccountUseCaseProtocol,
         adsSlotViewController: some AdsSlotViewControllerProtocol,
         contentView: T,
-        presenter: UIViewController? = nil
+        presenter: UIViewController? = nil,
+        presentationStyle: UIModalPresentationStyle = .automatic
     ) {
         self.adsSlotViewController = adsSlotViewController
         self.accountUseCase = accountUseCase
         self.contentView = contentView
         self.presenter = presenter
+        self.presentationStyle = presentationStyle
     }
     
     public func build(onViewFirstAppeared: (() -> Void)? = nil) -> UIViewController {
@@ -46,9 +49,12 @@ public struct AdsSlotRouter<T: View> {
                                          accountUseCase: accountUseCase,
                                          adsSlotChangeStream: AdsSlotChangeStream(adsSlotViewController: adsSlotViewController))
         let adsSlotView = AdsSlotView(viewModel: viewModel, contentView: contentView)
-        return HostingController(
+        let adsViewController = HostingController(
             rootView: adsSlotView,
-            onViewFirstAppeared: onViewFirstAppeared)
+            onViewFirstAppeared: onViewFirstAppeared
+        )
+        adsViewController.modalPresentationStyle = presentationStyle
+        return adsViewController
     }
     
     public func start() {
