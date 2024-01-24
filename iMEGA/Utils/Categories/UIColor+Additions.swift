@@ -111,7 +111,7 @@ extension UIColor {
     @objc class func mnz_navigationBarTitle(for traitCollection: UITraitCollection) -> UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light: MEGAAppColor.Black._000000.uiColor
-        case .dark: MEGAAppColor.White._FFFFFF.uiColor
+        case .dark: MEGAAppColor.White._FFFFFF_navigationBarTitle.uiColor
         @unknown default: MEGAAppColor.Black._000000.uiColor
         }
     }

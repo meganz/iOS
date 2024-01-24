@@ -6,6 +6,7 @@ import UIKit
 enum MEGAAppColor {
     enum White {
         case _FFFFFF
+        case _FFFFFF_navigationBarTitle
         case _FFFFFF_pageBackground
         case _FFFFFF_toolbarShadow
         case _EEEEEE
@@ -31,7 +32,8 @@ enum MEGAAppColor {
         
         private var designTokenColor: UIColor {
             switch self {
-            case ._FFFFFF: TokenColors.Text.primary
+            case ._FFFFFF: TokenColors.Background.blur
+            case ._FFFFFF_navigationBarTitle: TokenColors.Text.primary
             case ._FFFFFF_pageBackground: TokenColors.Background.page
             case ._FFFFFF_toolbarShadow: TokenColors.Border.strong
             case ._EEEEEE: TokenColors.Background.blur
@@ -51,7 +53,7 @@ enum MEGAAppColor {
         
         private var legacyColor: UIColor {
             switch self {
-            case ._FFFFFF, ._FFFFFF_pageBackground: UIColor.whiteFFFFFF
+            case ._FFFFFF, ._FFFFFF_pageBackground, ._FFFFFF_navigationBarTitle: UIColor.whiteFFFFFF
             case ._FFFFFF_toolbarShadow: UIColor.whiteFFFFFF // Toolbar shadow is only applied when .designToken feature flag is on so this legacy color will never be used.
             case ._EEEEEE: UIColor.whiteEEEEEE
             case ._EFEFEF: UIColor.whiteEFEFEF
