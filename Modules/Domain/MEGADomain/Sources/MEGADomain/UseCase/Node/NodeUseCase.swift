@@ -10,7 +10,6 @@ public protocol NodeUseCaseProtocol {
     func nodeForHandle(_ handle: HandleEntity) -> NodeEntity?
     func parentForHandle(_ handle: HandleEntity) -> NodeEntity?
     func parentsForHandle(_ handle: HandleEntity) async -> [NodeEntity]?
-    func childrenNames(of node: NodeEntity) -> [String]?
 }
 
 // MARK: - Use case implementation -
@@ -65,9 +64,5 @@ public struct NodeUseCase<T: NodeDataRepositoryProtocol, U: NodeValidationReposi
     public func parentsForHandle(_ handle: HandleEntity) async -> [NodeEntity]? {
         guard let node = nodeForHandle(handle) else { return nil }
         return await nodeRepository.parents(of: node)
-    }
-    
-    public func childrenNames(of node: NodeEntity) -> [String]? {
-        nodeRepository.childrenNames(of: node)
     }
 }

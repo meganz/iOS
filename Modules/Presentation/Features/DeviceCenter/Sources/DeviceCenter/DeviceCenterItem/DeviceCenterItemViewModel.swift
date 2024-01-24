@@ -9,7 +9,6 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
     private let refreshDevicesPublisher: PassthroughSubject<Void, Never>?
     private let deviceCenterUseCase: DeviceCenterUseCaseProtocol
     private let nodeUseCase: (any NodeUseCaseProtocol)?
-    private let cameraUploadsUseCase: (any CameraUploadsUseCaseProtocol)?
     private let deviceCenterBridge: DeviceCenterBridge
     private var itemType: DeviceCenterItemType
     var assets: ItemAssets
@@ -30,7 +29,6 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
          refreshDevicesPublisher: PassthroughSubject<Void, Never>? = nil,
          deviceCenterUseCase: DeviceCenterUseCaseProtocol,
          nodeUseCase: (any NodeUseCaseProtocol)? = nil,
-         cameraUploadsUseCase: (any CameraUploadsUseCaseProtocol)? = nil,
          deviceCenterBridge: DeviceCenterBridge,
          itemType: DeviceCenterItemType,
          assets: ItemAssets) {
@@ -38,7 +36,6 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
         self.refreshDevicesPublisher = refreshDevicesPublisher
         self.deviceCenterUseCase = deviceCenterUseCase
         self.nodeUseCase = nodeUseCase
-        self.cameraUploadsUseCase = cameraUploadsUseCase
         self.deviceCenterBridge = deviceCenterBridge
         self.itemType = itemType
         self.assets = assets
@@ -104,35 +101,6 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
             .build()
     }
     
-    private func makeRenameEntity(_ node: NodeEntity) -> RenameActionEntity? {
-        guard let parentNode = nodeUseCase?.nodeForHandle(node.parentHandle) else { return nil }
-        
-        let otherNames = nodeUseCase?
-            .childrenNames(of: parentNode)?
-            .filter {$0 != node.name}
-        
-        return RenameActionEntity(
-            oldName: node.name,
-            otherNamesInContext: otherNames ?? [],
-            actionType: .node(
-                node: node
-            ),
-            alertTitles: [
-                .invalidCharacters: Strings.Localizable.General.Error.charactersNotAllowed(String.Constants.invalidFileFolderNameCharacters),
-                .duplicatedName: Strings.Localizable.thereIsAlreadyAFolderWithTheSameName,
-                .none: Strings.Localizable.rename
-            ],
-            alertMessage: [
-                .duplicatedName: Strings.Localizable.Device.Center.Rename.Device.Different.name,
-                .none: Strings.Localizable.renameNodeMessage
-            ],
-            alertPlaceholder: node.name) {
-                Task { [weak self] in
-                    await self?.handleRenameCompletion()
-                }
-            }
-    }
-    
     @MainActor
     private func handleRenameCompletion() async {
         refreshDevicesPublisher?.send()
@@ -176,12 +144,6 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
                 guard let self else { return }
                 await self.deviceCenterBridge.nodeActionTapped(node, type)
             }
-        case .rename:
-            guard let node = nodeForItemType(), let renameEntity = makeRenameEntity(node) else { return }
-            
-            deviceCenterBridge.renameActionTapped(
-                renameEntity
-            )
         default: break
         }
     }

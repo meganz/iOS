@@ -9,11 +9,4 @@ public final class MockRenameRepository: RenameRepositoryProtocol {
     public func renameDevice(_ deviceId: String, newName: String) async throws {
         renamedDeviceRequests.append((deviceId: deviceId, name: newName))
     }
-    
-    public func renameNode(_ node: NodeEntity, newName: String) async throws {
-    }
-    
-    public func parentNodeHasMatchingChild(_ parentNode: NodeEntity, childName: String) -> Bool {
-        true
-    }
 }
