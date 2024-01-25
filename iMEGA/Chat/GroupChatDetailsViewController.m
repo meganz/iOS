@@ -18,13 +18,13 @@
 #import "MEGASdkManager.h"
 #import "MEGAGlobalDelegate.h"
 #import "MEGAArchiveChatRequestDelegate.h"
-#import "MEGAChatGenericRequestDelegate.h"
 #import "MEGAStore.h"
 #import "MEGA-Swift.h"
 #import "NSArray+MNZCategory.h"
 
 @import MEGAL10nObjc;
 @import MEGASDKRepo;
+@import ChatRepo;
 
 @interface GroupChatDetailsViewController () <MEGAChatRequestDelegate, MEGAChatDelegate, MEGAGlobalDelegate, PushNotificationControlProtocol, UIScrollViewDelegate>
 
@@ -233,7 +233,7 @@
     [leaveAlertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
     
     [leaveAlertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"leave", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        MEGAChatGenericRequestDelegate *delegate = [MEGAChatGenericRequestDelegate.alloc initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+        ChatRequestDelegate *delegate = [[ChatRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
             if (!error.type) {
                 [MEGALinkManager.joiningOrLeavingChatBase64Handles removeObject:[MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]];
             }
@@ -326,7 +326,7 @@
     
     customModalAlertVC.secondCompletion = ^{
         [weakCustom dismissViewControllerAnimated:YES completion:^{
-            MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+            ChatRequestDelegate *delegate = [[ChatRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
                 if (!error.type) {
                     [SVProgressHUD showSuccessWithStatus:LocalizedString(@"linkRemoved", @"Message shown when the link to a file or folder has been removed")];
                 }
@@ -860,11 +860,11 @@
             case GroupChatDetailsSectionGetChatLink: {
                 if (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeModerator) {
                     if (self.chatRoom.hasCustomTitle) {
-                        MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+                        ChatRequestDelegate *delegate = [[ChatRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
                             if (error.type == MEGAChatErrorTypeOk) {
                                 [self presentChatLinkOptionsWithLink:request.text];
                             } else {
-                                MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+                                ChatRequestDelegate *delegate = [[ChatRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
                                     if (error.type == MEGAChatErrorTypeOk) {
                                         [self presentChatLinkOptionsWithLink:request.text];
                                     }
@@ -884,7 +884,7 @@
                     }
                 } else if (self.chatRoom.ownPrivilege >= MEGAChatRoomPrivilegeRo) {
                     if (self.chatRoom.hasCustomTitle) {
-                        MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+                        ChatRequestDelegate *delegate = [[ChatRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
                             if (error.type == MEGAChatErrorTypeOk) {
                                 [self presentChatLinkOptionsWithLink:request.text];
                             } else {
@@ -933,7 +933,8 @@
                 customModalAlertVC.dismissButtonTitle = LocalizedString(@"cancel", @"");
                 __weak typeof(CustomModalAlertViewController) *weakCustom = customModalAlertVC;
                 customModalAlertVC.firstCompletion = ^{
-                    MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+                    
+                    ChatRequestDelegate *delegate = [[ChatRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
                         if (error.type == MEGAChatErrorTypeOk) {
                             [weakCustom dismissViewControllerAnimated:YES completion:^{
                                 [self.tableView reloadData];
