@@ -26,7 +26,7 @@ class ChatImageQualityTableViewController: UITableViewController {
     
     private func updateAppearance() {
         tableView.separatorColor = UIColor.mnz_separator(for: traitCollection)
-        tableView.backgroundColor = UIColor.mnz_backgroundGrouped(for: traitCollection)
+        tableView.backgroundColor = UIColor.pageBackgroundColor(for: traitCollection)
         
         tableView.reloadData()
     }
