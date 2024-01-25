@@ -177,6 +177,7 @@
 
 #import "TransferTableViewCell.h"
 #import "CameraUploadsTableViewController.h"
+#import "CameraUploadAdvancedOptionsViewController.h"
 #import "NotificationsTableViewController.h"
 #import "VerifyCredentialsViewController.h"
 #import "VideoUploadsTableViewController.h"

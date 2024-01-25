@@ -14,33 +14,13 @@
 @import MEGAL10nObjc;
 
 @interface CameraUploadsTableViewController () <BrowserViewControllerDelegate>
-
-@property (weak, nonatomic) IBOutlet UILabel *enableCameraUploadsLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *enableCameraUploadsSwitch;
-
-@property (weak, nonatomic) IBOutlet UILabel *uploadVideosInfoLabel;
-@property (weak, nonatomic) IBOutlet UILabel *uploadVideosInfoRightDetailLabel;
-
-@property (weak, nonatomic) IBOutlet UILabel *uploadVideosLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *uploadVideosSwitch;
-
-@property (weak, nonatomic) IBOutlet UILabel *HEICLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *HEICRedCheckmarkImageView;
-@property (weak, nonatomic) IBOutlet UILabel *JPGLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *JPGRedCheckmarkImageView;
-
-@property (weak, nonatomic) IBOutlet UILabel *includeGPSTagsLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *includeGPSTagsSwitch;
-
-@property (weak, nonatomic) IBOutlet UILabel *useCellularConnectionLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *useCellularConnectionSwitch;
-@property (weak, nonatomic) IBOutlet UILabel *useCellularConnectionForVideosLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *useCellularConnectionForVideosSwitch;
-
-@property (weak, nonatomic) IBOutlet UILabel *advancedLabel;
-
-@property (weak, nonatomic) IBOutlet UILabel *targetFolderLabel;
-
 @property (weak, nonatomic) IBOutlet UITableViewCell *cameraUploadCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *videoUploadInfoCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *videoUploadSwitchCell;
@@ -73,11 +53,10 @@
     
     self.useCellularConnectionLabel.text = LocalizedString(@"useMobileData", @"");
     self.useCellularConnectionForVideosLabel.text = LocalizedString(@"Use Mobile Data for Videos", @"");
-
-    self.advancedLabel.text = LocalizedString(@"advanced", @"");
     
+    self.advancedLabel.text = LocalizedString(@"advanced", @"");
     self.includeGPSTagsLabel.text = LocalizedString(@"Include Location Tags", @"Used in camera upload settings: This text will appear with a switch to turn on/off location tags while uploading a file");
-
+    
     [self configImageFormatTexts];
     
     if (self.isPresentedModally) {
@@ -125,13 +104,18 @@
 
 - (void)configUI {
     self.enableCameraUploadsSwitch.on = CameraUploadManager.isCameraUploadEnabled;
+    self.enableCameraUploadsSwitch.onTintColor = [UIColor switchOnTintColor];
     self.uploadVideosSwitch.on = CameraUploadManager.isVideoUploadEnabled;
+    self.uploadVideosSwitch.onTintColor = [UIColor switchOnTintColor];
+    
     self.uploadVideosInfoRightDetailLabel.text = CameraUploadManager.isVideoUploadEnabled ? LocalizedString(@"on", @"") : LocalizedString(@"off", @"");
     self.includeGPSTagsSwitch.on = CameraUploadManager.includeGPSTags;
+    self.includeGPSTagsSwitch.onTintColor = [UIColor switchOnTintColor];
     
     [self configTargetFolder];
     [self configPhotoFormatUI];
     [self configOptionsUI];
+    [self configLabelsTextColor];
     
     [self configTableSections];
     [self.tableView reloadData];
@@ -140,8 +124,10 @@
 - (void)updateAppearance {
     self.uploadVideosInfoRightDetailLabel.textColor = UIColor.secondaryLabelColor;
     
+    [self configLabelsTextColor];
+    
     self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
-    self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
+    self.tableView.backgroundColor = [UIColor pageBackgroundForTraitCollection:self.traitCollection];
     
     [self.tableView reloadData];
 }
@@ -371,6 +357,20 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     cell.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
+    if([view isKindOfClass:[UITableViewHeaderFooterView class]]){
+        UITableViewHeaderFooterView * headerFooterView = (UITableViewHeaderFooterView *) view;
+        headerFooterView.textLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+    }
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section {
+    if([view isKindOfClass:[UITableViewHeaderFooterView class]]){
+        UITableViewHeaderFooterView * headerFooterView = (UITableViewHeaderFooterView *) view;
+        headerFooterView.textLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

@@ -751,6 +751,7 @@
 		6D8820792B1C069500F0BE18 /* MEGAAppColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D88206F2B1B1B5B00F0BE18 /* MEGAAppColor.swift */; };
 		6D88207C2B1C07C700F0BE18 /* MEGAAppColor+Photos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D88207B2B1C07C700F0BE18 /* MEGAAppColor+Photos.swift */; };
 		6D88207F2B1C0E6E00F0BE18 /* MEGADesignToken in Frameworks */ = {isa = PBXBuildFile; productRef = 6D88207E2B1C0E6E00F0BE18 /* MEGADesignToken */; };
+		6D90A68F2B61FED200EA7DC2 /* CameraUploadAdvancedOptionsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D90A68E2B61FED200EA7DC2 /* CameraUploadAdvancedOptionsViewController+Additions.swift */; };
 		6D9A731D2B4619D200894E97 /* MEGAAppColor+Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D9A731C2B4619D200894E97 /* MEGAAppColor+Account.swift */; };
 		6DB163F02880F953004EFBC7 /* PhotosViewModel+Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB163EF2880F953004EFBC7 /* PhotosViewModel+Filter.swift */; };
 		6DB772CE28836A8500B75A93 /* PhotosViewController+Empty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB772CD28836A8500B75A93 /* PhotosViewController+Empty.swift */; };
@@ -3381,6 +3382,7 @@
 		6D88206F2B1B1B5B00F0BE18 /* MEGAAppColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAAppColor.swift; sourceTree = "<group>"; };
 		6D8820762B1BE50200F0BE18 /* MEGAAppColor+Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAAppColor+Chat.swift"; sourceTree = "<group>"; };
 		6D88207B2B1C07C700F0BE18 /* MEGAAppColor+Photos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAAppColor+Photos.swift"; sourceTree = "<group>"; };
+		6D90A68E2B61FED200EA7DC2 /* CameraUploadAdvancedOptionsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraUploadAdvancedOptionsViewController+Additions.swift"; sourceTree = "<group>"; };
 		6D9A731C2B4619D200894E97 /* MEGAAppColor+Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAAppColor+Account.swift"; sourceTree = "<group>"; };
 		6DB163EF2880F953004EFBC7 /* PhotosViewModel+Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewModel+Filter.swift"; sourceTree = "<group>"; };
 		6DB772CD28836A8500B75A93 /* PhotosViewController+Empty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewController+Empty.swift"; sourceTree = "<group>"; };
@@ -7037,6 +7039,7 @@
 		41FC83BC1AAE0559008FA551 /* Camera Uploads */ = {
 			isa = PBXGroup;
 			children = (
+				6D90A68E2B61FED200EA7DC2 /* CameraUploadAdvancedOptionsViewController+Additions.swift */,
 				B61B815622D6D9D900B97F51 /* CameraUploadAdvancedOptionsViewController.h */,
 				B61B815722D6D9D900B97F51 /* CameraUploadAdvancedOptionsViewController.m */,
 				B6CCC36A21E8297F00B68E2C /* CameraUploadSettings.storyboard */,
@@ -13600,6 +13603,7 @@
 				831807B92AA222CB00C91119 /* CallWaitingRoomUsersDialog.swift in Sources */,
 				B6D9D7E9216AB0C700D7B08A /* CameraScanner.m in Sources */,
 				B63F3198223BA47400B0C6A6 /* CameraUpload.xcdatamodeld in Sources */,
+				6D90A68F2B61FED200EA7DC2 /* CameraUploadAdvancedOptionsViewController+Additions.swift in Sources */,
 				B61B815822D6D9D900B97F51 /* CameraUploadAdvancedOptionsViewController.m in Sources */,
 				B6998320228E73BC0021BE31 /* CameraUploadBackgroundRefreshPerformer.m in Sources */,
 				25EB2E982B05984B00823B3D /* CameraUploadBannerStatusViewPresenterProtocol.swift in Sources */,

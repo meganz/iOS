@@ -3,6 +3,7 @@ import Foundation
 extension UIColor {
     
     // MARK: Chat
+    
     @objc class func color(withChatStatus status: MEGAChatStatus) -> UIColor? {
         var color: UIColor?
         
@@ -19,6 +20,11 @@ extension UIColor {
         }
         
         return color
+    }
+    
+    // MARK: - Switcher
+    @objc class func switchOnTintColor() -> UIColor {
+        MEGAAppColor.View.turquoise.uiColor
     }
     
     // MARK: - Background
@@ -126,16 +132,16 @@ extension UIColor {
     
     // MARK: Cell related colors
     
-    class func cellTitleColor(for traitCollection: UITraitCollection) -> UIColor {
+    @objc class func cellTitleColor(for traitCollection: UITraitCollection) -> UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
-            return MEGAAppColor.Black._000000.uiColor
+            return MEGAAppColor.Black._000000_text.uiColor
             
         case .dark:
-            return MEGAAppColor.White._FFFFFF.uiColor
+            return MEGAAppColor.White._FFFFFF_text.uiColor
             
         @unknown default:
-            return MEGAAppColor.Black._000000.uiColor
+            return MEGAAppColor.Black._000000_text.uiColor
         }
     }
     

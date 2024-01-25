@@ -17,19 +17,10 @@ typedef NS_ENUM(NSUInteger, AdvancedOptionSection) {
 @interface CameraUploadAdvancedOptionsViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *uploadVideosForLivePhotosLabel;
-@property (weak, nonatomic) IBOutlet UISwitch *uploadVideosForlivePhotosSwitch;
-
 @property (weak, nonatomic) IBOutlet UILabel *uploadAllBurstPhotosLabel;
-@property (weak, nonatomic) IBOutlet UISwitch *uploadAllBurstPhotosSwitch;
-
 @property (weak, nonatomic) IBOutlet UILabel *uploadHiddenAlbumLabel;
-@property (weak, nonatomic) IBOutlet UISwitch *uploadHiddenAlbumSwitch;
-
 @property (weak, nonatomic) IBOutlet UILabel *uploadSharedAlbumsLabel;
-@property (weak, nonatomic) IBOutlet UISwitch *uploadSharedAlbumsSwitch;
-
 @property (weak, nonatomic) IBOutlet UILabel *uploadSyncedAlbumsLabel;
-@property (weak, nonatomic) IBOutlet UISwitch *uploadSyncedAlbumsSwitch;
 
 @end
 
@@ -48,12 +39,14 @@ typedef NS_ENUM(NSUInteger, AdvancedOptionSection) {
     self.uploadAllBurstPhotosSwitch.on = CameraUploadManager.shouldUploadAllBurstPhotos;
     self.uploadHiddenAlbumLabel.text = LocalizedString(@"Upload Hidden Album", @"");
     self.uploadHiddenAlbumSwitch.on = CameraUploadManager.shouldUploadHiddenAlbum;
+
     self.uploadSharedAlbumsLabel.text = LocalizedString(@"Upload Shared Albums", @"");
     self.uploadSharedAlbumsSwitch.on = CameraUploadManager.shouldUploadSharedAlbums;
+
     self.uploadSyncedAlbumsLabel.text = LocalizedString(@"Upload Albums Synced from iTunes", @"Title of the switch to config whether to upload synced albums");
     self.uploadSyncedAlbumsSwitch.on = CameraUploadManager.shouldUploadSyncedAlbums;
     
-    self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
+    [self updateAppearance];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -67,8 +60,10 @@ typedef NS_ENUM(NSUInteger, AdvancedOptionSection) {
 #pragma mark - Private
 
 - (void)updateAppearance {
+    [self configSwitchTintColors];
+    
     self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
-    self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
+    self.tableView.backgroundColor = [UIColor pageBackgroundForTraitCollection:self.traitCollection];
     
     [self.tableView reloadData];
 }
@@ -151,6 +146,20 @@ typedef NS_ENUM(NSUInteger, AdvancedOptionSection) {
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     cell.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
+    if([view isKindOfClass:[UITableViewHeaderFooterView class]]){
+        UITableViewHeaderFooterView * headerFooterView = (UITableViewHeaderFooterView *) view;
+        headerFooterView.textLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+    }
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section {
+    if([view isKindOfClass:[UITableViewHeaderFooterView class]]){
+        UITableViewHeaderFooterView * headerFooterView = (UITableViewHeaderFooterView *) view;
+        headerFooterView.textLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+    }
 }
 
 @end
