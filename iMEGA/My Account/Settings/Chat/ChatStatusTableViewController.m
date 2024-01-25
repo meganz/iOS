@@ -100,7 +100,7 @@
 
 - (void)updateAppearance {
     self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
-    self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
+    self.tableView.backgroundColor = [UIColor pageBackgroundForTraitCollection:self.traitCollection];
     
     self.timeoutAutoAwayLabel.textColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
     [self.autoAwayTimeSaveButton setTitleColor:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection] forState:UIControlStateNormal];

@@ -850,18 +850,10 @@ extension UIColor {
     class func mnz_turquoise(for traitCollection: UITraitCollection) -> UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
-            if traitCollection.accessibilityContrast == .high {
-                return MEGAAppColor.Green._347467.uiColor
-            } else {
-                return MEGAAppColor.Green._00A886.uiColor
-            }
+            return MEGAAppColor.Green._00A886.uiColor
             
         case .dark:
-            if traitCollection.accessibilityContrast == .high {
-                return MEGAAppColor.Green._00E9B9.uiColor
-            } else {
-                return MEGAAppColor.Green._00C29A.uiColor
-            }
+            return MEGAAppColor.Green._00C29A.uiColor
             
         @unknown default:
             return MEGAAppColor.White._FFFFFF.uiColor
