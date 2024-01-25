@@ -33,8 +33,8 @@ extension NodeTableViewCell {
     }
     
     @objc func setAccessibilityLabelsForIcons(in node: MEGANode) {
-        labelImageView.accessibilityLabel = MEGANode.string(for: node.label)
-        favouriteImageView.accessibilityLabel = Strings.Localizable.favourite
-        linkImageView.accessibilityLabel = Strings.Localizable.shared
+        labelImageView?.accessibilityLabel = MEGANode.string(for: node.label)
+        favouriteImageView?.accessibilityLabel = Strings.Localizable.favourite
+        linkImageView?.accessibilityLabel = Strings.Localizable.shared
     }
 }
