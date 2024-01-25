@@ -6,4 +6,11 @@ extension VideoUploadsTableViewController {
         navigationItem.title = title
         setMenuCapableBackButtonWith(menuTitle: title)
     }
+    
+    @objc func configLabelsTextColor() {
+        uploadVideosLabel?.textColor = UIColor.cellTitleColor(for: traitCollection)
+        hevcLabel?.textColor = UIColor.cellTitleColor(for: traitCollection)
+        videoQualityLabel?.textColor = UIColor.cellTitleColor(for: traitCollection)
+        h264Label?.textColor = UIColor.cellTitleColor(for: traitCollection)
+    }
 }

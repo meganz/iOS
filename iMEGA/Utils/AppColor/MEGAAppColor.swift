@@ -7,6 +7,7 @@ enum MEGAAppColor {
     enum White {
         case _FFFFFF
         case _FFFFFF_navigationBarTitle
+        case _FFFFFF_text
         case _FFFFFF_pageBackground
         case _FFFFFF_toolbarShadow
         case _EEEEEE
@@ -33,7 +34,7 @@ enum MEGAAppColor {
         private var designTokenColor: UIColor {
             switch self {
             case ._FFFFFF: TokenColors.Background.blur
-            case ._FFFFFF_navigationBarTitle: TokenColors.Text.primary
+            case ._FFFFFF_navigationBarTitle, ._FFFFFF_text: TokenColors.Text.primary
             case ._FFFFFF_pageBackground: TokenColors.Background.page
             case ._FFFFFF_toolbarShadow: TokenColors.Border.strong
             case ._EEEEEE: TokenColors.Background.blur
@@ -53,7 +54,7 @@ enum MEGAAppColor {
         
         private var legacyColor: UIColor {
             switch self {
-            case ._FFFFFF, ._FFFFFF_pageBackground, ._FFFFFF_navigationBarTitle: UIColor.whiteFFFFFF
+            case ._FFFFFF, ._FFFFFF_pageBackground, ._FFFFFF_navigationBarTitle, ._FFFFFF_text: UIColor.whiteFFFFFF
             case ._FFFFFF_toolbarShadow: UIColor.whiteFFFFFF // Toolbar shadow is only applied when .designToken feature flag is on so this legacy color will never be used.
             case ._EEEEEE: UIColor.whiteEEEEEE
             case ._EFEFEF: UIColor.whiteEFEFEF
@@ -78,6 +79,7 @@ enum MEGAAppColor {
         case _00000075
         case _00000080
         case _000000
+        case _000000_text
         case _000000_pageBackground
         case _000000_toolbarShadow
         case _1C1C1E
@@ -107,6 +109,7 @@ enum MEGAAppColor {
             case ._00000075: TokenColors.Background.blur
             case ._00000080: TokenColors.Text.secondary
             case ._000000: TokenColors.Text.primary
+            case ._000000_text: TokenColors.Text.primary
             case ._000000_pageBackground: TokenColors.Background.page
             case ._000000_toolbarShadow: TokenColors.Border.strong
             case ._1C1C1E: TokenColors.Background.blur
@@ -129,7 +132,7 @@ enum MEGAAppColor {
             case ._00000060: UIColor.black00000060
             case ._00000075: UIColor.black00000075
             case ._00000080: UIColor.black00000080
-            case ._000000, ._000000_pageBackground: UIColor.black000000
+            case ._000000, ._000000_pageBackground, ._000000_text: UIColor.black000000
             case ._000000_toolbarShadow: UIColor.black000000 // Toolbar shadow is only applied when .designToken feature flag is on so this legacy color will never be used.
             case ._1C1C1E, ._1C1C1E_pageBackground: UIColor.black1C1C1E
             case ._222222: UIColor.black222222
@@ -617,7 +620,7 @@ enum MEGAAppColor {
             switch self {
             case .cellBackground: TokenColors.Background.blur
             case .textForeground: TokenColors.Background.blur
-            case .turquoise: TokenColors.Background.blur
+            case .turquoise: TokenColors.Support.success
             }
         }
         

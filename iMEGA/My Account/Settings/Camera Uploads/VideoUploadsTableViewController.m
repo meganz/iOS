@@ -19,14 +19,11 @@ typedef NS_ENUM(NSUInteger, VideoUploadsSectionFormatRow) {
 
 @interface VideoUploadsTableViewController ()
 
-@property (weak, nonatomic) IBOutlet UILabel *uploadVideosLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *uploadVideosSwitch;
-@property (weak, nonatomic) IBOutlet UILabel *videoQualityLabel;
-@property (weak, nonatomic) IBOutlet UILabel *videoQualityRightDetailLabel;
-@property (weak, nonatomic) IBOutlet UILabel *HEVCLabel;
-@property (weak, nonatomic) IBOutlet UILabel *H264Label;
 @property (weak, nonatomic) IBOutlet UIImageView *HEVCRedCheckmarkImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *H264RedCheckmarkImageView;
+
+@property (weak, nonatomic) IBOutlet UILabel *videoQualityRightDetailLabel;
 
 @end
 
@@ -67,14 +64,17 @@ typedef NS_ENUM(NSUInteger, VideoUploadsSectionFormatRow) {
     NSMutableAttributedString *H264AttributedString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ ", H264Format] attributes:formatAttributes];
     [H264AttributedString appendAttributedString:[NSAttributedString.alloc initWithString:LocalizedString(@"(Recommended)", @"") attributes:@{NSFontAttributeName : [UIFont preferredFontForTextStyle:UIFontTextStyleBody], NSForegroundColorAttributeName : [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection]}]];
     self.H264Label.attributedText = H264AttributedString;
-    
     self.HEVCLabel.attributedText = [[NSAttributedString alloc] initWithString:HEVCFormat attributes:formatAttributes];
 }
 
 - (void)configUI {
     self.uploadVideosSwitch.on = CameraUploadManager.isVideoUploadEnabled;
+    self.uploadVideosSwitch.onTintColor = [UIColor switchOnTintColor];
+    
     [self configVideoFormatUI];
     [self configVideoQualityUI];
+    [self configLabelsTextColor];
+    
     [self.tableView reloadData];
 }
 
@@ -108,8 +108,10 @@ typedef NS_ENUM(NSUInteger, VideoUploadsSectionFormatRow) {
 - (void)updateAppearance {
     self.videoQualityRightDetailLabel.textColor = UIColor.secondaryLabelColor;
     
+    [self configLabelsTextColor];
+    
     self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
-    self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
+    self.tableView.backgroundColor = [UIColor pageBackgroundForTraitCollection:self.traitCollection];
     
     [self.tableView reloadData];
 }
@@ -211,6 +213,20 @@ typedef NS_ENUM(NSUInteger, VideoUploadsSectionFormatRow) {
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
     cell.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
+    if([view isKindOfClass:[UITableViewHeaderFooterView class]]){
+        UITableViewHeaderFooterView * headerFooterView = (UITableViewHeaderFooterView *) view;
+        headerFooterView.textLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+    }
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section {
+    if([view isKindOfClass:[UITableViewHeaderFooterView class]]){
+        UITableViewHeaderFooterView * headerFooterView = (UITableViewHeaderFooterView *) view;
+        headerFooterView.textLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+    }
 }
 
 @end
