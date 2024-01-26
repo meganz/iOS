@@ -25,11 +25,17 @@ final class VideoRevampTabContainerViewController: UIViewController {
     )
     
     private let viewModel: VideoRevampTabContainerViewModel
+    private let fileSearchUseCase: any FilesSearchUseCaseProtocol
+    private let thumbnailUseCase: any ThumbnailUseCaseProtocol
     private let videoConfig: VideoConfig
+    private let router: any VideoRevampRouting
     
-    init(viewModel: VideoRevampTabContainerViewModel, videoConfig: VideoConfig) {
+    init(viewModel: VideoRevampTabContainerViewModel, fileSearchUseCase: some FilesSearchUseCaseProtocol, thumbnailUseCase: some ThumbnailUseCaseProtocol, videoConfig: VideoConfig, router: some VideoRevampRouting) {
         self.viewModel = viewModel
+        self.fileSearchUseCase = fileSearchUseCase
+        self.thumbnailUseCase = thumbnailUseCase
         self.videoConfig = videoConfig
+        self.router = router
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -57,7 +63,12 @@ final class VideoRevampTabContainerViewController: UIViewController {
     }
     
     private func setupContentView() {
-        let contentView = VideoRevampFactory.makeTabContainerView(videoConfig: videoConfig)
+        let contentView = VideoRevampFactory.makeTabContainerView(
+            fileSearchUseCase: fileSearchUseCase,
+            thumbnailUseCase: thumbnailUseCase,
+            videoConfig: videoConfig,
+            router: router
+        )
         add(contentView, container: view, animate: false)
     }
     

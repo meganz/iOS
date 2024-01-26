@@ -1,62 +1,45 @@
+import Combine
 import MEGADomain
 import MEGAPresentation
+import MEGASwift
 
-final class VideoListViewModel: ViewModelType {
+public final class VideoListViewModel: ObservableObject {
     
     private let fileSearchUseCase: any FilesSearchUseCaseProtocol
+    private(set) var thumbnailUseCase: any ThumbnailUseCaseProtocol
     
-    var invokeCommand: ((Command) -> Void)?
+    @Published var videos = [NodeEntity]()
+    @Published var uiState = UIState.initial
+    @Published var searchedText = ""
+    @Published var sortOrderType = SortOrderEntity.defaultAsc
     
-    enum Action: ActionType {
-        case onViewAppeared(searchedText: String?, sortOrderType: SortOrderEntity)
+    enum UIState {
+        case initial
+        case empty
+        case loaded
+        case error
     }
     
-    enum Command: CommandType, Equatable {
-        case showErrorView
-        case showEmptyItemView
-        case showItems(nodes: [NodeEntity])
-        case updateItems(nodes: [NodeEntity])
-    }
-    
-    init(fileSearchUseCase: some FilesSearchUseCaseProtocol) {
+    public init(fileSearchUseCase: some FilesSearchUseCaseProtocol, thumbnailUseCase: some ThumbnailUseCaseProtocol) {
         self.fileSearchUseCase = fileSearchUseCase
+        self.thumbnailUseCase = thumbnailUseCase
     }
     
-    func dispatch(_ action: Action) {
-        switch action {
-        case .onViewAppeared(let searchedText, let sortOrderType):
-            searchVideos(for: searchedText, order: sortOrderType)
-            listenNodesUpdate()
-        }
-    }
-    
-    private func searchVideos(for searchedText: String?, order sortOrderType: SortOrderEntity) {
-        fileSearchUseCase.search(
-            string: searchedText,
-            parent: nil,
-            recursive: true,
-            supportCancel: false,
-            sortOrderType: sortOrderType,
-            cancelPreviousSearchIfNeeded: true
-        ) { [weak self] videos, isFail in
-            guard !isFail else {
-                self?.invokeCommand?(.showErrorView)
-                return
-            }
-            
-            guard let videos else {
-                self?.invokeCommand?(.showEmptyItemView)
-                return
-            }
-            self?.invokeCommand?(.showItems(nodes: videos))
-        }
-    }
-    
-    private func listenNodesUpdate() {
-        fileSearchUseCase.onNodesUpdate { [weak self] nodes in
-            let updatedVideos = nodes.filter { $0.mediaType == .video }
-            guard updatedVideos.isNotEmpty else { return }
-            self?.invokeCommand?(.updateItems(nodes: updatedVideos))
+    @MainActor
+    func loadVideos() async {
+        do {
+            videos = try await fileSearchUseCase.search(
+                string: searchedText,
+                parent: nil,
+                recursive: true,
+                supportCancel: false,
+                sortOrderType: sortOrderType,
+                formatType: .video,
+                cancelPreviousSearchIfNeeded: true
+            )
+            uiState = videos.isEmpty ? .empty : .loaded
+        } catch {
+            uiState = .error
         }
     }
 }
