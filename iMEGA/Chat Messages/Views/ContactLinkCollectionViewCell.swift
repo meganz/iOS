@@ -24,7 +24,7 @@ class ContactLinkCollectionViewCell: TextMessageCell {
         guard megaMessage.richString == nil,
               let path = megaMessage.megaLink?.absoluteString,
               let rangeOfPrefix = path.endIndex(of: DeeplinkFragmentKey.contact.rawValue),
-              let handle = MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo).handle(forBase64Handle: String(path[rangeOfPrefix...]))else {
+              let handle = MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo).handle(forBase64Handle: String(path[rangeOfPrefix...])) else {
             return
         }
         
@@ -33,7 +33,7 @@ class ContactLinkCollectionViewCell: TextMessageCell {
             guard let self else { return }
             let contactLinkUC = ContactLinkUseCase(repo: ContactLinkRepository.newRepo)
             guard let contactEntity = try await contactLinkUC.contactLinkQuery(handle: handle) else {
-                self.contactLinkContentView.hideLoading()
+                contactLinkContentView.hideLoading()
                 return
             }
             
@@ -46,6 +46,7 @@ class ContactLinkCollectionViewCell: TextMessageCell {
             
             megaMessage.richTitle = contactEntity.name
             megaMessage.richString = contactEntity.email
+            megaMessage.contactLinkUserHandle = contactEntity.userHandle ?? .invalidHandle
             
             if self.isLastSectionVisible(collectionView: messagesCollectionView) {
                messagesCollectionView.reloadDataAndKeepOffset()

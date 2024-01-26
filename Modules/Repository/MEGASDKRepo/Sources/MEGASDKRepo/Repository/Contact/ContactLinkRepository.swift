@@ -19,7 +19,7 @@ public struct ContactLinkRepository: ContactLinkRepositoryProtocol {
             sdk.contactLinkQuery(withHandle: handle, delegate: RequestDelegate { result in
                 switch result {
                 case .success(let request):
-                    completion(.success(ContactLinkEntity(email: request.email, name: request.name)))
+                    completion(.success(ContactLinkEntity(email: request.email, name: request.name, userHandle: request.parentHandle)))
                 case .failure:
                     completion(.failure(GenericErrorEntity()))
                 }
