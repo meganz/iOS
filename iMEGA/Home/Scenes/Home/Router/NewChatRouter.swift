@@ -1,3 +1,4 @@
+import ChatRepo
 import Foundation
 import MEGADomain
 
@@ -81,18 +82,25 @@ final class NewChatRouter {
     private func chatRequestDelegate(
         ofShouldGetChatLink getChatLink: Bool,
         completion: @escaping (HandleEntity, String?) -> Void
-    ) -> MEGAChatGenericRequestDelegate {
+    ) -> ChatRequestDelegate {
         let chatSDK = MEGASdkManager.sharedMEGAChatSdk()
-        return MEGAChatGenericRequestDelegate { (request, error) in
-            switch getChatLink {
-            case false:
+        
+        func createChatLink(request: MEGAChatRequest, completion: @escaping (HandleEntity, String?) -> Void) {
+            let publicChatLinkCreationDelegate = ChatRequestDelegate { result in
+                guard case let .success(request) = result else { return }
+                completion(request.chatHandle, request.text)
+            }
+            chatSDK.createChatLink(request.chatHandle, delegate: publicChatLinkCreationDelegate)
+        }
+        
+        return ChatRequestDelegate { result in
+            switch (getChatLink, result) {
+            case (_, .failure):
+                completion(.invalid, nil)
+            case let (false, .success(request)):
                 completion(request.chatHandle, nil)
-            case true:
-                let publicChatLinkCreationDelegate = MEGAChatGenericRequestDelegate { (request, error) in
-                    guard error.type == .MEGAChatErrorTypeOk else { return }
-                    completion(request.chatHandle, request.text)
-                }
-                chatSDK.createChatLink(request.chatHandle, delegate: publicChatLinkCreationDelegate)
+            case let (true, .success(request)):
+                createChatLink(request: request, completion: completion)
             }
         }
     }
