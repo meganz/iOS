@@ -130,6 +130,7 @@
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAUserAlert.h"
 #import "NodeTableViewCell.h"
+#import "ThumbnailViewerTableViewCell.h"
 #import "MyAccountHallViewController.h"
 #import "RecentsViewController.h"
 #import "OfflineViewController.h"
