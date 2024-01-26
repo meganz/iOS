@@ -12,18 +12,6 @@
 
 @interface AdvancedTableViewController () <MEGARequestDelegate>
 
-@property (weak, nonatomic) IBOutlet UILabel *savePhotosLabel;
-@property (weak, nonatomic) IBOutlet UILabel *saveVideosLabel;
-
-@property (weak, nonatomic) IBOutlet UISwitch *saveImagesSwitch;
-@property (weak, nonatomic) IBOutlet UISwitch *saveVideosSwitch;
-
-@property (weak, nonatomic) IBOutlet UILabel *dontUseHttpLabel;
-@property (weak, nonatomic) IBOutlet UISwitch *useHttpsOnlySwitch;
-
-@property (weak, nonatomic) IBOutlet UILabel *saveMediaInGalleryLabel;
-@property (weak, nonatomic) IBOutlet UISwitch *saveMediaInGallerySwitch;
-
 @end
 
 @implementation AdvancedTableViewController
@@ -32,39 +20,41 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     [self.navigationItem setTitle:LocalizedString(@"advanced", @"")];
-    
+
     [self checkAuthorizationStatus];
-    
+
     [self updateAppearance];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
+
     [self.dontUseHttpLabel setText:LocalizedString(@"dontUseHttp", @"Text next to a switch that allows disabling the HTTP protocol for transfers")];
     self.savePhotosLabel.text = LocalizedString(@"Save Images in Photos", @"Settings section title where you can enable the option to 'Save Images in Photos'");
     self.saveVideosLabel.text = LocalizedString(@"Save Videos in Photos", @"Settings section title where you can enable the option to 'Save Videos in Photos'");
     self.saveMediaInGalleryLabel.text = LocalizedString(@"Save in Photos", @"Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app");
     BOOL useHttpsOnly = [[NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier] boolForKey:@"useHttpsOnly"];
     [self.useHttpsOnlySwitch setOn:useHttpsOnly];
-    
+
     BOOL isSavePhotoToGalleryEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSavePhotoToGalleryEnabled"];
     [self.saveImagesSwitch setOn:isSavePhotoToGalleryEnabled];
-    
+
     BOOL isSaveVideoToGalleryEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSaveVideoToGalleryEnabled"];
     [self.saveVideosSwitch setOn:isSaveVideoToGalleryEnabled];
-    
+
     BOOL isSaveMediaCapturedToGalleryEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"isSaveMediaCapturedToGalleryEnabled"];
     [self.saveMediaInGallerySwitch setOn:isSaveMediaCapturedToGalleryEnabled];
-    
+
+    [self configureLabelAppearance];
+
     [self.tableView reloadData];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
-    
+
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
         [self updateAppearance];
     }
@@ -74,8 +64,8 @@
 
 - (void)updateAppearance {
     self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
-    self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
-    
+    self.tableView.backgroundColor = [UIColor pageBackgroundForTraitCollection:self.traitCollection];
+
     [self.tableView reloadData];
 }
 
@@ -92,7 +82,7 @@
             }
             break;
         }
-            
+
         case PHAuthorizationStatusAuthorized: {
             //If the app has 'Read and Write' access to Photos and the user didn't configure the setting to save the media captured from the MEGA app in Photos, enable it by default.
             if (![[NSUserDefaults standardUserDefaults] objectForKey:@"isSaveMediaCapturedToGalleryEnabled"]) {
@@ -100,7 +90,7 @@
             }
             break;
         }
-            
+
         default:
             break;
     }
@@ -115,9 +105,16 @@
             [settingSwitch setOn:NO animated:YES];
             [handler alertPhotosPermission];
         }
-        
+
         [NSUserDefaults.standardUserDefaults setBool:settingSwitch.isOn forKey:userDefaultSetting];
     }];
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section {
+    if ([view isKindOfClass:[UITableViewHeaderFooterView class]]) {
+        UITableViewHeaderFooterView *headerFooterView = (UITableViewHeaderFooterView *) view;
+        headerFooterView.textLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+    }
 }
 
 #pragma mark - IBActions
