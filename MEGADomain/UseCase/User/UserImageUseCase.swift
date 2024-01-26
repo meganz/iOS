@@ -60,29 +60,27 @@ struct UserImageUseCase<T: UserImageRepositoryProtocol, U: UserStoreRepositoryPr
             completion(.success(image))
             return
         } else {
-            let displayName = userStoreRepo.getDisplayName(forUserHandle: handle)
-            
-            do {
-                let image = try createAvatar(usingName: displayName ?? name,
-                                             base64Handle: base64Handle,
-                                             avatarBackgroundHexColor: avatarBackgroundHexColor)
-                completion(.success(image))
-            } catch {
-                if let error = error as? UserImageLoadErrorEntity {
-                    completion(.failure(error))
-                } else {
-                    completion(.failure(.generic))
+            userImageRepo.loadUserImage(withUserHandle: base64Handle, destinationPath: destinationURLPath) { result in
+                guard case .success(let filePath) = result, let image = UIImage(contentsOfFile: filePath) else {
+                    let displayName = userStoreRepo.getDisplayName(forUserHandle: handle)
+                    
+                    do {
+                        let image = try createAvatar(usingName: displayName ?? name,
+                                                     base64Handle: base64Handle,
+                                                     avatarBackgroundHexColor: avatarBackgroundHexColor)
+                        completion(.success(image))
+                    } catch {
+                        if let error = error as? UserImageLoadErrorEntity {
+                            completion(.failure(error))
+                        } else {
+                            completion(.failure(.generic))
+                        }
+                    }
+                    return
                 }
-            }
-        }
 
-        userImageRepo.loadUserImage(withUserHandle: base64Handle, destinationPath: destinationURLPath) { result in
-            guard case .success(let filePath) = result, let image = UIImage(contentsOfFile: filePath) else {
-                completion(.failure(.unableToFetch))
-                return
+                completion(.success(image))
             }
-
-            completion(.success(image))
         }
     }
     
