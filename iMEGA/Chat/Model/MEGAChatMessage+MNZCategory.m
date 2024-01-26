@@ -22,6 +22,7 @@ static const void *nodeTagKey = &nodeTagKey;
 static const void *richStringTagKey = &richStringTagKey;
 static const void *richNumberTagKey = &richNumberTagKey;
 static const void *richTitleTagKey = &richTitleTagKey;
+static const void *contactLinkUserHandleTagKey = &contactLinkUserHandleTagKey;
 
 @implementation MEGAChatMessage (MNZCategory)
 
@@ -423,6 +424,14 @@ static const void *richTitleTagKey = &richTitleTagKey;
 
 - (void)setRichTitle:(NSString *)richTitle {
     objc_setAssociatedObject(self, &richTitleTagKey, richTitle, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (uint64_t)contactLinkUserHandle {
+    return ((NSNumber *)objc_getAssociatedObject(self, contactLinkUserHandleTagKey)).unsignedLongLongValue;
+}
+
+- (void)setContactLinkUserHandle:(uint64_t)contactLinkUserHandle {
+    objc_setAssociatedObject(self, &contactLinkUserHandleTagKey, @(contactLinkUserHandle), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 @end

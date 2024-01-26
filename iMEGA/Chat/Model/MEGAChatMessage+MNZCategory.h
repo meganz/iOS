@@ -22,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (copy, nonatomic, nullable) NSString *richString;
 @property (copy, nonatomic, nullable) NSNumber *richNumber;
 @property (copy, nonatomic, nullable) NSString *richTitle;
+@property (nonatomic) uint64_t contactLinkUserHandle;
 @property (readonly) NSString *senderId;
 
 - (BOOL)containsMEGALink;

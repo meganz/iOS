@@ -24,28 +24,18 @@ class ContactLinkContentView: UIView {
         backgroundColor = .mnz_chatRichLinkContentBubble(trait)
         titleLabel.textColor = UIColor.label
         descriptionLabel.textColor = UIColor.mnz_subtitles(for: trait)
+        imageView.layer.cornerRadius = imageView.frame.size.height / 2
+        imageView.clipsToBounds = true
     }
     
     func configureView() {
-        guard let message = message else { return }
-        
+        guard let message else { return }
         titleLabel.text = message.richTitle
         descriptionLabel.text = message.richString
         
-        imageView.image = UIImage.mnz_image(forUserHandle: message.userHandle, 
-                                            name: message.richString ?? "",
-                                            size: CGSize(width: 40, height: 40),
-                                            delegate: RequestDelegate { [weak self] result in
-            guard let self else { return }
-            
-            if case .failure = result {
-                self.imageView.isHidden = true
-            }
-        })
-        
-        if imageView.image != nil {
-            self.imageView.layer.cornerRadius = imageView.frame.size.height / 2
-            self.imageView.clipsToBounds = true
+        let userHandle = message.contactLinkUserHandle
+        if message.contactLinkUserHandle != .invalid && message.contactLinkUserHandle != 0 {
+            imageView.mnz_setImage(forUserHandle: userHandle, name: message.richString ?? "")
         }
     }
     
