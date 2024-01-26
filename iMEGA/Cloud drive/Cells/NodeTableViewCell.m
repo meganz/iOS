@@ -228,6 +228,7 @@
         return;
     }
     self.backgroundColor = [UIColor mnz_homeRecentsCellBackgroundForTraitCollection:currentTraitCollection];
+    self.timeLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
 }
 
 - (void)updateInfo {
