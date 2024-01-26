@@ -239,6 +239,7 @@ public final class DeviceListViewModel: ObservableObject {
         otherDevices = devices
             .filter { $0.id != currentDeviceId }
             .compactMap(loadDeviceViewModel)
+            .sorted {$0.name < $1.name}
         
         if isLoadingPlaceholderVisible {
             updateLoadingPlaceholderVisibility(false)
