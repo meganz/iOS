@@ -21,15 +21,13 @@
 
 @interface ThumbnailViewerTableViewCell () <UICollectionViewDataSource, UICollectionViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UICollectionView *thumbnailViewerCollectionView;
-
 @end
 
 @implementation ThumbnailViewerTableViewCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    [self updateWithTrait: self.traitCollection];
+    [self updateAppearanceWith:self.traitCollection];
 }
 
 - (void)prepareForReuse {
@@ -156,13 +154,9 @@
     [super traitCollectionDidChange:previousTraitCollection];
     
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateWithTrait:self.traitCollection];
+        [self updateAppearanceWith:self.traitCollection];
     }
 }
 
-- (void)updateWithTrait:(UITraitCollection *)currentTraitCollection {
-    self.backgroundColor = [UIColor mnz_backgroundElevated:currentTraitCollection];
-    self.thumbnailViewerCollectionView.backgroundColor = [UIColor mnz_backgroundElevated:currentTraitCollection];
-}
 
 @end

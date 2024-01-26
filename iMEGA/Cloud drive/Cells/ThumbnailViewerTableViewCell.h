@@ -12,6 +12,8 @@ typedef void (^ShowSelectedNodeAction)(UIViewController *);
 
 @interface ThumbnailViewerTableViewCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UICollectionView *thumbnailViewerCollectionView;
+
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailPlayImageView;
 
