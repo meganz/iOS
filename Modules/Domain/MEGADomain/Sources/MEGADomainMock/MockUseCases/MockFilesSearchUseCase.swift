@@ -27,6 +27,16 @@ public final class MockFilesSearchUseCase: FilesSearchUseCaseProtocol {
         }
     }
     
+    public func search(string: String?, parent node: NodeEntity?, recursive: Bool, supportCancel: Bool, sortOrderType: SortOrderEntity, formatType: NodeFormatEntity, cancelPreviousSearchIfNeeded: Bool) async throws -> [NodeEntity] {
+        searchCallCount += 1
+        switch searchResult {
+        case .success(let nodes):
+            return nodes ?? []
+        case .failure(let error):
+            throw error
+        }
+    }
+    
     public func onNodesUpdate(with nodesUpdateHandler: @escaping ([MEGADomain.NodeEntity]) -> Void) {
         onNodesUpdateCallCount += 1
         nodesUpdateHandlers.append(nodesUpdateHandler)

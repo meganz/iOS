@@ -150,6 +150,7 @@
 		240D80FB2AB1A1DC00FBD2C4 /* AudioPlayerItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240D80FA2AB1A1DC00FBD2C4 /* AudioPlayerItemTests.swift */; };
 		2412B5352A414EC7000EB46E /* MEGANode+initAudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2412B5342A414EC7000EB46E /* MEGANode+initAudioPlayer.swift */; };
 		24189DCE2AA705C70071F160 /* MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24189DCD2AA705C70071F160 /* MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift */; };
+		241B641A2B5A54BC00C82895 /* VideoRevampRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241B64192B5A54BC00C82895 /* VideoRevampRouter.swift */; };
 		242A14082ABC920A009E4788 /* AudioPlayerRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242A14072ABC920A009E4788 /* AudioPlayerRepository.swift */; };
 		242A140A2ABC9252009E4788 /* AudioPlayerUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 242A14092ABC9252009E4788 /* AudioPlayerUseCase.swift */; };
 		24352DE42ACA7E2000392859 /* SetVideoPlayerItemMetadataCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24352DE32ACA7E2000392859 /* SetVideoPlayerItemMetadataCommand.swift */; };
@@ -2709,6 +2710,7 @@
 		240D80FA2AB1A1DC00FBD2C4 /* AudioPlayerItemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerItemTests.swift; sourceTree = "<group>"; };
 		2412B5342A414EC7000EB46E /* MEGANode+initAudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANode+initAudioPlayer.swift"; sourceTree = "<group>"; };
 		24189DCD2AA705C70071F160 /* MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift"; sourceTree = "<group>"; };
+		241B64192B5A54BC00C82895 /* VideoRevampRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRevampRouter.swift; sourceTree = "<group>"; };
 		242A14072ABC920A009E4788 /* AudioPlayerRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerRepository.swift; sourceTree = "<group>"; };
 		242A14092ABC9252009E4788 /* AudioPlayerUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerUseCase.swift; sourceTree = "<group>"; };
 		24352DE32ACA7E2000392859 /* SetVideoPlayerItemMetadataCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetVideoPlayerItemMetadataCommand.swift; sourceTree = "<group>"; };
@@ -5807,6 +5809,7 @@
 			isa = PBXGroup;
 			children = (
 				244CEFCD2B257AB500147302 /* Infrastructure */,
+				241B64192B5A54BC00C82895 /* VideoRevampRouter.swift */,
 				2486F1A82B0EEE4E00003D20 /* VideoRevampTabContainerViewController.swift */,
 				2486F1AD2B0EF12600003D20 /* VideoRevampTabContainerViewModel.swift */,
 			);
@@ -14981,6 +14984,7 @@
 				BFAAF726252EC4F90053A9BF /* VideoExplorerTableCellViewModel.swift in Sources */,
 				BFAAF717252E85810053A9BF /* VideoExplorerTableViewCell.swift in Sources */,
 				BFE6908725350E6200CD21F9 /* VideoExplorerViewConfiguration.swift in Sources */,
+				241B641A2B5A54BC00C82895 /* VideoRevampRouter.swift in Sources */,
 				2486F1A92B0EEE4E00003D20 /* VideoRevampTabContainerViewController.swift in Sources */,
 				2486F1AE2B0EF12600003D20 /* VideoRevampTabContainerViewModel.swift in Sources */,
 				B658D3BB218F936B004C0D64 /* VideoUploadOperation.m in Sources */,

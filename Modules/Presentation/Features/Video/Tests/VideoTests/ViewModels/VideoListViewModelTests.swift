@@ -1,10 +1,14 @@
+import Combine
 import MEGADomain
 import MEGADomainMock
 import MEGATest
-import XCTest
 @testable import Video
+import XCTest
 
+@MainActor
 final class VideoListViewModelTests: XCTestCase {
+    
+    private var cancellables = Set<AnyCancellable>()
     
     func testInit_whenInit_doesNotExecuteSearchOnUseCase() {
         let (_, fileSearchUseCase) = makeSUT()
@@ -13,109 +17,46 @@ final class VideoListViewModelTests: XCTestCase {
         XCTAssertEqual(fileSearchUseCase.onNodesUpdateCallCount, 0, "Expect to not listen nodes update")
     }
     
-    func testViewAppeared_whenCalled_executeSearchUseCase() {
+    func testLoadVideos_whenCalled_executeSearchUseCase() async {
         let (sut, fileSearchUseCase) = makeSUT()
+        sut.searchedText = ""
+        sut.sortOrderType = .defaultAsc
         
-        sut.dispatch(.onViewAppeared(searchedText: nil, sortOrderType: .defaultAsc))
+        await sut.loadVideos()
         
         XCTAssertEqual(fileSearchUseCase.searchCallCount, 1, "Expect to search")
     }
     
-    func testViewAppeared_whenError_showsErrorView() {
+    func testLoadVideos_whenError_showsErrorView() async {
         let (sut, _) = makeSUT(fileSearchUseCase: MockFilesSearchUseCase(searchResult: .failure(FileSearchResultErrorEntity.generic)))
-        var receivedCommands = [VideoListViewModel.Command]()
-        sut.invokeCommand = { command in
-            receivedCommands.append(command)
-        }
+        sut.searchedText = ""
+        sut.sortOrderType = .defaultAsc
         
-        sut.dispatch(.onViewAppeared(searchedText: nil, sortOrderType: .defaultAsc))
+        await sut.loadVideos()
         
-        XCTAssertEqual(receivedCommands, [ .showErrorView ])
+        XCTAssertEqual(sut.uiState, .error)
     }
     
-    func testViewAppeared_whenNoErrors_showsEmptyItemView() {
+    func testLoadVideos_whenNoErrors_showsEmptyItemView() async {
         let (sut, _) = makeSUT(fileSearchUseCase: MockFilesSearchUseCase(searchResult: .success(nil)))
-        var receivedCommands = [VideoListViewModel.Command]()
-        sut.invokeCommand = { command in
-            receivedCommands.append(command)
-        }
+        sut.searchedText = ""
+        sut.sortOrderType = .defaultAsc
         
-        sut.dispatch(.onViewAppeared(searchedText: nil, sortOrderType: .defaultAsc))
+        await sut.loadVideos()
         
-        XCTAssertEqual(receivedCommands, [ .showEmptyItemView ])
+        XCTAssertEqual(sut.uiState, .empty)
     }
     
-    func testViewAppeared_whenNoErrors_showsVideoItems() {
+    func testLoadVideos_whenNoErrors_showsVideoItems() async {
         let foundVideos = [ anyNode(id: 1, mediaType: .video), anyNode(id: 2, mediaType: .video) ]
         let (sut, _) = makeSUT(fileSearchUseCase: MockFilesSearchUseCase(searchResult: .success(foundVideos)))
-        var receivedCommands = [VideoListViewModel.Command]()
-        sut.invokeCommand = { command in
-            receivedCommands.append(command)
-        }
+        sut.searchedText = ""
+        sut.sortOrderType = .defaultAsc
         
-        sut.dispatch(.onViewAppeared(searchedText: nil, sortOrderType: .defaultAsc))
+        await sut.loadVideos()
         
-        XCTAssertEqual(receivedCommands, [ .showItems(nodes: foundVideos) ])
-    }
-    
-    func testViewAppeared_whenCalled_ListenNodesUpdate() {
-        let (sut, fileSearchUseCase) = makeSUT()
-        
-        sut.dispatch(.onViewAppeared(searchedText: nil, sortOrderType: .defaultAsc))
-        
-        XCTAssertEqual(fileSearchUseCase.onNodesUpdateCallCount, 1)
-    }
-    
-    func testOnNodesUpdate_whenHasNodeUpdatesOnNonVideoNodes_doesNotUpdateUI() {
-        let nonVideoNodes = [ 
-            anyNode(id: 1, mediaType: .image),
-            anyNode(id: 2, mediaType: .image)
-        ]
-        let nonVideosUpdateNodes = [ 
-            anyNode(id: 1, mediaType: .image), anyNode(id: 2, mediaType: .image)
-        ]
-        let (sut, fileSearchUseCase) = makeSUT(
-            fileSearchUseCase: MockFilesSearchUseCase(
-                searchResult: .success(nonVideoNodes),
-                onNodesUpdateResult: nonVideosUpdateNodes
-            )
-        )
-        var receivedCommands = [VideoListViewModel.Command]()
-        sut.invokeCommand = { command in
-            receivedCommands.append(command)
-        }
-        sut.dispatch(.onViewAppeared(searchedText: nil, sortOrderType: .defaultAsc))
-        receivedCommands.removeAll()
-        
-        fileSearchUseCase.simulateOnNodesUpdate(with: nonVideosUpdateNodes)
-        
-        XCTAssertEqual(receivedCommands, [])
-    }
-    
-    func testOnNodesUpdate_whenHasNodeUpdatesOnVideoNodes_updatesUI() {
-        let intialVideoNodes = [ 
-            anyNode(id: 1, mediaType: .video, name: "old video name"),
-            anyNode(id: 2, mediaType: .image, name: "old image name")
-        ]
-        let updatedVideoNodes = [ 
-            anyNode(id: 1, mediaType: .video, name: "new video name")
-        ]
-        let (sut, fileSearchUseCase) = makeSUT(
-            fileSearchUseCase: MockFilesSearchUseCase(
-                searchResult: .success(intialVideoNodes),
-                onNodesUpdateResult: updatedVideoNodes
-            )
-        )
-        var receivedCommands = [VideoListViewModel.Command]()
-        sut.invokeCommand = { command in
-            receivedCommands.append(command)
-        }
-        sut.dispatch(.onViewAppeared(searchedText: nil, sortOrderType: .defaultAsc))
-        receivedCommands.removeAll()
-        
-        fileSearchUseCase.simulateOnNodesUpdate(with: updatedVideoNodes)
-        
-        XCTAssertEqual(receivedCommands, [ .updateItems(nodes: updatedVideoNodes) ])
+        XCTAssertEqual(sut.uiState, .loaded)
+        XCTAssertEqual(sut.videos, foundVideos)
     }
     
     // MARK: - Helpers
@@ -131,7 +72,7 @@ final class VideoListViewModelTests: XCTestCase {
         sut: VideoListViewModel,
         fileSearchUseCase: MockFilesSearchUseCase
     ) {
-        let sut = VideoListViewModel(fileSearchUseCase: fileSearchUseCase)
+        let sut = VideoListViewModel(fileSearchUseCase: fileSearchUseCase, thumbnailUseCase: MockThumbnailUseCase())
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return (sut, fileSearchUseCase)
     }

@@ -15,12 +15,6 @@ struct FilesExplorerRouter {
         self.featureFlagProvider = featureFlagProvider
     }
     
-    private func makeVideoRevampTabContainerViewController() -> VideoRevampTabContainerViewController {
-        let viewModel = VideoRevampTabContainerViewModel()
-        let viewController = VideoRevampTabContainerViewController(viewModel: viewModel, videoConfig: .live)
-        return viewController
-    }
-    
     func start() {
         guard let navController = navigationController else {
             MEGALogDebug("Unable to start Document Explorer screen as navigation controller is nil")
@@ -28,7 +22,8 @@ struct FilesExplorerRouter {
         }
         
         if explorerType == .video && featureFlagProvider.isFeatureFlagEnabled(for: .videoRevamp) {
-            navController.pushViewController(makeVideoRevampTabContainerViewController(), animated: true)
+            let router = VideoRevampRouter(explorerType: explorerType, navigationController: navigationController)
+            router.start()
             return
         }
         

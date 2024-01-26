@@ -1,3 +1,4 @@
+import MEGADomain
 import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
@@ -19,7 +20,9 @@ enum VideosTab: CaseIterable {
 struct TabContainerView: View {
     @State var currentTab: VideosTab = .all
     
+    let videoListViewModel: VideoListViewModel
     let videoConfig: VideoConfig
+    let router: any VideoRevampRouting
     
     var body: some View {
         VStack {
@@ -27,7 +30,12 @@ struct TabContainerView: View {
                 .frame(height: 44)
             
             TabView(selection: self.$currentTab) {
-                VideoListView(videoConfig: videoConfig).tag(VideosTab.all)
+                VideoListView(
+                    viewModel: videoListViewModel,
+                    videoConfig: videoConfig,
+                    router: router
+                )
+                .tag(VideosTab.all)
                 PlaylistView(videoConfig: videoConfig).tag(VideosTab.playlist)
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
@@ -133,9 +141,24 @@ struct TabBarItem: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            TabContainerView(videoConfig: .preview)
-            TabContainerView(videoConfig: .preview)
-                .preferredColorScheme(.dark)
+            TabContainerView(
+                videoListViewModel: makeNullViewModel(),
+                videoConfig: .preview,
+                router: Preview_VideoRevampRouter()
+            )
+            TabContainerView(
+                videoListViewModel: makeNullViewModel(),
+                videoConfig: .preview,
+                router: Preview_VideoRevampRouter()
+            )
+            .preferredColorScheme(.dark)
         }
+    }
+    
+    static func makeNullViewModel() -> VideoListViewModel {
+        VideoListViewModel(
+            fileSearchUseCase: Preview_FilesSearchUseCase(),
+            thumbnailUseCase: Preview_ThumbnailUseCase()
+        )
     }
 }

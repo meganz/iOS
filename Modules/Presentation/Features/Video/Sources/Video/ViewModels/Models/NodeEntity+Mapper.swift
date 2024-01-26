@@ -8,7 +8,7 @@ extension NodeEntity {
         VideoCellPreviewEntity(
             isFavorite: isFavourite,
             imageContainer: thumbnailContainer,
-            duration: VideoDurationFormatter.formatDuration(seconds: UInt(duration)),
+            duration: VideoDurationFormatter.formatDuration(seconds: UInt(max(duration, 0))),
             title: name,
             size: FileSizeFormatter.memoryStyleString(fromByteCount: Int64(size)),
             isPublicLink: isPublic,
