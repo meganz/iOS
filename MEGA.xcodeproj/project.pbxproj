@@ -1360,6 +1360,7 @@
 		94A220182A696502004130C4 /* MEGAAnalyticsiOS in Frameworks */ = {isa = PBXBuildFile; productRef = 94A220172A696502004130C4 /* MEGAAnalyticsiOS */; };
 		94A518EF2A6ED0E700728730 /* ChatViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A518EE2A6ED0E700728730 /* ChatViewControllerTests.swift */; };
 		94AB39772A83D0A800ECF1AB /* AlbumsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AB39762A83D0A800ECF1AB /* AlbumsTests.swift */; };
+		94AEFB8B2B64705B00FD8D5E /* FileManagementTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94AEFB8A2B64705B00FD8D5E /* FileManagementTableViewController+Additions.swift */; };
 		94B4A0462B160DC10089FC94 /* SearchWithFilterOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B4A0452B160DC10089FC94 /* SearchWithFilterOperation.swift */; };
 		94B6E8852A83F6410082D9B1 /* MEGAPickerFileProviderDomain in Frameworks */ = {isa = PBXBuildFile; productRef = 94B6E8842A83F6410082D9B1 /* MEGAPickerFileProviderDomain */; };
 		94B6E8882A83F8530082D9B1 /* MEGAPickerFileProviderRepo in Frameworks */ = {isa = PBXBuildFile; productRef = 94B6E8872A83F8530082D9B1 /* MEGAPickerFileProviderRepo */; };
@@ -3982,6 +3983,7 @@
 		949CEACE1F05121D00A3A580 /* OpenAppRequiredViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OpenAppRequiredViewController.m; path = iMEGA/Extensions/MEGAShare/OpenAppRequiredViewController.m; sourceTree = SOURCE_ROOT; };
 		94A518EE2A6ED0E700728730 /* ChatViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewControllerTests.swift; sourceTree = "<group>"; };
 		94AB39762A83D0A800ECF1AB /* AlbumsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsTests.swift; sourceTree = "<group>"; };
+		94AEFB8A2B64705B00FD8D5E /* FileManagementTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManagementTableViewController+Additions.swift"; sourceTree = "<group>"; };
 		94B4A0452B160DC10089FC94 /* SearchWithFilterOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchWithFilterOperation.swift; sourceTree = "<group>"; };
 		94B6ED9F2A864F1900B72DE5 /* NodeInfoVerifyAccountTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeInfoVerifyAccountTableViewCell.swift; sourceTree = "<group>"; };
 		94B761FB29E5C800003EBC92 /* NodeVersionsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeVersionsViewController+Additions.swift"; sourceTree = "<group>"; };
@@ -7079,6 +7081,7 @@
 			children = (
 				A873E85526E21DF700CBB174 /* File versioning */,
 				9D3563CD28B54E8B00CB3365 /* FileManagementSettingsViewRouter.swift */,
+				94AEFB8A2B64705B00FD8D5E /* FileManagementTableViewController+Additions.swift */,
 				5B00B6E6210745BF0076D5BB /* FileManagementTableViewController.h */,
 				5B00B6E7210745BF0076D5BB /* FileManagementTableViewController.m */,
 				B52021772A8BA5F8001B66C7 /* RubbishBinTableViewController+Additions.swift */,
@@ -13951,6 +13954,7 @@
 				945339CD2A6014FA00363DAD /* FileLinkViewController+ContextMenu.swift in Sources */,
 				E85044C61A6D84620064B675 /* FileLinkViewController.m in Sources */,
 				9D3563CE28B54E8B00CB3365 /* FileManagementSettingsViewRouter.swift in Sources */,
+				94AEFB8B2B64705B00FD8D5E /* FileManagementTableViewController+Additions.swift in Sources */,
 				5B00B6E8210745BF0076D5BB /* FileManagementTableViewController.m in Sources */,
 				B6A01BA9289A5E9200B503FD /* FileManager+Additions.swift in Sources */,
 				BFEA015C256B4E8A00646606 /* FilesDownloadUseCase.swift in Sources */,

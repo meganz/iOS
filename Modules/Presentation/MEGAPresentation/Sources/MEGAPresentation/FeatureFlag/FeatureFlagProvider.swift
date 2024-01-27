@@ -15,7 +15,7 @@ public struct FeatureFlagProvider: FeatureFlagProviderProtocol {
     
     public func isFeatureFlagEnabled(for key: FeatureFlagKey) -> Bool {
         guard !Self.disableFeatureFlags else { return false }
-        
+
         return useCase.isFeatureFlagEnabled(for: key.rawValue)
     }
 }

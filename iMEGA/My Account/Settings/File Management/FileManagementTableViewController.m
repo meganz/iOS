@@ -24,14 +24,6 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
 
 @interface FileManagementTableViewController () <MEGAGlobalDelegate, MEGARequestDelegate>
 
-@property (weak, nonatomic) IBOutlet UILabel *clearOfflineFilesLabel;
-@property (weak, nonatomic) IBOutlet UILabel *clearCacheLabel;
-
-@property (weak, nonatomic) IBOutlet UILabel *rubbishBinLabel;
-
-@property (weak, nonatomic) IBOutlet UILabel *fileVersioningLabel;
-@property (weak, nonatomic) IBOutlet UILabel *fileVersioningDetail;
-
 @property (nonatomic, copy) NSString *offlineSizeString;
 @property (nonatomic, copy) NSString *cacheSizeString;
 @property (nonatomic) BOOL isOfflineSizeEmpty;
@@ -39,42 +31,39 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
 
 @property (nonatomic, getter=isFileVersioningEnabled) BOOL fileVersioningEnabled;
 
-@property (weak, nonatomic) IBOutlet UILabel *useMobileDataLabel;
-@property (weak, nonatomic) IBOutlet UISwitch *useMobileDataSwitch;
-
 @end
 
 @implementation FileManagementTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     NSString *title = LocalizedString(@"File Management", @"A section header which contains the file management settings. These settings allow users to remove duplicate files etc.");
     self.navigationItem.title = title;
     [self setMenuCapableBackButtonWithMenuTitle: title];
-    
+
     _offlineSizeString = @"...";
     _cacheSizeString = @"...";
-    
+
     [self updateAppearance];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
+
     self.clearOfflineFilesLabel.text = LocalizedString(@"clearOfflineFiles", @"Section title where you can 'Clear Offline files' of your MEGA app");
     self.clearCacheLabel.text = LocalizedString(@"clearCache", @"Section title where you can 'Clear Cache' of your MEGA app");
-    
+
     self.rubbishBinLabel.text = LocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'");
-    
+
     self.fileVersioningLabel.text = LocalizedString(@"File versioning", @"Title of the option to enable or disable file versioning on Settings section");
     [[MEGASdkManager sharedMEGASdk] getFileVersionsOptionWithDelegate:self];
-    
+
     self.useMobileDataLabel.text = LocalizedString(@"useMobileData", @"Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature.");
     self.useMobileDataSwitch.on = [NSUserDefaults.standardUserDefaults boolForKey:MEGAUseMobileDataForPreviewingOriginalPhoto];
-    
+
     [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
-    
+
     [self reloadUI];
 }
 
@@ -95,7 +84,7 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
-    
+
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
         [self updateAppearance];
     }
@@ -105,8 +94,10 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
 
 - (void)updateAppearance {
     self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
-    self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
-    
+    self.tableView.backgroundColor = [UIColor pageBackgroundForTraitCollection:self.traitCollection];
+
+    [self updateLabelAppearance];
+
     [self.tableView reloadData];
 }
 
@@ -116,17 +107,17 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
         self.offlineSizeString = [NSString memoryStyleStringFromByteCount:offlineSize];
         self.offlineSizeString = [NSString mnz_formatStringFromByteCountFormatter:self.offlineSizeString];
         self.isOfflineSizeEmpty = [NSString mnz_isByteCountEmpty:self.offlineSizeString];
-        
+
         unsigned long long cachesFolderSize = [NSFileManager.defaultManager mnz_sizeOfFolderAtPath:[Helper pathForSharedSandboxCacheDirectory:@""]];
 
         unsigned long long temporaryDirectory = [NSFileManager.defaultManager mnz_sizeOfFolderAtPath:NSTemporaryDirectory()];
         unsigned long long groupDirectory = [NSFileManager.defaultManager mnz_groupSharedDirectorySize];
         unsigned long long cacheSize = cachesFolderSize + temporaryDirectory + groupDirectory;
-        
+
         self.cacheSizeString = [NSString memoryStyleStringFromByteCount:cacheSize];
         self.cacheSizeString = [NSString mnz_formatStringFromByteCountFormatter:self.cacheSizeString];
         self.isCacheSizeEmpty = [NSString mnz_isByteCountEmpty:self.cacheSizeString];
-        
+
         dispatch_async(dispatch_get_main_queue(), ^(void){
             [self.tableView reloadData];
         });
@@ -144,15 +135,15 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
 - (void)showClearAllOfflineFilesActionSheet:(UIView *)sender {
     UIAlertController *clearAllOfflineFilesAlertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"settings.fileManagement.alert.clearAllOfflineFiles", @"Question shown after you tap on 'Settings' - 'File Management' - 'Clear Offline files' to confirm the action") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     [clearAllOfflineFilesAlertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"Button title to cancel something") style:UIAlertActionStyleCancel handler:nil]];
-    
+
     UIAlertAction *clearAlertAction = [UIAlertAction actionWithTitle:LocalizedString(@"clear", @"Button title to clear something") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self clearOfflineFiles];
     }];
     [clearAllOfflineFilesAlertController addAction:clearAlertAction];
-    
+
     clearAllOfflineFilesAlertController.popoverPresentationController.sourceRect = sender.frame;
     clearAllOfflineFilesAlertController.popoverPresentationController.sourceView = sender.superview;
-    
+
     [self presentViewController:clearAllOfflineFilesAlertController animated:YES completion:nil];
 }
 
@@ -189,12 +180,12 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
         case FileManagementTableSectionOnYourDevice:
             titleHeader = LocalizedString(@"onYourDevice", @"Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section");
             break;
-            
+
         case FileManagementTableSectionOnMEGA:
             titleHeader = LocalizedString(@"onMEGA", @"Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section");
             break;
     }
-    
+
     return titleHeader;
 }
 
@@ -211,14 +202,14 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
             titleFooter = currentlyUsingString;
             break;
         }
-            
+
         case FileManagementTableSectionClearCache: {
             NSString *currentlyUsingString = LocalizedString(@"currentlyUsing", @"Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped");
             currentlyUsingString = [currentlyUsingString stringByReplacingOccurrencesOfString:@"%s" withString:self.cacheSizeString];
             titleFooter = currentlyUsingString;
             break;
         }
-            
+
         case FileManagementTableSectionOnMEGA: {
             NSNumber *rubbishBinSizeNumber = [[MEGASdkManager sharedMEGASdk] sizeForNode:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
             NSString *stringFromByteCount = [NSString memoryStyleStringFromByteCount:rubbishBinSizeNumber.unsignedLongLongValue];
@@ -229,7 +220,7 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
             break;
         }
     }
-    
+
     return titleFooter;
 }
 
@@ -245,11 +236,11 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
             if (_isOfflineSizeEmpty) {
                 break;
             }
-            
+
             [self showClearAllOfflineFilesActionSheet:[tableView cellForRowAtIndexPath:indexPath].contentView];
             break;
         }
-            
+
         case FileManagementTableSectionClearCache: {
             if (_isCacheSizeEmpty) {
                 break;
@@ -261,7 +252,7 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
                 [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:NSTemporaryDirectory()];
                 [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:[Helper pathForSharedSandboxCacheDirectory:@""]];
                 [self removeGroupSharedDirectoryContents];
-                                
+
                 if (MEGASdkManager.sharedMEGASdk.downloadTransfers.size == 0) {
                     [NSFileManager.defaultManager mnz_removeFolderContentsRecursivelyAtPath:[Helper pathForOffline] forItemsExtension:@"mega"];
                     [NSFileManager.defaultManager mnz_removeItemAtPath:[NSFileManager.defaultManager downloadsDirectory]];
@@ -269,7 +260,7 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
                 if (MEGASdkManager.sharedMEGASdk.uploadTransfers.size == 0) {
                     [NSFileManager.defaultManager mnz_removeItemAtPath:[NSFileManager.defaultManager uploadsDirectory]];
                 }
-                
+
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [SVProgressHUD dismiss];
                     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
@@ -278,16 +269,16 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
             });
             break;
         }
-            
+
         case FileManagementTableSectionOnMEGA:
             break;
         case FileManagementTableSectionFileVersioning:
             [[FileVersioningViewRouter.alloc initWithNavigationController:self.navigationController] start];
-            
+
         default:
             break;
     }
-    
+
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
@@ -301,7 +292,7 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
     NSInteger userListCount = userList.size;
     for (NSInteger i = 0 ; i < userListCount; i++) {
         MEGAUser *user = [userList userAtIndex:i];
-        
+
         if (user.handle == MEGASdk.currentUserHandle.unsignedLongLongValue && [user hasChangedType:MEGAUserChangeTypeDisableVersions] && user.isOwnChange == 0) {
             [api getFileVersionsOptionWithDelegate:self];
         }
