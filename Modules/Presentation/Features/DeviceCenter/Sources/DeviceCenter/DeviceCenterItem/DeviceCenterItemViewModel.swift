@@ -10,12 +10,14 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
     private let deviceCenterUseCase: DeviceCenterUseCaseProtocol
     private let nodeUseCase: (any NodeUseCaseProtocol)?
     private let deviceCenterBridge: DeviceCenterBridge
+    private let isCameraUploadsAvailable: Bool
     private var itemType: DeviceCenterItemType
     var assets: ItemAssets
     var availableActions: [DeviceCenterAction] = []
     var statusSubtitle: String?
     var isBackup: Bool = false
     var hasErrorStatus: Bool = false
+    var sortedAvailableActions: [DeviceCenterActionType: [DeviceCenterAction]]
     
     @Published var name: String = ""
     @Published var iconName: String?
@@ -31,6 +33,8 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
          nodeUseCase: (any NodeUseCaseProtocol)? = nil,
          deviceCenterBridge: DeviceCenterBridge,
          itemType: DeviceCenterItemType,
+         sortedAvailableActions: [DeviceCenterActionType: [DeviceCenterAction]],
+         isCUActionAvailable: Bool,
          assets: ItemAssets) {
         self.router = router
         self.refreshDevicesPublisher = refreshDevicesPublisher
@@ -38,6 +42,8 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
         self.nodeUseCase = nodeUseCase
         self.deviceCenterBridge = deviceCenterBridge
         self.itemType = itemType
+        self.sortedAvailableActions = sortedAvailableActions
+        self.isCameraUploadsAvailable = isCUActionAvailable
         self.assets = assets
         
         self.configure()
@@ -87,18 +93,27 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
     }
     
     private func loadAvailableActionsForBackup(_ backup: BackupEntity) {
-        guard let nodeEntity = nodeUseCase?.nodeForHandle(backup.rootHandle) else { return }
+        var actionTypes: [DeviceCenterActionType] = [.info]
         
-        availableActions = DeviceCenterActionBuilder()
-            .setActionType(.backup(backup))
-            .setNode(nodeEntity)
-            .build()
+        if isCameraUploadsAvailable {
+            actionTypes.append(.cameraUploads)
+        }
+        
+        availableActions = actionTypes.compactMap { type in
+            sortedAvailableActions[type]?.first
+        }
     }
     
     private func loadAvailableActionsForDevice(_ device: DeviceEntity) {
-        availableActions = DeviceCenterActionBuilder()
-            .setActionType(.device(device))
-            .build()
+        var actionTypes: [DeviceCenterActionType] = [.info]
+        
+        if isCameraUploadsAvailable {
+            actionTypes.append(.cameraUploads)
+        }
+        
+        availableActions = actionTypes.compactMap { type in
+            sortedAvailableActions[type]?.first
+        }
     }
     
     @MainActor
@@ -133,17 +148,13 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
             }
     }
     
-    private func handleBackupAction(_ type: DeviceCenterActionType) {
+    private func handleBackupAction(_ type: DeviceCenterActionType) async {
         switch type {
         case .cameraUploads:
-            handleCameraUploadAction()
-        case .info, .copy, .download, .shareLink, .manageLink, .removeLink, .shareFolder, .manageShare, .showInCloudDrive, .favourite, .label, .move, .moveToTheRubbishBin:
+            await handleCameraUploadAction()
+        case .info:
             guard let node = nodeForItemType() else { return }
-
-            Task { [weak self] in
-                guard let self else { return }
-                await self.deviceCenterBridge.nodeActionTapped(node, type)
-            }
+            deviceCenterBridge.infoActionTapped(node)
         default: break
         }
     }
@@ -151,17 +162,20 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
     private func handleDeviceAction(_ type: DeviceCenterActionType, device: DeviceEntity) async {
         switch type {
         case .cameraUploads:
-            handleCameraUploadAction()
+            await handleCameraUploadAction()
         case .rename:
             await handleRenameDeviceAction(device)
         default: break
         }
     }
     
+    @MainActor
     private func handleCameraUploadAction() {
         deviceCenterBridge.cameraUploadActionTapped { [weak self] in
-            guard let self else { return }
-            self.refreshDevicesPublisher?.send()
+            Task {
+                guard let self else { return }
+                self.refreshDevicesPublisher?.send()
+            }
         }
     }
     
@@ -235,7 +249,7 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
     func executeAction(_ type: DeviceCenterActionType) async {
         switch itemType {
         case .backup:
-            handleBackupAction(type)
+            await handleBackupAction(type)
         case .device(let device):
             await handleDeviceAction(type, device: device)
         default: break

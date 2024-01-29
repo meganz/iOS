@@ -25,7 +25,7 @@ public struct ActionSheetContentView<HeaderView: View>: View {
                     
                     Divider()
                 }
-                .background(colorScheme == .dark ? Color("2c2c2e") : Color("F7F7F7"))
+                .background(colorScheme == .dark ? Color(red: 0.17, green: 0.17, blue: 0.18) : Color(red: 0.97, green: 0.97, blue: 0.97))
                 
                 ForEach(actionButtons, id: \.self) { button in
                     button
@@ -74,7 +74,7 @@ public struct ActionSheetButton: View, Hashable {
                 if let subtitle = subtitle {
                     Text(subtitle)
                         .font(.callout)
-                        .foregroundColor(Color("848484"))
+                        .foregroundColor(Color(red: 0.52, green: 0.52, blue: 0.52))
                     
                     Image("standardDisclosureIndicator")
                         .padding([.trailing], 16)

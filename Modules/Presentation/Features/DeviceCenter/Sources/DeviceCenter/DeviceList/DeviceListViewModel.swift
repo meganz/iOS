@@ -130,12 +130,17 @@ public final class DeviceListViewModel: ObservableObject {
             return nil
         }
         
+        // The action of navigating to the Camera Uploads Settings will only be available for the current device, as long as it is an iPhone or iPad.
+        let isCUActionAvailable = device.id == currentDeviceUUID || (device.id == currentDeviceId && device.isMobileDevice())
+        
         return DeviceCenterItemViewModel(
             router: router,
             refreshDevicesPublisher: refreshDevicesPublisher,
             deviceCenterUseCase: deviceCenterUseCase,
             deviceCenterBridge: deviceCenterBridge,
             itemType: .device(device),
+            sortedAvailableActions: sortedAvailableActions,
+            isCUActionAvailable: isCUActionAvailable,
             assets: deviceAssets
         )
     }

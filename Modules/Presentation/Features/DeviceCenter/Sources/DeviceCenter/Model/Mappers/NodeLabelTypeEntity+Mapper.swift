@@ -43,25 +43,4 @@ extension NodeLabelTypeEntity {
             return ""
         }
     }
-    
-    func deviceCenterActionType() -> DeviceCenterActionType? {
-        switch self {
-        case .red:
-            return .labelRed
-        case .orange:
-            return .labelOrange
-        case .yellow:
-            return .labelYellow
-        case .green:
-            return .labelGreen
-        case .blue:
-            return .labelBlue
-        case .purple:
-            return .labelPurple
-        case .grey:
-            return .labelGrey
-        default:
-            return nil
-        }
-    }
 }

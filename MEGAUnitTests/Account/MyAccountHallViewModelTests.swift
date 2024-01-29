@@ -157,36 +157,6 @@ final class MyAccountHallViewModelTests: XCTestCase {
         )
     }
     
-    func testDidTapNodeAction_whenNodeCopyActionTapped_callsRouterOnce() async throws {
-        let deviceCenterBridge = DeviceCenterBridge()
-        let (sut, router) = makeSUT(deviceCenterBridge: deviceCenterBridge)
-        
-        test(viewModel: sut,
-             actions: [MyAccountHallAction.didTapDeviceCenterButton],
-             expectedCommands: [])
-        
-        await deviceCenterBridge.nodeActionTapped(MockNode(handle: 1).toNodeEntity(), .copy)
-        
-        XCTAssertEqual(
-            router.didTapNodeAction_calledTimes, 1, "Node action should have called the router once"
-        )
-    }
-    
-    func testDidTapNodeAction_whenSharedFolderActionTapped_callsRouterOnce() async throws {
-        let deviceCenterBridge = DeviceCenterBridge()
-        let (sut, router) = makeSUT(deviceCenterBridge: deviceCenterBridge)
-        
-        test(viewModel: sut,
-             actions: [MyAccountHallAction.didTapDeviceCenterButton],
-             expectedCommands: [])
-        
-        await deviceCenterBridge.nodeActionTapped(MockNode(handle: 1).toNodeEntity(), .shareFolder)
-        
-        XCTAssertEqual(
-            router.didTapNodeAction_calledTimes, 1, "Node action should have called the router once"
-        )
-    }
-    
     func testDidTapShowIn_whenShowInActionTapped_callsRouterOnce() async throws {
         let deviceCenterBridge = DeviceCenterBridge()
         let (sut, router) = makeSUT(deviceCenterBridge: deviceCenterBridge)
@@ -205,6 +175,23 @@ final class MyAccountHallViewModelTests: XCTestCase {
         
         XCTAssertEqual(
             router.didTapShowInAction_calledTimes, 1, "Show in action should have called the router once"
+        )
+    }
+    
+    func testDidTapInfoAction_whenInfoActionTapped_callsRouterOnce() async throws {
+        let deviceCenterBridge = DeviceCenterBridge()
+        let (sut, router) = makeSUT(deviceCenterBridge: deviceCenterBridge)
+        
+        test(viewModel: sut,
+             actions: [MyAccountHallAction.didTapDeviceCenterButton],
+             expectedCommands: [])
+        
+        deviceCenterBridge.infoActionTapped(
+            NodeEntity(handle: 1)
+        )
+        
+        XCTAssertEqual(
+            router.didTapInfoAction_calledTimes, 1, "Info action should have called the router once"
         )
     }
     
