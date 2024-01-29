@@ -7,7 +7,7 @@ extension PhotosViewController {
     var permissionRouter: some PermissionAlertRouting {
         PermissionAlertRouter.makeRouter(deviceHandler: permissionHandler)
     }
-    
+        
     @IBAction func moreAction(_ sender: UIBarButtonItem) {
         let nodeActionsViewController = NodeActionViewController(nodes: selection.nodes, delegate: self, displayMode: .photosTimeline, sender: sender)
         present(nodeActionsViewController, animated: true, completion: nil)

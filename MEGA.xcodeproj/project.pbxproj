@@ -232,6 +232,7 @@
 		25AF21632AB28E9400DC41AF /* EmptyMediaDiscoveryContentMenuAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AF21622AB28E9400DC41AF /* EmptyMediaDiscoveryContentMenuAction.swift */; };
 		25B529412AE765B8004503FD /* EnableCameraUploadsBannerButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E8C7E772AE2166900D408EB /* EnableCameraUploadsBannerButtonView.swift */; };
 		25B774C42B141737001F623A /* CameraUploadStatusBannerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B774C32B141737001F623A /* CameraUploadStatusBannerViewModelTests.swift */; };
+		25B8467C2B60AACD002B6134 /* CameraUploadsStatsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B8467B2B60AACD002B6134 /* CameraUploadsStatsRepository.swift */; };
 		25BE0B092AC3ADCC00ED44DF /* CloudDriveViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25BE0B082AC3ADCC00ED44DF /* CloudDriveViewModelTests.swift */; };
 		25C2F8D82AAEB3BA00F8930A /* MediaDiscoveryContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C2F8D72AAEB3BA00F8930A /* MediaDiscoveryContentViewController.swift */; };
 		25C2F8EF2AB126E100F8930A /* MediaDiscoveryContentViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C2F8EE2AB126E100F8930A /* MediaDiscoveryContentViewModelTests.swift */; };
@@ -2791,6 +2792,7 @@
 		25AF215D2AB263C400DC41AF /* EmptyMediaDiscoveryContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMediaDiscoveryContentView.swift; sourceTree = "<group>"; };
 		25AF21622AB28E9400DC41AF /* EmptyMediaDiscoveryContentMenuAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMediaDiscoveryContentMenuAction.swift; sourceTree = "<group>"; };
 		25B774C32B141737001F623A /* CameraUploadStatusBannerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadStatusBannerViewModelTests.swift; sourceTree = "<group>"; };
+		25B8467B2B60AACD002B6134 /* CameraUploadsStatsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadsStatsRepository.swift; sourceTree = "<group>"; };
 		25BE0B082AC3ADCC00ED44DF /* CloudDriveViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveViewModelTests.swift; sourceTree = "<group>"; };
 		25C2F8D72AAEB3BA00F8930A /* MediaDiscoveryContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDiscoveryContentViewController.swift; sourceTree = "<group>"; };
 		25C2F8EE2AB126E100F8930A /* MediaDiscoveryContentViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDiscoveryContentViewModelTests.swift; sourceTree = "<group>"; };
@@ -6065,6 +6067,14 @@
 				25484F772B153E7800694850 /* MonitorCameraUploadBannerStatusProviderTests.swift */,
 			);
 			path = Timeline;
+			sourceTree = "<group>";
+		};
+		25B8467A2B60AA91002B6134 /* CameraUploads */ = {
+			isa = PBXGroup;
+			children = (
+				25B8467B2B60AACD002B6134 /* CameraUploadsStatsRepository.swift */,
+			);
+			path = CameraUploads;
 			sourceTree = "<group>";
 		};
 		25C2F8ED2AB126B900F8930A /* MediaDiscoverContent */ = {
@@ -10684,6 +10694,7 @@
 				25F932922AF49B7000A63E73 /* Appearance */,
 				BFAC873525FEF1F3009CA3F6 /* AudioVideo */,
 				838A7B6725D5677500767DB0 /* Calls */,
+				25B8467A2B60AA91002B6134 /* CameraUploads */,
 				830C266F25DFC70B00E9B56E /* Favourites */,
 				83E3463B25B6DE56006F2AD6 /* Files */,
 				0D213E8C263A611500B43723 /* Node */,
@@ -13630,6 +13641,7 @@
 				B686F45921866BB4009C0DAA /* CameraUploadRequestDelegate.m in Sources */,
 				94FABD152ADE95A9003E8894 /* CameraUploadsRepository.swift in Sources */,
 				9D3563CA28B54C6C00CB3365 /* CameraUploadsSettingsViewRouter.swift in Sources */,
+				25B8467C2B60AACD002B6134 /* CameraUploadsStatsRepository.swift in Sources */,
 				B5BEB0FE2907C5F5006A442D /* CameraUploadsTableViewController+Additions.swift in Sources */,
 				41FC83C01AAE056C008FA551 /* CameraUploadsTableViewController.m in Sources */,
 				25EB2E902B0578E700823B3D /* CameraUploadStatusBannerView.swift in Sources */,

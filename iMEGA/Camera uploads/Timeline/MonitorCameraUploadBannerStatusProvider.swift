@@ -27,28 +27,22 @@ struct MonitorCameraUploadBannerStatusProvider {
         
     func monitorCameraUploadStatusSequence() -> AnyAsyncSequence<CameraUploadBannerStatusViewStates> {
         monitorCameraUploadUseCase
-            .monitorUploadStatus
-            .compactMap { uploadStatsResult -> CameraUploadBannerStatusViewStates?  in
-                switch uploadStatsResult {
-                case .success(let uploadStats):
-                    return map(uploadStats: uploadStats)
-                case .failure:
-                    return nil
-                }
-            }
+            .monitorUploadStats()
+            .map(map(uploadStats:))
             .eraseToAnyAsyncSequence()
     }
     
-    private func map(uploadStats: CameraUploadStatsEntity) -> CameraUploadBannerStatusViewStates? {
+    private func map(uploadStats: CameraUploadStatsEntity) -> CameraUploadBannerStatusViewStates {
         guard uploadStats.pendingFilesCount == 0 else {
-            
-            if networkMonitorUseCase.isConnectedViaWiFi() {
-                return .uploadInProgress(numberOfFilesPending: uploadStats.pendingFilesCount)
-            } else if networkMonitorUseCase.isConnected(), cameraUploadsUseCellularDataUsageAllowed {
-                // This may become the future scenario to handle `No internet connection`
-                return .uploadInProgress(numberOfFilesPending: uploadStats.pendingFilesCount)
-            } else {
+        
+            switch monitorCameraUploadUseCase.possibleCameraUploadPausedReason() {
+            case .noNetworkConnectivity:
+                // CC-5927: Next ticket will need to address no internet status
                 return .uploadPaused(reason: .noWifiConnection(numberOfFilesPending: uploadStats.pendingFilesCount))
+            case .noWifi:
+                return .uploadPaused(reason: .noWifiConnection(numberOfFilesPending: uploadStats.pendingFilesCount))
+            case .notPaused:
+                return .uploadInProgress(numberOfFilesPending: uploadStats.pendingFilesCount)
             }
         }
         

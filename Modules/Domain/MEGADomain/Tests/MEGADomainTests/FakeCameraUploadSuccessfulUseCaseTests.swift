@@ -7,7 +7,7 @@ final class FakeCameraUploadSuccessfulUseCaseTests: XCTestCase {
                                                     initialDelayInNanoSeconds: 10,
                                                     delayBetweenItemsInNanoSeconds: 10)
         
-        var iterator = sut.monitorUploadStatus.makeAsyncIterator()
+        var iterator = sut.monitorUploadStats().makeAsyncIterator()
         
         let expectedValues = [CameraUploadStatsEntity(progress: 0, pendingFilesCount: 4, pendingVideosCount: 0),
                               CameraUploadStatsEntity(progress: 0.25, pendingFilesCount: 3, pendingVideosCount: 0),
@@ -20,16 +20,11 @@ final class FakeCameraUploadSuccessfulUseCaseTests: XCTestCase {
                 XCTFail("Iterator returned nil unexpectedly")
                 break
             }
-            switch result {
-            case .success(let value):
-                XCTAssertEqual(value.progress, expected.progress, accuracy: 0.1,
-                               "Fail at index: \(index) with value: \(value)")
-                XCTAssertEqual(value.pendingFilesCount, expected.pendingFilesCount,
-                               "Fail at index: \(index) with value: \(value)")
-            case .failure:
-                XCTFail("Unexpected error")
-            }
-           
+            
+            XCTAssertEqual(result.progress, expected.progress, accuracy: 0.1,
+                           "Fail at index: \(index) with value: \(result)")
+            XCTAssertEqual(result.pendingFilesCount, expected.pendingFilesCount,
+                           "Fail at index: \(index) with value: \(result)")
         }
         let uploadComplete = await iterator.next()
         XCTAssertNil(uploadComplete)

@@ -2,22 +2,30 @@ import MEGASwift
 
 /// Simulate uploading of photos till completion. This is for testing purposes only until actual upload use case is implemented.
 public struct FakeCameraUploadSuccessfulUseCase: MonitorCameraUploadUseCaseProtocol {
-    public let monitorUploadStatus: AnyAsyncSequence<Result<CameraUploadStatsEntity, Error>>
+    private let _monitorUploadStats: AnyAsyncSequence<CameraUploadStatsEntity>
     
     public init(photoUploadCount: UInt = 100,
                 pendingVideosCount: UInt = 0,
                 initialDelayInNanoSeconds: UInt64 = 1_000_000_000,
                 delayBetweenItemsInNanoSeconds: UInt64 = 100_000_000) {
-        monitorUploadStatus = UploadPhotosAsyncSequence(
-            uploadCount: photoUploadCount, 
+        _monitorUploadStats = UploadPhotosAsyncSequence(
+            uploadCount: photoUploadCount,
             pendingVideosCount: pendingVideosCount,
             initialDelayInNanoSeconds: initialDelayInNanoSeconds,
             delayBetweenItemsInNanoSeconds: delayBetweenItemsInNanoSeconds
         ).eraseToAnyAsyncSequence()
     }
     
+    public func monitorUploadStats() -> AnyAsyncSequence<CameraUploadStatsEntity> {
+        _monitorUploadStats
+    }
+    
+    public func possibleCameraUploadPausedReason() -> CameraUploadPausedReason {
+        .notPaused
+    }
+    
     private struct UploadPhotosAsyncSequence: AsyncSequence {
-        typealias Element = Result<CameraUploadStatsEntity, Error>
+        typealias Element = CameraUploadStatsEntity
         private let uploadCount: UInt
         private let pendingVideosCount: UInt
         private let initialDelayInNanoSeconds: UInt64
@@ -34,7 +42,7 @@ public struct FakeCameraUploadSuccessfulUseCase: MonitorCameraUploadUseCaseProto
         }
         
         struct UploadPhotosAsyncIterator: AsyncIteratorProtocol {
-            typealias Element = Result<CameraUploadStatsEntity, Error>
+            typealias Element = CameraUploadStatsEntity
             
             private let uploadCount: UInt
             private let pendingVideosCount: UInt
@@ -52,7 +60,7 @@ public struct FakeCameraUploadSuccessfulUseCase: MonitorCameraUploadUseCaseProto
                 self.delayBetweenItemsInNanoSeconds = delayBetweenItemsInNanoSeconds
             }
             
-            mutating func next() async -> Result<CameraUploadStatsEntity, Error>? {
+            mutating func next() async -> CameraUploadStatsEntity? {
                 guard !Task.isCancelled,
                       currentCount <= uploadCount else {
                     return nil
@@ -65,7 +73,7 @@ public struct FakeCameraUploadSuccessfulUseCase: MonitorCameraUploadUseCaseProto
                     pendingFilesCount: uploadCount - currentCount, 
                     pendingVideosCount: pendingVideosCount)
                 currentCount += 1
-                return .success(nextValue)
+                return nextValue
             }
         }
         
@@ -80,27 +88,38 @@ public struct FakeCameraUploadSuccessfulUseCase: MonitorCameraUploadUseCaseProto
 
 /// Simulate upload paused. This is for testing purposes only until actual upload use case is implemented.
 public struct FakeCameraUploadPausedUseCase: MonitorCameraUploadUseCaseProtocol {
-    public let monitorUploadStatus: AnyAsyncSequence<Result<CameraUploadStatsEntity, Error>>
+    
+    public let _monitorUploadStats: AnyAsyncSequence<CameraUploadStatsEntity>
     
     public init() {
-        monitorUploadStatus = SingleItemAsyncSequence(
-            item: .success(.init(
-                progress: 0.5, pendingFilesCount: 12, pendingVideosCount: 0))).eraseToAnyAsyncSequence()
+        _monitorUploadStats = SingleItemAsyncSequence(
+            item: .init(
+                progress: 0.5,
+                pendingFilesCount: 12,
+                pendingVideosCount: 0))
+        .eraseToAnyAsyncSequence()
+    }
+    
+    public func monitorUploadStats() -> AnyAsyncSequence<CameraUploadStatsEntity> {
+        _monitorUploadStats
+    }
+    
+    public func possibleCameraUploadPausedReason() -> CameraUploadPausedReason {
+        .notPaused
     }
 }
 
 /// Simulate no items to upload. This is for testing purposes only until actual upload use case is implemented.
 public struct FakeNoItemsToUploadUseCase: MonitorCameraUploadUseCaseProtocol {
-    public let monitorUploadStatus: AnyAsyncSequence<Result<CameraUploadStatsEntity, Error>> = EmptyAsyncSequence<Result<CameraUploadStatsEntity, Error>>().eraseToAnyAsyncSequence()
+    public let _monitorUploadStats: AnyAsyncSequence<CameraUploadStatsEntity> = EmptyAsyncSequence<CameraUploadStatsEntity>().eraseToAnyAsyncSequence()
     
     public init() {}
-}
-
-/// Simulate upload failed. This is for testing purposes only until actual upload use case is implemented.
-public struct FakeCameraUploadFailedUseCase: MonitorCameraUploadUseCaseProtocol {
-    public let monitorUploadStatus: AnyAsyncSequence<Result<CameraUploadStatsEntity, Error>>
     
-    public init() {
-        monitorUploadStatus = SingleItemAsyncSequence(item: .failure(GenericErrorEntity())).eraseToAnyAsyncSequence()
+    public func monitorUploadStats() -> AnyAsyncSequence<CameraUploadStatsEntity> {
+        _monitorUploadStats
+    }
+    
+    public func possibleCameraUploadPausedReason() -> CameraUploadPausedReason {
+        .notPaused
     }
 }

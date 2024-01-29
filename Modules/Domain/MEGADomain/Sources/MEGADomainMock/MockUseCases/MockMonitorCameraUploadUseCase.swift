@@ -2,10 +2,21 @@ import MEGADomain
 import MEGASwift
 
 public struct MockMonitorCameraUploadUseCase: MonitorCameraUploadUseCaseProtocol {
-    public let monitorUploadStatus: AnyAsyncSequence<Result<CameraUploadStatsEntity, Error>>
     
-    public init(
-        monitorUploadStatus: AnyAsyncSequence<Result<CameraUploadStatsEntity, Error>> = EmptyAsyncSequence<Result<CameraUploadStatsEntity, Error>>().eraseToAnyAsyncSequence()) {
-        self.monitorUploadStatus = monitorUploadStatus
+    let _monitorUploadStats: AnyAsyncSequence<CameraUploadStatsEntity>
+    let possiblePauseReason: CameraUploadPausedReason
+    
+    public init(monitorUploadStats: AnyAsyncSequence<CameraUploadStatsEntity> = EmptyAsyncSequence<CameraUploadStatsEntity>().eraseToAnyAsyncSequence(),
+                possiblePauseReason: CameraUploadPausedReason = .notPaused) {
+        self._monitorUploadStats = monitorUploadStats
+        self.possiblePauseReason = possiblePauseReason
+    }
+    
+    public func monitorUploadStats() -> AnyAsyncSequence<CameraUploadStatsEntity> {
+        _monitorUploadStats
+    }
+    
+    public func possibleCameraUploadPausedReason() -> CameraUploadPausedReason {
+        possiblePauseReason
     }
 }

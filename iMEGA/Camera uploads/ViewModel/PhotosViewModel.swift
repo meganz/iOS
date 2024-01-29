@@ -69,7 +69,10 @@ final class PhotosViewModel: NSObject {
         self.cameraUploadsSettingsViewRouter = cameraUploadsSettingsViewRouter
         self.timelineCameraUploadStatusFeatureEnabled = featureFlagProvider.isFeatureFlagEnabled(for: .timelineCameraUploadStatus)
         self.timelineViewModel = CameraUploadStatusBannerViewModel(
-            monitorCameraUploadUseCase: FakeCameraUploadSuccessfulUseCase(),
+            monitorCameraUploadUseCase: MonitorCameraUploadUseCase(
+                cameraUploadRepository: CameraUploadsStatsRepository.newRepo,
+                networkMonitorUseCase: networkMonitorUseCase,
+                preferenceUseCase: preferenceUseCase),
             networkMonitorUseCase: networkMonitorUseCase,
             preferenceUseCase: preferenceUseCase,
             devicePermissionHandler: devicePermissionHandler,
