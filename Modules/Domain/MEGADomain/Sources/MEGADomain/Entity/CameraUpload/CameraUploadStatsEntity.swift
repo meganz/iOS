@@ -1,6 +1,6 @@
 import Foundation
 
-public struct CameraUploadStatsEntity: Sendable {
+public struct CameraUploadStatsEntity: Sendable, Equatable {
     public let progress: Float
     public let pendingFilesCount: UInt
     public let pendingVideosCount: UInt

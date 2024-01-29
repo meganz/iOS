@@ -28,15 +28,9 @@ final class CameraUploadStatusButtonViewModel: NSObject, ObservableObject {
         guard isCameraUploadsEnabled else { return }
         uploadCompleteIdleCheck()
 
-        for await uploadStatsResult in monitorCameraUploadUseCase.monitorUploadStatus {
+        for await uploadStats in monitorCameraUploadUseCase.monitorUploadStats() {
             cancelUploadCompleteIdleTask()
-            
-            switch uploadStatsResult {
-            case .success(let uploadStats):
-                await handleStatsUpdate(uploadStats)
-            case .failure:
-                await updateStatus(.warning)
-            }
+            await handleStatsUpdate(uploadStats)
         }
     }
     

@@ -10,9 +10,9 @@ import XCTest
 final class MonitorCameraUploadBannerStatusProviderTests: XCTestCase {
     
     func testMonitorCameraUploadStatusSequence_whenItContainsPendingFiles_shouldReturnUploadInProgress() async {
-        let uploadAsyncSequence = SingleItemAsyncSequence<Result<CameraUploadStatsEntity, Error>>(
-            item: .success(CameraUploadStatsEntity(progress: 1.0, pendingFilesCount: 10, pendingVideosCount: 0))).eraseToAnyAsyncSequence()
-        let sut = makeSUT(monitorCameraUploadUseCase: MockMonitorCameraUploadUseCase(monitorUploadStatus: uploadAsyncSequence))
+        let uploadAsyncSequence = SingleItemAsyncSequence<CameraUploadStatsEntity>(
+            item: CameraUploadStatsEntity(progress: 1.0, pendingFilesCount: 10, pendingVideosCount: 0)).eraseToAnyAsyncSequence()
+        let sut = makeSUT(monitorCameraUploadUseCase: MockMonitorCameraUploadUseCase(monitorUploadStats: uploadAsyncSequence))
         
         let result = await sut.monitorCameraUploadStatusSequence().first(where: { _ in true})
         
@@ -20,11 +20,14 @@ final class MonitorCameraUploadBannerStatusProviderTests: XCTestCase {
     }
     
     func testMonitorCameraUploadStatusSequence_whenItContainsPendingFilesAndNoWifiInternet_shouldReturnUploadPausedNoWifi() async {
-        let uploadAsyncSequence = SingleItemAsyncSequence<Result<CameraUploadStatsEntity, Error>>(
-            item: .success(CameraUploadStatsEntity(progress: 1.0, pendingFilesCount: 10, pendingVideosCount: 0))).eraseToAnyAsyncSequence()
+        let uploadAsyncSequence = SingleItemAsyncSequence<CameraUploadStatsEntity>(
+            item: CameraUploadStatsEntity(progress: 1.0, pendingFilesCount: 10, pendingVideosCount: 0)).eraseToAnyAsyncSequence()
         let networkMonitorUseCase = MockNetworkMonitorUseCase(connectedViaWiFi: false)
         let sut = makeSUT(
-            monitorCameraUploadUseCase: MockMonitorCameraUploadUseCase(monitorUploadStatus: uploadAsyncSequence),
+            monitorCameraUploadUseCase: MockMonitorCameraUploadUseCase(
+                monitorUploadStats: uploadAsyncSequence,
+                possiblePauseReason: .noWifi
+            ),
             networkMonitorUseCase: networkMonitorUseCase)
         
         let result = await sut.monitorCameraUploadStatusSequence().first(where: { _ in true})
@@ -33,10 +36,10 @@ final class MonitorCameraUploadBannerStatusProviderTests: XCTestCase {
     }
     
     func testMonitorCameraUploadStatusSequence_whenItContainsPendingFilesAndNoWifiInternetButHasMobileDataAvailableAndEnabled_shouldReturnInProgress() async {
-        let uploadAsyncSequence = SingleItemAsyncSequence<Result<CameraUploadStatsEntity, Error>>(
-            item: .success(CameraUploadStatsEntity(progress: 1.0, pendingFilesCount: 10, pendingVideosCount: 0))).eraseToAnyAsyncSequence()
+        let uploadAsyncSequence = SingleItemAsyncSequence<CameraUploadStatsEntity>(
+            item: CameraUploadStatsEntity(progress: 1.0, pendingFilesCount: 10, pendingVideosCount: 0)).eraseToAnyAsyncSequence()
         let sut = makeSUT(
-            monitorCameraUploadUseCase: MockMonitorCameraUploadUseCase(monitorUploadStatus: uploadAsyncSequence),
+            monitorCameraUploadUseCase: MockMonitorCameraUploadUseCase(monitorUploadStats: uploadAsyncSequence),
             networkMonitorUseCase: MockNetworkMonitorUseCase(connected: true, connectedViaWiFi: false),
             preferenceUseCase: MockPreferenceUseCase(dict: [.cameraUploadsCellularDataUsageAllowed: true]))
         
@@ -46,10 +49,12 @@ final class MonitorCameraUploadBannerStatusProviderTests: XCTestCase {
     }
     
     func testMonitorCameraUploadStatusSequence_whenItContainsPendingFilesAndNoInternetAvailableAndMobileDataUploadEnabled_shouldReturnInProgress() async {
-        let uploadAsyncSequence = SingleItemAsyncSequence<Result<CameraUploadStatsEntity, Error>>(
-            item: .success(CameraUploadStatsEntity(progress: 1.0, pendingFilesCount: 10, pendingVideosCount: 0))).eraseToAnyAsyncSequence()
+        let uploadAsyncSequence = SingleItemAsyncSequence<CameraUploadStatsEntity>(
+            item: CameraUploadStatsEntity(progress: 1.0, pendingFilesCount: 10, pendingVideosCount: 0)).eraseToAnyAsyncSequence()
         let sut = makeSUT(
-            monitorCameraUploadUseCase: MockMonitorCameraUploadUseCase(monitorUploadStatus: uploadAsyncSequence),
+            monitorCameraUploadUseCase: MockMonitorCameraUploadUseCase(
+                monitorUploadStats: uploadAsyncSequence,
+                possiblePauseReason: .noWifi),
             networkMonitorUseCase: MockNetworkMonitorUseCase(connected: false, connectedViaWiFi: false),
             preferenceUseCase: MockPreferenceUseCase(dict: [.cameraUploadsCellularDataUsageAllowed: true]))
         
@@ -59,11 +64,11 @@ final class MonitorCameraUploadBannerStatusProviderTests: XCTestCase {
     }
     
     func testMonitorCameraUploadStatusSequence_whenNoPendingFilesAndNoWifi_shouldReturnUploadCompleted() async {
-        let uploadAsyncSequence = SingleItemAsyncSequence<Result<CameraUploadStatsEntity, Error>>(
-            item: .success(CameraUploadStatsEntity(progress: 1.0, pendingFilesCount: 0, pendingVideosCount: 0))).eraseToAnyAsyncSequence()
+        let uploadAsyncSequence = SingleItemAsyncSequence<CameraUploadStatsEntity>(
+            item: CameraUploadStatsEntity(progress: 1.0, pendingFilesCount: 0, pendingVideosCount: 0)).eraseToAnyAsyncSequence()
         let networkMonitorUseCase = MockNetworkMonitorUseCase(connectedViaWiFi: false)
         let sut = makeSUT(
-            monitorCameraUploadUseCase: MockMonitorCameraUploadUseCase(monitorUploadStatus: uploadAsyncSequence),
+            monitorCameraUploadUseCase: MockMonitorCameraUploadUseCase(monitorUploadStats: uploadAsyncSequence),
             networkMonitorUseCase: networkMonitorUseCase)
         
         let result = await sut.monitorCameraUploadStatusSequence().first(where: { _ in true})
@@ -72,9 +77,9 @@ final class MonitorCameraUploadBannerStatusProviderTests: XCTestCase {
     }
     
     func testMonitorCameraUploadStatusSequence_whenNoPendingFilesAndVideoUploadDisabledWithPendingFiles_shouldReturnUploadPartiallyCompleted() async {
-        let uploadAsyncSequence = SingleItemAsyncSequence<Result<CameraUploadStatsEntity, Error>>(
-            item: .success(CameraUploadStatsEntity(progress: 1.0, pendingFilesCount: 0, pendingVideosCount: 12))).eraseToAnyAsyncSequence()
-        let sut = makeSUT(monitorCameraUploadUseCase: MockMonitorCameraUploadUseCase(monitorUploadStatus: uploadAsyncSequence))
+        let uploadAsyncSequence = SingleItemAsyncSequence<CameraUploadStatsEntity>(
+            item: CameraUploadStatsEntity(progress: 1.0, pendingFilesCount: 0, pendingVideosCount: 12)).eraseToAnyAsyncSequence()
+        let sut = makeSUT(monitorCameraUploadUseCase: MockMonitorCameraUploadUseCase(monitorUploadStats: uploadAsyncSequence))
         
         let result = await sut.monitorCameraUploadStatusSequence().first(where: { _ in true})
         
@@ -82,12 +87,12 @@ final class MonitorCameraUploadBannerStatusProviderTests: XCTestCase {
     }
     
     func testMonitorCameraUploadStatusSequence_whenNoPendingFilesAndPhotoLibraryAccessIsLimited_shouldReturnUploadPartiallyCompleted() async {
-        let uploadAsyncSequence = SingleItemAsyncSequence<Result<CameraUploadStatsEntity, Error>>(
-            item: .success(CameraUploadStatsEntity(progress: 1.0, pendingFilesCount: 0, pendingVideosCount: 12))).eraseToAnyAsyncSequence()
+        let uploadAsyncSequence = SingleItemAsyncSequence<CameraUploadStatsEntity>(
+            item: CameraUploadStatsEntity(progress: 1.0, pendingFilesCount: 0, pendingVideosCount: 12)).eraseToAnyAsyncSequence()
         let devicePermissionHandler = MockDevicePermissionHandler(photoAuthorization: .limited, audioAuthorized: true, videoAuthorized: true)
 
         let sut = makeSUT(
-            monitorCameraUploadUseCase: MockMonitorCameraUploadUseCase(monitorUploadStatus: uploadAsyncSequence),
+            monitorCameraUploadUseCase: MockMonitorCameraUploadUseCase(monitorUploadStats: uploadAsyncSequence),
             devicePermissionHandler: devicePermissionHandler)
         
         let result = await sut.monitorCameraUploadStatusSequence().first(where: { _ in true})
@@ -96,9 +101,9 @@ final class MonitorCameraUploadBannerStatusProviderTests: XCTestCase {
     }
     
     func testMonitorCameraUploadStatusSequence_whenNoPendingFilesAndVideoUploadDisabledWithPendingFilesAndPhotoLibraryAccessIsLimited_shouldReturnUploadPartiallyCompleted() async {
-        let uploadAsyncSequence = SingleItemAsyncSequence<Result<CameraUploadStatsEntity, Error>>(
-            item: .success(CameraUploadStatsEntity(progress: 1.0, pendingFilesCount: 0, pendingVideosCount: 12))).eraseToAnyAsyncSequence()
-        let sut = makeSUT(monitorCameraUploadUseCase: MockMonitorCameraUploadUseCase(monitorUploadStatus: uploadAsyncSequence))
+        let uploadAsyncSequence = SingleItemAsyncSequence<CameraUploadStatsEntity>(
+            item: CameraUploadStatsEntity(progress: 1.0, pendingFilesCount: 0, pendingVideosCount: 12)).eraseToAnyAsyncSequence()
+        let sut = makeSUT(monitorCameraUploadUseCase: MockMonitorCameraUploadUseCase(monitorUploadStats: uploadAsyncSequence))
         
         let result = await sut.monitorCameraUploadStatusSequence().first(where: { _ in true})
         
