@@ -79,10 +79,15 @@
     self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
     
-    self.twoFactorAuthenticationRightDetailLabel.textColor = UIColor.secondaryLabelColor;
-    self.passcodeDetailLabel.textColor = UIColor.secondaryLabelColor;
-    
-    self.closeOtherSessionsLabel.textColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
+    if (UIColor.isDesignTokenEnabled) {
+        self.twoFactorAuthenticationLabel.textColor = UIColor.mnz_primaryTextColor;
+        self.passcodeLabel.textColor = UIColor.mnz_primaryTextColor;
+    }
+
+    self.twoFactorAuthenticationRightDetailLabel.textColor = UIColor.mnz_secondaryTextColor;
+    self.passcodeDetailLabel.textColor = UIColor.mnz_secondaryTextColor;
+
+    self.closeOtherSessionsLabel.textColor = [UIColor mnz_errorRedForTraitCollection:self.traitCollection];
 }
 
 - (void)twoFactorAuthenticationStatus {

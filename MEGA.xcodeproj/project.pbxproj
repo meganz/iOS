@@ -142,6 +142,8 @@
 		160711542A558DED00970A19 /* PagerTabViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160711532A558DED00970A19 /* PagerTabViewModelTests.swift */; };
 		160711652A5594AD00970A19 /* PhotoAlbumContainerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160711642A5594AD00970A19 /* PhotoAlbumContainerViewModelTests.swift */; };
 		1678D7F22A45487E00336C52 /* MEGATest in Frameworks */ = {isa = PBXBuildFile; productRef = 1678D7F12A45487E00336C52 /* MEGATest */; };
+		168EF1192B620860008C9CB3 /* MEGAAppColor+Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168EF1182B620860008C9CB3 /* MEGAAppColor+Components.swift */; };
+		168EF11D2B620ABE008C9CB3 /* MEGAAppColor+Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168EF1182B620860008C9CB3 /* MEGAAppColor+Components.swift */; };
 		2400A7E02ACB135F0023C015 /* AudioPlayerItemDataSourceCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2400A7DF2ACB135F0023C015 /* AudioPlayerItemDataSourceCommand.swift */; };
 		240380542A30687500C06E61 /* ReportIssueMessageViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240380532A30687500C06E61 /* ReportIssueMessageViewModelTests.swift */; };
 		240380562A306B8B00C06E61 /* ReportIssueMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240380552A306B8B00C06E61 /* ReportIssueMessageViewModel.swift */; };
@@ -2702,6 +2704,7 @@
 		167845462A172AAA00568FBE /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		1678D7F02A45474E00336C52 /* MEGATest */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGATest; sourceTree = "<group>"; };
 		167F6A242A41507D00D0A6F9 /* MEGAPlugins */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAPlugins; sourceTree = "<group>"; };
+		168EF1182B620860008C9CB3 /* MEGAAppColor+Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAAppColor+Components.swift"; sourceTree = "<group>"; };
 		16E14DD22A4ADE4700ED3AD5 /* MEGAAnalyticsDomain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAAnalyticsDomain; sourceTree = "<group>"; };
 		2400A7DF2ACB135F0023C015 /* AudioPlayerItemDataSourceCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerItemDataSourceCommand.swift; sourceTree = "<group>"; };
 		240380532A30687500C06E61 /* ReportIssueMessageViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportIssueMessageViewModelTests.swift; sourceTree = "<group>"; };
@@ -8195,6 +8198,7 @@
 			children = (
 				6D9A731C2B4619D200894E97 /* MEGAAppColor+Account.swift */,
 				6D8820762B1BE50200F0BE18 /* MEGAAppColor+Chat.swift */,
+				168EF1182B620860008C9CB3 /* MEGAAppColor+Components.swift */,
 				6D88207B2B1C07C700F0BE18 /* MEGAAppColor+Photos.swift */,
 				6DF467A62B50ED5F0065CA76 /* MEGAAppColor+PSA.swift */,
 				6D86E81C2B4F7876002FAA8B /* MEGAAppColor+SharedItems.swift */,
@@ -14171,6 +14175,7 @@
 				BFFE228B292F8DB30063CFF2 /* MeetingsListHeaderView.swift in Sources */,
 				6D9A731D2B4619D200894E97 /* MEGAAppColor+Account.swift in Sources */,
 				6D8820772B1BE50200F0BE18 /* MEGAAppColor+Chat.swift in Sources */,
+				168EF1192B620860008C9CB3 /* MEGAAppColor+Components.swift in Sources */,
 				6D88207C2B1C07C700F0BE18 /* MEGAAppColor+Photos.swift in Sources */,
 				6DF467A72B50ED5F0065CA76 /* MEGAAppColor+PSA.swift in Sources */,
 				6D86E81D2B4F7876002FAA8B /* MEGAAppColor+SharedItems.swift in Sources */,
@@ -15208,6 +15213,7 @@
 				9411355A1F01006A00D33428 /* LTHPasscodeViewController.m in Sources */,
 				6D3D91DE2B4B59C500210D65 /* MEGAAppColor+Account.swift in Sources */,
 				99620A052B44D65E00AE5ADF /* MEGAAppColor+Chat.swift in Sources */,
+				168EF11D2B620ABE008C9CB3 /* MEGAAppColor+Components.swift in Sources */,
 				6D8820792B1C069500F0BE18 /* MEGAAppColor.swift in Sources */,
 				7764AAB4246EE62900134C88 /* MegaAvatarView.swift in Sources */,
 				77892EA120E503580020A533 /* MEGACD.xcdatamodeld in Sources */,
