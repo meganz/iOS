@@ -328,7 +328,7 @@
         [weakCustom dismissViewControllerAnimated:YES completion:^{
             ChatRequestDelegate *delegate = [[ChatRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
                 if (!error.type) {
-                    [SVProgressHUD showSuccessWithStatus:LocalizedString(@"linkRemoved", @"Message shown when the link to a file or folder has been removed")];
+                    [SVProgressHUD showSuccessWithStatus:LocalizedString(@"chat.link.linkRemoved", @"Message shown when the link to a file or folder has been removed")];
                 }
             }];
             [[MEGASdkManager sharedMEGAChatSdk] removeChatLink:self.chatRoom.chatId delegate:delegate];
