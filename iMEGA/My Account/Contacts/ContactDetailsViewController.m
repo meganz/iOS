@@ -12,7 +12,6 @@
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGARemoveContactRequestDelegate.h"
-#import "MEGAChatGenericRequestDelegate.h"
 #import "MEGAArchiveChatRequestDelegate.h"
 
 #import "BrowserViewController.h"
@@ -137,7 +136,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
         MEGAChatRoom *chatRoom = self.groupChatRoom ?: self.chatRoom;
         self.userName = [chatRoom userDisplayNameForUserHandle:self.userHandle];
         if (!self.userName) {
-            MEGAChatGenericRequestDelegate *delegate = [MEGAChatGenericRequestDelegate.alloc initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+            ChatRequestDelegate *delegate = [ChatRequestDelegate.alloc initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
                 if (error.type) {
                     return;
                 }
@@ -434,7 +433,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 }
 
 - (void)showPermissionAlertWithSourceView:(UIView *)sourceView {
-    MEGAChatGenericRequestDelegate *delegate = [MEGAChatGenericRequestDelegate.alloc initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+    ChatRequestDelegate *delegate = [ChatRequestDelegate.alloc initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
         if (error.type) {
             [SVProgressHUD showErrorWithStatus:LocalizedString(error.name, @"")];
         } else {
@@ -467,7 +466,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 }
 
 - (void)removeParticipantFromGroup {
-    MEGAChatGenericRequestDelegate *delegate = [MEGAChatGenericRequestDelegate.alloc initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+    ChatRequestDelegate *delegate = [ChatRequestDelegate.alloc initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
         if (error.type) {
             [SVProgressHUD showErrorWithStatus:LocalizedString(error.name, @"")];
         } else {
