@@ -59,7 +59,11 @@
 - (void)updateAppearance {
     self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
-    
+
+    if (UIColor.isDesignTokenEnabled) {
+        self.twoFactorAuthenticationLabel.textColor = UIColor.mnz_primaryTextColor;
+    }
+
     [self.tableView reloadData];
 }
 
@@ -97,4 +101,10 @@
     cell.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
 }
 
+- (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section {
+    if ([view isKindOfClass:[UITableViewHeaderFooterView class]] && UIColor.isDesignTokenEnabled) {
+        UITableViewHeaderFooterView *footerView = (UITableViewHeaderFooterView *)view;
+        footerView.textLabel.textColor = UIColor.mnz_secondaryTextColor;
+    }
+}
 @end

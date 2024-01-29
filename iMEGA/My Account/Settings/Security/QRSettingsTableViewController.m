@@ -53,11 +53,15 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.resetQRCodeLabel.textColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
-    
+    self.resetQRCodeLabel.textColor = [UIColor mnz_errorRedForTraitCollection:self.traitCollection];
+
     self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
-    
+
+    if (UIColor.isDesignTokenEnabled) {
+        self.autoAcceptLabel.textColor = UIColor.mnz_primaryTextColor;
+    }
+
     [self.tableView reloadData];
 }
 
@@ -95,6 +99,13 @@
         [[MEGASdkManager sharedMEGASdk] contactLinkCreateRenew:YES delegate:delegate];
     }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section {
+    if ([view isKindOfClass:[UITableViewHeaderFooterView class]] && UIColor.isDesignTokenEnabled) {
+        UITableViewHeaderFooterView *footerView = (UITableViewHeaderFooterView *)view;
+        footerView.textLabel.textColor = UIColor.mnz_secondaryTextColor;
+    }
 }
 
 #pragma mark - IBActions

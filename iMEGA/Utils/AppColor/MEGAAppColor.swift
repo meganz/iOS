@@ -193,6 +193,7 @@ enum MEGAAppColor {
         case _E4EBEA
         case _E5E5E5
         case _E6E6E6
+        case _E6E6E6_pageBackground
         case _E8E8E8
         case _EBEBEB
         case _EBEBF5
@@ -250,6 +251,7 @@ enum MEGAAppColor {
             case ._E4EBEA: TokenColors.Background.blur
             case ._E5E5E5: TokenColors.Background.blur
             case ._E6E6E6: TokenColors.Background.blur
+            case ._E6E6E6_pageBackground: TokenColors.Background.page
             case ._E8E8E8: TokenColors.Background.blur
             case ._EBEBEB: TokenColors.Background.blur
             case ._EBEBF5: TokenColors.Background.blur
@@ -301,7 +303,7 @@ enum MEGAAppColor {
             case ._E2E2E2: UIColor.grayE2E2E2
             case ._E4EBEA: UIColor.grayE4EBEA
             case ._E5E5E5: UIColor.grayE5E5E5
-            case ._E6E6E6: UIColor.grayE6E6E6
+            case ._E6E6E6, ._E6E6E6_pageBackground: UIColor.grayE6E6E6
             case ._E8E8E8: UIColor.grayE8E8E8
             case ._EBEBEB: UIColor.grayEBEBEB
             case ._EBEBF5: UIColor.grayEBEBF5
@@ -455,10 +457,12 @@ enum MEGAAppColor {
         case _CA75D1
         case _CE0A11
         case _F30C14
+        case _F30C14_error
         case _F30C14_badge
         case _F95C61
         case _F288C2
         case _F7363D
+        case _F7363D_error
         case _F7363D_badge
         case _FF0000
         case _FF3B30
@@ -477,10 +481,12 @@ enum MEGAAppColor {
             case ._CA75D1: TokenColors.Background.blur
             case ._CE0A11: TokenColors.Background.blur
             case ._F30C14: TokenColors.Button.brand
+            case ._F30C14_error: TokenColors.Support.error
             case ._F30C14_badge: TokenColors.Components.interactive
             case ._F95C61: TokenColors.Background.blur
             case ._F288C2: TokenColors.Background.blur
             case ._F7363D: TokenColors.Button.brand
+            case ._F7363D_error: TokenColors.Support.error
             case ._F7363D_badge: TokenColors.Components.interactive
             case ._FF0000: TokenColors.Background.blur
             case ._FF3B30: TokenColors.Background.blur
@@ -492,10 +498,10 @@ enum MEGAAppColor {
             switch self {
             case ._CA75D1: UIColor.redCA75D1
             case ._CE0A11: UIColor.redCE0A11
-            case ._F30C14, ._F30C14_badge: UIColor.redF30C14
+            case ._F30C14, ._F30C14_error, ._F30C14_badge: UIColor.redF30C14
             case ._F95C61: UIColor.redF95C61
             case ._F288C2: UIColor.redF288C2
-            case ._F7363D, ._F7363D_badge: UIColor.redF7363D
+            case ._F7363D, ._F7363D_error, ._F7363D_badge: UIColor.redF7363D
             case ._FF0000: UIColor.redFF3B30
             case ._FF3B30: UIColor.redFF3B30
             case ._FF453A: UIColor.redFF453A
@@ -544,116 +550,6 @@ enum MEGAAppColor {
             case ._FFCC00: UIColor.yellowFFCC00
             case ._FFD60A: UIColor.yellowFFD60A
             case ._FFD600: UIColor.yellowFFD600
-            }
-        }
-    }
-    
-    enum Shadow {
-        case blackAlpha10
-        case blackAlpha20
-        
-        var uiColor: UIColor {
-            DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) ? designTokenColor : legacyColor
-        }
-        
-        private var designTokenColor: UIColor {
-            switch self {
-            case .blackAlpha10: TokenColors.Background.blur
-            case .blackAlpha20: TokenColors.Background.blur
-            }
-        }
-        
-        private var legacyColor: UIColor {
-            switch self {
-            case .blackAlpha10: UIColor.blackAlpha10
-            case .blackAlpha20: UIColor.blackAlpha20
-            }
-        }
-    }
-    
-    enum Background {
-        case backgroundCell
-        case navigationBgColor
-        case backgroundRegularPrimaryElevated
-        
-        var uiColor: UIColor {
-            DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) ? designTokenColor : legacyColor
-        }
-        
-        var color: Color {
-            DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) ? designTokenColor.swiftUI : legacyColor.swiftUI
-        }
-        
-        private var designTokenColor: UIColor {
-            switch self {
-            case .backgroundCell: TokenColors.Background.blur
-            case .navigationBgColor:  TokenColors.Background.blur
-            case .backgroundRegularPrimaryElevated:  TokenColors.Background.blur
-            }
-        }
-        
-        private var legacyColor: UIColor {
-            switch self {
-            case .backgroundCell: UIColor.backgroundCell
-            case .navigationBgColor: UIColor.navigationBg
-            case .backgroundRegularPrimaryElevated: UIColor.backgroundRegularPrimaryElevated
-            }
-        }
-    }
-    
-    enum View {
-        case cellBackground
-        case textForeground
-        case turquoise
-        
-        var uiColor: UIColor {
-            DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) ? designTokenColor : legacyColor
-        }
-        
-        var color: Color {
-            DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) ? designTokenColor.swiftUI : legacyColor.swiftUI
-        }
-        
-        private var designTokenColor: UIColor {
-            switch self {
-            case .cellBackground: TokenColors.Background.blur
-            case .textForeground: TokenColors.Background.blur
-            case .turquoise: TokenColors.Support.success
-            }
-        }
-        
-        private var legacyColor: UIColor {
-            switch self {
-            case .cellBackground: UIColor.cellBackground
-            case .textForeground: UIColor.textForeground
-            case .turquoise: UIColor.turquoise
-            }
-        }
-    }
-    
-    enum Banner {
-        case bannerWarningBackground
-        case bannerWarningText
-        
-        var uiColor: UIColor {
-            DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) ? designTokenColor : legacyColor
-        }
-        
-        var color: Color {
-            DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) ? designTokenColor.swiftUI : legacyColor.swiftUI
-        }
-        
-        private var designTokenColor: UIColor {
-            switch self {
-            case .bannerWarningBackground: TokenColors.Background.blur
-            case .bannerWarningText: TokenColors.Background.blur
-            }
-        }
-        
-        private var legacyColor: UIColor {
-            switch self {
-            case .bannerWarningBackground: UIColor.bannerWarningBackground
-            case .bannerWarningText: UIColor.bannerWarningText
             }
         }
     }
