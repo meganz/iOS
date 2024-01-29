@@ -1172,7 +1172,6 @@
 
 - (void)readyToShowRecommendations {
     [self presentAccountExpiredViewIfNeeded];
-    [self showCookieDialogIfNeeded];
 }
 
 #pragma mark - MEGAPurchasePricingDelegate
