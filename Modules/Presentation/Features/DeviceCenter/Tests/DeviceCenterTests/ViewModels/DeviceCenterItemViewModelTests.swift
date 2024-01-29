@@ -9,108 +9,35 @@ final class DeviceCenterItemViewModelTests: XCTestCase {
     func testActionsForBackup_cameraUploadBackupType_returnsCorrectActions() {
         testActions(
             backupType: .cameraUpload,
-            isExported: false,
-            isOutShared: false,
-            expectedActions: [.info, .favourite, .label, .download, .shareLink, .shareFolder, .move, .copy, .moveToTheRubbishBin]
-        )
-        
-        testActions(
-            backupType: .cameraUpload,
-            isExported: true,
-            isOutShared: false,
-            expectedActions: [.info, .favourite, .label, .download, .manageLink, .removeLink, .shareFolder, .move, .copy, .moveToTheRubbishBin]
-        )
-        
-        testActions(
-            backupType: .cameraUpload,
-            isExported: false,
-            isOutShared: true,
-            expectedActions: [.info, .favourite, .label, .download, .shareLink, .manageShare, .move, .copy, .moveToTheRubbishBin]
-        )
-        
-        testActions(
-            backupType: .cameraUpload,
-            isExported: true,
-            isOutShared: true,
-            expectedActions: [.info, .favourite, .label, .download, .manageLink, .removeLink, .manageShare, .move, .copy, .moveToTheRubbishBin]
+            expectedActions: [.info]
         )
     }
  
     func testActionsForBackup_otherBackupUploadType_returnsCorrectActions() {
         testActions(
             backupType: .backupUpload,
-            isExported: false,
-            isOutShared: false,
-            expectedActions: [.info, .download, .shareLink, .shareFolder, .copy]
-        )
-        
-        testActions(
-            backupType: .backupUpload,
-            isExported: true,
-            isOutShared: false,
-            expectedActions: [.info, .download, .manageLink, .removeLink, .shareFolder, .copy]
-        )
-        
-        testActions(
-            backupType: .backupUpload,
-            isExported: false,
-            isOutShared: true,
-            expectedActions: [.info, .download, .shareLink, .manageShare, .copy]
-        )
-        
-        testActions(
-            backupType: .backupUpload,
-            isExported: true,
-            isOutShared: true,
-            expectedActions: [.info, .download, .manageLink, .removeLink, .manageShare, .copy]
+            expectedActions: [.info]
         )
     }
     
     func testActionsForBackup_syncBackupType_returnsCorrectActions() {
         testActions(
             backupType: .upSync,
-            isExported: false,
-            isOutShared: false,
-            expectedActions: [.info, .favourite, .label, .download, .shareLink, .shareFolder, .move, .copy, .moveToTheRubbishBin]
-        )
-        
-        testActions(
-            backupType: .upSync,
-            isExported: true,
-            isOutShared: false,
-            expectedActions: [.info, .favourite, .label, .download, .manageLink, .removeLink, .shareFolder, .move, .copy, .moveToTheRubbishBin]
-        )
-        
-        testActions(
-            backupType: .upSync,
-            isExported: false,
-            isOutShared: true,
-            expectedActions: [.info, .favourite, .label, .download, .shareLink, .manageShare, .move, .copy, .moveToTheRubbishBin]
-        )
-        
-        testActions(
-            backupType: .upSync,
-            isExported: true,
-            isOutShared: true,
-            expectedActions: [.info, .favourite, .label, .download, .manageLink, .removeLink, .manageShare, .move, .copy, .moveToTheRubbishBin]
+            expectedActions: [.info]
         )
     }
     
-    private func testActions(backupType: BackupTypeEntity, isExported: Bool, isOutShared: Bool, expectedActions: [DeviceCenterActionType]) {
+    private func testActions(backupType: BackupTypeEntity, expectedActions: [DeviceCenterActionType]) {
         let viewModel = makeSUT(
-            backupType: backupType,
-            isExported: isExported,
-            isOutShared: isOutShared
+            backupType: backupType
         )
         viewModel.loadAvailableActions()
         let actions = viewModel.availableActions.compactMap { $0.type }
-        XCTAssertEqual(actions, expectedActions, "Actions for \(backupType) backup [Exported: \(isExported), Outshared: \(isOutShared)] are incorrect")
+        XCTAssertEqual(actions, expectedActions, "Actions for \(backupType) are incorrect")
     }
     
     private func makeSUT(
         backupType: BackupTypeEntity = .invalid,
-        isExported: Bool = false,
-        isOutShared: Bool = false,
         file: StaticString = #file,
         line: UInt = #line
     ) -> DeviceCenterItemViewModel {
@@ -129,9 +56,7 @@ final class DeviceCenterItemViewModelTests: XCTestCase {
             status: .upToDate
         )
         let node = NodeEntity(
-            handle: 1,
-            isOutShare: isOutShared,
-            isExported: isExported
+            handle: 1
         )
         let nodeUseCase = MockNodeDataUseCase(
             nodes: [node],
@@ -152,6 +77,16 @@ final class DeviceCenterItemViewModelTests: XCTestCase {
             nodeUseCase: nodeUseCase,
             deviceCenterBridge: DeviceCenterBridge(),
             itemType: .backup(backup),
+            sortedAvailableActions: [
+                .info: [
+                    DeviceCenterAction(
+                        type: .info,
+                        title: "Info",
+                        icon: "info"
+                    )
+                ]
+            ],
+            isCUActionAvailable: false,
             assets: assets
         )
         

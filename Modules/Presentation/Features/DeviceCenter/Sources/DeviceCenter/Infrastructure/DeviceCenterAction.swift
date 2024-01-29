@@ -1,14 +1,7 @@
 public enum DeviceCenterActionType {
     case cameraUploads
-    case copy
     case info
     case rename
-    case download
-    case shareLink
-    case manageLink
-    case removeLink
-    case shareFolder
-    case manageShare
     case showInCloudDrive
     case showInBackups
     case sort
@@ -20,18 +13,6 @@ public enum DeviceCenterActionType {
     case sortOldest
     case sortLabel
     case sortFavourite
-    case favourite
-    case label
-    case labelRed
-    case labelOrange
-    case labelYellow
-    case labelGreen
-    case labelBlue
-    case labelPurple
-    case labelGrey
-    case exported
-    case move
-    case moveToTheRubbishBin
 }
 
 public struct DeviceCenterAction: Hashable {

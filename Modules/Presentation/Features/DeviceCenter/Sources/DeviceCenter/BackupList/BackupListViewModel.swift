@@ -234,6 +234,8 @@ public final class BackupListViewModel: ObservableObject {
                         nodeUseCase: nodeUseCase,
                         deviceCenterBridge: deviceCenterBridge,
                         itemType: .backup(backup),
+                        sortedAvailableActions: sortedAvailableActions,
+                        isCUActionAvailable: isCurrentDevice && isMobileDevice,
                         assets: assets
                     )
                 }
@@ -257,12 +259,15 @@ public final class BackupListViewModel: ObservableObject {
     }
     
     func actionsForBackup(_ backup: BackupEntity) -> [DeviceCenterAction]? {
-        guard let nodeEntity = nodeUseCase.nodeForHandle(backup.rootHandle) else { return nil }
+        var actionTypes: [DeviceCenterActionType] = [.info]
         
-        return DeviceCenterActionBuilder()
-            .setActionType(.backup(backup))
-            .setNode(nodeEntity)
-            .build()
+        if isCurrentDevice && isMobileDevice {
+            actionTypes.append(.cameraUploads)
+        }
+        
+        return actionTypes.compactMap { type in
+            sortedAvailableActions[type]?.first
+        }
     }
     
     func actionsForDevice() -> [DeviceCenterAction] {
@@ -314,8 +319,7 @@ public final class BackupListViewModel: ObservableObject {
         case .info:
             guard let nodeHandle = backups?.first?.rootHandle,
                   let nodeEntity = nodeUseCase.parentForHandle(nodeHandle) else { return }
-            
-            await deviceCenterBridge.nodeActionTapped(nodeEntity, .info)
+            deviceCenterBridge.infoActionTapped(nodeEntity)
         default: break
         }
     }

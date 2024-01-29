@@ -169,6 +169,8 @@ final class DeviceCenterItemViewModelSortingTests: XCTestCase {
                 nodeUseCase: nodeUseCase,
                 deviceCenterBridge: DeviceCenterBridge(),
                 itemType: .backup(backup),
+                sortedAvailableActions: [:],
+                isCUActionAvailable: false,
                 assets: assets
             )
         }
