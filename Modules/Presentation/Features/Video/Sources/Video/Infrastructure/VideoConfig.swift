@@ -151,8 +151,7 @@ public struct VideoConfig: Equatable {
         public let addPlaylistButtonBackgroundColor: Color
         public let chromeTabOrToolBarLight: Color
         public let chromeTabOrToolBarDark: Color
-        public let navigationBarLightColor: Color
-        public let navigationBarDarkColor: Color
+        public let navigationBgColor: Color
         public let emptyFavoriteThumbnailLightBackgroundColor: Color
         public let emptyFavoriteThumbnailDarkBackgroundColor: Color
         public let emptyFavoriteThumbnaillImageLightForegroundColor: Color
@@ -175,8 +174,7 @@ public struct VideoConfig: Equatable {
             addPlaylistButtonBackgroundColor: Color,
             chromeTabOrToolBarLight: Color,
             chromeTabOrToolBarDark: Color,
-            navigationBarLightColor: Color,
-            navigationBarDarkColor: Color,
+            navigationBgColor: Color,
             emptyFavoriteThumbnailLightBackgroundColor: Color,
             emptyFavoriteThumbnailDarkBackgroundColor: Color,
             emptyFavoriteThumbnaillImageLightForegroundColor: Color,
@@ -197,8 +195,7 @@ public struct VideoConfig: Equatable {
             self.addPlaylistButtonBackgroundColor = addPlaylistButtonBackgroundColor
             self.chromeTabOrToolBarLight = chromeTabOrToolBarLight
             self.chromeTabOrToolBarDark = chromeTabOrToolBarDark
-            self.navigationBarLightColor = navigationBarLightColor
-            self.navigationBarDarkColor = navigationBarDarkColor
+            self.navigationBgColor = navigationBgColor
             self.emptyFavoriteThumbnailLightBackgroundColor = emptyFavoriteThumbnailLightBackgroundColor
             self.emptyFavoriteThumbnailDarkBackgroundColor = emptyFavoriteThumbnailDarkBackgroundColor
             self.emptyFavoriteThumbnaillImageLightForegroundColor = emptyFavoriteThumbnaillImageLightForegroundColor

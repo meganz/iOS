@@ -5,6 +5,7 @@ import Video
 struct VideoRevampRouter: VideoRevampRouting {
     let explorerType: ExplorerTypeEntity
     let navigationController: UINavigationController?
+    let isDesignTokenEnabled: Bool
     
     func build() -> UIViewController {
         let sdk = MEGASdk.shared
@@ -21,7 +22,7 @@ struct VideoRevampRouter: VideoRevampRouting {
             viewModel: viewModel,
             fileSearchUseCase: fileSearchUseCase,
             thumbnailUseCase: thumbnailUseCase,
-            videoConfig: .live,
+            videoConfig: .live(isDesignTokenEnabled: isDesignTokenEnabled),
             router: self
         )
         return viewController

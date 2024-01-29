@@ -49,7 +49,6 @@ struct TabBarView: View {
     @Namespace var namespace
     let videoConfig: VideoConfig
     
-    @Environment(\.colorScheme) private var colorScheme
     @State private var orientation = UIDeviceOrientation.unknown
     
     var body: some View {
@@ -73,11 +72,7 @@ struct TabBarView: View {
         }
         .frame(maxWidth: interfaceOrientation.isPortrait ? .infinity : nil)
         .edgesIgnoringSafeArea(.all)
-        .background(
-            colorScheme == .light
-            ? videoConfig.colorAssets.navigationBarLightColor
-            : videoConfig.colorAssets.navigationBarDarkColor
-        )
+        .background(videoConfig.colorAssets.navigationBgColor)
         .onRotate { newOrientation in
             orientation = newOrientation
         }
