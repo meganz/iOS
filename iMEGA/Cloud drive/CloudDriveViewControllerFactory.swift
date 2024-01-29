@@ -288,7 +288,7 @@ struct CloudDriveViewControllerFactory {
                 mediaDiscoveryViewModel: self.makeOptionalMediaDiscoveryViewModel(nodeSource),
                 warningViewModel: self.makeOptionalWarningViewModel(
                     nodeSource,
-                    isFromUnverifiedContactSharedFolder: config.isFromUnverifiedContactSharedFolder == true
+                    shouldShowWarningBanner: config.isFromUnverifiedContactSharedFolder == true || config.warningViewModel != nil
                 ),
                 config: overriddenConfig,
                 nodeSource: nodeSource,
@@ -347,10 +347,10 @@ struct CloudDriveViewControllerFactory {
 
     private func makeOptionalWarningViewModel(
         _ nodeSource: NodeSource,
-        isFromUnverifiedContactSharedFolder: Bool
+        shouldShowWarningBanner: Bool
     ) -> WarningViewModel? {
         guard case let .node(parentNodeProvider) = nodeSource,
-              isFromUnverifiedContactSharedFolder
+              shouldShowWarningBanner
         else {
             return nil
         }
