@@ -589,20 +589,17 @@ extension AppDelegate {
         ChatUploader.sharedInstance.setup()
     }
     
-    // MARK: - Misc flags
-    func getMiscFlags() async throws {
-        let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
-        try await accountUseCase.getMiscFlags()
-    }
-    
     // MARK: - Shared links
-    @objc func showLinkForNoLoggedInUser(_ url: URL) {
+    @objc func showSharedLinkForNoLoggedInUser(_ url: URL) {
         Task {
+            // Try to get miscellanous flags before showing the shared link
             do {
-                try await getMiscFlags()
+                let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
+                try await accountUseCase.getMiscFlags()
                 showLink(url)
             } catch {
                 MEGALogError("[Misc Flag]Error getting miscellanous flags.")
+                showLink(url)
             }
         }
     }
