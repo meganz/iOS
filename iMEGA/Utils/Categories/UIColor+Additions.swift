@@ -756,7 +756,7 @@ extension UIColor {
             return MEGAAppColor.Gray._D1D1D1.uiColor
             
         @unknown default:
-            return MEGAAppColor.White._FFFFFF.uiColor
+            return MEGAAppColor.Gray._515151.uiColor
         }
     }
     
