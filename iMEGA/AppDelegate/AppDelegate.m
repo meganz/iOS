@@ -573,7 +573,14 @@
             }
         }
     } else {
-        [self showLinkForNoLoggedInUser:url];
+        switch ([url mnz_type]) {
+            case URLTypeFileLink:
+            case URLTypeFolderLink:
+                [self showSharedLinkForNoLoggedInUser:url];
+                
+            default:
+                [self showLink:url];
+        }
     }
 }
 
