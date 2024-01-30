@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
@@ -28,7 +29,7 @@ struct ReportIssueView: View {
                     Spacer()
                 }
             }
-            .background(Color(.secondarySystemBackground))
+            .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : Color(.secondarySystemBackground))
             .blur(radius: viewModel.isUploadingLog ? 1 : 0)
             .allowsHitTesting(viewModel.isUploadingLog ? false : true)
             .task {
@@ -42,6 +43,7 @@ struct ReportIssueView: View {
                 }
             }
         }
+        .ignoresSafeArea(edges: .bottom)
         .alert(isPresented: $viewModel.showingReportIssueAlert) {
             let alertData = viewModel.reportIssueAlertData()
             if let secondaryButtonAlert = alertData.secondaryButtoTitle {
@@ -70,14 +72,14 @@ struct ReportIssueView: View {
             rightNavigationBarButton
         }, center: {
             NavigationTitleView(title: Strings.Localizable.Help.ReportIssue.title)
-        }, backgroundColor: MEGAAppColor.Background.navigationBgColor.color)
+        }, backgroundColor: isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : UIColor.navigationBg.swiftUI)
     }
     
     private var leftNavigationButton: some View {
         Button(Strings.Localizable.cancel) {
             viewModel.showReportIssueActionSheetIfNeeded()
         }
-        .accentColor(Color.primary)
+        .accentColor(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : Color.primary)
         .actionSheet(isPresented: $viewModel.showingReportIssueActionSheet) {
             ActionSheet(title: Text(""), buttons: [
                 .destructive(Text(Strings.Localizable.Help.ReportIssue.discardReport)) {
@@ -87,12 +89,12 @@ struct ReportIssueView: View {
             ])
         }
     }
-
+    
     private var rightNavigationBarButton: some View {
         Button(Strings.Localizable.send) {
             viewModel.createTicket()
         }
-        .accentColor(Color.primary)
+        .accentColor(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : Color.primary)
         .font(.body.bold())
         .disabled(viewModel.shouldDisableSendButton)
     }

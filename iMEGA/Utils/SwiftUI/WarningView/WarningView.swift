@@ -1,3 +1,4 @@
+import MEGADesignToken
 import SwiftUI
 
 struct WarningView: View {
@@ -8,7 +9,7 @@ struct WarningView: View {
             Text(viewModel.warningType.description)
                 .font(.caption2.bold())
                 .fixedSize(horizontal: false, vertical: true)
-                .foregroundColor(MEGAAppColor.Banner.bannerWarningText.color)
+                .foregroundColor(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : UIColor.bannerWarningText.swiftUI)
                 .multilineTextAlignment(.leading)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 5))
