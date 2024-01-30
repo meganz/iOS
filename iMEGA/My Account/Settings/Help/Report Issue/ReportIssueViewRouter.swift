@@ -49,7 +49,6 @@ protocol ReportIssueViewRouting: Routing {
         let hostingController = UIHostingController(rootView: reportIssueView)
         hostingController.modalPresentationStyle = .fullScreen
         baseViewController = hostingController
-        
         return hostingController
     }
     
