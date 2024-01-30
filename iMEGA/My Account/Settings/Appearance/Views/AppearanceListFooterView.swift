@@ -9,10 +9,10 @@ struct AppearanceListFooterWithLinkView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(message)
-                .foregroundColor(MEGAAppColor.Chat.chatListSectionTitle.color)
+                .foregroundColor(MEGAAppColor.Text.secondary.color)
             Link(destination: linkUrl) {
                 Text(linkMessage)
-                    .foregroundColor(MEGAAppColor.View.turquoise.color)
+                    .foregroundColor(MEGAAppColor.View.turquoise_link.color)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)

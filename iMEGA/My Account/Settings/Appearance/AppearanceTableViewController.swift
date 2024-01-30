@@ -1,4 +1,5 @@
 import MEGAL10n
+import MEGAPresentation
 import SwiftUI
 import UIKit
 
@@ -120,7 +121,16 @@ class AppearanceTableViewController: UITableViewController {
     private func updateAppearance() {
         tableView.separatorColor = UIColor.mnz_separator(for: traitCollection)
         tableView.backgroundColor = UIColor.mnz_backgroundGrouped(for: traitCollection)
-        
+
+        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) {
+            defaultTabLabel.textColor = UIColor.mnz_primaryTextColor()
+            defaultTabDetailLabel.textColor = UIColor.mnz_secondaryTextColor()
+            sortingAndViewModeLabel.textColor = UIColor.mnz_primaryTextColor()
+            mediaDiscoveryViewLabel.textColor = UIColor.mnz_primaryTextColor()
+            mediaDiscoverySubfolderLabel.textColor = UIColor.mnz_primaryTextColor()
+            hideRecentActivityLabel.textColor = UIColor.mnz_primaryTextColor()
+        }
+
         tableView.reloadData()
     }
     
@@ -228,8 +238,21 @@ class AppearanceTableViewController: UITableViewController {
     private func configureTableViewHeaderStyleWithSentenceCase(_ view: UIView, forSection section: Int) {
         guard let tableViewHeaderFooterView = view as? UITableViewHeaderFooterView else { return }
         tableViewHeaderFooterView.textLabel?.text = titleForHeader(in: section)
+
+        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) {
+            tableViewHeaderFooterView.textLabel?.textColor = UIColor.mnz_secondaryTextColor()
+        }
     }
-    
+
+    override func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+        guard
+            let tableViewHeaderFooterView = view as? UITableViewHeaderFooterView,
+            DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken)
+        else { return }
+
+        tableViewHeaderFooterView.textLabel?.textColor = UIColor.mnz_secondaryTextColor()
+    }
+
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
        titleForHeader(in: section)
     }
@@ -285,7 +308,8 @@ class AppearanceTableViewController: UITableViewController {
                 AppearanceListFooterWithLinkView(
                     message: Strings.Localizable.Settings.UserInterface.MediaDiscovery.Footer.body,
                     linkMessage: Strings.Localizable.Settings.UserInterface.MediaDiscovery.Footer.link,
-                    linkUrl: linkUrl)
+                    linkUrl: linkUrl
+                )
             }
         case .none, .launch, .layout, .mediaDiscoverySubfolder, .recents, .appIcon:
             return nil

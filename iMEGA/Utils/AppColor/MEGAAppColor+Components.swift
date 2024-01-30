@@ -61,6 +61,7 @@ extension MEGAAppColor {
         case cellBackground
         case textForeground
         case turquoise
+        case turquoise_link
 
         var uiColor: UIColor {
             DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) ? designTokenColor : legacyColor
@@ -75,6 +76,7 @@ extension MEGAAppColor {
             case .cellBackground: TokenColors.Background.blur
             case .textForeground: TokenColors.Background.blur
             case .turquoise: TokenColors.Support.success
+            case .turquoise_link: TokenColors.Link.primary
             }
         }
 
@@ -82,7 +84,7 @@ extension MEGAAppColor {
             switch self {
             case .cellBackground: UIColor.cellBackground
             case .textForeground: UIColor.textForeground
-            case .turquoise: UIColor.turquoise
+            case .turquoise, .turquoise_link: UIColor.turquoise
             }
         }
     }

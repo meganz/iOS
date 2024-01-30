@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGAL10n
+import MEGAPresentation
 import UIKit
 
 enum SortingAndViewSection: Int {
@@ -70,7 +71,16 @@ class SortingAndViewModeTableViewController: UITableViewController {
         
         tableView.separatorColor = UIColor.mnz_separator(for: traitCollection)
         tableView.backgroundColor = UIColor.mnz_backgroundGrouped(for: traitCollection)
-        
+
+        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) {
+            sortingPreferencePerFolderLabel.textColor = UIColor.mnz_primaryTextColor()
+            sortingPreferenceSameForAllLabel.textColor = UIColor.mnz_primaryTextColor()
+            sortingPreferenceSameForAllDetailLabel.textColor = UIColor.mnz_secondaryTextColor()
+            viewModePreferencePerFolderLabel.textColor = UIColor.mnz_primaryTextColor()
+            viewModePreferenceListViewLabel.textColor = UIColor.mnz_primaryTextColor()
+            viewModePreferenceThumbnailViewLabel.textColor = UIColor.mnz_primaryTextColor()
+        }
+
         tableView.reloadData()
     }
     
@@ -154,10 +164,24 @@ class SortingAndViewModeTableViewController: UITableViewController {
     }
     
     private func configureTableViewHeaderStyleWithSentenceCase(_ view: UIView, forSection section: Int) {
-        guard let tableViewHeaderFooterView = view as? UITableViewHeaderFooterView else { return }
+        guard
+            let tableViewHeaderFooterView = view as? UITableViewHeaderFooterView,
+            DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken)
+        else { return }
+
         tableViewHeaderFooterView.textLabel?.text = titleForHeader(in: section)
+        tableViewHeaderFooterView.textLabel?.textColor = UIColor.mnz_secondaryTextColor()
     }
-    
+
+    override func tableView(_ tableView: UITableView, willDisplayFooterView view: UIView, forSection section: Int) {
+        guard
+            let tableViewHeaderFooterView = view as? UITableViewHeaderFooterView,
+            DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken)
+        else { return }
+
+        tableViewHeaderFooterView.textLabel?.textColor = UIColor.mnz_secondaryTextColor()
+    }
+
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         titleForHeader(in: section)
     }
