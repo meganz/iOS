@@ -56,7 +56,7 @@ extension PhotosViewController {
             self.objcWrapper_parent.navigationItem.setRightBarButtonItems([cancelBarButtonItem], animated: true)
         } else {
             var rightButtons = [UIBarButtonItem]()
-            if photoLibraryContentViewModel.selectedMode == .all || viewModel.mediaNodes.isEmpty, let barButton = makeContextMenuBarButton() {
+            if let barButton = makeContextMenuBarButton() {
                 rightButtons.append(barButton)
             }
             if viewModel.isFilterActive && !viewModel.timelineCameraUploadStatusFeatureEnabled {
