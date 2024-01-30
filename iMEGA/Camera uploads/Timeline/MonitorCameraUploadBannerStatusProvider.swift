@@ -4,27 +4,15 @@ import MEGASwift
 
 struct MonitorCameraUploadBannerStatusProvider {
     
-    private var monitorCameraUploadUseCase: any MonitorCameraUploadUseCaseProtocol
-    private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
+    private let monitorCameraUploadUseCase: any MonitorCameraUploadUseCaseProtocol
     private let devicePermissionHandler: any DevicePermissionsHandling
     
-    @PreferenceWrapper(key: .cameraUploadsCellularDataUsageAllowed, defaultValue: false)
-    private var cameraUploadsUseCellularDataUsageAllowed: Bool
-    
     init(monitorCameraUploadUseCase: some MonitorCameraUploadUseCaseProtocol,
-         networkMonitorUseCase: some NetworkMonitorUseCaseProtocol,
-         preferenceUseCase: some PreferenceUseCaseProtocol,
          devicePermissionHandler: some DevicePermissionsHandling) {
         self.monitorCameraUploadUseCase = monitorCameraUploadUseCase
-        self.networkMonitorUseCase = networkMonitorUseCase
         self.devicePermissionHandler = devicePermissionHandler
-        $cameraUploadsUseCellularDataUsageAllowed.useCase = preferenceUseCase
     }
-    
-    mutating func change(monitorCameraUploadUseCase: some MonitorCameraUploadUseCaseProtocol) {
-        self.monitorCameraUploadUseCase = monitorCameraUploadUseCase
-    }
-        
+            
     func monitorCameraUploadStatusSequence() -> AnyAsyncSequence<CameraUploadBannerStatusViewStates> {
         monitorCameraUploadUseCase
             .monitorUploadStats()
@@ -34,11 +22,9 @@ struct MonitorCameraUploadBannerStatusProvider {
     
     private func map(uploadStats: CameraUploadStatsEntity) -> CameraUploadBannerStatusViewStates {
         guard uploadStats.pendingFilesCount == 0 else {
-        
             switch monitorCameraUploadUseCase.possibleCameraUploadPausedReason() {
             case .noNetworkConnectivity:
-                // CC-5927: Next ticket will need to address no internet status
-                return .uploadPaused(reason: .noWifiConnection(numberOfFilesPending: uploadStats.pendingFilesCount))
+                return .uploadPaused(reason: .noInternetConnection(numberOfFilesPending: uploadStats.pendingFilesCount))
             case .noWifi:
                 return .uploadPaused(reason: .noWifiConnection(numberOfFilesPending: uploadStats.pendingFilesCount))
             case .notPaused:

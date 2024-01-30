@@ -379,7 +379,7 @@ final class AlbumListViewModelTests: XCTestCase {
         
         let sut = albumListViewModel(usecase: MockAlbumListUseCase(albums: [album1, album2, album3]))
         let task = Task { try await sut.monitorAlbums() }
-        _ = await sut.$albums.dropFirst().values.first { @Sendable _ in true }
+        _ = await sut.$albums.dropFirst().values.first { @Sendable albums in albums.isNotEmpty  }
         task.cancel()
         
         XCTAssertEqual(sut.albumNames.sorted(), ["Hey there", "", "Favourites"].sorted())
