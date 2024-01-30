@@ -23,11 +23,6 @@ struct AdsWebViewCoordinatorViewModel {
     }
 
     func urlHost(url: URL?) -> String? {
-        guard let url else { return nil }
-        
-        guard #available(iOS 16.0, *) else {
-            return url.host
-        }
-        return url.host()
+        url?.host
     }
 }
