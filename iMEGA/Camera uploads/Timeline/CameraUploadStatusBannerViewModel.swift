@@ -14,22 +14,14 @@ final class CameraUploadStatusBannerViewModel: ObservableObject {
     private var monitorCameraUploadBannerStatusProvider: MonitorCameraUploadBannerStatusProvider
     
     init(monitorCameraUploadUseCase: some MonitorCameraUploadUseCaseProtocol,
-         networkMonitorUseCase: some NetworkMonitorUseCaseProtocol,
-         preferenceUseCase: some PreferenceUseCaseProtocol,
          devicePermissionHandler: some DevicePermissionsHandling,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
         self.featureFlagProvider = featureFlagProvider
         self.monitorCameraUploadBannerStatusProvider = MonitorCameraUploadBannerStatusProvider(
             monitorCameraUploadUseCase: monitorCameraUploadUseCase,
-            networkMonitorUseCase: networkMonitorUseCase, 
-            preferenceUseCase: preferenceUseCase,
             devicePermissionHandler: devicePermissionHandler)
         
         subscribeToHandleAutoPresentation()
-    }
-    
-    func change(monitorCameraUploadUseCase: some MonitorCameraUploadUseCaseProtocol) {
-        monitorCameraUploadBannerStatusProvider.change(monitorCameraUploadUseCase: monitorCameraUploadUseCase)
     }
         
     @MainActor
@@ -94,8 +86,14 @@ final class CameraUploadStatusBannerViewModel: ObservableObject {
     
     private func subscribeToHandleAutoPresentation() {
         $cameraUploadBannerStatusViewState
-            .dropFirst()
-            .removeDuplicates()
+            .drop(while: { state in
+                switch state {
+                case .uploadInProgress, .uploadPaused:
+                    return false
+                case .uploadPartialCompleted, .uploadCompleted:
+                    return true
+                }
+            })
             .filter { state -> Bool in
                 switch state {
                 case .uploadInProgress:

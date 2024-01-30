@@ -167,7 +167,10 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnvironmen
                 sortOrderPreferenceUseCase: SortOrderPreferenceUseCase(
                     preferenceUseCase: PreferenceUseCase.default,
                     sortOrderPreferenceRepository: SortOrderPreferenceRepository.newRepo),
-                networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
+                monitorCameraUploadUseCase: MonitorCameraUploadUseCase(
+                    cameraUploadRepository: CameraUploadsStatsRepository.newRepo,
+                    networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
+                    preferenceUseCase: PreferenceUseCase.default), 
                 devicePermissionHandler: DevicePermissionsHandler.makeHandler(),
                 cameraUploadsSettingsViewRouter: CameraUploadsSettingsViewRouter(presenter: navigationController) { }
             )

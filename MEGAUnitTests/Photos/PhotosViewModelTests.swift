@@ -25,7 +25,7 @@ final class PhotosViewModelTests: XCTestCase {
                 contentConsumption: ContentConsumptionEntity(
                     ios: ContentConsumptionIos(timeline: ContentConsumptionTimeline(mediaType: .images, location: .cloudDrive, usePreference: true)))),
             sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc),
-            networkMonitorUseCase: MockNetworkMonitorUseCase(),
+            monitorCameraUploadUseCase: MockMonitorCameraUploadUseCase(), 
             devicePermissionHandler: MockDevicePermissionHandler(),
             cameraUploadsSettingsViewRouter: MockCameraUploadsSettingsViewRouter())
     }
@@ -96,7 +96,7 @@ final class PhotosViewModelTests: XCTestCase {
             photoLibraryUseCase: usecase,
             userAttributeUseCase: MockUserAttributeUseCase(),
             sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc),
-            networkMonitorUseCase: MockNetworkMonitorUseCase(),
+            monitorCameraUploadUseCase: MockMonitorCameraUploadUseCase(),
             devicePermissionHandler: MockDevicePermissionHandler(),
             cameraUploadsSettingsViewRouter: MockCameraUploadsSettingsViewRouter())
         
@@ -339,6 +339,7 @@ final class PhotosViewModelTests: XCTestCase {
         sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol = MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc),
         preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(),
         cameraUploadsSettingsViewRouter: some Routing = MockCameraUploadsSettingsViewRouter(),
+        monitorCameraUploadUseCase: MockMonitorCameraUploadUseCase = MockMonitorCameraUploadUseCase(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> PhotosViewModel {
         let publisher = PhotoUpdatePublisher(photosViewController: PhotosViewController())
@@ -350,7 +351,7 @@ final class PhotosViewModelTests: XCTestCase {
                                userAttributeUseCase: userAttributeUseCase,
                                sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
                                preferenceUseCase: preferenceUseCase,
-                               networkMonitorUseCase: MockNetworkMonitorUseCase(),
+                               monitorCameraUploadUseCase: monitorCameraUploadUseCase,
                                devicePermissionHandler: MockDevicePermissionHandler(),
                                cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter,
                                featureFlagProvider: featureFlagProvider)

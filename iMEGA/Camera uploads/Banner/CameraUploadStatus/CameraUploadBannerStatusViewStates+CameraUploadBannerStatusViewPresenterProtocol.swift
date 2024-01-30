@@ -100,12 +100,14 @@ extension CameraUploadBannerStatusUploadPausedReason: CameraUploadBannerStatusVi
         switch self {
         case .noWifiConnection:
             return Strings.Localizable.CameraUploads.Banner.Status.UploadsPausedDueToWifi.title
+        case .noInternetConnection:
+            return Strings.Localizable.noInternetConnection
         }
     }
     
     var subheading: String {
         switch self {
-        case .noWifiConnection(let numberOfFilesPending):
+        case .noWifiConnection(let numberOfFilesPending), .noInternetConnection(let numberOfFilesPending):
             return Strings.Localizable.CameraUploads.Banner.Status.FilesPending.subHeading(Int(numberOfFilesPending))
         }
     }

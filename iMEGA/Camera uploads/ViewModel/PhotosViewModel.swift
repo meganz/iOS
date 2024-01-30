@@ -57,7 +57,7 @@ final class PhotosViewModel: NSObject {
          userAttributeUseCase: some UserAttributeUseCaseProtocol,
          sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
          preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
-         networkMonitorUseCase: some NetworkMonitorUseCaseProtocol,
+         monitorCameraUploadUseCase: some MonitorCameraUploadUseCaseProtocol,
          devicePermissionHandler: some DevicePermissionsHandling,
          cameraUploadsSettingsViewRouter: some Routing,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
@@ -69,12 +69,7 @@ final class PhotosViewModel: NSObject {
         self.cameraUploadsSettingsViewRouter = cameraUploadsSettingsViewRouter
         self.timelineCameraUploadStatusFeatureEnabled = featureFlagProvider.isFeatureFlagEnabled(for: .timelineCameraUploadStatus)
         self.timelineViewModel = CameraUploadStatusBannerViewModel(
-            monitorCameraUploadUseCase: MonitorCameraUploadUseCase(
-                cameraUploadRepository: CameraUploadsStatsRepository.newRepo,
-                networkMonitorUseCase: networkMonitorUseCase,
-                preferenceUseCase: preferenceUseCase),
-            networkMonitorUseCase: networkMonitorUseCase,
-            preferenceUseCase: preferenceUseCase,
+            monitorCameraUploadUseCase: monitorCameraUploadUseCase,
             devicePermissionHandler: devicePermissionHandler,
             featureFlagProvider: featureFlagProvider)
         
@@ -193,7 +188,6 @@ final class PhotosViewModel: NSObject {
     func change(monitorCameraUploadUseCase: some MonitorCameraUploadUseCaseProtocol) {
         cameraUploadStatusButtonViewModel = CameraUploadStatusButtonViewModel(
             monitorCameraUploadUseCase: monitorCameraUploadUseCase)
-        timelineViewModel.change(monitorCameraUploadUseCase: monitorCameraUploadUseCase)
     }
     
     // MARK: - Private
