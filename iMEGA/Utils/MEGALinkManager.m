@@ -21,7 +21,6 @@
 #import "Helper.h"
 #import "MainTabBarController.h"
 #import "MasterKeyViewController.h"
-#import "MEGAChatGenericRequestDelegate.h"
 #import "MEGAContactLinkQueryRequestDelegate.h"
 #import "MEGAGetPublicNodeRequestDelegate.h"
 #import "MEGAInviteContactRequestDelegate.h"
@@ -165,7 +164,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         }
             
         case LinkOptionJoinChatLink: {
-            MEGAChatGenericRequestDelegate *openChatPreviewDelegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+            ChatRequestDelegate *openChatPreviewDelegate = [[ChatRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
                 if (error.type != MEGAErrorTypeApiOk && error.type != MEGAErrorTypeApiEExist) {
                     if (error.type == MEGAChatErrorTypeNoEnt) {
                         [SVProgressHUD dismiss];
@@ -182,7 +181,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
                 uint64_t chatId = request.chatHandle;
                 NSString *chatTitle = request.text;
                 NSURL *chatLink = request.link;
-                MEGAChatGenericRequestDelegate *autojoinOrRejoinPublicChatDelegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+                ChatRequestDelegate *autojoinOrRejoinPublicChatDelegate = [[ChatRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
                     if (!error.type) {
                         [MEGALinkManager.joiningOrLeavingChatBase64Handles removeObject:[MEGASdk base64HandleForUserHandle:request.chatHandle]];
                         
@@ -749,7 +748,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     [SVProgressHUD show];
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear]; // Disable background user interaction.
     
-    MEGAChatGenericRequestDelegate *delegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+    ChatRequestDelegate *delegate = [[ChatRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
         if (error.type != MEGAErrorTypeApiOk && error.type != MEGAErrorTypeApiEExist) {
             if (error.type == MEGAChatErrorTypeNoEnt) {
                 [SVProgressHUD dismiss];
@@ -773,7 +772,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         } else { // Chat link
             MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomForChatId:request.chatHandle];
             if (!chatRoom.isPreview && !chatRoom.isActive) {
-                MEGAChatGenericRequestDelegate *autorejoinPublicChatDelegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+                ChatRequestDelegate *autorejoinPublicChatDelegate = [[ChatRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
                     if (error.type) {
                         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
                         [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, LocalizedString(error.name, @"")]];
@@ -803,7 +802,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         }
     }
     
-    [MEGAChatSdk.shared checkChatLink:chatLinkUrl delegate:[[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+    [MEGAChatSdk.shared checkChatLink:chatLinkUrl delegate:[[ChatRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
         if (error.type != MEGAErrorTypeApiOk && error.type != MEGAErrorTypeApiEExist) {
             if (error.type == MEGAChatErrorTypeNoEnt) {
                 [SVProgressHUD dismiss];
@@ -850,7 +849,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"meetings.alert.meetingchat", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             
             if (!chatRoom.isPreview && !chatRoom.isActive) {
-                MEGAChatGenericRequestDelegate *autorejoinPublicChatDelegate = [[MEGAChatGenericRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+                ChatRequestDelegate *autorejoinPublicChatDelegate = [[ChatRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
                     if (error.type) {
                         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
                         [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, LocalizedString(error.name, @"")]];
