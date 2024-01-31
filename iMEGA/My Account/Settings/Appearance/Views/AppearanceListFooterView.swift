@@ -1,3 +1,4 @@
+import MEGADesignToken
 import SwiftUI
 
 struct AppearanceListFooterWithLinkView: View {
@@ -9,7 +10,9 @@ struct AppearanceListFooterWithLinkView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(message)
-                .foregroundColor(MEGAAppColor.Text.secondary.color)
+                .foregroundColor(
+                    isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : UIColor.chatListSubtitleText.swiftUI
+                )
             Link(destination: linkUrl) {
                 Text(linkMessage)
                     .foregroundColor(MEGAAppColor.View.turquoise_link.color)

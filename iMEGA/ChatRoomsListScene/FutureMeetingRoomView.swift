@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
@@ -40,14 +41,20 @@ struct FutureMeetingRoomView: View {
                         : Strings.Localizable.Meetings.Scheduled.Listing.InProgress.description
                     )
                     .font(.caption)
-                    .foregroundColor(MEGAAppColor.Chat.chatListSubtitleText.color)
+                    .foregroundColor(
+                        isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : UIColor.chatListSubtitleText.swiftUI
+                    )
                 } else {
                     HStack(spacing: 3) {
                         Text(viewModel.time)
-                            .foregroundColor(MEGAAppColor.Chat.chatListMeetingTimeText.color)
+                            .foregroundColor(
+                                isDesignTokenEnabled ? TokenColors.Button.brand.swiftUI : UIColor.chatListMeetingTimeText.swiftUI
+                            )
                             .font(.caption)
                         Text(viewModel.recurrence)
-                            .foregroundColor(MEGAAppColor.Chat.chatListMeetingTimeText.color)
+                            .foregroundColor(
+                                isDesignTokenEnabled ? TokenColors.Button.brand.swiftUI : UIColor.chatListMeetingTimeText.swiftUI
+                            )
                             .font(.caption)
                     }
                 }
