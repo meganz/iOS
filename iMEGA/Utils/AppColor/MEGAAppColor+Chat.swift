@@ -5,13 +5,6 @@ import UIKit
 
 extension MEGAAppColor {
     enum Chat {
-        case chatListArchiveSwipeActionBackground
-        case chatListMoreSwipeActionBackground
-        case chatListSectionTitle
-        case chatListSubtitleText
-        case chatListSectionBackground
-        case chatListMeetingTimeText
-        case chatListSectionBottomDividerBackground
         case chatReactionBubbleBorder
         case chatReactionBubbleSelectedDark
         case chatReactionBubbleSelectedLight
@@ -39,20 +32,6 @@ extension MEGAAppColor {
         
         private var designTokenColor: UIColor {
             switch self {
-            case .chatListArchiveSwipeActionBackground:
-                TokenColors.Background.blur
-            case .chatListMoreSwipeActionBackground:
-                TokenColors.Background.blur
-            case .chatListSectionTitle:
-                TokenColors.Background.blur
-            case .chatListSubtitleText:
-                TokenColors.Background.blur
-            case .chatListSectionBackground:
-                TokenColors.Background.blur
-            case .chatListMeetingTimeText:
-                TokenColors.Background.blur
-            case .chatListSectionBottomDividerBackground:
-                TokenColors.Background.blur
             case .chatReactionBubbleBorder:
                 TokenColors.Background.blur
             case .chatReactionBubbleSelectedDark:
@@ -90,20 +69,6 @@ extension MEGAAppColor {
         
         private var legacyColor: UIColor {
             switch self {
-            case .chatListArchiveSwipeActionBackground: 
-                UIColor.chatListArchiveSwipeActionBackground
-            case .chatListMoreSwipeActionBackground:
-                UIColor.chatListMoreSwipeActionBackground
-            case .chatListSectionTitle:
-                UIColor.chatListSectionTitle
-            case .chatListSubtitleText:
-                UIColor.chatListSubtitleText
-            case .chatListSectionBackground:
-                UIColor.chatListSectionBackground
-            case .chatListMeetingTimeText:
-                UIColor.chatListMeetingTimeText
-            case .chatListSectionBottomDividerBackground:
-                UIColor.chatListSectionBottomDividerBackground
             case .chatReactionBubbleBorder:
                 UIColor.chatReactionBubbleBorder
             case .chatReactionBubbleSelectedDark:
