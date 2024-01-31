@@ -1,3 +1,5 @@
+import MEGADesignToken
+import MEGASwiftUI
 import SwiftUI
 
 struct AboutItemView: View {
@@ -10,7 +12,9 @@ struct AboutItemView: View {
                 .font(.body)
             Text(subtitle)
                 .font(.callout)
-                .foregroundColor(Color(UIColor.secondaryLabel))
+                .foregroundColor(isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI: Color(UIColor.secondaryLabel))
         }
+        .designTokenSeparator(isDesignTokenEnabled)
+        .designTokenBackground(isDesignTokenEnabled)
     }
 }

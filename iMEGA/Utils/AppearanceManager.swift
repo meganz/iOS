@@ -50,12 +50,12 @@ class AppearanceManager: NSObject {
         UIProgressView.appearance().backgroundColor = UIColor.clear
         UIProgressView.appearance().tintColor = UIColor.mnz_turquoise(for: traitCollection)
         
-        UITableView.appearance().backgroundColor = UIColor.systemBackground
+        UITableView.appearance().backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.systemBackground
         UITableView.appearance().separatorColor = UIColor.mnz_separator(for: traitCollection)
         UIButton.appearance(whenContainedInInstancesOf: [UITableViewCell.self]).tintColor = UIColor.mnz_tertiaryGray(for: traitCollection)
         UITableViewCell.appearance().tintColor = UIColor.mnz_turquoise(for: traitCollection)
         
-        UICollectionView.appearance().backgroundColor = UIColor.systemBackground
+        UICollectionView.appearance().backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.systemBackground
         UIButton.appearance(whenContainedInInstancesOf: [UICollectionViewCell.self]).tintColor = UIColor.mnz_tertiaryGray(for: traitCollection)
         
         self.setupActivityIndicatorAppearance(traitCollection)

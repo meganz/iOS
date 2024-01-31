@@ -9,15 +9,22 @@ public struct ToggleModifier: ViewModifier {
     }
     
     public func body(content: Content) -> some View {
-        designTokenSupportView(content: content)
+        toggle(with: content)
     }
     
     @ViewBuilder
-    func designTokenSupportView(content: Content) -> some View {
+    func toggle(with content: Content) -> some View {
         if isDesignTokenEnabled {
             content.tint(TokenColors.Support.success.swiftUI)
         } else {
             content
         }
+    }
+}
+
+public extension View {
+    @ViewBuilder
+    func designTokenToggleBackground(_ isDesignTokenEnabled: Bool) -> some View {
+        modifier(ToggleModifier(isDesignTokenEnabled: isDesignTokenEnabled))
     }
 }

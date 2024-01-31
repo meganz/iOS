@@ -31,7 +31,7 @@ struct CallsSettingsSoundNotificationsView: View {
                 Toggle(Strings.Localizable.Settings.Section.Calls.SoundNotifications.title, isOn: $isOn)
                     .padding(.leading, parentGeometry.safeAreaInsets.leading + Constants.defaultPadding)
                     .padding(.trailing, parentGeometry.safeAreaInsets.trailing + Constants.defaultPadding)
-                    .modifier(ToggleModifier(isDesignTokenEnabled: isDesignTokenEnabled))
+                    .designTokenToggleBackground(isDesignTokenEnabled)
                 MEGADivider(isDesignTokenEnabled: isDesignTokenEnabled)
             }
             .background(backgroundColor)

@@ -18,12 +18,13 @@ let package = Package(
         .package(path: "../../../Infrastracture/MEGATest"),
         .package(path: "../../../Localization/MEGAL10n"),
         .package(path: "../../../Repository/ChatRepo"),
+        .package(path: "../../../UI/MEGASwiftUI"),
         .package(path: "../../Repository/LogRepo")
     ],
     targets: [
         .target(
             name: "Settings",
-            dependencies: ["MEGADomain", "MEGAPresentation", "MEGAL10n", "ChatRepo", "LogRepo"]),
+            dependencies: ["MEGADomain", "MEGAPresentation", "MEGAL10n", "ChatRepo", "LogRepo", "MEGASwiftUI"]),
         .testTarget(
             name: "SettingsTests",
             dependencies: ["Settings",
