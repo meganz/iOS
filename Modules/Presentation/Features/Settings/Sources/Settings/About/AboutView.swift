@@ -1,4 +1,6 @@
+import MEGADesignToken
 import MEGAL10n
+import MEGASwiftUI
 import SwiftUI
 
 struct AboutView: View {
@@ -15,7 +17,8 @@ struct AboutView: View {
                 LinkView(viewModel: viewModel)
             }
         }
-        .foregroundColor(.primary)
+        .designTokenBackground(isDesignTokenEnabled)
+        .foregroundColor(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : .primary)
         .listStyle(.grouped)
         .alert(isPresented: $viewModel.showApiEnvironmentChangedAlert) {
             Alert(title: Text("API URL changed"))
@@ -28,7 +31,9 @@ private struct LinkView: View {
     
     var body: some View {
         Link(Strings.Localizable.viewSourceCode, destination: viewModel.sourceCodeURL)
+            .designTokenSeparator(isDesignTokenEnabled)
         Link(Strings.Localizable.acknowledgements, destination: viewModel.acknowledgementsURL)
+            .designTokenSeparator(isDesignTokenEnabled)
     }
 }
 
