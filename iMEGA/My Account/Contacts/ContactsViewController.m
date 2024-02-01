@@ -189,11 +189,11 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
     [self removeNicknamesLoadedNotification];
     
-    [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegateAsync:self];
+    [MEGASdk.shared removeMEGAGlobalDelegateAsync:self];
     [MEGAChatSdk.shared removeChatDelegate:self];
     
-    if (self.isMovingFromParentViewController) {
-        [[MEGASdkManager sharedMEGASdk] removeMEGARequestDelegateAsync:self];
+    if (self.isMovingFromParentViewController || [self.navigationController isBeingDismissed]) {
+        [MEGASdk.shared removeMEGARequestDelegateAsync:self];
     }
 }
 
