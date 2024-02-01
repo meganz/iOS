@@ -511,6 +511,12 @@ extension HomeViewController: SlidePanelAnimationControllerDelegate {
 
     private func updateNavigationBarBackgroundColor(_ color: UIColor) {
         guard let navigationBar = navigationController?.navigationBar else { return }
+        
+        if UIColor.isDesignTokenEnabled() {
+            AppearanceManager.forceNavigationBarUpdate(navigationBar, traitCollection: traitCollection)
+            return
+        }
+        
         navigationBar.standardAppearance.backgroundColor = color
         navigationBar.scrollEdgeAppearance?.backgroundColor = color
         navigationBar.isTranslucent = false
