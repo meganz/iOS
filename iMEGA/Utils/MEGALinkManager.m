@@ -164,8 +164,8 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         }
             
         case LinkOptionJoinChatLink: {
-            ChatRequestDelegate *openChatPreviewDelegate = [[ChatRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
-                if (error.type != MEGAErrorTypeApiOk && error.type != MEGAErrorTypeApiEExist) {
+            ChatRequestDelegate *openChatPreviewDelegate = [[ChatRequestDelegate alloc] initWithRawSuccessCodes:@[@(MEGAChatErrorTypeOk), @(MEGAErrorTypeApiEExist)] completion:^(MEGAChatRequest *request, MEGAChatError *error) {
+                if (error) {
                     if (error.type == MEGAChatErrorTypeNoEnt) {
                         [SVProgressHUD dismiss];
                         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"Chat Link Unavailable", @"Shown when an invalid/inexisting/not-available-anymore chat link is opened.") message:LocalizedString(@"This chat link is no longer available", @"Shown when an inexisting/unavailable/removed link is tried to be opened.") preferredStyle:UIAlertControllerStyleAlert];
@@ -748,8 +748,8 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     [SVProgressHUD show];
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear]; // Disable background user interaction.
     
-    ChatRequestDelegate *delegate = [[ChatRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
-        if (error.type != MEGAErrorTypeApiOk && error.type != MEGAErrorTypeApiEExist) {
+    ChatRequestDelegate *delegate = [[ChatRequestDelegate alloc] initWithRawSuccessCodes:@[@(MEGAChatErrorTypeOk), @(MEGAErrorTypeApiEExist)] completion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+        if (error) {
             if (error.type == MEGAChatErrorTypeNoEnt) {
                 [SVProgressHUD dismiss];
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"Chat Link Unavailable", @"Shown when an invalid/inexisting/not-available-anymore chat link is opened.") message:LocalizedString(@"This chat link is no longer available", @"Shown when an inexisting/unavailable/removed link is tried to be opened.") preferredStyle:UIAlertControllerStyleAlert];
@@ -802,8 +802,8 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         }
     }
     
-    [MEGAChatSdk.shared checkChatLink:chatLinkUrl delegate:[[ChatRequestDelegate alloc] initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
-        if (error.type != MEGAErrorTypeApiOk && error.type != MEGAErrorTypeApiEExist) {
+    [MEGAChatSdk.shared checkChatLink:chatLinkUrl delegate:[[ChatRequestDelegate alloc] initWithRawSuccessCodes:@[@(MEGAChatErrorTypeOk), @(MEGAErrorTypeApiEExist)] completion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+        if (error) {
             if (error.type == MEGAChatErrorTypeNoEnt) {
                 [SVProgressHUD dismiss];
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"Chat Link Unavailable", @"Shown when an invalid/inexisting/not-available-anymore chat link is opened.") message:LocalizedString(@"This chat link is no longer available", @"Shown when an inexisting/unavailable/removed link is tried to be opened.") preferredStyle:UIAlertControllerStyleAlert];
