@@ -294,6 +294,15 @@ final class MeetingContainerViewModelTests: XCTestCase {
         XCTAssert(router.showMutedMessage_calledTimes == 1)
     }
     
+    func testAction_sfuProtocolErrorReceived_shouldShowUpdateAppAlert() {
+        let chatRoom = ChatRoomEntity(chatType: .meeting)
+        let router = MockMeetingContainerRouter()
+        viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom)
+
+        test(viewModel: viewModel, action: .sfuProtocolVersionError, expectedCommands: [])
+        XCTAssert(router.showProtocolErrorAlert_calledTimes == 1)
+    }
+    
     // MARK: - Private methods
     
     private func assertWhenMuteUnmuteOperationFailed(
@@ -340,6 +349,7 @@ final class MockMeetingContainerRouter: MeetingContainerRouting {
     var selectWaitingRoomList_calledTimes = 0
     var showScreenShareWarning_calledTimes = 0
     var showMutedMessage_calledTimes = 0
+    var showProtocolErrorAlert_calledTimes = 0
 
     func showMeetingUI(containerViewModel: MeetingContainerViewModel) {
         showMeetingUI_calledTimes += 1
@@ -416,5 +426,9 @@ final class MockMeetingContainerRouter: MeetingContainerRouting {
     
     func showMutedMessage(by name: String) {
         showMutedMessage_calledTimes += 1
+    }
+    
+    func showProtocolErrorAlert() {
+        showProtocolErrorAlert_calledTimes += 1
     }
 }

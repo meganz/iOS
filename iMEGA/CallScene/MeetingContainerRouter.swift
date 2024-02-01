@@ -28,6 +28,7 @@ protocol MeetingContainerRouting: AnyObject, Routing {
     func selectWaitingRoomList(containerViewModel: MeetingContainerViewModel)
     func showScreenShareWarning()
     func showMutedMessage(by name: String)
+    func showProtocolErrorAlert()
 }
 
 final class MeetingContainerRouter: MeetingContainerRouting {
@@ -290,6 +291,29 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     func showMutedMessage(by name: String) {
         SVProgressHUD.configureHudDarkMode()
         SVProgressHUD.showSuccess(withStatus: Strings.Localizable.Calls.ParticipantsInCall.mutedBy(name))
+    }
+    
+    func showProtocolErrorAlert() {
+        guard let presenter else { return }
+        let alert = UIAlertController(
+            title: Strings.Localizable.Calls.SfuOutdated.UpdateAppAlert.title,
+            message: Strings.Localizable.Calls.SfuOutdated.UpdateAppAlert.message,
+            preferredStyle: .alert)
+        alert.addAction(
+            UIAlertAction(
+                title: Strings.Localizable.Calls.SfuOutdated.UpdateAppAlert.Button.skip, style: .default)
+        )
+        let preferredAction = UIAlertAction(
+            title: Strings.Localizable.Calls.SfuOutdated.UpdateAppAlert.Button.update, style: .default) { _ in
+                if let url = URL(string: "itms-apps://itunes.apple.com/app/id706857885") {
+                    UIApplication.shared.open(url)
+                }
+            }
+        alert.addAction(preferredAction)
+        alert.preferredAction = preferredAction
+        presenter.dismiss(animated: true) {
+            presenter.present(alert, animated: true)
+        }
     }
     
     // MARK: - Private methods.

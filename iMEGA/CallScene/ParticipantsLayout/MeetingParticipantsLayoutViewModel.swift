@@ -1241,6 +1241,8 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
             containerViewModel?.dispatch(.dismissCall(completion: {
                 SVProgressHUD.showError(withStatus: Strings.Localizable.Error.noMoreParticipantsAreAllowedInThisGroupCall)
             }))
+        } else if call.termCodeType == .protocolVersion {
+            containerViewModel?.dispatch(.sfuProtocolVersionError)
         } else if reconnecting {
             tonePlayer.play(tone: .callEnded)
             containerViewModel?.dispatch(.dismissCall(completion: {

@@ -29,6 +29,7 @@ enum MeetingContainerAction: ActionType {
     case showScreenShareWarning
     case leaveCallFromRecordingAlert
     case showMutedBy(String)
+    case sfuProtocolVersionError
 }
 
 final class MeetingContainerViewModel: ViewModelType {
@@ -186,6 +187,9 @@ final class MeetingContainerViewModel: ViewModelType {
             endCall()
         case .showMutedBy(let name):
             router.showMutedMessage(by: name)
+        case .sfuProtocolVersionError:
+            hangCall()
+            router.showProtocolErrorAlert()
         }
     }
     
@@ -220,7 +224,7 @@ final class MeetingContainerViewModel: ViewModelType {
         router.dismiss(animated: true, completion: nil)
     }
     
-    private func dismissCall(completion: (() -> Void)?) {
+    private func hangCall() {
         if let call {
             if let callId = megaHandleUseCase.base64Handle(forUserHandle: call.callId),
                let chatId = megaHandleUseCase.base64Handle(forUserHandle: call.chatId) {
@@ -233,7 +237,10 @@ final class MeetingContainerViewModel: ViewModelType {
             callUseCase.hangCall(for: call.callId)
             callCoordinatorUseCase.endCall(call)
         }
-       
+    }
+    
+    private func dismissCall(completion: (() -> Void)?) {
+        hangCall()
         router.dismiss(animated: true, completion: completion)
     }
     
