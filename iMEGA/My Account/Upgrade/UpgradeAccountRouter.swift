@@ -3,7 +3,11 @@ import Foundation
 import MEGADomain
 import MEGAPresentation
 
-final class UpgradeAccountRouter {
+protocol UpgradeAccountRouting {
+    func presentUpgradeTVC()
+}
+
+final class UpgradeAccountRouter: UpgradeAccountRouting {
     private enum UpgradeAccountError: Error {
         case reachability
         case noProducts

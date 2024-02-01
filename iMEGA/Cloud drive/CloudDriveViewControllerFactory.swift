@@ -59,7 +59,8 @@ struct NodeBrowserConfig {
     var warningViewModel: WarningViewModel?
     // this should enabled for non-root nodes
     var mediaDiscoveryAutomaticDetectionEnabled: () -> Bool = { false }
-    
+    // Determines whether the NodeBrowserView should handle upgrade encouragement flow or not, default value is true
+    var supportsUpgradeEncouragement: Bool = true
     static var `default`: Self {
         .init()
     }
@@ -76,6 +77,12 @@ struct NodeBrowserConfig {
         var config = Self.default
         config.displayMode = displayMode
         config.warningViewModel = warningViewModel
+        return config
+    }
+    
+    static func withSupportsUpgradeEncouragement(_ supportsUpgradeEncouragement: Bool) -> Self {
+        var config = Self.default
+        config.supportsUpgradeEncouragement = supportsUpgradeEncouragement
         return config
     }
 }
@@ -337,6 +344,9 @@ struct CloudDriveViewControllerFactory {
             onCancel: { searchResultsVM.bridge.queryCleaned() }
         )
         
+        let upgradeEncouragementViewModel: UpgradeEncouragementViewModel? = config.supportsUpgradeEncouragement ? .init() : nil
+
+        
         let mediaContentDelegate = MediaContentDelegate()
         
         let nodeBrowserViewModel = NodeBrowserViewModel(
@@ -349,6 +359,7 @@ struct CloudDriveViewControllerFactory {
                 nodeSource,
                 config: config
             ),
+            upgradeEncouragementViewModel: upgradeEncouragementViewModel,
             config: overriddenConfig,
             nodeSource: nodeSource,
             avatarViewModel: avatarViewModel,

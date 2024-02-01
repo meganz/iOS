@@ -343,9 +343,10 @@ final class HomeScreenFactory: NSObject {
         for node: MEGANode
     ) -> UIViewController? {
         if node.isFolder() {
-            let nc = UINavigationController()
-            let factory = CloudDriveViewControllerFactory.make(nc: nc)
-            return factory.buildBare(parentNode: node.toNodeEntity())
+            let factory = CloudDriveViewControllerFactory.make()
+            // For preview mode, we don't support upgrade encouragement flow
+            let config = NodeBrowserConfig.withSupportsUpgradeEncouragement(false)
+            return factory.buildBare(parentNode: node.toNodeEntity(), config: config)
         } else {
             return nil
         }
@@ -386,7 +387,6 @@ final class HomeScreenFactory: NSObject {
             return []
         }
         return [
-            // action (selection) will be implemented in [FM-1176]
             .init(
                 title: Strings.Localizable.select,
                 imageName: "checkmark.circle",

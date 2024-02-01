@@ -6,6 +6,7 @@ public protocol AccountUseCaseProtocol {
     func currentUser() async -> UserEntity?
     var isGuest: Bool { get }
     var isNewAccount: Bool { get }
+    var accountCreationDate: Date? { get }
     var bandwidthOverquotaDelay: Int64 { get }
     func isLoggedIn() -> Bool
     func contacts() -> [UserEntity]
@@ -21,7 +22,6 @@ public protocol AccountUseCaseProtocol {
 
 // MARK: - Use case implementation
 public struct AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseProtocol {
-    
     private let repository: T
     
     public init(repository: T) {
@@ -42,6 +42,10 @@ public struct AccountUseCase<T: AccountRepositoryProtocol>: AccountUseCaseProtoc
     
     public var isNewAccount: Bool {
         repository.isNewAccount
+    }
+    
+    public var accountCreationDate: Date? {
+        repository.accountCreationDate
     }
     
     public var bandwidthOverquotaDelay: Int64 {

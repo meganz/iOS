@@ -13,6 +13,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol {
     private let _isLoggedIn: Bool
     private let _isMasterBusinessAccount: Bool
     private let _isNewAccount: Bool
+    private let _accountCreationDate: Date?
     private let _contacts: [UserEntity]
     private let _bandwidthOverquotaDelay: Int64
     private let contactsRequestsCount: Int
@@ -31,6 +32,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol {
     public init(currentUser: UserEntity? = nil,
                 isGuest: Bool = false,
                 isNewAccount: Bool = false,
+                accountCreationDate: Date? = nil,
                 isLoggedIn: Bool = true,
                 isMasterBusinessAccount: Bool = false,
                 contacts: [UserEntity] = [],
@@ -50,6 +52,7 @@ public final class MockAccountRepository: AccountRepositoryProtocol {
         _isLoggedIn = isLoggedIn
         _isMasterBusinessAccount = isMasterBusinessAccount
         _isNewAccount = isNewAccount
+        _accountCreationDate = accountCreationDate
         _contacts = contacts
         _currentAccountDetails = currentAccountDetails
         _bandwidthOverquotaDelay = bandwidthOverquotaDelay
@@ -86,6 +89,10 @@ public final class MockAccountRepository: AccountRepositoryProtocol {
     
     public var isNewAccount: Bool {
         _isNewAccount
+    }
+    
+    public var accountCreationDate: Date? {
+        _accountCreationDate
     }
     
     public func contacts() -> [UserEntity] {

@@ -12,6 +12,7 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
     private let _currentUser: UserEntity?
     private let _isGuest: Bool
     private let _isNewAccount: Bool
+    private let _accountCreationDate: Date?
     private let _isLoggedIn: Bool
     private let _contacts: [UserEntity]
     private let _currentAccountDetails: AccountDetailsEntity?
@@ -21,6 +22,7 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
                 isGuest: Bool = false,
                 isNewAccount: Bool = false,
                 isLoggedIn: Bool = true,
+                accountCreationDate: Date? = nil,
                 contacts: [UserEntity] = [],
                 totalNodesCountVariable: UInt64 = 0,
                 getMyChatFilesFolderResult: Result<NodeEntity, AccountErrorEntity> = .failure(.nodeNotFound),
@@ -35,6 +37,7 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
         _currentUser = currentUser
         _isGuest = isGuest
         _isNewAccount = isNewAccount
+        _accountCreationDate = accountCreationDate
         _isLoggedIn = isLoggedIn
         _contacts = contacts
         _currentAccountDetails = currentAccountDetails
@@ -62,6 +65,10 @@ public struct MockAccountUseCase: AccountUseCaseProtocol {
     
     public var isNewAccount: Bool {
         _isNewAccount
+    }
+    
+    public var accountCreationDate: Date? {
+        _accountCreationDate
     }
     
     public func isLoggedIn() -> Bool {

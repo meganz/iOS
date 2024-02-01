@@ -20,8 +20,8 @@ class NodeBrowserViewModel: ObservableObject {
     let searchResultsViewModel: SearchResultsViewModel
     let mediaDiscoveryViewModel: MediaDiscoveryContentViewModel? // not available for recent buckets yet
     let warningViewModel: WarningViewModel?
-    
     var mediaContentDelegate: MediaContentDelegate?
+    let upgradeEncouragementViewModel: UpgradeEncouragementViewModel?
     let config: NodeBrowserConfig
     var hasOnlyMediaNodesChecker: () async -> Bool
 
@@ -46,6 +46,7 @@ class NodeBrowserViewModel: ObservableObject {
         searchResultsViewModel: SearchResultsViewModel,
         mediaDiscoveryViewModel: MediaDiscoveryContentViewModel?,
         warningViewModel: WarningViewModel?,
+        upgradeEncouragementViewModel: UpgradeEncouragementViewModel?,
         config: NodeBrowserConfig,
         nodeSource: NodeSource,
         avatarViewModel: MyAvatarViewModel,
@@ -58,8 +59,10 @@ class NodeBrowserViewModel: ObservableObject {
         onBack: @escaping () -> Void
     ) {
         self.searchResultsViewModel = searchResultsViewModel
+        
         self.mediaDiscoveryViewModel = mediaDiscoveryViewModel
         self.warningViewModel = warningViewModel
+        self.upgradeEncouragementViewModel = upgradeEncouragementViewModel
         self.config = config
         self.nodeSource = nodeSource
         self.avatarViewModel = avatarViewModel
@@ -119,6 +122,7 @@ class NodeBrowserViewModel: ObservableObject {
         await determineIfHasVisualMediaIfNeeded()
         determineIfShowingAutomaticallyMediaDiscovery()
         onUpdateSearchBarVisibility(!isMediaDiscoveryShown(for: viewMode))
+        encourageUpgradeIfNeeded()
     }
     
     private func determineIfShowingAutomaticallyMediaDiscovery() {
@@ -143,6 +147,10 @@ class NodeBrowserViewModel: ObservableObject {
 
     private func isMediaDiscoveryShown(for viewMode: ViewModePreferenceEntity) -> Bool {
         shouldShowMediaDiscoveryAutomatically == true || viewMode == .mediaDiscovery
+    }
+    
+    private func encourageUpgradeIfNeeded() {
+        upgradeEncouragementViewModel?.encourageUpgradeIfNeeded()
     }
 
     private func refresh() {

@@ -58,6 +58,17 @@ final class AccountRepositoryTests: XCTestCase {
         XCTAssertFalse(makeSUT(sdk: MockSdk(isNewAccount: false)).isNewAccount)
     }
     
+    func testAccountCreationDate_whenNil_shouldReturnNil() {
+        let sut = makeSUT(sdk: MockSdk(accountCreationDate: nil))
+        XCTAssertNil(sut.accountCreationDate)
+    }
+    
+    func testAccountCreationDate_whenNotNil_shouldReturnValue() {
+        let stubbedDate = Date()
+        let sut = makeSUT(sdk: MockSdk(accountCreationDate: stubbedDate))
+        XCTAssertEqual(sut.accountCreationDate, stubbedDate)
+    }
+    
     func testContacts_shouldMapSdkContacts() {
         let userStubOne = MockUser()
         let userStubTwo = MockUser()
