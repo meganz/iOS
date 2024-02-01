@@ -75,7 +75,8 @@ class NodeBrowserViewModelTests: XCTestCase {
                     analyticsUseCase: MockMediaDiscoveryAnalyticsUseCase(),
                     mediaDiscoveryUseCase: mediaDiscoveryUseCase
                 ),
-                warningViewModel: nil,
+                warningViewModel: nil, 
+                upgradeEncouragementViewModel: nil,
                 config: .default,
                 nodeSource: nodeSource,
                 avatarViewModel: MyAvatarViewModel(

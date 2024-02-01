@@ -2450,6 +2450,10 @@
 		C49F8631255AC0310074A054 /* AudioPlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49F8630255AC0310074A054 /* AudioPlayerViewModel.swift */; };
 		C49F8639255AE2030074A054 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49F8638255AE2030074A054 /* AudioPlayer.swift */; };
 		C49FB1EE258B6F1000B1280D /* CALayer+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49FB1ED258B6F1000B1280D /* CALayer+Additions.swift */; };
+		C4A016962B63AE8A00492185 /* UpgradeEncouragementViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A016952B63AE8A00492185 /* UpgradeEncouragementViewModel.swift */; };
+		C4A016BA2B67338C00492185 /* UpgradeEncouragementViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A016B92B67338C00492185 /* UpgradeEncouragementViewModelTests.swift */; };
+		C4A016BD2B674DE100492185 /* MockRandomNumberGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A016BC2B674DE100492185 /* MockRandomNumberGenerator.swift */; };
+		C4A016C02B67630F00492185 /* MockUpgradeAccountRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A016BF2B67630F00492185 /* MockUpgradeAccountRouter.swift */; };
 		C4A5F0E8266E31DE001D783B /* MEGALabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A5F0E7266E31DD001D783B /* MEGALabel.swift */; };
 		C4AC9E6627ADA24F005105CF /* MessageInputBarComponentsSizeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AC9E6527ADA24F005105CF /* MessageInputBarComponentsSizeCalculator.swift */; };
 		C4AF4A8F2582836000594716 /* MiniPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF4A8E2582836000594716 /* MiniPlayerViewController.swift */; };
@@ -2457,6 +2461,9 @@
 		C4AF4AA3258283A700594716 /* MiniPlayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AF4AA2258283A700594716 /* MiniPlayerViewModel.swift */; };
 		C4B4B1652B27C3ED00F78710 /* PasswordView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B4B1642B27C3ED00F78710 /* PasswordView+Additions.swift */; };
 		C4B4B1692B27CAF900F78710 /* InputView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B4B1682B27CAF900F78710 /* InputView+Additions.swift */; };
+		C4B97D752B67820400EBA9E5 /* RandomNumberGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B97D742B67820400EBA9E5 /* RandomNumberGeneratorTests.swift */; };
+		C4B97D812B67925C00EBA9E5 /* FuncCallRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B97D802B67925C00EBA9E5 /* FuncCallRecorder.swift */; };
+		C4B97D8D2B77916500EBA9E5 /* RandomNumberGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B97D8C2B77916500EBA9E5 /* RandomNumberGenerator.swift */; };
 		C4C5C83325DC26100063D7B4 /* FolderLinkViewController+AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C5C83225DC26100063D7B4 /* FolderLinkViewController+AudioPlayer.swift */; };
 		C4C6A49827A4632600873165 /* MegaNode+Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C6A49527A4632600873165 /* MegaNode+Display.swift */; };
 		C4C6A49A27A4632600873165 /* MegaNode+Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C6A49527A4632600873165 /* MegaNode+Display.swift */; };
@@ -2471,6 +2478,9 @@
 		C4EACA9F2772559F00C6ACA3 /* MyChatFilesFolderNodeAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EACA902772502B00C6ACA3 /* MyChatFilesFolderNodeAccess.swift */; };
 		C4EB6DBB2B4BF68B007A94E3 /* AppExitHandlerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C4EB6DBA2B4BF68B007A94E3 /* AppExitHandlerManager.m */; };
 		C4EDB73826655229006A114F /* RoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EDB73726655229006A114F /* RoundedView.swift */; };
+		C4F06F6A2B690C4B005C1A3D /* MockUpgradeEncouragementShowTimeTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F06F692B690C4B005C1A3D /* MockUpgradeEncouragementShowTimeTracker.swift */; };
+		C4F06F742B691633005C1A3D /* UpgradeEncouragementShowTimeTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F06F712B6915F7005C1A3D /* UpgradeEncouragementShowTimeTracker.swift */; };
+		C4F06F792B691941005C1A3D /* UpgradeEncouragementShowTimeTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F06F782B691941005C1A3D /* UpgradeEncouragementShowTimeTrackerTests.swift */; };
 		C4F0C90A259E0FEE0063C5C5 /* StoreUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D33D673250DBA3900D74666 /* StoreUser.swift */; };
 		C4F0C913259E10190063C5C5 /* SDKAvatarClient+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D33D66B250D9BDD00D74666 /* SDKAvatarClient+Additions.swift */; };
 		C4F31ED025C1914800E15146 /* AVAsset+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F31ECF25C1914800E15146 /* AVAsset+Additions.swift */; };
@@ -5087,6 +5097,10 @@
 		C49F8630255AC0310074A054 /* AudioPlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerViewModel.swift; sourceTree = "<group>"; };
 		C49F8638255AE2030074A054 /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
 		C49FB1ED258B6F1000B1280D /* CALayer+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+Additions.swift"; sourceTree = "<group>"; };
+		C4A016952B63AE8A00492185 /* UpgradeEncouragementViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeEncouragementViewModel.swift; sourceTree = "<group>"; };
+		C4A016B92B67338C00492185 /* UpgradeEncouragementViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeEncouragementViewModelTests.swift; sourceTree = "<group>"; };
+		C4A016BC2B674DE100492185 /* MockRandomNumberGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRandomNumberGenerator.swift; sourceTree = "<group>"; };
+		C4A016BF2B67630F00492185 /* MockUpgradeAccountRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUpgradeAccountRouter.swift; sourceTree = "<group>"; };
 		C4A5F0E7266E31DD001D783B /* MEGALabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGALabel.swift; sourceTree = "<group>"; };
 		C4AC9E6527ADA24F005105CF /* MessageInputBarComponentsSizeCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInputBarComponentsSizeCalculator.swift; sourceTree = "<group>"; };
 		C4AF4A8E2582836000594716 /* MiniPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerViewController.swift; sourceTree = "<group>"; };
@@ -5094,6 +5108,9 @@
 		C4AF4AA2258283A700594716 /* MiniPlayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerViewModel.swift; sourceTree = "<group>"; };
 		C4B4B1642B27C3ED00F78710 /* PasswordView+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PasswordView+Additions.swift"; sourceTree = "<group>"; };
 		C4B4B1682B27CAF900F78710 /* InputView+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InputView+Additions.swift"; sourceTree = "<group>"; };
+		C4B97D742B67820400EBA9E5 /* RandomNumberGeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomNumberGeneratorTests.swift; sourceTree = "<group>"; };
+		C4B97D802B67925C00EBA9E5 /* FuncCallRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuncCallRecorder.swift; sourceTree = "<group>"; };
+		C4B97D8C2B77916500EBA9E5 /* RandomNumberGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomNumberGenerator.swift; sourceTree = "<group>"; };
 		C4C5C83225DC26100063D7B4 /* FolderLinkViewController+AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FolderLinkViewController+AudioPlayer.swift"; sourceTree = "<group>"; };
 		C4C6A49527A4632600873165 /* MegaNode+Display.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MegaNode+Display.swift"; sourceTree = "<group>"; };
 		C4CBDD3E256EC00900835CF5 /* AudioPlayerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerItem.swift; sourceTree = "<group>"; };
@@ -5106,6 +5123,9 @@
 		C4EB6DBA2B4BF68B007A94E3 /* AppExitHandlerManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppExitHandlerManager.m; sourceTree = "<group>"; };
 		C4EB6DBC2B4BF6B7007A94E3 /* AppExitHandlerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppExitHandlerManager.h; sourceTree = "<group>"; };
 		C4EDB73726655229006A114F /* RoundedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedView.swift; sourceTree = "<group>"; };
+		C4F06F692B690C4B005C1A3D /* MockUpgradeEncouragementShowTimeTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUpgradeEncouragementShowTimeTracker.swift; sourceTree = "<group>"; };
+		C4F06F712B6915F7005C1A3D /* UpgradeEncouragementShowTimeTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeEncouragementShowTimeTracker.swift; sourceTree = "<group>"; };
+		C4F06F782B691941005C1A3D /* UpgradeEncouragementShowTimeTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpgradeEncouragementShowTimeTrackerTests.swift; sourceTree = "<group>"; };
 		C4F31ECF25C1914800E15146 /* AVAsset+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVAsset+Additions.swift"; sourceTree = "<group>"; };
 		C4F31EDB25C19ABE00E15146 /* AudioPlayerFileToolbarConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerFileToolbarConfigurator.swift; sourceTree = "<group>"; };
 		C4F31EF825C1C50B00E15146 /* CustomTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTitleView.swift; sourceTree = "<group>"; };
@@ -6669,6 +6689,7 @@
 				C4E78E99272B4F5100DBF926 /* NodeAccess */,
 				833DF274280487FD00B25B64 /* OCWrapper */,
 				9495DBAB2A40865B00FA22EE /* Permissions */,
+				C4B97D8B2B77916500EBA9E5 /* RandomNumberGenerator */,
 				9441533028E4609B005EF5F9 /* ReportIssue */,
 				5D664364249CB0DB00CE9BD1 /* SDKService */,
 				94CD25A72ACD7A090079FABD /* Search */,
@@ -6679,6 +6700,7 @@
 				838D909E2B57FE2A0031CD62 /* SVProgressHUD */,
 				B639952A2898CBA400EA88F1 /* SwiftUI */,
 				B582965627C5DF28004DD7A5 /* Transfers */,
+				C4F06F702B6915DE005C1A3D /* UpgradeEncouragementShowTimeTracker */,
 				5B1FEE27231FE4FA001271AF /* AppearanceManager.swift */,
 				BF22BFC8268D366D00460DB3 /* CallActionManager.swift */,
 				B571B21B2A8CC3BC00B8F112 /* CountdownTimer.swift */,
@@ -10280,8 +10302,10 @@
 		B5000FC32A1E219400E06478 /* Plan */ = {
 			isa = PBXGroup;
 			children = (
+				C4A016BB2B674DC100492185 /* Mocks */,
 				B57496E82A45B4BC00292A27 /* UpgradeAccountPlanViewModel_createAccountPlanViewModelTests.swift */,
 				B56717632A1F16A200CFF55A /* UpgradeAccountPlanViewModelTests.swift */,
+				C4A016B92B67338C00492185 /* UpgradeEncouragementViewModelTests.swift */,
 			);
 			path = Plan;
 			sourceTree = "<group>";
@@ -10428,6 +10452,7 @@
 			isa = PBXGroup;
 			children = (
 				B5EF0A7229F0EDF100B166B1 /* Repository */,
+				C4A016B52B672DEC00492185 /* UpgradeEncouragement */,
 				B59580A32A1478AE00E5FC1C /* Views */,
 			);
 			path = "Upgrade Account";
@@ -10562,7 +10587,10 @@
 				5BBC13E426CE64A30010115B /* Cells */,
 				2488EBC12A13B4F2005F910E /* Delegates */,
 				328984882A288FCC0049CD40 /* DomainExtensions */,
+				C4B97D7E2B67924C00EBA9E5 /* FuncCallRecorder */,
+				C4B97D732B6781F900EBA9E5 /* RandomNumberGenerator */,
 				248A03182A79024700F183A2 /* Shared Views */,
+				C4F06F762B691934005C1A3D /* UpgradeEncouragementShowTimeTracker */,
 				A874D305263FF683000861DB /* ViewControllers */,
 				99E1A9272A383E9700974FC9 /* Views */,
 				B63AEB172512040E000B8517 /* Array+Additions.swift */,
@@ -12391,6 +12419,24 @@
 			path = AudioPlayerScene;
 			sourceTree = "<group>";
 		};
+		C4A016B52B672DEC00492185 /* UpgradeEncouragement */ = {
+			isa = PBXGroup;
+			children = (
+				C4A016952B63AE8A00492185 /* UpgradeEncouragementViewModel.swift */,
+			);
+			path = UpgradeEncouragement;
+			sourceTree = "<group>";
+		};
+		C4A016BB2B674DC100492185 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				C4A016BC2B674DE100492185 /* MockRandomNumberGenerator.swift */,
+				C4A016BF2B67630F00492185 /* MockUpgradeAccountRouter.swift */,
+				C4F06F692B690C4B005C1A3D /* MockUpgradeEncouragementShowTimeTracker.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
 		C4AF4A8B2582833200594716 /* MiniPlayerScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -12403,6 +12449,30 @@
 				C4AF4A982582839A00594716 /* MiniPlayerViewRouter.swift */,
 			);
 			path = MiniPlayerScene;
+			sourceTree = "<group>";
+		};
+		C4B97D732B6781F900EBA9E5 /* RandomNumberGenerator */ = {
+			isa = PBXGroup;
+			children = (
+				C4B97D742B67820400EBA9E5 /* RandomNumberGeneratorTests.swift */,
+			);
+			path = RandomNumberGenerator;
+			sourceTree = "<group>";
+		};
+		C4B97D7E2B67924C00EBA9E5 /* FuncCallRecorder */ = {
+			isa = PBXGroup;
+			children = (
+				C4B97D802B67925C00EBA9E5 /* FuncCallRecorder.swift */,
+			);
+			path = FuncCallRecorder;
+			sourceTree = "<group>";
+		};
+		C4B97D8B2B77916500EBA9E5 /* RandomNumberGenerator */ = {
+			isa = PBXGroup;
+			children = (
+				C4B97D8C2B77916500EBA9E5 /* RandomNumberGenerator.swift */,
+			);
+			path = RandomNumberGenerator;
 			sourceTree = "<group>";
 		};
 		C4CBDD4E256EC8F800835CF5 /* Domain */ = {
@@ -12444,6 +12514,22 @@
 				C4EB6DBA2B4BF68B007A94E3 /* AppExitHandlerManager.m */,
 			);
 			path = AppExitHandler;
+			sourceTree = "<group>";
+		};
+		C4F06F702B6915DE005C1A3D /* UpgradeEncouragementShowTimeTracker */ = {
+			isa = PBXGroup;
+			children = (
+				C4F06F712B6915F7005C1A3D /* UpgradeEncouragementShowTimeTracker.swift */,
+			);
+			path = UpgradeEncouragementShowTimeTracker;
+			sourceTree = "<group>";
+		};
+		C4F06F762B691934005C1A3D /* UpgradeEncouragementShowTimeTracker */ = {
+			isa = PBXGroup;
+			children = (
+				C4F06F782B691941005C1A3D /* UpgradeEncouragementShowTimeTrackerTests.swift */,
+			);
+			path = UpgradeEncouragementShowTimeTracker;
 			sourceTree = "<group>";
 		};
 		E7EE7CCD2AC6DC9E00DBABCD /* AppDelegate */ = {
@@ -14696,6 +14782,7 @@
 				83E345A425B598A4006F2AD6 /* QuickAccessWidgetRecentItem+CoreDataProperties.swift in Sources */,
 				83C1B25225A7349000814074 /* QuickAccessWidgetViewModel.swift in Sources */,
 				9456571A2B615E3D00620DDF /* QuickActionsMenuDelegateHandler.swift in Sources */,
+				C4B97D8D2B77916500EBA9E5 /* RandomNumberGenerator.swift in Sources */,
 				B6C95969268561EF00CF73A8 /* RatingRequestMonitor.swift in Sources */,
 				B6C9CB0927FBBB9D0073BA1A /* RawPhotoUploadOperation.swift in Sources */,
 				7747B2D8208625B50011814E /* Reachability.m in Sources */,
@@ -15010,6 +15097,8 @@
 				B59580A92A1478D400E5FC1C /* UpgradeAccountPlanViewModel.swift in Sources */,
 				5B76EBD525DE8DF800CE77F2 /* UpgradeAccountRouter.swift in Sources */,
 				B5AD33C529D136A600707496 /* UpgradeAccountViewModel.swift in Sources */,
+				C4F06F742B691633005C1A3D /* UpgradeEncouragementShowTimeTracker.swift in Sources */,
+				C4A016962B63AE8A00492185 /* UpgradeEncouragementViewModel.swift in Sources */,
 				B59580B42A1478E800E5FC1C /* UpgradeSectionFeatureOfProView.swift in Sources */,
 				B59580B32A1478E800E5FC1C /* UpgradeSectionHeaderView.swift in Sources */,
 				C4709A9926B05DA2008FB0C8 /* UpgradeTableViewController+Additions.swift in Sources */,
@@ -15509,6 +15598,7 @@
 				B67B18C625CAB7B60022D6C0 /* FileSystemImageCacheClient+Additions.swift in Sources */,
 				A81971E426FDBE82007DC7B1 /* FileVersioningViewModelTests.swift in Sources */,
 				320262EE298C97EE0049688C /* FilterTypeEntityMappingTests.swift in Sources */,
+				C4B97D812B67925C00EBA9E5 /* FuncCallRecorder.swift in Sources */,
 				BFD4E22B2935F73C0011392C /* FutureMeetingRoomViewModel+Additions.swift in Sources */,
 				BFD4E2292935F67A0011392C /* FutureMeetingRoomViewModelTests.swift in Sources */,
 				BFC9B6B72A282151009AA403 /* FutureMeetingSectionTests.swift in Sources */,
@@ -15578,6 +15668,7 @@
 				9422B9F22A41A55C007AA5D1 /* MockPermissionAlertRouter.swift in Sources */,
 				32A9DECE28D198FF00ABC3F6 /* MockPhotoBrowserDataProvider.swift in Sources */,
 				9968B43C2B16E96500305DD2 /* MockPushNotificationControl.swift in Sources */,
+				C4A016BD2B674DE100492185 /* MockRandomNumberGenerator.swift in Sources */,
 				8394EB972643E5200064F741 /* MockRemoteVideoUseCase.swift in Sources */,
 				949704B72AB427BE00B2CA3A /* MockRenameViewRouter.swift in Sources */,
 				83669E8C2987BF6B003E8F74 /* MockScheduledMeetingUseCase.swift in Sources */,
@@ -15588,6 +15679,8 @@
 				C47E7C2E25D1A8C800DB6FF5 /* MockStreaminginfoRepository.swift in Sources */,
 				24DE90072AA765970039C846 /* MockStreamingInfoUseCase.swift in Sources */,
 				25ED566A2A98699E0063864F /* MockTransferWidgetResponder.swift in Sources */,
+				C4A016C02B67630F00492185 /* MockUpgradeAccountRouter.swift in Sources */,
+				C4F06F6A2B690C4B005C1A3D /* MockUpgradeEncouragementShowTimeTracker.swift in Sources */,
 				0D0B54622627A92D00E9BB16 /* MockUploadFileUseCase.swift in Sources */,
 				BF8895CA2630F4B3002A18CA /* MockUserImageUseCase.swift in Sources */,
 				25484F782B153E7800694850 /* MonitorCameraUploadBannerStatusProviderTests.swift in Sources */,
@@ -15645,7 +15738,7 @@
 				247FC1BE2A4F1C3700CC8518 /* QASettingsRouterTests.swift in Sources */,
 				24A619DF2A52735600EBB863 /* QASettingsViewModelTests.swift in Sources */,
 				948176C52A93E9DC00E3A181 /* QuickAccessWidgetManagerTests.swift in Sources */,
-				945657152B6148F800620DDF /* QuickActionsMenuDelegateHandlerTests.swift in Sources */,
+				C4B97D752B67820400EBA9E5 /* RandomNumberGeneratorTests.swift in Sources */,
 				24EF67102B3594BF002F1380 /* ReasonWaitingToPlayNilLogicControllerTests.swift in Sources */,
 				B6AADE952518456B009A874C /* RegionListViewModelTests.swift in Sources */,
 				949704B32AB425C500B2CA3A /* RenameViewModelTests.swift in Sources */,
@@ -15690,6 +15783,8 @@
 				A874D308263FF6C6000861DB /* TurnOnNotificationsViewModelTests.swift in Sources */,
 				B57496E92A45B4BC00292A27 /* UpgradeAccountPlanViewModel_createAccountPlanViewModelTests.swift in Sources */,
 				B56717642A1F16A200CFF55A /* UpgradeAccountPlanViewModelTests.swift in Sources */,
+				C4F06F792B691941005C1A3D /* UpgradeEncouragementShowTimeTrackerTests.swift in Sources */,
+				C4A016BA2B67338C00492185 /* UpgradeEncouragementViewModelTests.swift in Sources */,
 				B5C3ABAF2A71232B008C3708 /* UsageViewControllerTests.swift in Sources */,
 				9467F576299F9E6600A24D4A /* UserAttributeEntityMappingTests.swift in Sources */,
 				3289848A2A288FF20049CD40 /* UserAttributeUseCase+AdditionsTests.swift in Sources */,

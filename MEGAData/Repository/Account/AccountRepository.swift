@@ -5,7 +5,6 @@ import MEGASDKRepo
 import MEGASwift
 
 final class AccountRepository: NSObject, AccountRepositoryProtocol {
-    
     static var newRepo: AccountRepository {
         AccountRepository(sdk: MEGASdk.shared)
     }
@@ -67,6 +66,10 @@ final class AccountRepository: NSObject, AccountRepositoryProtocol {
     
     var isNewAccount: Bool {
         sdk.isNewAccount
+    }
+    
+    var accountCreationDate: Date? {
+        sdk.accountCreationDate
     }
     
     var bandwidthOverquotaDelay: Int64 {

@@ -40,6 +40,7 @@ public final class MockSdk: MEGASdk {
     private let copiedNodeHandles: [MEGAHandle: MEGAHandle]
     private let abTestValues: [String: Int]
     private let requestResult: Result<MEGARequest, MEGAError>
+    private let _accountCreationDate: Date?
     
     public private(set) var sendEvent_Calls = [(
         eventType: Int,
@@ -106,7 +107,8 @@ public final class MockSdk: MEGASdk {
                 file: String? = nil,
                 copiedNodeHandles: [MEGAHandle: MEGAHandle] = [:],
                 abTestValues: [String: Int] = [:],
-                requestResult: Result<MEGARequest, MEGAError> = .failure(MockError.failingError)
+                requestResult: Result<MEGARequest, MEGAError> = .failure(MockError.failingError),
+                accountCreationDate: Date? = nil
     ) {
         self.nodes = nodes
         self.rubbishNodes = rubbishNodes
@@ -146,6 +148,7 @@ public final class MockSdk: MEGASdk {
         self.copiedNodeHandles = copiedNodeHandles
         self.abTestValues = abTestValues
         self.requestResult = requestResult
+        self._accountCreationDate = accountCreationDate
         super.init()
     }
     
@@ -166,6 +169,8 @@ public final class MockSdk: MEGASdk {
     public override var isContactVerificationWarningEnabled: Bool { _isContactVerificationWarningEnabled }
     
     public override var isNewAccount: Bool { _isNewAccount }
+    
+    public override var accountCreationDate: Date? { _accountCreationDate }
     
     public override func node(forHandle handle: MEGAHandle) -> MEGANode? {
         nodeForHandleCallCount += 1

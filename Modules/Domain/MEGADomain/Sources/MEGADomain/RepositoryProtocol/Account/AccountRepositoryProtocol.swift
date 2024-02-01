@@ -7,6 +7,7 @@ public protocol AccountRepositoryProtocol: RepositoryProtocol {
     var isGuest: Bool { get }
     var isMasterBusinessAccount: Bool { get }
     var isNewAccount: Bool { get }
+    var accountCreationDate: Date? { get }
     var bandwidthOverquotaDelay: Int64 { get }
     func isLoggedIn() -> Bool
     func contacts() -> [UserEntity]
