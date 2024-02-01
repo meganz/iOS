@@ -347,7 +347,7 @@ struct CloudDriveViewControllerFactory {
             ),
             warningViewModel: makeOptionalWarningViewModel(
                 nodeSource,
-                shouldShowWarningBanner: config.isFromUnverifiedContactSharedFolder == true
+                config: config
             ),
             config: overriddenConfig,
             nodeSource: nodeSource,
@@ -610,15 +610,21 @@ struct CloudDriveViewControllerFactory {
     
     private func makeOptionalWarningViewModel(
         _ nodeSource: NodeSource,
-        shouldShowWarningBanner: Bool
+        config: NodeBrowserConfig
     ) -> WarningViewModel? {
         guard case let .node(parentNodeProvider) = nodeSource,
-              shouldShowWarningBanner
+              config.isFromUnverifiedContactSharedFolder == true || config.warningViewModel != nil
         else {
             return nil
         }
         
-        return makeWarningViewModel(parentNodeProvider: parentNodeProvider)
+        if config.isFromUnverifiedContactSharedFolder == true {
+            return makeWarningViewModel(warningType: .contactNotVerifiedSharedFolder(parentNodeProvider()?.name ?? ""))
+        } else if let warningViewModel = config.warningViewModel {
+            return makeWarningViewModel(warningType: .backupStatusError(warningViewModel.warningType.description))
+        }
+
+        return nil
     }
     
     private func makeOverriddenConfigIfNeeded(
@@ -726,8 +732,8 @@ struct CloudDriveViewControllerFactory {
         )
     }
     
-    private func makeWarningViewModel(parentNodeProvider: ParentNodeProvider) -> WarningViewModel {
-        WarningViewModel(warningType: .contactNotVerifiedSharedFolder(parentNodeProvider()?.name ?? ""))
+    private func makeWarningViewModel(warningType: WarningType) -> WarningViewModel {
+        WarningViewModel(warningType: warningType)
     }
     
     private func resultProvider(
