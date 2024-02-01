@@ -12,6 +12,18 @@ public class ChatRequestDelegate: NSObject, MEGAChatRequestDelegate {
         super.init()
     }
     
+    @objc public convenience init(rawSuccessCodes: [MEGAChatErrorType.RawValue], completion: @escaping (MEGAChatRequest?, MEGAChatError?) -> Void) {
+        let completion: MEGAChatRequestCompletion = { result in
+            switch result {
+            case let .success(request):
+                completion(request, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
+        }
+        self.init(successCodes: rawSuccessCodes.compactMap { MEGAChatErrorType(rawValue: $0) }, completion: completion)
+    }
+    
     @objc public convenience init(completion: @escaping (MEGAChatRequest?, MEGAChatError?) -> Void) {
         let completion: MEGAChatRequestCompletion = { result in
             switch result {
