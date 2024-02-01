@@ -3976,3 +3976,11 @@
 "calls.participantsInCall.muteParticipant.error"="Error muting %@";
 /* Calls: Muted by a host message */
 "calls.participantsInCall.mutedBy"="You’ve been muted by %@";
+/* Calls: SFU protocol is outdated then show update alert dialog with title */
+"calls.sfuOutdated.updateAppAlert.title"="Update required";
+/* Calls: SFU protocol is outdated then show update alert dialog with message */
+"calls.sfuOutdated.updateAppAlert.message"="You're not using the latest version of our app so you can't start or join calls. Update now to continue.";
+/* Calls: SFU protocol is outdated then show update alert dialog with update button */
+"calls.sfuOutdated.updateAppAlert.button.update"="Update";
+/* Calls: SFU protocol is outdated then show update alert dialog, with skip button */
+"calls.sfuOutdated.updateAppAlert.button.skip"="Skip";
