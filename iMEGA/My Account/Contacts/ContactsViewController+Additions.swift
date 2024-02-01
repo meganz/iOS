@@ -44,7 +44,6 @@ extension ContactsViewController {
     func setNavigationBarTitles() {
         let title = pageTitle
         self.navigationItem.title = title
-        setMenuCapableBackButtonWith(menuTitle: title)
     }
     
     @objc
