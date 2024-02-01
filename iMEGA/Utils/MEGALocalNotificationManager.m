@@ -3,7 +3,6 @@
 #ifndef MNZ_APP_EXTENSION
 #import "AppDelegate.h"
 #import "Helper.h"
-#import "MEGAChatGenericRequestDelegate.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
 #import "MEGA-Swift.h"
 #endif
@@ -12,6 +11,7 @@
 #import "MEGAStore.h"
 #import "NSString+MNZCategory.h"
 
+@import ChatRepo;
 @import MEGAL10nObjc;
 
 #ifdef MNZ_NOTIFICATION_EXTENSION
@@ -70,7 +70,7 @@
                     } else {
                         MEGALogWarning("[Chat Links Scalability] Display name not ready");
                         waitForUserAttributes = YES;
-                        MEGAChatGenericRequestDelegate *delegate = [MEGAChatGenericRequestDelegate.alloc initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
+                        ChatRequestDelegate *delegate = [ChatRequestDelegate.alloc initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
                             if (!error.type) {
                                 self.chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:self.chatRoom.chatId];
                                 content.subtitle = [self.chatRoom userDisplayNameForUserHandle:self.message.userHandle];
