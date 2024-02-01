@@ -125,14 +125,10 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
         case .listView:
             changeModeToListView()
         case .clearRubbishBin:
-            let alertController = UIAlertController(title: Strings.Localizable.emptyRubbishBinAlertTitle, message: nil, preferredStyle: .alert)
             
-            alertController.addAction(UIAlertAction(title: Strings.Localizable.cancel, style: .cancel))
-            alertController.addAction(UIAlertAction(title: Strings.Localizable.ok, style: .default) { _ in
-                MEGASdk.sharedSdk.cleanRubbishBin()
-            })
+            UIApplication.mnz_visibleViewController()
+                .present(makeCleanRubbishBinAlert(), animated: true, completion: nil)
             
-            UIApplication.mnz_visibleViewController().present(alertController, animated: true, completion: nil)
         case .mediaDiscovery:
             changeModeToMediaDiscovery()
         default:
@@ -267,6 +263,17 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
             let actionSheetVC = ActionSheetViewController(actions: actions, headerTitle: nil, dismissCompletion: nil, sender: nil)
             self.present(actionSheetVC, animated: true)
         }
-
+        
     }
+}
+
+func makeCleanRubbishBinAlert() -> UIViewController {
+    let alertController = UIAlertController(title: Strings.Localizable.emptyRubbishBinAlertTitle, message: nil, preferredStyle: .alert)
+    
+    alertController.addAction(UIAlertAction(title: Strings.Localizable.cancel, style: .cancel))
+    alertController.addAction(UIAlertAction(title: Strings.Localizable.ok, style: .default) { _ in
+        MEGASdk.sharedSdk.cleanRubbishBin()
+    })
+    
+    return alertController
 }

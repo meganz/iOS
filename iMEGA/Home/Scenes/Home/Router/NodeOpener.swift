@@ -92,11 +92,10 @@ final class NodeOpener {
         let mediaNodes = NSMutableArray(array: nodes)
         let isOwner = sdk.accessLevel(for: node) == .accessOwner
         let passedThroughDisplayMode: DisplayMode = displayMode?.carriedOverDisplayMode ?? .cloudDrive
-        let displayMode: DisplayMode = isOwner ? passedThroughDisplayMode : .sharedItem
         let photoBrowserForMediaNode = MEGAPhotoBrowserViewController.photoBrowser(
             withMediaNodes: mediaNodes,
             api: MEGASdk.sharedSdk,
-            displayMode: displayMode,
+            displayMode: isOwner ? passedThroughDisplayMode : .sharedItem,
             preferredIndex: UInt(truncatingIfNeeded: index)
         )
         navigationController?.present(photoBrowserForMediaNode, animated: true, completion: nil)

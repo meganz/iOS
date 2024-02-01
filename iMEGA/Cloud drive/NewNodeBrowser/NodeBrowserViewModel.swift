@@ -5,17 +5,23 @@ import MEGAL10n
 import Search
 
 class NodeBrowserViewModel: ObservableObject {
+
+    // retain for example context menu objects that need to leave as long as this view model
+    var actionHandlers: [Any] = []
+
     // View is in edit mode once user starts selecting nodes
     // Otherwise, view will be in regular mode, with Bool value indicating whether the back button
     // should be displayed or not
     enum ViewState {
         case editing
-        case regular(Bool)
+        case regular(showBackButton: Bool)
     }
 
     let searchResultsViewModel: SearchResultsViewModel
     let mediaDiscoveryViewModel: MediaDiscoveryContentViewModel? // not available for recent buckets yet
     let warningViewModel: WarningViewModel?
+    
+    var mediaContentDelegate: MediaContentDelegate?
     let config: NodeBrowserConfig
     var hasOnlyMediaNodesChecker: () async -> Bool
 
@@ -24,8 +30,8 @@ class NodeBrowserViewModel: ObservableObject {
     @Published var selected: Set<ResultId> = []
     @Published var editing = false
     @Published var title = ""
-    @Published var viewState: ViewState = .regular(false)
-
+    @Published var viewState: ViewState = .regular(showBackButton: false)
+    var isSelectionHidden = false
     private var subscriptions = Set<AnyCancellable>()
 
     let avatarViewModel: MyAvatarViewModel
@@ -75,12 +81,28 @@ class NodeBrowserViewModel: ObservableObject {
 
                 onUpdateSearchBarVisibility(!self.isMediaDiscoveryShown(for: viewMode))
             }.store(in: &subscriptions)
+        
+        $editing
+            .removeDuplicates()
+            .sink { [weak self] editing in
+                searchResultsViewModel.editing = editing
+                mediaDiscoveryViewModel?.editMode = editing ? .active : .inactive
+                if !editing {
+                    self?.selected.removeAll()
+                    // set here to go back from select mode of title to default title
+                }
+                self?.refreshTitle(isEditing: editing)
+            }
+            .store(in: &subscriptions)
+        
+        mediaContentDelegate?.isMediaDiscoverySelectionHandler = { [weak self] isSelectionHidden in
+            self?.isSelectionHidden = isSelectionHidden
+        }
 
         searchResultsViewModel.bridge.selectionChanged = { [weak self] selected in
             guard let self else { return }
             self.selected = selected
             self.refreshTitle()
-
         }
 
         searchResultsViewModel.bridge.editingChanged = { [weak self] editing in
@@ -129,11 +151,16 @@ class NodeBrowserViewModel: ObservableObject {
     }
 
     private func refreshViewState() {
-        viewState = editing ? .editing : .regular(isBackButtonShown)
+        viewState = editing ? .editing : .regular(showBackButton: isBackButtonShown)
     }
 
-    private func refreshTitle() {
-        title = titleBuilder(editing, selected.count)
+    // this is also triggered from outside when node folder is renamed
+    func refreshTitle() {
+        refreshTitle(isEditing: editing)
+    }
+    
+    private func refreshTitle(isEditing: Bool) {
+        title = titleBuilder(isEditing, selected.count)
     }
 
     // here we check the value of the automatic flag and also the actual variable that holds the state
@@ -163,6 +190,14 @@ class NodeBrowserViewModel: ObservableObject {
 
     func back() {
         onBack()
+    }
+    
+    func toggleSelection() {
+        editing.toggle()
+    }
+    
+    func changeViewMode(_ viewMode: ViewModePreferenceEntity) {
+        self.viewMode = viewMode
     }
     
     func selectAll() {

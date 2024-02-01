@@ -2,6 +2,7 @@ import Foundation
 import MEGADomain
 
 public struct MockNodeRepository: NodeRepositoryProtocol {
+    
     public static let newRepo = MockNodeRepository()
     
     private let node: NodeEntity?
@@ -100,5 +101,9 @@ public struct MockNodeRepository: NodeRepositoryProtocol {
         return .init(nodesCount: childrenNodes.count, nodeAt: { index in
             return childrenNodes[index]
         })
+    }
+    
+    public func childrenNames(of node: MEGADomain.NodeEntity) -> [String]? {
+        nil
     }
 }

@@ -13,14 +13,28 @@ typealias ParentNodeProvider = () -> NodeEntity?
 
 enum NodeSource {
     /// we are using a closure returning an optional entity as
-    /// when app is started offline, root node of the sdk is nil,
-    /// but we need to have a way to attempt to re-aquire the node
+    /// when app is started offline, root node of the SDK is nil,
+    /// but we need to have a way to attempt to re-acquire the node
     /// later when the app becomes connected
     case node(ParentNodeProvider)
     /// Can't use modern RecentActionBucketEntity as currently there's no way
     /// to create MEGARecentActionBucket from RecentActionBucketEntity [like we do with nodes]
     /// which is needed in the legacy CloudDriveViewController implementation
+    /// This NodeSource mode should be used to construct a mode
+    /// of showing nodes like in recent mode of legacy cloud drive, used in the Home -> multiple Recents files
+    /// which shows CloudDriveVC in sectioned table view mode
+    /// see useNewCloudDrive method and [FM-1691]
     case recentActionBucket(MEGARecentActionBucket)
+    
+    var isRoot: Bool {
+        switch self {
+        case .node(let parentNodeProvider):
+            let node = parentNodeProvider()
+            return node?.nodeType == .root
+        case .recentActionBucket:
+            return false
+        }
+    }
 }
 
 extension DisplayMode {
@@ -45,7 +59,7 @@ struct NodeBrowserConfig {
     var warningViewModel: WarningViewModel?
     // this should enabled for non-root nodes
     var mediaDiscoveryAutomaticDetectionEnabled: () -> Bool = { false }
-
+    
     static var `default`: Self {
         .init()
     }
@@ -76,14 +90,21 @@ struct CloudDriveViewControllerFactory {
     private let mediaAnalyticsUseCase: any MediaDiscoveryAnalyticsUseCaseProtocol
     private let mediaDiscoveryUseCase: any MediaDiscoveryUseCaseProtocol
     private let homeScreenFactory: HomeScreenFactory
-    private let nodeRepository: any NodeRepositoryProtocol
+    private let nodeUseCase: any NodeUseCaseProtocol
     private let preferences: any PreferenceUseCaseProtocol
     private let resultsMapper: SearchResultMapper
     private let sdk: MEGASdk
     private let userDefaults: UserDefaults
+    private let contextMenuConfigFactory: CloudDriveContextMenuConfigFactory
+    private let backupsUseCase: any BackupsUseCaseProtocol
     private let avatarViewModel: MyAvatarViewModel
-    private let userProfileOpener: (UINavigationController) -> Void
-
+    private let nodeInfoRouter: NodeInfoRouter
+    private let sharedItemsRouter: SharedItemsViewRouter
+    private let nodeShareRouter: NodeShareRouter
+    private let shareUseCase: any ShareUseCaseProtocol
+    private let rubbishBinUseCase: any RubbishBinUseCaseProtocol
+    private let nodeActions: NodeActions
+    
     init(
         featureFlagProvider: some FeatureFlagProviderProtocol,
         abTestProvider: some ABTestProviderProtocol,
@@ -95,11 +116,18 @@ struct CloudDriveViewControllerFactory {
         mediaDiscoveryUseCase: some MediaDiscoveryUseCaseProtocol,
         homeScreenFactory: HomeScreenFactory,
         resultsMapper: SearchResultMapper,
-        nodeRepository: some NodeRepositoryProtocol,
+        nodeUseCase: some NodeUseCaseProtocol,
         preferences: some PreferenceUseCaseProtocol,
         sdk: MEGASdk,
         userDefaults: UserDefaults,
-        userProfileOpener: @escaping (UINavigationController) -> Void
+        contextMenuConfigFactory: CloudDriveContextMenuConfigFactory,
+        backupsUseCase: some BackupsUseCaseProtocol,
+        nodeInfoRouter: NodeInfoRouter,
+        sharedItemsRouter: SharedItemsViewRouter,
+        nodeShareRouter: NodeShareRouter,
+        shareUseCase: some ShareUseCaseProtocol,
+        rubbishBinUseCase: some RubbishBinUseCaseProtocol,
+        nodeActions: NodeActions
     ) {
         self.featureFlagProvider = featureFlagProvider
         self.abTestProvider = abTestProvider
@@ -111,12 +139,19 @@ struct CloudDriveViewControllerFactory {
         self.mediaDiscoveryUseCase = mediaDiscoveryUseCase
         self.homeScreenFactory = homeScreenFactory
         self.resultsMapper = resultsMapper
-        self.nodeRepository = nodeRepository
+        self.nodeUseCase = nodeUseCase
         self.preferences = preferences
         self.sdk = sdk
         self.userDefaults = userDefaults
-        self.userProfileOpener = userProfileOpener
-
+        self.contextMenuConfigFactory = contextMenuConfigFactory
+        self.backupsUseCase = backupsUseCase
+        self.nodeInfoRouter = nodeInfoRouter
+        self.nodeShareRouter = nodeShareRouter
+        self.sharedItemsRouter = sharedItemsRouter
+        self.shareUseCase = shareUseCase
+        self.rubbishBinUseCase = rubbishBinUseCase
+        self.nodeActions = nodeActions
+        
         self.avatarViewModel = MyAvatarViewModel(
             megaNotificationUseCase: MEGANotificationUseCase(
                 userAlertsClient: .live
@@ -134,10 +169,10 @@ struct CloudDriveViewControllerFactory {
                 accountUseCase: AccountUseCase(repository: AccountRepository.newRepo)
             )
         )
-
+        
         self.avatarViewModel.inputs.viewIsReady()
     }
-
+    
     static func make(nc: UINavigationController? = nil) -> CloudDriveViewControllerFactory {
         let sdk = MEGASdk.shared
         let homeFactory = HomeScreenFactory()
@@ -148,6 +183,12 @@ struct CloudDriveViewControllerFactory {
         let router = homeFactory.makeRouter(
             navController: navController,
             tracker: tracker
+        )
+        
+        let nodeUseCase = homeFactory.makeNodeUseCase()
+        let backupsUseCase = BackupsUseCase(
+            backupsRepository: BackupsRepository.newRepo,
+            nodeRepository: NodeRepository.newRepo
         )
         
         return CloudDriveViewControllerFactory(
@@ -169,27 +210,33 @@ struct CloudDriveViewControllerFactory {
                 filesSearchRepository: FilesSearchRepository(sdk: sdk),
                 nodeUpdateRepository: NodeUpdateRepository(sdk: sdk)
             ),
-
+            
             homeScreenFactory: homeFactory,
             resultsMapper: SearchResultMapper(
                 sdk: sdk,
                 nodeDetailUseCase: homeFactory.makeNodeDetailUseCase(),
-                nodeUseCase: homeFactory.makeNodeUseCase(),
+                nodeUseCase: nodeUseCase,
                 mediaUseCase: homeFactory.makeMediaUseCase()
             ),
-            nodeRepository: NodeRepository.newRepo,
+            nodeUseCase: nodeUseCase,
             preferences: PreferenceUseCase.default,
             sdk: sdk,
             userDefaults: .standard,
-            userProfileOpener: { navigationController in
-                MyAccountHallRouter(
-                    myAccountHallUseCase: MyAccountHallUseCase(repository: AccountRepository.newRepo),
-                    purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
-                    shareUseCase: ShareUseCase(repo: ShareRepository.newRepo),
-                    networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
-                    navigationController: navigationController
-                ).start()
-            }
+            contextMenuConfigFactory: CloudDriveContextMenuConfigFactory(
+                backupsUseCase: backupsUseCase,
+                nodeUseCase: nodeUseCase
+            ),
+            backupsUseCase: backupsUseCase,
+            nodeInfoRouter: .init(
+                navigationController: nc
+            ),
+            sharedItemsRouter: SharedItemsViewRouter(),
+            nodeShareRouter: NodeShareRouter(
+                viewController: nc
+            ),
+            shareUseCase: ShareUseCase(repo: ShareRepository.newRepo), 
+            rubbishBinUseCase: DIContainer.rubbishBinUseCase,
+            nodeActions: .makeActions(sdk: sdk, nc: nc)
         )
     }
     
@@ -254,7 +301,7 @@ struct CloudDriveViewControllerFactory {
             image: UIImage.cloudDriveIcon,
             selectedImage: nil
         )
-
+        
         if
             let legacy = vc as? (any MyAvatarPresenterProtocol),
             config.showsAvatar == true {
@@ -263,7 +310,10 @@ struct CloudDriveViewControllerFactory {
         
         return navigationController
     }
-
+    
+    // this method is ripe for extracting to separate file
+    // not doing this now as 2 develops are actively working with this file
+    // This factory should be split into 2 , one that just creates new , one that just creates old CDVC
     private func newCloudDriveViewController(
         nodeSource: NodeSource,
         config: NodeBrowserConfig
@@ -272,40 +322,153 @@ struct CloudDriveViewControllerFactory {
         // it's an nil safe check for root node basically
         // it would be very much useful to make media discovery work with
         // MEGARecentActionBucket to load arbitrary list of nodes
-        let overriddenConfig = makeOverriddenConfigIfNeeded(nodeSource: nodeSource, config: config)
-        let searchResultsVM = self.makeSearchResultsViewModel(
+        let overriddenConfig = makeOverriddenConfigIfNeeded(
+            nodeSource: nodeSource,
+            config: config
+        )
+        
+        let searchResultsVM = makeSearchResultsViewModel(
             nodeSource: nodeSource,
             config: overriddenConfig
         )
+        
         let searchControllerWrapper = SearchControllerWrapper(
             onSearch: { searchResultsVM.bridge.queryChanged($0) },
             onCancel: { searchResultsVM.bridge.queryCleaned() }
         )
         
-        let view = NodeBrowserView(
-            viewModel: .init(
-                searchResultsViewModel: searchResultsVM,
-                mediaDiscoveryViewModel: self.makeOptionalMediaDiscoveryViewModel(nodeSource),
-                warningViewModel: self.makeOptionalWarningViewModel(
-                    nodeSource,
-                    shouldShowWarningBanner: config.isFromUnverifiedContactSharedFolder == true || config.warningViewModel != nil
-                ),
-                config: overriddenConfig,
+        let mediaContentDelegate = MediaContentDelegate()
+        
+        let nodeBrowserViewModel = NodeBrowserViewModel(
+            searchResultsViewModel: searchResultsVM,
+                mediaDiscoveryViewModel: makeOptionalMediaDiscoveryViewModel(
                 nodeSource: nodeSource,
-                avatarViewModel: self.avatarViewModel,
-                hasOnlyMediaNodesChecker: self.makeHasOnlyMediaChecker(nodeSource: nodeSource),
-                titleBuilder: { isEditing, selectedNodesCount in
-                    titleFor(
-                        nodeSource,
-                        config: overriddenConfig,
-                        isEditModeActive: isEditing,
-                        selectedNodesArrayCount: selectedNodesCount
-                    ) ?? ""
-                },
-                onOpenUserProfile: { self.userProfileOpener(self.navigationController) },
-                onUpdateSearchBarVisibility: { searchControllerWrapper.onUpdateSearchBarVisibility?($0) },
-                onBack: { self.navigationController.popViewController(animated: true) }
-            )
+                mediaContentDelegate: mediaContentDelegate
+            ),
+            warningViewModel: makeOptionalWarningViewModel(
+                nodeSource,
+                shouldShowWarningBanner: config.isFromUnverifiedContactSharedFolder == true
+            ),
+            config: overriddenConfig,
+            nodeSource: nodeSource,
+            avatarViewModel: avatarViewModel,
+            hasOnlyMediaNodesChecker: makeVisualMediaChecker(nodeSource: nodeSource, mode: .containsExclusivelyMedia),
+            titleBuilder: { isEditing, selectedNodesCount in
+                // The code below is needed due the fact that most of new code uses NodeEntity struct
+                // and for the code to be robust and reuse the title logic, title should be derived from
+                // from the actual node for normal and renaming scenarios.
+                // For this reason, instead of passing the immutable NodeEntity struct, we
+                // are supplying a closure that caches the node handle
+                // and accesses actual node from the SDK data base whenever need, guaranteeing
+                // consistency between screen title and SDK state
+                let persistentNodeSourceProvider: () -> NodeSource = {
+                    switch nodeSource {
+                    case .node(let provider):
+                        guard let nodeHandle = provider()?.handle else { return nodeSource }
+                        return .node({
+                            nodeUseCase.nodeForHandle(nodeHandle)
+                        })
+                    case .recentActionBucket:
+                        return nodeSource
+                    }
+                }
+                return titleFor(
+                    persistentNodeSourceProvider(),
+                    config: overriddenConfig,
+                    isEditModeActive: isEditing,
+                    selectedNodesArrayCount: selectedNodesCount
+                ) ?? ""
+            },
+            onOpenUserProfile: { nodeActions.userProfileOpener(self.navigationController) },
+            onUpdateSearchBarVisibility: { searchControllerWrapper.onUpdateSearchBarVisibility?($0) },
+            onBack: { self.navigationController.popViewController(animated: true) }
+        )
+        
+        let displayMenuDelegateHandler = DisplayMenuDelegateHandler(
+            rubbishBinUseCase: rubbishBinUseCase,
+            toggleSelection: { [weak nodeBrowserViewModel] in
+                nodeBrowserViewModel?.toggleSelection()
+            },
+            changeViewMode: { [weak nodeBrowserViewModel] in
+                nodeBrowserViewModel?.changeViewMode($0)
+            }
+        )
+        
+        nodeBrowserViewModel.mediaContentDelegate = mediaContentDelegate
+        nodeBrowserViewModel.actionHandlers.append(displayMenuDelegateHandler)
+        
+        displayMenuDelegateHandler.presenterViewController = navigationController
+        
+        // nodeInfoRouter, sharedItemsRouter and nodeShareRouter used below are retained inside the closure
+        // so that their lifetime is the same as Delegate itself, which is retained
+        // by NodeBrowserViewMode
+        let quickActionsMenuDelegateHandler = QuickActionsMenuDelegateHandler(
+            showNodeInfo: {
+                nodeInfoRouter.showInformation(for: $0)
+            },
+            manageShare: {
+                nodeShareRouter.pushManageSharing(for: $0, on: navigationController)
+            },
+            shareFolders: { nodes in
+                Task { @MainActor [shareUseCase] in
+                    do {
+                        _ = try await shareUseCase.createShareKeys(forNodes: nodes)
+                        sharedItemsRouter.showShareFoldersContactView(withNodes: nodes)
+                    } catch {
+                        SVProgressHUD.showError(withStatus: error.localizedDescription)
+                    }
+                }
+            },
+            download: { nodes in
+                let transfers = nodes.map {
+                    CancellableTransfer(
+                        handle: $0.handle,
+                        name: nil,
+                        appData: nil,
+                        priority: false,
+                        isFile: $0.isFile,
+                        type: .download
+                    )
+                }
+                nodeActions.nodeDownloader(transfers)
+            },
+            presentGetLink: { nodeActions.getLinkOpener($0) }, 
+            copy: { nodeActions.copyNode($0) },
+            removeLink: { nodeActions.removeLink($0) },
+            removeSharing: { nodeActions.removeSharing($0) },
+            rename: {
+                nodeActions.rename(
+                    $0, { [weak nodeBrowserViewModel] in
+                        nodeBrowserViewModel?.refreshTitle()
+                    }
+                )
+            },
+            leaveSharing: { nodeActions.leaveSharing($0) },
+            nodeSource: nodeSource
+        )
+        
+        let rubbishBinMenuDelegate = RubbishBinMenuDelegateHandler(
+            restore: { nodeActions.restoreFromRubbishBin($0) },
+            showNodeInfo: { nodeInfoRouter.showInformation(for: $0) },
+            showNodeVersions: { nodeActions.showNodeVersions($0) },
+            remove: { nodeActions.remove($0) },
+            nodeSource: nodeSource
+        )
+        
+        let contextMenuManager = ContextMenuManager(
+            displayMenuDelegate: displayMenuDelegateHandler,
+            quickActionsMenuDelegate: quickActionsMenuDelegateHandler,
+            uploadAddMenuDelegate: UploadAddMenuDelegateHandler(),
+            rubbishBinMenuDelegate: rubbishBinMenuDelegate,
+            createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo)
+        )
+        
+        nodeBrowserViewModel.actionHandlers.append(contextMenuManager)
+        nodeBrowserViewModel.actionHandlers.append(quickActionsMenuDelegateHandler)
+        nodeBrowserViewModel.actionHandlers.append(rubbishBinMenuDelegate)
+        
+        let view = NodeBrowserView(
+            viewModel: nodeBrowserViewModel
         )
         let vc = SearchBarUIHostingController(
             rootView: view,
@@ -315,10 +478,114 @@ struct CloudDriveViewControllerFactory {
                 config: overriddenConfig
             )
         )
+        
+        let setContextMenuButton = { [weak nodeBrowserViewModel] in
+            let viewMode: ViewModePreferenceEntity = nodeBrowserViewModel?.viewMode ?? .list
+            let isSelectionHidden = nodeBrowserViewModel?.isSelectionHidden ?? false
+            Task { @MainActor in
+                let navItems = await navItems(
+                    nodeSource: nodeSource,
+                    config: config,
+                    currentViewMode: viewMode,
+                    contextMenuManager: contextMenuManager,
+                    isSelectionHidden: isSelectionHidden
+                )
+                vc.navigationItem.rightBarButtonItems = navItems.rightNavBarItems
+            }
+        }
+        // setting the refreshMenu handler so that context menu handlers can trigger it
+        displayMenuDelegateHandler.refreshMenu = setContextMenuButton
+        quickActionsMenuDelegateHandler.refreshMenu = setContextMenuButton
+        setContextMenuButton()
+        
         return vc
     }
     
-    private func makeHasOnlyMediaChecker(nodeSource: NodeSource) -> () async -> Bool {
+    // Private structure that carries actual button items
+    // to enable pure function and testing
+    struct NavItems {
+        let leftBarButtonItem: UIBarButtonItem?
+        let rightNavBarItems: [UIBarButtonItem]
+        
+        static let empty = NavItems(
+            leftBarButtonItem: nil,
+            rightNavBarItems: []
+        )
+    }
+    
+    @MainActor
+    // Method produces properly configured (with icons, titles and menus)
+    // navigation bar button items
+    private func navItems(
+        nodeSource: NodeSource,
+        config: NodeBrowserConfig,
+        currentViewMode: ViewModePreferenceEntity,
+        contextMenuManager: ContextMenuManager,
+        isSelectionHidden: Bool
+    ) async -> NavItems {
+        
+        guard case let .node(nodeProvider) = nodeSource else {
+            return .empty
+        }
+        
+        let parentNode = nodeProvider()
+        
+        let hasMedia = await makeVisualMediaChecker(nodeSource: nodeSource, mode: .containsSomeMedia)()
+        let accessType = nodeUseCase.nodeAccessLevel(nodeHandle: parentNode?.handle ?? .invalid)
+        
+        let menuConfig = contextMenuConfigFactory.contextMenuConfiguration(
+            parentNode: parentNode,
+            nodeAccessType: accessType,
+            currentViewMode: currentViewMode,
+            isSelectionHidden: isSelectionHidden,
+            showMediaDiscovery: sharedShouldShowMediaDiscoveryContextMenuOption(
+                mediaDiscoveryDetectionEnabled: !nodeSource.isRoot,
+                hasMediaFiles: hasMedia,
+                isFromSharedItem: config.isFromSharedItem == true,
+                viewModePreference: currentViewMode
+                
+            ),
+            sortOrder: .defaultAsc,
+            displayMode: config.displayMode?.carriedOverDisplayMode ?? .cloudDrive,
+            isFromViewInFolder: config.isFromViewInFolder == true
+        )
+        guard let menuConfig else {
+            return .empty
+        }
+        
+        guard let menu = contextMenuManager.contextMenu(with: menuConfig) else {
+            fatalError("menu should be available")
+        }
+        
+        let contextBarButtonItem = UIBarButtonItem(
+            image: UIImage.moreNavigationBar,
+            menu: menu
+        )
+        
+        let makeLeftBarButtonItem: () -> UIBarButtonItem? = {
+            // cancel button needs to be produced here when VC is presented modally
+            // to enable dismissal
+            nil
+        }
+        
+        return .init(
+            leftBarButtonItem: makeLeftBarButtonItem(),
+            rightNavBarItems: [contextBarButtonItem]
+        )
+    }
+    
+    enum MediaCheckerMode {
+        case containsExclusivelyMedia
+        case containsSomeMedia
+    }
+    
+    /// checks if children of  given node are all visual media (video/image) or if there is at least one media element
+    /// used to decide if we need to show the media discovery mode automatically and if media discovery
+    /// view mode option should be shown at all in the context menu
+    private func makeVisualMediaChecker(
+        nodeSource: NodeSource,
+        mode: MediaCheckerMode
+    ) -> () async -> Bool {
         switch nodeSource {
         case .node(let provider):
             // in here we produce a closure that can asynchronously check
@@ -326,25 +593,21 @@ struct CloudDriveViewControllerFactory {
             return {
                 guard
                     let node = provider(),
-                    let children = await nodeRepository.children(of: node)
+                    let children = await nodeUseCase.childrenOf(node: node)
                 else { return false }
                 
-                return children.containsOnlyVisualMedia()
+                switch mode {
+                case .containsExclusivelyMedia:
+                    return children.containsOnlyVisualMedia()
+                case .containsSomeMedia:
+                    return children.containsVisualMedia()
+                }
             }
         case .recentActionBucket:
             return { false }
         }
     }
     
-    private func makeOptionalMediaDiscoveryViewModel(_ nodeSource: NodeSource) -> MediaDiscoveryContentViewModel? {
-        guard case let .node(parentNodeProvider) = nodeSource else { return nil }
-        
-        return makeMediaDiscoveryViewModel(
-            parentNodeProvider: parentNodeProvider,
-            isShowingAutomatically: false // this is set later in .task modifier when we decide if need to show the banner explaining automatic MD presentation
-        )
-    }
-
     private func makeOptionalWarningViewModel(
         _ nodeSource: NodeSource,
         shouldShowWarningBanner: Bool
@@ -354,10 +617,10 @@ struct CloudDriveViewControllerFactory {
         else {
             return nil
         }
-
+        
         return makeWarningViewModel(parentNodeProvider: parentNodeProvider)
     }
-
+    
     private func makeOverriddenConfigIfNeeded(
         nodeSource: NodeSource,
         config: NodeBrowserConfig
@@ -376,7 +639,11 @@ struct CloudDriveViewControllerFactory {
                 else {
                     return false
                 }
-
+                
+                if config.displayMode == .rubbishBin {
+                    return false
+                }
+                
                 return preferences[.shouldDisplayMediaDiscoveryWhenMediaOnly] ?? true
             }
             return overriddenConfig
@@ -400,8 +667,12 @@ struct CloudDriveViewControllerFactory {
         let searchBridge = SearchBridge(
             selection: {
                 router.didTapNode(
-                    nodeHandle: $0.id,
-                    allNodeHandles: nil,
+                    nodeHandle: $0.result.id,
+                    // the siblings of the selected node are critical to be injected,
+                    // for several features of the app to function, like
+                    // audio player and image gallery
+                    // for more details inspect NodeOpener.swift and it's openNode method
+                    allNodeHandles: $0.nonEmptyOrNilSiblingsIds(),
                     displayMode: config.displayMode?.carriedOverDisplayMode,
                     warningViewModel: config.warningViewModel
                 )
@@ -438,7 +709,7 @@ struct CloudDriveViewControllerFactory {
         bridge.updateBottomInsetTrampoline = { [weak searchBridge] inset in
             searchBridge?.updateBottomInset(inset)
         }
-
+        
         return SearchResultsViewModel(
             resultsProvider: resultProvider(
                 for: nodeSource,
@@ -454,11 +725,11 @@ struct CloudDriveViewControllerFactory {
             keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: .default)
         )
     }
-
+    
     private func makeWarningViewModel(parentNodeProvider: ParentNodeProvider) -> WarningViewModel {
         WarningViewModel(warningType: .contactNotVerifiedSharedFolder(parentNodeProvider()?.name ?? ""))
     }
-
+    
     private func resultProvider(
         for nodeSource: NodeSource,
         searchBridge: SearchBridge
@@ -492,7 +763,7 @@ struct CloudDriveViewControllerFactory {
             return .init(customLocation: CustomViewModeLocation.Generic)
         }
     }
-
+    
     private func titleFor(
         _ nodeSource: NodeSource,
         config: NodeBrowserConfig,
@@ -519,7 +790,7 @@ struct CloudDriveViewControllerFactory {
             return nil
         }
     }
-
+    
     private func legacyCloudDriveViewController(
         nodeSource: NodeSource,
         options: NodeBrowserConfig
@@ -567,35 +838,34 @@ struct CloudDriveViewControllerFactory {
         return vc
     }
     
+    private func makeOptionalMediaDiscoveryViewModel(
+        nodeSource: NodeSource,
+        mediaContentDelegate: MediaContentDelegate
+    ) -> MediaDiscoveryContentViewModel? {
+        guard case let .node(parentNodeProvider) = nodeSource else { return nil }
+        
+        return makeMediaDiscoveryViewModel(
+            parentNodeProvider: parentNodeProvider,
+            mediaContentDelegate: mediaContentDelegate,
+            isShowingAutomatically: false // this is set later in .task modifier when we decide if need to show the banner explaining automatic MD presentation
+        )
+    }
+    
     private func makeMediaDiscoveryViewModel(
         parentNodeProvider: @escaping ParentNodeProvider,
+        mediaContentDelegate: MediaContentDelegate,
         isShowingAutomatically: Bool
     ) -> MediaDiscoveryContentViewModel {
-            .init(
+        .init(
             contentMode: .mediaDiscovery,
             parentNodeProvider: parentNodeProvider,
-            //            sortOrder: viewModel.sortOrder(for: .mediaDiscovery),
+            // Sorting to be handled in [FM-1776]
+            // sortOrder: viewModel.sortOrder(for: .mediaDiscovery),
             sortOrder: .nameAscending,
             isAutomaticallyShown: isShowingAutomatically,
-            delegate: MediaContentDelegate(),
+            delegate: mediaContentDelegate,
             analyticsUseCase: mediaAnalyticsUseCase,
             mediaDiscoveryUseCase: mediaDiscoveryUseCase
         )
-    }
-}
-
-// Implementing of the selection of nodes
-// will be implemented here [FM-1463]
-class MediaContentDelegate: MediaDiscoveryContentDelegate {
-    func selectedPhotos(selected: [MEGADomain.NodeEntity], allPhotos: [MEGADomain.NodeEntity]) {
-        // Connect select photos action
-    }
-    
-    func isMediaDiscoverySelection(isHidden: Bool) {
-        // Connect media discovery selection action
-    }
-    
-    func mediaDiscoverEmptyTapped(menuAction: EmptyMediaDiscoveryContentMenuAction) {
-        // Connect empty tapped action
     }
 }

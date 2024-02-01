@@ -4,6 +4,13 @@ import SearchMock
 import SwiftUI
 import XCTest
 
+extension SearchResultSelection: Equatable {
+    public static func == (lhs: SearchResultSelection, rhs: SearchResultSelection) -> Bool {
+        lhs.result == rhs.result &&
+        lhs.siblings() == rhs.siblings()
+    }
+}
+
 fileprivate extension Color {
     static let deselectedColor = SearchConfig.testConfig.chipAssets.normalBackground
     static let selectedColor = SearchConfig.testConfig.chipAssets.selectedBackground
@@ -16,7 +23,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         let sut: SearchResultsViewModel
         let resultsProvider: MockSearchResultsProviding
         let bridge: SearchBridge
-        var selectedResults: [SearchResult] = []
+        var selectedResults: [SearchResultSelection] = []
         var contextTriggeredResults: [SearchResult] = []
         var keyboardResignedCount = 0
         var chipTaps: [(SearchChipEntity, Bool)] = []
@@ -27,7 +34,7 @@ final class SearchResultsViewModelTests: XCTestCase {
             self.testcase = testcase
             resultsProvider = MockSearchResultsProviding()
             
-            var selection: (SearchResult) -> Void = { _ in }
+            var selection: (SearchResultSelection) -> Void = { _ in }
             var context: (SearchResult, UIButton) -> Void = { _, _ in }
             var chipTapped: (SearchChipEntity, Bool) -> Void = { _, _ in }
             var keyboardResigned = {}
@@ -257,7 +264,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         await harness.sut.queryChanged(to: "query")
         let item = try XCTUnwrap(harness.sut.listItems.first)
         item.actions.selectionAction()
-        XCTAssertEqual(harness.selectedResults, [.resultWith(id: 1, title: "title")])
+        XCTAssertEqual(harness.selectedResults, [.resultSelectionWith(id: 1, title: "title")])
     }
     
     func testOnContextAction_passesSelectedResultViaBridge() async throws {

@@ -1,5 +1,6 @@
 public protocol RubbishBinUseCaseProtocol {
     func isSyncDebrisNode(_ node: NodeEntity) -> Bool
+    func cleanRubbishBin() 
 }
 
 public struct RubbishBinUseCase<T: RubbishBinRepositoryProtocol>: RubbishBinUseCaseProtocol {
@@ -11,5 +12,9 @@ public struct RubbishBinUseCase<T: RubbishBinRepositoryProtocol>: RubbishBinUseC
     
     public func isSyncDebrisNode(_ node: NodeEntity) -> Bool {
         rubbishBinRepository.isSyncDebrisNode(node)
+    }
+    
+    public func cleanRubbishBin() {
+        rubbishBinRepository.cleanRubbishBin()
     }
 }

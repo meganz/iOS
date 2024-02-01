@@ -40,7 +40,7 @@ import Foundation
 ///     - sharedLinkStatus: Indicates current status of shared link
 ///     - isArchivedChatsVisible: Show archived chats action if exists some chat archived
 ///
-public struct CMConfigEntity {
+public struct CMConfigEntity: Sendable {
     public let menuType: CMElementTypeEntity
     public var viewMode: ViewModePreferenceEntity?
     public var accessLevel: ShareAccessLevelEntity?

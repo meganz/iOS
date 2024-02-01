@@ -1,4 +1,4 @@
-public enum DNDTurnOnOptionEntity: CaseIterable {
+public enum DNDTurnOnOptionEntity: CaseIterable, Sendable {
     case thirtyMinutes
     case oneHour
     case sixHours

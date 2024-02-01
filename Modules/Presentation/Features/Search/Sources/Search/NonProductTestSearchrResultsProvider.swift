@@ -5,6 +5,10 @@ import UIKit
 /// Development only implementation, will be moved to SearchMocks on next MR once
 /// we have actual results provider using real SDK
 public struct NonProductionTestResultsProvider: SearchResultsProviding {
+    public func currentResultIds() -> [ResultId] {
+        []
+    }
+    
     public var empty: Bool
     public init(empty: Bool = false) {
         self.empty = empty
@@ -14,7 +18,7 @@ public struct NonProductionTestResultsProvider: SearchResultsProviding {
         
         if
             queryRequest == .initial ||
-                queryRequest == .empty
+            queryRequest == .empty
         {
             return all
         }

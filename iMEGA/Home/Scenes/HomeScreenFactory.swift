@@ -237,10 +237,14 @@ final class HomeScreenFactory: NSObject {
         // this bridge is needed to do a searchBar <-> searchResults -> homeScreen communication without coupling this to
         // MEGA app level delegates. Using simple closures to pass data back and forth
         let searchBridge = SearchBridge(
-            selection: { [weak sdk] result in
-                router.didTapNode(nodeHandle: result.id)
+            selection: { [weak sdk] selection in
+                let resultId = selection.result.id
+                // currently, home search results (legacy and new) page does not support
+                // image gallery browsing, to enable this , allNodes need to be supplied to router
+                // see CloudDriveViewControllerFactory.swift for an example
+                router.didTapNode(nodeHandle: resultId)
                 // map from result id to a node to check if this is folder or a file
-                if let node = sdk?.node(forHandle: result.id) {
+                if let node = sdk?.node(forHandle: resultId) {
                     let event = SearchItemSelectedEvent(
                         searchItemType: node.isFolder() ? .folder : .file
                     )
