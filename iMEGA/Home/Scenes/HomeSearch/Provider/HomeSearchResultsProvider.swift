@@ -8,6 +8,7 @@ import Search
 
 /// abstraction into a search results
 final class HomeSearchResultsProvider: SearchResultsProviding {
+    
     private let searchFileUseCase: any SearchFileUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
     private let mediaUseCase: any MediaUseCaseProtocol
@@ -26,7 +27,6 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
     private var loadMorePagesOffset = 20
     private var isLastPageReached = false
     private var availableChips: [SearchChipEntity]
-
     private let onSearchResultUpdated: (SearchResult) -> Void
     
     // The node from which we want start searching from,
@@ -75,6 +75,14 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         } else {
             return try await searchInitially(queryRequest: queryRequest)
         }
+    }
+    
+    func currentResultIds() -> [Search.ResultId] {
+        guard let nodeList else {
+            return []
+        }
+        // need to cache this probably so that subsequent opens are fast for large datasets
+        return nodeList.toNodeEntities().map { $0.id }
     }
     
     func searchInitially(queryRequest: SearchQuery) async throws -> SearchResultsEntity {

@@ -10,6 +10,10 @@ public protocol NodeUseCaseProtocol {
     func nodeForHandle(_ handle: HandleEntity) -> NodeEntity?
     func parentForHandle(_ handle: HandleEntity) -> NodeEntity?
     func parentsForHandle(_ handle: HandleEntity) async -> [NodeEntity]?
+    func childrenOf(node: NodeEntity) async -> NodeListEntity?
+    func childrenNamesOf(node: NodeEntity) -> [String]?
+    func isRubbishBinRoot(node: NodeEntity) -> Bool
+    func isRestorable(node: NodeEntity) -> Bool
 }
 
 // MARK: - Use case implementation -
@@ -64,5 +68,26 @@ public struct NodeUseCase<T: NodeDataRepositoryProtocol, U: NodeValidationReposi
     public func parentsForHandle(_ handle: HandleEntity) async -> [NodeEntity]? {
         guard let node = nodeForHandle(handle) else { return nil }
         return await nodeRepository.parents(of: node)
+    }
+    
+    public func childrenNamesOf(node: NodeEntity) -> [String]? {
+        nodeRepository.childrenNames(of: node)
+    }
+    
+    public func isRubbishBinRoot(node: NodeEntity) -> Bool {
+        node.handle == nodeRepository.rubbishNode()?.handle
+    }
+ 
+    public func isRestorable(node: NodeEntity) -> Bool {
+        let restoreParentHandle = node.restoreParentHandle
+        guard let restoreNode = nodeRepository.nodeForHandle(restoreParentHandle) else {
+            return false
+        }
+        
+        return !isInRubbishBin(nodeHandle: restoreNode.handle) && isInRubbishBin(nodeHandle: node.handle)
+    }
+    
+    public func childrenOf(node: NodeEntity) async -> NodeListEntity? {
+       await nodeRepository.children(of: node)
     }
 }

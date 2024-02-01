@@ -1,6 +1,7 @@
 import MEGADomain
 
 public struct MockRubbishBinRepository: RubbishBinRepositoryProtocol {
+    
     private let syncDebrisNode: NodeEntity?
     private let syncDebrisChildNodes: [NodeEntity]?
     
@@ -24,4 +25,6 @@ public struct MockRubbishBinRepository: RubbishBinRepositoryProtocol {
             return isSyncDebrisChild(node)
         }
     }
+    
+    public func cleanRubbishBin() {}
 }

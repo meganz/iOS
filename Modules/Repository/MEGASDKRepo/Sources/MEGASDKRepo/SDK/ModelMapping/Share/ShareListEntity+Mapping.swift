@@ -20,6 +20,25 @@ extension MEGAShareType {
     }
 }
 
+extension MEGAShareType {
+    public func toNodeAccessTypeEntity() -> NodeAccessTypeEntity {
+        switch self {
+        case .accessUnknown:
+            return .unknown
+        case .accessRead:
+            return .read
+        case .accessReadWrite:
+            return .readWrite
+        case .accessFull:
+            return .full
+        case .accessOwner:
+            return .owner
+        @unknown default:
+            return .unknown
+        }
+    }
+}
+
 extension MEGAShare {
     public func toShareEntity() -> ShareEntity {
         ShareEntity(sharedUserEmail: user,

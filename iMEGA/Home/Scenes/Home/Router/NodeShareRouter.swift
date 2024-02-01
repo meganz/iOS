@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 import MessageKit
 
 final class NodeShareRouter: NSObject {
@@ -30,16 +31,38 @@ final class NodeShareRouter: NSObject {
             viewController.present(navigation, animated: true, completion: nil)
         }
     }
+    
+    func showManageSharing(for nodeEntity: NodeEntity) {
+        if let megaNode = MEGASdk.shared.node(forHandle: nodeEntity.handle) {
+            showManageSharing(for: megaNode)
+        }
+    }
+    
+    private static func makeContactViewController(for node: MEGANode) -> UIViewController? {
+        guard
+            let contactViewController = UIStoryboard(name: "Contacts", bundle: nil)
+            .instantiateViewController(withIdentifier: "ContactsViewControllerID") as? ContactsViewController
+        else { return nil}
+        contactViewController.node = node
+        contactViewController.contactsMode = .folderSharedWith
+        return contactViewController
+    }
 
     func showManageSharing(for node: MEGANode) {
         guard let viewController = viewController else { return }
         BackupNodesValidator(presenter: viewController, nodes: [node.toNodeEntity()]).showWarningAlertIfNeeded {
-            guard let contactViewController = UIStoryboard(name: "Contacts", bundle: nil)
-                .instantiateViewController(withIdentifier: "ContactsViewControllerID") as? ContactsViewController else { return }
-            contactViewController.node = node
-            contactViewController.contactsMode = .folderSharedWith
-            
-            viewController.present(contactViewController, animated: true, completion: nil)
+            guard let contactsVC = Self.makeContactViewController(for: node) else { return }
+            viewController.present(contactsVC, animated: true, completion: nil)
         }
+    }
+    
+    func pushManageSharing(for node: NodeEntity, on navigationController: UINavigationController?) {
+        guard 
+            let navigationController,
+            let megaNode = MEGASdk.shared.node(forHandle: node.handle),
+            let contactsVC = Self.makeContactViewController(for: megaNode)
+        else { return }
+        
+        navigationController.pushViewController(contactsVC, animated: true)
     }
 }

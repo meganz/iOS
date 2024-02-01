@@ -1,4 +1,5 @@
 import Foundation
+import MEGADomain
 
 final class NodeInfoRouter: NSObject {
 
@@ -9,6 +10,12 @@ final class NodeInfoRouter: NSObject {
     }
 
     // MARK: - Info
+    
+    func showInformation(for nodeEntity: NodeEntity) {
+        if let megaNode = MEGASdk.shared.node(forHandle: nodeEntity.handle) {
+            showInformation(for: megaNode)
+        }
+    }
 
     func showInformation(for node: MEGANode) {
         let nodeInfoNavigation = UIStoryboard(name: "Node", bundle: nil)

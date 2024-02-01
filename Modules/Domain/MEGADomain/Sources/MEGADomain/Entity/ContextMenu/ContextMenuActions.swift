@@ -9,7 +9,7 @@
 /// Using the "case menu" to create menus and the other cases to define different actions depending on the type.
 ///
 
-public enum CMElementTypeEntity: Equatable {
+public enum CMElementTypeEntity: Equatable, Sendable {
     /// Menus
     case menu(type: ContextMenuTypeEntity)
     
@@ -31,43 +31,43 @@ public enum CMElementTypeEntity: Equatable {
 }
 
 // MARK: - Context Menu types
-public enum ContextMenuTypeEntity {
+public enum ContextMenuTypeEntity: Sendable {
     case uploadAdd, display, quickActions, sort, rubbishBin, chat, chatStatus, chatDoNotDisturb, qr, meeting, unknown, album, timeline, folderLink, fileLink, home, homeVideos
 }
 
 // MARK: - Context Menu grouped actions
-public enum UploadAddActionEntity: CaseIterable {
+public enum UploadAddActionEntity: CaseIterable, Sendable {
     case chooseFromPhotos, capture, importFrom, scanDocument, newFolder, newTextFile, importFolderLink
 }
 
-public enum DisplayActionEntity: CaseIterable {
+public enum DisplayActionEntity: CaseIterable, Sendable {
     case select, mediaDiscovery, thumbnailView, listView, sort, clearRubbishBin, filter, filterActive
 }
 
-public enum QuickActionEntity: CaseIterable {
+public enum QuickActionEntity: CaseIterable, Sendable {
     case info, download, shareLink, manageLink, removeLink, shareFolder, manageFolder, rename, copy, removeSharing, leaveSharing, sendToChat, saveToPhotos
 }
 
-public enum RubbishBinActionEntity: CaseIterable {
+public enum RubbishBinActionEntity: CaseIterable, Sendable {
     case restore, info, versions, remove
 }
 
-public enum ChatActionEntity: CaseIterable {
+public enum ChatActionEntity: CaseIterable, Sendable {
     case status, doNotDisturb, archivedChats
 }
 
-public enum DNDDisabledActionEntity: CaseIterable {
+public enum DNDDisabledActionEntity: CaseIterable, Sendable {
     case off
 }
 
-public enum MyQRActionEntity: CaseIterable {
+public enum MyQRActionEntity: CaseIterable, Sendable {
     case share, settings, resetQR
 }
 
-public enum MeetingActionEntity: CaseIterable {
+public enum MeetingActionEntity: CaseIterable, Sendable {
     case startMeeting, joinMeeting, scheduleMeeting
 }
 
-public enum AlbumActionEntity: CaseIterable {
+public enum AlbumActionEntity: CaseIterable, Sendable {
     case selectAlbumCover, delete
 }

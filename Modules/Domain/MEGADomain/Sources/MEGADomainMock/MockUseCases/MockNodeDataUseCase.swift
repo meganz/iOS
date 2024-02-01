@@ -1,6 +1,7 @@
 import MEGADomain
 
 public final class MockNodeDataUseCase: NodeUseCaseProtocol {
+    
     private let nodeAccessLevelVariable: NodeAccessTypeEntity
     public var labelStringToReturn: String
     private let filesAndFolders: (Int, Int)
@@ -71,6 +72,22 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
     }
     
     public func parentsForHandle(_ handle: HandleEntity) async -> [NodeEntity]? {
+        nil
+    }
+    
+    public func childrenNamesOf(node: MEGADomain.NodeEntity) -> [String]? {
+        nil
+    }
+    
+    public func isRubbishBinRoot(node: MEGADomain.NodeEntity) -> Bool {
+        false
+    }
+    
+    public func isRestorable(node: MEGADomain.NodeEntity) -> Bool {
+        false
+    }
+    
+    public func childrenOf(node: MEGADomain.NodeEntity) async -> MEGADomain.NodeListEntity? {
         nil
     }
 }

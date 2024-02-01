@@ -3,7 +3,7 @@ import MEGADomain
 import MEGADomainMock
 import XCTest
 
-class MEGAavatarGeneratingUseCase: XCTestCase {
+class MEGAavatarGeneratingUseCaseTests: XCTestCase {
     
     // MARK: - Generate Avatar Image
     

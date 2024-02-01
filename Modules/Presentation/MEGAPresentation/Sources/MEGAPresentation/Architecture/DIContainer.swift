@@ -19,6 +19,12 @@ public enum DIContainer {
         )
     }
     
+    public static var rubbishBinUseCase: some RubbishBinUseCaseProtocol {
+        RubbishBinUseCase(
+            rubbishBinRepository: RubbishBinRepository.newRepo
+        )
+    }
+    
     public static var abTestProvider: some ABTestProviderProtocol {
         ABTestProvider()
     }

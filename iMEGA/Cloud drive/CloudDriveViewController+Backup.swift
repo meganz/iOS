@@ -15,7 +15,7 @@ extension CloudDriveViewController {
         if !isBackupsNode {
             isBackupsChild = backupsUseCase.isBackupNode(parentNodeEntity)
         }
-       
+        
         return CMConfigEntity(menuType: .menu(type: .display),
                               viewMode: isListViewModeSelected() ? .list : .thumbnail,
                               accessLevel: parentNodeAccessLevel.toShareAccessLevelEntity(),
@@ -48,7 +48,7 @@ extension CloudDriveViewController {
         } else {
             navigationItem.rightBarButtonItems = [contextBarButtonItem]
         }
-
+        
         if presentingViewController != nil {
             navigationItem.leftBarButtonItem = UIBarButtonItem(title: Strings.Localizable.close,
                                                                style: .plain,

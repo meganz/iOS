@@ -3,6 +3,13 @@ import MEGASdk
 import Search
 
 struct RecentActionBucketProvider: SearchResultsProviding {
+    func currentResultIds() -> [Search.ResultId] {
+        guard let list = bucket.nodesList else { return [] }
+        return list.toNodeArray().map {
+            $0.handle
+        }
+    }
+    
     var bucket: MEGARecentActionBucket
     var mapper: SearchResultMapper
     

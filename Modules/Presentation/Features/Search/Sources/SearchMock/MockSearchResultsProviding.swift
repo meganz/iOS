@@ -1,7 +1,13 @@
 import Search
 
 public class MockSearchResultsProviding: SearchResultsProviding {
+    
+    public func currentResultIds() -> [Search.ResultId] {
+        currentResultIdsToReturn
+    }
+    
     public var passedInQueries: [SearchQuery] = []
+    public var currentResultIdsToReturn: [ResultId] = []
     public var resultFactory: (_ query: SearchQuery) async throws -> SearchResultsEntity
     
     public init() {

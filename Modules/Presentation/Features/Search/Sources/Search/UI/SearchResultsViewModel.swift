@@ -344,8 +344,18 @@ public class SearchResultsViewModel: ObservableObject {
         bridge.selectionChanged(selected)
     }
     
-    private func rowActions(for result: SearchResult) -> SearchResultRowViewModel.UserActions {
+    private func selectionFor(result: SearchResult) -> SearchResultSelection {
         .init(
+            result: result,
+            siblingsProvider: { [weak self] in
+                self?.resultsProvider.currentResultIds() ?? []
+            }
+        )
+    }
+    
+    private func rowActions(for result: SearchResult) -> SearchResultRowViewModel.UserActions {
+        let selection = selectionFor(result: result)
+        return .init(
             contextAction: { [weak self] button in
                 // we pass in button to show popover attached to the correct view
                 self?.bridge.context(result, button)
@@ -355,11 +365,11 @@ public class SearchResultsViewModel: ObservableObject {
                 if editing {
                     toggleSelected(result)
                 } else {
-                    bridge.selection(result)
+                    bridge.selection(selection)
                 }
             },
             previewTapAction: { [weak self] in
-                self?.bridge.selection(result)
+                self?.bridge.selection(selection)
             }
         )
     }

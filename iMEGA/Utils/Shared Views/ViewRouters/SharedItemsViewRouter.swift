@@ -1,4 +1,13 @@
+import MEGADomain
+
 final class SharedItemsViewRouter: NSObject {
+    
+    func showShareFoldersContactView(withNodes nodes: [NodeEntity]) {
+        let megaNodes = nodes.compactMap {
+            MEGASdk.shared.node(forHandle: $0.handle)
+        }
+        showShareFoldersContactView(withNodes: megaNodes)
+    }
     
     func showShareFoldersContactView(withNodes nodes: [MEGANode]) {
         let presenter = UIApplication.mnz_visibleViewController()

@@ -1,7 +1,8 @@
-import MEGASdk
 import MEGADomain
+import MEGASdk
 
 public struct RubbishBinRepository: RubbishBinRepositoryProtocol {
+    
     public static var newRepo: RubbishBinRepository {
         RubbishBinRepository(sdk: MEGASdk.sharedSdk)
     }
@@ -38,5 +39,9 @@ public struct RubbishBinRepository: RubbishBinRepositoryProtocol {
             .filter {
                 $0.name == Constants.syncDebrisFolderName && $0.isFolder()
             }.toNodeEntities()
+    }
+    
+    public func cleanRubbishBin() {
+        sdk.cleanRubbishBin()
     }
 }
