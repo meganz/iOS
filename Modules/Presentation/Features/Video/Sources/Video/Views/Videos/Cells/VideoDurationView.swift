@@ -9,7 +9,7 @@ struct VideoDurationView: View {
             Text(duration)
                 .font(.caption)
                 .multilineTextAlignment(.center)
-                .foregroundColor(videoConfig.colorAssets.whiteColor)
+                .foregroundColor(videoConfig.colorAssets.durationTextColor)
                 .fixedSize(horizontal: true, vertical: false)
         }
         .padding(.vertical, 1)

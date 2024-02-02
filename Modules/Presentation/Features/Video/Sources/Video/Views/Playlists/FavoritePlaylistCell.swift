@@ -3,8 +3,6 @@ import SwiftUI
 
 struct FavoritePlaylistCell: View {
     
-    @Environment(\.colorScheme) private var colorScheme: ColorScheme
-    
     let videoConfig: VideoConfig
     
     var body: some View {
@@ -18,11 +16,7 @@ struct FavoritePlaylistCell: View {
                     .font(.subheadline)
                 Text(Strings.Localizable.Videos.Tab.Playlist.Content.PlaylistCell.Subtitle.emptyPlaylist)
                     .font(.caption)
-                    .foregroundStyle(
-                        colorScheme == .light
-                        ? videoConfig.colorAssets.secondaryLightTextColor
-                        : videoConfig.colorAssets.secondaryDarkTextColor
-                    )
+                    .foregroundStyle(videoConfig.colorAssets.secondaryTextColor)
                     .frame(maxHeight: .infinity, alignment: .top)
             }
             .frame(maxWidth: .infinity, alignment: .topLeading)

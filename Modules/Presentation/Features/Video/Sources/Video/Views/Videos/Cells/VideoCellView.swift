@@ -1,5 +1,5 @@
-import SwiftUI
 import MEGADomain
+import SwiftUI
 
 struct VideoCellView: View {
     @ObservedObject var viewModel: VideoCellViewModel
@@ -47,7 +47,7 @@ struct VideoCellViewContent: View {
             HStack {
                 Text(previewEntity.title)
                     .font(.subheadline)
-                    .foregroundColor(.primary)
+                    .foregroundColor(videoConfig.colorAssets.primaryTextColor)
                     .frame(maxWidth: .infinity, minHeight: 40, maxHeight: 40, alignment: .topLeading)
                 
                 if let labelImage = previewEntity.labelImage(source: videoConfig.rowAssets.labelAssets) {
@@ -61,16 +61,16 @@ struct VideoCellViewContent: View {
                 
                 Text(previewEntity.size)
                     .font(.caption)
-                    .foregroundColor(secondaryTextColor)
+                    .foregroundColor(videoConfig.colorAssets.secondaryTextColor)
                 
                 Image(systemName: "circle.fill")
                     .font(.system(size: 4))
-                    .foregroundColor(secondaryTextColor)
+                    .foregroundColor(videoConfig.colorAssets.secondaryTextColor)
                     .opacity(previewEntity.shouldShowCircleImage ? 1 : 0)
                 
                 Image(uiImage: videoConfig.rowAssets.publicLinkImage)
                     .font(.system(size: 12))
-                    .foregroundColor(secondaryTextColor)
+                    .foregroundColor(videoConfig.colorAssets.secondaryTextColor)
                     .opacity(previewEntity.isPublicLink ? 1 : 0)
                 
             }
@@ -79,15 +79,9 @@ struct VideoCellViewContent: View {
         }
     }
     
-    private var secondaryTextColor: Color {
-        colorScheme == .light
-        ? videoConfig.colorAssets.videoCellSecondaryLightTextColor
-        : videoConfig.colorAssets.videoCellSecondaryDarkTextColor
-    }
-    
     private var trailingContent: some View {
         Image(uiImage: videoConfig.rowAssets.moreImage)
-            .foregroundColor(videoConfig.colorAssets.tabInactiveTextColor)
+            .foregroundColor(videoConfig.colorAssets.secondaryIconColor)
     }
 }
 

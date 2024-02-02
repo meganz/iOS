@@ -70,6 +70,8 @@ final class VideoRevampTabContainerViewController: UIViewController {
             router: router
         )
         add(contentView, container: view, animate: false)
+        
+        view.backgroundColor = UIColor(videoConfig.colorAssets.pageBackgroundColor)
     }
     
     override func setEditing(_ editing: Bool, animated: Bool) {
@@ -91,7 +93,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
         toolbar.view.alpha = 0
         toolbar.view.translatesAutoresizingMaskIntoConstraints = false
         
-        toolbar.view.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
+        toolbar.view.backgroundColor = UIColor(videoConfig.colorAssets.toolbarBackgroundColor)
         
         tabBarController.view.addSubview(toolbar.view)
         NSLayoutConstraint.activate([

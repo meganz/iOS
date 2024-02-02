@@ -9,11 +9,11 @@ extension MEGAAppColor {
         case videoThumbnailDurationTextBackgroundColor
         
         var uiColor: UIColor {
-            DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .videoRevamp) ? designTokenColor : legacyColor
+            DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) ? designTokenColor : legacyColor
         }
         
         var color: Color {
-            DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .videoRevamp) ? designTokenColor.swiftUI : legacyColor.swiftUI
+            DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) ? designTokenColor.swiftUI : legacyColor.swiftUI
         }
         
         private var designTokenColor: UIColor {
@@ -21,7 +21,7 @@ extension MEGAAppColor {
             case .videoThumbnailImageViewPlaceholderBackgroundColor:
                 return TokenColors.Background.blur
             case .videoThumbnailDurationTextBackgroundColor:
-                return TokenColors.Background.blur
+                return TokenColors.Background.surface1
             }
         }
         
