@@ -38,7 +38,6 @@
 
 #import "SendToChatActivity.h"
 #import "SendToViewController.h"
-#import "MEGAChatGenericRequestDelegate.h"
 #import "MEGAContactLinkCreateRequestDelegate.h"
 #import "MEGAGetAttrUserRequestDelegate.h"
 #import "MEGAGetPublicNodeRequestDelegate.h"

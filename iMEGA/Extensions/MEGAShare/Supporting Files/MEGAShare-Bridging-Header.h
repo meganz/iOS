@@ -12,7 +12,6 @@
 #import "UIDevice+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
 
-#import "MEGAChatGenericRequestDelegate.h"
 #import "MEGARequestDelegate.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
 #import "MEGAConstants.h"
