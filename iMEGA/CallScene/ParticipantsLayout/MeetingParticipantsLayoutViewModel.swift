@@ -135,7 +135,8 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private var reconnecting: Bool = false
     private var switchingCamera: Bool = false
     private var hasScreenSharingParticipant: Bool = false
-    
+    private var hasBeenInProgress: Bool = false
+
     private weak var containerViewModel: MeetingContainerViewModel?
 
     private let chatUseCase: any ChatUseCaseProtocol
@@ -521,6 +522,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             if chatRoom.chatType != .oneToOne {
                 addMeetingParticipantStatusPipelineSubscription()
             }
+            hasBeenInProgress = call.status == .inProgress
         case .onViewReady:
             let myself = CallParticipantEntity.myself(handle: accountUseCase.currentUserHandle ?? .invalid, userName: chatUseCase.myFullName(), chatRoom: chatRoom)
             fetchAvatar(for: myself, name: myself.name ?? "Unknown") { [weak self] image in
@@ -1262,6 +1264,7 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
     }
     
     func connecting() {
+        guard hasBeenInProgress else { return }
         if !reconnecting {
             reconnecting = true
             tonePlayer.play(tone: .reconnecting)
@@ -1271,6 +1274,7 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
     }
     
     func inProgress() {
+        hasBeenInProgress = true
         if reconnecting {
             invokeCommand?(.reconnected)
             reconnecting = false
