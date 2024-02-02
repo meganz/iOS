@@ -31,6 +31,7 @@ struct VideoListView: View {
             videoConfig: videoConfig,
             router: router
         )
+        .background(videoConfig.colorAssets.pageBackgroundColor)
     }
 }
 
@@ -43,6 +44,7 @@ struct VideoListEmptyView: View {
             Image(uiImage: videoConfig.videoListAssets.noResultVideoImage)
             Text(Strings.Localizable.Videos.Tab.All.Content.emptyState)
         }
+        .background(videoConfig.colorAssets.pageBackgroundColor)
     }
 }
 

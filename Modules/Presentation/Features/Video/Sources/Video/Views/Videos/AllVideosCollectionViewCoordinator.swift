@@ -58,6 +58,7 @@ final class AllVideosCollectionViewCoordinator: NSObject {
         if #available(iOS 16.0, *) {
             cell.contentConfiguration = UIHostingConfiguration {
                 VideoCellView(viewModel: cellViewModel, videoConfig: videoConfig)
+                    .background(videoConfig.colorAssets.pageBackgroundColor)
             }
             .margins(.all, 0)
             cell.clipsToBounds = true
@@ -75,6 +76,7 @@ final class AllVideosCollectionViewCoordinator: NSObject {
         cellHostingController.view.backgroundColor = .clear
         cellHostingController.view.translatesAutoresizingMaskIntoConstraints = false
         cell.contentView.addSubview(cellHostingController.view)
+        cell.contentView.backgroundColor = UIColor(videoConfig.colorAssets.pageBackgroundColor)
         
         NSLayoutConstraint.activate([
             cellHostingController.view.topAnchor.constraint(equalTo: cell.contentView.topAnchor),

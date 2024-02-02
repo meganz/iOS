@@ -40,6 +40,7 @@ struct TabContainerView: View {
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
             .edgesIgnoringSafeArea(.all)
+            .background(videoConfig.colorAssets.pageBackgroundColor)
         }
     }
 }

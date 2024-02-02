@@ -44,11 +44,7 @@ struct VideoToolbar: View {
             .frame(maxWidth: .infinity)
         }
         .padding()
-        .background(
-            colorScheme == .light
-            ? videoConfig.colorAssets.chromeTabOrToolBarLight
-            : videoConfig.colorAssets.chromeTabOrToolBarDark
-        )
+        .background(videoConfig.colorAssets.toolbarBackgroundColor)
         .disabled(isDisabled)
     }
     

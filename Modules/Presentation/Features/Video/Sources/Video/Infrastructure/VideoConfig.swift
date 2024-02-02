@@ -141,16 +141,16 @@ public struct VideoConfig: Equatable {
     public struct ColorAssets: Equatable {
         
         public let primaryTextColor: Color
-        public let secondaryLightTextColor: Color
-        public let secondaryDarkTextColor: Color
+        public let secondaryTextColor: Color
+        public let secondaryIconColor: Color
+        public let pageBackgroundColor: Color
         public let whiteColor: Color
-        public let durationTextBackgroundColor: Color
+        public let durationTextColor: Color
         public let tabActiveIndicatorColor: Color
         public let tabInactiveIndicatorColor: Color
         public let tabInactiveTextColor: Color
         public let addPlaylistButtonBackgroundColor: Color
-        public let chromeTabOrToolBarLight: Color
-        public let chromeTabOrToolBarDark: Color
+        public let toolbarBackgroundColor: Color
         public let navigationBgColor: Color
         public let emptyFavoriteThumbnailLightBackgroundColor: Color
         public let emptyFavoriteThumbnailDarkBackgroundColor: Color
@@ -164,16 +164,16 @@ public struct VideoConfig: Equatable {
         /// Specify colors that needs to be injected from Main module.
         public init(
             primaryTextColor: Color,
-            secondaryLightTextColor: Color,
-            secondaryDarkTextColor: Color,
+            secondaryTextColor: Color,
+            secondaryIconColor: Color,
+            pageBackgroundColor: Color,
             whiteColor: Color,
-            durationTextBackgroundColor: Color,
+            durationTextColor: Color,
             tabActiveIndicatorColor: Color,
             tabInactiveIndicatorColor: Color,
             tabInactiveTextColor: Color,
             addPlaylistButtonBackgroundColor: Color,
-            chromeTabOrToolBarLight: Color,
-            chromeTabOrToolBarDark: Color,
+            toolbarBackgroundColor: Color,
             navigationBgColor: Color,
             emptyFavoriteThumbnailLightBackgroundColor: Color,
             emptyFavoriteThumbnailDarkBackgroundColor: Color,
@@ -185,16 +185,16 @@ public struct VideoConfig: Equatable {
             videoThumbnailDurationTextBackgroundColor: Color
         ) {
             self.primaryTextColor = primaryTextColor
-            self.secondaryLightTextColor = secondaryLightTextColor
-            self.secondaryDarkTextColor = secondaryDarkTextColor
+            self.secondaryTextColor = secondaryTextColor
+            self.secondaryIconColor = secondaryIconColor
+            self.pageBackgroundColor = pageBackgroundColor
             self.whiteColor = whiteColor
-            self.durationTextBackgroundColor = durationTextBackgroundColor
+            self.durationTextColor = durationTextColor
             self.tabActiveIndicatorColor = tabActiveIndicatorColor
             self.tabInactiveIndicatorColor = tabInactiveIndicatorColor
             self.tabInactiveTextColor = tabInactiveTextColor
             self.addPlaylistButtonBackgroundColor = addPlaylistButtonBackgroundColor
-            self.chromeTabOrToolBarLight = chromeTabOrToolBarLight
-            self.chromeTabOrToolBarDark = chromeTabOrToolBarDark
+            self.toolbarBackgroundColor = toolbarBackgroundColor
             self.navigationBgColor = navigationBgColor
             self.emptyFavoriteThumbnailLightBackgroundColor = emptyFavoriteThumbnailLightBackgroundColor
             self.emptyFavoriteThumbnailDarkBackgroundColor = emptyFavoriteThumbnailDarkBackgroundColor
