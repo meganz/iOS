@@ -142,7 +142,12 @@ public struct NodeRepository: NodeRepositoryProtocol {
             .toNodeArray()
             .compactMap(\.name)
     }
-    
+
+    public func isInRubbishBin(node: NodeEntity) -> Bool {
+        guard let node = node.toMEGANode(in: sdk) else { return false }
+        return sdk.isNode(inRubbish: node)
+    }
+
     // MARK: - Private
     private func images(forParentNode node: MEGANode) -> [NodeEntity] {
         let nodeList = sdk.children(forParent: node)

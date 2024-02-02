@@ -1,11 +1,13 @@
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
+import MEGAL10n
 import MEGAPresentationMock
 import MEGASdk
 import MEGASDKRepoMock
 import Search
 import SearchMock
+import SwiftUI
 import XCTest
 
 extension Locale {
@@ -137,7 +139,7 @@ class HomeSearchProviderTests: XCTestCase {
         
         func propertyIdsForFoundNode() async throws -> Set<NodePropertyId> {
             let searchResults = try await sut.search(
-                queryRequest: .userSupplied(.query("node 0"))
+                queryRequest: .userSupplied(.query("node 0", isSearchActive: true))
             )
             let result = try XCTUnwrap(searchResults?.results.first)
             let props = result.properties.compactMap { resultProperty in
@@ -150,7 +152,7 @@ class HomeSearchProviderTests: XCTestCase {
         func resultsFor(chip: SearchChipEntity) async throws -> [SearchResult] {
             let results = try await sut.search(
                 queryRequest: .userSupplied(
-                    .init(query: "", sorting: .automatic, mode: .home, chips: [chip])
+                    .init(query: "", sorting: .automatic, mode: .home, isSearchActive: false, chips: [chip])
                 )
             )
             let items = try XCTUnwrap(results)
@@ -182,7 +184,7 @@ class HomeSearchProviderTests: XCTestCase {
         let harness = Harness(self)
 
         let searchResults = try await harness.sut.search(
-            queryRequest: .userSupplied(.query("node 1"))
+            queryRequest: .userSupplied(.query("node 1", isSearchActive: true))
         )
 
         XCTAssertEqual(searchResults?.results, [])
@@ -203,7 +205,7 @@ class HomeSearchProviderTests: XCTestCase {
         let children = [NodeEntity(handle: 6), NodeEntity(handle: 7), NodeEntity(handle: 8)]
         let harness = Harness(self, rootNode: root, childrenNodes: children)
         
-        let response = try await harness.sut.search(queryRequest: .userSupplied(.query("")))
+        let response = try await harness.sut.search(queryRequest: .userSupplied(.query("", isSearchActive: false)))
         XCTAssertEqual(response?.results.map(\.id), [6, 7, 8])
     }
     
@@ -213,7 +215,7 @@ class HomeSearchProviderTests: XCTestCase {
         
         let harness = Harness(self, rootNode: root, childrenNodes: children)
         
-        _ = try await harness.sut.search(queryRequest: .userSupplied(.query("any search string")))
+        _ = try await harness.sut.search(queryRequest: .userSupplied(.query("any search string", isSearchActive: true)))
         XCTAssertEqual(harness.searchFile.passedInSortOrders, [.defaultAsc])
     }
     
@@ -293,5 +295,140 @@ class HomeSearchProviderTests: XCTestCase {
         let propertyIds = try await harness.propertyIdsForFoundNode()
         XCTAssertEqual(propertyIds, [.versioned, .linked])
     }
-    
+
+    func testSearchConfig_whenSearchIsInactive_shouldMatchTheEmptyAsset() {
+        let emptyAsset = makeEmptyAsset(with: "Title")
+        assertSearchConfig(expectedAsset: emptyAsset, defaultEmptyAsset: emptyAsset, isSearchActive: false)
+    }
+
+    func testSearchConfig_whenSearchIsActive_shouldMatchHomeEmptyNoChipSelected() {
+        let expectedAsset = makeEmptyAsset(with: Strings.Localizable.Home.Search.Empty.noChipSelected)
+        assertSearchConfig(expectedAsset: expectedAsset, defaultEmptyAsset: makeEmptyAsset(with: "Title"))
+    }
+
+    func testSearchConfig_whenChipIsDocs_shouldMatch() {
+        assertSearchConfig(
+            expectedAsset: makeEmptyAsset(with: Strings.Localizable.Home.Search.Empty.noDocuments),
+            defaultEmptyAsset: makeEmptyAsset(with: "Title"),
+            searchChipEntity: SearchChipEntity.docs
+        )
+    }
+
+    func testSearchConfig_whenChipIsAudio_shouldMatch() {
+        assertSearchConfig(
+            expectedAsset: makeEmptyAsset(with: Strings.Localizable.Home.Search.Empty.noAudio),
+            defaultEmptyAsset: makeEmptyAsset(with: "Title"),
+            searchChipEntity: SearchChipEntity.audio
+        )
+    }
+
+    func testSearchConfig_whenChipIsVideo_shouldMatch() {
+        assertSearchConfig(
+            expectedAsset: makeEmptyAsset(with: Strings.Localizable.Home.Search.Empty.noVideos),
+            defaultEmptyAsset: makeEmptyAsset(with: "Title"),
+            searchChipEntity: SearchChipEntity.video
+        )
+    }
+
+    func testSearchConfig_whenChipIsImages_shouldMatch() {
+        assertSearchConfig(
+            expectedAsset: makeEmptyAsset(with: Strings.Localizable.Home.Search.Empty.noImages),
+            defaultEmptyAsset: makeEmptyAsset(with: "Title"),
+            searchChipEntity: SearchChipEntity.images
+        )
+    }
+
+    func testSearchConfig_whenChipIsFolders_shouldMatch() {
+        assertSearchConfig(
+            expectedAsset: makeEmptyAsset(with: Strings.Localizable.Home.Search.Empty.noFolders),
+            defaultEmptyAsset: makeEmptyAsset(with: "Title"),
+            searchChipEntity: SearchChipEntity.folders
+        )
+    }
+
+    func testSearchConfig_whenChipIsPDF_shouldMatch() {
+        assertSearchConfig(
+            expectedAsset: makeEmptyAsset(with: Strings.Localizable.Home.Search.Empty.noPdfs),
+            defaultEmptyAsset: makeEmptyAsset(with: "Title"),
+            searchChipEntity: SearchChipEntity.pdf
+        )
+    }
+
+    func testSearchConfig_whenChipIsPresentation_shouldMatch() {
+        assertSearchConfig(
+            expectedAsset: makeEmptyAsset(with: Strings.Localizable.Home.Search.Empty.noPresentations),
+            defaultEmptyAsset: makeEmptyAsset(with: "Title"),
+            searchChipEntity: SearchChipEntity.presentation
+        )
+    }
+
+    func testSearchConfig_whenChipIsArchives_shouldMatch() {
+        assertSearchConfig(
+            expectedAsset: makeEmptyAsset(with: Strings.Localizable.Home.Search.Empty.noArchives),
+            defaultEmptyAsset: makeEmptyAsset(with: "Title"),
+            searchChipEntity: SearchChipEntity.archives
+        )
+    }
+
+    func testSearchConfig_whenChipIsDefault_shouldMatch() {
+        let emptyAsset = makeEmptyAsset(with: "Title")
+        assertSearchConfig(
+            expectedAsset: emptyAsset,
+            defaultEmptyAsset: emptyAsset,
+            searchChipEntity: SearchChipEntity(
+                type: .nodeType(1000),
+                title: "",
+                icon: "",
+                subchipsPickerTitle: nil,
+                subchips: []
+            )
+        )
+    }
+
+    // MARK: - Private methods.
+
+    private func assertSearchConfig(
+        expectedAsset: SearchConfig.EmptyViewAssets,
+        defaultEmptyAsset: SearchConfig.EmptyViewAssets,
+        isSearchActive: Bool = true,
+        searchChipEntity: SearchChipEntity? = nil,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        let config = SearchConfig.searchConfig(
+            contextPreviewFactory: HomeScreenFactory().contextPreviewFactory(
+                enableItemMultiSelection: false
+            ),
+            defaultEmptyViewAsset: defaultEmptyAsset
+        )
+
+        let resultEmptyAsset = config.emptyViewAssetFactory(
+            searchChipEntity, SearchQuery.userSupplied(.query("", isSearchActive: isSearchActive))
+        )
+        XCTAssertEqual(resultEmptyAsset, expectedAsset, file: file, line: line)
+    }
+
+    private func makeEmptyAsset(with title: String) -> SearchConfig.EmptyViewAssets {
+        .init(image: Image(systemName: "person"), title: title, titleTextColor: { _ in .red })
+    }
+}
+
+extension SearchConfig.EmptyViewAssets: Equatable {
+    public static func == (lhs: Search.SearchConfig.EmptyViewAssets, rhs: Search.SearchConfig.EmptyViewAssets) -> Bool {
+        lhs.title == rhs.title && lhs.actions == rhs.actions
+    }
+}
+
+extension SearchConfig.EmptyViewAssets.Action: Equatable {
+    public static func == (lhs: SearchConfig.EmptyViewAssets.Action, rhs: SearchConfig.EmptyViewAssets.Action) -> Bool {
+        lhs.title == rhs.title && lhs.menu == rhs.menu
+    }
+}
+
+extension SearchConfig.EmptyViewAssets.MenuOption: Equatable {
+    public static func == (
+        lhs: SearchConfig.EmptyViewAssets.MenuOption, rhs: SearchConfig.EmptyViewAssets.MenuOption
+    ) -> Bool {
+        lhs.title == rhs.title
+    }
 }

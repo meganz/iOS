@@ -1,3 +1,4 @@
+import MEGADesignToken
 import SwiftUI
 import UIKit
 
@@ -37,11 +38,12 @@ extension SearchConfig.ChipAssets {
 
 extension SearchConfig.EmptyViewAssets {
     
-    static let exampleFactory: (SearchChipEntity?) -> Self = { _ in
+    static let exampleFactory: (SearchChipEntity?, SearchQuery) -> Self = { _, _ in
             .init(
                 image: Image(systemName: "magnifyingglass.circle.fill"),
                 title: "No results",
-                foregroundColor: Color(red: 209.0/255.0, green: 209.0/255.0, blue: 209.0/255.0)
+                titleTextColor: { _ in TokenColors.Icon.secondary.swiftUI },
+                actions: []
             )
     }
 }

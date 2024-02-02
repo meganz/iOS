@@ -36,9 +36,9 @@ struct ImportAlbumView: View {
                 if viewModel.isConnectedToNetworkUntilContentLoaded {
                     content()
                 } else {
-                    ContentUnavailableView_iOS16 {
+                    ContentUnavailableView {
                         Image(.noInternetEmptyState)
-                    } description: {
+                    } description: { _ in
                         Text(Strings.Localizable.noInternetConnection)
                             .font(.body)
                     }
@@ -74,9 +74,9 @@ struct ImportAlbumView: View {
     private func content() -> some View {
         ZStack {
             if viewModel.shouldShowEmptyAlbumView {
-                ContentUnavailableView_iOS16 {
+                ContentUnavailableView {
                     Image(.allPhotosEmptyState)
-                } description: {
+                } description: { _ in
                     Text(Strings.Localizable.CameraUploads.Albums.Empty.title)
                         .font(.body)
                 }

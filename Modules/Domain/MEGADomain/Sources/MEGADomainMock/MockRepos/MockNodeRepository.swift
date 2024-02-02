@@ -6,7 +6,7 @@ public struct MockNodeRepository: NodeRepositoryProtocol {
     public static let newRepo = MockNodeRepository()
     
     private let node: NodeEntity?
-    private let rubbisNode: NodeEntity?
+    private let rubbishBinNode: NodeEntity?
     private let nodeRoot: NodeEntity?
     private let nodeAccessLevel: NodeAccessTypeEntity
     private let childNodeNamed: NodeEntity?
@@ -19,7 +19,7 @@ public struct MockNodeRepository: NodeRepositoryProtocol {
     
     public init(
         node: NodeEntity? = nil,
-        rubbishNode: NodeEntity? = nil,
+        rubbishBinNode: NodeEntity? = nil,
         nodeRoot: NodeEntity? = nil,
         nodeAccessLevel: NodeAccessTypeEntity = .unknown,
         childNodeNamed: NodeEntity? = nil,
@@ -31,7 +31,7 @@ public struct MockNodeRepository: NodeRepositoryProtocol {
         parentNodes: [NodeEntity] = []
     ) {
         self.node = node
-        self.rubbisNode = rubbishNode
+        self.rubbishBinNode = rubbishBinNode
         self.nodeRoot = nodeRoot
         self.nodeAccessLevel = nodeAccessLevel
         self.childNodeNamed = childNodeNamed
@@ -81,7 +81,7 @@ public struct MockNodeRepository: NodeRepositoryProtocol {
     }
     
     public func rubbishNode() -> NodeEntity? {
-        rubbisNode
+        rubbishBinNode
     }
     
     public func rootNode() -> NodeEntity? {
@@ -105,5 +105,9 @@ public struct MockNodeRepository: NodeRepositoryProtocol {
     
     public func childrenNames(of node: MEGADomain.NodeEntity) -> [String]? {
         nil
+    }
+
+    public func isInRubbishBin(node: NodeEntity) -> Bool {
+        rubbishBinNode == node
     }
 }

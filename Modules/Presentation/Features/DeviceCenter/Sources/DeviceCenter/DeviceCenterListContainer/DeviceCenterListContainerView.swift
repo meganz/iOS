@@ -28,9 +28,9 @@ struct ListViewContainer<Content>: View where Content: View {
                         }
                     }
             } else {
-                ContentUnavailableView_iOS16(label: {
+                ContentUnavailableView(label: {
                     Image("noInternetEmptyState")
-                }, description: {
+                }, description: { _ in
                     Text(Strings.Localizable.noInternetConnection)
                 })
             }

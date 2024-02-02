@@ -25,7 +25,8 @@ let package = Package(
         .package(
             url: "https://github.com/pointfreeco/swift-snapshot-testing",
             from: "1.12.0"
-        )
+        ),
+        .package(url: "https://github.com/meganz/MEGADesignToken", branch: "main")
     ],
     targets: [
         .target(
@@ -33,7 +34,8 @@ let package = Package(
             dependencies: [
                 "MEGASwiftUI",
                 "MEGAL10n",
-                "MEGASwift"
+                "MEGASwift",
+                "MEGADesignToken"
             ],
             swiftSettings: [.enableUpcomingFeature("ExistentialAny")]
         ),

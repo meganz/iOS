@@ -25,6 +25,18 @@ public enum SearchQuery: Equatable, Sendable {
         }
     }
     
+    /// Indicates if the search interface is active or inactive when the query search is triggered.
+    ///
+    /// This property is crucial for rendering distinct Empty views based on the current state of the search interface, whether it is active or inactive.
+    public var isSearchActive: Bool {
+        switch self {
+        case .initial:
+            return false
+        case .userSupplied(let searchQueryEntity):
+            return searchQueryEntity.isSearchActive
+        }
+    }
+
     var sorting: SortOrderEntity {
         .automatic
     }
