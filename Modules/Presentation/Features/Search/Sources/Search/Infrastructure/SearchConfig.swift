@@ -7,14 +7,14 @@ import UIKit
 public struct SearchConfig {
     
     public let chipAssets: ChipAssets
-    public let emptyViewAssetFactory: (SearchChipEntity?) -> EmptyViewAssets
+    public let emptyViewAssetFactory: (SearchChipEntity?, SearchQuery) -> EmptyViewAssets
     public let rowAssets: RowAssets
     public let colorAssets: ColorAssets
     public let contextPreviewFactory: ContextPreviewFactory
     
     public init(
         chipAssets: ChipAssets,
-        emptyViewAssetFactory: @escaping (SearchChipEntity?) -> EmptyViewAssets,
+        emptyViewAssetFactory: @escaping (SearchChipEntity?, SearchQuery) -> EmptyViewAssets,
         rowAssets: RowAssets,
         colorAssets: ColorAssets,
         contextPreviewFactory: ContextPreviewFactory
@@ -63,18 +63,82 @@ public struct SearchConfig {
     }
     
     public struct EmptyViewAssets {
+        /// Represents a menu option shown when the button is pressed.
+        ///
+        /// - Note: Instance of this struct is used along with `Action`. For more info see `Action` documentation.
+        public struct MenuOption {
+            public let title: String
+            public let image: Image
+            public let handler: () -> Void
+
+            public init(title: String, image: Image, handler: @escaping () -> Void) {
+                self.title = title
+                self.image = image
+                self.handler = handler
+            }
+        }
+
+        /// Represents an element in the `EmptyViewAssets` that the user can perform.
+        /// It can be a button or a menu.
+        ///
+        /// # Example 1: Menu
+        /// ```
+        /// let menuAction = Action(
+        ///   title: "Title",
+        ///   backgroundColor: { _ in .red },
+        ///   menu: [
+        ///     .init(
+        ///       title: "MenuOption 1",
+        ///       image: Image(systemName: "plus"),
+        ///       handler: {}
+        ///     )
+        ///   ],
+        ///   handler: nil
+        /// )
+        /// ```
+        /// # Example 2: Button
+        /// ```
+        /// let buttonAction = Action(
+        ///   title: "Title",
+        ///   backgroundColor: { _ in .red },
+        ///   menu: [],
+        ///   handler: {}
+        /// )
+        /// ```
+         public struct Action {
+            public let title: String
+            public let backgroundColor: (ColorScheme) -> Color
+            public let menu: [MenuOption]
+            public typealias Handler = () -> Void
+            public let handler: Handler?
+
+            public init(
+                title: String,
+                backgroundColor: @escaping (ColorScheme) -> Color,
+                menu: [MenuOption],
+                handler: Handler? = nil) {
+                self.title = title
+                self.backgroundColor = backgroundColor
+                self.menu = menu
+                self.handler = handler
+            }
+        }
+
         public let image: Image
         public let title: String
-        public let foregroundColor: Color
-        
+        public let titleTextColor: (ColorScheme) -> Color
+        public let actions: [Action]
+
         public init(
             image: Image,
             title: String,
-            foregroundColor: Color
+            titleTextColor: @escaping (ColorScheme) -> Color,
+            actions: [Action] = []
         ) {
             self.image = image
             self.title = title
-            self.foregroundColor = foregroundColor
+            self.titleTextColor = titleTextColor
+            self.actions = actions
         }
     }
     

@@ -6,6 +6,7 @@ public protocol NodeUseCaseProtocol {
     func getFilesAndFolders(nodeHandle: HandleEntity) -> (childFileCount: Int, childFolderCount: Int)
     func hasVersions(nodeHandle: HandleEntity) -> Bool
     func isDownloaded(nodeHandle: HandleEntity) -> Bool
+    func isARubbishBinRootNode(nodeHandle: HandleEntity) -> Bool
     func isInRubbishBin(nodeHandle: HandleEntity) -> Bool
     func nodeForHandle(_ handle: HandleEntity) -> NodeEntity?
     func parentForHandle(_ handle: HandleEntity) -> NodeEntity?
@@ -52,7 +53,11 @@ public struct NodeUseCase<T: NodeDataRepositoryProtocol, U: NodeValidationReposi
     public func isDownloaded(nodeHandle: HandleEntity) -> Bool {
         nodeValidationRepository.isDownloaded(nodeHandle: nodeHandle)
     }
-    
+
+    public func isARubbishBinRootNode(nodeHandle: HandleEntity) -> Bool {
+        nodeRepository.rubbishNode()?.handle == nodeHandle
+    }
+
     public func isInRubbishBin(nodeHandle: HandleEntity) -> Bool {
         nodeValidationRepository.isInRubbishBin(nodeHandle: nodeHandle)
     }

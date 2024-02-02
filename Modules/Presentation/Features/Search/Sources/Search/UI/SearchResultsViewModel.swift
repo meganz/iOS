@@ -6,7 +6,7 @@ import SwiftUI
 public class SearchResultsViewModel: ObservableObject {
     @Published var listItems: [SearchResultRowViewModel]  = []
     @Published var bottomInset: CGFloat = 0.0
-    @Published var emptyViewModel: ContentUnavailableView_iOS16ViewModel?
+    @Published var emptyViewModel: ContentUnavailableViewModel?
     @Published var isLoadingPlaceholderShown = false
 
     // this will need to be to exposed outside when parent will need to know exactly what is selected
@@ -99,7 +99,7 @@ public class SearchResultsViewModel: ObservableObject {
             _self?.debounceTask = Task {
                 try await Task.sleep(nanoseconds: UInt64(searchInputDebounceDelay*1_000_000_000))
                 await _self?.showLoadingPlaceholderIfNeeded()
-                await _self?.queryChanged(to: query)
+                await _self?.queryChanged(to: query, isSearchActive: true)
             }
         }
 
@@ -170,7 +170,7 @@ public class SearchResultsViewModel: ObservableObject {
         // this should reset just query string but keep chips etc
         cancelDebounceTask()
         await showLoadingPlaceholderIfNeeded()
-        await queryChanged(to: "")
+        await queryChanged(to: "", isSearchActive: false)
     }
     
     func scrolled() {
@@ -193,8 +193,14 @@ public class SearchResultsViewModel: ObservableObject {
         await defaultSearchQuery()
     }
     
-    func queryChanged(to query: String) async {
-        await queryChanged(to: .userSupplied(Self.makeQueryUsing(string: query, current: currentQuery)))
+    func queryChanged(to query: String, isSearchActive: Bool) async {
+        await queryChanged(
+            to: .userSupplied(
+                Self.makeQueryUsing(
+                    string: query, isSearchActive: isSearchActive, current: currentQuery
+                )
+            )
+        )
     }
 
     // After the user triggered new search query, if the results don't come in more than 1 second
@@ -387,33 +393,35 @@ public class SearchResultsViewModel: ObservableObject {
 
         self.listItems.append(contentsOf: items)
 
-        emptyViewModel = Self.makeEmptyView(
-            whenListItems: listItems.isEmpty,
-            textQuery: query.query,
-            appliedChips: results.appliedChips,
-            config: config
-        )
+        withAnimation {
+            emptyViewModel = Self.makeEmptyView(
+                whenListItems: listItems.isEmpty,
+                query: query,
+                appliedChips: results.appliedChips,
+                config: config
+            )
+        }
     }
     
     private static func makeEmptyView(
         whenListItems empty: Bool,
-        textQuery: String,
+        query: SearchQuery,
         appliedChips: [SearchChipEntity],
         config: SearchConfig
-    ) -> ContentUnavailableView_iOS16ViewModel? {
+    ) -> ContentUnavailableViewModel? {
         guard empty else { return nil }
         
         // we show contextual, chip-related empty screen only when there
         // is not text query
-        if textQuery.isEmpty {
+        if query.query.isEmpty {
             // this assumes only one chip at most can be applied at any given time
-            return config.emptyViewAssetFactory(appliedChips.first).emptyViewModel
+            return config.emptyViewAssetFactory(appliedChips.first, query).emptyViewModel
         }
         
         // when there is non-empty text query (and no results of course) ,
         // [independently if there is any chip selected
         // we show generic 'no results' empty screen
-        return config.emptyViewAssetFactory(nil).emptyViewModel
+        return config.emptyViewAssetFactory(nil, query).emptyViewModel
     }
     
     @MainActor
@@ -581,29 +589,44 @@ public class SearchResultsViewModel: ObservableObject {
                 query: currentQuery.query,
                 sorting: currentQuery.sorting,
                 mode: currentQuery.mode,
+                isSearchActive: currentQuery.isSearchActive,
                 chips: modifyChips(tappedChip)
             )
         )
     }
     
     // create new query using new string while preserving other search params intact
-    static private func makeQueryUsing(string: String, current: SearchQuery) -> SearchQueryEntity {
+    static private func makeQueryUsing(string: String, isSearchActive: Bool, current: SearchQuery) -> SearchQueryEntity {
         .init(
             query: string,
             sorting: .automatic,
-            mode: .home,
+            mode: .home, 
+            isSearchActive: isSearchActive,
             chips: current.chips
         )
     }
 }
 
 fileprivate extension SearchConfig.EmptyViewAssets {
-    var emptyViewModel: ContentUnavailableView_iOS16ViewModel {
+    var emptyViewModel: ContentUnavailableViewModel {
         .init(
             image: image,
             title: title,
-            font: Font.callout.bold(),
-            color: foregroundColor
+            font: .callout.bold(),
+            titleTextColor: titleTextColor,
+            actions: actions.map(\.action)
         )
+    }
+}
+
+fileprivate extension SearchConfig.EmptyViewAssets.Action {
+    var action: ContentUnavailableViewModel.MenuAction {
+        .init(title: title, backgroundColor: backgroundColor, actions: menu.map(\.buttonAction))
+    }
+}
+
+fileprivate extension SearchConfig.EmptyViewAssets.MenuOption {
+    var buttonAction: ContentUnavailableViewModel.ButtonAction {
+        .init(title: title, image: image, handler: handler)
     }
 }

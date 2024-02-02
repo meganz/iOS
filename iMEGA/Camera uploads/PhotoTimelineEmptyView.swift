@@ -12,9 +12,9 @@ struct PhotoTimelineEmptyView: View {
                 EnableCameraUploadsBannerButtonView(enableCameraUploadsAction)
             }
             
-            ContentUnavailableView_iOS16 {
+            ContentUnavailableView {
                 Image(centerImageResource)
-            } description: {
+            } description: { _ in
                 Text(title)
                     .font(.body)
             }

@@ -1,9 +1,14 @@
+import MEGADesignToken
 import MEGAL10n
+import MEGAPresentation
 import Search
 import SwiftUI
 
 extension SearchConfig {
-    static func searchConfig(contextPreviewFactory: ContextPreviewFactory) -> SearchConfig {
+    static func searchConfig(
+        contextPreviewFactory: ContextPreviewFactory,
+        defaultEmptyViewAsset: EmptyViewAssets
+    ) -> SearchConfig {
         .init(
             chipAssets: .init(
                 selectionIndicatorImage: UIImage.turquoiseCheckmark,
@@ -13,69 +18,78 @@ extension SearchConfig {
                 normalForeground: Color.photosFilterNormalTextForeground,
                 normalBackground: Color.photosFilterTypeNormalBackground
             ),
-            emptyViewAssetFactory: { chip in
-                let textColor = MEGAAppColor.Gray._515151.color
-                let defaultEmptyContent = EmptyViewAssets(
-                    image: Image(.searchEmptyState),
-                    title: Strings.Localizable.Home.Search.Empty.noChipSelected,
-                    foregroundColor: textColor
-                )
-                guard let chip else {
-                    return defaultEmptyContent
+            emptyViewAssetFactory: { chip, query in
+                let titleTextColor: (ColorScheme) -> Color = { colorScheme in
+                    guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) else {
+                        return colorScheme == .light ? UIColor.gray515151.swiftUI : UIColor.grayD1D1D1.swiftUI
+                    }
+
+                    return TokenColors.Icon.secondary.swiftUI
                 }
-                
+
+                guard let chip else {
+                    guard !query.isSearchActive else {
+                        return .init(
+                            image: Image(.searchEmptyState),
+                            title: Strings.Localizable.Home.Search.Empty.noChipSelected, 
+                            titleTextColor: titleTextColor
+                        )
+                    }
+
+                    return defaultEmptyViewAsset
+                }
+
                 switch chip.id {
                 case SearchChipEntity.docs.id:
                     return .init(
                         image: Image(.noResultsDocuments),
                         title: Strings.Localizable.Home.Search.Empty.noDocuments,
-                        foregroundColor: textColor
+                        titleTextColor: titleTextColor
                     )
                 case SearchChipEntity.audio.id:
                     return .init(
                         image: Image(.noResultsAudio),
                         title: Strings.Localizable.Home.Search.Empty.noAudio,
-                        foregroundColor: textColor
+                        titleTextColor: titleTextColor
                     )
                 case SearchChipEntity.video.id:
                     return .init(
                         image: Image(.noResultsVideo),
                         title: Strings.Localizable.Home.Search.Empty.noVideos,
-                        foregroundColor: textColor
+                        titleTextColor: titleTextColor
                     )
                 case SearchChipEntity.images.id:
                     return .init(
                         image: Image(.noResultsImages),
                         title: Strings.Localizable.Home.Search.Empty.noImages,
-                        foregroundColor: textColor
+                        titleTextColor: titleTextColor
                     )
                 case SearchChipEntity.folders.id:
                     return .init(
                         image: Image(.noResultsFolders),
                         title: Strings.Localizable.Home.Search.Empty.noFolders,
-                        foregroundColor: textColor
+                        titleTextColor: titleTextColor
                     )
                 case SearchChipEntity.pdf.id:
                     return .init(
                         image: Image(.noResultsDocuments),
                         title: Strings.Localizable.Home.Search.Empty.noPdfs,
-                        foregroundColor: textColor
+                        titleTextColor: titleTextColor
                     )
                 case SearchChipEntity.presentation.id:
                     return .init(
                         image: Image(.noResultsPresentations),
                         title: Strings.Localizable.Home.Search.Empty.noPresentations,
-                        foregroundColor: textColor
+                        titleTextColor: titleTextColor
                     )
                 case SearchChipEntity.archives.id:
                     return .init(
                         image: Image(.noResultsArchives),
                         title: Strings.Localizable.Home.Search.Empty.noArchives,
-                        foregroundColor: textColor
+                        titleTextColor: titleTextColor
                     )
                 default:
-                    return defaultEmptyContent
-                    
+                    return defaultEmptyViewAsset
                 }
             },
             rowAssets: .init(

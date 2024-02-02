@@ -2,20 +2,20 @@ import SwiftUI
 
 extension View {
     public func emptyState(
-        _ viewModel: ContentUnavailableView_iOS16ViewModel?
+        _ viewModel: ContentUnavailableViewModel?
     ) -> some View {
         modifier(EmptyStateViewModifier(emptyViewModel: viewModel))
     }
 }
 
 struct EmptyStateViewModifier: ViewModifier {
-    var emptyViewModel: ContentUnavailableView_iOS16ViewModel?
+    var emptyViewModel: ContentUnavailableViewModel?
     
     func body(content: Content) -> some View {
         if let emptyViewModel {
             content
                 .overlay(
-                    ContentUnavailableView_iOS16(viewModel: emptyViewModel)
+                    ContentUnavailableView(viewModel: emptyViewModel)
                 )
         } else {
             content

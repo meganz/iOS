@@ -21,4 +21,5 @@ public protocol NodeRepositoryProtocol: RepositoryProtocol {
     func parents(of node: NodeEntity) async -> [NodeEntity]
     func children(of node: NodeEntity) async -> NodeListEntity?
     func childrenNames(of node: NodeEntity) -> [String]?
+    func isInRubbishBin(node: NodeEntity) -> Bool
 }

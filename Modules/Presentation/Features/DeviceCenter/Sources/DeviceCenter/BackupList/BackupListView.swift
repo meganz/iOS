@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
@@ -57,16 +58,17 @@ struct BackupListContentView: View {
     var contentEmptyState: some View {
         content
             .emptyState(
-                ContentUnavailableView_iOS16ViewModel(
+                ContentUnavailableViewModel(
                     image: Image("folderEmptyState"),
                     title: Strings.Localizable.Device.Center.Current.Device.Empty.State.message,
                     font: .body,
-                    color: colorScheme == .dark ? .white : .black,
+                    titleTextColor: { _ in TokenColors.Text.primary.swiftUI },
                     actions: [
-                        ContentUnavailableView_iOS16ViewModel.Action(
+                        ContentUnavailableViewModel.ButtonAction(
                             title: Strings.Localizable.enableCameraUploadsButton,
-                            handler: viewModel.showCameraUploadsSettingsFlow,
-                            color: colorScheme == .dark ? Color("00C29A") : Color("00A886")
+                            backgroundColor: { _ in TokenColors.Support.success.swiftUI },
+                            image: nil,
+                            handler: viewModel.showCameraUploadsSettingsFlow
                         )
                     ]
                 )

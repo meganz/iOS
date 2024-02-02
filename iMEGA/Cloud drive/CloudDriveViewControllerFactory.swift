@@ -111,7 +111,8 @@ struct CloudDriveViewControllerFactory {
     private let shareUseCase: any ShareUseCaseProtocol
     private let rubbishBinUseCase: any RubbishBinUseCaseProtocol
     private let nodeActions: NodeActions
-    
+    private let emptyViewAssetFactory: CloudDriveEmptyViewAssetFactory
+
     init(
         featureFlagProvider: some FeatureFlagProviderProtocol,
         abTestProvider: some ABTestProviderProtocol,
@@ -178,6 +179,15 @@ struct CloudDriveViewControllerFactory {
         )
         
         self.avatarViewModel.inputs.viewIsReady()
+
+        self.emptyViewAssetFactory = CloudDriveEmptyViewAssetFactory(
+            navigationController: navigationController,
+            nodeUseCase: NodeUseCase(
+                nodeDataRepository: NodeDataRepository.newRepo,
+                nodeValidationRepository: NodeValidationRepository.newRepo,
+                nodeRepository: NodeRepository.newRepo
+            )
+        )
     }
     
     static func make(nc: UINavigationController? = nil) -> CloudDriveViewControllerFactory {
@@ -346,7 +356,6 @@ struct CloudDriveViewControllerFactory {
         
         let upgradeEncouragementViewModel: UpgradeEncouragementViewModel? = config.supportsUpgradeEncouragement ? .init() : nil
 
-        
         let mediaContentDelegate = MediaContentDelegate()
         
         let nodeBrowserViewModel = NodeBrowserViewModel(
@@ -736,7 +745,8 @@ struct CloudDriveViewControllerFactory {
             config: .searchConfig(
                 contextPreviewFactory: homeScreenFactory.contextPreviewFactory(
                     enableItemMultiSelection: true
-                )
+                ),
+                defaultEmptyViewAsset: emptyViewAssetFactory.defaultAsset(for: nodeSource)
             ),
             layout: viewModeStore.viewMode(for: locationFor(nodeSource)).pageLayout ?? .list,
             keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: .default)
@@ -745,6 +755,10 @@ struct CloudDriveViewControllerFactory {
     
     private func makeWarningViewModel(warningType: WarningType) -> WarningViewModel {
         WarningViewModel(warningType: warningType)
+    }
+
+    private func makeWarningViewModel(parentNodeProvider: ParentNodeProvider) -> WarningViewModel {
+        WarningViewModel(warningType: .contactNotVerifiedSharedFolder(parentNodeProvider()?.name ?? ""))
     }
     
     private func resultProvider(

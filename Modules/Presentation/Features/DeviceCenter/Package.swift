@@ -21,7 +21,8 @@ let package = Package(
         .package(path: "../../../UI/MEGASwiftUI"),
         .package(path: "../../../UI/MEGAUIKit"),
         .package(path: "../../../Infrastracture/MEGATest"),
-        .package(path: "../../../Localization/MEGAL10n")
+        .package(path: "../../../Localization/MEGAL10n"),
+        .package(url: "https://github.com/meganz/MEGADesignToken", branch: "main")
     ],
     targets: [
         .target(
@@ -30,7 +31,8 @@ let package = Package(
                            "MEGAPresentation",
                            "MEGASwiftUI",
                            "MEGAL10n",
-                           "MEGAUIKit"]
+                           "MEGAUIKit",
+                           "MEGADesignToken"]
         ),
         .target(
             name: "DeviceCenterMocks",

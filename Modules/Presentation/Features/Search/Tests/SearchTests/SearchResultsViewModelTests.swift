@@ -19,6 +19,11 @@ fileprivate extension Color {
 @MainActor
 final class SearchResultsViewModelTests: XCTestCase {
     class Harness {
+        struct EmptyContent: Equatable {
+            let chip: SearchChipEntity?
+            let isSearchActive: Bool
+        }
+
         static let emptyImageToReturn = Image("sun.min")
         let sut: SearchResultsViewModel
         let resultsProvider: MockSearchResultsProviding
@@ -27,7 +32,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         var contextTriggeredResults: [SearchResult] = []
         var keyboardResignedCount = 0
         var chipTaps: [(SearchChipEntity, Bool)] = []
-        var emptyContentRequested: [SearchChipEntity?] = []
+        var emptyContentRequested: [EmptyContent] = []
         weak var testcase: XCTestCase?
         
         init(_ testcase: XCTestCase) {
@@ -46,12 +51,15 @@ final class SearchResultsViewModelTests: XCTestCase {
                 chipTapped: { chipTapped($0, $1) }
             )
 
-            var askedForEmptyContent: (SearchChipEntity?) -> SearchConfig.EmptyViewAssets = { SearchConfig.testConfig.emptyViewAssetFactory($0) }
+            var askedForEmptyContent: (SearchChipEntity?, SearchQuery) -> SearchConfig.EmptyViewAssets = {
+                SearchConfig.testConfig.emptyViewAssetFactory($0, $1)
+            }
+
             let base = SearchConfig.testConfig
             let config = SearchConfig(
                 chipAssets: base.chipAssets,
-                emptyViewAssetFactory: { chip in
-                    askedForEmptyContent(chip)
+                emptyViewAssetFactory: { chip, query in
+                    askedForEmptyContent(chip, query)
                 },
                 rowAssets: base.rowAssets,
                 colorAssets: base.colorAssets,
@@ -80,8 +88,8 @@ final class SearchResultsViewModelTests: XCTestCase {
             }
             
             askedForEmptyContent = {
-                self.emptyContentRequested.append($0)
-                return SearchConfig.testConfig.emptyViewAssetFactory($0)
+                self.emptyContentRequested.append(.init(chip: $0, isSearchActive: $1.isSearchActive))
+                return SearchConfig.testConfig.emptyViewAssetFactory($0, $1)
             }
         }
         
@@ -178,17 +186,17 @@ final class SearchResultsViewModelTests: XCTestCase {
     func testChangingQuery_asksResultsProviderToPerformSearch() async {
         let harness = Harness(self).withSingleResultPrepared()
         await harness.sut.task()
-        await harness.sut.queryChanged(to: "query")
+        await harness.sut.queryChanged(to: "query", isSearchActive: true)
         let expectedReceivedQueries: [SearchQuery] = [
             .initial,
-            .userSupplied(.query("query"))
+            .userSupplied(.query("query", isSearchActive: true))
         ]
         XCTAssertEqual(harness.resultsProvider.passedInQueries, expectedReceivedQueries)
     }
     
     func testListItems_onQueryChanged_returnsResultsFromResultsProvider() async {
         let harness = Harness(self).withSingleResultPrepared()
-        await harness.sut.queryChanged(to: "query")
+        await harness.sut.queryChanged(to: "query", isSearchActive: true)
         let expectedListItems: [SearchResultRowViewModel] = [
             .init(
                 result: .resultWith(
@@ -236,7 +244,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         await harness.sut.task()
         XCTAssertTrue(harness.hasExactlyResults(count: 10))
         harness.withSingleResultPrepared("5")
-        await harness.sut.queryChanged(to: "5")
+        await harness.sut.queryChanged(to: "5", isSearchActive: true)
         XCTAssert(harness.hasExactlyResults(count: 1))
         harness.withResultsPrepared(10)
         await harness.sut.queryCleaned()
@@ -248,7 +256,7 @@ final class SearchResultsViewModelTests: XCTestCase {
     
     func testListItems_onSearchCancelled_sendsEmptyQuery_toProvider() async throws {
         let harness = Harness(self).withSingleResultPrepared()
-        await harness.sut.queryChanged(to: "query")
+        await harness.sut.queryChanged(to: "query", isSearchActive: true)
         let lastQueryBefore = try XCTUnwrap(harness.resultsProvider.passedInQueries.last)
         XCTAssertEqual(lastQueryBefore.query, "query")
         XCTAssertEqual(lastQueryBefore.chips, [])
@@ -261,7 +269,7 @@ final class SearchResultsViewModelTests: XCTestCase {
     
     func testOnSelectionAction_passesSelectedResultViaBridge() async throws {
         let harness = Harness(self).withSingleResultPrepared()
-        await harness.sut.queryChanged(to: "query")
+        await harness.sut.queryChanged(to: "query", isSearchActive: true)
         let item = try XCTUnwrap(harness.sut.listItems.first)
         item.actions.selectionAction()
         XCTAssertEqual(harness.selectedResults, [.resultSelectionWith(id: 1, title: "title")])
@@ -269,7 +277,7 @@ final class SearchResultsViewModelTests: XCTestCase {
     
     func testOnContextAction_passesSelectedResultViaBridge() async throws {
         let harness = Harness(self).withSingleResultPrepared()
-        await harness.sut.queryChanged(to: "query")
+        await harness.sut.queryChanged(to: "query", isSearchActive: true)
         let item = try XCTUnwrap(harness.sut.listItems.first)
         item.actions.contextAction(UIButton())
         XCTAssertEqual(harness.contextTriggeredResults, [.resultWith(id: 1, title: "title")])
@@ -277,7 +285,7 @@ final class SearchResultsViewModelTests: XCTestCase {
     
     func testListItems_showResultsTitleAndDescription() async {
         let harness = Harness(self).withSingleResultPrepared()
-        await harness.sut.queryChanged(to: "query")
+        await harness.sut.queryChanged(to: "query", isSearchActive: true)
         let result = harness.resultVM(at: 0)
         XCTAssertEqual(result.title, "title")
         XCTAssertEqual(result.result.description(.list), "Desc")
@@ -328,13 +336,13 @@ final class SearchResultsViewModelTests: XCTestCase {
     
     func testEmptyView_isNil_whenItemsNotEmpty() async {
         let harness = Harness(self).withSingleResultPrepared()
-        await harness.sut.queryChanged(to: "query")
+        await harness.sut.queryChanged(to: "query", isSearchActive: true)
         XCTAssertNil(harness.sut.emptyViewModel)
     }
     
     func testEmptyView_notNil_whenItemsEmpty() async throws {
         let harness = Harness(self)
-        await harness.sut.queryChanged(to: "query")
+        await harness.sut.queryChanged(to: "query", isSearchActive: true)
         let contentUnavailableVM = try XCTUnwrap(harness.sut.emptyViewModel)
         let expectedContent = SearchConfig.EmptyViewAssets.testAssets
         XCTAssertEqual(contentUnavailableVM.image, expectedContent.image)
@@ -343,19 +351,27 @@ final class SearchResultsViewModelTests: XCTestCase {
     
     func testEmptyView_isDefault_whenChipSelected_AndQueryNotEmpty() async throws {
         let harness = Harness(self).withChipsPrepared(2)
-        await harness.sut.queryChanged(to: "query")
+        await harness.sut.queryChanged(to: "query", isSearchActive: true)
         await harness.sut.chipsItems.first!.select()
         _ = try XCTUnwrap(harness.sut.emptyViewModel)
-        XCTAssertEqual(harness.emptyContentRequested, [nil, nil])
+        let content: Harness.EmptyContent = .init(chip: nil, isSearchActive: true)
+        XCTAssertEqual(harness.emptyContentRequested, [content, content])
     }
-    
+
     func testEmptyView_isContextualBasedOnChip_whenChipSelected_AndQueryEmpty() async throws {
         let harness = Harness(self)
-        await harness.sut.queryChanged(to: "")
+        await harness.sut.queryChanged(to: "", isSearchActive: false)
         harness.noResultsWithSingleChipApplied()
         await harness.sut.chipsItems.first!.select()
         _ = try XCTUnwrap(harness.sut.emptyViewModel)
-        XCTAssertEqual(harness.emptyContentRequested, [nil, .some(.init(type: .nodeFormat(1), title: "appliedChip"))])
+        let content: [Harness.EmptyContent] = [
+            .init(chip: nil, isSearchActive: false),
+            .init(
+                chip: .some(.init(type: .nodeFormat(1), title: "appliedChip")), 
+                isSearchActive: false
+            )
+        ]
+        XCTAssertEqual(harness.emptyContentRequested, content)
     }
 
     func testOnProlongedLoading_shouldDisplayShimmerLoadingView() async {
@@ -370,7 +386,7 @@ final class SearchResultsViewModelTests: XCTestCase {
         await fulfillment(of: [delayExpectation], timeout: 0.2)
         XCTAssertTrue(harness.sut.isLoadingPlaceholderShown)
 
-        await harness.sut.queryChanged(to: "query")
+        await harness.sut.queryChanged(to: "query", isSearchActive: true)
         XCTAssertFalse(harness.sut.isLoadingPlaceholderShown)
     }
     

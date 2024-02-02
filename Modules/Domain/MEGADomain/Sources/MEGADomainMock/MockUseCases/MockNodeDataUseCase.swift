@@ -7,6 +7,7 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
     private let filesAndFolders: (Int, Int)
     public var versions: Bool
     public var downloadedToReturn: Bool
+    public var isARubbishBinRootNodeValue: Bool
     public var inRubbishBinToReturn: Bool
     private var nodes: [NodeEntity]
     private var nodeEntity: NodeEntity?
@@ -18,6 +19,7 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
                 filesAndFolders: (Int, Int) = (0, 0),
                 versions: Bool = false,
                 downloaded: Bool = false,
+                isARubbishBinRootNodeValue: Bool = false,
                 inRubbishBin: Bool = false,
                 nodes: [NodeEntity] = [],
                 node: NodeEntity? = nil) {
@@ -26,6 +28,7 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
         self.filesAndFolders = filesAndFolders
         self.versions = versions
         self.downloadedToReturn = downloaded
+        self.isARubbishBinRootNodeValue = isARubbishBinRootNodeValue
         self.inRubbishBinToReturn = inRubbishBin
         self.nodes = nodes
         self.nodeEntity = node
@@ -56,7 +59,11 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
     public func isDownloaded(nodeHandle: HandleEntity) -> Bool {
         downloadedToReturn
     }
-    
+
+    public func isARubbishBinRootNode(nodeHandle: MEGADomain.HandleEntity) -> Bool {
+        isARubbishBinRootNodeValue
+    }
+
     public func isInRubbishBin(nodeHandle: HandleEntity) -> Bool {
         inRubbishBinToReturn
     }

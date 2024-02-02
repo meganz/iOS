@@ -8,7 +8,7 @@ extension SearchQueryEntity {
     }
     /// default search query performed on the appear of the screen results screen
     public static var initialRootQuery: Self {
-        SearchQueryEntity(query: "", sorting: .automatic, mode: .home, chips: [])
+        SearchQueryEntity(query: "", sorting: .automatic, mode: .home, isSearchActive: false, chips: [])
     }
 }
 

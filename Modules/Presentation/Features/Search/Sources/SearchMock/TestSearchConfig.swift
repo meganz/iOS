@@ -1,3 +1,4 @@
+import MEGADesignToken
 import Search
 import SwiftUI
 import UIKit
@@ -13,7 +14,7 @@ extension SearchConfig {
                 normalForeground: .black,
                 normalBackground: .gray
             ),
-            emptyViewAssetFactory: { _ in .testAssets },
+            emptyViewAssetFactory: { _, _ in .testAssets },
             rowAssets: .init(
                 contextImage: UIImage(systemName: "ellipsis")!,
                 itemSelected: UIImage(systemName: "checkmark.circle")!,
@@ -62,7 +63,8 @@ extension SearchConfig.EmptyViewAssets {
         .init(
             image: Image(systemName: "magnifyingglass"),
             title: "No results",
-            foregroundColor: Color(red: 209.0/255.0, green: 209.0/255.0, blue: 209.0/255.0)
+            titleTextColor: { _ in TokenColors.Icon.secondary.swiftUI },
+            actions: []
         )
     }
 }

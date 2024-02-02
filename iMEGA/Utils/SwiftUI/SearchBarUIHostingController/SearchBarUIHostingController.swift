@@ -48,10 +48,6 @@ class SearchControllerWrapper: NSObject {
     var onCancel: (() -> Void)?
     var onUpdateSearchBarVisibility: ((Bool) -> Void)?
 
-    // We need current search text in order to not trigger not needed searching with empty string ""
-    // when the search controller becomes active
-    private var searchText: String?
-
     init(
         onSearch: ((String) -> Void)?,
         onCancel: (() -> Void)?
@@ -79,13 +75,6 @@ extension SearchControllerWrapper: UISearchResultsUpdating {
               searchController.isActive
         else { return }
 
-        // We need to trigger search only if the input user types is not empty or if the user has
-        // previously entered some text in the search bar.
-        // By doing this, we avoid not needed searching with empty string ""
-        // when the search controller becomes active
-        guard (searchText != nil && searchText!.isNotEmpty) || searchString.isNotEmpty else { return }
-
-        searchText = searchString
         onSearch?(searchString)
     }
 }

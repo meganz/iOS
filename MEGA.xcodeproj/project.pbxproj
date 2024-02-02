@@ -2032,6 +2032,7 @@
 		BF1164B027F68EC500E5C5A4 /* SDWebImageWebPCoder in Frameworks */ = {isa = PBXBuildFile; productRef = BF1164AF27F68EC500E5C5A4 /* SDWebImageWebPCoder */; };
 		BF1164B827F6908500E5C5A4 /* SDWebImageWebPCoder in Frameworks */ = {isa = PBXBuildFile; productRef = BF1164B727F6908500E5C5A4 /* SDWebImageWebPCoder */; };
 		BF1164BB27F692DB00E5C5A4 /* KeyboardLayoutGuide in Frameworks */ = {isa = PBXBuildFile; productRef = BF1164BA27F692DB00E5C5A4 /* KeyboardLayoutGuide */; };
+		BF11FEE42B6AF70400398A2D /* CloudDriveEmptyViewAssetFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF11FEE32B6AF70400398A2D /* CloudDriveEmptyViewAssetFactory.swift */; };
 		BF121D672A09FF1700DA3633 /* ScheduleMeetingNotificationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF121D662A09FF1700DA3633 /* ScheduleMeetingNotificationInfo.swift */; };
 		BF121D692A09FF3F00DA3633 /* UNNotificationContent+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF121D682A09FF3F00DA3633 /* UNNotificationContent+Additions.swift */; };
 		BF121D792A0B566900DA3633 /* ScheduleMeetingCreationRecurrenceOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF121D782A0B566900DA3633 /* ScheduleMeetingCreationRecurrenceOption.swift */; };
@@ -4729,6 +4730,7 @@
 		BF1053C824971A5E009094C8 /* ChatNotificationMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatNotificationMessage.swift; sourceTree = "<group>"; };
 		BF1053DC2498663B009094C8 /* ChatUnreadMessagesLabelCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUnreadMessagesLabelCollectionCell.swift; sourceTree = "<group>"; };
 		BF1053DD2498663B009094C8 /* ChatUnreadMessagesLabelCollectionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatUnreadMessagesLabelCollectionCell.xib; sourceTree = "<group>"; };
+		BF11FEE32B6AF70400398A2D /* CloudDriveEmptyViewAssetFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveEmptyViewAssetFactory.swift; sourceTree = "<group>"; };
 		BF121D662A09FF1700DA3633 /* ScheduleMeetingNotificationInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingNotificationInfo.swift; sourceTree = "<group>"; };
 		BF121D682A09FF3F00DA3633 /* UNNotificationContent+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UNNotificationContent+Additions.swift"; sourceTree = "<group>"; };
 		BF121D782A0B566900DA3633 /* ScheduleMeetingCreationRecurrenceOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationRecurrenceOption.swift; sourceTree = "<group>"; };
@@ -6519,6 +6521,7 @@
 				C45093FD270C48AC006DC81F /* CloudDriveCollectionViewController+DynamicType.swift */,
 				83369CE22179D0A0002B09C3 /* CloudDriveCollectionViewController.h */,
 				83369CE32179D0A0002B09C3 /* CloudDriveCollectionViewController.m */,
+				BF11FEE32B6AF70400398A2D /* CloudDriveEmptyViewAssetFactory.swift */,
 				944034B729394F5E0073FE6F /* CloudDriveTableViewController+Additions.swift */,
 				830B54882178845300BE1E1F /* CloudDriveTableViewController.h */,
 				830B54892178845300BE1E1F /* CloudDriveTableViewController.m */,
@@ -13881,6 +13884,7 @@
 				83369CE42179D0A0002B09C3 /* CloudDriveCollectionViewController.m in Sources */,
 				94831D642B61086700D0005F /* CloudDriveContextMenuConfigFactory.swift in Sources */,
 				94768B502B55535F005C436B /* CloudDriveContextMenuDelegates.swift in Sources */,
+				BF11FEE42B6AF70400398A2D /* CloudDriveEmptyViewAssetFactory.swift in Sources */,
 				940F97302B57DDA300B8C0AF /* CloudDriveNavigationTitleBuilder.swift in Sources */,
 				944034B829394F5E0073FE6F /* CloudDriveTableViewController+Additions.swift in Sources */,
 				830B548A2178845300BE1E1F /* CloudDriveTableViewController.m in Sources */,
