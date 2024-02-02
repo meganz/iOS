@@ -1,4 +1,6 @@
+import MEGADesignToken
 import MEGAL10n
+import MEGAPresentation
 import SwiftUI
 
 struct MyAccountHallPlanView: View {
@@ -13,7 +15,9 @@ struct MyAccountHallPlanView: View {
             VStack(alignment: .leading, spacing: 0) {
                 Text(Strings.Localizable.InAppPurchase.ProductDetail.Navigation.currentPlan)
                     .font(.footnote)
-                    .foregroundColor(MEGAAppColor.Account.upgradeAccountPrimaryGrayText.color)
+                    .foregroundColor(
+                        isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : MEGAAppColor.Account.upgradeAccountPrimaryGrayText.color
+                    )
                 
                 ZStack {
                     ProgressView()
@@ -21,7 +25,9 @@ struct MyAccountHallPlanView: View {
                     
                     Text(viewModel.currentPlanName)
                         .font(.body)
-                        .foregroundColor(MEGAAppColor.Account.upgradeAccountPrimaryText.color)
+                        .foregroundColor(
+                            isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : MEGAAppColor.Account.upgradeAccountPrimaryGrayText.color
+                        )
                         .opacity(viewModel.isUpdatingAccountDetails ? 0 : 1)
                 }
             }
@@ -32,7 +38,9 @@ struct MyAccountHallPlanView: View {
                 viewModel.dispatch(.didTapUpgradeButton)
             } label: {
                 Text(Strings.Localizable.upgrade)
-                    .foregroundColor(MEGAAppColor.View.turquoise.color)
+                    .foregroundColor(
+                        isDesignTokenEnabled ? TokenColors.Support.success.swiftUI : MEGAAppColor.View.turquoise.color
+                    )
                     .font(.subheadline.bold())
                     .frame(height: 50)
                     .frame(maxWidth: 300)
@@ -41,11 +49,16 @@ struct MyAccountHallPlanView: View {
                     .contentShape(Rectangle())
                     .overlay(
                         RoundedRectangle(cornerRadius: 10)
-                            .stroke(MEGAAppColor.View.turquoise.color, lineWidth: 2)
+                            .stroke(
+                                isDesignTokenEnabled ? TokenColors.Support.success.swiftUI : MEGAAppColor.View.turquoise.color,
+                                lineWidth: 2
+                            )
                     )
             }
             .padding()
         }
-        .background(MEGAAppColor.Background.backgroundCell.color)
+        .background(
+            isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : MEGAAppColor.Background.backgroundCell.color
+        )
     }
 }
