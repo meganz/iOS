@@ -1,4 +1,5 @@
 import Combine
+import MEGADesignToken
 import MEGAUIKit
 import UIKit
 
@@ -59,13 +60,16 @@ final class ExploreViewStack: UIView, NibOwnerLoadable {
     }
     
     private func setupBackgroundColor(with trait: UITraitCollection) {
+        let defaultColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.whiteF7F7F7
+        let darkColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.black000000
+        
         switch trait.theme {
         case .dark:
-            backgroundColor = MEGAAppColor.Black._000000.uiColor
-            subviews.first?.backgroundColor = MEGAAppColor.Black._000000.uiColor
+            backgroundColor = darkColor
+            subviews.first?.backgroundColor = darkColor
         default:
-            backgroundColor = MEGAAppColor.White._F7F7F7.uiColor
-            subviews.first?.backgroundColor = MEGAAppColor.White._F7F7F7.uiColor
+            backgroundColor = defaultColor
+            subviews.first?.backgroundColor = defaultColor
         }
     }
 }

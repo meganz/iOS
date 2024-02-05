@@ -85,6 +85,8 @@ static NSString *kisDirectory = @"kisDirectory";
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.searchController.delegate = self;
     
+    self.offlineTableView.tableView.backgroundColor = [UIColor pageBackgroundForTraitCollection:self.traitCollection];
+    
     [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
 }
 
@@ -165,8 +167,9 @@ static NSString *kisDirectory = @"kisDirectory";
         [AppearanceManager forceToolbarUpdate:self.toolbar traitCollection:self.traitCollection];
         [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
         if (self.flavor == HomeScreen) {
-            self.view.backgroundColor = UIColor.mnz_black1C1C1E;
+            self.view.backgroundColor = [UIColor isDesignTokenEnabled] ? [UIColor pageBackgroundForTraitCollection:self.traitCollection] : UIColor.mnz_black1C1C1E;
         }
+        
         [self reloadData];
     }
 }
@@ -579,7 +582,7 @@ static NSString *kisDirectory = @"kisDirectory";
 }
 
 - (void)reloadData {
-    self.view.backgroundColor = UIColor.systemBackgroundColor;
+    self.view.backgroundColor = [UIColor pageBackgroundForTraitCollection:self.traitCollection];
     
     if (self.viewModePreference == ViewModePreferenceEntityList) {
         [self.offlineTableView.tableView reloadData];

@@ -46,17 +46,8 @@
 
 - (void)updateAppearance:(UITraitCollection *)currentTraitCollection{
     self.infoLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
-    switch (currentTraitCollection.userInterfaceStyle) {
-        case UIUserInterfaceStyleUnspecified:
-        case UIUserInterfaceStyleLight: {
-            self.backgroundColor = UIColor.mnz_whiteFFFFFF;
-        }
-            break;
-        case UIUserInterfaceStyleDark: {
-            self.backgroundColor = UIColor.mnz_black1C1C1E;
-        }
-    }
+    [self setCellBackgroundColorWith:self.traitCollection];
+    [self configureMoreButtonUI];
 }
-
 
 @end

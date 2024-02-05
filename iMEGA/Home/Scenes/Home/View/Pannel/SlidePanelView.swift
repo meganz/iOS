@@ -1,4 +1,5 @@
 import Combine
+import MEGADesignToken
 import MEGAL10n
 import UIKit
 
@@ -89,6 +90,7 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        
         loadNibContent()
         setupView(with: traitCollection)
     }
@@ -126,6 +128,7 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
         panGesture.delegate = self
         
         let scrollView = firstScrollViewInSubviews(recentViewController.view.subviews)
+        scrollView?.backgroundColor = TokenColors.Background.page
         recentScrollView = scrollView
         scrollView?.addGestureRecognizer(panGesture)
     }
@@ -138,6 +141,7 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
         panGesture.delegate = self
         
         let scrollView = firstScrollViewInSubviews(favouritesViewController.view.subviews)
+        scrollView?.backgroundColor = TokenColors.Background.page
         favouritesScrollView = scrollView
         scrollView?.addGestureRecognizer(panGesture)
     }
@@ -150,6 +154,7 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
         panGesture.delegate = self
         
         let scrollView = firstScrollViewInSubviews(offlineViewController.view.subviews)
+        scrollView?.backgroundColor = TokenColors.Background.page
         offlineScrollView = scrollView
         scrollView?.addGestureRecognizer(panGesture)
     }
@@ -173,11 +178,18 @@ final class SlidePanelView: UIView, NibOwnerLoadable {
     }
     
     // MARK: - Privates
+    
     private func setupView(with trait: UITraitCollection) {
         setupSegmentTitle()
         updateTabVisiblity(to: .recents)
+        
         handlerView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(didPan(_:))))
         titleView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(didPan(_:))))
+        
+        if UIColor.isDesignTokenEnabled() {
+            handlerView.backgroundColor = TokenColors.Background.page
+            titleView.backgroundColor = TokenColors.Background.page
+        }
     }
     
     private func updateTabVisiblity(to tab: DisplayTab) {

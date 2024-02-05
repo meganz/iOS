@@ -109,13 +109,14 @@
     if (![FileExtensionGroupOCWrapper verifyIsVideo:node.name]) {
         self.thumbnailPlayImageView.hidden = YES;
     }
-        
+    
     if (node.isTakenDown) {
         self.nameLabel.attributedText = [node attributedTakenDownName];
         self.nameLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
     } else {
         self.nameLabel.text = node.name;
-        self.nameLabel.textColor = UIColor.labelColor;
+        self.nameLabel.textColor = [UIColor isDesignTokenEnabled] ? [UIColor cellTitleColorFor: self.traitCollection] :
+        [UIColor labelColor];
         self.subtitleLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     }
     
@@ -127,8 +128,8 @@
             case NodeTableViewCellFlavorRecentAction:
             case NodeTableViewCellFlavorCloudDrive: {
                 self.infoLabel.text =
-                    self.recentActionBucket ? [Helper sizeAndCreationHourAndMininuteForNode:node api:megaSDK] :
-                    [Helper sizeAndModificationDateForNode:node api:megaSDK];
+                self.recentActionBucket ? [Helper sizeAndCreationHourAndMininuteForNode:node api:megaSDK] :
+                [Helper sizeAndModificationDateForNode:node api:megaSDK];
                 [MEGASdkManager.sharedMEGASdk hasVersionsForNode:node completion:^(BOOL hasVersions) {
                     dispatch_async(dispatch_get_main_queue(), ^{
                         self.versionedImageView.hidden = !hasVersions;
@@ -199,7 +200,7 @@
         self.incomingOrOutgoingImageView.hidden = NO;
         self.incomingOrOutgoingImageView.image = (shareType == MEGAShareTypeAccessOwner) ? [UIImage imageNamed:@"mini_folder_outgoing"] : [UIImage imageNamed:@"mini_folder_incoming"];
     }
-
+    
     self.uploadOrVersionImageView.image = recentActionBucket.isUpdate ? [UIImage imageNamed:@"versioned"] : [UIImage imageNamed:@"recentUpload"];
     
     self.timeLabel.text = recentActionBucket.timestamp.mnz_formattedHourAndMinutes;
@@ -223,12 +224,17 @@
 
 - (void)updateWithTrait:(UITraitCollection *)currentTraitCollection {
     [self configureMoreButtonUI];
+    
     self.infoLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+    self.infoStringRightLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+    
     if (self.cellFlavor != NodeTableViewCellFlavorRecentAction) {
         return;
     }
-    self.backgroundColor = [UIColor mnz_homeRecentsCellBackgroundForTraitCollection:currentTraitCollection];
+    
+    [self setCellBackgroundColorWith:self.traitCollection];
     self.timeLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+    self.subtitleLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
 }
 
 - (void)updateInfo {
@@ -238,9 +244,9 @@
         || (self.node.parentHandle == MEGASdkManager.sharedMEGASdk.rootNode.handle);
         self.infoLabel.text = shouldIncludeRootFolder ? LocalizedString(@"", @"") : LocalizedString(@"> ", @"");
         self.infoStringRightLabel.text = [self.node filePathWithDelimeter:@" > "
-                                                            sdk:MEGASdkManager.sharedMEGASdk
-                                          includeRootFolderName:shouldIncludeRootFolder
-                                                excludeFileName:YES];
+                                                                      sdk:MEGASdkManager.sharedMEGASdk
+                                                    includeRootFolderName:shouldIncludeRootFolder
+                                                          excludeFileName:YES];
         self.versionedImageView.image = [UIImage imageNamed:self.node.isInShare ? @"pathInShares" : @"pathCloudDrive"];
         self.versionedImageView.hidden = NO;
     }

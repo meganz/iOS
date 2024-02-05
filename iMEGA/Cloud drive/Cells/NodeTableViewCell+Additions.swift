@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 
 extension NodeTableViewCell {
@@ -29,12 +30,24 @@ extension NodeTableViewCell {
     }
     
     @objc func configureMoreButtonUI() {
-        moreButton.tintColor = MEGAAppColor.Gray._BBBBBB.uiColor
+        moreButton.tintColor = UIColor.isDesignTokenEnabled() ? TokenColors.Icon.secondary : UIColor.grayBBBBBB
     }
     
     @objc func setAccessibilityLabelsForIcons(in node: MEGANode) {
         labelImageView?.accessibilityLabel = MEGANode.string(for: node.label)
         favouriteImageView?.accessibilityLabel = Strings.Localizable.favourite
         linkImageView?.accessibilityLabel = Strings.Localizable.shared
+    }
+    
+    @objc func setCellBackgroundColor(with traitCollection: UITraitCollection) {
+        var bgColor: UIColor = .black
+        
+        if UIColor.isDesignTokenEnabled() {
+            bgColor = TokenColors.Background.page
+        } else {
+            bgColor = traitCollection.userInterfaceStyle == .dark ? UIColor.black1C1C1E : UIColor.whiteFFFFFF
+        }
+        
+        backgroundColor = bgColor
     }
 }

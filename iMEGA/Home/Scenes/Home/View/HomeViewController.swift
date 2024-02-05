@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
@@ -445,13 +446,16 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
     }
 
     private func setupBackgroundColor(with trait: UITraitCollection) {
+        let defaultColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.whiteF7F7F7
+        let darkColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.black000000
+        
         switch trait.theme {
-        case .light:
-            slidePanelView.backgroundColor = MEGAAppColor.White._F7F7F7.uiColor
-            view.backgroundColor = MEGAAppColor.White._F7F7F7.uiColor
         case .dark:
-            slidePanelView.backgroundColor = MEGAAppColor.Black._000000.uiColor
-            view.backgroundColor = MEGAAppColor.Black._000000.uiColor
+            slidePanelView.backgroundColor = darkColor
+            view.backgroundColor = darkColor
+        default:
+            slidePanelView.backgroundColor = defaultColor
+            view.backgroundColor = defaultColor
         }
     }
 

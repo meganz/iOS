@@ -60,6 +60,8 @@
         self.thumbnailViewerView.hidden = YES;
     }
     
+    self.indicatorImageView.tintColor = [self indicatorTintColor];
+    
     NSUInteger numberOfPhotos = 0;
     NSUInteger numberOfVideos = 0;
     for (NSUInteger i = 0; i < nodesArray.count; i++) {

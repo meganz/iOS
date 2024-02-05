@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAUIKit
 import UIKit
 
@@ -57,10 +58,13 @@ final class HandlerView: UIView {
     }
 
     private func themeColor(of trait: UITraitCollection) -> (UIColor, UIColor) {
+        let lightBackgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.black1C1C1E
+        let darkBackgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.whiteFFFFFF
+        
         switch trait.userInterfaceStyle {
-        case .dark: return (.mnz_black1C1C1E(), MEGAAppColor.White._FFFFFF.uiColor)
-        case .light: return (MEGAAppColor.White._FFFFFF.uiColor, .mnz_black1C1C1E())
-        default: return (MEGAAppColor.White._FFFFFF.uiColor, .mnz_black1C1C1E())
+        case .dark: return (lightBackgroundColor, MEGAAppColor.White._FFFFFF.uiColor)
+        case .light: return (darkBackgroundColor, .mnz_black1C1C1E())
+        default: return (darkBackgroundColor, .mnz_black1C1C1E())
         }
     }
         // MARK: - UIView overrides
