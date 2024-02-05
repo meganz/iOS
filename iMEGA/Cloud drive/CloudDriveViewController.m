@@ -23,7 +23,6 @@
 #import "MEGAPurchase.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGARemoveRequestDelegate.h"
-#import "MEGASdkManager.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGAStore.h"
 #import "MEGA-Swift.h"
@@ -100,7 +99,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     switch (self.displayMode) {
         case DisplayModeCloudDrive: {
             if (!self.parentNode) {
-                self.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
+                self.parentNode = [MEGASdk.shared rootNode];
             }
             break;
         }
@@ -116,7 +115,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     
     [self determineViewMode];
     
-    if (self.displayMode != DisplayModeCloudDrive || (([MEGASdkManager.sharedMEGASdk accessLevelForNode:self.parentNode] != MEGAShareTypeAccessOwner) && MEGAReachabilityManager.isReachable)) {
+    if (self.displayMode != DisplayModeCloudDrive || (([MEGASdk.shared accessLevelForNode:self.parentNode] != MEGAShareTypeAccessOwner) && MEGAReachabilityManager.isReachable)) {
     }
     
     [self setNavigationBarButtonItems];
@@ -124,7 +123,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     if (self.displayMode == DisplayModeBackup) {
         [self toolbarActionsForNode:self.parentNode];
     } else {
-        MEGAShareType shareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:self.parentNode];
+        MEGAShareType shareType = [MEGASdk.shared accessLevelForNode:self.parentNode];
         [self toolbarActionsForShareType:shareType isBackupNode:false];
     }
     
@@ -174,7 +173,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     
     [self observeViewModeNotification];
     
-    [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
+    [MEGASdk.shared addMEGADelegate:self];
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     
     [self reloadUI];
@@ -203,7 +202,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [super viewWillDisappear:animated];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
-    [[MEGASdkManager sharedMEGASdk] removeMEGADelegateAsync:self];
+    [MEGASdk.shared removeMEGADelegateAsync:self];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -392,10 +391,10 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     switch (displayMode) {
         case DisplayModeCloudDrive: {
             if (!self.parentNode) {
-                self.parentNode = [[MEGASdkManager sharedMEGASdk] rootNode];
+                self.parentNode = [MEGASdk.shared rootNode];
             }
             [self updateNavigationBarTitle];
-            self.nodes = [MEGASdkManager.sharedMEGASdk childrenForParent:self.parentNode order:[Helper sortTypeFor:self.parentNode]];
+            self.nodes = [MEGASdk.shared childrenForParent:self.parentNode order:[Helper sortTypeFor:self.parentNode]];
             self.hasMediaFiles = [self.viewModel hasMediaFilesWithNodes:self.nodes];
             [self updateSearchAppearanceFor:self.viewModePreference_ObjC];
             break;
@@ -403,7 +402,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             
         case DisplayModeRubbishBin: {
             [self updateNavigationBarTitle];
-            self.nodes = [MEGASdkManager.sharedMEGASdk childrenForParent:self.parentNode order:[Helper sortTypeFor:self.parentNode]];
+            self.nodes = [MEGASdk.shared childrenForParent:self.parentNode order:[Helper sortTypeFor:self.parentNode]];
             self.moreMinimizedBarButtonItem.enabled = self.nodes.size > 0;
             self.navigationItem.searchController = self.searchController;
             break;
@@ -418,7 +417,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             
         case DisplayModeBackup: {
             [self updateNavigationBarTitle];
-            self.nodes = [MEGASdkManager.sharedMEGASdk childrenForParent:self.parentNode order:[Helper sortTypeFor:self.parentNode]];
+            self.nodes = [MEGASdk.shared childrenForParent:self.parentNode order:[Helper sortTypeFor:self.parentNode]];
             self.navigationItem.searchController = self.searchController;
             break;
         }
@@ -575,13 +574,13 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     
     static BOOL alreadyPresented = NO;
     
-    NSDate *accountCreationDate = MEGASdkManager.sharedMEGASdk.accountCreationDate;
+    NSDate *accountCreationDate = MEGASdk.shared.accountCreationDate;
     NSInteger days = [NSCalendar.currentCalendar components:NSCalendarUnitDay
                                                    fromDate:accountCreationDate
                                                      toDate:NSDate.date
                                                     options:NSCalendarWrapComponents].day;
     
-    if (!alreadyPresented && ![[MEGASdkManager sharedMEGASdk] mnz_isProAccount] && days > kMinDaysToEncourageToUpgrade) {
+    if (!alreadyPresented && ![MEGASdk.shared mnz_isProAccount] && days > kMinDaysToEncourageToUpgrade) {
         NSDate *lastEncourageUpgradeDate = [[NSUserDefaults standardUserDefaults] objectForKey:@"lastEncourageUpgradeDate"];
         if (lastEncourageUpgradeDate) {
             NSInteger week = [[NSCalendar currentCalendar] components:NSCalendarUnitWeekOfYear
@@ -592,7 +591,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
                 return;
             }
         }
-        MEGAAccountDetails *accountDetails = [[MEGASdkManager sharedMEGASdk] mnz_accountDetails];
+        MEGAAccountDetails *accountDetails = [MEGASdk.shared mnz_accountDetails];
         if (accountDetails && (arc4random_uniform(20) == 0)) { // 5 % of the times
             [self showUpgradePlanView];
             [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"lastEncourageUpgradeDate"];
@@ -675,7 +674,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         NSString *text = self.searchController.searchBar.text;
         [SVProgressHUD show];
         self.cancelToken = MEGACancelToken.alloc.init;
-        SearchOperation* searchOperation = [[SearchOperation alloc] initWithSdk:[MEGASdkManager sharedMEGASdk] parentNode:self.parentNode text:text recursive:YES nodeFormat:MEGANodeFormatTypeUnknown sortOrder:[Helper sortTypeFor:self.parentNode] cancelToken:self.cancelToken completion:^(MEGANodeList*nodeList, BOOL isCancelled) {
+        SearchOperation* searchOperation = [[SearchOperation alloc] initWithSdk:MEGASdk.shared parentNode:self.parentNode text:text recursive:YES nodeFormat:MEGANodeFormatTypeUnknown sortOrder:[Helper sortTypeFor:self.parentNode] cancelToken:self.cancelToken completion:^(MEGANodeList*nodeList, BOOL isCancelled) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.searchNodesArray = [NSMutableArray arrayWithArray: [nodeList toNodeArray]];
                 [self reloadData];
@@ -724,7 +723,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         [self toggleWithEditModeActive:NO];
     }];
     for (MEGANode *node in self.selectedNodesArray) {
-        [MEGASdkManager.sharedMEGASdk removeNode:node delegate:removeRequestDelegate];
+        [MEGASdk.shared removeNode:node delegate:removeRequestDelegate];
     }
 }
 
@@ -786,15 +785,15 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     UIAlertAction *createFolderAlertAction = [UIAlertAction actionWithTitle:LocalizedString(@"createFolderButton", @"Title button for the create folder alert.") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         if ([MEGAReachabilityManager isReachableHUDIfNot]) {
             UITextField *textField = [[newFolderAlertController textFields] firstObject];
-            MEGANode *existingChildNode = [[MEGASdkManager sharedMEGASdk] childNodeForParent:weakSelf.parentNode name:textField.text type:MEGANodeTypeFolder];
+            MEGANode *existingChildNode = [MEGASdk.shared childNodeForParent:weakSelf.parentNode name:textField.text type:MEGANodeTypeFolder];
             if (existingChildNode) {
                 [SVProgressHUD showErrorWithStatus:LocalizedString(@"There is already a folder with the same name", @"A tooltip message which is shown when a folder name is duplicated during renaming or creation.")];
             } else {
                 MEGACreateFolderRequestDelegate *createFolderRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-                    MEGANode *newFolderNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
+                    MEGANode *newFolderNode = [MEGASdk.shared nodeForHandle:request.nodeHandle];
                     [self didSelectNode:newFolderNode];
                 }];
-                [[MEGASdkManager sharedMEGASdk] createFolderWithName:textField.text.mnz_removeWhitespacesAndNewlinesFromBothEnds parent:weakSelf.parentNode delegate:createFolderRequestDelegate];
+                [MEGASdk.shared createFolderWithName:textField.text.mnz_removeWhitespacesAndNewlinesFromBothEnds parent:weakSelf.parentNode delegate:createFolderRequestDelegate];
             }
         }
     }];

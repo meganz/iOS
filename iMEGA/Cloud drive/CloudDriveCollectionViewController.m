@@ -5,7 +5,6 @@
 #import "MEGANode+MNZCategory.h"
 
 #import "MEGAReachabilityManager.h"
-#import "MEGASdkManager.h"
 
 #import "CloudDriveViewController.h"
 #import "CHTCollectionViewWaterfallLayout.h"
@@ -79,7 +78,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     MEGANode *node = [self thumbnailNodeAtIndexPath:indexPath];
     NodeCollectionViewCell *cell = indexPath.section == 1 ? [self.collectionView dequeueReusableCellWithReuseIdentifier:@"NodeCollectionFileID" forIndexPath:indexPath] : [self.collectionView dequeueReusableCellWithReuseIdentifier:@"NodeCollectionFolderID" forIndexPath:indexPath];
-    [cell configureCellForNode:node allowedMultipleSelection:self.collectionView.allowsMultipleSelection sdk:MEGASdkManager.sharedMEGASdk delegate:self];
+    [cell configureCellForNode:node allowedMultipleSelection:self.collectionView.allowsMultipleSelection sdk:MEGASdk.shared delegate:self];
     
     return cell;
 }
@@ -156,7 +155,7 @@
         if (self.cloudDrive.selectedNodesArray.count == 0) {
             [self.cloudDrive setToolbarActionsEnabled:NO];
         } else {
-            if ([[MEGASdkManager sharedMEGASdk] isNodeInRubbish:node]) {
+            if ([MEGASdk.shared isNodeInRubbish:node]) {
                 [self.cloudDrive setToolbarActionsEnabled:YES];
             }
         }
