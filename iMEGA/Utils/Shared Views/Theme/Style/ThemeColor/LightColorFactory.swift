@@ -1,11 +1,12 @@
 import Foundation
+import MEGADesignToken
 
 struct LightColorThemeFactory: ColorFactory {
     
     func textColor(_ style: MEGAColor.Text) -> UIColor {
         switch style {
-        case .primary: return MEGAAppColor.Black._00000032.uiColor
-        case .secondary: return MEGAAppColor.Gray._999999.uiColor
+        case .primary: return UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.black000000
+        case .secondary: return UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : UIColor.gray999999
         case .tertiary: return MEGAAppColor.Gray._515151.uiColor
         case .quaternary: return MEGAAppColor.Gray._848484.uiColor
         case .warning: return MEGAAppColor.Red._FF3B30.uiColor
@@ -14,8 +15,8 @@ struct LightColorThemeFactory: ColorFactory {
     
     func backgroundColor(_ style: MEGAColor.Background) -> UIColor {
         switch style {
-        case .primary: return MEGAAppColor.White._FFFFFF.uiColor
-        case .secondary: return MEGAAppColor.Gray._C4CCCC.uiColor
+        case .primary: return UIColor.isDesignTokenEnabled() ? TokenColors.Background.page: UIColor.whiteFFFFFF
+        case .secondary: return UIColor.isDesignTokenEnabled() ? TokenColors.Background.page: UIColor.grayC4CCCC
             
         case .warning: return MEGAAppColor.Yellow._FFCC0003.uiColor
         case .enabled: return MEGAAppColor.Green._00A886.uiColor
@@ -29,8 +30,8 @@ struct LightColorThemeFactory: ColorFactory {
     
     func tintColor(_ style: MEGAColor.Tint) -> UIColor {
         switch style {
-        case .primary: return MEGAAppColor.Gray._515151.uiColor
-        case .secondary: return MEGAAppColor.Gray._C4C4C4.uiColor
+        case .primary: return UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.gray515151
+        case .secondary: return UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : UIColor.grayC4C4C4
         }
     }
     

@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGASwift
@@ -53,11 +54,11 @@ extension OfflineTableViewViewController {
     func updateAppearanceForTraitCollection(_ traitCollection: UITraitCollection) {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
-            self.tableView?.backgroundColor = UIColor.mnz_whiteFFFFFF()
+            self.tableView?.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.whiteFFFFFF
         case .dark:
-            self.tableView?.backgroundColor = UIColor.mnz_black1C1C1E()
+            self.tableView?.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.black1C1C1E
         @unknown default:
-            self.tableView?.backgroundColor = UIColor.mnz_whiteFFFFFF()
+            self.tableView?.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.whiteFFFFFF
         }
     }
     
