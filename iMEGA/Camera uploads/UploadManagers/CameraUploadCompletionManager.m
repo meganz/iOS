@@ -104,7 +104,7 @@
         return;
     }
     
-    MEGANode *existingNode = [MEGASdkManager.sharedMEGASdk nodeForFingerprint:uploadInfo.fingerprint parent:uploadInfo.parentNode];
+    MEGANode *existingNode = [MEGASdk.shared nodeForFingerprint:uploadInfo.fingerprint parent:uploadInfo.parentNode];
     if (existingNode) {
         MEGALogInfo(@"[Camera Upload] existing node %@ found for %@ by fingerprint match", existingNode.name, uploadInfo.savedLocalIdentifier);
         [self copyToParentNodeIfNeededForMatchingNode:existingNode uploadInfo:uploadInfo];
@@ -134,7 +134,7 @@
 - (void)copyToParentNodeIfNeededForMatchingNode:(MEGANode *)node uploadInfo:(AssetUploadInfo *)uploadInfo {
     if (node.parentHandle != uploadInfo.parentNode.handle) {
         NSString *uniqueName = [uploadInfo.fileName mnz_sequentialFileNameInParentNode:uploadInfo.parentNode];
-        [MEGASdkManager.sharedMEGASdk copyNode:node newParent:uploadInfo.parentNode newName:uniqueName delegate:[[CameraUploadRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
+        [MEGASdk.shared copyNode:node newParent:uploadInfo.parentNode newName:uniqueName delegate:[[CameraUploadRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
             if (error.type) {
                 MEGALogError(@"[Camera Upload] %@ error when to copy node %@", self, error.nativeError);
                 if (error.type == MEGAErrorTypeApiEOverQuota || error.type == MEGAErrorTypeApiEgoingOverquota) {

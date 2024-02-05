@@ -1,7 +1,6 @@
 #import "CameraUploadManager.h"
 #import "CameraUploadRecordManager.h"
 #import "CameraScanner.h"
-#import "MEGASdkManager.h"
 #import "UploadOperationFactory.h"
 #import "AttributeUploadManager.h"
 #import "CameraUploadManager+Settings.h"
@@ -313,7 +312,7 @@ static const NSUInteger VideoUploadBatchCount = 1;
         }
     }];
     
-    [MEGASdkManager.sharedMEGASdk retryPendingConnections];
+    [MEGASdk.shared retryPendingConnections];
     
     [AttributeUploadManager.shared scanLocalAttributeFilesAndRetryUploadIfNeeded];
 }

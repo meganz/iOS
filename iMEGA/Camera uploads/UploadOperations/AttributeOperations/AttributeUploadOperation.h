@@ -1,5 +1,4 @@
 #import "MEGAOperation.h"
-#import "MEGASdkManager.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

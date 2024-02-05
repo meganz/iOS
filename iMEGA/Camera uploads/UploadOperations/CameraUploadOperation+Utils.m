@@ -8,6 +8,7 @@
 #import "CameraUploadRequestDelegate.h"
 #import "MEGAError+MNZCategory.h"
 #import "NSError+CameraUpload.h"
+#import "MEGA-Swift.h"
 @import FirebaseCrashlytics;
 
 static NSString * const CameraUploadLivePhotoExtension = @"live";
@@ -20,7 +21,7 @@ static NSString * const CameraUploadBurstPhotoExtension = @"burst";
 - (void)copyToParentNodeIfNeededForMatchingNode:(MEGANode *)node localFileName:(NSString *)fileName {
     if (node.parentHandle != self.uploadInfo.parentNode.handle) {
         NSString *uniqueFileName = [fileName mnz_sequentialFileNameInParentNode:self.uploadInfo.parentNode];
-        [MEGASdkManager.sharedMEGASdk copyNode:node newParent:self.uploadInfo.parentNode newName:uniqueFileName delegate:[[CameraUploadRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
+        [MEGASdk.shared copyNode:node newParent:self.uploadInfo.parentNode newName:uniqueFileName delegate:[[CameraUploadRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
             if (self.isCancelled) {
                 [self finishOperationWithStatus:CameraAssetUploadStatusCancelled];
                 return;
@@ -41,9 +42,9 @@ static NSString * const CameraUploadBurstPhotoExtension = @"burst";
 }
 
 - (MEGANode *)nodeForOriginalFingerprint:(NSString *)fingerprint {
-    MEGANode *matchingNode = [MEGASdkManager.sharedMEGASdk nodeForFingerprint:fingerprint parent:self.uploadInfo.parentNode];
+    MEGANode *matchingNode = [MEGASdk.shared nodeForFingerprint:fingerprint parent:self.uploadInfo.parentNode];
     if (matchingNode == nil) {
-        MEGANodeList *nodeList = [MEGASdkManager.sharedMEGASdk nodesForOriginalFingerprint:fingerprint];
+        MEGANodeList *nodeList = [MEGASdk.shared nodesForOriginalFingerprint:fingerprint];
         if (nodeList.size > 0) {
             matchingNode = [self firstNodeInNodeList:nodeList hasParentNode:self.uploadInfo.parentNode];
             if (matchingNode == nil) {

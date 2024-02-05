@@ -1,6 +1,6 @@
 #import "MediaInfoLoader.h"
-#import "MEGASdkManager.h"
 #import "LoadMediaInfoOperation.h"
+#import "MEGA-Swift.h"
 
 @interface MediaInfoLoader ()
 
@@ -21,7 +21,7 @@
 }
 
 - (BOOL)isMediaInfoLoaded {
-    return [MEGASdkManager.sharedMEGASdk ensureMediaInfo];
+    return [MEGASdk.shared ensureMediaInfo];
 }
 
 - (void)loadMediaInfoWithTimeout:(NSTimeInterval)timeout completion:(void (^)(BOOL loaded))completion {

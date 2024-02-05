@@ -3,6 +3,7 @@
 #import "NSString+MNZCategory.h"
 #import "MEGAError+MNZCategory.h"
 #import "NSError+CameraUpload.h"
+#import "MEGA-Swift.h"
 
 @interface PutNodeOperation ()
 
@@ -44,7 +45,7 @@
         if (error.type) {
             self.completion(nil, [error nativeError]);
         } else {
-            MEGANode *node = [MEGASdkManager.sharedMEGASdk nodeForHandle:request.nodeHandle];
+            MEGANode *node = [MEGASdk.shared nodeForHandle:request.nodeHandle];
             self.completion(node, nil);
         }
         
@@ -53,7 +54,7 @@
     
     NSString *originalFingerPrint = [self.uploadInfo.originalFingerprint isEqualToString:self.uploadInfo.fingerprint] ? nil : self.uploadInfo.originalFingerprint;
     NSString *serverUniqueFileName = [self.uploadInfo.fileName mnz_sequentialFileNameInParentNode:self.uploadInfo.parentNode];
-    [MEGASdkManager.sharedMEGASdk completeBackgroundMediaUpload:self.uploadInfo.mediaUpload
+    [MEGASdk.shared completeBackgroundMediaUpload:self.uploadInfo.mediaUpload
                                                        fileName:serverUniqueFileName
                                                      parentNode:self.uploadInfo.parentNode
                                                     fingerprint:self.uploadInfo.fingerprint

@@ -1,5 +1,4 @@
 #import "CameraUploadOperation.h"
-#import "MEGASdkManager.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 #import "TransferSessionManager.h"
@@ -105,8 +104,8 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
         return;
     }
     
-    self.uploadInfo.fingerprint = [MEGASdkManager.sharedMEGASdk fingerprintForFilePath:self.uploadInfo.fileURL.path modificationTime:self.uploadInfo.asset.creationDate];
-    MEGANode *matchingNode = [MEGASdkManager.sharedMEGASdk nodeForFingerprint:self.uploadInfo.fingerprint parent:self.uploadInfo.parentNode];
+    self.uploadInfo.fingerprint = [MEGASdk.shared fingerprintForFilePath:self.uploadInfo.fileURL.path modificationTime:self.uploadInfo.asset.creationDate];
+    MEGANode *matchingNode = [MEGASdk.shared nodeForFingerprint:self.uploadInfo.fingerprint parent:self.uploadInfo.parentNode];
     if (matchingNode) {
         MEGALogDebug(@"[Camera Upload] %@ found existing node by file fingerprint", self);
         [self finishUploadForFingerprintMatchedNode:matchingNode];
@@ -126,7 +125,7 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
     
     [self prepareThumbnailAndPreviewFilesWithCompletionHandler:^(BOOL thumbnailAndPreviewCreated) {
         if (thumbnailAndPreviewCreated) {
-            MEGABackgroundMediaUpload *mediaUpload = [[MEGABackgroundMediaUpload alloc] initWithMEGASdk:MEGASdkManager.sharedMEGASdk];
+            MEGABackgroundMediaUpload *mediaUpload = [[MEGABackgroundMediaUpload alloc] initWithMEGASdk:MEGASdk.shared];
             if (mediaUpload == nil) {
                 [self finishOperationWithStatus:CameraAssetUploadStatusCancelled];
                 return;
@@ -195,7 +194,7 @@ static NSString * const VideoAttributeImageName = @"AttributeImage";
         return;
     }
     
-    [MEGASdkManager.sharedMEGASdk requestBackgroundUploadURLWithFileSize:self.uploadInfo.fileSize mediaUpload:self.uploadInfo.mediaUpload delegate:[[CameraUploadRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
+    [MEGASdk.shared requestBackgroundUploadURLWithFileSize:self.uploadInfo.fileSize mediaUpload:self.uploadInfo.mediaUpload delegate:[[CameraUploadRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
         if (self.isCancelled) {
             [self finishOperationWithStatus:CameraAssetUploadStatusCancelled];
             return;

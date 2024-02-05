@@ -1,7 +1,5 @@
 #import <UIKit/UIKit.h>
 
-#import "MEGASdkManager.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
 @class MyAvatarManager, PhotoLibraryContentViewModel, PhotoUpdatePublisher, PhotoSelectionAdapter, WarningViewModel, PhotoAlbumContainerViewController, PhotosViewModel, ContextMenuManager;
