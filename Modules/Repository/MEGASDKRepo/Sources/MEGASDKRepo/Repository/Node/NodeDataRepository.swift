@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGASdk
+import MEGASwift
 
 public struct NodeDataRepository: NodeDataRepositoryProtocol {
     public static var newRepo: NodeDataRepository {
@@ -42,6 +43,27 @@ public struct NodeDataRepository: NodeDataRepositoryProtocol {
         let numberOfFolders = sdk.numberChildFolders(forParent: node)
         
         return (numberOfFiles, numberOfFolders)
+    }
+    
+    public func folderInfo(node: NodeEntity) async throws -> FolderInfoEntity? {
+        guard let node = node.toMEGANode(in: sdk) else {
+            throw FolderInfoErrorEntity.notFound
+        }
+        
+        return try await withAsyncThrowingValue(in: { completion in
+            sdk.getFolderInfo(for: node, delegate: RequestDelegate { result in
+                switch result {
+                case .failure:
+                    completion(.failure(FolderInfoErrorEntity.notFound))
+                case .success(let request):
+                    guard let megaFolderInfo = request.megaFolderInfo else {
+                        completion(.failure(FolderInfoErrorEntity.notFound))
+                        return
+                    }
+                    completion(.success(megaFolderInfo.toFolderInfoEntity()))
+                }
+            })
+        })
     }
     
     public func sizeForNode(handle: HandleEntity) -> UInt64? {

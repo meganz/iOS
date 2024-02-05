@@ -5,6 +5,8 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
     private let nodeAccessLevelVariable: NodeAccessTypeEntity
     public var labelStringToReturn: String
     private let filesAndFolders: (Int, Int)
+    private let folderInfo: FolderInfoEntity?
+    private let size: UInt64
     public var versions: Bool
     public var downloadedToReturn: Bool
     public var isARubbishBinRootNodeValue: Bool
@@ -17,6 +19,8 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
     public init(nodeAccessLevelVariable: NodeAccessTypeEntity = .unknown,
                 labelString: String = "",
                 filesAndFolders: (Int, Int) = (0, 0),
+                folderInfo: FolderInfoEntity? = nil,
+                size: UInt64 = UInt64(0),
                 versions: Bool = false,
                 downloaded: Bool = false,
                 isARubbishBinRootNodeValue: Bool = false,
@@ -26,6 +30,8 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
         self.nodeAccessLevelVariable = nodeAccessLevelVariable
         self.labelStringToReturn = labelString
         self.filesAndFolders = filesAndFolders
+        self.folderInfo = folderInfo
+        self.size = size
         self.versions = versions
         self.downloadedToReturn = downloaded
         self.isARubbishBinRootNodeValue = isARubbishBinRootNodeValue
@@ -50,6 +56,14 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
     
     public func getFilesAndFolders(nodeHandle: HandleEntity) -> (childFileCount: Int, childFolderCount: Int) {
         filesAndFolders
+    }
+    
+    public func sizeFor(node: NodeEntity) -> UInt64? {
+        size
+    }
+    
+    public func folderInfo(node: NodeEntity) async throws -> FolderInfoEntity? {
+        folderInfo
     }
     
     public func hasVersions(nodeHandle: HandleEntity) -> Bool {

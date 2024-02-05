@@ -103,8 +103,8 @@ public struct MockNodeRepository: NodeRepositoryProtocol {
         })
     }
     
-    public func childrenNames(of node: MEGADomain.NodeEntity) -> [String]? {
-        nil
+    public func childrenNames(of node: NodeEntity) -> [String]? {
+        childrenNodes.compactMap {$0.name}
     }
 
     public func isInRubbishBin(node: NodeEntity) -> Bool {
