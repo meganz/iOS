@@ -2,6 +2,7 @@
 #import "PHAssetResource+CameraUpload.h"
 #import "CameraUploadOperation+Utils.h"
 #import "NSFileManager+MNZCategory.h"
+#import "MEGA-Swift.h"
 
 @interface AssetResourceUploadOperation ()
 
@@ -63,7 +64,7 @@
 }
 
 - (void)assetResource:(PHAssetResource *)resource exportedToURL:(NSURL *)URL {
-    self.uploadInfo.originalFingerprint = [MEGASdkManager.sharedMEGASdk fingerprintForFilePath:URL.path modificationTime:self.uploadInfo.asset.creationDate];
+    self.uploadInfo.originalFingerprint = [MEGASdk.shared fingerprintForFilePath:URL.path modificationTime:self.uploadInfo.asset.creationDate];
     MEGANode *matchingNode = [self nodeForOriginalFingerprint:self.uploadInfo.originalFingerprint];
     if (matchingNode) {
         MEGALogDebug(@"[Camera Upload] %@ found existing node by original file fingerprint", self);

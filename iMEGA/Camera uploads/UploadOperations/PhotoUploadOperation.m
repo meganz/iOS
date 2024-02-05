@@ -102,7 +102,7 @@ static NSString * const PhotoExportTempName = @"photoExportTemp";
         return;
     }
     
-    self.uploadInfo.originalFingerprint = [MEGASdkManager.sharedMEGASdk fingerprintForFilePath:imageURL.path modificationTime:self.uploadInfo.asset.creationDate];
+    self.uploadInfo.originalFingerprint = [MEGASdk.shared fingerprintForFilePath:imageURL.path modificationTime:self.uploadInfo.asset.creationDate];
     MEGANode *matchingNode = [self nodeForOriginalFingerprint:self.uploadInfo.originalFingerprint];
     if (matchingNode) {
         MEGALogDebug(@"[Camera Upload] %@ found node by original fingerprint", self);

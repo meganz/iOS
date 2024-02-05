@@ -1,4 +1,5 @@
 #import "AssetUploadInfo.h"
+#import "MEGA-Swift.h"
 
 @implementation AssetUploadInfo
 
@@ -63,10 +64,10 @@
         _originalFingerprint = [aDecoder decodeObjectOfClass:NSString.class forKey:@"originalFingerprint"];
         _directoryURL = [aDecoder decodeObjectOfClass:NSURL.class forKey:@"directoryURL"];
         NSNumber *parentHandle = [aDecoder decodeObjectOfClass:NSNumber.class forKey:@"parentHandle"];
-        _parentNode = [MEGASdkManager.sharedMEGASdk nodeForHandle:parentHandle.unsignedLongLongValue];
+        _parentNode = [MEGASdk.shared nodeForHandle:parentHandle.unsignedLongLongValue];
         NSData *serializedData = [aDecoder decodeObjectOfClass:NSData.class forKey:@"mediaUpload"];
         if (serializedData) {
-            _mediaUpload = [MEGABackgroundMediaUpload unserializByData:serializedData MEGASdk:MEGASdkManager.sharedMEGASdk];
+            _mediaUpload = [MEGABackgroundMediaUpload unserializByData:serializedData MEGASdk:MEGASdk.shared];
         }
         _savedLocalIdentifier = [aDecoder decodeObjectOfClass:NSString.class forKey:@"savedLocalIdentifier"];
         _encryptedChunksCount = [[aDecoder decodeObjectOfClass:NSNumber.class forKey:@"encryptedChunksCount"] unsignedIntegerValue];

@@ -1,5 +1,4 @@
 #import <Foundation/Foundation.h>
-#import "MEGASdkManager.h"
 @import Photos;
 
 NS_ASSUME_NONNULL_BEGIN

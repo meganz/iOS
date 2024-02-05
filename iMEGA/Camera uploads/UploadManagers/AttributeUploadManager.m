@@ -6,6 +6,8 @@
 #import "CameraUploadManager.h"
 #import "NSString+MNZCategory.h"
 #import "NSError+CameraUpload.h"
+#import "MEGA-Swift.h"
+
 @import MEGASDKRepo;
 
 static NSString * const AttributesDirectoryName = @"Attributes";
@@ -140,7 +142,7 @@ typedef NS_ENUM(NSInteger, PreviewConcurrentUploadCount) {
         return;
     }
     
-    [MEGASdkManager.sharedMEGASdk retryPendingConnections];
+    [MEGASdk.shared retryPendingConnections];
     
     [self.attributeScanQueue addOperationWithBlock:^{
         NSError *error;
@@ -158,7 +160,7 @@ typedef NS_ENUM(NSInteger, PreviewConcurrentUploadCount) {
 
 - (void)scanAttributeDirectoryURL:(NSURL *)URL {
     AssetLocalAttribute *attribute = [[AssetLocalAttribute alloc] initWithAttributeDirectoryURL:URL];
-    MEGANode *node = [MEGASdkManager.sharedMEGASdk nodeForFingerprint:attribute.savedFingerprint];
+    MEGANode *node = [MEGASdk.shared nodeForFingerprint:attribute.savedFingerprint];
     if (node == nil) {
         MEGALogDebug(@"[Camera Upload] no node can be created from %@ for %@", attribute.savedFingerprint, URL.lastPathComponent);
         return;

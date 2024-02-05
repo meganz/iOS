@@ -3,6 +3,7 @@
 #import "NSFileManager+MNZCategory.h"
 #import "MEGAError+MNZCategory.h"
 #import "NSURL+CameraUpload.h"
+#import "MEGA-Swift.h"
 
 @implementation PreviewUploadOperation
 
@@ -25,7 +26,7 @@
     }
     
     __weak __typeof__(self) weakSelf = self;
-    [MEGASdkManager.sharedMEGASdk setPreviewNode:self.node sourceFilePath:self.attributeURL.path delegate:[[CameraUploadRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
+    [MEGASdk.shared setPreviewNode:self.node sourceFilePath:self.attributeURL.path delegate:[[CameraUploadRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
         if (error.type) {
             MEGALogError(@"[Camera Upload] Upload preview failed %@ error: %@", weakSelf, error.nativeError);
             if (error.type == MEGAErrorTypeApiEExist) {

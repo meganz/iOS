@@ -87,7 +87,7 @@
     
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveInternetConnectionChangedNotification) name:kReachabilityChangedNotification object:nil];
     
-    [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
+    [MEGASdk.shared addMEGAGlobalDelegate:self];
     
     [self.photoUpdatePublisher setupSubscriptions];
     
@@ -128,7 +128,7 @@
     
     [NSNotificationCenter.defaultCenter removeObserver:self name:kReachabilityChangedNotification object:nil];
     
-    [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
+    [MEGASdk.shared removeMEGAGlobalDelegate:self];
     
     [self.photoUpdatePublisher cancelSubscriptions];
 }
@@ -180,7 +180,7 @@
 
 - (PhotoSelectionAdapter *)selection {
     if (_selection == nil) {
-        _selection = [[PhotoSelectionAdapter alloc] initWithSdk:MEGASdkManager.sharedMEGASdk];
+        _selection = [[PhotoSelectionAdapter alloc] initWithSdk:MEGASdk.shared];
     }
     
     return _selection;

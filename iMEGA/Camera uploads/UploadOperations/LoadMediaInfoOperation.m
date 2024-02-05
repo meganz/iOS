@@ -1,5 +1,5 @@
 #import "LoadMediaInfoOperation.h"
-#import "MEGASdkManager.h"
+#import "MEGA-Swift.h"
 
 @implementation LoadMediaInfoOperation
 
@@ -8,7 +8,7 @@
     
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveMediaInfoReadyNotification) name:MEGAMediaInfoReadyNotification object:nil];
     
-    if ([MEGASdkManager.sharedMEGASdk ensureMediaInfo]) {
+    if ([MEGASdk.shared ensureMediaInfo]) {
         [self finishOperation];
     }
 }
