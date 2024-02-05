@@ -85,7 +85,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     
-    [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
+    [MEGASdk.shared addMEGADelegate:self];
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     
     [self addSearchBar];
@@ -106,7 +106,7 @@
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     
-    [[MEGASdkManager sharedMEGASdk] removeMEGADelegateAsync:self];
+    [MEGASdk.shared removeMEGADelegateAsync:self];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
@@ -230,7 +230,7 @@
             
         case BrowserActionSelectFolder:
             [self setupDefaultElements];
-            self.toolBarSelectBarButtonItem.enabled = self.isChildBrowser && self.parentNode.handle != MEGASdkManager.sharedMEGASdk.rootNode.handle;
+            self.toolBarSelectBarButtonItem.enabled = self.isChildBrowser && self.parentNode.handle != MEGASdk.shared.rootNode.handle;
             self.toolBarSelectBarButtonItem.title = LocalizedString(@"Select Folder", @"");
             [self setToolbarItems:@[self.toolBarNewFolderBarButtonItem, flexibleItem, self.toolBarSelectBarButtonItem]];
 
@@ -268,7 +268,7 @@
         if (self.browserAction == BrowserActionSendFromCloudDrive) {
             enableToolbarItems = self.selectedNodesMutableDictionary.count > 0;
         } else {
-            self.parentShareType = [MEGASdkManager.sharedMEGASdk accessLevelForNode:self.parentNode];
+            self.parentShareType = [MEGASdk.shared accessLevelForNode:self.parentNode];
             enableToolbarItems = self.parentShareType > MEGAShareTypeAccessRead;
         }
     } else if (self.incomingButton.selected) {
@@ -292,17 +292,17 @@
     if (self.cloudDriveButton.selected) {
         if (self.isParentBrowser) {
             if (!self.parentNode) {
-                self.parentNode = MEGASdkManager.sharedMEGASdk.rootNode;
+                self.parentNode = MEGASdk.shared.rootNode;
             }
         }
-        self.nodes = [MEGASdkManager.sharedMEGASdk childrenForParent:self.parentNode];
+        self.nodes = [MEGASdk.shared childrenForParent:self.parentNode];
     } else if (self.incomingButton.selected) {
         if (self.isParentBrowser) {
             self.parentNode = nil;
-            self.nodes = MEGASdkManager.sharedMEGASdk.inShares;
-            self.shares = [MEGASdkManager.sharedMEGASdk inSharesList:MEGASortOrderTypeNone];
+            self.nodes = MEGASdk.shared.inShares;
+            self.shares = [MEGASdk.shared inSharesList:MEGASortOrderTypeNone];
         } else {
-            self.nodes = [MEGASdkManager.sharedMEGASdk childrenForParent:self.parentNode];
+            self.nodes = [MEGASdk.shared childrenForParent:self.parentNode];
         }
     }
 }
@@ -490,13 +490,13 @@
 #ifdef MAIN_APP_TARGET
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         [self.browserViewControllerDelegate nodeEditCompleted:YES];
-        if (self.browserAction == BrowserActionImport && [MEGASdkManager.sharedMEGASdk accessLevelForNode:self.selectedNodesArray[0]] == MEGAShareTypeAccessUnknown) {
+        if (self.browserAction == BrowserActionImport && [MEGASdk.shared accessLevelForNode:self.selectedNodesArray[0]] == MEGAShareTypeAccessUnknown) {
             [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
             [SVProgressHUD show];
             [self updateActionTargetNode:self.parentNode];
             for (MEGANode *node in self.selectedNodesArray) {
                 self.remainingOperations++;
-                [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:self.parentNode];
+                [MEGASdk.shared copyNode:node newParent:self.parentNode];
             }
         } else {
             [self dismissAndSelectNodesIfNeeded:NO completion:^{
@@ -535,16 +535,16 @@
         
         if ([MEGAReachabilityManager isReachableHUDIfNot]) {
             UITextField *textField = [[newFolderAlertController textFields] firstObject];
-            MEGANodeList *childrenNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:strongSelf.parentNode searchString:textField.text recursive:NO];
+            MEGANodeList *childrenNodeList = [MEGASdk.shared nodeListSearchForNode:strongSelf.parentNode searchString:textField.text recursive:NO];
             if ([childrenNodeList mnz_existsFolderWithName:textField.text]) {
                 [SVProgressHUD showErrorWithStatus:LocalizedString(@"There is already a folder with the same name", @"A tooltip message which is shown when a folder name is duplicated during renaming or creation.")];
             } else {
                 MEGACreateFolderRequestDelegate *createFolderRequestDelegate = [[MEGACreateFolderRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-                    MEGANode *newFolderNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
+                    MEGANode *newFolderNode = [MEGASdk.shared nodeForHandle:request.nodeHandle];
                     [strongSelf pushBrowserWithParentNode:newFolderNode];
                 }];
                 
-                [[MEGASdkManager sharedMEGASdk] createFolderWithName:textField.text.mnz_removeWhitespacesAndNewlinesFromBothEnds parent:strongSelf.parentNode delegate:createFolderRequestDelegate];
+                [MEGASdk.shared createFolderWithName:textField.text.mnz_removeWhitespacesAndNewlinesFromBothEnds parent:strongSelf.parentNode delegate:createFolderRequestDelegate];
             }
         }
     }];
@@ -658,7 +658,7 @@
     }
     
     MEGANode *node = [self nodeAtIndexPath:indexPath];
-    MEGAShareType shareType = [[MEGASdkManager sharedMEGASdk] accessLevelForNode:node];
+    MEGAShareType shareType = [MEGASdk.shared accessLevelForNode:node];
     
     if (self.browserAction == BrowserActionSendFromCloudDrive) {
         [self.selectedNodesMutableDictionary objectForKey:node.base64Handle] ? [self.tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone] : [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
@@ -671,7 +671,7 @@
     }
     
     if (node.hasThumbnail) {
-        [Helper thumbnailForNode:node api:[MEGASdkManager sharedMEGASdk] cell:cell];
+        [Helper thumbnailForNode:node api:MEGASdk.shared cell:cell];
     } else {
         [cell.thumbnailImageView setImage:[NodeAssetsManager.shared iconFor:node]];
     }
@@ -693,9 +693,9 @@
     cell.infoLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     if (self.cloudDriveButton.selected) {
         if (node.isFile) {
-            cell.infoLabel.text = [Helper sizeAndModificationDateForNode:node api:[MEGASdkManager sharedMEGASdk]];
+            cell.infoLabel.text = [Helper sizeAndModificationDateForNode:node api:MEGASdk.shared];
         } else {
-            cell.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:[MEGASdkManager sharedMEGASdk]];
+            cell.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:MEGASdk.shared];
         }
     } else if (self.incomingButton.selected) {
         MEGAShare *share = [self.shares shareAtIndex:indexPath.row];
@@ -810,7 +810,7 @@
             self.searchNodesArray = [self.nodes.mnz_nodesArrayFromNodeList mutableCopy];
         } else {
             if (self.cloudDriveButton.selected) {
-                MEGANodeList *allNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:self.parentNode searchString:searchString recursive:NO];
+                MEGANodeList *allNodeList = [MEGASdk.shared nodeListSearchForNode:self.parentNode searchString:searchString recursive:NO];
                 self.searchNodesArray = [allNodeList.mnz_nodesArrayFromNodeList mutableCopy];
             } else if (self.incomingButton.selected) {
                 NSPredicate *resultPredicate = [NSPredicate predicateWithFormat:@"SELF.name contains[c] %@", searchString];

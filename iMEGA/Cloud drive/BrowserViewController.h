@@ -1,7 +1,5 @@
 #import <UIKit/UIKit.h>
 
-#import "MEGASdkManager.h"
-
 typedef NS_ENUM(NSUInteger, BrowserAction) {
     BrowserActionCopy = 0,
     BrowserActionMove,
