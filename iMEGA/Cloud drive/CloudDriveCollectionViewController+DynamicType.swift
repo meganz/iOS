@@ -9,7 +9,7 @@ extension CloudDriveCollectionViewController: DynamicTypeCollectionViewSizing {
                                                         NodeCollectionViewCell.instantiateFromFileNib :
                                                         NodeCollectionViewCell.instantiateFromFolderNib
         
-        cell.configureCell(for: node, allowedMultipleSelection: collectionView.allowsMultipleSelection, sdk: MEGASdkManager.sharedMEGASdk(), delegate: nil)
+        cell.configureCell(for: node, allowedMultipleSelection: collectionView.allowsMultipleSelection, sdk: MEGASdk.shared, delegate: nil)
         
         return cell
     }

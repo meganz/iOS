@@ -6,7 +6,6 @@
 
 #import "Helper.h"
 #import "MEGAReachabilityManager.h"
-#import "MEGASdkManager.h"
 #import "MEGA-Swift.h"
 #import "MEGANode+MNZCategory.h"
 
@@ -80,7 +79,7 @@
         dateString = self.cloudDrive.recentActionBucket.timestamp.mnz_formattedDateMediumStyle;
     }
     
-    MEGANode *parentNode = [MEGASdkManager.sharedMEGASdk nodeForHandle:self.cloudDrive.recentActionBucket.parentHandle];
+    MEGANode *parentNode = [MEGASdk.shared nodeForHandle:self.cloudDrive.recentActionBucket.parentHandle];
     bucketHeaderView.parentFolderNameLabel.text = [NSString stringWithFormat:@"%@ •", parentNode.name.uppercaseString];
     bucketHeaderView.uploadOrVersionImageView.image = self.cloudDrive.recentActionBucket.isUpdate ? [UIImage imageNamed:@"versioned"] : [UIImage imageNamed:@"recentUpload"];
     bucketHeaderView.dateLabel.text = dateString.uppercaseString;
@@ -164,7 +163,7 @@
     
     cell.recentActionBucket = self.cloudDrive.recentActionBucket ?: nil;
     cell.cellFlavor = NodeTableViewCellFlavorCloudDrive;
-    [cell configureCellForNode:node api:[MEGASdkManager sharedMEGASdk]];
+    [cell configureCellForNode:node api:MEGASdk.shared];
     
     if (self.tableView.isEditing) {
         // Check if selectedNodesArray contains the current node in the tableView
