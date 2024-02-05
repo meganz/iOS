@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGADomain
 import MEGAFoundation
 import MEGAL10n
@@ -86,7 +87,7 @@ final class ProfileTableViewDataSource {
                 } catch {
                     cell.detailLabel.text = phoneNumber
                 }
-                cell.detailLabel.textColor = UIColor.secondaryLabel
+                cell.detailLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : UIColor.secondaryLabel
             }
             return cell
         case .changePassword(let isLoading):
@@ -98,10 +99,10 @@ final class ProfileTableViewDataSource {
             return cell
         case .recoveryKey:
             let cell = tableView.dequeueReusableCell(withIdentifier: "RecoveryKeyID", for: indexPath) as! RecoveryKeyTableViewCell
-            cell.recoveryKeyContainerView.backgroundColor = UIColor.mnz_secondaryBackgroundElevated(traitCollection)
+            cell.recoveryKeyContainerView.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.surface1 : UIColor.mnz_secondaryBackgroundElevated(traitCollection)
             cell.recoveryKeyLabel.text = Strings.Localizable.General.Security.recoveryKeyFile
             cell.backupRecoveryKeyLabel.text = Strings.Localizable.backupRecoveryKey
-            cell.backupRecoveryKeyLabel.textColor = UIColor.mnz_turquoise(for: traitCollection)
+            cell.backupRecoveryKeyLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Link.primary : UIColor.mnz_turquoise(for: traitCollection)
             return cell
         case .upgrade:
             let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileCellID", for: indexPath) as! ProfileTableViewCell
@@ -118,26 +119,26 @@ final class ProfileTableViewDataSource {
             switch accountType {
             case .free:
                 cell.detailLabel.text = Strings.Localizable.free
-                cell.detailLabel.textColor = UIColor.secondaryLabel
+                cell.detailLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : UIColor.secondaryLabel
             case .proI:
                 cell.detailLabel.text = "Pro I"
-                cell.detailLabel.textColor = UIColor.mnz_redProI()
+                cell.detailLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : UIColor.mnz_redProI()
             case .proII:
                 cell.detailLabel.text = "Pro II"
-                cell.detailLabel.textColor = UIColor.mnz_redProII()
+                cell.detailLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : UIColor.mnz_redProII()
             case .proIII:
                 cell.detailLabel.text = "Pro III"
-                cell.detailLabel.textColor = UIColor.mnz_redProIII()
+                cell.detailLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : UIColor.mnz_redProIII()
             case .lite:
                 cell.detailLabel.text = Strings.Localizable.proLite
-                cell.detailLabel.textColor = UIColor.systemOrange
+                cell.detailLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : UIColor.systemOrange
             case .business:
                 if MEGASdk.shared.businessStatus == .active {
                     cell.detailLabel.text = Strings.Localizable.active
                 } else {
                     cell.detailLabel.text = Strings.Localizable.paymentOverdue
                 }
-                cell.detailLabel.textColor = UIColor.secondaryLabel
+                cell.detailLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : UIColor.secondaryLabel
                 cell.nameLabel.text = Strings.Localizable.business
                 cell.accessoryType = .none
             case .proFlexi:
@@ -159,14 +160,14 @@ final class ProfileTableViewDataSource {
             } else {
                 cell.detailLabel.text = Strings.Localizable.user
             }
-            cell.detailLabel.textColor = UIColor.secondaryLabel
+            cell.detailLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : UIColor.secondaryLabel
             cell.nameLabel.text = Strings.Localizable.role.replacingOccurrences(of: ":", with: "")
             cell.accessoryType = .none
             return cell
         case .logout:
             let cell = tableView.dequeueReusableCell(withIdentifier: "LogoutID", for: indexPath) as! LogoutTableViewCell
             cell.logoutLabel.text = Strings.Localizable.logoutLabel
-            cell.logoutLabel.textColor = UIColor.mnz_red(for: traitCollection)
+            cell.logoutLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.error :  UIColor.mnz_red(for: traitCollection)
             return cell
         }
     }
