@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,22 +17,22 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xBY-vN-fzC" userLabel="Horizontal Scroll View">
-                                <rect key="frame" x="0.0" y="20" width="375" height="390"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="410"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GpX-eg-QwU" userLabel="Top Stack View">
-                                        <rect key="frame" x="0.0" y="0.0" width="1500" height="390"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="1500" height="410"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EVy-xX-412" customClass="OnboardingView">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="390"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="410"/>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ImP-Id-dP6" customClass="OnboardingView">
-                                                <rect key="frame" x="375" y="0.0" width="375" height="390"/>
+                                                <rect key="frame" x="375" y="0.0" width="375" height="410"/>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Woe-ab-ywv" customClass="OnboardingView">
-                                                <rect key="frame" x="750" y="0.0" width="375" height="390"/>
+                                                <rect key="frame" x="750" y="0.0" width="375" height="410"/>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yQr-6h-yp1" customClass="OnboardingView">
-                                                <rect key="frame" x="1125" y="0.0" width="375" height="390"/>
+                                                <rect key="frame" x="1125" y="0.0" width="375" height="410"/>
                                             </view>
                                         </subviews>
                                         <constraints>
@@ -133,7 +133,7 @@
                             <constraint firstItem="BUQ-n8-sSm" firstAttribute="trailing" secondItem="P3g-UA-WH7" secondAttribute="trailing" constant="44" id="GgV-i1-vew"/>
                             <constraint firstItem="P3g-UA-WH7" firstAttribute="top" secondItem="xBY-vN-fzC" secondAttribute="bottom" id="IZN-6H-M3h"/>
                             <constraint firstItem="xBY-vN-fzC" firstAttribute="leading" secondItem="BUQ-n8-sSm" secondAttribute="leading" id="OFD-xC-9DU"/>
-                            <constraint firstItem="xBY-vN-fzC" firstAttribute="top" secondItem="BUQ-n8-sSm" secondAttribute="top" id="SzM-zN-mgw"/>
+                            <constraint firstItem="xBY-vN-fzC" firstAttribute="top" secondItem="gew-dm-7J5" secondAttribute="top" id="SzM-zN-mgw"/>
                             <constraint firstItem="BUQ-n8-sSm" firstAttribute="bottom" secondItem="P3g-UA-WH7" secondAttribute="bottom" constant="15" id="ed6-1A-LOV"/>
                             <constraint firstItem="BUQ-n8-sSm" firstAttribute="trailing" secondItem="xBY-vN-fzC" secondAttribute="trailing" id="h5Q-3T-9cf"/>
                             <constraint firstItem="P3g-UA-WH7" firstAttribute="leading" secondItem="BUQ-n8-sSm" secondAttribute="leading" constant="43" id="wGD-EO-xOW"/>

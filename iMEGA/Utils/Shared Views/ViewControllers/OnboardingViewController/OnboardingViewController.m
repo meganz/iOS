@@ -9,9 +9,6 @@
 @property (nonatomic) OnboardingType type;
 
 @property (weak, nonatomic) IBOutlet UIStackView *topStackView;
-@property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
-@property (weak, nonatomic) IBOutlet UIButton *primaryButton;
-@property (weak, nonatomic) IBOutlet UIButton *secondaryButton;
 
 @end
 
@@ -168,19 +165,6 @@
     } else {
         [self dismissViewControllerAnimated:YES completion:self.completion];
     }
-}
-
-- (void)updateAppearance {
-    self.view.backgroundColor = self.scrollView.backgroundColor = UIColor.systemBackgroundColor;
-    
-    self.pageControl.currentPageIndicatorTintColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
-    self.pageControl.pageIndicatorTintColor = [UIColor mnz_tertiaryGrayForTraitCollection:self.traitCollection];
-    self.pageControl.backgroundColor = UIColor.systemBackgroundColor;
-    
-    [self.primaryButton mnz_setupPrimary:self.traitCollection];
-    [self.secondaryButton mnz_setupBasic:self.traitCollection];
-    [self.tertiaryButton setTitleColor:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection] forState:UIControlStateNormal];
-
 }
 
 #pragma mark - Targets

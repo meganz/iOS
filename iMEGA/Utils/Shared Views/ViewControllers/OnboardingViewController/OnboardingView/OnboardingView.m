@@ -45,6 +45,7 @@
     
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
         self.descriptionLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+        self.titleLabel.textColor = [UIColor cellTitleColorFor:self.traitCollection];
     }
 }
 
@@ -55,7 +56,11 @@
     [self addSubview:self.customView];
     self.customView.frame = self.bounds;
     self.customView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    
+    self.titleLabel.textColor = [UIColor cellTitleColorFor:self.traitCollection];
     self.descriptionLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+    
+    self.backgroundColor = [UIColor pageBackgroundForTraitCollection:self.traitCollection];
 }
 
 #pragma mark - Setters

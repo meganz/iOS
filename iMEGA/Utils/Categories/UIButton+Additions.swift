@@ -1,3 +1,5 @@
+import MEGADesignToken
+
 @objc enum MEGACustomButtonStyle: Int {
     case none
     case basic
@@ -45,8 +47,25 @@ extension UIButton {
     }
     
     @objc func mnz_setupPrimary(_ traitCollection: UITraitCollection) {
-        backgroundColor = UIColor.mnz_turquoise(for: traitCollection)
-        setTitleColor(MEGAAppColor.White._FFFFFF.uiColor, for: UIControl.State.normal)
+        if UIColor.isDesignTokenEnabled() {
+            backgroundColor = TokenColors.Button.primary
+            setTitleColor(TokenColors.Text.inverseAccent, for: UIControl.State.normal)
+        } else {
+            backgroundColor = UIColor.mnz_turquoise(for: traitCollection)
+            setTitleColor(UIColor.whiteFFFFFF, for: UIControl.State.normal)
+        }
+        
+        setupLayer()
+    }
+    
+    @objc func mnz_setupSecondary(_ traitCollection: UITraitCollection) {
+        if UIColor.isDesignTokenEnabled() {
+            backgroundColor = TokenColors.Button.secondary
+            setTitleColor(TokenColors.Text.accent, for: UIControl.State.normal)
+        } else {
+            backgroundColor = UIColor.mnz_basicButton(for: traitCollection)
+            setTitleColor(UIColor.mnz_turquoise(for: traitCollection), for: UIControl.State.normal)
+        }
         
         setupLayer()
     }
