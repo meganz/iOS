@@ -1,4 +1,5 @@
 import Combine
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
@@ -49,13 +50,13 @@ import UIKit
         
         nameLabel.text = MEGASdk.currentUserHandle().map { MEGAUser.mnz_fullName($0.uint64Value) ?? "" }
         nameLabel.layer.shadowOffset = CGSize(width: 0, height: 1)
-        nameLabel.layer.shadowColor = MEGAAppColor.Shadow.blackAlpha20.uiColor.cgColor
+        nameLabel.layer.shadowColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.blur.cgColor :  MEGAAppColor.Shadow.blackAlpha20.uiColor.cgColor
         nameLabel.layer.shadowRadius = 2.0
         nameLabel.layer.shadowOpacity = 1
         
         emailLabel.text = MEGASdk.shared.myEmail
         emailLabel.layer.shadowOffset = CGSize(width: 0, height: 1)
-        emailLabel.layer.shadowColor = MEGAAppColor.Shadow.blackAlpha20.uiColor.cgColor
+        emailLabel.layer.shadowColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.blur.cgColor : MEGAAppColor.Shadow.blackAlpha20.uiColor.cgColor
         emailLabel.layer.shadowRadius = 2.0
         emailLabel.layer.shadowOpacity = 1
         
@@ -144,13 +145,14 @@ import UIKit
     
     private func updateAppearance() {
         dataSource?.update(traitCollection: traitCollection)
+        let separatorColor = UIColor.isDesignTokenEnabled() ? TokenColors.Border.strong: UIColor.mnz_separator(for: traitCollection)
         
-        tableView.backgroundColor = UIColor.mnz_backgroundGrouped(for: traitCollection)
-        tableView.separatorColor = UIColor.mnz_separator(for: traitCollection)
+        tableView.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_backgroundGrouped(for: traitCollection)
+        tableView.separatorColor = separatorColor
         
-        nameLabel.textColor = MEGAAppColor.White._FFFFFF.uiColor
-        emailLabel.textColor = MEGAAppColor.White._FFFFFF.uiColor
-        avatarBottomSeparatorView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
+        nameLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.onColor : MEGAAppColor.White._FFFFFF.uiColor
+        emailLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.onColor : MEGAAppColor.White._FFFFFF.uiColor
+        avatarBottomSeparatorView.backgroundColor = separatorColor
     }
     
     private func configureGestures() {
@@ -328,7 +330,7 @@ import UIKit
 
 extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        cell.backgroundColor = UIColor.mnz_backgroundElevated(traitCollection)
+        cell.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_backgroundElevated(traitCollection)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -388,6 +390,10 @@ extension ProfileViewController: UITableViewDelegate {
     private func configureTableViewHeaderStyleWithSentenceCase(_ view: UIView, forSection section: Int) {
         guard let tableViewHeaderFooterView = view as? UITableViewHeaderFooterView else { return }
         tableViewHeaderFooterView.textLabel?.text = titleForHeader(in: section)
+        
+        if UIColor.isDesignTokenEnabled() {
+            tableViewHeaderFooterView.textLabel?.textColor = TokenColors.Text.secondary
+        }
     }
     
     private func titleForHeader(in section: Int) -> String? {
