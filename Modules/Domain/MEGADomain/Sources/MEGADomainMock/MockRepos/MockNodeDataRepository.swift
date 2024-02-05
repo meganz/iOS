@@ -7,15 +7,30 @@ public struct MockNodeDataRepository: NodeDataRepositoryProtocol {
     private let nodeAccessLevel: NodeAccessTypeEntity
     private let labelString: String
     private let filesAndFoldersCount: (Int, Int)
+    private let folderInfo: FolderInfoEntity?
     private let size: UInt64?
     private let modificationDate: Date
+    private let node: NodeEntity?
+    private let parentNode: NodeEntity?
     
-    public init(nodeAccessLevel: NodeAccessTypeEntity = .unknown, labelString: String = "", filesAndFoldersCount: (Int, Int) = (0, 0), size: UInt64? = nil, modificationDate: Date = Date()) {
+    public init(
+        nodeAccessLevel: NodeAccessTypeEntity = .unknown,
+        labelString: String = "",
+        filesAndFoldersCount: (Int, Int) = (0, 0),
+        folderInfo: FolderInfoEntity? = nil,
+        size: UInt64? = nil,
+        modificationDate: Date = Date(),
+        node: NodeEntity? = nil,
+        parentNode: NodeEntity? = nil
+    ) {
         self.nodeAccessLevel = nodeAccessLevel
         self.labelString = labelString
         self.filesAndFoldersCount = filesAndFoldersCount
+        self.folderInfo = folderInfo
         self.size = size
         self.modificationDate = modificationDate
+        self.node = node
+        self.parentNode = parentNode
     }
     
     public func nodeAccessLevel(nodeHandle: HandleEntity) -> NodeAccessTypeEntity {
@@ -34,6 +49,10 @@ public struct MockNodeDataRepository: NodeDataRepositoryProtocol {
         filesAndFoldersCount
     }
     
+    public func folderInfo(node: NodeEntity) async throws -> FolderInfoEntity? {
+        folderInfo
+    }
+
     public func sizeForNode(handle: HandleEntity) -> UInt64? {
         size
     }
@@ -43,10 +62,10 @@ public struct MockNodeDataRepository: NodeDataRepositoryProtocol {
     }
     
     public func nodeForHandle(_ handle: HandleEntity) -> NodeEntity? {
-        nil
+        node
     }
     
     public func parentForHandle(_ handle: HandleEntity) -> NodeEntity? {
-        nil
+        parentNode
     }
 }

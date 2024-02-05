@@ -4,6 +4,8 @@ public protocol NodeUseCaseProtocol {
     func nodeAccessLevelAsync(nodeHandle: HandleEntity) async -> NodeAccessTypeEntity
     func labelString(label: NodeLabelTypeEntity) -> String
     func getFilesAndFolders(nodeHandle: HandleEntity) -> (childFileCount: Int, childFolderCount: Int)
+    func sizeFor(node: NodeEntity) -> UInt64?
+    func folderInfo(node: NodeEntity) async throws -> FolderInfoEntity?
     func hasVersions(nodeHandle: HandleEntity) -> Bool
     func isDownloaded(nodeHandle: HandleEntity) -> Bool
     func isARubbishBinRootNode(nodeHandle: HandleEntity) -> Bool
@@ -44,6 +46,14 @@ public struct NodeUseCase<T: NodeDataRepositoryProtocol, U: NodeValidationReposi
     
     public func getFilesAndFolders(nodeHandle: HandleEntity) -> (childFileCount: Int, childFolderCount: Int) {
         nodeDataRepository.getFilesAndFolders(nodeHandle: nodeHandle)
+    }
+    
+    public func sizeFor(node: NodeEntity) -> UInt64? {
+        nodeDataRepository.sizeForNode(handle: node.handle)
+    }
+    
+    public func folderInfo(node: NodeEntity) async throws -> FolderInfoEntity? {
+        try await nodeDataRepository.folderInfo(node: node)
     }
     
     public func hasVersions(nodeHandle: HandleEntity) -> Bool {

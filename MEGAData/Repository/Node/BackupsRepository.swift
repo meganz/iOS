@@ -60,7 +60,7 @@ struct BackupsRepository: BackupsRepositoryProtocol {
         })
     }
     
-    private func folderInfo(node: MEGANode) async throws -> MEGAFolderInfo {
+    private func folderInfo(node: MEGANode) async throws -> FolderInfoEntity {
         try await withAsyncThrowingValue(in: { completion in
             sdk.getFolderInfo(for: node, delegate: RequestDelegate { result in
                 switch result {
@@ -71,7 +71,7 @@ struct BackupsRepository: BackupsRepositoryProtocol {
                         completion(.failure(FolderInfoErrorEntity.notFound))
                         return
                     }
-                    completion(.success(megaFolderInfo))
+                    completion(.success(megaFolderInfo.toFolderInfoEntity()))
                 }
             })
         })
