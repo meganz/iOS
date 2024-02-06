@@ -22,7 +22,6 @@
 #import "NSString+MNZCategory.h"
 #import "ShareAttachment.h"
 #import "ShareDestinationTableViewController.h"
-#import "MEGASdkManager+CleanUp.h"
 #import "MEGAProcessAsset.h"
 
 @import ChatRepo;
@@ -260,7 +259,7 @@
 
 - (void)resetSdks {
     [MEGAChatSdk.shared saveCurrentState];
-    [MEGASdkManager localLogout];
+    [MEGASdkCleanUp localLogout];
 }
 
 #pragma mark - Login and Setup

@@ -22,10 +22,4 @@
     return MEGASdk.sharedFolderLink;
 }
 
-+ (void)deleteSharedSdks {
-    [MEGAChatSdk.shared deleteMegaChatApi];
-    [MEGASdk.shared deleteMegaApi];
-    [MEGASdk.sharedFolderLink deleteMegaApi];
-}
-
 @end

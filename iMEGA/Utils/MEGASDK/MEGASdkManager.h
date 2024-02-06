@@ -11,8 +11,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (MEGASdk *)sharedMEGASdkFolder;
 
-+ (void)deleteSharedSdks;
-
 @end
 
 NS_ASSUME_NONNULL_END
