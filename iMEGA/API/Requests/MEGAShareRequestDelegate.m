@@ -69,12 +69,8 @@
                 [SVProgressHUD showSuccessWithStatus:LocalizedString(@"permissionsChanged", @"Message shown when you have changed the permissions of a shared folder")];
             }
         } else {
-            if (self.totalRequests > 1) {
-                NSString *sharedFolders = [NSString stringWithFormat:LocalizedString(@"sharedFolders_success", @"Success message for sharing multiple files."), self.totalRequests];
-                [SVProgressHUD showImage:[UIImage imageNamed:@"hudSharedFolder"] status:sharedFolders];
-            } else {
-                [SVProgressHUD showImage:[UIImage imageNamed:@"hudSharedFolder"] status:LocalizedString(@"sharedFolder_success", @"Message shown when a folder have been shared")];
-            }
+            NSString *statusMessage = [NSString stringWithFormat:LocalizedString(@"general.menuAction.shareFolders.successMessage", @"Success message for sharing single or multiple folders."), self.totalRequests];
+            [SVProgressHUD showImage:[UIImage imageNamed:@"hudSharedFolder"] status:statusMessage];
         }
         
         if (self.completion) {
