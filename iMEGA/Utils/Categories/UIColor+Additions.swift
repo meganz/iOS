@@ -489,6 +489,10 @@ extension UIColor {
     class func mnz_separator(
         for traitCollection: UITraitCollection
     ) -> UIColor {
+        guard !UIColor.isDesignTokenEnabled() else {
+            return TokenColors.Border.strong
+        }
+        
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
             return MEGAAppColor.Gray._3C3C4330.uiColor
@@ -901,15 +905,20 @@ extension UIColor {
     class func mnz_primaryGray(
         for traitCollection: UITraitCollection
     ) -> UIColor {
+        
+        guard !UIColor.isDesignTokenEnabled() else {
+            return TokenColors.Text.secondary
+        }
+        
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
-            return UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary: MEGAAppColor.Gray._515151.uiColor
+            return MEGAAppColor.Gray._515151.uiColor
             
         case .dark:
-            return UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary: MEGAAppColor.Gray._D1D1D1.uiColor
+            return MEGAAppColor.Gray._D1D1D1.uiColor
             
         @unknown default:
-            return UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary: MEGAAppColor.Gray._515151.uiColor
+            return MEGAAppColor.Gray._515151.uiColor
         }
     }
     

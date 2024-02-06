@@ -7,17 +7,13 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    
-    self.theNewView.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
-    
-    self.theNewLabel.textColor = UIColor.mnz_whiteFFFFFF;
+    [self updateAppearance];
     self.theNewLabel.text = LocalizedString(@"New", @"Label shown inside an unseen notification");
 }
 
 - (void)prepareForReuse {
     [super prepareForReuse];
-    
-    self.theNewView.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+    [self updateAppearance];
 }
 
 @end
