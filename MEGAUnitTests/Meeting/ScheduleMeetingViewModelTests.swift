@@ -443,7 +443,7 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
         let viewConfiguration = MockScheduleMeetingViewConfiguration(rules: rules)
         let viewModel = ScheduleMeetingViewModel(viewConfiguration: viewConfiguration)
         viewModel.startDate = date
-        XCTAssert(viewModel.monthlyRecurrenceFootnoteViewText == Strings.Localizable.Meetings.ScheduleMeeting.Create.MonthlyRecurrenceOption.DayThirtyFirstSelected.footNote)
+        XCTAssert(viewModel.monthlyRecurrenceFootnoteViewText == Strings.Localizable.Meetings.Scheduled.Create.MonthlyRecurrenceOption.BeyondTheLastDayOfTheMonthSelected.footNote(31))
     }
     
     func testShowMonthlyRecurrenceFootnoteView_recurrenceOptionMonthlyDaySixteen_shouldBeTrue() throws {

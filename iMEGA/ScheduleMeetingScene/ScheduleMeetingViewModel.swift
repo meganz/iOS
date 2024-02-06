@@ -109,12 +109,8 @@ final class ScheduleMeetingViewModel: ObservableObject {
         guard rules.frequency == .monthly, let day = rules.monthDayList?.first else { return nil }
         
         switch day {
-        case 29:
-            return Strings.Localizable.Meetings.ScheduleMeeting.Create.MonthlyRecurrenceOption.DayTwentyNineSelected.footNote
-        case 30:
-            return Strings.Localizable.Meetings.ScheduleMeeting.Create.MonthlyRecurrenceOption.DayThirtySelected.footNote
-        case 31:
-            return Strings.Localizable.Meetings.ScheduleMeeting.Create.MonthlyRecurrenceOption.DayThirtyFirstSelected.footNote
+        case 29, 30, 31:
+            return Strings.Localizable.Meetings.Scheduled.Create.MonthlyRecurrenceOption.BeyondTheLastDayOfTheMonthSelected.footNote(day)
         default:
             return nil
         }

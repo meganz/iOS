@@ -91,11 +91,11 @@ final class ScheduleMeetingCreationMonthlyCustomOptionsViewModel: ObservableObje
     func calendarFooterNote() -> String? {
         if let monthDayList = rules.monthDayList, Set(monthDayList).intersection([29, 30, 31]).isNotEmpty {
             if monthDayList.contains(29) {
-                return Strings.Localizable.Meetings.ScheduleMeeting.Create.MonthlyRecurrenceOption.DayTwentyNineSelected.footNote
+                return Strings.Localizable.Meetings.Scheduled.Create.MonthlyRecurrenceOption.BeyondTheLastDayOfTheMonthSelected.footNote(29)
             } else if monthDayList.contains(30) {
-                return Strings.Localizable.Meetings.ScheduleMeeting.Create.MonthlyRecurrenceOption.DayThirtySelected.footNote
+                return Strings.Localizable.Meetings.Scheduled.Create.MonthlyRecurrenceOption.BeyondTheLastDayOfTheMonthSelected.footNote(30)
             } else if monthDayList.contains(31) {
-                return Strings.Localizable.Meetings.ScheduleMeeting.Create.MonthlyRecurrenceOption.DayThirtyFirstSelected.footNote
+                return Strings.Localizable.Meetings.Scheduled.Create.MonthlyRecurrenceOption.BeyondTheLastDayOfTheMonthSelected.footNote(31)
             }
         }
         

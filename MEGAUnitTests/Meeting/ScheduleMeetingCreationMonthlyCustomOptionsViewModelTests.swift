@@ -113,7 +113,7 @@ final class ScheduleMeetingCreationMonthlyCustomOptionsViewModelTests: XCTestCas
         let viewModel = viewModel(forMonthDayList: [31])
         XCTAssertEqual(
             viewModel.calendarFooterNote(),
-            Strings.Localizable.Meetings.ScheduleMeeting.Create.MonthlyRecurrenceOption.DayThirtyFirstSelected.footNote)
+            Strings.Localizable.Meetings.Scheduled.Create.MonthlyRecurrenceOption.BeyondTheLastDayOfTheMonthSelected.footNote(31))
     }
     
     func testUpdateInterval_changeIntervalToThree_shouldMatch() {
