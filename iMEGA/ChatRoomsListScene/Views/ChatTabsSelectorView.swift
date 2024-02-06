@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import SwiftUI
 
@@ -17,7 +18,7 @@ struct ChatTabsSelectorView: View {
                 }, label: {
                     Text(Strings.Localizable.Chat.Selector.chat)
                         .font(Font.system(.subheadline, design: .default).weight(.medium))
-                        .foregroundColor(chatViewMode == .chats ? MEGAAppColor.Chat.chatTabSelectedText.color : MEGAAppColor.Chat.chatTabNormalText.color)
+                        .foregroundColor(chatViewMode == .chats ? selectedColor : unselectedColor)
                     
                 })
                 .overlay(alignment: .trailing, content: {
@@ -29,7 +30,7 @@ struct ChatTabsSelectorView: View {
                 })
                 Divider()
                     .frame(maxHeight: 1)
-                    .background(chatViewMode == .chats ? MEGAAppColor.Red._F30C14.color : MEGAAppColor.Chat.chatTabNormalBackground.color)
+                    .background(chatViewMode == .chats ? selectedColor : unselectedColor)
             }
             
             VStack {
@@ -39,21 +40,29 @@ struct ChatTabsSelectorView: View {
                 }, label: {
                     Text(Strings.Localizable.Chat.Selector.meeting)
                         .font(Font.system(.subheadline, design: .default).weight(.medium))
-                        .foregroundColor(chatViewMode == .meetings ? MEGAAppColor.Chat.chatTabSelectedText.color : MEGAAppColor.Chat.chatTabNormalText.color)
+                        .foregroundColor(chatViewMode == .meetings ? selectedColor : unselectedColor)
                 })
                 .overlay(alignment: .trailing, content: {
                     Circle()
-                        .fill(MEGAAppColor.Red._F30C14_badge.color)
+                        .fill(isDesignTokenEnabled ? TokenColors.Button.brand.swiftUI : MEGAAppColor.Red._F30C14_badge.color)
                         .frame(width: 5, height: 5)
                         .offset(x: 9, y: -3)
                         .opacity(shouldDisplayUnreadBadgeForMeetings ? 1 : 0)
                 })
                 Divider()
                     .frame(maxHeight: 1)
-                    .background(chatViewMode == .meetings ? MEGAAppColor.Red._F30C14.color : MEGAAppColor.Chat.chatTabNormalBackground.color)
+                    .background(chatViewMode == .meetings ? selectedColor : unselectedColor)
             }
         }
         .frame(maxHeight: 44)
         .background(colorScheme == .dark ? MEGAAppColor.Black._161616.color : MEGAAppColor.White._F7F7F7.color)
+    }
+    
+    private var selectedColor: Color {
+        isDesignTokenEnabled ? TokenColors.Button.brand.swiftUI : MEGAAppColor.Chat.chatTabSelectedText.color
+    }
+    
+    private var unselectedColor: Color {
+        isDesignTokenEnabled ? TokenColors.Icon.secondary.swiftUI : MEGAAppColor.Chat.chatTabNormalText.color
     }
 }
