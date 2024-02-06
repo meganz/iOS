@@ -2485,6 +2485,7 @@
 		C4F31EDC25C19ABE00E15146 /* AudioPlayerFileToolbarConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F31EDB25C19ABE00E15146 /* AudioPlayerFileToolbarConfigurator.swift */; };
 		C4F31EF925C1C50B00E15146 /* CustomTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F31EF825C1C50B00E15146 /* CustomTitleView.swift */; };
 		C4F31F0325C1C51A00E15146 /* CustomTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4F31F0225C1C51A00E15146 /* CustomTitleView.xib */; };
+		E79B628B2B71223100F0C918 /* NotificationTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79B628A2B71223100F0C918 /* NotificationTableViewCell+Additions.swift */; };
 		E7EE7CCF2AC6DCDB00DBABCD /* AppDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EE7CCE2AC6DCDB00DBABCD /* AppDelegateTests.swift */; };
 		E803CB641D5336F100F81A36 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E803CB661D5336F100F81A36 /* InfoPlist.strings */; };
 		E80C76101DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E80C760F1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m */; };
@@ -5127,6 +5128,7 @@
 		C4F31EDB25C19ABE00E15146 /* AudioPlayerFileToolbarConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerFileToolbarConfigurator.swift; sourceTree = "<group>"; };
 		C4F31EF825C1C50B00E15146 /* CustomTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTitleView.swift; sourceTree = "<group>"; };
 		C4F31F0225C1C51A00E15146 /* CustomTitleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomTitleView.xib; sourceTree = "<group>"; };
+		E79B628A2B71223100F0C918 /* NotificationTableViewCell+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationTableViewCell+Additions.swift"; sourceTree = "<group>"; };
 		E7EE7CCE2AC6DCDB00DBABCD /* AppDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateTests.swift; sourceTree = "<group>"; };
 		E803CB651D5336F100F81A36 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E803CB681D53374A00F81A36 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -8316,6 +8318,7 @@
 				BFDEE879297118D1004B585D /* NotificationsTableViewController+Meetings.swift */,
 				77597008219EB85300B31671 /* NotificationsTableViewController.h */,
 				77597009219EB85300B31671 /* NotificationsTableViewController.m */,
+				E79B628A2B71223100F0C918 /* NotificationTableViewCell+Additions.swift */,
 				7759700D219EC2D700B31671 /* NotificationTableViewCell.h */,
 				7759700E219EC2D700B31671 /* NotificationTableViewCell.m */,
 				BF0D5124298BD31500309563 /* ScheduleMeetingOccurrenceNotification.swift */,
@@ -14541,6 +14544,7 @@
 				B57AD23028C1A26600FB173A /* NotificationsTableViewController+Additions.swift in Sources */,
 				BFDEE87A297118D1004B585D /* NotificationsTableViewController+Meetings.swift in Sources */,
 				7759700A219EB85300B31671 /* NotificationsTableViewController.m in Sources */,
+				E79B628B2B71223100F0C918 /* NotificationTableViewCell+Additions.swift in Sources */,
 				7759700F219EC2D700B31671 /* NotificationTableViewCell.m in Sources */,
 				5B118EC31FB1B0C6005D7D90 /* NSArray+MNZCategory.m in Sources */,
 				949086881FD5482E002B12BD /* NSAttributedString+MNZCategory.m in Sources */,
