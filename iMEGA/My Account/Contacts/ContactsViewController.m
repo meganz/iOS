@@ -10,7 +10,6 @@
 #import "MEGANode+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGARemoveContactRequestDelegate.h"
-#import "MEGASdkManager.h"
 #import "MEGAShareRequestDelegate.h"
 #import "MEGA-Swift.h"
 #import "MEGAUser+MNZCategory.h"
@@ -174,7 +173,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     [self addNicknamesLoadedNotification];
     
-    [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
+    [MEGASdk.shared addMEGAGlobalDelegate:self];
     [MEGAChatSdk.shared addChatDelegate:self];
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     
@@ -201,7 +200,7 @@
     [super viewDidAppear:animated];
     
     if (self.contactsMode == ContactsModeDefault) {
-        MEGAContactRequestList *incomingContactsLists = [[MEGASdkManager sharedMEGASdk] incomingContactRequests];
+        MEGAContactRequestList *incomingContactsLists = [MEGASdk.shared incomingContactRequests];
         if (!self.avoidPresentIncomingPendingContactRequests && incomingContactsLists.size > 0) {
             ContactRequestsViewController *contactRequestsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsRequestsViewControllerID"];
             
@@ -392,7 +391,7 @@
     self.visibleUsersArray = [[NSMutableArray alloc] init];
     [self.indexPathsMutableDictionary removeAllObjects];
     
-    NSArray<MEGAUser *> *visibleContactsArray = MEGASdkManager.sharedMEGASdk.visibleContacts;
+    NSArray<MEGAUser *> *visibleContactsArray = MEGASdk.shared.visibleContacts;
     NSMutableArray *usersArray = [[NSMutableArray alloc] init];
     
     switch (self.contactsMode) {
@@ -443,7 +442,7 @@
                 if (share.isPending) {
                     [self.pendingShareUsersArray addObject:share];
                 } else {
-                    MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:share.user];
+                    MEGAUser *user = [MEGASdk.shared contactForEmail:share.user];
                     if (user) {
                         [self.visibleUsersArray addObject:user];
                     }
@@ -651,11 +650,11 @@
             if ([userToShare isKindOfClass:MEGAUser.class]) {
                 MEGAUser *user = (MEGAUser *)userToShare;
                 for (MEGANode *node in nodes) {
-                    [MEGASdkManager.sharedMEGASdk shareNode:node withUser:user level:shareType delegate:shareRequestDelegate];
+                    [MEGASdk.shared shareNode:node withUser:user level:shareType delegate:shareRequestDelegate];
                 }
             } else if ([userToShare isKindOfClass:NSString.class]) {
                 for (MEGANode *node in nodes) {
-                    [MEGASdkManager.sharedMEGASdk shareNode:node withEmail:userToShare level:shareType delegate:shareRequestDelegate];
+                    [MEGASdk.shared shareNode:node withEmail:userToShare level:shareType delegate:shareRequestDelegate];
                 }
             }
         }
@@ -679,7 +678,7 @@
             };
         }
         MEGAShareRequestDelegate *shareRequestDelegate = [[MEGAShareRequestDelegate alloc] initToChangePermissionsWithNumberOfRequests:1 completion:completion];
-        [[MEGASdkManager sharedMEGASdk] shareNode:self.node withUser:self.userTapped level:shareType delegate:shareRequestDelegate];
+        [MEGASdk.shared shareNode:self.node withUser:self.userTapped level:shareType delegate:shareRequestDelegate];
     }
 }
 
@@ -815,7 +814,7 @@
             
         case ContactsModeChatNamingGroup: {
             if (indexPath.row == self.selectedUsersArray.count) {
-                user = MEGASdkManager.sharedMEGASdk.myUser;
+                user = MEGASdk.shared.myUser;
             } else {
                 user = [self.selectedUsersArray objectOrNilAtIndex:indexPath.row];
             }
@@ -855,7 +854,7 @@
 
 - (void)updatePendingContactRequestsLabel {
     if (self.contactsMode == ContactsModeDefault) {
-        MEGAContactRequestList *incomingContactsLists = MEGASdkManager.sharedMEGASdk.incomingContactRequests;
+        MEGAContactRequestList *incomingContactsLists = MEGASdk.shared.incomingContactRequests;
         self.contactsTableViewHeader.requestsDetailLabel.text = incomingContactsLists.size == 0 ? @"" : [NSString stringWithFormat:@"%ld", (long)incomingContactsLists.size];
 
     }
@@ -1022,7 +1021,7 @@
 }
 
 - (void)inviteEmailToShareFolder:(NSString *)email {
-    MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:email];
+    MEGAUser *user = [MEGASdk.shared contactForEmail:email];
     if (user && user.visibility == MEGAUserVisibilityVisible) {
         [self selectUser:user];
     } else {
@@ -1167,7 +1166,7 @@
                 } else {
                     if (MEGAReachabilityManager.isReachableHUDIfNot) {
                         MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [MEGAInviteContactRequestDelegate.alloc initWithNumberOfRequests:1];
-                        [MEGASdkManager.sharedMEGASdk inviteContactWithEmail:textField.text message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
+                        [MEGASdk.shared inviteContactWithEmail:textField.text message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
                         [addContactAlertController dismissViewControllerAnimated:YES completion:nil];
                     }
                 }
@@ -1232,7 +1231,7 @@
     }];
     
     for (MEGAUser *user in self.selectedUsersArray) {
-        [[MEGASdkManager sharedMEGASdk] shareNode:self.node withUser:user level:MEGAShareTypeAccessUnknown delegate:shareRequestDelegate];
+        [MEGASdk.shared shareNode:self.node withUser:user level:MEGAShareTypeAccessUnknown delegate:shareRequestDelegate];
     }
 }
 
@@ -1507,8 +1506,8 @@
                     [cell.avatarImageView mnz_setImageForUserHandle:peerHandle name:cell.nameLabel.text];
                     NSString *peerEmail = [MEGAChatSdk.shared userEmailFromCacheByUserHandle:peerHandle];
                     if (peerEmail) {
-                        MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:peerEmail];
-                        cell.verifiedImageView.hidden = ![MEGASdkManager.sharedMEGASdk areCredentialsVerifiedOfUser:user];
+                        MEGAUser *user = [MEGASdk.shared contactForEmail:peerEmail];
+                        cell.verifiedImageView.hidden = ![MEGASdk.shared areCredentialsVerifiedOfUser:user];
                     } else {
                         cell.verifiedImageView.hidden = YES;
                     }
@@ -1697,7 +1696,7 @@
                             [self setTableViewEditing:NO animated:NO];
                             [self reloadUI];
                         }];
-                        [MEGASdkManager.sharedMEGASdk shareNode:self.node withEmail:self.pendingShareUsersArray[indexPath.row].user level:MEGAShareTypeAccessUnknown delegate:shareRequestDelegate];
+                        [MEGASdk.shared shareNode:self.node withEmail:self.pendingShareUsersArray[indexPath.row].user level:MEGAShareTypeAccessUnknown delegate:shareRequestDelegate];
                     }]];
                     [self presentViewController:removePendingShareAlertController animated:YES completion:nil];
                     

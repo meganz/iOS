@@ -108,7 +108,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     self.avatarCollapsedPosition = self.view.frame.size.height * 0.3;
     self.avatarViewHeightConstraint.constant = self.avatarCollapsedPosition;
     
-    self.user = [[MEGASdkManager sharedMEGASdk] contactForEmail:self.userEmail];
+    self.user = [MEGASdk.shared contactForEmail:self.userEmail];
     [self.avatarImageView mnz_setImageAvatarOrColorForUserHandle:self.userHandle];
     self.chatRoom = [MEGAChatSdk.shared chatRoomByUser:self.userHandle];
     
@@ -179,12 +179,12 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
         self.onlineStatusView.hidden = YES;
     }
     
-    self.incomingNodeListForUser = [[MEGASdkManager sharedMEGASdk] inSharesForUser:self.user];
+    self.incomingNodeListForUser = [MEGASdk.shared inSharesForUser:self.user];
     
     self.avatarImageView.accessibilityIgnoresInvertColors = YES;
     
     self.chatNotificationControl = [ChatNotificationControl.alloc initWithDelegate:self];
-    [MEGASdkManager.sharedMEGASdk addMEGARequestDelegate:self];
+    [MEGASdk.shared addMEGARequestDelegate:self];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"GenericHeaderFooterView" bundle:nil] forHeaderFooterViewReuseIdentifier:@"GenericHeaderFooterViewID"];
     [self.tableView sizeHeaderToFit];
@@ -200,7 +200,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     [super viewWillAppear:animated];
     [MEGAChatSdk.shared addChatDelegate:self];
     [MEGAChatSdk.shared addChatCallDelegate:self];
-    [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
+    [MEGASdk.shared addMEGAGlobalDelegate:self];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     [self updateCallButtonsState];
     
@@ -214,10 +214,10 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     [MEGAChatSdk.shared removeChatDelegate:self];
     [MEGAChatSdk.shared removeChatCallDelegate:self];
     
-    [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegateAsync:self];
+    [MEGASdk.shared removeMEGAGlobalDelegateAsync:self];
     
     if (self.isMovingFromParentViewController) {
-        [[MEGASdkManager sharedMEGASdk] removeMEGARequestDelegateAsync:self];
+        [MEGASdk.shared removeMEGARequestDelegateAsync:self];
     }
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
@@ -308,8 +308,8 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     MEGANode *node = [self.incomingNodeListForUser nodeAtIndex:indexPath.row];
     cell.thumbnailImageView.image = UIImage.mnz_incomingFolderImage;
     cell.nameLabel.text = node.name;
-    cell.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:MEGASdkManager.sharedMEGASdk];
-    MEGAShareType shareType = [MEGASdkManager.sharedMEGASdk accessLevelForNode:node];
+    cell.infoLabel.text = [Helper filesAndFoldersInFolderNode:node api:MEGASdk.shared];
+    MEGAShareType shareType = [MEGASdk.shared accessLevelForNode:node];
     [cell.permissionsButton setImage:[UIImage mnz_permissionsButtonImageForShareType:shareType] forState:UIControlStateNormal];
     
     if (self.contactDetailsMode == ContactDetailsModeFromChat) {
@@ -480,7 +480,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 - (void)addParticipantToContact {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [MEGAInviteContactRequestDelegate.alloc initWithNumberOfRequests:1];
-        [MEGASdkManager.sharedMEGASdk inviteContactWithEmail:self.userEmail message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
+        [MEGASdk.shared inviteContactWithEmail:self.userEmail message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
     }
 }
 - (void)showRemoveContactConfirmationFromSender:(UIView *)sender {
@@ -493,18 +493,18 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
             [MEGAStore.shareInstance updateUserWithHandle:self.user.handle interactedWith:NO];
             [self.navigationController popViewControllerAnimated:YES];
         }];
-        [[MEGASdkManager sharedMEGASdk] removeContactUser:self.user delegate:removeContactRequestDelegate];
+        [MEGASdk.shared removeContactUser:self.user delegate:removeContactRequestDelegate];
     }];
     [self presentViewController:removeContactAlertController animated:YES completion:nil];
 }
 
 - (void)sendInviteContact {
     MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [[MEGAInviteContactRequestDelegate alloc] initWithNumberOfRequests:1];
-    [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:self.userEmail message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
+    [MEGASdk.shared inviteContactWithEmail:self.userEmail message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
 }
 
 - (void)updateCredentialsVerified {
-    self.credentialsVerified = [MEGASdkManager.sharedMEGASdk areCredentialsVerifiedOfUser:self.user];
+    self.credentialsVerified = [MEGASdk.shared areCredentialsVerifiedOfUser:self.user];
 }
 
 - (void)presentVerifyCredentialsViewController {
@@ -652,7 +652,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 }
 
 - (void)updateCallButtonsState {
-    MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:self.userEmail];
+    MEGAUser *user = [MEGASdk.shared contactForEmail:self.userEmail];
     if (!user || user.visibility != MEGAUserVisibilityVisible) {
         self.messageButton.enabled = self.callButton.enabled = self.videoCallButton.enabled = NO;
         return;
@@ -820,7 +820,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 }
 
 - (BOOL)shouldAllowToAddContact {
-    MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:self.userEmail];
+    MEGAUser *user = [MEGASdk.shared contactForEmail:self.userEmail];
     return (user == nil || user.visibility != MEGAUserVisibilityVisible);
 }
 
@@ -1177,7 +1177,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     }
     
     if (shouldProcessOnNodesUpdate) {
-        self.incomingNodeListForUser = [[MEGASdkManager sharedMEGASdk] inSharesForUser:self.user];
+        self.incomingNodeListForUser = [MEGASdk.shared inSharesForUser:self.user];
         [self.tableView reloadData];
     }
 }

@@ -8,7 +8,6 @@
 
 #import "MEGAContactLinkQueryRequestDelegate.h"
 #import "MEGAInviteContactRequestDelegate.h"
-#import "MEGASdkManager.h"
 #import "MEGA-Swift.h"
 #import "QRSettingsTableViewController.h"
 
@@ -87,7 +86,7 @@ typedef NS_ENUM(NSInteger, QRSection) {
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [[MEGASdkManager sharedMEGASdk] contactLinkCreateRenew:NO delegate:self.contactLinkCreateDelegate];
+    [MEGASdk.shared contactLinkCreateRenew:NO delegate:self.contactLinkCreateDelegate];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -311,7 +310,7 @@ typedef NS_ENUM(NSInteger, QRSection) {
                         }
                     }];
                     
-                    [[MEGASdkManager sharedMEGASdk] contactLinkQueryWithHandle:[MEGASdk handleForBase64Handle:base64Handle] delegate:delegate];
+                    [MEGASdk.shared contactLinkQueryWithHandle:[MEGASdk handleForBase64Handle:base64Handle] delegate:delegate];
                 } else {
                     [self feedbackWithSuccess:NO];
                 }
@@ -342,7 +341,7 @@ typedef NS_ENUM(NSInteger, QRSection) {
             __weak ContactLinkQRViewController *weakSelf = self;
             weakSelf.queryInProgress = NO;
         }];
-        [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:email message:@"" action:MEGAInviteActionAdd handle:contactLinkHandle delegate:delegate];
+        [MEGASdk.shared inviteContactWithEmail:email message:@"" action:MEGAInviteActionAdd handle:contactLinkHandle delegate:delegate];
         [weakInviteOrDismissModal dismissViewControllerAnimated:YES completion:nil];
     };
     
@@ -352,14 +351,14 @@ typedef NS_ENUM(NSInteger, QRSection) {
         }];
     };
     
-    MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:email];
+    MEGAUser *user = [MEGASdk.shared contactForEmail:email];
     if (user && user.visibility == MEGAUserVisibilityVisible) {
         inviteOrDismissModal.detail = [LocalizedString(@"alreadyAContact", @"Error message displayed when trying to invite a contact who is already added.") stringByReplacingOccurrencesOfString:@"%s" withString:email];
         inviteOrDismissModal.firstButtonTitle = LocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
         inviteOrDismissModal.firstCompletion = dismissCompletion;
     } else {
         BOOL isInOutgoingContactRequest = NO;
-        MEGAContactRequestList *outgoingContactRequestList = [[MEGASdkManager sharedMEGASdk] outgoingContactRequests];
+        MEGAContactRequestList *outgoingContactRequestList = [MEGASdk.shared outgoingContactRequests];
         for (NSInteger i = 0; i < outgoingContactRequestList.size; i++) {
             MEGAContactRequest *contactRequest = [outgoingContactRequestList contactRequestAtIndex:i];
             if ([email isEqualToString:contactRequest.targetEmail]) {

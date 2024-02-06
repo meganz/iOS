@@ -13,7 +13,6 @@
 
 #import "UIImageView+MNZCategory.h"
 
-#import "MEGASdkManager.h"
 #import "MEGAUser+MNZCategory.h"
 #import "NSString+MNZCategory.h"
 @import MEGASDKRepo;
@@ -105,16 +104,16 @@
 
 - (void)configureDefaultCellForUser:(MEGAUser *)user newUser:(BOOL)newUser {
     [self.avatarImageView mnz_setImageForUserHandle:user.handle name:self.nameLabel.text];
-    self.verifiedImageView.hidden = ![MEGASdkManager.sharedMEGASdk areCredentialsVerifiedOfUser:user];
+    self.verifiedImageView.hidden = ![MEGASdk.shared areCredentialsVerifiedOfUser:user];
     
     NSString *userName = [self userNameForUser:user];
     self.nameLabel.text = userName ? userName : user.email;
     
-    MEGAChatStatus userStatus = [MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:user.handle];
+    MEGAChatStatus userStatus = [MEGAChatSdk.shared userOnlineStatus:user.handle];
     self.shareLabel.text = [NSString chatStatusString:userStatus];
     self.onlineStatusView.backgroundColor = [UIColor colorWithChatStatus: userStatus];
     if (userStatus < MEGAChatStatusOnline) {
-        [MEGASdkManager.sharedMEGAChatSdk requestLastGreen:user.handle];
+        [MEGAChatSdk.shared requestLastGreen:user.handle];
     }
     
     if (newUser) {
@@ -129,7 +128,7 @@
 
 - (void)configureCellForContactsModeFolderSharedWith:(MEGAUser *)user indexPath:(NSIndexPath *)indexPath {
     [self.avatarImageView mnz_setImageForUserHandle:user.handle name:self.nameLabel.text];
-    self.verifiedImageView.hidden = ![MEGASdkManager.sharedMEGASdk areCredentialsVerifiedOfUser:user];
+    self.verifiedImageView.hidden = ![MEGASdk.shared areCredentialsVerifiedOfUser:user];
     
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
