@@ -8,7 +8,6 @@
 #import "EmptyStateView.h"
 #import "Helper.h"
 #import "MEGAReachabilityManager.h"
-#import "MEGASdkManager.h"
 #import "MEGA-Swift.h"
 #import "NSString+MNZCategory.h"
 #import "NSDate+MNZCategory.h"
@@ -64,7 +63,7 @@ typedef NS_ENUM(NSInteger, Segment) {
     [self.contactRequestsSegmentedControl setTitle:LocalizedString(@"received", @"Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved.") forSegmentAtIndex:SegmentReceived];
     [self.contactRequestsSegmentedControl setTitle:LocalizedString(@"sent", @"Title of one of the filters in 'Contacts requests' section. If 'Sent' is selected, it will only show the requests which have been sent out.") forSegmentAtIndex:SegmentSent];
     
-    [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
+    [MEGASdk.shared addMEGAGlobalDelegate:self];
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -77,7 +76,7 @@ typedef NS_ENUM(NSInteger, Segment) {
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     
-    [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
+    [MEGASdk.shared removeMEGAGlobalDelegate:self];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
@@ -130,7 +129,7 @@ typedef NS_ENUM(NSInteger, Segment) {
 - (void)reloadOutgoingContactsRequestsView {
     self.outgoingContactRequestArray = [[NSMutableArray alloc] init];
     
-    MEGAContactRequestList *outgoingContactRequestList = [[MEGASdkManager sharedMEGASdk] outgoingContactRequests];
+    MEGAContactRequestList *outgoingContactRequestList = [MEGASdk.shared outgoingContactRequests];
     for (NSInteger i = 0; i < outgoingContactRequestList.size; i++) {
         MEGAContactRequest *contactRequest = [outgoingContactRequestList contactRequestAtIndex:i];
         [self.outgoingContactRequestArray addObject:contactRequest];
@@ -139,7 +138,7 @@ typedef NS_ENUM(NSInteger, Segment) {
     //If user cancel all sent requests and HAS incoming requests > Switch to Received
     //If user cancel all sent requests and HAS NOT incoming requests > Go back to Contacts
     if (outgoingContactRequestList.size == 0 && self.isDeletingLastRequest) {
-        MEGAContactRequestList *incomingContactRequestList = MEGASdkManager.sharedMEGASdk.incomingContactRequests;
+        MEGAContactRequestList *incomingContactRequestList = MEGASdk.shared.incomingContactRequests;
         if (incomingContactRequestList.size == 0) {
             if (self.presentingViewController) {
                 [self dismissViewControllerAnimated:YES completion:nil];
@@ -157,7 +156,7 @@ typedef NS_ENUM(NSInteger, Segment) {
 - (void)reloadIncomingContactsRequestsView {
     self.incomingContactRequestArray = [[NSMutableArray alloc] init];
     
-    MEGAContactRequestList *incomingContactRequestList = [[MEGASdkManager sharedMEGASdk] incomingContactRequests];
+    MEGAContactRequestList *incomingContactRequestList = [MEGASdk.shared incomingContactRequests];
     for (NSInteger i = 0; i < incomingContactRequestList.size; i++) {
         MEGAContactRequest *contactRequest = [incomingContactRequestList contactRequestAtIndex:i];
         [self.incomingContactRequestArray addObject:contactRequest];
@@ -188,7 +187,7 @@ typedef NS_ENUM(NSInteger, Segment) {
     }
     if (sender.tag < self.incomingContactRequestArray.count) {
         MEGAContactRequest *contactSelected = [self.incomingContactRequestArray objectAtIndex:sender.tag];
-        [MEGASdkManager.sharedMEGASdk replyContactRequest:contactSelected action:MEGAReplyActionAccept delegate:self];
+        [MEGASdk.shared replyContactRequest:contactSelected action:MEGAReplyActionAccept delegate:self];
         
         if (self.incomingContactRequestArray.count == 1) {
             self.acceptingOrDecliningLastRequest = YES;
@@ -202,14 +201,14 @@ typedef NS_ENUM(NSInteger, Segment) {
     }
     if (self.contactRequestsSegmentedControl.selectedSegmentIndex == SegmentReceived && sender.tag < self.incomingContactRequestArray.count) {
         MEGAContactRequest *contactSelected = [self.incomingContactRequestArray objectAtIndex:sender.tag];
-        [[MEGASdkManager sharedMEGASdk] replyContactRequest:contactSelected action:MEGAReplyActionDeny delegate:self];
+        [MEGASdk.shared replyContactRequest:contactSelected action:MEGAReplyActionDeny delegate:self];
         
         if (self.incomingContactRequestArray.count == 1) {
             self.acceptingOrDecliningLastRequest = YES;
         }
     } else if (sender.tag < self.outgoingContactRequestArray.count) {
         MEGAContactRequest *contactSelected = [self.outgoingContactRequestArray objectAtIndex:sender.tag];
-        [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:[contactSelected targetEmail] message:@"" action:MEGAInviteActionDelete delegate:self];
+        [MEGASdk.shared inviteContactWithEmail:[contactSelected targetEmail] message:@"" action:MEGAInviteActionDelete delegate:self];
         
         if (self.outgoingContactRequestArray.count == 1) {
             self.deletingLastRequest = YES;
