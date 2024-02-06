@@ -19,7 +19,6 @@
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAPurchase.h"
 #import "MEGAReachabilityManager.h"
-#import "MEGASdkManager.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGAStore.h"
 #import "MEGATransfer+MNZCategory.h"
@@ -46,7 +45,7 @@
 #import "CameraUploadManager+Settings.h"
 #import "TransferSessionManager.h"
 #import <SDWebImage/SDWebImage.h>
-#import "MEGASdkManager+CleanUp.h"
+
 @import ChatRepo;
 @import Firebase;
 @import MEGAL10nObjc;
@@ -157,22 +156,22 @@
     
     [Helper restoreAPISetting];
     [self chatUploaderSetup];
-    [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
-    [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
-    [[MEGASdkManager sharedMEGASdkFolder] addMEGATransferDelegate:self];
-    [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
+    [MEGASdk.shared addMEGARequestDelegate:self];
+    [MEGASdk.shared addMEGATransferDelegate:self];
+    [MEGASdk.sharedFolderLink addMEGATransferDelegate:self];
+    [MEGASdk.shared addMEGAGlobalDelegate:self];
     
     [MEGAChatSdk.shared addChatDelegate:self];
     [MEGAChatSdk.shared addChatRequestDelegate:self];
         
-    [[MEGASdkManager sharedMEGASdk] httpServerSetMaxBufferSize:[UIDevice currentDevice].maxBufferSize];
+    [MEGASdk.shared httpServerSetMaxBufferSize:[UIDevice currentDevice].maxBufferSize];
     
     [[LTHPasscodeViewController sharedUser] setDelegate:self];
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"presentPasscodeLater"];
     
     NSString *languageCode = NSBundle.mainBundle.preferredLocalizations.firstObject;
-    [MEGASdkManager.sharedMEGASdk setLanguageCode:languageCode];
-    [MEGASdkManager.sharedMEGASdkFolder setLanguageCode:languageCode];
+    [MEGASdk.shared setLanguageCode:languageCode];
+    [MEGASdk.sharedFolderLink setLanguageCode:languageCode];
     
     self.backgroundTaskMutableDictionary = [[NSMutableDictionary alloc] init];
     
@@ -215,7 +214,7 @@
         }
         
         MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
-        [MEGASdkManager.sharedMEGASdk fastLoginWithSession:sessionV3 delegate:loginRequestDelegate];
+        [MEGASdk.shared fastLoginWithSession:sessionV3 delegate:loginRequestDelegate];
         
         if ([MEGAReachabilityManager isReachable]) {
             [self showLaunchViewController];
@@ -236,7 +235,7 @@
         }
         
         if ([sharedUserDefaults boolForKey:@"useHttpsOnly"]) {
-            [[MEGASdkManager sharedMEGASdk] useHttpsOnly:YES];
+            [MEGASdk.shared useHttpsOnly:YES];
         }
         
         [CameraUploadManager enableAdvancedSettingsForUpgradingUserIfNeeded];
@@ -251,7 +250,7 @@
                 [UIApplication.mnz_presentingViewController presentViewController:checkEmailAndFollowTheLinkVC animated:YES completion:nil];
             }];
             createAccountRequestDelegate.resumeCreateAccount = YES;
-            [[MEGASdkManager sharedMEGASdk] resumeCreateAccountWithSessionId:sessionId delegate:createAccountRequestDelegate];
+            [MEGASdk.shared resumeCreateAccountWithSessionId:sessionId delegate:createAccountRequestDelegate];
         } else {
             [self listenToStorePaymentTransactions];
         }
@@ -287,7 +286,7 @@
         [self beginBackgroundTaskWithName:@"Chat-Request-SET_BACKGROUND_STATUS=YES"];
     }
     
-    [MEGASdkManager.sharedMEGASdk areTherePendingTransfersWithCompletion:^(BOOL pendingTransfers) {
+    [MEGASdk.shared areTherePendingTransfersWithCompletion:^(BOOL pendingTransfers) {
         if (pendingTransfers) {
             [self beginBackgroundTaskWithName:@"PendingTasks"];
         }
@@ -326,7 +325,7 @@
     if (MEGASdk.isLoggedIn && self->isFetchNodesDone) {
         dispatch_async(dispatch_get_main_queue(), ^{
             MEGAShowPasswordReminderRequestDelegate *showPasswordReminderDelegate = [[MEGAShowPasswordReminderRequestDelegate alloc] initToLogout:NO];
-            [[MEGASdkManager sharedMEGASdk] shouldShowPasswordReminderDialogAtLogout:NO delegate:showPasswordReminderDelegate];
+            [MEGASdk.shared shouldShowPasswordReminderDialogAtLogout:NO delegate:showPasswordReminderDelegate];
         });
     }
     
@@ -365,7 +364,7 @@
     [[SKPaymentQueue defaultQueue] removeTransactionObserver:[MEGAPurchase sharedInstance]];
 
     [AudioPlayerManager.shared playbackStoppedForCurrentItem];
-    [MEGASdkManager localLogoutAndCleanUp];
+    [MEGASdkCleanUp localLogoutAndCleanUp];
 }
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
@@ -394,7 +393,7 @@
     
     NSString *deviceTokenString = [NSString stringWithString:hexString];
     MEGALogDebug(@"[App Lifecycle] Application did register for remote notifications with device token %@", deviceTokenString);
-    [[MEGASdkManager sharedMEGASdk] registeriOSdeviceToken:deviceTokenString];
+    [MEGASdk.shared registeriOSdeviceToken:deviceTokenString];
     
     [self registerCustomActionsForStartScheduledMeetingNotification];
 }
@@ -525,7 +524,7 @@
 
 - (RatingRequestMonitor *)ratingRequestMonitor {
     if (_ratingRequestMonitor == nil) {
-        _ratingRequestMonitor = [[RatingRequestMonitor alloc] initWithSdk:MEGASdkManager.sharedMEGASdk];
+        _ratingRequestMonitor = [[RatingRequestMonitor alloc] initWithSdk:MEGASdk.shared];
     }
     
     return _ratingRequestMonitor;
@@ -881,7 +880,7 @@
 
 - (void)presentInviteContactCustomAlertViewController {
     BOOL isInOutgoingContactRequest = NO;
-    MEGAContactRequestList *outgoingContactRequestList = [[MEGASdkManager sharedMEGASdk] outgoingContactRequests];
+    MEGAContactRequestList *outgoingContactRequestList = [MEGASdk.shared outgoingContactRequests];
     for (NSInteger i = 0; i < outgoingContactRequestList.size; i++) {
         MEGAContactRequest *contactRequest = [outgoingContactRequestList contactRequestAtIndex:i];
         if ([self.email isEqualToString:contactRequest.targetEmail]) {
@@ -1018,13 +1017,13 @@
         return;
     }
     
-    if (MEGASdkManager.sharedMEGASdk.businessStatus == BusinessStatusGracePeriod) {
-        if (MEGASdkManager.sharedMEGASdk.isMasterBusinessAccount) {
+    if (MEGASdk.shared.businessStatus == BusinessStatusGracePeriod) {
+        if (MEGASdk.shared.isMasterBusinessAccount) {
             [[CustomModalAlertRouter.alloc init:CustomModalAlertModeBusinessGracePeriod presenter:UIApplication.mnz_presentingViewController] start];
         }
     }
     
-    if (MEGASdkManager.sharedMEGASdk.businessStatus == BusinessStatusExpired &&
+    if (MEGASdk.shared.businessStatus == BusinessStatusExpired &&
         ![UIApplication.mnz_visibleViewController isKindOfClass:AccountExpiredViewController.class]) {
         AccountExpiredViewController *accountStatusVC = AccountExpiredViewController.alloc.init;
         accountStatusVC.modalPresentationStyle = UIModalPresentationFullScreen;
@@ -1039,7 +1038,7 @@
 }
 
 - (void)indexFavourites {
-    self.spotlightIndexer = [[SpotlightIndexer alloc] initWithSdk:MEGASdkManager.sharedMEGASdk passcodeEnabled:LTHPasscodeViewController.doesPasscodeExist];
+    self.spotlightIndexer = [[SpotlightIndexer alloc] initWithSdk:MEGASdk.shared passcodeEnabled:LTHPasscodeViewController.doesPasscodeExist];
     [self.spotlightIndexer indexFavourites];
 }
 
@@ -1059,11 +1058,11 @@
 }
 
 - (void)maxNumberOfFailedAttemptsReached {
-    [[MEGASdkManager sharedMEGASdk] logout];
+    [MEGASdk.shared logout];
 }
 
 - (void)logoutButtonWasPressed {
-    [[MEGASdkManager sharedMEGASdk] logout];
+    [MEGASdk.shared logout];
 }
 
 - (void)passcodeWasEnabled {
@@ -1092,7 +1091,7 @@
     
     NSString *deviceTokenString = [NSString stringWithString:hexString];
     MEGALogDebug(@"Device token %@", deviceTokenString);
-    [[MEGASdkManager sharedMEGASdk] registeriOSVoIPdeviceToken:deviceTokenString];
+    [MEGASdk.shared registeriOSVoIPdeviceToken:deviceTokenString];
     
 }
 
@@ -1170,7 +1169,7 @@
 #pragma mark - LaunchViewControllerDelegate
 
 - (void)setupFinished {
-    if (MEGASdkManager.sharedMEGASdk.businessStatus == BusinessStatusGracePeriod &&             [UIApplication.mnz_presentingViewController isKindOfClass:CustomModalAlertViewController.class]) {
+    if (MEGASdk.shared.businessStatus == BusinessStatusGracePeriod &&             [UIApplication.mnz_presentingViewController isKindOfClass:CustomModalAlertViewController.class]) {
         return;
     }
     [self showMainTabBar];
@@ -1313,7 +1312,7 @@
                 [api getAccountDetails];
             } else if (event.number == StorageStatePaywall) {
                 __weak typeof(self) weakSelf = self;
-                NSInteger cloudStorageUsed = MEGASdkManager.sharedMEGASdk.mnz_accountDetails.storageUsed;
+                NSInteger cloudStorageUsed = MEGASdk.shared.mnz_accountDetails.storageUsed;
                 OverDiskQuotaCommand *presentOverDiskQuotaScreenCommand = [OverDiskQuotaCommand.alloc initWithStorageUsed:cloudStorageUsed completionAction:^(id<OverDiskQuotaInfomationProtocol> _Nullable infor) {
                     if (infor != nil) {
                         [weakSelf presentOverDiskQuotaViewControllerIfNeededWithInformation:infor];
@@ -1341,7 +1340,7 @@
             break;
             
         case EventStorageSumChanged:
-            [MEGASdkManager.sharedMEGASdk mnz_setShouldRequestAccountDetails:YES];
+            [MEGASdk.shared mnz_setShouldRequestAccountDetails:YES];
             [self postSetShouldRequestAccountDetailsNotification:YES];
             break;
             
@@ -1479,7 +1478,7 @@
                 break;
             case MEGAErrorTypeApiEPaywall: {
                 __weak typeof(self) weakSelf = self;
-                NSInteger cloudStorageUsed = MEGASdkManager.sharedMEGASdk.mnz_accountDetails.storageUsed;
+                NSInteger cloudStorageUsed = MEGASdk.shared.mnz_accountDetails.storageUsed;
                 OverDiskQuotaCommand *presentOverDiskQuotaScreenCommand =
                     [[OverDiskQuotaCommand alloc] initWithStorageUsed:cloudStorageUsed completionAction:^(id<OverDiskQuotaInfomationProtocol> _Nullable infor) {
                         if (infor != nil) {
@@ -1516,7 +1515,7 @@
             [self initProviderDelegate];
             [self registerForVoIPNotifications];
             [self registerForNotifications];
-            [[MEGASdkManager sharedMEGASdk] fetchNodes];
+            [MEGASdk.shared fetchNodes];
             [QuickAccessWidgetManager reloadAllWidgetsContent];
             [[MEGAPurchase sharedInstance] requestPricing];
             [api setAccountAuth:api.accountAuth];
@@ -1533,8 +1532,8 @@
             [[SKPaymentQueue defaultQueue] addTransactionObserver:[MEGAPurchase sharedInstance]];
             
             if ([[NSUserDefaults standardUserDefaults] boolForKey:@"TransfersPaused"]) {
-                [[MEGASdkManager sharedMEGASdk] pauseTransfers:YES];
-                [[MEGASdkManager sharedMEGASdkFolder] pauseTransfers:YES];
+                [MEGASdk.shared pauseTransfers:YES];
+                [MEGASdk.sharedFolderLink pauseTransfers:YES];
             } else {
                 [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"TransfersPaused"];
             }
@@ -1566,7 +1565,7 @@
                     }
                 }
                 
-                [[MEGASdkManager sharedMEGASdk] getAccountDetails];
+                [MEGASdk.shared getAccountDetails];
                 [self refreshAccountDetails];
                 
                 [self.quickAccessWidgetManager createWidgetItemData];
@@ -1587,7 +1586,7 @@
                 [Helper logout];
                 [self showOnboardingWithCompletion:nil];
                 
-                [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:nil];
+                [MEGASdk.shared mnz_setAccountDetails:nil];
                 
                 [QuickAccessWidgetManager reloadAllWidgetsContent];
                 if (sessionInvalidateInOtherClient && !self.API_ESIDAlertController) {
@@ -1600,16 +1599,16 @@
         }
             
         case MEGARequestTypeAccountDetails:
-            [MEGASdkManager.sharedMEGASdk mnz_setShouldRequestAccountDetails:NO];
-            [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:[request megaAccountDetails]];
+            [MEGASdk.shared mnz_setShouldRequestAccountDetails:NO];
+            [MEGASdk.shared mnz_setAccountDetails:[request megaAccountDetails]];
             
             [self postDidFinishFetchAccountDetailsNotificationWithAccountDetails:[request megaAccountDetails]];
             [self postSetShouldRequestAccountDetailsNotification:NO];
             
-            NSInteger storageUsed = MEGASdkManager.sharedMEGASdk.mnz_accountDetails.storageUsed;
+            NSInteger storageUsed = MEGASdk.shared.mnz_accountDetails.storageUsed;
             [OverDiskQuotaService.sharedService updateUserStorageUsed:storageUsed];
 
-            if (self.showAccountUpgradeScreen && [MEGASdkManager.sharedMEGASdk mnz_accountDetails]) {
+            if (self.showAccountUpgradeScreen && [MEGASdk.shared mnz_accountDetails]) {
                 self.showAccountUpgradeScreen = NO;
                 [self showUpgradeAccount];
             }
@@ -1618,7 +1617,7 @@
             
         case MEGARequestTypeGetAttrUser: {
             MEGAUser *user;
-            MEGAUser *me = MEGASdkManager.sharedMEGASdk.myUser;
+            MEGAUser *me = MEGASdk.shared.myUser;
             
             if (me.handle == request.nodeHandle) {
                 user = me;
