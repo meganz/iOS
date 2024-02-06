@@ -9,6 +9,23 @@ def injectEnvironments(Closure body) {
     }
 }
 
+def postWarningAboutFilesChanged(int maxNumberOfFilesAllowed) {
+    def script = "git diff --name-only origin/develop...origin/${env.BRANCH_NAME} -- \"*.swift\" | wc -l"
+    def numberOfFiles = sh(script: script, returnStdout: true).trim()
+
+    if (numberOfFiles.toInteger() <= maxNumberOfFilesAllowed) {
+        return
+    }
+
+    def mrNumber = env.BRANCH_NAME.replace('MR-', '')
+
+    withCredentials([usernamePassword(credentialsId: 'Gitlab-Access-Token', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
+        env.MARKDOWN_LINK = ":warning: Over 10 `.swift` files changed, please explain why you need to do this change or break the MR into smaller ones"
+        env.MERGE_REQUEST_URL = "https://code.developers.mega.co.nz/api/v4/projects/193/merge_requests/${mrNumber}/notes"
+        sh 'curl --request POST --header PRIVATE-TOKEN:$TOKEN --form body=\"${MARKDOWN_LINK}\" ${MERGE_REQUEST_URL}'
+    }
+}
+
 pipeline {
     agent { label 'mac-jenkins-slave-ios' }
     options {
@@ -53,7 +70,6 @@ pipeline {
                 injectEnvironments({
                     if (env.BRANCH_NAME.startsWith('MR-')) {
                         def mr_number = env.BRANCH_NAME.replace('MR-', '')
-
                         withCredentials([usernamePassword(credentialsId: 'Gitlab-Access-Token', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
                             sh 'bundle exec fastlane parse_and_upload_code_coverage mr:' + mr_number + ' token:' + TOKEN
                             env.MARKDOWN_LINK = ":white_check_mark: Build status check succeeded"
@@ -68,6 +84,11 @@ pipeline {
         }
         always {
             script {
+                withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
+                    injectEnvironments({
+                        postWarningAboutFilesChanged(10)
+                    })
+                }
                 withCredentials([usernamePassword(credentialsId: 'Gitlab-Access-Token', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
                     injectEnvironments({
                         if (env.BRANCH_NAME.startsWith('MR-')) {
