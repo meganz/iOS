@@ -2306,7 +2306,6 @@
 		BFD213BC28EE43D00057150E /* ChatRoomsEmptyViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD213BB28EE43D00057150E /* ChatRoomsEmptyViewState.swift */; };
 		BFD2141128F4D5810057150E /* ChatRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2141028F4D5810057150E /* ChatRoomViewModel.swift */; };
 		BFD2141B28F75A1E0057150E /* ChatRoomHybridDescriptionViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2141A28F75A1E0057150E /* ChatRoomHybridDescriptionViewState.swift */; };
-		BFD2144728FCFAB70057150E /* SwipeLeftActionModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2144628FCFAB70057150E /* SwipeLeftActionModifier.swift */; };
 		BFD2144928FCFAE20057150E /* SwipeActionLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2144828FCFAE20057150E /* SwipeActionLabel.swift */; };
 		BFD2146328FF8BD50057150E /* ChatRoomContextMenuOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2146228FF8BD50057150E /* ChatRoomContextMenuOption.swift */; };
 		BFD23CCE236255A5005D4A1E /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD23CCD236255A5005D4A1E /* NicknameViewController.swift */; };
@@ -4969,7 +4968,6 @@
 		BFD213BB28EE43D00057150E /* ChatRoomsEmptyViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomsEmptyViewState.swift; sourceTree = "<group>"; };
 		BFD2141028F4D5810057150E /* ChatRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomViewModel.swift; sourceTree = "<group>"; };
 		BFD2141A28F75A1E0057150E /* ChatRoomHybridDescriptionViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomHybridDescriptionViewState.swift; sourceTree = "<group>"; };
-		BFD2144628FCFAB70057150E /* SwipeLeftActionModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeLeftActionModifier.swift; sourceTree = "<group>"; };
 		BFD2144828FCFAE20057150E /* SwipeActionLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeActionLabel.swift; sourceTree = "<group>"; };
 		BFD2146228FF8BD50057150E /* ChatRoomContextMenuOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatRoomContextMenuOption.swift; sourceTree = "<group>"; };
 		BFD23CCD236255A5005D4A1E /* NicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
@@ -8694,7 +8692,6 @@
 				BFD213B928ED4CDF0057150E /* ChatRoomsEmptyView.swift */,
 				83B71A6128F03A2D00E006C6 /* ChatRoomsTopRowView.swift */,
 				8342CB0A28EB3DEC0078D35F /* ChatTabsSelectorView.swift */,
-				BFD2144628FCFAB70057150E /* SwipeLeftActionModifier.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -15008,7 +15005,6 @@
 				B695B605264B43160050DF09 /* SVProgressHUD.m in Sources */,
 				B695B5FF264B43160050DF09 /* SVRadialGradientLayer.m in Sources */,
 				BFD2144928FCFAE20057150E /* SwipeActionLabel.swift in Sources */,
-				BFD2144728FCFAB70057150E /* SwipeLeftActionModifier.swift in Sources */,
 				0D30D86225BFA14A00C26367 /* Tab.swift in Sources */,
 				5D876543252CAAE200E6CB91 /* TableDataSourceConfiguration.swift in Sources */,
 				5D4ACA082533259600935FC9 /* TableDataSourceConfigurationFactory.swift in Sources */,
