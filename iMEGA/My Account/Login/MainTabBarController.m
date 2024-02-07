@@ -26,8 +26,8 @@
     [super viewDidLoad];
     [self loadTabViewControllers];
     [self setupHomeSearchForABTestingWithCompletionHandler:^{}];
-    [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
-    [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
+    [MEGAChatSdk.shared addChatDelegate:self];
+    [MEGASdk.shared addMEGAGlobalDelegate:self];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -97,7 +97,7 @@
 }
 
 - (void)showAchievements {
-    if (![[MEGASdkManager sharedMEGASdk] isAchievementsEnabled]) {
+    if (![MEGASdk.shared isAchievementsEnabled]) {
         return;
     }
     

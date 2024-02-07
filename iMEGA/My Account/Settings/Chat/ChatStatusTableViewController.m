@@ -6,7 +6,6 @@
 #import "EmptyStateView.h"
 #import "Helper.h"
 #import "MEGAReachabilityManager.h"
-#import "MEGASdkManager.h"
 #import "MEGA-Swift.h"
 #import "NSArray+MNZCategory.h"
 
@@ -68,9 +67,9 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     
-    [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
+    [MEGAChatSdk.shared addChatDelegate:self];
     
-    self.presenceConfig = [[MEGASdkManager sharedMEGAChatSdk] presenceConfig];
+    self.presenceConfig = [MEGAChatSdk.shared presenceConfig];
     [self updateUIWithPresenceConfig];
     
     self.autoAwayTimeoutInMinutes = (NSInteger)(self.presenceConfig.autoAwayTimeout / 60);
@@ -81,7 +80,7 @@
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     
-    [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
+    [MEGAChatSdk.shared removeChatDelegate:self];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -180,7 +179,7 @@
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
     [SVProgressHUD show];
     
-    [[MEGASdkManager sharedMEGAChatSdk] setPresenceAutoaway:boolValue timeout:(self.autoAwayTimeoutInMinutes * 60)];
+    [MEGAChatSdk.shared setPresenceAutoaway:boolValue timeout:(self.autoAwayTimeoutInMinutes * 60)];
 }
 
 #pragma mark - IBActions
@@ -197,14 +196,14 @@
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
     [SVProgressHUD show];
     
-    [[MEGASdkManager sharedMEGAChatSdk] setPresencePersist:sender.on];
+    [MEGAChatSdk.shared setPresencePersist:sender.on];
 }
 
 - (IBAction)lastGreenValueChanged:(UISwitch *)sender {
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
     [SVProgressHUD show];
     
-    [[MEGASdkManager sharedMEGAChatSdk] setLastGreenVisible:sender.on];
+    [MEGAChatSdk.shared setLastGreenVisible:sender.on];
 }
 
 #pragma mark - UITableViewDataSource
@@ -315,19 +314,19 @@
         
         switch (indexPath.row) {
             case 0: //Online
-                [[MEGASdkManager sharedMEGAChatSdk] setOnlineStatus:MEGAChatStatusOnline];
+                [MEGAChatSdk.shared setOnlineStatus:MEGAChatStatusOnline];
                 break;
                 
             case 1: //Away
-                [[MEGASdkManager sharedMEGAChatSdk] setOnlineStatus:MEGAChatStatusAway];
+                [MEGAChatSdk.shared setOnlineStatus:MEGAChatStatusAway];
                 break
                 ;
             case 2: //Busy
-                [[MEGASdkManager sharedMEGAChatSdk] setOnlineStatus:MEGAChatStatusBusy];
+                [MEGAChatSdk.shared setOnlineStatus:MEGAChatStatusBusy];
                 break;
                 
             case 3: //Offline
-                [[MEGASdkManager sharedMEGAChatSdk] setOnlineStatus:MEGAChatStatusOffline];
+                [MEGAChatSdk.shared setOnlineStatus:MEGAChatStatusOffline];
                 break;
         }
     } else if (indexPath.section == 3 && indexPath.row == 1 && !self.isSelectingTimeout) { //Auto-away - Number of

@@ -145,7 +145,7 @@
 }
 
 - (void)presentAlreadyHaveActiveSubscriptionAlertWithProduct:(SKProduct *)product {
-    MEGAAccountDetails *accountDetails = MEGASdkManager.sharedMEGASdk.mnz_accountDetails;
+    MEGAAccountDetails *accountDetails = MEGASdk.shared.mnz_accountDetails;
     
     NSString *title = LocalizedString(@"account.upgrade.alreadyHaveASubscription.title", @"");
     NSString *message;
@@ -162,7 +162,7 @@
     if (canCancelSubscription) {
         [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"no", @"") style:UIAlertActionStyleCancel handler:nil]];
         [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"yes", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            [MEGASdkManager.sharedMEGASdk creditCardCancelSubscriptions:nil delegate:[MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
+            [MEGASdk.shared creditCardCancelSubscriptions:nil delegate:[MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
                 if (error.type == MEGAErrorTypeApiOk) {
                     [[MEGAPurchase sharedInstance] purchaseProduct:product];
                 }
@@ -210,7 +210,7 @@
     if (product == nil) {
         [self presentProductUnavailableAlertController];
     } else {
-        MEGAAccountDetails *accountDetails = MEGASdkManager.sharedMEGASdk.mnz_accountDetails;
+        MEGAAccountDetails *accountDetails = MEGASdk.shared.mnz_accountDetails;
         if (accountDetails.type != MEGAAccountTypeFree &&
             accountDetails.subscriptionStatus == MEGASubscriptionStatusValid &&
             accountDetails.subscriptionMethodId != MEGAPaymentMethodItunes) {

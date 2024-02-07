@@ -6,7 +6,6 @@
 
 #import "Helper.h"
 #import "MEGAStore.h"
-#import "MEGASdkManager.h"
 
 #import "NodeCollectionViewCell.h"
 #import "OfflineViewController.h"
@@ -119,7 +118,7 @@ static NSString *kPath = @"kPath";
     NodeCollectionViewCell *cell = indexPath.section == ThumbnailSectionFile ? [self.collectionView dequeueReusableCellWithReuseIdentifier:@"NodeCollectionFileID" forIndexPath:indexPath] : [self.collectionView dequeueReusableCellWithReuseIdentifier:@"NodeCollectionFolderID" forIndexPath:indexPath];
    
     NSDictionary *item = [self getItemAtIndexPath:indexPath];
-    [cell configureCellForOfflineItem:item itemPath:[[self.offline currentOfflinePath] stringByAppendingPathComponent:item[kFileName]] allowedMultipleSelection:self.collectionView.allowsMultipleSelection sdk:[MEGASdkManager sharedMEGASdk] delegate: self];
+    [cell configureCellForOfflineItem:item itemPath:[[self.offline currentOfflinePath] stringByAppendingPathComponent:item[kFileName]] allowedMultipleSelection:self.collectionView.allowsMultipleSelection sdk:MEGASdk.shared delegate: self];
     
     return cell;
 }

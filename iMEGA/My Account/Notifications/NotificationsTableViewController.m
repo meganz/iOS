@@ -10,7 +10,6 @@
 #import "MainTabBarController.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
-#import "MEGASDKManager.h"
 #import "MEGAStore.h"
 #import "MEGA-Swift.h"
 #import "MEGAUser+MNZCategory.h"
@@ -53,14 +52,14 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     
-    [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
+    [MEGASdk.shared addMEGAGlobalDelegate:self];
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
+    [MEGASdk.shared removeMEGAGlobalDelegate:self];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
 }
@@ -68,7 +67,7 @@
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     
-    [[MEGASdkManager sharedMEGASdk] acknowledgeUserAlerts];
+    [MEGASdk.shared acknowledgeUserAlerts];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -256,7 +255,7 @@
             break;
             
         case MEGAUserAlertTypeDeletedShare: {
-            MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:userAlert.nodeHandle];
+            MEGANode *node = [MEGASdk.shared nodeForHandle:userAlert.nodeHandle];
             if ([userAlert numberAtIndex:0] == 0) {
                 NSAttributedString *nodeName = [[NSAttributedString alloc] initWithString:node.name ?: @""  attributes:@{ NSFontAttributeName : boldFont }];
                 NSString *text = LocalizedString(@"inapp.notifications.sharedItems.userLeftTheSharedFolder.message", @"notification text");
@@ -388,7 +387,7 @@
 }
 
 - (void)fetchAlerts {
-    NSArray<MEGAUserAlert *> *alerts = [MEGASdkManager sharedMEGASdk].userAlertList.relevantUserAlertsArray;
+    NSArray<MEGAUserAlert *> *alerts = MEGASdk.shared.userAlertList.relevantUserAlertsArray;
     
     NSMutableArray *filteredAlerts = [NSMutableArray array];
     for(MEGAUserAlert *alert in alerts) {
@@ -458,7 +457,7 @@
         case MEGAUserAlertTypeContactChangeContactEstablished:
         case MEGAUserAlertTypeUpdatePendingContactIncomingAccepted:
         case MEGAUserAlertTypeUpdatePendingContactOutgoingAccepted: {
-            MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:userAlert.email];
+            MEGAUser *user = [MEGASdk.shared contactForEmail:userAlert.email];
             if (user && user.visibility == MEGAUserVisibilityVisible) {
                 [navigationController popToRootViewControllerAnimated:NO];
                 ContactsViewController *contactsVC = [[UIStoryboard storyboardWithName:@"Contacts" bundle:nil] instantiateViewControllerWithIdentifier:@"ContactsViewControllerID"];
@@ -480,7 +479,7 @@
         case MEGAUserAlertTypeRemovedSharesNodes:
         case MEGAUserAlertTypeTakedown:
         case MEGAUserAlertTypeTakedownReinstated: {
-            MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:userAlert.nodeHandle];
+            MEGANode *node = [MEGASdk.shared nodeForHandle:userAlert.nodeHandle];
             if (!node.isTakenDown) {
                 [node navigateToParentAndPresent];
             }

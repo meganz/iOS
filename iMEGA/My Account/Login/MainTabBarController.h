@@ -1,6 +1,5 @@
 #import <UIKit/UIKit.h>
-
-#import "MEGASdkManager.h"
+#import "MEGAChatSdk.h"
 
 @class AudioPlayer;
 @class MiniPlayerViewRouter;

@@ -2,7 +2,6 @@
 
 #import "SVProgressHUD.h"
 
-#import "MEGASdkManager.h"
 #import "MEGA-Swift.h"
 #import "UIApplication+MNZCategory.h"
 #import "UIImage+MNZCategory.h"
@@ -63,7 +62,7 @@
     
     [self setupFirstSectionLabelTextAndImage];
     
-    NSString *qrString = [NSString stringWithFormat:@"otpauth://totp/MEGA:%@?secret=%@&issuer=MEGA", MEGASdkManager.sharedMEGASdk.myEmail, self.seed];
+    NSString *qrString = [NSString stringWithFormat:@"otpauth://totp/MEGA:%@?secret=%@&issuer=MEGA", MEGASdk.shared.myEmail, self.seed];
     self.seedQrImageView.image = [UIImage mnz_qrImageFromString:qrString withSize:self.seedQrImageView.frame.size color:UIColor.labelColor backgroundColor:UIColor.clearColor];
     
     self.seedTextViewView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
@@ -123,7 +122,7 @@
 #pragma mark - IBActions
 
 - (IBAction)openInTouchUpInside:(UIButton *)sender {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"otpauth://totp/MEGA:%@?secret=%@&issuer=MEGA", [[MEGASdkManager sharedMEGASdk] myEmail], self.seed]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"otpauth://totp/MEGA:%@?secret=%@&issuer=MEGA", [MEGASdk.shared myEmail], self.seed]];
     [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:^(BOOL success) {
         if (success) {
             MEGALogInfo(@"URL opened on authenticator app");

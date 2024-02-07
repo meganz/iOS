@@ -5,7 +5,6 @@
 #import "SVProgressHUD.h"
 
 #import "MEGAReachabilityManager.h"
-#import "MEGASdkManager.h"
 #import "MEGASDK+MNZCategory.h"
 #import "MEGA-Swift.h"
 #import "NSURL+MNZCategory.h"
@@ -58,7 +57,7 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [[MEGASdkManager sharedMEGASdk] mnz_isProAccount] ? 4 : 3;
+    return [MEGASdk.shared mnz_isProAccount] ? 4 : 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

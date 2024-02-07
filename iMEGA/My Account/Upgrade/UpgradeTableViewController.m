@@ -10,7 +10,6 @@
 #import "NSArray+MNZCategory.h"
 
 #import "MEGAPurchase.h"
-#import "MEGASdkManager.h"
 #import "MEGA-Swift.h"
 #import "MEGAReachabilityManager.h"
 #import "ProductDetailViewController.h"
@@ -76,7 +75,7 @@
     SKProduct *product = MEGAPurchase.sharedInstance.products.firstObject;
     self.numberFormatter.locale = product.priceLocale;
     
-    NSString *navigationTitle = MEGASdkManager.sharedMEGASdk.mnz_isProAccount ? LocalizedString(@"Manage Account", @"account management button title in business account’s landing page") : LocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
+    NSString *navigationTitle = MEGASdk.shared.mnz_isProAccount ? LocalizedString(@"Manage Account", @"account management button title in business account’s landing page") : LocalizedString(@"upgradeAccount", @"Button title which triggers the action to upgrade your MEGA account level");
     self.title = (self.isChoosingTheAccountType) ? LocalizedString(@"chooseYourAccountType", @"") : navigationTitle;
     
     [self setMenuCapableBackButtonWithMenuTitle:self.title];
@@ -126,7 +125,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    if ([MEGASdkManager.sharedMEGASdk mnz_isProAccount]) {
+    if ([MEGASdk.shared mnz_isProAccount]) {
         //This method is called here so the storage and transfer quota label of the current plan show the correct attributed string
         [self setupCurrentPlanView];
     }
@@ -233,13 +232,13 @@
 }
 
 - (void)initCurrentPlan {
-    self.userProLevel = [MEGASdkManager sharedMEGASdk].mnz_accountDetails.type;
+    self.userProLevel = MEGASdk.shared.mnz_accountDetails.type;
     
     self.currentPlanImageView.image = [self imageForProLevel:self.userProLevel];
     self.currentPlanNameView.backgroundColor = [UIColor mnz_colorWithProLevel:self.userProLevel];
     self.currentPlanNameLabel.text = LocalizedString([MEGAAccountDetails stringForAccountType:self.userProLevel], @"");
     
-    if ([[MEGASdkManager sharedMEGASdk] mnz_isProAccount]) {
+    if ([MEGASdk.shared mnz_isProAccount]) {
         self.tableView.tableHeaderView = self.chooseFromOneOfThePlansPROHeaderView;
     }
     

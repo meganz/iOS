@@ -4,7 +4,6 @@
 
 #import "Helper.h"
 #import "MEGAReachabilityManager.h"
-#import "MEGASdkManager.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGAStore.h"
 #import "MEGA-Swift.h"
@@ -57,19 +56,19 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
     self.rubbishBinLabel.text = LocalizedString(@"rubbishBinLabel", @"Title of one of the Settings sections where you can see your MEGA 'Rubbish Bin'");
 
     self.fileVersioningLabel.text = LocalizedString(@"File versioning", @"Title of the option to enable or disable file versioning on Settings section");
-    [[MEGASdkManager sharedMEGASdk] getFileVersionsOptionWithDelegate:self];
+    [MEGASdk.shared getFileVersionsOptionWithDelegate:self];
 
     self.useMobileDataLabel.text = LocalizedString(@"useMobileData", @"Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature.");
     self.useMobileDataSwitch.on = [NSUserDefaults.standardUserDefaults boolForKey:MEGAUseMobileDataForPreviewingOriginalPhoto];
 
-    [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
+    [MEGASdk.shared addMEGAGlobalDelegate:self];
 
     [self reloadUI];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
+    [MEGASdk.shared removeMEGAGlobalDelegate:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -211,7 +210,7 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
         }
 
         case FileManagementTableSectionOnMEGA: {
-            NSNumber *rubbishBinSizeNumber = [[MEGASdkManager sharedMEGASdk] sizeForNode:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
+            NSNumber *rubbishBinSizeNumber = [MEGASdk.shared sizeForNode:[MEGASdk.shared rubbishNode]];
             NSString *stringFromByteCount = [NSString memoryStyleStringFromByteCount:rubbishBinSizeNumber.unsignedLongLongValue];
             stringFromByteCount = [NSString mnz_formatStringFromByteCountFormatter:stringFromByteCount];
             NSString *currentlyUsingString = LocalizedString(@"currentlyUsing", @"Footer text that explain what amount of space you will free up if 'Clear Offline data', 'Clear cache' or 'Clear Rubbish Bin' is tapped");
@@ -253,11 +252,11 @@ typedef NS_ENUM(NSUInteger, FileManagementTableSection) {
                 [NSFileManager.defaultManager mnz_removeFolderContentsAtPath:[Helper pathForSharedSandboxCacheDirectory:@""]];
                 [self removeGroupSharedDirectoryContents];
 
-                if (MEGASdkManager.sharedMEGASdk.downloadTransfers.size == 0) {
+                if (MEGASdk.shared.downloadTransfers.size == 0) {
                     [NSFileManager.defaultManager mnz_removeFolderContentsRecursivelyAtPath:[Helper pathForOffline] forItemsExtension:@"mega"];
                     [NSFileManager.defaultManager mnz_removeItemAtPath:[NSFileManager.defaultManager downloadsDirectory]];
                 }
-                if (MEGASdkManager.sharedMEGASdk.uploadTransfers.size == 0) {
+                if (MEGASdk.shared.uploadTransfers.size == 0) {
                     [NSFileManager.defaultManager mnz_removeItemAtPath:[NSFileManager.defaultManager uploadsDirectory]];
                 }
 

@@ -1,7 +1,6 @@
 #import "MasterKeyViewController.h"
 
 #import "MEGAReachabilityManager.h"
-#import "MEGASdkManager.h"
 #import "MEGA-Swift.h"
 
 #import "Helper.h"
@@ -61,7 +60,7 @@
 #pragma mark - IBActions
 
 - (IBAction)copyMasterKeyTouchUpInside:(UIButton *)sender {
-    if ([[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
+    if ([MEGASdk.shared isLoggedIn]) {
         [Helper showMasterKeyCopiedAlert];
     } else {
         [MEGAReachabilityManager isReachableHUDIfNot];
@@ -69,7 +68,7 @@
 }
 
 - (IBAction)saveMasterKeyTouchUpInside:(UIButton *)sender {
-    if ([[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
+    if ([MEGASdk.shared isLoggedIn]) {
         [Helper showExportMasterKeyInView:self completion:nil];
     } else {
         [MEGAReachabilityManager isReachableHUDIfNot];

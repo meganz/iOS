@@ -1,6 +1,5 @@
 #import "ChangePasswordViewController.h"
 
-#import "MEGASdkManager.h"
 #import "MEGA-Swift.h"
 #import "MEGAReachabilityManager.h"
 #import "NSString+MNZCategory.h"
@@ -131,7 +130,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
     
     self.navigationController.presentationController.delegate = self;
     
-    [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
+    [MEGASdk.shared addMEGAGlobalDelegate:self];
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(emailHasChanged) name:MEGAEmailHasChangedNotification object:nil];
@@ -140,7 +139,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
+    [MEGASdk.shared removeMEGAGlobalDelegate:self];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
@@ -223,10 +222,10 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
     if (self.theNewPasswordView.passwordTextField.text.mnz_isEmpty) {
         [self.theNewPasswordView setErrorState:YES withText:LocalizedString(@"passwordInvalidFormat", @"Message shown when the user enters a wrong password")];
         return NO;
-    } else if ([MEGASdkManager.sharedMEGASdk checkPassword:self.theNewPasswordView.passwordTextField.text]) {
+    } else if ([MEGASdk.shared checkPassword:self.theNewPasswordView.passwordTextField.text]) {
         [self.theNewPasswordView setErrorState:YES withText:LocalizedString(@"account.changePassword.error.currentPassword", @"Account, Change Password view. Error shown when you type your current password.")];
         return NO;
-    } else if ([[MEGASdkManager sharedMEGASdk] passwordStrength:self.theNewPasswordView.passwordTextField.text] == PasswordStrengthVeryWeak) {
+    } else if ([MEGASdk.shared passwordStrength:self.theNewPasswordView.passwordTextField.text] == PasswordStrengthVeryWeak) {
         [self.theNewPasswordView setErrorState:YES withText:LocalizedString(@"pleaseStrengthenYourPassword", @"")];
         return NO;
     } else {
@@ -338,7 +337,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
                         
                         [self.navigationController pushViewController:twoFactorAuthenticationVC animated:YES];
                     } else {
-                        [[MEGASdkManager sharedMEGASdk] changePassword:nil newPassword:self.theNewPasswordView.passwordTextField.text delegate:self];
+                        [MEGASdk.shared changePassword:nil newPassword:self.theNewPasswordView.passwordTextField.text delegate:self];
                     }
                     
                     break;
@@ -353,13 +352,13 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
                         
                         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(processStarted) name:@"processStarted" object:nil];
                     } else {
-                        [[MEGASdkManager sharedMEGASdk] changeEmail:self.theNewEmailInputView.inputTextField.text delegate:self];
+                        [MEGASdk.shared changeEmail:self.theNewEmailInputView.inputTextField.text delegate:self];
                     }
                     
                     break;
                     
                 case ChangeTypeResetPassword:
-                    [[MEGASdkManager sharedMEGASdk] confirmResetPasswordWithLink:self.link newPassword:self.theNewPasswordView.passwordTextField.text masterKey:self.masterKey delegate:self];
+                    [MEGASdk.shared confirmResetPasswordWithLink:self.link newPassword:self.theNewPasswordView.passwordTextField.text masterKey:self.masterKey delegate:self];
                     
                     break;
                     
@@ -367,7 +366,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
                     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"startNewAccount", @"Headline of the password reset recovery procedure")  message:LocalizedString(@"startingFreshAccount", @"Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed 'Recovery Key')") preferredStyle:UIAlertControllerStyleAlert];
                     [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"") style:UIAlertActionStyleCancel handler:nil]];
                     [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                        [[MEGASdkManager sharedMEGASdk] confirmResetPasswordWithLink:self.link newPassword:self.theNewPasswordView.passwordTextField.text masterKey:nil delegate:self];
+                        [MEGASdk.shared confirmResetPasswordWithLink:self.link newPassword:self.theNewPasswordView.passwordTextField.text masterKey:nil delegate:self];
                     }]];
                     [self presentViewController:alertController animated:YES completion:nil];
                     
@@ -461,7 +460,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
                 self.passwordStrengthContainer.hidden = YES;
             } else {
                 self.passwordStrengthContainer.hidden = NO;
-                [self.passwordStrengthIndicatorView updateViewWithPasswordStrength:[[MEGASdkManager sharedMEGASdk] passwordStrength:text] updateDescription:YES];
+                [self.passwordStrengthIndicatorView updateViewWithPasswordStrength:[MEGASdk.shared passwordStrength:text] updateDescription:YES];
             }
         }
     }
@@ -622,7 +621,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
             if (self.changeType == ChangeTypePassword) {
                 [self.navigationController dismissViewControllerAnimated:YES completion:nil];
             } else if (self.changeType == ChangeTypePasswordFromLogout) {
-                [MEGASdkManager.sharedMEGASdk logout];
+                [MEGASdk.shared logout];
             }
             
             break;
@@ -643,7 +642,7 @@ typedef NS_ENUM(NSUInteger, TextFieldTag) {
                 NSString *title;
                 void (^completion)(void);
                 if (self.changeType == ChangeTypeResetPassword) {
-                    if ([[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
+                    if ([MEGASdk.shared isLoggedIn]) {
                         [[NSNotificationCenter defaultCenter] postNotificationName:@"passwordReset" object:nil];
                         title = LocalizedString(@"passwordChanged", @"The label showed when your password has been changed");
                         

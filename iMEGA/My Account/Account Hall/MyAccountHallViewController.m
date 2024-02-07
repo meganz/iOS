@@ -7,7 +7,6 @@
 #import "MEGAPurchase.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
-#import "MEGASdkManager.h"
 #import "MEGA-Swift.h"
 #import "MyAccountHallTableViewCell.h"
 #import "NotificationsTableViewController.h"
@@ -138,8 +137,8 @@
     
     self.addPhoneNumberView.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
     
-    if ([MEGASdkManager.sharedMEGASdk isAccountType:MEGAAccountTypeBusiness] ||
-        [MEGASdkManager.sharedMEGASdk isAccountType:MEGAAccountTypeProFlexi]) {
+    if ([MEGASdk.shared isAccountType:MEGAAccountTypeBusiness] ||
+        [MEGASdk.shared isAccountType:MEGAAccountTypeProFlexi]) {
         self.accountTypeLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
         
         self.tableFooterContainerView.backgroundColor = [UIColor mnz_secondaryBackgroundElevated:self.traitCollection];
@@ -154,11 +153,11 @@
 - (void)configAddPhoneNumberTexts {
     self.addPhoneNumberTitle.text = LocalizedString(@"Add Your Phone Number", @"");
     
-    if (!MEGASdkManager.sharedMEGASdk.isAchievementsEnabled) {
+    if (!MEGASdk.shared.isAchievementsEnabled) {
         self.addPhoneNumberDescription.text = LocalizedString(@"Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA.", @"");
     } else {
         [self.addPhoneNumberActivityIndicator startAnimating];
-        [MEGASdkManager.sharedMEGASdk getAccountAchievementsWithDelegate:[[MEGAGenericRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
+        [MEGASdk.shared getAccountAchievementsWithDelegate:[[MEGAGenericRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
             [self.addPhoneNumberActivityIndicator stopAnimating];
             if (error.type == MEGAErrorTypeApiOk) {
                 NSString *storageText = [NSString memoryStyleStringFromByteCount:[request.megaAchievementsDetails classStorageForClassId:MEGAAchievementAddPhone]];
@@ -169,7 +168,7 @@
 }
 
 - (void)configAddPhoneNumberView {
-    if (MEGASdkManager.sharedMEGASdk.smsVerifiedPhoneNumber != nil || MEGASdkManager.sharedMEGASdk.smsAllowedState != SMSStateOptInAndUnblock) {
+    if (MEGASdk.shared.smsVerifiedPhoneNumber != nil || MEGASdk.shared.smsAllowedState != SMSStateOptInAndUnblock) {
         self.profileBottomSeparatorView.hidden = YES;
         self.addPhoneNumberView.hidden = YES;
     } else {

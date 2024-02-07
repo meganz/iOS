@@ -7,7 +7,6 @@
 
 #import "Helper.h"
 #import "MEGAStore.h"
-#import "MEGASdkManager.h"
 
 #import "OfflineTableViewCell.h"
 #import "OfflineViewController.h"
@@ -125,7 +124,7 @@ static NSString *kPath = @"kPath";
                 [self refreshThumbnailImageFor:cell thumbnailFilePath:thumbnailFilePath nodeName:nameString];
             } else {
                 dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
-                    if ([[MEGASdkManager sharedMEGASdk] createThumbnail:pathForItem destinatioPath:thumbnailFilePath]) {
+                    if ([MEGASdk.shared createThumbnail:pathForItem destinatioPath:thumbnailFilePath]) {
                         dispatch_async(dispatch_get_main_queue(), ^{
                             [self refreshThumbnailImageFor:cell thumbnailFilePath:thumbnailFilePath nodeName:nameString];
                         });
@@ -148,7 +147,7 @@ static NSString *kPath = @"kPath";
         
         cell.infoLabel.text = [NSString stringWithFormat:@"%@ • %@", [NSString memoryStyleStringFromByteCount:size], modificationDate.mnz_formattedDateMediumTimeShortStyle];
     }
-    cell.nameLabel.text = [[MEGASdkManager sharedMEGASdk] unescapeFsIncompatible:nameString destinationPath:[NSHomeDirectory() stringByAppendingString:@"/"]];
+    cell.nameLabel.text = [MEGASdk.shared unescapeFsIncompatible:nameString destinationPath:[NSHomeDirectory() stringByAppendingString:@"/"]];
     
     if (self.tableView.isEditing) {
         for (NSURL *url in self.offline.selectedItems) {

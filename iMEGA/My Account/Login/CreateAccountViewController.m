@@ -5,7 +5,6 @@
 #import "InputView.h"
 #import "MEGACreateAccountRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
-#import "MEGASdkManager.h"
 #import "MEGA-Swift.h"
 #import "NSURL+MNZCategory.h"
 #import "NSString+MNZCategory.h"
@@ -244,7 +243,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     if (self.passwordView.passwordTextField.text.mnz_isEmpty) {
         [self.passwordView setErrorState:YES withText:LocalizedString(@"passwordInvalidFormat", @"Message shown when the user enters a wrong password")];
         return NO;
-    } else if ([[MEGASdkManager sharedMEGASdk] passwordStrength:self.passwordView.passwordTextField.text] == PasswordStrengthVeryWeak) {
+    } else if ([MEGASdk.shared passwordStrength:self.passwordView.passwordTextField.text] == PasswordStrengthVeryWeak) {
         [self.passwordView setErrorState:YES withText:LocalizedString(@"pleaseStrengthenYourPassword", @"")];
         return NO;
     } else {
@@ -418,9 +417,9 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
             NSInteger lastPublicTypeAccessed = [NSUserDefaults.standardUserDefaults integerForKey:MEGALastPublicTypeAccessed];
             NSTimeInterval lastPublicTimestampAccessed = [NSUserDefaults.standardUserDefaults doubleForKey:MEGALastPublicTimestampAccessed];
             if (lastPublicTimestampAccessed && lastPublicHandleAccessed && lastPublicTypeAccessed) {
-                [MEGASdkManager.sharedMEGASdk createAccountWithEmail:self.emailInputView.inputTextField.text password:self.passwordView.passwordTextField.text firstname:self.firstNameInputView.inputTextField.text lastname:self.lastNameInputView.inputTextField.text lastPublicHandle:lastPublicHandleAccessed lastPublicHandleType:lastPublicTypeAccessed lastAccessTimestamp:(uint64_t)lastPublicTimestampAccessed delegate:createAccountRequestDelegate];
+                [MEGASdk.shared createAccountWithEmail:self.emailInputView.inputTextField.text password:self.passwordView.passwordTextField.text firstname:self.firstNameInputView.inputTextField.text lastname:self.lastNameInputView.inputTextField.text lastPublicHandle:lastPublicHandleAccessed lastPublicHandleType:lastPublicTypeAccessed lastAccessTimestamp:(uint64_t)lastPublicTimestampAccessed delegate:createAccountRequestDelegate];
             } else {
-                [MEGASdkManager.sharedMEGASdk createAccountWithEmail:self.emailInputView.inputTextField.text password:self.passwordView.passwordTextField.text firstname:self.firstNameInputView.inputTextField.text lastname:self.lastNameInputView.inputTextField.text delegate:createAccountRequestDelegate];
+                [MEGASdk.shared createAccountWithEmail:self.emailInputView.inputTextField.text password:self.passwordView.passwordTextField.text firstname:self.firstNameInputView.inputTextField.text lastname:self.lastNameInputView.inputTextField.text delegate:createAccountRequestDelegate];
             }
         }
     }
@@ -521,7 +520,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
             self.passwordStrengthIndicatorContainerView.hidden = NO;
             self.passwordStrengthIndicatorView.customView.hidden = NO;
             [self.scrollView scrollRectToVisible:self.passwordStrengthIndicatorView.frame animated:YES];
-            [self.passwordStrengthIndicatorView updateViewWithPasswordStrength:[[MEGASdkManager sharedMEGASdk] passwordStrength:text] updateDescription:YES];
+            [self.passwordStrengthIndicatorView updateViewWithPasswordStrength:[MEGASdk.shared passwordStrength:text] updateDescription:YES];
         }
     }
     
