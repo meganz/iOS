@@ -5,7 +5,6 @@
 
 @interface PasswordStrengthIndicatorView ()
 
-@property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UILabel *strengthLabel;
 @property (weak, nonatomic) IBOutlet UILabel *strengthDescriptionLabel;
 
@@ -35,54 +34,55 @@
     self.customView = [[[NSBundle mainBundle] loadNibNamed:@"PasswordStrengthIndicatorView" owner:self options:nil] firstObject];
     [self addSubview:self.customView];
     self.customView.frame = self.bounds;
-    self.strengthLabel.textColor = UIColor.labelColor;
+    self.strengthLabel.textColor = [self textColor];
     [self.strengthLabel sizeToFit];
+    
+    self.backgroundColor = self.customView.backgroundColor = [UIColor pageBackgroundForTraitCollection:self.traitCollection];
 }
 
 #pragma mark - Public
 
 - (void)updateViewWithPasswordStrength:(PasswordStrength)passwordStrength updateDescription:(BOOL)updateDescription {
+    self.strengthLabel.textColor = [self strengthLabeColorWith:passwordStrength];
+    [self setStrengthImageViewTintColorWith:passwordStrength];
+    
     switch (passwordStrength) {
         case PasswordStrengthVeryWeak:
-            self.imageView.image = [UIImage imageNamed:@"indicatorVeryWeak"];
+            self.imageView.image = [UIImage imageNamed: [UIColor isDesignTokenEnabled] ? @"indicatorVeryWeak_Semantic": @"indicatorVeryWeak"];
             self.strengthLabel.text = LocalizedString(@"veryWeak", @"Label displayed during checking the strength of the password introduced. Represents Very Weak security");
-            self.strengthLabel.textColor = UIColor.systemRedColor;
+            
             if (updateDescription) {
                 self.strengthDescriptionLabel.text = LocalizedString(@"passwordVeryWeakOrWeak", @"");
             }
             break;
             
         case PasswordStrengthWeak:
-            self.imageView.image = [UIImage imageNamed:@"indicatorWeak"];
+            self.imageView.image = [UIImage imageNamed: [UIColor isDesignTokenEnabled] ? @"indicatorWeak_Semantic" : @"indicatorWeak"];
             self.strengthLabel.text = LocalizedString(@"weak", @"");
-            self.strengthLabel.textColor = [UIColor colorWithRed:1.0 green:165.0/255.0 blue:0 alpha:1.0];
             if (updateDescription) {
                 self.strengthDescriptionLabel.text = LocalizedString(@"passwordVeryWeakOrWeak", @"");
             }
             break;
             
         case PasswordStrengthMedium:
-            self.imageView.image = [UIImage imageNamed:@"indicatorMedium"];
+            self.imageView.image = [UIImage imageNamed: [UIColor isDesignTokenEnabled] ? @"indicatorMedium_Semantic" : @"indicatorMedium"];
             self.strengthLabel.text = LocalizedString(@"PasswordStrengthMedium", @"Label displayed during checking the strength of the password introduced. Represents Medium security");
-            self.strengthLabel.textColor = UIColor.systemGreenColor;
             if (updateDescription) {
                 self.strengthDescriptionLabel.text = LocalizedString(@"passwordMedium", @"");
             }
             break;
             
         case PasswordStrengthGood:
-            self.imageView.image = [UIImage imageNamed:@"indicatorGood"];
+            self.imageView.image = [UIImage imageNamed: [UIColor isDesignTokenEnabled] ? @"indicatorGood_Semantic": @"indicatorGood"];
             self.strengthLabel.text = LocalizedString(@"good", @"");
-            self.strengthLabel.textColor = [UIColor colorWithRed:18.0/255.0 green:210.0/255.0 blue:56.0/255.0 alpha:1.0];
             if (updateDescription) {
                 self.strengthDescriptionLabel.text = LocalizedString(@"passwordGood", @"");
             }
             break;
             
         case PasswordStrengthStrong:
-            self.imageView.image = [UIImage imageNamed:@"indicatorStrong"];
+            self.imageView.image = [UIImage imageNamed: [UIColor isDesignTokenEnabled] ? @"indicatorStrong_Semantic" : @"indicatorStrong"];
             self.strengthLabel.text = LocalizedString(@"strong", @"Label displayed during checking the strength of the password introduced. Represents Strong security");
-            self.strengthLabel.textColor = [UIColor mnz_blueForTraitCollection:self.traitCollection];
             if (updateDescription) {
                 self.strengthDescriptionLabel.text = LocalizedString(@"passwordStrong", @"");
             }

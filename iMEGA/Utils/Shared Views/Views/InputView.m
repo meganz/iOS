@@ -56,11 +56,11 @@
 - (void)setErrorState:(BOOL)error withText:(NSString *)text {
     self.topLabel.text = text;
     if (error) {
-        self.topLabel.textColor = UIColor.systemRedColor;
-        self.inputTextField.textColor = UIColor.systemRedColor;
+        self.topLabel.textColor = [self errorTextColor];
+        self.inputTextField.textColor = [self errorTextColor];
     } else {
-        self.topLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
-        self.inputTextField.textColor = UIColor.labelColor;
+        self.topLabel.textColor = [self normalLabelColor];
+        self.inputTextField.textColor = [self normalTextColor];
     }
 }
 
