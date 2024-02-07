@@ -1,6 +1,8 @@
 import Accounts
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
+import MEGAPresentation
 import SwiftUI
 
 struct UpgradeSectionHeaderView: View {
@@ -15,7 +17,9 @@ struct UpgradeSectionHeaderView: View {
                 .bold()
             
             Text(Strings.Localizable.UpgradeAccountPlan.Header.Title.currentPlan(currentPlanName))
-                .foregroundColor(MEGAAppColor.Gray._8E8E93.color)
+                .foregroundColor(
+                    isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI : MEGAAppColor.Gray._8E8E93.color
+                )
                 .font(.subheadline)
                 .bold()
                 .padding(.top, 1)

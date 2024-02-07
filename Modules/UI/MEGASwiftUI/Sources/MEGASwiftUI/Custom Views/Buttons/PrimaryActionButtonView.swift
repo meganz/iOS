@@ -1,3 +1,5 @@
+import MEGADesignToken
+import MEGAPresentation
 import SwiftUI
 
 public struct PrimaryActionButtonView: View {
@@ -18,9 +20,13 @@ public struct PrimaryActionButtonView: View {
             Text(title)
                 .frame(maxWidth: .infinity)
                 .frame(height: 50)
-                .foregroundColor(.white)
+                .foregroundColor(
+                    isDesignTokenEnabled ? TokenColors.Text.inverseAccent.swiftUI : .white
+                )
                 .font(.title3)
-                .background(textColor)
+                .background(
+                    isDesignTokenEnabled ? TokenColors.Icon.accent.swiftUI : textColor
+                )
                 .cornerRadius(10)
                 .contentShape(Rectangle())
         }

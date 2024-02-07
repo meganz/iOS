@@ -1,3 +1,5 @@
+import MEGADesignToken
+import MEGAPresentation
 import SwiftUI
 
 public struct AccountPlanView: View {
@@ -30,7 +32,7 @@ public struct AccountPlanView: View {
             .padding()
             .padding(.bottom, 5)
         }
-        .background(config.onboardingViewAssets.backgroundColor)
+        .background(isDesignTokenEnabled ? Color.clear : config.onboardingViewAssets.backgroundColor) // This line should be removed when design token is permanently applied
         .overlay(
             roundedRectangle
                 .stroke(borderColor, lineWidth: viewModel.isSelected ? 3 : 1.5)
