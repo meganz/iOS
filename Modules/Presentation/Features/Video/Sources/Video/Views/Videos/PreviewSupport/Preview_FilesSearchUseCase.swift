@@ -12,4 +12,8 @@ struct Preview_FilesSearchUseCase: FilesSearchUseCaseProtocol {
     func onNodesUpdate(with nodesUpdateHandler: @escaping ([NodeEntity]) -> Void) {
         nodesUpdateHandler([])
     }
+    
+    func stopNodesUpdateListener() { }
+    
+    func startNodesUpdateListener() { }
 }

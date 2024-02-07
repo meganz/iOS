@@ -10,17 +10,16 @@ struct VideoListView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            switch viewModel.uiState {
-            case .empty:
+            if viewModel.videos.isEmpty {
                 VideoListEmptyView(videoConfig: videoConfig)
-            case .loaded:
+            } else if viewModel.videos.isNotEmpty {
                 listView()
-            default:
+            } else {
                 EmptyView()
             }
         }
         .task {
-            await viewModel.loadVideos()
+            await viewModel.onViewAppeared()
         }
     }
     
@@ -32,6 +31,9 @@ struct VideoListView: View {
             router: router
         )
         .background(videoConfig.colorAssets.pageBackgroundColor)
+        .onDisappear {
+            viewModel.onViewDissapeared()
+        }
     }
 }
 

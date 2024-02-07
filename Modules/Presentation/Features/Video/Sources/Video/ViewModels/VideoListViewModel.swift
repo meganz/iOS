@@ -7,39 +7,77 @@ public final class VideoListViewModel: ObservableObject {
     
     private let fileSearchUseCase: any FilesSearchUseCaseProtocol
     private(set) var thumbnailUseCase: any ThumbnailUseCaseProtocol
+    private(set) var reloadVideosTask: Task<Void, Never>?
     
-    @Published var videos = [NodeEntity]()
-    @Published var uiState = UIState.initial
+    @Published private(set) var videos = [NodeEntity]()
     @Published var searchedText = ""
     @Published var sortOrderType = SortOrderEntity.defaultAsc
-    
-    enum UIState {
-        case initial
-        case empty
-        case loaded
-        case error
-    }
+    @Published private(set) var shouldShowError = false
     
     public init(fileSearchUseCase: some FilesSearchUseCaseProtocol, thumbnailUseCase: some ThumbnailUseCaseProtocol) {
         self.fileSearchUseCase = fileSearchUseCase
         self.thumbnailUseCase = thumbnailUseCase
     }
     
-    @MainActor
-    func loadVideos() async {
+    func onViewAppeared() async {
         do {
-            videos = try await fileSearchUseCase.search(
-                string: searchedText,
-                parent: nil,
-                recursive: true,
-                supportCancel: false,
-                sortOrderType: sortOrderType,
-                formatType: .video,
-                cancelPreviousSearchIfNeeded: true
-            )
-            uiState = videos.isEmpty ? .empty : .loaded
+            try await loadVideos()
+            try Task.checkCancellation()
+            
+            fileSearchUseCase.startNodesUpdateListener()
+            listenNodesUpdate()
         } catch {
-            uiState = .error
+            shouldShowError = true
+        }
+    }
+    
+    func onViewDissapeared() {
+        reloadVideosTask?.cancel()
+        reloadVideosTask = nil
+        
+        fileSearchUseCase.stopNodesUpdateListener()
+    }
+    
+    @MainActor
+    private func loadVideos() async throws {
+        do {
+            videos = try await search(by: searchedText)
+        } catch {
+            throw error
+        }
+    }
+    
+    private func search(by text: String) async throws -> [NodeEntity] {
+        try await fileSearchUseCase.search(
+            string: text,
+            parent: nil,
+            recursive: true,
+            supportCancel: false,
+            sortOrderType: sortOrderType,
+            formatType: .video,
+            cancelPreviousSearchIfNeeded: true
+        )
+    }
+    
+    private func listenNodesUpdate() {
+        fileSearchUseCase.onNodesUpdate { [weak self] nodes in
+            self?.update(nodes)
+        }
+    }
+    
+    private func update(_ nodes: [NodeEntity]) {
+        let updatedVideos = nodes.filter { $0.mediaType == .video }
+        guard updatedVideos.isNotEmpty else { return }
+        updateVideos(with: updatedVideos)
+    }
+    
+    private func updateVideos(with updatedVideos: [NodeEntity]) {
+        reloadVideosTask = Task {
+            do {
+                try await loadVideos()
+            } catch {
+                shouldShowError = true
+            }
         }
     }
 }

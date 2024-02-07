@@ -1,8 +1,14 @@
 import MEGADomain
 
 public final class MockFilesSearchUseCase: FilesSearchUseCaseProtocol {
-    public private(set) var searchCallCount = 0
-    public private(set) var onNodesUpdateCallCount = 0
+    public enum Message: Equatable {
+        case search
+        case onNodesUpdate
+        case stopNodesUpdateListener
+        case startNodesUpdateListener
+    }
+    
+    public private(set) var messages = [Message]()
     
     private let searchResult: Result<[NodeEntity]?, FileSearchResultErrorEntity>
     private var onNodesUpdateResult: [NodeEntity]?
@@ -18,7 +24,7 @@ public final class MockFilesSearchUseCase: FilesSearchUseCaseProtocol {
     }
     
     public func search(string: String?, parent node: NodeEntity?, recursive: Bool, supportCancel: Bool, sortOrderType: SortOrderEntity, cancelPreviousSearchIfNeeded: Bool, completion: @escaping ([NodeEntity]?, Bool) -> Void) {
-        searchCallCount += 1
+        messages.append(.search)
         switch searchResult {
         case .success(let nodes):
             completion(nodes, false)
@@ -28,7 +34,7 @@ public final class MockFilesSearchUseCase: FilesSearchUseCaseProtocol {
     }
     
     public func search(string: String?, parent node: NodeEntity?, recursive: Bool, supportCancel: Bool, sortOrderType: SortOrderEntity, formatType: NodeFormatEntity, cancelPreviousSearchIfNeeded: Bool) async throws -> [NodeEntity] {
-        searchCallCount += 1
+        messages.append(.search)
         switch searchResult {
         case .success(let nodes):
             return nodes ?? []
@@ -38,11 +44,19 @@ public final class MockFilesSearchUseCase: FilesSearchUseCaseProtocol {
     }
     
     public func onNodesUpdate(with nodesUpdateHandler: @escaping ([MEGADomain.NodeEntity]) -> Void) {
-        onNodesUpdateCallCount += 1
+        messages.append(.onNodesUpdate)
         nodesUpdateHandlers.append(nodesUpdateHandler)
     }
     
     public func simulateOnNodesUpdate(with nodes: [NodeEntity], at index: Int = 0) {
         nodesUpdateHandlers[index](nodes)
+    }
+    
+    public func stopNodesUpdateListener() { 
+        messages.append(.stopNodesUpdateListener)
+    }
+    
+    public func startNodesUpdateListener() {
+        messages.append(.startNodesUpdateListener)
     }
 }
