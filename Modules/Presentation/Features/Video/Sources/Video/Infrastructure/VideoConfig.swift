@@ -7,6 +7,7 @@ public struct VideoConfig: Equatable {
     public let rowAssets: RowAssets
     public let colorAssets: ColorAssets
     public let toolbarAssets: ToolbarAssets
+    public let recentlyWatchedAssets: RecentlyWatchedAssets
     
     /// Configuration Dependencies that needs to be passed from Main module.
     /// - Parameters:
@@ -14,16 +15,19 @@ public struct VideoConfig: Equatable {
     ///   - rowAssets: contains assets for video row cell
     ///   - colorAssets: contains assets color assets
     ///   - toolbarAssets: contains assets toolbar
+    ///   - recentlyWatchedAssets: contains assets for recently watched views
     public init(
         videoListAssets: VideoListAssets,
         rowAssets: RowAssets,
         colorAssets: ColorAssets,
-        toolbarAssets: ToolbarAssets
+        toolbarAssets: ToolbarAssets,
+        recentlyWatchedAssets: RecentlyWatchedAssets
     ) {
         self.videoListAssets = videoListAssets
         self.rowAssets = rowAssets
         self.colorAssets = colorAssets
         self.toolbarAssets = toolbarAssets
+        self.recentlyWatchedAssets = recentlyWatchedAssets
     }
     
     public struct VideoListAssets: Equatable {

@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAAssets
 import MEGASwiftUI
 import SwiftUI
@@ -55,6 +56,35 @@ extension VideoConfig {
             saveToPhotosImage: MEGAAssetsPreviewImageProvider.image(named: "saveToPhotos")!,
             hudMinusImage: MEGAAssetsPreviewImageProvider.image(named: "hudMinus")!,
             moreListImage: MEGAAssetsPreviewImageProvider.image(named: "moreList")!
+        ),
+        recentlyWatchedAssets: RecentlyWatchedAssets(
+            emptyView: .init(
+                color: .init(
+                    pageBackgroundColor: TokenColors.Background.page.swiftUI,
+                    textColor: TokenColors.Text.primary.swiftUI,
+                    iconColor: TokenColors.Icon.secondary.swiftUI
+                )
+            ),
+            listView: .init(
+                header: .init(
+                    color: .init(
+                        primaryTextColor: TokenColors.Text.primary.swiftUI,
+                        pageBackgroundColor: TokenColors.Background.page.swiftUI
+                    )
+                ),
+                cell: .init(
+                    color: .init(
+                        primaryTextColor: TokenColors.Text.primary.swiftUI,
+                        secondaryTextColor: TokenColors.Text.secondary.swiftUI,
+                        secondaryIconColor: TokenColors.Icon.secondary.swiftUI,
+                        durationTextColor: TokenColors.Button.primary.swiftUI,
+                        durationTextBackgroundColor: TokenColors.Background.blur.swiftUI,
+                        pageBackgroundColor: TokenColors.Background.page.swiftUI,
+                        progressBarActiveColor: TokenColors.Button.brand.swiftUI,
+                        progressBarBackgroundColor: TokenColors.Button.brand.swiftUI
+                    )
+                )
+            )
         )
     )
 }
