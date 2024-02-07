@@ -4,7 +4,6 @@
 
 #import "MEGANavigationController.h"
 #import "MEGAReachabilityManager.h"
-#import "MEGASdkManager.h"
 #import "MEGAStore.h"
 #import "MEGA-Swift.h"
 #import "NSString+MNZCategory.h"

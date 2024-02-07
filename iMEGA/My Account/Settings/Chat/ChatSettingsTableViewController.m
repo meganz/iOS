@@ -5,7 +5,6 @@
 #import "Helper.h"
 #import "MEGAGetAttrUserRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
-#import "MEGASdkManager.h"
 #import "MEGA-Swift.h"
 #import "NSString+MNZCategory.h"
 
@@ -96,7 +95,7 @@ typedef NS_ENUM(NSInteger, ChatSettingsNotificationRow) {
         [NSUserDefaults.standardUserDefaults setBool:request.flag forKey:@"richLinks"];
         self.richPreviewsSwitch.on = request.flag;
     }];
-    [[MEGASdkManager sharedMEGASdk] isRichPreviewsEnabledWithDelegate:delegate];
+    [MEGASdk.shared isRichPreviewsEnabledWithDelegate:delegate];
     
     self.doNotDisturbSwitch.enabled = NO;
     self.chatNotificationsSwitch.enabled = NO;
@@ -110,7 +109,7 @@ typedef NS_ENUM(NSInteger, ChatSettingsNotificationRow) {
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     
-    [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
+    [MEGAChatSdk.shared addChatDelegate:self];
     
     [self onlineStatus];
     
@@ -127,7 +126,7 @@ typedef NS_ENUM(NSInteger, ChatSettingsNotificationRow) {
     
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     
-    [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
+    [MEGAChatSdk.shared removeChatDelegate:self];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -141,7 +140,7 @@ typedef NS_ENUM(NSInteger, ChatSettingsNotificationRow) {
 #pragma mark - IBActions
 
 - (IBAction)richPreviewsValueChanged:(UISwitch *)sender {
-    [[MEGASdkManager sharedMEGASdk] enableRichPreviews:sender.isOn];
+    [MEGASdk.shared enableRichPreviews:sender.isOn];
 }
 
 - (IBAction)dndSwitchValueChanged:(UISwitch *)sender {
@@ -181,7 +180,7 @@ typedef NS_ENUM(NSInteger, ChatSettingsNotificationRow) {
 }
 
 - (void)onlineStatus {
-    MEGAChatPresenceConfig *presenceConfig = [[MEGASdkManager sharedMEGAChatSdk] presenceConfig];
+    MEGAChatPresenceConfig *presenceConfig = [MEGAChatSdk.shared presenceConfig];
     NSString *onlineStatus = [NSString chatStatusString:presenceConfig.onlineStatus];
     if (onlineStatus) {
         self.invalidStatus = NO;

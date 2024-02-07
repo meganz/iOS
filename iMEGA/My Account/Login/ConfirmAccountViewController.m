@@ -7,7 +7,6 @@
 #import "MEGALinkManager.h"
 #import "MEGALoginRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
-#import "MEGASdkManager.h"
 #import "MEGA-Swift.h"
 #import "NSString+MNZCategory.h"
 #import "UIApplication+MNZCategory.h"
@@ -54,7 +53,7 @@
         case URLTypeCancelAccountLink: {
             NSString* message = LocalizedString(@"enterYourPasswordToConfirmThatYouWanToClose", @"Account closure, message shown when you click on the link in the email to confirm the closure of your account");
 
-            MEGAAccountDetails *accountDetails = [[MEGASdkManager sharedMEGASdk] mnz_accountDetails];
+            MEGAAccountDetails *accountDetails = [MEGASdk.shared mnz_accountDetails];
             if (accountDetails &&
                  accountDetails.type != MEGAAccountTypeFree &&
                  (accountDetails.subscriptionMethodId == MEGAPaymentMethodECP ||
@@ -106,17 +105,17 @@
             [self lockUI:YES];
             switch (self.urlType) {
                 case URLTypeConfirmationLink:
-                    [[MEGASdkManager sharedMEGASdk] confirmAccountWithLink:self.confirmationLinkString password:self.passwordView.passwordTextField.text delegate:self];
+                    [MEGASdk.shared confirmAccountWithLink:self.confirmationLinkString password:self.passwordView.passwordTextField.text delegate:self];
                     
                     break;
                     
                 case URLTypeChangeEmailLink:
-                    [[MEGASdkManager sharedMEGASdk] confirmChangeEmailWithLink:self.confirmationLinkString password:self.passwordView.passwordTextField.text delegate:self];
+                    [MEGASdk.shared confirmChangeEmailWithLink:self.confirmationLinkString password:self.passwordView.passwordTextField.text delegate:self];
                     
                     break;
                     
                 case URLTypeCancelAccountLink:
-                    [[MEGASdkManager sharedMEGASdk] confirmCancelAccountWithLink:self.confirmationLinkString password:self.passwordView.passwordTextField.text delegate:self];
+                    [MEGASdk.shared confirmCancelAccountWithLink:self.confirmationLinkString password:self.passwordView.passwordTextField.text delegate:self];
                     
                     break;
                     
@@ -140,7 +139,7 @@
             [MEGALinkManager resetLinkAndURLType];
             
             if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionId"]) {
-                [[MEGASdkManager sharedMEGASdk] logout];
+                [MEGASdk.shared logout];
                 [Helper clearEphemeralSession];
             }
             
@@ -294,10 +293,10 @@
     
     switch ([request type]) {
         case MEGARequestTypeConfirmAccount: {
-            MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:nil];
+            MEGAChatInit chatInit = [MEGAChatSdk.shared initKarereWithSid:nil];
             if (chatInit != MEGAChatInitWaitingNewSession) {
                 MEGALogError(@"Init Karere without sesion must return waiting for a new sesion");
-                [[MEGASdkManager sharedMEGAChatSdk] logout];
+                [MEGAChatSdk.shared logout];
             }
 
             if ([api isLoggedIn] <= 1) {
@@ -311,7 +310,7 @@
             
         case MEGARequestTypeLogout: {
             [Helper logout];
-            [[MEGASdkManager sharedMEGASdk] confirmAccountWithLink:self.confirmationLinkString password:self.passwordView.passwordTextField.text delegate:self];
+            [MEGASdk.shared confirmAccountWithLink:self.confirmationLinkString password:self.passwordView.passwordTextField.text delegate:self];
             break;
         }
             

@@ -7,7 +7,6 @@
 
 #import "Helper.h"
 #import "CustomModalAlertViewController.h"
-#import "MEGASdkManager.h"
 #import "MEGA-Swift.h"
 #import "TransferSessionManager.h"
 
@@ -236,15 +235,15 @@
 - (IBAction)enableCameraUploadsSwitchValueChanged:(UISwitch *)sender {
     MEGALogInfo(@"%@ camera uploads", sender.isOn ? @"Enable" : @"Disable");
     if (sender.isOn) {
-        if (MEGASdkManager.sharedMEGASdk.businessStatus == BusinessStatusExpired) {
+        if (MEGASdk.shared.businessStatus == BusinessStatusExpired) {
             [self showAccountExpiredAlert];
             [sender setOn:NO];
         } else {
             DevicePermissionsHandlerObjC *handler = [[DevicePermissionsHandlerObjC alloc] init];
             [handler requstPhotoAlbumAccessPermissionsWithHandler:^(BOOL granted) {
                 if (granted) {
-                    if ([MEGASdkManager.sharedMEGASdk isAccountType:MEGAAccountTypeBusiness] &&
-                        !MEGASdkManager.sharedMEGASdk.isMasterBusinessAccount) {
+                    if ([MEGASdk.shared isAccountType:MEGAAccountTypeBusiness] &&
+                        !MEGASdk.shared.isMasterBusinessAccount) {
                         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"cameraUploadsLabel", @"Title of one of the Settings sections where you can set up the 'Camera Uploads' options") message:LocalizedString(@"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account", @"Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data.") preferredStyle:UIAlertControllerStyleAlert];
                         [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"") style:UIAlertActionStyleCancel handler:nil]];
                         [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"enable", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -324,7 +323,7 @@
     BrowserViewController *browserVC = navigationController.viewControllers.firstObject;
     browserVC.browserAction = BrowserActionSelectFolder;
     browserVC.childBrowser = YES;
-    browserVC.parentNode = MEGASdkManager.sharedMEGASdk.rootNode;
+    browserVC.parentNode = MEGASdk.shared.rootNode;
     browserVC.browserViewControllerDelegate = self;
     [self presentViewController:navigationController animated:YES completion:nil];
 }

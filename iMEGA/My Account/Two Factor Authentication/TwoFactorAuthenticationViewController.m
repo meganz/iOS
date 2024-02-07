@@ -4,7 +4,6 @@
 
 #import "Helper.h"
 #import "MEGALoginRequestDelegate.h"
-#import "MEGASdkManager.h"
 #import "MEGA-Swift.h"
 #import "NSString+MNZCategory.h"
 #import "NSURL+MNZCategory.h"
@@ -181,29 +180,29 @@
                             break;
                     }
                 };
-                [[MEGASdkManager sharedMEGASdk] multiFactorAuthLoginWithEmail:self.email password:self.password pin:code delegate:loginRequestDelegate];
+                [MEGASdk.shared multiFactorAuthLoginWithEmail:self.email password:self.password pin:code delegate:loginRequestDelegate];
                 break;
             }
                 
             case TwoFactorAuthenticationChangePassword:
             case TwoFactorAuthenticationChangePasswordFromLogout:
-                [[MEGASdkManager sharedMEGASdk] multiFactorAuthChangePassword:nil newPassword:self.newerPassword pin:code delegate:self];
+                [MEGASdk.shared multiFactorAuthChangePassword:nil newPassword:self.newerPassword pin:code delegate:self];
                 break;
                 
             case TwoFactorAuthenticationChangeEmail:
-                [[MEGASdkManager sharedMEGASdk] multiFactorAuthChangeEmail:self.email pin:code delegate:self];
+                [MEGASdk.shared multiFactorAuthChangeEmail:self.email pin:code delegate:self];
                 break;
                 
             case TwoFactorAuthenticationCancelAccount:
-                [[MEGASdkManager sharedMEGASdk] multiFactorAuthCancelAccountWithPin:code delegate:self];
+                [MEGASdk.shared multiFactorAuthCancelAccountWithPin:code delegate:self];
                 break;
                 
             case TwoFactorAuthenticationEnable:
-                [[MEGASdkManager sharedMEGASdk] multiFactorAuthEnableWithPin:code delegate:self];
+                [MEGASdk.shared multiFactorAuthEnableWithPin:code delegate:self];
                 break;
                 
             case TwoFactorAuthenticationDisable:
-                 [[MEGASdkManager sharedMEGASdk] multiFactorAuthDisableWithPin:code delegate:self];
+                 [MEGASdk.shared multiFactorAuthDisableWithPin:code delegate:self];
                 break;
                 
             default:
@@ -315,7 +314,7 @@
             if (self.twoFAMode == TwoFactorAuthenticationChangePassword) {
                 [self.navigationController dismissViewControllerAnimated:YES completion:nil];
             } else if (self.twoFAMode == TwoFactorAuthenticationChangePasswordFromLogout) {
-                [MEGASdkManager.sharedMEGASdk logout];
+                [MEGASdk.shared logout];
             }
             break;
         }

@@ -4,7 +4,6 @@
 
 
 #import "Helper.h"
-#import "MEGASdkManager.h"
 #import "MEGA-Swift.h"
 #import "NSString+MNZCategory.h"
 
@@ -121,7 +120,7 @@
 
 - (IBAction)useHttpsOnlySwitch:(UISwitch *)sender {
     [[NSUserDefaults.alloc initWithSuiteName:MEGAGroupIdentifier] setBool:sender.on forKey:@"useHttpsOnly"];
-    [[MEGASdkManager sharedMEGASdk] useHttpsOnly:sender.on];
+    [MEGASdk.shared useHttpsOnly:sender.on];
 }
 
 - (IBAction)downloadOptionsSaveImagesSwitchTouchUpInside:(UIButton *)sender {

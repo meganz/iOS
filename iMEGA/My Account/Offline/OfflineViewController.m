@@ -9,7 +9,6 @@
 
 #import "EmptyStateView.h"
 #import "MEGANavigationController.h"
-#import "MEGASdkManager.h"
 #import "PreviewDocumentViewController.h"
 #import "Helper.h"
 #import "MEGAReachabilityManager.h"
@@ -99,7 +98,7 @@ static NSString *kisDirectory = @"kisDirectory";
     [self addSubscriptions];
     
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
-    [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
+    [MEGASdk.sharedFolderLink retryPendingConnections];
     
     // If the user has activated the logs, then they are imported to the offline section from the shared sandbox:
     BOOL isDocumentDirectory = [self.currentOfflinePath isEqualToString:Helper.pathForOffline];
@@ -476,10 +475,10 @@ static NSString *kisDirectory = @"kisDirectory";
     MEGATransferList *transferList;
     NSInteger transferListSize;
     if (isFolderLink) {
-        transferList = [[MEGASdkManager sharedMEGASdkFolder] transfers];
+        transferList = [MEGASdk.sharedFolderLink transfers];
         transferListSize = transferList.size;
     } else {
-        transferList = [[MEGASdkManager sharedMEGASdk] transfers];
+        transferList = [MEGASdk.shared transfers];
         transferListSize = transferList.size;
     }
     
@@ -491,9 +490,9 @@ static NSString *kisDirectory = @"kisDirectory";
         
         if ([transfer.parentPath isEqualToString:[folderPath stringByAppendingString:@"/"]]) {
             if (isFolderLink) {
-                [[MEGASdkManager sharedMEGASdkFolder] cancelTransferByTag:transfer.tag];
+                [MEGASdk.sharedFolderLink cancelTransferByTag:transfer.tag];
             } else {
-                [[MEGASdkManager sharedMEGASdk] cancelTransferByTag:transfer.tag];
+                [MEGASdk.shared cancelTransferByTag:transfer.tag];
             }
         } else {
             NSString *lastPathComponent = [folderPath lastPathComponent];
@@ -503,9 +502,9 @@ static NSString *kisDirectory = @"kisDirectory";
                 NSString *folderString = [pathComponentsArray objectAtIndex:j];
                 if ([folderString isEqualToString:lastPathComponent]) {
                     if (isFolderLink) {
-                        [[MEGASdkManager sharedMEGASdkFolder] cancelTransferByTag:transfer.tag];
+                        [MEGASdk.sharedFolderLink cancelTransferByTag:transfer.tag];
                     } else {
-                        [[MEGASdkManager sharedMEGASdk] cancelTransferByTag:transfer.tag];
+                        [MEGASdk.shared cancelTransferByTag:transfer.tag];
                     }
                     break;
                 }
@@ -859,10 +858,10 @@ static NSString *kisDirectory = @"kisDirectory";
     BOOL isDirectory;
     [[NSFileManager defaultManager] fileExistsAtPath:itemPath isDirectory:&isDirectory];
     if (isDirectory) {
-        if ([[[MEGASdkManager sharedMEGASdk] transfers] size]) {
+        if ([[MEGASdk.shared transfers] size]) {
             [self cancelPendingTransfersOnFolder:itemPath folderLink:NO];
         }
-        if ([[[MEGASdkManager sharedMEGASdkFolder] transfers] size]) {
+        if ([[MEGASdk.sharedFolderLink transfers] size]) {
             [self cancelPendingTransfersOnFolder:itemPath folderLink:YES];
         }
         offlinePathsOnFolderArray = [self offlinePathOnFolder:itemPath];

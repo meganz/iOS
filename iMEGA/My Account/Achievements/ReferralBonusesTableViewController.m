@@ -1,7 +1,6 @@
 #import "ReferralBonusesTableViewController.h"
 #import "Helper.h"
 #import "MEGAGetAttrUserRequestDelegate.h"
-#import "MEGASdkManager.h"
 #import "MEGAStore.h"
 #import "MEGAUser+MNZCategory.h"
 #import "UIImageView+MNZCategory.h"
@@ -87,7 +86,7 @@
     }
     
     NSString *email = [self.inviteAchievementsEmailsMutableArray objectAtIndex:indexPath.row];
-    MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:email];
+    MEGAUser *user = [MEGASdk.shared contactForEmail:email];
     
     if (user) {
         [cell.avatarImageView mnz_setImageForUserHandle:user.handle];
@@ -103,8 +102,8 @@
             MEGAGetAttrUserRequestDelegate *delegate = [[MEGAGetAttrUserRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
                 [tableView reloadData];
             }];
-            [[MEGASdkManager sharedMEGASdk] getUserAttributeForEmailOrHandle:email type:MEGAUserAttributeFirstname delegate:delegate];
-            [[MEGASdkManager sharedMEGASdk] getUserAttributeForEmailOrHandle:email type:MEGAUserAttributeLastname delegate:delegate];
+            [MEGASdk.shared getUserAttributeForEmailOrHandle:email type:MEGAUserAttributeFirstname delegate:delegate];
+            [MEGASdk.shared getUserAttributeForEmailOrHandle:email type:MEGAUserAttributeLastname delegate:delegate];
         }
     }
     

@@ -4,7 +4,6 @@
 #import "InputView.h"
 #import "MEGALoginRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
-#import "MEGASdkManager.h"
 #import "MEGA-Swift.h"
 #import "NSURL+MNZCategory.h"
 #import "NSString+MNZCategory.h"
@@ -124,11 +123,11 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 #pragma mark - IBActions
 
 - (IBAction)tapLogin:(id)sender {
-    if ([[MEGASdkManager sharedMEGAChatSdk] initState] != MEGAChatInitWaitingNewSession) {
-        MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:nil];
+    if ([MEGAChatSdk.shared initState] != MEGAChatInitWaitingNewSession) {
+        MEGAChatInit chatInit = [MEGAChatSdk.shared initKarereWithSid:nil];
         if (chatInit != MEGAChatInitWaitingNewSession) {
             MEGALogError(@"Init Karere without sesion must return waiting for a new sesion");
-            [[MEGASdkManager sharedMEGAChatSdk] logout];
+            [MEGAChatSdk.shared logout];
         }
     }
     
@@ -150,7 +149,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
                     [self.navigationController pushViewController:twoFactorAuthenticationVC animated:YES];
                 }
             };
-            [[MEGASdkManager sharedMEGASdk] loginWithEmail:self.emailInputView.inputTextField.text password:self.passwordView.passwordTextField.text delegate:loginRequestDelegate];
+            [MEGASdk.shared loginWithEmail:self.emailInputView.inputTextField.text password:self.passwordView.passwordTextField.text delegate:loginRequestDelegate];
         }
     }
 }

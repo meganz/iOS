@@ -1,6 +1,5 @@
 #import "AchievementsViewController.h"
 #import "Helper.h"
-#import "MEGASdkManager.h"
 #import "MEGA-Swift.h"
 #import "NSString+MNZCategory.h"
 
@@ -63,7 +62,7 @@
     self.unlockedBonusesLabel.text = LocalizedString(@"unlockedBonuses", @"Header of block with achievements bonuses.");
     self.storageQuotaLabel.text = LocalizedString(@"storageQuota", @"A header/title of a section which contains information about used/available storage space on a user's cloud drive.");
     
-    [[MEGASdkManager sharedMEGASdk] getAccountAchievementsWithDelegate:self];
+    [MEGASdk.shared getAccountAchievementsWithDelegate:self];
     
     if (self.enableCloseBarButton) { //For modal presentations
         UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:LocalizedString(@"skipButton", @"Button title that skips the current action")

@@ -1,7 +1,6 @@
 #import "UsageViewController.h"
 
 #import "NSString+MNZCategory.h"
-#import "MEGASdkManager.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGA-Swift.h"
 

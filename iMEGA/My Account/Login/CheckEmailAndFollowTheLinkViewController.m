@@ -62,13 +62,13 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
+    [MEGASdk.shared addMEGAGlobalDelegate:self];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
+    [MEGASdk.shared removeMEGAGlobalDelegate:self];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -117,7 +117,7 @@
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"") style:UIAlertActionStyleCancel handler:nil]];
     [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [MEGASdkManager.sharedMEGASdk cancelCreateAccount];        
+        [MEGASdk.shared cancelCreateAccount];        
         [Helper clearEphemeralSession];
         [self dismissViewControllerAnimated:YES completion:nil];
     }]];
@@ -162,7 +162,7 @@
                     [SVProgressHUD showInfoWithStatus:LocalizedString(@"awaitingEmailConfirmation", @"Title shown just after doing some action that requires confirming the action by an email")];
                 }
             }];
-            [MEGASdkManager.sharedMEGASdk resendSignupLinkWithEmail:self.emailInputView.inputTextField.text
+            [MEGASdk.shared resendSignupLinkWithEmail:self.emailInputView.inputTextField.text
                                                              name:self.name
                                                          delegate:delegate];
         }
@@ -184,10 +184,10 @@
 
 - (void)onEvent:(MEGASdk *)api event:(MEGAEvent *)event {
     if (event.type == EventAccountConfirmation) {
-        MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:nil];
+        MEGAChatInit chatInit = [MEGAChatSdk.shared initKarereWithSid:nil];
         if (chatInit != MEGAChatInitWaitingNewSession) {
             MEGALogError(@"Init Karere without sesion must return waiting for a new sesion");
-            [[MEGASdkManager sharedMEGAChatSdk] logout];
+            [MEGAChatSdk.shared logout];
         }
 
         MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];

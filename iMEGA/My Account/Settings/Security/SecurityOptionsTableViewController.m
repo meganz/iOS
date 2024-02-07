@@ -5,7 +5,6 @@
 #import "MEGAGenericRequestDelegate.h"
 #import "MEGAMultiFactorAuthCheckRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
-#import "MEGASdkManager.h"
 #import "MEGA-Swift.h"
 
 #import "AwaitingEmailConfirmationView.h"
@@ -96,7 +95,7 @@
         self.twoFactorAuthenticationRightDetailLabel.text = self.twoFactorAuthenticationEnabled ? LocalizedString(@"on", @"") : LocalizedString(@"off", @"");
         [self.tableView reloadData];
     }];
-    [[MEGASdkManager sharedMEGASdk] multiFactorAuthCheckWithEmail:[[MEGASdkManager sharedMEGASdk] myEmail] delegate:delegate];
+    [MEGASdk.shared multiFactorAuthCheckWithEmail:[MEGASdk.shared myEmail] delegate:delegate];
 }
 
 - (void)configPasscodeView {
@@ -113,7 +112,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
-        return MEGASdkManager.sharedMEGASdk.multiFactorAuthAvailable ? 1 : 0;
+        return MEGASdk.shared.multiFactorAuthAvailable ? 1 : 0;
     }
     
     return 1;
@@ -150,7 +149,7 @@
                         }
                         [SVProgressHUD showSuccessWithStatus:LocalizedString(@"sessionsClosed", @"Message shown when you click on 'Close other session' to block every session that is opened on other devices except the current one")];
                     }];
-                    [MEGASdkManager.sharedMEGASdk killSession:-1 delegate:delegate];
+                    [MEGASdk.shared killSession:-1 delegate:delegate];
                 }]];
                 [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"") style:UIAlertActionStyleCancel handler:nil]];
                 [self presentViewController:alertController animated:YES completion:nil];

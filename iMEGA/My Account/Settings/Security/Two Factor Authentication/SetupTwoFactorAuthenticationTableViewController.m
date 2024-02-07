@@ -3,7 +3,6 @@
 #import "UIApplication+MNZCategory.h"
 
 #import "CustomModalAlertViewController.h"
-#import "MEGASdkManager.h"
 #import "MEGAMultiFactorAuthCheckRequestDelegate.h"
 #import "MEGA-Swift.h"
 #import "TwoFactorAuthenticationViewController.h"
@@ -43,7 +42,7 @@
         
         self.twoFactorAuthenticationSwitch.on = self.twoFactorAuthenticationEnabled;
     }];
-    [[MEGASdkManager sharedMEGASdk] multiFactorAuthCheckWithEmail:[[MEGASdkManager sharedMEGASdk] myEmail] delegate:delegate];
+    [MEGASdk.shared multiFactorAuthCheckWithEmail:[MEGASdk.shared myEmail] delegate:delegate];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {

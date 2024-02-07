@@ -1,5 +1,4 @@
 #import "LaunchViewController.h"
-#import "MEGASdkManager.h"
 
 #ifdef MNZ_SHARE_EXTENSION
 #import "MEGAShare-Swift.h"
@@ -44,13 +43,13 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [MEGASdkManager.sharedMEGASdk addMEGARequestDelegate:self];
+    [MEGASdk.shared addMEGARequestDelegate:self];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [[MEGASdkManager sharedMEGASdk] removeMEGARequestDelegateAsync:self];
+    [MEGASdk.shared removeMEGARequestDelegateAsync:self];
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -85,7 +84,7 @@
 
 - (void)showWaitingReason {
     NSString *message;
-    switch (MEGASdkManager.sharedMEGASdk.waiting) {
+    switch (MEGASdk.shared.waiting) {
         case RetryConnectivity:
             message = LocalizedString(@"unableToReachMega", @"Message shown when the app is waiting for the server to complete a request due to connectivity issue.");
             break;

@@ -2,7 +2,6 @@
 
 #import "SVProgressHUD.h"
 
-#import "MEGASdkManager.h"
 #import "MEGA-Swift.h"
 #import "MEGAGenericRequestDelegate.h"
 
@@ -78,10 +77,10 @@
             }
         }
     }];
-    [MEGASdkManager.sharedMEGASdk getUserCredentials:self.user delegate:userCredentialsDelegate];
+    [MEGASdk.shared getUserCredentials:self.user delegate:userCredentialsDelegate];
     
     self.yourCredentialsLabel.text = LocalizedString(@"verifyCredentials.yourCredentials.title", @"Title of the label in the my account section. It shows the credentials of the current user so it can be used to be verified by other contacts");
-    NSString *yourCredentials = MEGASdkManager.sharedMEGASdk.myCredentials;
+    NSString *yourCredentials = MEGASdk.shared.myCredentials;
     if (yourCredentials.length == 40) {
         self.firstPartOfYourCredentialsLabel.text =  [yourCredentials substringWithRange:NSMakeRange(0, length)];
         self.secondPartOfYourCredentialsLabel.text =  [yourCredentials substringWithRange:NSMakeRange(position, length)];
@@ -136,7 +135,7 @@
 }
 
 - (void)updateVerifyOrResetButton {
-    if ([MEGASdkManager.sharedMEGASdk areCredentialsVerifiedOfUser:self.user]) {
+    if ([MEGASdk.shared areCredentialsVerifiedOfUser:self.user]) {
         [self.verifyOrResetButton setTitle:LocalizedString(@"reset", @"Button to reset the password") forState:UIControlStateNormal];
         [self.verifyOrResetButton mnz_setupBasic:self.traitCollection];
     } else {
@@ -148,7 +147,7 @@
 #pragma mark - IBActions
 
 - (IBAction)verifyOrResetTouchUpInside:(UIButton *)sender {
-    if ([MEGASdkManager.sharedMEGASdk areCredentialsVerifiedOfUser:self.user]) {
+    if ([MEGASdk.shared areCredentialsVerifiedOfUser:self.user]) {
         MEGAGenericRequestDelegate *resetCredentialsOfUserDelegate = [MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest *request, MEGAError *error) {
             if (error.type) {
                 [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, LocalizedString(error.name, @"")]];
@@ -157,7 +156,7 @@
                 self.statusUpdateCompletionBlock();
             }
         }];
-        [MEGASdkManager.sharedMEGASdk resetCredentialsOfUser:self.user delegate:resetCredentialsOfUserDelegate];
+        [MEGASdk.shared resetCredentialsOfUser:self.user delegate:resetCredentialsOfUserDelegate];
     } else {
         MEGAGenericRequestDelegate *verifyCredentialsOfUserDelegate = [MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest *request, MEGAError *error) {
             if (error.type) {
@@ -169,7 +168,7 @@
                 self.statusUpdateCompletionBlock();
             }
         }];
-        [MEGASdkManager.sharedMEGASdk verifyCredentialsOfUser:self.user delegate:verifyCredentialsOfUserDelegate];
+        [MEGASdk.shared verifyCredentialsOfUser:self.user delegate:verifyCredentialsOfUserDelegate];
     }
 }
 

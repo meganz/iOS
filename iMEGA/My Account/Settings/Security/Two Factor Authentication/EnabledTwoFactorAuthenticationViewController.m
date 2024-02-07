@@ -1,7 +1,6 @@
 #import "EnabledTwoFactorAuthenticationViewController.h"
 
 #import "Helper.h"
-#import "MEGASdkManager.h"
 #import "MEGA-Swift.h"
 #import "UIApplication+MNZCategory.h"
 
@@ -42,7 +41,7 @@
     [self.closeButton setTitle:LocalizedString(@"close", @"A button label. The button allows the user to close the conversation.") forState:UIControlStateNormal];
     self.closeButton.layer.borderColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection].CGColor;
     
-    [[MEGASdkManager sharedMEGASdk] isMasterKeyExportedWithDelegate:self];
+    [MEGASdk.shared isMasterKeyExportedWithDelegate:self];
     
     [self updateAppearance];
 }

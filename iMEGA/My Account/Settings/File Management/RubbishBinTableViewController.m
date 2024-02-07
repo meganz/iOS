@@ -9,7 +9,6 @@
 #import "MEGAReachabilityManager.h"
 
 #import "CustomModalAlertViewController.h"
-#import "MEGASdkManager.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGA-Swift.h"
 
@@ -44,7 +43,7 @@
     
     [self updateAppearance];
     
-    if ([MEGASdkManager.sharedMEGASdk mnz_isProAccount]) {
+    if ([MEGASdk.shared mnz_isProAccount]) {
         self.tableView.tableFooterView = nil;
     } else {
         self.tableView.tableFooterView = self.longerRetentionPeriodUpgradetoProView;
@@ -62,11 +61,11 @@
     [self updateClearRubbishBinDetailLabel];
     
     self.rubbishBinCleaningSchedulerLabel.text = [LocalizedString(@"Rubbish-Bin Cleaning Scheduler:", @"Title for the Rubbish-Bin Cleaning Scheduler feature") stringByReplacingOccurrencesOfString:@":" withString:@""];
-    [self.rubbishBinCleaningSchedulerSwitch setOn:[[MEGASdkManager sharedMEGASdk] serverSideRubbishBinAutopurgeEnabled]];
+    [self.rubbishBinCleaningSchedulerSwitch setOn:[MEGASdk.shared serverSideRubbishBinAutopurgeEnabled]];
     
     self.removeFilesOlderThanLabel.text = LocalizedString(@"Remove files older than", @"A rubbish bin scheduler setting which allows removing old files from the rubbish bin automatically. E.g. Remove files older than 15 days.");
     
-    [[MEGASdkManager sharedMEGASdk] getRubbishBinAutopurgePeriodWithDelegate:self];
+    [MEGASdk.shared getRubbishBinAutopurgePeriodWithDelegate:self];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -82,7 +81,7 @@
 }
 
 - (void)setupTableViewHeaderAndFooter {
-    if (![MEGASdkManager.sharedMEGASdk mnz_isProAccount]) {
+    if (![MEGASdk.shared mnz_isProAccount]) {
         [self setLongerRetentionPeriodUpgradetoProLabel];
         [self.tableView sizeFooterToFit];
     }
@@ -132,7 +131,7 @@
 - (void)updateClearRubbishBinDetailLabel {
     [self.clearRubbishBinAI stopAnimating];
     self.clearRubbishBinDetailLabel.hidden = NO;
-    NSNumber *rubbishBinSizeNumber = [[MEGASdkManager sharedMEGASdk] sizeForNode:[[MEGASdkManager sharedMEGASdk] rubbishNode]];
+    NSNumber *rubbishBinSizeNumber = [MEGASdk.shared sizeForNode:[MEGASdk.shared rubbishNode]];
     NSString *stringFromByteCount = [NSString memoryStyleStringFromByteCount:rubbishBinSizeNumber.unsignedLongLongValue];
     self.clearRubbishBinDetailLabel.text = [NSString mnz_formatStringFromByteCountFormatter:stringFromByteCount];
 }
@@ -141,9 +140,9 @@
 
 - (IBAction)scheduleRubbishBinClearingSwitchTouchUpInside:(UIButton *)sender {
     if (self.rubbishBinCleaningSchedulerSwitch.isOn) {
-        if ([[MEGASdkManager sharedMEGASdk] mnz_isProAccount]) {
+        if ([MEGASdk.shared mnz_isProAccount]) {
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-                [[MEGASdkManager sharedMEGASdk] setRubbishBinAutopurgePeriodInDays:0 delegate:self];
+                [MEGASdk.shared setRubbishBinAutopurgePeriodInDays:0 delegate:self];
             }
         } else {
             CustomModalAlertViewController *customModalAlertVC = [[CustomModalAlertViewController alloc] init];
@@ -167,8 +166,8 @@
         }
     } else {
         if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-            NSInteger days = [[MEGASdkManager sharedMEGASdk] mnz_isProAccount] ? 90 : 14;
-            [[MEGASdkManager sharedMEGASdk] setRubbishBinAutopurgePeriodInDays:days delegate:self];
+            NSInteger days = [MEGASdk.shared mnz_isProAccount] ? 90 : 14;
+            [MEGASdk.shared setRubbishBinAutopurgePeriodInDays:days delegate:self];
         }
     }
 }
@@ -176,7 +175,7 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [[MEGASdkManager sharedMEGASdk] serverSideRubbishBinAutopurgeEnabled] ? 2 : 1;
+    return [MEGASdk.shared serverSideRubbishBinAutopurgeEnabled] ? 2 : 1;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
@@ -187,7 +186,7 @@
             break;
             
         case 1:
-            titleFooter = ([[MEGASdkManager sharedMEGASdk] mnz_isProAccount]) ? LocalizedString(@"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days.", @"New server-side rubbish-bin cleaning scheduler description (for PRO users)") : LocalizedString(@"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days.", @"New server-side rubbish-bin cleaning scheduler description (for Free users)");
+            titleFooter = ([MEGASdk.shared mnz_isProAccount]) ? LocalizedString(@"The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days.", @"New server-side rubbish-bin cleaning scheduler description (for PRO users)") : LocalizedString(@"The Rubbish Bin is cleaned for you automatically. The minimum period is 7 days and your maximum period is 30 days.", @"New server-side rubbish-bin cleaning scheduler description (for Free users)");
             break;
     }
     
@@ -209,9 +208,9 @@
                 [emptyRubbishBinAlertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                     self.clearRubbishBinDetailLabel.hidden = YES;
                     [self.clearRubbishBinAI startAnimating];
-                    [[MEGASdkManager sharedMEGASdk] cleanRubbishBinWithDelegate:[MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
+                    [MEGASdk.shared cleanRubbishBinWithDelegate:[MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
                         if (error.type == MEGAErrorTypeApiOk) {
-                            [MEGASdkManager.sharedMEGASdk catchupWithDelegate:[MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
+                            [MEGASdk.shared catchupWithDelegate:[MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
                                 if (error.type == MEGAErrorTypeApiOk) {
                                     [self updateClearRubbishBinDetailLabel];
                                 }
@@ -240,7 +239,7 @@
                     [scheduleRubbishBinClearingAlertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"") style:UIAlertActionStyleCancel handler:nil]];
                     UIAlertAction *doneAction = [UIAlertAction actionWithTitle:LocalizedString(@"done", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                         NSString *days = scheduleRubbishBinClearingAlertController.textFields.firstObject.text;
-                        if ([[MEGASdkManager sharedMEGASdk] mnz_isProAccount]) {
+                        if ([MEGASdk.shared mnz_isProAccount]) {
                             if (days.integerValue > 365) {
                                 days = @"365";
                             }
@@ -255,7 +254,7 @@
                         }
                         
                         if (self.rubbishBinAutopurgePeriod != days.integerValue) {
-                            [[MEGASdkManager sharedMEGASdk] setRubbishBinAutopurgePeriodInDays:days.integerValue delegate:self];
+                            [MEGASdk.shared setRubbishBinAutopurgePeriodInDays:days.integerValue delegate:self];
                         }
                     }];
                     doneAction.enabled = NO;
@@ -279,7 +278,7 @@
     if ((request.type == MEGARequestTypeGetAttrUser || request.type == MEGARequestTypeSetAttrUser) && (request.paramType == MEGAUserAttributeRubbishTime)) {
         if (error.type) {
             if (error.type == MEGAErrorTypeApiENoent) {
-                self.rubbishBinAutopurgePeriod = [[MEGASdkManager sharedMEGASdk] mnz_isProAccount] ? 90 : 14;
+                self.rubbishBinAutopurgePeriod = [MEGASdk.shared mnz_isProAccount] ? 90 : 14;
                 self.removeFilesOlderThanDetailLabel.text = [NSString stringWithFormat:@"%ld", (long)self.rubbishBinAutopurgePeriod];
             }
         } else {
