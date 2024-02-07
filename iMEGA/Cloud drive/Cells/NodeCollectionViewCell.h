@@ -11,9 +11,19 @@ NS_ASSUME_NONNULL_BEGIN
 @interface NodeCollectionViewCell : UICollectionViewCell
 
 @property (strong, nonatomic) NodeCollectionViewCellViewModel *viewModel;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *infoLabel;
 @property (weak, nonatomic) IBOutlet UILabel *durationLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *thumbnailIconView;
+@property (weak, nonatomic) IBOutlet UIImageView *favouriteImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *linkImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *versionedImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *videoIconView;
+@property (weak, nonatomic) IBOutlet UIImageView *downloadedImageView;
+@property (weak, nonatomic) IBOutlet UIView *topNodeIconsView;
+@property (weak, nonatomic) IBOutlet UIButton *moreButton;
+@property (weak, nonatomic) IBOutlet UIImageView *selectImageView;
 
 - (void)configureCellForNode:(MEGANode *)node allowedMultipleSelection:(BOOL)multipleSelection sdk:(MEGASdk *)sdk delegate:(id<NodeCollectionViewCellDelegate> _Nullable)delegate;
 - (void)configureCellForFolderLinkNode:(MEGANode *)node allowedMultipleSelection:(BOOL)multipleSelection sdk:(MEGASdk *)sdk delegate:(id<NodeCollectionViewCellDelegate> _Nullable)delegate;

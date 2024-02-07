@@ -44,10 +44,8 @@
 
 #pragma mark - Private
 
-- (void)updateAppearance:(UITraitCollection *)currentTraitCollection{
-    self.infoLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
-    [self setCellBackgroundColorWith:self.traitCollection];
-    [self configureMoreButtonUI];
+- (void)updateAppearance:(UITraitCollection *)currentTraitCollection {
+    [self configureTokenColors];
 }
 
 @end

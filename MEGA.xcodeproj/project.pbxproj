@@ -2486,6 +2486,7 @@
 		C4F31EF925C1C50B00E15146 /* CustomTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F31EF825C1C50B00E15146 /* CustomTitleView.swift */; };
 		C4F31F0325C1C51A00E15146 /* CustomTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4F31F0225C1C51A00E15146 /* CustomTitleView.xib */; };
 		E79B628B2B71223100F0C918 /* NotificationTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79B628A2B71223100F0C918 /* NotificationTableViewCell+Additions.swift */; };
+		E79B62912B72671A00F0C918 /* OfflineTableViewViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79B62902B72671A00F0C918 /* OfflineTableViewViewController+Additions.swift */; };
 		E7EE7CCF2AC6DCDB00DBABCD /* AppDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EE7CCE2AC6DCDB00DBABCD /* AppDelegateTests.swift */; };
 		E803CB641D5336F100F81A36 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E803CB661D5336F100F81A36 /* InfoPlist.strings */; };
 		E80C76101DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E80C760F1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m */; };
@@ -5128,6 +5129,7 @@
 		C4F31EF825C1C50B00E15146 /* CustomTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTitleView.swift; sourceTree = "<group>"; };
 		C4F31F0225C1C51A00E15146 /* CustomTitleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomTitleView.xib; sourceTree = "<group>"; };
 		E79B628A2B71223100F0C918 /* NotificationTableViewCell+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationTableViewCell+Additions.swift"; sourceTree = "<group>"; };
+		E79B62902B72671A00F0C918 /* OfflineTableViewViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OfflineTableViewViewController+Additions.swift"; sourceTree = "<group>"; };
 		E7EE7CCE2AC6DCDB00DBABCD /* AppDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateTests.swift; sourceTree = "<group>"; };
 		E803CB651D5336F100F81A36 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E803CB681D53374A00F81A36 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -6620,6 +6622,7 @@
 				E8E6CADC1A9C8C23008A0CD2 /* OfflineTableViewCell.h */,
 				E8E6CADD1A9C8C23008A0CD2 /* OfflineTableViewCell.m */,
 				A8C1B73D27734A22007095F4 /* OfflineTableViewController+Additions.swift */,
+				E79B62902B72671A00F0C918 /* OfflineTableViewViewController+Additions.swift */,
 				83FB142F219AC7CD00418BE6 /* OfflineTableViewViewController.h */,
 				83FB1430219AC7CD00418BE6 /* OfflineTableViewViewController.m */,
 				243F74902A42D8380050D5E4 /* OfflineViewController+Additions.swift */,
@@ -14572,6 +14575,7 @@
 				A8B315682ACAB49500173F3A /* OfflineTableViewCell+Additions.swift in Sources */,
 				E8E6CADE1A9C8C23008A0CD2 /* OfflineTableViewCell.m in Sources */,
 				A8C1B73E27734A22007095F4 /* OfflineTableViewController+Additions.swift in Sources */,
+				E79B62912B72671A00F0C918 /* OfflineTableViewViewController+Additions.swift in Sources */,
 				83FB1431219AC7CD00418BE6 /* OfflineTableViewViewController.m in Sources */,
 				243F74912A42D8380050D5E4 /* OfflineViewController+Additions.swift in Sources */,
 				9451F90A28229A11000ACE3B /* OfflineViewController+ContextMenu.swift in Sources */,
