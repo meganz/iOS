@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aAh-l2-z5Q">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aAh-l2-z5Q">
     <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -71,7 +71,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ptk-b4-EIp" userLabel="Content View">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="600.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="605"/>
                                         <subviews>
                                             <imageView contentMode="scaleToFill" image="megaThePrivacyCompanyLogo" translatesAutoresizingMaskIntoConstraints="NO" id="aOs-mq-CX2">
                                                 <rect key="frame" x="75" y="68" width="170" height="54"/>
@@ -80,7 +80,7 @@
                                                 </constraints>
                                             </imageView>
                                             <view contentMode="scaleToFill" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="55" translatesAutoresizingMaskIntoConstraints="NO" id="Cud-y6-Xtd" customClass="InputView">
-                                                <rect key="frame" x="0.0" y="187" width="320" height="55"/>
+                                                <rect key="frame" x="0.0" y="187" width="320" height="59.5"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="622" id="68t-xJ-P8k"/>
                                                 </constraints>
@@ -100,7 +100,7 @@
                                                 </variation>
                                             </view>
                                             <view contentMode="scaleToFill" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="60" translatesAutoresizingMaskIntoConstraints="NO" id="NEs-0T-7bT" customClass="PasswordView">
-                                                <rect key="frame" x="0.0" y="262" width="320" height="60"/>
+                                                <rect key="frame" x="0.0" y="266.5" width="320" height="60"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="622" id="CnO-WG-FFi"/>
                                                 </constraints>
@@ -120,7 +120,7 @@
                                                 </variation>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UnQ-C2-8bb" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
-                                                <rect key="frame" x="175" y="330" width="108" height="28"/>
+                                                <rect key="frame" x="175" y="334.5" width="108" height="28"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="28" id="hjN-Kb-jeD"/>
                                                 </constraints>
@@ -135,10 +135,10 @@
                                                 </connections>
                                             </button>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="littleQuestionMark" translatesAutoresizingMaskIntoConstraints="NO" id="Ssu-EP-cXE">
-                                                <rect key="frame" x="291" y="338" width="12" height="12"/>
+                                                <rect key="frame" x="291" y="342.5" width="12" height="12"/>
                                             </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EcF-LZ-UjW" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
-                                                <rect key="frame" x="16" y="513" width="288" height="50"/>
+                                                <rect key="frame" x="16" y="517.5" width="288" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="M9c-MZ-MYw"/>
                                                     <constraint firstAttribute="width" constant="288" id="VXZ-WV-DEp"/>
@@ -154,7 +154,7 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New to MEGA? Create Account" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sEJ-r0-KdP">
-                                                <rect key="frame" x="73" y="578" width="174.5" height="14.5"/>
+                                                <rect key="frame" x="73" y="582.5" width="174.5" height="14.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>

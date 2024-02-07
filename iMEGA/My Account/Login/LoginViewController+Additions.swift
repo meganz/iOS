@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGASwift
 
 extension LoginViewController {
@@ -23,5 +24,17 @@ extension LoginViewController {
             let streamingInfoUseCase = StreamingInfoUseCase()
             streamingInfoUseCase.stopServer()
         }
+    }
+    
+    @objc func forgotPasswordTintColor() -> UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.mnz_secondaryGray(for: traitCollection)
+    }
+    
+    @objc func loginLabelrimaryTextColor() -> UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.mnz_primaryGray(for: traitCollection)
+    }
+    
+    @objc func loginLabelLinkTextColor() -> UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Link.primary : UIColor.mnz_turquoise(for: self.traitCollection)
     }
 }
