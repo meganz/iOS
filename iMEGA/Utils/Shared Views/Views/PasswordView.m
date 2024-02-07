@@ -48,9 +48,13 @@
 
 - (void)configureToggleSecureButton {
     if (self.passwordTextField.secureTextEntry) {
-        [self.toggleSecureButton setImage:[UIImage imageNamed:@"showHidePassword"] forState:UIControlStateNormal];
+        UIImage *image = [[UIImage imageNamed:@"showHidePassword"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        [self.toggleSecureButton setImage:image forState: UIControlStateNormal];
+        [self setToggleSecureButtonTintColorWithIsActive:NO];
     } else {
-        [self.toggleSecureButton setImage:[UIImage imageNamed:@"showHidePassword_active"] forState:UIControlStateNormal];
+        UIImage *image = [[UIImage imageNamed:@"showHidePassword_active"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        [self.toggleSecureButton setImage:image forState: UIControlStateNormal];
+        [self setToggleSecureButtonTintColorWithIsActive:YES];
     }
 }
 
@@ -73,11 +77,11 @@
 - (void)setErrorState:(BOOL)error withText:(NSString *)text {
     self.topLabel.text = text;
     if (error) {
-        self.topLabel.textColor = UIColor.systemRedColor;
-        self.passwordTextField.textColor = UIColor.systemRedColor;
+        self.topLabel.textColor = [self errorTextColor];
+        self.passwordTextField.textColor = [self errorTextColor];
     } else {
-        self.topLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
-        self.passwordTextField.textColor = UIColor.labelColor;
+        self.topLabel.textColor = [self normalLabelColor];
+        self.passwordTextField.textColor = [self normalTextColor];
     }
 }
 

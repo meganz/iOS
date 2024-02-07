@@ -1,17 +1,23 @@
+import MEGADesignToken
+
 extension InputView {
     @objc func updateAppearance() {
-        topSeparatorView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
-        bottomSeparatorView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
+        topSeparatorView.backgroundColor = separatorColor()
+        bottomSeparatorView.backgroundColor = separatorColor()
         
-        iconImageView?.tintColor = UIColor.mnz_secondaryGray(for: traitCollection)
-        topLabel?.textColor = UIColor.mnz_secondaryGray(for: traitCollection)
-        inputTextField?.textColor = UIColor.label
+        iconImageView?.renderImage(withColor: iconTintColor())
+        topLabel?.textColor = normalLabelColor()
+        inputTextField?.textColor = normalTextColor()
         
-        if backgroundColor != nil && !isUsingDefaultBackgroundColor {
-            backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
+        if UIColor.isDesignTokenEnabled() {
+            backgroundColor = TokenColors.Background.page
         } else {
-            backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
-            isUsingDefaultBackgroundColor = true
+            if backgroundColor != nil && !isUsingDefaultBackgroundColor {
+                backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
+            } else {
+                backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
+                isUsingDefaultBackgroundColor = true
+            }
         }
     }
     
@@ -20,5 +26,27 @@ extension InputView {
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
             updateAppearance()
         }
+    }
+    
+    @objc func errorTextColor() -> UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Text.error : UIColor.systemRed
+    }
+    
+    @objc func normalTextColor() -> UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Button.primary : UIColor.label
+    }
+    
+    @objc func normalLabelColor() -> UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Button.primary : UIColor.mnz_secondaryGray(for: traitCollection)
+    }
+    
+    // MARK: - Private
+    
+    private func separatorColor() -> UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Border.strong : UIColor.mnz_separator(for: traitCollection)
+    }
+    
+    private func iconTintColor() -> UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Icon.secondary : UIColor.mnz_secondaryGray(for: traitCollection)
     }
 }

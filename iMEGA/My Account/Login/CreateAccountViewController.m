@@ -41,10 +41,7 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 @property (weak, nonatomic) IBOutlet PasswordStrengthIndicatorView *passwordStrengthIndicatorView;
 @property (weak, nonatomic) IBOutlet PasswordView *retypePasswordView;
 
-@property (weak, nonatomic) IBOutlet UIButton *termsCheckboxButton;
 @property (weak, nonatomic) IBOutlet UILabel *termsOfServiceLabel;
-
-@property (weak, nonatomic) IBOutlet UIButton *termsForLosingPasswordCheckboxButton;
 @property (weak, nonatomic) IBOutlet UILabel *termsForLosingPasswordLabel;
 
 @property (weak, nonatomic) IBOutlet UIButton *createAccountButton;
@@ -77,17 +74,20 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     self.cancelBarButtonItem.title = LocalizedString(@"cancel", @"Button title to cancel something");
     
     self.firstNameInputView.inputTextField.returnKeyType = UIReturnKeyNext;
+    self.firstNameInputView.topLabel.textColor = [self.firstNameInputView normalLabelColor];
     self.firstNameInputView.inputTextField.delegate = self;
     self.firstNameInputView.inputTextField.tag = FirstNameTextFieldTag;
     self.firstNameInputView.bottomSeparatorView.hidden = YES;
     
     self.lastNameInputView.inputTextField.returnKeyType = UIReturnKeyNext;
+    self.lastNameInputView.topLabel.textColor = [self.lastNameInputView normalLabelColor];
     self.lastNameInputView.inputTextField.delegate = self;
     self.lastNameInputView.inputTextField.tag = LastNameTextFieldTag;
     self.firstNameInputView.inputTextField.textContentType = UITextContentTypeGivenName;
     self.lastNameInputView.inputTextField.textContentType = UITextContentTypeFamilyName;
 
     self.emailInputView.inputTextField.returnKeyType = UIReturnKeyNext;
+    self.emailInputView.topLabel.textColor = [self.emailInputView normalLabelColor];
     self.emailInputView.inputTextField.delegate = self;
     self.emailInputView.inputTextField.tag = EmailTextFieldTag;
     self.emailInputView.inputTextField.keyboardType = UIKeyboardTypeEmailAddress;
@@ -97,14 +97,18 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     self.emailInputView.inputTextField.textContentType = UITextContentTypeUsername;
     
     self.passwordView.passwordTextField.returnKeyType = UIReturnKeyNext;
+    self.passwordView.topLabel.textColor = [self.passwordView normalLabelColor];
     self.passwordView.passwordTextField.delegate = self;
     self.passwordView.passwordTextField.tag = PasswordTextFieldTag;
     self.passwordView.bottomSeparatorView.hidden = YES;
     
     self.retypePasswordView.passwordTextField.delegate = self;
+    self.retypePasswordView.topLabel.textColor = [self.retypePasswordView normalLabelColor];
     self.retypePasswordView.passwordTextField.tag = RetypeTextFieldTag;
     self.passwordView.passwordTextField.textContentType = UITextContentTypeNewPassword;
     self.retypePasswordView.passwordTextField.textContentType = UITextContentTypePassword;
+    
+    [self setUpCheckBoxButton];
     
     [self.createAccountButton setTitle:LocalizedString(@"createAccount", @"Button title which triggers the action to create a MEGA account") forState:UIControlStateNormal];
     
@@ -303,8 +307,8 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     }
     agreeWithTheMEGATermsOfService = [agreeWithTheMEGATermsOfService mnz_removeWebclientFormatters];
     
-    UIColor *termsOfServiceColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
-    NSMutableAttributedString *termsOfServiceMutableAttributedString = [NSMutableAttributedString.alloc initWithString:agreeWithTheMEGATermsOfService attributes:@{NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
+    UIColor *termsOfServiceColor = [self termLinkTextColor];
+    NSMutableAttributedString *termsOfServiceMutableAttributedString = [NSMutableAttributedString.alloc initWithString:agreeWithTheMEGATermsOfService attributes:@{NSForegroundColorAttributeName:[self termPrimaryTextColor]}];
     [termsOfServiceMutableAttributedString setAttributes:@{NSForegroundColorAttributeName:termsOfServiceColor} range:[agreeWithTheMEGATermsOfService rangeOfString:@"MEGA"]];
     if (termsOfServiceString) {
         [termsOfServiceMutableAttributedString setAttributes:@{NSForegroundColorAttributeName:termsOfServiceColor} range:[agreeWithTheMEGATermsOfService rangeOfString:termsOfServiceString]];
@@ -325,13 +329,13 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     NSRange semiboldPrimaryGrayTextRange = [agreementForLosingPasswordText rangeOfString:semiboldPrimaryGrayText];
     NSRange greenTextRange = [agreementForLosingPasswordText rangeOfString:greenText];
 
-    UIColor *primaryGrayColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+    UIColor *primaryGrayColor = [self termPrimaryTextColor];
     NSMutableAttributedString *termsMutableAttributedString = [NSMutableAttributedString.alloc initWithString:agreementForLosingPasswordText attributes:@{NSForegroundColorAttributeName : primaryGrayColor}];
 
     NSDictionary *semiboldPrimaryGrayTextAttributes = @{NSFontAttributeName : [UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightSemibold], NSForegroundColorAttributeName : primaryGrayColor};
     [termsMutableAttributedString setAttributes:semiboldPrimaryGrayTextAttributes range:semiboldPrimaryGrayTextRange];
 
-    NSDictionary *greenTextAttributes = @{NSForegroundColorAttributeName : [UIColor mnz_turquoiseForTraitCollection:self.traitCollection]};
+    NSDictionary *greenTextAttributes = @{NSForegroundColorAttributeName : [self termLinkTextColor]};
     [termsMutableAttributedString setAttributes:greenTextAttributes range:greenTextRange];
 
     self.termsForLosingPasswordLabel.textColor = primaryGrayColor;
@@ -339,23 +343,14 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
 }
 
 - (void)updateAppearance {
-    self.view.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
+    self.view.backgroundColor = [UIColor pageBackgroundForTraitCollection:self.traitCollection];
     
-    self.firstNameInputView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
     [self.firstNameInputView updateAppearance];
-    
-    self.lastNameInputView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
     [self.lastNameInputView updateAppearance];
-    
-    self.emailInputView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
     [self.emailInputView updateAppearance];
-    
-    self.passwordView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
     [self.passwordView updateAppearance];
     
-    self.passwordStrengthIndicatorContainerView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
-    
-    self.retypePasswordView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
+    self.passwordStrengthIndicatorContainerView.backgroundColor = [UIColor pageBackgroundForTraitCollection:self.traitCollection];
     [self.retypePasswordView updateAppearance];
     
     [self setTermsOfServiceAttributedText];

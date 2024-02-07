@@ -735,6 +735,7 @@
 		5DFC8DC224ECEC9B00DDA006 /* StoreUserClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DFC8DC124ECEC9B00DDA006 /* StoreUserClient.swift */; };
 		5DFC8DC524ECF37800DDA006 /* MEGAavatarGeneratingUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DFC8DC424ECF37800DDA006 /* MEGAavatarGeneratingUseCaseTests.swift */; };
 		6D00BD282B1E5D9600370AC7 /* DIContainer+Photos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D00BD272B1E5D9600370AC7 /* DIContainer+Photos.swift */; };
+		6D1272B62B72E69800DAF37D /* PasswordStrengthIndicatorView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1272B52B72E69800DAF37D /* PasswordStrengthIndicatorView+Additions.swift */; };
 		6D39A57929EF456D00348D1C /* ChatContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D39A57829EF456D00348D1C /* ChatContentViewModel.swift */; };
 		6D3D91DE2B4B59C500210D65 /* MEGAAppColor+Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D9A731C2B4619D200894E97 /* MEGAAppColor+Account.swift */; };
 		6D5A19B02A10D33E00FDD5B3 /* MyAccountHallViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D5A19AF2A10D33E00FDD5B3 /* MyAccountHallViewModelTests.swift */; };
@@ -3396,6 +3397,7 @@
 		5DFC8DC124ECEC9B00DDA006 /* StoreUserClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreUserClient.swift; sourceTree = "<group>"; };
 		5DFC8DC424ECF37800DDA006 /* MEGAavatarGeneratingUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MEGAavatarGeneratingUseCaseTests.swift; sourceTree = "<group>"; };
 		6D00BD272B1E5D9600370AC7 /* DIContainer+Photos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DIContainer+Photos.swift"; sourceTree = "<group>"; };
+		6D1272B52B72E69800DAF37D /* PasswordStrengthIndicatorView+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PasswordStrengthIndicatorView+Additions.swift"; sourceTree = "<group>"; };
 		6D18B4D02B44C75600E4ABA8 /* MEGAMacro */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAMacro; sourceTree = "<group>"; };
 		6D39A57829EF456D00348D1C /* ChatContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatContentViewModel.swift; sourceTree = "<group>"; };
 		6D5A19AF2A10D33E00FDD5B3 /* MyAccountHallViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAccountHallViewModelTests.swift; sourceTree = "<group>"; };
@@ -7445,6 +7447,7 @@
 				5D283DF524B6AF05008D0F27 /* MEGAThemeButton.swift */,
 				C45B971A26A7221D00875003 /* MEGAVerticalButton.swift */,
 				5D66F8C724E510510088E5FF /* PaddingLabel.swift */,
+				6D1272B52B72E69800DAF37D /* PasswordStrengthIndicatorView+Additions.swift */,
 				5BB68C9E20359B5300B03C00 /* PasswordStrengthIndicatorView.h */,
 				5BB68C9F20359B5400B03C00 /* PasswordStrengthIndicatorView.m */,
 				5BB68CA020359B5400B03C00 /* PasswordStrengthIndicatorView.xib */,
@@ -14603,6 +14606,7 @@
 				A87FF3C122F8111D00EFD95C /* PasscodeTimeDurationTableViewController.swift in Sources */,
 				240A15402B5503730000CD08 /* PasswordReminderViewController+Additions.swift in Sources */,
 				836AEDDD2018830E00868FC7 /* PasswordReminderViewController.m in Sources */,
+				6D1272B62B72E69800DAF37D /* PasswordStrengthIndicatorView+Additions.swift in Sources */,
 				5BB68CA120359B5400B03C00 /* PasswordStrengthIndicatorView.m in Sources */,
 				C4B4B1652B27C3ED00F78710 /* PasswordView+Additions.swift in Sources */,
 				836AEDE52018AD1F00868FC7 /* PasswordView.m in Sources */,
