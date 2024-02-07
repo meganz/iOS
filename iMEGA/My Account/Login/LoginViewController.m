@@ -269,8 +269,8 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     self.passwordView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
     [self.passwordView updateAppearance];
     
-    [self.forgotPasswordButton setTitleColor:[UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection] forState:UIControlStateNormal];
-    self.forgotPasswordImageView.tintColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
+    [self.forgotPasswordButton setTitleColor: [self forgotPasswordTintColor] forState:UIControlStateNormal];
+    self.forgotPasswordImageView.tintColor = [self forgotPasswordTintColor];
     
     [self.loginButton mnz_setupPrimary:self.traitCollection];
         
@@ -362,11 +362,11 @@ typedef NS_ENUM(NSInteger, TextFieldTag) {
     NSAttributedString *newToMegaAttributedString = [NSAttributedString.alloc
                                                      initWithString:newToMegaString
                                                      attributes:@{NSFontAttributeName : font,
-                                                                  NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
+                                                                  NSForegroundColorAttributeName:[self loginLabelrimaryTextColor]}];
     NSAttributedString *createAccountAttributedString = [NSAttributedString.alloc
                                                          initWithString:createAccountString
                                                          attributes:@{NSFontAttributeName : font,
-                                                                      NSForegroundColorAttributeName:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection]}];
+                                                                      NSForegroundColorAttributeName:[self loginLabelLinkTextColor]}];
     
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] init];
     [attributedString appendAttributedString:newToMegaAttributedString];
