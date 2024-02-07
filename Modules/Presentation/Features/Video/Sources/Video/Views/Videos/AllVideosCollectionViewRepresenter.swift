@@ -2,8 +2,7 @@ import MEGADomain
 import SwiftUI
 
 struct AllVideosCollectionViewRepresenter: UIViewRepresentable {
-    let thumbnailUseCase: any ThumbnailUseCaseProtocol
-    let videos: [NodeEntity]
+    @ObservedObject var viewModel: AllVideosCollectionViewModel
     let videoConfig: VideoConfig
     let router: any VideoRevampRouting
     
@@ -13,8 +12,7 @@ struct AllVideosCollectionViewRepresenter: UIViewRepresentable {
         videoConfig: VideoConfig,
         router: some VideoRevampRouting
     ) {
-        self.thumbnailUseCase = thumbnailUseCase
-        self.videos = videos
+        self.viewModel = AllVideosCollectionViewModel(thumbnailUseCase: thumbnailUseCase, videos: videos)
         self.videoConfig = videoConfig
         self.router = router
     }
@@ -31,7 +29,7 @@ struct AllVideosCollectionViewRepresenter: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: UICollectionView, context: Context) {
-        context.coordinator.reloadData(with: videos)
+        context.coordinator.reloadData(with: viewModel.videos)
     }
     
     func makeCoordinator() -> AllVideosCollectionViewCoordinator {

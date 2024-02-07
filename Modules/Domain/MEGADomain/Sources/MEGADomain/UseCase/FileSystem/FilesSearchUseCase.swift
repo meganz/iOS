@@ -16,6 +16,9 @@ public protocol FilesSearchUseCaseProtocol {
                 cancelPreviousSearchIfNeeded: Bool) async throws -> [NodeEntity]
     
     func onNodesUpdate(with nodesUpdateHandler: @escaping ([NodeEntity]) -> Void)
+    
+    func stopNodesUpdateListener()
+    func startNodesUpdateListener()
 }
 
 public final class FilesSearchUseCase: FilesSearchUseCaseProtocol {
@@ -84,6 +87,17 @@ public final class FilesSearchUseCase: FilesSearchUseCaseProtocol {
     
     public func onNodesUpdate(with nodesUpdateHandler: @escaping ([NodeEntity]) -> Void) {
         self.nodesUpdateHandler = nodesUpdateHandler
+    }
+    
+    public func stopNodesUpdateListener() {
+        self.nodesUpdateHandler = nil
+        self.nodesUpdateListenerRepo.onNodesUpdateHandler = nil
+    }
+    
+    public func startNodesUpdateListener() {
+        if nodesUpdateHandler == nil {
+            addNodesUpdateHandler()
+        }
     }
     
     // MARK: - Private

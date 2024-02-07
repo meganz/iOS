@@ -8,6 +8,23 @@ final class AllVideosCollectionViewCoordinator: NSObject {
         case allVideos
     }
     
+    /// Row Item type to support diffable data source diffing while protecting `NodeEntity` agasint the `DiffableDataSource` API.
+    private struct RowItem: Hashable {
+        let node: NodeEntity
+        
+        init(node: NodeEntity) {
+            self.node = node
+        }
+        
+        static func == (lhs: RowItem, rhs: RowItem) -> Bool {
+            lhs.node.id == rhs.node.id
+            && lhs.node.isFavourite == rhs.node.isFavourite
+            && lhs.node.name == rhs.node.name
+            && lhs.node.label == rhs.node.label
+            && lhs.node.isPublic == rhs.node.isPublic
+        }
+    }
+    
     private let videoConfig: VideoConfig
     private let representer: AllVideosCollectionViewRepresenter
     
@@ -15,7 +32,7 @@ final class AllVideosCollectionViewCoordinator: NSObject {
     private typealias CellRegistration = UICollectionView.CellRegistration<UICollectionViewCell, Item>
     private typealias DiffableDataSource = UICollectionViewDiffableDataSource<Section, Item>
     private typealias DiffableDataSourceSnapshot = NSDiffableDataSourceSnapshot<Section, Item>
-    private typealias Item = NodeEntity
+    private typealias Item = RowItem
     
     init(_ representer: AllVideosCollectionViewRepresenter) {
         self.representer = representer
@@ -30,12 +47,12 @@ final class AllVideosCollectionViewCoordinator: NSObject {
     }
     
     private func makeDataSource(for collectionView: UICollectionView) -> DiffableDataSource {
-        let cellRegistration = CellRegistration { [weak self] cell, _, video in
+        let cellRegistration = CellRegistration { [weak self] cell, _, rowItem in
             guard let self else { return }
             
             let cellViewModel = VideoCellViewModel(
-                thumbnailUseCase: representer.thumbnailUseCase,
-                nodeEntity: video
+                thumbnailUseCase: representer.viewModel.thumbnailUseCase,
+                nodeEntity: rowItem.node
             )
             configureCell(cell, cellViewModel: cellViewModel)
         }
@@ -48,7 +65,7 @@ final class AllVideosCollectionViewCoordinator: NSObject {
     func reloadData(with videos: [NodeEntity]) {
         var snapshot = DiffableDataSourceSnapshot()
         snapshot.appendSections([.allVideos])
-        snapshot.appendItems(videos, toSection: .allVideos)
+        snapshot.appendItems(videos.map(RowItem.init(node:)), toSection: .allVideos)
         dataSource?.apply(snapshot, animatingDifferences: false)
     }
     
@@ -91,7 +108,7 @@ final class AllVideosCollectionViewCoordinator: NSObject {
 
 extension AllVideosCollectionViewCoordinator: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let videos = dataSource?.snapshot().itemIdentifiers ?? []
+        let videos = (dataSource?.snapshot().itemIdentifiers ?? []).map(\.node)
         guard let video = videos[safe: indexPath.item] else { return }
         representer.router.openMediaBrowser(for: video, allVideos: videos)
     }
