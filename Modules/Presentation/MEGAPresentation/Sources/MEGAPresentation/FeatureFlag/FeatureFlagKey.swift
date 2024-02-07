@@ -11,4 +11,5 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable {
     case designToken = "MEGADesignToken"
     case newCloudDrive = "New Cloud Drive"
     case videoRevamp = "Video Revamp"
+    case notificationCenter = "NotificationCenter"
 }
