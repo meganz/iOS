@@ -1,5 +1,7 @@
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
+import MEGAPresentation
 import SwiftUI
 
 public struct AccountPlanCyclePickerView: View {
@@ -28,6 +30,7 @@ public struct AccountPlanCyclePickerView: View {
                 .bold()
                 .padding(.horizontal, 10)
                 .padding(.vertical, 6)
+                .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.success.swiftUI : Color.primary)
                 .background(subMessageBackgroundColor)
                 .cornerRadius(10)
                 .padding(.bottom, 15)

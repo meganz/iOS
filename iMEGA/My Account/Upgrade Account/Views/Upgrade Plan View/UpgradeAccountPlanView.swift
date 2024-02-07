@@ -1,6 +1,8 @@
 import Accounts
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
+import MEGAPresentation
 import MEGASwiftUI
 import Settings
 import SwiftUI
@@ -23,7 +25,9 @@ struct UpgradeAccountPlanView: View {
             viewModel.isDismiss = true
         } label: {
             Text(Strings.Localizable.cancel)
-                .foregroundColor(MEGAAppColor.Account.upgradeAccountPrimaryGrayText.color)
+                .foregroundColor(
+                    isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : MEGAAppColor.Account.upgradeAccountPrimaryGrayText.color
+                )
         }
         .padding()
     }
@@ -36,7 +40,9 @@ struct UpgradeAccountPlanView: View {
                 LazyVStack(pinnedViews: .sectionFooters) {
                     UpgradeSectionHeaderView(currentPlanName: viewModel.currentPlanName,
                                              selectedCycleTab: $viewModel.selectedCycleTab,
-                                             subMessageBackgroundColor: MEGAAppColor.Account.upgradeAccountSubMessageBackground.color)
+                                             subMessageBackgroundColor:
+                                                isDesignTokenEnabled ? TokenColors.Notifications.notificationSuccess.swiftUI :
+                                                MEGAAppColor.Account.upgradeAccountSubMessageBackground.color)
                     
                     Section {
                         ForEach(viewModel.filteredPlanList, id: \.self) { plan in

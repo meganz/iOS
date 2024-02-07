@@ -13,12 +13,13 @@ let package = Package(
             targets: ["MEGASwiftUI"])
     ],
     dependencies: [
-        .package(path: "../MEGAUI")
+        .package(path: "../MEGAUI"),
+        .package(path: "../../MEGAPresentation")
     ],
     targets: [
         .target(
             name: "MEGASwiftUI",
-            dependencies: ["MEGAUI"],
+            dependencies: ["MEGAUI", "MEGAPresentation"],
             swiftSettings: [.enableUpcomingFeature("ExistentialAny")]),
         .testTarget(
             name: "MEGASwiftUITests",

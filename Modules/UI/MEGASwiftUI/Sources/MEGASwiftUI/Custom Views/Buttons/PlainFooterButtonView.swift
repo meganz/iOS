@@ -1,3 +1,5 @@
+import MEGADesignToken
+import MEGAPresentation
 import SwiftUI
 
 public struct PlainFooterButtonView: View {
@@ -17,9 +19,11 @@ public struct PlainFooterButtonView: View {
     public var body: some View {
         Button(action: action) {
             Text(title)
-                .foregroundColor(textColor)
                 .font(.footnote)
                 .bold()
+                .foregroundStyle(
+                    isDesignTokenEnabled ? TokenColors.Link.primary.swiftUI : textColor
+                )
         }
     }
 }
