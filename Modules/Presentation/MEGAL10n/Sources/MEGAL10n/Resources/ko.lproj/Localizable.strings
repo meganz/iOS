@@ -500,10 +500,6 @@
 "permissionTitle"="권한 오류";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionMessage"="이 폴더에 대한 권한을 확인하세요";
-/* Message shown when a folder have been shared */
-"sharedFolder_success"="폴더 공유됨";
-/* Success message for sharing multiple folders. */
-"sharedFolders_success"="폴더 %d개 공유됨";
 /* Button title that triggers the importing link action */
 "Import to Cloud Drive"="들여오기";
 /* Message shown when a file has been imported */
@@ -3392,12 +3388,6 @@
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="매주";
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="월간";
-/* Create Schedule Meeting: Footnote shown to the user when the day selected is 29 of the month and the recurrence option is monthly. */
-"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayTwentyNineSelected.footNote"="몇몇 달은 29일이 없습니다. 이러한 달은 되풀이 항목이 그 달의 마지막 날로 예약됩니다.";
-/* Create Schedule Meeting: Footnote shown to the user when the day selected is 30 of the month and the recurrence option is monthly. */
-"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtySelected.footNote"="몇몇 달은 30일이 없습니다. 이러한 달은 되풀이 항목이 그 달의 마지막 날로 예약됩니다.";
-/* Create Schedule Meeting: Footnote shown to the user when the day selected is 31 of the month and the recurrence option is monthly. */
-"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtyFirstSelected.footNote"="몇몇 달은 31일이 없습니다. 이러한 달은 되풀이 항목이 그 달의 마지막 날로 예약됩니다.";
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="카메라";
 /* Device Center title */
@@ -3976,3 +3966,11 @@
 "calls.participantsInCall.muteParticipant.error"="%@ 님을 음소거 하던 중 오류";
 /* Calls: Muted by a host message */
 "calls.participantsInCall.mutedBy"="당신이 %@ 님에 의해 음소거 되었습니다";
+/* Calls: SFU protocol is outdated then show update alert dialog with title */
+"calls.sfuOutdated.updateAppAlert.title"="업데이트가 필요합니다";
+/* Calls: SFU protocol is outdated then show update alert dialog with message */
+"calls.sfuOutdated.updateAppAlert.message"="앱의 최신 버전을 이용하고 있지 않아서 통화를 시작하거나 참여할 수 없습니다. 계속 하려면 지금 업데이트 하세요.";
+/* Calls: SFU protocol is outdated then show update alert dialog with update button */
+"calls.sfuOutdated.updateAppAlert.button.update"="변경";
+/* Calls: SFU protocol is outdated then show update alert dialog, with skip button */
+"calls.sfuOutdated.updateAppAlert.button.skip"="건너뛰기";

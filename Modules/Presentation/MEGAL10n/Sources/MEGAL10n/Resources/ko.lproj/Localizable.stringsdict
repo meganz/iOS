@@ -2372,6 +2372,22 @@
         <string>매 %d개월마다, [ordinalNumber] [weekDayName]</string>
       </dict>
     </dict>
+    <key>meetings.scheduled.create.monthlyRecurrenceOption.beyondTheLastDayOfTheMonthSelected.footNote</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Some months don’t have %d day. For these months, the occurrence will be scheduled for the last day of the month.</string>
+        <key>other</key>
+        <string>Some months don’t have %d days. For these months, the occurrence will be scheduled for the last day of the month.</string>
+      </dict>
+    </dict>
     <key>meetings.scheduleMeeting.create.selectedRecurrence.daily.customInterval</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -2522,10 +2538,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Files sent to %d chat</string>
         <key>other</key>
-        <string>Files sent to %d chats</string>
+        <string>%d개의 대화에 파일을 전송했습니다</string>
       </dict>
     </dict>
     <key>contacts.invite.emailAddress.inviteNumberOfContacts</key>
@@ -2554,6 +2568,22 @@
         <string>d</string>
         <key>other</key>
         <string>참여자 %d명</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.shareFolders.successMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Folder shared</string>
+        <key>other</key>
+        <string>%d folders shared</string>
       </dict>
     </dict>
   </dict>

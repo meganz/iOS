@@ -500,10 +500,6 @@
 "permissionTitle"="權限錯誤";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionMessage"="請檢查您被授予此資料夾的權限";
-/* Message shown when a folder have been shared */
-"sharedFolder_success"="資料夾已共享";
-/* Success message for sharing multiple folders. */
-"sharedFolders_success"="已共享%d個資料夾";
 /* Button title that triggers the importing link action */
 "Import to Cloud Drive"="匯入";
 /* Message shown when a file has been imported */
@@ -1639,7 +1635,7 @@
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
 "beginSetup"="開始設定";
 /* A message on the Verify Login page telling the user to enter their 2FA code. */
-"pleaseEnterTheSixDigitCode"="請輸入您身份驗證程式所生成的6位數字代碼。";
+"pleaseEnterTheSixDigitCode"="輸入您的身份驗證器應用程式生成的6位數字代碼。";
 /* Title of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthentication"="為什麼需要雙重驗證？";
 /* Description for the ‘Two-Factor Authentication’ in the security settings section. */
@@ -2575,7 +2571,7 @@
 /* Backup setup warning message */
 "dialog.backup.setup.message"="使用我們的桌面應用程式確保您的備份資料夾與您的MEGA雲端同步。";
 /* Change the default backup location warning title. %@ is a folder */
-"dialog.backup.folder.location.warning.title"="移至“%@”";
+"dialog.backup.folder.location.warning.title"="移動「%@」";
 /* Change the default backup location warning message */
 "dialog.root.backup.folder.location.warning.message"="您正在更改預設的備份資料夾位置。這可能會影響您將來查找備份資料夾。因此請記住它的位置，以便將來可以找到它。";
 /* Change the default backup location warning message */
@@ -3392,12 +3388,6 @@
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="每週";
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="每月";
-/* Create Schedule Meeting: Footnote shown to the user when the day selected is 29 of the month and the recurrence option is monthly. */
-"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayTwentyNineSelected.footNote"="有些月份沒有29天。對於這些月份，事件將安排在該月的最後一天。";
-/* Create Schedule Meeting: Footnote shown to the user when the day selected is 30 of the month and the recurrence option is monthly. */
-"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtySelected.footNote"="有些月份沒有30天。對於這些月份，事件將安排在該月的最後一天。";
-/* Create Schedule Meeting: Footnote shown to the user when the day selected is 31 of the month and the recurrence option is monthly. */
-"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtyFirstSelected.footNote"="有些月份沒有31天。對於這些月份，事件將安排在該月的最後一天。";
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="相機";
 /* Device Center title */
@@ -3897,9 +3887,9 @@
 /* Alert button for user accepting call screen recording */
 "calls.screenRecording.alert.action.learnMore"="瞭解更多";
 /* Notification message about someone started to record call screen */
-"calls.screenRecording.notification.recording.started"="%@已開始錄影";
+"calls.screenRecording.notification.recording.started"="%@已開始錄製";
 /* Notification message about someone stopped to record call screen */
-"calls.screenRecording.notification.recording.stopped"="%@已停止錄影";
+"calls.screenRecording.notification.recording.stopped"="%@已停止錄製";
 /* Text for a UI label indicating that the call screen is being recorded */
 "calls.screenRecording.screenIndicator.label"="錄製中";
 /* Camera uploads status banner - uploads in progress title */
@@ -3976,3 +3966,11 @@
 "calls.participantsInCall.muteParticipant.error"="將%@設為靜音時出錯";
 /* Calls: Muted by a host message */
 "calls.participantsInCall.mutedBy"="%@已將您設為靜音";
+/* Calls: SFU protocol is outdated then show update alert dialog with title */
+"calls.sfuOutdated.updateAppAlert.title"="需要更新";
+/* Calls: SFU protocol is outdated then show update alert dialog with message */
+"calls.sfuOutdated.updateAppAlert.message"="您沒有使用我們應用程式的最新版本，因此您無法啟動或加入通話。立即更新以繼續。";
+/* Calls: SFU protocol is outdated then show update alert dialog with update button */
+"calls.sfuOutdated.updateAppAlert.button.update"="更新";
+/* Calls: SFU protocol is outdated then show update alert dialog, with skip button */
+"calls.sfuOutdated.updateAppAlert.button.skip"="略過";

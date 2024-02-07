@@ -493,17 +493,13 @@
 /* Success message shown when you have moved 1 file and {1+} folders to the rubbish bin */
 "fileFoldersMovedToRubbishBinMessage"="1 файл и %d папок(и) перемещены в Корзину";
 /* Success message shown when you have moved {1+} files and 1 folder to the rubbish bin */
-"filesFolderMovedToRubbishBinMessage"="%d файлов(а) и 1 папка перемещены в Корзину";
+"filesFolderMovedToRubbishBinMessage"="Файлы (%d) и 1 папка перемещены в Корзину";
 /* Success message shown when you have moved [A] = {1+} files and [B] = {1+} folders to the rubbish bin */
-"filesFoldersMovedToRubbishBinMessage"="[A] файлов(а) и [B] папок(и) были перемещены в Корзину";
+"filesFoldersMovedToRubbishBinMessage"="Файлы ([A]) и папки ([B]) были перемещены в Корзину";
 /* Error title shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionTitle"="Недостаточно прав доступа";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionMessage"="Проверьте права доступа на эту папку";
-/* Message shown when a folder have been shared */
-"sharedFolder_success"="Доступ к папке открыт";
-/* Success message for sharing multiple folders. */
-"sharedFolders_success"="Папки перемещены (%d)";
 /* Button title that triggers the importing link action */
 "Import to Cloud Drive"="Импорт";
 /* Message shown when a file has been imported */
@@ -3392,12 +3388,6 @@
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="Еженедельно";
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="Ежемесячно";
-/* Create Schedule Meeting: Footnote shown to the user when the day selected is 29 of the month and the recurrence option is monthly. */
-"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayTwentyNineSelected.footNote"="В некоторых месяцах меньше 29 дней. Для них повторение будет запланировано на последний день месяца.";
-/* Create Schedule Meeting: Footnote shown to the user when the day selected is 30 of the month and the recurrence option is monthly. */
-"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtySelected.footNote"="В некоторых месяцах меньше 30 дней. Для них повторение будет запланировано на последний день месяца.";
-/* Create Schedule Meeting: Footnote shown to the user when the day selected is 31 of the month and the recurrence option is monthly. */
-"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtyFirstSelected.footNote"="В некоторых месяцах меньше 31 дня. Для них повторение будет запланировано на последний день месяца.";
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="Камера";
 /* Device Center title */
@@ -3975,4 +3965,12 @@
 /* Calls: Mute specific participant error message */
 "calls.participantsInCall.muteParticipant.error"="Не удалось приглушить %@";
 /* Calls: Muted by a host message */
-"calls.participantsInCall.mutedBy"="You’ve been muted by %@";
+"calls.participantsInCall.mutedBy"="Пользователь %@ пришлушил вас";
+/* Calls: SFU protocol is outdated then show update alert dialog with title */
+"calls.sfuOutdated.updateAppAlert.title"="Требуется обновление";
+/* Calls: SFU protocol is outdated then show update alert dialog with message */
+"calls.sfuOutdated.updateAppAlert.message"="У вас не последняя версия нашего приложения, поэтому вы не можете начинать звонки или присоединяться к ним. Обновите приложение, чтобы продолжить.";
+/* Calls: SFU protocol is outdated then show update alert dialog with update button */
+"calls.sfuOutdated.updateAppAlert.button.update"="Изменить";
+/* Calls: SFU protocol is outdated then show update alert dialog, with skip button */
+"calls.sfuOutdated.updateAppAlert.button.skip"="Пропустить";

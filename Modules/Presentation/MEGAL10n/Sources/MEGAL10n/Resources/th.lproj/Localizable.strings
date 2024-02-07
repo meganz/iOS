@@ -500,10 +500,6 @@
 "permissionTitle"="ข้อผิดพลาดในสิทธิ์";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionMessage"="ตรวจสอบสิทธิ์ของคุณบนโฟลเดอร์นี้";
-/* Message shown when a folder have been shared */
-"sharedFolder_success"="โฟลเดอร์ที่แชร์";
-/* Success message for sharing multiple folders. */
-"sharedFolders_success"="แชร์โฟลเดอร์ %d รายการแล้ว";
 /* Button title that triggers the importing link action */
 "Import to Cloud Drive"="นำเข้า";
 /* Message shown when a file has been imported */
@@ -1639,7 +1635,7 @@
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
 "beginSetup"="เริ่มต้นการตั้งค่า";
 /* A message on the Verify Login page telling the user to enter their 2FA code. */
-"pleaseEnterTheSixDigitCode"="กรุณากรอกรหัส 6 หลักที่สร้างโดยแอปตัวรับรองความถูกต้องของคุณ";
+"pleaseEnterTheSixDigitCode"="กรอกรหัส 6 หลักที่แอปตัวรับรองความถูกต้องของคุณสร้างขึ้น";
 /* Title of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthentication"="ทำไมคุณต้องมีการรับรองความถูกต้องด้วยสองปัจจัย";
 /* Description for the ‘Two-Factor Authentication’ in the security settings section. */
@@ -3392,12 +3388,6 @@
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="รายสัปดาห์";
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="รายเดือน";
-/* Create Schedule Meeting: Footnote shown to the user when the day selected is 29 of the month and the recurrence option is monthly. */
-"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayTwentyNineSelected.footNote"="บางเดือนจะไม่มี 29 วัน แต่สำหรับเดือนนี้ เหตุการณ์จะจัดขึ้นในวันสุดท้ายของเดือนแทน";
-/* Create Schedule Meeting: Footnote shown to the user when the day selected is 30 of the month and the recurrence option is monthly. */
-"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtySelected.footNote"="บางเดือนจะไม่มี 30 วัน แต่สำหรับเดือนนี้ เหตุการณ์จะจัดขึ้นในวันสุดท้ายของเดือนแทน";
-/* Create Schedule Meeting: Footnote shown to the user when the day selected is 31 of the month and the recurrence option is monthly. */
-"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtyFirstSelected.footNote"="บางเดือนจะไม่มี 31 วัน แต่สำหรับเดือนนี้ เหตุการณ์จะจัดขึ้นในวันสุดท้ายของเดือนแทน";
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="กล้อง";
 /* Device Center title */
@@ -3976,3 +3966,11 @@
 "calls.participantsInCall.muteParticipant.error"="ปิดเสียง %@ ไม่สำเร็จ";
 /* Calls: Muted by a host message */
 "calls.participantsInCall.mutedBy"="%@ ได้ปิดเสียงคุณ";
+/* Calls: SFU protocol is outdated then show update alert dialog with title */
+"calls.sfuOutdated.updateAppAlert.title"="Update required";
+/* Calls: SFU protocol is outdated then show update alert dialog with message */
+"calls.sfuOutdated.updateAppAlert.message"="You’re not using the latest version of our app so you can’t start or join calls. Update now to continue.";
+/* Calls: SFU protocol is outdated then show update alert dialog with update button */
+"calls.sfuOutdated.updateAppAlert.button.update"="อัปเดต";
+/* Calls: SFU protocol is outdated then show update alert dialog, with skip button */
+"calls.sfuOutdated.updateAppAlert.button.skip"="ข้าม";

@@ -243,7 +243,7 @@
 /* Slideshow Preference Setting include subFolders */
 "slideshow.preferenceSetting.slideshowOptions.subFolders"="Załącz podfoldery";
 /* Title shown when the Offline section is empty, when you don't have download any files. Keep the upper. */
-"offlineEmptyState_title"="Nie masz plików w Offline";
+"offlineEmptyState_title"="Nie masz plików w lokalnych";
 /* Title shown when the Contacts section is empty, when you have not added any contact. */
 "contactsEmptyState_title"="Brak kontaktów";
 /* Title shown when there's no incoming Shared Items */
@@ -500,10 +500,6 @@
 "permissionTitle"="Błąd uprawnień";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionMessage"="Sprawdź swoje uprawnienia do tego katalogu";
-/* Message shown when a folder have been shared */
-"sharedFolder_success"="Katalog został zapisany";
-/* Success message for sharing multiple folders. */
-"sharedFolders_success"="%d katalogów udostępnionych";
 /* Button title that triggers the importing link action */
 "Import to Cloud Drive"="Importować";
 /* Message shown when a file has been imported */
@@ -603,7 +599,7 @@
 /* String shown when multi selection is enabled and the user has more than one item selected. */
 "xSelected"="%d wybrano";
 /* Title of the Offline section */
-"offline"="Niedostępny";
+"offline"="Lokalne";
 /* Title of the Contacts section */
 "contactsTitle"="Kontakty";
 /* Label for any ‘Requests’ button, link, text, title, etc. On iOS is used to go to the Contact request section from Contacts */
@@ -829,13 +825,13 @@
 /* Alert title shown when you have exported your MEGA Recovery Key */
 "masterKeyExported"="Klucz zapasowy został wyeksportowany";
 /* Alert message shown to explain that the Recovery Key was saved on your device. Also that you can access it through iTunes. And ends with and security advise. */
-"masterKeyExported_alertMessage"="Klucz odzyskiwania został wyeksportowany do sekcji Offline jako MEGA-KLUCZODZYSKIWANIA.txt. Uwaga: Zostanie on usunięty po wylogowaniu, proszę przechowywać go w bezpiecznym miejscu.";
+"masterKeyExported_alertMessage"="Klucz odzyskiwania został wyeksportowany do sekcji lokalnej jako MEGA-RECOVERYKEY.txt.. Uwaga: Zostanie on usunięty po wylogowaniu, proszę przechowywać go w bezpiecznym miejscu.";
 /* Title header that refers to where do you do the actions 'Clear Offlines files' and 'Clear cache' inside 'Settings' -> 'Advanced' section" */
 "onYourDevice"="Na Twoim urządzeniu";
 /* Section title where you can 'Clear Offline files' of your MEGA app */
-"clearOfflineFiles"="Usuń pliki offline";
+"clearOfflineFiles"="Usuń pliki lokalne";
 /* Question shown after you tap on 'Settings' - 'File Management' - 'Clear Offline files' to confirm the action */
-"settings.fileManagement.alert.clearAllOfflineFiles"="Wyczyścić wszystkie pliki offline?";
+"settings.fileManagement.alert.clearAllOfflineFiles"="Wyczyścić wszystkie pliki lokalne?";
 /* Section title where you can 'Clear Cache' of your MEGA app */
 "clearCache"="Wyczyść pamięć podręczną";
 /* "Title header that refers to where do you do the action 'Empty Rubbish Bin' inside 'Settings' -> 'Advanced' section" */
@@ -1179,15 +1175,15 @@
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="Odblokuj tryb debug";
 /* Alert message shown when the DEBUG mode is enabled */
-"enableDebugMode_message"="Dziennik zdarzeń zostanie utworzony w trybie Offlice (MEGAiOS.log). Dziennik może posiadać dane powiązane z Twoim kontem.";
+"enableDebugMode_message"="Dziennik zdarzeń zostanie utworzony w trybie lokalnym (MEGAiOS.log). Dziennik może posiadać dane powiązane z Twoim kontem.";
 /* Alert title shown when the DEBUG mode is disabled */
 "disableDebugMode_title"="Zablokuj tryb debug";
 /* Alert message shown when the DEBUG mode is disabled */
-"disableDebugMode_message"="Plik (MEGAiOS.log) zostanie usunięty z trybu Offline.";
+"disableDebugMode_message"="Plik (MEGAiOS.log) zostanie usunięty z trybu lokalnego.";
 /* Alert message shown when the user remove one item from the Offline section */
-"removeItemFromOffline"="Czy na pewno chcesz usunąć ten plik z trybu Offline?";
+"removeItemFromOffline"="Czy na pewno chcesz usunąć ten plik z trybu lokalnego?";
 /* Alert message shown when the user remove various items from the Offline section */
-"removeItemsFromOffline"="Czy na pewno chcesz usunąć te pliki z trybu Offline?";
+"removeItemsFromOffline"="Czy na pewno chcesz usunąć te pliki z trybu lokalnego?";
 /* Giphy section header */
 "Send GIF"="Wyślij GIF";
 /* This is the placeholder text for GIPHY search */
@@ -1615,7 +1611,7 @@
 /* Alert title shown when users try to stream an unsupported audio/video file */
 "fileNotSupported"="Plik nie jest obsługiwany";
 /* Alert message shown when users try to stream an unsupported audio/video file */
-"message_fileNotSupported"="Możesz zapisać go w trybie offline i otworzyć w kompatybilnej aplikacji.";
+"message_fileNotSupported"="Możesz zapisać go w trybie lokalnym i otworzyć w kompatybilnej aplikacji.";
 /* Item of a menu to forward a message chat to another chatroom */
 "forward"="Do przodu";
 /* Success message shown after forwarding messages to other chats */
@@ -1639,7 +1635,7 @@
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
 "beginSetup"="Rozpocznij instalację";
 /* A message on the Verify Login page telling the user to enter their 2FA code. */
-"pleaseEnterTheSixDigitCode"="Wprowadź 6-cyfrowy kod wygenerowany przez aplikację Authenticator.";
+"pleaseEnterTheSixDigitCode"="Wprowadź 6-cyfrowy kod wygenerowany przez aplikację uwierzytelniającą.";
 /* Title of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthentication"="Dlaczego potrzebujesz uwierzytelniania dwuetapowego?";
 /* Description for the ‘Two-Factor Authentication’ in the security settings section. */
@@ -1671,7 +1667,7 @@
 /* Settings section title where you can enable the option to 'Save Videos in Photos' */
 "Save Videos in Photos"="Zapisz wideo w Zdjęciach";
 /* Footer text shown under the settings for download options 'Save Images/Videos in Library' */
-"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Zdjęcia lub pobrane filmy będą przechowywane w bibliotece multimediów urządzenia zamiast w sekcji Offline.";
+"Images and/or videos downloaded will be stored in the device’s media library instead of the Offline section."="Zdjęcia lub pobrane filmy będą przechowywane w bibliotece multimediów urządzenia zamiast w sekcji lokalne.";
 /* Header title of Camera section on MEGA Settings > Advanced screen. */
 "Camera"="Kamera";
 /* Settings section title where you can enable the option to 'Save in Photos' the images or videos taken from your camera in the MEGA app */
@@ -2247,9 +2243,9 @@
 /* Warning message to alert user about logout in My Account section if has transfers in progress. */
 "When you logout, ongoing transfers will be cancelled."="Po wylogowaniu trwające przelewy zostaną anulowane.";
 /* Warning message to alert user about logout in My Account section if has offline files. */
-"When you logout, files from your Offline section will be deleted from your device."="Kiedy się wylogujesz, pliki z sekcji Offline zostaną usunięte z Twojego urządzenia.";
+"When you logout, files from your Offline section will be deleted from your device."="Kiedy się wylogujesz, pliki z sekcji lokalne zostaną usunięte z Twojego urządzenia.";
 /* Warning message to alert user about logout in My Account section if has offline files and transfers in progress. */
-"When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="Po wylogowaniu pliki z sekcji Offline zostaną usunięte z Twojego urządzenia, a trwające transfery zostaną anulowane.";
+"When you logout, files from your Offline section will be deleted from your device and ongoing transfers will be cancelled."="Po wylogowaniu pliki z sekcji lokalne zostaną usunięte z Twojego urządzenia, a trwające transfery zostaną anulowane.";
 /* Default title of an empty chat. */
 "Chat created on %s1"="Czat utworzony na %s1";
 /* Title shown when there are no shared files */
@@ -2503,13 +2499,13 @@
 /* Title for the QuickAccess widget */
 "Quick Access"="Szybki dostęp";
 /* Text description for the QuickAccess widget */
-"Quickly access files on Recents, Favourites, or Offline section"="Szybki dostęp do plików w folderach Ostatnie, Ulubione lub w sekcji Offline";
+"Quickly access files on Recents, Favourites, or Offline section"="Szybki dostęp do plików w folderach Ostatnie, Ulubione lub w sekcji lokalne";
 /* Text description for the Favourites QuickAccess widget */
 "Quickly access files on Favourites section"="Szybki dostęp do plików z sekcji Ulubione";
 /* Text description for the Recents QuickAccess widget */
 "Quickly access files on Recents section"="Szybki dostęp do plików z sekcji Ostatnio dodane";
 /* Text description for the Offline QuickAccess widget */
-"Quickly access files on Offline section"="Szybki dostęp do plików z sekcji Offline";
+"Quickly access files on Offline section"="Szybki dostęp do plików z sekcji lokalne";
 /* Dialog title for the no enough device storage screen */
 "The device does not have enough space for MEGA to run properly."="Urządzenie nie ma wystarczająco dużo miejsca, aby MEGA działała prawidłowo.";
 /* Dialog description for the no enough device storage screen */
@@ -2535,7 +2531,7 @@
 /* Dialog button text for the change launch tab screen */
 "Change Setting"="Zmień ustawienie";
 /* Offline log out warning message */
-"offline.logOut.warning.message"="Wylogowanie powoduje usunięcie zawartości offline.";
+"offline.logOut.warning.message"="Wylogowanie powoduje usunięcie zawartości lokalnej.";
 /* A message shown when uploading to an incoming share and the owner’s account is over its storage quota. */
 "transfer.cell.shareOwnerStorageQuota.infoLabel"="Właściciel przekroczył limit pamięci.";
 /* An error message which is shown when we want to share a file with somebody who has used all the storage space in their MEGA account. */
@@ -3059,7 +3055,7 @@
 /* Meetings: Notification message to be shown to the user when the timer is set and call is going to end after the timer duration */
 "meetings.notification.EndCallTimerDuration"="Połączenie zakończy się za %@";
 /* Text for the action of downloading an item to the offline section */
-"general.downloadToOffline"="Udostępnij w trybie offline";
+"general.downloadToOffline"="Udostępnij w trybie lokalnym";
 /* Text for the popup displayed when you try to download file to photos while file is already being downloaded */
 "general.fileIsBeingDownloaded"="Plik jest już pobierany";
 /* Button and title text that ends the meeting for all */
@@ -3392,12 +3388,6 @@
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="Tygodniowo";
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="Miesięcznie";
-/* Create Schedule Meeting: Footnote shown to the user when the day selected is 29 of the month and the recurrence option is monthly. */
-"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayTwentyNineSelected.footNote"="Niektóre miesiące nie mają 29 dni. W przypadku tych miesięcy zdarzenie zostanie zaplanowane na ostatni dzień miesiąca.";
-/* Create Schedule Meeting: Footnote shown to the user when the day selected is 30 of the month and the recurrence option is monthly. */
-"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtySelected.footNote"="Niektóre miesiące nie mają 30 dni. W przypadku tych miesięcy zdarzenie zostanie zaplanowane na ostatni dzień miesiąca.";
-/* Create Schedule Meeting: Footnote shown to the user when the day selected is 31 of the month and the recurrence option is monthly. */
-"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtyFirstSelected.footNote"="Niektóre miesiące nie mają 31 dni. W przypadku tych miesięcy zdarzenie zostanie zaplanowane na ostatni dzień miesiąca.";
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="Kamera";
 /* Device Center title */
@@ -3419,7 +3409,7 @@
 /* Device Center backup disabled status */
 "device.center.backup.disabled.status.message"="Zablokowane";
 /* Device Center backup offline status */
-"device.center.backup.offline.status.message"="Niedostępny";
+"device.center.backup.offline.status.message"="Lokalne";
 /* Device Center backup backup stopped status */
 "device.center.backup.backupStopped.status.message"="Kopia zapasowa zatrzymana";
 /* Device Center backup paused status */
@@ -3975,4 +3965,12 @@
 /* Calls: Mute specific participant error message */
 "calls.participantsInCall.muteParticipant.error"="Błąd wyciszania %@";
 /* Calls: Muted by a host message */
-"calls.participantsInCall.mutedBy"="You’ve been muted by %@";
+"calls.participantsInCall.mutedBy"="Zostałeś wyciszony przez %@";
+/* Calls: SFU protocol is outdated then show update alert dialog with title */
+"calls.sfuOutdated.updateAppAlert.title"="Update required";
+/* Calls: SFU protocol is outdated then show update alert dialog with message */
+"calls.sfuOutdated.updateAppAlert.message"="You’re not using the latest version of our app so you can’t start or join calls. Update now to continue.";
+/* Calls: SFU protocol is outdated then show update alert dialog with update button */
+"calls.sfuOutdated.updateAppAlert.button.update"="Zapisz zmiany";
+/* Calls: SFU protocol is outdated then show update alert dialog, with skip button */
+"calls.sfuOutdated.updateAppAlert.button.skip"="Pomiń";

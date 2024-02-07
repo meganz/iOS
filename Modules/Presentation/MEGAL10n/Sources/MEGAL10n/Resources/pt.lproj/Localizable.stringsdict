@@ -3044,6 +3044,24 @@
         <string>A cada %d meses no(a) [ordinalNumber] [weekDayName]</string>
       </dict>
     </dict>
+    <key>meetings.scheduled.create.monthlyRecurrenceOption.beyondTheLastDayOfTheMonthSelected.footNote</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Alguns meses não têm dia %d. Nestes meses, o agendamento será no último dia do mês.</string>
+        <key>many</key>
+        <string>Alguns meses não têm dia %d. Nestes meses, o agendamento será no último dia do mês.</string>
+        <key>other</key>
+        <string>Alguns meses não têm dia %d. Nestes meses, o agendamento será no último dia do mês.</string>
+      </dict>
+    </dict>
     <key>meetings.scheduleMeeting.create.selectedRecurrence.daily.customInterval</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -3276,6 +3294,22 @@
         <string>%d participantes</string>
         <key>other</key>
         <string>%d participantes</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.shareFolders.successMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Folder shared</string>
+        <key>other</key>
+        <string>%d folders shared</string>
       </dict>
     </dict>
   </dict>

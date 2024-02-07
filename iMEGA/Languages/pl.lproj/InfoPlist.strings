@@ -15,7 +15,7 @@
 /*  */
 "quickActionUploadString"="Wgrywane";
 /* Title of the Offline section */
-"quickActionOfflineString"="Niedostępny";
+"quickActionOfflineString"="Lokalne";
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
 "NSLocationWhenInUseUsageDescription"="MEGA uzyskuje dostęp do Twojej lokalizacji, gdy udostępniasz ją swoim kontaktom na czacie.";
 /* Local Network Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why Local Network will be accessed. */

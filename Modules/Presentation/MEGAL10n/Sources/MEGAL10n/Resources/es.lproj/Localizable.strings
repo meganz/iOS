@@ -500,10 +500,6 @@
 "permissionTitle"="Error de permisos";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionMessage"="Comprueba tus permisos sobre esta carpeta";
-/* Message shown when a folder have been shared */
-"sharedFolder_success"="Carpeta compartida";
-/* Success message for sharing multiple folders. */
-"sharedFolders_success"="%d carpetas compartidas";
 /* Button title that triggers the importing link action */
 "Import to Cloud Drive"="Importar";
 /* Message shown when a file has been imported */
@@ -3392,12 +3388,6 @@
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="Semanal";
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="Mensual";
-/* Create Schedule Meeting: Footnote shown to the user when the day selected is 29 of the month and the recurrence option is monthly. */
-"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayTwentyNineSelected.footNote"="Algunos meses no tienen 29 días. Para estos meses, el evento se programará para el último día del mes.";
-/* Create Schedule Meeting: Footnote shown to the user when the day selected is 30 of the month and the recurrence option is monthly. */
-"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtySelected.footNote"="Algunos meses no tienen 30 días. Para estos meses, el evento se programará para el último día del mes.";
-/* Create Schedule Meeting: Footnote shown to the user when the day selected is 31 of the month and the recurrence option is monthly. */
-"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtyFirstSelected.footNote"="Algunos meses no tienen 31 días. Para estos meses, el evento se programará para el último día del mes.";
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="Cámara";
 /* Device Center title */
@@ -3976,3 +3966,11 @@
 "calls.participantsInCall.muteParticipant.error"="Error al silenciar a %@";
 /* Calls: Muted by a host message */
 "calls.participantsInCall.mutedBy"="%@ te ha silenciado";
+/* Calls: SFU protocol is outdated then show update alert dialog with title */
+"calls.sfuOutdated.updateAppAlert.title"="Update required";
+/* Calls: SFU protocol is outdated then show update alert dialog with message */
+"calls.sfuOutdated.updateAppAlert.message"="You’re not using the latest version of our app so you can’t start or join calls. Update now to continue.";
+/* Calls: SFU protocol is outdated then show update alert dialog with update button */
+"calls.sfuOutdated.updateAppAlert.button.update"="Actualizar";
+/* Calls: SFU protocol is outdated then show update alert dialog, with skip button */
+"calls.sfuOutdated.updateAppAlert.button.skip"="Saltar";
