@@ -3382,6 +3382,26 @@
         <string>Каждые %d месяца, [ordinalNumber] [weekDayName]</string>
       </dict>
     </dict>
+    <key>meetings.scheduled.create.monthlyRecurrenceOption.beyondTheLastDayOfTheMonthSelected.footNote</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>В некоторых месяцах меньше %d дня. Для них повторение будет запланировано на последний день месяца.</string>
+        <key>few</key>
+        <string>В некоторых месяцах меньше %d дней. Для них повторение будет запланировано на последний день месяца.</string>
+        <key>many</key>
+        <string>В некоторых месяцах меньше %d дней. Для них повторение будет запланировано на последний день месяца.</string>
+        <key>other</key>
+        <string>В некоторых месяцах меньше %d дня. Для них повторение будет запланировано на последний день месяца.</string>
+      </dict>
+    </dict>
     <key>meetings.scheduleMeeting.create.selectedRecurrence.daily.customInterval</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -3593,9 +3613,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Files sent to %d chat</string>
+        <string>Файлы отправлены в %d чат</string>
+        <key>few</key>
+        <string>Файлы отправлены в %d чата</string>
+        <key>many</key>
+        <string>Файлы отправлены в %d чатов</string>
         <key>other</key>
-        <string>Files sent to %d chats</string>
+        <string>Файлы отправлены в %d чата</string>
       </dict>
     </dict>
     <key>contacts.invite.emailAddress.inviteNumberOfContacts</key>
@@ -3636,6 +3660,22 @@
         <string>%d участников</string>
         <key>other</key>
         <string>%d участника</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.shareFolders.successMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Folder shared</string>
+        <key>other</key>
+        <string>%d folders shared</string>
       </dict>
     </dict>
   </dict>

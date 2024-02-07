@@ -500,10 +500,6 @@
 "permissionTitle"="权限错误";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionMessage"="请检查您对此文件夹的权限";
-/* Message shown when a folder have been shared */
-"sharedFolder_success"="文件夹已共享";
-/* Success message for sharing multiple folders. */
-"sharedFolders_success"="%d文件夹已共享";
 /* Button title that triggers the importing link action */
 "Import to Cloud Drive"="输入";
 /* Message shown when a file has been imported */
@@ -1639,7 +1635,7 @@
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
 "beginSetup"="开始设置";
 /* A message on the Verify Login page telling the user to enter their 2FA code. */
-"pleaseEnterTheSixDigitCode"="请输入验证程序中生成的6位验证码。";
+"pleaseEnterTheSixDigitCode"="输入您的身份验证应用程序生成的6位数代码。";
 /* Title of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthentication"="为什么您需要双重验证？";
 /* Description for the ‘Two-Factor Authentication’ in the security settings section. */
@@ -3392,12 +3388,6 @@
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="每周";
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="每月";
-/* Create Schedule Meeting: Footnote shown to the user when the day selected is 29 of the month and the recurrence option is monthly. */
-"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayTwentyNineSelected.footNote"="有些月份没有第29天。对于这些月份，事件将安排在该月的最后一天。";
-/* Create Schedule Meeting: Footnote shown to the user when the day selected is 30 of the month and the recurrence option is monthly. */
-"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtySelected.footNote"="有些月份没有第30天。对于这些月份，事件将安排在该月的最后一天。";
-/* Create Schedule Meeting: Footnote shown to the user when the day selected is 31 of the month and the recurrence option is monthly. */
-"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtyFirstSelected.footNote"="有些月份没有第31天。对于这些月份，事件将安排在该月的最后一天。";
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="相机";
 /* Device Center title */
@@ -3976,3 +3966,11 @@
 "calls.participantsInCall.muteParticipant.error"="将%@设为静音时出错";
 /* Calls: Muted by a host message */
 "calls.participantsInCall.mutedBy"="%@已将您静音";
+/* Calls: SFU protocol is outdated then show update alert dialog with title */
+"calls.sfuOutdated.updateAppAlert.title"="需要更新";
+/* Calls: SFU protocol is outdated then show update alert dialog with message */
+"calls.sfuOutdated.updateAppAlert.message"="您使用的不是我们应用程序的最新版本，因此您无法发起或加入通话。立即更新以继续。";
+/* Calls: SFU protocol is outdated then show update alert dialog with update button */
+"calls.sfuOutdated.updateAppAlert.button.update"="更新";
+/* Calls: SFU protocol is outdated then show update alert dialog, with skip button */
+"calls.sfuOutdated.updateAppAlert.button.skip"="跳过";

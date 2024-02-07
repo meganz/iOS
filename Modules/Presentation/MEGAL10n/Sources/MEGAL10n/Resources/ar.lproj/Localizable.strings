@@ -259,7 +259,7 @@
 /* Detail message shown when you try to call someone that is not you contact in MEGA. The [X] placeholder will be replaced on runtime for the email of the user */
 "dialog.callAttempt.contactNotInMEGA"="جهة الاتصال الخاصة بك [X] ليست موجودة على ميغا MEGA. من أجل الاتصال عبر المحادثة المشفرة في ميغا MEGA، عليك دعوة جهة الاتصال الخاصة بك";
 /* Text shown when the user sends a contact invitation */
-"inviteSent"="Invitation sent";
+"inviteSent"="تم إرسال الدعوة";
 /* Button title to allow the user postpone an action */
 "later"="لاحقاً";
 /* Title of one of the filters in 'Contacts requests' section. If 'Received' is selected, it will only show the requests which have been recieved. */
@@ -500,10 +500,6 @@
 "permissionTitle"="خطأ في الإذن";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionMessage"="راجع أذوناتك لهذا المجلد";
-/* Message shown when a folder have been shared */
-"sharedFolder_success"="تم مشاركة المجلد";
-/* Success message for sharing multiple folders. */
-"sharedFolders_success"="%d مجلدات مشاركة";
 /* Button title that triggers the importing link action */
 "Import to Cloud Drive"="استيراد";
 /* Message shown when a file has been imported */
@@ -1639,7 +1635,7 @@
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
 "beginSetup"="ابدأ الاعداد";
 /* A message on the Verify Login page telling the user to enter their 2FA code. */
-"pleaseEnterTheSixDigitCode"="يرجى إدخال الرمز المكون من 6 أرقام المولد بتطبيق المصادقة الخاص بك.";
+"pleaseEnterTheSixDigitCode"="أدخل الرمز المكون من 6 أرقام الذي تم إنشاؤه بواسطة تطبيق المصادقة الخاص بك.";
 /* Title of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthentication"="لماذا تحتاج المصادقة المزدوجة 2FA؟";
 /* Description for the ‘Two-Factor Authentication’ in the security settings section. */
@@ -3223,7 +3219,7 @@
 /* In App notification for meetings */
 "inapp.notifications.meetings.header"="الاجتماعات";
 /* In app notification description for one off new meeting invitation */
-"inapp.notifications.scheduledMeetings.oneOff.new.description"="[B][Email][/B] invited you to a meeting scheduled for:";
+"inapp.notifications.scheduledMeetings.oneOff.new.description"="قام [B][Email][/B] بدعوتك إلى اجتماع مجدول بتاريخ:";
 /* In app notification description for scheduled meeting when multiple fields updated for one off meeting */
 "inapp.notifications.scheduledMeetings.oneOff.mulitpleFieldsUpdate.description"="[B][Email] قام بتحديث[/B] الاجتماع إلى";
 /* In app notification description for scheduled meeting description field update */
@@ -3335,7 +3331,7 @@
 /* Schedule meeting add participants field */
 "meetings.scheduleMeeting.addParticipants"="إضافة مشاركين";
 /* Schedule meeting send calendar invite field */
-"meetings.scheduleMeeting.sendCalendarInvite"="Send calendar invitation";
+"meetings.scheduleMeeting.sendCalendarInvite"="إرسال دعوة إلى التقويم";
 /* Schedule meeting open invite field */
 "meetings.scheduleMeeting.openInvite"="السماح لغير المضيفين بإضافة مشاركين";
 /* Schedule meeting description field placeholder */
@@ -3392,12 +3388,6 @@
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="أسبوعياً";
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="شهرياً";
-/* Create Schedule Meeting: Footnote shown to the user when the day selected is 29 of the month and the recurrence option is monthly. */
-"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayTwentyNineSelected.footNote"="بعض الأشهر ليس لديها 29 يوم. بالنسبة لهذه الأشهر سيتم تحديد موعد التكرار في اليوم الأخير من الشهر.";
-/* Create Schedule Meeting: Footnote shown to the user when the day selected is 30 of the month and the recurrence option is monthly. */
-"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtySelected.footNote"="بعض الأشهر ليس لديها 30 يوم. بالنسبة لهذه الأشهر سيتم تحديد موعد التكرار في اليوم الأخير من الشهر.";
-/* Create Schedule Meeting: Footnote shown to the user when the day selected is 31 of the month and the recurrence option is monthly. */
-"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtyFirstSelected.footNote"="بعض الأشهر ليس لديها 31 يوم. بالنسبة لهذه الأشهر سيتم تحديد موعد التكرار في اليوم الأخير من الشهر.";
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="الكاميرا";
 /* Device Center title */
@@ -3599,7 +3589,7 @@
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
 "upgradeAccountPlan.message.text.featuresOfProPlan"="• روابط محمية بكلمة مرور\n\n• روابط بتواريخ انتهاء الصلاحية\n\n• مشاركة حجم تراسل المعطيات المتاح\n\n• النسخ الاحتياطية التلقائية\n\n• الترجيع إلى ما يصل حتى 90 يومًا على برو لايت Pro Lite وما يصل حتى 180 يومًا على برو Pro I و II و III (قريبًا)\n\n• جدولة مسح سلة المحذوفات بين 7 أيام و 10 سنوات";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Automatic backups\n\n• Rewind up to 90 days on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Schedule rubbish bin clearing between 7 days and 10 years\n\n• Ad free";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• روابط محمية بكلمة مرور\n\n• روابط بتواريخ انتهاء الصلاحية\n\n• تشارك حجم تراسل المعطيات المتاح\n\n• النسخ الاحتياطي التلقائي\n\n• الترجيع حتى 90 يومًا على برو  Pro Lite وما يصل إلى 180 يومًا على برو Pro I و II و III\n\n• جدولة إفراغ سلة المحذوفات بين 7 أيام و 10 سنوات\n\n• بدون إعلانات";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="تفاصيل الاشتراك";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3689,7 +3679,7 @@
 /* Edit Schedule meeting navigaion title. */
 "meetings.scheduled.editMeeting.title"="تعديل الاجتماع";
 /* Schedule meeting calendar invite description */
-"meetings.scheduleMeeting.calendarInvite.description"="Email a calendar invitation to participants so they can add the meeting to their calendars.";
+"meetings.scheduleMeeting.calendarInvite.description"="أرسل دعوة تقويم بالبريد الإلكتروني إلى المشاركين حتى يتمكنوا من إضافة الاجتماع إلى التقويمات الخاصة بهم.";
 /* Start meeting tip view message bold text */
 "meetings.scheduleMeeting.startMeetingTip.startMeeting"="ابدأ الاجتماع";
 /* Recurring meeting tip view message bold text */
@@ -3951,28 +3941,36 @@
 /* Meeting link text for sharing a scheduled meeting link through external app */
 "meetings.info.shareMeetingLink.meetingLink"="رابط الاجتماع: %@";
 /* A log message in the chat conversation to tell the reader that a participant [A] joined the meeting. For example: Alice joined the meeting. */
-"chat.message.joinedTheMeeting"="[A] joined the meeting.";
+"chat.message.joinedTheMeeting"="[A] انضم إلى الاجتماع.";
 /* A log message in the chat conversation to tell the reader that a participant [A] left the meeting. For example: Alice left the meeting. */
-"chat.message.leftTheMeeting"="[A] left the meeting.";
+"chat.message.leftTheMeeting"="[A] غادر الاجتماع.";
 /* A log message in a chat conversation to tell the reader that a participant [A] was removed from the meeting by the moderator [B]. Please keep [A] and [B], they will be replaced by the participant and the moderator names at runtime. For example: Alice was removed from the meeting by Frank. */
-"chat.message.wasRemovedFromTheMeetingBy"="[A] was removed from the meeting by [B].";
+"chat.message.wasRemovedFromTheMeetingBy"="[A] تمت إزالته من الاجتماع من قبل [B].";
 /* A log message in a chat conversation to tell the reader that a participant [A] was added to the meeting by a moderator [B]. Please keep the [A] and [B] placeholders, they will be replaced by the participant and the moderator names at runtime. For example: Alice joined the meeting by invitation from Frank. */
-"chat.message.joinedTheMeetingByInvitationFrom"="[A] joined the meeting by invitation from [B].";
+"chat.message.joinedTheMeetingByInvitationFrom"="[A] انضم إلى الاجتماع بدعوة من [B].";
 /* Meeting subject text for sharing a meeting link through email */
-"meetings.info.shareMeetingLink.subject"="MEGA meeting invitation";
+"meetings.info.shareMeetingLink.subject"="دعوة اجتماع ميغا MEGA";
 /* Calls: Floating panel participants in call header to mute them all */
-"calls.panel.participantsInCall.header.muteAll"="Mute all";
+"calls.panel.participantsInCall.header.muteAll"="كتم صوت الكل";
 /* Calls: Floating panel participants in call header to show all participants are muted */
-"calls.panel.participantsInCall.header.allMuted"="All muted";
+"calls.panel.participantsInCall.header.allMuted"="تم كتم الكل";
 /* Calls: Participant context menu action to mute in the call */
 "calls.panel.participantsInCall.participantContextMenu.actions.mute"="كتم";
 /* Calls: Mute all participants success message */
-"calls.participantsInCall.muteAll.success"="You’ve muted all participants";
+"calls.participantsInCall.muteAll.success"="لقد كتمت صوت جميع المشاركين";
 /* Calls: Mute specific participant success message */
-"calls.participantsInCall.muteParticipant.success"="You’ve muted %@";
+"calls.participantsInCall.muteParticipant.success"="لقد كتمت صوت %@";
 /* Calls: Mute all participants error message */
-"calls.participantsInCall.muteAll.error"="Error muting all participants";
+"calls.participantsInCall.muteAll.error"="حدث خطأ أثناء كتم صوت جميع المشاركين";
 /* Calls: Mute specific participant error message */
-"calls.participantsInCall.muteParticipant.error"="Error muting %@";
+"calls.participantsInCall.muteParticipant.error"="حدث خطأ أثناء كتم الصوت %@";
 /* Calls: Muted by a host message */
-"calls.participantsInCall.mutedBy"="You’ve been muted by %@";
+"calls.participantsInCall.mutedBy"="لقد تم كتم صوتك بواسطة %@";
+/* Calls: SFU protocol is outdated then show update alert dialog with title */
+"calls.sfuOutdated.updateAppAlert.title"="التحديث مطلوب";
+/* Calls: SFU protocol is outdated then show update alert dialog with message */
+"calls.sfuOutdated.updateAppAlert.message"="انت لا تستخدم أحدث إصدار من تطبيقنا لذا لا يمكنك بدء المكالمات أو الانضمام إليها. قم بالتحديث الآن للمتابعة.";
+/* Calls: SFU protocol is outdated then show update alert dialog with update button */
+"calls.sfuOutdated.updateAppAlert.button.update"="تحديث";
+/* Calls: SFU protocol is outdated then show update alert dialog, with skip button */
+"calls.sfuOutdated.updateAppAlert.button.skip"="تخطى";

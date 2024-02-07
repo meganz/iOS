@@ -3044,6 +3044,24 @@
         <string>Le [ordinalNumber] [weekDayName] tous les %d mois</string>
       </dict>
     </dict>
+    <key>meetings.scheduled.create.monthlyRecurrenceOption.beyondTheLastDayOfTheMonthSelected.footNote</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Certains mois ne comportent pas %d jour. Pour ces mois, l’occurrence sera programmée le dernier jour du mois.</string>
+        <key>many</key>
+        <string>Certains mois ne comportent pas %d jours. Pour ces mois, l’occurrence sera programmée le dernier jour du mois.</string>
+        <key>other</key>
+        <string>Certains mois ne comportent pas %d jours. Pour ces mois, l’occurrence sera programmée le dernier jour du mois.</string>
+      </dict>
+    </dict>
     <key>meetings.scheduleMeeting.create.selectedRecurrence.daily.customInterval</key>
     <dict>
       <key>NSStringLocalizedFormatKey</key>
@@ -3235,9 +3253,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Files sent to %d chat</string>
+        <string>Les fichiers ont été envoyés vers %d conversation</string>
+        <key>many</key>
+        <string>Les fichiers ont été envoyés vers %d de conversations</string>
         <key>other</key>
-        <string>Files sent to %d chats</string>
+        <string>Les fichiers ont été envoyés vers %d conversations</string>
       </dict>
     </dict>
     <key>contacts.invite.emailAddress.inviteNumberOfContacts</key>
@@ -3274,6 +3294,22 @@
         <string>%d de participants</string>
         <key>other</key>
         <string>%d participants</string>
+      </dict>
+    </dict>
+    <key>general.menuAction.shareFolders.successMessage</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Folder shared</string>
+        <key>other</key>
+        <string>%d folders shared</string>
       </dict>
     </dict>
   </dict>

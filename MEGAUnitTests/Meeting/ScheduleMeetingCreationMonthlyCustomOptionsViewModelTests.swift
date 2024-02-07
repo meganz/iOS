@@ -99,14 +99,14 @@ final class ScheduleMeetingCreationMonthlyCustomOptionsViewModelTests: XCTestCas
         let viewModel = viewModel(forMonthDayList: [29])
         XCTAssertEqual(
             viewModel.calendarFooterNote(),
-            Strings.Localizable.Meetings.ScheduleMeeting.Create.MonthlyRecurrenceOption.DayTwentyNineSelected.footNote)
+            Strings.Localizable.Meetings.Scheduled.Create.MonthlyRecurrenceOption.BeyondTheLastDayOfTheMonthSelected.footNote(29))
     }
     
     func testCalendarFootNote_givenDayIsThirty_shouldMatch() {
         let viewModel = viewModel(forMonthDayList: [30])
         XCTAssertEqual(
             viewModel.calendarFooterNote(),
-            Strings.Localizable.Meetings.ScheduleMeeting.Create.MonthlyRecurrenceOption.DayThirtySelected.footNote)
+            Strings.Localizable.Meetings.Scheduled.Create.MonthlyRecurrenceOption.BeyondTheLastDayOfTheMonthSelected.footNote(30))
     }
     
     func testCalendarFootNote_givenDayIsThirtyOne_shouldMatch() {

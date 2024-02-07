@@ -500,10 +500,6 @@
 "permissionTitle"="Toestemmingsfout";
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionMessage"="Bekijk uw rechten voor deze map";
-/* Message shown when a folder have been shared */
-"sharedFolder_success"="Map gedeeld";
-/* Success message for sharing multiple folders. */
-"sharedFolders_success"="%d mappen gedeeld";
 /* Button title that triggers the importing link action */
 "Import to Cloud Drive"="Importeren";
 /* Message shown when a file has been imported */
@@ -1639,7 +1635,7 @@
 /* Button title to start the setup of a feature. For example 'Begin Setup' for Two-Factor Authentication */
 "beginSetup"="Begin de Instelling";
 /* A message on the Verify Login page telling the user to enter their 2FA code. */
-"pleaseEnterTheSixDigitCode"="Voer de 6-cijferige code gegenereerd door uw Authenticatie Applicatie in.";
+"pleaseEnterTheSixDigitCode"="Voer de 6-cijferige code in die door uw authenticator-applicatie is gegenereerd.";
 /* Title of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthentication"="Waarom heeft u twee-staps authenticatie nodig?";
 /* Description for the ‘Two-Factor Authentication’ in the security settings section. */
@@ -3392,12 +3388,6 @@
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.weekly"="Wekelijks";
 /* Recurrence option monthly shown in the creating the schedule meeting screen as the selected option. */
 "meetings.scheduleMeeting.create.selectedRecurrenceOption.monthly"="Maandelijks";
-/* Create Schedule Meeting: Footnote shown to the user when the day selected is 29 of the month and the recurrence option is monthly. */
-"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayTwentyNineSelected.footNote"="Sommige maanden hebben geen 29 dagen. Voor deze maanden wordt de gebeurtenis gepland op de laatste dag van de maand.";
-/* Create Schedule Meeting: Footnote shown to the user when the day selected is 30 of the month and the recurrence option is monthly. */
-"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtySelected.footNote"="Sommige maanden hebben geen 30 dagen. Voor deze maanden wordt de gebeurtenis gepland op de laatste dag van de maand.";
-/* Create Schedule Meeting: Footnote shown to the user when the day selected is 31 of the month and the recurrence option is monthly. */
-"meetings.scheduleMeeting.create.monthlyRecurrenceOption.DayThirtyFirstSelected.footNote"="Sommige maanden hebben geen 31 dagen. Voor deze maanden wordt de gebeurtenis gepland op de laatste dag van de maand.";
 /* Camera button title to toggle camera on calls. */
 "chat.call.quickAction.camera"="Camera";
 /* Device Center title */
@@ -3976,3 +3966,11 @@
 "calls.participantsInCall.muteParticipant.error"="Fout bij dempen %@";
 /* Calls: Muted by a host message */
 "calls.participantsInCall.mutedBy"="U bent gedempt door %@";
+/* Calls: SFU protocol is outdated then show update alert dialog with title */
+"calls.sfuOutdated.updateAppAlert.title"="Update vereist";
+/* Calls: SFU protocol is outdated then show update alert dialog with message */
+"calls.sfuOutdated.updateAppAlert.message"="U gebruikt niet de laatste versie van onze applicatie, dus u kunt geen oproepen starten of aansluiten. Update nu om door te gaan.";
+/* Calls: SFU protocol is outdated then show update alert dialog with update button */
+"calls.sfuOutdated.updateAppAlert.button.update"="Bijwerken";
+/* Calls: SFU protocol is outdated then show update alert dialog, with skip button */
+"calls.sfuOutdated.updateAppAlert.button.skip"="Overslaan";
