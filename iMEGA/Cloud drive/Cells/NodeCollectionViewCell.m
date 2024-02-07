@@ -17,23 +17,11 @@ static NSString *kFileSize = @"kFileSize";
 
 @interface NodeCollectionViewCell ()
 
-@property (weak, nonatomic) IBOutlet UIView *topNodeIconsView;
-
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UIView *labelView;
 @property (weak, nonatomic) IBOutlet UIImageView *labelImageView;
-
-@property (weak, nonatomic) IBOutlet UIButton *moreButton;
-@property (weak, nonatomic) IBOutlet UIImageView *selectImageView;
-@property (weak, nonatomic) IBOutlet UILabel *infoLabel;
 @property (weak, nonatomic) IBOutlet UIView *favouriteView;
-@property (weak, nonatomic) IBOutlet UIImageView *favouriteImageView;
 @property (weak, nonatomic) IBOutlet UIView *versionedView;
-@property (weak, nonatomic) IBOutlet UIImageView *versionedImageView;
 @property (weak, nonatomic) IBOutlet UIView *linkView;
-@property (weak, nonatomic) IBOutlet UIImageView *linkImageView;
-@property (weak, nonatomic) IBOutlet UIImageView *videoIconView;
-@property (weak, nonatomic) IBOutlet UIImageView *downloadedImageView;
 @property (weak, nonatomic) IBOutlet UIView *downloadedView;
 
 @property (strong, nonatomic) MEGANode *node;
@@ -50,24 +38,17 @@ static NSString *kFileSize = @"kFileSize";
     return _viewModel;
 }
 
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    
+    if ([UIColor isDesignTokenEnabled]) {
+        [self setupTokenColors];
+    }
+}
+
 - (void)setSelected:(BOOL)selected {
     [super setSelected:selected];
-    if (self.moreButton.hidden && selected) {
-        self.selectImageView.image = [UIImage imageNamed:@"thumbnail_selected"];
-        self.contentView.layer.borderColor = UIColor.mnz_green00A886.CGColor;
-    } else {
-        self.selectImageView.image = [UIImage imageNamed:@"checkBoxUnselected"];
-        switch (self.traitCollection.userInterfaceStyle) {
-            case UIUserInterfaceStyleUnspecified:
-            case UIUserInterfaceStyleLight: {
-                self.contentView.layer.borderColor = UIColor.mnz_whiteF7F7F7.CGColor;
-            }
-                break;
-            case UIUserInterfaceStyleDark: {
-                self.contentView.layer.borderColor = UIColor.mnz_gray545458.CGColor;
-            }
-        }
-    }
+    [self updateSelection];
 }
 
 - (void)configureCellForNode:(MEGANode *)node allowedMultipleSelection:(BOOL)multipleSelection sdk:(MEGASdk *)sdk delegate:(id<NodeCollectionViewCellDelegate> _Nullable)delegate {
@@ -239,19 +220,7 @@ static NSString *kFileSize = @"kFileSize";
 
 - (void)setupAppearance {
     [self setSelected:NO];
-    
-    switch (self.traitCollection.userInterfaceStyle) {
-        case UIUserInterfaceStyleUnspecified:
-        case UIUserInterfaceStyleLight: {
-            self.topNodeIconsView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.3];
-            self.thumbnailImageView.backgroundColor = UIColor.mnz_whiteF7F7F7;
-        }
-            break;
-        case UIUserInterfaceStyleDark: {
-            self.topNodeIconsView.backgroundColor = [UIColor colorWithWhite:0 alpha:0.4];
-            self.thumbnailImageView.backgroundColor = UIColor.mnz_black1C1C1E;
-        }
-    }
+    [self setupThumbnailBackground];
 }
 
 - (IBAction)optionButtonAction:(id)sender {
