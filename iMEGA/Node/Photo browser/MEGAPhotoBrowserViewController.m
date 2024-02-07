@@ -62,8 +62,6 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 @property (nonatomic) CGFloat playButtonSize;
 @property (nonatomic) double transferProgress;
 
-@property (nonatomic) UIWindow *secondWindow;
-
 @property (nonatomic) SendLinkToChatsDelegate *sendLinkDelegate;
 
 @end
@@ -234,9 +232,6 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [self airplayClear];
-    self.secondWindow.hidden = YES;
-    self.secondWindow = nil;
     [self removeSnackBarPresenter];
     [[MEGASdkManager sharedMEGASdk] removeMEGADelegateAsync:self];
 }
@@ -298,7 +293,6 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
     [self loadNearbyImagesFromIndex:self.dataProvider.currentIndex];
     self.scrollView.contentOffset = CGPointMake(self.dataProvider.currentIndex * CGRectGetWidth(self.scrollView.frame), 0);
     [self reloadTitleWithCompletionHandler:^{}];
-    [self airplayDisplayCurrentImage];
 }
 
 - (void)resetZooms {
@@ -426,7 +420,6 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             self.dataProvider.currentIndex = newIndex;
             [self resetZooms];
             [self reloadTitleWithCompletionHandler:^{}];
-            [self airplayDisplayCurrentImage];
             [self activateSlideShowButtonWithBarButtonItem:[self slideshowButton]];
             [self updateMessageIdTo:newIndex];
         }
@@ -972,41 +965,6 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 
 - (void)playVideo:(UIButton *)sender {
     [self playCurrentVideoWithCompletionHandler:^{}];
-}
-
-#pragma mark - AirPlay
-
-- (void)airplayDisplayCurrentImage {
-    NSSet <UIScene *> *connectedScenes = UIApplication.sharedApplication.connectedScenes;
-    if (connectedScenes.count > 1 && UIScreen.screens.count > 1) {
-        UIScreen *secondScreen = [UIScreen.screens objectOrNilAtIndex:1];
-        if (!self.secondWindow) {
-            UIWindowScene *secondWindowsScene;
-            for (UIWindowScene *scene in connectedScenes) {
-                if (scene.screen == secondScreen) {
-                    secondWindowsScene = scene;
-                    break;
-                }
-            }
-            self.secondWindow = [UIWindow.alloc initWithFrame:secondScreen.bounds];
-            self.secondWindow.windowScene = secondWindowsScene;
-            self.secondWindow.hidden = NO;
-        }
-        
-        UIScrollView *zoomableView = [self.imageViewsCache objectForKey:@(self.dataProvider.currentIndex)];
-        UIImageView *imageView = (UIImageView *)zoomableView.subviews.firstObject;
-        UIImageView *airplayImageView = [[UIImageView alloc] initWithFrame:self.secondWindow.frame];
-        airplayImageView.image = imageView.image;
-        airplayImageView.contentMode = UIViewContentModeScaleAspectFit;
-        [self airplayClear];
-        [self.secondWindow addSubview:airplayImageView];
-    }
-}
-
-- (void)airplayClear {
-    for (UIView *subview in self.secondWindow.subviews) {
-        [subview removeFromSuperview];
-    }
 }
 
 #pragma mark - UIViewControllerTransitioningDelegate
