@@ -107,6 +107,16 @@ final class MyAccountHallViewModelTests: XCTestCase {
         XCTAssertFalse(sut.isDeviceCenterEnabled())
     }
     
+    func testIsFeatureFlagEnabled_onNotificationCenterUIEnabled_shouldBeEnabled() {
+        let (sut, _) = makeSUT(featureFlagProvider: MockFeatureFlagProvider(list: [.notificationCenter: true]))
+        XCTAssertTrue(sut.isNotificationCenterEnabled())
+    }
+
+    func testIsFeatureFlagEnabled_onNotificationCenterUIDisabled_shouldBeTurnedOff() {
+        let (sut, _) = makeSUT(featureFlagProvider: MockFeatureFlagProvider(list: [.notificationCenter: false]))
+        XCTAssertFalse(sut.isNotificationCenterEnabled())
+    }
+    
     func testDidTapDeviceCenterButton_whenButtonIsTapped_navigatesToDeviceCenter() {
         let (sut, router) = makeSUT()
         

@@ -78,6 +78,10 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
         featureFlagProvider.isFeatureFlagEnabled(for: .deviceCenter)
     }
     
+    func isNotificationCenterEnabled() -> Bool {
+        featureFlagProvider.isFeatureFlagEnabled(for: .notificationCenter)
+    }
+    
     // MARK: - Dispatch actions
     
     func dispatch(_ action: MyAccountHallAction) {
