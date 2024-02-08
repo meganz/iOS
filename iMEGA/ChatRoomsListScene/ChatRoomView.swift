@@ -50,14 +50,14 @@ struct ChatRoomView: View {
         [
             SwipeActionLabel(
                 imageName: "archiveChatSwipeActionButton",
-                backgroundColor: isDesignTokenEnabled ? TokenColors.Support.success.swiftUI :  UIColor.chatListArchiveSwipeActionBackground.swiftUI,
+                backgroundColor: isDesignTokenEnabled ? TokenColors.Support.warning.swiftUI :  UIColor.chatListArchiveSwipeActionBackground.swiftUI,
                 action: {
                     viewModel.archiveChat()
                 }
             ),
             SwipeActionLabel(
                 imageName: "moreListChatSwipeActionButton",
-                backgroundColor: isDesignTokenEnabled ? TokenColors.Icon.secondary.swiftUI : UIColor.chatListMoreSwipeActionBackground.swiftUI,
+                backgroundColor: isDesignTokenEnabled ? TokenColors.Support.info.swiftUI : UIColor.chatListMoreSwipeActionBackground.swiftUI,
                 action: {
                     viewModel.presentMoreOptionsForChat()
                 }
@@ -201,17 +201,13 @@ private struct ChatRoomContentDescriptionView: View {
                 : Strings.Localizable.Meetings.Scheduled.Listing.InProgress.description
             )
             .font(.caption)
-            .foregroundColor(
-                isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : UIColor.chatListSubtitleText.swiftUI
-            )
+            .foregroundColor(descriptionTextColor)
         } else if let hybridDescription = viewModel.hybridDescription {
             HStack(spacing: 0) {
                 if let sender = hybridDescription.sender {
                     Text(sender)
                         .font(viewModel.shouldShowUnreadCount ? .caption.bold(): .caption)
-                        .foregroundColor(
-                            isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : UIColor.chatListSubtitleText.swiftUI
-                        )
+                        .foregroundColor(descriptionTextColor)
                 }
                 
                 Image(uiImage: hybridDescription.image)
@@ -221,21 +217,25 @@ private struct ChatRoomContentDescriptionView: View {
                 
                 Text(hybridDescription.duration)
                     .font(viewModel.shouldShowUnreadCount ? .caption.bold(): .caption)
-                    .foregroundColor(
-                        isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : UIColor.chatListSubtitleText.swiftUI
-                    )
+                    .foregroundColor(descriptionTextColor)
             }
         } else if let description = viewModel.description {
             Text(description)
                 .font(viewModel.shouldShowUnreadCount ? .caption.bold(): .caption)
-                .foregroundColor(
-                    isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : UIColor.chatListSubtitleText.swiftUI
-                )
+                .foregroundColor(descriptionTextColor)
                 .lineLimit(1)
         } else {
             Text("Placeholder")
                 .font(.caption)
                 .redacted(reason: .placeholder)
+        }
+    }
+    
+    var descriptionTextColor: Color {
+        if isDesignTokenEnabled {
+            viewModel.shouldShowUnreadCount ? TokenColors.Text.primary.swiftUI : TokenColors.Text.secondary.swiftUI
+        } else {
+            UIColor.chatListSubtitleText.swiftUI
         }
     }
 }
