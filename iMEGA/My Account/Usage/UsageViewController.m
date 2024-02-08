@@ -59,9 +59,11 @@
 - (void)reloadPieChart:(NSInteger)currentPage {
     [_pieChartMainLabel setAttributedText:[self textForMainLabel:currentPage]];
     
-    self.pieChartMainLabel.textColor = [self storageColorWithTraitCollection:self.traitCollection
-                                                               isStorageFull:self.isStorageFull
-                                                                 currentPage:currentPage];
+    self.pieChartMainLabel.textColor = [self storageColorWithIsDesignTokenEnabled:[UIColor isDesignTokenEnabled]
+                                                                  traitCollection:self.traitCollection
+                                                                    isStorageFull:self.isStorageFull
+                                                                      currentPage:self.usagePageControl.currentPage];
+    
     [self textForSecondaryAndTertiaryLabels:currentPage];
     
     [self.pieChartView reloadData];
@@ -211,15 +213,14 @@
 - (UIColor *)pieChartView:(PieChartView *)pieChartView colorForSliceAtIndex:(NSUInteger)index {
     switch (index) {
         case 0: //Storage / Transfer Quota
-            return [self storageColorWithTraitCollection:self.traitCollection
+            return [self storageColorWithIsDesignTokenEnabled:[UIColor isDesignTokenEnabled]
+                                              traitCollection:self.traitCollection
                                            isStorageFull:self.isStorageFull
                                              currentPage:self.usagePageControl.currentPage];
-            
-        case 1: //Available storage/quota
-            return [UIColor mnz_tertiaryGrayForTraitCollection:self.traitCollection];
-            
+        //Available storage/quota or default
         default:
-            return [UIColor mnz_tertiaryGrayForTraitCollection:self.traitCollection];
+            return [self availableStorageColorWithIsDesignTokenEnabled:[UIColor isDesignTokenEnabled]
+                                                       traitCollection:self.traitCollection];
     }
 }
 
