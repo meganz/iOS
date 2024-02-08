@@ -53,14 +53,14 @@ public struct AlbumContentsUseCase: AlbumContentsUseCaseProtocol {
     
     public func userAlbumPhotos(by id: HandleEntity) async -> [AlbumPhotoEntity] {
         await withTaskGroup(of: AlbumPhotoEntity?.self) { group in
-            let albumContent = await userAlbumRepo.albumContent(by: id, includeElementsInRubbishBin: false)
-            albumContent.forEach { setElement in
+            let albumElementIds = await userAlbumRepo.albumElementIds(by: id, includeElementsInRubbishBin: false)
+            albumElementIds.forEach { albumElementId in
                 group.addTask {
-                    guard let photo = await photo(forNodeId: setElement.nodeId) else {
+                    guard let photo = await photo(forNodeId: albumElementId.nodeId) else {
                         return nil
                     }
                     return AlbumPhotoEntity(photo: photo,
-                                            albumPhotoId: setElement.id)
+                                            albumPhotoId: albumElementId.id)
                 }
             }
             
