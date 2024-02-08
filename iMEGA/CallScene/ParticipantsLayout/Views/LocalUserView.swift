@@ -99,6 +99,9 @@ class LocalUserView: UIView {
         }
         avatarImageView.isHidden = isVideoEnabled
         videoImageView.isHidden = !isVideoEnabled
+        if !enabled {
+            removeBlurEffect()
+        }
     }
     
     func frameData(width: Int, height: Int, buffer: Data!) {
