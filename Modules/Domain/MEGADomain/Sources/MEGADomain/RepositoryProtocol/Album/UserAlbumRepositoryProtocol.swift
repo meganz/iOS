@@ -32,6 +32,13 @@ public protocol UserAlbumRepositoryProtocol: RepositoryProtocol {
     /// - Returns: User album element, or nil if not found
     func albumElement(by id: HandleEntity, elementId: HandleEntity) async -> SetElementEntity?
     
+    /// Fetch associations for album and photo node for an album
+    /// - Parameters:
+    ///   - id: User album id
+    ///   - includeElementsInRubbishBin: Filter out Elements in Rubbish Bin
+    /// - Returns: Associations between album, album element and photo.
+    func albumElementIds(by id: HandleEntity, includeElementsInRubbishBin: Bool) async -> [AlbumPhotoIdEntity]
+    
     /// Create a user album
     /// - Parameter name: The user album name, can be nil
     /// - Throws: AlbumErrorEntity

@@ -5,6 +5,8 @@ public protocol UserAlbumCacheProtocol: Actor {
     var albums: [SetEntity] { get }
     func setAlbums(_ albums: [SetEntity])
     func album(forHandle handle: HandleEntity) -> SetEntity?
+    func albumElementIds(forAlbumId id: HandleEntity) -> [AlbumPhotoIdEntity]?
+    func setAlbumElementIds(forAlbumId id: HandleEntity, elementIds: [AlbumPhotoIdEntity])
     func removeAllCachedValues()
 }
 
@@ -13,6 +15,7 @@ actor UserAlbumCache: UserAlbumCacheProtocol {
     
     private let albumCache = NSCache<NSNumber, SetEntityEntryProxy>()
     private let albumIdTracker = CacheIdTracker<SetEntityEntryProxy>()
+    private let albumElementIdsCache = NSCache<NSNumber, AlbumPhotoIdsEntityProxy>()
     
     var albums: [SetEntity] {
         albumIdTracker.identifiers.compactMap {
@@ -35,8 +38,17 @@ actor UserAlbumCache: UserAlbumCacheProtocol {
         albumCache[handle]
     }
     
+    func albumElementIds(forAlbumId id: HandleEntity) -> [AlbumPhotoIdEntity]? {
+        albumElementIdsCache[id]
+    }
+    
+    func setAlbumElementIds(forAlbumId id: HandleEntity, elementIds: [AlbumPhotoIdEntity]) {
+        albumElementIdsCache[id] = elementIds
+    }
+    
     func removeAllCachedValues() {
         albumCache.removeAllObjects()
+        albumElementIdsCache.removeAllObjects()
     }
 }
 
@@ -59,6 +71,27 @@ private extension NSCache where KeyType == NSNumber, ObjectType == SetEntityEntr
             if let entry = newValue {
                 let value = SetEntityEntryProxy(set: entry)
                 setObject(value, forKey: key)
+            } else {
+                removeObject(forKey: key)
+            }
+        }
+    }
+}
+
+private final class AlbumPhotoIdsEntityProxy {
+    let photoIds: [AlbumPhotoIdEntity]
+    init(photoIds: [AlbumPhotoIdEntity]) { self.photoIds = photoIds }
+}
+
+private extension NSCache where KeyType == NSNumber, ObjectType == AlbumPhotoIdsEntityProxy {
+    subscript(_ handle: HandleEntity) -> [AlbumPhotoIdEntity]? {
+        get {
+            object(forKey: NSNumber(value: handle))?.photoIds
+        }
+        set {
+            let key = NSNumber(value: handle)
+            if let entry = newValue {
+                setObject(.init(photoIds: entry), forKey: key)
             } else {
                 removeObject(forKey: key)
             }

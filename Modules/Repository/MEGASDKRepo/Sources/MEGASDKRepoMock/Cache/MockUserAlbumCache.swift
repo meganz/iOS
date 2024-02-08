@@ -7,9 +7,12 @@ public actor MockUserAlbumCache: UserAlbumCacheProtocol {
     }
     
     private var _albums: [HandleEntity: SetEntity]
+    private var albumsElementIds: [HandleEntity: [AlbumPhotoIdEntity]]
     
-    public init(albums: [SetEntity] = []) {
+    public init(albums: [SetEntity] = [],
+                albumsElementIds: [HandleEntity: [AlbumPhotoIdEntity]] = [:]) {
         _albums = Dictionary(uniqueKeysWithValues: albums.map { ($0.handle, $0) })
+        self.albumsElementIds = albumsElementIds
     }
     
     public func setAlbums(_ albums: [SetEntity]) {
@@ -22,11 +25,20 @@ public actor MockUserAlbumCache: UserAlbumCacheProtocol {
         _albums[set.id] = set
     }
     
-    public func album(forHandle handle: MEGADomain.HandleEntity) -> SetEntity? {
+    public func album(forHandle handle: HandleEntity) -> SetEntity? {
         _albums[handle]
+    }
+    
+    public func albumElementIds(forAlbumId id: HandleEntity) -> [AlbumPhotoIdEntity]? {
+        albumsElementIds[id]
+    }
+    
+    public func setAlbumElementIds(forAlbumId id: HandleEntity, elementIds: [AlbumPhotoIdEntity]) {
+        albumsElementIds[id] = elementIds
     }
     
     public func removeAllCachedValues() {
         _albums.removeAll()
+        albumsElementIds.removeAll()
     }
 }

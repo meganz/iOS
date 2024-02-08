@@ -38,6 +38,17 @@ final public class UserAlbumCacheRepository: UserAlbumRepositoryProtocol {
         await userAlbumRepository.albumElement(by: id, elementId: elementId)
     }
     
+    public func albumElementIds(by id: HandleEntity, includeElementsInRubbishBin: Bool) async -> [AlbumPhotoIdEntity] {
+        if let cachedAlbumElementIds = await userAlbumCache.albumElementIds(forAlbumId: id),
+           cachedAlbumElementIds.isNotEmpty {
+            return cachedAlbumElementIds
+        }
+        let albumElementIds = await userAlbumRepository.albumElementIds(
+            by: id, includeElementsInRubbishBin: includeElementsInRubbishBin)
+        await userAlbumCache.setAlbumElementIds(forAlbumId: id, elementIds: albumElementIds)
+        return albumElementIds
+    }
+    
     public func createAlbum(_ name: String?) async throws -> SetEntity {
         try await userAlbumRepository.createAlbum(name)
     }

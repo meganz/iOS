@@ -19,4 +19,15 @@ final class UserAlbumCacheTests: XCTestCase {
         
         XCTAssertEqual(Set(result), Set(albums))
     }
+    
+    func testAlbumElementIds_onSet_shouldRetrieve() async throws {
+        let sut = UserAlbumCache.shared
+        let albumId = HandleEntity(65)
+        let elementIds = [AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 56, nodeId: 65),
+                          AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 665, nodeId: 976)]
+        await sut.setAlbumElementIds(forAlbumId: albumId, elementIds: elementIds)
+        
+        let result = await sut.albumElementIds(forAlbumId: albumId)
+        XCTAssertEqual(Set(try XCTUnwrap(result)), Set(elementIds))
+    }
 }

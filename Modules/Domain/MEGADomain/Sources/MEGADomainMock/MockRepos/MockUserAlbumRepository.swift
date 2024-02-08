@@ -7,6 +7,7 @@ public struct MockUserAlbumRepository: UserAlbumRepositoryProtocol {
     private let node: NodeEntity?
     private let albums: [SetEntity]
     private let albumContent: [HandleEntity: [SetElementEntity]]
+    private let albumElementIds: [HandleEntity: [AlbumPhotoIdEntity]]
     public let setsUpdatedPublisher: AnyPublisher<[SetEntity], Never>
     public let setElementsUpdatedPublisher: AnyPublisher<[SetElementEntity], Never>
     public let albumElement: SetElementEntity?
@@ -22,6 +23,7 @@ public struct MockUserAlbumRepository: UserAlbumRepositoryProtocol {
     public init(node: NodeEntity? = nil,
                 albums: [SetEntity] = [],
                 albumContent: [HandleEntity: [SetElementEntity]] = [:],
+                albumElementIds: [HandleEntity: [AlbumPhotoIdEntity]] = [:],
                 setsUpdatedPublisher: AnyPublisher<[SetEntity], Never> = Empty().eraseToAnyPublisher(),
                 setElementsUpdatedPublisher: AnyPublisher<[SetElementEntity], Never> = Empty().eraseToAnyPublisher(),
                 albumElement: SetElementEntity? = nil,
@@ -37,6 +39,7 @@ public struct MockUserAlbumRepository: UserAlbumRepositoryProtocol {
         self.node = node
         self.albums = albums
         self.albumContent = albumContent
+        self.albumElementIds = albumElementIds
         self.setsUpdatedPublisher = setsUpdatedPublisher
         self.setElementsUpdatedPublisher = setElementsUpdatedPublisher
         self.albumElement = albumElement
@@ -60,6 +63,10 @@ public struct MockUserAlbumRepository: UserAlbumRepositoryProtocol {
     
     public func albumElement(by id: HandleEntity, elementId: HandleEntity) async -> SetElementEntity? {
         albumElement
+    }
+    
+    public func albumElementIds(by id: HandleEntity, includeElementsInRubbishBin: Bool) async -> [AlbumPhotoIdEntity] {
+        albumElementIds[id] ?? []
     }
     
     public func createAlbum(_ name: String?) async throws -> SetEntity {
