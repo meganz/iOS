@@ -1,47 +1,86 @@
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGASDKRepo
 
 extension UsageViewController {
-     
-    @objc func storageColor(traitCollection: UITraitCollection, isStorageFull: Bool, currentPage: Int) -> UIColor {
-        guard currentPage == 0, isStorageFull else {
-            return UIColor.mnz_turquoise(for: traitCollection)
+    private func setupTokenColors() {
+        view.backgroundColor = TokenColors.Background.page
+        pieChartView?.backgroundColor = TokenColors.Background.page
+        usageStorageView?.backgroundColor = TokenColors.Background.page
+
+        [cloudDriveLabel, backupsLabel, rubbishBinLabel, incomingSharesLabel].forEach { label in
+            label?.textColor = TokenColors.Text.primary
         }
-        return UIColor.mnz_red(for: traitCollection)
+
+        [cloudDriveSizeLabel, backupsSizeLabel, rubbishBinSizeLabel, incomingSharesSizeLabel, usageTitleLabel].forEach { label in
+            label?.textColor = TokenColors.Text.secondary
+        }
+
+        pieChartSecondaryLabel?.textColor = TokenColors.Text.primary
+        pieChartTertiaryLabel?.textColor = TokenColors.Text.secondary
+
+        usagePageControl?.currentPageIndicatorTintColor = TokenColors.Icon.accent
+        usagePageControl?.pageIndicatorTintColor = TokenColors.Icon.secondary
+
+        [usageBottomSeparatorView, cloudDriveBottomSeparatorView, backupsBottomSeparatorView, rubbishBinBottomSeparatorView, incomingSharesBottomSeparatorView].forEach { view in
+            view?.backgroundColor = TokenColors.Border.strong
+        }
+
+        usageSizeLabel?.textColor = TokenColors.Text.accent
+    }
+    
+    private func setupColors() {
+        view.backgroundColor = UIColor.systemBackground
+        pieChartView?.backgroundColor = UIColor.systemBackground
+        usageStorageView?.backgroundColor = UIColor.systemBackground
+
+        let primaryTextColor = UIColor.mnz_primaryTextColor()
+        let secondaryTextColor = UIColor.mnz_secondaryGray(for: traitCollection)
+
+        [cloudDriveLabel, backupsLabel, rubbishBinLabel, incomingSharesLabel].forEach { label in
+            label?.textColor = primaryTextColor
+        }
+
+        [cloudDriveSizeLabel, backupsSizeLabel, rubbishBinSizeLabel, incomingSharesSizeLabel, usageTitleLabel].forEach { label in
+            label?.textColor = secondaryTextColor
+        }
+
+        pieChartSecondaryLabel?.textColor = UIColor.mnz_primaryGray(for: traitCollection)
+        pieChartTertiaryLabel?.textColor = secondaryTextColor
+
+        usagePageControl?.currentPageIndicatorTintColor = UIColor.mnz_turquoise(for: traitCollection)
+        usagePageControl?.pageIndicatorTintColor = UIColor.mnz_secondaryGray(for: traitCollection)
+
+        let separatorColor = UIColor.mnz_separator(for: traitCollection)
+        [usageBottomSeparatorView, cloudDriveBottomSeparatorView, backupsBottomSeparatorView, rubbishBinBottomSeparatorView, incomingSharesBottomSeparatorView].forEach { view in
+            view?.backgroundColor = separatorColor
+        }
+        
+        usageSizeLabel?.textColor = UIColor.mnz_turquoise(for: traitCollection)
+    }
+    
+    @objc func storageColor(isDesignTokenEnabled: Bool, traitCollection: UITraitCollection, isStorageFull: Bool, currentPage: Int) -> UIColor {
+        guard currentPage == 0, isStorageFull else {
+            return isDesignTokenEnabled ? TokenColors.Support.success : UIColor.mnz_turquoise(for: traitCollection)
+        }
+        return isDesignTokenEnabled ? TokenColors.Support.error : UIColor.mnz_red(for: traitCollection)
+    }
+    
+    @objc func availableStorageColor(isDesignTokenEnabled: Bool, traitCollection: UITraitCollection) -> UIColor {
+        isDesignTokenEnabled ? TokenColors.Border.strong : UIColor.mnz_tertiaryGray(for: traitCollection)
     }
     
     @objc func updateAppearance() {
-        view.backgroundColor = UIColor.systemBackground
+        UIColor.isDesignTokenEnabled() ? setupTokenColors() : setupColors()
         
-        pieChartView?.backgroundColor = UIColor.systemBackground
-        
-        pieChartMainLabel?.textColor = storageColor(traitCollection: traitCollection,
-                                                   isStorageFull: isStorageFull(),
-                                                   currentPage: usagePageControl?.currentPage ?? 0)
-        
-        pieChartSecondaryLabel?.textColor = UIColor.mnz_primaryGray(for: traitCollection)
-        pieChartTertiaryLabel?.textColor = UIColor.mnz_secondaryGray(for: traitCollection)
+        pieChartMainLabel?.textColor = storageColor(
+            isDesignTokenEnabled: UIColor.isDesignTokenEnabled(),
+            traitCollection: traitCollection,
+            isStorageFull: isStorageFull(),
+            currentPage: usagePageControl?.currentPage ?? 0)
         
         pieChartView?.reloadData()
-        
-        usagePageControl?.currentPageIndicatorTintColor = UIColor.mnz_turquoise(for: traitCollection)
-        usagePageControl?.pageIndicatorTintColor = UIColor.mnz_secondaryGray(for: traitCollection)
-        usageBottomSeparatorView?.backgroundColor = UIColor.mnz_separator(for: traitCollection)
-        
-        cloudDriveSizeLabel?.textColor = UIColor.mnz_secondaryGray(for: traitCollection)
-        backupsSizeLabel?.textColor = UIColor.mnz_secondaryGray(for: traitCollection)
-        rubbishBinSizeLabel?.textColor = UIColor.mnz_secondaryGray(for: traitCollection)
-        incomingSharesSizeLabel?.textColor = UIColor.mnz_secondaryGray(for: traitCollection)
-        
-        cloudDriveBottomSeparatorView?.backgroundColor = UIColor.mnz_separator(for: traitCollection)
-        backupsBottomSeparatorView?.backgroundColor = UIColor.mnz_separator(for: traitCollection)
-        rubbishBinBottomSeparatorView?.backgroundColor = UIColor.mnz_separator(for: traitCollection)
-        incomingSharesBottomSeparatorView?.backgroundColor = UIColor.mnz_separator(for: traitCollection)
-        
-        usageStorageView?.backgroundColor = UIColor.systemBackground
-        usageTitleLabel?.textColor = UIColor.mnz_primaryGray(for: traitCollection)
-        usageSizeLabel?.textColor = UIColor.mnz_turquoise(for: traitCollection)
     }
     
     @objc func initializeStorageInfo() {
