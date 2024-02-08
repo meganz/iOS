@@ -418,6 +418,7 @@ extension UIColor {
     }
     
     // MARK: - Objects
+    
     @objc class func mnz_chatIncomingBubble(
         _ traitCollection: UITraitCollection
     ) -> UIColor {
@@ -567,6 +568,14 @@ extension UIColor {
     }
     
     // MARK: - Chat Reactions
+    
+    @objc class func primaryTextColor() -> UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.label
+    }
+    
+    @objc class func secondaryTextColor() -> UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : UIColor.label
+    }
     
     class func mnz_emojiLabelSelectedState(
         _ traitCollection: UITraitCollection
