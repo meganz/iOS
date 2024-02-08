@@ -54,6 +54,33 @@ final class UserAlbumCacheRepositoryTests: XCTestCase {
         XCTAssertEqual(result, albumElement)
     }
     
+    func testAlbumElementIds_notCached_shouldRetrieveAlbumElementIdsFromUserAlbumRepository() async {
+        let albumId = HandleEntity(65)
+        let expectedAlbumPhotoIds = [AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 54, nodeId: 4),
+                                     AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 65, nodeId: 87)]
+        
+        let userAlbumRepository = MockUserAlbumRepository(albumElementIds: [albumId: expectedAlbumPhotoIds])
+        let sut = makeSUT(userAlbumRepository: userAlbumRepository)
+        
+        let albumPhotoIds = await sut.albumElementIds(by: albumId, includeElementsInRubbishBin: false)
+        
+        XCTAssertEqual(albumPhotoIds, expectedAlbumPhotoIds)
+    }
+    
+    func testAlbumElementIds_cachedElementIds_shouldReturnCachedValues() async {
+        let albumId = HandleEntity(65)
+        let expectedAlbumPhotoIds = [AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 54, nodeId: 4),
+                                     AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 65, nodeId: 87)]
+        
+        let userAlbumCache = MockUserAlbumCache(albumsElementIds: [albumId: expectedAlbumPhotoIds])
+        
+        let sut = makeSUT(userAlbumCache: userAlbumCache)
+        
+        let albumPhotoIds = await sut.albumElementIds(by: albumId, includeElementsInRubbishBin: false)
+        
+        XCTAssertEqual(albumPhotoIds, expectedAlbumPhotoIds)
+    }
+    
     func testCreateAlbum_onSuccess_shouldReturnAlbumCreatedByUserAlbumRepository() async throws {
         let albumName = "album name"
         let album = SetEntity(handle: 54, name: albumName)

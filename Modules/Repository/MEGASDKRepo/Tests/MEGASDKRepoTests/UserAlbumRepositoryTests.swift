@@ -152,6 +152,18 @@ final class UserAlbumRepositoryTests: XCTestCase {
         wait(for: [exp], timeout: 1)
     }
     
+    func testAlbumElementIds_onSetElementsRetrieved_shouldReturnCorrectHandles() async {
+        let albumId = HandleEntity(56)
+        let setElements = sampleSetElements() 
+        let sdk = MockSdk(megaSetElements: setElements)
+        
+        let repo = UserAlbumRepository(sdk: sdk)
+        
+        let albumPhotoIds = await repo.albumElementIds(by: albumId, includeElementsInRubbishBin: false)
+        
+        XCTAssertEqual(albumPhotoIds, setElements.toAlbumPhotoIdEntities())
+    }
+    
     // MARK: Private
     
     private func makeAlbumSets() -> [MockMEGASet] {

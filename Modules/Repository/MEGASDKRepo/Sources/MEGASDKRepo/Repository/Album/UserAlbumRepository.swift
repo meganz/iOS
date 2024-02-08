@@ -44,6 +44,12 @@ final public class UserAlbumRepository: NSObject, UserAlbumRepositoryProtocol {
         return sdk.megaSetElement(bySid: id, eid: elementId)?.toSetElementEntity()
     }
     
+    public func albumElementIds(by id: HandleEntity, includeElementsInRubbishBin: Bool) async -> [AlbumPhotoIdEntity] {
+        let megaSetElements = sdk.megaSetElements(bySid: id,
+                                                  includeElementsInRubbishBin: includeElementsInRubbishBin)
+        return megaSetElements.toAlbumPhotoIdEntities()
+    }
+    
     public func createAlbum(_ name: String?) async throws -> SetEntity {
         return try await withCheckedThrowingContinuation { continuation in
             sdk.createSet(name, type: .album, delegate: RequestDelegate { result in
