@@ -45,12 +45,13 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.view.backgroundColor = UIColor.systemBackgroundColor;
+    self.view.backgroundColor = [UIColor isDesignTokenEnabled] ? [UIColor pageBackgroundForTraitCollection:self.traitCollection] : UIColor.systemBackgroundColor;;
     
+    self.titleLabel.textColor = [UIColor primaryTextColor];
     self.descriptionLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     
     [self.setupButton mnz_setupPrimary:self.traitCollection];
-    [self.skipButton mnz_setupBasic:self.traitCollection];
+    [self.skipButton mnz_setupSecondary:self.traitCollection];
 }
 
 #pragma mark - Public
