@@ -554,6 +554,18 @@ extension UIColor {
         }
     }
     
+    @objc class func mnz_badgeTextColor() -> UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Text.onColor : UIColor.mnz_whiteFFFFFF()
+    }
+    
+    @objc class func mnz_secondaryLabelTextColor() -> UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : UIColor.secondaryLabel
+    }
+    
+    @objc class func mnz_defaultLabelTextColor() -> UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.label
+    }
+    
     // MARK: - Chat Reactions
     
     class func mnz_emojiLabelSelectedState(
