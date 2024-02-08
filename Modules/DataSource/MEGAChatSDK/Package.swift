@@ -35,7 +35,6 @@ let package = Package(
                       "tests",
                       "webrtc-build",
                       "src/videoRenderer_Qt.cpp",
-                      "src/videoRenderer_objc.mm",
                       "src/base/promise-test.cpp"],
             publicHeadersPath: "src",
             cxxSettings: [
