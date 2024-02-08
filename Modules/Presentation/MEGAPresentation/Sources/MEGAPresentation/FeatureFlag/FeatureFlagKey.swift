@@ -12,4 +12,5 @@ public enum FeatureFlagKey: FeatureFlagName, CaseIterable {
     case newCloudDrive = "New Cloud Drive"
     case videoRevamp = "Video Revamp"
     case notificationCenter = "NotificationCenter"
+    case chatMonetization =  "Chats and Meetings Monetization"
 }
