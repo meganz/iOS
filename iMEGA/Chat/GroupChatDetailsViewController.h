@@ -26,6 +26,9 @@ typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
 @property (nonatomic, strong) ChatNotificationControl *chatNotificationControl;
 @property (nonatomic, strong) NSArray<NSNumber *> *groupDetailsSections;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIView *groupInfoView;
+@property (weak, nonatomic) IBOutlet UILabel *participantsLabel;
+@property (weak, nonatomic) IBOutlet UIView *groupInfoBottomSeparatorView;
 
 - (void)reloadData;
 

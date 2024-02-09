@@ -28,11 +28,8 @@
 
 @interface GroupChatDetailsViewController () <MEGAChatRequestDelegate, MEGAChatDelegate, MEGAGlobalDelegate, PushNotificationControlProtocol, UIScrollViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UIView *groupInfoView;
 @property (weak, nonatomic) IBOutlet MegaAvatarView *avatarView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *participantsLabel;
-@property (weak, nonatomic) IBOutlet UIView *groupInfoBottomSeparatorView;
 
 @property (strong, nonatomic) NSMutableArray<NSNumber *> *participantsMutableArray;
 @property (nonatomic) NSMutableDictionary<NSString *, NSIndexPath *> *indexPathsMutableDictionary;
@@ -127,14 +124,6 @@
     ]];
     
     self.groupDetailsSections = sections;
-}
-
-- (void)updateAppearance {
-    self.view.backgroundColor = self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
-    
-    self.groupInfoView.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
-    self.participantsLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
-    self.groupInfoBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
 }
 
 - (void)updateHeadingView {
@@ -485,7 +474,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     GroupChatDetailsViewTableViewCell *cell;
-    cell.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
+    cell.backgroundColor = [self backgroundElevatedColor];
     
     if (self.groupDetailsSections[indexPath.section].unsignedIntegerValue != GroupChatDetailsSectionParticipants
         && self.groupDetailsSections[indexPath.section].unsignedIntegerValue != GroupChatDetailsSectionObservers
@@ -510,7 +499,7 @@
             
         case GroupChatDetailsSectionRenameGroup:
             cell.leftImageView.image = [UIImage imageNamed:@"rename"];
-            cell.leftImageView.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+            cell.leftImageView.tintColor = [self iconPrimaryColor];
             cell.nameLabel.text = self.chatRoom.isMeeting
                 ? LocalizedString(@"meetings.info.renameMeeting", @"The title of a menu button which allows users to rename a meeting.")
                 : LocalizedString(@"renameGroup", @"The title of a menu button which allows users to rename a group chat.");
@@ -540,13 +529,13 @@
             
         case GroupChatDetailsSectionArchiveChat:
             cell.leftImageView.image = self.chatRoom.isArchived ? [UIImage imageNamed:@"unArchiveChat"] : [UIImage imageNamed:@"archiveChat"];
-            cell.leftImageView.tintColor = self.chatRoom.isArchived ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+            cell.leftImageView.tintColor = self.chatRoom.isArchived ? [self iconRedColor] : [self iconPrimaryColor];
             cell.nameLabel.text = self.chatRoom.isArchived ? LocalizedString(@"unarchiveChat", @"The title of the dialog to unarchive an archived chat.") : LocalizedString(@"archiveChat", @"Title of button to archive chats.");
             [cell setDestructive:self.chatRoom.isArchived];
             break;
             
         case GroupChatDetailsSectionLeaveGroup: {
-            cell.leftImageView.image = [UIImage imageNamed:@"leaveGroup"];
+            [self configLeftImageForLeftGroupFor: cell];
             NSString *leaveTitle = self.chatRoom.isMeeting
                 ? LocalizedString(@"meetings.info.leaveMeeting", @"The button title that allows the user to leave a ad hoc meeting.")
                 : LocalizedString(@"leaveGroup", @"Button title that allows the user to leave a group chat.");
@@ -559,7 +548,7 @@
         
         case GroupChatDetailsSectionEndCallForAll:
             cell.leftImageView.image = [UIImage imageNamed:@"endCall"];
-            cell.leftImageView.tintColor = UIColor.mnz_redFF0000;
+            cell.leftImageView.tintColor = [self iconRedColor];
             cell.leftImageView.contentMode = UIViewContentModeScaleAspectFit;
             cell.nameLabel.text = LocalizedString(@"meetings.endCall.endForAllButtonTitle", @"Button title that ends the call for all the participants.");
             [cell setDestructive:YES];
@@ -589,7 +578,7 @@
         case GroupChatDetailsSectionParticipants: {
             if ((indexPath.row == 0) && [self shouldShowAddParticipants]) {
                 cell = [self.tableView dequeueReusableCellWithIdentifier:@"GroupChatDetailsParticipantEmailTypeID" forIndexPath:indexPath];
-                cell.leftImageView.image = [UIImage imageNamed:@"inviteToChat"];
+                cell.leftImageView.image = [self groupChatAddParticipantImage];
                 cell.emailLabel.text = LocalizedString(@"addParticipant", @"Button label. Allows to add contacts in current chat conversation.");
                 cell.onlineStatusView.backgroundColor = nil;
                 [cell.permissionsButton setImage:nil forState:UIControlStateNormal];

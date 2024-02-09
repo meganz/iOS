@@ -1,5 +1,6 @@
 import ChatRepo
 import Foundation
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGASDKRepo
@@ -145,6 +146,55 @@ extension GroupChatDetailsViewController {
             message: message,
             url: url
         )
+    }
+    
+    @objc func updateAppearance() {
+        view.backgroundColor = backgroundGroupedColor()
+        tableView.backgroundColor = backgroundGroupedColor()
+        groupInfoView.backgroundColor = backgroundElevatedColor()
+        
+        if UIColor.isDesignTokenEnabled() {
+            participantsLabel.textColor = TokenColors.Text.secondary
+            groupInfoBottomSeparatorView.backgroundColor = TokenColors.Border.strong
+        } else {
+            participantsLabel.textColor = UIColor.mnz_subtitles(for: traitCollection)
+            groupInfoBottomSeparatorView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
+        }
+    }
+    
+    @objc func backgroundGroupedColor() -> UIColor {
+        UIColor.isDesignTokenEnabled() ?
+        TokenColors.Background.page : UIColor.mnz_backgroundGrouped(for: traitCollection)
+    }
+    
+    @objc func backgroundElevatedColor() -> UIColor {
+        UIColor.isDesignTokenEnabled() ?
+        TokenColors.Background.page : UIColor.mnz_backgroundElevated(traitCollection)
+    }
+    
+    @objc func iconPrimaryColor() -> UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Icon.primary: UIColor.mnz_primaryGray(for: traitCollection)
+    }
+    
+    @objc func iconRedColor() -> UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Support.error : UIColor.mnz_red(for: traitCollection)
+    }
+    
+    @objc func configLeftImageForLeftGroup(for cell: GroupChatDetailsViewTableViewCell) {
+        if UIColor.isDesignTokenEnabled() {
+            cell.leftImageView.image = UIImage.leaveGroup.withRenderingMode(.alwaysTemplate)
+            cell.leftImageView.tintColor = iconRedColor()
+        } else {
+            cell.leftImageView.image = UIImage.leaveGroup
+        }
+    }
+    
+    @objc func groupChatAddParticipantImage() -> UIImage {
+        if UIColor.isDesignTokenEnabled() {
+            UIImage.groupChatAddParticipant
+        } else {
+            UIImage.inviteToChat
+        }
     }
 }
 
