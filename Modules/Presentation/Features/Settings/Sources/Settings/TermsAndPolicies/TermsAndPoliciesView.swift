@@ -1,4 +1,6 @@
+import MEGADesignToken
 import MEGAL10n
+import MEGASwiftUI
 import SwiftUI
 
 public struct TermsAndPoliciesView: View {
@@ -10,22 +12,24 @@ public struct TermsAndPoliciesView: View {
     
     public var body: some View {
         List {
-            Link(destination: viewModel.privacyUrl) {
-                NavigationLink(Strings.Localizable.privacyPolicyLabel, destination: EmptyView())
-            }
-            Link(destination: viewModel.cookieUrl) {
-                NavigationLink(Strings.Localizable.General.cookiePolicy, destination: EmptyView())
-            }
-            Link(destination: viewModel.termsUrl) {
-                NavigationLink(Strings.Localizable.termsOfServicesLabel, destination: EmptyView())
-            }
+            listItem(with: viewModel.privacyUrl, title: Strings.Localizable.privacyPolicyLabel)
+            listItem(with: viewModel.cookieUrl, title: Strings.Localizable.General.cookiePolicy)
+            listItem(with: viewModel.termsUrl, title: Strings.Localizable.termsOfServicesLabel)
         }
         .task {
             await viewModel.setupCookiePolicyURL()
         }
+        .designTokenBackground(isDesignTokenEnabled)
         .foregroundColor(.primary)
         .listStyle(.grouped)
         .navigationTitle(Strings.Localizable.Settings.Section.termsAndPolicies)
     }
-}
 
+    private func listItem(with url: URL, title: String) -> some View {
+        Link(destination: url) {
+            NavigationLink(title, destination: EmptyView())
+        }
+        .designTokenListItemBackground(isDesignTokenEnabled)
+        .designTokenSeparator(isDesignTokenEnabled)
+    }
+}
