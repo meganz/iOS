@@ -173,7 +173,7 @@ struct CloudDriveViewControllerFactory {
         self.avatarViewModel.inputs.viewIsReady()
 
         self.emptyViewAssetFactory = CloudDriveEmptyViewAssetFactory(
-            navigationController: navigationController,
+            nodeInsertionRouter: CloudDriveNodeInsertionRouter(navigationController: navigationController),
             nodeUseCase: NodeUseCase(
                 nodeDataRepository: NodeDataRepository.newRepo,
                 nodeValidationRepository: NodeValidationRepository.newRepo,
@@ -434,11 +434,16 @@ struct CloudDriveViewControllerFactory {
             remove: { nodeActions.removeFromRubbishBin([$0]) },
             nodeSource: nodeSource
         )
-        
+
+        let uploadAddMenuDelegate = UploadAddMenuDelegateHandler(
+            nodeInsertionRouter: CloudDriveNodeInsertionRouter(navigationController: navigationController),
+            nodeSource: nodeSource
+        )
+
         let contextMenuManager = ContextMenuManager(
             displayMenuDelegate: displayMenuDelegateHandler,
             quickActionsMenuDelegate: quickActionsMenuDelegateHandler,
-            uploadAddMenuDelegate: UploadAddMenuDelegateHandler(),
+            uploadAddMenuDelegate: uploadAddMenuDelegate,
             rubbishBinMenuDelegate: rubbishBinMenuDelegate,
             createContextMenuUseCase: createContextMenuUseCase
         )
@@ -564,7 +569,7 @@ struct CloudDriveViewControllerFactory {
         
         nodeBrowserViewModel.actionHandlers.append(actionHandlers)
         nodeBrowserViewModel.actionHandlers.append(mediaContentDelegate)
-        
+
         let view = NodeBrowserView(
             viewModel: nodeBrowserViewModel
         )
@@ -670,12 +675,19 @@ struct CloudDriveViewControllerFactory {
         guard let menu = contextMenuManager.contextMenu(with: menuConfig) else {
             fatalError("menu should be available")
         }
-        
-        let contextBarButtonItem = UIBarButtonItem(
-            image: UIImage.moreNavigationBar,
-            menu: menu
-        )
-        
+
+        let rightNavBarItems = [
+            makeAddBarButtonItem(
+                for: config,
+                contextMenuManager: contextMenuManager,
+                currentViewMode: currentViewMode
+            ),
+            UIBarButtonItem(
+                image: UIImage.moreNavigationBar,
+                menu: menu
+            )
+        ]
+
         let makeLeftBarButtonItem: () -> UIBarButtonItem? = {
             // cancel button needs to be produced here when VC is presented modally
             // to enable dismissal
@@ -684,10 +696,26 @@ struct CloudDriveViewControllerFactory {
         
         return .init(
             leftBarButtonItem: makeLeftBarButtonItem(),
-            rightNavBarItems: [contextBarButtonItem]
+            rightNavBarItems: rightNavBarItems.compactMap { $0 }
         )
     }
-    
+
+    private func makeAddBarButtonItem(
+        for config: NodeBrowserConfig,
+        contextMenuManager: ContextMenuManager,
+        currentViewMode: ViewModePreferenceEntity
+    ) -> UIBarButtonItem? {
+        guard config.isFromViewInFolder != true,
+           config.displayMode != .rubbishBin,
+           config.displayMode != .backup else {
+            return nil
+        }
+
+        let addBarMenuConfig = CMConfigEntity(menuType: .menu(type: .uploadAdd), viewMode: currentViewMode)
+        let addBarMenu = contextMenuManager.contextMenu(with: addBarMenuConfig)
+        return UIBarButtonItem(image: UIImage.navigationbarAdd, menu: addBarMenu)
+    }
+
     // this enum is used when negotiating if given folder should
     // have a media discovery option available in the context menu (if there are any media)
     // or if it should be shown automatically (folder only having images inside)
