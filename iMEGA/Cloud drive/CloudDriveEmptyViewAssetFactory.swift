@@ -7,17 +7,16 @@ import SwiftUI
 import UIKit
 
 struct CloudDriveEmptyViewAssetFactory {
-    private let navigationController: UINavigationController
+    private let nodeInsertionRouter: any NodeInsertionRouting
     private let nodeUseCase: any NodeUseCaseProtocol
     private let isDesignTokenEnabled: Bool
     private let titleTextColor: (ColorScheme) -> Color
 
     init(
-        navigationController: UINavigationController,
+        nodeInsertionRouter: some NodeInsertionRouting,
         nodeUseCase: some NodeUseCaseProtocol,
         isDesignTokenEnabled: Bool = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken)
     ) {
-        self.navigationController = navigationController
         self.nodeUseCase = nodeUseCase
         self.isDesignTokenEnabled = isDesignTokenEnabled
         self.titleTextColor = { colorScheme in
@@ -27,6 +26,7 @@ struct CloudDriveEmptyViewAssetFactory {
 
             return TokenColors.Icon.secondary.swiftUI
         }
+        self.nodeInsertionRouter = nodeInsertionRouter
     }
 
     func defaultAsset(for nodeSource: NodeSource, config: NodeBrowserConfig) -> SearchConfig.EmptyViewAssets {
@@ -156,61 +156,37 @@ struct CloudDriveEmptyViewAssetFactory {
 
     private func createTextFileMenuOption(for nodeEntity: NodeEntity) -> SearchConfig.EmptyViewAssets.MenuOption {
         .init(title: Strings.Localizable.newTextFile, image: Image(.textfile)) {
-            createTextFileAlert(for: nodeEntity)
+            nodeInsertionRouter.createNewFolder(for: nodeEntity)
         }
     }
 
     private func createNewFolderMenuOption(for nodeEntity: NodeEntity) -> SearchConfig.EmptyViewAssets.MenuOption {
         .init(title: Strings.Localizable.newFolder, image: Image(.newFolder)) {
-            createNewFolder(for: nodeEntity)
+            nodeInsertionRouter.createNewFolder(for: nodeEntity)
         }
     }
 
     private func scanDocumentMenuOption(for nodeEntity: NodeEntity) -> SearchConfig.EmptyViewAssets.MenuOption {
         .init(title: Strings.Localizable.scanDocument, image: Image(.scanDocument)) {
-            scanDocument(for: nodeEntity)
+            nodeInsertionRouter.scanDocument(for: nodeEntity)
         }
     }
 
     private func importFromFilesMenuOption(for nodeEntity: NodeEntity) -> SearchConfig.EmptyViewAssets.MenuOption {
         .init(title: Strings.Localizable.CloudDrive.Upload.importFromFiles, image: Image(.import)) {
-            importFromFiles(for: nodeEntity)
+            nodeInsertionRouter.importFromFiles(for: nodeEntity)
         }
     }
 
     private func capturePhotoVideoMenuOption(for nodeEntity: NodeEntity) -> SearchConfig.EmptyViewAssets.MenuOption {
         .init(title: Strings.Localizable.capturePhotoVideo, image: Image(.capture)) {
-            capturePhotoVideo(for: nodeEntity)
+            nodeInsertionRouter.capturePhotoVideo(for: nodeEntity)
         }
     }
 
     private func choosePhotoVideoMenuOption(for nodeEntity: NodeEntity) -> SearchConfig.EmptyViewAssets.MenuOption {
         .init(title: Strings.Localizable.choosePhotoVideo, image: Image(.saveToPhotos)) {
-            choosePhotoVideo(for: nodeEntity)
+            nodeInsertionRouter.choosePhotoVideo(for: nodeEntity)
         }
-    }
-
-    private func createTextFileAlert(for nodeEntity: NodeEntity) {
-        // Create a text file
-    }
-
-    private func createNewFolder(for nodeEntity: NodeEntity) {
-        // create a folder
-    }
-
-    private func scanDocument(for nodeEntity: NodeEntity) {
-        // scan document
-    }
-
-    private func importFromFiles(for nodeEntity: NodeEntity) {
-        // import files
-    }
-
-    private func capturePhotoVideo(for nodeEntity: NodeEntity) {
-        // capture photos
-    }
-
-    private func choosePhotoVideo(for nodeEntity: NodeEntity) {
-        // choose photo or video
     }
 }

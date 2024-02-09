@@ -2336,6 +2336,9 @@
 		BFD6536025EDE8E500052DE8 /* MeetingParticipantInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD6535E25EDE8E500052DE8 /* MeetingParticipantInfoViewController.swift */; };
 		BFD6557525F59EC600052DE8 /* CircularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD6557425F59EC600052DE8 /* CircularView.swift */; };
 		BFD6564F25F6D22300052DE8 /* MeetingQuickActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD6564E25F6D22300052DE8 /* MeetingQuickActionView.swift */; };
+		BFDE27B12B75D62E00F5A69E /* CloudDriveNodeInsertionRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDE27B02B75D62E00F5A69E /* CloudDriveNodeInsertionRouter.swift */; };
+		BFDE27B52B75D7BC00F5A69E /* UploadAddMenuDelegateHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDE27B42B75D7BC00F5A69E /* UploadAddMenuDelegateHandlerTests.swift */; };
+		BFDE27B72B75D99200F5A69E /* MockNodeInsertionRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDE27B62B75D99200F5A69E /* MockNodeInsertionRouter.swift */; };
 		BFDBE2C82B75A1100008B38A /* CloudDriveEmptyViewAssetFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDBE2C72B75A1100008B38A /* CloudDriveEmptyViewAssetFactoryTests.swift */; };
 		BFDEE87A297118D1004B585D /* NotificationsTableViewController+Meetings.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDEE879297118D1004B585D /* NotificationsTableViewController+Meetings.swift */; };
 		BFE3B9DE2856A8A1003949FF /* MockNoUserJoinedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE3B9DD2856A8A1003949FF /* MockNoUserJoinedUseCase.swift */; };
@@ -5022,6 +5025,9 @@
 		BFD6535E25EDE8E500052DE8 /* MeetingParticipantInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingParticipantInfoViewController.swift; sourceTree = "<group>"; };
 		BFD6557425F59EC600052DE8 /* CircularView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularView.swift; sourceTree = "<group>"; };
 		BFD6564E25F6D22300052DE8 /* MeetingQuickActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingQuickActionView.swift; sourceTree = "<group>"; };
+		BFDE27B02B75D62E00F5A69E /* CloudDriveNodeInsertionRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveNodeInsertionRouter.swift; sourceTree = "<group>"; };
+		BFDE27B42B75D7BC00F5A69E /* UploadAddMenuDelegateHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadAddMenuDelegateHandlerTests.swift; sourceTree = "<group>"; };
+		BFDE27B62B75D99200F5A69E /* MockNodeInsertionRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNodeInsertionRouter.swift; sourceTree = "<group>"; };
 		BFDBE2C72B75A1100008B38A /* CloudDriveEmptyViewAssetFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveEmptyViewAssetFactoryTests.swift; sourceTree = "<group>"; };
 		BFDEE879297118D1004B585D /* NotificationsTableViewController+Meetings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationsTableViewController+Meetings.swift"; sourceTree = "<group>"; };
 		BFE3B9DD2856A8A1003949FF /* MockNoUserJoinedUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNoUserJoinedUseCase.swift; sourceTree = "<group>"; };
@@ -5625,6 +5631,7 @@
 				0E72E1222A27ECED00C900F9 /* CopyrightWarning */,
 				0E3B1A362A1D917900EC5859 /* GetLink */,
 				1240A4A127DD545F00627262 /* MediaDiscovery */,
+				BFDE27B32B75D7A000F5A69E /* NewNodeBrowser */,
 				B5FC636529E92FE400EE4C8E /* Node */,
 				245385F82A13C04800208B31 /* NodeInfo */,
 				C499E1DD2B7663FB00503353 /* StorageFullAlert */,
@@ -9904,6 +9911,8 @@
 				948606762B6CFCE500B1055A /* DisplayMenuDelegateHandler.swift */,
 				94768B4F2B55535F005C436B /* MediaContentDelegateHandler.swift */,
 				9402EF482B6D6313002F7714 /* NodeActions+NodeActionsDelegateHandler.swift */,
+				94768B4F2B55535F005C436B /* CloudDriveContextMenuDelegates.swift */,
+				BFDE27B02B75D62E00F5A69E /* CloudDriveNodeInsertionRouter.swift */,
 				948EE56E2B67B600001F5EEA /* NodeActions.swift */,
 				94272C4A2B6D3BCE00D4AF7C /* NodeActionsDelegateHandler.swift */,
 				94FB1E8E2B2AF16C0045276C /* NodeBrowserView.swift */,
@@ -12152,6 +12161,15 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		BFDE27B32B75D7A000F5A69E /* NewNodeBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				BFDE27B62B75D99200F5A69E /* MockNodeInsertionRouter.swift */,
+				BFDE27B42B75D7BC00F5A69E /* UploadAddMenuDelegateHandlerTests.swift */,
+			);
+			path = NewNodeBrowser;
+			sourceTree = "<group>";
+		};
 		BFE556F427E183B40028EF1F /* SDK */ = {
 			isa = PBXGroup;
 			children = (
@@ -13989,6 +14007,7 @@
 				94831D642B61086700D0005F /* CloudDriveContextMenuConfigFactory.swift in Sources */,
 				BF11FEE42B6AF70400398A2D /* CloudDriveEmptyViewAssetFactory.swift in Sources */,
 				940F97302B57DDA300B8C0AF /* CloudDriveNavigationTitleBuilder.swift in Sources */,
+				BFDE27B12B75D62E00F5A69E /* CloudDriveNodeInsertionRouter.swift in Sources */,
 				944034B829394F5E0073FE6F /* CloudDriveTableViewController+Additions.swift in Sources */,
 				830B548A2178845300BE1E1F /* CloudDriveTableViewController.m in Sources */,
 				83BFA3A627CFBCA000BDF997 /* CloudDriveViewController+Additions.swift in Sources */,
@@ -15788,6 +15807,7 @@
 				94712EFA2A9C9F5700B5F2C9 /* MockNodeDetailsUseCase.swift in Sources */,
 				C47E7C0225D18FDF00DB6FF5 /* MockNodeInfoRepository.swift in Sources */,
 				24DE90042AA765650039C846 /* MockNodeInfoUseCase.swift in Sources */,
+				BFDE27B72B75D99200F5A69E /* MockNodeInsertionRouter.swift in Sources */,
 				BFE3B9DE2856A8A1003949FF /* MockNoUserJoinedUseCase.swift in Sources */,
 				C47E7C1C25D1A84200DB6FF5 /* MockOfflineFileInfoRepository.swift in Sources */,
 				9422B9F22A41A55C007AA5D1 /* MockPermissionAlertRouter.swift in Sources */,
@@ -15913,6 +15933,7 @@
 				B56717642A1F16A200CFF55A /* UpgradeAccountPlanViewModelTests.swift in Sources */,
 				C4F06F792B691941005C1A3D /* UpgradeEncouragementShowTimeTrackerTests.swift in Sources */,
 				C4A016BA2B67338C00492185 /* UpgradeEncouragementViewModelTests.swift in Sources */,
+				BFDE27B52B75D7BC00F5A69E /* UploadAddMenuDelegateHandlerTests.swift in Sources */,
 				B5C3ABAF2A71232B008C3708 /* UsageViewControllerTests.swift in Sources */,
 				9467F576299F9E6600A24D4A /* UserAttributeEntityMappingTests.swift in Sources */,
 				3289848A2A288FF20049CD40 /* UserAttributeUseCase+AdditionsTests.swift in Sources */,

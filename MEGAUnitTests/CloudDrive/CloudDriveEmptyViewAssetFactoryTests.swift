@@ -108,7 +108,7 @@ final class CloudDriveEmptyViewAssetFactoryTests: XCTestCase {
         isDesignTokenEnabled: Bool = true
     ) -> SUT {
         .init(
-            navigationController: UINavigationController(),
+            nodeInsertionRouter: MockNodeInsertionRouter(),
             nodeUseCase: nodeUseCase,
             isDesignTokenEnabled: isDesignTokenEnabled
         )
@@ -121,7 +121,7 @@ final class CloudDriveEmptyViewAssetFactoryTests: XCTestCase {
             displayMode: .cloudDrive,
             expectedImage: Image(.cloudEmptyState),
             expectedTitle: Strings.Localizable.cloudDriveEmptyStateTitle,
-            actions:  [
+            actions: [
                 .init(
                     title: Strings.Localizable.addFiles,
                     backgroundColor: { _ in TokenColors.Support.success.swiftUI },
