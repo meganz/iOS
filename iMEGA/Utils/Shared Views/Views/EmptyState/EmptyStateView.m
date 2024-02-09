@@ -144,13 +144,17 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.descriptionLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
-    [self.descriptionButton setTintColor:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection]];
-    
+    if (UIColor.isDesignTokenEnabled) {
+        [self designTokenColors];
+    } else {
+        self.descriptionLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+        [self.descriptionButton setTintColor:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection]];
+        
+        [self bottomViewVisibility];
+        self.button.titleLabel.font = [UIFont mnz_preferredFontWithStyle:UIFontTextStyleBody weight:UIFontWeightSemibold];
+        self.descriptionButton.titleLabel.font = [UIFont mnz_preferredFontWithStyle:UIFontTextStyleBody weight:UIFontWeightMedium];
+    }
     [self.button mnz_setupPrimary:self.traitCollection];
-    [self bottomViewVisibility];
-    self.button.titleLabel.font = [UIFont mnz_preferredFontWithStyle:UIFontTextStyleBody weight:UIFontWeightSemibold];
-    self.descriptionButton.titleLabel.font = [UIFont mnz_preferredFontWithStyle:UIFontTextStyleBody weight:UIFontWeightMedium];
 }
 
 - (void)bottomViewVisibility {
