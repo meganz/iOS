@@ -10,6 +10,7 @@ struct PlaylistView: View {
             newPlaylistView
             listView
         }
+        .background(videoConfig.colorAssets.pageBackgroundColor)
     }
     
     private var newPlaylistView: some View {
@@ -18,6 +19,7 @@ struct PlaylistView: View {
             
             Text(Strings.Localizable.Videos.Tab.Playlist.Content.newPlaylist)
                 .font(.system(size: 15, weight: .medium))
+                .foregroundColor(videoConfig.colorAssets.primaryTextColor)
         }
         .frame(height: 60)
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -35,7 +37,7 @@ struct PlaylistView: View {
                 Image(uiImage: videoConfig.rowAssets.addPlaylistImage.withRenderingMode(.alwaysTemplate))
                     .resizable()
                     .frame(width: 22, height: 22)
-                    .tint(.white)
+                    .tint(videoConfig.colorAssets.addPlaylistButtonTextColor)
             }
         }
         .tint(videoConfig.colorAssets.addPlaylistButtonBackgroundColor)
@@ -46,9 +48,10 @@ struct PlaylistView: View {
         List {
             FavoritePlaylistCell(videoConfig: videoConfig)
                 .listRowSeparator(.hidden)
+                .listRowInsets(.init())
         }
         .listStyle(PlainListStyle())
-        .padding(.horizontal, -10)
+        .padding(.horizontal, 8)
     }
 }
 

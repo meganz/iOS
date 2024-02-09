@@ -14,6 +14,7 @@ struct FavoritePlaylistCell: View {
             VStack(alignment: .leading, spacing: 8) {
                 Text(Strings.Localizable.Videos.Tab.Playlist.Content.PlaylistCell.Title.favorites)
                     .font(.subheadline)
+                    .foregroundColor(videoConfig.colorAssets.primaryTextColor)
                 Text(Strings.Localizable.Videos.Tab.Playlist.Content.PlaylistCell.Subtitle.emptyPlaylist)
                     .font(.caption)
                     .foregroundStyle(videoConfig.colorAssets.secondaryTextColor)
@@ -22,29 +23,26 @@ struct FavoritePlaylistCell: View {
             .frame(maxWidth: .infinity, alignment: .topLeading)
             
             Image(uiImage: videoConfig.rowAssets.moreImage)
-                .foregroundColor(.secondary)
+                .foregroundColor(videoConfig.colorAssets.secondaryIconColor)
         }
         .padding(0)
+        .background(videoConfig.colorAssets.pageBackgroundColor)
     }
 }
 
 private struct ThumbnailLayerView: View {
     
-    @Environment(\.colorScheme) private var colorScheme: ColorScheme
-    
     let videoConfig: VideoConfig
     
     var body: some View {
         ZStack {
-            colorScheme == .light
-            ? videoConfig.colorAssets.emptyFavoriteThumbnailLightBackgroundColor
-            : videoConfig.colorAssets.emptyFavoriteThumbnailDarkBackgroundColor
+            videoConfig.colorAssets.emptyFavoriteThumbnailBackgroundColor
             
             VStack(spacing: 0) {
                 HStack {
                     Image(uiImage: videoConfig.rowAssets.rectangleVideoStackPlaylistImage)
                         .resizable()
-                        .foregroundColor(.white)
+                        .foregroundColor(videoConfig.colorAssets.whiteColor)
                         .frame(width: 16, height: 16)
                         .frame(maxWidth: .infinity, alignment: .trailing)
                 }
@@ -56,9 +54,7 @@ private struct ThumbnailLayerView: View {
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 32, height: 32)
                     .foregroundColor(
-                        colorScheme == .light
-                        ? videoConfig.colorAssets.emptyFavoriteThumbnaillImageLightForegroundColor
-                        : videoConfig.colorAssets.emptyFavoriteThumbnaillImageDarkForegroundColor
+                        videoConfig.colorAssets.emptyFavoriteThumbnaillImageForegroundColor
                     )
             }
             .padding(0)

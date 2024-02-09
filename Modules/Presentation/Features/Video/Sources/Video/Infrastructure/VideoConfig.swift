@@ -153,15 +153,12 @@ public struct VideoConfig: Equatable {
         public let tabActiveIndicatorColor: Color
         public let tabInactiveIndicatorColor: Color
         public let tabInactiveTextColor: Color
+        public let addPlaylistButtonTextColor: Color
         public let addPlaylistButtonBackgroundColor: Color
         public let toolbarBackgroundColor: Color
         public let navigationBgColor: Color
-        public let emptyFavoriteThumbnailLightBackgroundColor: Color
-        public let emptyFavoriteThumbnailDarkBackgroundColor: Color
-        public let emptyFavoriteThumbnaillImageLightForegroundColor: Color
-        public let emptyFavoriteThumbnaillImageDarkForegroundColor: Color
-        public let videoCellSecondaryLightTextColor: Color
-        public let videoCellSecondaryDarkTextColor: Color
+        public let emptyFavoriteThumbnailBackgroundColor: Color
+        public let emptyFavoriteThumbnaillImageForegroundColor: Color
         public let videoThumbnailImageViewPlaceholderBackgroundColor: Color
         public let videoThumbnailDurationTextBackgroundColor: Color
         
@@ -176,15 +173,12 @@ public struct VideoConfig: Equatable {
             tabActiveIndicatorColor: Color,
             tabInactiveIndicatorColor: Color,
             tabInactiveTextColor: Color,
+            addPlaylistButtonTextColor: Color,
             addPlaylistButtonBackgroundColor: Color,
             toolbarBackgroundColor: Color,
             navigationBgColor: Color,
-            emptyFavoriteThumbnailLightBackgroundColor: Color,
-            emptyFavoriteThumbnailDarkBackgroundColor: Color,
-            emptyFavoriteThumbnaillImageLightForegroundColor: Color,
-            emptyFavoriteThumbnaillImageDarkForegroundColor: Color,
-            videoCellSecondaryLightTextColor: Color,
-            videoCellSecondaryDarkTextColor: Color,
+            emptyFavoriteThumbnailBackgroundColor: Color,
+            emptyFavoriteThumbnaillImageForegroundColor: Color,
             videoThumbnailImageViewPlaceholderBackgroundColor: Color,
             videoThumbnailDurationTextBackgroundColor: Color
         ) {
@@ -197,15 +191,12 @@ public struct VideoConfig: Equatable {
             self.tabActiveIndicatorColor = tabActiveIndicatorColor
             self.tabInactiveIndicatorColor = tabInactiveIndicatorColor
             self.tabInactiveTextColor = tabInactiveTextColor
+            self.addPlaylistButtonTextColor = addPlaylistButtonTextColor
             self.addPlaylistButtonBackgroundColor = addPlaylistButtonBackgroundColor
             self.toolbarBackgroundColor = toolbarBackgroundColor
             self.navigationBgColor = navigationBgColor
-            self.emptyFavoriteThumbnailLightBackgroundColor = emptyFavoriteThumbnailLightBackgroundColor
-            self.emptyFavoriteThumbnailDarkBackgroundColor = emptyFavoriteThumbnailDarkBackgroundColor
-            self.emptyFavoriteThumbnaillImageLightForegroundColor = emptyFavoriteThumbnaillImageLightForegroundColor
-            self.emptyFavoriteThumbnaillImageDarkForegroundColor = emptyFavoriteThumbnaillImageDarkForegroundColor
-            self.videoCellSecondaryLightTextColor = videoCellSecondaryLightTextColor
-            self.videoCellSecondaryDarkTextColor = videoCellSecondaryDarkTextColor
+            self.emptyFavoriteThumbnailBackgroundColor = emptyFavoriteThumbnailBackgroundColor
+            self.emptyFavoriteThumbnaillImageForegroundColor = emptyFavoriteThumbnaillImageForegroundColor
             self.videoThumbnailImageViewPlaceholderBackgroundColor = videoThumbnailImageViewPlaceholderBackgroundColor
             self.videoThumbnailDurationTextBackgroundColor = videoThumbnailDurationTextBackgroundColor
         }
