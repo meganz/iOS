@@ -1,3 +1,4 @@
+import MEGADesignToken
 import SwiftUI
 
 struct ChatRoomsEmptyView: View {
@@ -46,6 +47,7 @@ struct ChatRoomsEmptyView: View {
                 }
             }
         }
+        .background(TokenColors.Background.page.swiftUI)
     }
 }
 
@@ -63,17 +65,20 @@ private struct ChatRoomsEmptyCenterView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 120, height: 120)
+                    .tint(TokenColors.Icon.secondary.swiftUI)
             }
             
             Text(title)
                 .font(.body)
                 .padding(.bottom, 5)
+                .foregroundColor(TokenColors.Text.primary.swiftUI)
             
             if let description {
                 Text(description)
                     .font(.footnote)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 30)
+                    .foregroundColor(TokenColors.Text.primary.swiftUI)
             }
         }
     }
@@ -82,8 +87,8 @@ private struct ChatRoomsEmptyCenterView: View {
 private struct ChatRoomsEmptyBottomButtonView: View {
     let name: String
     var height: CGFloat? = 50
-    var backgroundColor = Color(red: 0, green: 0.66, blue: 0.52)
-    var textColor = MEGAAppColor.White._FFFFFF.color
+    var backgroundColor: Color { isDesignTokenEnabled ? TokenColors.Icon.accent.swiftUI : Color(red: 0, green: 0.66, blue: 0.52) }
+    var textColor: Color { isDesignTokenEnabled ? TokenColors.Text.inverseAccent.swiftUI : MEGAAppColor.White._FFFFFF.color }
     var maxWidth: CGFloat? = 288
     var cornerRadius: CGFloat = 10
     var font: Font = .headline
