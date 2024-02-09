@@ -1406,6 +1406,7 @@
 		9911BA902A8B20DE00B88F28 /* WaitingRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9911BA8F2A8B20DE00B88F28 /* WaitingRoomView.swift */; };
 		9911BA922A8B216900B88F28 /* WaitingRoomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9911BA912A8B216900B88F28 /* WaitingRoomViewModel.swift */; };
 		9911BA9C2A8B949200B88F28 /* WaitingRoomMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9911BA9B2A8B949200B88F28 /* WaitingRoomMessageView.swift */; };
+		991754F12B7440E2001E586D /* GroupChatDetailsViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991754F02B7440E2001E586D /* GroupChatDetailsViewTableViewCell.swift */; };
 		991C87062A53F2B900BF940B /* ScheduleMeetingOnboardingRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991C87052A53F2B900BF940B /* ScheduleMeetingOnboardingRecord.swift */; };
 		992003582B0C09620058FF5F /* CallParticipantCellTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992003572B0C09620058FF5F /* CallParticipantCellTests.swift */; };
 		992453F02A8DF8FF00ADB76B /* WaitingRoomJoinPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992453EF2A8DF8FF00ADB76B /* WaitingRoomJoinPanelView.swift */; };
@@ -4047,6 +4048,7 @@
 		9911BA8F2A8B20DE00B88F28 /* WaitingRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomView.swift; sourceTree = "<group>"; };
 		9911BA912A8B216900B88F28 /* WaitingRoomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomViewModel.swift; sourceTree = "<group>"; };
 		9911BA9B2A8B949200B88F28 /* WaitingRoomMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomMessageView.swift; sourceTree = "<group>"; };
+		991754F02B7440E2001E586D /* GroupChatDetailsViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupChatDetailsViewTableViewCell.swift; sourceTree = "<group>"; };
 		991C87052A53F2B900BF940B /* ScheduleMeetingOnboardingRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingOnboardingRecord.swift; sourceTree = "<group>"; };
 		992003572B0C09620058FF5F /* CallParticipantCellTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallParticipantCellTests.swift; sourceTree = "<group>"; };
 		992453EF2A8DF8FF00ADB76B /* WaitingRoomJoinPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomJoinPanelView.swift; sourceTree = "<group>"; };
@@ -7082,6 +7084,7 @@
 				BFE3B9FD28596715003949FF /* GroupChatDetailsViewController.swift */,
 				E80C760E1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.h */,
 				E80C760F1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m */,
+				991754F02B7440E2001E586D /* GroupChatDetailsViewTableViewCell.swift */,
 				A8F1381D21D3F8AE003C7364 /* LocationSearchTableViewCell.h */,
 				A8F1381E21D3F8AF003C7364 /* LocationSearchTableViewCell.m */,
 				A8F1381A21D3ABF2003C7364 /* LocationSearchTableViewController.h */,
@@ -14152,6 +14155,7 @@
 				E8B415061DE3237F00B9D206 /* GroupChatDetailsViewController.m in Sources */,
 				BFE3B9FE28596715003949FF /* GroupChatDetailsViewController.swift in Sources */,
 				E80C76101DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m in Sources */,
+				991754F12B7440E2001E586D /* GroupChatDetailsViewTableViewCell.swift in Sources */,
 				5DD91D2F24D7EE62001C72DB /* HandlerView.swift in Sources */,
 				832CAEF3286485A40069409D /* HangOrEndCallRouter.swift in Sources */,
 				83135B2A2862123B0015AE2F /* HangOrEndCallView.swift in Sources */,

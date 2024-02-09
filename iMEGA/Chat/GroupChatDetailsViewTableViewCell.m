@@ -31,7 +31,7 @@
 
 - (void)setDestructive:(BOOL)isDestructive {
     _destructive = isDestructive;
-    _nameLabel.textColor = isDestructive ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : UIColor.labelColor;
+    [self configNameLabelColorWithIsDestructive:isDestructive];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -61,12 +61,6 @@
 }
 
 #pragma mark - Private
-
-- (void)updateAppearance {
-    self.enableLabel.textColor = self.rightLabel.textColor = UIColor.secondaryLabelColor;
-    self.emailLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
-    self.nameLabel.textColor = self.isDestructive ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : UIColor.labelColor;
-}
 
 - (IBAction)notificationSwitchValueChanged:(UISwitch *)sender {
     if ([self.delegate respondsToSelector:@selector(controlSwitchValueChanged:fromCell:)]) {
