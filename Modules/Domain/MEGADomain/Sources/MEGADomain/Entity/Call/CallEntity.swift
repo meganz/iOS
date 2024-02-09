@@ -24,6 +24,8 @@ public struct CallEntity: Sendable {
         case protocolVersion
         case kicked
         case waitingRoomTimeout
+        case callDurationLimit
+        case callUsersLimit
     }
     
     public enum ChangeType: Sendable {
