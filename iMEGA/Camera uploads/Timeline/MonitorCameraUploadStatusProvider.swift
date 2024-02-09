@@ -2,7 +2,7 @@ import MEGADomain
 import MEGAPermissions
 import MEGASwift
 
-struct MonitorCameraUploadBannerStatusProvider {
+struct MonitorCameraUploadStatusProvider {
     
     private let monitorCameraUploadUseCase: any MonitorCameraUploadUseCaseProtocol
     private let devicePermissionHandler: any DevicePermissionsHandling
@@ -13,14 +13,37 @@ struct MonitorCameraUploadBannerStatusProvider {
         self.devicePermissionHandler = devicePermissionHandler
     }
             
-    func monitorCameraUploadStatusSequence() -> AnyAsyncSequence<CameraUploadBannerStatusViewStates> {
+    func monitorCameraUploadBannerStatusSequence() -> AnyAsyncSequence<CameraUploadBannerStatusViewStates> {
         monitorCameraUploadUseCase
             .monitorUploadStats()
-            .map(map(uploadStats:))
+            .map(mapBannerStatus(uploadStats:))
             .eraseToAnyAsyncSequence()
     }
     
-    private func map(uploadStats: CameraUploadStatsEntity) -> CameraUploadBannerStatusViewStates {
+    func monitorCameraUploadImageStatusSequence() -> AnyAsyncSequence<CameraUploadStatus> {
+        monitorCameraUploadUseCase
+            .monitorUploadStats()
+            .map(mapImageStatus(uploadStats:))
+            .eraseToAnyAsyncSequence()
+    }
+    
+    func hasLimitedLibraryAccess() -> Bool {
+        devicePermissionHandler.photoLibraryAuthorizationStatus == .limited
+    }
+    
+    private func mapImageStatus(uploadStats: CameraUploadStatsEntity) -> CameraUploadStatus {
+        guard uploadStats.pendingFilesCount == 0 else {
+            switch monitorCameraUploadUseCase.possibleCameraUploadPausedReason() {
+            case .notPaused:
+                return .uploading(progress: uploadStats.progress)
+            case .noWifi, .noNetworkConnectivity:
+                return .warning
+            }
+        }
+        return .completed
+    }
+    
+    private func mapBannerStatus(uploadStats: CameraUploadStatsEntity) -> CameraUploadBannerStatusViewStates {
         guard uploadStats.pendingFilesCount == 0 else {
             switch monitorCameraUploadUseCase.possibleCameraUploadPausedReason() {
             case .noNetworkConnectivity:

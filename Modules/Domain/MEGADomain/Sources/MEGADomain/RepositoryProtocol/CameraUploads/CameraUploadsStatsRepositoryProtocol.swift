@@ -7,7 +7,7 @@ public protocol CameraUploadsStatsRepositoryProtocol: RepositoryProtocol {
     
     ///  Provides current CameraUploadStatsEntity relating to the status of active camera uploads occurring in the application.
     /// - Returns: CameraUploadStatsEntity containing stats of uploads at the call of this function.
-    func currentUploadStatus() async throws -> CameraUploadStatsEntity
+    func currentUploadStats() async throws -> CameraUploadStatsEntity
     
     ///  AsyncSequence that fires off CameraUploadStatsEntity relating to the status of active camera uploads occurring in the application.
     ///   A new stats update should be triggered when uploads have had a state change. This includes completions, failures or paused

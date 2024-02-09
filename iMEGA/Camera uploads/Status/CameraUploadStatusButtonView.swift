@@ -11,9 +11,6 @@ struct CameraUploadStatusButtonView: View {
                 .task {
                     await viewModel.monitorCameraUpload()
                 }
-                .onAppear {
-                    viewModel.onViewAppear()
-                }
                 .onDisappear {
                     viewModel.onViewDisappear()
                 }

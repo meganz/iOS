@@ -19,11 +19,7 @@ final class PhotosViewModel: NSObject {
         }
     }
     
-    var cameraUploadStatusButtonViewModel = CameraUploadStatusButtonViewModel(monitorCameraUploadUseCase: FakeCameraUploadSuccessfulUseCase()) {
-        didSet {
-            cameraUploadStatusButtonViewModel.onTappedHandler = cameraUploadStatusButtonTapped
-        }
-    }
+    let cameraUploadStatusButtonViewModel: CameraUploadStatusButtonViewModel
     
     @objc let timelineCameraUploadStatusFeatureEnabled: Bool
     var contentConsumptionAttributeLoadingTask: Task<Void, Never>?
@@ -72,6 +68,10 @@ final class PhotosViewModel: NSObject {
             monitorCameraUploadUseCase: monitorCameraUploadUseCase,
             devicePermissionHandler: devicePermissionHandler,
             featureFlagProvider: featureFlagProvider)
+        self.cameraUploadStatusButtonViewModel = CameraUploadStatusButtonViewModel(
+            monitorCameraUploadUseCase: monitorCameraUploadUseCase,
+            devicePermissionHandler: devicePermissionHandler,
+            preferenceUseCase: preferenceUseCase)
         
         super.init()
         $isCameraUploadsEnabled.useCase = preferenceUseCase
@@ -184,12 +184,7 @@ final class PhotosViewModel: NSObject {
     func navigateToCameraUploadSettings() {
         cameraUploadsSettingsViewRouter.start()
     }
-    
-    func change(monitorCameraUploadUseCase: some MonitorCameraUploadUseCaseProtocol) {
-        cameraUploadStatusButtonViewModel = CameraUploadStatusButtonViewModel(
-            monitorCameraUploadUseCase: monitorCameraUploadUseCase)
-    }
-    
+        
     // MARK: - Private
     private func loadFilteredPhotos() async throws -> [NodeEntity] {
         let filterOptions: PhotosFilterOptions = [filterType, filterLocation]

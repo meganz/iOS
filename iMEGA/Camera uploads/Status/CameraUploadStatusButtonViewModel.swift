@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAPermissions
 import SwiftUI
 
 final class CameraUploadStatusButtonViewModel: NSObject, ObservableObject {
@@ -7,41 +8,53 @@ final class CameraUploadStatusButtonViewModel: NSObject, ObservableObject {
     private let idleWaitTimeNanoSeconds: UInt64
     @PreferenceWrapper(key: .isCameraUploadsEnabled, defaultValue: false)
     private var isCameraUploadsEnabled: Bool
-    private var checkIdleTask: Task<Void, any Error>?
+    private var delayedStatusChangeTask: Task<Void, any Error>?
     
-    private let monitorCameraUploadUseCase: any MonitorCameraUploadUseCaseProtocol
-    
+    private let monitorCameraUploadStatusProvider: MonitorCameraUploadStatusProvider
+
     var onTappedHandler: (() -> Void)?
     
     init(idleWaitTimeNanoSeconds: UInt64 = 3 * 1_000_000_000,
          monitorCameraUploadUseCase: some MonitorCameraUploadUseCaseProtocol,
+         devicePermissionHandler: some DevicePermissionsHandling,
          preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default) {
         self.idleWaitTimeNanoSeconds = idleWaitTimeNanoSeconds
-        self.monitorCameraUploadUseCase = monitorCameraUploadUseCase
+        self.monitorCameraUploadStatusProvider = MonitorCameraUploadStatusProvider(
+            monitorCameraUploadUseCase: monitorCameraUploadUseCase,
+            devicePermissionHandler: devicePermissionHandler)
+        
         imageViewModel = CameraUploadStatusImageViewModel(
             status: preferenceUseCase[.isCameraUploadsEnabled] ?? false ? .checkPendingItemsToUpload : .turnedOff)
         super.init()
         $isCameraUploadsEnabled.useCase = preferenceUseCase
     }
-    
+        
     func monitorCameraUpload() async {
-        guard isCameraUploadsEnabled else { return }
-        uploadCompleteIdleCheck()
 
-        for await uploadStats in monitorCameraUploadUseCase.monitorUploadStats() {
-            cancelUploadCompleteIdleTask()
-            await handleStatsUpdate(uploadStats)
+        guard isCameraUploadsEnabled else {
+            await updateStatus(.turnedOff)
+            return
+        }
+        
+        await updateStatus(.checkPendingItemsToUpload)
+        
+        var hasFinishedDroppingResult = false
+        for await status in monitorCameraUploadStatusProvider.monitorCameraUploadImageStatusSequence() {
+            // If first result is completed, we want to delay it to go straight to idle completed state.
+            // And not show the green tick, as nothing has uploaded since loading this view
+            if !hasFinishedDroppingResult, status == .completed {
+                uploadCompleteIdleCheck()
+                return
+            } else if !hasFinishedDroppingResult {
+                hasFinishedDroppingResult = true
+            }
+            cancelDelayedStatusChangeTask()
+            await handleStatusUpdate(status)
         }
     }
     
-    func onViewAppear() {
-        let updatedStatus = isCameraUploadsEnabled ? CameraUploadStatus.checkPendingItemsToUpload : .turnedOff
-        guard imageViewModel.status != updatedStatus else { return }
-        imageViewModel.status = updatedStatus
-    }
-    
     func onViewDisappear() {
-        cancelUploadCompleteIdleTask()
+        cancelDelayedStatusChangeTask()
     }
     
     func onTapped() { onTappedHandler?() }
@@ -49,13 +62,11 @@ final class CameraUploadStatusButtonViewModel: NSObject, ObservableObject {
     // MARK: - Private Functions
     
     @MainActor
-    private func handleStatsUpdate(_ uploadStats: CameraUploadStatsEntity) {
-        guard uploadStats.pendingFilesCount > 0 else {
-            imageViewModel.status = .completed
+    private func handleStatusUpdate(_ status: CameraUploadStatus) {
+        if status == .completed {
             uploadCompleteIdleCheck()
-            return
         }
-        imageViewModel.status = .uploading(progress: uploadStats.progress)
+        updateStatus(status)
     }
     
     @MainActor
@@ -65,16 +76,16 @@ final class CameraUploadStatusButtonViewModel: NSObject, ObservableObject {
     
     // After the upload is complete the green checkmark should turn dark grey after a few seconds.
     private func uploadCompleteIdleCheck() {
-        cancelUploadCompleteIdleTask()
-        checkIdleTask = Task {
+        cancelDelayedStatusChangeTask()
+        delayedStatusChangeTask = Task {
             try await Task.sleep(nanoseconds: idleWaitTimeNanoSeconds)
-            await updateStatus(.idle)
-            cancelUploadCompleteIdleTask()
+            await updateStatus(monitorCameraUploadStatusProvider.hasLimitedLibraryAccess() ? .warning : .idle)
+            cancelDelayedStatusChangeTask()
         }
     }
     
-    private func cancelUploadCompleteIdleTask() {
-        checkIdleTask?.cancel()
-        checkIdleTask = nil
+    private func cancelDelayedStatusChangeTask() {
+        delayedStatusChangeTask?.cancel()
+        delayedStatusChangeTask = nil
     }
 }

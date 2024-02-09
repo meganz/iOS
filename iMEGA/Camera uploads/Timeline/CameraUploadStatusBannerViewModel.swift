@@ -11,13 +11,13 @@ final class CameraUploadStatusBannerViewModel: ObservableObject {
     @Published var showPhotoPermissionAlert = false
     
     private let featureFlagProvider: any FeatureFlagProviderProtocol
-    private var monitorCameraUploadBannerStatusProvider: MonitorCameraUploadBannerStatusProvider
+    private var monitorCameraUploadStatusProvider: MonitorCameraUploadStatusProvider
     
     init(monitorCameraUploadUseCase: some MonitorCameraUploadUseCaseProtocol,
          devicePermissionHandler: some DevicePermissionsHandling,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
         self.featureFlagProvider = featureFlagProvider
-        self.monitorCameraUploadBannerStatusProvider = MonitorCameraUploadBannerStatusProvider(
+        self.monitorCameraUploadStatusProvider = MonitorCameraUploadStatusProvider(
             monitorCameraUploadUseCase: monitorCameraUploadUseCase,
             devicePermissionHandler: devicePermissionHandler)
         
@@ -31,7 +31,7 @@ final class CameraUploadStatusBannerViewModel: ObservableObject {
             return
         }
         
-        for await status in monitorCameraUploadBannerStatusProvider.monitorCameraUploadStatusSequence() {
+        for await status in monitorCameraUploadStatusProvider.monitorCameraUploadBannerStatusSequence() {
             try Task.checkCancellation()
             cameraUploadBannerStatusViewState = status
         }
@@ -94,6 +94,7 @@ final class CameraUploadStatusBannerViewModel: ObservableObject {
                     return true
                 }
             })
+            .removeDuplicates()
             .filter { state -> Bool in
                 switch state {
                 case .uploadInProgress:

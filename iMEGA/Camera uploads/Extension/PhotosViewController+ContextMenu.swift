@@ -99,49 +99,11 @@ extension PhotosViewController {
     
     // Add Camera Status testing option to UIMenu
     private func makeTestingMenuItems(from original: UIMenu) -> UIMenu {
-        var children = original.children
-        let testingOptionsAction = UIAction(title: "CU Status Testing") { _ in
-            self.showCameraUploadStatusTestingOptions()
-        }
-        children.append(testingOptionsAction)
-        let menuItem = UIMenu(title: original.title,
-                              subtitle: original.subtitle,
-                              image: original.image,
-                              options: original.options,
-                              children: children)
-        return menuItem
-    }
-    
-    // Action sheet to show testing options for camera uploads.
-    private func showCameraUploadStatusTestingOptions() {
-        let alertController = UIAlertController(title: "CU Testing", message: "Select Testing Option", preferredStyle: .actionSheet)
-        alertController.addAction(UIAlertAction(title: "Upload Photos", style: .default, handler: { [weak self] _ in
-            self?.reloadCUBarButtonWithUseCase(FakeCameraUploadSuccessfulUseCase())
-        }))
-        alertController.addAction(UIAlertAction(title: "Upload paused", style: .default, handler: { [weak self] _ in
-            self?.reloadCUBarButtonWithUseCase(FakeCameraUploadPausedUseCase())
-        }))
-        alertController.addAction(UIAlertAction(title: "Upload already completed", style: .default, handler: { [weak self] _ in
-            self?.reloadCUBarButtonWithUseCase(FakeNoItemsToUploadUseCase())
-        }))
-        alertController.addAction(UIAlertAction(title: "Upload already completed with video upload disabled", style: .default, handler: { [weak self] _ in
-            self?.reloadCUBarButtonWithUseCase(FakeCameraUploadSuccessfulUseCase(pendingVideosCount: 15))
-        }))
-        alertController.addAction(UIAlertAction(title: Strings.Localizable.cancel, style: .cancel))
-        
-        alertController.modalPresentationStyle = .popover
-        if let view = cameraUploadStatusBarButtonItem?.customView {
-            alertController.popoverPresentationController?.sourceRect = view.frame
-            alertController.popoverPresentationController?.sourceView = view
-        }
-        present(alertController, animated: true)
-    }
-    
-    // Reload CU button with new use case to view different testing options
-    private func reloadCUBarButtonWithUseCase(_ useCase: some MonitorCameraUploadUseCaseProtocol) {
-        viewModel.change(monitorCameraUploadUseCase: useCase)
-        cameraUploadStatusBarButtonItem = makeCameraUploadStatusBarButton()
-        setupRightNavigationBarButtons()
+        UIMenu(title: original.title,
+               subtitle: original.subtitle,
+               image: original.image,
+               options: original.options,
+               children: original.children)
     }
 }
 

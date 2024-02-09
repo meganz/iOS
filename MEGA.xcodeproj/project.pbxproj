@@ -228,7 +228,7 @@
 		25A58F902B0C635400050882 /* CameraUploadBannerStatusViewStatesToPreviewEntityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A58F8F2B0C635400050882 /* CameraUploadBannerStatusViewStatesToPreviewEntityTests.swift */; };
 		25A58FA42B0ED04C00050882 /* TimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A58FA32B0ED04C00050882 /* TimelineView.swift */; };
 		25A58FAF2B0F084E00050882 /* CameraUploadStatusBannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A58FAE2B0F084E00050882 /* CameraUploadStatusBannerViewModel.swift */; };
-		25A58FB52B0FF8F100050882 /* MonitorCameraUploadBannerStatusProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A58FB42B0FF8F100050882 /* MonitorCameraUploadBannerStatusProvider.swift */; };
+		25A58FB52B0FF8F100050882 /* MonitorCameraUploadStatusProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A58FB42B0FF8F100050882 /* MonitorCameraUploadStatusProvider.swift */; };
 		25AA545F2B27E1640094F2A2 /* AlbunListPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AA545E2B27E1640094F2A2 /* AlbunListPlaceholderView.swift */; };
 		25AF215E2AB263C400DC41AF /* EmptyMediaDiscoveryContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AF215D2AB263C400DC41AF /* EmptyMediaDiscoveryContentView.swift */; };
 		25AF21632AB28E9400DC41AF /* EmptyMediaDiscoveryContentMenuAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AF21622AB28E9400DC41AF /* EmptyMediaDiscoveryContentMenuAction.swift */; };
@@ -2811,7 +2811,7 @@
 		25A58F8F2B0C635400050882 /* CameraUploadBannerStatusViewStatesToPreviewEntityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadBannerStatusViewStatesToPreviewEntityTests.swift; sourceTree = "<group>"; };
 		25A58FA32B0ED04C00050882 /* TimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineView.swift; sourceTree = "<group>"; };
 		25A58FAE2B0F084E00050882 /* CameraUploadStatusBannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraUploadStatusBannerViewModel.swift; sourceTree = "<group>"; };
-		25A58FB42B0FF8F100050882 /* MonitorCameraUploadBannerStatusProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorCameraUploadBannerStatusProvider.swift; sourceTree = "<group>"; };
+		25A58FB42B0FF8F100050882 /* MonitorCameraUploadStatusProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorCameraUploadStatusProvider.swift; sourceTree = "<group>"; };
 		25AA545E2B27E1640094F2A2 /* AlbunListPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbunListPlaceholderView.swift; sourceTree = "<group>"; };
 		25AF215D2AB263C400DC41AF /* EmptyMediaDiscoveryContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMediaDiscoveryContentView.swift; sourceTree = "<group>"; };
 		25AF21622AB28E9400DC41AF /* EmptyMediaDiscoveryContentMenuAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMediaDiscoveryContentMenuAction.swift; sourceTree = "<group>"; };
@@ -6093,7 +6093,7 @@
 			isa = PBXGroup;
 			children = (
 				25A58FAE2B0F084E00050882 /* CameraUploadStatusBannerViewModel.swift */,
-				25A58FB42B0FF8F100050882 /* MonitorCameraUploadBannerStatusProvider.swift */,
+				25A58FB42B0FF8F100050882 /* MonitorCameraUploadStatusProvider.swift */,
 				25A58FA32B0ED04C00050882 /* TimelineView.swift */,
 			);
 			path = Timeline;
@@ -14464,7 +14464,7 @@
 				832F19EB2091BA970067679E /* MOMediaDestination+CoreDataProperties.m in Sources */,
 				A8F0A1D82178A73300575C57 /* MOMessage+CoreDataClass.m in Sources */,
 				A8F0A1D92178A73300575C57 /* MOMessage+CoreDataProperties.m in Sources */,
-				25A58FB52B0FF8F100050882 /* MonitorCameraUploadBannerStatusProvider.swift in Sources */,
+				25A58FB52B0FF8F100050882 /* MonitorCameraUploadStatusProvider.swift in Sources */,
 				83FB1439219C372800418BE6 /* MOOfflineFolderLayout+CoreDataClass.m in Sources */,
 				83FB143A219C372800418BE6 /* MOOfflineFolderLayout+CoreDataProperties.m in Sources */,
 				41D1E0BB1B58F0B800982830 /* MOOfflineNode.m in Sources */,
