@@ -86,6 +86,10 @@ extension MEGAChatCallTermCode {
             return .kicked
         case .waitingRoomTimeout:
             return .waitingRoomTimeout
+        case .callDurationLimit:
+            return .callDurationLimit
+        case .callUsersLimit:
+            return .callUsersLimit
         @unknown default:
             return .invalid
         }
