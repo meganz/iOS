@@ -62,6 +62,9 @@
 
 - (void)configureCellForNode:(MEGANode *)node api:(MEGASdk *)api {
     self.node = node;
+    if (UIColor.isDesignTokenEnabled){
+        [self updateWithTrait:self.traitCollection];
+    }
     
     self.downloadingArrowImageView.hidden = self.downloadProgressView.hidden = YES;
     
@@ -228,11 +231,14 @@
     self.infoLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     self.infoStringRightLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     
+    if (UIColor.isDesignTokenEnabled) {
+        [self setCellBackgroundColorWith:self.traitCollection];
+    }
+    
     if (self.cellFlavor != NodeTableViewCellFlavorRecentAction) {
         return;
     }
     
-    [self setCellBackgroundColorWith:self.traitCollection];
     self.timeLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     self.subtitleLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
 }

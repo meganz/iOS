@@ -191,15 +191,6 @@
     });
 }
 
-#pragma mark - Private
-- (void)updateAppearance {
-    self.view.backgroundColor = UIColor.systemBackgroundColor;
-    
-    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
-    
-    [self updateTabSelection];
-}
-
 - (void)reloadUI {
     if (self.incomingButton.selected) {
         [self incomingVerifiedNodes];
@@ -1060,23 +1051,23 @@
             [node mnz_leaveSharingInViewController:self completion:nil];
             [self endEditingMode];
         }];
-        shareAction.image = [[UIImage imageNamed:@"leaveShare"] imageWithTintColor:UIColor.mnz_whiteFFFFFF];
-        shareAction.backgroundColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
+        shareAction.image = [[UIImage imageNamed:@"leaveShare"] imageWithTintColor:[self tintColorForImage]];
+        shareAction.backgroundColor = [self backgroundColorWhenTrailingSwipe];
         return [UISwipeActionsConfiguration configurationWithActions:@[shareAction]];
     } else if (self.outgoingButton.selected) {
         UIContextualAction *shareAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
             [node mnz_removeSharingWithCompletion:nil];
             [self endEditingMode];
         }];
-        shareAction.image = [[UIImage imageNamed:@"removeShare"] imageWithTintColor:UIColor.mnz_whiteFFFFFF];
-        shareAction.backgroundColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
+        shareAction.image = [[UIImage imageNamed:@"removeShare"] imageWithTintColor:[self tintColorForImage]];
+        shareAction.backgroundColor = [self backgroundColorWhenTrailingSwipe];
         return [UISwipeActionsConfiguration configurationWithActions:@[shareAction]];
     } else if (self.linksButton.selected) {
         UIContextualAction *removeLinkAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
             [self showRemoveLinkWarning:@[node]];
         }];
-        removeLinkAction.image = [[UIImage imageNamed:@"removeLink"] imageWithTintColor:UIColor.mnz_whiteFFFFFF];
-        removeLinkAction.backgroundColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
+        removeLinkAction.image = [[UIImage imageNamed:@"removeLink"] imageWithTintColor:[self tintColorForImage]];
+        removeLinkAction.backgroundColor = [self backgroundColorWhenTrailingSwipe];
         return [UISwipeActionsConfiguration configurationWithActions:@[removeLinkAction]];
     } else {
         return [UISwipeActionsConfiguration configurationWithActions:@[]];

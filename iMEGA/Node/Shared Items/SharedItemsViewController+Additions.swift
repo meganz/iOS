@@ -1,4 +1,5 @@
 import ChatRepo
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
@@ -435,6 +436,34 @@ extension SharedItemsViewController {
                 container.font = UIFont.preferredFont(style: .caption2, weight: isSelected ? .semibold : .regular)
                 configuredButton.configuration?.attributedTitle = AttributedString(title, attributes: container)
             }
+        }
+    }
+    
+    @objc func updateAppearance() {
+        if UIColor.isDesignTokenEnabled() {
+            self.tableView?.separatorColor = TokenColors.Border.strong
+            self.view.backgroundColor = TokenColors.Background.page
+        } else {
+            self.tableView?.separatorColor = UIColor.mnz_separator(for: self.traitCollection)
+            self.view.backgroundColor = UIColor.systemBackground
+        }
+        
+        updateTabSelection()
+    }
+    
+    @objc func backgroundColorWhenTrailingSwipe() -> UIColor {
+        if UIColor.isDesignTokenEnabled() {
+            TokenColors.Support.error
+        } else {
+            UIColor.mnz_red(for: traitCollection)
+        }
+    }
+    
+    @objc func tintColorForImage() -> UIColor {
+        if UIColor.isDesignTokenEnabled() {
+            TokenColors.Icon.onColor
+        } else {
+            UIColor.mnz_whiteFFFFFF()
         }
     }
 }
