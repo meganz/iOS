@@ -2,7 +2,7 @@ import SwiftUI
 
 struct CameraUploadStatusImageView: View {
     @ObservedObject var viewModel: CameraUploadStatusImageViewModel
-    @State private var rotationDegrees = 0.0
+    @State private var shouldRotate = false
     
     var body: some View {
         ZStack(alignment: .center) {
@@ -22,17 +22,13 @@ struct CameraUploadStatusImageView: View {
                         .frame(width: 15.5,
                                height: 15.5)
                     
-                    if viewModel.shouldRotateStatusImage {
-                        statusImage(resource: statusImageResource)
-                            .rotationEffect(.degrees(rotationDegrees))
-                            .onAppear {
-                                withAnimation(statusImageAnimation) {
-                                    rotationDegrees = 360.0
-                                }
-                            }
-                    } else {
-                        statusImage(resource: statusImageResource)
-                    }
+                    statusImage(resource: statusImageResource)
+                        .animation(nil, value: shouldRotate)
+                        .rotationEffect(.degrees(shouldRotate ? 360 : 0))
+                        .animation(viewModel.shouldRotateStatusImage ? statusImageAnimation : .linear(duration: 0), value: shouldRotate)
+                        .onAppear { update(shouldRotate: viewModel.shouldRotateStatusImage) }
+                        .onDisappear { update(shouldRotate: false) }
+                        .onChange(of: viewModel.shouldRotateStatusImage) { update(shouldRotate: $0) }
                 }
                 .offset(x: 8,
                         y: 8)
@@ -42,6 +38,14 @@ struct CameraUploadStatusImageView: View {
                height: 28)
     }
     
+    private func update(shouldRotate: Bool) {
+        guard self.shouldRotate != shouldRotate else {
+            return
+        }
+        self.shouldRotate = shouldRotate
+    }
+    
+    @ViewBuilder
     private func statusImage(resource: ImageResource) -> some View {
         Image(resource)
             .resizable()

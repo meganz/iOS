@@ -11,7 +11,7 @@ public struct MockCameraUploadsStatsRepository: CameraUploadsStatsRepositoryProt
         self.currentStats = currentStats
     }
     
-    public func currentUploadStatus() async throws -> CameraUploadStatsEntity {
+    public func currentUploadStats() async throws -> CameraUploadStatsEntity {
         currentStats
     }
     

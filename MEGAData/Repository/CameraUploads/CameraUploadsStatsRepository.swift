@@ -18,7 +18,7 @@ public final class CameraUploadsStatsRepository: CameraUploadsStatsRepositoryPro
         self.notificationCenter = notificationCenter
     }
     
-    public func currentUploadStatus() async throws -> CameraUploadStatsEntity {
+    public func currentUploadStats() async throws -> CameraUploadStatsEntity {
         let currentStats = try await cameraUploadManager.loadCurrentUploadStats()
         let videoUploadStats = try await cameraUploadManager.loadUploadStats(
             forMediaTypes: [PHAssetMediaType.video.rawValue as NSNumber])
@@ -35,7 +35,7 @@ public final class CameraUploadsStatsRepository: CameraUploadsStatsRepositoryPro
             .map { _ in () }
             .prepend(())
             .values
-            .compactMap { [weak self] _ in try? await self?.currentUploadStatus() }
+            .compactMap { [weak self] _ in try? await self?.currentUploadStats() }
             .eraseToAnyAsyncSequence()
     }
 }
