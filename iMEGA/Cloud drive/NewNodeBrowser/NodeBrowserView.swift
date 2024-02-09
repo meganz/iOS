@@ -51,13 +51,6 @@ struct NodeBrowserView: View {
         ToolbarItem(placement: .principal) {
             Text(viewModel.title).font(.headline)
         }
-
-        ToolbarItem(placement: .primaryAction) {
-            Text(Strings.Localizable.cancel).font(.subheadline)
-                .onTapGesture {
-                    viewModel.stopEditing()
-                }
-        }
     }
 
     @ToolbarContentBuilder

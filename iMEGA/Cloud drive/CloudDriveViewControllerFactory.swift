@@ -1,6 +1,7 @@
 import Foundation
 import MEGADomain
 import MEGAL10n
+import MEGAPermissions
 import MEGAPresentation
 import MEGARepo
 import MEGASDKRepo
@@ -105,11 +106,8 @@ struct CloudDriveViewControllerFactory {
     private let contextMenuConfigFactory: CloudDriveContextMenuConfigFactory
     private let backupsUseCase: any BackupsUseCaseProtocol
     private let avatarViewModel: MyAvatarViewModel
-    private let nodeInfoRouter: NodeInfoRouter
-    private let sharedItemsRouter: SharedItemsViewRouter
-    private let nodeShareRouter: NodeShareRouter
-    private let shareUseCase: any ShareUseCaseProtocol
     private let rubbishBinUseCase: any RubbishBinUseCaseProtocol
+    private let createContextMenuUseCase: any CreateContextMenuUseCaseProtocol
     private let nodeActions: NodeActions
     private let emptyViewAssetFactory: CloudDriveEmptyViewAssetFactory
 
@@ -130,11 +128,8 @@ struct CloudDriveViewControllerFactory {
         userDefaults: UserDefaults,
         contextMenuConfigFactory: CloudDriveContextMenuConfigFactory,
         backupsUseCase: some BackupsUseCaseProtocol,
-        nodeInfoRouter: NodeInfoRouter,
-        sharedItemsRouter: SharedItemsViewRouter,
-        nodeShareRouter: NodeShareRouter,
-        shareUseCase: some ShareUseCaseProtocol,
         rubbishBinUseCase: some RubbishBinUseCaseProtocol,
+        createContextMenuUseCase: some CreateContextMenuUseCaseProtocol,
         nodeActions: NodeActions
     ) {
         self.featureFlagProvider = featureFlagProvider
@@ -153,11 +148,8 @@ struct CloudDriveViewControllerFactory {
         self.userDefaults = userDefaults
         self.contextMenuConfigFactory = contextMenuConfigFactory
         self.backupsUseCase = backupsUseCase
-        self.nodeInfoRouter = nodeInfoRouter
-        self.nodeShareRouter = nodeShareRouter
-        self.sharedItemsRouter = sharedItemsRouter
-        self.shareUseCase = shareUseCase
         self.rubbishBinUseCase = rubbishBinUseCase
+        self.createContextMenuUseCase = createContextMenuUseCase
         self.nodeActions = nodeActions
         
         self.avatarViewModel = MyAvatarViewModel(
@@ -244,16 +236,12 @@ struct CloudDriveViewControllerFactory {
                 nodeUseCase: nodeUseCase
             ),
             backupsUseCase: backupsUseCase,
-            nodeInfoRouter: .init(
-                navigationController: nc
-            ),
-            sharedItemsRouter: SharedItemsViewRouter(),
-            nodeShareRouter: NodeShareRouter(
-                viewController: nc
-            ),
-            shareUseCase: ShareUseCase(repo: ShareRepository.newRepo), 
             rubbishBinUseCase: DIContainer.rubbishBinUseCase,
-            nodeActions: .makeActions(sdk: sdk, nc: nc)
+            createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo),
+            nodeActions: .makeActions(
+                sdk: sdk,
+                navigationController: navController
+            )
         )
     }
     
@@ -328,6 +316,135 @@ struct CloudDriveViewControllerFactory {
         return navigationController
     }
     
+    private func makeNodeBrowserViewModel(
+        nodeSource: NodeSource,
+        searchResultsViewModel: SearchResultsViewModel,
+        config: NodeBrowserConfig,
+        nodeActions: NodeActions,
+        navigationController: UINavigationController,
+        mediaContentDelegate: MediaContentDelegateHandler,
+        searchControllerWrapper: SearchControllerWrapper,
+        onSelectionModeChange: @escaping (Bool) -> Void
+    ) -> NodeBrowserViewModel {
+
+        let upgradeEncouragementViewModel: UpgradeEncouragementViewModel? = config.supportsUpgradeEncouragement ? .init() : nil
+        
+        return .init(
+            searchResultsViewModel: searchResultsViewModel,
+            mediaDiscoveryViewModel: makeOptionalMediaDiscoveryViewModel(
+                nodeSource: nodeSource,
+                mediaContentDelegate: mediaContentDelegate
+            ),
+            warningViewModel: makeOptionalWarningViewModel(
+                nodeSource,
+                config: config
+            ),
+            upgradeEncouragementViewModel: upgradeEncouragementViewModel,
+            config: config,
+            nodeSource: nodeSource,
+            avatarViewModel: avatarViewModel,
+            hasOnlyMediaNodesChecker: makeVisualMediaChecker(nodeSource: nodeSource, mode: .containsExclusivelyMedia),
+            titleBuilder: { isEditing, selectedNodesCount in
+                // The code below is needed due the fact that most of new code uses NodeEntity struct
+                // and for the code to be robust and reuse the title logic, title should be derived from
+                // from the actual node for normal and renaming scenarios.
+                // For this reason, instead of passing the immutable NodeEntity struct, we
+                // are supplying a closure that caches the node handle
+                // and accesses actual node from the SDK data base whenever need, guaranteeing
+                // consistency between screen title and SDK state
+                let persistentNodeSourceProvider: () -> NodeSource = {
+                    switch nodeSource {
+                    case .node(let provider):
+                        guard let nodeHandle = provider()?.handle else { return nodeSource }
+                        return .node({
+                            nodeUseCase.nodeForHandle(nodeHandle)
+                        })
+                    case .recentActionBucket:
+                        return nodeSource
+                    }
+                }
+                return titleFor(
+                    persistentNodeSourceProvider(),
+                    config: config,
+                    isEditModeActive: isEditing,
+                    selectedNodesArrayCount: selectedNodesCount
+                ) ?? ""
+            },
+            onOpenUserProfile: { nodeActions.userProfileOpener(navigationController) },
+            onUpdateSearchBarVisibility: { searchControllerWrapper.onUpdateSearchBarVisibility?($0) },
+            onBack: { self.navigationController.popViewController(animated: true) },
+            onEditingChanged: { enabled in
+                onSelectionModeChange(enabled)
+            }
+        )
+    }
+    
+    // This factory method creates all the machinery need to show and handle three dot context menu
+    // ContextMenuManager holds weak references to the action handles, so they
+    // need to be retained in the viewModel to make sure they live as long as the view
+    private func makeContextMenuManager(
+        nodeSource: NodeSource,
+        nodeBrowserViewModel: NodeBrowserViewModel,
+        navigationController: UINavigationController
+    ) -> (ContextMenuManager, [AnyObject]) {
+        
+        // All node actions triggered via context menus (three dot or toolbar)
+        // are handled from a central place: NodeActions which keeps
+        // closure that can execute each operation
+        // possible improvement is to also use this mechanism
+        // when three dots are tapped on the single node cell
+        
+        let displayMenuDelegateHandler = DisplayMenuDelegateHandler(
+            rubbishBinUseCase: rubbishBinUseCase,
+            toggleSelection: { [weak nodeBrowserViewModel] in
+                nodeBrowserViewModel?.toggleSelection()
+            },
+            changeViewMode: { [weak nodeBrowserViewModel] in
+                nodeBrowserViewModel?.changeViewMode($0)
+            }
+        )
+        
+        displayMenuDelegateHandler.presenterViewController = navigationController
+        
+        let quickActionsMenuDelegateHandler = QuickActionsMenuDelegateHandler(
+            showNodeInfo: nodeActions.showNodeInfo,
+            manageShare: { nodeActions.manageShare([$0]) },
+            shareFolders: nodeActions.shareFolders,
+            download: nodeActions.nodeDownloader,
+            shareOrManageLink: nodeActions.shareOrManageLink,
+            copy: { nodeActions.browserAction(.copy, [$0]) },
+            removeLink: nodeActions.removeLink,
+            removeSharing: nodeActions.removeSharing,
+            rename: {
+                nodeActions.rename(
+                    $0, { [weak nodeBrowserViewModel] in
+                        nodeBrowserViewModel?.refreshTitle()
+                    }
+                )
+            },
+            leaveSharing: nodeActions.leaveSharing,
+            nodeSource: nodeSource
+        )
+        
+        let rubbishBinMenuDelegate = RubbishBinMenuDelegateHandler(
+            restore: { nodeActions.restoreFromRubbishBin([$0]) },
+            showNodeInfo: nodeActions.showNodeInfo,
+            showNodeVersions: nodeActions.showNodeVersions,
+            remove: { nodeActions.removeFromRubbishBin([$0]) },
+            nodeSource: nodeSource
+        )
+        
+        let contextMenuManager = ContextMenuManager(
+            displayMenuDelegate: displayMenuDelegateHandler,
+            quickActionsMenuDelegate: quickActionsMenuDelegateHandler,
+            uploadAddMenuDelegate: UploadAddMenuDelegateHandler(),
+            rubbishBinMenuDelegate: rubbishBinMenuDelegate,
+            createContextMenuUseCase: createContextMenuUseCase
+        )
+        
+        return (contextMenuManager, contextMenuManager.allNonNilActionHandlers())
+    }
+    
     // this method is ripe for extracting to separate file
     // not doing this now as 2 develops are actively working with this file
     // This factory should be split into 2 , one that just creates new , one that just creates old CDVC
@@ -354,145 +471,112 @@ struct CloudDriveViewControllerFactory {
             onCancel: { searchResultsVM.bridge.queryCleaned() }
         )
         
-        let upgradeEncouragementViewModel: UpgradeEncouragementViewModel? = config.supportsUpgradeEncouragement ? .init() : nil
+        // this object will communicate from views showing the nodes
+        // into search hosting controller which will configure the tool bar with items
+        // depending on the context, selection state and selected items
+        let selectionHandler = SearchControllerSelectionHandler()
+        let isBackupsNode: () -> Bool = {
+            guard
+                case let .node(nodeProvider) = nodeSource,
+                let node = nodeProvider()
+            else { return false }
+            return backupsUseCase.isBackupNode(node)
+        }
+        
+        let toolbarActionCompleted: (BottomToolbarAction) -> Void = { _ in
+            // here we should disable edit mode I think
+        }
+        
+        let parentNodeAccessType: () async -> NodeAccessTypeEntity = {
+            guard
+                case let .node(nodeProvider) = nodeSource,
+                let node = nodeProvider()
+            else { return .unknown }
+            return await accessType(for: node)
+        }
+        
+        let toolbarConfig: (_ selectedNodes: [NodeEntity], _ accessType: NodeAccessTypeEntity) -> BottomToolbarConfig = { nodes, accessType in
+            .init(
+                accessType: accessType,
+                displayMode: overriddenConfig.displayMode ?? .cloudDrive,
+                isBackupNode: isBackupsNode(),
+                selectedNodes: nodes,
+                isIncomingShareChildView: false,
+                onActionCompleted: toolbarActionCompleted
+            )
+        }
 
-        let mediaContentDelegate = MediaContentDelegate()
-        
-        let nodeBrowserViewModel = NodeBrowserViewModel(
-            searchResultsViewModel: searchResultsVM,
-                mediaDiscoveryViewModel: makeOptionalMediaDiscoveryViewModel(
-                nodeSource: nodeSource,
-                mediaContentDelegate: mediaContentDelegate
-            ),
-            warningViewModel: makeOptionalWarningViewModel(
-                nodeSource,
-                config: config
-            ),
-            upgradeEncouragementViewModel: upgradeEncouragementViewModel,
-            config: overriddenConfig,
-            nodeSource: nodeSource,
-            avatarViewModel: avatarViewModel,
-            hasOnlyMediaNodesChecker: makeVisualMediaChecker(nodeSource: nodeSource, mode: .containsExclusivelyMedia),
-            titleBuilder: { isEditing, selectedNodesCount in
-                // The code below is needed due the fact that most of new code uses NodeEntity struct
-                // and for the code to be robust and reuse the title logic, title should be derived from
-                // from the actual node for normal and renaming scenarios.
-                // For this reason, instead of passing the immutable NodeEntity struct, we
-                // are supplying a closure that caches the node handle
-                // and accesses actual node from the SDK data base whenever need, guaranteeing
-                // consistency between screen title and SDK state
-                let persistentNodeSourceProvider: () -> NodeSource = {
-                    switch nodeSource {
-                    case .node(let provider):
-                        guard let nodeHandle = provider()?.handle else { return nodeSource }
-                        return .node({
-                            nodeUseCase.nodeForHandle(nodeHandle)
-                        })
-                    case .recentActionBucket:
-                        return nodeSource
-                    }
-                }
-                return titleFor(
-                    persistentNodeSourceProvider(),
-                    config: overriddenConfig,
-                    isEditModeActive: isEditing,
-                    selectedNodesArrayCount: selectedNodesCount
-                ) ?? ""
-            },
-            onOpenUserProfile: { nodeActions.userProfileOpener(self.navigationController) },
-            onUpdateSearchBarVisibility: { searchControllerWrapper.onUpdateSearchBarVisibility?($0) },
-            onBack: { self.navigationController.popViewController(animated: true) }
-        )
-        
-        let displayMenuDelegateHandler = DisplayMenuDelegateHandler(
-            rubbishBinUseCase: rubbishBinUseCase,
-            toggleSelection: { [weak nodeBrowserViewModel] in
-                nodeBrowserViewModel?.toggleSelection()
-            },
-            changeViewMode: { [weak nodeBrowserViewModel] in
-                nodeBrowserViewModel?.changeViewMode($0)
+        searchResultsVM.bridge.selectionChanged = { selectedNodes in
+            let nodes: [NodeEntity] = selectedNodes.compactMap {
+                nodeUseCase.nodeForHandle($0)
             }
-        )
-        
-        nodeBrowserViewModel.mediaContentDelegate = mediaContentDelegate
-        nodeBrowserViewModel.actionHandlers.append(displayMenuDelegateHandler)
-        
-        displayMenuDelegateHandler.presenterViewController = navigationController
-        
-        // nodeInfoRouter, sharedItemsRouter and nodeShareRouter used below are retained inside the closure
-        // so that their lifetime is the same as Delegate itself, which is retained
-        // by NodeBrowserViewMode
-        let quickActionsMenuDelegateHandler = QuickActionsMenuDelegateHandler(
-            showNodeInfo: {
-                nodeInfoRouter.showInformation(for: $0)
-            },
-            manageShare: {
-                nodeShareRouter.pushManageSharing(for: $0, on: navigationController)
-            },
-            shareFolders: { nodes in
-                Task { @MainActor [shareUseCase] in
-                    do {
-                        _ = try await shareUseCase.createShareKeys(forNodes: nodes)
-                        sharedItemsRouter.showShareFoldersContactView(withNodes: nodes)
-                    } catch {
-                        SVProgressHUD.showError(withStatus: error.localizedDescription)
-                    }
-                }
-            },
-            download: { nodes in
-                let transfers = nodes.map {
-                    CancellableTransfer(
-                        handle: $0.handle,
-                        name: nil,
-                        appData: nil,
-                        priority: false,
-                        isFile: $0.isFile,
-                        type: .download
-                    )
-                }
-                nodeActions.nodeDownloader(transfers)
-            },
-            presentGetLink: { nodeActions.getLinkOpener($0) }, 
-            copy: { nodeActions.copyNode($0) },
-            removeLink: { nodeActions.removeLink($0) },
-            removeSharing: { nodeActions.removeSharing($0) },
-            rename: {
-                nodeActions.rename(
-                    $0, { [weak nodeBrowserViewModel] in
-                        nodeBrowserViewModel?.refreshTitle()
-                    }
+            Task { @MainActor in
+                let accessType = await parentNodeAccessType()
+                selectionHandler.onSelectionChanged?(
+                    toolbarConfig(nodes, accessType)
                 )
-            },
-            leaveSharing: { nodeActions.leaveSharing($0) },
-            nodeSource: nodeSource
+            }
+            
+        }
+        
+        let onSelectionModeChange: (Bool) -> Void  = { enabled in
+            
+            Task { @MainActor in
+                let accessType = await parentNodeAccessType()
+                selectionHandler.onSelectionModeChange?(
+                    enabled, toolbarConfig([], accessType)
+                )
+            }
+        }
+
+        let mediaContentDelegate = MediaContentDelegateHandler()
+        let nodeBrowserViewModel = makeNodeBrowserViewModel(
+            nodeSource: nodeSource,
+            searchResultsViewModel: searchResultsVM,
+            config: overriddenConfig,
+            nodeActions: nodeActions,
+            navigationController: navigationController,
+            mediaContentDelegate: mediaContentDelegate,
+            searchControllerWrapper: searchControllerWrapper,
+            onSelectionModeChange: onSelectionModeChange
         )
         
-        let rubbishBinMenuDelegate = RubbishBinMenuDelegateHandler(
-            restore: { nodeActions.restoreFromRubbishBin($0) },
-            showNodeInfo: { nodeInfoRouter.showInformation(for: $0) },
-            showNodeVersions: { nodeActions.showNodeVersions($0) },
-            remove: { nodeActions.remove($0) },
-            nodeSource: nodeSource
+        mediaContentDelegate.selectedPhotosHandler = { selected, _ in
+            Task { @MainActor in
+                let accessType = await parentNodeAccessType()
+                // here we send selected items and config to refresh toolbar inside
+                // SearchBarUIHostingController
+                selectionHandler.onSelectionChanged?(
+                    toolbarConfig(selected, accessType)
+                )
+                // Here we trigger reload of nav bar title
+                // when selecting items inside MediaContentDiscoveryView
+                nodeBrowserViewModel.refreshTitle()
+            }
+        }
+        
+        let (contextMenuManager, actionHandlers) = makeContextMenuManager(
+            nodeSource: nodeSource,
+            nodeBrowserViewModel: nodeBrowserViewModel,
+            navigationController: navigationController
         )
         
-        let contextMenuManager = ContextMenuManager(
-            displayMenuDelegate: displayMenuDelegateHandler,
-            quickActionsMenuDelegate: quickActionsMenuDelegateHandler,
-            uploadAddMenuDelegate: UploadAddMenuDelegateHandler(),
-            rubbishBinMenuDelegate: rubbishBinMenuDelegate,
-            createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo)
-        )
-        
-        nodeBrowserViewModel.actionHandlers.append(contextMenuManager)
-        nodeBrowserViewModel.actionHandlers.append(quickActionsMenuDelegateHandler)
-        nodeBrowserViewModel.actionHandlers.append(rubbishBinMenuDelegate)
+        nodeBrowserViewModel.actionHandlers.append(actionHandlers)
+        nodeBrowserViewModel.actionHandlers.append(mediaContentDelegate)
         
         let view = NodeBrowserView(
             viewModel: nodeBrowserViewModel
         )
+        
         let vc = SearchBarUIHostingController(
             rootView: view,
             wrapper: searchControllerWrapper,
+            selectionHandler: selectionHandler,
+            toolbarBuilder: CloudDriveBottomToolbarItemsFactory(
+                sdk: sdk,
+                nodeActionHandler: nodeActions.makeNodeActionsHandler(),
+                actionFactory: ToolbarActionFactory()
+            ),
             backButtonTitle: titleFor(
                 nodeSource,
                 config: overriddenConfig
@@ -513,9 +597,13 @@ struct CloudDriveViewControllerFactory {
                 vc.navigationItem.rightBarButtonItems = navItems.rightNavBarItems
             }
         }
+        
+        assert(actionHandlers.isNotEmpty, "sanity check as they should not be deallocated")
         // setting the refreshMenu handler so that context menu handlers can trigger it
-        displayMenuDelegateHandler.refreshMenu = setContextMenuButton
-        quickActionsMenuDelegateHandler.refreshMenu = setContextMenuButton
+        actionHandlers
+            .compactMap { $0 as? (any RefreshMenuTriggering) }
+            .forEach { $0.refreshMenu = setContextMenuButton }
+        
         setContextMenuButton()
         
         return vc
@@ -531,6 +619,11 @@ struct CloudDriveViewControllerFactory {
             leftBarButtonItem: nil,
             rightNavBarItems: []
         )
+    }
+    
+    // this should be run in async way as it's locking up with the SDK lock
+    private func accessType(for node: NodeEntity?) async -> NodeAccessTypeEntity {
+        await nodeUseCase.nodeAccessLevelAsync(nodeHandle: node?.handle ?? .invalid)
     }
     
     @MainActor
@@ -551,7 +644,7 @@ struct CloudDriveViewControllerFactory {
         let parentNode = nodeProvider()
         
         let hasMedia = await makeVisualMediaChecker(nodeSource: nodeSource, mode: .containsSomeMedia)()
-        let accessType = nodeUseCase.nodeAccessLevel(nodeHandle: parentNode?.handle ?? .invalid)
+        let accessType = await accessType(for: parentNode)
         
         let menuConfig = contextMenuConfigFactory.contextMenuConfiguration(
             parentNode: parentNode,
@@ -594,6 +687,9 @@ struct CloudDriveViewControllerFactory {
         )
     }
     
+    // this enum is used when negotiating if given folder should
+    // have a media discovery option available in the context menu (if there are any media)
+    // or if it should be shown automatically (folder only having images inside)
     enum MediaCheckerMode {
         case containsExclusivelyMedia
         case containsSomeMedia
@@ -871,7 +967,7 @@ struct CloudDriveViewControllerFactory {
     
     private func makeOptionalMediaDiscoveryViewModel(
         nodeSource: NodeSource,
-        mediaContentDelegate: MediaContentDelegate
+        mediaContentDelegate: MediaContentDelegateHandler
     ) -> MediaDiscoveryContentViewModel? {
         guard case let .node(parentNodeProvider) = nodeSource else { return nil }
         
@@ -884,7 +980,7 @@ struct CloudDriveViewControllerFactory {
     
     private func makeMediaDiscoveryViewModel(
         parentNodeProvider: @escaping ParentNodeProvider,
-        mediaContentDelegate: MediaContentDelegate,
+        mediaContentDelegate: MediaContentDelegateHandler,
         isShowingAutomatically: Bool
     ) -> MediaDiscoveryContentViewModel {
         .init(

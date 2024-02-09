@@ -116,7 +116,7 @@ public struct SearchResultsView: View {
             ForEach(Array(viewModel.listItems.enumerated()), id: \.element.id) { index, item in
                 SearchResultRowView(
                     viewModel: item,
-                    selected: $viewModel.selected,
+                    selected: $viewModel.selectedResultIds,
                     selectionEnabled: $viewModel.editing
                 )
                 .task {
@@ -136,7 +136,7 @@ public struct SearchResultsView: View {
                     ForEach(Array(viewModel.folderListItems.enumerated()), id: \.element.id) { index, item in
                         SearchResultThumbnailItemView(
                             viewModel: item,
-                            selected: $viewModel.selected,
+                            selected: $viewModel.selectedResultIds,
                             selectionEnabled: $viewModel.editing
                         )
                             .task {
@@ -152,7 +152,7 @@ public struct SearchResultsView: View {
                     ForEach(Array(viewModel.fileListItems.enumerated()), id: \.element.id) { index, item in
                         SearchResultThumbnailItemView(
                             viewModel: item,
-                            selected: $viewModel.selected,
+                            selected: $viewModel.selectedResultIds,
                             selectionEnabled: $viewModel.editing
                         )
                             .task {

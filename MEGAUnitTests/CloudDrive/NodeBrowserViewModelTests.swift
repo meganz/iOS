@@ -88,7 +88,8 @@ class NodeBrowserViewModelTests: XCTestCase {
                 titleBuilder: { _, _ in Self.titleBuilderProvidedValue },
                 onOpenUserProfile: {},
                 onUpdateSearchBarVisibility: { _ in },
-                onBack: {}
+                onBack: {}, 
+                onEditingChanged: { _ in }
             )
         }
     }
