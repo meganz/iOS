@@ -213,6 +213,15 @@ extension UIColor {
         }
     }
     
+    // MARK: Icon tint color
+    
+    @objc
+    class func secondaryIconTintColor(
+        for traitCollection: UITraitCollection
+    ) -> UIColor {
+        TokenColors.Icon.secondary
+    }
+    
     // MARK: Background grouped
     
     @objc(

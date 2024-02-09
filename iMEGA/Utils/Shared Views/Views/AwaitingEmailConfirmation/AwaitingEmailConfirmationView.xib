@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -50,6 +50,7 @@
                     </variation>
                 </label>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="K3f-lP-shF"/>
             <constraints>
                 <constraint firstItem="hIq-3x-tfh" firstAttribute="centerX" secondItem="0sb-yg-ZOf" secondAttribute="centerX" id="3m2-aT-f7U"/>
                 <constraint firstItem="0sb-yg-ZOf" firstAttribute="top" secondItem="2jk-LD-Uqt" secondAttribute="top" constant="92" id="66E-pi-u8l"/>
@@ -62,7 +63,6 @@
                 <constraint firstItem="hIq-3x-tfh" firstAttribute="top" secondItem="0sb-yg-ZOf" secondAttribute="bottom" constant="36" id="i8c-XE-Qlg"/>
                 <constraint firstItem="hIq-3x-tfh" firstAttribute="leading" secondItem="2jk-LD-Uqt" secondAttribute="leading" constant="30" id="uMb-OY-CsF"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="K3f-lP-shF"/>
             <variation key="default">
                 <mask key="constraints">
                     <exclude reference="66E-pi-u8l"/>
@@ -70,6 +70,7 @@
             </variation>
             <connections>
                 <outlet property="descriptionLabel" destination="jU8-Oa-6ip" id="YZG-Dl-Ojh"/>
+                <outlet property="iconImageView" destination="0sb-yg-ZOf" id="QYk-gG-hTu"/>
                 <outlet property="titleLabel" destination="hIq-3x-tfh" id="lif-cg-IAh"/>
             </connections>
             <point key="canvasLocation" x="29" y="42"/>
