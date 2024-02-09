@@ -1,4 +1,5 @@
 #import "AwaitingEmailConfirmationView.h"
+#import "MEGA-Swift.h"
 
 @implementation AwaitingEmailConfirmationView
 
@@ -21,7 +22,14 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.backgroundColor = UIColor.systemBackgroundColor;
+    self.backgroundColor = [UIColor pageBackgroundForTraitCollection:self.traitCollection];
+    self.titleLabel.textColor = [UIColor mnz_primaryTextColor];
+    self.descriptionLabel.textColor = [UIColor mnz_secondaryTextColor];
+    
+    if ([UIColor isDesignTokenEnabled]) {
+        [self.iconImageView.image imageWithRenderingMode: UIImageRenderingModeAlwaysTemplate];
+        self.iconImageView.tintColor = [UIColor secondaryIconTintColorFor: self.traitCollection];
+    }
 }
 
 @end
