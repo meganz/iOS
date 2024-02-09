@@ -1,3 +1,5 @@
+import MEGADesignToken
+import MEGASwiftUI
 import SwiftUI
 
 struct QASettingsView: View {
@@ -9,44 +11,51 @@ struct QASettingsView: View {
         static let fingerprintVerificationHeaderText = "SDK secure flag"
         static let fingerprintVerificationFooterText = "To toggle secure flag: logout user > on onboarding screen > tap 5 times"
         static let fingerprintVerificationText = "Share secure flag: "
-        static let cellDarkBackgroundColor = MEGAAppColor.Black._1C1C1E.color
-        static let cellLightBackgroundColor = MEGAAppColor.White._FFFFFF.color
     }
     
     let viewModel: QASettingsViewModel
     @Environment(\.colorScheme) private var colorScheme
-
+    
     var body: some View {
         List {
-            Section(header: Text(Constants.appUpdatesHeaderText).textCase(nil)) {
-                Button {
-                    viewModel.checkForUpdate()
-                } label: {
-                    Text(Constants.checkForUpdateText)
-                }
-                .listRowBackground(listRowBackgroundColor)
-            }            
+            Section(
+                header:
+                    Text(Constants.appUpdatesHeaderText)
+                    .textCase(nil)
+                    .foregroundColor(TokenColors.Text.secondary.swiftUI)) {
+                        Button {
+                            viewModel.checkForUpdate()
+                        } label: {
+                            Text(Constants.checkForUpdateText)
+                        }
+                    }
+                    .listRowSeparatorTint(TokenColors.Border.strong.swiftUI)
             
-            Section(header: Text(Constants.featureListHeaderText).textCase(nil)) {
-                FeatureFlagView()
-                    .listRowBackground(listRowBackgroundColor)
-            }
-
-            Section(header: Text(Constants.fingerprintVerificationHeaderText).textCase(nil),
-                    footer: Text(Constants.fingerprintVerificationFooterText)) {
-                Text(Constants.fingerprintVerificationText + viewModel.fingerprintVerificationFlagStatus())
-            }
+            Section(
+                header:
+                    Text(Constants.featureListHeaderText)
+                    .textCase(nil)
+                    .foregroundColor(TokenColors.Text.secondary.swiftUI)) {
+                        FeatureFlagView()
+                            .listRowSeparatorTint(TokenColors.Border.strong.swiftUI)
+                    }
+            
+            Section(
+                header:
+                    Text(Constants.fingerprintVerificationHeaderText)
+                    .textCase(nil)
+                    .foregroundColor(TokenColors.Text.secondary.swiftUI),
+                
+                footer:
+                    Text(Constants.fingerprintVerificationFooterText)
+                    .foregroundColor(TokenColors.Text.secondary.swiftUI)) {
+                        Text(Constants.fingerprintVerificationText + viewModel.fingerprintVerificationFlagStatus())
+                            .foregroundColor(TokenColors.Text.primary.swiftUI)
+                            .listRowSeparatorTint(TokenColors.Border.strong.swiftUI)
+                    }
         }
         .listStyle(.grouped)
         .padding(.top)
-        .background(backgroundColor)
-    }
-    
-    private var listRowBackgroundColor: Color {
-        colorScheme == .dark ? Constants.cellDarkBackgroundColor : Constants.cellLightBackgroundColor
-    }
-    
-    private var backgroundColor: Color {
-        colorScheme == .dark ? MEGAAppColor.Black._000000.color : MEGAAppColor.White._F7F7F7.color
+        .designTokenBackground(isDesignTokenEnabled)
     }
 }

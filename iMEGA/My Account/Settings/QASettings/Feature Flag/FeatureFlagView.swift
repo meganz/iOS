@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGADomain
 import SwiftUI
 
@@ -14,6 +15,7 @@ struct FeatureFlagView: View {
             .padding(.horizontal)
             .padding(.vertical, 5)
             .listRowInsets(EdgeInsets())
+            .foregroundColor(TokenColors.Text.primary.swiftUI)
         }
     }
 }
