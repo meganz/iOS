@@ -29,7 +29,7 @@ typedef NS_ENUM(NSUInteger, BrowserAction) {
 @property (weak, nonatomic) IBOutlet UIButton *incomingButton;
 
 @property (nonatomic, strong) MEGANode *parentNode;
-@property (nonatomic, strong) NSArray *selectedNodesArray;
+@property (nonatomic, strong) NSArray<MEGANode *> *selectedNodesArray;
 
 @property (nonatomic) BrowserAction browserAction;
 @property (nonatomic, getter=isChildBrowser) BOOL childBrowser;

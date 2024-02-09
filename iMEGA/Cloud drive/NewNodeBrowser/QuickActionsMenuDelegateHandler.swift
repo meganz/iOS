@@ -1,13 +1,13 @@
 import MEGADomain
 import MEGAL10n
 
-final class QuickActionsMenuDelegateHandler: QuickActionsMenuDelegate {
+final class QuickActionsMenuDelegateHandler: QuickActionsMenuDelegate, RefreshMenuTriggering {
     
     let showNodeInfo: (NodeEntity) -> Void
     let manageShare: (NodeEntity) -> Void
     let shareFolders: ([NodeEntity]) -> Void
     let download: ([NodeEntity]) -> Void
-    let presentGetLink: ([NodeEntity]) -> Void
+    let shareOrManageLink: ([NodeEntity]) -> Void
     let copy: (NodeEntity) -> Void
     let removeLink: ([NodeEntity]) -> Void
     let removeSharing: (NodeEntity) -> Void
@@ -23,7 +23,7 @@ final class QuickActionsMenuDelegateHandler: QuickActionsMenuDelegate {
         manageShare: @escaping (NodeEntity) -> Void,
         shareFolders: @escaping ([NodeEntity]) -> Void,
         download: @escaping ([NodeEntity]) -> Void,
-        presentGetLink: @escaping ([NodeEntity]) -> Void,
+        shareOrManageLink: @escaping ([NodeEntity]) -> Void,
         copy: @escaping (NodeEntity) -> Void,
         removeLink: @escaping ([NodeEntity]) -> Void,
         removeSharing: @escaping (NodeEntity) -> Void,
@@ -34,7 +34,7 @@ final class QuickActionsMenuDelegateHandler: QuickActionsMenuDelegate {
         self.showNodeInfo = showNodeInfo
         self.manageShare = manageShare
         self.shareFolders = shareFolders
-        self.presentGetLink = presentGetLink
+        self.shareOrManageLink = shareOrManageLink
         self.copy = copy
         self.removeLink = removeLink
         self.download = download
@@ -60,7 +60,7 @@ final class QuickActionsMenuDelegateHandler: QuickActionsMenuDelegate {
         case .download:
             download([parentNode])
         case .shareLink, .manageLink:
-            presentGetLink([parentNode])
+            shareOrManageLink([parentNode])
         case .shareFolder:
             shareFolders([parentNode])
         case .rename:

@@ -1,11 +1,10 @@
 import MEGADomain
 import MEGAL10n
-
 // This delegate object is used by the new cloud drive (NodeBrowserView) to
 // handle display related context menu actions
 // Classes below, similarly are supposed to handle other sections of the context menu such
 // as related to uploading and rubbish bin
-final class DisplayMenuDelegateHandler: DisplayMenuDelegate {
+final class DisplayMenuDelegateHandler: DisplayMenuDelegate, RefreshMenuTriggering {
     
     var presenterViewController: UIViewController?
     var refreshMenu: (() -> Void)?
@@ -63,30 +62,5 @@ final class DisplayMenuDelegateHandler: DisplayMenuDelegate {
     
     func sortMenu(didSelect sortType: SortOrderType) {
         assert(false, "not implemented yet, scheduled to be done in [FM-1776]")
-    }
-}
-
-final class UploadAddMenuDelegateHandler: UploadAddMenuDelegate {
-    func uploadAddMenu(didSelect action: MEGADomain.UploadAddActionEntity) {
-        
-    }
-}
-
-// Implementing of the selection of nodes
-// will be implemented here [FM-1463]
-final class MediaContentDelegate: MediaDiscoveryContentDelegate {
-    
-    var isMediaDiscoverySelectionHandler: ((_ isHidden: Bool) -> Void)?
-    
-    func selectedPhotos(selected: [MEGADomain.NodeEntity], allPhotos: [MEGADomain.NodeEntity]) {
-        // Connect select photos action
-    }
-    
-    func isMediaDiscoverySelection(isHidden: Bool) {
-        isMediaDiscoverySelectionHandler?(isHidden)
-    }
-    
-    func mediaDiscoverEmptyTapped(menuAction: EmptyMediaDiscoveryContentMenuAction) {
-        // Connect empty tapped action
     }
 }

@@ -10,7 +10,7 @@ public class SearchResultsViewModel: ObservableObject {
     @Published var isLoadingPlaceholderShown = false
 
     // this will need to be to exposed outside when parent will need to know exactly what is selected
-    @Published var selected: Set<ResultId> = []
+    @Published public var selectedResultIds: Set<ResultId> = []
 
     @Published public var layout: PageLayout
 
@@ -189,7 +189,7 @@ public class SearchResultsViewModel: ObservableObject {
         currentQuery = .initial
         listItems = []
         lastAvailableChips = []
-        selected = []
+        selectedResultIds = []
         await defaultSearchQuery()
     }
     
@@ -341,13 +341,13 @@ public class SearchResultsViewModel: ObservableObject {
 
     private func toggleSelected(_ result: SearchResult) {
         
-        if selected.contains(result.id) {
-            selected.remove(result.id)
+        if selectedResultIds.contains(result.id) {
+            selectedResultIds.remove(result.id)
         } else {
-            selected.insert(result.id)
+            selectedResultIds.insert(result.id)
         }
 
-        bridge.selectionChanged(selected)
+        bridge.selectionChanged(selectedResultIds)
     }
     
     private func selectionFor(result: SearchResult) -> SearchResultSelection {
