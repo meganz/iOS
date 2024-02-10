@@ -343,6 +343,7 @@ struct CloudDriveViewControllerFactory {
             config: config,
             nodeSource: nodeSource,
             avatarViewModel: avatarViewModel,
+            storageFullAlertViewModel: StorageFullAlertViewModel(router: StorageFullModalAlertViewController(nibName: nil, bundle: nil)),
             hasOnlyMediaNodesChecker: makeVisualMediaChecker(nodeSource: nodeSource, mode: .containsExclusivelyMedia),
             titleBuilder: { isEditing, selectedNodesCount in
                 // The code below is needed due the fact that most of new code uses NodeEntity struct
@@ -851,10 +852,6 @@ struct CloudDriveViewControllerFactory {
     
     private func makeWarningViewModel(warningType: WarningType) -> WarningViewModel {
         WarningViewModel(warningType: warningType)
-    }
-
-    private func makeWarningViewModel(parentNodeProvider: ParentNodeProvider) -> WarningViewModel {
-        WarningViewModel(warningType: .contactNotVerifiedSharedFolder(parentNodeProvider()?.name ?? ""))
     }
     
     private func resultProvider(

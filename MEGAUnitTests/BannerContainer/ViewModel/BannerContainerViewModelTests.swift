@@ -57,7 +57,6 @@ final class BannerContainerViewModelTests: XCTestCase {
         }
         
         return (BannerContainerViewModel(
-            router: MockBannerContainerViewRouter(),
             message: "Banner message example",
             type: .warning,
             preferenceUseCase: preferenceUseCase

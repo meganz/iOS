@@ -15,14 +15,11 @@ final class UpgradeAccountRouter: UpgradeAccountRouting {
     }
     
     private let purchase: MEGAPurchase
-    private let abTestProvider: any ABTestProviderProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     
     init(purchase: MEGAPurchase = MEGAPurchase.sharedInstance(),
-         abTestProvider: some ABTestProviderProtocol = DIContainer.abTestProvider,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
         self.purchase = purchase
-        self.abTestProvider = abTestProvider
         self.featureFlagProvider = featureFlagProvider
     }
     

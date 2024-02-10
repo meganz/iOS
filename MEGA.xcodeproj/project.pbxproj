@@ -2460,6 +2460,8 @@
 		C48AED412710922D00DD9F85 /* NodeCollectionViewCell+Nib.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48AED402710922C00DD9F85 /* NodeCollectionViewCell+Nib.swift */; };
 		C48CE0142732ECE40081DEC4 /* NodeLoadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48CE0132732ECE40081DEC4 /* NodeLoadOperation.swift */; };
 		C498894926B19D6700C41E25 /* AchievementsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C498894826B19D6700C41E25 /* AchievementsViewController+Additions.swift */; };
+		C499E1DC2B7663B800503353 /* StorageFullAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C499E1DB2B7663B800503353 /* StorageFullAlertViewModel.swift */; };
+		C499E1DF2B7663FB00503353 /* StorageFullAlertViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C499E1DE2B7663FB00503353 /* StorageFullAlertViewModelTests.swift */; };
 		C49F8618255ABE810074A054 /* AudioPlayer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C49F8617255ABE810074A054 /* AudioPlayer.storyboard */; };
 		C49F8621255ABEA80074A054 /* AudioPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49F8620255ABEA80074A054 /* AudioPlayerViewController.swift */; };
 		C49F8629255AC0200074A054 /* AudioPlayerViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49F8628255AC0200074A054 /* AudioPlayerViewRouter.swift */; };
@@ -5124,6 +5126,8 @@
 		C48AED402710922C00DD9F85 /* NodeCollectionViewCell+Nib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NodeCollectionViewCell+Nib.swift"; sourceTree = "<group>"; };
 		C48CE0132732ECE40081DEC4 /* NodeLoadOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeLoadOperation.swift; sourceTree = "<group>"; };
 		C498894826B19D6700C41E25 /* AchievementsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AchievementsViewController+Additions.swift"; sourceTree = "<group>"; };
+		C499E1DB2B7663B800503353 /* StorageFullAlertViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageFullAlertViewModel.swift; sourceTree = "<group>"; };
+		C499E1DE2B7663FB00503353 /* StorageFullAlertViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageFullAlertViewModelTests.swift; sourceTree = "<group>"; };
 		C49F8617255ABE810074A054 /* AudioPlayer.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AudioPlayer.storyboard; sourceTree = "<group>"; };
 		C49F8620255ABEA80074A054 /* AudioPlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerViewController.swift; sourceTree = "<group>"; };
 		C49F8628255AC0200074A054 /* AudioPlayerViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerViewRouter.swift; sourceTree = "<group>"; };
@@ -5614,6 +5618,7 @@
 				1240A4A127DD545F00627262 /* MediaDiscovery */,
 				B5FC636529E92FE400EE4C8E /* Node */,
 				245385F82A13C04800208B31 /* NodeInfo */,
+				C499E1DD2B7663FB00503353 /* StorageFullAlert */,
 				9402EF4D2B70DBC5002F7714 /* CloudDriveBottomToolbarFactoryTests.swift */,
 				94B85CA02B582DDE002AECEF /* CloudDriveNavigationTitleBuilderTests.swift */,
 				24575FEE2A499A62003EAE79 /* CloudDriveViewControllerTests.swift */,
@@ -9867,6 +9872,7 @@
 		94FB1E912B2AF1860045276C /* NewNodeBrowser */ = {
 			isa = PBXGroup;
 			children = (
+				C499E1DA2B7663B800503353 /* StorageFullAlertViewModel */,
 				94272C4C2B6D3BFA00D4AF7C /* BrowserViewControllerDelegateHandler.swift */,
 				9474F19C2B5A672900FDBE8D /* CloudDriveBottomToolbarFactory.swift */,
 				94831D632B61086700D0005F /* CloudDriveContextMenuConfigFactory.swift */,
@@ -10862,9 +10868,9 @@
 		B6730B0A2735F34100A9CF5F /* Shared Views */ = {
 			isa = PBXGroup;
 			children = (
-				948028382B6C272E002B4EB4 /* Info */,
 				5B8281451E7BE7FA0079C1BB /* Cells */,
 				C467AD4D26A8651400AFE4D2 /* DynamicType */,
+				948028382B6C272E002B4EB4 /* Info */,
 				B6730B0B2735F46D00A9CF5F /* Shared Controls */,
 				9458610A2926963200866F03 /* Snackbar */,
 				5D646600248909D5006030A5 /* Theme */,
@@ -11269,7 +11275,6 @@
 		B6CED48C22B8AC70009C4861 /* MEGAUnitTests */ = {
 			isa = PBXGroup;
 			children = (
-				94227F6A2B6D47FF009D586F /* Info */,
 				B6D5482E283E2AF000D7302F /* Account */,
 				328FDCF629121D2200E5990A /* Album */,
 				E7EE7CCD2AC6DC9E00DBABCD /* AppDelegate */,
@@ -11281,6 +11286,7 @@
 				2FF3F9B3260AECA600015050 /* DeepLinking */,
 				A81971E226FDBE4E007DC7B1 /* File Versioning */,
 				5DFC8DC324ECF35C00DDA006 /* Home */,
+				94227F6A2B6D47FF009D586F /* Info */,
 				B6AF22DD26097F200008FF72 /* Launching */,
 				837B17A128819CB900A4D01B /* Links */,
 				835CE84C2AA88E7E00861544 /* MainTabBar */,
@@ -12454,6 +12460,22 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		C499E1DA2B7663B800503353 /* StorageFullAlertViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C499E1DB2B7663B800503353 /* StorageFullAlertViewModel.swift */,
+			);
+			path = StorageFullAlertViewModel;
+			sourceTree = "<group>";
+		};
+		C499E1DD2B7663FB00503353 /* StorageFullAlert */ = {
+			isa = PBXGroup;
+			children = (
+				C499E1DE2B7663FB00503353 /* StorageFullAlertViewModelTests.swift */,
+			);
+			path = StorageFullAlert;
+			sourceTree = "<group>";
+		};
 		C49F8610255ABD6A0074A054 /* AudioPlayer */ = {
 			isa = PBXGroup;
 			children = (
@@ -13622,7 +13644,6 @@
 				2F83AA0E2419C96000505B8A /* ActionSheetViewController.swift in Sources */,
 				8340CAF7284E48F8007C3B39 /* ActionsView.swift in Sources */,
 				8340CAFA284E4F0C007C3B39 /* ActionViewModel.swift in Sources */,
-				9480283E2B6C2755002B4EB4 /* ResourceInfoViewRouter.swift in Sources */,
 				9470003929B77BCF00827E04 /* ActionWarningViewRouter.swift in Sources */,
 				8348A8D82901902B00B66463 /* ActiveCallViewModel.swift in Sources */,
 				835833332948DB0A00394F1A /* AddParticipantsView.swift in Sources */,
@@ -13859,7 +13880,6 @@
 				2F147784244D1C950069B264 /* ChatLocationCollectionViewCell.swift in Sources */,
 				2F029234244FD6D90071A6E2 /* ChatManagmentTypeCollectionViewCell.swift in Sources */,
 				2FA6D9DD243E8CB5007A8E81 /* ChatMediaCollectionViewCell.swift in Sources */,
-				9480283A2B6C2741002B4EB4 /* ResourceInfoView.swift in Sources */,
 				BFB463E92433394500FB90B9 /* ChatMessage.swift in Sources */,
 				2F04634024BFF13900A47A81 /* ChatMessageActionMenuViewController.swift in Sources */,
 				BFC933E824A45D0000BC2A75 /* ChatMessageOptionsTableViewController.swift in Sources */,
@@ -14739,7 +14759,6 @@
 				0D8C01DE268029D100D0F2AA /* PhotoGridViewBaseDataSource.swift in Sources */,
 				BFAB113D23CEA5C300BCE72D /* PhotoGridViewCell.swift in Sources */,
 				BFAB113C23CEA5C300BCE72D /* PhotoGridViewController.swift in Sources */,
-				9480283C2B6C274A002B4EB4 /* ResourceInfoViewModel.swift in Sources */,
 				BFAB113A23CEA5C300BCE72D /* PhotoGridViewDataSource.swift in Sources */,
 				BFAB113823CEA5C300BCE72D /* PhotoGridViewDelegate.swift in Sources */,
 				BFE40CA5265CB7D70012B71A /* PhotoGridViewDiffableDataSource.swift in Sources */,
@@ -14898,6 +14917,9 @@
 				A8EC8D7727A0258900A9ED13 /* ReportIssueViewModel.swift in Sources */,
 				A808F1832795D286004E4D31 /* ReportIssueViewRouter.swift in Sources */,
 				2F9F11192508A3E800896DFF /* RequestModel.swift in Sources */,
+				9480283A2B6C2741002B4EB4 /* ResourceInfoView.swift in Sources */,
+				9480283C2B6C274A002B4EB4 /* ResourceInfoViewModel.swift in Sources */,
+				9480283E2B6C2755002B4EB4 /* ResourceInfoViewRouter.swift in Sources */,
 				2F9F11172508A3E800896DFF /* ResponseModel.swift in Sources */,
 				2F2801D924481EFD00C160D0 /* RichPreviewContentView.swift in Sources */,
 				2F09867A2511BA8900E959C2 /* RichPreviewDialogView.swift in Sources */,
@@ -15071,6 +15093,7 @@
 				BFE6E554255259FE00050DCA /* SortOrderType.swift in Sources */,
 				A870B31C27AC2FBB0052B6D0 /* SpotlightIndexer.swift in Sources */,
 				5D17CFA42541C46C0000194A /* StartConversationViewModel.swift in Sources */,
+				C499E1DC2B7663B800503353 /* StorageFullAlertViewModel.swift in Sources */,
 				2F5EC89F24075BA30017F334 /* StorageFullModalAlertViewController.swift in Sources */,
 				5D667EEC24ECF9400092474D /* StoreUser.swift in Sources */,
 				5DFC8DC224ECEC9B00DDA006 /* StoreUserClient.swift in Sources */,
@@ -15615,7 +15638,6 @@
 				C47E7BDB25D1550200DB6FF5 /* AudioPlayerItem.swift in Sources */,
 				240D80FB2AB1A1DC00FBD2C4 /* AudioPlayerItemTests.swift in Sources */,
 				C452B66425CD50260073B22C /* AudioPlayerPlaybackTests.swift in Sources */,
-				94227F6D2B6D481B009D586F /* ResourceInfoViewModelTests.swift in Sources */,
 				24A6ADDC2A8222CE0035C7B0 /* AudioPlayerPlaylistShiftStrategyTestSpecs.swift in Sources */,
 				24C577F82AC1876200302849 /* AudioPlayerRepositoryTests.swift in Sources */,
 				24C577FB2AC187F600302849 /* AudioPlayerUseCaseTests.swift in Sources */,
@@ -15822,6 +15844,7 @@
 				949704B32AB425C500B2CA3A /* RenameViewModelTests.swift in Sources */,
 				240380542A30687500C06E61 /* ReportIssueMessageViewModelTests.swift in Sources */,
 				A8EE47AA27DFAEF000D37685 /* ReportIssueViewModelTests.swift in Sources */,
+				94227F6D2B6D481B009D586F /* ResourceInfoViewModelTests.swift in Sources */,
 				B6AADE9C251845E2009A874C /* Routing+Addition.swift in Sources */,
 				947CA1FB2B62994800E4D578 /* RubbishBinMenuDelegateHandlerTests.swift in Sources */,
 				BF418B7E2A43DE14004C5A5D /* ScheduledMeetingDateBuilderTests.swift in Sources */,
@@ -15850,6 +15873,7 @@
 				9D7E604128DD7E0100055875 /* SlideShowOptionViewModelTests.swift in Sources */,
 				32B0723328A4E403002BAE34 /* SlideshowViewModelTests.swift in Sources */,
 				B66BA24E25155B3A009787BD /* SMSVerificationViewModelTests.swift in Sources */,
+				C499E1DF2B7663FB00503353 /* StorageFullAlertViewModelTests.swift in Sources */,
 				C4F0C90A259E0FEE0063C5C5 /* StoreUser.swift in Sources */,
 				C47032F225A35B3200A0CA74 /* StoreUserClient.swift in Sources */,
 				2461E7042A8CC90600A8FFA6 /* StreamingInfoRepositoryTests.swift in Sources */,

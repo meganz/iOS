@@ -516,11 +516,6 @@
     [self.navigationController pushViewController:videoUploadsController animated:YES];
 }
 
-- (void)showLocalDiskIsFullWarningScreen {
-    StorageFullModalAlertViewController *warningVC = StorageFullModalAlertViewController.alloc.init;
-    [warningVC show];
-}
-
 #pragma mark - DZNEmptyDataSetSource
 
 - (nullable UIView *)customViewForEmptyDataSet:(UIScrollView *)scrollView {

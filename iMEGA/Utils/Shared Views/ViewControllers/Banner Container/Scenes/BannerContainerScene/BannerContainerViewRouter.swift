@@ -25,7 +25,7 @@ extension BannerContainerViewRouter: BannerContainerViewRouting {
         
         bannerContainerVC.contentVC = contentViewController
         
-        let viewModel = BannerContainerViewModel(router: self, message: bannerMessage, type: bannerType)
+        let viewModel = BannerContainerViewModel(message: bannerMessage, type: bannerType)
         bannerContainerVC.viewModel = viewModel
         
         return bannerContainerVC

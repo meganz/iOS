@@ -83,7 +83,8 @@ class NodeBrowserViewModelTests: XCTestCase {
                     megaNotificationUseCase: MockMEGANotificationUseCaseProtocol(),
                     megaAvatarUseCase: MockMEGAAvatarUseCaseProtocol(),
                     megaAvatarGeneratingUseCase: MockMEGAAvatarGeneratingUseCaseProtocol()
-                ),
+                ), 
+                storageFullAlertViewModel: .init(router: MockStorageFullAlertViewRouting()),
                 hasOnlyMediaNodesChecker: { false },
                 titleBuilder: { _, _ in Self.titleBuilderProvidedValue },
                 onOpenUserProfile: {},

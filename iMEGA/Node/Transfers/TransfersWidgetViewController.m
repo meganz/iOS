@@ -185,7 +185,7 @@ static TransfersWidgetViewController* instance = nil;
 
 - (void)updateViewState {
     [CrashlyticsLogger logWithCategory:LogCategoryTranfersWidget
-                                   msg:[NSString stringWithFormat: @"Tranfers widget will disappear. Navigation bar info: %@.", self.navigationController.navigationBar]
+                                   msg:[NSString stringWithFormat: @"Tranfers widget updated state to %ld. Navigation bar info: %@.", (long)self.transfersSelected, self.navigationController.navigationBar]
                                   file:@(__FILENAME__)
                               function:@(__FUNCTION__)];
     
