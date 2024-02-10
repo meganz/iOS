@@ -25,7 +25,7 @@ class NodeBrowserViewModel: ObservableObject {
     let mediaDiscoveryViewModel: MediaDiscoveryContentViewModel? // not available for recent buckets yet
     let warningViewModel: WarningViewModel?
     var mediaContentDelegate: MediaContentDelegateHandler?
-    let upgradeEncouragementViewModel: UpgradeEncouragementViewModel?
+    private let upgradeEncouragementViewModel: UpgradeEncouragementViewModel?
     let config: NodeBrowserConfig
     var hasOnlyMediaNodesChecker: () async -> Bool
 
@@ -37,6 +37,7 @@ class NodeBrowserViewModel: ObservableObject {
     var isSelectionHidden = false
     private var subscriptions = Set<AnyCancellable>()
     let avatarViewModel: MyAvatarViewModel
+    private let storageFullAlertViewModel: StorageFullAlertViewModel
 
     private let nodeSource: NodeSource
     private let titleBuilder: (_ isEditing: Bool, _ selectedNodeCount: Int) -> String
@@ -53,6 +54,7 @@ class NodeBrowserViewModel: ObservableObject {
         config: NodeBrowserConfig,
         nodeSource: NodeSource,
         avatarViewModel: MyAvatarViewModel,
+        storageFullAlertViewModel: StorageFullAlertViewModel,
         // this is needed to check if given folder contains only visual media
         // so that we can automatically show media browser
         hasOnlyMediaNodesChecker: @escaping () async -> Bool,
@@ -63,13 +65,13 @@ class NodeBrowserViewModel: ObservableObject {
         onEditingChanged: @escaping (Bool) -> Void
     ) {
         self.searchResultsViewModel = searchResultsViewModel
-        
         self.mediaDiscoveryViewModel = mediaDiscoveryViewModel
         self.warningViewModel = warningViewModel
         self.upgradeEncouragementViewModel = upgradeEncouragementViewModel
         self.config = config
         self.nodeSource = nodeSource
         self.avatarViewModel = avatarViewModel
+        self.storageFullAlertViewModel = storageFullAlertViewModel
         self.titleBuilder = titleBuilder
         self.onOpenUserProfile = onOpenUserProfile
         self.hasOnlyMediaNodesChecker = hasOnlyMediaNodesChecker
@@ -147,6 +149,11 @@ class NodeBrowserViewModel: ObservableObject {
         determineIfShowingAutomaticallyMediaDiscovery()
         onUpdateSearchBarVisibility(!isMediaDiscoveryShown(for: viewMode))
         encourageUpgradeIfNeeded()
+    }
+    
+    @MainActor
+    func onLoadTask() {
+        storageFullAlertViewModel.showStorageAlertIfNeeded()
     }
     
     private func determineIfShowingAutomaticallyMediaDiscovery() {

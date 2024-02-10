@@ -43,12 +43,12 @@ class StorageFullModalAlertViewController: CustomModalAlertViewController {
 
         dismissCompletion = { [weak self] in
             self?.dismiss(animated: true, completion: {
-                UserDefaults.standard.set(Date().timeIntervalSince1970, forKey: "MEGAStorageFullNotification")
+                UserDefaults.standard.set(Date.now.timeIntervalSince1970, forKey: "MEGAStorageFullNotification")
             })
         }
     }
     
-    @objc func show() {
+    func show() {
         show(requiredStorage: requiredStorage)
     }
     
@@ -65,7 +65,7 @@ class StorageFullModalAlertViewController: CustomModalAlertViewController {
         let storageDate = Date(timeIntervalSince1970: TimeInterval(UserDefaults.standard.double(forKey: "MEGAStorageFullNotification")))
         
         guard FileManager.default.mnz_fileSystemFreeSize < limitedSpace,
-              storageDate.daysEarlier(than: Date()) < duration else {
+              storageDate.daysEarlier(than: .now) > duration else {
             return
         }
         

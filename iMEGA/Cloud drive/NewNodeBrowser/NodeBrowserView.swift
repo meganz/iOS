@@ -37,6 +37,7 @@ struct NodeBrowserView: View {
         }
         .navigationBarTitleDisplayMode(.inline)
         .task { await viewModel.viewTask() }
+        .onLoad { viewModel.onLoadTask() }
     }
 
     @ToolbarContentBuilder
