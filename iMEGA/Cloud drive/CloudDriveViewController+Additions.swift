@@ -488,7 +488,8 @@ extension CloudDriveViewController {
         router.didTapNode(
             nodeHandle: node.handle,
             allNodeHandles: allNodesForOpening(node: node).map { $0.handle },
-            displayMode: displayMode.carriedOverDisplayMode,
+            displayMode: displayMode.carriedOverDisplayMode, 
+            isFromSharedItem: isFromSharedItem,
             warningViewModel: warningViewModel
         )
     }
