@@ -17,8 +17,8 @@ protocol NodeRouting {
         displayMode: DisplayMode?
     )
 
-    func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity]?, displayMode: DisplayMode?, warningViewModel: WarningViewModel?)
-    
+    func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity]?, displayMode: DisplayMode?, isFromSharedItem: Bool, warningViewModel: WarningViewModel?)
+
     func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity]?)
     
     func didTapNode(nodeHandle: HandleEntity)
@@ -72,7 +72,7 @@ final class HomeSearchResultRouter: NodeRouting {
         navigationController?.present(nodeActionViewController, animated: true, completion: nil)
     }
     
-    func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity]?, displayMode: DisplayMode?, warningViewModel: WarningViewModel? = nil) {
+    func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity]?, displayMode: DisplayMode?, isFromSharedItem: Bool, warningViewModel: WarningViewModel? = nil) {
         guard let node = nodeUseCase.nodeForHandle(nodeHandle) else { return }
         if node.isTakenDown {
             showTakenDownAlert(isFolder: node.isFolder)
@@ -80,17 +80,20 @@ final class HomeSearchResultRouter: NodeRouting {
             nodeOpener.openNode(
                 nodeHandle: nodeHandle,
                 allNodes: allNodeHandles,
-                config: .withOptionalDisplayMode(displayMode, warningViewModel: warningViewModel)
+                config: .init(
+                    displayMode: displayMode,
+                    isFromSharedItem: isFromSharedItem,
+                    warningViewModel: warningViewModel)
             )
         }
     }
     
     func didTapNode(nodeHandle: HandleEntity, allNodeHandles: [HandleEntity]?) {
-        didTapNode(nodeHandle: nodeHandle, allNodeHandles: allNodeHandles, displayMode: nil)
+        didTapNode(nodeHandle: nodeHandle, allNodeHandles: allNodeHandles, displayMode: nil, isFromSharedItem: false)
     }
     
     func didTapNode(nodeHandle: HandleEntity) {
-        didTapNode(nodeHandle: nodeHandle, allNodeHandles: nil, displayMode: nil)
+        didTapNode(nodeHandle: nodeHandle, allNodeHandles: nil, displayMode: nil, isFromSharedItem: false)
     }
     
     func showTakenDownAlert(isFolder: Bool) {

@@ -796,7 +796,8 @@ struct CloudDriveViewControllerFactory {
                     // audio player and image gallery
                     // for more details inspect NodeOpener.swift and it's openNode method
                     allNodeHandles: $0.nonEmptyOrNilSiblingsIds(),
-                    displayMode: config.displayMode?.carriedOverDisplayMode,
+                    displayMode: config.displayMode?.carriedOverDisplayMode, 
+                    isFromSharedItem: false,
                     warningViewModel: config.warningViewModel
                 )
             },
