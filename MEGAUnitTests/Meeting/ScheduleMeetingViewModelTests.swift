@@ -780,6 +780,45 @@ final class ScheduleMeetingViewModelTests: XCTestCase {
         )
     }
     
+    func testFreePlanTimeLimitation_durationShorterThan60minutesAndUserIsPro_viewShouldNotBeShown() {
+        let viewModel = ScheduleMeetingViewModel(accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity(proLevel: .proI)), featureFlagProvider: MockFeatureFlagProvider(list: [.chatMonetization: true]))
+        let date = Date.now
+        viewModel.startDate = date
+        viewModel.endDate = date.addingTimeInterval(300)
+        XCTAssertFalse(viewModel.showLimitDurationView)
+    }
+    
+    func testFreePlanTimeLimitation_durationLongerThan60minutesAndUserIsPro_viewShouldNotBeShown() {
+        let viewModel = ScheduleMeetingViewModel(accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity(proLevel: .proI)), featureFlagProvider: MockFeatureFlagProvider(list: [.chatMonetization: true]))
+        let date = Date.now
+        viewModel.startDate = date
+        viewModel.endDate = date.addingTimeInterval(3601)
+        XCTAssertFalse(viewModel.showLimitDurationView)
+    }
+    
+    func testFreePlanTimeLimitation_durationShorterThan60minutesAndUserIsFree_viewShouldNotBeShown() {
+        let viewModel = ScheduleMeetingViewModel(accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity(proLevel: .free)), featureFlagProvider: MockFeatureFlagProvider(list: [.chatMonetization: true]))
+        let date = Date.now
+        viewModel.startDate = date
+        viewModel.endDate = date.addingTimeInterval(300)
+        XCTAssertFalse(viewModel.showLimitDurationView)
+    }
+    
+    func testFreePlanTimeLimitation_durationLongerThan60minutesAndUserIsFree_viewShouldBeShown() {
+        let viewModel = ScheduleMeetingViewModel(accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity(proLevel: .free)), featureFlagProvider: MockFeatureFlagProvider(list: [.chatMonetization: true]))
+        let date = Date.now
+        viewModel.startDate = date
+        viewModel.endDate = date.addingTimeInterval(3601)
+        XCTAssertTrue(viewModel.showLimitDurationView)
+    }
+    
+    func testFreePlanTimeLimitation_upgradeAccountIsTapped_shouldShowUpgradeAccountView() {
+        let router = MockScheduleMeetingRouter()
+        let viewModel = ScheduleMeetingViewModel(router: router, accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity(proLevel: .free)), featureFlagProvider: MockFeatureFlagProvider(list: [.chatMonetization: true]))
+        viewModel.upgradePlansViewTapped()
+        XCTAssertEqual(router.upgradeAccount_calledTimes, 1)
+    }
+    
     // MARK: - Private methods.
     
     private func evaluate(isInverted: Bool = false, expression: @escaping () -> Bool) {
@@ -814,6 +853,7 @@ final class MockScheduleMeetingRouter: ScheduleMeetingRouting {
     var scheduleMettingRulesEntityPublisher = PassthroughSubject<ScheduledMeetingRulesEntity, Never>()
     var endRecurrenceScheduleMettingRulesEntityPublisher = PassthroughSubject<ScheduledMeetingRulesEntity, Never>()
     var updatedMeeting_calledTimes = 0
+    var upgradeAccount_calledTimes = 0
 
     func showSpinner() {
         showSpinner_calledTimes += 1
@@ -857,5 +897,9 @@ final class MockScheduleMeetingRouter: ScheduleMeetingRouting {
     
     func updated(meeting: ScheduledMeetingEntity) {
         updatedMeeting_calledTimes += 1
+    }
+    
+    func showUpgradeAccount(_ account: AccountDetailsEntity) {
+        upgradeAccount_calledTimes += 1
     }
 }

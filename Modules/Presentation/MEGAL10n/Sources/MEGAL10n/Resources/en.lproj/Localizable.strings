@@ -3974,3 +3974,5 @@
 "calls.sfuOutdated.updateAppAlert.button.update"="Update";
 /* Calls: SFU protocol is outdated then show update alert dialog, with skip button */
 "calls.sfuOutdated.updateAppAlert.button.skip"="Skip";
+/* Meetings: free plan limitation text for scheduled meetings calls longer than 60 minutes. Text between tags is colour formatted, keep tags order in the string: [A] should appear before [/A] always. */
+"meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Your current plan can only support 60 minutes per meeting. Need more time? [A]Upgrade now[/A]";
