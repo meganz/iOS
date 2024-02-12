@@ -121,5 +121,10 @@ extension ScheduleMeetingRouter: ScheduleMeetingRouting {
         router.start()
         return router.$rules.eraseToAnyPublisher()
     }
+    
+    func showUpgradeAccount(_ account: AccountDetailsEntity) {
+        guard let baseViewController else { return }
+        UpgradeAccountPlanRouter(presenter: baseViewController, accountDetails: account).start()
+    }
 }
  

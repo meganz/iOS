@@ -17,6 +17,7 @@ protocol ScheduleMeetingRouting {
     func showAddParticipants(alreadySelectedUsers: [UserEntity], newSelectedUsers: @escaping (([UserEntity]?) -> Void))
     func showRecurrenceOptionsView(rules: ScheduledMeetingRulesEntity, startDate: Date) -> AnyPublisher<ScheduledMeetingRulesEntity, Never>?
     func showEndRecurrenceOptionsView(rules: ScheduledMeetingRulesEntity, startDate: Date) -> AnyPublisher<ScheduledMeetingRulesEntity, Never>?
+    func showUpgradeAccount(_ account: AccountDetailsEntity)
 }
 
 final class ScheduleMeetingViewModel: ObservableObject {
@@ -25,6 +26,7 @@ final class ScheduleMeetingViewModel: ObservableObject {
         static let meetingNameMaxLength: Int = 30
         static let meetingDescriptionMaxLength: Int = 3000
         static let minDurationFiveMinutes: TimeInterval = 300
+        static let freePlanDurationLimit: TimeInterval = 3600
     }
     
     var title: String { viewConfiguration.title }
@@ -52,6 +54,7 @@ final class ScheduleMeetingViewModel: ObservableObject {
         didSet {
             startDateUpdated(previouslySelectedDate: oldValue)
             updateRightBarButtonState()
+            shouldShowFreePlanLimit()
         }
     }
     
@@ -59,6 +62,7 @@ final class ScheduleMeetingViewModel: ObservableObject {
         didSet {
             endDateFormatted = formatDate(endDate)
             updateRightBarButtonState()
+            shouldShowFreePlanLimit()
         }
     }
     
@@ -101,7 +105,8 @@ final class ScheduleMeetingViewModel: ObservableObject {
     @Published var showDiscardAlert = false
     @Published var isRightBarButtonEnabled = false
     @Published var participantHandleList: [HandleEntity] = []
-    
+    @Published var showLimitDurationView = false
+
     @PreferenceWrapper(key: .waitingRoomWarningBannerDismissed, defaultValue: false)
     var waitingRoomWarningBannerDismissed: Bool
     
@@ -223,6 +228,11 @@ final class ScheduleMeetingViewModel: ObservableObject {
         router
             .showRecurrenceOptionsView(rules: rules, startDate: startDate)?
             .assign(to: &$rules)
+    }
+    
+    func upgradePlansViewTapped() {
+        guard let accountDetails = accountUseCase.currentAccountDetails else { return }
+        router.showUpgradeAccount(accountDetails)
     }
     
     func selectedFrequencyDetails() -> String {
@@ -441,6 +451,14 @@ final class ScheduleMeetingViewModel: ObservableObject {
         guard previouslySelectedRecurrenceOption != .custom else { return }
         
         rules.updateDayList(usingStartDate: startDate)
+    }
+    
+    private func shouldShowFreePlanLimit() {
+        if featureFlagProvider.isFeatureFlagEnabled(for: .chatMonetization) {
+            if accountUseCase.currentAccountDetails?.proLevel == .free {
+                showLimitDurationView = endDate.timeIntervalSince(startDate) > Constants.freePlanDurationLimit
+            }
+        }
     }
     
     @MainActor

@@ -20,7 +20,12 @@ struct ScheduleMeetingCreationDateAndRecurrenceView: View {
                 DatePickerView(title: Strings.Localizable.Meetings.ScheduleMeeting.end, dateFormatted: $viewModel.endDateFormatted, datePickerVisible: $viewModel.endDatePickerVisible, date: $viewModel.endDate, dateRange: viewModel.minimunEndDate...) {
                     viewModel.endsDidTap()
                 }
-                if viewModel.endDatePickerVisible {
+                if viewModel.showLimitDurationView {
+                    ScheduleMeetingFreePlanTimeLimitationView {
+                        viewModel.upgradePlansViewTapped()
+                    }
+                }
+                if viewModel.endDatePickerVisible || viewModel.showLimitDurationView {
                     Divider()
                 } else {
                     Divider()
