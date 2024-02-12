@@ -30,7 +30,7 @@ struct ChatTabsSelectorView: View {
                 })
                 Divider()
                     .frame(maxHeight: 1)
-                    .background(chatViewMode == .chats ? selectedColor : unselectedColor)
+                    .background(chatViewMode == .chats ? selectedColor : unselectedDividerColor)
             }
             
             VStack {
@@ -51,7 +51,7 @@ struct ChatTabsSelectorView: View {
                 })
                 Divider()
                     .frame(maxHeight: 1)
-                    .background(chatViewMode == .meetings ? selectedColor : unselectedColor)
+                    .background(chatViewMode == .meetings ? selectedColor : unselectedDividerColor)
             }
         }
         .frame(maxHeight: 44)
@@ -64,5 +64,9 @@ struct ChatTabsSelectorView: View {
     
     private var unselectedColor: Color {
         isDesignTokenEnabled ? TokenColors.Icon.secondary.swiftUI : MEGAAppColor.Chat.chatTabNormalText.color
+    }
+    
+    private var unselectedDividerColor: Color {
+        isDesignTokenEnabled ? TokenColors.Icon.secondary.swiftUI : MEGAAppColor.Chat.chatTabNormalBackground.color
     }
 }
