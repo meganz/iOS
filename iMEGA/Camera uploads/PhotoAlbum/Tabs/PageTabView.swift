@@ -1,4 +1,6 @@
 import Combine
+import MEGADesignToken
+import MEGAPresentation
 import MEGASwiftUI
 import SwiftUI
 
@@ -6,22 +8,40 @@ struct PageTabView: View {
     @ObservedObject private var viewModel: PagerTabViewModel
     @Environment(\.colorScheme) var colorScheme
     
-    private let textForgroundRedColor = MEGAAppColor.Red._F7363D.color
+    private var textForgroundRedColor: Color {
+        isDesignTokenEnabled ? TokenColors.Button.brand.swiftUI : MEGAAppColor.Red._F7363D.color
+    }
     
     private var bottomIndicatorColor: Color {
-        colorScheme == .dark ? MEGAAppColor.Red._F30C14.color : MEGAAppColor.Red._F7363D.color
+        if isDesignTokenEnabled {
+            TokenColors.Button.brand.swiftUI
+        } else {
+            colorScheme == .dark ? MEGAAppColor.Red._F30C14.color : MEGAAppColor.Red._F7363D.color
+        }
     }
     
     private var tabForgroundColor: Color {
-        if !viewModel.isEditing {
-            return tabTextColor
+        if isDesignTokenEnabled {
+            if !viewModel.isEditing {
+                return tabTextColor
+            } else {
+                return TokenColors.Text.primary.swiftUI
+            }
         } else {
-            return MEGAAppColor.Gray._515151.color
+            if !viewModel.isEditing {
+                return tabTextColor
+            } else {
+                return MEGAAppColor.Gray._515151.color
+            }
         }
     }
     
     private var tabTextColor: Color {
-        colorScheme == .dark ? MEGAAppColor.Gray._D1D1D1.color : MEGAAppColor.Gray._515151.color
+        if isDesignTokenEnabled {
+            TokenColors.Text.primary.swiftUI
+        } else {
+            colorScheme == .dark ? MEGAAppColor.Gray._D1D1D1.color : MEGAAppColor.Gray._515151.color
+        }
     }
     
     init(viewModel: PagerTabViewModel) {
@@ -60,7 +80,7 @@ struct PageTabView: View {
                 .padding(.vertical, 10)
             }
             .frame(height: 40)
-            .background(Color.photosPageTabForeground)
+            .background(isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : Color.photosPageTabForeground)
             .overlay(
                 BottomIndicator(width: proxy.size.width, height: 1, offset: viewModel.tabOffset, color: bottomIndicatorColor),
                 alignment: .bottom
