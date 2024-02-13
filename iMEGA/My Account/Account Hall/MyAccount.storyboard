@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="goA-hy-Wkg">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="goA-hy-Wkg">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -254,15 +254,36 @@
                                                                 <constraint firstItem="k9L-sP-xFg" firstAttribute="centerY" secondItem="kQy-tK-wrG" secondAttribute="centerY" id="pju-3a-i81"/>
                                                             </constraints>
                                                         </view>
+                                                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MTJ-eX-4ny">
+                                                            <rect key="frame" x="127.5" y="45" width="39.5" height="16"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Promo" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QkF-fC-hzO" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
+                                                                    <rect key="frame" x="4" y="2" width="31.5" height="12"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                    <userDefinedRuntimeAttributes>
+                                                                        <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="caption2"/>
+                                                                        <userDefinedRuntimeAttribute type="string" keyPath="weight" value="medium"/>
+                                                                    </userDefinedRuntimeAttributes>
+                                                                </label>
+                                                            </subviews>
+                                                            <constraints>
+                                                                <constraint firstItem="QkF-fC-hzO" firstAttribute="centerX" secondItem="MTJ-eX-4ny" secondAttribute="centerX" id="0Vl-E9-1NT"/>
+                                                                <constraint firstItem="QkF-fC-hzO" firstAttribute="centerY" secondItem="MTJ-eX-4ny" secondAttribute="centerY" id="AIs-f4-WcW"/>
+                                                                <constraint firstItem="QkF-fC-hzO" firstAttribute="leading" secondItem="MTJ-eX-4ny" secondAttribute="leading" constant="4" id="kyt-1b-auh"/>
+                                                                <constraint firstItem="QkF-fC-hzO" firstAttribute="top" secondItem="MTJ-eX-4ny" secondAttribute="top" constant="2" id="oi2-B7-AiZ"/>
+                                                            </constraints>
+                                                        </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="751" text="asds dsd asdsa dsass asds ds adsads ds ds ads as adsds ds ds asd ads" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="64P-Jn-H5s">
-                                                            <rect key="frame" x="134.5" y="22" width="242" height="62"/>
+                                                            <rect key="frame" x="186" y="22" width="190.5" height="62"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstItem="64P-Jn-H5s" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="kQy-tK-wrG" secondAttribute="trailing" constant="14" id="2l8-tt-2sa"/>
+                                                        <constraint firstItem="64P-Jn-H5s" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="MTJ-eX-4ny" secondAttribute="trailing" constant="14" id="Ab5-9A-n8p"/>
                                                         <constraint firstAttribute="bottom" secondItem="64P-Jn-H5s" secondAttribute="bottom" constant="22" id="LEQ-Vm-Kae"/>
                                                         <constraint firstItem="kQy-tK-wrG" firstAttribute="leading" secondItem="bdM-YA-sg4" secondAttribute="trailing" constant="7" id="MU6-f5-3mb"/>
                                                         <constraint firstItem="UAp-tU-btg" firstAttribute="leading" secondItem="DgO-Mi-JsC" secondAttribute="leading" constant="14" id="N7e-4C-acT"/>
@@ -270,6 +291,8 @@
                                                         <constraint firstAttribute="trailing" secondItem="64P-Jn-H5s" secondAttribute="trailing" constant="7" id="TV4-Ij-lu3"/>
                                                         <constraint firstItem="64P-Jn-H5s" firstAttribute="top" secondItem="DgO-Mi-JsC" secondAttribute="top" constant="22" id="TWh-vC-9Ql"/>
                                                         <constraint firstItem="UAp-tU-btg" firstAttribute="centerY" secondItem="bdM-YA-sg4" secondAttribute="centerY" id="UVv-af-YMi"/>
+                                                        <constraint firstItem="MTJ-eX-4ny" firstAttribute="leading" secondItem="kQy-tK-wrG" secondAttribute="trailing" constant="7" id="Vtu-ek-VHM"/>
+                                                        <constraint firstItem="MTJ-eX-4ny" firstAttribute="centerY" secondItem="DgO-Mi-JsC" secondAttribute="centerY" id="ad4-el-Oqh"/>
                                                         <constraint firstItem="UAp-tU-btg" firstAttribute="centerY" secondItem="DgO-Mi-JsC" secondAttribute="centerY" id="sMd-xb-dn3"/>
                                                         <constraint firstItem="bdM-YA-sg4" firstAttribute="leading" secondItem="UAp-tU-btg" secondAttribute="trailing" constant="18" id="uYD-1R-Kv4"/>
                                                         <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="bdM-YA-sg4" secondAttribute="bottom" constant="21.5" id="vP8-4t-IFC"/>
@@ -282,6 +305,8 @@
                                                     <outlet property="iconImageView" destination="UAp-tU-btg" id="BTZ-Js-dQg"/>
                                                     <outlet property="pendingLabel" destination="k9L-sP-xFg" id="tHv-eM-YEf"/>
                                                     <outlet property="pendingView" destination="kQy-tK-wrG" id="xsF-ch-e0P"/>
+                                                    <outlet property="promoLabel" destination="QkF-fC-hzO" id="iFq-Mq-y9E"/>
+                                                    <outlet property="promoView" destination="MTJ-eX-4ny" id="85i-zE-vbf"/>
                                                     <outlet property="sectionLabel" destination="bdM-YA-sg4" id="wDM-4f-r4A"/>
                                                 </connections>
                                             </tableViewCell>
@@ -412,6 +437,9 @@
         </scene>
     </scenes>
     <designables>
+        <designable name="QkF-fC-hzO">
+            <size key="intrinsicContentSize" width="31.5" height="12"/>
+        </designable>
         <designable name="YqG-fz-6ti"/>
         <designable name="k9L-sP-xFg">
             <size key="intrinsicContentSize" width="8" height="12"/>

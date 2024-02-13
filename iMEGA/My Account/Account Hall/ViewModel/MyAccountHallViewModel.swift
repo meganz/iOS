@@ -7,7 +7,7 @@ import MEGASDKRepo
 import MEGASwift
 
 enum MyAccountHallLoadTarget {
-    case planList, accountDetails, contentCounts
+    case planList, accountDetails, contentCounts, promos
 }
 
 enum MyAccountHallAction: ActionType {
@@ -31,6 +31,7 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
 
     @Atomic var relevantUnseenUserAlertsCount: UInt = 0
     @Atomic var accountDetails: AccountDetailsEntity?
+    @Atomic var arePromosAvailable: Bool = false
 
     var invokeCommand: ((Command) -> Void)?
     var incomingContactRequestsCount = 0
@@ -149,6 +150,8 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
             await fetchAccountDetails(showActivityIndicator: showActivityIndicator)
         case .contentCounts:
             await fetchCounts()
+        case .promos:
+            await fetchAvailablePromos()
         }
     }
     
@@ -179,6 +182,12 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
         }
         
         await reloadNotificationCounts()
+    }
+    
+    private func fetchAvailablePromos() async {
+        $arePromosAvailable.mutate { currentValue in
+            currentValue = self.isNotificationCenterEnabled()
+        }
     }
     
     // MARK: UI

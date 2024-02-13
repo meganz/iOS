@@ -60,9 +60,10 @@ extension MyAccountHallViewController: UITableViewDataSource {
     }
     
     // MARK: - Notifications row setup data
-    private func notificationsSetupData(existsPendingView: Bool) -> MyAccountHallCellData {
+    private func notificationsSetupData(existsPendingView: Bool, existsPromoView: Bool) -> MyAccountHallCellData {
         var isPendingViewVisible = false
         var pendingText = ""
+        var promoText: String?
         
         let unseenUserAlerts = viewModel.relevantUnseenUserAlertsCount
         
@@ -71,10 +72,17 @@ extension MyAccountHallViewController: UITableViewDataSource {
             pendingText = String(describing: unseenUserAlerts)
         }
         
-        return MyAccountHallCellData(sectionText: Strings.Localizable.notifications,
-                                     icon: UIImage.iconNotifications.imageFlippedForRightToLeftLayoutDirection(),
-                                     isPendingViewVisible: isPendingViewVisible,
-                                     pendingText: pendingText)
+        if existsPromoView && viewModel.arePromosAvailable {
+            promoText = Strings.Localizable.Notifications.Tag.Promo.title
+        }
+        
+        return MyAccountHallCellData(
+            sectionText: Strings.Localizable.notifications,
+            icon: UIImage.iconNotifications.imageFlippedForRightToLeftLayoutDirection(),
+            isPendingViewVisible: isPendingViewVisible,
+            pendingText: pendingText,
+            promoText: promoText
+        )
     }
     
     // MARK: - Backups row setup data
@@ -171,7 +179,7 @@ extension MyAccountHallViewController: UITableViewDataSource {
         case .storage: cell.setup(data: isShowStorageUsageCell ? storageBusinessAccountSetupData() : storageSetupData())
         case .contacts: cell.setup(data: contactsSetupData(existsPendingView: cell.pendingView != nil))
         case .backups: cell.setup(data: makeBackupsCellData())
-        case .notifications: cell.setup(data: notificationsSetupData(existsPendingView: cell.pendingView != nil))
+        case .notifications: cell.setup(data: notificationsSetupData(existsPendingView: cell.pendingView != nil, existsPromoView: cell.promoView != nil))
         case .achievements: cell.setup(data: achievementsSetupData())
         case .transfers: cell.setup(data: transfersSetupData())
         case .deviceCenter: cell.setup(data: makeDeviceCenterCellData())
