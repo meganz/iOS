@@ -37,7 +37,11 @@
     self.strengthLabel.textColor = [self textColor];
     [self.strengthLabel sizeToFit];
     
-    self.backgroundColor = self.customView.backgroundColor = [UIColor pageBackgroundForTraitCollection:self.traitCollection];
+    if (UIColor.isDesignTokenEnabled) {
+        self.backgroundColor = self.customView.backgroundColor = [UIColor pageBackgroundForTraitCollection:self.traitCollection];
+    } else {
+        self.backgroundColor = self.customView.backgroundColor = [UIColor clearColor];
+    }
 }
 
 #pragma mark - Public
