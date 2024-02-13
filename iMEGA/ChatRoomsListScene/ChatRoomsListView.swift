@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import MEGAPresentation
 import MEGASwiftUI
@@ -99,16 +100,18 @@ struct ChatRoomsListView: View {
                                 }
                                 .listRowInsets(EdgeInsets())
                                 .padding(10)
+                                .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : .clear)
                         }
                         
                         ForEach(chatRooms) { chatRoom in
                             ChatRoomView(viewModel: chatRoom)
                                 .listRowInsets(EdgeInsets())
+                                .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : .clear)
                         }
                     }
                 }
                 .listStyle(.plain)
-                .overlay(
+                .background(
                     VStack {
                         if viewModel.isChatRoomEmpty {
                             ChatRoomsEmptyView(emptyViewState: viewModel.isSearchActive ? viewModel.searchEmptyViewState() : viewModel.emptyChatRoomsViewState())
@@ -116,6 +119,7 @@ struct ChatRoomsListView: View {
                     }
                     , alignment: .center
                 )
+                .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : .clear)
                 .edgesIgnoringSafeArea([.top, .bottom])
             } else {
                 LoadingSpinner()
@@ -135,6 +139,7 @@ struct ChatRoomsListView: View {
                             ForEach(futureMeetingSection.items) { futureMeeting in
                                 FutureMeetingRoomView(viewModel: futureMeeting)
                                     .listRowInsets(EdgeInsets())
+                                    .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : .clear)
                                     .background(
                                         GeometryReader { geo in
                                             Color.clear
@@ -158,11 +163,12 @@ struct ChatRoomsListView: View {
                         ForEach(pastMeetings) { pastMeeting in
                             ChatRoomView(viewModel: pastMeeting)
                                 .listRowInsets(EdgeInsets())
+                                .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : .clear)
                         }
                     }
                 }
                 .listStyle(.plain)
-                .overlay(
+                .background(
                     VStack {
                         if viewModel.isChatRoomEmpty {
                             ChatRoomsEmptyView(emptyViewState: viewModel.isSearchActive ? viewModel.searchEmptyViewState() : viewModel.emptyChatRoomsViewState())
@@ -170,6 +176,7 @@ struct ChatRoomsListView: View {
                     }
                     , alignment: .center
                 )
+                .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : .clear)
                 .scrollStatusMonitor($viewModel.isMeetingListScrolling)
             } else {
                 LoadingSpinner()
