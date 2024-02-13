@@ -46,6 +46,7 @@ extension MyAccountHallViewController {
         viewModel.dispatch(.load(.planList))
         viewModel.dispatch(.load(.accountDetails))
         viewModel.dispatch(.load(.contentCounts))
+        viewModel.dispatch(.load(.promos))
     }
     
     @objc func addSubscriptions() {

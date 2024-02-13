@@ -3976,3 +3976,5 @@
 "calls.sfuOutdated.updateAppAlert.button.skip"="Skip";
 /* Meetings: free plan limitation text for scheduled meetings calls longer than 60 minutes. Text between tags is colour formatted, keep tags order in the string: [A] should appear before [/A] always. */
 "meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Your current plan can only support 60 minutes per meeting. Need more time? [A]Upgrade now[/A]";
+/* Notifications: tag to show the user that there are promotions available in the notifications page and section.*/
+"notifications.tag.promo.title"="Promo";

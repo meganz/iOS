@@ -6,6 +6,8 @@
 
 @property (weak, nonatomic) IBOutlet UIView *pendingView;
 @property (weak, nonatomic) IBOutlet UILabel *pendingLabel;
+@property (weak, nonatomic) IBOutlet UIView *promoView;
+@property (weak, nonatomic) IBOutlet UILabel *promoLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *storageLabel;
 @property (weak, nonatomic) IBOutlet UILabel *transferLabel;
