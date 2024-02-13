@@ -25,7 +25,7 @@ final class MockMyAccountHallRouter: MyAccountHallRouting {
         didTapShowInAction_calledTimes += 1
     }
     
-    func didTapInfoAction(_ nodeEntity: NodeEntity) {
+    func didTapInfoAction(_ infoModel: ResourceInfoModel) {
         didTapInfoAction_calledTimes += 1
     }
 }

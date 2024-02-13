@@ -9,6 +9,7 @@ public final class DeviceListViewModel: ObservableObject {
     private let router: any DeviceListRouting
     private let deviceCenterBridge: DeviceCenterBridge
     private let deviceCenterUseCase: any DeviceCenterUseCaseProtocol
+    private let nodeUseCase: any NodeUseCaseProtocol
     private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
     private let backupStatuses: [BackupStatus]
     private let deviceCenterActions: [DeviceCenterAction]
@@ -52,6 +53,7 @@ public final class DeviceListViewModel: ObservableObject {
         router: some DeviceListRouting,
         deviceCenterBridge: DeviceCenterBridge,
         deviceCenterUseCase: some DeviceCenterUseCaseProtocol,
+        nodeUseCase: some NodeUseCaseProtocol,
         networkMonitorUseCase: some NetworkMonitorUseCaseProtocol,
         deviceListAssets: DeviceListAssets,
         emptyStateAssets: EmptyStateAssets,
@@ -66,6 +68,7 @@ public final class DeviceListViewModel: ObservableObject {
         self.router = router
         self.deviceCenterBridge = deviceCenterBridge
         self.deviceCenterUseCase = deviceCenterUseCase
+        self.nodeUseCase = nodeUseCase
         self.networkMonitorUseCase = networkMonitorUseCase
         self.deviceListAssets = deviceListAssets
         self.emptyStateAssets = emptyStateAssets
@@ -137,6 +140,7 @@ public final class DeviceListViewModel: ObservableObject {
             router: router,
             refreshDevicesPublisher: refreshDevicesPublisher,
             deviceCenterUseCase: deviceCenterUseCase,
+            nodeUseCase: nodeUseCase,
             deviceCenterBridge: deviceCenterBridge,
             itemType: .device(device),
             sortedAvailableActions: sortedAvailableActions,

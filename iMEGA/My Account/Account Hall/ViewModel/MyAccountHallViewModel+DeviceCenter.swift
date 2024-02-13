@@ -14,8 +14,8 @@ extension MyAccountHallViewModel {
             self?.router.didTapRenameAction(renameEntity)
         }
         
-        deviceCenterBridge.infoActionTapped = { [weak self] nodeEntity in
-            self?.router.didTapInfoAction(nodeEntity)
+        deviceCenterBridge.infoActionTapped = { [weak self] resourceInfoModel in
+            self?.router.didTapInfoAction(resourceInfoModel)
         }
         
         deviceCenterBridge.showInTapped = { [weak self] showInActionEntity in

@@ -48,6 +48,8 @@ struct DeviceCenterItemView: View {
                 selectedViewModel = viewModel
             } label: {
                 Image("moreList")
+                    .renderingMode(.template)
+                    .foregroundColor(.gray)
                     .scaledToFit()
                     .frame(width: 28, height: 28)
             }
