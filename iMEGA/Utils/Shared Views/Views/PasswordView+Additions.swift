@@ -14,12 +14,7 @@ extension PasswordView {
         if UIColor.isDesignTokenEnabled() {
             backgroundColor = TokenColors.Background.page
         } else {
-            if backgroundColor != nil && !self.isUsingDefaultBackgroundColor {
-                backgroundColor = UIColor.mnz_tertiaryBackground(currentTraitCollection)
-            } else {
-                backgroundColor = UIColor.mnz_secondaryBackground(for: currentTraitCollection)
-                isUsingDefaultBackgroundColor = true
-            }
+            backgroundColor = UIColor.mnz_tertiaryBackground(currentTraitCollection)
         }
     }
     
