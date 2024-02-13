@@ -54,6 +54,7 @@ struct ScheduleMeetingView: View {
         .ignoresSafeArea(.container, edges: [.top, .bottom])
         .onAppear {
             viewModel.updateRightBarButtonState()
+            viewModel.showLimitDurationViewIfNeeded()
         }
         .actionSheet(isPresented: $viewModel.showDiscardAlert) {
             ActionSheet(title: Text(Strings.Localizable.Meetings.ScheduleMeeting.DiscardChanges.title), buttons: discardChangesButtons())

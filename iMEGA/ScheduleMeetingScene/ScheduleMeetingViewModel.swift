@@ -54,7 +54,7 @@ final class ScheduleMeetingViewModel: ObservableObject {
         didSet {
             startDateUpdated(previouslySelectedDate: oldValue)
             updateRightBarButtonState()
-            shouldShowFreePlanLimit()
+            showLimitDurationViewIfNeeded()
         }
     }
     
@@ -62,7 +62,7 @@ final class ScheduleMeetingViewModel: ObservableObject {
         didSet {
             endDateFormatted = formatDate(endDate)
             updateRightBarButtonState()
-            shouldShowFreePlanLimit()
+            showLimitDurationViewIfNeeded()
         }
     }
     
@@ -280,6 +280,10 @@ final class ScheduleMeetingViewModel: ObservableObject {
         tracker.trackAnalyticsEvent(with: ScheduledMeetingSettingEnableOpenInviteButtonEvent())
     }
     
+    func showLimitDurationViewIfNeeded() {
+       showLimitDurationView = shouldShowFreePlanLimit()
+    }
+    
     // MARK: - Private
     
     private func initShowWarningBannerSubscription() {
@@ -453,12 +457,12 @@ final class ScheduleMeetingViewModel: ObservableObject {
         rules.updateDayList(usingStartDate: startDate)
     }
     
-    private func shouldShowFreePlanLimit() {
-        if featureFlagProvider.isFeatureFlagEnabled(for: .chatMonetization) {
-            if accountUseCase.currentAccountDetails?.proLevel == .free {
-                showLimitDurationView = endDate.timeIntervalSince(startDate) > Constants.freePlanDurationLimit
-            }
-        }
+    private func shouldShowFreePlanLimit() -> Bool {
+       let featureEnabled = featureFlagProvider.isFeatureFlagEnabled(for: .chatMonetization)
+       let freeAccountUser = accountUseCase.currentAccountDetails?.proLevel == .free
+       let meetingLongerThanFreePlanLimit = endDate.timeIntervalSince(startDate) > Constants.freePlanDurationLimit
+       
+       return featureEnabled && freeAccountUser && meetingLongerThanFreePlanLimit
     }
     
     @MainActor
