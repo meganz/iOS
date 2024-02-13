@@ -395,6 +395,7 @@ final class DeviceListViewModelTests: XCTestCase {
                     devices: devices,
                     currentDeviceId: currentDeviceId
                 ),
+            nodeUseCase: MockNodeDataUseCase(),
             networkMonitorUseCase: MockNetworkMonitorUseCase(),
             deviceListAssets:
                 DeviceListAssets(

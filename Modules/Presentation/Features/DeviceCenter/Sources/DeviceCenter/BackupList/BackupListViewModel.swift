@@ -27,6 +27,7 @@ public final class BackupListViewModel: ObservableObject {
     private let notificationCenter: NotificationCenter
     private var selectedDeviceId: String
     private var selectedDeviceName: String
+    private var selectedDeviceIcon: String
     private(set) var backups: [BackupEntity]?
     private var sortedBackupStatuses: [BackupStatusEntity: BackupStatus] {
         Dictionary(uniqueKeysWithValues: backupStatuses.map { ($0.status, $0) })
@@ -76,6 +77,7 @@ public final class BackupListViewModel: ObservableObject {
         isCurrentDevice: Bool,
         selectedDeviceId: String,
         selectedDeviceName: String,
+        selectedDeviceIcon: String,
         devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>,
         updateInterval: UInt64,
         deviceCenterUseCase: some DeviceCenterUseCaseProtocol,
@@ -94,6 +96,7 @@ public final class BackupListViewModel: ObservableObject {
         self.isCurrentDevice = isCurrentDevice
         self.selectedDeviceId = selectedDeviceId
         self.selectedDeviceName = selectedDeviceName
+        self.selectedDeviceIcon = selectedDeviceIcon
         self.devicesUpdatePublisher = devicesUpdatePublisher
         self.updateInterval = updateInterval
         self.deviceCenterUseCase = deviceCenterUseCase
@@ -271,7 +274,7 @@ public final class BackupListViewModel: ObservableObject {
     }
     
     func actionsForDevice() -> [DeviceCenterAction] {
-        var actionTypes: [DeviceCenterActionType] = [.rename]
+        var actionTypes: [DeviceCenterActionType] = [.rename, .info]
         
         if isCurrentDevice && isMobileDevice {
             actionTypes.append(.cameraUploads)
@@ -317,9 +320,8 @@ public final class BackupListViewModel: ObservableObject {
             let renameEntity = await makeRenameEntity()
             deviceCenterBridge.renameActionTapped(renameEntity)
         case .info:
-            guard let nodeHandle = backups?.first?.rootHandle,
-                  let nodeEntity = nodeUseCase.parentForHandle(nodeHandle) else { return }
-            deviceCenterBridge.infoActionTapped(nodeEntity)
+            let infoModel = await makeDeviceInfoModel()
+            deviceCenterBridge.infoActionTapped(infoModel)
         default: break
         }
     }
@@ -351,6 +353,53 @@ public final class BackupListViewModel: ObservableObject {
             }
     }
     
+    private func folderInfoFrom(_ backup: BackupEntity) async -> (files: Int, folders: Int, totalSize: UInt64) {
+        guard let node = nodeUseCase.nodeForHandle(backup.rootHandle),
+              let folderInfo = try? await nodeUseCase.folderInfo(node: node) else {
+            return (0, 0, 0)
+        }
+        
+        return (folderInfo.files, folderInfo.folders, UInt64(folderInfo.currentSize))
+    }
+
+    private func makeDeviceInfoModel() async -> ResourceInfoModel {
+        guard let backups else {
+            return ResourceInfoModel(
+                icon: selectedDeviceIcon,
+                name: selectedDeviceName,
+                counter: ResourceCounter()
+            )
+        }
+        
+        var totalFiles: Int = 0
+        var totalFolders: Int = 0
+        var totalSize: UInt64 = 0
+
+        await withTaskGroup(of: (files: Int, folders: Int, totalSize: UInt64).self) { group in
+            for backup in backups {
+                group.addTask {
+                    await self.folderInfoFrom(backup)
+                }
+            }
+
+            for await result in group {
+                totalFiles += result.files
+                totalFolders += result.folders
+                totalSize += result.totalSize
+            }
+        }
+
+        return ResourceInfoModel(
+            icon: selectedDeviceIcon,
+            name: selectedDeviceName,
+            counter: ResourceCounter(
+                files: totalFiles,
+                folders: totalFolders
+            ),
+            totalSize: totalSize
+        )
+    }
+
     private func onSortTypeChanged() {
         guard let sortType = SortType(rawValue: sortIndexSelected) else { return }
         sortTypeSelected = sortType

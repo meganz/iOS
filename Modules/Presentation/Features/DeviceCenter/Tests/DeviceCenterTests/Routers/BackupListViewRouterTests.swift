@@ -40,6 +40,7 @@ final class BackupListsViewRouterTests: XCTestCase {
             isCurrentDevice: true,
             selectedDeviceId: "1",
             selectedDeviceName: "Device 1",
+            selectedDeviceIcon: "",
             devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>(),
             updateInterval: 1,
             backups: [],

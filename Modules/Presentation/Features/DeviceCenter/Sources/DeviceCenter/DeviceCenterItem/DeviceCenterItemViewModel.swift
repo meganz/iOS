@@ -8,7 +8,7 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
     private let router: (any DeviceListRouting)?
     private let refreshDevicesPublisher: PassthroughSubject<Void, Never>?
     private let deviceCenterUseCase: DeviceCenterUseCaseProtocol
-    private let nodeUseCase: (any NodeUseCaseProtocol)?
+    private let nodeUseCase: any NodeUseCaseProtocol
     private let deviceCenterBridge: DeviceCenterBridge
     private let isCameraUploadsAvailable: Bool
     private var itemType: DeviceCenterItemType
@@ -30,7 +30,7 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
     init(router: (any DeviceListRouting)? = nil,
          refreshDevicesPublisher: PassthroughSubject<Void, Never>? = nil,
          deviceCenterUseCase: DeviceCenterUseCaseProtocol,
-         nodeUseCase: (any NodeUseCaseProtocol)? = nil,
+         nodeUseCase: any NodeUseCaseProtocol,
          deviceCenterBridge: DeviceCenterBridge,
          itemType: DeviceCenterItemType,
          sortedAvailableActions: [DeviceCenterActionType: [DeviceCenterAction]],
@@ -148,13 +148,71 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
             }
     }
     
+    private func folderInfoFrom(_ backup: BackupEntity) async -> (files: Int, folders: Int, totalSize: Int64) {
+        guard let node = nodeUseCase.nodeForHandle(backup.rootHandle),
+              let folderInfo = try? await nodeUseCase.folderInfo(node: node) else {
+            return (0, 0, 0)
+        }
+        
+        return (folderInfo.files, folderInfo.folders, folderInfo.currentSize)
+    }
+
+    private func makeNodeInfoEntity(for backup: BackupEntity) async -> ResourceInfoModel {
+        let result: (files: Int, folders: Int, totalSize: Int64) = await folderInfoFrom(backup)
+        
+        return ResourceInfoModel(
+            icon: assets.iconName,
+            name: backup.name,
+            counter: ResourceCounter(
+                files: result.files,
+                folders: result.folders
+            ),
+            totalSize: UInt64(result.totalSize),
+            added: backup.activityTimestamp)
+    }
+
+    private func makeDeviceInfoEntity(_ device: DeviceEntity) async -> ResourceInfoModel {
+        guard let backups = device.backups else {
+            return ResourceInfoModel(
+                icon: assets.iconName,
+                name: device.name,
+                counter: ResourceCounter()
+            )
+        }
+        
+        var totalFiles: Int = 0
+        var totalFolders: Int = 0
+        var totalSize: UInt64 = 0
+
+        await withTaskGroup(of: ResourceInfoModel.self) { group in
+            for backup in backups {
+                group.addTask {
+                    await self.makeNodeInfoEntity(for: backup)
+                }
+            }
+
+            for await entity in group {
+                totalFiles += entity.counter.files
+                totalFolders += entity.counter.folders
+                totalSize += entity.totalSize
+            }
+        }
+
+        return ResourceInfoModel(
+            icon: assets.iconName,
+            name: device.name,
+            counter: ResourceCounter(
+                files: totalFiles,
+                folders: totalFolders
+            ),
+            totalSize: totalSize
+        )
+    }
+
     private func handleBackupAction(_ type: DeviceCenterActionType) async {
         switch type {
         case .cameraUploads:
             await handleCameraUploadAction()
-        case .info:
-            guard let node = nodeForItemType() else { return }
-            deviceCenterBridge.infoActionTapped(node)
         default: break
         }
     }
@@ -165,6 +223,9 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
             await handleCameraUploadAction()
         case .rename:
             await handleRenameDeviceAction(device)
+        case .info:
+            let infoEntity = await makeDeviceInfoEntity(device)
+            deviceCenterBridge.infoActionTapped(infoEntity)
         default: break
         }
     }
@@ -187,10 +248,10 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
     func nodeForItemType() -> NodeEntity? {
         switch itemType {
         case .backup(let backupEntity):
-            return nodeUseCase?.nodeForHandle(backupEntity.rootHandle)
+            return nodeUseCase.nodeForHandle(backupEntity.rootHandle)
         case .device(let deviceEntity):
             guard let backupNode = deviceEntity.backups?.first else { return nil }
-            return nodeUseCase?.nodeForHandle(backupNode.rootHandle)
+            return nodeUseCase.nodeForHandle(backupNode.rootHandle)
         default: return nil
         }
     }
@@ -233,11 +294,16 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
             guard let router else { return }
             let currentDeviceUUID = UIDevice.current.identifierForVendor?.uuidString ?? ""
             if device.id == currentDeviceUUID && device.status == .noCameraUploads {
-                router.showCurrentDeviceEmptyState(currentDeviceUUID, deviceName: UIDevice.current.modelName)
+                router.showCurrentDeviceEmptyState(
+                    currentDeviceUUID,
+                    deviceName: UIDevice.current.modelName,
+                    deviceIcon: assets.iconName
+                )
             } else {
                 let currentDeviceId = deviceCenterUseCase.loadCurrentDeviceId()
                 router.showDeviceBackups(
                     device,
+                    deviceIcon: assets.iconName,
                     isCurrentDevice: device.id == currentDeviceUUID || (device.id == currentDeviceId)
                 )
             }

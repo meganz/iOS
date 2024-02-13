@@ -8,7 +8,7 @@ public protocol MyAccountHallRouting: Routing {
     func navigateToDeviceCenter(deviceCenterBridge: DeviceCenterBridge, deviceCenterAssets: DeviceCenterAssets)
     func didTapCameraUploadsAction(statusChanged: @escaping () -> Void)
     func didTapRenameAction(_ renameEntity: RenameActionEntity)
-    func didTapInfoAction(_ nodeEntity: NodeEntity)
+    func didTapInfoAction(_ infoModel: ResourceInfoModel)
     func didTapNavigateToContent(_ navigateToContentEntity: NavigateToContentActionEntity)
 }
 
@@ -132,8 +132,9 @@ final class MyAccountHallRouter: MyAccountHallRouting {
             )
             return
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            guard let presenter = self.navigationController?.topViewController else { return }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            guard let self,
+                  let presenter = self.navigationController?.topViewController else { return }
             action(presenter, node)
         }
     }
@@ -210,8 +211,9 @@ final class MyAccountHallRouter: MyAccountHallRouting {
     func didTapRenameAction(
         _ renameEntity: RenameActionEntity
     ) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            guard let presenter = self.navigationController else { return }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            guard let self,
+                  let presenter = self.navigationController else { return }
             
             RenameRouter(
                 presenter: presenter,
@@ -224,8 +226,18 @@ final class MyAccountHallRouter: MyAccountHallRouting {
     }
     
     func didTapInfoAction(
-        _ nodeEntity: NodeEntity
-    ) {}
+        _ infoModel: ResourceInfoModel
+    ) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            guard let self,
+                  let presenter = self.navigationController else { return }
+            
+            ResourceInfoViewRouter(
+                presenter: presenter,
+                infoModel: infoModel
+            ).start()
+        }
+    }
     
     func didTapNavigateToContent(_ navigateToContentEntity: NavigateToContentActionEntity) {
         switch navigateToContentEntity.type {

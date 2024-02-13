@@ -197,7 +197,11 @@ final class MyAccountHallViewModelTests: XCTestCase {
              expectedCommands: [])
         
         deviceCenterBridge.infoActionTapped(
-            NodeEntity(handle: 1)
+            ResourceInfoModel(
+                icon: "",
+                name: "",
+                counter: ResourceCounter()
+            )
         )
         
         XCTAssertEqual(

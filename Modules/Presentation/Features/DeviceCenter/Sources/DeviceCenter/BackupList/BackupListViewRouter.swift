@@ -15,6 +15,7 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
     private let isCurrentDevice: Bool
     private let selectedDeviceId: String
     private let selectedDeviceName: String
+    private let selectedDeviceIcon: String
     private let devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>
     private let updateInterval: UInt64
     private let backups: [BackupEntity]?
@@ -32,6 +33,7 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
         isCurrentDevice: Bool,
         selectedDeviceId: String,
         selectedDeviceName: String,
+        selectedDeviceIcon: String,
         devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>,
         updateInterval: UInt64,
         backups: [BackupEntity]?,
@@ -50,6 +52,7 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
         self.isCurrentDevice = isCurrentDevice
         self.selectedDeviceId = selectedDeviceId
         self.selectedDeviceName = selectedDeviceName
+        self.selectedDeviceIcon = selectedDeviceIcon
         self.devicesUpdatePublisher = devicesUpdatePublisher
         self.updateInterval = updateInterval
         self.backups = backups
@@ -70,7 +73,8 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
         let backupListViewModel = BackupListViewModel(
             isCurrentDevice: isCurrentDevice,
             selectedDeviceId: selectedDeviceId,
-            selectedDeviceName: selectedDeviceName,
+            selectedDeviceName: selectedDeviceName, 
+            selectedDeviceIcon: selectedDeviceIcon,
             devicesUpdatePublisher: devicesUpdatePublisher,
             updateInterval: updateInterval,
             deviceCenterUseCase: deviceCenterUseCase,

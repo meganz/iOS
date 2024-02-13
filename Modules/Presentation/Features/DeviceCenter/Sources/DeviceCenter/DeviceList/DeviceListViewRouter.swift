@@ -5,8 +5,8 @@ import MEGAUIKit
 import SwiftUI
 
 public protocol DeviceListRouting: Routing {
-    func showDeviceBackups(_ device: DeviceEntity, isCurrentDevice: Bool)
-    func showCurrentDeviceEmptyState(_ deviceId: String, deviceName: String)
+    func showDeviceBackups(_ device: DeviceEntity, deviceIcon: String, isCurrentDevice: Bool)
+    func showCurrentDeviceEmptyState(_ deviceId: String, deviceName: String, deviceIcon: String)
 }
 
 public final class DeviceListViewRouter: NSObject, DeviceListRouting {
@@ -57,6 +57,7 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
             router: self,
             deviceCenterBridge: deviceCenterBridge,
             deviceCenterUseCase: deviceCenterUseCase,
+            nodeUseCase: nodeUseCase,
             networkMonitorUseCase: networkMonitorUseCase,
             deviceListAssets: deviceCenterAssets.deviceListAssets,
             emptyStateAssets: deviceCenterAssets.emptyStateAssets,
@@ -78,13 +79,18 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
         navigationController?.pushViewController(build(), animated: true)
     }
     
-    public func showDeviceBackups(_ device: DeviceEntity, isCurrentDevice: Bool) {
+    public func showDeviceBackups(
+        _ device: DeviceEntity,
+        deviceIcon: String,
+        isCurrentDevice: Bool
+    ) {
         guard let backups = device.backups else { return }
         
         BackupListViewRouter(
             isCurrentDevice: isCurrentDevice,
             selectedDeviceId: device.id,
             selectedDeviceName: device.name.isEmpty ? deviceCenterAssets.deviceListAssets.deviceDefaultName : device.name,
+            selectedDeviceIcon: deviceIcon,
             devicesUpdatePublisher: devicesUpdatePublisher,
             updateInterval: updateInterval,
             backups: backups,
@@ -102,11 +108,16 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
         ).start()
     }
     
-    public func showCurrentDeviceEmptyState(_ deviceId: String, deviceName: String) {
+    public func showCurrentDeviceEmptyState(
+        _ deviceId: String,
+        deviceName: String,
+        deviceIcon: String
+    ) {
         BackupListViewRouter(
             isCurrentDevice: true,
             selectedDeviceId: deviceId,
             selectedDeviceName: deviceName,
+            selectedDeviceIcon: deviceIcon,
             devicesUpdatePublisher: devicesUpdatePublisher,
             updateInterval: updateInterval,
             backups: nil,
