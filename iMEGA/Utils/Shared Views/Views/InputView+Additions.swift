@@ -12,12 +12,7 @@ extension InputView {
         if UIColor.isDesignTokenEnabled() {
             backgroundColor = TokenColors.Background.page
         } else {
-            if backgroundColor != nil && !isUsingDefaultBackgroundColor {
-                backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
-            } else {
-                backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
-                isUsingDefaultBackgroundColor = true
-            }
+            backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
         }
     }
     
