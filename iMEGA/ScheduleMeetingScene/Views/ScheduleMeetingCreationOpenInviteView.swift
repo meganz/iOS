@@ -6,7 +6,7 @@ struct ScheduleMeetingCreationOpenInviteView: View {
     @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             Divider()
             
             Toggle(isOn: $viewModel.allowNonHostsToAddParticipantsEnabled.onChange { enabled in
@@ -15,6 +15,7 @@ struct ScheduleMeetingCreationOpenInviteView: View {
                 Text(Strings.Localizable.Meetings.ScheduleMeeting.openInvite)
                     .opacity(viewModel.shouldAllowEditingAllowNonHostsToAddParticipants ? 1.0 : 0.3)
             }
+            .frame(minHeight: 44)
             .toggleStyle(SwitchToggleStyle(tint: Color(UIColor.mnz_green00A886())))
             .padding(.horizontal)
             .disabled(!viewModel.shouldAllowEditingAllowNonHostsToAddParticipants)

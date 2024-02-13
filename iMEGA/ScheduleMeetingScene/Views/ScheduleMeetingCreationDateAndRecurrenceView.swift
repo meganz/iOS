@@ -6,7 +6,7 @@ struct ScheduleMeetingCreationDateAndRecurrenceView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            VStack {
+            VStack(spacing: 0) {
                 Divider()
                 DatePickerView(title: Strings.Localizable.Meetings.ScheduleMeeting.start, dateFormatted: $viewModel.startDateFormatted, datePickerVisible: $viewModel.startDatePickerVisible, date: $viewModel.startDate, dateRange: Date()...) {
                     viewModel.startsDidTap()

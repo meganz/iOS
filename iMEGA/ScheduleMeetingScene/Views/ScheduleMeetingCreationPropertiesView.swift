@@ -6,8 +6,8 @@ struct ScheduleMeetingCreationPropertiesView: View {
     @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
-        VStack {
-            VStack {
+        VStack(spacing: 0) {
+            VStack(spacing: 0) {
                 ScheduleMeetingCreationDateAndRecurrenceView(viewModel: viewModel)
                 Toggle(isOn: $viewModel.meetingLinkEnabled.onChange { enabled in
                     viewModel.onMeetingLinkEnabledChange(enabled)
@@ -15,6 +15,7 @@ struct ScheduleMeetingCreationPropertiesView: View {
                     Text(Strings.Localizable.Meetings.ScheduleMeeting.link)
                         .opacity(viewModel.shouldAllowEditingMeetingLink ? 1.0 : 0.3)
                 }
+                .frame(minHeight: 44)
                 .toggleStyle(SwitchToggleStyle(tint: Color(UIColor.mnz_green00A886())))
                 .padding(.horizontal)
                 .disabled(

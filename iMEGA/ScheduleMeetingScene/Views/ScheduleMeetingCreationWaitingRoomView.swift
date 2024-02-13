@@ -7,13 +7,14 @@ struct ScheduleMeetingCreationWaitingRoomView: View {
     @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             Divider()
             
             Toggle(isOn: $waitingRoomEnabled) {
                 Text(Strings.Localizable.Meetings.ScheduleMeeting.waitingRoom)
                     .opacity(shouldAllowEditingWaitingRoom ? 1.0 : 0.3)
             }
+            .frame(minHeight: 44)
             .toggleStyle(SwitchToggleStyle(tint: Color(UIColor.mnz_green00A886())))
             .padding(.horizontal)
             .disabled(!shouldAllowEditingWaitingRoom)

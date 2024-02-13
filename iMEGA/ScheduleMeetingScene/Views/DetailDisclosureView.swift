@@ -38,6 +38,7 @@ struct DetailDisclosureView: View {
                 content()
             }
         }
+        .frame(minHeight: 44)
         .contentShape(Rectangle())
         .onTapGesture {
             action()

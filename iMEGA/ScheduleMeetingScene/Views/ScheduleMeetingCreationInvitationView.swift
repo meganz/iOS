@@ -6,8 +6,8 @@ struct ScheduleMeetingCreationInvitationView: View {
     @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
-        VStack {
-            VStack {
+        VStack(spacing: 0) {
+            VStack(spacing: 0) {
                 Divider()
                 
                 DetailDisclosureView(
@@ -28,6 +28,7 @@ struct ScheduleMeetingCreationInvitationView: View {
                     Text(Strings.Localizable.Meetings.ScheduleMeeting.sendCalendarInvite)
                         .opacity(viewModel.shouldAllowEditingCalendarInvite ? 1.0 : 0.3)
                 }
+                .frame(minHeight: 44)
                 .toggleStyle(SwitchToggleStyle(tint: Color(UIColor.mnz_green00A886())))
                 .padding(.horizontal)
                 .disabled(!viewModel.shouldAllowEditingCalendarInvite)
