@@ -122,15 +122,15 @@ pipeline {
                     }
                 }
 
-                stage('Boot Simulators') {
-                    steps {
-                        gitlabCommitStatus(name: 'Bundle install') {
-                            injectEnvironments({
-                                sh "./scripts/boot-simulators.sh"
-                            })
-                        }
-                    }
-                }
+                // stage('Boot Simulators') {
+                //     steps {
+                //         gitlabCommitStatus(name: 'Bundle install') {
+                //             injectEnvironments({
+                //                 sh "./scripts/boot-simulators.sh"
+                //             })
+                //         }
+                //     }
+                // }
             }
         }
 
