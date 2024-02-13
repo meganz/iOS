@@ -20,6 +20,7 @@ struct DatePickerView: View {
                     : (colorScheme == .dark ? MEGAAppColor.White._FFFFFF.color : MEGAAppColor.Gray._3C3C43.color.opacity(0.6))
                 )
         }
+        .frame(minHeight: 44)
         .contentShape(Rectangle())
         .onTapGesture {
             action()

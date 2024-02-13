@@ -10,6 +10,7 @@ struct ScheduleMeetingCreationFootnoteView: View {
             .foregroundColor(colorScheme == .dark ? MEGAAppColor.White._FFFFFF.color.opacity(0.6) : MEGAAppColor.Gray._3C3C43.color.opacity(0.6))
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal)
+            .padding(.top, 6)
     }
 }
 
