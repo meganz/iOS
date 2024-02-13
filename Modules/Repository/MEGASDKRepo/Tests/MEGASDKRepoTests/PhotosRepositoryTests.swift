@@ -152,11 +152,14 @@ final class PhotosRepositoryTests: XCTestCase {
         let nodeUpdatesProvider = MockNodeUpdatesProvider(nodeUpdates: stream.eraseToAnyAsyncSequence())
         let sut = makeSUT(sdk: sdk,
                           nodeUpdatesProvider: nodeUpdatesProvider)
+        
+        let firstSequenceFinished = expectation(description: "first task finished")
         let firstTask = Task {
             for await _ in await sut.photosUpdated {}
+            firstSequenceFinished.fulfill()
         }
         firstTask.cancel()
-        try? await Task.sleep(nanoseconds: 100_000_000)
+        await fulfillment(of: [firstSequenceFinished], timeout: 0.5)
         
         let iterated = expectation(description: "iterated")
         let finished = expectation(description: "finished")
@@ -174,6 +177,63 @@ final class PhotosRepositoryTests: XCTestCase {
         await fulfillment(of: [iterated], timeout: 0.5)
         secondTask.cancel()
         await fulfillment(of: [finished], timeout: 0.5)
+    }
+    
+    func testPhotosUpdate_onPhotoMovedToRubbish_shouldNotEmitUpdate() async {
+        let (stream, continuation) = AsyncStream
+            .makeStream(of: [NodeEntity].self)
+        let nodeUpdatesProvider = MockNodeUpdatesProvider(nodeUpdates: stream.eraseToAnyAsyncSequence())
+        let photoInRubbish = MockNode(handle: 76, name: "test.jpg")
+        let sdk = MockSdk(nodes: [photoInRubbish], rubbishNodes: [photoInRubbish])
+        let photoLocalSource = MockPhotoLocalSource()
+        
+        let sut = makeSUT(sdk: sdk,
+                          photoLocalSource: photoLocalSource,
+                          nodeUpdatesProvider: nodeUpdatesProvider)
+        
+        let exp = expectation(description: "should not emit value")
+        exp.isInverted = true
+        let task = Task {
+            for await _ in await sut.photosUpdated {
+                exp.fulfill()
+            }
+        }
+        
+        continuation.yield([photoInRubbish.toNodeEntity()])
+        continuation.finish()
+        
+        await fulfillment(of: [exp], timeout: 1.0)
+        task.cancel()
+        
+        let cachedPhotos = await photoLocalSource.photos
+        XCTAssertTrue(cachedPhotos.isEmpty)
+    }
+    
+    func testPhotosUpdate_onNoneVisualMediaNodeUpdate_shouldNotEmitAnything() async {
+        let (stream, continuation) = AsyncStream
+            .makeStream(of: [NodeEntity].self)
+        let nodeUpdatesProvider = MockNodeUpdatesProvider(nodeUpdates: stream.eraseToAnyAsyncSequence())
+        let photoLocalSource = MockPhotoLocalSource()
+        
+        let sut = makeSUT(photoLocalSource: photoLocalSource,
+                          nodeUpdatesProvider: nodeUpdatesProvider)
+        
+        let exp = expectation(description: "should not emit value")
+        exp.isInverted = true
+        let task = Task {
+            for await _ in await sut.photosUpdated {
+                exp.fulfill()
+            }
+        }
+        
+        continuation.yield([NodeEntity(name: "file.txt", handle: 43)])
+        continuation.finish()
+        
+        await fulfillment(of: [exp], timeout: 1.0)
+        task.cancel()
+        
+        let cachedPhotos = await photoLocalSource.photos
+        XCTAssertTrue(cachedPhotos.isEmpty)
     }
     
     private func makeSUT(sdk: MEGASdk = MockSdk(),

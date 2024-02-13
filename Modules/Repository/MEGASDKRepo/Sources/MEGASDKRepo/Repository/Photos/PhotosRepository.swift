@@ -126,9 +126,10 @@ public actor PhotosRepository: PhotosRepositoryProtocol {
                     terminatePhotoContinuations()
                     break
                 }
-                guard nodeUpdates.contains(where: { $0.fileExtensionGroup.isVisualMedia }) else { continue }
+                let updatedPhotos = nodeUpdates.filter(\.fileExtensionGroup.isVisualMedia)
+                guard updatedPhotos.isNotEmpty else { continue }
+                await updatePhotos(updatedPhotos)
                 
-                await photoLocalSource.removeAllPhotos()
                 guard let allPhotos = try? await loadAllPhotos(),
                       allPhotos.isNotEmpty else {
                     continue
@@ -136,6 +137,32 @@ public actor PhotosRepository: PhotosRepositoryProtocol {
                 yieldPhotosToContinuations(allPhotos)
             }
         }
+    }
+    
+    private func updatePhotos(_ updatedPhotos: [NodeEntity]) async {
+        let photosToStore = await withTaskGroup(of: NodeEntity?.self) { group in
+            updatedPhotos.forEach { updatedPhoto in
+                group.addTask { [weak self] in
+                    guard let self else { return nil }
+                    
+                    if !updatedPhoto.changeTypes.contains(.new) {
+                        await photoLocalSource.removePhoto(forHandle: updatedPhoto.handle)
+                    }
+                    
+                    guard let photo = sdk.node(forHandle: updatedPhoto.handle),
+                          !sdk.isNode(inRubbish: photo) else {
+                        return nil
+                    }
+                    return photo.toNodeEntity()
+                }
+            }
+            return await group.reduce(into: [NodeEntity](), {
+                if let updatedPhoto = $1 { $0.append(updatedPhoto) }
+            })
+        }
+        
+        guard photosToStore.isNotEmpty else { return }
+        await photoLocalSource.setPhotos(photosToStore)
     }
     
     private func yieldPhotosToContinuations(_ photos: [NodeEntity]) {
