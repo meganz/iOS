@@ -3,7 +3,6 @@ import SwiftUI
 
 struct PhotoLibraryPicker: View {
     @Environment(\.editMode) var editMode
-    @Environment(\.colorScheme) private var colorScheme
     @Binding var selectedMode: PhotoLibraryViewMode
     
     var body: some View {
@@ -22,9 +21,6 @@ struct PhotoLibraryPicker: View {
             }
         }
         .pickerStyle(.segmented)
-        .background(
-            MEGAAppColor.Background.backgroundRegularPrimaryElevated.color
-                .cornerRadius(7, corners: .allCorners)
-        )
+        .blurBackground(isDesignTokenEnabled, color: UIColor.backgroundRegularPrimaryElevated.swiftUI)
     }
 }

@@ -1,15 +1,33 @@
+import MEGADesignToken
 import MEGASwiftUI
 import SwiftUI
 
 struct PhotoLibraryZoomControl: View {
     @Binding var zoomState: PhotoLibraryZoomState
     @Environment(\.editMode) var editMode
+    @Environment(\.colorScheme) private var colorScheme
     
     var body: some View {
         zoomControl()
             .alignmentGuide(.trailing, computeValue: { d in d[.trailing] + 12})
             .alignmentGuide(.top, computeValue: { d in d[.top] - 5})
             .opacity(editMode?.wrappedValue.isEditing == true ? 0 : 1)
+    }
+    
+    private var zoomInButtonForegroundColor: Color {
+        if isDesignTokenEnabled {
+            zoomState.canZoom(.in) ? (colorScheme == .light ? TokenColors.Background.surface1.swiftUI : TokenColors.Background.surface2.swiftUI) : UIColor.gray8E8E93.swiftUI
+        } else {
+            zoomState.canZoom(.in) ? MEGAAppColor.Photos.zoomButtonForeground.color : MEGAAppColor.Gray._8E8E93.color
+        }
+    }
+    
+    private var zoomOutButtonForegroundColor: Color {
+        if isDesignTokenEnabled {
+            zoomState.canZoom(.out) ? (colorScheme == .light ? TokenColors.Background.surface1.swiftUI : TokenColors.Background.surface2.swiftUI): UIColor.gray8E8E93.swiftUI
+        } else {
+            zoomState.canZoom(.out) ? MEGAAppColor.Photos.zoomButtonForeground.color : MEGAAppColor.Gray._8E8E93.color
+        }
     }
     
     // MARK: - Private
@@ -26,25 +44,41 @@ struct PhotoLibraryZoomControl: View {
         .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
     }
     
+    // MARK: View Builders
+    
+    @ViewBuilder
     private func zoomInButton() -> some View {
         Button {
             zoomState.zoom(.in)
         } label: {
-            Image(systemName: "plus")
-                .imageScale(.large)
+            if isDesignTokenEnabled {
+                Image(systemName: "plus")
+                    .imageScale(.large)
+                    .foregroundColor(zoomState.canZoom(.in) ? TokenColors.Icon.primary.swiftUI : TokenColors.Icon.disabled.swiftUI)
+            } else {
+                Image(systemName: "plus")
+                    .imageScale(.large)
+            }
         }
-        .foregroundColor(zoomState.canZoom(.in) ? MEGAAppColor.Photos.zoomButtonForeground.color : MEGAAppColor.Gray._8E8E93.color)
+        .foregroundColor(zoomInButtonForegroundColor)
         .disabled(!zoomState.canZoom(.in))
     }
     
+    @ViewBuilder
     private func zoomOutButton() -> some View {
         Button {
             zoomState.zoom(.out)
         } label: {
-            Image(systemName: "minus")
-                .imageScale(.large)
+            if isDesignTokenEnabled {
+                Image(systemName: "minus")
+                    .imageScale(.large)
+                    .foregroundColor(zoomState.canZoom(.out) ? TokenColors.Icon.primary.swiftUI : TokenColors.Icon.disabled.swiftUI)
+            } else {
+                Image(systemName: "minus")
+                    .imageScale(.large)
+            }
         }
-        .foregroundColor(zoomState.canZoom(.out) ? MEGAAppColor.Photos.zoomButtonForeground.color : MEGAAppColor.Gray._8E8E93.color)
+        .foregroundColor(zoomOutButtonForegroundColor)
         .disabled(!zoomState.canZoom(.out))
     }
 }

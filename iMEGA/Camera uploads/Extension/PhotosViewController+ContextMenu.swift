@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGASDKRepo
@@ -31,11 +32,33 @@ extension PhotosViewController {
     
     @objc func makeContextMenuBarButton() -> UIBarButtonItem? {
         guard let config = contextMenuConfiguration(), let menu = contextMenuManager?.contextMenu(with: config) else { return nil }
-        if viewModel.timelineCameraUploadStatusFeatureEnabled {
-            return UIBarButtonItem(image: UIImage(resource: viewModel.isFilterActive ? .moreActionActiveNavigationBar : .moreNavigationBar),
-                                   menu: makeTestingMenuItems(from: menu))
+        
+        var image = UIImage(resource: .moreNavigationBar)
+        
+        if UIColor.isDesignTokenEnabled() {
+            image = image.withRenderingMode(.alwaysTemplate)
         }
-        return UIBarButtonItem(image: UIImage(resource: .moreNavigationBar), menu: menu)
+        
+        if viewModel.timelineCameraUploadStatusFeatureEnabled {
+            image = UIImage(resource: viewModel.isFilterActive ? .moreActionActiveNavigationBar : .moreNavigationBar)
+            
+            let button = UIBarButtonItem(image: image,
+                                        menu: makeTestingMenuItems(from: menu))
+            
+            if UIColor.isDesignTokenEnabled() {
+                button.tintColor = TokenColors.Icon.primary
+            }
+            
+            return button
+        }
+        
+        let button = UIBarButtonItem(image: image, menu: menu)
+        
+        if UIColor.isDesignTokenEnabled() {
+            button.tintColor = TokenColors.Icon.primary
+        }
+        
+        return button
     }
     
     @objc func setupNavigationBarButtons() {

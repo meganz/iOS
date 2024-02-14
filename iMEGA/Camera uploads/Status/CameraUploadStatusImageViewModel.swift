@@ -1,3 +1,4 @@
+import MEGADesignToken
 import SwiftUI
 
 enum CameraUploadStatus: Equatable {
@@ -27,9 +28,9 @@ final class CameraUploadStatusImageViewModel: ObservableObject {
     var progressLineColor: Color {
         switch status {
         case .uploading:
-            return MEGAAppColor.Photos.cameraUploadStatusUploading.color
+            return UIColor.isDesignTokenEnabled() ? TokenColors.Support.info.swiftUI : MEGAAppColor.Photos.cameraUploadStatusUploading.color
         case .completed:
-            return MEGAAppColor.Photos.cameraUploadStatusCompleted.color
+            return UIColor.isDesignTokenEnabled() ? TokenColors.Support.success.swiftUI : MEGAAppColor.Photos.cameraUploadStatusCompleted.color
         default:
             return .clear
         }

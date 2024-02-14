@@ -1,8 +1,25 @@
+import MEGADesignToken
 import SwiftUI
 
 struct CameraUploadStatusImageView: View {
     @ObservedObject var viewModel: CameraUploadStatusImageViewModel
     @State private var shouldRotate = false
+    
+    private var statusImageTintColor: Color {
+        switch viewModel.status {
+        case .checkPendingItemsToUpload:
+            TokenColors.Icon.secondary.swiftUI
+        case .uploading:
+            TokenColors.Support.info.swiftUI
+        case .completed:
+            TokenColors.Support.success.swiftUI
+        case .warning:
+            TokenColors.Support.warning.swiftUI
+        case .idle:
+            TokenColors.Icon.primary.swiftUI
+        default: TokenColors.Icon.primary.swiftUI
+        }
+    }
     
     var body: some View {
         ZStack(alignment: .center) {
@@ -11,14 +28,16 @@ struct CameraUploadStatusImageView: View {
             }
             
             Image(viewModel.baseImageResource)
+                .renderingMode(isDesignTokenEnabled ? .template : .original)
                 .resizable()
                 .frame(width: 21.5,
                        height: 21.5)
+                .foregroundColor(isDesignTokenEnabled ? TokenColors.Icon.primary.swiftUI : nil)
             
             if let statusImageResource = viewModel.statusImageResource {
                 Group {
                     Circle()
-                        .fill(MEGAAppColor.Background.navigationBgColor.color)
+                        .fill(.navigationBg)
                         .frame(width: 15.5,
                                height: 15.5)
                     
@@ -48,9 +67,11 @@ struct CameraUploadStatusImageView: View {
     @ViewBuilder
     private func statusImage(resource: ImageResource) -> some View {
         Image(resource)
+            .renderingMode(isDesignTokenEnabled ? .template : .original)
             .resizable()
             .frame(width: 12.5,
                    height: 12.5)
+            .foregroundColor(isDesignTokenEnabled ? statusImageTintColor : nil)
     }
     
     private var statusImageAnimation: Animation {
