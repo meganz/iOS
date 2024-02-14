@@ -40,7 +40,7 @@ public struct ContentUnavailableView<Label, Description, Actions>: View where La
                     description(colorScheme)
                     Spacer()
                     actions()
-                    Spacer().frame(height: 40)
+                    Spacer().frame(height: 27)
                 }
                 Spacer()
             }
@@ -184,9 +184,7 @@ struct ButtonActionView: View {
                 text(for: action.title)
             }
         }
-        .padding([.horizontal], 40)
-        .frame(height: 50)
-        .frame(maxWidth: .infinity)
+        .frame(width: 288, height: 50)
         .background(action.backgroundColor(colorScheme))
         .cornerRadius(8)
     }
@@ -211,9 +209,7 @@ struct MenuActionView: View {
             Text(action.title)
                 .foregroundColor(.white)
                 .fontWeight(.semibold)
-                .padding([.horizontal], 40)
-                .frame(height: 50)
-                .frame(maxWidth: .infinity)
+                .frame(width: 288, height: 50)
                 .background(action.backgroundColor(colorScheme))
                 .cornerRadius(8)
         }

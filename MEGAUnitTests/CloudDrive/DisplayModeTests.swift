@@ -39,7 +39,7 @@ final class DisplayModeTests: XCTestCase {
             .previewPdfPage
             ]
         let filteredOut = allDisplayModes.filter {
-            $0 != .rubbishBin && $0 != .backup
+            $0 != .rubbishBin && $0 != .backup && $0 != .cloudDrive
         }
         
         filteredOut.forEach { mode in
