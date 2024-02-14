@@ -14,11 +14,11 @@ struct CloudDriveEmptyViewAssetFactory {
 
     init(
         navigationController: UINavigationController,
-        nodeUseCase: some NodeUseCaseProtocol
+        nodeUseCase: some NodeUseCaseProtocol,
+        isDesignTokenEnabled: Bool = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken)
     ) {
         self.navigationController = navigationController
         self.nodeUseCase = nodeUseCase
-        let isDesignTokenEnabled = DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken)
         self.isDesignTokenEnabled = isDesignTokenEnabled
         self.titleTextColor = { colorScheme in
             guard isDesignTokenEnabled else {
@@ -29,12 +29,12 @@ struct CloudDriveEmptyViewAssetFactory {
         }
     }
 
-    func defaultAsset(for nodeSource: NodeSource) -> SearchConfig.EmptyViewAssets {
+    func defaultAsset(for nodeSource: NodeSource, config: NodeBrowserConfig) -> SearchConfig.EmptyViewAssets {
         let emptyViewAssets: SearchConfig.EmptyViewAssets
 
         switch nodeSource {
         case .node(let parentNodeProvider):
-            emptyViewAssets = defaultAsset(forParentNodeProvider: parentNodeProvider)
+            emptyViewAssets = defaultAsset(forParentNodeProvider: parentNodeProvider, config: config)
         case .recentActionBucket:
             emptyViewAssets = defaultAssetForRecentActionBucket()
         }
@@ -45,33 +45,33 @@ struct CloudDriveEmptyViewAssetFactory {
     // MARK: - Private methods.
 
     private func defaultAsset(
-        forParentNodeProvider parentNodeProvider: ParentNodeProvider
+        forParentNodeProvider parentNodeProvider: ParentNodeProvider,
+        config: NodeBrowserConfig
     ) -> SearchConfig.EmptyViewAssets {
         let emptyViewAssets: SearchConfig.EmptyViewAssets
 
-        if let parentNode = parentNodeProvider(),
-            let asset = defaultAsset(forParentNode: parentNode) {
-            emptyViewAssets = asset
+        if let parentNode = parentNodeProvider() {
+            emptyViewAssets = defaultAsset(forParentNode: parentNode, config: config)
         } else {
-            emptyViewAssets = emptyFolderStateWithAddFilesOption(parentNodeProvider: parentNodeProvider)
+            emptyViewAssets = defaultAssetForEmptyFolder()
         }
 
         return emptyViewAssets
     }
 
     private func defaultAsset(
-        forParentNode parentNode: NodeEntity
-    ) -> SearchConfig.EmptyViewAssets? {
-        let emptyViewAssets: SearchConfig.EmptyViewAssets?
+        forParentNode parentNode: NodeEntity,
+        config: NodeBrowserConfig
+    ) -> SearchConfig.EmptyViewAssets {
+        let emptyViewAssets: SearchConfig.EmptyViewAssets
 
-        if nodeUseCase.isARubbishBinRootNode(nodeHandle: parentNode.handle) {
-            emptyViewAssets = defaultAssetForRubbishBinRootFolder()
-        } else if parentNode.parentHandle == .invalid {
+        switch config.displayMode {
+        case .cloudDrive where parentNode.nodeType == .root:
             emptyViewAssets = defaultAssetForCloudDriveRootFolder(parentNode: parentNode)
-        } else if nodeUseCase.isInRubbishBin(nodeHandle: parentNode.handle) {
-            emptyViewAssets = defaultAssetForNodeInRubbishBinFolder()
-        } else {
-            emptyViewAssets = nil
+        case .rubbishBin where nodeUseCase.isARubbishBinRootNode(nodeHandle: parentNode.handle):
+            emptyViewAssets = defaultAssetForRubbishBinRootFolder()
+        default:
+            emptyViewAssets = defaultAssetForEmptyFolder(for: config.displayMode != .rubbishBin ? parentNode : nil)
         }
 
         return emptyViewAssets
@@ -94,14 +94,6 @@ struct CloudDriveEmptyViewAssetFactory {
         )
     }
 
-    private func defaultAssetForNodeInRubbishBinFolder() -> SearchConfig.EmptyViewAssets {
-        .init(
-            image: Image(.folderEmptyState),
-            title: Strings.Localizable.emptyFolder,
-            titleTextColor: titleTextColor
-        )
-    }
-
     private func defaultAssetForRecentActionBucket() -> SearchConfig.EmptyViewAssets {
         .init(
             image: Image(.searchEmptyState),
@@ -110,24 +102,35 @@ struct CloudDriveEmptyViewAssetFactory {
         )
     }
 
-    private func emptyFolderStateWithAddFilesOption(
-        parentNodeProvider: ParentNodeProvider
-    ) -> SearchConfig.EmptyViewAssets {
+    private func defaultAssetForEmptyFolder(for parentNode: NodeEntity? = nil) -> SearchConfig.EmptyViewAssets {
         .init(
             image: Image(.folderEmptyState),
             title: Strings.Localizable.emptyFolder,
             titleTextColor: titleTextColor,
-            actions: makeDefaultActions(for: parentNodeProvider())
+            actions: makeDefaultActions(for: parentNode)
         )
     }
 
-    private func makeDefaultActions(for nodeEntity: NodeEntity?) -> [SearchConfig.EmptyViewAssets.Action] {
-        guard let nodeEntity else {
-            MEGALogError("node passed to default action is empty")
+    private func makeDefaultActions(for parentNode: NodeEntity?) -> [SearchConfig.EmptyViewAssets.Action] {
+        guard let parentNode else {
             return []
         }
 
-        let action = SearchConfig.EmptyViewAssets.Action(
+        let actions: [SearchConfig.EmptyViewAssets.Action]
+        let access = nodeUseCase.nodeAccessLevel(nodeHandle: parentNode.handle)
+
+        switch access {
+        case .read, .unknown:
+            actions = []
+        case .readWrite, .full, .owner:
+            actions = [addFilesAction(for: parentNode)]
+        }
+
+        return actions
+    }
+
+    private func addFilesAction(for nodeEntity: NodeEntity) -> SearchConfig.EmptyViewAssets.Action {
+        .init(
             title: Strings.Localizable.addFiles,
             backgroundColor: { colorScheme in
                 guard isDesignTokenEnabled else {
@@ -138,7 +141,6 @@ struct CloudDriveEmptyViewAssetFactory {
             },
             menu: menu(for: nodeEntity)
         )
-        return [action]
     }
 
     private func menu(for nodeEntity: NodeEntity) -> [SearchConfig.EmptyViewAssets.MenuOption] {

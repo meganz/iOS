@@ -40,9 +40,9 @@ enum NodeSource {
 
 extension DisplayMode {
     var carriedOverDisplayMode: DisplayMode? {
-        // for those 2 special cases, we carry over the display mode so that children are configured properly
+        // for those 3 special cases, we carry over the display mode so that children are configured properly
         // [bug in the comments in FM-1461]
-        if self == .rubbishBin || self == .backup {
+        if self == .rubbishBin || self == .backup || self == .cloudDrive {
             return self
         }
         return nil
@@ -844,7 +844,7 @@ struct CloudDriveViewControllerFactory {
                 contextPreviewFactory: homeScreenFactory.contextPreviewFactory(
                     enableItemMultiSelection: true
                 ),
-                defaultEmptyViewAsset: emptyViewAssetFactory.defaultAsset(for: nodeSource)
+                defaultEmptyViewAsset: emptyViewAssetFactory.defaultAsset(for: nodeSource, config: config)
             ),
             layout: viewModeStore.viewMode(for: locationFor(nodeSource)).pageLayout ?? .list,
             keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: .default)
