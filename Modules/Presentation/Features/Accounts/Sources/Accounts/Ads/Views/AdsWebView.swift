@@ -67,6 +67,7 @@ struct AdsWebView: UIViewRepresentable {
             }
             
             UIApplication.shared.open(url)
+            adsWebView.adsTapAction()
             return nil
         }
         
