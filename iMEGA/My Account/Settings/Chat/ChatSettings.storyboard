@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -638,15 +638,11 @@
                         <outlet property="autoAwayTimePicker" destination="jBV-mK-8iY" id="1rD-Lh-Wnq"/>
                         <outlet property="autoAwayTimeSaveButton" destination="0O8-L1-wZg" id="138-Ng-eY5"/>
                         <outlet property="awayLabel" destination="LzG-na-WSV" id="UoX-QO-Byp"/>
-                        <outlet property="awayRedCheckmarkImageView" destination="wU4-sQ-CF0" id="ftf-YW-302"/>
                         <outlet property="busyLabel" destination="Lyj-Xx-9XK" id="DaO-lr-8TY"/>
-                        <outlet property="busyRedCheckmarkImageView" destination="5Uy-ag-9H9" id="263-Ui-cF5"/>
                         <outlet property="lastActiveLabel" destination="kIa-cK-0Zo" id="0MX-xA-yj1"/>
                         <outlet property="lastActiveSwitch" destination="DEl-nb-Mde" id="TYn-Xa-T7J"/>
                         <outlet property="offlineLabel" destination="ihj-4i-8ZS" id="GUd-jd-FEV"/>
-                        <outlet property="offlineRedCheckmarkImageView" destination="4Nx-gf-jb0" id="p2h-bA-RBc"/>
                         <outlet property="onlineLabel" destination="i7n-tZ-nJB" id="IiQ-n7-b3d"/>
-                        <outlet property="onlineRedCheckmarkImageView" destination="Xu0-PS-Bgx" id="tUG-j1-DF1"/>
                         <outlet property="statusPersistenceLabel" destination="7Zi-Lu-rhp" id="Pig-CZ-nxL"/>
                         <outlet property="statusPersistenceSwitch" destination="WML-0a-bJq" id="wZX-e9-01M"/>
                         <outlet property="timeoutAutoAwayCell" destination="hOd-iA-L1A" id="VZp-po-Kxa"/>
