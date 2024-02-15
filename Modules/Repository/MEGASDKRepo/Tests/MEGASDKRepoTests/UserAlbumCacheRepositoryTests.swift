@@ -2,6 +2,7 @@ import MEGADomain
 import MEGADomainMock
 @testable import MEGASDKRepo
 import MEGASDKRepoMock
+import MEGASwift
 import XCTest
 
 final class UserAlbumCacheRepositoryTests: XCTestCase {
@@ -173,14 +174,95 @@ final class UserAlbumCacheRepositoryTests: XCTestCase {
         XCTAssertEqual(result, elementId)
     }
     
+    func testMonitorSetUpdates_onNewSetsAdded_shouldUpdateCacheWithNewSet() async {
+        
+        // Arrange
+        let expectedResults = [SetEntity(handle: 123)]
+        let setAndElementsUpdatesProvider = MockSetAndElementUpdatesProvider()
+        let userAlbumCache = MockUserAlbumCache(albums: [])
+        
+        // Act
+        let sut = makeSUT(
+            userAlbumCache: userAlbumCache,
+            setAndElementsUpdatesProvider: setAndElementsUpdatesProvider)
+
+        // Assert
+        let exp = expectation(description: "A non-empty result from publisher")
+        let cancellable = sut.setsUpdatedPublisher
+            .first { $0.isNotEmpty }
+            .sink { result in
+                XCTAssertEqual(Set(result), Set(expectedResults))
+                exp.fulfill()
+            }
+        
+        setAndElementsUpdatesProvider.mockSendSetUpdate(setUpdate: expectedResults)
+
+        await fulfillment(of: [exp], timeout: 1)
+        cancellable.cancel()
+    }
+    
+    func testMonitorSetUpdates_onNewSetsRemoved_shouldUpdateCacheWithRemovedSet() async {
+        
+        // Arrange
+        let setAndElementsUpdatesProvider = MockSetAndElementUpdatesProvider()
+        let userAlbumCache = MockUserAlbumCache(albums: [SetEntity(handle: 123)])
+        
+        // Act
+        let sut = makeSUT(
+            userAlbumCache: userAlbumCache,
+            setAndElementsUpdatesProvider: setAndElementsUpdatesProvider)
+
+        // Assert
+        let exp = expectation(description: "An empty result from publisher")
+        let cancellable = sut.setsUpdatedPublisher
+            .first { $0.isEmpty }
+            .sink { result in
+                XCTAssertEqual(Set(result), [])
+                exp.fulfill()
+            }
+        
+        setAndElementsUpdatesProvider.mockSendSetUpdate(setUpdate: [SetEntity(handle: 123, changeTypes: .removed)])
+
+        await fulfillment(of: [exp], timeout: 1)
+        cancellable.cancel()
+    }
+    
+    func testMonitorSetUpdates_onNewSetNameChange_shouldUpdateCacheWithUpdatedSet() async {
+        
+        // Arrange
+        let setAndElementsUpdatesProvider = MockSetAndElementUpdatesProvider()
+        let userAlbumCache = MockUserAlbumCache(albums: [SetEntity(handle: 123, name: "Test 123")])
+        
+        // Act
+        let sut = makeSUT(
+            userAlbumCache: userAlbumCache,
+            setAndElementsUpdatesProvider: setAndElementsUpdatesProvider)
+
+        // Assert
+        let exp = expectation(description: "A non-empty result from publisher")
+        let cancellable = sut.setsUpdatedPublisher
+            .first { $0.isNotEmpty }
+            .sink { result in
+                XCTAssertEqual(result.map(\.name), ["Test 1234"])
+                exp.fulfill()
+            }
+        
+        setAndElementsUpdatesProvider.mockSendSetUpdate(setUpdate: [SetEntity(handle: 123, name: "Test 1234", changeTypes: .name)])
+
+        await fulfillment(of: [exp], timeout: 1)
+        cancellable.cancel()
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(
         userAlbumRepository: some UserAlbumRepositoryProtocol = MockUserAlbumRepository(),
-        userAlbumCache: some UserAlbumCacheProtocol = MockUserAlbumCache()
+        userAlbumCache: some UserAlbumCacheProtocol = MockUserAlbumCache(),
+        setAndElementsUpdatesProvider: some SetAndElementUpdatesProviderProtocol = MockSetAndElementUpdatesProvider()
     ) -> UserAlbumCacheRepository {
         UserAlbumCacheRepository(userAlbumRepository: userAlbumRepository,
-                                            userAlbumCache: userAlbumCache)
+                                 userAlbumCache: userAlbumCache,
+                                 setAndElementsUpdatesProvider: setAndElementsUpdatesProvider)
     }
 }
 

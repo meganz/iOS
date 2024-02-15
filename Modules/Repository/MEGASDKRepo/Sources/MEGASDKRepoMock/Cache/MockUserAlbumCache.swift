@@ -2,6 +2,7 @@ import MEGADomain
 import MEGASDKRepo
 
 public actor MockUserAlbumCache: UserAlbumCacheProtocol {
+    
     public var albums: [SetEntity] {
         Array(_albums.values)
     }
@@ -40,5 +41,12 @@ public actor MockUserAlbumCache: UserAlbumCacheProtocol {
     public func removeAllCachedValues() {
         _albums.removeAll()
         albumsElementIds.removeAll()
+    }
+    
+    public func remove(albums: [SetEntity]) {
+        albums.forEach {
+            _albums.removeValue(forKey: $0.handle)
+            albumsElementIds.removeValue(forKey: $0.handle)
+        }
     }
 }
