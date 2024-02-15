@@ -1,4 +1,5 @@
 @testable import DeviceCenter
+import DeviceCenterMocks
 import MEGADomain
 import MEGADomainMock
 import XCTest
@@ -6,55 +7,103 @@ import XCTest
 final class DeviceCenterItemViewModelTests: XCTestCase {
     let mockCurrentDeviceId = "1"
 
-    func testActionsForBackup_cameraUploadBackupType_returnsCorrectActions() {
-        testActions(
-            backupType: .cameraUpload,
-            expectedActions: [.info]
-        )
-    }
- 
-    func testActionsForBackup_otherBackupUploadType_returnsCorrectActions() {
-        testActions(
-            backupType: .backupUpload,
-            expectedActions: [.info]
-        )
-    }
-    
-    func testActionsForBackup_syncBackupType_returnsCorrectActions() {
-        testActions(
-            backupType: .upSync,
-            expectedActions: [.info]
-        )
-    }
-    
-    private func testActions(backupType: BackupTypeEntity, expectedActions: [DeviceCenterActionType]) {
-        let viewModel = makeSUT(
-            backupType: backupType
-        )
-        viewModel.loadAvailableActions()
-        let actions = viewModel.availableActions.compactMap { $0.type }
-        XCTAssertEqual(actions, expectedActions, "Actions for \(backupType) are incorrect")
-    }
-    
-    private func makeSUT(
-        backupType: BackupTypeEntity = .invalid,
-        file: StaticString = #file,
-        line: UInt = #line
-    ) -> DeviceCenterItemViewModel {
-        let backup = BackupEntity(
-            id: 1,
-            name: "backup1",
-            deviceId: mockCurrentDeviceId,
-            rootHandle: 1,
-            type: backupType,
-            status: .upToDate
-        )
+    func testActionsForDevices_returnsCorrectActions() {
+        let expectedActions: [DeviceCenterActionType] = [.info]
         let device = DeviceEntity(
             id: mockCurrentDeviceId,
             name: "device1",
-            backups: [backup],
+            backups: [],
             status: .upToDate
         )
+        let viewModel = makeSUT(itemType: .device(device))
+        
+        viewModel.executeMainAction()
+        
+        let actions = viewModel.availableActions.compactMap { $0.type }
+        XCTAssertEqual(actions, expectedActions, "Actions for devices are incorrect")
+    }
+
+    func testExecuteMainAction_forCUFolder_triggersInfoAction() {
+        let cuFolderBackup = BackupEntity(
+            id: 1,
+            name: "Camera Uploads",
+            deviceId: mockCurrentDeviceId,
+            rootHandle: 1,
+            type: .cameraUpload,
+            status: .upToDate
+        )
+        
+        executeTestForItem(
+            itemType: .backup(cuFolderBackup),
+            expectedName: cuFolderBackup.name,
+            description: "CU Folder"
+        )
+    }
+
+    func testExecuteMainAction_forSyncFolder_triggersInfoAction() {
+        let syncBackup = BackupEntity(
+            id: 1,
+            name: "Sync",
+            deviceId: mockCurrentDeviceId,
+            rootHandle: 1,
+            type: .upSync,
+            status: .upToDate
+        )
+        
+        executeTestForItem(
+            itemType: .backup(syncBackup),
+            expectedName: syncBackup.name,
+            description: "Sync Folder"
+        )
+    }
+    
+    func testExecuteMainAction_forBackupFolder_triggersInfoAction() {
+        let backup = BackupEntity(
+            id: 1,
+            name: "Backup",
+            deviceId: mockCurrentDeviceId,
+            rootHandle: 1,
+            type: .backupUpload,
+            status: .upToDate
+        )
+        
+        executeTestForItem(
+            itemType: .backup(backup),
+            expectedName: backup.name,
+            description: "Backup Folder"
+        )
+    }
+    
+    private func executeTestForItem(
+        itemType: DeviceCenterItemType,
+        expectedName: String,
+        description: String
+    ) {
+        let expectation = self.expectation(description: description)
+        let bridge = DeviceCenterBridge()
+        var actualInfoModel: ResourceInfoModel?
+        
+        bridge.infoActionTapped = { infoModel in
+            actualInfoModel = infoModel
+            expectation.fulfill()
+        }
+        
+        let viewModel = makeSUT(itemType: itemType, deviceCenterBridge: bridge)
+        
+        viewModel.executeMainAction()
+        
+        wait(for: [expectation], timeout: 3.0)
+        
+        XCTAssertNotNil(actualInfoModel, "Expected info action to be triggered with a non-nil ResourceInfoModel for \(description).")
+        XCTAssertEqual(actualInfoModel?.name, expectedName, "Expected info action to be triggered with ResourceInfoModel matching the name for \(description).")
+    }
+    
+    private func makeSUT(
+        itemType: DeviceCenterItemType,
+        deviceCenterBridge: DeviceCenterBridge = DeviceCenterBridge(),
+        file: StaticString = #file,
+        line: UInt = #line
+    ) -> DeviceCenterItemViewModel {
         let node = NodeEntity(
             handle: 1
         )
@@ -63,7 +112,7 @@ final class DeviceCenterItemViewModelTests: XCTestCase {
             node: node
         )
         let deviceCenterUseCase = MockDeviceCenterUseCase(
-            devices: [device],
+            devices: [],
             currentDeviceId: mockCurrentDeviceId
         )
         let assets = ItemAssets(
@@ -75,8 +124,8 @@ final class DeviceCenterItemViewModelTests: XCTestCase {
         let sut = DeviceCenterItemViewModel(
             deviceCenterUseCase: deviceCenterUseCase,
             nodeUseCase: nodeUseCase,
-            deviceCenterBridge: DeviceCenterBridge(),
-            itemType: .backup(backup),
+            deviceCenterBridge: deviceCenterBridge,
+            itemType: itemType,
             sortedAvailableActions: [
                 .info: [
                     DeviceCenterAction(

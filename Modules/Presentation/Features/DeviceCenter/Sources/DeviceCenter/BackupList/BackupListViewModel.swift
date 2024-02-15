@@ -352,51 +352,26 @@ public final class BackupListViewModel: ObservableObject {
                 }
             }
     }
-    
-    private func folderInfoFrom(_ backup: BackupEntity) async -> (files: Int, folders: Int, totalSize: UInt64) {
-        guard let node = nodeUseCase.nodeForHandle(backup.rootHandle),
-              let folderInfo = try? await nodeUseCase.folderInfo(node: node) else {
-            return (0, 0, 0)
-        }
-        
-        return (folderInfo.files, folderInfo.folders, UInt64(folderInfo.currentSize))
-    }
 
     private func makeDeviceInfoModel() async -> ResourceInfoModel {
         guard let backups else {
             return ResourceInfoModel(
                 icon: selectedDeviceIcon,
                 name: selectedDeviceName,
-                counter: ResourceCounter()
+                counter: ResourceCounter.emptyCounter
             )
         }
         
-        var totalFiles: Int = 0
-        var totalFolders: Int = 0
-        var totalSize: UInt64 = 0
-
-        await withTaskGroup(of: (files: Int, folders: Int, totalSize: UInt64).self) { group in
-            for backup in backups {
-                group.addTask {
-                    await self.folderInfoFrom(backup)
-                }
-            }
-
-            for await result in group {
-                totalFiles += result.files
-                totalFolders += result.folders
-                totalSize += result.totalSize
-            }
-        }
+        let folderInfo = await FolderInfoFactory(nodeUseCase: nodeUseCase).info(from: backups)
 
         return ResourceInfoModel(
             icon: selectedDeviceIcon,
             name: selectedDeviceName,
             counter: ResourceCounter(
-                files: totalFiles,
-                folders: totalFolders
+                files: folderInfo.files,
+                folders: folderInfo.folders
             ),
-            totalSize: totalSize
+            totalSize: folderInfo.totalSize
         )
     }
 

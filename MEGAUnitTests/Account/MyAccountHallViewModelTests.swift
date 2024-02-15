@@ -200,7 +200,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
             ResourceInfoModel(
                 icon: "",
                 name: "",
-                counter: ResourceCounter()
+                counter: ResourceCounter.emptyCounter
             )
         )
         

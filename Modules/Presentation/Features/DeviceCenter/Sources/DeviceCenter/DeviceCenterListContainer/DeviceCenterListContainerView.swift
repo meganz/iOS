@@ -44,11 +44,11 @@ struct ListViewContainer<Content>: View where Content: View {
         ActionSheetContentView(
             headerView:
                 ActionSheetHeaderView(
-                    iconName: selectedItem.iconName ?? "",
+                    iconName: selectedItem.assets.iconName,
                     title: selectedItem.name,
-                    detailImageName: selectedItem.statusIconName ?? "",
-                    subtitle: selectedItem.statusTitle,
-                    subtitleColor: selectedItem.statusColor
+                    detailImageName: selectedItem.assets.backupStatus.iconName,
+                    subtitle: selectedItem.assets.backupStatus.title,
+                    subtitleColor: selectedItem.assets.backupStatus.color
                 ),
             actionButtons: {
                 selectedItem.availableActions.compactMap { action in

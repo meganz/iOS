@@ -18,15 +18,28 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
     var isBackup: Bool = false
     var hasErrorStatus: Bool = false
     var sortedAvailableActions: [DeviceCenterActionType: [DeviceCenterAction]]
+    var updateSelectedViewModel: ((DeviceCenterItemViewModel?) -> Void)?
     
-    @Published var name: String = ""
-    @Published var iconName: String?
-    @Published var statusIconName: String?
-    @Published var statusTitle: String = ""
-    @Published var statusColor: UIColor = .clear
     @Published var shouldShowBackupPercentage: Bool = false
     @Published var backupPercentage: String = ""
     
+    var mainActionIconName: String {
+       switch itemType {
+       case .backup: "info"
+       case .device: "moreList"
+       default: ""
+       }
+    }
+    
+    var name: String {
+       switch itemType {
+       case .backup(let backup): backup.name
+       case .device(let device): device.name.isNotEmpty ? device.name : assets.defaultName ?? ""
+       case .unknown: ""
+       }
+    }
+    
+    /// `router` and `refreshDevicesPublisher` are declared as optional with a nil default value to accommodate the shared usage of `DeviceCenterItemViewModel` across different item types (devices, backups, sync, and camera upload (CU) folders). These properties are essential for navigating and refreshing the UI when interacting with device-related functionalities. However, for other item types like backups, sync, and CU folders, these functionalities are not required.
     init(router: (any DeviceListRouting)? = nil,
          refreshDevicesPublisher: PassthroughSubject<Void, Never>? = nil,
          deviceCenterUseCase: DeviceCenterUseCaseProtocol,
@@ -50,22 +63,11 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
     }
     
     private func configure() {
-        switch itemType {
-        case .backup(let backup):
-            name = backup.name
+        if case .backup = itemType {
             statusSubtitle = backupStatusDetailedErrorMessage()
             hasErrorStatus = statusSubtitle != nil
             isBackup = true
-            
-        case .device(let device):
-            name = device.name.isNotEmpty ? device.name : assets.defaultName ?? ""
-        default: break
         }
-        
-        iconName = assets.iconName
-        statusTitle = assets.backupStatus.title
-        statusIconName = assets.backupStatus.iconName
-        statusColor = assets.backupStatus.color
         
         calculateProgress()
     }
@@ -147,28 +149,19 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
                 }
             }
     }
-    
-    private func folderInfoFrom(_ backup: BackupEntity) async -> (files: Int, folders: Int, totalSize: Int64) {
-        guard let node = nodeUseCase.nodeForHandle(backup.rootHandle),
-              let folderInfo = try? await nodeUseCase.folderInfo(node: node) else {
-            return (0, 0, 0)
-        }
-        
-        return (folderInfo.files, folderInfo.folders, folderInfo.currentSize)
-    }
 
     private func makeNodeInfoEntity(for backup: BackupEntity) async -> ResourceInfoModel {
-        let result: (files: Int, folders: Int, totalSize: Int64) = await folderInfoFrom(backup)
+        let folderInfo = await FolderInfoFactory(nodeUseCase: nodeUseCase).info(from: backup)
         
         return ResourceInfoModel(
             icon: assets.iconName,
             name: backup.name,
             counter: ResourceCounter(
-                files: result.files,
-                folders: result.folders
+                files: folderInfo.files,
+                folders: folderInfo.folders
             ),
-            totalSize: UInt64(result.totalSize),
-            added: backup.activityTimestamp)
+            totalSize: folderInfo.totalSize,
+            added: folderInfo.added)
     }
 
     private func makeDeviceInfoEntity(_ device: DeviceEntity) async -> ResourceInfoModel {
@@ -176,45 +169,27 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
             return ResourceInfoModel(
                 icon: assets.iconName,
                 name: device.name,
-                counter: ResourceCounter()
+                counter: ResourceCounter.emptyCounter
             )
         }
         
-        var totalFiles: Int = 0
-        var totalFolders: Int = 0
-        var totalSize: UInt64 = 0
-
-        await withTaskGroup(of: ResourceInfoModel.self) { group in
-            for backup in backups {
-                group.addTask {
-                    await self.makeNodeInfoEntity(for: backup)
-                }
-            }
-
-            for await entity in group {
-                totalFiles += entity.counter.files
-                totalFolders += entity.counter.folders
-                totalSize += entity.totalSize
-            }
-        }
+        let folderInfo = await FolderInfoFactory(nodeUseCase: nodeUseCase).info(from: backups)
 
         return ResourceInfoModel(
             icon: assets.iconName,
             name: device.name,
             counter: ResourceCounter(
-                files: totalFiles,
-                folders: totalFolders
+                files: folderInfo.files,
+                folders: folderInfo.folders
             ),
-            totalSize: totalSize
+            totalSize: folderInfo.totalSize
         )
     }
 
-    private func handleBackupAction(_ type: DeviceCenterActionType) async {
-        switch type {
-        case .cameraUploads:
-            await handleCameraUploadAction()
-        default: break
-        }
+    private func handleBackupInfoAction() async {
+        guard case let .backup(backupEntity) = itemType else { return }
+        let infoEntity = await makeNodeInfoEntity(for: backupEntity)
+        deviceCenterBridge.infoActionTapped(infoEntity)
     }
     
     private func handleDeviceAction(_ type: DeviceCenterActionType, device: DeviceEntity) async {
@@ -245,6 +220,12 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
         deviceCenterBridge.renameActionTapped(renameEntity)
     }
     
+    private func loadAvailableActions() {
+        if case .device(let deviceEntity) = itemType {
+            loadAvailableActionsForDevice(deviceEntity)
+        }
+    }
+    
     func nodeForItemType() -> NodeEntity? {
         switch itemType {
         case .backup(let backupEntity):
@@ -256,12 +237,21 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
         }
     }
     
-    func loadAvailableActions() {
+    func handleMainActionButtonPressed() {
+        executeMainAction()
+        if !isBackup {
+            updateSelectedViewModel?(self)
+        }
+    }
+    
+    func executeMainAction() {
         switch itemType {
-        case .backup(let backupEntity):
-            loadAvailableActionsForBackup(backupEntity)
-        case .device(let deviceEntity):
-            loadAvailableActionsForDevice(deviceEntity)
+        case .backup:
+            Task { [weak self] in
+                await self?.handleBackupInfoAction()
+            }
+        case .device:
+            loadAvailableActions()
         default: break
         }
     }
@@ -313,12 +303,8 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
     
     @MainActor
     func executeAction(_ type: DeviceCenterActionType) async {
-        switch itemType {
-        case .backup:
-            await handleBackupAction(type)
-        case .device(let device):
+        if case .device(let device) = itemType {
             await handleDeviceAction(type, device: device)
-        default: break
         }
     }
     
