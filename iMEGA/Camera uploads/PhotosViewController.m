@@ -71,6 +71,8 @@
     [self updateAppearance];
     [self setupBarButtons];
     [self updateNavigationTitleBar];
+    
+    [self setupBannerViewColorWithBackgroundView:self.stateView label:self.stateLabel button:self.enableCameraUploadsButton];
 }
 
 - (void)setupBarButtons {
