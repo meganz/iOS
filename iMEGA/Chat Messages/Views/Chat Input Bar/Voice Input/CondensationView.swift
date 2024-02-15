@@ -1,20 +1,9 @@
 import CoreGraphics
 
-class CondensationView: EnlargementView {
-    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
-    var originalBottomValue: CGFloat!
-    
+class CondensationView: EnlargementView {    
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         enlarge = false
-        originalBottomValue = bottomConstraint.constant
-    }
-    
-    override func updateUI() {
-        super.updateUI()
-        
-        bottomConstraint.constant = originalBottomValue ?? CGFloat.zero + singleSideAddedWidth
     }
     
     override func updateAppearance() {
