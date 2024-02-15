@@ -18,12 +18,6 @@ final class ResourceInfoViewModelTests: XCTestCase {
         let viewModel = makeSUT(name: itemName)
         XCTAssertEqual(viewModel.title, itemName)
     }
-
-    func testSubtitle_with1024Bytes_returns1KBFormatted() {
-        let itemSize = UInt64(1024)
-        let viewModel = makeSUT(totalSize: itemSize)
-        XCTAssertEqual(viewModel.subtitle, "1 KB")
-    }
     
     func testTotalSize_with1024Bytes_returns1KBFormatted() {
         let itemSize = UInt64(1024)

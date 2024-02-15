@@ -5,14 +5,20 @@ struct DeviceCenterItemView: View {
     @ObservedObject var viewModel: DeviceCenterItemViewModel
     @Binding var selectedViewModel: DeviceCenterItemViewModel?
     
+    init(viewModel: DeviceCenterItemViewModel, selectedViewModel: Binding<DeviceCenterItemViewModel?>) {
+        self._viewModel = ObservedObject(wrappedValue: viewModel)
+        self._selectedViewModel = selectedViewModel
+        self.viewModel.updateSelectedViewModel = { [selectedViewModel] vm in
+            selectedViewModel.wrappedValue = vm
+        }
+    }
+    
     var body: some View {
         HStack {
-            if let iconName = viewModel.iconName {
-                Image(iconName)
-                    .scaledToFit()
-                    .frame(width: 40, height: 40)
-                    .padding(EdgeInsets(top: 10, leading: 12, bottom: 10, trailing: 8))
-            }
+            Image(viewModel.assets.iconName)
+                .scaledToFit()
+                .frame(width: 40, height: 40)
+                .padding(EdgeInsets(top: 10, leading: 12, bottom: 10, trailing: 8))
             VStack(alignment: .leading, spacing: 4) {
                 Text(viewModel.name)
                     .font(.subheadline)
@@ -26,28 +32,25 @@ struct DeviceCenterItemView: View {
                             .foregroundColor(.white)
                             .padding(.horizontal, 8)
                             .padding(.vertical, 2)
-                            .background(Color(viewModel.statusColor))
+                            .background(Color(viewModel.assets.backupStatus.color))
                             .clipShape(Capsule())
                     } else {
-                        if let statusIcon = viewModel.statusIconName {
-                            Image(statusIcon)
-                                .renderingMode(.template)
-                                .foregroundColor(Color(viewModel.statusColor))
-                                .frame(width: 12, height: 12)
-                        }
+                        Image(viewModel.assets.backupStatus.iconName)
+                            .renderingMode(.template)
+                            .foregroundColor(Color(viewModel.assets.backupStatus.color))
+                            .frame(width: 12, height: 12)
                     }
-                    Text(viewModel.statusTitle)
+                    Text(viewModel.assets.backupStatus.title)
                         .font(.caption)
-                        .foregroundColor(Color(viewModel.statusColor))
+                        .foregroundColor(Color(viewModel.assets.backupStatus.color))
                     Spacer()
                 }
             }
             Spacer()
             Button {
-                viewModel.loadAvailableActions()
-                selectedViewModel = viewModel
+                viewModel.handleMainActionButtonPressed()
             } label: {
-                Image("moreList")
+                Image(viewModel.mainActionIconName)
                     .renderingMode(.template)
                     .foregroundColor(.gray)
                     .scaledToFit()

@@ -30,7 +30,7 @@ public struct ResourceInfoModel: Sendable {
         counter: ResourceCounter,
         totalSize: UInt64 = UInt64(0),
         added: Date? = nil,
-        formatDateClosure: @escaping DateFormatterClosure = { DateFormatter.dateShort().localisedString(from: $0) }
+        formatDateClosure: @escaping DateFormatterClosure = { DateFormatter.dateMediumTimeShort().localisedString(from: $0) }
     ) {
         self.icon = icon
         self.name = name
@@ -56,9 +56,16 @@ public struct ResourceCounter: Sendable {
     ///       different folder levels contained in the current resource
     var folders: Int
     
+    public static var emptyCounter: Self {
+        .init(
+            files: 0,
+            folders: 0
+        )
+    }
+    
     public init(
-        files: Int = 0,
-        folders: Int = 0
+        files: Int,
+        folders: Int
     ) {
         self.files = files
         self.folders = folders

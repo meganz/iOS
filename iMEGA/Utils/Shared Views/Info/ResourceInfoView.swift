@@ -21,17 +21,12 @@ struct ResourceInfoView: View {
                 .frame(height: 156)
                 .frame(maxWidth: .infinity)
                 
-                VStack(alignment: .leading, spacing: 3) {
-                    Text(viewModel.title)
-                        .font(.callout)
-                        .bold()
-                        .foregroundColor(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : UIColor.label.swiftUI)
-                    Text(viewModel.subtitle)
-                        .font(.caption)
-                        .foregroundColor(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : UIColor.label.swiftUI)
-                }
-                .padding(.vertical, 2)
-                .listRowSeparator(.hidden)
+                Text(viewModel.title)
+                    .font(.callout)
+                    .bold()
+                    .foregroundColor(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : UIColor.label.swiftUI)
+                    .padding(.vertical, 2)
+                    .listRowSeparator(.hidden)
                 
                 Section(header: Text(Strings.Localizable.details)) {
                     DetailRow(title: Strings.Localizable.totalSize, detail: viewModel.totalSize)

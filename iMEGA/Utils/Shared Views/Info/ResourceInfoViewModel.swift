@@ -11,10 +11,6 @@ final class ResourceInfoViewModel: ObservableObject {
         infoModel.name
     }
     
-    var subtitle: String {
-        String.memoryStyleString(fromByteCount: Int64(infoModel.totalSize))
-    }
-    
     var totalSize: String {
         String.memoryStyleString(fromByteCount: Int64(infoModel.totalSize))
     }
