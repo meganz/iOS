@@ -22,7 +22,7 @@ final class HangOrEndCallRouter: HangOrEndCallRouting {
     
     func build() -> UIViewController {
         let analyticsEventUseCase = AnalyticsEventUseCase(
-            repository: AnalyticsRepository(sdk: MEGASdkManager.sharedMEGASdk())
+            repository: AnalyticsRepository(sdk: MEGASdk.shared)
         )
         let viewModel = HangOrEndCallViewModel(router: self, analyticsEventUseCase: analyticsEventUseCase)
         let hangOrEndCallView = HangOrEndCallView(viewModel: viewModel)

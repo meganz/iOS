@@ -3,7 +3,6 @@
 #import "UIImage+GKContact.h"
 
 #import "MEGAChatListItem.h"
-#import "MEGASdkManager.h"
 #import "MEGAStore.h"
 #import "MEGAUser+MNZCategory.h"
 #import "NSAttributedString+MNZCategory.h"
@@ -149,8 +148,8 @@
     
     self.onCallDuration.hidden = YES;
     self.activeCallImageView.hidden = YES;
-    if ([[MEGASdkManager sharedMEGAChatSdk] hasCallInChatRoom:chatListItem.chatId] && MEGAReachabilityManager.isReachable) {
-        MEGAChatCall *call = [[MEGASdkManager sharedMEGAChatSdk] chatCallForChatId:chatListItem.chatId];
+    if ([MEGAChatSdk.shared hasCallInChatRoom:chatListItem.chatId] && MEGAReachabilityManager.isReachable) {
+        MEGAChatCall *call = [MEGAChatSdk.shared chatCallForChatId:chatListItem.chatId];
         BOOL is1on1AndThereAreNoNewMessages = !chatListItem.isGroup && self.unreadView.hidden;
         if (is1on1AndThereAreNoNewMessages || chatListItem.isGroup) {
             switch (call.status) {
@@ -224,7 +223,7 @@
 
 - (void)configureAvatar:(MEGAChatListItem *)chatListItem {
     if (chatListItem.isGroup) {
-        MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:chatListItem.chatId];
+        MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomForChatId:chatListItem.chatId];
         [self.avatarView setupFor:chatRoom];
     } else {
         [self.avatarView.avatarImageView mnz_setImageForUserHandle:chatListItem.peerHandle name:chatListItem.title];
@@ -286,7 +285,7 @@
                 senderString = [self actionAuthorNameInChatListItem:item pronoumForMe:YES];
             }
             
-            MEGAChatMessage *lastMessage = [[MEGASdkManager sharedMEGAChatSdk] messageForChat:item.chatId messageId:item.lastMessageId];
+            MEGAChatMessage *lastMessage = [MEGAChatSdk.shared messageForChat:item.chatId messageId:item.lastMessageId];
             NSString *durationString;
             if (lastMessage.nodeList && lastMessage.nodeList.size == 1) {
                 MEGANode *node = [lastMessage.nodeList nodeAtIndex:0];
@@ -335,7 +334,7 @@
             
         case MEGAChatMessageTypePrivilegeChange: {
             NSString *fullNameDidAction = [self actionAuthorNameInChatListItem:item pronoumForMe:NO];
-            MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:item.chatId];
+            MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomForChatId:item.chatId];
             
             NSString *fullNameReceiveAction = [chatRoom userDisplayNameForUserHandle:item.lastMessageHandle];
             if (!fullNameReceiveAction) {
@@ -369,7 +368,7 @@
             
         case MEGAChatMessageTypeAlterParticipants: {
             NSString *fullNameDidAction = [self actionAuthorNameInChatListItem:item pronoumForMe:NO];
-            MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:item.chatId];
+            MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomForChatId:item.chatId];
             
             NSString *fullNameReceiveAction = [chatRoom userDisplayNameForUserHandle:item.lastMessageHandle];
             if (!fullNameReceiveAction) {
@@ -414,7 +413,7 @@
         case MEGAChatMessageTypeSetRetentionTime: {
             NSString *text;
             NSString *fullNameDidAction = [self actionAuthorNameInChatListItem:item pronoumForMe:NO];
-            MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:item.chatId];
+            MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomForChatId:item.chatId];
             if (chatRoom.retentionTime <= 0) {
                 text = LocalizedString(@"[A]%1$s[/A][B] disabled message clearing.[/B]", @"System message that is shown to all chat participants upon disabling the Retention history.");
                 text = text.mnz_removeWebclientFormatters;
@@ -492,8 +491,8 @@
             NSString *senderString = [self actionAuthorNameInChatListItem:item pronoumForMe:YES];
             
             if (item.lastMessageType == MEGAChatMessageTypeContainsMeta) {
-                MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:item.chatId];
-                MEGAChatMessage *message = [[MEGASdkManager sharedMEGAChatSdk] messageForChat:chatRoom.chatId messageId:item.lastMessageId];
+                MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomForChatId:item.chatId];
+                MEGAChatMessage *message = [MEGAChatSdk.shared messageForChat:chatRoom.chatId messageId:item.lastMessageId];
                 
                 if (message.containsMeta.type == MEGAChatContainsMetaTypeGeolocation) {
                     NSMutableAttributedString *lastMessageMutableAttributedString = senderString ? [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@: ", senderString]].mutableCopy : [[NSAttributedString alloc] initWithString:@""].mutableCopy;
@@ -519,10 +518,10 @@
 
 - (NSString *)actionAuthorNameInChatListItem:(MEGAChatListItem *)item pronoumForMe:(BOOL)me {
     NSString *actionAuthor;
-    if (item.lastMessageSender == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
-        actionAuthor = me ? LocalizedString(@"me", @"The title for my message in a chat. The message was sent from yourself.") : MEGASdkManager.sharedMEGAChatSdk.myFullname;
+    if (item.lastMessageSender == [MEGAChatSdk.shared myUserHandle]) {
+        actionAuthor = me ? LocalizedString(@"me", @"The title for my message in a chat. The message was sent from yourself.") : MEGAChatSdk.shared.myFullname;
     } else {
-        MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:item.chatId];
+        MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomForChatId:item.chatId];
         actionAuthor = [chatRoom userDisplayNameForUserHandle:item.lastMessageSender];
         if (!actionAuthor) {
             MEGALogWarning(@"[Chat Links Scalability] Display name not ready");

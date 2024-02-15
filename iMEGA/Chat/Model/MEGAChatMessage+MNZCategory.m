@@ -4,7 +4,6 @@
 
 #import "Helper.h"
 
-#import "MEGASdkManager.h"
 #import "MEGAStore.h"
 #import "NSAttributedString+MNZCategory.h"
 #import "NSString+MNZCategory.h"
@@ -117,7 +116,7 @@ static const void *contactLinkUserHandleTagKey = &contactLinkUserHandleTagKey;
 
 - (NSString *)generateAttributedString:(BOOL)isMeeting {
     NSString *text;
-    uint64_t myHandle = [[MEGASdkManager sharedMEGAChatSdk] myUserHandle];
+    uint64_t myHandle = [MEGAChatSdk.shared myUserHandle];
     
     UIFont *textFontRegular = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
     UIFont *textFontMedium = [[UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline] fontWithWeight:UIFontWeightMedium];
@@ -309,8 +308,8 @@ static const void *contactLinkUserHandleTagKey = &contactLinkUserHandleTagKey;
 - (NSString *)fullNameDidAction {
     NSString *fullNameDidAction;
     
-    if ([MEGASdkManager sharedMEGAChatSdk].myUserHandle == self.userHandle) {
-        fullNameDidAction = [MEGASdkManager sharedMEGAChatSdk].myFullname;
+    if (MEGAChatSdk.shared.myUserHandle == self.userHandle) {
+        fullNameDidAction = MEGAChatSdk.shared.myFullname;
     } else {
         fullNameDidAction = [self fullNameByHandle:self.userHandle];
     }
@@ -322,8 +321,8 @@ static const void *contactLinkUserHandleTagKey = &contactLinkUserHandleTagKey;
     NSString *fullNameReceiveAction;
     uint64_t tempHandle = [self userHandleReceiveAction];
     
-    if ([MEGASdkManager sharedMEGAChatSdk].myUserHandle == tempHandle) {
-        fullNameReceiveAction = [MEGASdkManager sharedMEGAChatSdk].myFullname;
+    if (MEGAChatSdk.shared.myUserHandle == tempHandle) {
+        fullNameReceiveAction = MEGAChatSdk.shared.myFullname;
     } else {
         fullNameReceiveAction = [self fullNameByHandle:tempHandle];
     }

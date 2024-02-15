@@ -2,7 +2,6 @@
 
 #import "MEGAInviteContactRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
-#import "MEGASdkManager.h"
 #import "UIImageView+MNZCategory.h"
 
 #import "ContactDetailsViewController.h"
@@ -71,7 +70,7 @@
     NSUInteger usersAttachedCount =  self.message.usersCount;
     for (NSUInteger i = 0; i < usersAttachedCount; i++) {
         NSString *userEmail = [self.message userEmailAtIndex:i];
-        MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:userEmail];
+        MEGAUser *user = [MEGASdk.shared contactForEmail:userEmail];
         if ((user != nil) && (user.visibility == MEGAUserVisibilityVisible)) {
             NSString *userBase64Handle = [MEGASdk base64HandleForUserHandle:user.handle];
             [self.alreadyContactsMutableDictionary setObject:user forKey:userBase64Handle];
@@ -206,7 +205,7 @@
     MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [[MEGAInviteContactRequestDelegate alloc] initWithNumberOfRequests:count];
     for (NSUInteger i = 0; i < count; i++) {
         NSString *email = [self.selectedUsersMutableArray objectAtIndex:i];
-        [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:email message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
+        [MEGASdk.shared inviteContactWithEmail:email message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
     }
     
     [self editTapped:self.editBarButtonItem];
@@ -295,7 +294,7 @@
         NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
         [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email") detail:nil image:nil style:UIAlertActionStyleDefault actionHandler:^{
             MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [MEGAInviteContactRequestDelegate.alloc initWithNumberOfRequests:1];
-            [MEGASdkManager.sharedMEGASdk inviteContactWithEmail:userEmailSelected message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
+            [MEGASdk.shared inviteContactWithEmail:userEmailSelected message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
         }]];
         
         ActionSheetViewController *moreActionSheet = [ActionSheetViewController.alloc initWithActions:actions headerTitle:userEmailSelected dismissCompletion:nil sender:[tableView cellForRowAtIndexPath:indexPath]];

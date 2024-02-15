@@ -58,16 +58,16 @@
         _endedCalls = NSMutableDictionary.new;
     }
     
-    [MEGASdkManager.sharedMEGAChatSdk addChatCallDelegate:self];
-    [MEGASdkManager.sharedMEGAChatSdk addChatDelegate:self];
+    [MEGAChatSdk.shared addChatCallDelegate:self];
+    [MEGAChatSdk.shared addChatDelegate:self];
     
     return self;
 }
 
 - (void)invalidateProvider {
     self.megaCallManager = nil;
-    [MEGASdkManager.sharedMEGAChatSdk removeChatCallDelegate:self];
-    [MEGASdkManager.sharedMEGAChatSdk removeChatDelegate:self];
+    [MEGAChatSdk.shared removeChatCallDelegate:self];
+    [MEGAChatSdk.shared removeChatDelegate:self];
     [self.provider invalidate];
 }
 
@@ -78,8 +78,8 @@
     // Solution provided in the below link.
     // https://stackoverflow.com/questions/48023629/abnormal-behavior-of-speaker-button-on-system-provided-call-screen?rq=1
     [self configureAudioSession];
-    MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForCallId:callId];
-    MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:chatId];
+    MEGAChatCall *call = [MEGAChatSdk.shared chatCallForCallId:callId];
+    MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomForChatId:chatId];
     
     NSUUID *uuid = [self.megaCallManager uuidForChatId:chatId callId:callId];
     
@@ -149,7 +149,7 @@
     if (callEndedReason == 0) {
         for (NSUInteger i = 0; i < call.participants.size; i++) {
             uint64_t handle = [call.participants megaHandleAtIndex:i];
-            if (MEGASdkManager.sharedMEGAChatSdk.myUserHandle == handle) {
+            if (MEGAChatSdk.shared.myUserHandle == handle) {
                 callEndedReason = CXCallEndedReasonAnsweredElsewhere;
                 break;
             }
@@ -187,7 +187,7 @@
     
     MEGALogDebug(@"[CallKit] Update call %@, video %@", call, call.hasLocalVideo ? @"YES" : @"NO");
     
-    MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:call.chatId];
+    MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomForChatId:call.chatId];
     CXCallUpdate *update = [self callUpdateWithValue:[MEGASdk base64HandleForUserHandle:chatRoom.chatId] localizedCallerName:chatRoom.title hasVideo:call.hasLocalVideo];
     [self.provider reportCallWithUUID:call.uuid updated:update];
 }
@@ -212,7 +212,7 @@
             if (error) {
                 MEGALogError(@"[CallKit] Report new incoming call failed with error: %@", error);
             } else {
-                MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForCallId:callId];
+                MEGAChatCall *call = [MEGAChatSdk.shared chatCallForCallId:callId];
                 if (call) {
                     [weakSelf.megaCallManager addCall:call];
                 } else {
@@ -298,12 +298,12 @@
 
 - (void)provider:(CXProvider *)provider performStartCallAction:(CXStartCallAction *)action {
     uint64_t callId = [self.megaCallManager callIdForUUID:action.callUUID];
-    MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForCallId:callId];
+    MEGAChatCall *call = [MEGAChatSdk.shared chatCallForCallId:callId];
     
     MEGALogDebug(@"[CallKit] Provider perform start call: %@, uuid: %@", call, action.callUUID);
 
     if (call) {
-        MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:call.chatId];
+        MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomForChatId:call.chatId];
         CXCallUpdate *update = [self callUpdateWithValue:[MEGASdk base64HandleForUserHandle:chatRoom.chatId] localizedCallerName:chatRoom.title hasVideo:call.hasLocalVideo];
         [provider reportCallWithUUID:call.uuid updated:update];
         [action fulfill];
@@ -315,8 +315,8 @@
 
 - (void)provider:(CXProvider *)provider performAnswerCallAction:(CXAnswerCallAction *)action {
     uint64_t chatid = [self.megaCallManager chatIdForUUID:action.callUUID];
-    MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatid];
-    MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForChatId:chatid];
+    MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomForChatId:chatid];
+    MEGAChatCall *call = [MEGAChatSdk.shared chatCallForChatId:chatid];
     MEGALogDebug(@"[CallKit] Provider perform answer call: %@, uuid: %@", call, action.callUUID);
     
     if (action.callUUID) {
@@ -336,17 +336,17 @@
 
 - (void)provider:(CXProvider *)provider performEndCallAction:(CXEndCallAction *)action {
     uint64_t callId = [self.megaCallManager callIdForUUID:action.callUUID];
-    MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForCallId:callId];
+    MEGAChatCall *call = [MEGAChatSdk.shared chatCallForCallId:callId];
     
     MEGALogDebug(@"[CallKit] Provider perform end call: %@, uuid: %@", call, action.callUUID);
     
     if (action.callUUID) {
         if (call) {
-            MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:call.chatId];
+            MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomForChatId:call.chatId];
             if ((call.status != MEGAChatCallStatusInitial && call.status != MEGAChatCallStatusUserNoPresent)
                 || chatRoom.isOneToOne) {
                 MEGALogDebug(@"[CallKit] hanging call for: %@, uuid: %@", call, action.callUUID);
-                [MEGASdkManager.sharedMEGAChatSdk hangChatCall:call.callId];
+                [MEGAChatSdk.shared hangChatCall:call.callId];
             }
         } else {
             self.endCallWhenConnect = YES;
@@ -361,7 +361,7 @@
 
 - (void)provider:(CXProvider *)provider performSetMutedCallAction:(CXSetMutedCallAction *)action {
     uint64_t callId = [self.megaCallManager callIdForUUID:action.callUUID];
-    MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForCallId:callId];
+    MEGAChatCall *call = [MEGAChatSdk.shared chatCallForCallId:callId];
     
     MEGALogDebug(@"[CallKit] Provider perform mute/unmute call: %@, uuid: %@, action: %d", call, action.callUUID, action.muted);
     
@@ -369,10 +369,10 @@
         if (call) {
             if (call.hasLocalAudio && action.muted) {
                 MEGALogDebug(@"[CallKit][ChatSDK] Provider perform mute call: %@", call);
-                [MEGASdkManager.sharedMEGAChatSdk disableAudioForChat:call.chatId];
+                [MEGAChatSdk.shared disableAudioForChat:call.chatId];
             } else if (!call.hasLocalAudio && !action.muted) {
                 MEGALogDebug(@"[CallKit][ChatSDK] Provider perform unmute call: %@", call);
-                [MEGASdkManager.sharedMEGAChatSdk enableAudioForChat:call.chatId];
+                [MEGAChatSdk.shared enableAudioForChat:call.chatId];
             }
         } else {
             MEGALogDebug(@"[CallKit][ChatSDK] Provider perfom store action for call");
@@ -416,8 +416,8 @@
 
     if (self.isCallKitAnsweredCall) {
         self.callKitAnsweredCall = NO;
-        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:self.answeredChatId.unsignedLongLongValue];
-        MEGAChatCall *chatCall = [MEGASdkManager.sharedMEGAChatSdk chatCallForChatId:chatRoom.chatId];
+        MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomForChatId:self.answeredChatId.unsignedLongLongValue];
+        MEGAChatCall *chatCall = [MEGAChatSdk.shared chatCallForChatId:chatRoom.chatId];
         if (chatCall != nil) {
             MEGALogDebug(@"[CallKit] Loud speaker is %d", chatRoom.isMeeting);
             [AudioSessionUseCaseOCWrapper.alloc.init setSpeakerEnabled:chatRoom.isMeeting];
@@ -443,12 +443,12 @@
     MEGALogDebug(@"onChatSessionUpdate %@", session);
     
     if ([session hasChanged:MEGAChatSessionChangeRemoteAvFlags]) {
-        MEGAChatCall *chatCall = [MEGASdkManager.sharedMEGAChatSdk chatCallForCallId:callId];
+        MEGAChatCall *chatCall = [MEGAChatSdk.shared chatCallForCallId:callId];
         [self callUpdateVideoForCall:chatCall];
     } else if ([session hasChanged:MEGAChatSessionChangeStatus]
                && session.status == MEGAChatSessionStatusInProgress
                && self.isOutgoingCall
-               && [self isOneToOneChatRoom:[MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:chatId]]) {
+               && [self isOneToOneChatRoom:[MEGAChatSdk.shared chatRoomForChatId:chatId]]) {
         [self stopDialerTone];
         self.outgoingCall = NO;
     } else if (session.status == MEGAChatSessionStatusDestroyed && session.termCode == MEGAChatSessionTermCodeNonRecoverable) {
@@ -526,7 +526,7 @@
             if (call.status == MEGAChatCallStatusUserNoPresent) {
                 if (self.shouldAnswerCallWhenConnect) {
                     MEGALogDebug(@"[CallKit] Online now for call %@, ready to answer", call);
-                    MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatId];
+                    MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomForChatId:chatId];
                     [self answerCallForChatRoom:chatRoom call:call action:nil];
                     self.answerCallWhenConnect = NO;
                 }
