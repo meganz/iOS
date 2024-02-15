@@ -189,11 +189,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
         if existsInProgressCallInChatRoom {
             joinCall(in: chatRoom)
         } else {
-            if chatRoom.isWaitingRoomEnabled {
-                startMeetingInWaitingRoomChatNoRinging(in: chatRoom)
-            } else {
-                startMeetingCallNoRinging(in: chatRoom)
-            }
+            startCall(in: chatRoom)
         }
     }
     
@@ -345,7 +341,7 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
     private func joinCall(in chatRoom: ChatRoomEntity) {
         guard let call = callUseCase.call(for: scheduledMeeting.chatId) else { return }
         if call.status == .userNoPresent {
-            callUseCase.startCall(for: scheduledMeeting.chatId, enableVideo: false, enableAudio: true) { [weak self] result in
+            callUseCase.startCall(for: scheduledMeeting.chatId, enableVideo: false, enableAudio: true, notRinging: false) { [weak self] result in
                 switch result {
                 case .success:
                     self?.prepareAndShowCallUI(for: call, in: chatRoom)
@@ -364,8 +360,8 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
         }
     }
     
-    private func startMeetingCallNoRinging(in chatRoom: ChatRoomEntity) {
-        callUseCase.startCallNoRinging(for: scheduledMeeting, enableVideo: false, enableAudio: true) { [weak self] result in
+    private func startCall(in chatRoom: ChatRoomEntity) {
+        callUseCase.startCall(for: scheduledMeeting.chatId, enableVideo: false, enableAudio: true, notRinging: true) { [weak self] result in
             switch result {
             case .success(let call):
                 self?.prepareAndShowCallUI(for: call, in: chatRoom)
@@ -377,20 +373,6 @@ final class FutureMeetingRoomViewModel: ObservableObject, Identifiable, CallInPr
                     self?.router.showErrorMessage(Strings.Localizable.somethingWentWrong)
                     MEGALogError("Not able to start scheduled meeting call")
                 }
-            }
-        }
-    }
-    
-    private func startMeetingInWaitingRoomChatNoRinging(in chatRoom: ChatRoomEntity) {
-        Task { @MainActor in
-            do {
-                let call = try await callUseCase.startMeetingInWaitingRoomChatNoRinging(for: scheduledMeeting, enableVideo: false, enableAudio: true)
-                prepareAndShowCallUI(for: call, in: chatRoom)
-            } catch CallErrorEntity.tooManyParticipants {
-                router.showErrorMessage(Strings.Localizable.Error.noMoreParticipantsAreAllowedInThisGroupCall)
-            } catch {
-                router.showErrorMessage(Strings.Localizable.somethingWentWrong)
-                MEGALogError("Not able to start scheduled meeting call")
             }
         }
     }

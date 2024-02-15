@@ -607,6 +607,7 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
         [[CallActionManager shared] startCallWithChatId:chatRoom.chatId
                                             enableVideo:videoCall
                                             enableAudio:!chatRoom.isMeeting
+                                             notRinging:NO
                                                delegate:startCallDelegate];
     }
 }

@@ -772,18 +772,12 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
         if let call = callUseCase.call(for: chatRoom.chatId), call.status != .userNoPresent {
             prepareAndShowCallUI(for: call, in: chatRoom)
         } else {
-            if let scheduledMeeting = scheduledMeetingUseCase.scheduledMeetingsByChat(chatId: chatListItem.chatId).first {
-                if chatRoom.isWaitingRoomEnabled {
-                    startMeetingInWaitingRoomChatNoRinging(for: scheduledMeeting, in: chatRoom)
-                } else {
-                    startMeetingCallNoRinging(for: scheduledMeeting, in: chatRoom)
-                }
-            }
+            startCall(in: chatRoom)
         }
     }
     
-    private func startMeetingCallNoRinging(for scheduledMeeting: ScheduledMeetingEntity, in chatRoom: ChatRoomEntity) {
-        callUseCase.startCallNoRinging(for: scheduledMeeting, enableVideo: false, enableAudio: true) { [weak self] result in
+    private func startCall(in chatRoom: ChatRoomEntity) {
+        callUseCase.startCall(for: chatRoom.chatId, enableVideo: false, enableAudio: true, notRinging: true) { [weak self] result in
             switch result {
             case .success(let call):
                 self?.prepareAndShowCallUI(for: call, in: chatRoom)
@@ -795,20 +789,6 @@ final class ChatRoomViewModel: ObservableObject, Identifiable, CallInProgressTim
                     self?.router.showErrorMessage(Strings.Localizable.somethingWentWrong)
                     MEGALogError("Not able to start scheduled meeting call")
                 }
-            }
-        }
-    }
-    
-    private func startMeetingInWaitingRoomChatNoRinging(for scheduledMeeting: ScheduledMeetingEntity, in chatRoom: ChatRoomEntity) {
-        Task { @MainActor in
-            do {
-                let call = try await callUseCase.startMeetingInWaitingRoomChatNoRinging(for: scheduledMeeting, enableVideo: false, enableAudio: true)
-                prepareAndShowCallUI(for: call, in: chatRoom)
-            } catch CallErrorEntity.tooManyParticipants {
-                router.showErrorMessage(Strings.Localizable.Error.noMoreParticipantsAreAllowedInThisGroupCall)
-            } catch {
-                router.showErrorMessage(Strings.Localizable.somethingWentWrong)
-                MEGALogError("Not able to start scheduled meeting call")
             }
         }
     }

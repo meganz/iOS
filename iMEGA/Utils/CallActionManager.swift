@@ -33,7 +33,7 @@ import MEGADomain
 
     private override init() { super.init() }
 
-    @objc func startCall(chatId: UInt64, enableVideo: Bool, enableAudio: Bool, delegate: MEGAChatStartCallRequestDelegate) {
+    @objc func startCall(chatId: UInt64, enableVideo: Bool, enableAudio: Bool, notRinging: Bool, delegate: MEGAChatStartCallRequestDelegate) {
         self.chatOnlineListener = ChatOnlineListener(
             chatId: chatId,
             sdk: chatSdk
@@ -53,36 +53,12 @@ import MEGADomain
             guard let startCallRequestDelegate = self.startCallRequestDelegate else { return }
             self.chatSdk.setChatVideoInDevices("Front Camera")
             self.providerDelegate?.isOutgoingCall = self.isOneToOneChatRoom(forChatId: chatId)
-            self.chatSdk.startCall(inChat: chatId, enableVideo: enableVideo, enableAudio: enableAudio, notRinging: false, delegate: startCallRequestDelegate)
-        }
-    }
-    
-    func startCallNoRinging(chatId: ChatIdEntity, scheduledId: UInt64, enableVideo: Bool, enableAudio: Bool, delegate: MEGAChatStartCallRequestDelegate) {
-        self.chatOnlineListener = ChatOnlineListener(
-            chatId: chatId,
-            sdk: chatSdk
-        ) { [weak self] chatId in
-            guard let self else { return }
-            self.chatOnlineListener = nil
-            MEGALogDebug("1: CallActionManager: state is online now \(MEGASdk.base64Handle(forUserHandle: chatId) ?? "-1") ")
-            
-            self.configureAudioSessionForStartCall(chatId: chatId)
-            self.startCallRequestDelegate = MEGAChatStartCallRequestDelegate { error in
-                if error.type == .MEGAChatErrorTypeOk {
-                    self.notifyStartCallToCallKit(chatId: chatId)
-                    MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.sharedRepo).start(chatId: chatId)
-                }
-                delegate.completion(error)
-            }
-            guard let startCallRequestDelegate = self.startCallRequestDelegate else { return }
-            self.chatSdk.setChatVideoInDevices("Front Camera")
-            
-            self.chatSdk.startCall(inChat: chatId, enableVideo: enableVideo, enableAudio: enableAudio, notRinging: true, delegate: startCallRequestDelegate)
+            self.chatSdk.startCall(inChat: chatId, enableVideo: enableVideo, enableAudio: enableAudio, notRinging: notRinging, delegate: startCallRequestDelegate)
         }
     }
     
     @MainActor
-    func startMeetingInWaitingRoomChat(chatId: ChatIdEntity, enableVideo: Bool, enableAudio: Bool) async throws -> CallEntity {
+    func startCall(chatId: ChatIdEntity, enableVideo: Bool, enableAudio: Bool, notRinging: Bool) async throws -> CallEntity {
         try await withCheckedThrowingContinuation { continuation in
             self.chatOnlineListener = ChatOnlineListener(
                 chatId: chatId,
@@ -111,42 +87,7 @@ import MEGADomain
                     }
                 }
                 chatSdk.setChatVideoInDevices("Front Camera")
-                chatSdk.startCall(inChat: chatId, enableVideo: enableVideo, enableAudio: enableAudio, notRinging: false, delegate: delegate)
-            }
-        }
-    }
-    
-    @MainActor
-    func startMeetingInWaitingRoomChatNoRinging(chatId: ChatIdEntity, scheduledId: UInt64, enableVideo: Bool, enableAudio: Bool) async throws -> CallEntity {
-        try await withCheckedThrowingContinuation { continuation in
-            self.chatOnlineListener = ChatOnlineListener(
-                chatId: chatId,
-                sdk: chatSdk
-            ) { [weak self] chatId in
-                guard let self else { return }
-                chatOnlineListener = nil
-                configureAudioSessionForStartCall(chatId: chatId)
-                let delegate = ChatRequestDelegate { [weak self] completion in
-                    switch completion {
-                    case .success:
-                        guard let self, let call = chatSdk.chatCall(forChatId: chatId) else {
-                            continuation.resume(with: .failure(CallErrorEntity.generic))
-                            return
-                        }
-                        notifyStartCallToCallKit(chatId: chatId)
-                        MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.sharedRepo).start(chatId: chatId)
-                        continuation.resume(with: .success(call.toCallEntity()))
-                    case .failure(let error):
-                        switch error.type {
-                        case .MEGAChatErrorTooMany:
-                            continuation.resume(with: .failure(CallErrorEntity.tooManyParticipants))
-                        default:
-                            continuation.resume(with: .failure(CallErrorEntity.generic))
-                        }
-                    }
-                }
-                chatSdk.setChatVideoInDevices("Front Camera")
-                chatSdk.startCall(inChat: chatId, enableVideo: enableVideo, enableAudio: enableAudio, notRinging: true, delegate: delegate)
+                chatSdk.startCall(inChat: chatId, enableVideo: enableVideo, enableAudio: enableAudio, notRinging: notRinging, delegate: delegate)
             }
         }
     }

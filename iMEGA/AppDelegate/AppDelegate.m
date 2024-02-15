@@ -875,6 +875,7 @@
     [[CallActionManager shared] startCallWithChatId:self.chatRoom.chatId
                                         enableVideo:self.videoCall
                                         enableAudio:!self.chatRoom.isMeeting
+                                         notRinging:NO
                                            delegate:requestDelegate];
 }
 
