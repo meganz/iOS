@@ -462,13 +462,11 @@ extension AppDelegate {
             if shouldOpenWaitingRoom(for: chatRoom.toChatRoomEntity()) {
                 openWaitingRoom(for: scheduleMeeting)
             } else {
-                let callEntity = chatRoom.isWaitingRoomEnabled ?
-                try await callUseCase.startMeetingInWaitingRoomChatNoRinging(for: scheduleMeeting, enableVideo: false, enableAudio: true) :
-                try await callUseCase.startCallNoRinging(for: scheduleMeeting, enableVideo: false, enableAudio: true)
+                let callEntity = try await callUseCase.startCall(for: scheduleMeeting.chatId, enableVideo: false, enableAudio: true, notRinging: true)
                 join(call: callEntity, chatRoom: chatRoom.toChatRoomEntity())
             }
         } else {
-            let callEntity = try await callUseCase.startCall(for: chatRoom.chatId, enableVideo: false, enableAudio: true)
+            let callEntity = try await callUseCase.startCall(for: chatRoom.chatId, enableVideo: false, enableAudio: true, notRinging: false)
             join(call: callEntity, chatRoom: chatRoom.toChatRoomEntity())
         }
     }

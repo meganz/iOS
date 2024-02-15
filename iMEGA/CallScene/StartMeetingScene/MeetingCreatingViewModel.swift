@@ -311,7 +311,8 @@ final class MeetingCreatingViewModel: ViewModelType {
                 let call = try await callUseCase.startCall(
                     for: chatRoom.chatId,
                     enableVideo: isVideoEnabled,
-                    enableAudio: isMicrophoneEnabled
+                    enableAudio: isMicrophoneEnabled, 
+                    notRinging: false
                 )
                 meetingUseCase.createChatLink(forChatId: chatRoom.chatId)
                 dismiss()

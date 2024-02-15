@@ -1172,7 +1172,7 @@ class ChatViewController: MessagesViewController {
     
     private func startMeetingNoRinging(videoCall: Bool, scheduledMeeting: ScheduledMeetingEntity) {
         prepareAudioForCall()
-        callUseCase.startCallNoRinging(for: scheduledMeeting, enableVideo: videoCall, enableAudio: true) { [weak self] result in
+        callUseCase.startCall(for: scheduledMeeting.chatId, enableVideo: videoCall, enableAudio: true, notRinging: true) { [weak self] result in
             guard let self else { return }
             updateNavigationBarButtonsBeforeStartCall()
             switch result {
@@ -1187,7 +1187,7 @@ class ChatViewController: MessagesViewController {
     
     private func startOutGoingCall(isVideoEnabled: Bool) {
         prepareAudioForCall()
-        callUseCase.startCall(for: chatRoom.chatId, enableVideo: isVideoEnabled, enableAudio: !chatRoom.isMeeting) { [weak self] result in
+        callUseCase.startCall(for: chatRoom.chatId, enableVideo: isVideoEnabled, enableAudio: !chatRoom.isMeeting, notRinging: false) { [weak self] result in
             guard let self else { return }
             updateNavigationBarButtonsBeforeStartCall()
             switch result {
@@ -1204,7 +1204,7 @@ class ChatViewController: MessagesViewController {
         prepareAudioForCall()
         Task { @MainActor in
             do {
-                _ = try await callUseCase.startMeetingInWaitingRoomChat(for: scheduledMeeting, enableVideo: videoCall, enableAudio: true)
+                _ = try await callUseCase.startCall(for: scheduledMeeting.chatId, enableVideo: videoCall, enableAudio: true, notRinging: false)
                 updateNavigationBarButtonsBeforeStartCall()
                 startMeetingUI(isVideoEnabled: videoCall, isSpeakerEnabled: chatRoom.isMeeting || videoCall)
             } catch {
@@ -1217,7 +1217,7 @@ class ChatViewController: MessagesViewController {
         prepareAudioForCall()
         Task { @MainActor in
             do {
-                _ = try await callUseCase.startMeetingInWaitingRoomChatNoRinging(for: scheduledMeeting, enableVideo: videoCall, enableAudio: true)
+                _ = try await callUseCase.startCall(for: scheduledMeeting.chatId, enableVideo: videoCall, enableAudio: true, notRinging: true)
                 updateNavigationBarButtonsBeforeStartCall()
                 startMeetingUI(isVideoEnabled: videoCall, isSpeakerEnabled: chatRoom.isMeeting || videoCall)
             } catch {
