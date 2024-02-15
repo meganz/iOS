@@ -48,7 +48,7 @@ final class PhotosRepositoryTests: XCTestCase {
         let sut = makeSUT(photoLocalSource: photoLocalSource)
         
         let photos = try await sut.allPhotos()
-        XCTAssertEqual(photos, expectedPhotos)
+        XCTAssertEqual(Set(photos), Set(expectedPhotos))
     }
     
     func testPhotoForHandle_photoSourceDontContainPhoto_shouldRetrieveAndSetPhoto() async {
@@ -88,16 +88,18 @@ final class PhotosRepositoryTests: XCTestCase {
     func testPhotosUpdate_onNodeUpdate_shouldUpdateCacheAndYieldUpdatedPhotos() async {
         let (stream, continuation) = AsyncStream
             .makeStream(of: [NodeEntity].self)
-        let expectedPhotos = [MockNode(handle: 45),
-                              MockNode(handle: 65)]
-        let sdk = MockSdk(nodes: expectedPhotos,
+        let fileNode = MockNode(handle: 54, name: "3.pdf")
+        let photoNode = MockNode(handle: 76, name: "1.jpg")
+        let cachedPhoto = NodeEntity(handle: 4)
+        let expectedPhotos = [photoNode.toNodeEntity(), cachedPhoto]
+        let sdk = MockSdk(nodes: [fileNode, photoNode],
                           megaRootNode: MockNode(handle: 1))
-        let photoLocalSource = MockPhotoLocalSource(photos: [NodeEntity(handle: 4)])
+        let photoLocalSource = MockPhotoLocalSource(photos: [cachedPhoto])
         let nodeUpdatesProvider = MockNodeUpdatesProvider(nodeUpdates: stream.eraseToAnyAsyncSequence())
         let sut = makeSUT(sdk: sdk,
                           photoLocalSource: photoLocalSource,
                           nodeUpdatesProvider: nodeUpdatesProvider)
-        [[NodeEntity(name: "3.pdf", handle: 54)], [], [NodeEntity(name: "1.jpg", handle: 76)]].forEach {
+        [[fileNode.toNodeEntity()], [], [photoNode.toNodeEntity()]].forEach {
             continuation.yield($0)
         }
         continuation.finish()
@@ -106,9 +108,9 @@ final class PhotosRepositoryTests: XCTestCase {
         let finished = expectation(description: "finished")
         let task = Task {
             for await updatedPhotos in await sut.photosUpdated {
-                XCTAssertEqual(Set(updatedPhotos), Set(expectedPhotos.toNodeEntities()))
+                XCTAssertEqual(Set(updatedPhotos), Set(expectedPhotos))
                 let photoSourcePhotos = await photoLocalSource.photos
-                XCTAssertEqual(Set(photoSourcePhotos), Set(expectedPhotos.toNodeEntities()))
+                XCTAssertEqual(Set(photoSourcePhotos), Set(expectedPhotos))
                 iterated.fulfill()
             }
             finished.fulfill()

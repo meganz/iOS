@@ -130,7 +130,7 @@ public actor PhotosRepository: PhotosRepositoryProtocol {
                 guard updatedPhotos.isNotEmpty else { continue }
                 await updatePhotos(updatedPhotos)
                 
-                guard let allPhotos = try? await loadAllPhotos(),
+                guard let allPhotos = try? await allPhotos(),
                       allPhotos.isNotEmpty else {
                     continue
                 }
