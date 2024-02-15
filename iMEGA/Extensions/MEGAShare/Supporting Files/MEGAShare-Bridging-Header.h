@@ -22,7 +22,6 @@
 #import "MEGAStore.h"
 
 #import "CustomModalAlertViewController.h"
-#import "SelectableTableViewCell.h"
 #import "NodeTableViewCell.h"
 #import "MegaNodeActionType.h"
 #import "Helper.h"

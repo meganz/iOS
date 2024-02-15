@@ -4,23 +4,17 @@
 #import "UIScrollView+EmptyDataSet.h"
 
 #import "EmptyStateView.h"
-#import "Helper.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGA-Swift.h"
-#import "NSArray+MNZCategory.h"
 
 @import MEGAL10nObjc;
 
 @interface ChatStatusTableViewController () <UITextFieldDelegate, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAChatDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *onlineLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *onlineRedCheckmarkImageView;
 @property (weak, nonatomic) IBOutlet UILabel *awayLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *awayRedCheckmarkImageView;
 @property (weak, nonatomic) IBOutlet UILabel *busyLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *busyRedCheckmarkImageView;
 @property (weak, nonatomic) IBOutlet UILabel *offlineLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *offlineRedCheckmarkImageView;
 
 @property (weak, nonatomic) IBOutlet UILabel *autoAwayLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *autoAwaySwitch;

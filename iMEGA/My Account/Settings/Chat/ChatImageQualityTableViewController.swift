@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import UIKit
 
@@ -40,8 +41,13 @@ class ChatImageQualityTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
         let currentSeletedQuality = UserDefaults.standard.integer(forKey: "chatImageQuality")
-
-        cell.accessoryView = UIImageView.init(image: UIImage.turquoiseCheckmark)
+        
+        let imageView = UIImageView(image: UIImage.turquoiseCheckmark)
+        if UIColor.isDesignTokenEnabled() {
+            imageView.tintColor = TokenColors.Support.success
+        }
+        
+        cell.accessoryView = imageView
         cell.accessoryView?.isHidden = currentSeletedQuality != indexPath.row
 
         switch indexPath.row {

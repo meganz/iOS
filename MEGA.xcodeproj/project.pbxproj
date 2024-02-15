@@ -574,7 +574,6 @@
 		5BD5CCDD1EB9DA4800175A25 /* ChangeNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BD5CCDC1EB9DA4800175A25 /* ChangeNameViewController.m */; };
 		5BE484BF215BB3CD003B291D /* ChatSettings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5BE484BE215BB3CD003B291D /* ChatSettings.storyboard */; };
 		5BE6898A2417CB3D00462134 /* MEGAStore+CloudAppearancePreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B12D03A241273D4006C3907 /* MEGAStore+CloudAppearancePreference.swift */; };
-		5BE689942417CC2100462134 /* SelectableTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8281471E7BE8300079C1BB /* SelectableTableViewCell.m */; };
 		5BE689952417CC4F00462134 /* MEGANavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8C8D73E1B1DCB4000BCDBA4 /* MEGANavigationController.m */; };
 		5BE689A42419122C00462134 /* AppearancePreference+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE689A22419122B00462134 /* AppearancePreference+CoreDataClass.swift */; };
 		5BE689A52419122C00462134 /* AppearancePreference+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE689A32419122C00462134 /* AppearancePreference+CoreDataProperties.swift */; };
@@ -1523,6 +1522,7 @@
 		A828E685286B317F004CED9E /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = A828E684286B317F004CED9E /* FirebaseCrashlytics */; };
 		A828E687286B318A004CED9E /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = A828E686286B318A004CED9E /* FirebaseCrashlytics */; };
 		A828E68D286B3204004CED9E /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = A828E68C286B3204004CED9E /* FirebaseCrashlytics */; };
+		A83428B32B7D2CF1002393FA /* SelectableTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83428B22B7D2CF1002393FA /* SelectableTableViewCell+Additions.swift */; };
 		A836581C2102101C005E616F /* Contacts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 415226731A692ECC00EC7BB6 /* Contacts.storyboard */; };
 		A83892431EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A83892421EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m */; };
 		A8399F47296C40070062B6BC /* FileProviderExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8399F46296C40070062B6BC /* FileProviderExtension.swift */; };
@@ -4189,6 +4189,7 @@
 		A82751111E97AB73007CD9E2 /* libresolv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		A82751131E97AB79007CD9E2 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		A8278D7E200E72A00040B076 /* incoming_voice_video_call_iOS9.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = incoming_voice_video_call_iOS9.mp3; sourceTree = "<group>"; };
+		A83428B22B7D2CF1002393FA /* SelectableTableViewCell+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SelectableTableViewCell+Additions.swift"; sourceTree = "<group>"; };
 		A83892411EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGAChatMessage+MNZCategory.h"; sourceTree = "<group>"; };
 		A83892421EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MEGAChatMessage+MNZCategory.m"; sourceTree = "<group>"; };
 		A8399F42296C40060062B6BC /* MEGAPickerFileProvider.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MEGAPickerFileProvider.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -7412,6 +7413,7 @@
 				5B1C4DEB26C29A8800425A23 /* Node */,
 				83D726582316903D007B2E58 /* GenericHeaderFooterView.swift */,
 				83D7265A23169067007B2E58 /* GenericHeaderFooterView.xib */,
+				A83428B22B7D2CF1002393FA /* SelectableTableViewCell+Additions.swift */,
 				5B8281461E7BE8300079C1BB /* SelectableTableViewCell.h */,
 				5B8281471E7BE8300079C1BB /* SelectableTableViewCell.m */,
 				5B8281481E7BE8300079C1BB /* SelectableTableViewCell.xib */,
@@ -15024,6 +15026,7 @@
 				83DE6D2129894956000503CC /* SeeMoreOccurrencesView.swift in Sources */,
 				8358334D294A1E3200394F1A /* SeeMoreParticipantsView.swift in Sources */,
 				5DC0FD4B24D8FB94004DB649 /* SegmentTitleView.swift in Sources */,
+				A83428B32B7D2CF1002393FA /* SelectableTableViewCell+Additions.swift in Sources */,
 				5B8281491E7BE8300079C1BB /* SelectableTableViewCell.m in Sources */,
 				B5D875372A04B501003F9380 /* SendFeedbackViewModel.swift in Sources */,
 				7288C2CE27F5D3D70010DC19 /* SendFeedbackViewRouter.swift in Sources */,
@@ -15543,7 +15546,6 @@
 				BF943E9C23554181001C18E0 /* PushNotificationControl.swift in Sources */,
 				7747B2DB208625B70011814E /* Reachability.m in Sources */,
 				A8F1D10C2A5ECBC2000DEB6F /* RemovalConfirmationMessageGenerator.swift in Sources */,
-				5BE689942417CC2100462134 /* SelectableTableViewCell.m in Sources */,
 				5B367578204FFC1B0087362D /* SendToChatActivity.m in Sources */,
 				9986031F2A78AA1900D39A20 /* SendToViewController+Additions.swift in Sources */,
 				77F95CF020E3E5C000F42D9C /* SendToViewController.m in Sources */,
