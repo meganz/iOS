@@ -37,6 +37,7 @@ class AudioRecordingInputBar: UIView {
     }()
 
     override func awakeFromNib() {
+        
         super.awakeFromNib()
         
         addGestureRecognizer(trashedTapGesture)

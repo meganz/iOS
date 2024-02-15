@@ -52,18 +52,20 @@ class EnlargementView: UIView {
     }
     
     var singleSideAddedWidth: CGFloat {
-        let enlargeWidth = (width - originalWidth) / 2.0
-        let normalWidth = (originalWidth - width) / 2.0
+        let size = min(width, height)
+        let enlargeWidth = (size - originalWidth) / 2.0
+        let normalWidth = (originalWidth - size) / 2.0
         return enlarge ? enlargeWidth : normalWidth
     }
     
     func updateUI() {
-        widthConstraint.constant = width
-        heightConstraint.constant = height
-
-        placeholderConstraint.constant = enlarge
-            ? (originalPlaceholderValue - singleSideAddedWidth)
-            : (originalPlaceholderValue + singleSideAddedWidth)
+        let size = min(width, height)
+        widthConstraint.constant = size
+        heightConstraint.constant = size
+     
+        let forEnlarge = originalPlaceholderValue - singleSideAddedWidth
+        let forNotEnlarge = originalPlaceholderValue + singleSideAddedWidth
+        placeholderConstraint.constant = enlarge ? forEnlarge : forNotEnlarge
         
         nonSelectionView.alpha = 1.0 - progress
         selectionView.alpha = progress

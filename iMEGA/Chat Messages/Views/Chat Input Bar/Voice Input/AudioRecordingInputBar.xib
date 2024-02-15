@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -15,12 +15,12 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="236"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4pH-4S-81F">
+                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4pH-4S-81F">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="236"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iN0-l3-epB">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="236"/>
+                    <rect key="frame" x="0.0" y="-34" width="414" height="236"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H0B-HU-26G" userLabel="AudioWavesBackground">
                             <rect key="frame" x="37.5" y="170" width="338" height="55"/>
@@ -174,7 +174,6 @@
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                             <connections>
-                                <outlet property="bottomConstraint" destination="Ve8-2A-nMZ" id="dFY-H6-qdK"/>
                                 <outlet property="heightConstraint" destination="Fjb-jH-9G2" id="WrZ-54-LzS"/>
                                 <outlet property="imageView" destination="QAd-1U-gRQ" id="BqW-Xd-dbJ"/>
                                 <outlet property="nonSelectionView" destination="4Yk-9x-aP6" id="OzJ-YH-hbO"/>
@@ -184,7 +183,7 @@
                             </connections>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Drag left to cancel, release to send" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Xd-Sa-NXk">
-                            <rect key="frame" x="90" y="128.5" width="234" height="13.5"/>
+                            <rect key="frame" x="90" y="127.5" width="234" height="14.5"/>
                             <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                             <color key="textColor" red="0.51764705882352935" green="0.51764705882352935" blue="0.51764705882352935" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
@@ -212,9 +211,9 @@
                         <constraint firstItem="vRr-bH-Ylv" firstAttribute="centerY" secondItem="H0B-HU-26G" secondAttribute="centerY" id="ChM-TJ-PKZ"/>
                         <constraint firstItem="vRr-bH-Ylv" firstAttribute="leading" secondItem="7Q4-5E-Job" secondAttribute="leading" constant="73" id="Fqx-VH-flp"/>
                         <constraint firstItem="V6B-TZ-Mn7" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" id="GaB-Kt-GHK"/>
+                        <constraint firstItem="7Q4-5E-Job" firstAttribute="bottom" secondItem="vRr-bH-Ylv" secondAttribute="bottom" constant="11" id="Kex-a7-eqC"/>
                         <constraint firstItem="H0B-HU-26G" firstAttribute="centerY" secondItem="eRE-Xv-z0l" secondAttribute="centerY" id="O3h-OF-KiB"/>
                         <constraint firstItem="H0B-HU-26G" firstAttribute="top" secondItem="3Xd-Sa-NXk" secondAttribute="bottom" constant="28" id="Qk9-Gi-d3J"/>
-                        <constraint firstItem="7Q4-5E-Job" firstAttribute="bottom" secondItem="fXk-hP-wk8" secondAttribute="bottom" constant="-38.5" id="Ve8-2A-nMZ"/>
                         <constraint firstItem="H0B-HU-26G" firstAttribute="top" secondItem="mHh-Jk-tvL" secondAttribute="bottom" constant="5" id="bk1-y7-jYy"/>
                         <constraint firstItem="eRE-Xv-z0l" firstAttribute="leading" secondItem="7Q4-5E-Job" secondAttribute="leading" constant="10" id="cLQ-lT-Ljy"/>
                         <constraint firstItem="V6B-TZ-Mn7" firstAttribute="centerX" secondItem="fXk-hP-wk8" secondAttribute="centerX" id="cUd-dB-YS8"/>
@@ -235,7 +234,6 @@
                 <constraint firstAttribute="trailing" secondItem="4pH-4S-81F" secondAttribute="trailing" id="QP0-vG-6Pn"/>
                 <constraint firstItem="iN0-l3-epB" firstAttribute="bottom" secondItem="dzS-f6-JUA" secondAttribute="bottom" id="UKJ-IO-G97"/>
                 <constraint firstAttribute="bottom" secondItem="4pH-4S-81F" secondAttribute="bottom" id="pDe-BQ-xmP"/>
-                <constraint firstItem="4pH-4S-81F" firstAttribute="top" secondItem="xmB-Mt-qSj" secondAttribute="top" id="zaw-iW-m7y"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
@@ -255,6 +253,11 @@
             <point key="canvasLocation" x="318.84057971014494" y="-174.10714285714286"/>
         </view>
     </objects>
+    <designables>
+        <designable name="mHh-Jk-tvL">
+            <size key="intrinsicContentSize" width="35" height="14.5"/>
+        </designable>
+    </designables>
     <resources>
         <image name="cancelVoice" width="30" height="30"/>
         <image name="lockRecording-1" width="30" height="30"/>
