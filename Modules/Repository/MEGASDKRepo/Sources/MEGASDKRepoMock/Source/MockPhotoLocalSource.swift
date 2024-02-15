@@ -2,25 +2,31 @@ import MEGADomain
 import MEGASDKRepo
 
 public actor MockPhotoLocalSource: PhotoLocalSourceProtocol {
-    public var photos: [NodeEntity]
+    private var _photos: [HandleEntity: NodeEntity]
+    
+    public var photos: [NodeEntity] {
+        Array(_photos.values)
+    }
     
     public init(photos: [NodeEntity] = []) {
-        self.photos = photos
+        _photos = Dictionary(uniqueKeysWithValues: photos.map { ($0.handle, $0) })
     }
     
     public func setPhotos(_ photos: [NodeEntity]) {
-        self.photos = photos
+        photos.forEach {
+            _photos[$0.handle] = $0
+        }
     }
     
     public func photo(forHandle handle: HandleEntity) -> NodeEntity? {
-        photos.first(where: { $0.handle == handle })
+        _photos[handle]
     }
     
     public func removePhoto(forHandle handle: HandleEntity) {
-        photos.removeAll(where: { $0.handle == handle })
+        _photos[handle] = nil
     }
     
     public func removeAllPhotos() {
-        photos.removeAll()
+        _photos.removeAll()
     }
 }
