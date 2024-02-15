@@ -15,7 +15,7 @@ extension GroupChatDetailsViewTableViewCell {
             enableLabel?.textColor = TokenColors.Text.secondary
             rightLabel?.textColor = TokenColors.Text.secondary
             emailLabel?.textColor = TokenColors.Text.secondary
-            nameLabel?.textColor = TokenColors.Text.primary
+            nameLabel?.textColor = isDestructive ? TokenColors.Text.error : TokenColors.Text.primary
         } else {
             enableLabel?.textColor = UIColor.secondaryLabel
             rightLabel?.textColor = UIColor.secondaryLabel
