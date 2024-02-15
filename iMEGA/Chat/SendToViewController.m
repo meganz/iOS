@@ -13,7 +13,6 @@
 #import "MEGACreateFolderRequestDelegate.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
-#import "MEGASdkManager.h"
 #import "MEGAUser+MNZCategory.h"
 
 #import "ContactTableViewCell.h"
@@ -152,7 +151,7 @@
 }
 
 - (void)setGroupChatsAndRecents {
-    self.chatListItemList = [[MEGASdkManager sharedMEGAChatSdk] activeChatListItems];
+    self.chatListItemList = [MEGAChatSdk.shared activeChatListItems];
     self.groupChatsMutableArray = [[NSMutableArray alloc] init];
     self.selectedGroupChatsMutableArray = [[NSMutableArray alloc] init];
     if (self.chatListItemList.size) {
@@ -168,7 +167,7 @@
 }
 
 - (void)setVisibleUsers {
-    self.users = [[MEGASdkManager sharedMEGASdk] contacts];
+    self.users = [MEGASdk.shared contacts];
     self.visibleUsersMutableArray = [[NSMutableArray alloc] init];
     self.selectedUsersMutableArray = [[NSMutableArray alloc] init];
     NSInteger count = self.users.size;
@@ -339,11 +338,11 @@
                     uint64_t chatId = chatIdNumber.unsignedLongLongValue;
                     MEGAChatMessage *newMessage;
                     if (message.containsMeta.type == MEGAChatContainsMetaTypeGeolocation) {
-                        newMessage = [[MEGASdkManager sharedMEGAChatSdk] sendGeolocationToChat:chatId longitude:message.containsMeta.geolocation.longitude latitude:message.containsMeta.geolocation.latitude image:message.containsMeta.geolocation.image];
+                        newMessage = [MEGAChatSdk.shared sendGeolocationToChat:chatId longitude:message.containsMeta.geolocation.longitude latitude:message.containsMeta.geolocation.latitude image:message.containsMeta.geolocation.image];
                     } else if (message.containsMeta.type == MEGAChatContainsMetaTypeGiphy) {
-                        newMessage = [[MEGASdkManager sharedMEGAChatSdk] sendGiphyToChat:chatId srcMp4:message.containsMeta.giphy.mp4Src srcWebp:message.containsMeta.giphy.webpSrc sizeMp4:message.containsMeta.giphy.mp4Size sizeWebp:message.containsMeta.giphy.webpSize width:message.containsMeta.giphy.width height:message.containsMeta.giphy.height title:message.containsMeta.giphy.title];
+                        newMessage = [MEGAChatSdk.shared sendGiphyToChat:chatId srcMp4:message.containsMeta.giphy.mp4Src srcWebp:message.containsMeta.giphy.webpSrc sizeMp4:message.containsMeta.giphy.mp4Size sizeWebp:message.containsMeta.giphy.webpSize width:message.containsMeta.giphy.width height:message.containsMeta.giphy.height title:message.containsMeta.giphy.title];
                     } else {
-                        newMessage = [[MEGASdkManager sharedMEGAChatSdk] sendMessageToChat:chatId message:message.content];
+                        newMessage = [MEGAChatSdk.shared sendMessageToChat:chatId message:message.content];
                     }
                     [self completeForwardingMessage:newMessage toChat:chatId];
                 }
@@ -353,7 +352,7 @@
             case MEGAChatMessageTypeContact: {
                 for (NSNumber *chatIdNumber in self.chatIdNumbers) {
                     uint64_t chatId = chatIdNumber.unsignedLongLongValue;
-                    MEGAChatMessage *newMessage = [[MEGASdkManager sharedMEGAChatSdk] forwardContactFromChat:self.sourceChatId messageId:message.messageId targetChatId:chatId];
+                    MEGAChatMessage *newMessage = [MEGAChatSdk.shared forwardContactFromChat:self.sourceChatId messageId:message.messageId targetChatId:chatId];
                     [self completeForwardingMessage:newMessage toChat:chatId];
                 }
                 
@@ -391,9 +390,9 @@
     for (NSNumber *chatIdNumber in self.chatIdNumbers) {
         uint64_t chatId = chatIdNumber.unsignedLongLongValue;
         if (asVoiceClip) {
-            [[MEGASdkManager sharedMEGAChatSdk] attachVoiceMessageToChat:chatId node:handle delegate:delegate];
+            [MEGAChatSdk.shared attachVoiceMessageToChat:chatId node:handle delegate:delegate];
         } else {
-            [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatId node:handle delegate:delegate];
+            [MEGAChatSdk.shared attachNodeToChat:chatId node:handle delegate:delegate];
         }
     }
 }
@@ -432,21 +431,21 @@
                 for (MEGANode *node in self.nodes) {
                     for (MEGAChatListItem *chatListItem in self.selectedGroupChatsMutableArray) {
                         [Helper importNode:node toShareWithCompletion:^(MEGANode *node) {
-                            [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatListItem.chatId node:node.handle delegate:chatAttachNodeRequestDelegate];
+                            [MEGAChatSdk.shared attachNodeToChat:chatListItem.chatId node:node.handle delegate:chatAttachNodeRequestDelegate];
                         }];
                     }
                     
                     for (MEGAUser *user in self.selectedUsersMutableArray) {
-                        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:user.handle];
+                        MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomByUser:user.handle];
                         if (chatRoom) {
                             [Helper importNode:node toShareWithCompletion:^(MEGANode *node) {
-                                [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatRoom.chatId node:node.handle delegate:chatAttachNodeRequestDelegate];
+                                [MEGAChatSdk.shared attachNodeToChat:chatRoom.chatId node:node.handle delegate:chatAttachNodeRequestDelegate];
                             }];
                         } else {
                             MEGALogDebug(@"There is not a chat with %@, create the chat and attach", user.email);
                             [MEGAChatSdk.shared mnz_createChatRoomWithUserHandle:user.handle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
                                 [Helper importNode:node toShareWithCompletion:^(MEGANode *node) {
-                                    [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatRoom.chatId node:node.handle delegate:chatAttachNodeRequestDelegate];
+                                    [MEGAChatSdk.shared attachNodeToChat:chatRoom.chatId node:node.handle delegate:chatAttachNodeRequestDelegate];
                                 }];
                             }];
                         }
@@ -480,7 +479,7 @@
                         }
                     }
                     for (MEGAUser *user in self.selectedUsersMutableArray) {
-                        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:user.handle];
+                        MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomByUser:user.handle];
                         if (chatRoom) {
                             @synchronized(self.chatIdNumbers) {
                                 [self.chatIdNumbers addObject:@(chatRoom.chatId)];
@@ -507,16 +506,16 @@
                 
             case SendModeText: {
                 for (MEGAChatListItem *chatListItem in self.selectedGroupChatsMutableArray) {
-                    [MEGASdkManager.sharedMEGAChatSdk sendMessageToChat:chatListItem.chatId message:[self.sendToChatActivityDelegate textToSend]];
+                    [MEGAChatSdk.shared sendMessageToChat:chatListItem.chatId message:[self.sendToChatActivityDelegate textToSend]];
                 }
                 
                 for (MEGAUser *user in self.selectedUsersMutableArray) {
-                    MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomByUser:user.handle];
+                    MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomByUser:user.handle];
                     if (chatRoom) {
-                        [MEGASdkManager.sharedMEGAChatSdk sendMessageToChat:chatRoom.chatId message:[self.sendToChatActivityDelegate textToSend]];
+                        [MEGAChatSdk.shared sendMessageToChat:chatRoom.chatId message:[self.sendToChatActivityDelegate textToSend]];
                     } else {
                         [MEGAChatSdk.shared mnz_createChatRoomWithUserHandle:user.handle completion:^(MEGAChatRoom * _Nonnull chatRoom) {
-                            [MEGASdkManager.sharedMEGAChatSdk sendMessageToChat:chatRoom.chatId message:[self.sendToChatActivityDelegate textToSend]];
+                            [MEGAChatSdk.shared sendMessageToChat:chatRoom.chatId message:[self.sendToChatActivityDelegate textToSend]];
                         }];
                     }
                 }
@@ -584,7 +583,7 @@
         
         cell.chatTitle.text = chatListItem.title;
         
-        MEGAChatRoom *chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:chatListItem.chatId];
+        MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomForChatId:chatListItem.chatId];
         cell.chatLastMessage.text = [chatRoom participantsNamesWithMe:YES];
         cell.chatLastTime.hidden = YES;
         
@@ -607,7 +606,7 @@
         ContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"contactCell" forIndexPath:indexPath];
         cell.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
         
-        UIColor *color = [UIColor colorWithChatStatus: [MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:user.handle]];
+        UIColor *color = [UIColor colorWithChatStatus: [MEGAChatSdk.shared userOnlineStatus:user.handle]];
         
         if (color) {
             cell.onlineStatusView.backgroundColor = color;

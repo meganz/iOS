@@ -5,7 +5,6 @@
 #import "SVProgressHUD.h"
 
 #import "Helper.h"
-#import "MEGASdkManager.h"
 #import "MEGA-Swift.h"
 
 #import "LocationSearchTableViewController.h"
@@ -158,9 +157,9 @@
                 
         if (self.editMessage) {
             uint64_t messageId = (self.editMessage.status == MEGAChatMessageStatusSending) ? self.editMessage.temporalId : self.editMessage.messageId;
-            message = [[MEGASdkManager sharedMEGAChatSdk] editGeolocationForChat:self.chatRoom.chatId messageId:messageId longitude:coordinate.longitude latitude:coordinate.latitude image:imageB64];
+            message = [MEGAChatSdk.shared editGeolocationForChat:self.chatRoom.chatId messageId:messageId longitude:coordinate.longitude latitude:coordinate.latitude image:imageB64];
         } else {
-            message = [[MEGASdkManager sharedMEGAChatSdk] sendGeolocationToChat:self.chatRoom.chatId longitude:coordinate.longitude latitude:coordinate.latitude image:imageB64];
+            message = [MEGAChatSdk.shared sendGeolocationToChat:self.chatRoom.chatId longitude:coordinate.longitude latitude:coordinate.latitude image:imageB64];
         }
         MEGALogDebug(@"[Share Location] Send message %@", message);
         if (!message) {

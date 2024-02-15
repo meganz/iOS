@@ -15,7 +15,6 @@
 #import "MEGAInviteContactRequestDelegate.h"
 #import "MEGALinkManager.h"
 #import "MEGANavigationController.h"
-#import "MEGASdkManager.h"
 #import "MEGAGlobalDelegate.h"
 #import "MEGAArchiveChatRequestDelegate.h"
 #import "MEGAStore.h"
@@ -111,7 +110,7 @@
         @(GroupChatDetailsSectionLeaveGroup)
     ]];
     
-    MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForChatId:self.chatRoom.chatId];
+    MEGAChatCall *call = [MEGAChatSdk.shared chatCallForChatId:self.chatRoom.chatId];
     if (self.chatRoom.ownPrivilege == MEGAChatRoomPrivilegeModerator
         && (call.status == MEGAChatCallStatusInProgress || call.status == MEGAChatCallStatusUserNoPresent)) {
         [sections addObject:@(GroupChatDetailsSectionEndCallForAll)];
@@ -127,7 +126,7 @@
 }
 
 - (void)updateHeadingView {
-    self.chatRoom = [[MEGASdkManager sharedMEGAChatSdk] chatRoomForChatId:self.chatRoom.chatId];
+    self.chatRoom = [MEGAChatSdk.shared chatRoomForChatId:self.chatRoom.chatId];
     self.nameLabel.text = self.chatRoom.chatTitle;
     
     [self.avatarView setupFor:self.chatRoom];
@@ -150,7 +149,7 @@
     }
     
     if (!self.chatRoom.isPreview) {
-        uint64_t myHandle = [[MEGASdkManager sharedMEGAChatSdk] myUserHandle];
+        uint64_t myHandle = [MEGAChatSdk.shared myUserHandle];
         [self.participantsMutableArray addObject:[NSNumber numberWithUnsignedLongLong:myHandle]];
     }
     
@@ -165,13 +164,13 @@
             continue;
         }
         NSNumber *handle = [self.participantsMutableArray objectAtIndex:indexPath.row];
-        if (![MEGASdkManager.sharedMEGAChatSdk userFullnameFromCacheByUserHandle:handle.unsignedLongLongValue] && ![self.requestedParticipantsMutableSet containsObject:handle]) {
+        if (![MEGAChatSdk.shared userFullnameFromCacheByUserHandle:handle.unsignedLongLongValue] && ![self.requestedParticipantsMutableSet containsObject:handle]) {
             [usersHandles addObject:handle];
             [self.requestedParticipantsMutableSet addObject:handle];
         }
     }
     if (usersHandles.count) {
-        [MEGASdkManager.sharedMEGAChatSdk loadUserAttributesForChatId:self.chatRoom.chatId usersHandles:usersHandles delegate:self];
+        [MEGAChatSdk.shared loadUserAttributesForChatId:self.chatRoom.chatId usersHandles:usersHandles delegate:self];
     }
 }
 
@@ -211,7 +210,7 @@
                 [self.tableView reloadData];
             }
         }];
-        [[MEGASdkManager sharedMEGAChatSdk] archiveChat:self.chatRoom.chatId archive:!self.chatRoom.isArchived delegate:archiveChatRequesDelegate];
+        [MEGAChatSdk.shared archiveChat:self.chatRoom.chatId archive:!self.chatRoom.isArchived delegate:archiveChatRequesDelegate];
     }]];
     
     [self presentViewController:archiveAlertController animated:YES completion:nil];
@@ -227,7 +226,7 @@
                 [MEGALinkManager.joiningOrLeavingChatBase64Handles removeObject:[MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]];
             }
         }];
-        [MEGASdkManager.sharedMEGAChatSdk leaveChat:self.chatRoom.chatId delegate:delegate];
+        [MEGAChatSdk.shared leaveChat:self.chatRoom.chatId delegate:delegate];
         [MEGALinkManager.joiningOrLeavingChatBase64Handles addObject:[MEGASdk base64HandleForUserHandle:self.chatRoom.chatId]];
         [self.navigationController popViewControllerAnimated:YES];
     }]];
@@ -254,7 +253,7 @@
     UIAlertAction *renameAction = [UIAlertAction actionWithTitle:LocalizedString(@"rename", @"Title for the action that allows you to rename a file or folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
         UITextField *textField = [[renameGroupAlertController textFields] firstObject];
         NSString *newGroupName = textField.text;
-        [[MEGASdkManager sharedMEGAChatSdk] setChatTitle:self.chatRoom.chatId title:newGroupName delegate:self];
+        [MEGAChatSdk.shared setChatTitle:self.chatRoom.chatId title:newGroupName delegate:self];
     }];
     
     [renameGroupAlertController addAction:cancelAction];
@@ -320,7 +319,7 @@
                     [SVProgressHUD showSuccessWithStatus:LocalizedString(@"chat.link.linkRemoved", @"Message shown when the link to a file or folder has been removed")];
                 }
             }];
-            [[MEGASdkManager sharedMEGAChatSdk] removeChatLink:self.chatRoom.chatId delegate:delegate];
+            [MEGAChatSdk.shared removeChatLink:self.chatRoom.chatId delegate:delegate];
         }];
     };
     
@@ -358,7 +357,7 @@
     }
     
     uint64_t userHandle = participant.unsignedLongLongValue;
-    NSString *peerEmail = [MEGASdkManager.sharedMEGAChatSdk userEmailFromCacheByUserHandle:userHandle];
+    NSString *peerEmail = [MEGAChatSdk.shared userEmailFromCacheByUserHandle:userHandle];
     
     if (index != (self.participantsMutableArray.count - 1)) {
         NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
@@ -370,29 +369,29 @@
             UIImageView *checkmarkImageView = [UIImageView.alloc initWithImage:[UIImage imageNamed:@"turquoise_checkmark"]];
 
             [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"moderator", @"The Moderator permission level in chat. With moderator permissions a participant can manage the chat.") detail:nil accessoryView:privilege == MEGAChatRoomPrivilegeModerator ? checkmarkImageView : nil image:[UIImage imageNamed:@"moderator"] style:UIAlertActionStyleDefault actionHandler:^{
-                [MEGASdkManager.sharedMEGAChatSdk updateChatPermissions:weakSelf.chatRoom.chatId userHandle:userHandle privilege:MEGAChatRoomPrivilegeModerator delegate:weakSelf];
+                [MEGAChatSdk.shared updateChatPermissions:weakSelf.chatRoom.chatId userHandle:userHandle privilege:MEGAChatRoomPrivilegeModerator delegate:weakSelf];
             }]];
             [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"standard", @"The Standard permission level in chat. With the standard permissions a participant can read and type messages in a chat.") detail:nil accessoryView:privilege == MEGAChatRoomPrivilegeStandard ? checkmarkImageView : nil image:[UIImage imageNamed:@"standard"] style:UIAlertActionStyleDefault actionHandler:^{
-                [MEGASdkManager.sharedMEGAChatSdk updateChatPermissions:weakSelf.chatRoom.chatId userHandle:userHandle privilege:MEGAChatRoomPrivilegeStandard delegate:weakSelf];
+                [MEGAChatSdk.shared updateChatPermissions:weakSelf.chatRoom.chatId userHandle:userHandle privilege:MEGAChatRoomPrivilegeStandard delegate:weakSelf];
             }]];
             [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"readOnly", @"Permissions given to the user you share your folder with") detail:nil accessoryView:privilege == MEGAChatRoomPrivilegeRo ? checkmarkImageView : nil image:[UIImage imageNamed:@"readOnly_chat"] style:UIAlertActionStyleDefault actionHandler:^{
-                [MEGASdkManager.sharedMEGAChatSdk updateChatPermissions:weakSelf.chatRoom.chatId userHandle:userHandle privilege:MEGAChatRoomPrivilegeRo delegate:weakSelf];
+                [MEGAChatSdk.shared updateChatPermissions:weakSelf.chatRoom.chatId userHandle:userHandle privilege:MEGAChatRoomPrivilegeRo delegate:weakSelf];
             }]];
             
             if (peerEmail) {
-                MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:peerEmail];
+                MEGAUser *user = [MEGASdk.shared contactForEmail:peerEmail];
                 if (!user || user.visibility != MEGAUserVisibilityVisible) {
                     [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"addContact", @"Alert title shown when you select to add a contact inserting his/her email") detail:nil image:[UIImage imageNamed:@"add"] style:UIAlertActionStyleDefault actionHandler:^{
                         if (MEGAReachabilityManager.isReachableHUDIfNot) {
                             MEGAInviteContactRequestDelegate *inviteContactRequestDelegate = [MEGAInviteContactRequestDelegate.alloc initWithNumberOfRequests:1];
-                            [MEGASdkManager.sharedMEGASdk inviteContactWithEmail:peerEmail message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
+                            [MEGASdk.shared inviteContactWithEmail:peerEmail message:@"" action:MEGAInviteActionAdd delegate:inviteContactRequestDelegate];
                         }
                     }]];
                 }
             
             }
             [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"removeParticipant", @"A button title which removes a participant from a chat.") detail:nil image:[UIImage imageNamed:@"delete"] style:UIAlertActionStyleDestructive actionHandler:^{
-                [MEGASdkManager.sharedMEGAChatSdk removeFromChat:self.chatRoom.chatId userHandle:userHandle delegate:weakSelf];
+                [MEGAChatSdk.shared removeFromChat:self.chatRoom.chatId userHandle:userHandle delegate:weakSelf];
             }]];
         } else {
             [self openContactDetailsWithEmail:peerEmail userHandle:userHandle];
@@ -597,22 +596,22 @@
             NSString *peerDisplayName;
             NSString *peerEmail;
             MEGAChatRoomPrivilege privilege;
-            MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:base64Handle];
+            MEGAUser *user = [MEGASdk.shared contactForEmail:base64Handle];
 
-            if (handle == [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]) {
-                NSString *myFullname = [[MEGASdkManager sharedMEGAChatSdk] myFullname];
+            if (handle == [MEGAChatSdk.shared myUserHandle]) {
+                NSString *myFullname = [MEGAChatSdk.shared myFullname];
                 peerDisplayName = [NSString stringWithFormat:@"%@ (%@)", myFullname, LocalizedString(@"me", @"The title for my message in a chat. The message was sent from yourself.")];
-                peerEmail = [[MEGASdkManager sharedMEGAChatSdk] myEmail];
+                peerEmail = [MEGAChatSdk.shared myEmail];
                 privilege = self.chatRoom.ownPrivilege;
             } else {                
                 NSString *nickname = user.mnz_nickname;
                 if (nickname.length > 0) {
                     peerDisplayName = nickname;
                 } else {
-                    peerDisplayName = [MEGASdkManager.sharedMEGAChatSdk userFullnameFromCacheByUserHandle:handle];
+                    peerDisplayName = [MEGAChatSdk.shared userFullnameFromCacheByUserHandle:handle];
                 }
                 if (user.visibility == MEGAUserVisibilityVisible || user.visibility == MEGAUserVisibilityInactive) {
-                    peerEmail = [MEGASdkManager.sharedMEGAChatSdk userEmailFromCacheByUserHandle:handle] ?: @"";
+                    peerEmail = [MEGAChatSdk.shared userEmailFromCacheByUserHandle:handle] ?: @"";
                 } else {
                     peerEmail = @"";
                 }
@@ -638,7 +637,7 @@
                 [cell.leftImageView mnz_setImageForUserHandle:handle];
             }
             
-            cell.onlineStatusView.backgroundColor = [UIColor colorWithChatStatus: [MEGASdkManager.sharedMEGAChatSdk userOnlineStatus:handle]];
+            cell.onlineStatusView.backgroundColor = [UIColor colorWithChatStatus: [MEGAChatSdk.shared userOnlineStatus:handle]];
             
             cell.emailLabel.text = peerEmail;
             
@@ -662,7 +661,7 @@
             }
             [cell.permissionsButton setImage:permissionsImage forState:UIControlStateNormal];
             cell.permissionsButton.tag = indexPath.row;
-            cell.verifiedImageView.hidden = ![MEGASdkManager.sharedMEGASdk areCredentialsVerifiedOfUser:user];
+            cell.verifiedImageView.hidden = ![MEGASdk.shared areCredentialsVerifiedOfUser:user];
             break;
         }
             
@@ -858,10 +857,10 @@
                                         [self presentChatLinkOptionsWithLink:request.text];
                                     }
                                 }];
-                                [[MEGASdkManager sharedMEGAChatSdk] createChatLink:self.chatRoom.chatId delegate:delegate];
+                                [MEGAChatSdk.shared createChatLink:self.chatRoom.chatId delegate:delegate];
                             }
                         }];
-                        [[MEGASdkManager sharedMEGAChatSdk] queryChatLink:self.chatRoom.chatId delegate:delegate];
+                        [MEGAChatSdk.shared queryChatLink:self.chatRoom.chatId delegate:delegate];
                     } else {
                         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"Chat Link", @"Label shown in a cell where you can enable a switch to get a chat link") message:LocalizedString(@"To create a chat link you must name the group.", @"Alert message to advice the users that to generate a chat link they need enter a group name for the chat")  preferredStyle:UIAlertControllerStyleAlert];
                         [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
@@ -880,7 +879,7 @@
                                 [self presentNoChatLinkAvailable];
                             }
                         }];
-                        [[MEGASdkManager sharedMEGAChatSdk] queryChatLink:self.chatRoom.chatId delegate:delegate];
+                        [MEGAChatSdk.shared queryChatLink:self.chatRoom.chatId delegate:delegate];
                     } else {
                         [self presentNoChatLinkAvailable];
                     }
@@ -898,7 +897,7 @@
                 
             case GroupChatDetailsSectionLeaveGroup:
                 if (self.chatRoom.isPreview) {
-                    [[MEGASdkManager sharedMEGAChatSdk] closeChatPreview:self.chatRoom.chatId];
+                    [MEGAChatSdk.shared closeChatPreview:self.chatRoom.chatId];
                     if (self.presentingViewController) {
                         [self dismissViewControllerAnimated:YES completion:nil];
                     } else {
@@ -930,7 +929,7 @@
                             }];
                         }
                     }];
-                    [[MEGASdkManager sharedMEGAChatSdk] setPublicChatToPrivate:self.chatRoom.chatId delegate:delegate];
+                    [MEGAChatSdk.shared setPublicChatToPrivate:self.chatRoom.chatId delegate:delegate];
                 };
                 
                 [self presentViewController:customModalAlertVC animated:YES completion:nil];
@@ -952,7 +951,7 @@
                 uint64_t userHandle = [self.participantsMutableArray[index] unsignedLongLongValue];
 
                 if (userHandle != MEGASdk.currentUserHandle.unsignedLongLongValue) {
-                    NSString *userEmail = [MEGASdkManager.sharedMEGAChatSdk userEmailFromCacheByUserHandle:userHandle];
+                    NSString *userEmail = [MEGAChatSdk.shared userEmailFromCacheByUserHandle:userHandle];
                     [self openContactDetailsWithEmail:userEmail userHandle:userHandle];
                 }
                 break;

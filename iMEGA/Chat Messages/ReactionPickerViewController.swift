@@ -55,7 +55,7 @@ extension ReactionPickerViewController: EmojiViewDelegate {
       
       func emojiViewDidSelectEmoji(_ emoji: String, emojiView: EmojiView) {
         let megaMessage = message?.message
-        MEGASdkManager.sharedMEGAChatSdk().addReaction(forChat: message?.chatRoom.chatId ?? 0, messageId: megaMessage?.messageId ?? 0, reaction: emoji)
+          MEGAChatSdk.shared.addReaction(forChat: message?.chatRoom.chatId ?? 0, messageId: megaMessage?.messageId ?? 0, reaction: emoji)
         dismiss(animated: true, completion: nil)
       }
       

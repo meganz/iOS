@@ -1,6 +1,5 @@
 #import "MEGACallManager.h"
-#import "MEGASdkManager.h"
-
+#import "MEGA-Swift.h"
 #import <CallKit/CallKit.h>
 
 @interface MEGACallManager ()
@@ -35,7 +34,7 @@
     CXHandle *handle = [[CXHandle alloc] initWithType:CXHandleTypeGeneric value:[MEGASdk base64HandleForUserHandle:call.chatId]];
     CXStartCallAction *startCallAction = [[CXStartCallAction alloc] initWithCallUUID:call.uuid handle:handle];
     startCallAction.video = call.hasLocalVideo;
-    MEGAChatRoom *chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:call.chatId];
+    MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomForChatId:call.chatId];
     startCallAction.contactIdentifier = chatRoom.title;
     
     CXTransaction *transaction = [[CXTransaction alloc] init];
@@ -79,11 +78,11 @@
     } else {
         MEGALogDebug(@"[CallKit] Call %@ not found in the calls dictionary. %@ the call", [MEGASdk base64HandleForUserHandle:callId], muted ? @"Mute" : @"Unmute");
         [self printAllCalls];
-        MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForChatId:chatId];
+        MEGAChatCall *call = [MEGAChatSdk.shared chatCallForChatId:chatId];
         if (muted && call.hasLocalAudio) {
-            [MEGASdkManager.sharedMEGAChatSdk disableAudioForChat:chatId];
+            [MEGAChatSdk.shared disableAudioForChat:chatId];
         } else if (!call.hasLocalAudio) {
-            [MEGASdkManager.sharedMEGAChatSdk enableAudioForChat:chatId];
+            [MEGAChatSdk.shared enableAudioForChat:chatId];
         }
     }
 }
@@ -144,12 +143,12 @@
 }
 
 - (void)startCallWithChatId:(MEGAHandle)chatId {
-    MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForChatId:chatId];
+    MEGAChatCall *call = [MEGAChatSdk.shared chatCallForChatId:chatId];
     [self startCall:call];
 }
 
 - (void)answerCallWithChatId:(MEGAHandle)chatId {
-    MEGAChatCall *call = [MEGASdkManager.sharedMEGAChatSdk chatCallForChatId:chatId];
+    MEGAChatCall *call = [MEGAChatSdk.shared chatCallForChatId:chatId];
     [self answerCall:call];
 }
 

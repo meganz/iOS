@@ -1,6 +1,5 @@
 #import <UIKit/UIKit.h>
-
-#import "MEGASdkManager.h"
+#import "MEGAChatSdk.h"
 
 typedef NS_ENUM(NSUInteger, GroupChatDetailsSection) {
     GroupChatDetailsSectionChatNotifications = 0,

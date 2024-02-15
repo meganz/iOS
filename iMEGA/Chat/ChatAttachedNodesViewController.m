@@ -11,7 +11,6 @@
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAPhotoBrowserViewController.h"
 #import "MEGAReachabilityManager.h"
-#import "MEGASdkManager.h"
 #import "NodeTableViewCell.h"
 #import "NSString+MNZCategory.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
@@ -76,7 +75,7 @@
     [self.importBarButtonItem setTitleTextAttributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleBody weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_redForTraitCollection:self.traitCollection]} forState:UIControlStateNormal];
     UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
-    NSString *myUserHandleString = [NSString stringWithFormat:@"%llu", [[MEGASdkManager sharedMEGAChatSdk] myUserHandle]];
+    NSString *myUserHandleString = [NSString stringWithFormat:@"%llu", [MEGAChatSdk.shared myUserHandle]];
     if ([self.message.senderId isEqualToString:myUserHandleString]) {
         [self setToolbarItems:@[flexibleItem, self.downloadBarButtonItem]];
     } else {
@@ -216,7 +215,7 @@
     NodeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NodeTableViewCellID" forIndexPath:indexPath];
     
     cell.nameLabel.text = currentNode.name;
-    cell.infoLabel.text = [Helper sizeAndCreationDateForNode:currentNode api:[MEGASdkManager sharedMEGASdk]];
+    cell.infoLabel.text = [Helper sizeAndCreationDateForNode:currentNode api:MEGASdk.shared];
     
     if (self.tableView.isEditing) {
         NSUInteger selectedNodesCount = self.selectedNodesMutableArray.count;
@@ -256,7 +255,7 @@
         if ([FileExtensionGroupOCWrapper verifyIsVisualMedia:node.name]) {
             NSMutableArray<MEGANode *> *mediaNodesArray = [self.message.nodeList mnz_mediaNodesMutableArrayFromNodeList];
             
-            MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeSharedItem presentingNode:node];
+            MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:MEGASdk.shared displayMode:DisplayModeSharedItem presentingNode:node];
             
             [self.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
         } else {
