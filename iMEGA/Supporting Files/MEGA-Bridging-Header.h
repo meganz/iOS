@@ -197,3 +197,4 @@
 #import "AppExitHandlerManager.h"
 
 #import "PasswordReminderViewController.h"
+#import "QRSettingsTableViewController.h"

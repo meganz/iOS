@@ -17,10 +17,6 @@ extension ContactLinkQRViewController: QRMenuDelegate {
                                                 createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo))
     }
     
-    @objc func scanCodeLabelTextColorInLightMode() -> UIColor {
-        MEGAAppColor.Black._000000.uiColor
-    }
-    
     // MARK: - QRMenuDelegate functions
     func qrMenu(didSelect action: MyQRActionEntity) {
         switch action {

@@ -2509,6 +2509,8 @@
 		C4F31F0325C1C51A00E15146 /* CustomTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4F31F0225C1C51A00E15146 /* CustomTitleView.xib */; };
 		E79B628B2B71223100F0C918 /* NotificationTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79B628A2B71223100F0C918 /* NotificationTableViewCell+Additions.swift */; };
 		E79B62912B72671A00F0C918 /* OfflineTableViewViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79B62902B72671A00F0C918 /* OfflineTableViewViewController+Additions.swift */; };
+		E7E114142B7BA130004BBB16 /* ContactLinkQRViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E114132B7BA130004BBB16 /* ContactLinkQRViewController+Additions.swift */; };
+		E7E114192B7BC6C1004BBB16 /* QRSettingsTableViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E114182B7BC6C1004BBB16 /* QRSettingsTableViewController+Additions.swift */; };
 		E7EE7CCF2AC6DCDB00DBABCD /* AppDelegateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EE7CCE2AC6DCDB00DBABCD /* AppDelegateTests.swift */; };
 		E803CB641D5336F100F81A36 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E803CB661D5336F100F81A36 /* InfoPlist.strings */; };
 		E80C76101DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E80C760F1DEDF32A00CA4D68 /* GroupChatDetailsViewTableViewCell.m */; };
@@ -5173,6 +5175,8 @@
 		C4F31F0225C1C51A00E15146 /* CustomTitleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomTitleView.xib; sourceTree = "<group>"; };
 		E79B628A2B71223100F0C918 /* NotificationTableViewCell+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationTableViewCell+Additions.swift"; sourceTree = "<group>"; };
 		E79B62902B72671A00F0C918 /* OfflineTableViewViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OfflineTableViewViewController+Additions.swift"; sourceTree = "<group>"; };
+		E7E114132B7BA130004BBB16 /* ContactLinkQRViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactLinkQRViewController+Additions.swift"; sourceTree = "<group>"; };
+		E7E114182B7BC6C1004BBB16 /* QRSettingsTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "QRSettingsTableViewController+Additions.swift"; sourceTree = "<group>"; };
 		E7EE7CCE2AC6DCDB00DBABCD /* AppDelegateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateTests.swift; sourceTree = "<group>"; };
 		E803CB651D5336F100F81A36 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E803CB681D53374A00F81A36 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -6914,6 +6918,7 @@
 				5BF4B3B120AB05FD00A6E6D7 /* Two Factor Authentication */,
 				E8BD127D1DB76E03003DC53F /* MasterKeyViewController.h */,
 				E8BD127E1DB76E03003DC53F /* MasterKeyViewController.m */,
+				E7E114182B7BC6C1004BBB16 /* QRSettingsTableViewController+Additions.swift */,
 				777E922B203EE14B00266229 /* QRSettingsTableViewController.h */,
 				777E922C203EE14B00266229 /* QRSettingsTableViewController.m */,
 				41AA1A1A1AC081C600D32691 /* SecurityOptionsTableViewController.h */,
@@ -7437,6 +7442,7 @@
 			isa = PBXGroup;
 			children = (
 				5B9F200F243332D200F22FBA /* ContactLinkQR.storyboard */,
+				E7E114132B7BA130004BBB16 /* ContactLinkQRViewController+Additions.swift */,
 				9426B67C283FE0C9003B89B1 /* ContactLinkQRViewController+ContextMenu.swift */,
 				775652D5203AD2FC009E7EC8 /* ContactLinkQRViewController.h */,
 				775652D6203AD2FC009E7EC8 /* ContactLinkQRViewController.m */,
@@ -14002,6 +14008,7 @@
 				9433A72328DB7D720041F0DB /* ContactLinkCollectionViewCell.swift in Sources */,
 				9422494228DB77A2009626E6 /* ContactLinkContentView.swift in Sources */,
 				8371D2A9289933D300D0972F /* ContactLinkPresentationItemSource.swift in Sources */,
+				E7E114142B7BA130004BBB16 /* ContactLinkQRViewController+Additions.swift in Sources */,
 				9426B67D283FE0C9003B89B1 /* ContactLinkQRViewController+ContextMenu.swift in Sources */,
 				775652D7203AD2FC009E7EC8 /* ContactLinkQRViewController.m in Sources */,
 				4182B4EF1BF4ADD400E6FFB8 /* ContactRequestsTableViewCell.m in Sources */,
@@ -14873,6 +14880,7 @@
 				BFEF8CAD2887A0F400F8F9F1 /* QASettingsRouter.swift in Sources */,
 				BFEF8CB12887A10B00F8F9F1 /* QASettingsView.swift in Sources */,
 				BFEF8CAF2887A10100F8F9F1 /* QASetttingsViewModel.swift in Sources */,
+				E7E114192B7BC6C1004BBB16 /* QRSettingsTableViewController+Additions.swift in Sources */,
 				777E922D203EE14B00266229 /* QRSettingsTableViewController.m in Sources */,
 				837ABEF825DC1834007CE19D /* QuickAccessWidgetFavouriteItem+CoreDataClass.swift in Sources */,
 				837ABEFA25DC1834007CE19D /* QuickAccessWidgetFavouriteItem+CoreDataProperties.swift in Sources */,
