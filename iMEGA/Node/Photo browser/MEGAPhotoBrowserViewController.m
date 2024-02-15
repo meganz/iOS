@@ -159,7 +159,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
+    [MEGASdk.shared addMEGADelegate:self];
     [self configureSnackBarPresenter];
     [TransfersWidgetViewController.sharedTransferViewController setProgressViewInKeyWindow];
     [TransfersWidgetViewController.sharedTransferViewController bringProgressToFrontKeyWindowIfNeeded];
@@ -233,7 +233,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self removeSnackBarPresenter];
-    [[MEGASdkManager sharedMEGASdk] removeMEGADelegateAsync:self];
+    [MEGASdk.shared removeMEGADelegateAsync:self];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -1047,7 +1047,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
                     
                 default:
                     if (node != nil) {
-                        [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:@[node] presenter:self isFolderLink:self.api == MEGASdkManager.sharedMEGASdkFolder];
+                        [CancellableTransferRouterOCWrapper.alloc.init downloadNodes:@[node] presenter:self isFolderLink:self.api == MEGASdk.sharedFolderLink];
                     }
                     break;
             }

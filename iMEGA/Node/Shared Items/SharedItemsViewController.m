@@ -5,7 +5,6 @@
 #import "UIScrollView+EmptyDataSet.h"
 
 #import "Helper.h"
-#import "MEGASdkManager.h"
 #import "MEGA-Swift.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGANavigationController.h"
@@ -113,7 +112,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(internetConnectionChanged) name:kReachabilityChangedNotification object:nil];
     
-    [[MEGASdkManager sharedMEGASdk] addMEGAGlobalDelegate:self];
+    [MEGASdk.shared addMEGAGlobalDelegate:self];
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     
     [self addSearchBar];
@@ -137,7 +136,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
     [NSNotificationCenter.defaultCenter removeObserver:self name:MEGAAudioPlayerShouldUpdateContainerNotification object:nil];
     
-    [[MEGASdkManager sharedMEGASdk] removeMEGAGlobalDelegate:self];
+    [MEGASdk.shared removeMEGAGlobalDelegate:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -242,11 +241,11 @@
     
     self.incomingNodesMutableArray = NSMutableArray.alloc.init;
     
-    self.incomingShareList = [MEGASdkManager.sharedMEGASdk inSharesList:self.sortOrderType];
+    self.incomingShareList = [MEGASdk.shared inSharesList:self.sortOrderType];
     NSInteger count = self.incomingShareList.size;
     for (NSInteger i = 0; i < count; i++) {
         MEGAShare *share = [self.incomingShareList shareAtIndex:i];
-        MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:share.nodeHandle];
+        MEGANode *node = [MEGASdk.shared nodeForHandle:share.nodeHandle];
         [self.incomingNodesMutableArray addObject:node];
     }
     
@@ -257,7 +256,7 @@
     [_outgoingNodesForEmailMutableDictionary removeAllObjects];
     [_outgoingIndexPathsMutableDictionary removeAllObjects];
     
-    _outgoingShareList = [MEGASdkManager.sharedMEGASdk outShares:self.sortOrderType];
+    _outgoingShareList = [MEGASdk.shared outShares:self.sortOrderType];
     self.outgoingSharesMutableArray = NSMutableArray.alloc.init;
     self.outgoingUnverifiedSharesMutableArray = NSMutableArray.alloc.init;
     
@@ -271,7 +270,7 @@
         if ([share user] != nil) {
             [_outgoingSharesMutableArray addObject:share];
             
-            MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:share.nodeHandle];
+            MEGANode *node = [MEGASdk.shared nodeForHandle:share.nodeHandle];
             
             if (![lastBase64Handle isEqualToString:node.base64Handle]) {
                 lastBase64Handle = node.base64Handle;
@@ -297,7 +296,7 @@
     [self.outgoingNodesForEmailMutableDictionary removeAllObjects];
     [self.outgoingIndexPathsMutableDictionary removeAllObjects];
     
-    self.publicLinksArray = [MEGASdkManager.sharedMEGASdk publicLinks:self.sortOrderType].mnz_nodesArrayFromNodeList;
+    self.publicLinksArray = [MEGASdk.shared publicLinks:self.sortOrderType].mnz_nodesArrayFromNodeList;
     
     if (self.publicLinksArray.count == 0) {
         self.tableView.tableHeaderView = nil;
@@ -329,7 +328,7 @@
     NSArray *filesAndFolders = self.selectedNodesMutableArray.mnz_numberOfFilesAndFolders;
     MEGARemoveRequestDelegate *removeRequestDelegate = [MEGARemoveRequestDelegate.alloc initWithMode:DisplayModeSharedItem files:[filesAndFolders.firstObject unsignedIntegerValue] folders:[filesAndFolders[1] unsignedIntegerValue] completion:nil];
     for (NSInteger i = 0; i < self.selectedNodesMutableArray.count; i++) {
-        [[MEGASdkManager sharedMEGASdk] removeNode:[self.selectedNodesMutableArray objectAtIndex:i] delegate:removeRequestDelegate];
+        [MEGASdk.shared removeNode:[self.selectedNodesMutableArray objectAtIndex:i] delegate:removeRequestDelegate];
     }
     
     [self endEditingMode];
@@ -351,8 +350,8 @@
     }];
     
     for (MEGAShare *share in self.selectedSharesMutableArray) {
-        MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:[share nodeHandle]];
-        [[MEGASdkManager sharedMEGASdk] shareNode:node withEmail:share.user level:MEGAShareTypeAccessUnknown delegate:shareRequestDelegate];
+        MEGANode *node = [MEGASdk.shared nodeForHandle:[share nodeHandle]];
+        [MEGASdk.shared shareNode:node withEmail:share.user level:MEGAShareTypeAccessUnknown delegate:shareRequestDelegate];
     }
     
     [self endEditingMode];
@@ -436,7 +435,7 @@
     cell.nameLabel.textColor = UIColor.labelColor;
     [self setupLabelAndFavouriteForNode:node cell:cell];
     
-    MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:userEmail];
+    MEGAUser *user = [MEGASdk.shared contactForEmail:userEmail];
 
     NSString *userDisplayName = user.mnz_displayName;
     cell.infoLabel.text = (userDisplayName != nil) ? userDisplayName : userEmail;
@@ -485,7 +484,7 @@
     if (outSharesCount > 1) {
         userName = [NSString stringWithFormat:LocalizedString(@"sharedWithXContacts", @""), outSharesCount];
     } else {
-        MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:[outSharesMutableArray.firstObject user]];
+        MEGAUser *user = [MEGASdk.shared contactForEmail:[outSharesMutableArray.firstObject user]];
         NSString *userDisplayName = user.mnz_displayName;
         userName = (userDisplayName != nil) ? userDisplayName : user.email;
     }
@@ -506,7 +505,7 @@
 - (NodeTableViewCell *)linkSharedCellAtIndexPath:(NSIndexPath *)indexPath forNode:(MEGANode *)node {
     NodeTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
     cell.cellFlavor = NodeTableViewCellFlavorSharedLink;
-    [cell configureCellForNode:node api:MEGASdkManager.sharedMEGASdk];
+    [cell configureCellForNode:node api:MEGASdk.shared];
     //We are on the Shared Items - Links tab, no need to show any icon next to the thumbnail.
     cell.linkImageView.hidden = YES;
     
@@ -571,7 +570,7 @@
         }
     }
     
-    MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:MEGASdkManager.sharedMEGASdk displayMode:DisplayModeCloudDrive presentingNode:node];
+    MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:MEGASdk.shared displayMode:DisplayModeCloudDrive presentingNode:node];
     
     return photoBrowserVC;
 }

@@ -11,7 +11,6 @@
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAPhotoBrowserViewController.h"
 #import "MEGAReachabilityManager.h"
-#import "MEGASdkManager.h"
 #import "MEGA-Swift.h"
 
 #import "NSString+MNZCategory.h"
@@ -121,7 +120,7 @@
 
     [self updateAppearance];
 
-    [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
+    [MEGASdk.shared addMEGATransferDelegate:self];
     
     [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
 }
@@ -129,7 +128,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    MEGASdk *sdkFolder = MEGASdkManager.sharedMEGASdkFolder;
+    MEGASdk *sdkFolder = MEGASdk.sharedFolderLink;
     [sdkFolder addMEGAGlobalDelegate:self.globalDelegate];
     [sdkFolder addMEGARequestDelegate:self.requestDelegate];
     
@@ -146,7 +145,7 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    MEGASdk *sdkFolder = MEGASdkManager.sharedMEGASdkFolder;
+    MEGASdk *sdkFolder = MEGASdk.sharedFolderLink;
     [sdkFolder removeMEGAGlobalDelegate:self.globalDelegate];
     [sdkFolder removeMEGARequestDelegate:self.requestDelegate];
     
@@ -208,12 +207,12 @@
 
 - (void)reloadUI {
     if (!self.parentNode) {
-        self.parentNode = [[MEGASdkManager sharedMEGASdkFolder] rootNode];
+        self.parentNode = [MEGASdk.sharedFolderLink rootNode];
     }
     
     [self setNavigationBarTitleLabel];
     
-    self.nodeList = [[MEGASdkManager sharedMEGASdkFolder] childrenForParent:self.parentNode order:[Helper sortTypeFor:self.parentNode]];
+    self.nodeList = [MEGASdk.sharedFolderLink childrenForParent:self.parentNode order:[Helper sortTypeFor:self.parentNode]];
     if (_nodeList.size == 0) {
         [self setActionButtonsEnabled:NO];
     } else {
@@ -335,7 +334,7 @@
     }];
     
     [decryptionAlertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        [[MEGASdkManager sharedMEGASdkFolder] logout];
+        [MEGASdk.sharedFolderLink logout];
         [decryptionAlertController.textFields.firstObject resignFirstResponder];
         [self dismissViewControllerAnimated:YES completion:nil];
     }]];
@@ -345,7 +344,7 @@
         
         self.validatingDecryptionKey = YES;
         
-        [MEGASdkManager.sharedMEGASdkFolder loginToFolderLink:linkString];
+        [MEGASdk.sharedFolderLink loginToFolderLink:linkString];
     }]];
     
     decryptionAlertController.actions.lastObject.enabled = NO;
@@ -366,13 +365,13 @@
 - (void)navigateToNodeWithBase64Handle:(NSString *)base64Handle {
     if (self.isFolderRootNode) {
         // Push folders to go to the selected subfolder:
-        MEGANode *targetNode = [[MEGASdkManager sharedMEGASdkFolder] nodeForHandle:[MEGASdk handleForBase64Handle:base64Handle]];
+        MEGANode *targetNode = [MEGASdk.sharedFolderLink nodeForHandle:[MEGASdk handleForBase64Handle:base64Handle]];
         if (targetNode) {
             MEGANode *tempNode = targetNode;
             NSMutableArray *nodesToPush = [NSMutableArray new];
             while (tempNode.handle != self.parentNode.handle) {
                 [nodesToPush insertObject:tempNode atIndex:0];
-                tempNode = [[MEGASdkManager sharedMEGASdkFolder] nodeForHandle:tempNode.parentHandle];
+                tempNode = [MEGASdk.sharedFolderLink nodeForHandle:tempNode.parentHandle];
             }
             
             for (MEGANode *node in nodesToPush) {
@@ -405,11 +404,11 @@
 }
 
 - (void)presentMediaNode:(MEGANode *)node {
-    MEGANode *parentNode = [[MEGASdkManager sharedMEGASdkFolder] nodeForHandle:node.parentHandle];
-    MEGANodeList *nodeList = [[MEGASdkManager sharedMEGASdkFolder] childrenForParent:parentNode];
-    NSMutableArray<MEGANode *> *mediaNodesArray = [nodeList mnz_mediaAuthorizeNodesMutableArrayFromNodeListWithSdk:MEGASdkManager.sharedMEGASdkFolder];
+    MEGANode *parentNode = [MEGASdk.sharedFolderLink nodeForHandle:node.parentHandle];
+    MEGANodeList *nodeList = [MEGASdk.sharedFolderLink childrenForParent:parentNode];
+    NSMutableArray<MEGANode *> *mediaNodesArray = [nodeList mnz_mediaAuthorizeNodesMutableArrayFromNodeListWithSdk:MEGASdk.sharedFolderLink];
     
-    MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:[MEGASdkManager sharedMEGASdkFolder] displayMode:DisplayModeNodeInsideFolderLink presentingNode:node];
+    MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:mediaNodesArray api:MEGASdk.sharedFolderLink displayMode:DisplayModeNodeInsideFolderLink presentingNode:node];
     
     [self.navigationController presentViewController:photoBrowserVC animated:YES completion:nil];
 }
@@ -426,7 +425,7 @@
     if (_globalDelegate == nil) {
         __weak __typeof__(self) weakSelf = self;
         _globalDelegate = [GlobalDelegate.alloc initOnNodesUpdateCompletion:^(MEGANodeList * _Nullable nodeList) {
-            [weakSelf onNodesUpdate:MEGASdkManager.sharedMEGASdkFolder nodeList:nodeList];
+            [weakSelf onNodesUpdate:MEGASdk.sharedFolderLink nodeList:nodeList];
         }];
     }
     return _globalDelegate;
@@ -435,7 +434,7 @@
 - (MEGAGenericRequestDelegate *)requestDelegate {
     if (_requestDelegate == nil) {
         __weak __typeof__(self) weakSelf = self;
-        MEGASdk *sdkFolder = MEGASdkManager.sharedMEGASdkFolder;
+        MEGASdk *sdkFolder = MEGASdk.sharedFolderLink;
         _requestDelegate = [MEGAGenericRequestDelegate.alloc initWithStart:^(MEGARequest * _Nonnull request) {
             [weakSelf onRequestStart:sdkFolder request:request];
         } completion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
@@ -525,7 +524,7 @@
     [MEGALinkManager resetUtilsForLinksWithoutSession];
 
     if (!AudioPlayerManager.shared.isPlayerAlive) {
-        [[MEGASdkManager sharedMEGASdkFolder] logout];
+        [MEGASdk.sharedFolderLink logout];
     }
 
     [SVProgressHUD dismiss];

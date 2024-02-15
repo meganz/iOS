@@ -12,7 +12,6 @@
 #import "MEGASdk+MNZCategory.h"
 
 #import "Helper.h"
-#import "MEGASdkManager.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
 #import "MEGATransfer+MNZCategory.h"
@@ -102,11 +101,11 @@ static TransfersWidgetViewController* instance = nil;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleCoreDataChangeNotification:) name:NSManagedObjectContextObjectsDidChangeNotification object:nil];
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(didReceiveTransferOverQuotaNotification:) name:MEGATransferOverQuotaNotification object:nil];
     
-    [[MEGASdkManager sharedMEGASdk] addMEGATransferDelegate:self];
-    [[MEGASdkManager sharedMEGASdkFolder] addMEGATransferDelegate:self];
-    [[MEGASdkManager sharedMEGASdk] addMEGARequestDelegate:self];
+    [MEGASdk.shared addMEGATransferDelegate:self];
+    [MEGASdk.sharedFolderLink addMEGATransferDelegate:self];
+    [MEGASdk.shared addMEGARequestDelegate:self];
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
-    [[MEGASdkManager sharedMEGASdkFolder] retryPendingConnections];
+    [MEGASdk.sharedFolderLink retryPendingConnections];
     
     [self reloadView];
     
@@ -213,8 +212,8 @@ static TransfersWidgetViewController* instance = nil;
     [NSNotificationCenter.defaultCenter removeObserver:self name:NSManagedObjectContextObjectsDidChangeNotification object:nil];
     [NSNotificationCenter.defaultCenter removeObserver:self name:MEGATransferOverQuotaNotification object:nil];
     
-    [MEGASdkManager.sharedMEGASdk removeMEGATransferDelegate:self];
-    [MEGASdkManager.sharedMEGASdkFolder removeMEGATransferDelegate:self];
+    [MEGASdk.shared removeMEGATransferDelegate:self];
+    [MEGASdk.sharedFolderLink removeMEGATransferDelegate:self];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
@@ -300,7 +299,7 @@ static TransfersWidgetViewController* instance = nil;
         
         if (transfer.state == MEGATransferStateComplete) {
             NodeTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"transferNodeCell" forIndexPath:indexPath];
-            [cell configureCellForNode:node api:[MEGASdkManager sharedMEGASdk]];
+            [cell configureCellForNode:node api:MEGASdk.shared];
             
             __weak typeof(self) weakself = self;
             cell.moreButtonAction = ^(UIButton * moreButton) {
@@ -418,16 +417,16 @@ static TransfersWidgetViewController* instance = nil;
     
     if (isDemoted) {
         if (toIndexPath.row + 1 < self.transfers.count) {
-            [MEGASdkManager.sharedMEGASdk moveTransferBefore:selectedTransfer prevTransfer:({
+            [MEGASdk.shared moveTransferBefore:selectedTransfer prevTransfer:({
                 MEGATransfer *prevTransfer = [self.transfers objectOrNilAtIndex:toIndexPath.row + 1];
                 prevTransfer;
                 
             })];
         } else {
-            [MEGASdkManager.sharedMEGASdk moveTransferToLast:selectedTransfer];
+            [MEGASdk.shared moveTransferToLast:selectedTransfer];
         }
     } else {
-        [MEGASdkManager.sharedMEGASdk moveTransferBefore:selectedTransfer prevTransfer:({
+        [MEGASdk.shared moveTransferBefore:selectedTransfer prevTransfer:({
             MEGATransfer *prevTransfer = [self.transfers objectOrNilAtIndex:toIndexPath.row];
             prevTransfer;
             
@@ -523,14 +522,14 @@ static TransfersWidgetViewController* instance = nil;
 }
 
 - (void)cancelTransfersForDirection:(NSInteger)direction {
-    MEGATransferList *transferList = [[MEGASdkManager sharedMEGASdk] transfers];
+    MEGATransferList *transferList = [MEGASdk.shared transfers];
     if (transferList.size > 0) {
-        [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:direction];
+        [MEGASdk.shared cancelTransfersForDirection:direction];
     }
     
-    transferList = [[MEGASdkManager sharedMEGASdkFolder] transfers];
+    transferList = [MEGASdk.sharedFolderLink transfers];
     if (transferList.size > 0) {
-        [[MEGASdkManager sharedMEGASdkFolder] cancelTransfersForDirection:direction delegate:self];
+        [MEGASdk.sharedFolderLink cancelTransfersForDirection:direction delegate:self];
     }
     
     if (direction == 1) {
@@ -539,15 +538,15 @@ static TransfersWidgetViewController* instance = nil;
 }
 
 - (void)removeFromCompletedTransfers:(MEGATransfer *)transfer {
-    [[MEGASdkManager.sharedMEGASdk completedTransfers] removeObject:transfer];
+    [[MEGASdk.shared completedTransfers] removeObject:transfer];
 }
 
 - (void)removeSelectedTransfers {
-    [[MEGASdkManager.sharedMEGASdk completedTransfers] removeObjectsInArray:self.selectedTransfers];
+    [[MEGASdk.shared completedTransfers] removeObjectsInArray:self.selectedTransfers];
 }
 
 - (void)removeAllCompletedTransfers {
-    [[MEGASdkManager.sharedMEGASdk completedTransfers] removeAllObjects];
+    [[MEGASdk.shared completedTransfers] removeAllObjects];
 }
 
 - (NSIndexPath *)indexPathForPendingTransfer:(MEGATransfer *)transfer {
@@ -769,13 +768,13 @@ static TransfersWidgetViewController* instance = nil;
 }
 
 - (IBAction)pauseTransfersAction:(UIBarButtonItem *)sender {
-    [[MEGASdkManager sharedMEGASdk] pauseTransfers:YES];
-    [[MEGASdkManager sharedMEGASdkFolder] pauseTransfers:YES delegate:self];
+    [MEGASdk.shared pauseTransfers:YES];
+    [MEGASdk.sharedFolderLink pauseTransfers:YES delegate:self];
 }
 
 - (IBAction)resumeTransfersAction:(UIBarButtonItem *)sender {
-    [[MEGASdkManager sharedMEGASdk] pauseTransfers:NO];
-    [[MEGASdkManager sharedMEGASdkFolder] pauseTransfers:NO delegate:self];
+    [MEGASdk.shared pauseTransfers:NO];
+    [MEGASdk.sharedFolderLink pauseTransfers:NO delegate:self];
 }
 
 - (IBAction)cancelTransfersAction:(UIBarButtonItem *)sender {
@@ -983,7 +982,7 @@ static TransfersWidgetViewController* instance = nil;
         case MegaNodeActionTypeViewInFolder: {
             
             if (transfer.type == MEGATransferTypeUpload) {
-                MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:node.parentHandle];
+                MEGANode *parentNode = [MEGASdk.shared nodeForHandle:node.parentHandle];
                 if (parentNode.isFolder) {
                     [self openFolderNode:parentNode isFromViewInFolder:YES];
                 }
@@ -998,7 +997,7 @@ static TransfersWidgetViewController* instance = nil;
         }
         case MegaNodeActionTypeRetry: {
             
-            [MEGASdkManager.sharedMEGASdk retryTransfer:transfer];
+            [MEGASdk.shared retryTransfer:transfer];
             [self removeFromCompletedTransfers:transfer];
             [self.tableView reloadData];
             break;
@@ -1059,7 +1058,7 @@ static TransfersWidgetViewController* instance = nil;
 }
 
 - (MEGAPhotoBrowserViewController *)photoBrowserForMediaNode:(MEGANode *)node {
-    MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:@[node].mutableCopy api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeTransfers presentingNode:node];
+    MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:@[node].mutableCopy api:MEGASdk.shared displayMode:DisplayModeTransfers presentingNode:node];
     
     return photoBrowserVC;
 }
