@@ -11,12 +11,6 @@
 
 @interface QRSettingsTableViewController ()
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *closeBarButtonItem;
-
-@property (weak, nonatomic) IBOutlet UILabel *autoAcceptLabel;
-@property (weak, nonatomic) IBOutlet UILabel *resetQRCodeLabel;
-@property (weak, nonatomic) IBOutlet UISwitch *autoAcceptSwitch;
-
 @property (nonatomic) MEGAGetAttrUserRequestDelegate *getContactLinksOptionDelegate;
 
 @end
@@ -49,21 +43,6 @@
     }
 }
 
-#pragma mark - Private
-
-- (void)updateAppearance {
-    self.resetQRCodeLabel.textColor = [UIColor mnz_errorRedForTraitCollection:self.traitCollection];
-
-    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
-    self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
-
-    if (UIColor.isDesignTokenEnabled) {
-        self.autoAcceptLabel.textColor = UIColor.mnz_primaryTextColor;
-    }
-
-    [self.tableView reloadData];
-}
-
 #pragma mark - UITableViewDataSource
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
@@ -84,10 +63,6 @@
 }
 
 #pragma mark - UITableViewDelegate
-
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    cell.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
-}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section==1 && indexPath.row == 0) {

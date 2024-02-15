@@ -20,30 +20,12 @@
 @import MEGASDKRepo;
 @import MEGAUIKit;
 
-typedef NS_ENUM(NSInteger, QRSection) {
-    QRSectionMyCode = 0,
-    QRSectionScanCode
-};
-
 @interface ContactLinkQRViewController () <AVCaptureMetadataOutputObjectsDelegate>
 
-@property (weak, nonatomic) IBOutlet UIButton *backButton;
 @property (weak, nonatomic) IBOutlet MEGASegmentedControl *segmentedControl;
-
-@property (weak, nonatomic) IBOutlet UIView *avatarBackgroundView;
-@property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;
-@property (weak, nonatomic) IBOutlet UIButton *linkCopyButton;
-
-@property (weak, nonatomic) IBOutlet UIView *cameraView;
-@property (weak, nonatomic) IBOutlet UIView *cameraMaskView;
-@property (weak, nonatomic) IBOutlet UIView *cameraMaskBorderView;
-@property (weak, nonatomic) IBOutlet UILabel *hintLabel;
-@property (weak, nonatomic) IBOutlet UILabel *errorLabel;
 
 @property (nonatomic) AVCaptureSession *captureSession;
 @property (nonatomic) AVCaptureVideoPreviewLayer *videoPreviewLayer;
-
-@property (nonatomic) BOOL queryInProgress;
 
 @end
 
@@ -73,13 +55,12 @@ typedef NS_ENUM(NSInteger, QRSection) {
             self.linkCopyButton.hidden = self.moreButton.hidden = NO;
         }
         
-        self.qrImageView.image = [UIImage mnz_qrImageFromString:destination withSize:self.qrImageView.frame.size color:[UIColor mnz_qr:self.traitCollection] backgroundColor:[UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection]];
+        [self setupQRImageFrom: destination];
         [self setUserAvatar];
         [self setMoreButtonAction];
     }];
     
-    [self updateAppearance];
-    
+    [self updateAppearance: self.segmentedControl];
     [self configureContextMenuManager];
 }
 
@@ -127,38 +108,8 @@ typedef NS_ENUM(NSInteger, QRSection) {
     [super traitCollectionDidChange:previousTraitCollection];
     
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        [self updateAppearance];
+        [self updateAppearance: self.segmentedControl];
     }
-}
-
-#pragma mark - Private
-
-- (void)updateAppearance {
-    switch (self.segmentedControl.selectedSegmentIndex) {
-        case QRSectionMyCode: {
-            self.view.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
-            self.backButton.tintColor = self.moreButton.tintColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
-            [self.segmentedControl setTitleTextColor:UIColor.labelColor selectedColor:UIColor.labelColor];
-            
-            //The SVProgressHUD appearance is not updated when enabling/disabling dark mode. By updating the appearance and dismissing the HUD, it will have the correct configuration the next time is shown.
-            [AppearanceManager configureSVProgressHUD:self.traitCollection];
-            [SVProgressHUD dismiss];
-            break;
-        }
-            
-        case QRSectionScanCode: {
-            self.view.backgroundColor = UIColor.clearColor;
-            self.backButton.tintColor = UIColor.mnz_whiteFFFFFF;
-            self.hintLabel.textColor = UIColor.mnz_whiteFFFFFF;
-            UIColor *scanCodeLabelTextColor = (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark ? UIColor.mnz_whiteFFFFFF : [self scanCodeLabelTextColorInLightMode]);
-            [self.segmentedControl setTitleTextColor:UIColor.mnz_whiteFFFFFF selectedColor:scanCodeLabelTextColor];
-            break;
-        }
-    }
-    
-    self.qrImageView.image = [UIImage mnz_qrImageFromString:self.contactLinkLabel.text withSize:self.qrImageView.frame.size color:[UIColor mnz_qr:self.traitCollection] backgroundColor:[UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection]];
-    
-    [self.linkCopyButton mnz_setupPrimary:self.traitCollection];
 }
 
 #pragma mark - User avatar and camera mask
@@ -181,7 +132,7 @@ typedef NS_ENUM(NSInteger, QRSection) {
 #pragma mark - IBActions
 
 - (IBAction)valueChangedAtSegmentedControl:(UISegmentedControl *)sender {
-    [self updateAppearance];
+    [self updateAppearance: self.segmentedControl];
     
     switch (sender.selectedSegmentIndex) {
         case QRSectionMyCode:
@@ -385,24 +336,6 @@ typedef NS_ENUM(NSInteger, QRSection) {
     }
     
     [self presentViewController:inviteOrDismissModal animated:YES completion:nil];
-}
-
-- (void)feedbackWithSuccess:(BOOL)success {
-    NSString *message = success ? LocalizedString(@"codeScanned", @"Success text shown in a label when the user scans a valid QR. String as short as possible.") : LocalizedString(@"invalidCode", @"Error text shown when the user scans a QR that is not valid. String as short as possible.");
-    UIColor *color = success ? UIColor.mnz_green00FF00 : UIColor.mnz_redFF0000;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        self.errorLabel.text = message;
-        CABasicAnimation *colorAnimation = [CABasicAnimation animationWithKeyPath:@"borderColor"];
-        colorAnimation.fromValue = (id)color.CGColor;
-        colorAnimation.toValue = (id)UIColor.mnz_whiteFFFFFF.CGColor;
-        colorAnimation.duration = 1;
-        [self.cameraMaskBorderView.layer addAnimation:colorAnimation forKey:@"borderColor"];
-    });
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        self.queryInProgress = success; // If success, queryInProgress will be NO later
-        self.errorLabel.text = @"";
-    });
 }
 
 @end
