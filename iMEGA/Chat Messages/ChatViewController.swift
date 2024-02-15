@@ -258,6 +258,8 @@ class ChatViewController: MessagesViewController {
                 guard let self else { return }
                 messagesCollectionView.contentInset.top = isHidden ? 0 : startOrJoinCallButton.frame.height * 2
             })
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(stopVoiceRecording), name: UIApplication.willResignActiveNotification, object: nil)
     }
     
     static func backButtonMenuTitle(chatTitle: String?, isOneToOne: Bool) -> String {
@@ -404,6 +406,8 @@ class ChatViewController: MessagesViewController {
         
         saveDraft()
         
+        stopVoiceRecording()
+        
         MEGAChatSdk.shared.removeMEGAChatDelegateAsync(self as (any MEGAChatDelegate))
         MEGAChatSdk.shared.removeMEGACallDelegateAsync(self as (any MEGAChatCallDelegate))
         
@@ -412,6 +416,10 @@ class ChatViewController: MessagesViewController {
         }
         
         audioController.stopAnyOngoingPlaying()
+    }
+    
+    @objc func stopVoiceRecording() {
+        chatInputBar?.stopRecordingIfNeeded()
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

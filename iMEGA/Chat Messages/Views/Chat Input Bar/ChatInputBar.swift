@@ -302,6 +302,12 @@ class ChatInputBar: UIView {
             self.messageInputBar.alpha = 0.0
         })
     }
+    
+    func stopRecordingIfNeeded() {
+        if audioRecordingInputBar != nil {
+            stopRecordingAndSwitchToTextInput()
+        }
+    }
         
     private func stopRecordingAndSwitchToTextInput() {
         delegate?.voiceRecordingEnded()
