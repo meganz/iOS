@@ -1,4 +1,4 @@
-import UIKit
+import MEGADesignToken
 
 final class MEGAVerticalButton: UIButton {
     private var badgeView: UIView?
@@ -29,7 +29,7 @@ final class MEGAVerticalButton: UIButton {
         guard badgeView == nil, let imageView else { return }
         
         let badgeView = UIView()
-        badgeView.backgroundColor = UIColor.mnz_redFF453A()
+        badgeView.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Components.interactive : UIColor.mnz_redFF453A()
         badgeView.clipsToBounds = true
         badgeView.layer.cornerRadius = 9
         badgeView.translatesAutoresizingMaskIntoConstraints = false
@@ -37,7 +37,7 @@ final class MEGAVerticalButton: UIButton {
         self.badgeView = badgeView
         
         let badgeLabel = UILabel()
-        badgeLabel.textColor = MEGAAppColor.White._FFFFFF.uiColor
+        badgeLabel.textColor = UIColor.whiteFFFFFF
         badgeLabel.font = UIFont.systemFont(ofSize: 11)
         badgeLabel.textAlignment = .center
         badgeLabel.translatesAutoresizingMaskIntoConstraints = false
