@@ -39,7 +39,7 @@ final class FolderLinkCollectionViewDiffableDataSource {
                 fatalError("Could not instantiate NodeCollectionViewCell or Node at index")
             }
             
-            cell.configureCell(forFolderLinkNode: node, allowedMultipleSelection: collectionView.allowsMultipleSelection, sdk: MEGASdkManager.sharedMEGASdkFolder(), delegate: self.controller)
+            cell.configureCell(forFolderLinkNode: node, allowedMultipleSelection: collectionView.allowsMultipleSelection, sdk: MEGASdk.sharedFolderLink, delegate: self.controller)
             
             return cell
         }

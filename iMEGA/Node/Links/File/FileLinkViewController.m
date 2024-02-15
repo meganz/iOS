@@ -6,7 +6,6 @@
 #import "MEGANode+MNZCategory.h"
 #import "MEGALinkManager.h"
 #import "MEGAPhotoBrowserViewController.h"
-#import "MEGASdkManager.h"
 #import "MEGA-Swift.h"
 #import "MEGAReachabilityManager.h"
 #import "NSString+MNZCategory.h"
@@ -178,7 +177,7 @@
     
     if ([FileExtensionGroupOCWrapper verifyIsVisualMedia:self.node.name]) {
         [self dismissViewControllerAnimated:YES completion:^{
-            MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:@[self.node].mutableCopy api:[MEGASdkManager sharedMEGASdk] displayMode:DisplayModeFileLink presentingNode:self.node];
+            MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:@[self.node].mutableCopy api:MEGASdk.shared displayMode:DisplayModeFileLink presentingNode:self.node];
             photoBrowserVC.publicLink = self.publicLinkString;
             
             [UIApplication.mnz_presentingViewController presentViewController:photoBrowserVC animated:YES completion:nil];
@@ -268,7 +267,7 @@
             
             [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
             [SVProgressHUD show];
-            [[MEGASdkManager sharedMEGASdk] publicNodeForMegaFileLink:linkString delegate:delegate];
+            [MEGASdk.shared publicNodeForMegaFileLink:linkString delegate:delegate];
         }
     }];
     decryptAlertAction.enabled = NO;

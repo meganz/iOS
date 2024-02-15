@@ -4,7 +4,6 @@
 
 #import "Helper.h"
 #import "MEGAPauseTransferRequestDelegate.h"
-#import "MEGASdkManager.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGA-Swift.h"
 #import "NSDate+MNZCategory.h"
@@ -49,13 +48,13 @@
     self.transfer = transfer;
     self.uploadTransferLocalIdentifier = nil;
     
-    self.nameLabel.text = [[MEGASdkManager sharedMEGASdk] unescapeFsIncompatible:transfer.fileName destinationPath:[NSHomeDirectory() stringByAppendingString:@"/"]];
+    self.nameLabel.text = [MEGASdk.shared unescapeFsIncompatible:transfer.fileName destinationPath:[NSHomeDirectory() stringByAppendingString:@"/"]];
     self.pauseButton.hidden = self.cancelButton.hidden = NO;
     float percentage = ((float)transfer.transferredBytes / (float)transfer.totalBytes);
     self.progressView.progress = percentage;
     switch (transfer.type) {
         case MEGATransferTypeDownload: {
-            MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:transfer.nodeHandle];
+            MEGANode *node = [MEGASdk.shared nodeForHandle:transfer.nodeHandle];
             if (node) {
                 [self.iconImageView mnz_setThumbnailByNode:node];
             } else {
@@ -248,7 +247,7 @@
             self.arrowImageView.image = (self.transfer.type == MEGATransferTypeDownload) ? UIImage.mnz_downloadingTransferImage : UIImage.mnz_uploadingTransferImage;
             NSAttributedString *status;
             if (self.transfer.type == MEGATransferTypeUpload &&
-                MEGASdkManager.sharedMEGASdk.isStorageOverquota) {
+                MEGASdk.shared.isStorageOverquota) {
                 status = [NSAttributedString.alloc initWithString:LocalizedString(@"transfer.storage.quotaExceeded", @"") attributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
             } else {
                 status = [NSAttributedString.alloc initWithString:LocalizedString(@"Retrying...", @"Label for the state of a transfer when is being retrying - (String as short as possible).") attributes:@{NSFontAttributeName:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
@@ -336,11 +335,11 @@
 
 - (IBAction)cancelTransfer:(id)sender {
     if (self.transfer) {
-        if ([[MEGASdkManager sharedMEGASdk] transferByTag:self.transfer.tag] != nil) {
-            [[MEGASdkManager sharedMEGASdk] cancelTransferByTag:self.transfer.tag];
+        if ([MEGASdk.shared transferByTag:self.transfer.tag] != nil) {
+            [MEGASdk.shared cancelTransferByTag:self.transfer.tag];
         } else {
-            if ([[MEGASdkManager sharedMEGASdkFolder] transferByTag:self.transfer.tag] != nil) {
-                [[MEGASdkManager sharedMEGASdkFolder] cancelTransferByTag:self.transfer.tag];
+            if ([MEGASdk.sharedFolderLink transferByTag:self.transfer.tag] != nil) {
+                [MEGASdk.sharedFolderLink cancelTransferByTag:self.transfer.tag];
             }
         }
     } else if (self.uploadTransferLocalIdentifier) {
@@ -351,11 +350,11 @@
 - (IBAction)pauseTransfer:(id)sender {
     if (self.transfer) {
         MEGAPauseTransferRequestDelegate *pauseTransferDelegate = [[MEGAPauseTransferRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-            MEGATransfer *transfer = [[MEGASdkManager sharedMEGASdk] transferByTag:self.transfer.tag];
+            MEGATransfer *transfer = [MEGASdk.shared transferByTag:self.transfer.tag];
             if (transfer) {
                 self.transfer = transfer;
             } else {
-                transfer = [[MEGASdkManager sharedMEGASdkFolder] transferByTag:self.transfer.tag];
+                transfer = [MEGASdk.sharedFolderLink transferByTag:self.transfer.tag];
                 if (transfer) {
                     self.transfer = transfer;
                 }
@@ -365,13 +364,13 @@
             [self configureCellWithTransferState:(request.flag) ? MEGATransferStatePaused : MEGATransferStateActive];
         }];
         
-        MEGATransfer *transfer = [[MEGASdkManager sharedMEGASdk] transferByTag:self.transfer.tag];
+        MEGATransfer *transfer = [MEGASdk.shared transferByTag:self.transfer.tag];
         if (transfer) {
-            [[MEGASdkManager sharedMEGASdk] pauseTransferByTag:self.transfer.tag pause:!(transfer.state == MEGATransferStatePaused) delegate:pauseTransferDelegate];
+            [MEGASdk.shared pauseTransferByTag:self.transfer.tag pause:!(transfer.state == MEGATransferStatePaused) delegate:pauseTransferDelegate];
         } else {
-            transfer = [[MEGASdkManager sharedMEGASdkFolder] transferByTag:self.transfer.tag];
+            transfer = [MEGASdk.sharedFolderLink transferByTag:self.transfer.tag];
             if (transfer) {
-                [[MEGASdkManager sharedMEGASdkFolder] pauseTransferByTag:self.transfer.tag pause:!(transfer.state == MEGATransferStatePaused) delegate:pauseTransferDelegate];
+                [MEGASdk.sharedFolderLink pauseTransferByTag:self.transfer.tag pause:!(transfer.state == MEGATransferStatePaused) delegate:pauseTransferDelegate];
             }
         }
     }
