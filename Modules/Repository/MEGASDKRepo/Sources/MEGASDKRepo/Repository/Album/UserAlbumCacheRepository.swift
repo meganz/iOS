@@ -1,23 +1,42 @@
 import Combine
+import Foundation
 import MEGADomain
 
 final public class UserAlbumCacheRepository: UserAlbumRepositoryProtocol {
     public static let newRepo: UserAlbumCacheRepository = UserAlbumCacheRepository(
-        userAlbumRepository: UserAlbumRepository.newRepo, userAlbumCache: UserAlbumCache.shared)
+        userAlbumRepository: UserAlbumRepository.newRepo, 
+        userAlbumCache: UserAlbumCache.shared,
+        setAndElementsUpdatesProvider: SetAndElementUpdatesProvider(sdk: .sharedSdk))
     
+    private let setsUpdatedSourcePublisher = PassthroughSubject<[SetEntity], Never>()
     private let userAlbumRepository: any UserAlbumRepositoryProtocol
     private let userAlbumCache: any UserAlbumCacheProtocol
+    private let setAndElementsUpdatesProvider: any SetAndElementUpdatesProviderProtocol
     
-    public let setsUpdatedPublisher: AnyPublisher<[SetEntity], Never>
+    public var setsUpdatedPublisher: AnyPublisher<[SetEntity], Never> {
+        setsUpdatedSourcePublisher.eraseToAnyPublisher()
+    }
     public let setElementsUpdatedPublisher: AnyPublisher<[SetElementEntity], Never>
+    private var monitorSDKUpdatesTask: Task<Void, Error>?
     
     init(userAlbumRepository: some UserAlbumRepositoryProtocol,
-         userAlbumCache: some UserAlbumCacheProtocol) {
+         userAlbumCache: some UserAlbumCacheProtocol,
+         setAndElementsUpdatesProvider: some SetAndElementUpdatesProviderProtocol
+    ) {
         self.userAlbumRepository = userAlbumRepository
         self.userAlbumCache = userAlbumCache
+        self.setAndElementsUpdatesProvider = setAndElementsUpdatesProvider
         
-        setsUpdatedPublisher = userAlbumRepository.setsUpdatedPublisher
         setElementsUpdatedPublisher = userAlbumRepository.setElementsUpdatedPublisher
+        monitorSDKUpdatesTask = Task {
+            await withTaskGroup(of: Void.self, body: { taskGroup in
+                taskGroup.addTask { await self.monitorSetUpdates() }
+            })
+        }
+    }
+    
+    deinit {
+        monitorSDKUpdatesTask?.cancel()
     }
     
     public func albums() async -> [SetEntity] {
@@ -79,5 +98,42 @@ final public class UserAlbumCacheRepository: UserAlbumRepositoryProtocol {
     
     public func updateAlbumCover(for albumId: HandleEntity, elementId: HandleEntity) async throws -> HandleEntity {
         try await userAlbumRepository.updateAlbumCover(for: albumId, elementId: elementId)
+    }
+    
+    private func monitorSetUpdates() async {
+        for await setUpdates in setAndElementsUpdatesProvider.setUpdates(filteredBy: [.album]) {
+            guard !Task.isCancelled else {
+                break
+            }
+            
+            let (insertions, deletions) = setUpdates
+                .reduce(into: (insertions: [SetEntity], deletions: [SetEntity])([], [])) { result, setEntity in
+                    if setEntity.changeTypes.contains(.removed) {
+                        result.deletions.append(setEntity)
+                    } else {
+                        result.insertions.append(setEntity.copyWithModified(changeTypes: []))
+                    }
+                }
+            await userAlbumCache.remove(albums: deletions)
+            await userAlbumCache.setAlbums(insertions)
+            
+            setsUpdatedSourcePublisher.send(await albums())
+        }
+    }
+}
+
+fileprivate extension SetEntity {
+    func copyWithModified(handle: HandleEntity? = nil, userId: HandleEntity? = nil, coverId: HandleEntity? = nil, creationTime: Date? = nil, modificationTime: Date? = nil, setType: SetTypeEntity? = nil, name: String? = nil, isExported: Bool? = nil, changeTypes: SetChangeTypeEntity? = nil) -> SetEntity {
+        
+        SetEntity(
+            handle: handle ?? self.handle,
+            userId: userId ?? self.userId,
+            coverId: coverId ?? self.coverId,
+            creationTime: creationTime ?? self.creationTime,
+            modificationTime: modificationTime ?? self.modificationTime,
+            setType: setType ?? self.setType,
+            name: name ?? self.name,
+            isExported: isExported ?? self.isExported,
+            changeTypes: changeTypes ?? self.changeTypes)
     }
 }

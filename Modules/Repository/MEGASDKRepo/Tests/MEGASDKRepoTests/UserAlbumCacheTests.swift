@@ -30,4 +30,21 @@ final class UserAlbumCacheTests: XCTestCase {
         let result = await sut.albumElementIds(forAlbumId: albumId)
         XCTAssertEqual(Set(try XCTUnwrap(result)), Set(elementIds))
     }
+    
+    func testAlbums_removeAlbums_shouldRemoveGivenAlbums() async {
+        let sut = UserAlbumCache.shared
+        let albums = [SetEntity(handle: 534),
+                      SetEntity(handle: 654)]
+        await sut.setAlbums(albums)
+        
+        let afterInsertedResult = await sut.albums
+        
+        XCTAssertEqual(Set(afterInsertedResult), Set(albums))
+        
+        await sut.remove(albums: [SetEntity(handle: 534)])
+        
+        let afterRemovedResult = await sut.albums
+
+        XCTAssertEqual(afterRemovedResult.map(\.handle), [654])
+    }
 }
