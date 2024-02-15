@@ -9,7 +9,6 @@
 
 #import "Helper.h"
 #import "MEGAStore.h"
-#import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
 @import GKContactImage;
 @import MEGAUIKit;
@@ -141,7 +140,7 @@
         image = [UIImage imageForName:initialForAvatar size:size backgroundColor:[UIColor mnz_fromHexString:colorString] backgroundGradientColor:[UIColor mnz_fromHexString:secondaryColorString] textColor:UIColor.mnz_whiteFFFFFF font:[UIFont systemFontOfSize:(size.width/2.0f)]];
         [UIImageJPEGRepresentation(image, 1) writeToFile:avatarFilePath atomically:YES];
         
-        [[MEGASdkManager sharedMEGASdk] getAvatarUserWithEmailOrHandle:base64Handle destinationFilePath:avatarFilePath delegate:delegate];
+        [MEGASdk.shared getAvatarUserWithEmailOrHandle:base64Handle destinationFilePath:avatarFilePath delegate:delegate];
     }
     
     return image;
@@ -205,7 +204,7 @@
             break;
             
         case MEGAChatMessageEndCallReasonCancelled:
-            if (userHandle == [MEGASdkManager sharedMEGAChatSdk].myUserHandle) {
+            if (userHandle == MEGAChatSdk.shared.myUserHandle) {
                 endCallReasonImage = [UIImage imageNamed:@"callCancelled"];
             } else {
                 endCallReasonImage = [UIImage imageNamed:@"missedCall"];
@@ -213,7 +212,7 @@
             break;
             
         case MEGAChatMessageEndCallReasonNoAnswer:
-            if (userHandle == [MEGASdkManager sharedMEGAChatSdk].myUserHandle) {
+            if (userHandle == MEGAChatSdk.shared.myUserHandle) {
                 endCallReasonImage = [UIImage imageNamed:@"callFailed"];
             } else {
                 endCallReasonImage = [UIImage imageNamed:@"missedCall"];

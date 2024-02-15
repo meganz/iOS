@@ -40,7 +40,7 @@
 @implementation MEGANode (MNZCategory)
 
 - (MEGANode *)parent {
-    return [MEGASdkManager.sharedMEGASdk nodeForHandle:self.parentHandle];
+    return [MEGASdk.shared nodeForHandle:self.parentHandle];
 }
 
 - (void)navigateToParentAndPresent {
@@ -147,10 +147,10 @@
 }
 
 - (UIViewController *)mnz_viewControllerForNodeInFolderLink:(BOOL)isFolderLink fileLink:(NSString *)fileLink inViewController:(UIViewController *)viewController {
-    MEGASdk *api = isFolderLink ? [MEGASdkManager sharedMEGASdkFolder] : [MEGASdkManager sharedMEGASdk];
+    MEGASdk *api = isFolderLink ? MEGASdk.sharedFolderLink : MEGASdk.shared;
     MEGASdk *apiForStreaming;
-    if([MEGASdkManager sharedMEGASdk].isLoggedIn) {
-        apiForStreaming = [MEGASdkManager sharedMEGASdk];
+    if(MEGASdk.shared.isLoggedIn) {
+        apiForStreaming = MEGASdk.shared;
     } else {
         apiForStreaming = api;
     }
@@ -263,36 +263,36 @@
     
     NSMutableArray<ActionSheetAction *> *actions = NSMutableArray.new;
     [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"Red", @"A user can mark a folder or file with its own colour, in this case “Red”.") detail:nil accessoryView:(self.label == MEGANodeLabelRed ? checkmarkImageView : nil) image:[UIImage imageNamed:@"Red"] style:UIAlertActionStyleDefault actionHandler:^{
-        if (self.label != MEGANodeLabelRed) [MEGASdkManager.sharedMEGASdk setNodeLabel:self label:MEGANodeLabelRed];
+        if (self.label != MEGANodeLabelRed) [MEGASdk.shared setNodeLabel:self label:MEGANodeLabelRed];
     }]];
     
     [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"Orange", @"A user can mark a folder or file with its own colour, in this case “Orange”.") detail:nil accessoryView:(self.label == MEGANodeLabelOrange ? checkmarkImageView : nil) image:[UIImage imageNamed:@"Orange"] style:UIAlertActionStyleDefault actionHandler:^{
-        if (self.label != MEGANodeLabelOrange) [MEGASdkManager.sharedMEGASdk setNodeLabel:self label:MEGANodeLabelOrange];
+        if (self.label != MEGANodeLabelOrange) [MEGASdk.shared setNodeLabel:self label:MEGANodeLabelOrange];
     }]];
     
     [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"Yellow", @"A user can mark a folder or file with its own colour, in this case “Yellow”.") detail:nil accessoryView:(self.label == MEGANodeLabelYellow ? checkmarkImageView : nil) image:[UIImage imageNamed:@"Yellow"] style:UIAlertActionStyleDefault actionHandler:^{
-        if (self.label != MEGANodeLabelYellow) [MEGASdkManager.sharedMEGASdk setNodeLabel:self label:MEGANodeLabelYellow];
+        if (self.label != MEGANodeLabelYellow) [MEGASdk.shared setNodeLabel:self label:MEGANodeLabelYellow];
     }]];
     
     [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"Green", @"A user can mark a folder or file with its own colour, in this case “Green”.") detail:nil accessoryView:(self.label == MEGANodeLabelGreen ? checkmarkImageView : nil) image:[UIImage imageNamed:@"Green"] style:UIAlertActionStyleDefault actionHandler:^{
-        if (self.label != MEGANodeLabelGreen) [MEGASdkManager.sharedMEGASdk setNodeLabel:self label:MEGANodeLabelGreen];
+        if (self.label != MEGANodeLabelGreen) [MEGASdk.shared setNodeLabel:self label:MEGANodeLabelGreen];
     }]];
     
     [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"Blue", @"A user can mark a folder or file with its own colour, in this case “Blue”.") detail:nil accessoryView:(self.label == MEGANodeLabelBlue ? checkmarkImageView : nil) image:[UIImage imageNamed:@"Blue"] style:UIAlertActionStyleDefault actionHandler:^{
-        if (self.label != MEGANodeLabelBlue) [MEGASdkManager.sharedMEGASdk setNodeLabel:self label:MEGANodeLabelBlue];
+        if (self.label != MEGANodeLabelBlue) [MEGASdk.shared setNodeLabel:self label:MEGANodeLabelBlue];
     }]];
     
     [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"Purple", @"A user can mark a folder or file with its own colour, in this case “Purple”.") detail:nil accessoryView:(self.label == MEGANodeLabelPurple ? checkmarkImageView : nil) image:[UIImage imageNamed:@"Purple"] style:UIAlertActionStyleDefault actionHandler:^{
-        if (self.label != MEGANodeLabelPurple) [MEGASdkManager.sharedMEGASdk setNodeLabel:self label:MEGANodeLabelPurple];
+        if (self.label != MEGANodeLabelPurple) [MEGASdk.shared setNodeLabel:self label:MEGANodeLabelPurple];
     }]];
     
     [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"Grey", @"A user can mark a folder or file with its own colour, in this case “Grey”.") detail:nil accessoryView:(self.label == MEGANodeLabelGrey ? checkmarkImageView : nil) image:[UIImage imageNamed:@"Grey"] style:UIAlertActionStyleDefault actionHandler:^{
-        if (self.label != MEGANodeLabelGrey) [MEGASdkManager.sharedMEGASdk setNodeLabel:self label:MEGANodeLabelGrey];
+        if (self.label != MEGANodeLabelGrey) [MEGASdk.shared setNodeLabel:self label:MEGANodeLabelGrey];
     }]];
     
     if (self.label != MEGANodeLabelUnknown) {
         [actions addObject:[ActionSheetAction.alloc initWithTitle:LocalizedString(@"Remove Label", @"Option shown on the action sheet where you can choose or change the color label of a file or folder. The 'Remove Label' only appears if you have previously selected a label") detail:nil image:[UIImage imageNamed:@"delete"] style:UIAlertActionStyleDestructive actionHandler:^{
-            [MEGASdkManager.sharedMEGASdk resetNodeLabel:self];
+            [MEGASdk.shared resetNodeLabel:self];
         }]];
     }
     
@@ -321,14 +321,14 @@
         UIAlertAction *renameAlertAction = [UIAlertAction actionWithTitle:LocalizedString(@"rename", @"Title for the action that allows you to rename a file or folder") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 NSString *alertViewTextFieldText = renameAlertController.textFields.firstObject.text;
-                MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.parentHandle];
+                MEGANode *parentNode = [MEGASdk.shared nodeForHandle:self.parentHandle];
                 
                 MEGANodeType nodeType = MEGANodeTypeFile;
                 if (self.isFolder) {
                     nodeType = MEGANodeTypeFolder;
                 }
                 
-                MEGANode *existingChildNode = [[MEGASdkManager sharedMEGASdk] childNodeForParent:parentNode name:alertViewTextFieldText type:nodeType];
+                MEGANode *existingChildNode = [MEGASdk.shared childNodeForParent:parentNode name:alertViewTextFieldText type:nodeType];
                 
                 if (existingChildNode) {
                     NSString *duplicateErrorMessage = LocalizedString(@"There is already a file with the same name", @"A tooltip message which shows when a file name is duplicated during renaming.");
@@ -367,7 +367,7 @@
 - (void)mnz_moveToTheRubbishBinWithCompletion:(void (^)(void))completion {
     if (MEGAReachabilityManager.isReachableHUDIfNot) {
         MEGAMoveRequestDelegate *moveRequestDelegate = [MEGAMoveRequestDelegate.alloc initToMoveToTheRubbishBinWithFiles:(self.isFile ? 1 : 0) folders:(self.isFolder ? 1 : 0) completion:completion];
-        [MEGASdkManager.sharedMEGASdk moveNode:self newParent:MEGASdkManager.sharedMEGASdk.rubbishNode delegate:moveRequestDelegate];
+        [MEGASdk.shared moveNode:self newParent:MEGASdk.shared.rubbishNode delegate:moveRequestDelegate];
     }
 }
 
@@ -396,7 +396,7 @@
                     };
                 }
                 MEGARemoveRequestDelegate *removeRequestDelegate = [[MEGARemoveRequestDelegate alloc] initWithMode:1 files:(self.isFile ? 1 : 0) folders:(self.isFolder ? 1 : 0) completion:completion];
-                [[MEGASdkManager sharedMEGASdk] removeNode:self delegate:removeRequestDelegate];
+                [MEGASdk.shared removeNode:self delegate:removeRequestDelegate];
                 
                 if (actionCompletion) {
                     actionCompletion(YES);
@@ -430,7 +430,7 @@
                     }
                 };
                 MEGARemoveRequestDelegate *removeRequestDelegate = [[MEGARemoveRequestDelegate alloc] initWithMode:2 files:(self.isFile ? 1 : 0) folders:(self.isFolder ? 1 : 0) completion:comp];
-                [[MEGASdkManager sharedMEGASdk] removeNode:self delegate:removeRequestDelegate];
+                [MEGASdk.shared removeNode:self delegate:removeRequestDelegate];
             }
         }]];
         
@@ -442,7 +442,7 @@
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
         NSMutableArray *outSharesForNodeMutableArray = [[NSMutableArray alloc] init];
         
-        MEGAShareList *outSharesForNodeShareList = [[MEGASdkManager sharedMEGASdk] outSharesForNode:self];
+        MEGAShareList *outSharesForNodeShareList = [MEGASdk.shared outSharesForNode:self];
         NSInteger outSharesForNodeCount = outSharesForNodeShareList.size;
         for (NSInteger i = 0; i < outSharesForNodeCount; i++) {
             MEGAShare *share = [outSharesForNodeShareList shareAtIndex:i];
@@ -460,7 +460,7 @@
         [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             MEGAShareRequestDelegate *shareRequestDelegate = [[MEGAShareRequestDelegate alloc] initToChangePermissionsWithNumberOfRequests:outSharesForNodeMutableArray.count completion:nil];
             for (MEGAShare *share in outSharesForNodeMutableArray) {
-                [[MEGASdkManager sharedMEGASdk] shareNode:self withEmail:share.user level:MEGAShareTypeAccessUnknown delegate:shareRequestDelegate];
+                [MEGASdk.shared shareNode:self withEmail:share.user level:MEGAShareTypeAccessUnknown delegate:shareRequestDelegate];
             }
             if (completion) {
                 completion(YES);
@@ -472,9 +472,9 @@
 
 - (void)mnz_restore {
     if ([MEGAReachabilityManager isReachableHUDIfNot]) {
-        MEGANode *restoreNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.restoreHandle];
+        MEGANode *restoreNode = [MEGASdk.shared nodeForHandle:self.restoreHandle];
         [[NameCollisionRouterOCWrapper.alloc init] moveNodes:@[self] to:restoreNode presenter:UIApplication.mnz_presentingViewController];
-        [MEGASdkManager.sharedMEGASdk disableExportNode:self];
+        [MEGASdk.shared disableExportNode:self];
     }
 }
 
@@ -567,7 +567,7 @@
             break;
         }
         
-        parentNode = [MEGASdkManager.sharedMEGASdk parentNodeForNode:parentNode];
+        parentNode = [MEGASdk.shared parentNodeForNode:parentNode];
     }
     
     return parentNode;
@@ -576,17 +576,17 @@
 - (NSMutableArray *)mnz_parentTreeArray {
     NSMutableArray *parentTreeArray = [[NSMutableArray alloc] init];
     
-    if ([[MEGASdkManager sharedMEGASdk] accessLevelForNode:self] == MEGAShareTypeAccessOwner) {
+    if ([MEGASdk.shared accessLevelForNode:self] == MEGAShareTypeAccessOwner) {
         uint64_t rootHandle;
-        if ([[[MEGASdkManager sharedMEGASdk] nodePathForNode:self] hasPrefix:@"//bin"]) {
-            rootHandle = [[MEGASdkManager sharedMEGASdk] rubbishNode].parentHandle;
+        if ([[MEGASdk.shared nodePathForNode:self] hasPrefix:@"//bin"]) {
+            rootHandle = [MEGASdk.shared rubbishNode].parentHandle;
         } else {
-            rootHandle = [[MEGASdkManager sharedMEGASdk] rootNode].handle;
+            rootHandle = [MEGASdk.shared rootNode].handle;
         }
         
         uint64_t tempHandle = self.parentHandle;
         while (tempHandle != rootHandle) {
-            MEGANode *tempNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:tempHandle];
+            MEGANode *tempNode = [MEGASdk.shared nodeForHandle:tempHandle];
             if (tempNode) {
                 [parentTreeArray insertObject:tempNode atIndex:0];
                 tempHandle = tempNode.parentHandle;
@@ -595,10 +595,10 @@
             }
         }
     } else {
-        MEGANode *tempNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.parentHandle];
+        MEGANode *tempNode = [MEGASdk.shared nodeForHandle:self.parentHandle];
         while (tempNode != nil) {
             [parentTreeArray insertObject:tempNode atIndex:0];
-            tempNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:tempNode.parentHandle];
+            tempNode = [MEGASdk.shared nodeForHandle:tempNode.parentHandle];
         }
     }
     
@@ -788,8 +788,8 @@
 }
 
 - (BOOL)mnz_isRestorable {
-    MEGANode *restoreNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.restoreHandle];
-    if (restoreNode && ![[MEGASdkManager sharedMEGASdk] isNodeInRubbish:restoreNode] && [[MEGASdkManager sharedMEGASdk] isNodeInRubbish:self]) {
+    MEGANode *restoreNode = [MEGASdk.shared nodeForHandle:self.restoreHandle];
+    if (restoreNode && ![MEGASdk.shared isNodeInRubbish:restoreNode] && [MEGASdk.shared isNodeInRubbish:self]) {
         return YES;
     } else {
         return NO;
@@ -797,7 +797,7 @@
 }
 
 - (BOOL)mnz_isInRubbishBin {
-    return [[MEGASdkManager sharedMEGASdk] isNodeInRubbish:self];
+    return [MEGASdk.shared isNodeInRubbish:self];
 }
 
 - (BOOL)mnz_isPlayable {
@@ -872,7 +872,7 @@
 - (nonnull NSMutableArray <MEGAShare *> *)outShares {
     NSMutableArray *outSharesForNodeMutableArray = NSMutableArray.new;
     
-    MEGAShareList *outSharesForNodeShareList = [MEGASdkManager.sharedMEGASdk outSharesForNode:self];
+    MEGAShareList *outSharesForNodeShareList = [MEGASdk.shared outSharesForNode:self];
     NSInteger outSharesForNodeCount = outSharesForNodeShareList.size;
     for (NSInteger i = 0; i < outSharesForNodeCount; i++) {
         MEGAShare *share = [outSharesForNodeShareList shareAtIndex:i];
@@ -887,12 +887,12 @@
 #pragma mark - Versions
 
 - (NSInteger)mnz_numberOfVersions {
-    return ([[MEGASdkManager sharedMEGASdk] hasVersionsForNode:self]) ? ([[MEGASdkManager sharedMEGASdk] numberOfVersionsForNode:self]) : 0;
+    return ([MEGASdk.shared hasVersionsForNode:self]) ? ([MEGASdk.shared numberOfVersionsForNode:self]) : 0;
 }
 
 
 - (NSArray<MEGANode *> *)mnz_versions {
-    return [[[MEGASdkManager sharedMEGASdk] versionsForNode:self] mnz_nodesArrayFromNodeList];
+    return [[MEGASdk.shared versionsForNode:self] mnz_nodesArrayFromNodeList];
 }
 
 - (long long)mnz_versionsSize {

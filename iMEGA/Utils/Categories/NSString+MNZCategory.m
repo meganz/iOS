@@ -4,7 +4,6 @@
 #import <Photos/Photos.h>
 #import "Helper.h"
 #import "NSDate+MNZCategory.h"
-#import "MEGASdkManager.h"
 #import "MEGAUser+MNZCategory.h"
 #import <CoreMedia/CoreMedia.h>
 
@@ -192,7 +191,7 @@ static NSString* const B = @"[B]";
             break;
             
         case MEGAChatMessageEndCallReasonNoAnswer:
-            if (userHandle == [MEGASdkManager sharedMEGAChatSdk].myUserHandle) {
+            if (userHandle == MEGAChatSdk.shared.myUserHandle) {
                 endCallReasonString = LocalizedString(@"callWasNotAnswered", @"When an active call of user A with user B had not answered");
             } else {
                 endCallReasonString = LocalizedString(@"missedCall", @"Title of the notification for a missed call");
@@ -205,7 +204,7 @@ static NSString* const B = @"[B]";
             break;
             
         case MEGAChatMessageEndCallReasonCancelled:
-            if (userHandle == [MEGASdkManager sharedMEGAChatSdk].myUserHandle) {
+            if (userHandle == MEGAChatSdk.shared.myUserHandle) {
                 endCallReasonString = LocalizedString(@"callWasCancelled", @"When an active call of user A with user B had cancelled");
             } else {
                 endCallReasonString = LocalizedString(@"missedCall", @"Title of the notification for a missed call");
@@ -784,7 +783,7 @@ static NSString* const B = @"[B]";
 + (NSString *)mnz_addedByInRecentActionBucket:(MEGARecentActionBucket *)recentActionBucket {
     NSString *addebByString;
     
-    MEGAUser *user = [MEGASdkManager.sharedMEGASdk contactForEmail:recentActionBucket.userEmail];
+    MEGAUser *user = [MEGASdk.shared contactForEmail:recentActionBucket.userEmail];
     NSString *userNameThatMadeTheAction = @"";
     if (user) {
         userNameThatMadeTheAction = user.mnz_firstName ? user.mnz_firstName : @"";
@@ -812,7 +811,7 @@ static NSString* const B = @"[B]";
             nameWithoutExtension = [self.stringByDeletingPathExtension stringByAppendingString:[NSString stringWithFormat:@"_%d", index]];
         }
         
-        MEGANodeList *nameNodeList = [[MEGASdkManager sharedMEGASdk] nodeListSearchForNode:parentNode searchString:[nameWithoutExtension stringByAppendingPathExtension:extension]];
+        MEGANodeList *nameNodeList = [MEGASdk.shared nodeListSearchForNode:parentNode searchString:[nameWithoutExtension stringByAppendingPathExtension:extension]];
         listSize = (int)nameNodeList.size;
         index++;
     } while (listSize != 0);

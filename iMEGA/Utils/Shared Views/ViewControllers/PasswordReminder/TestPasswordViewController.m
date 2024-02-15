@@ -1,7 +1,6 @@
 #import "TestPasswordViewController.h"
 
 #import "Helper.h"
-#import "MEGASdkManager.h"
 #import "MEGA-Swift.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGANavigationController.h"
@@ -89,16 +88,16 @@
 
 - (IBAction)tapConfirm:(id)sender {
     [self.passwordView.passwordTextField resignFirstResponder];
-    if ([[MEGASdkManager sharedMEGASdk] checkPassword:self.passwordView.passwordTextField.text]) {
+    if ([MEGASdk.shared checkPassword:self.passwordView.passwordTextField.text]) {
         [self passwordTestSuccess];
-        [[MEGASdkManager sharedMEGASdk] passwordReminderDialogSucceeded];
+        [MEGASdk.shared passwordReminderDialogSucceeded];
     } else {
         [self passwordTestFailed];
     }
 }
 
 - (IBAction)tapBackupRecoveryKey:(id)sender {
-    if ([[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
+    if ([MEGASdk.shared isLoggedIn]) {
         if (self.isLoggingOut) {
             [Helper showMasterKeyCopiedAlert];
         } else {
@@ -108,7 +107,7 @@
             
             [Helper showExportMasterKeyInView:self completion:^{
                 if (weakSelf.isLoggingOut) {
-                    [MEGASdkManager.sharedMEGASdk logout];
+                    [MEGASdk.shared logout];
                 }
             }];
         }
@@ -122,7 +121,7 @@
     
     [self dismissViewControllerAnimated:YES completion:^{
         if (self.isLoggingOut) {
-            [MEGASdkManager.sharedMEGASdk logout];
+            [MEGASdk.shared logout];
         }
     }];
 }
@@ -196,7 +195,7 @@
                 [UIApplication.mnz_presentingViewController presentViewController:navigationController animated:YES completion:nil];
             }];
         }];
-        [[MEGASdkManager sharedMEGASdk] multiFactorAuthCheckWithEmail:[[MEGASdkManager sharedMEGASdk] myEmail] delegate:delegate];
+        [MEGASdk.shared multiFactorAuthCheckWithEmail:[MEGASdk.shared myEmail] delegate:delegate];
     }
 }
 

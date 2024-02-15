@@ -2,7 +2,6 @@
 #import <Photos/Photos.h>
 #import "Helper.h"
 #import "MEGANode+MNZCategory.h"
-#import "MEGASdkManager.h"
 #import "MEGAReachabilityManager.h"
 #import "NSFileManager+MNZCategory.h"
 #import "NSString+MNZCategory.h"
@@ -38,8 +37,8 @@
     NSString *thumbnailFilePath = [transferAbsolutePath.stringByDeletingPathExtension stringByAppendingString:@"_thumbnail"];
     NSString *previewFilePath = [transferAbsolutePath.stringByDeletingPathExtension stringByAppendingString:@"_preview"];
     
-    [[MEGASdkManager sharedMEGASdk] createThumbnail:imageFilePath destinatioPath:thumbnailFilePath];
-    [[MEGASdkManager sharedMEGASdk] createPreview:imageFilePath destinatioPath:previewFilePath];
+    [MEGASdk.shared createThumbnail:imageFilePath destinatioPath:thumbnailFilePath];
+    [MEGASdk.shared createPreview:imageFilePath destinatioPath:previewFilePath];
     
     if ([FileExtensionGroupOCWrapper verifyIsVideo:self.fileName]) {
         [NSFileManager.defaultManager mnz_removeItemAtPath:imageFilePath];
@@ -54,7 +53,7 @@
         
         switch (self.state) {
             case MEGATransferStateComplete: {
-                MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.nodeHandle];
+                MEGANode *node = [MEGASdk.shared nodeForHandle:self.nodeHandle];
                 NSString *thumbsDirectory = [Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"];
                 NSString *previewsDirectory = [Helper pathForSharedSandboxCacheDirectory:@"previewsV3"];
 
@@ -132,9 +131,9 @@
     NSString *chatID = [appDataComponentComponentsArray objectAtIndex:1];
     unsigned long long chatIdUll = strtoull(chatID.UTF8String, NULL, 0);
     if (asVoiceClip) {
-        [[MEGASdkManager sharedMEGAChatSdk] attachVoiceMessageToChat:chatIdUll node:self.nodeHandle];
+        [MEGAChatSdk.shared attachVoiceMessageToChat:chatIdUll node:self.nodeHandle];
     } else {
-        [[MEGASdkManager sharedMEGAChatSdk] attachNodeToChat:chatIdUll node:self.nodeHandle];
+        [MEGAChatSdk.shared attachNodeToChat:chatIdUll node:self.nodeHandle];
     }
 }
 
@@ -168,7 +167,7 @@
 
 - (void)mnz_moveFileToDestinationIfVoiceClipData {
     if ([self.appData containsString:@"attachVoiceClipToChatID"]) {
-        MEGANode *node = [MEGASdkManager.sharedMEGASdk nodeForHandle:self.nodeHandle];
+        MEGANode *node = [MEGASdk.shared nodeForHandle:self.nodeHandle];
         if (node) {
             NSString *nodeFilePath = [node mnz_voiceCachePath];
             [NSFileManager.defaultManager mnz_moveItemAtPath:self.path toPath:nodeFilePath];
@@ -205,7 +204,7 @@
     if (self.publicNode) {
         node = self.publicNode;
     } else {
-        node = [MEGASdkManager.sharedMEGASdk nodeForHandle:self.nodeHandle];
+        node = [MEGASdk.shared nodeForHandle:self.nodeHandle];
     }
     return node;
 }
@@ -220,8 +219,8 @@
         NSString *latitude = setCoordinatesComponentsArray.firstObject;
         NSString *longitude = [setCoordinatesComponentsArray objectAtIndex:1];
         if (latitude && longitude) {
-            MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:self.nodeHandle];
-            [[MEGASdkManager sharedMEGASdk] setNodeCoordinates:node latitude:@(latitude.doubleValue) longitude:@(longitude.doubleValue)];
+            MEGANode *node = [MEGASdk.shared nodeForHandle:self.nodeHandle];
+            [MEGASdk.shared setNodeCoordinates:node latitude:@(latitude.doubleValue) longitude:@(longitude.doubleValue)];
         }
     }
 }

@@ -4,7 +4,7 @@ import MEGADomain
 extension MEGAChatListItem {
 
     var chatRoom: MEGAChatRoom? {
-        return MEGASdkManager.sharedMEGAChatSdk().chatRoom(forChatId: chatId)
+        return MEGAChatSdk.shared.chatRoom(forChatId: chatId)
     }
 
     var peerCount: UInt {
@@ -12,9 +12,9 @@ extension MEGAChatListItem {
     }
 
     @objc var searchString: String {
-        let fullnames = (0..<peerCount).compactMap { MEGASdkManager.sharedMEGAChatSdk().userFullnameFromCache(byUserHandle: chatRoom?.peerHandle(at: $0) ?? MEGAInvalidHandle)}.joined(separator: " ")
+        let fullnames = (0..<peerCount).compactMap { MEGAChatSdk.shared.userFullnameFromCache(byUserHandle: chatRoom?.peerHandle(at: $0) ?? MEGAInvalidHandle)}.joined(separator: " ")
         let nicknames = (0..<peerCount).compactMap { nickName(forHandle: chatRoom?.peerHandle(at: $0)) }.joined(separator: " ")
-        let emails = (0..<peerCount).compactMap { MEGASdkManager.sharedMEGAChatSdk().userEmailFromCache(byUserHandle: chatRoom?.peerHandle(at: $0) ?? MEGAInvalidHandle) }.joined(separator: " ")
+        let emails = (0..<peerCount).compactMap { MEGAChatSdk.shared.userEmailFromCache(byUserHandle: chatRoom?.peerHandle(at: $0) ?? MEGAInvalidHandle) }.joined(separator: " ")
         
         guard let chatRoomTitle = title else {
             return fullnames + " " + nicknames + " " + emails

@@ -1,6 +1,5 @@
 #import "PasswordReminderViewController.h"
 
-#import "MEGASdkManager.h"
 #import "MEGA-Swift.h"
 #import "MEGAReachabilityManager.h"
 #import "Helper.h"
@@ -89,7 +88,7 @@
 }
 
 - (IBAction)tapBackupRecoveryKey:(id)sender {
-    if ([[MEGASdkManager sharedMEGASdk] isLoggedIn]) {
+    if ([MEGASdk.shared isLoggedIn]) {
         if (self.isLoggingOut) {
             [Helper showMasterKeyCopiedAlert];
         } else {
@@ -97,7 +96,7 @@
             
             [Helper showExportMasterKeyInView:self completion:^{
                 if (weakSelf.isLoggingOut) {
-                    [MEGASdkManager.sharedMEGASdk logout];
+                    [MEGASdk.shared logout];
                 }
             }];
         }
@@ -131,13 +130,13 @@
 - (void)notifyUserSkippedOrBlockedPasswordReminder {
     MEGAGenericRequestDelegate *delegate = [[MEGAGenericRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
         if (self.isLoggingOut) {
-            [MEGASdkManager.sharedMEGASdk logout];
+            [MEGASdk.shared logout];
         }
     }];
     if (self.dontShowAgainSwitch.isOn) {
-        [[MEGASdkManager sharedMEGASdk] passwordReminderDialogBlockedWithDelegate:delegate];
+        [MEGASdk.shared passwordReminderDialogBlockedWithDelegate:delegate];
     } else {
-        [[MEGASdkManager sharedMEGASdk] passwordReminderDialogSkippedWithDelegate:delegate];
+        [MEGASdk.shared passwordReminderDialogSkippedWithDelegate:delegate];
     }
     [OverDiskQuotaService.sharedService invalidate];
     [[SearchFileUseCase.alloc init] clearFileSearchHistoryEntries];

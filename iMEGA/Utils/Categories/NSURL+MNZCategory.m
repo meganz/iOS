@@ -7,7 +7,6 @@
 #import "UIApplication+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
 #import "MEGAGenericRequestDelegate.h"
-#import "MEGASdkManager.h"
 #import "MEGA-Swift.h"
 
 @import MEGAL10nObjc;
@@ -43,7 +42,7 @@
                 }
             }];
             
-            [MEGASdkManager.sharedMEGASdk getSessionTransferURL:path delegate:delegate];
+            [MEGASdk.shared getSessionTransferURL:path delegate:delegate];
         } else {
             [self presentSafariViewControllerWithLURL:self];
         }

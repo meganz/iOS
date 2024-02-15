@@ -1,5 +1,4 @@
 #import "MEGANodeList+MNZCategory.h"
-#import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
 
 #ifdef MNZ_SHARE_EXTENSION
@@ -7,8 +6,6 @@
 #else
 #import "MEGA-Swift.h"
 #endif
-
-#import "MEGASdkManager.h"
 
 @implementation MEGANodeList (MNZCategory)
 
