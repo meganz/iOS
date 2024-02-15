@@ -7,7 +7,6 @@
 
 #import "Helper.h"
 #import "MEGACreateFolderRequestDelegate.h"
-#import "MEGASdkManager.h"
 #import "MEGASdk+MNZCategory.h"
 #import "NSDate+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
@@ -117,7 +116,7 @@
 - (NSString *)createAvatarWithImagePath:(NSString *)imagePath {
     NSString *base64Handle = [MEGASdk base64HandleForUserHandle:MEGASdk.currentUserHandle.unsignedLongLongValue];
     NSString *avatarFilePath = [[Helper pathForSharedSandboxCacheDirectory:@"thumbnailsV3"] stringByAppendingPathComponent:base64Handle];
-    if ([[MEGASdkManager sharedMEGASdk] createAvatar:imagePath destinationPath:avatarFilePath]) {
+    if ([MEGASdk.shared createAvatar:imagePath destinationPath:avatarFilePath]) {
         return avatarFilePath;
     } else {
         return nil;
@@ -141,10 +140,10 @@
         }];
     } else if (self.toChangeAvatar) {
         NSString *avatarFilePath = [self createAvatarWithImagePath:imagePath];
-        [[MEGASdkManager sharedMEGASdk] setAvatarUserWithSourceFilePath:avatarFilePath];
+        [MEGASdk.shared setAvatarUserWithSourceFilePath:avatarFilePath];
         [self dismissViewControllerAnimated:YES completion:nil];
     } else if (self.toShareThroughChat) {
-        [[MEGASdkManager sharedMEGASdk] createPreview:imagePath destinatioPath:imagePath];
+        [MEGASdk.shared createPreview:imagePath destinatioPath:imagePath];
         self.filePath = imagePath.mnz_relativeLocalPath;
         __weak __typeof__(self) weakSelf = self;
         [MyChatFilesFolderNodeAccess.shared loadNodeWithCompletion:^(MEGANode * _Nullable myChatFilesFolderNode, NSError * _Nullable error) {

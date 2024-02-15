@@ -31,7 +31,6 @@
 #import "MEGAPhotoBrowserViewController.h"
 #import "MEGAQuerySignupLinkRequestDelegate.h"
 #import "MEGAQueryRecoveryLinkRequestDelegate.h"
-#import "MEGASdkManager.h"
 #import "UnavailableLinkView.h"
 #import "MEGA-Swift.h"
 
@@ -234,7 +233,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
 
 + (void)presentNode {
     uint64_t handle = [MEGASdk handleForBase64Handle:nodeToPresentBase64Handle];
-    MEGANode *node = [[MEGASdkManager sharedMEGASdk] nodeForHandle:handle];
+    MEGANode *node = [MEGASdk.shared nodeForHandle:handle];
     if (node) {
         if (UIApplication.mainTabBarRootViewController) {
             [node navigateToParentAndPresent];
@@ -257,7 +256,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     NSString *stringWithoutSymbols = [[link stringByReplacingOccurrencesOfString:@"#" withString:@""] stringByReplacingOccurrencesOfString:@"!" withString:@""];
     NSString *publicHandle = [stringWithoutSymbols substringFromIndex:stringWithoutSymbols.length - 8];
     
-    return [MEGASdkManager.sharedMEGASdk buildPublicLinkForHandle:publicHandle key:key isFolder:isFolder];
+    return [MEGASdk.shared buildPublicLinkForHandle:publicHandle key:key isFolder:isFolder];
 }
 
 + (void)processLinkURL:(NSURL *)url {
@@ -302,7 +301,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
             if ([url.path hasPrefix:@"/confirm"]) {
                 link = [link stringByReplacingOccurrencesOfString:@"confirm" withString:@"#confirm"];
             }
-            [MEGASdkManager.sharedMEGASdk querySignupLink:link delegate:querySignupLinkRequestDelegate];
+            [MEGASdk.shared querySignupLink:link delegate:querySignupLinkRequestDelegate];
             break;
         }
             
@@ -316,7 +315,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
                 [UIApplication.mnz_visibleViewController presentViewController:alreadyLoggedInAlertController animated:YES completion:nil];
             } else {
                 MEGAQuerySignupLinkRequestDelegate *querySignupLinkRequestDelegate = [[MEGAQuerySignupLinkRequestDelegate alloc] initWithCompletion:nil urlType:MEGALinkManager.urlType];
-                [[MEGASdkManager sharedMEGASdk] querySignupLink:url.mnz_MEGAURL delegate:querySignupLinkRequestDelegate];
+                [MEGASdk.shared querySignupLink:url.mnz_MEGAURL delegate:querySignupLinkRequestDelegate];
             }
             break;
         }
@@ -332,7 +331,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         case URLTypeChangeEmailLink: {
             if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
                 MEGAQueryRecoveryLinkRequestDelegate *queryRecoveryLinkRequestDelegate = [[MEGAQueryRecoveryLinkRequestDelegate alloc] initWithRequestCompletion:nil urlType:URLTypeChangeEmailLink];
-                [[MEGASdkManager sharedMEGASdk] queryChangeEmailLink:url.mnz_MEGAURL delegate:queryRecoveryLinkRequestDelegate];
+                [MEGASdk.shared queryChangeEmailLink:url.mnz_MEGAURL delegate:queryRecoveryLinkRequestDelegate];
             } else {
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"needToBeLoggedInToCompleteYourEmailChange", @"Error message when a user attempts to change their email without an active login session.") message:nil preferredStyle:UIAlertControllerStyleAlert];
                 [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleCancel handler:nil]];
@@ -345,14 +344,14 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         case URLTypeCancelAccountLink: {
             if ([Helper hasSession_alertIfNot]) {
                 MEGAQueryRecoveryLinkRequestDelegate *queryRecoveryLinkRequestDelegate = [[MEGAQueryRecoveryLinkRequestDelegate alloc] initWithRequestCompletion:nil urlType:URLTypeCancelAccountLink];
-                [[MEGASdkManager sharedMEGASdk] queryCancelLink:url.mnz_MEGAURL delegate:queryRecoveryLinkRequestDelegate];
+                [MEGASdk.shared queryCancelLink:url.mnz_MEGAURL delegate:queryRecoveryLinkRequestDelegate];
             }
             break;
         }
             
         case URLTypeRecoverLink: {
             MEGAQueryRecoveryLinkRequestDelegate *queryRecoveryLinkRequestDelegate = [[MEGAQueryRecoveryLinkRequestDelegate alloc] initWithRequestCompletion:nil urlType:URLTypeRecoverLink];
-            [[MEGASdkManager sharedMEGASdk] queryResetPasswordLink:url.mnz_MEGAURL delegate:queryRecoveryLinkRequestDelegate];
+            [MEGASdk.shared queryResetPasswordLink:url.mnz_MEGAURL delegate:queryRecoveryLinkRequestDelegate];
             break;
         }
             
@@ -561,7 +560,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         textField.secureTextEntry = YES;
     }];
     [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [[MEGASdkManager sharedMEGASdk] decryptPasswordProtectedLink:encryptedLinkURLString password:alertController.textFields.firstObject.text delegate:delegate];
+        [MEGASdk.shared decryptPasswordProtectedLink:encryptedLinkURLString password:alertController.textFields.firstObject.text delegate:delegate];
     }]];
     [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         [MEGALinkManager resetLinkAndURLType];
@@ -596,7 +595,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
                     }
                 }
                 
-                MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:@[node].mutableCopy api:[MEGASdkManager sharedMEGASdkFolder] displayMode:DisplayModeFileLink presentingNode:node];
+                MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:@[node].mutableCopy api:MEGASdk.sharedFolderLink displayMode:DisplayModeFileLink presentingNode:node];
                 photoBrowserVC.publicLink = fileLinkURLString;
                 photoBrowserVC.encryptedLink = MEGALinkManager.secondaryLinkURL.absoluteString;
                 photoBrowserVC.needsReload = YES;
@@ -614,7 +613,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     delegate.savePublicHandle = YES;
     
     [SVProgressHUD show];
-    [[MEGASdkManager sharedMEGASdk] publicNodeForMegaFileLink:fileLinkURLString delegate:delegate];
+    [MEGASdk.shared publicNodeForMegaFileLink:fileLinkURLString delegate:delegate];
 }
 
 + (void)presentFileLinkViewForLink:(NSString *)link request:(MEGARequest *)request error:(MEGAError *)error {
@@ -679,7 +678,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         [SVProgressHUD showErrorWithStatus:LocalizedString(@"linkNotValid", @"Message shown when the user clicks on an link that is not valid")];
     }];
 
-    [[MEGASdkManager sharedMEGASdk] contactLinkQueryWithHandle:handle delegate:delegate];
+    [MEGASdk.shared contactLinkQueryWithHandle:handle delegate:delegate];
 }
 
 + (void)presentInviteModalForEmail:(NSString *)email fullName:(NSString *)fullName contactLinkHandle:(uint64_t)contactLinkHandle image:(NSString *)imageOnBase64URLEncoding {
@@ -699,7 +698,7 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     __weak CustomModalAlertViewController *weakInviteOrDismissModal = inviteOrDismissModal;
     void (^firstCompletion)(void) = ^{
         MEGAInviteContactRequestDelegate *delegate = [[MEGAInviteContactRequestDelegate alloc] initWithNumberOfRequests:1 presentSuccessOver:weakVisibleVC completion:nil];
-        [[MEGASdkManager sharedMEGASdk] inviteContactWithEmail:email message:@"" action:MEGAInviteActionAdd handle:contactLinkHandle delegate:delegate];
+        [MEGASdk.shared inviteContactWithEmail:email message:@"" action:MEGAInviteActionAdd handle:contactLinkHandle delegate:delegate];
         [weakInviteOrDismissModal dismissViewControllerAnimated:YES completion:nil];
     };
     
@@ -707,14 +706,14 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         [weakInviteOrDismissModal dismissViewControllerAnimated:YES completion:nil];
     };
     
-    MEGAUser *user = [[MEGASdkManager sharedMEGASdk] contactForEmail:email];
+    MEGAUser *user = [MEGASdk.shared contactForEmail:email];
     if (user && user.visibility == MEGAUserVisibilityVisible) {
         inviteOrDismissModal.detail = [LocalizedString(@"alreadyAContact", @"Error message displayed when trying to invite a contact who is already added.") stringByReplacingOccurrencesOfString:@"%s" withString:email];
         inviteOrDismissModal.firstButtonTitle = LocalizedString(@"dismiss", @"Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible).");
         inviteOrDismissModal.firstCompletion = dismissCompletion;
     } else {
         BOOL isInOutgoingContactRequest = NO;
-        MEGAContactRequestList *outgoingContactRequestList = [[MEGASdkManager sharedMEGASdk] outgoingContactRequests];
+        MEGAContactRequestList *outgoingContactRequestList = [MEGASdk.shared outgoingContactRequests];
         for (NSInteger i = 0; i < outgoingContactRequestList.size; i++) {
             MEGAContactRequest *contactRequest = [outgoingContactRequestList contactRequestAtIndex:i];
             if ([email isEqualToString:contactRequest.targetEmail]) {

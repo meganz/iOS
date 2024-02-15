@@ -7,7 +7,6 @@
 #import "MEGA-Swift.h"
 #endif
 
-#import "MEGASdkManager.h"
 #import "MEGAStore.h"
 #import "NSString+MNZCategory.h"
 
@@ -72,7 +71,7 @@
                         waitForUserAttributes = YES;
                         ChatRequestDelegate *delegate = [ChatRequestDelegate.alloc initWithCompletion:^(MEGAChatRequest * _Nonnull request, MEGAChatError * _Nonnull error) {
                             if (!error.type) {
-                                self.chatRoom = [MEGASdkManager.sharedMEGAChatSdk chatRoomForChatId:self.chatRoom.chatId];
+                                self.chatRoom = [MEGAChatSdk.shared chatRoomForChatId:self.chatRoom.chatId];
                                 content.subtitle = [self.chatRoom userDisplayNameForUserHandle:self.message.userHandle];
                             }
                             waitForUserAttributes = NO;
@@ -80,7 +79,7 @@
                                 [self postNotificationWithIdentifier:identifier content:content trigger:trigger];
                             }
                         }];
-                        [MEGASdkManager.sharedMEGAChatSdk loadUserAttributesForChatId:self.chatRoom.chatId usersHandles:@[@(self.message.userHandle)] delegate:delegate];
+                        [MEGAChatSdk.shared loadUserAttributesForChatId:self.chatRoom.chatId usersHandles:@[@(self.message.userHandle)] delegate:delegate];
                     }
                 }
                 
@@ -95,7 +94,7 @@
                                 waitForThumbnail = YES;
                                 NSString *thumbnailFilePath = [Helper pathForNode:node inSharedSandboxCacheDirectory:@"thumbnailsV3"];
                                 MEGAGetThumbnailRequestDelegate *getThumbnailRequestDelegate = [[MEGAGetThumbnailRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-                                    MEGAChatMessage *message = [MEGASdkManager.sharedMEGAChatSdk messageForChat:self.chatRoom.chatId messageId:self.message.messageId];
+                                    MEGAChatMessage *message = [MEGAChatSdk.shared messageForChat:self.chatRoom.chatId messageId:self.message.messageId];
                                     if (message.status == MEGAChatMessageStatusSeen) {
                                         return;
                                     }
@@ -108,7 +107,7 @@
                                         [self postNotificationWithIdentifier:identifier content:content trigger:trigger];
                                     }
                                 }];
-                                [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath delegate:getThumbnailRequestDelegate];
+                                [MEGASdk.shared getThumbnailNode:node destinationFilePath:thumbnailFilePath delegate:getThumbnailRequestDelegate];
                             }
                         }
                     }

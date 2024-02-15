@@ -45,7 +45,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
     if (self) {
         self.viewModel = [self makeViewModel];
         _apiForStreaming = apiForStreaming;
-        self.node            = folderLink ? [[MEGASdkManager sharedMEGASdkFolder] authorizeNode:node] : node;
+        self.node            = folderLink ? [MEGASdk.sharedFolderLink authorizeNode:node] : node;
         _isFolderLink        = folderLink;
         self.fileUrl         = [self streamingPathWithNode:node];
         _hasPlayedOnceBefore = NO;
@@ -220,7 +220,7 @@ static const NSUInteger MIN_SECOND = 10; // Save only where the users were playi
     if (self.node) {
         fingerprint = self.node.fingerprint;
     } else {
-        fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:self.fileUrl.path];
+        fingerprint = [MEGASdk.shared fingerprintForFilePath:self.fileUrl.path];
     }
     
     return fingerprint;

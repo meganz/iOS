@@ -1,7 +1,6 @@
 #import "UIImageView+MNZCategory.h"
 
 #import "Helper.h"
-#import "MEGASdkManager.h"
 #import "UIImage+MNZCategory.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
 #import "MEGAGetPreviewRequestDelegate.h"
@@ -68,7 +67,7 @@ static const void *base64HandleKey = &base64HandleKey;
                 self.image = [UIImage imageWithContentsOfFile:request.file];
             }
         }];
-        [[MEGASdkManager sharedMEGASdk] getAvatarUserWithEmailOrHandle:base64Handle destinationFilePath:avatarFilePath delegate:getThumbnailRequestDelegate];
+        [MEGASdk.shared getAvatarUserWithEmailOrHandle:base64Handle destinationFilePath:avatarFilePath delegate:getThumbnailRequestDelegate];
     }
 }
 
@@ -86,7 +85,7 @@ static const void *base64HandleKey = &base64HandleKey;
                 [self sd_setImageWithURL:[NSURL fileURLWithPath:request.file]];
             }];
             [self setImage:[NodeAssetsManager.shared iconFor:node]];
-            [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:path delegate:delegate];
+            [MEGASdk.shared getThumbnailNode:node destinationFilePath:path delegate:delegate];
         }
     } else {
         [self setImage:[NodeAssetsManager.shared iconFor:node]];
@@ -109,7 +108,7 @@ static const void *base64HandleKey = &base64HandleKey;
                 }
             }];
             self.image = nil;
-            [[MEGASdkManager sharedMEGASdk] getPreviewNode:node destinationFilePath:path delegate:delegate];
+            [MEGASdk.shared getPreviewNode:node destinationFilePath:path delegate:delegate];
         }
     } else {
         [self setImage:[NodeAssetsManager.shared iconFor:node]];

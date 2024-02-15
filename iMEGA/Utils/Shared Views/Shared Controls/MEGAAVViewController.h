@@ -2,8 +2,6 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "MEGASdkManager.h"
-
 @class AVViewModel;
 
 @interface MEGAAVViewController : AVPlayerViewController

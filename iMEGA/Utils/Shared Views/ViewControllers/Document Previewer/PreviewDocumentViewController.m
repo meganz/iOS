@@ -63,7 +63,7 @@
     [super viewDidLoad];
     
     if (self.node == nil && self.nodeHandle != MEGAInvalidHandle) {
-        self.node = [MEGASdkManager.sharedMEGASdk nodeForHandle:self.nodeHandle];
+        self.node = [MEGASdk.shared nodeForHandle:self.nodeHandle];
     }
     
     self.thumbnailCache = [[NSCache alloc] init];
@@ -100,13 +100,13 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     if (previewDocumentTransfer) {
-        [MEGASdkManager.sharedMEGASdk cancelTransfer:previewDocumentTransfer];
+        [MEGASdk.shared cancelTransfer:previewDocumentTransfer];
     }
     
     if (!self.pdfView.hidden) {
         CGPDFPageRef pageRef = self.pdfView.currentPage.pageRef;
         size_t page = CGPDFPageGetPageNumber(pageRef);
-        NSString *fingerprint = [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:self.pdfView.document.documentURL.path];
+        NSString *fingerprint = [MEGASdk.shared fingerprintForFilePath:self.pdfView.document.documentURL.path];
         if (page == 1) {
             [[MEGAStore shareInstance] deleteMediaDestinationWithFingerprint:fingerprint];
         } else {
@@ -192,7 +192,7 @@
     UIBarButtonItem *flexibleItem = [UIBarButtonItem.alloc initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     NSMutableArray *toolbarItems = NSMutableArray.new;
     [toolbarItems addObjectsFromArray:@[self.downloadBarButtonItem, flexibleItem]];
-    if ([MEGASdkManager.sharedMEGASdk accessLevelForNode:self.node] == MEGAShareTypeAccessOwner) {
+    if ([MEGASdk.shared accessLevelForNode:self.node] == MEGAShareTypeAccessOwner) {
         [toolbarItems addObject:self.exportFileBarButtonItem];
     } else {
         [toolbarItems addObject:self.importBarButtonItem];
@@ -301,8 +301,8 @@
 }
 
 - (IBAction)actionsTapped:(UIBarButtonItem *)sender {
-    if ([MEGASdkManager.sharedMEGASdk accessLevelForNode:self.node] != MEGAShareTypeAccessUnknown) {
-        self.node = [MEGASdkManager.sharedMEGASdk nodeForHandle:self.node.handle];
+    if ([MEGASdk.shared accessLevelForNode:self.node] != MEGAShareTypeAccessUnknown) {
+        self.node = [MEGASdk.shared nodeForHandle:self.node.handle];
     }
     
     DisplayMode displayMode = self.node.mnz_isInRubbishBin ? DisplayModeRubbishBin : self.collectionView.hidden ? DisplayModePreviewPdfPage :  DisplayModePreviewDocument;
@@ -515,7 +515,7 @@
             if (self.node.mnz_isInRubbishBin) {
                 [self setToolbarItems:@[self.thumbnailBarButtonItem, flexibleItem, self.searchBarButtonItem] animated:YES];
             } else {
-                [self setToolbarItems:@[self.thumbnailBarButtonItem, flexibleItem, self.searchBarButtonItem, flexibleItem, [MEGASdkManager.sharedMEGASdk accessLevelForNode:self.node] == MEGAShareTypeAccessOwner ? self.exportFileBarButtonItem : self.importBarButtonItem] animated:YES];
+                [self setToolbarItems:@[self.thumbnailBarButtonItem, flexibleItem, self.searchBarButtonItem, flexibleItem, [MEGASdk.shared accessLevelForNode:self.node] == MEGAShareTypeAccessOwner ? self.exportFileBarButtonItem : self.importBarButtonItem] animated:YES];
             }
         } else {
             [self setToolbarItems:@[self.thumbnailBarButtonItem, flexibleItem, self.searchBarButtonItem, flexibleItem, self.exportFileBarButtonItem] animated:YES];
@@ -541,7 +541,7 @@
         self.pdfView.autoScales = YES;
         self.pdfView.minScaleFactor = self.pdfView.scaleFactorForSizeToFit;
         
-        NSString *fingerprint = [NSString stringWithFormat:@"%@", [[MEGASdkManager sharedMEGASdk] fingerprintForFilePath:self.pdfView.document.documentURL.path]];
+        NSString *fingerprint = [NSString stringWithFormat:@"%@", [MEGASdk.shared fingerprintForFilePath:self.pdfView.document.documentURL.path]];
         if (fingerprint && ![fingerprint isEqualToString:@""]) {
             NSNumber *destinationPage = [[MEGAStore shareInstance] fetchMediaDestinationWithFingerprint:fingerprint].destination;
             [self.pdfView goToPage:[self.pdfView.document pageAtIndex:destinationPage.unsignedIntegerValue - 1]];

@@ -17,7 +17,6 @@
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAProcessAsset.h"
 #import "MEGALogger.h"
-#import "MEGASdkManager.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGAStore.h"
 #import "MEGAUser+MNZCategory.h"
@@ -79,7 +78,7 @@
         }
     }
 
-    return [folderParentPath stringByAppendingPathComponent:[MEGASdkManager.sharedMEGASdk escapeFsIncompatible:node.name]];
+    return [folderParentPath stringByAppendingPathComponent:[MEGASdk.shared escapeFsIncompatible:node.name]];
 }
 
 + (NSString *)pathForHandle:(NSString *)base64Handle inSharedSandboxCacheDirectory:(NSString *)directory {
@@ -107,9 +106,9 @@
         nodeSizeNumber = [node size];
     } else if ([node type] == MEGANodeTypeFolder) {
         if (isFolderLink) {
-            nodeSizeNumber = [[MEGASdkManager sharedMEGASdkFolder] sizeForNode:node];
+            nodeSizeNumber = [MEGASdk.sharedFolderLink sizeForNode:node];
         } else {
-            nodeSizeNumber = [[MEGASdkManager sharedMEGASdk] sizeForNode:node];
+            nodeSizeNumber = [MEGASdk.shared sizeForNode:node];
         }
     }
     
@@ -170,7 +169,7 @@
     PHAsset *asset = [PHAsset fetchAssetsWithLocalIdentifiers:@[transferRecordDTO.localIdentifier]
                                                       options:nil].firstObject;
     
-    MEGANode *parentNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:transferRecordDTO.parentNodeHandle.unsignedLongLongValue];
+    MEGANode *parentNode = [MEGASdk.shared nodeForHandle:transferRecordDTO.parentNodeHandle.unsignedLongLongValue];
     
     MEGAProcessAsset *processAsset = [[MEGAProcessAsset alloc] initWithAsset:asset filePath:^(NSString *filePath) {
         NSString *name = [FileExtensionOCWrapper fileNameWithLowercaseExtensionFrom:filePath.lastPathComponent];
@@ -189,9 +188,9 @@
             if (![[NSFileManager defaultManager] moveItemAtPath:absoluteFilePath toPath:newFilePath error:&error]) {
                 MEGALogError(@"Move item at path failed with error: %@", error);
             }
-            [MEGASdkManager.sharedMEGASdk startUploadWithLocalPath:newFilePath.mnz_relativeLocalPath parent:parentNode fileName:nil appData:appData isSourceTemporary:YES startFirst:NO cancelToken:nil];
+            [MEGASdk.shared startUploadWithLocalPath:newFilePath.mnz_relativeLocalPath parent:parentNode fileName:nil appData:appData isSourceTemporary:YES startFirst:NO cancelToken:nil];
         } else {
-            [MEGASdkManager.sharedMEGASdk startUploadWithLocalPath:filePath.mnz_relativeLocalPath parent:parentNode fileName:nil appData:appData isSourceTemporary:YES startFirst:NO cancelToken:nil];
+            [MEGASdk.shared startUploadWithLocalPath:filePath.mnz_relativeLocalPath parent:parentNode fileName:nil appData:appData isSourceTemporary:YES startFirst:NO cancelToken:nil];
         }
         
         if (transferRecordDTO.localIdentifier) {
@@ -210,7 +209,7 @@
 + (void)startPendingUploadTransferIfNeeded {
     BOOL allUploadTransfersPaused = YES;
     
-    MEGATransferList *transferList = [[MEGASdkManager sharedMEGASdk] uploadTransfers];
+    MEGATransferList *transferList = [MEGASdk.shared uploadTransfers];
     
     for (int i = 0; i < transferList.size; i++) {
         MEGATransfer *transfer = [transferList transferAtIndex:i];
@@ -332,20 +331,20 @@
 + (void)setApiURL:(MEGAAPIEnv)envType {
     switch (envType) {
         case MEGAAPIEnvProduction:
-            [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://g.api.mega.co.nz/" disablepkp:NO];
-            [[MEGASdkManager sharedMEGASdkFolder] changeApiUrl:@"https://g.api.mega.co.nz/" disablepkp:NO];
+            [MEGASdk.shared changeApiUrl:@"https://g.api.mega.co.nz/" disablepkp:NO];
+            [MEGASdk.sharedFolderLink changeApiUrl:@"https://g.api.mega.co.nz/" disablepkp:NO];
             break;
         case MEGAAPIEnvStaging:
-            [[MEGASdkManager sharedMEGASdk] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
-            [[MEGASdkManager sharedMEGASdkFolder] changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
+            [MEGASdk.shared changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
+            [MEGASdk.sharedFolderLink changeApiUrl:@"https://staging.api.mega.co.nz/" disablepkp:NO];
             break;
         case MEGAAPIEnvStaging444:
-            [MEGASdkManager.sharedMEGASdk changeApiUrl:@"https://staging.api.mega.co.nz:444/" disablepkp:YES];
-            [MEGASdkManager.sharedMEGASdkFolder changeApiUrl:@"https://staging.api.mega.co.nz:444/" disablepkp:YES];
+            [MEGASdk.shared changeApiUrl:@"https://staging.api.mega.co.nz:444/" disablepkp:YES];
+            [MEGASdk.sharedFolderLink changeApiUrl:@"https://staging.api.mega.co.nz:444/" disablepkp:YES];
             break;
         case MEGAAPIEnvSandbox3:
-            [MEGASdkManager.sharedMEGASdk changeApiUrl:@"https://api-sandbox3.developers.mega.co.nz/" disablepkp:YES];
-            [MEGASdkManager.sharedMEGASdkFolder changeApiUrl:@"https://api-sandbox3.developers.mega.co.nz/" disablepkp:YES];
+            [MEGASdk.shared changeApiUrl:@"https://api-sandbox3.developers.mega.co.nz/" disablepkp:YES];
+            [MEGASdk.sharedFolderLink changeApiUrl:@"https://api-sandbox3.developers.mega.co.nz/" disablepkp:YES];
             break;
             
         default:
@@ -358,8 +357,8 @@
     [SVProgressHUD showSuccessWithStatus:@"API URL changed"];
     
     if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]) {
-        [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:[SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]];
-        [[MEGASdkManager sharedMEGAChatSdk] refreshUrls];
+        [MEGASdk.shared fastLoginWithSession:[SAMKeychain passwordForService:@"MEGA" account:@"sessionV3"]];
+        [MEGAChatSdk.shared refreshUrls];
     }
 }
 
@@ -455,15 +454,15 @@
 }
 
 + (void)importNode:(MEGANode *)node toShareWithCompletion:(void (^)(MEGANode *node))completion {
-    if (node.owner == [MEGASdkManager sharedMEGAChatSdk].myUserHandle) {
+    if (node.owner == MEGAChatSdk.shared.myUserHandle) {
         completion(node);
     } else {
-        MEGANode *remoteNode = [[MEGASdkManager sharedMEGASdk] nodeForFingerprint:node.fingerprint];
-        if (remoteNode && remoteNode.owner == [MEGASdkManager sharedMEGAChatSdk].myUserHandle) {
+        MEGANode *remoteNode = [MEGASdk.shared nodeForFingerprint:node.fingerprint];
+        if (remoteNode && remoteNode.owner == MEGAChatSdk.shared.myUserHandle) {
             completion(remoteNode);
         } else {
             MEGACopyRequestDelegate *copyRequestDelegate = [[MEGACopyRequestDelegate alloc] initWithCompletion:^(MEGARequest *request) {
-                MEGANode *resultNode = [[MEGASdkManager sharedMEGASdk] nodeForHandle:request.nodeHandle];
+                MEGANode *resultNode = [MEGASdk.shared nodeForHandle:request.nodeHandle];
                 completion(resultNode);
             }];
         
@@ -472,7 +471,7 @@
                     MEGALogWarning(@"Coud not load MyChatFiles target folder doe tu error %@", error);
                     return;
                 }
-                [[MEGASdkManager sharedMEGASdk] copyNode:node newParent:myChatFilesFolderNode delegate:copyRequestDelegate];
+                [MEGASdk.shared copyNode:node newParent:myChatFilesFolderNode delegate:copyRequestDelegate];
             }];
         }
     }
@@ -508,10 +507,10 @@
 }
 
 + (void)cancelAllTransfers {
-    [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:0];
-    [[MEGASdkManager sharedMEGASdk] cancelTransfersForDirection:1];
+    [MEGASdk.shared cancelTransfersForDirection:0];
+    [MEGASdk.shared cancelTransfersForDirection:1];
     
-    [[MEGASdkManager sharedMEGASdkFolder] cancelTransfersForDirection:0];
+    [MEGASdk.sharedFolderLink cancelTransfersForDirection:0];
 }
 
 + (void)clearEphemeralSession {
@@ -578,11 +577,11 @@
     NSString *documentsDirectory = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
     NSString *masterKeyFilePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.txt", LocalizedString(@"general.security.recoveryKeyFile", @"Name for the recovery key file")]];
     
-    BOOL success = [[NSFileManager defaultManager] createFileAtPath:masterKeyFilePath contents:[[[MEGASdkManager sharedMEGASdk] masterKey] dataUsingEncoding:NSUTF8StringEncoding] attributes:@{NSFileProtectionKey:NSFileProtectionComplete}];
+    BOOL success = [[NSFileManager defaultManager] createFileAtPath:masterKeyFilePath contents:[[MEGASdk.shared masterKey] dataUsingEncoding:NSUTF8StringEncoding] attributes:@{NSFileProtectionKey:NSFileProtectionComplete}];
     if (success) {
         UIAlertController *recoveryKeyAlertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"masterKeyExported", @"Alert title shown when you have exported your MEGA Recovery Key") message:LocalizedString(@"masterKeyExported_alertMessage", @"The Recovery Key has been exported into the Offline section as MEGA-RECOVERYKEY.txt. Note: It will be deleted if you log out, please store it in a safe place.")  preferredStyle:UIAlertControllerStyleAlert];
         [recoveryKeyAlertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [[MEGASdkManager sharedMEGASdk] masterKeyExported];
+            [MEGASdk.shared masterKeyExported];
             [viewController dismissViewControllerAnimated:YES completion:^{
                 if (completion) {
                     completion();
@@ -596,13 +595,13 @@
 
 + (void)showMasterKeyCopiedAlert {
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-    pasteboard.string = [[MEGASdkManager sharedMEGASdk] masterKey];
+    pasteboard.string = [MEGASdk.shared masterKey];
     
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"recoveryKeyCopiedToClipboard", @"Title of the dialog displayed when copy the user's Recovery Key to the clipboard to be saved or exported - (String as short as possible).") message:nil preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleCancel handler:nil]];
     [UIApplication.mnz_presentingViewController presentViewController:alertController animated:YES completion:nil];
     
-    [[MEGASdkManager sharedMEGASdk] masterKeyExported];
+    [MEGASdk.shared masterKeyExported];
 }
 
 #pragma mark - Log

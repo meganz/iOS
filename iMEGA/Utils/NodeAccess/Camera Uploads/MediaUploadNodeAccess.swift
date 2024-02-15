@@ -5,7 +5,7 @@ final class MediaUploadNodeAccess: NodeAccess {
         configuration: NodeAccessConfiguration(
             updateInMemoryNotificationName: nil,
             updateInRemoteNotificationName: .MEGACameraUploadTargetFolderChangedInRemote,
-            loadNodeRequest: MEGASdkManager.sharedMEGASdk().getCameraUploadsFolderSecondary
+            loadNodeRequest: MEGASdk.shared.getCameraUploadsFolderSecondary
         )
     )
 }

@@ -7,7 +7,14 @@
 #import "SVProgressHUD.h"
 
 #import "UIApplication+MNZCategory.h"
-#import "MEGASdkManager.h"
+
+#ifdef MNZ_SHARE_EXTENSION
+#import "MEGAShare-Swift.h"
+#elif MNZ_NOTIFICATION_EXTENSION
+#import "MEGANotifications-Swift.h"
+#else
+#import "MEGA-Swift.h"
+#endif
 
 @import MEGAL10nObjc;
 
@@ -165,15 +172,15 @@
 }
 
 - (void)retryPendingConnections {
-    [[MEGASdkManager sharedMEGASdk] retryPendingConnections];
-    [[MEGASdkManager sharedMEGAChatSdk] retryPendingConnections];
+    [MEGASdk.shared retryPendingConnections];
+    [MEGAChatSdk.shared retryPendingConnections];
 }
 
 - (void)reconnect {
     MEGALogDebug(@"Reconnecting...");
-    [[MEGASdkManager sharedMEGASdk] reconnect];
-    [[MEGASdkManager sharedMEGASdkFolder] reconnect];
-    [[MEGASdkManager sharedMEGAChatSdk] reconnect];
+    [MEGASdk.shared reconnect];
+    [MEGASdk.sharedFolderLink reconnect];
+    [MEGAChatSdk.shared reconnect];
 }
 
 - (void)monitorAccessToMobileData {
