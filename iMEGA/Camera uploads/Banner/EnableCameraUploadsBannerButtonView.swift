@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import SwiftUI
 
@@ -30,29 +31,35 @@ struct EnableCameraUploadsBannerButtonView: View {
         VStack(spacing: 0) {
             HStack(alignment: .center, spacing: Constants.contentHorizontalSpacing) {
                 Image(.enableCameraUploadsBannerIcon)
+                    .renderingMode(isDesignTokenEnabled ? .template : .original)
+                    .foregroundColor(isDesignTokenEnabled ? TokenColors.Icon.secondary.swiftUI : nil)
                 
                 VStack(alignment: .leading) {
                     Text(Strings.Localizable.CameraUploads.Banner.EnableState.title)
                         .font(.system(.footnote).bold())
-                        .foregroundColor(.primary)
+                        .foregroundColor(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : .primary)
                     
                     Text(Strings.Localizable.CameraUploads.Banner.EnableState.description)
                         .font(.caption2)
                         .multilineTextAlignment(.leading)
-                        .foregroundColor(.primary)
+                        .foregroundColor(isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI : .secondary)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 
                 Image(.cuBannerChevron)
+                    .renderingMode(isDesignTokenEnabled ? .template : .original)
+                    .foregroundColor(isDesignTokenEnabled ? TokenColors.Icon.secondary.swiftUI : nil)
                     .frame(width: Constants.chevronFrameWidth,
                            height: Constants.chevronFrameHeight)
+                
             }
             .padding(.vertical, Constants.contentVerticalPadding)
             .padding(.horizontal, Constants.contentHorizontalPadding)
             
             Divider()
-                .background(bannerBorderColor)
+                .background(isDesignTokenEnabled ? TokenColors.Border.strong.swiftUI : bannerBorderColor)
         }
+        .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : nil)
     }
     
     private var bannerBorderColor: Color {
