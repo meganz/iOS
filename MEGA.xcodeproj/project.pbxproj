@@ -420,7 +420,6 @@
 		415226961A692ECC00EC7BB6 /* Offline.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4152267F1A692ECC00EC7BB6 /* Offline.storyboard */; };
 		415226981A692ECC00EC7BB6 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 415226831A692ECC00EC7BB6 /* Settings.storyboard */; };
 		4152269A1A692ECC00EC7BB6 /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 415226881A692ECC00EC7BB6 /* Helper.m */; };
-		4152269B1A692ECC00EC7BB6 /* MEGASdkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4152268A1A692ECC00EC7BB6 /* MEGASdkManager.m */; };
 		4156C80C1AD7E79A00F5E818 /* LTHKeychainUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 4156C8091AD7E79A00F5E818 /* LTHKeychainUtils.m */; };
 		4156C80D1AD7E79A00F5E818 /* LTHPasscodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4156C80B1AD7E79A00F5E818 /* LTHPasscodeViewController.m */; };
 		415DCF241BF48EFA00914A1E /* ContactRequestsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 415DCF231BF48EFA00914A1E /* ContactRequestsViewController.m */; };
@@ -810,7 +809,6 @@
 		7794AEA9231674750039C1D2 /* MEGASdk+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 942F4FD71F500A8F001FC4AC /* MEGASdk+MNZCategory.m */; };
 		7794AED7231E4E0A0039C1D2 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7794AED6231E4E0A0039C1D2 /* NotificationService.swift */; };
 		7794AEDB231E4E0A0039C1D2 /* MEGANotifications.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 7794AED4231E4E0A0039C1D2 /* MEGANotifications.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		7794AEDF231E54120039C1D2 /* MEGASdkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4152268A1A692ECC00EC7BB6 /* MEGASdkManager.m */; };
 		7794AEE1231E5BC00039C1D2 /* MEGAConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = B60DDC1521A7A7930097E4A3 /* MEGAConstants.m */; };
 		7794AF19231FDF3D0039C1D2 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 7747B2D6208623660011814E /* Reachability.m */; };
 		7795677721C80CDF002B6227 /* OnboardingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7795677621C80CDF002B6227 /* OnboardingViewController.m */; };
@@ -1356,7 +1354,6 @@
 		948425DB2A94F34F0024FF1F /* MainTabBarController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948425D72A94EF020024FF1F /* MainTabBarController+Additions.swift */; };
 		948606772B6CFCE500B1055A /* DisplayMenuDelegateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948606762B6CFCE500B1055A /* DisplayMenuDelegateHandler.swift */; };
 		9486067A2B6CFDDB00B1055A /* UploadAddMenuDelegateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948606792B6CFDDB00B1055A /* UploadAddMenuDelegateHandler.swift */; };
-		94892C921EFBEA3D00AEAC25 /* MEGASdkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4152268A1A692ECC00EC7BB6 /* MEGASdkManager.m */; };
 		94892C931EFBEA4100AEAC25 /* MEGALogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 41A4204E1C4EA02C002E192E /* MEGALogger.m */; };
 		94892CA11EFBF20800AEAC25 /* UIFont+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B5B4FFE1E681BAC00DBEB3B /* UIFont+MNZCategory.m */; };
 		948EE56D2B67B4FE001F5EEA /* RubbishBinMenuDelegateHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948EE56C2B67B4FD001F5EEA /* RubbishBinMenuDelegateHandler.swift */; };
@@ -3042,8 +3039,6 @@
 		415226831A692ECC00EC7BB6 /* Settings.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		415226871A692ECC00EC7BB6 /* Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Helper.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		415226881A692ECC00EC7BB6 /* Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = Helper.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		415226891A692ECC00EC7BB6 /* MEGASdkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGASdkManager.h; sourceTree = "<group>"; };
-		4152268A1A692ECC00EC7BB6 /* MEGASdkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGASdkManager.m; sourceTree = "<group>"; };
 		4156C8081AD7E79A00F5E818 /* LTHKeychainUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTHKeychainUtils.h; sourceTree = "<group>"; };
 		4156C8091AD7E79A00F5E818 /* LTHKeychainUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTHKeychainUtils.m; sourceTree = "<group>"; };
 		4156C80A1AD7E79A00F5E818 /* LTHPasscodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTHPasscodeViewController.h; sourceTree = "<group>"; };
@@ -10335,8 +10330,6 @@
 				A84F4A95298904860017ACB4 /* MEGAChatSdk+SharedInstanceWrapper.swift */,
 				A84F4A8E298903600017ACB4 /* MEGASdk+SharedInstanceWrapper.swift */,
 				A534E15C2B725E300067A0E1 /* MEGASdkCleanUp.swift */,
-				415226891A692ECC00EC7BB6 /* MEGASdkManager.h */,
-				4152268A1A692ECC00EC7BB6 /* MEGASdkManager.m */,
 			);
 			path = MEGASDK;
 			sourceTree = "<group>";
@@ -14504,7 +14497,6 @@
 				A84F4A8F298903600017ACB4 /* MEGASdk+SharedInstanceWrapper.swift in Sources */,
 				A8E5E52B282A913F007155CA /* MEGASdk+SynchronousBGThread.swift in Sources */,
 				A534E15D2B725E300067A0E1 /* MEGASdkCleanUp.swift in Sources */,
-				4152269B1A692ECC00EC7BB6 /* MEGASdkManager.m in Sources */,
 				5D9DE5B6254BE9E400FA69C8 /* MEGASearchBarView.swift in Sources */,
 				C467AD4A26A8150D00AFE4D2 /* MEGASegmentedControl.swift in Sources */,
 				C45390D72565BB840026F215 /* MEGASelectedButton.swift in Sources */,
@@ -15294,7 +15286,6 @@
 				772DE06A2444B30C0013EF52 /* MEGALocalNotificationManager.m in Sources */,
 				774941E62416552600FC5CB6 /* MEGALogger.m in Sources */,
 				A84F4A93298903600017ACB4 /* MEGASdk+SharedInstanceWrapper.swift in Sources */,
-				7794AEDF231E54120039C1D2 /* MEGASdkManager.m in Sources */,
 				A81BD5B227EB312400234902 /* MEGAStore+Message.swift in Sources */,
 				774941DB240FF69800FC5CB6 /* MEGAStore.m in Sources */,
 				774941DF2410EADA00FC5CB6 /* MOChatDraft+CoreDataClass.m in Sources */,
@@ -15494,7 +15485,6 @@
 				A84F4A92298903600017ACB4 /* MEGASdk+SharedInstanceWrapper.swift in Sources */,
 				A8E5E52F282A917D007155CA /* MEGASdk+SynchronousBGThread.swift in Sources */,
 				A534E15F2B7262380067A0E1 /* MEGASdkCleanUp.swift in Sources */,
-				94892C921EFBEA3D00AEAC25 /* MEGASdkManager.m in Sources */,
 				5BA81EA31FC30C8F00C8146C /* MEGAShareRequestDelegate.m in Sources */,
 				2FBBE77E25E4544900B760BC /* MEGAStartDownloadTransferDelegate.m in Sources */,
 				940CEE422A84C4C8007DD202 /* MEGAStore+Additions.swift in Sources */,

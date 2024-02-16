@@ -7,9 +7,10 @@
 #import "LoginViewController.h"
 #import "MEGALinkManager.h"
 #import "MEGALoginRequestDelegate.h"
-#import "MEGASdkManager.h"
 #import "OnboardingViewController.h"
 #import "UIApplication+MNZCategory.h"
+#import "MEGAChatSdk.h"
+#import "MEGA-Swift.h"
 
 @import MEGAL10nObjc;
 @import SAMKeychain;
@@ -42,16 +43,16 @@
         if (request.flag) {
             NSString *ephemeralEmail = [SAMKeychain passwordForService:@"MEGA" account:@"email"];
             if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionId"] && [request.email isEqualToString:ephemeralEmail]) {                
-                MEGAChatInit chatInit = [[MEGASdkManager sharedMEGAChatSdk] initKarereWithSid:nil];
+                MEGAChatInit chatInit = [MEGAChatSdk.shared initKarereWithSid:nil];
                 if (chatInit != MEGAChatInitWaitingNewSession) {
                     MEGALogError(@"Init Karere without sesion must return waiting for a new sesion");
-                    [[MEGASdkManager sharedMEGAChatSdk] logout];
+                    [MEGAChatSdk.shared logout];
                 }
                 
                 MEGALoginRequestDelegate *loginRequestDelegate = [[MEGALoginRequestDelegate alloc] init];
                 loginRequestDelegate.confirmAccountInOtherClient = YES;
                 NSString *password = [SAMKeychain passwordForService:@"MEGA" account:@"password"];
-                [MEGASdkManager.sharedMEGASdk loginWithEmail:request.email password:password delegate:loginRequestDelegate];
+                [MEGASdk.shared loginWithEmail:request.email password:password delegate:loginRequestDelegate];
             } else {
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"accountAlreadyConfirmed", @"Message shown when the user clicks on a confirm account link that has already been used") message:nil preferredStyle:UIAlertControllerStyleAlert];
                 [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
@@ -67,7 +68,7 @@
                 }]];
                 
                 if ([SAMKeychain passwordForService:@"MEGA" account:@"sessionId"]) {
-                    [MEGASdkManager.sharedMEGASdk cancelCreateAccount];
+                    [MEGASdk.shared cancelCreateAccount];
                     [Helper clearEphemeralSession];
                     [UIApplication.mnz_visibleViewController dismissViewControllerAnimated:YES completion:^{
                         [UIApplication.mnz_visibleViewController presentViewController:alertController animated:YES completion:nil];

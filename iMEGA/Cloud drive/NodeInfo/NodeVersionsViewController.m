@@ -2,7 +2,6 @@
 
 #import "SVProgressHUD.h"
 
-#import "MEGASdkManager.h"
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
@@ -54,7 +53,7 @@ MEGADelegate
     [super viewWillAppear:animated];
     
     if (!self.presentedViewController) {
-        [[MEGASdkManager sharedMEGASdk] addMEGADelegate:self];
+        [MEGASdk.shared addMEGADelegate:self];
     }
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
     [self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:YES];
@@ -64,7 +63,7 @@ MEGADelegate
     [super viewWillDisappear:animated];
     
     if (!self.presentedViewController) {
-        [[MEGASdkManager sharedMEGASdk] removeMEGADelegateAsync:self];
+        [MEGASdk.shared removeMEGADelegateAsync:self];
     }
 }
 
@@ -107,7 +106,7 @@ MEGADelegate
     NodeTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:@"nodeCell" forIndexPath:indexPath];
     cell.cellFlavor = NodeTableViewCellFlavorVersions;
     cell.isNodeInRubbishBin = [node mnz_isInRubbishBin];
-    [cell configureCellForNode:node api:[MEGASdkManager sharedMEGASdk]];
+    [cell configureCellForNode:node api:MEGASdk.shared];
     
     if (self.tableView.isEditing) {
         for (MEGANode *tempNode in self.selectedNodesArray) {
@@ -204,7 +203,7 @@ MEGADelegate
     
     NSMutableArray *rightActions = [NSMutableArray new];
     
-    if ([MEGASdkManager.sharedMEGASdk accessLevelForNode:self.node] >= MEGAShareTypeAccessFull) {
+    if ([MEGASdk.shared accessLevelForNode:self.node] >= MEGAShareTypeAccessFull) {
         UIContextualAction *removeAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
             [self removeAction:nil];
         }];
@@ -213,7 +212,7 @@ MEGADelegate
         [rightActions addObject:removeAction];
     }
     
-    if (indexPath.section != 0 && [MEGASdkManager.sharedMEGASdk accessLevelForNode:self.node] >= MEGAShareTypeAccessReadWrite) {
+    if (indexPath.section != 0 && [MEGASdk.shared accessLevelForNode:self.node] >= MEGAShareTypeAccessReadWrite) {
         UIContextualAction *revertAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:nil handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
             [self revertAction:nil];
         }];
@@ -302,11 +301,11 @@ MEGADelegate
     }
     MEGANode *node = self.selectedNodesArray.firstObject;
     
-    if ([MEGASdkManager.sharedMEGASdk accessLevelForNode:node] == MEGAShareTypeAccessReadWrite) {
+    if ([MEGASdk.shared accessLevelForNode:node] == MEGAShareTypeAccessReadWrite) {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"permissionTitle", @"Error title shown when you are trying to do an action with a file or folder and you don’t have the necessary permissions") message:LocalizedString(@"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?", @"Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share.") preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"") style:UIAlertActionStyleCancel handler:nil]];
         [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"Create new file", @"Text shown for the action create new file") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            [MEGASdkManager.sharedMEGASdk restoreVersionNode:node delegate:[MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
+            [MEGASdk.shared restoreVersionNode:node delegate:[MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
                 if (error.type == MEGAErrorTypeApiOk) {
                     [SVProgressHUD showSuccessWithStatus:LocalizedString(@"Version created as a new file successfully.", @"Text shown when the creation of a version as a new file was successful")];
                 }
@@ -314,7 +313,7 @@ MEGADelegate
         }]];
         [self presentViewController:alertController animated:YES completion:nil];
     } else {
-        [MEGASdkManager.sharedMEGASdk restoreVersionNode:node];
+        [MEGASdk.shared restoreVersionNode:node];
     }
     
     [self setEditing:NO animated:YES];
@@ -325,7 +324,7 @@ MEGADelegate
     [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"") style:UIAlertActionStyleCancel handler:nil]];
     [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"delete", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         for (MEGANode *node in self.selectedNodesArray) {
-            [[MEGASdkManager sharedMEGASdk] removeVersionNode:node];
+            [MEGASdk.shared removeVersionNode:node];
         }
         [self setEditing:NO animated:YES];
     }]];
@@ -410,7 +409,7 @@ MEGADelegate
                 break;
             } else {
                 if ([self isNodeWithHandlePreviousVersion:nodeUpdated.base64Handle]) {
-                    self.node = [MEGASdkManager.sharedMEGASdk nodeForHandle:self.node.handle];
+                    self.node = [MEGASdk.shared nodeForHandle:self.node.handle];
                     [self reloadUI];
                     break;
                 }
@@ -419,7 +418,7 @@ MEGADelegate
         
         if ([nodeUpdated hasChangedType:MEGANodeChangeTypeParent]) {
             if (nodeUpdated.handle == self.node.handle) {
-                self.node = [MEGASdkManager.sharedMEGASdk nodeForHandle:nodeUpdated.parentHandle];
+                self.node = [MEGASdk.shared nodeForHandle:nodeUpdated.parentHandle];
                 [self reloadUI];
                 break;
             }

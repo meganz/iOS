@@ -3,7 +3,6 @@
 #import "SVProgressHUD.h"
 
 #import "ChangePasswordViewController.h"
-#import "MEGASdkManager.h"
 #import "MEGANavigationController.h"
 #import "MEGALinkManager.h"
 #import "NSString+MNZCategory.h"
@@ -11,6 +10,7 @@
 #import "TwoFactorAuthenticationViewController.h"
 #import "UIApplication+MNZCategory.h"
 #import "UITextField+MNZCategory.h"
+#import "MEGA-Swift.h"
 
 @import MEGAL10nObjc;
 @import SAMKeychain;
@@ -128,7 +128,7 @@
                 [masterKeyLoggedInAlertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"") style:UIAlertActionStyleCancel handler:nil]];
                 
                 UIAlertAction *okAlertAction = [UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-                    NSString *masterKey = masterKeyLoggedInAlertController.textFields.count ? masterKeyLoggedInAlertController.textFields.firstObject.text : MEGASdkManager.sharedMEGASdk.masterKey;
+                    NSString *masterKey = masterKeyLoggedInAlertController.textFields.count ? masterKeyLoggedInAlertController.textFields.firstObject.text : MEGASdk.shared.masterKey;
                     [self presentChangeViewType:ChangeTypeResetPassword email:MEGALinkManager.emailOfNewSignUpLink masterKey:masterKey link:request.link];
                     MEGALinkManager.emailOfNewSignUpLink = nil;
                 }];

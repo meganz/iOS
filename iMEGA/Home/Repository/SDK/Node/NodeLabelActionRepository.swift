@@ -26,7 +26,7 @@ final class NodeLabelActionRepository: NodeLabelActionRepositoryProtocol {
 
     private let sdk: MEGASdk
 
-    init(sdk: MEGASdk = MEGASdkManager.sharedMEGASdk()) {
+    init(sdk: MEGASdk = MEGASdk.shared) {
         self.sdk = sdk
     }
 

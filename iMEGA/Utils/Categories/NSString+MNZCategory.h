@@ -1,3 +1,5 @@
+#import "MEGASdk.h"
+
 @import UIKit;
 
 typedef NS_ENUM (NSInteger, MEGAChatStatus);

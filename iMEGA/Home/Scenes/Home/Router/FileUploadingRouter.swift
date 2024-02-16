@@ -127,7 +127,7 @@ final class FileUploadingRouter {
                 asyncOnMain {
                     guard let self else { return }
                     scanViewController.dismiss(animated: true, completion: nil)
-                    let rootNode = MEGASdkManager.sharedMEGASdk().rootNode
+                    let rootNode = MEGASdk.shared.rootNode
                     let documentScanViewController = self.documentScanerSaveSettingViewController(parentNode: rootNode, images: images)
                     self.navigationController?.present(documentScanViewController, animated: true, completion: nil)
                 }

@@ -83,7 +83,7 @@ final class NewChatRouter {
         ofShouldGetChatLink getChatLink: Bool,
         completion: @escaping (HandleEntity, String?) -> Void
     ) -> ChatRequestDelegate {
-        let chatSDK = MEGASdkManager.sharedMEGAChatSdk()
+        let chatSDK = MEGAChatSdk.shared
         
         func createChatLink(request: MEGAChatRequest, completion: @escaping (HandleEntity, String?) -> Void) {
             let publicChatLinkCreationDelegate = ChatRequestDelegate { result in
@@ -112,7 +112,7 @@ final class NewChatRouter {
         allowNonHostToAddParticipants: Bool,
         completion: @escaping (HandleEntity, String?) -> Void
     ) {
-        let chatSDK = MEGASdkManager.sharedMEGAChatSdk()
+        let chatSDK = MEGAChatSdk.shared
         let chatPeers = MEGAChatPeerList.mnz_standardPrivilegePeerList(usersArray: users)
         chatSDK.createPublicChat(withPeers: chatPeers,
                                  title: chatRoomName,
@@ -126,7 +126,7 @@ final class NewChatRouter {
                                 groupName: String?,
                                 allowNonHostToAddParticipants: Bool,
                                 completion: @escaping (MEGAChatRoom) -> Void) {
-        let chatSDK = MEGASdkManager.sharedMEGAChatSdk()
+        let chatSDK = MEGAChatSdk.shared
         chatSDK.mnz_createChatRoom(usersArray: users,
                                    title: groupName,
                                    allowNonHostToAddParticipants: allowNonHostToAddParticipants,
@@ -135,7 +135,7 @@ final class NewChatRouter {
 
     private func chatRoom(byUserHandle userHandle: HandleEntity,
                           completion: @escaping (MEGAChatRoom) -> Void) {
-        let chatSDK = MEGASdkManager.sharedMEGAChatSdk()
+        let chatSDK = MEGAChatSdk.shared
         if let chatRoom = chatSDK.chatRoom(byUser: userHandle) {
             completion(chatRoom)
         } else {

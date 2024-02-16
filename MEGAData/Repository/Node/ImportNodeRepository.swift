@@ -4,7 +4,7 @@ import MEGASDKRepo
 
 struct ImportNodeRepository: ImportNodeRepositoryProtocol {
     static var newRepo: ImportNodeRepository {
-        ImportNodeRepository(sdk: MEGASdkManager.sharedMEGASdk(), chatSdk: MEGASdkManager.sharedMEGAChatSdk(), myChatFilesFolder: MyChatFilesFolderNodeAccess.shared)
+        ImportNodeRepository(sdk: MEGASdk.shared, chatSdk: MEGAChatSdk.shared, myChatFilesFolder: MyChatFilesFolderNodeAccess.shared)
     }
     
     private let sdk: MEGASdk

@@ -43,20 +43,20 @@
     [self.tableView addGestureRecognizer:tapGesture];
     [self registerCustomCells];
     
-    self.chatReady = MEGASdkManager.sharedMEGAChatSdk.initState == MEGAChatInitOnlineSession && MEGASdkManager.sharedMEGAChatSdk.activeChatListItems.size == 0;
+    self.chatReady = MEGAChatSdk.shared.initState == MEGAChatInitOnlineSession && MEGAChatSdk.shared.activeChatListItems.size == 0;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     [self.navigationController setToolbarHidden:YES animated:animated];
-    [[MEGASdkManager sharedMEGAChatSdk] addChatDelegate:self];
+    [MEGAChatSdk.shared addChatDelegate:self];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
+    [MEGAChatSdk.shared removeChatDelegate:self];
 }
 
 - (void)didBecomeActive {
@@ -112,7 +112,7 @@
 #pragma mark - IBActions
 
 - (IBAction)cancelAction:(UIBarButtonItem *)sender {
-    [[MEGASdkManager sharedMEGAChatSdk] removeChatDelegate:self];
+    [MEGAChatSdk.shared removeChatDelegate:self];
     [self.shareViewController hideViewWithCompletion:^{
         [self.extensionContext cancelRequestWithError:[NSError errorWithDomain:@"Cancel tapped" code:-1 userInfo:nil]];
     }];
@@ -123,7 +123,7 @@
 - (void)onChatInitStateUpdate:(MEGAChatSdk *)api newState:(MEGAChatInit)newState {
     MEGALogInfo(@"onChatInitStateUpdate new state: %td", newState);
     BOOL wasChatReady = self.chatReady;
-    self.chatReady = newState == MEGAChatInitOnlineSession && MEGASdkManager.sharedMEGAChatSdk.activeChatListItems.size == 0;
+    self.chatReady = newState == MEGAChatInitOnlineSession && MEGAChatSdk.shared.activeChatListItems.size == 0;
     if (wasChatReady != self.isChatReady) {
         [self.tableView reloadData];
     }
