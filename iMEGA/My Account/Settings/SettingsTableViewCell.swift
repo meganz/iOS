@@ -38,7 +38,7 @@ class SettingsTableViewCell: UITableViewCell {
     }
     
     private func updateAppearance() {
-        titleLabel.textColor = isDestructive ? UIColor.mnz_red(for: traitCollection) :
+        titleLabel.textColor = isDestructive ? UIColor.mnz_errorRed(for: traitCollection) :
                                                UIColor.cellTitleColor(for: traitCollection)
     }
 }
