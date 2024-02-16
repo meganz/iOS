@@ -6,7 +6,6 @@
 #import "Helper.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
 #import "MEGANode+MNZCategory.h"
-#import "MEGASdkManager.h"
 #import "UIImageView+MNZCategory.h"
 #import "MEGAStore.h"
 #import "MEGA-Swift.h"
@@ -96,7 +95,7 @@ static NSString *kFileSize = @"kFileSize";
     self.favouriteView.hidden = favouriteIsHidden;
     BOOL linkIsHidden = !node.isExported || node.mnz_isInRubbishBin;
     self.linkView.hidden = linkIsHidden;
-    [MEGASdkManager.sharedMEGASdk hasVersionsForNode:node completion:^(BOOL hasVersions) {
+    [MEGASdk.shared hasVersionsForNode:node completion:^(BOOL hasVersions) {
         BOOL versionedIsHidden = !hasVersions;
         dispatch_async(dispatch_get_main_queue(), ^{
             self.versionedView.hidden = versionedIsHidden;

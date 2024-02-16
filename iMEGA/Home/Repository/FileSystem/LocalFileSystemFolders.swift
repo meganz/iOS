@@ -11,7 +11,7 @@ extension TemporaryDirectoryFinding {
     static var live: Self {
         return Self(searchFor: { searchType in
             let temporaryDirectory = NSTemporaryDirectory()
-            let sdk = MEGASdkManager.sharedMEGASdk()
+            let sdk = MEGASdk.shared
             switch searchType {
             case let .node(handle: handle, name: name, fingerprint):
                 if let nodeTemporaryDirectoryURL = urlForNode(handle, name: name, in: temporaryDirectory),

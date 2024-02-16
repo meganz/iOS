@@ -8,7 +8,6 @@
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAPhotoBrowserViewController.h"
-#import "MEGASdkManager.h"
 #import "MEGAUser+MNZCategory.h"
 #import "NSDate+MNZCategory.h"
 #import "NSString+MNZCategory.h"
@@ -91,10 +90,10 @@
     }
     self.nameLabel.text = title;
     
-    MEGAShareType shareType = [MEGASdkManager.sharedMEGASdk accessLevelForNode:nodesArray.firstObject];
+    MEGAShareType shareType = [MEGASdk.shared accessLevelForNode:nodesArray.firstObject];
     if ([recentActionBucket.userEmail isEqualToString:MEGASdk.currentUserEmail]) {
         if (shareType == MEGAShareTypeAccessOwner) {
-            MEGANode *firstbornParentNode = [[MEGASdkManager.sharedMEGASdk nodeForHandle:recentActionBucket.parentHandle] mnz_firstbornInShareOrOutShareParentNode];
+            MEGANode *firstbornParentNode = [[MEGASdk.shared nodeForHandle:recentActionBucket.parentHandle] mnz_firstbornInShareOrOutShareParentNode];
             if (firstbornParentNode.isOutShare) {
                 self.incomingOrOutgoingView.hidden = NO;
                 self.incomingOrOutgoingImageView.image = [UIImage imageNamed:@"mini_folder_outgoing"];
@@ -112,7 +111,7 @@
         self.incomingOrOutgoingImageView.image = (shareType == MEGAShareTypeAccessOwner) ? [UIImage imageNamed:@"mini_folder_outgoing"] : [UIImage imageNamed:@"mini_folder_incoming"];
     }
     
-    MEGANode *parentNode = [MEGASdkManager.sharedMEGASdk nodeForHandle:recentActionBucket.parentHandle];
+    MEGANode *parentNode = [MEGASdk.shared nodeForHandle:recentActionBucket.parentHandle];
     self.infoLabel.text = [NSString stringWithFormat:@"%@ ・", parentNode.name];
     
     self.uploadOrVersionImageView.image = recentActionBucket.isUpdate ? [UIImage imageNamed:@"versioned"] : [UIImage imageNamed:@"recentUpload"];
@@ -147,7 +146,7 @@
 #pragma mark - UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:self.nodesArray.mutableCopy api:MEGASdkManager.sharedMEGASdk displayMode:DisplayModeCloudDrive presentingNode:self.nodesArray[indexPath.row]];
+    MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:self.nodesArray.mutableCopy api:MEGASdk.shared displayMode:DisplayModeCloudDrive presentingNode:self.nodesArray[indexPath.row]];
 
     self.showNodeAction(photoBrowserVC);
 }

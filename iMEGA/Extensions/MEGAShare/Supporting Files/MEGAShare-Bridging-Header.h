@@ -1,8 +1,6 @@
 #ifndef MEGAShare_Bridging_Header_h
 #define MEGAShare_Bridging_Header_h
 
-#import "MEGASdkManager.h"
-
 #import "SVProgressHUD.h"
 
 #import "NSDate+MNZCategory.h"

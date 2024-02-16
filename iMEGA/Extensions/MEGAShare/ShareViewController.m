@@ -14,7 +14,6 @@
 #import "MEGALogger.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGARequestDelegate.h"
-#import "MEGASdkManager.h"
 #import "MEGASdk+MNZCategory.h"
 #import "MEGAShare-Swift.h"
 #import "MEGATransferDelegate.h"
@@ -110,7 +109,7 @@
     self.passcodeToBePresented = NO;
     
     NSString *languageCode = NSBundle.mainBundle.preferredLocalizations.firstObject;
-    [MEGASdkManager.sharedMEGASdk setLanguageCode:languageCode];
+    [MEGASdk.shared setLanguageCode:languageCode];
     
     // Add observers to get notified when the extension goes to background and comes back to foreground:
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willResignActive)
@@ -145,7 +144,7 @@
         }
         
         if ([self.sharedUserDefaults boolForKey:@"useHttpsOnly"]) {
-            [[MEGASdkManager sharedMEGASdk] useHttpsOnly:YES];
+            [MEGASdk.shared useHttpsOnly:YES];
         }
     } else {
         [self openApp];
@@ -158,13 +157,13 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [MEGASdkManager.sharedMEGASdk addMEGARequestDelegate:self.logoutDelegate];
+    [MEGASdk.shared addMEGARequestDelegate:self.logoutDelegate];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [[MEGASdkManager sharedMEGASdk] removeMEGARequestDelegateAsync:self];
+    [MEGASdk.shared removeMEGARequestDelegateAsync:self];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -288,7 +287,7 @@
     self.launchVC = launchVC;
     [self.view addSubview:self.launchVC.view];
     
-    [[MEGASdkManager sharedMEGASdk] fastLoginWithSession:self.session delegate:self];
+    [MEGASdk.shared fastLoginWithSession:self.session delegate:self];
 }
 
 - (UINavigationController *)shareDestinationNavigationVC {
@@ -419,7 +418,7 @@
                     BOOL sessionInvalidateInOtherClient = request.paramType == MEGAErrorTypeApiESid;
                     if (request.flag || sessionInvalidateInOtherClient) {
                         [Helper logout];
-                        [[MEGASdkManager sharedMEGASdk] mnz_setAccountDetails:nil];
+                        [MEGASdk.shared mnz_setAccountDetails:nil];
                         if (sessionInvalidateInOtherClient) {
                             UIAlertController *alert = [UIAlertController alertControllerWithTitle:LocalizedString(@"loggedOut_alertTitle", @"") message:LocalizedString(@"loggedOutFromAnotherLocation", @"") preferredStyle:UIAlertControllerStyleAlert];
                             [alert addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
@@ -803,7 +802,7 @@
 - (void)smartUploadLocalPath:(NSString *)localPath parent:(MEGANode *)parentNode isFile:(BOOL)isFile {
     if (self.users || self.chats) {
         NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:localPath.mnz_coordinatesOfPhotoOrVideo];
-        [MEGASdkManager.sharedMEGASdk startUploadWithLocalPath:localPath parent:parentNode fileName:nil appData:appData isSourceTemporary:YES startFirst:NO cancelToken:nil delegate:self];
+        [MEGASdk.shared startUploadWithLocalPath:localPath parent:parentNode fileName:nil appData:appData isSourceTemporary:YES startFirst:NO cancelToken:nil delegate:self];
     } else {
         [self.transfers addObject:[CancellableTransfer.alloc initWithHandle:MEGAInvalidHandle parentHandle:parentNode.handle fileLinkURL:nil localFileURL:[NSURL fileURLWithPath:localPath] name:nil appData:[NSString.new mnz_appDataToSaveCoordinates:localPath.mnz_coordinatesOfPhotoOrVideo] priority:NO isFile:isFile type:CancellableTransferTypeUpload]];
         [self onePendingLess];
@@ -868,7 +867,7 @@
 
 - (void)logout {
     [SVProgressHUD showImage:[UIImage imageNamed:@"hudLogOut"] status:LocalizedString(@"loggingOut", @"String shown when you are logging out of your account.")];
-    [[MEGASdkManager sharedMEGASdk] logout];
+    [MEGASdk.shared logout];
 }
 
 #pragma mark - BrowserViewControllerDelegate

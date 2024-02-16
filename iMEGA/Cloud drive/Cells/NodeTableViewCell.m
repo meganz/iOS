@@ -5,7 +5,6 @@
 #import "Helper.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
 #import "MEGANode+MNZCategory.h"
-#import "MEGASdkManager.h"
 #import "MEGAStore.h"
 #import "NSDate+MNZCategory.h"
 #import "NSString+MNZCategory.h"
@@ -102,7 +101,7 @@
                     self.thumbnailImageView.image = [UIImage imageWithContentsOfFile:request.file];
                 }
             }];
-            [[MEGASdkManager sharedMEGASdk] getThumbnailNode:node destinationFilePath:thumbnailFilePath delegate:getThumbnailRequestDelegate];
+            [MEGASdk.shared getThumbnailNode:node destinationFilePath:thumbnailFilePath delegate:getThumbnailRequestDelegate];
             [self.thumbnailImageView setImage:[NodeAssetsManager.shared iconFor:node]];
         }
     } else {
@@ -125,7 +124,7 @@
     
     self.infoLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     if (node.isFile) {
-        MEGASdk *megaSDK = self.recentActionBucket ? MEGASdkManager.sharedMEGASdk : api;
+        MEGASdk *megaSDK = self.recentActionBucket ? MEGASdk.shared : api;
         switch (self.cellFlavor) {
             case NodeTableViewCellFlavorVersions:
             case NodeTableViewCellFlavorRecentAction:
@@ -133,7 +132,7 @@
                 self.infoLabel.text =
                 self.recentActionBucket ? [Helper sizeAndCreationHourAndMininuteForNode:node api:megaSDK] :
                 [Helper sizeAndModificationDateForNode:node api:megaSDK];
-                [MEGASdkManager.sharedMEGASdk hasVersionsForNode:node completion:^(BOOL hasVersions) {
+                [MEGASdk.shared hasVersionsForNode:node completion:^(BOOL hasVersions) {
                     dispatch_async(dispatch_get_main_queue(), ^{
                         self.versionedImageView.hidden = !hasVersions;
                     });
@@ -142,7 +141,7 @@
             }
             case NodeTableViewCellFlavorSharedLink: {
                 self.infoLabel.text = [Helper sizeAndShareLinkCreateDateForSharedLinkNode:node api:megaSDK];
-                [MEGASdkManager.sharedMEGASdk hasVersionsForNode:node completion:^(BOOL hasVersions) {
+                [MEGASdk.shared hasVersionsForNode:node completion:^(BOOL hasVersions) {
                     dispatch_async(dispatch_get_main_queue(), ^{
                         self.versionedImageView.hidden = !hasVersions;
                     });
@@ -183,10 +182,10 @@
     self.thumbnailImageView.accessibilityIgnoresInvertColors = YES;
     self.thumbnailPlayImageView.accessibilityIgnoresInvertColors = YES;
     
-    MEGAShareType shareType = [MEGASdkManager.sharedMEGASdk accessLevelForNode:node];
+    MEGAShareType shareType = [MEGASdk.shared accessLevelForNode:node];
     if ([recentActionBucket.userEmail isEqualToString:MEGASdk.currentUserEmail]) {
         if (shareType == MEGAShareTypeAccessOwner) {
-            MEGANode *firstbornParentNode = [[MEGASdkManager.sharedMEGASdk nodeForHandle:recentActionBucket.parentHandle] mnz_firstbornInShareOrOutShareParentNode];
+            MEGANode *firstbornParentNode = [[MEGASdk.shared nodeForHandle:recentActionBucket.parentHandle] mnz_firstbornInShareOrOutShareParentNode];
             if (firstbornParentNode.isOutShare) {
                 self.incomingOrOutgoingView.hidden = NO;
                 self.incomingOrOutgoingImageView.image = [UIImage imageNamed:@"mini_folder_outgoing"];
@@ -247,10 +246,10 @@
     if (self.cellFlavor == NodeTableViewCellExplorerView && self.node != nil) {
         self.infoStringRightLabel.lineBreakMode = NSLineBreakByTruncatingHead;
         BOOL shouldIncludeRootFolder = self.node.isInShare
-        || (self.node.parentHandle == MEGASdkManager.sharedMEGASdk.rootNode.handle);
+        || (self.node.parentHandle == MEGASdk.shared.rootNode.handle);
         self.infoLabel.text = shouldIncludeRootFolder ? LocalizedString(@"", @"") : LocalizedString(@"> ", @"");
         self.infoStringRightLabel.text = [self.node filePathWithDelimeter:@" > "
-                                                                      sdk:MEGASdkManager.sharedMEGASdk
+                                                                      sdk:MEGASdk.shared
                                                     includeRootFolderName:shouldIncludeRootFolder
                                                           excludeFileName:YES];
         self.versionedImageView.image = [UIImage imageNamed:self.node.isInShare ? @"pathInShares" : @"pathCloudDrive"];

@@ -3,7 +3,7 @@ import MEGADomain
 
 final class OfflineFilesRepository: OfflineFilesRepositoryProtocol {
     static var newRepo: OfflineFilesRepository {
-        OfflineFilesRepository(store: MEGAStore.shareInstance(), sdk: MEGASdkManager.sharedMEGASdk())
+        OfflineFilesRepository(store: MEGAStore.shareInstance(), sdk: MEGASdk.shared)
     }
     
     private let store: MEGAStore

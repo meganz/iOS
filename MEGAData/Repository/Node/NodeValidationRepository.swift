@@ -2,7 +2,7 @@ import MEGADomain
 
 struct NodeValidationRepository: NodeValidationRepositoryProtocol {
     static var newRepo: NodeValidationRepository {
-        NodeValidationRepository(sdk: MEGASdkManager.sharedMEGASdk())
+        NodeValidationRepository(sdk: MEGASdk.shared)
     }
     
     private let sdk: MEGASdk

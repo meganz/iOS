@@ -124,7 +124,7 @@ extension FilesExplorerGridSource: UICollectionViewDataSource {
         
         cell.configureCell(for: node,
                            allowedMultipleSelection: collectionView.allowsMultipleSelection,
-                           sdk: MEGASdkManager.sharedMEGASdk(),
+                           sdk: MEGASdk.shared,
                            delegate: self)
         return cell
     }
@@ -137,7 +137,7 @@ extension FilesExplorerGridSource: DynamicTypeCollectionViewSizing {
         let cell = NodeCollectionViewCell.instantiateFromFileNib
         cell.configureCell(for: node,
                            allowedMultipleSelection: collectionView.allowsMultipleSelection,
-                           sdk: MEGASdkManager.sharedMEGASdk(),
+                           sdk: MEGASdk.shared,
                            delegate: self)
         return cell
     }

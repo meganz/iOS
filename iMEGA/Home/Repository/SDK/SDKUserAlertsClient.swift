@@ -21,7 +21,7 @@ struct SDKUserAlertsClient {
 extension SDKUserAlertsClient {
 
     static var live: Self {
-        let api = MEGASdkManager.sharedMEGASdk()
+        let api = MEGASdk.shared
         let globalUserAlertsAndContactRequestDelegate = MEGAUserNotificationGlobalDelegate()
         api.add(globalUserAlertsAndContactRequestDelegate)
 

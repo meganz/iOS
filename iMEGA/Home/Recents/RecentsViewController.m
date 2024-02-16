@@ -5,7 +5,6 @@
 #import "MEGANode+MNZCategory.h"
 #import "MEGANodeList+MNZCategory.h"
 #import "MEGAReachabilityManager.h"
-#import "MEGASdkManager.h"
 #import "NSString+MNZCategory.h"
 
 #import "CloudDriveViewController.h"
@@ -59,7 +58,7 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 3.0;
     self.dateFormatter.locale = NSLocale.autoupdatingCurrentLocale;
     
     RecentsPreferenceManager.delegate = self;
-    [MEGASdkManager.sharedMEGASdk addMEGADelegate:self];
+    [MEGASdk.shared addMEGADelegate:self];
     
     self.tableView.sectionHeaderTopPadding = 0.0f;
 }
@@ -69,7 +68,7 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 3.0;
     
     RecentsPreferenceManager.delegate = nil;
 
-    [[MEGASdkManager sharedMEGASdk] removeMEGADelegateAsync:self];
+    [MEGASdk.shared removeMEGADelegateAsync:self];
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
@@ -103,7 +102,7 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 3.0;
     
     if (node) {
         BOOL isNodeUndecrypted = [node isUndecryptedWithOwnerEmail:recentActionBucket.userEmail
-                                                                in:MEGASdkManager.sharedMEGASdk];
+                                                                in:MEGASdk.shared];
         if (isNodeUndecrypted) {
             [self showContactVerificationViewForUserEmail:recentActionBucket.userEmail];
         } else {
@@ -224,7 +223,7 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 3.0;
     MEGANode *node = nodesArray.firstObject;
     if (node) {
         BOOL isNodeUndecrypted = [node isUndecryptedWithOwnerEmail:recentActionBucket.userEmail
-                                                                in:MEGASdkManager.sharedMEGASdk];
+                                                                in:MEGASdk.shared];
         
         if (isNodeUndecrypted) {
             [self showContactVerificationViewForUserEmail:recentActionBucket.userEmail];
@@ -235,7 +234,7 @@ static const NSTimeInterval RecentsViewReloadTimeDelay = 3.0;
     
     if (nodesArray.count == 1) {
         if ([FileExtensionGroupOCWrapper verifyIsVisualMedia:node.name]) {
-            MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:nodesArray.mutableCopy api:MEGASdkManager.sharedMEGASdk displayMode:DisplayModeCloudDrive presentingNode:nodesArray.firstObject];
+            MEGAPhotoBrowserViewController *photoBrowserVC = [MEGAPhotoBrowserViewController photoBrowserWithMediaNodes:nodesArray.mutableCopy api:MEGASdk.shared displayMode:DisplayModeCloudDrive presentingNode:nodesArray.firstObject];
             [self.delegate showSelectedNodeInViewController:photoBrowserVC];
         } else {
             if ([FileExtensionGroupOCWrapper verifyIsMultiMedia:node.name] && ![FileExtensionGroupOCWrapper verifyIsVideo:node.name] && node.mnz_isPlayable) {

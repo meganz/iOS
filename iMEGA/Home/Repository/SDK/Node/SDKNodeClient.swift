@@ -25,7 +25,7 @@ struct SDKNodeClient {
 extension SDKNodeClient {
 
     static var live: Self {
-        let sdk  = MEGASdkManager.sharedMEGASdk()
+        let sdk  = MEGASdk.shared
 
         let megaSDKOperationQueue = OperationQueue()
         megaSDKOperationQueue.name = "MEGASDKOperationQueue"
