@@ -1,5 +1,6 @@
 import Foundation
 import MEGADomain
+import MEGASDKRepo
 
 struct SDKNodeClient {
 
@@ -42,12 +43,13 @@ extension SDKNodeClient {
             }
             let destinationPath = destinationPathURL.path
             megaSDKOperationQueue.addOperation {
-                let delegate = MEGAGenericRequestDelegate { (_, error) in
-                    guard error.type == .apiOk else {
+                let delegate = RequestDelegate { result in
+                    switch result {
+                    case .success:
+                        asyncOnGlobal { completion(true) }
+                    case .failure:
                         asyncOnGlobal { completion(false) }
-                        return
                     }
-                    asyncOnGlobal { completion(true) }
                 }
                 sdk.getThumbnailNode(node, destinationFilePath: destinationPath, delegate: delegate)
             }
@@ -62,13 +64,14 @@ extension SDKNodeClient {
 
         findChatFolderNode: { completion in
             megaSDKOperationQueue.addOperation {
-                let delegate = MEGAGenericRequestDelegate { (request, error) in
-                    guard error.type == .apiOk else {
+                let delegate = RequestDelegate { result in
+                    switch result {
+                    case let .success(request):
+                        let chatFilesFolderNode = sdk.node(forHandle: request.nodeHandle)
+                        completion(chatFilesFolderNode?.toNodeEntity())
+                    case .failure:
                         completion(nil)
-                        return
                     }
-                    let chatFilesFolderNode = sdk.node(forHandle: request.nodeHandle)
-                    completion(chatFilesFolderNode?.toNodeEntity())
                 }
                 sdk.getMyChatFilesFolder(with: delegate)
             }
