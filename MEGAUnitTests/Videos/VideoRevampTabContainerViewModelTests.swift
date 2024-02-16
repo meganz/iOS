@@ -21,6 +21,7 @@ final class VideoRevampTabContainerViewModelTests: XCTestCase {
         sut.dispatch(.onViewDidLoad)
         
         XCTAssertEqual(sortOrderPreferenceUseCase.getSortOrderCallCount, 1)
+        XCTAssertEqual(sortOrderPreferenceUseCase.monitorSortOrderCallCount, 1)
     }
     
     // MARK: - Dispatch.navigationBarAction.didSelectSortMenuAction
@@ -32,21 +33,6 @@ final class VideoRevampTabContainerViewModelTests: XCTestCase {
         sut.dispatch(.navigationBarAction(.didSelectSortMenuAction(sortType: selectedSortType)))
         
         XCTAssertEqual(sortOrderPreferenceUseCase.saveSortOrderCallCount, 1)
-    }
-    
-    func testDispatch_navigationBarActionDidSelectSortMenuAction_updatesSortOrderTypeToUI() {
-        let selectedSortType = anySortOrderType()
-        let (sut, _) = makeSUT()
-        
-        var receivedCommands = [VideoRevampTabContainerViewModel.Command]()
-        sut.invokeCommand = { command in
-            receivedCommands.append(command)
-        }
-        
-        sut.dispatch(.navigationBarAction(.didSelectSortMenuAction(sortType: selectedSortType)))
-        
-        XCTAssertEqual(sut.videoRevampSortOrderType, selectedSortType)
-        XCTAssertEqual(receivedCommands, [ .navigationBarCommand(.refreshContextMenu) ])
     }
     
     // MARK: - Dispatch.navigationBarAction.didReceivedDisplayMenuAction
@@ -63,14 +49,6 @@ final class VideoRevampTabContainerViewModelTests: XCTestCase {
         
         XCTAssertEqual(receivedCommands, [ .navigationBarCommand(.toggleEditing) ])
         XCTAssertEqual(sut.isEditing, true)
-    }
-    
-    func testDispatch_navigationBarActionDidReceivedDisplayMenuActionSort_setsVideoRevampSortOrderType() {
-        let (sut, sortOrderPreferenceUseCase) = makeSUT()
-        
-        sut.dispatch(.navigationBarAction(.didReceivedDisplayMenuAction(action: .sort)))
-        
-        XCTAssertEqual(sortOrderPreferenceUseCase.getSortOrderCallCount, 1)
     }
     
     // MARK: - Dispatch.navigationBarAction.didTapCancel

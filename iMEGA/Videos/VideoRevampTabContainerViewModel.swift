@@ -1,5 +1,7 @@
+import Combine
 import MEGADomain
 import MEGAPresentation
+import Video
 
 final class VideoRevampTabContainerViewModel: ViewModelType {
     
@@ -30,7 +32,9 @@ final class VideoRevampTabContainerViewModel: ViewModelType {
     var isSelectHidden = false
     var isEditing = false
     
-    private(set) var videoRevampSortOrderType: SortOrderType = .none
+    private(set) var syncModel = VideoRevampSyncModel()
+    
+    private var subscriptions = Set<AnyCancellable>()
     
     private let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
     
@@ -44,13 +48,12 @@ final class VideoRevampTabContainerViewModel: ViewModelType {
         switch action {
         case .onViewDidLoad:
             loadSortOrderType()
+            monitorSortOrderSubscription()
         case .navigationBarAction(.didReceivedDisplayMenuAction(let action)):
             switch action {
             case .select:
                 isEditing = true
                 invokeCommand?(.navigationBarCommand(.toggleEditing))
-            case .sort:
-                videoRevampSortOrderType = sortOrderPreferenceUseCase.sortOrder(for: .homeVideos).toSortOrderType()
             case .filter:
                 // router.showFilter()
                 break
@@ -59,8 +62,6 @@ final class VideoRevampTabContainerViewModel: ViewModelType {
             }
         case .navigationBarAction(.didSelectSortMenuAction(let sortOrderType)):
             sortOrderPreferenceUseCase.save(sortOrder: sortOrderType.toSortOrderEntity(), for: .homeVideos)
-            videoRevampSortOrderType = sortOrderType
-            invokeCommand?(.navigationBarCommand(.refreshContextMenu))
         case .navigationBarAction(.didTapSelectAll):
             break
         case .navigationBarAction(.didTapCancel):
@@ -69,8 +70,23 @@ final class VideoRevampTabContainerViewModel: ViewModelType {
     }
     
     private func loadSortOrderType() {
-        videoRevampSortOrderType = sortOrderPreferenceUseCase
+        syncModel.videoRevampSortOrderType = sortOrderPreferenceUseCase
             .sortOrder(for: .homeVideos)
-            .toSortOrderType()
+    }
+    
+    private func monitorSortOrderSubscription() {
+        sortOrderPreferenceUseCase.monitorSortOrder(for: .homeVideos)
+            .map { $0.toSortOrderType().toSortOrderEntity() }
+            .removeDuplicates()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.syncModel.videoRevampSortOrderType = $0
+                self?.reloadContextMenu()
+            }
+            .store(in: &subscriptions)
+    }
+    
+    private func reloadContextMenu() {
+        invokeCommand?(.navigationBarCommand(.refreshContextMenu))
     }
 }

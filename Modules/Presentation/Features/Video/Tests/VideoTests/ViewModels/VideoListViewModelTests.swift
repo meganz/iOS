@@ -33,7 +33,6 @@ final class VideoListViewModelTests: XCTestCase {
     func testOnViewAppeared_whenCalled_executeSearchUseCase() async {
         let (sut, fileSearchUseCase) = makeSUT()
         sut.searchedText = ""
-        sut.sortOrderType = .defaultAsc
         
         await sut.onViewAppeared()
         
@@ -43,7 +42,6 @@ final class VideoListViewModelTests: XCTestCase {
     func testOnViewAppeared_whenCalledOnFailedLoadVideos_executesSearchUseCaseInOrder() async {
         let (sut, fileSearchUseCase) = makeSUT()
         sut.searchedText = ""
-        sut.sortOrderType = .defaultAsc
         
         await sut.onViewAppeared()
         
@@ -53,7 +51,6 @@ final class VideoListViewModelTests: XCTestCase {
     func testOnViewAppeared_whenCalledOnSuccessfullyLoadVideos_executesSearchUseCaseInOrder() async {
         let (sut, fileSearchUseCase) = makeSUT(fileSearchUseCase: MockFilesSearchUseCase(searchResult: .success(nil)))
         sut.searchedText = ""
-        sut.sortOrderType = .defaultAsc
         
         await sut.onViewAppeared()
         
@@ -67,7 +64,6 @@ final class VideoListViewModelTests: XCTestCase {
     func testOnViewAppeared_whenError_showsErrorView() async {
         let (sut, _) = makeSUT(fileSearchUseCase: MockFilesSearchUseCase(searchResult: .failure(FileSearchResultErrorEntity.generic)))
         sut.searchedText = ""
-        sut.sortOrderType = .defaultAsc
         
         await sut.onViewAppeared()
         
@@ -77,7 +73,6 @@ final class VideoListViewModelTests: XCTestCase {
     func testOnViewAppeared_whenNoErrors_showsEmptyItemView() async {
         let (sut, _) = makeSUT(fileSearchUseCase: MockFilesSearchUseCase(searchResult: .success(nil)))
         sut.searchedText = ""
-        sut.sortOrderType = .defaultAsc
         
         await sut.onViewAppeared()
         
@@ -88,7 +83,6 @@ final class VideoListViewModelTests: XCTestCase {
         let foundVideos = [ anyNode(id: 1, mediaType: .video), anyNode(id: 2, mediaType: .video) ]
         let (sut, _) = makeSUT(fileSearchUseCase: MockFilesSearchUseCase(searchResult: .success(foundVideos)))
         sut.searchedText = ""
-        sut.sortOrderType = .defaultAsc
         
         await sut.onViewAppeared()
         
@@ -101,7 +95,7 @@ final class VideoListViewModelTests: XCTestCase {
             anyNode(id: 2, mediaType: .video)
         ]
         let nonVideosUpdateNodes = [
-            anyNode(id: 1, mediaType: .image), 
+            anyNode(id: 1, mediaType: .image),
             anyNode(id: 2, mediaType: .image)
         ]
         let (sut, fileSearchUseCase) = makeSUT(
@@ -111,7 +105,6 @@ final class VideoListViewModelTests: XCTestCase {
             )
         )
         sut.searchedText = ""
-        sut.sortOrderType = .defaultAsc
         
         await sut.onViewAppeared()
         
@@ -136,7 +129,6 @@ final class VideoListViewModelTests: XCTestCase {
             )
         )
         sut.searchedText = ""
-        sut.sortOrderType = .defaultAsc
         
         await sut.onViewAppeared()
         
@@ -164,7 +156,6 @@ final class VideoListViewModelTests: XCTestCase {
             )
         )
         sut.searchedText = ""
-        sut.sortOrderType = .defaultAsc
         
         await sut.onViewAppeared()
         
@@ -232,7 +223,11 @@ final class VideoListViewModelTests: XCTestCase {
         sut: VideoListViewModel,
         fileSearchUseCase: MockFilesSearchUseCase
     ) {
-        let sut = VideoListViewModel(fileSearchUseCase: fileSearchUseCase, thumbnailUseCase: MockThumbnailUseCase())
+        let sut = VideoListViewModel(
+            fileSearchUseCase: fileSearchUseCase,
+            thumbnailUseCase: MockThumbnailUseCase(),
+            syncModel: VideoRevampSyncModel()
+        )
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return (sut, fileSearchUseCase)
     }
