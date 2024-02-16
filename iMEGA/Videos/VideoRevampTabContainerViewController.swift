@@ -45,9 +45,10 @@ final class VideoRevampTabContainerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNavigationBar()
-        setupContentView()
         setupBindings()
+        setupContentView()
+        viewModel.dispatch(.onViewDidLoad)
+        setupNavigationBar()
         
         toolbar = VideoRevampFactory.makeToolbarView(isDisabled: true, videoConfig: videoConfig)
     }
@@ -66,6 +67,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
         let contentView = VideoRevampFactory.makeTabContainerView(
             fileSearchUseCase: fileSearchUseCase,
             thumbnailUseCase: thumbnailUseCase,
+            syncModel: viewModel.syncModel,
             videoConfig: videoConfig,
             router: router
         )
@@ -190,7 +192,7 @@ extension VideoRevampTabContainerViewController {
     func contextMenuConfiguration() -> CMConfigEntity {
         CMConfigEntity(
             menuType: .menu(type: .homeVideos),
-            sortType: viewModel.videoRevampSortOrderType.megaSortOrderType.toSortOrderEntity(),
+            sortType: viewModel.syncModel.videoRevampSortOrderType,
             isVideosRevampExplorer: true,
             isFilterEnabled: true,
             isSelectHidden: viewModel.isSelectHidden,

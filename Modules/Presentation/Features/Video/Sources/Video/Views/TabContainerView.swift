@@ -154,7 +154,8 @@ struct ContentView_Previews: PreviewProvider {
     static func makeNullViewModel() -> VideoListViewModel {
         VideoListViewModel(
             fileSearchUseCase: Preview_FilesSearchUseCase(),
-            thumbnailUseCase: Preview_ThumbnailUseCase()
+            thumbnailUseCase: Preview_ThumbnailUseCase(),
+            syncModel: VideoRevampSyncModel()
         )
     }
 }

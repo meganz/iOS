@@ -20,6 +20,7 @@ struct VideoListView: View {
         }
         .task {
             await viewModel.onViewAppeared()
+            await viewModel.monitorSortOrderChanged()
         }
     }
     
@@ -55,7 +56,8 @@ struct VideoListView_Previews: PreviewProvider {
         VideoListView(
             viewModel: VideoListViewModel(
                 fileSearchUseCase: Preview_FilesSearchUseCase(),
-                thumbnailUseCase: Preview_ThumbnailUseCase()
+                thumbnailUseCase: Preview_ThumbnailUseCase(),
+                syncModel: VideoRevampSyncModel()
             ),
             videoConfig: .preview,
             router: Preview_VideoRevampRouter()
