@@ -1,3 +1,5 @@
+import MEGADesignToken
+import MEGAPresentation
 import MEGASwiftUI
 import SwiftUI
 
@@ -11,11 +13,19 @@ struct PhotoLibraryFilterTypeView: View {
     }
     
     private var foreground: Color {
-        selected ? MEGAAppColor.White._FFFFFF.color : MEGAAppColor.Photos.filterNormalTextForeground.color
+        if isDesignTokenEnabled {
+            selected ? TokenColors.Text.inverseAccent.swiftUI : TokenColors.Text.primary.swiftUI
+        } else {
+            selected ? MEGAAppColor.White._FFFFFF.color : MEGAAppColor.Photos.filterNormalTextForeground.color
+        }
     }
     
     private var background: Color {
-        selected ? MEGAAppColor.Photos.filterTypeSelectionBackground.color : MEGAAppColor.Photos.filterTypeNormalBackground.color
+        if isDesignTokenEnabled {
+            selected ? TokenColors.Components.selectionControl.swiftUI : TokenColors.Button.secondary.swiftUI
+        } else {
+            selected ? MEGAAppColor.Photos.filterTypeSelectionBackground.color : MEGAAppColor.Photos.filterTypeNormalBackground.color
+        }
     }
     
     var body: some View {
