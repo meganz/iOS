@@ -1,3 +1,4 @@
+
 import SwiftUI
 
 /**
@@ -49,4 +50,28 @@ public struct NavigationBarView <Leading: View, Trailing: View, Center: View>: V
         .padding(.vertical, 10)
         .background(backgroundColor.ignoresSafeArea(edges: [.top, .leading, .trailing]))
     }
+}
+
+#Preview {
+    NavigationBarView(leading: {
+        Button(action: {}, label: { Text("Button 1") })
+    }, trailing: {
+        Button(action: {}, label: { Text("Button 2") })
+    }, center: {
+        NavigationTitleView(title: "Title")
+    }, backgroundColor: Color.white
+    )
+    .preferredColorScheme(.light)
+}
+
+#Preview {
+    NavigationBarView(leading: {
+        Button(action: {}, label: { Text("Button 1") })
+    }, trailing: {
+        Button(action: {}, label: { Text("Button 2") })
+    }, center: {
+        NavigationTitleView(title: "Title")
+    }, backgroundColor: Color.black
+    )
+    .preferredColorScheme(.dark)
 }

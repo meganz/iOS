@@ -1,3 +1,5 @@
+import MEGADesignToken
+import MEGAPresentation
 import SwiftUI
 
 struct PhotoLibraryFilterLocationView: View {
@@ -10,7 +12,11 @@ struct PhotoLibraryFilterLocationView: View {
             Text(location.localization)
             Spacer()
             Image(systemName: "checkmark")
-                .foregroundColor(MEGAAppColor.Photos.filterLocationItemTickForeground.color)
+                .foregroundStyle(
+                    isDesignTokenEnabled
+                    ? TokenColors.Support.success.swiftUI
+                    : MEGAAppColor.Photos.filterLocationItemTickForeground.color
+                )
                 .offset(x: 5, y: 0)
         }
     }
@@ -43,7 +49,11 @@ struct PhotoLibraryFilterLocationView: View {
             }
             Spacer()
         }
-        .foregroundColor(MEGAAppColor.Photos.filterLocationItemForeground.color)
+        .foregroundStyle(
+            isDesignTokenEnabled
+            ? TokenColors.Text.primary.swiftUI
+            : MEGAAppColor.Photos.filterLocationItemForeground.color
+        )
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
         .contentShape(Rectangle())

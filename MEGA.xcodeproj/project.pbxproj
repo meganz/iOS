@@ -147,6 +147,7 @@
 		2400A7E02ACB135F0023C015 /* AudioPlayerItemDataSourceCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2400A7DF2ACB135F0023C015 /* AudioPlayerItemDataSourceCommand.swift */; };
 		240380542A30687500C06E61 /* ReportIssueMessageViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240380532A30687500C06E61 /* ReportIssueMessageViewModelTests.swift */; };
 		240380562A306B8B00C06E61 /* ReportIssueMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240380552A306B8B00C06E61 /* ReportIssueMessageViewModel.swift */; };
+		2404468F2B7B7C24001E1027 /* Preview_UserAttributeUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2404468E2B7B7C24001E1027 /* Preview_UserAttributeUseCase.swift */; };
 		2407FDA62B05C73C00F26248 /* URL+MNZCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2407FDA52B05C73C00F26248 /* URL+MNZCategory.swift */; };
 		240A15402B5503730000CD08 /* PasswordReminderViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240A153F2B5503730000CD08 /* PasswordReminderViewController+Additions.swift */; };
 		240D80FB2AB1A1DC00FBD2C4 /* AudioPlayerItemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 240D80FA2AB1A1DC00FBD2C4 /* AudioPlayerItemTests.swift */; };
@@ -2750,6 +2751,7 @@
 		2400A7DF2ACB135F0023C015 /* AudioPlayerItemDataSourceCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerItemDataSourceCommand.swift; sourceTree = "<group>"; };
 		240380532A30687500C06E61 /* ReportIssueMessageViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportIssueMessageViewModelTests.swift; sourceTree = "<group>"; };
 		240380552A306B8B00C06E61 /* ReportIssueMessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportIssueMessageViewModel.swift; sourceTree = "<group>"; };
+		2404468E2B7B7C24001E1027 /* Preview_UserAttributeUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preview_UserAttributeUseCase.swift; sourceTree = "<group>"; };
 		2407FDA52B05C73C00F26248 /* URL+MNZCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+MNZCategory.swift"; sourceTree = "<group>"; };
 		240A153F2B5503730000CD08 /* PasswordReminderViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PasswordReminderViewController+Additions.swift"; sourceTree = "<group>"; };
 		240D80FA2AB1A1DC00FBD2C4 /* AudioPlayerItemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerItemTests.swift; sourceTree = "<group>"; };
@@ -5865,6 +5867,14 @@
 			path = BuildTools;
 			sourceTree = "<group>";
 		};
+		2404468D2B7B7C17001E1027 /* PreviewSupport */ = {
+			isa = PBXGroup;
+			children = (
+				2404468E2B7B7C24001E1027 /* Preview_UserAttributeUseCase.swift */,
+			);
+			path = PreviewSupport;
+			sourceTree = "<group>";
+		};
 		240D80F92AB1A1CB00FBD2C4 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
@@ -6360,6 +6370,7 @@
 		3286072228851AFF0056A3A5 /* FilterView */ = {
 			isa = PBXGroup;
 			children = (
+				2404468D2B7B7C17001E1027 /* PreviewSupport */,
 				329110F9288E39D6001324EA /* PhotoLibraryFilterLocationView.swift */,
 				329110FB288E39FC001324EA /* PhotoLibraryFilterTypeView.swift */,
 				32860720288509DD0056A3A5 /* PhotoLibraryFilterView.swift */,
@@ -14849,6 +14860,7 @@
 				C480AF422570F0F400898D48 /* PlaylistItemTableViewCell.swift in Sources */,
 				5DD6B17224D6D54E00F14515 /* PrecedenceGroup.swift in Sources */,
 				B6A0CF1A28A08D1B00D7F52E /* PreferenceUseCase+Additions.swift in Sources */,
+				2404468F2B7B7C24001E1027 /* Preview_UserAttributeUseCase.swift in Sources */,
 				837B179528815E4400A4D01B /* PreviewDocumentViewController+Additions.swift in Sources */,
 				41D578241B84A0FB00334ED3 /* PreviewDocumentViewController.m in Sources */,
 				2F85306F24885F9100064E83 /* PreviewersView.swift in Sources */,
