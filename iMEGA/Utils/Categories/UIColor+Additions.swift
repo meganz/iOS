@@ -1094,10 +1094,14 @@ extension UIColor {
     class func mnz_errorRed(
         for traitCollection: UITraitCollection
     ) -> UIColor {
-        switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light: UIColor.redF30C14
-        case .dark: UIColor.redF7363D
-        @unknown default: UIColor.redF30C14
+        if UIColor.isDesignTokenEnabled() {
+            TokenColors.Text.error
+        } else {
+            switch traitCollection.userInterfaceStyle {
+            case .unspecified, .light: UIColor.redF30C14
+            case .dark: UIColor.redF7363D
+            @unknown default: UIColor.redF30C14
+            }
         }
     }
     
