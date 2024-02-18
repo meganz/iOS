@@ -30,6 +30,14 @@ struct PhotoLibraryZoomControl: View {
         }
     }
     
+    private var zoomControlBackgroundColor: Color {
+        if isDesignTokenEnabled {
+            colorScheme == .light ? TokenColors.Background.surface1.swiftUI : TokenColors.Background.surface2.swiftUI
+        } else {
+            .clear
+        }
+    }
+    
     // MARK: - Private
     private func zoomControl() -> some View {
         HStack {
@@ -41,6 +49,7 @@ struct PhotoLibraryZoomControl: View {
         .frame(width: 80, height: 40)
         .padding(EdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 12))
         .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 18))
+        .background(zoomControlBackgroundColor, in: RoundedRectangle(cornerRadius: 18))
         .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
     }
     
