@@ -1,3 +1,4 @@
+import MEGADesignToken
 import SwiftUI
 
 struct PhotoCellVideoDurationViewModifier: ViewModifier {
@@ -11,9 +12,9 @@ struct PhotoCellVideoDurationViewModifier: ViewModifier {
     private var videoOverlay: some View {
         Text(viewModel.duration)
             .font(.system(size: viewModel.fontSize))
-            .foregroundColor(MEGAAppColor.White._FFFFFF.color)
+            .foregroundColor(UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary.swiftUI : .whiteFFFFFF)
             .padding(.init(top: 2, leading: 5, bottom: 2, trailing: 5))
-            .background(MEGAAppColor.Black._000000.color.opacity(0.3))
+            .background(UIColor.isDesignTokenEnabled() ? TokenColors.Background.surface2.swiftUI : .black000000.opacity(0.3))
             .cornerRadius(6.0)
             .offset(x: 5, y: viewModel.durationYOffset)
             .opacity(viewModel.shouldShowDuration ? 1 : 0)
