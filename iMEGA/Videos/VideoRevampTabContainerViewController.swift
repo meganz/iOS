@@ -194,10 +194,8 @@ extension VideoRevampTabContainerViewController {
             menuType: .menu(type: .homeVideos),
             sortType: viewModel.syncModel.videoRevampSortOrderType,
             isVideosRevampExplorer: true,
-            isFilterEnabled: true,
             isSelectHidden: viewModel.isSelectHidden,
-            isEmptyState: false,
-            isFilterActive: viewModel.isFilterActive
+            isEmptyState: false
         )
     }
 }

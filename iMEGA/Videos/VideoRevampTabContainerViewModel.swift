@@ -28,7 +28,6 @@ final class VideoRevampTabContainerViewModel: ViewModelType {
     
     var invokeCommand: ((Command) -> Void)?
     
-    var isFilterActive = false
     var isSelectHidden = false
     var isEditing = false
     
@@ -54,9 +53,6 @@ final class VideoRevampTabContainerViewModel: ViewModelType {
             case .select:
                 isEditing = true
                 invokeCommand?(.navigationBarCommand(.toggleEditing))
-            case .filter:
-                // router.showFilter()
-                break
             default:
                 break
             }
