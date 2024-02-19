@@ -2,6 +2,7 @@ import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
+import MEGASwiftUI
 import SwiftUI
 
 public struct PlanHeaderTagView: View {
@@ -10,14 +11,11 @@ public struct PlanHeaderTagView: View {
     public var recommededPlanTagColor: Color
     
     public var body: some View {
-        Text(planTagName)
-            .font(.caption2)
-            .bold()
-            .foregroundStyle(planTagTextColor)
-            .padding(6)
-            .padding(.horizontal, 2)
-            .background(planTagColor)
-            .cornerRadius(10)
+        TagView(
+            tagName: planTagName,
+            tagColor: planTagColor,
+            tagTextColor: planTagTextColor
+        )
     }
     
     private var planTagName: String {
