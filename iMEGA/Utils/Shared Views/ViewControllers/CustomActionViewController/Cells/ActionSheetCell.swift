@@ -1,4 +1,4 @@
-import UIKit
+import MEGADesignToken
 
 final class ActionSheetCell: UITableViewCell {
 
@@ -8,6 +8,11 @@ final class ActionSheetCell: UITableViewCell {
         detailTextLabel?.text = action.detail
         accessoryView = action.accessoryView
         imageView?.image = action.image
+        if UIColor.isDesignTokenEnabled() {
+            textLabel?.textColor = TokenColors.Text.primary
+            detailTextLabel?.textColor = TokenColors.Text.secondary
+            backgroundColor = TokenColors.Background.surface1
+        }
         switch action.style {
         case .cancel, .destructive:
             textLabel?.textColor = .mnz_red(for: traitCollection)

@@ -1,8 +1,8 @@
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGASDKRepo
 import MEGASwift
-import UIKit
 
 @objc protocol NodeActionViewControllerDelegate {
     // Method that handles selected node action for a single node. It may have an action specifically for single nodes. e.g Info, Versions
@@ -49,7 +49,7 @@ class NodeActionViewController: ActionSheetViewController {
     lazy var separatorLineView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = tableView.separatorColor
+        view.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Border.strong : tableView.separatorColor
         return view
     }()
     
@@ -247,14 +247,14 @@ class NodeActionViewController: ActionSheetViewController {
     override func updateAppearance() {
         super.updateAppearance()
         
-        headerView?.backgroundColor = UIColor.mnz_secondaryBackgroundElevated(traitCollection)
+        headerView?.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.surface2 : UIColor.mnz_secondaryBackgroundElevated(traitCollection)
         if nodes.count == 1, let node = nodes.first, node.isTakenDown() {
             titleLabel.attributedText = node.attributedTakenDownName()
             titleLabel.textColor = UIColor.mnz_red(for: traitCollection)
         } else {
-            titleLabel.textColor = UIColor.label
+            titleLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.label
         }
-        subtitleLabel.textColor = UIColor.mnz_subtitles(for: traitCollection)
+        subtitleLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : UIColor.mnz_subtitles(for: traitCollection)
         separatorLineView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
     }
     
