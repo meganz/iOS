@@ -622,7 +622,7 @@ final class ContextMenuActionsTests: XCTestCase {
                 .setType(.menu(type: .homeVideos))
                 .setSortType(.modificationDesc)
                 .setIsVideosRevampExplorer(true)
-                .setIsFilterEnabled(true)
+                .setIsFilterEnabled(false)
                 .setIsSelectHidden(false)
                 .setIsEmptyState(false)
                 .build()
@@ -630,7 +630,7 @@ final class ContextMenuActionsTests: XCTestCase {
         
         let actions = decomposeMenuIntoActions(menu: menuEntity)
         
-        XCTAssertEqual(filterDisplayActions(from: actions), [ .select, .filter ])
+        XCTAssertEqual(filterDisplayActions(from: actions), [ .select ])
         XCTAssertEqual(filterSortActions(from: actions), SortOrderEntity.allValid)
     }
     
@@ -640,7 +640,7 @@ final class ContextMenuActionsTests: XCTestCase {
                 .setType(.menu(type: .homeVideos))
                 .setSortType(.modificationDesc)
                 .setIsVideosRevampExplorer(true)
-                .setIsFilterEnabled(true)
+                .setIsFilterEnabled(false)
                 .setIsSelectHidden(false)
                 .setIsEmptyState(true)
                 .build()
@@ -648,7 +648,7 @@ final class ContextMenuActionsTests: XCTestCase {
         
         let actions = decomposeMenuIntoActions(menu: menuEntity)
         
-        XCTAssertEqual(filterDisplayActions(from: actions), [ .select, .sort, .filter ])
+        XCTAssertEqual(filterDisplayActions(from: actions), [ .select, .sort ])
     }
     
     func testVideosMenu_onIsFilterActive_shouldShowFilterActive() throws {
@@ -656,13 +656,13 @@ final class ContextMenuActionsTests: XCTestCase {
             ContextMenuBuilder()
                 .setType(.menu(type: .homeVideos))
                 .setIsVideosRevampExplorer(true)
-                .setIsFilterEnabled(true)
+                .setIsFilterEnabled(false)
                 .setIsFilterActive(true)
                 .build()
         )
         
         let actions = decomposeMenuIntoActions(menu: menuEntity)
         
-        XCTAssertEqual(filterDisplayActions(from: actions), [ .select, .filterActive ])
+        XCTAssertEqual(filterDisplayActions(from: actions), [ .select ])
     }
 }

@@ -620,9 +620,6 @@ public final class ContextMenuBuilder {
             displayActionsMenuChildren.append(selectMenu())
         }
         displayActionsMenuChildren.append(sortMenu())
-        if isFilterEnabled {
-            displayActionsMenuChildren.append(filterMenu())
-        }
         return CMEntity(
             displayInline: true,
             children: displayActionsMenuChildren
