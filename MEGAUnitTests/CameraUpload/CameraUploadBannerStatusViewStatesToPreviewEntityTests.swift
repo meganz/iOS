@@ -13,7 +13,7 @@ class CameraUploadBannerStatusViewStatesToPreviewEntityTests: XCTestCase {
             textColor: (.primary, .primary),
             backgroundColor: (MEGAAppColor.White._FFFFFF.color, MEGAAppColor.Gray._1D1D1D.color),
             expectedTitle: Strings.Localizable.CameraUploads.Banner.Status.UploadsComplete.title,
-            expectedSubheading: Strings.Localizable.CameraUploads.Banner.Status.UploadsComplete.subHeading
+            expectedSubheading: { .init(Strings.Localizable.CameraUploads.Banner.Status.UploadsComplete.subHeading) }
         )
     }
     
@@ -23,7 +23,7 @@ class CameraUploadBannerStatusViewStatesToPreviewEntityTests: XCTestCase {
             textColor: (.primary, .primary),
             backgroundColor: (MEGAAppColor.White._FFFFFF.color, MEGAAppColor.Gray._1D1D1D.color),
             expectedTitle: Strings.Localizable.CameraUploads.Banner.Status.UploadInProgress.title,
-            expectedSubheading: Strings.Localizable.CameraUploads.Banner.Status.FilesPending.subHeading(1)
+            expectedSubheading: { .init(Strings.Localizable.CameraUploads.Banner.Status.FilesPending.subHeading(1)) }
         )
         
         performPreviewComparisonTest(
@@ -31,7 +31,7 @@ class CameraUploadBannerStatusViewStatesToPreviewEntityTests: XCTestCase {
             textColor: (.primary, .primary),
             backgroundColor: (MEGAAppColor.White._FFFFFF.color, MEGAAppColor.Gray._1D1D1D.color),
             expectedTitle: Strings.Localizable.CameraUploads.Banner.Status.UploadInProgress.title,
-            expectedSubheading: Strings.Localizable.CameraUploads.Banner.Status.FilesPending.subHeading(12)
+            expectedSubheading: { .init(Strings.Localizable.CameraUploads.Banner.Status.FilesPending.subHeading(12)) }
         )
     }
     
@@ -41,7 +41,7 @@ class CameraUploadBannerStatusViewStatesToPreviewEntityTests: XCTestCase {
             textColor: (.primary, .primary),
             backgroundColor: (MEGAAppColor.White._FFFFFF.color, MEGAAppColor.Gray._1D1D1D.color),
             expectedTitle: Strings.Localizable.CameraUploads.Banner.Status.UploadsPausedDueToWifi.title,
-            expectedSubheading: Strings.Localizable.CameraUploads.Banner.Status.FilesPending.subHeading(1)
+            expectedSubheading: { .init(Strings.Localizable.CameraUploads.Banner.Status.FilesPending.subHeading(1)) }
         )
         
         performPreviewComparisonTest(
@@ -49,7 +49,7 @@ class CameraUploadBannerStatusViewStatesToPreviewEntityTests: XCTestCase {
             textColor: (.primary, .primary),
             backgroundColor: (MEGAAppColor.White._FFFFFF.color, MEGAAppColor.Gray._1D1D1D.color),
             expectedTitle: Strings.Localizable.CameraUploads.Banner.Status.UploadsPausedDueToWifi.title,
-            expectedSubheading: Strings.Localizable.CameraUploads.Banner.Status.FilesPending.subHeading(13)
+            expectedSubheading: { .init(Strings.Localizable.CameraUploads.Banner.Status.FilesPending.subHeading(13)) }
         )
     }
     
@@ -59,7 +59,12 @@ class CameraUploadBannerStatusViewStatesToPreviewEntityTests: XCTestCase {
             textColor: (MEGAAppColor.Yellow._9D8319.color, MEGAAppColor.Yellow._FFD60A.color),
             backgroundColor: (MEGAAppColor.Yellow._FED42926.color, MEGAAppColor.Yellow._FED42926.color),
             expectedTitle: Strings.Localizable.CameraUploads.Banner.Status.UploadsComplete.title,
-            expectedSubheading: Strings.Localizable.CameraUploads.Banner.Status.UploadsPartialComplete.LimitedPhotoLibraryAccess.subHeading
+            expectedSubheading: {
+                let subHeading = AttributedString(Strings.Localizable.CameraUploads.Banner.Status.UploadsPartialComplete.LimitedPhotoLibraryAccess.subHeading)
+                var subHeadingAction = AttributedString(Strings.Localizable.CameraUploads.Banner.Status.UploadsPartialComplete.LimitedPhotoLibraryAccess.subHeadingAction)
+                subHeadingAction.font = .caption2.bold()
+                return subHeading + " " + subHeadingAction
+            }
         )
         
         performPreviewComparisonTest(
@@ -67,7 +72,7 @@ class CameraUploadBannerStatusViewStatesToPreviewEntityTests: XCTestCase {
             textColor: (.primary, .primary),
             backgroundColor: (MEGAAppColor.White._FFFFFF.color, MEGAAppColor.Gray._1D1D1D.color),
             expectedTitle: Strings.Localizable.CameraUploads.Banner.Status.UploadsComplete.title,
-            expectedSubheading: Strings.Localizable.CameraUploads.Banner.Status.UploadsPartialComplete.VideosNotUploaded.subHeading(1)
+            expectedSubheading: { .init(Strings.Localizable.CameraUploads.Banner.Status.UploadsPartialComplete.VideosNotUploaded.subHeading(1)) }
         )
         
         performPreviewComparisonTest(
@@ -75,7 +80,7 @@ class CameraUploadBannerStatusViewStatesToPreviewEntityTests: XCTestCase {
             textColor: (.primary, .primary),
             backgroundColor: (MEGAAppColor.White._FFFFFF.color, MEGAAppColor.Gray._1D1D1D.color),
             expectedTitle: Strings.Localizable.CameraUploads.Banner.Status.UploadsComplete.title,
-            expectedSubheading: Strings.Localizable.CameraUploads.Banner.Status.UploadsPartialComplete.VideosNotUploaded.subHeading(42)
+            expectedSubheading: { .init(Strings.Localizable.CameraUploads.Banner.Status.UploadsPartialComplete.VideosNotUploaded.subHeading(42)) }
         )
     }
     
@@ -84,7 +89,7 @@ class CameraUploadBannerStatusViewStatesToPreviewEntityTests: XCTestCase {
         textColor: ColorSchemeColors,
         backgroundColor: ColorSchemeColors,
         expectedTitle: String,
-        expectedSubheading: String,
+        expectedSubheading: () -> AttributedString,
         file: StaticString = #filePath,
         line: UInt = #line) {
         
@@ -93,7 +98,7 @@ class CameraUploadBannerStatusViewStatesToPreviewEntityTests: XCTestCase {
         
         // Assert
         XCTAssertEqual(previewEntity.title, expectedTitle, "For status: \(status)", file: file, line: line)
-        XCTAssertEqual(previewEntity.subheading, expectedSubheading, "For status: \(status)", file: file, line: line)
+        XCTAssertEqual(previewEntity.subheading, expectedSubheading(), "For status: \(status)", file: file, line: line)
         XCTAssertEqual(textColor.light, previewEntity.textColor(for: .light), "For status: \(status)", file: file, line: line)
         XCTAssertEqual(textColor.dark, previewEntity.textColor(for: .dark), "For status: \(status)", file: file, line: line)
         XCTAssertEqual(backgroundColor.light, previewEntity.backgroundColor(for: .light), "For status: \(status)", file: file, line: line)
