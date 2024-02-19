@@ -3,14 +3,15 @@ import UIKit
 @objc public extension UITabBar {
     /// Create a badge for a UITabBarItem at top right corner.
     /// - Parameter value: The text inside the badge. If the value is `nil`, it the remove the badge if it exists before.
+    /// - Parameter color: The background color of the badge.
     /// - Parameter index: The index of the UITabBarItem.
-    func setBadge(value: String?, at index: Int) {
+    func setBadge(value: String?, color: UIColor, at index: Int) {
         let existingBadge = badge(at: index)
         existingBadge?.removeFromSuperview()
         
         guard let value else { return }
         
-        let badge = TabBarBadge(for: index, value: value)
+        let badge = TabBarBadge(for: index, value: value, color: color)
         addSubview(badge)
         
         if value.count > 1 {
@@ -67,12 +68,12 @@ private class TabBarBadge: UILabel {
         return "\(String(describing: TabBarBadge.self))-\(index)"
     }
     
-    convenience init(for index: Int, value: String) {
+    convenience init(for index: Int, value: String, color: UIColor) {
         self.init()
         identifier = identifier(for: index)
         clipsToBounds = true
         textAlignment = .center
-        backgroundColor = .red
+        backgroundColor = color
         textColor = .white
         font = .preferredFont(forTextStyle: .caption2)
         adjustsFontForContentSizeCategory = true
