@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import SwiftUI
 
@@ -11,6 +12,7 @@ struct ScheduleMeetingCreationCustomOptionsView: View {
                 ScheduleMeetingCreationCustomOptionsRepetitionRulesView(viewModel: viewModel)
             } footer: {
                 Text(viewModel.intervalFooterNote)
+                    .foregroundStyle(TokenColors.Text.primary.swiftUI)
             }
             
             let monthlyOptionsViewModel = viewModel.monthlyOptionsViewModel
@@ -23,6 +25,7 @@ struct ScheduleMeetingCreationCustomOptionsView: View {
                 }
             } footer: {
                 Text(monthlyOptionsViewModel?.calendarFooterNote() ?? "")
+                    .foregroundStyle(TokenColors.Text.primary.swiftUI)
             }
         }
         .listStyle(.grouped)

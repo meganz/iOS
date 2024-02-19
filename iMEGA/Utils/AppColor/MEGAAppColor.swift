@@ -529,14 +529,14 @@ enum MEGAAppColor {
         
         private var designTokenColor: UIColor {
             switch self {
-            case ._9D8319: TokenColors.Background.blur
-            case ._F8D552: TokenColors.Background.blur
-            case ._FED42926: TokenColors.Background.blur
-            case ._FED429: TokenColors.Background.blur
-            case ._FFCC0003: TokenColors.Background.blur
-            case ._FFCC00: TokenColors.Background.blur
-            case ._FFD60A: TokenColors.Background.blur
-            case ._FFD600: TokenColors.Background.blur
+            case ._9D8319: UIColor.yellow9D8319
+            case ._F8D552: UIColor.yellowF8D552
+            case ._FED42926: UIColor.yellowFED42926
+            case ._FED429: UIColor.yellowFED429
+            case ._FFCC0003: UIColor.yellowFFCC0003
+            case ._FFCC00: UIColor.yellowFFCC00
+            case ._FFD60A: UIColor.yellowFFD60A
+            case ._FFD600: UIColor.yellowFFD600
             }
         }
         

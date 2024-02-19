@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import SwiftUI
 
@@ -9,19 +10,26 @@ struct ScheduleMeetingCreationWaitingRoomView: View {
     var body: some View {
         VStack(spacing: 0) {
             Divider()
-            
+                .foregroundStyle(TokenColors.Border.subtle.swiftUI)
+
             Toggle(isOn: $waitingRoomEnabled) {
                 Text(Strings.Localizable.Meetings.ScheduleMeeting.waitingRoom)
+                    .foregroundStyle(TokenColors.Text.primary.swiftUI)
                     .opacity(shouldAllowEditingWaitingRoom ? 1.0 : 0.3)
             }
             .frame(minHeight: 44)
-            .toggleStyle(SwitchToggleStyle(tint: Color(UIColor.mnz_green00A886())))
+            .toggleStyle(SwitchToggleStyle(tint: isDesignTokenEnabled
+                                           ? TokenColors.Support.success.swiftUI
+                                           : Color(UIColor.mnz_green00A886())))
             .padding(.horizontal)
             .disabled(!shouldAllowEditingWaitingRoom)
             
             Divider()
+                .foregroundStyle(TokenColors.Border.subtle.swiftUI)
         }
-        .background(colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._FFFFFF.color)
+        .background(isDesignTokenEnabled
+                    ? TokenColors.Background.page.swiftUI
+                    : colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._FFFFFF.color)
         
         ScheduleMeetingCreationFootnoteView(title: Strings.Localizable.Meetings.ScheduleMeeting.WaitingRoom.description)
             .padding(.bottom)

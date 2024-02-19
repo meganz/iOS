@@ -1,3 +1,4 @@
+import MEGADesignToken
 import SwiftUI
 
 struct ScheduleMeetingCreationCustomOptionsWheelPickerView<T: Hashable>: View {
@@ -10,6 +11,7 @@ struct ScheduleMeetingCreationCustomOptionsWheelPickerView<T: Hashable>: View {
         Picker(label, selection: $selection) {
             ForEach(options, id: \.self) { option in
                 Text(convertOptionToString(option))
+                    .foregroundStyle(TokenColors.Text.primary.swiftUI)
             }
         }
         .pickerStyle(.wheel)

@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import MEGASwiftUI
 import SwiftUI
@@ -23,6 +24,8 @@ struct ScheduleMeetingCreationNameView: View {
 
             Divider()
         }
-        .background(colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._FFFFFF.color)
+        .background(isDesignTokenEnabled
+                    ? TokenColors.Background.surface1.swiftUI
+                    : colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._FFFFFF.color)
     }
 }

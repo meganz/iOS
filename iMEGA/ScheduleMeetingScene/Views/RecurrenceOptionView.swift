@@ -1,3 +1,4 @@
+import MEGADesignToken
 import SwiftUI
 
 struct RecurrenceOptionView: View {
@@ -8,9 +9,11 @@ struct RecurrenceOptionView: View {
     var body: some View {
         HStack {
             Text(name)
+                .foregroundStyle(TokenColors.Text.primary.swiftUI)
             Spacer()
             Image(systemName: "checkmark")
-                .foregroundColor(MEGAAppColor.Chat.chatMeetingFrequencySelectionTickMark.color)
+                .foregroundStyle(isDesignTokenEnabled ?
+                                 TokenColors.Support.success.swiftUI : MEGAAppColor.Chat.chatMeetingFrequencySelectionTickMark.color)
                 .font(.system(.footnote).bold())
                 .opacity(isSelected ? 1 : 0)
         }

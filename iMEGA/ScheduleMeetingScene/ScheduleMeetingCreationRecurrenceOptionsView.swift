@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import SwiftUI
 
@@ -42,6 +43,7 @@ struct ScheduleMeetingCreationRecurrenceOptionsView: View {
         } footer: {
             if let footerNote = viewModel.customOptionFooterNote() {
                 Text(footerNote)
+                    .foregroundStyle(TokenColors.Text.primary.swiftUI)
             }
         }
     }

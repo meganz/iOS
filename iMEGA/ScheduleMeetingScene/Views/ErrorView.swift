@@ -1,3 +1,4 @@
+import MEGADesignToken
 import SwiftUI
 
 struct ErrorView: View {
@@ -6,7 +7,8 @@ struct ErrorView: View {
     var body: some View {
         Text(error)
             .font(.footnote)
-            .foregroundColor(MEGAAppColor.Red._F30C14.color)
+            .foregroundStyle(isDesignTokenEnabled ?
+                             TokenColors.Button.brand.swiftUI : MEGAAppColor.Red._F30C14.color)
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal)
     }

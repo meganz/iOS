@@ -1,3 +1,4 @@
+import MEGADesignToken
 import SwiftUI
 
 struct ScheduleMeetingCreationMonthlyDatePickerView: View {
@@ -96,12 +97,15 @@ private struct ScheduleMeetingCreationMonthlyDatePickerTileView: View {
     var body: some View {
         ZStack {
             Circle()
-                .fill(colorScheme == .dark ? MEGAAppColor.Green._00C29A.color : MEGAAppColor.Green._00A886.color)
+                .fill(isDesignTokenEnabled
+                      ? TokenColors.Support.success.swiftUI : colorScheme == .dark ? MEGAAppColor.Green._00C29A.color : MEGAAppColor.Green._00A886.color)
                 .opacity(selected ? 1.0 : 0.0)
             Text(day)
                 .font(.title3)
-                .foregroundColor(
-                    (colorScheme == .light && selected) ? Color(UIColor.systemBackground) : .primary
+                .foregroundStyle(
+                    (colorScheme == .light && selected) ?
+                    isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : Color(UIColor.systemBackground)
+                    : isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : .primary
                 )
         }
     }

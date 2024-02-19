@@ -11,14 +11,18 @@ struct ScheduleMeetingFreePlanTimeLimitationView: View {
         VStack(spacing: 0) {
             Text(createAttributedStringForAccentTags(content: Strings.Localizable.Meetings.ScheduleMeeting.Create.FreePlanLimitWarning.longerThan60Minutes))
                 .font(.footnote)
-                .foregroundColor(colorScheme == .dark ? MEGAAppColor.White._FFFFFF.color : MEGAAppColor.Black._000000.color)
+                .foregroundStyle(isDesignTokenEnabled
+                                 ? TokenColors.Text.primary.swiftUI
+                                 : colorScheme == .dark ? MEGAAppColor.White._FFFFFF.color : MEGAAppColor.Black._000000.color)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal)
                 .padding(.top, 6)
                 .padding(.bottom, 20)
         }
         .frame(minHeight: 53.0)
-        .background(colorScheme == .dark ? MEGAAppColor.Black._000000.color : MEGAAppColor.White._F7F7F7.color)
+        .background(isDesignTokenEnabled
+                    ? TokenColors.Background.page.swiftUI
+                    : colorScheme == .dark ? MEGAAppColor.Black._000000.color : MEGAAppColor.White._F7F7F7.color)
         .contentShape(Rectangle())
         .onTapGesture {
             action()
@@ -36,7 +40,9 @@ struct ScheduleMeetingFreePlanTimeLimitationView: View {
         let startIndex = attributedString.index(rangeStart.upperBound, offsetByCharacters: 0)
         let endIndex = attributedString.index(rangeEnd.lowerBound, offsetByCharacters: 0)
         let substringRange = startIndex..<endIndex
-        attributedString[substringRange].foregroundColor = MEGAAppColor.Green._00A886.color
+        attributedString[substringRange].foregroundColor = isDesignTokenEnabled
+        ? TokenColors.Support.success.swiftUI
+        : MEGAAppColor.Green._00A886.color
         
         attributedString.removeSubrange(rangeEnd)
         attributedString.removeSubrange(rangeStart)
