@@ -1,6 +1,7 @@
 import Accounts
 import ChatRepo
 import Combine
+import MEGADesignToken
 import MEGADomain
 import MEGAPresentation
 import MEGASDKRepo
@@ -226,7 +227,11 @@ extension MainTabBarController {
         
         let unreadCountString = unreadChats > 99 ? "99+" : "\(unreadChats)"
         let badgeValue = unreadChats > 0 ? unreadCountString : nil
-        tabBar.setBadge(value: badgeValue, at: TabType.chat.rawValue)
+        tabBar.setBadge(
+            value: badgeValue,
+            color: UIColor.isDesignTokenEnabled() ? TokenColors.Components.interactive : .red,
+            at: TabType.chat.rawValue
+        )
     }
 }
 
