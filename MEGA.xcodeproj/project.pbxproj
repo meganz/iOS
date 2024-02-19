@@ -2336,10 +2336,14 @@
 		BFD6536025EDE8E500052DE8 /* MeetingParticipantInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD6535E25EDE8E500052DE8 /* MeetingParticipantInfoViewController.swift */; };
 		BFD6557525F59EC600052DE8 /* CircularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD6557425F59EC600052DE8 /* CircularView.swift */; };
 		BFD6564F25F6D22300052DE8 /* MeetingQuickActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD6564E25F6D22300052DE8 /* MeetingQuickActionView.swift */; };
+		BFDAC1722B8356DA0003BE4F /* CloudDriveViewControllerNavItemsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDAC1712B8356DA0003BE4F /* CloudDriveViewControllerNavItemsFactory.swift */; };
+		BFDAC1762B835C8A0003BE4F /* CloudDriveViewControllerMediaCheckerMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDAC1752B835C8A0003BE4F /* CloudDriveViewControllerMediaCheckerMode.swift */; };
+		BFDAC17A2B835D320003BE4F /* CloudDriveViewControllerMediaCheckerModeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDAC1792B835D320003BE4F /* CloudDriveViewControllerMediaCheckerModeTests.swift */; };
+		BFDAC17E2B836BD30003BE4F /* CloudDriveViewControllerNavItemsFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDAC17D2B836BD30003BE4F /* CloudDriveViewControllerNavItemsFactoryTests.swift */; };
+		BFDBE2C82B75A1100008B38A /* CloudDriveEmptyViewAssetFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDBE2C72B75A1100008B38A /* CloudDriveEmptyViewAssetFactoryTests.swift */; };
 		BFDE27B12B75D62E00F5A69E /* CloudDriveNodeInsertionRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDE27B02B75D62E00F5A69E /* CloudDriveNodeInsertionRouter.swift */; };
 		BFDE27B52B75D7BC00F5A69E /* UploadAddMenuDelegateHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDE27B42B75D7BC00F5A69E /* UploadAddMenuDelegateHandlerTests.swift */; };
 		BFDE27B72B75D99200F5A69E /* MockNodeInsertionRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDE27B62B75D99200F5A69E /* MockNodeInsertionRouter.swift */; };
-		BFDBE2C82B75A1100008B38A /* CloudDriveEmptyViewAssetFactoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDBE2C72B75A1100008B38A /* CloudDriveEmptyViewAssetFactoryTests.swift */; };
 		BFDEE87A297118D1004B585D /* NotificationsTableViewController+Meetings.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFDEE879297118D1004B585D /* NotificationsTableViewController+Meetings.swift */; };
 		BFE3B9DE2856A8A1003949FF /* MockNoUserJoinedUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE3B9DD2856A8A1003949FF /* MockNoUserJoinedUseCase.swift */; };
 		BFE3B9F2285838A7003949FF /* MeetingContainerViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE3B9F1285838A7003949FF /* MeetingContainerViewModel+Additions.swift */; };
@@ -5025,10 +5029,14 @@
 		BFD6535E25EDE8E500052DE8 /* MeetingParticipantInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingParticipantInfoViewController.swift; sourceTree = "<group>"; };
 		BFD6557425F59EC600052DE8 /* CircularView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularView.swift; sourceTree = "<group>"; };
 		BFD6564E25F6D22300052DE8 /* MeetingQuickActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingQuickActionView.swift; sourceTree = "<group>"; };
+		BFDAC1712B8356DA0003BE4F /* CloudDriveViewControllerNavItemsFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveViewControllerNavItemsFactory.swift; sourceTree = "<group>"; };
+		BFDAC1752B835C8A0003BE4F /* CloudDriveViewControllerMediaCheckerMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveViewControllerMediaCheckerMode.swift; sourceTree = "<group>"; };
+		BFDAC1792B835D320003BE4F /* CloudDriveViewControllerMediaCheckerModeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveViewControllerMediaCheckerModeTests.swift; sourceTree = "<group>"; };
+		BFDAC17D2B836BD30003BE4F /* CloudDriveViewControllerNavItemsFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveViewControllerNavItemsFactoryTests.swift; sourceTree = "<group>"; };
+		BFDBE2C72B75A1100008B38A /* CloudDriveEmptyViewAssetFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveEmptyViewAssetFactoryTests.swift; sourceTree = "<group>"; };
 		BFDE27B02B75D62E00F5A69E /* CloudDriveNodeInsertionRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveNodeInsertionRouter.swift; sourceTree = "<group>"; };
 		BFDE27B42B75D7BC00F5A69E /* UploadAddMenuDelegateHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadAddMenuDelegateHandlerTests.swift; sourceTree = "<group>"; };
 		BFDE27B62B75D99200F5A69E /* MockNodeInsertionRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNodeInsertionRouter.swift; sourceTree = "<group>"; };
-		BFDBE2C72B75A1100008B38A /* CloudDriveEmptyViewAssetFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveEmptyViewAssetFactoryTests.swift; sourceTree = "<group>"; };
 		BFDEE879297118D1004B585D /* NotificationsTableViewController+Meetings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationsTableViewController+Meetings.swift"; sourceTree = "<group>"; };
 		BFE3B9DD2856A8A1003949FF /* MockNoUserJoinedUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNoUserJoinedUseCase.swift; sourceTree = "<group>"; };
 		BFE3B9F1285838A7003949FF /* MeetingContainerViewModel+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MeetingContainerViewModel+Additions.swift"; sourceTree = "<group>"; };
@@ -5638,6 +5646,8 @@
 				9402EF4D2B70DBC5002F7714 /* CloudDriveBottomToolbarFactoryTests.swift */,
 				BFDBE2C72B75A1100008B38A /* CloudDriveEmptyViewAssetFactoryTests.swift */,
 				94B85CA02B582DDE002AECEF /* CloudDriveNavigationTitleBuilderTests.swift */,
+				BFDAC1792B835D320003BE4F /* CloudDriveViewControllerMediaCheckerModeTests.swift */,
+				BFDAC17D2B836BD30003BE4F /* CloudDriveViewControllerNavItemsFactoryTests.swift */,
 				24575FEE2A499A62003EAE79 /* CloudDriveViewControllerTests.swift */,
 				25BE0B082AC3ADCC00ED44DF /* CloudDriveViewModelTests.swift */,
 				9422636D2B445FF60010B667 /* DisplayModeTests.swift */,
@@ -6605,6 +6615,8 @@
 				837A88BD20B42290007B55D1 /* CloudDriveViewController.h */,
 				837A88BE20B42290007B55D1 /* CloudDriveViewController.m */,
 				94F4157B2B2086A300F1BBFD /* CloudDriveViewControllerFactory.swift */,
+				BFDAC1752B835C8A0003BE4F /* CloudDriveViewControllerMediaCheckerMode.swift */,
+				BFDAC1712B8356DA0003BE4F /* CloudDriveViewControllerNavItemsFactory.swift */,
 				B596D15B2979280A002C5094 /* CloudDriveViewModel.swift */,
 				BFCF843C246A6471004FA3B1 /* DocScannerActionTableViewCell.swift */,
 				BFCF843A246A5BFA004FA3B1 /* DocScannerDetailTableCell.swift */,
@@ -9907,12 +9919,11 @@
 				9474F19C2B5A672900FDBE8D /* CloudDriveBottomToolbarFactory.swift */,
 				94831D632B61086700D0005F /* CloudDriveContextMenuConfigFactory.swift */,
 				940F972F2B57DDA300B8C0AF /* CloudDriveNavigationTitleBuilder.swift */,
+				BFDE27B02B75D62E00F5A69E /* CloudDriveNodeInsertionRouter.swift */,
 				94D724C52B6BC43500B1F1EC /* ContextMenuManager+ActionHandlersArray.swift */,
 				948606762B6CFCE500B1055A /* DisplayMenuDelegateHandler.swift */,
 				94768B4F2B55535F005C436B /* MediaContentDelegateHandler.swift */,
 				9402EF482B6D6313002F7714 /* NodeActions+NodeActionsDelegateHandler.swift */,
-				94768B4F2B55535F005C436B /* CloudDriveContextMenuDelegates.swift */,
-				BFDE27B02B75D62E00F5A69E /* CloudDriveNodeInsertionRouter.swift */,
 				948EE56E2B67B600001F5EEA /* NodeActions.swift */,
 				94272C4A2B6D3BCE00D4AF7C /* NodeActionsDelegateHandler.swift */,
 				94FB1E8E2B2AF16C0045276C /* NodeBrowserView.swift */,
@@ -14023,6 +14034,8 @@
 				251863132AA69108005C77F0 /* CloudDriveViewController+ViewMode.swift in Sources */,
 				837A88BF20B42290007B55D1 /* CloudDriveViewController.m in Sources */,
 				94F4157C2B2086A300F1BBFD /* CloudDriveViewControllerFactory.swift in Sources */,
+				BFDAC1762B835C8A0003BE4F /* CloudDriveViewControllerMediaCheckerMode.swift in Sources */,
+				BFDAC1722B8356DA0003BE4F /* CloudDriveViewControllerNavItemsFactory.swift in Sources */,
 				B596D15C2979280A002C5094 /* CloudDriveViewModel.swift in Sources */,
 				5D1B23F524AF34EE00ACE1C5 /* ColorFactory.swift in Sources */,
 				5D64660624890BBE006030A5 /* ColorProviding.swift in Sources */,
@@ -15718,6 +15731,8 @@
 				9402EF4E2B70DBC5002F7714 /* CloudDriveBottomToolbarFactoryTests.swift in Sources */,
 				BFDBE2C82B75A1100008B38A /* CloudDriveEmptyViewAssetFactoryTests.swift in Sources */,
 				94B85CA12B582DDE002AECEF /* CloudDriveNavigationTitleBuilderTests.swift in Sources */,
+				BFDAC17A2B835D320003BE4F /* CloudDriveViewControllerMediaCheckerModeTests.swift in Sources */,
+				BFDAC17E2B836BD30003BE4F /* CloudDriveViewControllerNavItemsFactoryTests.swift in Sources */,
 				24575FEF2A499A62003EAE79 /* CloudDriveViewControllerTests.swift in Sources */,
 				25BE0B092AC3ADCC00ED44DF /* CloudDriveViewModelTests.swift in Sources */,
 				94CBB2C42A8A578400C62F32 /* ContactsViewModelTests.swift in Sources */,

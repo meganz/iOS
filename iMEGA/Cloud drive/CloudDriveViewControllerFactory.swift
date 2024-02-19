@@ -344,7 +344,9 @@ struct CloudDriveViewControllerFactory {
             nodeSource: nodeSource,
             avatarViewModel: avatarViewModel,
             storageFullAlertViewModel: StorageFullAlertViewModel(router: StorageFullModalAlertViewController(nibName: nil, bundle: nil)),
-            hasOnlyMediaNodesChecker: makeVisualMediaChecker(nodeSource: nodeSource, mode: .containsExclusivelyMedia),
+            hasOnlyMediaNodesChecker: CloudDriveViewControllerMediaCheckerMode
+                .containsExclusivelyMedia
+                .makeVisualMediaChecker(nodeSource: nodeSource, nodeUseCase: nodeUseCase),
             titleBuilder: { isEditing, selectedNodesCount in
                 // The code below is needed due the fact that most of new code uses NodeEntity struct
                 // and for the code to be robust and reuse the title logic, title should be derived from
@@ -593,13 +595,17 @@ struct CloudDriveViewControllerFactory {
             let viewMode: ViewModePreferenceEntity = nodeBrowserViewModel?.viewMode ?? .list
             let isSelectionHidden = nodeBrowserViewModel?.isSelectionHidden ?? false
             Task { @MainActor in
-                let navItems = await navItems(
+                let navItemsFactory = CloudDriveViewControllerNavItemsFactory(
                     nodeSource: nodeSource,
                     config: config,
                     currentViewMode: viewMode,
                     contextMenuManager: contextMenuManager,
+                    contextMenuConfigFactory: contextMenuConfigFactory,
+                    nodeUseCase: nodeUseCase,
                     isSelectionHidden: isSelectionHidden
                 )
+
+                let navItems = await navItemsFactory.makeNavItems()
                 vc.navigationItem.rightBarButtonItems = navItems.rightNavBarItems
             }
         }
@@ -615,142 +621,9 @@ struct CloudDriveViewControllerFactory {
         return vc
     }
     
-    // Private structure that carries actual button items
-    // to enable pure function and testing
-    struct NavItems {
-        let leftBarButtonItem: UIBarButtonItem?
-        let rightNavBarItems: [UIBarButtonItem]
-        
-        static let empty = NavItems(
-            leftBarButtonItem: nil,
-            rightNavBarItems: []
-        )
-    }
-    
     // this should be run in async way as it's locking up with the SDK lock
     private func accessType(for node: NodeEntity?) async -> NodeAccessTypeEntity {
         await nodeUseCase.nodeAccessLevelAsync(nodeHandle: node?.handle ?? .invalid)
-    }
-    
-    @MainActor
-    // Method produces properly configured (with icons, titles and menus)
-    // navigation bar button items
-    private func navItems(
-        nodeSource: NodeSource,
-        config: NodeBrowserConfig,
-        currentViewMode: ViewModePreferenceEntity,
-        contextMenuManager: ContextMenuManager,
-        isSelectionHidden: Bool
-    ) async -> NavItems {
-        
-        guard case let .node(nodeProvider) = nodeSource else {
-            return .empty
-        }
-        
-        let parentNode = nodeProvider()
-        
-        let hasMedia = await makeVisualMediaChecker(nodeSource: nodeSource, mode: .containsSomeMedia)()
-        let accessType = await accessType(for: parentNode)
-        
-        let menuConfig = contextMenuConfigFactory.contextMenuConfiguration(
-            parentNode: parentNode,
-            nodeAccessType: accessType,
-            currentViewMode: currentViewMode,
-            isSelectionHidden: isSelectionHidden,
-            showMediaDiscovery: sharedShouldShowMediaDiscoveryContextMenuOption(
-                mediaDiscoveryDetectionEnabled: !nodeSource.isRoot,
-                hasMediaFiles: hasMedia,
-                isFromSharedItem: config.isFromSharedItem == true,
-                viewModePreference: currentViewMode
-                
-            ),
-            sortOrder: .defaultAsc,
-            displayMode: config.displayMode?.carriedOverDisplayMode ?? .cloudDrive,
-            isFromViewInFolder: config.isFromViewInFolder == true
-        )
-        guard let menuConfig else {
-            return .empty
-        }
-        
-        guard let menu = contextMenuManager.contextMenu(with: menuConfig) else {
-            fatalError("menu should be available")
-        }
-
-        let rightNavBarItems = [
-            makeAddBarButtonItem(
-                for: config,
-                contextMenuManager: contextMenuManager,
-                currentViewMode: currentViewMode
-            ),
-            UIBarButtonItem(
-                image: UIImage.moreNavigationBar,
-                menu: menu
-            )
-        ]
-
-        let makeLeftBarButtonItem: () -> UIBarButtonItem? = {
-            // cancel button needs to be produced here when VC is presented modally
-            // to enable dismissal
-            nil
-        }
-        
-        return .init(
-            leftBarButtonItem: makeLeftBarButtonItem(),
-            rightNavBarItems: rightNavBarItems.compactMap { $0 }
-        )
-    }
-
-    private func makeAddBarButtonItem(
-        for config: NodeBrowserConfig,
-        contextMenuManager: ContextMenuManager,
-        currentViewMode: ViewModePreferenceEntity
-    ) -> UIBarButtonItem? {
-        guard config.isFromViewInFolder != true,
-           config.displayMode != .rubbishBin,
-           config.displayMode != .backup else {
-            return nil
-        }
-
-        let addBarMenuConfig = CMConfigEntity(menuType: .menu(type: .uploadAdd), viewMode: currentViewMode)
-        let addBarMenu = contextMenuManager.contextMenu(with: addBarMenuConfig)
-        return UIBarButtonItem(image: UIImage.navigationbarAdd, menu: addBarMenu)
-    }
-
-    // this enum is used when negotiating if given folder should
-    // have a media discovery option available in the context menu (if there are any media)
-    // or if it should be shown automatically (folder only having images inside)
-    enum MediaCheckerMode {
-        case containsExclusivelyMedia
-        case containsSomeMedia
-    }
-    
-    /// checks if children of  given node are all visual media (video/image) or if there is at least one media element
-    /// used to decide if we need to show the media discovery mode automatically and if media discovery
-    /// view mode option should be shown at all in the context menu
-    private func makeVisualMediaChecker(
-        nodeSource: NodeSource,
-        mode: MediaCheckerMode
-    ) -> () async -> Bool {
-        switch nodeSource {
-        case .node(let provider):
-            // in here we produce a closure that can asynchronously check
-            // if given folder node contains only media (videos/images)
-            return {
-                guard
-                    let node = provider(),
-                    let children = await nodeUseCase.childrenOf(node: node)
-                else { return false }
-                
-                switch mode {
-                case .containsExclusivelyMedia:
-                    return children.containsOnlyVisualMedia()
-                case .containsSomeMedia:
-                    return children.containsVisualMedia()
-                }
-            }
-        case .recentActionBucket:
-            return { false }
-        }
     }
     
     private func makeOptionalWarningViewModel(

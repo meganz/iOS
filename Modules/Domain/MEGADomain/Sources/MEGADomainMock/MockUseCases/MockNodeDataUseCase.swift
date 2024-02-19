@@ -13,7 +13,8 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
     public var inRubbishBinToReturn: Bool
     private var nodes: [NodeEntity]
     private var nodeEntity: NodeEntity?
-    
+    private let nodeListEntity: NodeListEntity?
+
     public var isMultimediaFileNode_CalledTimes = 0
     
     public init(nodeAccessLevelVariable: NodeAccessTypeEntity = .unknown,
@@ -26,7 +27,8 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
                 isARubbishBinRootNodeValue: Bool = false,
                 inRubbishBin: Bool = false,
                 nodes: [NodeEntity] = [],
-                node: NodeEntity? = nil) {
+                node: NodeEntity? = nil,
+                nodeListEntity: NodeListEntity? = nil) {
         self.nodeAccessLevelVariable = nodeAccessLevelVariable
         self.labelStringToReturn = labelString
         self.filesAndFolders = filesAndFolders
@@ -38,6 +40,7 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
         self.inRubbishBinToReturn = inRubbishBin
         self.nodes = nodes
         self.nodeEntity = node
+        self.nodeListEntity = nodeListEntity
     }
     
     public func nodeAccessLevel(nodeHandle: HandleEntity) -> NodeAccessTypeEntity {
@@ -108,7 +111,7 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
         false
     }
     
-    public func childrenOf(node: MEGADomain.NodeEntity) async -> MEGADomain.NodeListEntity? {
-        nil
+    public func childrenOf(node: NodeEntity) async -> NodeListEntity? {
+        nodeListEntity
     }
 }
