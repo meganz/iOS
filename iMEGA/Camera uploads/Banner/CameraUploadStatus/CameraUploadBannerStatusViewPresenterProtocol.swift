@@ -2,7 +2,7 @@ import SwiftUI
 
 protocol CameraUploadBannerStatusViewPresenterProtocol {
     var title: String { get }
-    var subheading: String { get }
+    var subheading: AttributedString { get }
     func textColor(for scheme: ColorScheme) -> Color
     func backgroundColor(for scheme: ColorScheme) -> Color
 }
@@ -16,7 +16,7 @@ extension CameraUploadBannerStatusViewPresenterProtocol {
 struct CameraUploadBannerStatusViewPreviewEntity: CameraUploadBannerStatusViewPresenterProtocol, Hashable {
     
     let title: String
-    let subheading: String
+    let subheading: AttributedString
     let textColor: (ColorScheme) -> Color
     let backgroundColor: (ColorScheme) -> Color
     
@@ -34,6 +34,9 @@ struct CameraUploadBannerStatusViewPreviewEntity: CameraUploadBannerStatusViewPr
     }
     
     static func == (lhs: CameraUploadBannerStatusViewPreviewEntity, rhs: CameraUploadBannerStatusViewPreviewEntity) -> Bool {
-        [lhs.title, lhs.subheading] == [rhs.title, rhs.subheading]
+        [
+            lhs.title == rhs.title,
+            lhs.subheading == rhs.subheading
+        ].allSatisfy { $0 }
     }
 }

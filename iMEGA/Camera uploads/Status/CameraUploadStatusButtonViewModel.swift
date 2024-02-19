@@ -44,7 +44,7 @@ final class CameraUploadStatusButtonViewModel: NSObject, ObservableObject {
             // And not show the green tick, as nothing has uploaded since loading this view
             if !hasFinishedDroppingResult, status == .completed {
                 uploadCompleteIdleCheck()
-                return
+                continue
             } else if !hasFinishedDroppingResult {
                 hasFinishedDroppingResult = true
             }

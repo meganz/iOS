@@ -7,7 +7,7 @@ extension CameraUploadBannerStatusViewStates {
     func toPreviewEntity() -> CameraUploadBannerStatusViewPreviewEntity {
         CameraUploadBannerStatusViewPreviewEntity(
             title: title,
-            subheading: subheading, 
+            subheading: subheading,
             textColor: textColor,
             backgroundColor: backgroundColor)
     }
@@ -26,18 +26,18 @@ extension CameraUploadBannerStatusViewStates: CameraUploadBannerStatusViewPresen
         }
     }
     
-    var subheading: String {
+    var subheading: AttributedString {
         switch self {
         case .uploadInProgress(let numberOfFilesPending):
-            return Strings.Localizable.CameraUploads.Banner.Status.FilesPending.subHeading(Int(numberOfFilesPending))
+            return .init(Strings.Localizable.CameraUploads.Banner.Status.FilesPending.subHeading(Int(numberOfFilesPending)))
         case .uploadCompleted:
-            return Strings.Localizable.CameraUploads.Banner.Status.UploadsComplete.subHeading
+            return .init(Strings.Localizable.CameraUploads.Banner.Status.UploadsComplete.subHeading)
         case .uploadPaused(let reason as any CameraUploadBannerStatusViewPresenterProtocol),
-                .uploadPartialCompleted(let reason as any CameraUploadBannerStatusViewPresenterProtocol):
+            .uploadPartialCompleted(let reason as any CameraUploadBannerStatusViewPresenterProtocol):
             return reason.subheading
         }
     }
-
+    
     func textColor(for scheme: ColorScheme) -> Color {
         switch self {
         case .uploadInProgress, .uploadCompleted:
@@ -67,15 +67,18 @@ extension CameraUploadBannerStatusPartiallyCompletedReason: CameraUploadBannerSt
         }
     }
     
-    var subheading: String {
+    var subheading: AttributedString {
         switch self {
         case .videoUploadIsNotEnabled(let pendingVideoUploadCount):
-            return Strings.Localizable.CameraUploads.Banner.Status.UploadsPartialComplete.VideosNotUploaded.subHeading(Int(pendingVideoUploadCount))
+            return .init(Strings.Localizable.CameraUploads.Banner.Status.UploadsPartialComplete.VideosNotUploaded.subHeading(Int(pendingVideoUploadCount)))
         case .photoLibraryLimitedAccess:
-            return Strings.Localizable.CameraUploads.Banner.Status.UploadsPartialComplete.LimitedPhotoLibraryAccess.subHeading
+            let subHeading = AttributedString(Strings.Localizable.CameraUploads.Banner.Status.UploadsPartialComplete.LimitedPhotoLibraryAccess.subHeading)
+            var subHeadingAction = AttributedString(Strings.Localizable.CameraUploads.Banner.Status.UploadsPartialComplete.LimitedPhotoLibraryAccess.subHeadingAction)
+            subHeadingAction.font = .caption2.bold()
+            return subHeading + " " + subHeadingAction
         }
     }
-        
+    
     func textColor(for scheme: ColorScheme) -> Color {
         switch self {
         case .videoUploadIsNotEnabled:
@@ -84,7 +87,7 @@ extension CameraUploadBannerStatusPartiallyCompletedReason: CameraUploadBannerSt
             return scheme == .dark ? MEGAAppColor.Yellow._FFD60A.color : MEGAAppColor.Yellow._9D8319.color
         }
     }
-        
+    
     func backgroundColor(for scheme: ColorScheme) -> Color {
         switch self {
         case .videoUploadIsNotEnabled:
@@ -105,10 +108,10 @@ extension CameraUploadBannerStatusUploadPausedReason: CameraUploadBannerStatusVi
         }
     }
     
-    var subheading: String {
+    var subheading: AttributedString {
         switch self {
         case .noWifiConnection(let numberOfFilesPending), .noInternetConnection(let numberOfFilesPending):
-            return Strings.Localizable.CameraUploads.Banner.Status.FilesPending.subHeading(Int(numberOfFilesPending))
+                .init(Strings.Localizable.CameraUploads.Banner.Status.FilesPending.subHeading(Int(numberOfFilesPending)))
         }
     }
     
