@@ -1,3 +1,4 @@
+import MEGADesignToken
 import SwiftUI
 
 struct ScheduleMeetingCreationFootnoteView: View {
@@ -7,7 +8,9 @@ struct ScheduleMeetingCreationFootnoteView: View {
     var body: some View {
         Text(title)
             .font(.footnote)
-            .foregroundColor(colorScheme == .dark ? MEGAAppColor.White._FFFFFF.color.opacity(0.6) : MEGAAppColor.Gray._3C3C43.color.opacity(0.6))
+            .foregroundStyle(isDesignTokenEnabled
+                             ? TokenColors.Text.secondary.swiftUI
+                             : colorScheme == .dark ? MEGAAppColor.White._FFFFFF.color.opacity(0.6) : MEGAAppColor.Gray._3C3C43.color.opacity(0.6))
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal)
             .padding(.top, 6)

@@ -1,3 +1,4 @@
+import MEGADesignToken
 import SwiftUI
 
 struct ScheduleMeetingCreationCustomOptionsSelectionHeaderView: View {
@@ -11,9 +12,10 @@ struct ScheduleMeetingCreationCustomOptionsSelectionHeaderView: View {
     var body: some View {
         HStack {
             Text(title)
+                .foregroundStyle(TokenColors.Text.primary.swiftUI)
             Spacer()
             Text(selectedText)
-                .foregroundColor(
+                .foregroundStyle(
                     colorScheme == .dark
                     ? darkThemeForegroundTextColor()
                     : lightThemeForegroundTextColor()
@@ -27,13 +29,13 @@ struct ScheduleMeetingCreationCustomOptionsSelectionHeaderView: View {
     
     private func lightThemeForegroundTextColor() -> Color {
         isExpanded
-        ? Color(UIColor.mnz_green00A886())
-        : MEGAAppColor.Gray._3C3C43.color
+        ? (isDesignTokenEnabled ? TokenColors.Support.success.swiftUI : Color(UIColor.mnz_green00A886()))
+        : (isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI : MEGAAppColor.Gray._3C3C43.color)
     }
     
     private func darkThemeForegroundTextColor() -> Color {
         isExpanded
-        ? MEGAAppColor.Green._00C29A.color
-        : MEGAAppColor.White._FFFFFF.color.opacity(0.6)
+        ? (isDesignTokenEnabled ? TokenColors.Support.success.swiftUI : MEGAAppColor.Green._00C29A.color)
+        : (isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI : MEGAAppColor.White._FFFFFF.color.opacity(0.6))
     }
 }

@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import SwiftUI
 
@@ -59,7 +60,11 @@ struct FocusableTextDescriptionView: View {
         .onChange(of: focused) { isFocused in
             onChange(isFocused)
         }
-        .foregroundColor(focused ? .primary : colorScheme == .dark ? MEGAAppColor.White._FFFFFF.color.opacity(Constants.titleOpacity) : MEGAAppColor.Gray._3C3C43.color.opacity(Constants.titleOpacity))
+        .foregroundStyle(focused ?
+                         isDesignTokenEnabled
+                         ? TokenColors.Text.primary.swiftUI : .primary
+                         : isDesignTokenEnabled
+                         ? TokenColors.Text.secondary.swiftUI : colorScheme == .dark ? MEGAAppColor.White._FFFFFF.color.opacity(Constants.titleOpacity) : MEGAAppColor.Gray._3C3C43.color.opacity(Constants.titleOpacity))
         .padding(.top, !focused && $descriptionText.wrappedValue.isNotEmpty ? Constants.titleHeight : 0)
         .overlay(
             VStack(spacing: Constants.spacing) {
@@ -68,6 +73,7 @@ struct FocusableTextDescriptionView: View {
                         .frame(maxWidth: .infinity, maxHeight: Constants.titleHeight, alignment: .leading)
                         .padding(.horizontal)
                         .font(.body)
+                        .foregroundStyle(TokenColors.Text.primary.swiftUI)
                     Spacer()
                 }
             }

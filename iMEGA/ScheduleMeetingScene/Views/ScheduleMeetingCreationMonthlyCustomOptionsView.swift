@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import SwiftUI
 
@@ -61,6 +62,7 @@ struct ScheduleMeetingCreationMonthlyCustomPickerView: View {
             ) {
                 ForEach(viewModel.weekNumbers, id: \.self) {
                     Text($0)
+                        .foregroundStyle(TokenColors.Text.primary.swiftUI)
                 }
             }
             .pickerStyle(.wheel)
@@ -74,6 +76,7 @@ struct ScheduleMeetingCreationMonthlyCustomPickerView: View {
             ) {
                 ForEach(viewModel.weekdaySymbols, id: \.self) { weekSymbol in
                     Text(weekSymbol)
+                        .foregroundStyle(TokenColors.Text.primary.swiftUI)
                 }
             }
             .pickerStyle(.wheel)

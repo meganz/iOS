@@ -1,3 +1,4 @@
+import MEGADesignToken
 import SwiftUI
 
 struct DetailDisclosureView: View {
@@ -6,7 +7,7 @@ struct DetailDisclosureView: View {
 
     private enum Constants {
         static let disclosureOpacity: CGFloat = 0.6
-        static let discolureIndicator = "chevron.right"
+        static let disclosureIndicator = "chevron.right"
     }
     
     let text: String
@@ -49,13 +50,18 @@ struct DetailDisclosureView: View {
         HStack(alignment: verticalAlignment) {
             Text(text)
                 .font(.body)
+                .foregroundStyle(TokenColors.Text.primary.swiftUI)
             Spacer()
             if let detail {
                 Text(detail)
-                    .foregroundColor(colorScheme == .dark ? MEGAAppColor.Gray._EBEBF5.color.opacity(Constants.disclosureOpacity) : MEGAAppColor.Gray._3C3C43.color.opacity(Constants.disclosureOpacity))
+                    .foregroundStyle(isDesignTokenEnabled
+                                     ? TokenColors.Text.secondary.swiftUI
+                                     : colorScheme == .dark ? MEGAAppColor.Gray._EBEBF5.color.opacity(Constants.disclosureOpacity) : MEGAAppColor.Gray._3C3C43.color.opacity(Constants.disclosureOpacity))
             }
-            Image(systemName: Constants.discolureIndicator)
-                .foregroundColor(MEGAAppColor.Gray._8E8E93.color.opacity(Constants.disclosureOpacity))
+            Image(systemName: Constants.disclosureIndicator)
+                .foregroundStyle(isDesignTokenEnabled
+                                 ? TokenColors.Text.secondary.swiftUI
+                                 : MEGAAppColor.Gray._8E8E93.color.opacity(Constants.disclosureOpacity))
                 .flipsForRightToLeftLayoutDirection(layoutDirection == .rightToLeft)
         }
     }

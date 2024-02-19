@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import SwiftUI
 
@@ -24,6 +25,7 @@ struct ScheduleMeetingCreationCustomOptionsRepetitionRulesView: View {
             
             if viewModel.expandInterval, let intervalOptions = viewModel.intervalOptions {
                 Divider()
+                    .foregroundStyle(TokenColors.Border.subtle.swiftUI)
                     .padding(.vertical)
                 ScheduleMeetingCreationCustomOptionsWheelPickerView(
                     label: Strings.Localizable.Meetings.ScheduleMeeting.Create.Interval.Picker.accessibilityLabel,

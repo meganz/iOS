@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import SwiftUI
 
@@ -50,7 +51,9 @@ struct ScheduleMeetingView: View {
             }
         }
         .padding(.vertical)
-        .background(colorScheme == .dark ? MEGAAppColor.Black._000000.color : MEGAAppColor.White._F7F7F7.color)
+        .background(isDesignTokenEnabled
+                    ? TokenColors.Background.page.swiftUI
+                    : (colorScheme == .dark ? MEGAAppColor.Black._000000.color : MEGAAppColor.White._F7F7F7.color))
         .ignoresSafeArea(.container, edges: [.top, .bottom])
         .onAppear {
             viewModel.updateRightBarButtonState()
