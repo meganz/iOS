@@ -200,7 +200,9 @@ extension NodeAction {
     }
     
     class func removeVersionAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.delete, detail: nil, image: UIImage.delete, type: .remove)
+        let nodeAction = NodeAction(title: Strings.Localizable.delete, detail: nil, image: UIImage.delete, type: .remove)
+        nodeAction.style = .destructive
+        return nodeAction
     }
     
     class func selectAction() -> NodeAction {

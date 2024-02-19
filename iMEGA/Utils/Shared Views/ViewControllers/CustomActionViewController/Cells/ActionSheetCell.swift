@@ -15,7 +15,8 @@ final class ActionSheetCell: UITableViewCell {
         }
         switch action.style {
         case .cancel, .destructive:
-            textLabel?.textColor = .mnz_red(for: traitCollection)
+            textLabel?.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Support.error : .mnz_red(for: traitCollection)
+            imageView?.tintColor = UIColor.isDesignTokenEnabled() ? TokenColors.Support.error : .mnz_red(for: traitCollection)
         default: break
         }
     }
