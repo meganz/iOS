@@ -2189,6 +2189,7 @@
 		BF7EBD4D2452ABE20015255F /* AddToChatMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7EBD4C2452ABE20015255F /* AddToChatMenuView.swift */; };
 		BF7EBD4F2452AF460015255F /* AddToChatMenus.plist in Resources */ = {isa = PBXBuildFile; fileRef = BF7EBD4E2452AF460015255F /* AddToChatMenus.plist */; };
 		BF7EBD512452B0A00015255F /* AddToChatMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7EBD502452B0A00015255F /* AddToChatMenu.swift */; };
+		BF825F532B872696007B0B53 /* ScanDocumentViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF825F522B872696007B0B53 /* ScanDocumentViewRouter.swift */; };
 		BF8895B62630F3A4002A18CA /* MockChatRoomUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8895B52630F3A4002A18CA /* MockChatRoomUseCase.swift */; };
 		BF8895CA2630F4B3002A18CA /* MockUserImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8895C92630F4B3002A18CA /* MockUserImageUseCase.swift */; };
 		BF8895D42630F810002A18CA /* MeetingParticipantInfoViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8895D32630F810002A18CA /* MeetingParticipantInfoViewModelTests.swift */; };
@@ -4899,6 +4900,7 @@
 		BF7EBD4C2452ABE20015255F /* AddToChatMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatMenuView.swift; sourceTree = "<group>"; };
 		BF7EBD4E2452AF460015255F /* AddToChatMenus.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = AddToChatMenus.plist; sourceTree = "<group>"; };
 		BF7EBD502452B0A00015255F /* AddToChatMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatMenu.swift; sourceTree = "<group>"; };
+		BF825F522B872696007B0B53 /* ScanDocumentViewRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanDocumentViewRouter.swift; sourceTree = "<group>"; };
 		BF8895B52630F3A4002A18CA /* MockChatRoomUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockChatRoomUseCase.swift; sourceTree = "<group>"; };
 		BF8895C92630F4B3002A18CA /* MockUserImageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserImageUseCase.swift; sourceTree = "<group>"; };
 		BF8895D32630F810002A18CA /* MeetingParticipantInfoViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingParticipantInfoViewModelTests.swift; sourceTree = "<group>"; };
@@ -9929,6 +9931,7 @@
 				94B09E452B84CC86007D6B84 /* SearchResultSelection+NonEmptySiblings.swift */,
 				94B09E3E2B84CC86007D6B84 /* ToolbarActionFactory.swift */,
 				94B09E482B84CC86007D6B84 /* UploadAddMenuDelegateHandler.swift */,
+				BF825F522B872696007B0B53 /* ScanDocumentViewRouter.swift */,
 			);
 			path = NewNodeBrowser;
 			sourceTree = "<group>";
@@ -13791,6 +13794,7 @@
 				B611E175286165ED00F360CF /* AppDelegate+SDK.swift in Sources */,
 				137361931A6664C300B740E8 /* AppDelegate.m in Sources */,
 				255FE6902ACBB5D40077A85C /* AppearanceListFooterView.swift in Sources */,
+				BF825F532B872696007B0B53 /* ScanDocumentViewRouter.swift in Sources */,
 				5B1FEE28231FE4FA001271AF /* AppearanceManager.swift in Sources */,
 				5BE689A42419122C00462134 /* AppearancePreference+CoreDataClass.swift in Sources */,
 				5BE689A52419122C00462134 /* AppearancePreference+CoreDataProperties.swift in Sources */,

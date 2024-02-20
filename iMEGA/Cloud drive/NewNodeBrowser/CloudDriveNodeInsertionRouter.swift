@@ -26,7 +26,10 @@ struct CloudDriveNodeInsertionRouter: NodeInsertionRouting {
     }
 
     func scanDocument(for nodeEntity: NodeEntity) {
-        // scan document
+        Task {
+            let scanDocumentRouter = ScanDocumentViewRouter(presenter: navigationController, parent: nodeEntity)
+            await scanDocumentRouter.start()
+        }
     }
 
     func importFromFiles(for nodeEntity: NodeEntity) {

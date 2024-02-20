@@ -156,37 +156,46 @@ struct CloudDriveEmptyViewAssetFactory {
 
     private func createTextFileMenuOption(for nodeEntity: NodeEntity) -> SearchConfig.EmptyViewAssets.MenuOption {
         .init(title: Strings.Localizable.newTextFile, image: Image(.textfile)) {
-            nodeInsertionRouter.createNewFolder(for: nodeEntity)
+            perform(action: .newTextFile, for: nodeEntity)
         }
     }
 
     private func createNewFolderMenuOption(for nodeEntity: NodeEntity) -> SearchConfig.EmptyViewAssets.MenuOption {
         .init(title: Strings.Localizable.newFolder, image: Image(.newFolder)) {
-            nodeInsertionRouter.createNewFolder(for: nodeEntity)
+            perform(action: .newFolder, for: nodeEntity)
         }
     }
 
     private func scanDocumentMenuOption(for nodeEntity: NodeEntity) -> SearchConfig.EmptyViewAssets.MenuOption {
         .init(title: Strings.Localizable.scanDocument, image: Image(.scanDocument)) {
-            nodeInsertionRouter.scanDocument(for: nodeEntity)
+            perform(action: .scanDocument, for: nodeEntity)
         }
     }
 
     private func importFromFilesMenuOption(for nodeEntity: NodeEntity) -> SearchConfig.EmptyViewAssets.MenuOption {
         .init(title: Strings.Localizable.CloudDrive.Upload.importFromFiles, image: Image(.import)) {
-            nodeInsertionRouter.importFromFiles(for: nodeEntity)
+            perform(action: .importFrom, for: nodeEntity)
         }
     }
 
     private func capturePhotoVideoMenuOption(for nodeEntity: NodeEntity) -> SearchConfig.EmptyViewAssets.MenuOption {
         .init(title: Strings.Localizable.capturePhotoVideo, image: Image(.capture)) {
-            nodeInsertionRouter.capturePhotoVideo(for: nodeEntity)
+            perform(action: .capture, for: nodeEntity)
         }
     }
 
     private func choosePhotoVideoMenuOption(for nodeEntity: NodeEntity) -> SearchConfig.EmptyViewAssets.MenuOption {
         .init(title: Strings.Localizable.choosePhotoVideo, image: Image(.saveToPhotos)) {
-            nodeInsertionRouter.choosePhotoVideo(for: nodeEntity)
+            perform(action: .chooseFromPhotos, for: nodeEntity)
         }
+    }
+
+    private func perform(action: UploadAddActionEntity, for nodeEntity: NodeEntity) {
+        let menuDelegate = UploadAddMenuDelegateHandler(
+            nodeInsertionRouter: nodeInsertionRouter,
+            nodeSource: .node { nodeEntity }
+        )
+
+        menuDelegate.uploadAddMenu(didSelect: action)
     }
 }
