@@ -38,7 +38,26 @@ enum DocScanQuality: Float, CustomStringConvertible {
 }
 
 class DocScannerSaveSettingTableViewController: UITableViewController {
-    @objc var parentNode: MEGANode?
+    @objc var parentNode: MEGANode? {
+        didSet {
+            guard parentNode?.handle != parentNodeEntity?.handle else { return }
+            
+            parentNodeEntity = parentNode?.toNodeEntity()
+        }
+    }
+
+    var parentNodeEntity: NodeEntity? {
+        didSet {
+            guard parentNodeEntity?.handle != parentNode?.handle else { return }
+
+            if let parentNodeEntity {
+                parentNode = MEGASdk.shared.node(forHandle: parentNodeEntity.handle)
+            } else {
+                parentNode = nil
+            }
+        }
+    }
+
     @objc var docs: [UIImage]?
     @objc var chatRoom: MEGAChatRoom?
     var charactersNotAllowed: Bool = false

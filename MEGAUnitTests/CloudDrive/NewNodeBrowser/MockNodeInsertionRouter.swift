@@ -1,3 +1,4 @@
+import Combine
 @testable import MEGA
 import MEGADomain
 import XCTest
@@ -12,7 +13,7 @@ final class MockNodeInsertionRouter: NodeInsertionRouting {
         case choosePhotoVideo(NodeEntity)
     }
 
-    var actions: [Action] = []
+    @Published var actions: [Action] = []
 
     func shouldMatch(expectedAction: Action, file: StaticString = #file, line: UInt = #line) {
         XCTAssertEqual(actions.first, expectedAction, file: file, line: line)

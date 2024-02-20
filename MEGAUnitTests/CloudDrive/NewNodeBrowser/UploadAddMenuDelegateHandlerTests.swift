@@ -1,3 +1,4 @@
+import Combine
 @testable import MEGA
 import MEGADomain
 import XCTest
@@ -12,28 +13,36 @@ final class UploadAddMenuDelegateHandlerTests: XCTestCase {
         assertEmptyActions(with: .recentActionBucket(MEGARecentActionBucket()))
     }
 
-    func testUploadAddMenu_forValidNodeWithChooseFromPhotosAction_shouldCallTheChooseFromPhotoVideoAction() {
-        assertValidNode(for: NodeEntity(), action: .chooseFromPhotos, expectedAction: .choosePhotoVideo( NodeEntity()))
+    func testUploadAddMenu_forValidNodeWithChooseFromPhotosAction_shouldCallTheChooseFromPhotoVideoAction() async {
+        await assertValidNode(
+            for: NodeEntity(),
+            action: .chooseFromPhotos,
+            expectedAction: .choosePhotoVideo( NodeEntity())
+        )
     }
 
-    func testUploadAddMenu_forValidNodeWithCaptureAction_shouldCallTheCapturePhotoVideoAction() {
-        assertValidNode(for: NodeEntity(), action: .capture, expectedAction: .capturePhotoVideo( NodeEntity()))
+    func testUploadAddMenu_forValidNodeWithCaptureAction_shouldCallTheCapturePhotoVideoAction() async {
+        await assertValidNode(for: NodeEntity(), action: .capture, expectedAction: .capturePhotoVideo( NodeEntity()))
     }
 
-    func testUploadAddMenu_forValidNodeWithImportFromAction_shouldCallTheImportFromFilesAction() {
-        assertValidNode(for: NodeEntity(), action: .importFrom, expectedAction: .importFromFiles( NodeEntity()))
+    func testUploadAddMenu_forValidNodeWithImportFromAction_shouldCallTheImportFromFilesAction() async {
+        await assertValidNode(for: NodeEntity(), action: .importFrom, expectedAction: .importFromFiles( NodeEntity()))
     }
 
-    func testUploadAddMenu_forValidNodeWithScanDocumentAction_shouldCallTheScanDocumentAction() {
-        assertValidNode(for: NodeEntity(), action: .scanDocument, expectedAction: .scanDocument( NodeEntity()))
+    func testUploadAddMenu_forValidNodeWithScanDocumentAction_shouldCallTheScanDocumentAction() async {
+        await assertValidNode(for: NodeEntity(), action: .scanDocument, expectedAction: .scanDocument( NodeEntity()))
     }
 
-    func testUploadAddMenu_forValidNodeWithNewFolderAction_shouldCallTheCreateNewFolderAction() {
-        assertValidNode(for: NodeEntity(), action: .newFolder, expectedAction: .createNewFolder( NodeEntity()))
+    func testUploadAddMenu_forValidNodeWithNewFolderAction_shouldCallTheCreateNewFolderAction() async {
+        await assertValidNode(for: NodeEntity(), action: .newFolder, expectedAction: .createNewFolder( NodeEntity()))
     }
 
-    func testUploadAddMenu_forValidNodeWithNewTextFileAction_shouldCallTheCreateTextFileAlertAction() {
-        assertValidNode(for: NodeEntity(), action: .newTextFile, expectedAction: .createTextFileAlert( NodeEntity()))
+    func testUploadAddMenu_forValidNodeWithNewTextFileAction_shouldCallTheCreateTextFileAlertAction() async {
+        await assertValidNode(
+            for: NodeEntity(),
+            action: .newTextFile,
+            expectedAction: .createTextFileAlert( NodeEntity())
+        )
     }
 
     // MARK: - Private methods.
@@ -70,10 +79,22 @@ final class UploadAddMenuDelegateHandlerTests: XCTestCase {
         expectedAction: MockNodeInsertionRouter.Action,
         file: StaticString = #file,
         line: UInt = #line
-    ) {
+    ) async {
         let router = MockNodeInsertionRouter()
         let sut = makeSUT(nodeInsertionRouter: router, nodeSource: .node({ node }))
+
+        let actionExpectation = expectation(description: "Waiting for the action to be called")
+        let cancellable = router.$actions
+            .sink { actions in
+                if actions.contains(expectedAction) {
+                    actionExpectation.fulfill()
+                }
+            }
+
         sut.uploadAddMenu(didSelect: action)
+        await fulfillment(of: [actionExpectation], timeout: 0.5)
+        cancellable.cancel()
+
         router.shouldMatch(expectedAction: expectedAction, file: file, line: line)
     }
 }
