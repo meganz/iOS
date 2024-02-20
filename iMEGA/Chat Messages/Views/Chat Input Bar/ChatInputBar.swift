@@ -303,9 +303,9 @@ class ChatInputBar: UIView {
         })
     }
     
-    func stopRecordingIfNeeded() {
+    func cancelRecordingIfNeeded() {
         if audioRecordingInputBar != nil {
-            stopRecordingAndSwitchToTextInput()
+            cancelRecordingAndSwitchToTextInput()
         }
     }
         

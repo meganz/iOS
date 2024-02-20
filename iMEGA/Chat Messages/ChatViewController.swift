@@ -419,7 +419,7 @@ class ChatViewController: MessagesViewController {
     }
     
     @objc func stopVoiceRecording() {
-        chatInputBar?.stopRecordingIfNeeded()
+        chatInputBar?.cancelRecordingIfNeeded()
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
