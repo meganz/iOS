@@ -137,7 +137,8 @@ private struct ChatRoomContentDetailsView: View {
                         
                         if viewModel.shouldShowUnreadCount {
                             UnreadCountBadgeView(
-                                unreadCountString: viewModel.unreadCountString
+                                unreadCountString: viewModel.unreadCountString,
+                                backgroundColor: isDesignTokenEnabled ? TokenColors.Components.interactive.swiftUI : .red
                             )
                         }
                     }

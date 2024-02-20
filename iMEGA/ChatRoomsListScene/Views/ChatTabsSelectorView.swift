@@ -23,7 +23,7 @@ struct ChatTabsSelectorView: View {
                 })
                 .overlay(alignment: .trailing, content: {
                     Circle()
-                        .fill(MEGAAppColor.Red._F30C14_badge.color)
+                        .fill(isDesignTokenEnabled ? TokenColors.Components.interactive.swiftUI : MEGAAppColor.Red._F30C14_badge.color)
                         .frame(width: 5, height: 5)
                         .offset(x: 9, y: -3)
                         .opacity(shouldDisplayUnreadBadgeForChats ? 1 : 0)
@@ -44,7 +44,7 @@ struct ChatTabsSelectorView: View {
                 })
                 .overlay(alignment: .trailing, content: {
                     Circle()
-                        .fill(isDesignTokenEnabled ? TokenColors.Button.brand.swiftUI : MEGAAppColor.Red._F30C14_badge.color)
+                        .fill(isDesignTokenEnabled ? TokenColors.Components.interactive.swiftUI : MEGAAppColor.Red._F30C14_badge.color)
                         .frame(width: 5, height: 5)
                         .offset(x: 9, y: -3)
                         .opacity(shouldDisplayUnreadBadgeForMeetings ? 1 : 0)
