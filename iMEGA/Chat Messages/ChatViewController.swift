@@ -12,14 +12,9 @@ import UIKit
 class ChatViewController: MessagesViewController {
     let spacePadding = "   "
     let sdk = MEGASdk.shared
-    let audioSessionUC = AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession(), callActionManager: CallActionManager.shared))
-    let scheduledMeetingUseCase = ScheduledMeetingUseCase(repository: ScheduledMeetingRepository(chatSDK: .shared))
-    let callUseCase = CallUseCase(repository: CallRepository(chatSdk: .shared, callActionManager: CallActionManager.shared))
     let chatContentViewModel: ChatContentViewModel
     
     @objc private(set) var chatRoom: MEGAChatRoom
-    
-    var chatCall: MEGAChatCall?
     
     @objc var publicChatLink: URL?
     @objc var publicChatWithLinkCreated: Bool = false
@@ -37,12 +32,6 @@ class ChatViewController: MessagesViewController {
             reloadInputViews()
         }
     }
-    
-    var endCallSubscription: AnyCancellable?
-    var meetingNoUserJoinedUseCase: MeetingNoUserJoinedUseCase?
-    var noUserJoinedSubscription: AnyCancellable?
-    var endCallDialog: EndCallDialog?
-    private(set) lazy var tonePlayer = TonePlayer()
     
     var startOrJoinButtonIsHiddenSubscription: AnyCancellable?
     
@@ -89,10 +78,6 @@ class ChatViewController: MessagesViewController {
     
     open lazy var audioController = BasicAudioController(messageCollectionView: messagesCollectionView)
     
-    // join call
-    var timer: Timer?
-    var initDuration: TimeInterval?
-    
     let permissionHandler: some DevicePermissionsHandling = DevicePermissionsHandler.makeHandler()
     
     lazy var startOrJoinCallButton: UIButton = {
@@ -123,7 +108,7 @@ class ChatViewController: MessagesViewController {
         return chatRoomDelegate.messages
     }
     
-    var myUser = User(senderId: String(format: "%llu", MEGAChatSdk.shared.myUserHandle ), displayName: "")
+    var myUser = User(senderId: String(format: "%llu", MEGAChatSdk.shared.myUserHandle), displayName: "")
     
     lazy var chatRoomDelegate: ChatRoomDelegate = {
         return ChatRoomDelegate(chatRoom: chatRoom)
@@ -196,16 +181,29 @@ class ChatViewController: MessagesViewController {
         updateToolbarState()
     }
     
+    init(chatRoom: MEGAChatRoom, chatContentViewModel: ChatContentViewModel) {
+        self.chatRoom = chatRoom
+        self.chatContentViewModel = chatContentViewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
     @objc init(chatRoom: MEGAChatRoom) {
         self.chatRoom = chatRoom
+        let router = ChatContentRouter(chatRoom: chatRoom.toChatRoomEntity())
         chatContentViewModel = ChatContentViewModel(
             chatRoom: chatRoom.toChatRoomEntity(),
             chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
             chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo),
             callUseCase: CallUseCase(repository: CallRepository.newRepo),
-            scheduledMeetingUseCase: ScheduledMeetingUseCase(repository: ScheduledMeetingRepository.newRepo)
+            scheduledMeetingUseCase: ScheduledMeetingUseCase(repository: ScheduledMeetingRepository.newRepo),
+            audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession(), callActionManager: CallActionManager.shared)),
+            router: router,
+            permissionRouter: PermissionAlertRouter.makeRouter(deviceHandler: permissionHandler),
+            analyticsEventUseCase: AnalyticsEventUseCase(repository: AnalyticsRepository(sdk: MEGASdk.sharedSdk)),
+            meetingNoUserJoinedUseCase: MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.sharedRepo)
         )
         super.init(nibName: nil, bundle: nil)
+        router.baseViewController = self
     }
     
     convenience init?(chatId: UInt64) {
@@ -238,7 +236,6 @@ class ChatViewController: MessagesViewController {
         addObservers()
         addChatBottomInfoScreenToView()
         configureGesture()
-        subscribeToNoUserJoinedNotification()
         
         chatContentViewModel.invokeCommand = { [weak self] command in
             guard let self else { return }
@@ -321,7 +318,6 @@ class ChatViewController: MessagesViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         MEGAChatSdk.shared.add(self as (any MEGAChatDelegate))
-        MEGAChatSdk.shared.add(self as (any MEGAChatCallDelegate))
         
         previewerView.isHidden = chatRoom.previewersCount == 0
         previewerView.previewersLabel.text = "\(chatRoom.previewersCount)"
@@ -409,7 +405,6 @@ class ChatViewController: MessagesViewController {
         stopVoiceRecording()
         
         MEGAChatSdk.shared.removeMEGAChatDelegateAsync(self as (any MEGAChatDelegate))
-        MEGAChatSdk.shared.removeMEGACallDelegateAsync(self as (any MEGAChatCallDelegate))
         
         if previewMode || isMovingFromParent || presentingViewController != nil && navigationController?.viewControllers.count == 1 {
             closeChatRoom()
@@ -797,8 +792,6 @@ class ChatViewController: MessagesViewController {
     
     private func executeCommand(_ command: ChatContentViewModel.Command) {
         switch command {
-        case .initTimerForCall(let call):
-            initTimerForCall(call)
         case .configNavigationBar:
             configureNavigationBar()
         case .tapToReturnToCallCleanUp:
@@ -807,20 +800,12 @@ class ChatViewController: MessagesViewController {
             hideStartOrJoinCallButton(hide)
         case .showStartOrJoinCallButton:
             showStartOrJoinCallButton()
-        case .showCallEndTimerIfNeeded(let callEntity):
-            showCallEndTimerIfNeeded(call: callEntity)
         case .showTapToReturnToCall(let title):
             showTapToReturnToCall(withTitle: title)
         case .enableAudioVideoButtons(let enable):
             shouldEnableAudioVideoButtons(enable)
-        case .startMeetingNoRinging(let videoCall, let scheduledMeeting):
-            startMeetingNoRinging(videoCall: videoCall, scheduledMeeting: scheduledMeeting)
-        case .startOutGoingCall(let videoEnable):
-            startOutGoingCall(isVideoEnabled: videoEnable)
-        case .startMeetingInWaitingRoomChat(let videoCall, let scheduledMeeting):
-            startMeetingInWaitingRoomChat(videoCall: videoCall, scheduledMeeting: scheduledMeeting)
-        case .startMeetingInWaitingRoomChatNoRinging(let videoCall, let scheduledMeeting):
-            startMeetingInWaitingRoomChatNoRinging(videoCall: videoCall, scheduledMeeting: scheduledMeeting)
+        case .updateNavigationBarButtonsWithAudioVideo(let enabled):
+            updateNavigationBarButtonsWithAudioVideo(enabled)
         }
     }
     
@@ -861,7 +846,7 @@ class ChatViewController: MessagesViewController {
     }
     
     private func configureTapToReturnToCallButton() {
-        tapToReturnToCallButton.addTarget(self, action: #selector(didTapToReturnToCall), for: .touchUpInside)
+        tapToReturnToCallButton.addTarget(self, action: #selector(didTapToReturnToCallBannerButton), for: .touchUpInside)
         view.addSubview(tapToReturnToCallButton)
         
         tapToReturnToCallButton.translatesAutoresizingMaskIntoConstraints = false
@@ -875,7 +860,7 @@ class ChatViewController: MessagesViewController {
     }
     
     private func configureStartOrJoinCallButton() {
-        startOrJoinCallButton.addTarget(self, action: #selector(didTapJoinCall), for: .touchUpInside)
+        startOrJoinCallButton.addTarget(self, action: #selector(didTapStartOrJoinCallFloatingButton), for: .touchUpInside)
         view.addSubview(startOrJoinCallButton)
         startOrJoinCallButton.isHidden = true
         
@@ -1135,26 +1120,24 @@ class ChatViewController: MessagesViewController {
         chatContentViewModel.dispatch(.updateChatRoom(chatRoom))
     }
     
-    // MARK: - Bar Button actions
-    
     var permissionRouter: PermissionAlertRouter {
         .makeRouter(deviceHandler: permissionHandler)
     }
     
+    // MARK: - Bar Button actions
+    
     @objc
     func startAudioCall() {
-        startCall(isVideo: false)
-    }
-    
-    private func startCall(isVideo: Bool) {
-        permissionRouter.requestPermissionsFor(videoCall: isVideo) {[weak self] in
-            self?.openCallViewWithVideo(videoCall: isVideo, isReturnToCall: false)
-        }
+        chatContentViewModel.dispatch(
+            .startCallBarButtonTapped(isVideoEnabled: false)
+        )
     }
     
     @objc
     func startVideoCall() {
-        startCall(isVideo: true)
+        chatContentViewModel.dispatch(
+            .startCallBarButtonTapped(isVideoEnabled: true)
+        )
     }
     
     @objc func dismissChatRoom() {
@@ -1178,144 +1161,10 @@ class ChatViewController: MessagesViewController {
         setEditing(false, animated: true)
     }
     
-    private func startMeetingNoRinging(videoCall: Bool, scheduledMeeting: ScheduledMeetingEntity) {
-        prepareAudioForCall()
-        callUseCase.startCall(for: scheduledMeeting.chatId, enableVideo: videoCall, enableAudio: true, notRinging: true) { [weak self] result in
-            guard let self else { return }
-            updateNavigationBarButtonsBeforeStartCall()
-            switch result {
-            case .success:
-                startMeetingUI(isVideoEnabled: videoCall,
-                               isSpeakerEnabled: chatRoom.isMeeting || videoCall)
-            case .failure:
-                MEGALogDebug("Cannot start no ringing call for scheduled meeting")
-            }
-        }
-    }
-    
-    private func startOutGoingCall(isVideoEnabled: Bool) {
-        prepareAudioForCall()
-        callUseCase.startCall(for: chatRoom.chatId, enableVideo: isVideoEnabled, enableAudio: !chatRoom.isMeeting, notRinging: false) { [weak self] result in
-            guard let self else { return }
-            updateNavigationBarButtonsBeforeStartCall()
-            switch result {
-            case .success:
-                startMeetingUI(isVideoEnabled: isVideoEnabled,
-                               isSpeakerEnabled: false)
-            case .failure:
-                MEGALogDebug("Cannot start outgoing call")
-            }
-        }
-    }
-    
-    private func startMeetingInWaitingRoomChat(videoCall: Bool, scheduledMeeting: ScheduledMeetingEntity) {
-        prepareAudioForCall()
+    private func updateNavigationBarButtonsWithAudioVideo(_ enabled: Bool) {
+        shouldDisableAudioVideoCalling = enabled
         Task { @MainActor in
-            do {
-                _ = try await callUseCase.startCall(for: scheduledMeeting.chatId, enableVideo: videoCall, enableAudio: true, notRinging: false)
-                updateNavigationBarButtonsBeforeStartCall()
-                startMeetingUI(isVideoEnabled: videoCall, isSpeakerEnabled: chatRoom.isMeeting || videoCall)
-            } catch {
-                updateNavigationBarButtonsBeforeStartCall()
-            }
-        }
-    }
-    
-    private func startMeetingInWaitingRoomChatNoRinging(videoCall: Bool, scheduledMeeting: ScheduledMeetingEntity) {
-        prepareAudioForCall()
-        Task { @MainActor in
-            do {
-                _ = try await callUseCase.startCall(for: scheduledMeeting.chatId, enableVideo: videoCall, enableAudio: true, notRinging: true)
-                updateNavigationBarButtonsBeforeStartCall()
-                startMeetingUI(isVideoEnabled: videoCall, isSpeakerEnabled: chatRoom.isMeeting || videoCall)
-            } catch {
-                updateNavigationBarButtonsBeforeStartCall()
-            }
-        }
-    }
-    
-    private func answerCall() {
-        prepareAudioForCall()
-        callUseCase.answerCall(for: chatRoom.chatId) { [weak self] result in
-            guard let self else { return }
-            updateNavigationBarButtonsBeforeStartCall()
-            switch result {
-            case .success:
-                startMeetingUI(isVideoEnabled: false,
-                               isSpeakerEnabled: false)
-            case .failure:
-                MEGALogDebug("Cannot answer call")
-            }
-        }
-    }
-    
-    private func updateNavigationBarButtonsBeforeStartCall() {
-        shouldDisableAudioVideoCalling = false
-        updateRightBarButtons()
-    }
-    
-    private func joinActiveCall(isVideoEnabled: Bool) {
-        guard let activeCall = MEGAChatSdk.shared.chatCall(forChatId: chatRoom.chatId) else {
-            return
-        }
-        if activeCall.status == .userNoPresent {
-            startOutGoingCall(isVideoEnabled: isVideoEnabled)
-        } else {
-            let isSpeakerEnabled = AVAudioSession.sharedInstance().isOutputEqualToPortType(.builtInSpeaker)
-            startMeetingUI(isVideoEnabled: isVideoEnabled, isSpeakerEnabled: isSpeakerEnabled)
-        }
-    }
-    
-    private func startMeetingUI(isVideoEnabled: Bool, isSpeakerEnabled: Bool) {
-        guard let call = MEGAChatSdk.shared.chatCall(forChatId: chatRoom.chatId) else { return }
-        
-        let callEntity = call.toCallEntity()
-        let chatRoomEntity = chatRoom.toChatRoomEntity()
-        
-        MeetingContainerRouter(presenter: self,
-                               chatRoom: chatRoomEntity,
-                               call: callEntity,
-                               isSpeakerEnabled: isSpeakerEnabled).start()
-    }
-    
-    private func openWaitingRoom() {
-        guard let scheduledMeeting = scheduledMeetingUseCase.scheduledMeetingsByChat(chatId: chatRoom.chatId).first else { return }
-        WaitingRoomViewRouter(presenter: self, scheduledMeeting: scheduledMeeting).start()
-    }
-    
-    private func prepareAudioForCall() {
-        shouldDisableAudioVideoCalling = true
-        updateRightBarButtons()
-        
-        audioSessionUC.configureCallAudioSession()
-        if chatRoom.isMeeting {
-            audioSessionUC.enableLoudSpeaker()
-        } else {
-            audioSessionUC.disableLoudSpeaker()
-        }
-    }
-    
-    func openCallViewWithVideo(videoCall: Bool, shouldRing: Bool = true, isReturnToCall: Bool) {
-        guard let call = MEGAChatSdk.shared.chatCall(forChatId: chatRoom.chatId) else {
-            let reachable = MEGAReachabilityManager.isReachable()
-            
-            if chatContentViewModel.shouldOpenWaitingRoom() {
-                openWaitingRoom()
-            } else if chatRoom.isMeeting && !shouldRing {
-                chatContentViewModel.dispatch(.startMeetingNoRinging(videoCall, shouldDisableAudioVideoCalling, isVoiceRecordingInProgress, reachable))
-            } else {
-                chatContentViewModel.dispatch(.startOutGoingCall(videoCall, shouldDisableAudioVideoCalling, isVoiceRecordingInProgress, reachable))
-            }
-            
-            return
-        }
-        
-        if chatContentViewModel.shouldOpenWaitingRoom(isReturnToCall: isReturnToCall) {
-            openWaitingRoom()
-        } else if call.isRinging || call.status == .userNoPresent {
-            answerCall()
-        } else {
-            joinActiveCall(isVideoEnabled: videoCall)
+            updateRightBarButtons()
         }
     }
     

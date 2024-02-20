@@ -114,6 +114,15 @@ public struct CallEntity: Sendable {
         self.waitingRoomHandleList = waitingRoomHandleList
         self.uuid = uuid
     }
+    
+    public var isActiveCall: Bool {
+        switch status {
+        case .joining, .connecting, .inProgress:
+            return true
+        default:
+            return false
+        }
+    }
 }
 
 extension CallEntity: Hashable {
