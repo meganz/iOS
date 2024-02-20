@@ -1,9 +1,32 @@
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
+import MEGASwiftUI
+import Notifications
 
 extension NotificationsTableViewController {
+    // MARK: - Register cell
+    @objc func registerCustomCells() {
+        tableView.register(HostingTableViewCell<NotificationItemView>.self,
+                                 forCellReuseIdentifier: "NotificationItemView")
+    }
     
+    // MARK: - Promo cell
+    @objc func promoCell(indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "NotificationItemView", for: indexPath) as? HostingTableViewCell<NotificationItemView> else {
+            fatalError("Failed to load HostingTableViewCell<NotificationItemView>")
+        }
+        
+        let promo = viewModel.promoList[indexPath.row]
+        let promoView = NotificationItemView(viewModel: NotificationItemViewModel(notification: promo))
+    
+        cell.host(promoView, parent: self)
+        cell.selectionStyle = .none
+        cell.backgroundColor = UIColor.isDesignTokenEnabled() ? notificationCellBackground(true) : UIColor.mnz_notificationSeenBackground(for: self.traitCollection)
+        return cell
+    }
+    
+    // MARK: - Contents
     @objc func contentForTakedownReinstatedNode(withHandle handle: HandleEntity, nodeFont: UIFont) -> NSAttributedString? {
         guard let node = MEGASdk.shared.node(forHandle: handle) else { return nil }
         let nodeName = node.name ?? ""

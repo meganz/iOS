@@ -1,12 +1,13 @@
 #import <UIKit/UIKit.h>
 
-@class ScheduleMeetingOccurrenceNotification;
+@class ScheduleMeetingOccurrenceNotification, NotificationsViewModel;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NotificationsTableViewController : UITableViewController
 
 @property (nonatomic) NSArray<ScheduleMeetingOccurrenceNotification *> *scheduleMeetingOccurrenceNotificationList;
+@property (nonatomic, strong) NotificationsViewModel *viewModel;
 
 @end
 

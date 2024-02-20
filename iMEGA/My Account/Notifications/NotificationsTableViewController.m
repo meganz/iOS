@@ -36,6 +36,7 @@
     self.tableView.emptyDataSetSource = self;
     
     self.navigationItem.title = LocalizedString(@"notifications", @"");
+    [self registerCustomCells];
     [self fetchAlerts];
     [self logUserAlertsStatus:self.userAlertsArray];
     
@@ -401,13 +402,42 @@
 
 #pragma mark - UITableViewDataSource
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return self.viewModel.numberOfSections;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if (self.viewModel.isPromoEnabled) {
+        switch (section) {
+            case NotificationSectionPromos:
+                return self.viewModel.promoSectionNumberOfRows;
+            case NotificationSectionUserAlerts:
+                return self.userAlertsArray.count;
+            default:
+                return 0;
+        }
+    }
+    
     return self.userAlertsArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NotificationTableViewCell *cell = (NotificationTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"notificationCell" forIndexPath:indexPath];
-    
+    if (self.viewModel.isPromoEnabled) {
+        switch (indexPath.section) {
+            case NotificationSectionPromos:
+                return [self promoCellWithIndexPath:indexPath];
+            case NotificationSectionUserAlerts:
+                return [self userAlertCellRowAtIndexPath:indexPath];
+            default:
+                return UITableViewCell.new;
+        }
+    }
+    return [self userAlertCellRowAtIndexPath:indexPath];
+}
+
+- (UITableViewCell *)userAlertCellRowAtIndexPath:(NSIndexPath *)indexPath {
+    NotificationTableViewCell *cell = (NotificationTableViewCell *)[self.tableView dequeueReusableCellWithIdentifier:@"notificationCell" forIndexPath:indexPath];
+
     MEGAUserAlert *userAlert = [self.userAlertsArray objectAtIndex:indexPath.row];
     
     [self configureTypeLabel:cell.typeLabel forType:userAlert.type];

@@ -1657,6 +1657,7 @@
 		B5120F4A2A16050A00A56354 /* ShareAttachmentCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5120F492A16050A00A56354 /* ShareAttachmentCellView.swift */; };
 		B5120F4C2A16053A00A56354 /* ShareAttachmentCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5120F4B2A16053A00A56354 /* ShareAttachmentCellViewModel.swift */; };
 		B51616492B83361900C6E842 /* Notifications in Frameworks */ = {isa = PBXBuildFile; productRef = B51616482B83361900C6E842 /* Notifications */; };
+		B513F0452B7E1CBC002DC6F7 /* NotificationsViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B513F0442B7E1CBB002DC6F7 /* NotificationsViewRouter.swift */; };
 		B51C55C52824AA04004E3FA8 /* UsageViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51C55C42824AA04004E3FA8 /* UsageViewController+Additions.swift */; };
 		B51CFD3929A70976004D91AA /* CustomModalAlertViewController+SharedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51CFD3829A70976004D91AA /* CustomModalAlertViewController+SharedItem.swift */; };
 		B51DD9CE28B5D34A0094A979 /* LiveTextImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51DD9CD28B5D34A0094A979 /* LiveTextImageView.swift */; };
@@ -1721,6 +1722,7 @@
 		B5CD176427F58236000CF282 /* PhotosViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CD176327F58236000CF282 /* PhotosViewController+Additions.swift */; };
 		B5CDC70E285355A4006759D4 /* MEGANode+MenuActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CDC70D285355A4006759D4 /* MEGANode+MenuActions.swift */; };
 		B5CFA46E2A860EE300F3374E /* CustomModalAlertViewController+Transfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CFA46D2A860EE300F3374E /* CustomModalAlertViewController+Transfer.swift */; };
+		B5D1A6362B7F13E0007447AB /* NotificationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D1A6352B7F13E0007447AB /* NotificationsViewModel.swift */; };
 		B5D58D552AC67C89004ECD36 /* Accounts in Frameworks */ = {isa = PBXBuildFile; productRef = B5D58D542AC67C89004ECD36 /* Accounts */; };
 		B5D58D582AC67D0D004ECD36 /* Accounts in Frameworks */ = {isa = PBXBuildFile; productRef = B5D58D572AC67D0D004ECD36 /* Accounts */; };
 		B5D875372A04B501003F9380 /* SendFeedbackViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D875362A04B501003F9380 /* SendFeedbackViewModel.swift */; };
@@ -4341,6 +4343,7 @@
 		B511CE6D2AA745E800445877 /* AppDelegate+Ads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+Ads.swift"; sourceTree = "<group>"; };
 		B5120F492A16050A00A56354 /* ShareAttachmentCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareAttachmentCellView.swift; sourceTree = "<group>"; };
 		B5120F4B2A16053A00A56354 /* ShareAttachmentCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareAttachmentCellViewModel.swift; sourceTree = "<group>"; };
+		B513F0442B7E1CBB002DC6F7 /* NotificationsViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewRouter.swift; sourceTree = "<group>"; };
 		B51C55C42824AA04004E3FA8 /* UsageViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UsageViewController+Additions.swift"; sourceTree = "<group>"; };
 		B51CFD3829A70976004D91AA /* CustomModalAlertViewController+SharedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+SharedItem.swift"; sourceTree = "<group>"; };
 		B51DD9CD28B5D34A0094A979 /* LiveTextImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveTextImageView.swift; sourceTree = "<group>"; };
@@ -4402,6 +4405,7 @@
 		B5CD176327F58236000CF282 /* PhotosViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewController+Additions.swift"; sourceTree = "<group>"; };
 		B5CDC70D285355A4006759D4 /* MEGANode+MenuActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGANode+MenuActions.swift"; sourceTree = "<group>"; };
 		B5CFA46D2A860EE300F3374E /* CustomModalAlertViewController+Transfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CustomModalAlertViewController+Transfer.swift"; sourceTree = "<group>"; };
+		B5D1A6352B7F13E0007447AB /* NotificationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewModel.swift; sourceTree = "<group>"; };
 		B5D875362A04B501003F9380 /* SendFeedbackViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendFeedbackViewModel.swift; sourceTree = "<group>"; };
 		B5E378A22B8334DA000C1DAD /* Notifications */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Notifications; sourceTree = "<group>"; };
 		B5E4EB422A656BE300174309 /* ReferralBonusesTableViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReferralBonusesTableViewController+Additions.swift"; sourceTree = "<group>"; };
@@ -8400,6 +8404,7 @@
 		77597007219EB7FD00B31671 /* Notifications */ = {
 			isa = PBXGroup;
 			children = (
+				B5D1A6332B7F13CB007447AB /* ViewModel */,
 				7759700B219EBCE700B31671 /* Notifications.storyboard */,
 				B57AD22F28C1A26600FB173A /* NotificationsTableViewController+Additions.swift */,
 				BFDEE879297118D1004B585D /* NotificationsTableViewController+Meetings.swift */,
@@ -9918,6 +9923,7 @@
 				94272C4C2B6D3BFA00D4AF7C /* BrowserViewControllerDelegateHandler.swift */,
 				9474F19C2B5A672900FDBE8D /* CloudDriveBottomToolbarFactory.swift */,
 				94831D632B61086700D0005F /* CloudDriveContextMenuConfigFactory.swift */,
+				94768B4F2B55535F005C436B /* CloudDriveContextMenuDelegates.swift */,
 				940F972F2B57DDA300B8C0AF /* CloudDriveNavigationTitleBuilder.swift */,
 				BFDE27B02B75D62E00F5A69E /* CloudDriveNodeInsertionRouter.swift */,
 				94D724C52B6BC43500B1F1EC /* ContextMenuManager+ActionHandlersArray.swift */,
@@ -10523,6 +10529,15 @@
 				B5CC2AA42995F15200A966A0 /* SharedItemsViewRouter.swift */,
 			);
 			path = ViewRouters;
+			sourceTree = "<group>";
+		};
+		B5D1A6332B7F13CB007447AB /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				B5D1A6352B7F13E0007447AB /* NotificationsViewModel.swift */,
+				B513F0442B7E1CBB002DC6F7 /* NotificationsViewRouter.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		B5D777E029DA6C6100329801 /* Account Hall */ = {
@@ -14690,6 +14705,8 @@
 				B57AD23028C1A26600FB173A /* NotificationsTableViewController+Additions.swift in Sources */,
 				BFDEE87A297118D1004B585D /* NotificationsTableViewController+Meetings.swift in Sources */,
 				7759700A219EB85300B31671 /* NotificationsTableViewController.m in Sources */,
+				B5D1A6362B7F13E0007447AB /* NotificationsViewModel.swift in Sources */,
+				B513F0452B7E1CBC002DC6F7 /* NotificationsViewRouter.swift in Sources */,
 				E79B628B2B71223100F0C918 /* NotificationTableViewCell+Additions.swift in Sources */,
 				7759700F219EC2D700B31671 /* NotificationTableViewCell.m in Sources */,
 				5B118EC31FB1B0C6005D7D90 /* NSArray+MNZCategory.m in Sources */,
