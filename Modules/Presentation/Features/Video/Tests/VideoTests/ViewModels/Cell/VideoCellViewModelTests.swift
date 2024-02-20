@@ -1,8 +1,8 @@
-@testable import Video
 import MEGADomain
 import MEGADomainMock
 import MEGATest
 import SwiftUI
+@testable import Video
 import XCTest
 
 @MainActor
@@ -69,10 +69,36 @@ final class VideoCellViewModelTests: XCTestCase {
         XCTAssertNotNil(previewEntity.imageContainer)
     }
     
+    func testOnTappedMoreOptions_whenCalled_triggerTap() async {
+        let node = nodeEntity(name: "name", handle: 1, hasThumbnail: true, isFavorite: true, label: .blue, size: 12, duration: 12)
+        let mockThumbnailUseCase = MockThumbnailUseCase(
+            cachedThumbnails: [],
+            loadThumbnailResult: .failure(GenericErrorEntity()),
+            loadPreviewResult: .failure(GenericErrorEntity()),
+            loadThumbnailAndPreviewResult: .failure(GenericErrorEntity())
+        )
+        var tappedNodes = [NodeEntity]()
+        let sut = await makeSUT(
+            thumbnailUseCase: mockThumbnailUseCase,
+            nodeEntity: node,
+            onTapMoreOptions: { tappedNodes.append($0) }
+        )
+        
+        sut.onTappedMoreOptions()
+        
+        XCTAssertEqual(tappedNodes, [ node ])
+    }
+    
     // MARK: - Helpers
     
-    private func makeSUT(thumbnailUseCase: ThumbnailUseCaseProtocol, nodeEntity: NodeEntity, file: StaticString = #filePath, line: UInt = #line) async -> VideoCellViewModel {
-        let sut = VideoCellViewModel(thumbnailUseCase: thumbnailUseCase, nodeEntity: nodeEntity)
+    private func makeSUT(
+        thumbnailUseCase: ThumbnailUseCaseProtocol,
+        nodeEntity: NodeEntity,
+        onTapMoreOptions: @escaping (_ node: NodeEntity) -> Void = { _ in },
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) async -> VideoCellViewModel {
+        let sut = VideoCellViewModel(thumbnailUseCase: thumbnailUseCase, nodeEntity: nodeEntity, onTapMoreOptions: onTapMoreOptions)
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
     }

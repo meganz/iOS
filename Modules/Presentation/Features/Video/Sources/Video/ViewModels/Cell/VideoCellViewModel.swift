@@ -6,12 +6,14 @@ final class VideoCellViewModel: ObservableObject {
     
     private let thumbnailUseCase: any ThumbnailUseCaseProtocol
     private let nodeEntity: NodeEntity
+    private let onTapMoreOptions: (_ node: NodeEntity) -> Void
     
     @Published var previewEntity: VideoCellPreviewEntity
     
-    init(thumbnailUseCase: some ThumbnailUseCaseProtocol, nodeEntity: NodeEntity) {
+    init(thumbnailUseCase: some ThumbnailUseCaseProtocol, nodeEntity: NodeEntity, onTapMoreOptions: @escaping (_ node: NodeEntity) -> Void) {
         self.thumbnailUseCase = thumbnailUseCase
         self.nodeEntity = nodeEntity
+        self.onTapMoreOptions = onTapMoreOptions
         
         guard let cachedContainer = thumbnailUseCase.cachedThumbnailContainer(for: nodeEntity, type: .thumbnail) else {
             let placeholderContainer = ImageContainer(image: Image(systemName: "square.fill"), type: .placeholder)
@@ -28,6 +30,10 @@ final class VideoCellViewModel: ObservableObject {
             return
         }
         previewEntity = nodeEntity.toVideoCellPreviewEntity(thumbnailContainer: remoteContainer)
+    }
+    
+    func onTappedMoreOptions() {
+        onTapMoreOptions(nodeEntity)
     }
     
     private func loadThumbnailContainerFromRemote() async -> (any ImageContaining)? {

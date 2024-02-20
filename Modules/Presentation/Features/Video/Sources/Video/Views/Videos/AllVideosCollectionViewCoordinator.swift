@@ -52,7 +52,8 @@ final class AllVideosCollectionViewCoordinator: NSObject {
             
             let cellViewModel = VideoCellViewModel(
                 thumbnailUseCase: representer.viewModel.thumbnailUseCase,
-                nodeEntity: rowItem.node
+                nodeEntity: rowItem.node,
+                onTapMoreOptions: { [weak self] in self?.onTapMoreOptions($0, sender: cell) }
             )
             configureCell(cell, cellViewModel: cellViewModel)
         }
@@ -101,6 +102,10 @@ final class AllVideosCollectionViewCoordinator: NSObject {
             cellHostingController.view.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor),
             cellHostingController.view.bottomAnchor.constraint(equalTo: cell.contentView.bottomAnchor)
         ])
+    }
+    
+    private func onTapMoreOptions(_ video: NodeEntity, sender: Any) {
+        representer.router.openMoreOptions(for: video, sender: sender)
     }
 }
 

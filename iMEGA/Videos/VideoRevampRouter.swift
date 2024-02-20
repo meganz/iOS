@@ -48,4 +48,27 @@ struct VideoRevampRouter: VideoRevampRouting {
         let nodeOpener = NodeOpener(navigationController: navigationController)
         nodeOpener.openNode(node: selectedNode, allNodes: allNodes)
     }
+    
+    func openMoreOptions(for videoNodeEntity: NodeEntity, sender: Any) {
+        guard
+            let navigationController,
+            let videoMegaNode = videoNodeEntity.toMEGANode(in: MEGASdk.shared)
+        else {
+            return
+        }
+        
+        let backupsUseCase = BackupsUseCase(backupsRepository: BackupsRepository.newRepo, nodeRepository: NodeRepository.newRepo)
+        let isBackupNode = backupsUseCase.isBackupNode(videoNodeEntity)
+        let delegate = NodeActionViewControllerGenericDelegate(viewController: navigationController)
+        let viewController = NodeActionViewController(
+            node: videoMegaNode,
+            delegate: delegate,
+            displayMode: .cloudDrive,
+            isIncoming: false,
+            isBackupNode: isBackupNode,
+            sender: sender
+        )
+        
+        navigationController.present(viewController, animated: true, completion: nil)
+    }
 }

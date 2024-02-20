@@ -6,10 +6,14 @@ struct VideoCellView: View {
     let videoConfig: VideoConfig
     
     var body: some View {
-        VideoCellViewContent(previewEntity: viewModel.previewEntity, videoConfig: videoConfig)
-            .task {
-                await viewModel.attemptLoadThumbnail()
-            }
+        VideoCellViewContent(
+            previewEntity: viewModel.previewEntity,
+            videoConfig: videoConfig,
+            onTappedMoreOptions: viewModel.onTappedMoreOptions
+        )
+        .task {
+            await viewModel.attemptLoadThumbnail()
+        }
     }
 }
 
@@ -17,6 +21,7 @@ struct VideoCellViewContent: View {
     @Environment(\.colorScheme) var colorScheme
     let previewEntity: VideoCellPreviewEntity
     let videoConfig: VideoConfig
+    let onTappedMoreOptions: () -> Void
     
     var body: some View {
         HStack(alignment: .center, spacing: 8) {
@@ -82,6 +87,7 @@ struct VideoCellViewContent: View {
     private var trailingContent: some View {
         Image(uiImage: videoConfig.rowAssets.moreImage)
             .foregroundColor(videoConfig.colorAssets.secondaryIconColor)
+            .onTapGesture { onTappedMoreOptions() }
     }
 }
 
@@ -89,17 +95,17 @@ struct VideoCellViewContent: View {
 
 #Preview {
     Group {
-        VideoCellViewContent(previewEntity: .standard, videoConfig: .preview)
+        VideoCellViewContent(previewEntity: .standard, videoConfig: .preview, onTappedMoreOptions: {})
             .frame(height: 80)
-        VideoCellViewContent(previewEntity: .favorite, videoConfig: .preview)
+        VideoCellViewContent(previewEntity: .favorite, videoConfig: .preview, onTappedMoreOptions: {})
             .frame(height: 80)
-        VideoCellViewContent(previewEntity: .hasPublicLink, videoConfig: .preview)
+        VideoCellViewContent(previewEntity: .hasPublicLink, videoConfig: .preview, onTappedMoreOptions: {})
             .frame(height: 80)
-        VideoCellViewContent(previewEntity: .hasLabel, videoConfig: .preview)
+        VideoCellViewContent(previewEntity: .hasLabel, videoConfig: .preview, onTappedMoreOptions: {})
             .frame(height: 80)
-        VideoCellViewContent(previewEntity: .all, videoConfig: .preview)
+        VideoCellViewContent(previewEntity: .all, videoConfig: .preview, onTappedMoreOptions: {})
             .frame(height: 80)
-        VideoCellViewContent(previewEntity: .placeholder, videoConfig: .preview)
+        VideoCellViewContent(previewEntity: .placeholder, videoConfig: .preview, onTappedMoreOptions: {})
             .frame(height: 80)
     }
 }
