@@ -46,7 +46,7 @@ struct EnableCameraUploadsBannerButtonView: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 
-                Image(.cuBannerChevron)
+                Image(isDesignTokenEnabled ? .cuBannerChevronRevamp : .cuBannerChevron)
                     .renderingMode(isDesignTokenEnabled ? .template : .original)
                     .foregroundColor(isDesignTokenEnabled ? TokenColors.Icon.secondary.swiftUI : nil)
                     .frame(width: Constants.chevronFrameWidth,
@@ -71,6 +71,9 @@ struct EnableCameraUploadsBannerButtonView_Preview: PreviewProvider {
     static var previews: some View {
         
         EnableCameraUploadsBannerButtonView()
+        
+        EnableCameraUploadsBannerButtonView()
+            .preferredColorScheme(.dark)
         
         EnableCameraUploadsBannerButtonView()
             .previewInterfaceOrientation(.landscapeLeft)
