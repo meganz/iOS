@@ -51,8 +51,7 @@ extension MyAccountHallViewController: UITableViewDelegate {
             }
             
         case MyAccountMegaSection.notifications.rawValue:
-            let notificationsTVC = UIStoryboard(name: "Notifications", bundle: nil).instantiateViewController(withIdentifier: "NotificationsTableViewControllerID")
-            navigationController?.pushViewController(notificationsTVC, animated: true)
+            NotificationsViewRouter(navigationController: navigationController).start()
             
         case MyAccountMegaSection.contacts.rawValue:
             let contactsVC = UIStoryboard(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "ContactsViewControllerID")
