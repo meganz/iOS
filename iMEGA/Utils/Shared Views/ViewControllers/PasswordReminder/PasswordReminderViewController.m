@@ -11,23 +11,6 @@
 
 @interface PasswordReminderViewController ()
 
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
-@property (weak, nonatomic) IBOutlet UILabel *switchInfoLabel;
-@property (weak, nonatomic) IBOutlet UIButton *testPasswordButton;
-@property (weak, nonatomic) IBOutlet UIButton *backupKeyButton;
-@property (weak, nonatomic) IBOutlet UIButton *dismissButton;
-
-@property (weak, nonatomic) IBOutlet UIView *doNotShowMeAgainView;
-@property (weak, nonatomic) IBOutlet UIView *doNotShowMeAgainTopSeparatorView;
-@property (weak, nonatomic) IBOutlet UISwitch *dontShowAgainSwitch;
-@property (weak, nonatomic) IBOutlet UIView *doNotShowMeAgainBottomSeparatorView;
-
-@property (weak, nonatomic) IBOutlet UIView *alphaView;
-@property (weak, nonatomic) IBOutlet UIImageView *keyImageView;
-
-@property (weak, nonatomic) IBOutlet UIView *backgroundView;
-
 @end
 
 @implementation PasswordReminderViewController
@@ -109,22 +92,6 @@
     [self dismissViewControllerAnimated:YES completion:^{
         [self notifyUserSkippedOrBlockedPasswordReminder];
     }];
-}
-
-#pragma mark - Private
-
-- (void)updateAppearance {
-    self.backgroundView.backgroundColor = UIColor.systemBackgroundColor;
-    
-    self.descriptionLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
-    
-    self.doNotShowMeAgainView.backgroundColor = [UIColor mnz_secondaryBackgroundElevated:self.traitCollection];
-    self.doNotShowMeAgainTopSeparatorView.backgroundColor = self.doNotShowMeAgainBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
-    
-    [self.testPasswordButton mnz_setupBasic:self.traitCollection];
-    [self.backupKeyButton mnz_setupPrimary:self.traitCollection];
-    
-    [self.dismissButton mnz_setupCancel:self.traitCollection];
 }
 
 - (void)notifyUserSkippedOrBlockedPasswordReminder {
