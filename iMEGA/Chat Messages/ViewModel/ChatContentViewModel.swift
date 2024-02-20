@@ -1,25 +1,26 @@
+import Combine
 import Foundation
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
 
+protocol ChatContentRouting {
+    func startCallUI(chatRoom: ChatRoomEntity, call: CallEntity, isSpeakerEnabled: Bool)
+    func openWaitingRoom(scheduledMeeting: ScheduledMeetingEntity)
+    func showCallAlreadyInProgress(endAndJoinAlertHandler: (() -> Void)?)
+    func showEndCallDialog(stayOnCallCompletion: @escaping () -> Void, endCallCompletion: @escaping () -> Void)
+    func removeEndCallDialogIfNeeded()
+}
+
 enum ChatContentAction: ActionType {
     case startOrJoinCallCleanUp
-    case updateCallNavigationBarButtons(_ disableCalling: Bool, 
-                                        _ isVoiceRecordingInProgress: Bool,
-                                        _ reachable: Bool)
-    case startMeetingNoRinging(_ videoCall: Bool,
-                               _ disableCalling: Bool,
-                               _ isVoiceRecordingInProgress: Bool,
-                               _ reachable: Bool)
-    case startOutGoingCall(_ isVideoEnabled: Bool,
-                           _ disableCalling: Bool,
-                           _ isVoiceRecordingInProgress: Bool,
-                           _ reachable: Bool)
+    case updateCallNavigationBarButtons(_ disableCalling: Bool, _ isVoiceRecordingInProgress: Bool)
     case updateContent
-    case updateCall(_ call: CallEntity?)
     case updateChatRoom(_ chatRoom: ChatRoomEntity)
     case inviteParticipants(_ userHandles: [HandleEntity])
+    case startCallBarButtonTapped(isVideoEnabled: Bool)
+    case startOrJoinFloatingButtonTapped
+    case returnToCallBannerButtonTapped
 }
 
 final class ChatContentViewModel: ViewModelType {
@@ -28,15 +29,10 @@ final class ChatContentViewModel: ViewModelType {
         case configNavigationBar
         case tapToReturnToCallCleanUp
         case showStartOrJoinCallButton
-        case initTimerForCall(_ call: CallEntity)
-        case startOutGoingCall(_ enableVideo: Bool)
         case showTapToReturnToCall(_ title: String)
         case enableAudioVideoButtons(_ enable: Bool)
-        case showCallEndTimerIfNeeded(_ call: CallEntity)
-        case startMeetingNoRinging(_ videoCall: Bool, _ scheduledMeeting: ScheduledMeetingEntity)
-        case startMeetingInWaitingRoomChat(_ videoCall: Bool, _ scheduledMeeting: ScheduledMeetingEntity)
-        case startMeetingInWaitingRoomChatNoRinging(_ videoCall: Bool, _ scheduledMeeting: ScheduledMeetingEntity)
         case hideStartOrJoinCallButton(_ hide: Bool)
+        case updateNavigationBarButtonsWithAudioVideo(_ enabled: Bool)
     }
     
     struct NavBarRightItems: OptionSet {
@@ -51,25 +47,42 @@ final class ChatContentViewModel: ViewModelType {
     }
     
     var invokeCommand: ((Command) -> Void)?
-    
-    lazy var userHandle: HandleEntity = {
-        chatUseCase.myUserHandle()
-    }()
         
     private var chatRoom: ChatRoomEntity
     private let chatUseCase: any ChatUseCaseProtocol
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let callUseCase: any CallUseCaseProtocol
     private let scheduledMeetingUseCase: any ScheduledMeetingUseCaseProtocol
+    private let audioSessionUseCase: any AudioSessionUseCaseProtocol
+    private let analyticsEventUseCase: any AnalyticsEventUseCaseProtocol
+    private let meetingNoUserJoinedUseCase: any MeetingNoUserJoinedUseCaseProtocol
+
+    private let router: any ChatContentRouting
+    private let permissionRouter: any PermissionAlertRouting
+    
     private let featureFlagProvider: any FeatureFlagProviderProtocol
 
     private var invitedUserIdsToBypassWaitingRoom = Set<HandleEntity>()
+
+    var timer: Timer?
+    var initDuration: TimeInterval?
+
+    private var callUpdateSubscription: AnyCancellable?
+    private var endCallSubscription: AnyCancellable?
+    private var noUserJoinedSubscription: AnyCancellable?
+
+    private(set) lazy var tonePlayer = TonePlayer()
 
     init(chatRoom: ChatRoomEntity,
          chatUseCase: some ChatUseCaseProtocol,
          chatRoomUseCase: some ChatRoomUseCaseProtocol,
          callUseCase: some CallUseCaseProtocol,
          scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol,
+         audioSessionUseCase: some AudioSessionUseCaseProtocol,
+         router: some ChatContentRouting,
+         permissionRouter: some PermissionAlertRouting,
+         analyticsEventUseCase: some AnalyticsEventUseCaseProtocol,
+         meetingNoUserJoinedUseCase: some MeetingNoUserJoinedUseCaseProtocol,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
         self.chatRoom = chatRoom
@@ -77,7 +90,15 @@ final class ChatContentViewModel: ViewModelType {
         self.chatRoomUseCase = chatRoomUseCase
         self.callUseCase = callUseCase
         self.scheduledMeetingUseCase = scheduledMeetingUseCase
+        self.audioSessionUseCase = audioSessionUseCase
+        self.router = router
+        self.permissionRouter = permissionRouter
+        self.analyticsEventUseCase = analyticsEventUseCase
+        self.meetingNoUserJoinedUseCase = meetingNoUserJoinedUseCase
         self.featureFlagProvider = featureFlagProvider
+        
+        subscribeToOnCallUpdate()
+        subscribeToNoUserJoinedNotification()
     }
     
     // MARK: - Dispatch actions
@@ -86,45 +107,26 @@ final class ChatContentViewModel: ViewModelType {
         switch action {
         case .startOrJoinCallCleanUp:
             onUpdateStartOrJoinCallButtons()
-        case .updateCallNavigationBarButtons(let disableCalling, 
-                                             let isVoiceRecordingInProgress,
-                                             let reachable):
-            onUpdateNavigationBarButtonItems(disableCalling, isVoiceRecordingInProgress, reachable)
-        case .startMeetingNoRinging(let videoCall, 
-                                    let disableCalling,
-                                    let isVoiceRecordingInProgress,
-                                    let reachable):
-            if chatRoom.isWaitingRoomEnabled {
-                startMeetingInWaitingRoomChatNoRinging(videoCall, disableCalling, isVoiceRecordingInProgress, reachable)
-            } else {
-                startMeetingNoRinging(videoCall, disableCalling, isVoiceRecordingInProgress, reachable)
-            }
-        case .startOutGoingCall(let isVideoEnabled, 
-                                let disableCalling,
-                                let isVoiceRecordingInProgress,
-                                let reachable):
-            if chatRoom.isWaitingRoomEnabled {
-                startMeetingInWaitingRoomChat(isVideoEnabled, disableCalling, isVoiceRecordingInProgress, reachable)
-            } else {
-                startOutGoingCall(isVideoEnabled, disableCalling, isVoiceRecordingInProgress, reachable)
-            }
+        case .updateCallNavigationBarButtons(let disableCalling,
+                                             let isVoiceRecordingInProgress):
+            onUpdateNavigationBarButtonItems(disableCalling, isVoiceRecordingInProgress)
         case .updateContent:
             updateContentIfNeeded()
-        case .updateCall(let call):
-            onChatCallUpdate(for: call)
         case .updateChatRoom(let chatRoom):
             self.chatRoom = chatRoom
         case .inviteParticipants(let userHandles):
             inviteParticipants(userHandles)
+        case .startCallBarButtonTapped(let isVideoEnabled):
+            checkPermissionsAndStartCall(isVideoEnabled: isVideoEnabled, notRinging: false)
+        case .startOrJoinFloatingButtonTapped:
+            guard !existsOtherCallInProgress() else { return }
+            checkPermissionsAndStartCall(isVideoEnabled: false, notRinging: true)
+        case .returnToCallBannerButtonTapped:
+            returnToCallUI()
         }
     }
     
     // MARK: - Public
-
-    func shouldOpenWaitingRoom(isReturnToCall: Bool = false) -> Bool {
-        let isModerator = chatRoom.ownPrivilege == .moderator
-        return !isModerator && chatRoom.isWaitingRoomEnabled && !isReturnToCall
-    }
     
     func determineNavBarRightItems(isEditing: Bool = false) -> NavBarRightItems {
         if isEditing {
@@ -158,65 +160,10 @@ final class ChatContentViewModel: ViewModelType {
         }
     }
     
-    private func onChatCallUpdate(for call: CallEntity?) {
+    private func onChatCallUpdate(for call: CallEntity) {
         Task {
             let scheduledMeetings = await scheduledMeetingUseCase.scheduledMeetings(by: chatRoom.chatId)
             await onUpdate(for: call, with: scheduledMeetings)
-        }
-    }
-    
-    private func startMeetingNoRinging(_ videoCall: Bool,
-                                       _ disableCalling: Bool,
-                                       _ isVoiceRecordingInProgress: Bool,
-                                       _ reachable: Bool) {
-        Task {
-            let shouldEnable = await shouldEnableAudioVideoButtons(disableCalling, isVoiceRecordingInProgress, reachable)
-            let scheduledMeetings = await scheduledMeetingUseCase.scheduledMeetings(by: chatRoom.chatId)
-            if shouldEnable && scheduledMeetings.isNotEmpty {
-                await startMeetingNoRinging(videoCall, scheduledMeetings[0])
-            }
-        }
-    }
-    
-    private func startOutGoingCall(_ videoEnabled: Bool,
-                                   _ disableCalling: Bool,
-                                   _ isVoiceRecordingInProgress: Bool,
-                                   _ reachable: Bool) {
-        Task {
-            let shouldEnable = await shouldEnableAudioVideoButtons(disableCalling, isVoiceRecordingInProgress, reachable)
-            if shouldEnable {
-                await startOutGoingCall(videoEnabled)
-            }
-        }
-    }
-    
-    private func startMeetingInWaitingRoomChatNoRinging(
-        _ videoCall: Bool,
-        _ disableCalling: Bool,
-        _ isVoiceRecordingInProgress: Bool,
-        _ reachable: Bool
-    ) {
-        Task {
-            let shouldEnable = await shouldEnableAudioVideoButtons(disableCalling, isVoiceRecordingInProgress, reachable)
-            let scheduledMeetings = await scheduledMeetingUseCase.scheduledMeetings(by: chatRoom.chatId)
-            if shouldEnable, let scheduledMeeting = scheduledMeetings.first {
-                await startMeetingInWaitingRoomChatNoRinging(videoCall, scheduledMeeting)
-            }
-        }
-    }
-    
-    private func startMeetingInWaitingRoomChat(
-        _ videoCall: Bool,
-        _ disableCalling: Bool,
-        _ isVoiceRecordingInProgress: Bool,
-        _ reachable: Bool
-    ) {
-        Task {
-            let shouldEnable = await shouldEnableAudioVideoButtons(disableCalling, isVoiceRecordingInProgress, reachable)
-            let scheduledMeetings = await scheduledMeetingUseCase.scheduledMeetings(by: chatRoom.chatId)
-            if shouldEnable, let scheduledMeeting = scheduledMeetings.first {
-                await startMeetingInWaitingRoomChat(videoCall, scheduledMeeting)
-            }
         }
     }
     
@@ -228,17 +175,15 @@ final class ChatContentViewModel: ViewModelType {
     }
     
     private func onUpdateNavigationBarButtonItems(_ disableCalling: Bool,
-                                                  _ isVoiceRecordingInProgress: Bool,
-                                                  _ reachable: Bool) {
+                                                  _ isVoiceRecordingInProgress: Bool) {
         Task {
-            let shouldEnable = await shouldEnableAudioVideoButtons(disableCalling, isVoiceRecordingInProgress, reachable)
+            let shouldEnable = await shouldEnableAudioVideoButtons(disableCalling, isVoiceRecordingInProgress)
             await enableNavigationBarButtonItems(shouldEnable)
         }
     }
     
     private func shouldEnableAudioVideoButtons(_ disableCalling: Bool,
-                                               _ isVoiceRecordingInProgress: Bool,
-                                               _ reachable: Bool) async -> Bool {
+                                               _ isVoiceRecordingInProgress: Bool) async -> Bool {
         let connectionStatus = await chatUseCase.chatConnectionStatus(for: chatRoom.chatId)
         let call = await chatUseCase.chatCall(for: chatRoom.chatId)
         let privilege = chatRoom.ownPrivilege
@@ -246,7 +191,7 @@ final class ChatContentViewModel: ViewModelType {
         let existsActiveCall = chatUseCase.existsActiveCall()
         let isWaitingRoomNonHost = chatRoom.isWaitingRoomEnabled && privilege != .moderator
         let shouldEnable = !(disableCalling || ownPrivilegeSmallerThanStandard || connectionStatus != .online ||
-                             !reachable || existsActiveCall || call != nil || isVoiceRecordingInProgress || isWaitingRoomNonHost)
+                             !MEGAReachabilityManager.isReachable() || existsActiveCall || call != nil || isVoiceRecordingInProgress || isWaitingRoomNonHost)
         
         return shouldEnable
     }
@@ -256,33 +201,54 @@ final class ChatContentViewModel: ViewModelType {
         invokeCommand?(.enableAudioVideoButtons(enable))
     }
     
-    @MainActor
-    private func startMeetingNoRinging(_ videoCall: Bool, _ scheduledMeeting: ScheduledMeetingEntity) {
-        invokeCommand?(.startMeetingNoRinging(videoCall, scheduledMeeting))
+    private func startCall(enableVideo: Bool, notRinging: Bool) {
+        prepareAudioForCall()
+        invokeCommand?(.updateNavigationBarButtonsWithAudioVideo(true))
+        let isSpeakerEnabled = enableVideo || chatRoom.isMeeting
+        Task {
+            do {
+                let call = try await callUseCase.startCall(for: chatRoom.chatId, enableVideo: enableVideo, enableAudio: true, notRinging: notRinging)
+                invokeCommand?(.updateNavigationBarButtonsWithAudioVideo(false))
+                router.startCallUI(chatRoom: chatRoom, call: call, isSpeakerEnabled: isSpeakerEnabled)
+            } catch {
+                MEGALogDebug("Cannot start call")
+            }
+        }
     }
     
-    @MainActor
-    private func startOutGoingCall(_ enableVideo: Bool) {
-        invokeCommand?(.startOutGoingCall(enableVideo))
+    private func answerCall() {
+        prepareAudioForCall()
+        invokeCommand?(.updateNavigationBarButtonsWithAudioVideo(true))
+        callUseCase.answerCall(for: chatRoom.chatId) { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success(let call):
+                invokeCommand?(.updateNavigationBarButtonsWithAudioVideo(false))
+                router.startCallUI(chatRoom: chatRoom, call: call, isSpeakerEnabled: false)
+            case .failure:
+                MEGALogDebug("Cannot answer call")
+            }
+        }
     }
     
-    @MainActor
-    private func startMeetingInWaitingRoomChatNoRinging(_ videoCall: Bool, _ scheduledMeeting: ScheduledMeetingEntity) {
-        invokeCommand?(.startMeetingInWaitingRoomChatNoRinging(videoCall, scheduledMeeting))
-    }
-    
-    @MainActor
-    private func startMeetingInWaitingRoomChat(_ videoCall: Bool, _ scheduledMeeting: ScheduledMeetingEntity) {
-        invokeCommand?(.startMeetingInWaitingRoomChat(videoCall, scheduledMeeting))
+    private func prepareAudioForCall() {
+        audioSessionUseCase.configureCallAudioSession()
+        if chatRoom.isMeeting {
+            audioSessionUseCase.enableLoudSpeaker()
+        } else {
+            audioSessionUseCase.disableLoudSpeaker()
+        }
     }
     
     @MainActor
     private func updateStartOrJoinCallButton( _ scheduledMeetings: [ScheduledMeetingEntity]) {
+        timer?.invalidate()
         invokeCommand?(.hideStartOrJoinCallButton(shouldHideStartOrJoinCallButton(scheduledMeetings: scheduledMeetings)))
     }
     
     @MainActor
     private func updateReturnToCallCleanUpButton() {
+        timer?.invalidate()
         invokeCommand?(.tapToReturnToCallCleanUp)
     }
     
@@ -298,21 +264,44 @@ final class ChatContentViewModel: ViewModelType {
         
         switch call.status {
         case .initial, .joining, .userNoPresent:
-            invokeCommand?(.hideStartOrJoinCallButton(shouldHideStartOrJoinCallButton(scheduledMeetings: scheduledMeetings)))
-            invokeCommand?(.tapToReturnToCallCleanUp)
+            updateStartOrJoinCallButton(scheduledMeetings)
+            updateReturnToCallCleanUpButton()
             invokeCommand?(.showStartOrJoinCallButton)
         case .inProgress:
-            invokeCommand?(.hideStartOrJoinCallButton(shouldHideStartOrJoinCallButton(scheduledMeetings: scheduledMeetings)))
-            invokeCommand?(.initTimerForCall(call))
-            invokeCommand?(.showCallEndTimerIfNeeded(call))
+            updateStartOrJoinCallButton(scheduledMeetings)
+            initTimerForCall(call)
+            showCallEndTimerIfNeeded(call: call)
         case .connecting:
             invokeCommand?(.showTapToReturnToCall(Strings.Localizable.reconnecting))
         case .destroyed, .terminatingUserParticipation, .undefined:
-            invokeCommand?(.hideStartOrJoinCallButton(shouldHideStartOrJoinCallButton(scheduledMeetings: scheduledMeetings)))
-            invokeCommand?(.tapToReturnToCallCleanUp)
+            updateStartOrJoinCallButton(scheduledMeetings)
+            updateReturnToCallCleanUpButton()
         default:
             return
         }
+    }
+    
+    private func initTimerForCall(_ call: CallEntity) {
+        initDuration = TimeInterval(call.duration)
+        if !(timer?.isValid ?? false) {
+            let startTime = Date().timeIntervalSince1970
+            updateTapToReturnToCallLabel(withStartTime: startTime)
+            
+            timer = Timer(timeInterval: 1, repeats: true) { [weak self] _ in
+                guard let self, callUseCase.call(for: chatRoom.chatId)?.status != .connecting else { return }
+                updateTapToReturnToCallLabel(withStartTime: startTime)
+            }
+            
+            RunLoop.current.add(timer!, forMode: RunLoop.Mode.common)
+        }
+    }
+    
+    private func updateTapToReturnToCallLabel(withStartTime startTime: TimeInterval) {
+        guard let initDuration = initDuration else { return }
+        
+        let time = Date().timeIntervalSince1970 - startTime + initDuration
+        let title = Strings.Localizable.Chat.CallInProgress.tapToReturnToCall(time.timeString)
+        invokeCommand?(.showTapToReturnToCall(title))
     }
     
     private func shouldHideStartOrJoinCallButton(scheduledMeetings: [ScheduledMeetingEntity]) -> Bool {
@@ -350,5 +339,139 @@ final class ChatContentViewModel: ViewModelType {
             callUseCase.addPeer(toCall: call, peerId: userId)
             invitedUserIdsToBypassWaitingRoom.remove(userId)
         }
+    }
+    
+    private func existsOtherCallInProgress() -> Bool {
+        if chatUseCase.existsActiveCall() {
+            guard let call = callUseCase.call(for: chatRoom.chatId), call.isActiveCall else {
+                router.showCallAlreadyInProgress {[weak self] in
+                    guard let self else { return }
+                    endActiveCallAndJoinCurrentChatroomCall()
+                }
+                return true
+            }
+            return false
+        } else {
+            return false
+        }
+    }
+    
+    private func endActiveCallAndJoinCurrentChatroomCall() {
+        if let activeCall = chatUseCase.activeCall() {
+            endCall(activeCall)
+        }
+        checkPermissionsAndStartCall(isVideoEnabled: false, notRinging: false)
+    }
+    
+    private func endCall(_ call: CallEntity) {
+        callUseCase.hangCall(for: call.callId)
+        CallCoordinatorUseCase().endCall(call)
+    }
+    
+    private func manageStartOrJoinCall(videoCall: Bool, notRinging: Bool) {
+        if shouldOpenWaitingRoom() {
+            openWaitingRoom()
+        } else {
+            if callUseCase.call(for: chatRoom.chatId) != nil {
+                answerCall()
+            } else {
+                startCall(enableVideo: videoCall, notRinging: notRinging)
+            }
+        }
+    }
+    
+    private func checkPermissionsAndStartCall(isVideoEnabled: Bool, notRinging: Bool) {
+        permissionRouter.requestPermissionsFor(videoCall: isVideoEnabled) { [weak self] in
+            guard let self else { return }
+            timer?.invalidate()
+            manageStartOrJoinCall(videoCall: isVideoEnabled, notRinging: notRinging)
+        }
+    }
+    
+    private func returnToCallUI() {
+        guard let call = callUseCase.call(for: chatRoom.chatId) else { return }
+        let isSpeakerEnabled = AVAudioSession.sharedInstance().isOutputEqualToPortType(.builtInSpeaker)
+        router.startCallUI(chatRoom: chatRoom, call: call, isSpeakerEnabled: isSpeakerEnabled)
+    }
+    
+    private func openWaitingRoom() {
+        guard let scheduledMeeting = scheduledMeetingUseCase.scheduledMeetingsByChat(chatId: chatRoom.chatId).first else { return }
+        router.openWaitingRoom(scheduledMeeting: scheduledMeeting)
+    }
+    
+    private func shouldOpenWaitingRoom() -> Bool {
+        guard chatRoom.isWaitingRoomEnabled else { return false }
+        return chatRoom.ownPrivilege != .moderator
+    }
+    
+    private func showCallEndDialog(withCall call: CallEntity) {   
+        router.showEndCallDialog {  [weak self] in
+            self?.analyticsEventUseCase.sendAnalyticsEvent(.meetings(.stayOnCallInNoParticipantsPopup))
+            self?.cancelEndCallSubscription()
+        } endCallCompletion: {[weak self] in
+            self?.analyticsEventUseCase.sendAnalyticsEvent(.meetings(.endCallInNoParticipantsPopup))
+            self?.endCall(call)
+            self?.cancelEndCallSubscription()
+        }
+        
+        endCallSubscription = Just(Void.self)
+            .delay(for: .seconds(120), scheduler: RunLoop.main)
+            .sink { [weak self] _ in
+                guard let self else { return }
+                tonePlayer.play(tone: .callEnded)
+                analyticsEventUseCase.sendAnalyticsEvent(.meetings(.endCallWhenEmptyCallTimeout))
+                
+                // When ending call, CallKit decativation will interupt playing of tone.
+                // Adding a delay of 0.7 seconds so there is enough time to play the tone
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) { [weak self] in
+                    guard let self else { return }
+                    router.removeEndCallDialogIfNeeded()
+                    endCall(call)
+                    endCallSubscription = nil
+                }
+            }
+    }
+    
+    private func cancelEndCallSubscription() {
+        endCallSubscription?.cancel()
+        endCallSubscription = nil
+    }
+    
+    private func showCallEndTimerIfNeeded(call: CallEntity) {
+        guard MeetingContainerRouter.isAlreadyPresented == false,
+              call.changeType == .callComposition,
+              call.numberOfParticipants == 1,
+              call.participants.first == chatUseCase.myUserHandle() else {
+            
+            if call.changeType == .callComposition, call.numberOfParticipants > 1 {
+                router.removeEndCallDialogIfNeeded()
+                cancelEndCallSubscription()
+            }
+            
+            return
+        }
+        
+        showCallEndDialog(withCall: call)
+    }
+    
+    private func subscribeToNoUserJoinedNotification() {
+        noUserJoinedSubscription = meetingNoUserJoinedUseCase
+            .monitor
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                guard let self else { return }
+                Task {
+                    guard MeetingContainerRouter.isAlreadyPresented == false,
+                          let call = await self.chatUseCase.chatCall(for: self.chatRoom.chatId) else { return }
+                    self.showCallEndDialog(withCall: call)
+                }
+            }
+    }
+    
+    private func subscribeToOnCallUpdate() {
+        callUpdateSubscription = callUseCase.onCallUpdate()
+            .sink { [weak self] call in
+                self?.onChatCallUpdate(for: call)
+            }
     }
 }

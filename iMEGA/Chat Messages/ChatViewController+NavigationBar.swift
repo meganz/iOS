@@ -14,10 +14,8 @@ extension ChatViewController {
             return
         }
         navigationItem.rightBarButtonItems = createNavBarRightButtonItems()
-        
-        let reachable = MEGAReachabilityManager.isReachable()
-        
-        chatContentViewModel.dispatch(.updateCallNavigationBarButtons(shouldDisableAudioVideoCalling, isVoiceRecordingInProgress, reachable))
+                
+        chatContentViewModel.dispatch(.updateCallNavigationBarButtons(shouldDisableAudioVideoCalling, isVoiceRecordingInProgress))
     }
     
     private func addRightBarButtons() {

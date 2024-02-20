@@ -3,10 +3,13 @@
 final class MockPermissionAlertRouter: PermissionAlertRouting {
     
     let isAudioPermissionGranted: Bool
+    let isVideoPermissionGranted: Bool
     var presentModalNotificationsPermissionPromptCallCount = 0
     
-    init(isAudioPermissionGranted: Bool = true) {
+    init(isAudioPermissionGranted: Bool = true,
+         isVideoPermissionGranted: Bool = true) {
         self.isAudioPermissionGranted = isAudioPermissionGranted
+        self.isVideoPermissionGranted = isVideoPermissionGranted
     }
     
     func audioPermission(
@@ -30,5 +33,13 @@ final class MockPermissionAlertRouter: PermissionAlertRouting {
     func requestPermissionsFor(
         videoCall: Bool,
         granted: @escaping () -> Void
-    ) {}
+    ) {
+        guard isAudioPermissionGranted else { return }
+        if videoCall {
+            guard isVideoPermissionGranted else { return }
+            granted()
+        } else {
+            granted()
+        }
+    }
 }

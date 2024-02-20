@@ -952,6 +952,7 @@
 		8359E4B325F0E1DF0023FE18 /* QuickAccessWidgetAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359E4B225F0E1DF0023FE18 /* QuickAccessWidgetAction.swift */; };
 		8359E4BD25F0E20C0023FE18 /* WidgetStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359E4BC25F0E20C0023FE18 /* WidgetStatus.swift */; };
 		835A610E2B76344B00BBB9A1 /* ScheduleMeetingFreePlanTimeLimitationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835A610D2B76344B00BBB9A1 /* ScheduleMeetingFreePlanTimeLimitationView.swift */; };
+		835A60FD2B74EBC200BBB9A1 /* ChatContentRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835A60FC2B74EBC100BBB9A1 /* ChatContentRouter.swift */; };
 		835AD88B24AA46B700BB934C /* PhoneNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835AD88A24AA46B700BB934C /* PhoneNumberViewController.swift */; };
 		835B1B90245AD23C00E41FBE /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 415226881A692ECC00EC7BB6 /* Helper.m */; };
 		835CE8492AA886B200861544 /* waitingRoomEvent.wav in Resources */ = {isa = PBXBuildFile; fileRef = 835CE8482AA886B200861544 /* waitingRoomEvent.wav */; };
@@ -3654,6 +3655,7 @@
 		8359E4B225F0E1DF0023FE18 /* QuickAccessWidgetAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAccessWidgetAction.swift; sourceTree = "<group>"; };
 		8359E4BC25F0E20C0023FE18 /* WidgetStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetStatus.swift; sourceTree = "<group>"; };
 		835A610D2B76344B00BBB9A1 /* ScheduleMeetingFreePlanTimeLimitationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingFreePlanTimeLimitationView.swift; sourceTree = "<group>"; };
+		835A60FC2B74EBC100BBB9A1 /* ChatContentRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatContentRouter.swift; sourceTree = "<group>"; };
 		835AD88A24AA46B700BB934C /* PhoneNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberViewController.swift; sourceTree = "<group>"; };
 		835CE8482AA886B200861544 /* waitingRoomEvent.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = waitingRoomEvent.wav; sourceTree = "<group>"; };
 		835CE84D2AA88E9300861544 /* MainTabBarCallsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarCallsViewModelTests.swift; sourceTree = "<group>"; };
@@ -8316,6 +8318,7 @@
 		6D39A57729EF455B00348D1C /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				835A60FC2B74EBC100BBB9A1 /* ChatContentRouter.swift */,
 				6D39A57829EF456D00348D1C /* ChatContentViewModel.swift */,
 			);
 			path = ViewModel;
@@ -13938,6 +13941,7 @@
 				0EE990942AA55D9300D43714 /* ChatAttachedNodesViewController+Additions.swift in Sources */,
 				5B20F4A21EFA9629007E0A34 /* ChatAttachedNodesViewController.m in Sources */,
 				2FA4CB71252C019200240AFA /* ChatBottomNewMessageIndicatorView.swift in Sources */,
+				835A60FD2B74EBC200BBB9A1 /* ChatContentRouter.swift in Sources */,
 				6D39A57929EF456D00348D1C /* ChatContentViewModel.swift in Sources */,
 				2F7E7064251D81DD0002C93E /* ChatGiphyCollectionViewCell.swift in Sources */,
 				2FCA4B7A2385FB260011B7DA /* ChatImageQualityTableViewController.swift in Sources */,
