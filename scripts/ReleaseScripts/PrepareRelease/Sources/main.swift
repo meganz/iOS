@@ -28,6 +28,9 @@ do {
     log("Updating project version to \(userInput.version)")
     try updateProjectVersion(userInput.version)
 
+    log("Fetching origin for git submodules")
+    try fetchOriginForSubmodules()
+
     log("Updating git submodules")
     try updateSubmodules()
 
