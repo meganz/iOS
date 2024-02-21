@@ -13,6 +13,18 @@ public class RequestDelegate: NSObject, MEGARequestDelegate {
         super.init()
     }
     
+    @objc public convenience init(completion: @escaping (MEGARequest?, MEGAError?) -> Void) {
+        let completion: MEGARequestCompletion = { result in
+            switch result {
+            case let .success(request):
+                completion(request, nil)
+            case let .failure(error):
+                completion(nil, error)
+            }
+        }
+        self.init(completion: completion)
+    }
+    
     public func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
         if successCodes.contains(error.type) {
             self.completion(.success(request))
