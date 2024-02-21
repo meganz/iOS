@@ -501,11 +501,11 @@
 /* Error message shown when you are trying to do an action with a file or folder and you don't have the necessary permissions */
 "permissionMessage"="Bitte Zugriffsberechtigungen für diesen Ordner prüfen";
 /* Button title that triggers the importing link action */
-"Import to Cloud Drive"="Importieren";
+"Import to Cloud Drive"="In Cloud Drive kopieren";
 /* Message shown when a file has been imported */
-"fileImported"="Datei importiert";
+"fileImported"="File saved to Cloud drive";
 /* Message shown when some files have been imported */
-"filesImported"="Dateien wurden importiert";
+"filesImported"="Files saved to Cloud drive";
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
 "selectTitle"="Auswählen";
 /* Button title that skips the current action */
@@ -1856,8 +1856,6 @@
 "Accepted your contact request"="Ihre Kontaktanfrage wurde akzeptiert";
 /* When somebody denied your contact request */
 "Denied your contact request"="hat ihre Kontaktanfrage abgelehnt";
-/* notification text */
-"A user has left the shared folder {0}"="Ein Benutzer hat die Ordnerfreigabe {0} verlassen";
 /* This is shown in the Notification dialog when the email address of a contact is not found and access to the share is lost for some reason (e.g. share removal or contact removal). */
 "Access to folders was removed."="Ordnerfreigabe storniert.";
 /* Content of a notification that informs how many files and folders have been added to a shared folder */
@@ -2971,7 +2969,7 @@
 /* Placeholder to indicate the user that needs to describe the issue through the text edit field of bug report form. */
 "help.reportIssue.describeIssue.placeholder"="Fehlerbeschreibung";
 /* Label shown when users lost the internet connection */
-"general.NoIntenerConnection"="Keine Internetverbindung möglich. Bitte prüfen Sie Ihre Verbindung und versuchen Sie es dann noch einmal.";
+"general.NoIntenerConnection"="Keine Internetverbindung möglich. Prüfen Sie Ihre Verbindung und versuchen Sie es erneut.";
 /* Menu title in meetings that allows to switch to main view for a participant. */
 "meetings.displayInMainView.title"="In Hauptansicht anzeigen";
 /* Label indicating storage over quota */
@@ -3890,8 +3888,6 @@
 "calls.screenRecording.notification.recording.started"="%@ hat die Aufzeichnung gestartet";
 /* Notification message about someone stopped to record call screen */
 "calls.screenRecording.notification.recording.stopped"="%@ hat die Aufzeichnung beendet";
-/* Text for a UI label indicating that the call screen is being recorded */
-"calls.screenRecording.screenIndicator.label"="REC";
 /* Camera uploads status banner - uploads in progress title */
 "cameraUploads.banner.status.uploadInProgress.title"="Upload läuft";
 /* Camera uploads status banner - uploads complete title */
@@ -3901,7 +3897,9 @@
 /* Camera uploads status banner - uploads complete description */
 "cameraUploads.banner.status.uploadsComplete.subHeading"="Alle Inhalte wurden gesichert";
 /* Camera uploads status banner - uploads partially completed due to limited access to photo library */
-"cameraUploads.banner.status.uploadsPartialComplete.limitedPhotoLibraryAccess.subHeading"="MEGA hat nur eingeschränkten Zugriff auf Ihre Fotobibliothek und kann nicht alle Fotos sichern. Antippen, um die Berechtigungen zu ändern.";
+"cameraUploads.banner.status.uploadsPartialComplete.limitedPhotoLibraryAccess.subHeading"="MEGA has limited access to your photo library and cannot back up all photos.";
+/* Camera uploads status banner - uploads partially completed due to limited access to photo library action */
+"cameraUploads.banner.status.uploadsPartialComplete.limitedPhotoLibraryAccess.subHeadingAction"="Antippen, um die Berechtigungen zu ändern.";
 /* Title of Terms of Violation alert */
 "general.alert.termsOfServiceViolation.title"="Datei nicht mehr verfügbar";
 /* Calls: Floating panel participants not in call header to call them all */
@@ -3965,12 +3963,16 @@
 /* Calls: Mute specific participant error message */
 "calls.participantsInCall.muteParticipant.error"="Fehler beim Stummschalten von %@";
 /* Calls: Muted by a host message */
-"calls.participantsInCall.mutedBy"="You’ve been muted by %@";
+"calls.participantsInCall.mutedBy"="Sie wurden von %@ stummgeschaltet";
 /* Calls: SFU protocol is outdated then show update alert dialog with title */
-"calls.sfuOutdated.updateAppAlert.title"="Update required";
+"calls.sfuOutdated.updateAppAlert.title"="Update erforderlich";
 /* Calls: SFU protocol is outdated then show update alert dialog with message */
-"calls.sfuOutdated.updateAppAlert.message"="You’re not using the latest version of our app so you can’t start or join calls. Update now to continue.";
+"calls.sfuOutdated.updateAppAlert.message"="Da Sie nicht die neueste Version unserer App verwenden, können Sie keine Anrufe oder Konferenzen starten oder an diesen teilnehmen. Führen Sie jetzt ein Update durch, um fortzufahren.";
 /* Calls: SFU protocol is outdated then show update alert dialog with update button */
 "calls.sfuOutdated.updateAppAlert.button.update"="Update";
 /* Calls: SFU protocol is outdated then show update alert dialog, with skip button */
 "calls.sfuOutdated.updateAppAlert.button.skip"="Überspringen";
+/* Meetings: free plan limitation text for scheduled meetings calls longer than 60 minutes. Text between tags is colour formatted, keep tags order in the string: [A] should appear before [/A] always. */
+"meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Your current plan can only support 60 minutes per meeting. Need more time? [A]Upgrade now[/A]";
+/* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
+"notifications.tag.promo.title"="Promo";

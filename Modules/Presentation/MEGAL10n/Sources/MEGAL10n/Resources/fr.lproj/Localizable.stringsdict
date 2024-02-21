@@ -3307,9 +3307,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Folder shared</string>
+        <string>Le dossier a été partagé</string>
+        <key>many</key>
+        <string>%d de dossiers ont été partagés</string>
         <key>other</key>
-        <string>%d folders shared</string>
+        <string>%d dossiers ont été partagés</string>
       </dict>
     </dict>
   </dict>

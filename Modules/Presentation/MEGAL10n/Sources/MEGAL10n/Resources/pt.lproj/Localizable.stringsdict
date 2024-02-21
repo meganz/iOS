@@ -3307,9 +3307,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Folder shared</string>
+        <string>Pasta compartilhada</string>
+        <key>many</key>
+        <string>%d de pastas compartilhadas</string>
         <key>other</key>
-        <string>%d folders shared</string>
+        <string>%d pastas compartilhadas</string>
       </dict>
     </dict>
   </dict>

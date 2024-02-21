@@ -2382,10 +2382,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Some months don’t have %d day. For these months, the occurrence will be scheduled for the last day of the month.</string>
         <key>other</key>
-        <string>Some months don’t have %d days. For these months, the occurrence will be scheduled for the last day of the month.</string>
+        <string>몇몇 달은 %d일이 없습니다. 이러한 달은 되풀이 항목이 그 달의 마지막 날로 예약됩니다.</string>
       </dict>
     </dict>
     <key>meetings.scheduleMeeting.create.selectedRecurrence.daily.customInterval</key>

@@ -4068,10 +4068,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>بعض الأشهر ليس لديها %d يوم. بالنسبة لهذه الأشهر سيتم تحديد موعد التكرار في اليوم الأخير من الشهر.</string>
         <key>one</key>
-        <string>Some months don’t have %d day. For these months, the occurrence will be scheduled for the last day of the month.</string>
+        <string>بعض الأشهر ليس لديها %d يوم. بالنسبة لهذه الأشهر سيتم تحديد موعد التكرار في اليوم الأخير من الشهر.</string>
+        <key>two</key>
+        <string>بعض الأشهر ليس لديها %d يوم. بالنسبة لهذه الأشهر سيتم تحديد موعد التكرار في اليوم الأخير من الشهر.</string>
+        <key>few</key>
+        <string>بعض الأشهر ليس لديها %d أيام. بالنسبة لهذه الأشهر سيتم تحديد موعد التكرار في اليوم الأخير من الشهر.</string>
+        <key>many</key>
+        <string>بعض الأشهر ليس لديها %d يوم. بالنسبة لهذه الأشهر سيتم تحديد موعد التكرار في اليوم الأخير من الشهر.</string>
         <key>other</key>
-        <string>Some months don’t have %d days. For these months, the occurrence will be scheduled for the last day of the month.</string>
+        <string>بعض الأشهر ليس لديها %d يوم. بالنسبة لهذه الأشهر سيتم تحديد موعد التكرار في اليوم الأخير من الشهر.</string>
       </dict>
     </dict>
     <key>meetings.scheduleMeeting.create.selectedRecurrence.daily.customInterval</key>
@@ -4252,10 +4260,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>لم يتم إرسال أي الملف إلى المحادثة</string>
         <key>one</key>
-        <string>File sent to chat</string>
+        <string>تم إرسال الملف إلى المحادثة</string>
+        <key>two</key>
+        <string>تم إرسال الملفين إلى المحادثة</string>
+        <key>few</key>
+        <string>تم إرسال الملفات إلى المحادثة</string>
+        <key>many</key>
+        <string>تم إرسال الملفات إلى المحادثة</string>
         <key>other</key>
-        <string>Files sent to chat</string>
+        <string>تم إرسال الملفات إلى المحادثة</string>
       </dict>
     </dict>
     <key>chat.message.fileSentToMultipleChats</key>
@@ -4268,10 +4284,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>تم إرسال الملف إلى %d محادثة</string>
         <key>one</key>
-        <string>File sent to %d chat</string>
+        <string>تم إرسال الملف إلى %d محادثة</string>
+        <key>two</key>
+        <string>تم إرسال الملف إلى %d محادثتين</string>
+        <key>few</key>
+        <string>تم إرسال الملف إلى %d محادثات</string>
+        <key>many</key>
+        <string>تم إرسال الملف إلى %d محادثة</string>
         <key>other</key>
-        <string>File sent to %d chats</string>
+        <string>تم إرسال الملف إلى %d محادثة</string>
       </dict>
     </dict>
     <key>chat.message.filesSent</key>
@@ -4308,10 +4332,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>تم إرسال الملفات إلى %d محادثة</string>
         <key>one</key>
-        <string>Files sent to %d chat</string>
+        <string>تم إرسال الملفات إلى %d محادثة</string>
+        <key>two</key>
+        <string>تم إرسال الملفات إلى %d محادثتين</string>
+        <key>few</key>
+        <string>تم إرسال الملفات إلى %d محادثات</string>
+        <key>many</key>
+        <string>تم إرسال الملفات إلى %d محادثة</string>
         <key>other</key>
-        <string>Files sent to %d chats</string>
+        <string>تم إرسال الملفات إلى %d محادثة</string>
       </dict>
     </dict>
     <key>contacts.invite.emailAddress.inviteNumberOfContacts</key>
@@ -4324,10 +4356,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>قم بدعوة %d جهة اتصال</string>
         <key>one</key>
-        <string>Invite %d contact</string>
+        <string>قم بدعوة %d جهة اتصال</string>
+        <key>two</key>
+        <string>قم بدعوة %d جهتي اتصال</string>
+        <key>few</key>
+        <string>قم بدعوة %d جهات اتصال</string>
+        <key>many</key>
+        <string>قم بدعوة %d جهة اتصال</string>
         <key>other</key>
-        <string>Invite %d contacts</string>
+        <string>قم بدعوة %d جهة اتصال</string>
       </dict>
     </dict>
     <key>chat.info.numberOfParticipants</key>
@@ -4364,10 +4404,18 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>zero</key>
+        <string>%d مجلد مشارك</string>
         <key>one</key>
-        <string>Folder shared</string>
+        <string>مجلد مشترك</string>
+        <key>two</key>
+        <string>%d مجلدان مشاركان</string>
+        <key>few</key>
+        <string>%d مجلدات مشاركة</string>
+        <key>many</key>
+        <string>%d مجلد مشارك</string>
         <key>other</key>
-        <string>%d folders shared</string>
+        <string>%d مجلد مشارك</string>
       </dict>
     </dict>
   </dict>

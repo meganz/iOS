@@ -2378,10 +2378,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Some months don’t have %d day. For these months, the occurrence will be scheduled for the last day of the month.</string>
         <key>other</key>
-        <string>Some months don’t have %d days. For these months, the occurrence will be scheduled for the last day of the month.</string>
+        <string>有些月份没有%d天。对于这些月份，事件将安排在该月的最后一天。</string>
       </dict>
     </dict>
     <key>meetings.scheduleMeeting.create.selectedRecurrence.daily.customInterval</key>
@@ -2576,10 +2574,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Folder shared</string>
         <key>other</key>
-        <string>%d folders shared</string>
+        <string>已共享%d个文件夹</string>
       </dict>
     </dict>
   </dict>
