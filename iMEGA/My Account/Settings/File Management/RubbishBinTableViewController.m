@@ -14,6 +14,7 @@
 
 @import MEGAL10nObjc;
 @import MEGAUIKit;
+@import MEGASDKRepo;
 
 @interface RubbishBinTableViewController () <MEGARequestDelegate>
 
@@ -208,10 +209,10 @@
                 [emptyRubbishBinAlertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                     self.clearRubbishBinDetailLabel.hidden = YES;
                     [self.clearRubbishBinAI startAnimating];
-                    [MEGASdk.shared cleanRubbishBinWithDelegate:[MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
-                        if (error.type == MEGAErrorTypeApiOk) {
-                            [MEGASdk.shared catchupWithDelegate:[MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
-                                if (error.type == MEGAErrorTypeApiOk) {
+                    [MEGASdk.shared cleanRubbishBinWithDelegate:[RequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nullable request, MEGAError * _Nullable error) {
+                        if (!error) {
+                            [MEGASdk.shared catchupWithDelegate:[RequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nullable request, MEGAError * _Nullable error) {
+                                if (!error) {
                                     [self updateClearRubbishBinDetailLabel];
                                 }
                             }]];
