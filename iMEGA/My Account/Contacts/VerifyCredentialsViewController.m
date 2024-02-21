@@ -3,9 +3,9 @@
 #import "SVProgressHUD.h"
 
 #import "MEGA-Swift.h"
-#import "MEGAGenericRequestDelegate.h"
 
 @import MEGAL10nObjc;
+@import MEGASDKRepo;
 
 @interface VerifyCredentialsViewController ()
 
@@ -58,9 +58,9 @@
     NSInteger length = 4;
     NSInteger position = 4;
     
-    MEGAGenericRequestDelegate *userCredentialsDelegate = [MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest *request, MEGAError *error) {
+    RequestDelegate *userCredentialsDelegate = [RequestDelegate.alloc initWithCompletion:^(MEGARequest *request, MEGAError *error) {
         if (error.type) {
-            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, LocalizedString(error.name, @"")]];
+            [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@", LocalizedString(error.name, @"")]];
         } else {
             NSString *userCredentials = request.password;
             if (userCredentials.length == 40) {
@@ -148,9 +148,9 @@
 
 - (IBAction)verifyOrResetTouchUpInside:(UIButton *)sender {
     if ([MEGASdk.shared areCredentialsVerifiedOfUser:self.user]) {
-        MEGAGenericRequestDelegate *resetCredentialsOfUserDelegate = [MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest *request, MEGAError *error) {
+        RequestDelegate *resetCredentialsOfUserDelegate = [RequestDelegate.alloc initWithCompletion:^(MEGARequest *request, MEGAError *error) {
             if (error.type) {
-                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, LocalizedString(error.name, @"")]];
+                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@", LocalizedString(error.name, @"")]];
             } else {
                 [self updateVerifyOrResetButton];
                 self.statusUpdateCompletionBlock();
@@ -158,9 +158,9 @@
         }];
         [MEGASdk.shared resetCredentialsOfUser:self.user delegate:resetCredentialsOfUserDelegate];
     } else {
-        MEGAGenericRequestDelegate *verifyCredentialsOfUserDelegate = [MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest *request, MEGAError *error) {
+        RequestDelegate *verifyCredentialsOfUserDelegate = [RequestDelegate.alloc initWithCompletion:^(MEGARequest *request, MEGAError *error) {
             if (error.type) {
-                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@ %@", request.requestString, LocalizedString(error.name, @"")]];
+                [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"%@", LocalizedString(error.name, @"")]];
             } else {
                 [SVProgressHUD showSuccessWithStatus:LocalizedString(@"verified", @"Button title")];
                 
