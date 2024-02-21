@@ -1,5 +1,6 @@
 import Foundation
 import MEGADomain
+import MEGASDKRepo
 
 protocol NodeLabelActionRepositoryProtocol {
 
@@ -45,12 +46,15 @@ final class NodeLabelActionRepository: NodeLabelActionRepositoryProtocol {
             return
         }
 
-        let delegate = MEGAGenericRequestDelegate { (_, error) in
-            if let errorType = error.sdkError {
-                completion?(.failure(.sdkError(errorType)))
-                return
+        let delegate = RequestDelegate { result in
+            guard let completion else { return }
+            switch result {
+            case .success:
+                completion(.success(()))
+            case let .failure(error):
+                let errorType = transform(error: error)
+                completion(.failure(.sdkError(errorType)))
             }
-            completion?(.success(()))
         }
 
         sdk.setNodeLabel(node, label: SDKLabelColor, delegate: delegate)
@@ -64,12 +68,15 @@ final class NodeLabelActionRepository: NodeLabelActionRepositoryProtocol {
             completion?(.failure(.nodeNotFound))
             return
         }
-        let delegate = MEGAGenericRequestDelegate { (_, error) in
-            if let errorType = error.sdkError {
-                completion?(.failure(.sdkError(errorType)))
-                return
+        let delegate = RequestDelegate { result in
+            guard let completion else { return }
+            switch result {
+            case .success:
+                completion(.success(()))
+            case let .failure(error):
+                let errorType = transform(error: error)
+                completion(.failure(.sdkError(errorType)))
             }
-            completion?(.success(()))
         }
         sdk.resetNodeLabel(node, delegate: delegate)
     }
