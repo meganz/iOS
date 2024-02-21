@@ -157,9 +157,9 @@
         self.addPhoneNumberDescription.text = LocalizedString(@"Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA.", @"");
     } else {
         [self.addPhoneNumberActivityIndicator startAnimating];
-        [MEGASdk.shared getAccountAchievementsWithDelegate:[[MEGAGenericRequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
+        [MEGASdk.shared getAccountAchievementsWithDelegate:[[RequestDelegate alloc] initWithCompletion:^(MEGARequest * _Nullable request, MEGAError * _Nullable error) {
             [self.addPhoneNumberActivityIndicator stopAnimating];
-            if (error.type == MEGAErrorTypeApiOk) {
+            if (request) {
                 NSString *storageText = [NSString memoryStyleStringFromByteCount:[request.megaAchievementsDetails classStorageForClassId:MEGAAchievementAddPhone]];
                 self.addPhoneNumberDescription.text = [NSString stringWithFormat:LocalizedString(@"Get free %@ when you add your phone number. This makes it easier for your contacts to find you on MEGA.", @""), storageText];
             }
