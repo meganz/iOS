@@ -11,6 +11,7 @@
 #import "MEGA-Swift.h"
 
 @import MEGAL10nObjc;
+@import MEGASDKRepo;
 
 @interface CheckEmailAndFollowTheLinkViewController () <UITextFieldDelegate, MEGAGlobalDelegate>
 
@@ -130,7 +131,7 @@
         BOOL validEmail = [self.emailInputView.inputTextField.text mnz_isValidEmail];
         if (validEmail) {
             [self.emailInputView.inputTextField resignFirstResponder];
-            MEGAGenericRequestDelegate *delegate = [[MEGAGenericRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
+            RequestDelegate *delegate = [[RequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
                 if (error.type) {
                     NSString *title;
                     NSString *message;
@@ -147,7 +148,7 @@
                             
                         default:
                             title = LocalizedString(@"error", @"");
-                            message = [NSString stringWithFormat:@"%@ %@", request.requestString, LocalizedString(error.name, @"")];
+                            message = [NSString stringWithFormat:@"%@", LocalizedString(error.name, @"")];
                             break;
                     }
                     
