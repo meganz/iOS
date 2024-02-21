@@ -7,7 +7,7 @@ import MEGASDKRepo
 
 protocol MeetingParticipantInfoViewRouting: Routing {
     func showInfo(withEmail email: String?)
-    func openChatRoom(withChatId chatId: UInt64)
+    func openChatRoom(_ chatRoom: ChatRoomEntity)
     func makeParticipantAsModerator()
     func removeModeratorPrivilege()
     func removeParticipant()
@@ -17,7 +17,7 @@ protocol MeetingParticipantInfoViewRouting: Routing {
 
 struct MeetingParticipantInfoViewRouter: MeetingParticipantInfoViewRouting {
     private let sender: UIButton
-    private weak var presenter: UIViewController?
+    private var presenter: UIViewController
     private let participant: CallParticipantEntity
     private let isMyselfModerator: Bool
     private weak var meetingFloatingPanelModel: MeetingFloatingPanelViewModel?
@@ -64,7 +64,7 @@ struct MeetingParticipantInfoViewRouter: MeetingParticipantInfoViewRouting {
     }
     
     func start() {
-        presenter?.present(build(), animated: true)
+        presenter.present(build(), animated: true)
     }
     
     // MARK: - Actions
@@ -78,7 +78,7 @@ struct MeetingParticipantInfoViewRouter: MeetingParticipantInfoViewRouting {
         contactDetailsVC.userEmail = email
         contactDetailsVC.userHandle = participant.participantId
         
-        presenter?.present(MEGANavigationController(rootViewController: contactDetailsVC), animated: true)
+        presenter.present(MEGANavigationController(rootViewController: contactDetailsVC), animated: true)
     }
     
     func makeParticipantAsModerator() {
@@ -93,10 +93,8 @@ struct MeetingParticipantInfoViewRouter: MeetingParticipantInfoViewRouting {
         meetingFloatingPanelModel?.dispatch(.removeParticipant(participant: participant))
     }
     
-    func openChatRoom(withChatId chatId: UInt64) {
-        guard let chatViewController = ChatViewController(chatId: chatId) else { return }
-        presenter?.present(MEGANavigationController(rootViewController: chatViewController),
-                           animated: true)
+    func openChatRoom(_ chatRoom: ChatRoomEntity) {
+        ChatContentRouter(chatRoom: chatRoom, presenter: presenter, chatContentRoutingStyle: .present).start()
     }
 
     func displayInMainView() {

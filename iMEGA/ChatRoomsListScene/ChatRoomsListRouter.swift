@@ -87,8 +87,8 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
     }
         
     func showDetails(forChatId chatId: HandleEntity) {
-        guard let navigationController, let chatViewController = ChatViewController(chatId: chatId) else { return }
-        navigationController.pushViewController(chatViewController, animated: true)
+        guard let navigationController, let chatRoom = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo).chatRoom(forChatId: chatId) else { return }
+        ChatContentRouter(chatRoom: chatRoom, presenter: navigationController).start()
     }
     
     func openChatRoom(withChatId chatId: ChatIdEntity, publicLink: String?) {
@@ -113,13 +113,8 @@ final class ChatRoomsListRouter: ChatRoomsListRouting {
             }
         }
         
-        if let chatViewController = ChatViewController(chatId: chatId) {
-            if let publicLink {
-                chatViewController.publicChatWithLinkCreated = true
-                chatViewController.publicChatLink = URL(string: publicLink)
-            }
-            
-            navigationController.pushViewController(chatViewController, animated: true)
+        if let chatRoom = ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo).chatRoom(forChatId: chatId) {
+            ChatContentRouter(chatRoom: chatRoom, presenter: navigationController, publicLink: publicLink, showShareLinkViewAfterOpenChat: (publicLink != nil) ? true : false).start()
         }
     }
     

@@ -187,34 +187,6 @@ class ChatViewController: MessagesViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
-    @objc init(chatRoom: MEGAChatRoom) {
-        self.chatRoom = chatRoom
-        let router = ChatContentRouter(chatRoom: chatRoom.toChatRoomEntity())
-        chatContentViewModel = ChatContentViewModel(
-            chatRoom: chatRoom.toChatRoomEntity(),
-            chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
-            chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo),
-            callUseCase: CallUseCase(repository: CallRepository.newRepo),
-            scheduledMeetingUseCase: ScheduledMeetingUseCase(repository: ScheduledMeetingRepository.newRepo),
-            audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: AudioSessionRepository(audioSession: AVAudioSession(), callActionManager: CallActionManager.shared)),
-            router: router,
-            permissionRouter: PermissionAlertRouter.makeRouter(deviceHandler: permissionHandler),
-            analyticsEventUseCase: AnalyticsEventUseCase(repository: AnalyticsRepository(sdk: MEGASdk.sharedSdk)),
-            meetingNoUserJoinedUseCase: MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.sharedRepo)
-        )
-        super.init(nibName: nil, bundle: nil)
-        router.baseViewController = self
-    }
-    
-    convenience init?(chatId: UInt64) {
-        guard let chatRoom = MEGAChatSdk.shared.chatRoom(forChatId: chatId) else {
-            MEGALogDebug("No chatroom found with chat id \(chatId)")
-            return nil
-        }
-        
-        self.init(chatRoom: chatRoom)
-    }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

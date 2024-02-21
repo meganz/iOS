@@ -440,7 +440,7 @@ final class MockMeetingParticipantInfoViewRouter: MeetingParticipantInfoViewRout
         showInfo_calledTimes += 1
     }
     
-    func openChatRoom(withChatId chatId: UInt64) {
+    func openChatRoom(_ chatRoom: ChatRoomEntity) {
         openChatRoom_calledTimes += 1
     }
     

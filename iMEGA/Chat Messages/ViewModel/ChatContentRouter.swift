@@ -5,18 +5,45 @@ import MEGAPresentation
 import MEGARepo
 import MEGASDKRepo
 
-final class ChatContentRouter: ChatContentRouting {
+enum ChatContentRoutingStyle {
+    case push
+    case present
+}
+
+@objc final class ChatContentRouter: NSObject, ChatContentRouting {
     weak var baseViewController: UIViewController?
-    private var chatRoom: ChatRoomEntity
+    private weak var presenter: UIViewController?
+    private let chatContentRoutingStyle: ChatContentRoutingStyle
+    private let chatRoom: ChatRoomEntity
+    private let publicLink: String?
+    private let showShareLinkViewAfterOpenChat: Bool
+
     private var endCallDialog: EndCallDialog?
 
-    init(chatRoom: ChatRoomEntity) {
+    init(chatRoom: ChatRoomEntity, presenter: UIViewController?, publicLink: String? = nil, showShareLinkViewAfterOpenChat: Bool = false, chatContentRoutingStyle: ChatContentRoutingStyle = .push) {
         self.chatRoom = chatRoom
+        self.presenter = presenter
+        self.publicLink = publicLink
+        self.showShareLinkViewAfterOpenChat = showShareLinkViewAfterOpenChat
+        self.chatContentRoutingStyle = chatContentRoutingStyle
     }
     
-    func build() -> UIViewController? {
+    @objc init(chatRoom: MEGAChatRoom, presenter: UIViewController?, publicLink: String?, showShareLinkViewAfterOpenChat: Bool) {
+        self.chatRoom = chatRoom.toChatRoomEntity()
+        self.presenter = presenter
+        self.publicLink = publicLink
+        self.showShareLinkViewAfterOpenChat = showShareLinkViewAfterOpenChat
+        self.chatContentRoutingStyle = .push
+    }
+    
+    @objc static func chatViewController(for chatRoom: MEGAChatRoom) -> ChatViewController? {
+        guard let chatViewController = ChatContentRouter(chatRoom: chatRoom.toChatRoomEntity(), presenter: nil).build() as? ChatViewController else { return nil }
+        return chatViewController
+    }
+    
+    func build() -> UIViewController {
         guard let megaChatRoom = chatRoom.toMEGAChatRoom() else {
-            return nil
+            return UIViewController()
         }
         let chatContentViewModel = ChatContentViewModel(
             chatRoom: chatRoom,
@@ -32,8 +59,24 @@ final class ChatContentRouter: ChatContentRouting {
         )
         
         let chatViewController = ChatViewController(chatRoom: megaChatRoom, chatContentViewModel: chatContentViewModel)
+        if let publicLink {
+            chatViewController.publicChatWithLinkCreated = showShareLinkViewAfterOpenChat
+            chatViewController.publicChatLink = URL(string: publicLink)
+        }
+        
         baseViewController = chatViewController
         return chatViewController
+    }
+    
+    @objc func start() {
+        let chatViewController = build()
+        switch chatContentRoutingStyle {
+        case .push:
+            guard let navigationPresenter = presenter as? UINavigationController else { return }
+            navigationPresenter.pushViewController(chatViewController, animated: true)
+        case .present:
+            presenter?.present(MEGANavigationController(rootViewController: chatViewController), animated: true)
+        }
     }
     
     // MARK: - ChatContentRouting
