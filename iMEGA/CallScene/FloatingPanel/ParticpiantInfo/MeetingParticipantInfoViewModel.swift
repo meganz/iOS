@@ -143,11 +143,11 @@ final class MeetingParticipantInfoViewModel: ViewModelType {
     
     private func sendMessage() {
         if let chatRoom = chatRoomUseCase.chatRoom(forUserHandle: participant.participantId) {
-            router.openChatRoom(withChatId: chatRoom.chatId)
+            router.openChatRoom(chatRoom)
         } else {
             chatRoomUseCase.createChatRoom(forUserHandle: participant.participantId) { result in
                 if case .success(let chatRoom) = result {
-                    self.router.openChatRoom(withChatId: chatRoom.chatId)
+                    self.router.openChatRoom(chatRoom)
                 }
             }
         }

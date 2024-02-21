@@ -155,8 +155,8 @@ extension ChatViewController {
                     MEGALogDebug("Cannot find chatRoom chat")
                     return
                 }
-                let messagesVC = ChatViewController(chatRoom: chatRoom)
-                self.replaceCurrentViewController(withViewController: messagesVC)
+                self.navigationController?.popToRootViewController(animated: false)
+                ChatContentRouter(chatRoom: chatRoom.toChatRoomEntity(), presenter: self.navigationController).start()
             } else {
                 showSuccess = true
             }

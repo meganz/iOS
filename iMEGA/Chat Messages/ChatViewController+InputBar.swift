@@ -16,7 +16,10 @@ extension ChatViewController {
             return nil
         }
            
-        if chatRoom.isPublicChat,
+        if chatRoom.ownPrivilege.rawValue >= MEGAChatRoomPrivilege.standard.rawValue {
+            chatInputBar = ChatInputBar()
+            chatInputBar?.delegate = self
+        } else if chatRoom.isPublicChat,
             chatRoom.isPreview,
             !chatRoomDelegate.hasChatRoomClosed || MEGALinkManager.joiningOrLeavingChatBase64Handles.contains(MEGASdk.base64Handle(forUserHandle: chatRoom.chatId) ?? "") {
             return joinInputBar
@@ -143,18 +146,18 @@ extension ChatViewController {
                     MEGALogDebug("ChatRoom not found with chat handle")
                     return
                 }
-                let chatViewController = ChatViewController(chatRoom: chatRoom)
-                self.closeChatRoom()
-                self.replaceCurrentViewController(withViewController: chatViewController, animated: false)
-                button.isEnabled = true
                 MEGALinkManager.joiningOrLeavingChatBase64Handles.remove(MEGASdk.base64Handle(forUserHandle: self.chatRoom.chatId) ?? "")
-                self.updateJoinView()
-
+                self.closeChatRoom()
+                self.update(chatRoom: chatRoom)
+                self.messagesCollectionView.reloadData()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self.scrollToBottom()
+                }
             }
-            MEGAChatSdk.shared.autojoinPublicChat(chatRoom.chatId, delegate: delegate)
             if let handle = MEGASdk.base64Handle(forUserHandle: chatRoom.chatId) {
                 MEGALinkManager.joiningOrLeavingChatBase64Handles.add(handle)
             }
+            MEGAChatSdk.shared.autojoinPublicChat(chatRoom.chatId, delegate: delegate)
             updateJoinView()
             button.isEnabled = false
         }
@@ -241,12 +244,7 @@ extension ChatViewController {
                 if getChatLink {
                     let genericRequestDelegate = ChatRequestDelegate { result in
                         if case let .success(request) = result, let text = request.text {
-                            let chatViewController = ChatViewController(chatRoom: newChatRoom)
-                            chatViewController.publicChatWithLinkCreated = true
-                            chatViewController.publicChatLink = URL(string: text)
-                            self.replaceCurrentViewController(withViewController: chatViewController)
-                            SVProgressHUD.setDefaultMaskType(.none)
-                            SVProgressHUD.dismiss()
+                            self.open(chatRoom: newChatRoom, publicLink: text)
                         }
                     }
                     
@@ -278,9 +276,8 @@ extension ChatViewController {
         return (navController, contactsViewController)
     }
     
-    private func open(chatRoom: MEGAChatRoom) {
-        let chatViewController = ChatViewController(chatRoom: chatRoom)
-        replaceCurrentViewController(withViewController: chatViewController)
+    private func open(chatRoom: MEGAChatRoom, publicLink: String? = nil) {
+        ChatContentRouter(chatRoom: chatRoom.toChatRoomEntity(), presenter: self.navigationController, publicLink: publicLink, showShareLinkViewAfterOpenChat: publicLink != nil ? true : false).start()
         SVProgressHUD.setDefaultMaskType(.none)
         SVProgressHUD.dismiss()
     }

@@ -8,7 +8,7 @@ final class ChatViewControllerTests: XCTestCase {
     var sut: ChatViewController!
     override func setUp() {
         super.setUp()
-        sut = ChatViewController(chatRoom: MockChatRoom())
+        sut = ChatContentRouter.chatViewController(for: MockChatRoom())
     }
     
     override func tearDown() {
@@ -33,7 +33,7 @@ final class ChatViewControllerTests: XCTestCase {
     
     func testViewDidLoad_viewConfiguration_shouldBeCorrect() {
         // given
-        let sut = ChatViewController(chatRoom: MockChatRoom())
+        guard let sut =  ChatContentRouter.chatViewController(for: MockChatRoom()) else { return }
         
         // when
         sut.viewDidLoad()

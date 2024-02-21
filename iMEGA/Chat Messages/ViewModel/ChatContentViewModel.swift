@@ -4,7 +4,7 @@ import MEGADomain
 import MEGAL10n
 import MEGAPresentation
 
-protocol ChatContentRouting {
+protocol ChatContentRouting: Routing {
     func startCallUI(chatRoom: ChatRoomEntity, call: CallEntity, isSpeakerEnabled: Bool)
     func openWaitingRoom(scheduledMeeting: ScheduledMeetingEntity)
     func showCallAlreadyInProgress(endAndJoinAlertHandler: (() -> Void)?)

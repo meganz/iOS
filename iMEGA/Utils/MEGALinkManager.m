@@ -929,29 +929,22 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
     }
     
     if (UIApplication.mainTabBarRootViewController) {
-        ChatViewController *chatViewController = [ChatViewController.alloc initWithChatRoom:chatRoom];
-        chatViewController.publicChatLink = publicChatLink;
-        
         MainTabBarController *mainTBC = (MainTabBarController *)UIApplication.mainTabBarRootViewController;
         mainTBC.selectedIndex = TabTypeChat;
         
         if (mainTBC.presentedViewController) {
             [mainTBC dismissViewControllerAnimated:YES completion:^{
-                [MEGALinkManager pushChat:chatViewController tabBar:mainTBC];
+                [MEGALinkManager pushChat:chatRoom publicChatLink:publicChatLink tabBar:mainTBC];
             }];
         } else {
-            [MEGALinkManager pushChat:chatViewController tabBar:mainTBC];
+            [MEGALinkManager pushChat:chatRoom publicChatLink:publicChatLink tabBar:mainTBC];
         }
     } else {
-        ChatViewController *chatViewController = [ChatViewController.alloc initWithChatRoom:chatRoom];
-        chatViewController.publicChatLink = publicChatLink;
-        MEGANavigationController *navigationController = [[MEGANavigationController alloc] initWithRootViewController:chatViewController];
-        navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
-        [UIApplication.mnz_visibleViewController presentViewController:navigationController animated:YES completion:nil];
+        [[ChatContentRouter.alloc initWithChatRoom:chatRoom presenter:UIApplication.mnz_visibleViewController publicLink:publicChatLink.absoluteString showShareLinkViewAfterOpenChat:NO] start];
     }
 }
 
-+ (void)pushChat:(UIViewController *)chatViewController tabBar:(MainTabBarController *)mainTBC {
++ (void)pushChat:(MEGAChatRoom *)chatRoom publicChatLink:(NSURL *)publicChatLink tabBar:(MainTabBarController *)mainTBC {
     UINavigationController *chatNC = mainTBC.selectedViewController;
     
     for (UIViewController *viewController in chatNC.viewControllers) {
@@ -961,14 +954,8 @@ static NSMutableSet<NSString *> *joiningOrLeavingChatBase64Handles;
         }
     }
     
-    [chatNC pushViewController:chatViewController animated:YES];
-    
-    NSMutableArray *viewControllers = chatNC.viewControllers.mutableCopy;
-    NSInteger limit = chatNC.viewControllers.count - 2;
-    for (NSInteger i = 1; i <= limit; i++) {
-        [viewControllers removeObjectAtIndex:1];
-    }
-    chatNC.viewControllers = viewControllers;
+    [chatNC popToRootViewControllerAnimated:NO];
+    [[ChatContentRouter.alloc initWithChatRoom:chatRoom presenter:chatNC publicLink:publicChatLink.absoluteString showShareLinkViewAfterOpenChat:NO] start];
 }
 
 + (void)handleChatPeerOptionsLink {

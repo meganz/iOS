@@ -85,8 +85,7 @@ class ContactsGroupsViewController: UIViewController {
         guard let chatRoom = MEGAChatSdk.shared.chatRoom(forChatId: chatListItem.chatId) else {
             return
         }
-        let messagesVC = ChatViewController(chatRoom: chatRoom)
-        navigationController?.pushViewController(messagesVC, animated: true)
+        ChatContentRouter(chatRoom: chatRoom.toChatRoomEntity(), presenter: navigationController).start()
     }
     
     @IBAction func showNewChatGroup() {
@@ -108,8 +107,7 @@ class ContactsGroupsViewController: UIViewController {
                     completion: { chatRoom in
                         DispatchQueue.main.async {
                             self?.addNewChatToList(chatRoom: chatRoom)
-                            let messagesVC = ChatViewController(chatRoom: chatRoom)
-                            self?.navigationController?.pushViewController(messagesVC, animated: true)
+                            ChatContentRouter(chatRoom: chatRoom.toChatRoomEntity(), presenter: self?.navigationController).start()
                         }
                     })
             } else {
@@ -130,16 +128,14 @@ class ContactsGroupsViewController: UIViewController {
                         if getChatlink {
                             MEGAChatSdk.shared.createChatLink(chatRoom.chatId, delegate: ChatRequestDelegate { result in
                                 if case .success = result, let text = request.text {
-                                    let messagesVC = ChatViewController(chatRoom: chatRoom)
-                                    messagesVC.publicChatWithLinkCreated = true
-                                    messagesVC.publicChatLink = URL(string: text)
-                                    self?.navigationController?.pushViewController(messagesVC, animated: true)
+                                    guard let self else { return }
+                                    ChatContentRouter(chatRoom: chatRoom.toChatRoomEntity(), presenter: self.navigationController, publicLink: text, showShareLinkViewAfterOpenChat: true).start()
                                 }
                             })
                         } else {
                             DispatchQueue.main.async {
-                                let messagesVC = ChatViewController(chatRoom: chatRoom)
-                                self?.navigationController?.pushViewController(messagesVC, animated: true)
+                                guard let self else { return }
+                                ChatContentRouter(chatRoom: chatRoom.toChatRoomEntity(), presenter: self.navigationController).start()
                             }
                         }
                     })

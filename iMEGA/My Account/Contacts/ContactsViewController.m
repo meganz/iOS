@@ -1089,8 +1089,7 @@
         return;
     }
     
-    ChatViewController *chatViewController = [ChatViewController.alloc initWithChatRoom:chatRoom];
-    [self.navigationController pushViewController:chatViewController animated:YES];
+    [[ChatContentRouter.alloc initWithChatRoom:chatRoom presenter:self.navigationController publicLink:nil showShareLinkViewAfterOpenChat: NO] start];
 }
 
 - (void)setupContactsTableViewHeader {

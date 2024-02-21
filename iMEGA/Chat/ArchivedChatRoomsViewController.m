@@ -336,8 +336,7 @@
     MEGAChatRoom *chatRoom         = [MEGAChatSdk.shared chatRoomForChatId:chatListItem.chatId];
     
     if (chatRoom != nil) {
-        ChatViewController *chatViewController = [ChatViewController.alloc initWithChatRoom:chatRoom];
-        [self.navigationController pushViewController:chatViewController animated:YES];
+        [[ChatContentRouter.alloc initWithChatRoom:chatRoom presenter:self.navigationController publicLink:nil showShareLinkViewAfterOpenChat:NO] start];
     }
 }
 
@@ -384,7 +383,10 @@
         MEGAChatRoom *chatRoom = [MEGAChatSdk.shared chatRoomForChatId:chatListItem.chatId];
 
         UIContextMenuConfiguration *configuration = [UIContextMenuConfiguration configurationWithIdentifier:nil previewProvider:^UIViewController * _Nullable{
-            ChatViewController *chatViewController = [ChatViewController.alloc initWithChatRoom:chatRoom];
+            // This is the view controller that will be presented by long pressing the cell.
+            // It is a UIKit feature that breaks the router navigation, as it needs the ChatViewController object.
+            // The router exposes it in order to keep the feature, but *@objc static func chatViewController(for chatRoom: MEGAChatRoom) -> ChatViewController?* should be removed once ArchivedChatRoomsViewController is refactored into SwiftUI.
+            ChatViewController *chatViewController = [ChatContentRouter chatViewControllerFor:chatRoom];
             chatViewController.previewMode = YES;
             return chatViewController;
             
