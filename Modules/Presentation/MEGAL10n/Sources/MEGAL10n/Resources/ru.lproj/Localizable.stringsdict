@@ -3673,9 +3673,13 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Folder shared</string>
+        <string>Открыт доступ к папке</string>
+        <key>few</key>
+        <string>Открыт доступ к %d папкам</string>
+        <key>many</key>
+        <string>Открыт доступ к %d папкам</string>
         <key>other</key>
-        <string>%d folders shared</string>
+        <string>Открыт доступ к %d папки</string>
       </dict>
     </dict>
   </dict>

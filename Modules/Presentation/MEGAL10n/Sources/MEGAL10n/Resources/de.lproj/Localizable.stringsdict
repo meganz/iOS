@@ -2717,9 +2717,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Some months don’t have %d day. For these months, the occurrence will be scheduled for the last day of the month.</string>
+        <string>Manche Monate sind kürzer als %d Tag. In diesen Monaten wird das Meeting auf den letzten Tag des Monats gelegt.</string>
         <key>other</key>
-        <string>Some months don’t have %d days. For these months, the occurrence will be scheduled for the last day of the month.</string>
+        <string>Manche Monate sind kürzer als %d Tage. In diesen Monaten wird das Meeting auf den letzten Tag des Monats gelegt.</string>
       </dict>
     </dict>
     <key>meetings.scheduleMeeting.create.selectedRecurrence.daily.customInterval</key>
@@ -2893,9 +2893,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Files sent to %d chat</string>
+        <string>Dateien an %d Chat gesendet</string>
         <key>other</key>
-        <string>Files sent to %d chats</string>
+        <string>Dateien an %d Chats gesendet</string>
       </dict>
     </dict>
     <key>contacts.invite.emailAddress.inviteNumberOfContacts</key>
@@ -2909,9 +2909,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Invite %d contact</string>
+        <string>%d Kontakt einladen</string>
         <key>other</key>
-        <string>Invite %d contacts</string>
+        <string>%d Kontakte einladen</string>
       </dict>
     </dict>
     <key>chat.info.numberOfParticipants</key>
@@ -2941,9 +2941,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Folder shared</string>
+        <string>Ordner freigegeben</string>
         <key>other</key>
-        <string>%d folders shared</string>
+        <string>%d Ordner freigegeben</string>
       </dict>
     </dict>
   </dict>

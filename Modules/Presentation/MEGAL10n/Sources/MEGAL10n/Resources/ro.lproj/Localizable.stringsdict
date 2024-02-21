@@ -3055,9 +3055,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Some months don’t have %d day. For these months, the occurrence will be scheduled for the last day of the month.</string>
+        <string>Unele luni nu au %d zi. Pentru aceste luni, ocurența va fi planificată pentru ultima zi a lunii.</string>
+        <key>few</key>
+        <string>Unele luni nu au %d de zile. Pentru aceste luni, ocurența va fi planificată pentru ultima zi a lunii.</string>
         <key>other</key>
-        <string>Some months don’t have %d days. For these months, the occurrence will be scheduled for the last day of the month.</string>
+        <string>Unele luni nu au %d de zile. Pentru aceste luni, ocurența va fi planificată pentru ultima zi a lunii.</string>
       </dict>
     </dict>
     <key>meetings.scheduleMeeting.create.selectedRecurrence.daily.customInterval</key>
@@ -3305,9 +3307,11 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Folder shared</string>
+        <string>Folderul a fost partajat</string>
+        <key>few</key>
+        <string>%d foldere au fost  partajate</string>
         <key>other</key>
-        <string>%d folders shared</string>
+        <string>%d de foldere au fost partajate</string>
       </dict>
     </dict>
   </dict>

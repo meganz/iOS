@@ -2717,9 +2717,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Some months don’t have %d day. For these months, the occurrence will be scheduled for the last day of the month.</string>
+        <string>Sommige maanden hebben geen %d dag. Voor deze maanden wordt het evenement gepland op de laatste dag van de maand.</string>
         <key>other</key>
-        <string>Some months don’t have %d days. For these months, the occurrence will be scheduled for the last day of the month.</string>
+        <string>Sommige maanden hebben geen %d dagen. Voor deze maanden wordt het evenement gepland op de laatste dag van de maand.</string>
       </dict>
     </dict>
     <key>meetings.scheduleMeeting.create.selectedRecurrence.daily.customInterval</key>
@@ -2941,9 +2941,9 @@
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
         <key>one</key>
-        <string>Folder shared</string>
+        <string>Map gedeeld</string>
         <key>other</key>
-        <string>%d folders shared</string>
+        <string>%d mappen gedeeld</string>
       </dict>
     </dict>
   </dict>
