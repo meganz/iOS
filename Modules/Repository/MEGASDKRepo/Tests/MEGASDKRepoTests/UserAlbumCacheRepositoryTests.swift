@@ -253,6 +253,126 @@ final class UserAlbumCacheRepositoryTests: XCTestCase {
         cancellable.cancel()
     }
     
+    func testMonitorSetElementUpdates_onSetElementRemoval_shouldInvalidateElementsInCacheForTheSet() async {
+        
+        // Arrange
+        let albumId = HandleEntity(65)
+        let expectedAlbumPhotoIds = [
+            AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 54, nodeId: 4),
+            AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 65, nodeId: 87)
+        ]
+        let setAndElementsUpdatesProvider = MockSetAndElementUpdatesProvider()
+        let userAlbumCache = MockUserAlbumCache(
+            albums: [SetEntity(handle: albumId, name: "Test 123")],
+            albumsElementIds: [albumId: expectedAlbumPhotoIds])
+        
+        // Act
+        let sut = makeSUT(
+            userAlbumCache: userAlbumCache,
+            setAndElementsUpdatesProvider: setAndElementsUpdatesProvider)
+
+        // Assert
+        
+        let initialResult = await userAlbumCache.albumElementIds(forAlbumId: albumId)
+        XCTAssertEqual(initialResult, expectedAlbumPhotoIds)
+
+        let exp = expectation(description: "A non-empty result from publisher")
+        let cancellable = sut.setElementsUpdatedPublisher
+            .first { $0.isNotEmpty }
+            .sink { _ in exp.fulfill() }
+        
+        setAndElementsUpdatesProvider
+            .mockSendSetElementUpdate(setElementUpdate: [
+                .init(handle: 65, ownerId: albumId, changeTypes: .removed)
+            ])
+
+        await fulfillment(of: [exp], timeout: 1)
+        cancellable.cancel()
+        
+        let result = await userAlbumCache.albumElementIds(forAlbumId: albumId)
+        XCTAssertNil(result)
+    }
+    
+    func testMonitorSetElementUpdates_onSetElementInsertion_shouldInvalidateElementsInCacheForTheSet() async {
+        
+        // Arrange
+        let albumId = HandleEntity(65)
+        let expectedAlbumPhotoIds = [
+            AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 54, nodeId: 4),
+            AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 65, nodeId: 87)
+        ]
+        let setAndElementsUpdatesProvider = MockSetAndElementUpdatesProvider()
+        let userAlbumCache = MockUserAlbumCache(
+            albums: [SetEntity(handle: albumId, name: "Test 123")],
+            albumsElementIds: [albumId: expectedAlbumPhotoIds])
+        
+        // Act
+        let sut = makeSUT(
+            userAlbumCache: userAlbumCache,
+            setAndElementsUpdatesProvider: setAndElementsUpdatesProvider)
+
+        // Assert
+        
+        let initialResult = await userAlbumCache.albumElementIds(forAlbumId: albumId)
+        XCTAssertEqual(initialResult, expectedAlbumPhotoIds)
+
+        let exp = expectation(description: "A non-empty result from publisher")
+        let cancellable = sut.setElementsUpdatedPublisher
+            .first { $0.isNotEmpty }
+            .sink { _ in exp.fulfill() }
+        
+        setAndElementsUpdatesProvider
+            .mockSendSetElementUpdate(setElementUpdate: [
+                .init(handle: 65, ownerId: albumId, changeTypes: .new)
+            ])
+
+        await fulfillment(of: [exp], timeout: 1)
+        cancellable.cancel()
+        
+        let result = await userAlbumCache.albumElementIds(forAlbumId: albumId)
+        XCTAssertNil(result)
+    }
+    
+    func testMonitorSetElementUpdates_onSetElementNameChange_shouldInvalidateElementsInCacheForTheSet() async {
+        
+        // Arrange
+        let albumId = HandleEntity(65)
+        let expectedAlbumPhotoIds = [
+            AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 54, nodeId: 4),
+            AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: 65, nodeId: 87)
+        ]
+        let setAndElementsUpdatesProvider = MockSetAndElementUpdatesProvider()
+        let userAlbumCache = MockUserAlbumCache(
+            albums: [SetEntity(handle: albumId, name: "Test 123")],
+            albumsElementIds: [albumId: expectedAlbumPhotoIds])
+        
+        // Act
+        let sut = makeSUT(
+            userAlbumCache: userAlbumCache,
+            setAndElementsUpdatesProvider: setAndElementsUpdatesProvider)
+
+        // Assert
+        
+        let initialResult = await userAlbumCache.albumElementIds(forAlbumId: albumId)
+        XCTAssertEqual(initialResult, expectedAlbumPhotoIds)
+
+        let exp = expectation(description: "A non-empty result from publisher")
+        let cancellable = sut.setElementsUpdatedPublisher
+            .first { $0.isNotEmpty }
+            .sink { _ in exp.fulfill() }
+        
+        setAndElementsUpdatesProvider
+            .mockSendSetElementUpdate(setElementUpdate: [
+                .init(handle: 65, ownerId: albumId, name: "New Name", changeTypes: .name)
+            ])
+
+        await fulfillment(of: [exp], timeout: 1)
+        cancellable.cancel()
+        
+        let result = await userAlbumCache.albumElementIds(forAlbumId: albumId)
+        XCTAssertNil(result)
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(

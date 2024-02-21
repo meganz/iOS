@@ -12,6 +12,10 @@ public protocol UserAlbumCacheProtocol: Actor {
     ///  Remove the provided SetEntities from the local cache. If the set does  exist in the cache it will be evicted immediately. Else no action will happen.
     /// - Parameter albums: List of set entities to be removed from local cache.
     func remove(albums: [SetEntity])
+    
+    ///  Remove all SetElements related to the passed in Set HandleEntities. The Set will remain in the cache, but only the sequence of elements linked against the Set will be removed.
+    /// - Parameter albums: Sequence of Set/Album handle entities
+    func removeElements(of albums: any Sequence<HandleEntity>)
 }
 
 actor UserAlbumCache: UserAlbumCacheProtocol {
@@ -49,7 +53,7 @@ actor UserAlbumCache: UserAlbumCacheProtocol {
     func setAlbumElementIds(forAlbumId id: HandleEntity, elementIds: [AlbumPhotoIdEntity]) {
         albumElementIdsCache[id] = elementIds
     }
-    
+
     func removeAllCachedValues() {
         albumCache.removeAllObjects()
         albumElementIdsCache.removeAllObjects()
@@ -60,6 +64,12 @@ actor UserAlbumCache: UserAlbumCacheProtocol {
             let id = NSNumber(value: $0.id)
             albumCache.removeObject(forKey: id)
             albumElementIdsCache.removeObject(forKey: id)
+        }
+    }
+    
+    func removeElements(of albums: any Sequence<HandleEntity>) {
+        albums.forEach {
+            albumElementIdsCache.removeObject(forKey: NSNumber(value: $0))
         }
     }
 }
