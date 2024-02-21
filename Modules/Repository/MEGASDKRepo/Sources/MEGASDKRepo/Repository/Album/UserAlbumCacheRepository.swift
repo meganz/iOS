@@ -8,15 +8,18 @@ final public class UserAlbumCacheRepository: UserAlbumRepositoryProtocol {
         userAlbumCache: UserAlbumCache.shared,
         setAndElementsUpdatesProvider: SetAndElementUpdatesProvider(sdk: .sharedSdk))
     
+    public var setsUpdatedPublisher: AnyPublisher<[SetEntity], Never> {
+        setsUpdatedSourcePublisher.eraseToAnyPublisher()
+    }
+    public var setElementsUpdatedPublisher: AnyPublisher<[SetElementEntity], Never> {
+        setElementsUpdatedSourcePublisher.eraseToAnyPublisher()
+    }
+    
     private let setsUpdatedSourcePublisher = PassthroughSubject<[SetEntity], Never>()
     private let userAlbumRepository: any UserAlbumRepositoryProtocol
     private let userAlbumCache: any UserAlbumCacheProtocol
     private let setAndElementsUpdatesProvider: any SetAndElementUpdatesProviderProtocol
-    
-    public var setsUpdatedPublisher: AnyPublisher<[SetEntity], Never> {
-        setsUpdatedSourcePublisher.eraseToAnyPublisher()
-    }
-    public let setElementsUpdatedPublisher: AnyPublisher<[SetElementEntity], Never>
+    private let setElementsUpdatedSourcePublisher = PassthroughSubject<[SetElementEntity], Never>()
     private var monitorSDKUpdatesTask: Task<Void, Error>?
     
     init(userAlbumRepository: some UserAlbumRepositoryProtocol,
@@ -27,10 +30,10 @@ final public class UserAlbumCacheRepository: UserAlbumRepositoryProtocol {
         self.userAlbumCache = userAlbumCache
         self.setAndElementsUpdatesProvider = setAndElementsUpdatesProvider
         
-        setElementsUpdatedPublisher = userAlbumRepository.setElementsUpdatedPublisher
         monitorSDKUpdatesTask = Task {
             await withTaskGroup(of: Void.self, body: { taskGroup in
                 taskGroup.addTask { await self.monitorSetUpdates() }
+                taskGroup.addTask { await self.monitorSetElementUpdates() }
             })
         }
     }
@@ -118,6 +121,20 @@ final public class UserAlbumCacheRepository: UserAlbumRepositoryProtocol {
             await userAlbumCache.setAlbums(insertions)
             
             setsUpdatedSourcePublisher.send(await albums())
+        }
+    }
+    
+    private func monitorSetElementUpdates() async {
+        for await setElementUpdate in setAndElementsUpdatesProvider.setElementUpdates() {
+            guard !Task.isCancelled else {
+                break
+            }
+
+            let invalidateAlbumSets = Set(setElementUpdate.map(\.ownerId))
+            
+            await userAlbumCache.removeElements(of: invalidateAlbumSets)
+            
+            setElementsUpdatedSourcePublisher.send(setElementUpdate)
         }
     }
 }

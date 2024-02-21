@@ -9,6 +9,11 @@ public protocol SetAndElementUpdatesProviderProtocol {
     /// - Returns: `AnyAsyncSequence` that will call sdk.add on creation and sdk.remove onTermination of `AsyncStream`.
     /// It will yield `[SetEntity]` items until sequence terminated
     func setUpdates(filteredBy: [SetTypeEntity]) -> AnyAsyncSequence<[SetEntity]>
+    
+    /// SetElement updates from `MEGAGlobalDelegate` `onSetElementsUpdate` as an `AnyAsyncSequence`
+    /// - Returns: `AnyAsyncSequence` that will call sdk.add on creation and sdk.remove onTermination of `AsyncStream`.
+    /// It will yield `[SetElementEntity]` items until sequence terminated
+    func setElementUpdates() -> AnyAsyncSequence<[SetElementEntity]>
 }
 
 public struct SetAndElementUpdatesProvider: SetAndElementUpdatesProviderProtocol {
@@ -22,6 +27,16 @@ public struct SetAndElementUpdatesProvider: SetAndElementUpdatesProviderProtocol
     public func setUpdates(filteredBy: [SetTypeEntity]) -> AnyAsyncSequence<[SetEntity]> {
         AsyncStream { continuation in
             let delegate = SetUpdateGlobalDelegate(filterBy: filteredBy) { continuation.yield($0) }
+            
+            continuation.onTermination = { _ in sdk.remove(delegate) }
+            
+            sdk.add(delegate, queueType: .globalBackground)
+        }.eraseToAnyAsyncSequence()
+    }
+    
+    public func setElementUpdates() -> AnyAsyncSequence<[SetElementEntity]> {
+        AsyncStream { continuation in
+            let delegate = SetElementUpdateGlobalDelegate { continuation.yield($0) }
             
             continuation.onTermination = { _ in sdk.remove(delegate) }
             
@@ -51,5 +66,19 @@ private class SetUpdateGlobalDelegate: NSObject, MEGAGlobalDelegate {
         guard albumSets.isNotEmpty else { return }
         
         onUpdate(albumSets)
+    }
+}
+
+private class SetElementUpdateGlobalDelegate: NSObject, MEGAGlobalDelegate {
+    
+    private let onUpdate: ([SetElementEntity]) -> Void
+
+    public init(onUpdate: @escaping ([SetElementEntity]) -> Void) {
+        self.onUpdate = onUpdate
+        super.init()
+    }
+    
+    func onSetElementsUpdate(_ api: MEGASdk, setElements: [MEGASetElement]) {
+        onUpdate(setElements.toSetElementsEntities())
     }
 }
