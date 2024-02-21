@@ -10,7 +10,7 @@
 static const NSUInteger kMinimumLettersToStartTheSearch = 1;
 
 NS_ASSUME_NONNULL_BEGIN
-@protocol ViewModeStoring;
+@protocol ViewModeStoringObjC;
 @interface CloudDriveViewController : UIViewController <BrowserViewControllerDelegate, ContatctsViewControllerDelegate, UIDocumentPickerDelegate>
 
 @property (nonatomic, strong, nullable) MEGANode *parentNode;
@@ -59,7 +59,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectAllBarButtonItem;
 @property (nonatomic, assign) BOOL shouldDetermineViewMode;
 @property (nonatomic, strong, nullable) ContextMenuManager * contextMenuManager;
-@property (nonatomic, strong, nullable) id<ViewModeStoring> viewModeStore;
+@property (nonatomic, strong, nullable) id<ViewModeStoringObjC> viewModeStore;
 @property (strong, nonatomic) CloudDriveViewModel *viewModel;
 @property (weak, nonatomic) IBOutlet UIStackView *containerStackView;
 @property (nonatomic, assign) NSInteger viewModePreference_ObjC;

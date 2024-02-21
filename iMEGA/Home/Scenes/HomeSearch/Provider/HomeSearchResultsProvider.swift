@@ -127,7 +127,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         guard let parentNode else {
             return .empty
         }
-        self.nodeList = await nodeRepository.children(of: parentNode)
+        self.nodeList = await nodeRepository.asyncChildren(of: parentNode)
         return await fillResults()
     }
     
@@ -161,7 +161,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
 
     private func childrenFolders() async throws -> NodeListEntity? {
         guard let root = nodeRepository.rootNode() else { return nil }
-        guard let nodeList = await nodeRepository.children(of: root) else { return nil }
+        guard let nodeList = await nodeRepository.asyncChildren(of: root) else { return nil }
 
         let nodes = nodeList.toNodeEntities().filter { $0.isFolder }
 

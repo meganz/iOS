@@ -40,7 +40,7 @@ protocol ToolbarActionFactoryProtocol {
 }
 
 /// This bit of logic only produces the actions enum for the given context
-/// It used by CloudDriveBottomToolbarItemsFactory to build actions and then turn them into UIBarButtonItems and add action handlers
+/// It's used by CloudDriveBottomToolbarItemsFactory to build actions and then turn them into UIBarButtonItems and add action handlers
 /// but the logic what button is actually shown when is defined here
 /// original logic present in : CloudDriveViewController.m toolbarActionsForShareType:shareType:isBackupNode:
 struct ToolbarActionFactory: ToolbarActionFactoryProtocol {
@@ -97,7 +97,6 @@ struct ToolbarActionFactory: ToolbarActionFactoryProtocol {
     private func accessOwnerActions(
         displayMode: DisplayMode
     ) -> [BottomToolbarAction] {
-        
         switch displayMode {
         case .cloudDrive:
             [

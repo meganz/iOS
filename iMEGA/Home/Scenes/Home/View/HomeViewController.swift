@@ -37,7 +37,7 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
 
     var bannerViewModel: (any HomeBannerViewModelType)?
     
-    var viewModeStore: (any ViewModeStoring)?
+    var viewModeStore: (any ViewModeStoringObjC)?
 
     var quickAccessWidgetViewModel: QuickAccessWidgetViewModel?
     
@@ -172,7 +172,7 @@ final class HomeViewController: UIViewController, DisplayMenuDelegate {
         if let layout = viewMode.pageLayout {
             changeLayout(to: layout)
         }
-        viewModeStore?.save(viewMode: viewMode, for: viewModeLocation)
+        viewModeStore?.save(viewMode: viewMode, forObjC: viewModeLocation)
         updateContextMenuButtonMenu(viewMode: viewMode)
     }
     

@@ -23,7 +23,8 @@ final class HomeScreenFactory: NSObject {
         MEGAStore.shareInstance()
     }
     
-    private var newViewModeStore: some ViewModeStore {
+    // shared with ObjC code so need Objc version
+    private var newViewModeStore: some ViewModeStoringObjC {
         ViewModeStore(
             preferenceRepo: PreferenceRepository(userDefaults: .standard),
             megaStore: megaStore,
@@ -161,7 +162,7 @@ final class HomeScreenFactory: NSObject {
         bridge: SearchResultsBridge,
         newHomeSearchResultsEnabled: Bool,
         tracker: some AnalyticsTracking,
-        viewModeStore: some ViewModeStoring,
+        viewModeStore: some ViewModeStoringObjC,
         enableItemMultiSelection: Bool
     ) -> UIViewController {
         
@@ -221,7 +222,7 @@ final class HomeScreenFactory: NSObject {
         with navigationController: UINavigationController,
         bridge: SearchResultsBridge,
         tracker: some AnalyticsTracking,
-        viewModeStore: some ViewModeStoring,
+        viewModeStore: some ViewModeStoringObjC,
         enableItemMultiSelection: Bool
     ) -> UIViewController {
         

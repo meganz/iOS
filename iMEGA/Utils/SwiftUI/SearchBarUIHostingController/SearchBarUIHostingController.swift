@@ -16,13 +16,14 @@ final class SearchBarUIHostingController<Content>: UIHostingController<Content> 
     private var backButtonTitle: String?
     private var toolbarBuilder: CloudDriveBottomToolbarItemsFactory!
     private var browseDelegate: BrowserViewControllerDelegateHandler!
-        
+    private var searchBarVisible: Bool!
     init(
         rootView: Content,
         wrapper: SearchControllerWrapper,
         selectionHandler: SearchControllerSelectionHandler,
         toolbarBuilder: CloudDriveBottomToolbarItemsFactory,
-        backButtonTitle: String?
+        backButtonTitle: String?,
+        searchBarVisible: Bool
     ) {
         super.init(rootView: rootView)
         self.wrapper = wrapper
@@ -30,6 +31,7 @@ final class SearchBarUIHostingController<Content>: UIHostingController<Content> 
         self.toolbarBuilder = toolbarBuilder
         self.backButtonTitle = backButtonTitle
         self.browseDelegate = BrowserViewControllerDelegateHandler()
+        self.searchBarVisible = searchBarVisible
     }
 
     @MainActor required dynamic init?(coder aDecoder: NSCoder) {
@@ -38,19 +40,19 @@ final class SearchBarUIHostingController<Content>: UIHostingController<Content> 
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.searchController = wrapper?.searchController ?? UISearchController()
         navigationItem.hidesSearchBarWhenScrolling = false
         navigationItem.hidesBackButton = true
-        definesPresentationContext = true
-
+        navigationItem.searchController = wrapper?.searchController
         let toolbar = UIToolbar(frame: .zero)
         self.toolbar = toolbar
         if let backButtonTitle {
             setMenuCapableBackButtonWith(menuTitle: backButtonTitle)
         }
+        self.navigationItem.searchController = searchBarVisible ? wrapper?.searchController : nil
 
         wrapper?.onUpdateSearchBarVisibility = { [weak self] isVisible in
             guard let self, let wrapper = self.wrapper else { return }
+            self.searchBarVisible = isVisible
             self.navigationItem.searchController = isVisible ? wrapper.searchController : nil
         }
         
@@ -159,7 +161,11 @@ class SearchControllerWrapper: NSObject {
         onCancel: (() -> Void)?
     ) {
         super.init()
-        self.searchController = UISearchController.customSearchController(searchResultsUpdaterDelegate: self, searchBarDelegate: self)
+        self.searchController = UISearchController.customSearchController(
+            searchResultsUpdaterDelegate: self,
+            searchBarDelegate: self
+        )
+        self.searchController.hidesNavigationBarDuringPresentation = false
         self.onSearch = onSearch
         self.onCancel = onCancel
     }

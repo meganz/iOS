@@ -72,12 +72,28 @@ extension ViewModeLocation_ObjWrapper {
     }
 }
 
-@objc protocol ViewModeStoring {
-    func viewMode(for location: ViewModeLocation_ObjWrapper) -> ViewModePreferenceEntity
-    func save(viewMode: ViewModePreferenceEntity, for location: ViewModeLocation_ObjWrapper)
+@objc protocol ViewModeStoringObjC {
+    func viewMode(
+        for location: ViewModeLocation_ObjWrapper
+    ) -> ViewModePreferenceEntity
+    func save(
+        viewMode: ViewModePreferenceEntity,
+        forObjC location: ViewModeLocation_ObjWrapper
+    )
 }
 
-class ViewModeStore: ViewModeStoring {
+// pure Swift version used in new Cloud Drive
+protocol ViewModeStoring {
+    func viewMode(
+        for location: ViewModeLocation
+    ) -> ViewModePreferenceEntity
+    func save(
+        viewMode: ViewModePreferenceEntity,
+        for location: ViewModeLocation
+    )
+}
+
+final class ViewModeStore: ViewModeStoring, ViewModeStoringObjC {
     
     func viewMode(for location: ViewModeLocation_ObjWrapper) -> ViewModePreferenceEntity {
         if let location = location.location {
@@ -86,7 +102,7 @@ class ViewModeStore: ViewModeStoring {
         return .list
     }
     
-    func save(viewMode: ViewModePreferenceEntity, for location: ViewModeLocation_ObjWrapper) {
+    func save(viewMode: ViewModePreferenceEntity, forObjC location: ViewModeLocation_ObjWrapper) {
         if let location = location.location {
             self.save(viewMode: viewMode, for: location)
         }
