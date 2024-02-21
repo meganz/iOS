@@ -9,6 +9,10 @@ func createPrepareBranch(_ versionNumber: String) throws -> String {
     return prepareBranch
 }
 
+func fetchOriginForSubmodules() throws {
+    try runInShell("git submodule foreach 'git fetch origin'")
+}
+
 func updateSubmodules() throws {
     try runInShell("git submodule update --init --recursive")
 }
