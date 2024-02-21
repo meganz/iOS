@@ -29,14 +29,14 @@ struct NodeBrowserView: View {
             if let warningViewModel = viewModel.warningViewModel {
                 WarningView(viewModel: warningViewModel)
             }
-            if viewModel.isMediaDiscoveryShown, let mediaDiscoveryViewModel = viewModel.mediaDiscoveryViewModel {
+            if let mediaDiscoveryViewModel = viewModel.viewModeAwareMediaDiscoveryViewModel {
                 MediaDiscoveryContentView(viewModel: mediaDiscoveryViewModel)
             } else {
                 SearchResultsView(viewModel: viewModel.searchResultsViewModel)
             }
         }
         .navigationBarTitleDisplayMode(.inline)
-        .task { await viewModel.viewTask() }
+        .onAppear { viewModel.onViewAppear() }
         .onLoad { viewModel.onLoadTask() }
     }
 

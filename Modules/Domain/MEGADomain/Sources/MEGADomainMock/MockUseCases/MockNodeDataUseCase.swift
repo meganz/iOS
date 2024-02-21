@@ -111,7 +111,11 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
         false
     }
     
-    public func childrenOf(node: NodeEntity) async -> NodeListEntity? {
+    public func asyncChildrenOf(node: NodeEntity) async -> NodeListEntity? {
+        nil
+    }
+
+    public func childrenOf(node: NodeEntity) -> NodeListEntity? {
         nodeListEntity
     }
 }

@@ -101,7 +101,7 @@ final class NodeRepositoryTests: XCTestCase {
     func testChildrenOfParent_returnEmptyArray_whenNoChildrenFound() async {
         let root = MockNode(handle: 1, nodeType: .folder)
         let harness = Harness(nodes: [root] )
-        let result = await harness.sut.children(of: root.toNodeEntity())
+        let result = await harness.sut.asyncChildren(of: root.toNodeEntity())
         XCTAssertEqual(result?.nodesCount ?? 0, 0)
     }
     
@@ -114,7 +114,7 @@ final class NodeRepositoryTests: XCTestCase {
         
         let children = [child0, child1, child2]
         let harness = Harness(nodes: [root] + children + [grandChild])
-        let result = await harness.sut.children(of: root.toNodeEntity())
+        let result = await harness.sut.asyncChildren(of: root.toNodeEntity())
         let resultNodes = [result?.nodeAt(0), result?.nodeAt(1), result?.nodeAt(2)]
         XCTAssertEqual(resultNodes, children.toNodeEntities())
     }

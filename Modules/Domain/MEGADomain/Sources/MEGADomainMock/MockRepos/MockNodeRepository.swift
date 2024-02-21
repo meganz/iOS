@@ -92,11 +92,15 @@ public struct MockNodeRepository: NodeRepositoryProtocol {
         parentNodes
     }
     
-    public func children(of node: NodeEntity) async -> [NodeEntity] {
+    public func asyncChildren(of node: NodeEntity) async -> [NodeEntity] {
         childrenNodes
     }
-
-    public func children(of node: NodeEntity) async -> NodeListEntity? {
+    
+    public func children(of node: NodeEntity) -> NodeListEntity? {
+        .init(nodesCount: 0, nodeAt: { _ in nil })
+    }
+    
+    public func asyncChildren(of node: NodeEntity) async -> NodeListEntity? {
         guard !childrenNodes.isEmpty else { return nil }
         return .init(nodesCount: childrenNodes.count, nodeAt: { index in
             return childrenNodes[index]

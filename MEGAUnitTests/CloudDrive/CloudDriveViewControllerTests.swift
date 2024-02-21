@@ -5,22 +5,17 @@ import XCTest
 
 final class CloudDriveViewControllerTests: XCTestCase {
     
-    class MockViewModeStore: ViewModeStoring {
+    class MockViewModeStoreObjC: ViewModeStoringObjC {
+        func save(viewMode: ViewModePreferenceEntity, forObjC location: MEGA.ViewModeLocation_ObjWrapper) {
+            viewModesPassedIn.append(viewMode)
+        }
         
-        var viewModeToReturn: ViewModePreferenceEntity = .list
-        func viewMode(
-            for location: ViewModeLocation_ObjWrapper
-        ) -> ViewModePreferenceEntity {
+        func viewMode(for location: MEGA.ViewModeLocation_ObjWrapper) -> ViewModePreferenceEntity {
             viewModeToReturn
         }
         
+        var viewModeToReturn: ViewModePreferenceEntity = .list
         var viewModesPassedIn = [ViewModePreferenceEntity]()
-        func save(
-            viewMode: ViewModePreferenceEntity,
-            for location: ViewModeLocation_ObjWrapper
-        ) {
-            viewModesPassedIn.append(viewMode)
-        }
         
         init() {}
     }
@@ -28,7 +23,7 @@ final class CloudDriveViewControllerTests: XCTestCase {
     // MARK: - NodeAction favorite
     
     func testNodeAction_whenSelectFavoriteOnViewModePreferenceEntityThumbnailAndHasFolderTypeOnly_reloadCollectionAtIndexPath() {
-        let viewModeStore = MockViewModeStore()
+        let viewModeStore = MockViewModeStoreObjC()
         viewModeStore.viewModeToReturn = .thumbnail
         let displayMode = cloudDriveDisplayMode()
         let selectedNode = anyNode(handle: .min, nodeType: .folder)
@@ -44,7 +39,7 @@ final class CloudDriveViewControllerTests: XCTestCase {
     }
     
     func testNodeAction_whenSelectFavoriteOnViewModePreferenceEntityThumbnailAndHasFileTypeOnly_reloadCollectionAtIndexPath() {
-        let viewModeStore = MockViewModeStore()
+        let viewModeStore = MockViewModeStoreObjC()
         viewModeStore.viewModeToReturn = .thumbnail
         let displayMode = cloudDriveDisplayMode()
         let selectedNode = anyNode(handle: .min, nodeType: .file)
@@ -61,7 +56,7 @@ final class CloudDriveViewControllerTests: XCTestCase {
     // MARK: - NodeAction Remove
     
     func testNodeAction_whenSelectRubbishBinOnRubbishBinPage_reloadCollection() {
-        let viewModeStore = MockViewModeStore()
+        let viewModeStore = MockViewModeStoreObjC()
         viewModeStore.viewModeToReturn = .thumbnail
         let displayMode = rubbishBinDisplayMode()
         let selectedNode = anyNode(handle: .min, nodeType: .file)
@@ -77,7 +72,7 @@ final class CloudDriveViewControllerTests: XCTestCase {
     // MARK: - ReloadUI
     
     func testReloadUI_whenUpdatesOnOneNodeOnViewModePreferenceEntityThumbnailHasFileTypeOnlyAndSelectFavoriteAction_reloadCollectionAtIndexPath() {
-        let viewModeStore = MockViewModeStore()
+        let viewModeStore = MockViewModeStoreObjC()
         viewModeStore.viewModeToReturn = .thumbnail
         let displayMode = cloudDriveDisplayMode()
         let sampleNode = anyNode(handle: anyHandle(), nodeType: .file)
@@ -91,7 +86,7 @@ final class CloudDriveViewControllerTests: XCTestCase {
     }
     
     func testReloadUI_whenUpdatesMoreThanOneNodeOnViewModePreferenceEntityThumbnail_reloadCollection() {
-        let viewModeStore = MockViewModeStore()
+        let viewModeStore = MockViewModeStoreObjC()
         viewModeStore.viewModeToReturn = .thumbnail
         let displayMode = cloudDriveDisplayMode()
         let firstNode = anyNode(handle: anyHandle(), nodeType: .file)
@@ -283,7 +278,7 @@ final class CloudDriveViewControllerTests: XCTestCase {
     // MARK: - CloudDriveViewController+ContextMenu
     
     func testSortMenu_whenSortFromRubbishBinOnThumbnailView_reloadData() {
-        let viewModeStore = MockViewModeStore()
+        let viewModeStore = MockViewModeStoreObjC()
         viewModeStore.viewModeToReturn = .thumbnail
         let displayMode = rubbishBinDisplayMode()
         let selectedNode = anyNode(handle: .min, nodeType: .file)
@@ -361,7 +356,7 @@ final class CloudDriveViewControllerTests: XCTestCase {
         nodes: [MEGANode],
         displayMode: DisplayMode = .cloudDrive,
         parentNode: MEGANode? = nil,
-        viewModeStore: some ViewModeStoring = MockViewModeStore()
+        viewModeStore: some ViewModeStoringObjC = MockViewModeStoreObjC()
     ) -> CloudDriveViewController {
         let storyboard = UIStoryboard(name: "Cloud", bundle: .main)
         let sut = storyboard.instantiateViewController(withIdentifier: "CloudDriveID") as! CloudDriveViewController

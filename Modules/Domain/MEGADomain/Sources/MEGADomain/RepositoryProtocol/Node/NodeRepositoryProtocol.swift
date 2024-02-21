@@ -19,7 +19,8 @@ public protocol NodeRepositoryProtocol: RepositoryProtocol {
     func rubbishNode() -> NodeEntity?
     func rootNode() -> NodeEntity?
     func parents(of node: NodeEntity) async -> [NodeEntity]
-    func children(of node: NodeEntity) async -> NodeListEntity?
+    func asyncChildren(of node: NodeEntity) async -> NodeListEntity?
+    func children(of node: NodeEntity) -> NodeListEntity?
     func childrenNames(of node: NodeEntity) -> [String]?
     func isInRubbishBin(node: NodeEntity) -> Bool
 }

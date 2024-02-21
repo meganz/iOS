@@ -30,9 +30,10 @@ struct CloudDriveViewControllerNavItemsFactory {
 
         let parentNode = nodeProvider()
 
-        let hasMedia = await CloudDriveViewControllerMediaCheckerMode
+        let hasMedia = CloudDriveViewControllerMediaCheckerMode
             .containsSomeMedia
-            .makeVisualMediaChecker(nodeSource: nodeSource, nodeUseCase: nodeUseCase)()
+            .makeVisualMediaPresenceChecker(nodeSource: nodeSource, nodeUseCase: nodeUseCase)()
+        
         let accessType = await nodeUseCase.nodeAccessLevelAsync(nodeHandle: parentNode?.handle ?? .invalid)
 
         let menuConfig = contextMenuConfigFactory.contextMenuConfiguration(

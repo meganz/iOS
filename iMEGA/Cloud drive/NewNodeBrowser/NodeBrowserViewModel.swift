@@ -22,15 +22,17 @@ class NodeBrowserViewModel: ObservableObject {
     }
 
     let searchResultsViewModel: SearchResultsViewModel
-    let mediaDiscoveryViewModel: MediaDiscoveryContentViewModel? // not available for recent buckets yet
+    // this is private as view should access only the view when needed, and this depends
+    // on the view mode state and the injected instance.
+    // Making actual property private removes logic of checking this from the view, allows to cover this by tests with high confidence
+    private let mediaDiscoveryViewModel: MediaDiscoveryContentViewModel? // not available for recent buckets yet
     let warningViewModel: WarningViewModel?
     var mediaContentDelegate: MediaContentDelegateHandler?
     private let upgradeEncouragementViewModel: UpgradeEncouragementViewModel?
     let config: NodeBrowserConfig
-    var hasOnlyMediaNodesChecker: () async -> Bool
 
     @Published var shouldShowMediaDiscoveryAutomatically: Bool?
-    @Published var viewMode: ViewModePreferenceEntity = .list
+    @Published var viewMode: ViewModePreferenceEntity
     @Published var editing = false
     @Published var title = ""
     @Published var viewState: ViewState = .regular(showBackButton: false)
@@ -47,6 +49,7 @@ class NodeBrowserViewModel: ObservableObject {
     private let onEditingChanged: (Bool) -> Void
     
     init(
+        viewMode: ViewModePreferenceEntity,
         searchResultsViewModel: SearchResultsViewModel,
         mediaDiscoveryViewModel: MediaDiscoveryContentViewModel?,
         warningViewModel: WarningViewModel?,
@@ -54,16 +57,18 @@ class NodeBrowserViewModel: ObservableObject {
         config: NodeBrowserConfig,
         nodeSource: NodeSource,
         avatarViewModel: MyAvatarViewModel,
+        // we call this whenever view sate is changed so that:
+        // - preference is saved if it's required
+        // - context menu can be reconstructed
+        viewModeSaver: @escaping (ViewModePreferenceEntity) -> Void,
         storageFullAlertViewModel: StorageFullAlertViewModel,
-        // this is needed to check if given folder contains only visual media
-        // so that we can automatically show media browser
-        hasOnlyMediaNodesChecker: @escaping () async -> Bool,
         titleBuilder: @escaping (Bool, Int) -> String,
         onOpenUserProfile: @escaping () -> Void,
         onUpdateSearchBarVisibility: @escaping (Bool) -> Void,
         onBack: @escaping () -> Void,
         onEditingChanged: @escaping (Bool) -> Void
     ) {
+        self.viewMode = viewMode
         self.searchResultsViewModel = searchResultsViewModel
         self.mediaDiscoveryViewModel = mediaDiscoveryViewModel
         self.warningViewModel = warningViewModel
@@ -74,11 +79,10 @@ class NodeBrowserViewModel: ObservableObject {
         self.storageFullAlertViewModel = storageFullAlertViewModel
         self.titleBuilder = titleBuilder
         self.onOpenUserProfile = onOpenUserProfile
-        self.hasOnlyMediaNodesChecker = hasOnlyMediaNodesChecker
         self.onUpdateSearchBarVisibility = onUpdateSearchBarVisibility
         self.onEditingChanged = onEditingChanged
         self.onBack = onBack
-
+        
         $viewMode
             .removeDuplicates()
             .sink { viewMode in
@@ -88,9 +92,13 @@ class NodeBrowserViewModel: ObservableObject {
                 if viewMode == .thumbnail {
                     searchResultsViewModel.layout = .thumbnail
                 }
-
-                onUpdateSearchBarVisibility(!self.isMediaDiscoveryShown(for: viewMode))
-            }.store(in: &subscriptions)
+                
+                // save to preferences/reconstruct context menu
+                viewModeSaver(viewMode)
+                // hide search bar if we are showing media disovery
+                onUpdateSearchBarVisibility(viewMode != .mediaDiscovery)
+            }
+            .store(in: &subscriptions)
         
         // Some observations regarding editing (selection) state
         // in the legacy CD, so default we should implement it the same way.
@@ -113,6 +121,7 @@ class NodeBrowserViewModel: ObservableObject {
                     // need to deselect all here to reset selected items
                     // ticket for this is [FM-1464]
                 }
+
                 refreshTitle(isEditing: editing)
                 onEditingChanged(editing)
             }
@@ -143,12 +152,11 @@ class NodeBrowserViewModel: ObservableObject {
         refresh()
     }
     
-    @MainActor
-    func viewTask() async {
-        await determineIfHasVisualMediaIfNeeded()
-        determineIfShowingAutomaticallyMediaDiscovery()
-        onUpdateSearchBarVisibility(!isMediaDiscoveryShown(for: viewMode))
-        encourageUpgradeIfNeeded()
+    var viewModeAwareMediaDiscoveryViewModel: MediaDiscoveryContentViewModel? {
+        if viewMode == .mediaDiscovery, let viewModel = mediaDiscoveryViewModel {
+            return viewModel
+        } 
+        return nil
     }
     
     @MainActor
@@ -156,28 +164,8 @@ class NodeBrowserViewModel: ObservableObject {
         storageFullAlertViewModel.showStorageAlertIfNeeded()
     }
     
-    private func determineIfShowingAutomaticallyMediaDiscovery() {
-        mediaDiscoveryViewModel?
-            .showAutoMediaDiscoveryBanner = shouldShowMediaDiscoveryAutomatically == true
-    }
-    
-    @MainActor
-    private func determineIfHasVisualMediaIfNeeded() async {
-        guard config.mediaDiscoveryAutomaticDetectionEnabled() else {
-            return
-        }
-        
-        if shouldShowMediaDiscoveryAutomatically != nil {
-            return
-        }
-        // first time we load view, we need to get
-        // all nodes list to see if there are any media
-        // in case we need to automatically show media discovery view
-        shouldShowMediaDiscoveryAutomatically = await hasOnlyMediaNodesChecker()
-    }
-
-    private func isMediaDiscoveryShown(for viewMode: ViewModePreferenceEntity) -> Bool {
-        shouldShowMediaDiscoveryAutomatically == true || viewMode == .mediaDiscovery
+    func onViewAppear() {
+        encourageUpgradeIfNeeded()
     }
     
     private func encourageUpgradeIfNeeded() {
@@ -199,7 +187,7 @@ class NodeBrowserViewModel: ObservableObject {
     }
     
     var selectedCount: Int {
-        if isMediaDiscoveryShown, let mediaDiscoveryViewModel {
+        if let mediaDiscoveryViewModel = viewModeAwareMediaDiscoveryViewModel {
             return mediaDiscoveryViewModel.photoLibraryContentViewModel.selection.photos.count
         } else {
             return searchResultsViewModel.selectedResultIds.count
@@ -209,26 +197,10 @@ class NodeBrowserViewModel: ObservableObject {
     private func refreshTitle(isEditing: Bool) {
         title = titleBuilder(isEditing, selectedCount)
     }
-
-    // here we check the value of the automatic flag and also the actual variable that holds the state
-    // which can be changed via the context menu
-    var isMediaDiscoveryShown: Bool {
-        isMediaDiscoveryShown(for: viewMode)
-    }
-
+    
     private var isBackButtonShown: Bool {
-       guard let parentNode else { return false }
+       guard let parentNode = nodeSource.parentNode else { return false }
        return parentNode.nodeType != .root
-    }
-
-    private var parentNode: NodeEntity? {
-        switch nodeSource {
-        case .node(let parentNodeProvider):
-            guard let parentNodeProvider = parentNodeProvider() else { return nil }
-            return parentNodeProvider
-        default:
-            return nil
-        }
     }
 
     func openUserProfile() {

@@ -2,6 +2,7 @@ import MEGADomain
 import MEGASdk
 
 public struct NodeRepository: NodeRepositoryProtocol {
+    
     public static var newRepo: NodeRepository {
         NodeRepository(sdk: MEGASdk.sharedSdk, sharedFolderSdk: MEGASdk.sharedFolderLinkSdk)
     }
@@ -130,7 +131,12 @@ public struct NodeRepository: NodeRepositoryProtocol {
         return await parentTreeTask.value
     }
     
-    public func children(of node: NodeEntity) async -> NodeListEntity? {
+    public func children(of node: NodeEntity) -> NodeListEntity? {
+        guard let node = node.toMEGANode(in: sdk) else { return nil }
+        return sdk.children(forParent: node).toNodeListEntity()
+    }
+    
+    public func asyncChildren(of node: NodeEntity) async -> NodeListEntity? {
         guard let node = node.toMEGANode(in: sdk) else { return nil }
         return sdk.children(forParent: node).toNodeListEntity()
     }

@@ -90,7 +90,7 @@ extension CloudDriveViewController {
         {
             viewModeStore?.save(
                 viewMode: viewMode,
-                for: ViewModeLocation_ObjWrapper(node: node)
+                forObjC: ViewModeLocation_ObjWrapper(node: node)
             )
         }
     }

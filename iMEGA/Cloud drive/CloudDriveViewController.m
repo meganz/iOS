@@ -52,10 +52,7 @@ static const NSTimeInterval kSearchTimeDelay = .5;
 static const NSTimeInterval kHUDDismissDelay = .3;
 static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 
-@interface CloudDriveViewController () <MEGANavigationControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate, VNDocumentCameraViewControllerDelegate, RecentNodeActionDelegate, TextFileEditable> {
-    
-    MEGAShareType lowShareType; //Control the actions allowed for node/nodes selected
-}
+@interface CloudDriveViewController () <MEGANavigationControllerDelegate, UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGADelegate, MEGARequestDelegate, NodeInfoViewControllerDelegate, UITextFieldDelegate, UISearchControllerDelegate, VNDocumentCameraViewControllerDelegate, RecentNodeActionDelegate, TextFileEditable>
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *moreBarButtonItem;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *moreMinimizedBarButtonItem;
@@ -66,7 +63,6 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
 @property (nonatomic, strong) NSArray *nodesArray;
 
 @property (nonatomic, strong) NSMutableArray *cloudImages;
-
 
 @property (strong, nonatomic) NSOperationQueue *searchQueue;
 @property (strong, nonatomic) MEGACancelToken *cancelToken;
@@ -93,7 +89,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     self.view.backgroundColor = UIColor.systemBackgroundColor;
 
     self.definesPresentationContext = YES;
-    
+
     [self configureContextMenuManagerIfNeeded];
 
     switch (self.displayMode) {
@@ -154,6 +150,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     StorageFullModalAlertViewController *warningVC = StorageFullModalAlertViewController.alloc.init;
     [warningVC showStorageAlertIfNeeded];
     self.searchController = [UISearchController customSearchControllerWithSearchResultsUpdaterDelegate:self searchBarDelegate:self];
+    
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.searchController.delegate = self;
     [self assignAsMEGANavigationDelegateWithDelegate:self];
