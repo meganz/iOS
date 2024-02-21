@@ -2,7 +2,6 @@
 
 #import "SVProgressHUD.h"
 
-#import "MEGAGenericRequestDelegate.h"
 #import "MEGAMultiFactorAuthCheckRequestDelegate.h"
 #import "MEGAReachabilityManager.h"
 #import "MEGA-Swift.h"
@@ -12,6 +11,7 @@
 #import "QRSettingsTableViewController.h"
 
 @import MEGAL10nObjc;
+@import MEGASDKRepo;
 
 @interface SecurityOptionsTableViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -143,7 +143,7 @@
             if ([MEGAReachabilityManager isReachableHUDIfNot]) {
                 UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:LocalizedString(@"Do you want to close all other sessions? This will log you out on all other active sessions except the current one.", @"Confirmation dialog for the button that logs the user out of all sessions except the current one.") preferredStyle:UIAlertControllerStyleAlert];
                 [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"ok", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                    MEGAGenericRequestDelegate *delegate = [MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest *request, MEGAError *error) {
+                    RequestDelegate *delegate = [RequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nullable request, MEGAError * _Nullable error) {
                         if (error.type) {
                             [SVProgressHUD showErrorWithStatus:LocalizedString(error.name, @"")];
                         }
