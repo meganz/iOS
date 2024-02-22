@@ -16,10 +16,7 @@ extension ChatViewController {
             return nil
         }
            
-        if chatRoom.ownPrivilege.rawValue >= MEGAChatRoomPrivilege.standard.rawValue {
-            chatInputBar = ChatInputBar()
-            chatInputBar?.delegate = self
-        } else if chatRoom.isPublicChat,
+        if chatRoom.isPublicChat,
             chatRoom.isPreview,
             !chatRoomDelegate.hasChatRoomClosed || MEGALinkManager.joiningOrLeavingChatBase64Handles.contains(MEGASdk.base64Handle(forUserHandle: chatRoom.chatId) ?? "") {
             return joinInputBar
@@ -30,7 +27,7 @@ extension ChatViewController {
             chatInputBar?.delegate = self
         }
         return chatInputBar
-    }
+    }   
     
     override var canBecomeFirstResponder: Bool {
         return true
