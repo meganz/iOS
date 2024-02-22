@@ -43,8 +43,8 @@ class ChatInputBar: UIView {
     // MARK: - Private properties
 
     private let messageInputBar = MessageInputBar.instanceFromNib
-    private var audioRecordingInputBar: AudioRecordingInputBar!
-    private var voiceClipInputBar: VoiceClipInputBar!
+    private var audioRecordingInputBar: AudioRecordingInputBar?
+    private var voiceClipInputBar: VoiceClipInputBar?
     private var initialTranslation: SIMD2<Double>?
     private var storedMessageInputBarHeight: CGFloat = 0.0
     private var animationDuration: TimeInterval = 0.4
@@ -76,7 +76,7 @@ class ChatInputBar: UIView {
                 messageInputBar.messageTextView.isScrollEnabled = false
                 messageInputBar.expandCollapseButton.isHidden = true
 
-                voiceClipInputBar = VoiceClipInputBar.instanceFromNib
+                let voiceClipInputBar = VoiceClipInputBar.instanceFromNib
                 voiceClipInputBar.delegate = self
                 
                 self.wrap(voiceClipInputBar, excludeConstraints: [.top])
@@ -89,6 +89,8 @@ class ChatInputBar: UIView {
                 
                 layoutIfNeeded()
                 
+                self.voiceClipInputBar = voiceClipInputBar
+                
                 UIView.animate(withDuration: animationDuration, animations: {
                     voiceClipInputBarHeightConstraint.constant = voiceClipInputBarHeight
                     self.layoutIfNeeded()
@@ -100,7 +102,11 @@ class ChatInputBar: UIView {
                 })
             } else {
                 voiceRecordingViewCanBeDismissed = false
-                guard let voiceClipInputBarHeightConstraint = voiceClipInputBar.constraints.first(where: { $0.firstAttribute == .height }) else {
+                
+                guard
+                    let voiceClipInputBar,
+                    let voiceClipInputBarHeightConstraint = voiceClipInputBar.constraints.first(where: { $0.firstAttribute == .height })
+                else {
                     return
                 }
                 
@@ -115,12 +121,12 @@ class ChatInputBar: UIView {
                     
                     self.messageInputBar.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
 
-                    self.voiceClipInputBar.startRecordingView.isHidden = false
-                    self.voiceClipInputBar.trashView.isHidden = false
-                    self.voiceClipInputBar.sendView.isHidden = false
+                    voiceClipInputBar.startRecordingView.isHidden = false
+                    voiceClipInputBar.trashView.isHidden = false
+                    voiceClipInputBar.sendView.isHidden = false
 
-                    self.voiceClipInputBar.cancelRecordingIfNeeded()
-                    self.voiceClipInputBar.removeFromSuperview()
+                    voiceClipInputBar.cancelRecordingIfNeeded()
+                    voiceClipInputBar.removeFromSuperview()
                     self.voiceClipInputBar = nil
                     
                     self.messageInputBar.messageTextView.isScrollEnabled = true
@@ -257,6 +263,7 @@ class ChatInputBar: UIView {
     }
     
     private func voiceInputBarToTextInputSwitch(completionBlock: (() -> Void)? = nil) {
+        guard let audioRecordingInputBar else { return }
         if audioRecordingInputBar.superview == nil {
             return
         }
@@ -269,13 +276,13 @@ class ChatInputBar: UIView {
         }
                 
         UIView.animate(withDuration: 0.2, animations: {
-            self.audioRecordingInputBar.alpha = 0.0
+            self.audioRecordingInputBar?.alpha = 0.0
             self.messageInputBar.alpha = 1.0
-            self.audioRecordingInputBar.viewHeightConstraint.constant = self.storedMessageInputBarHeight
-            self.audioRecordingInputBar.layoutIfNeeded()
+            self.audioRecordingInputBar?.viewHeightConstraint.constant = self.storedMessageInputBarHeight
+            self.audioRecordingInputBar?.layoutIfNeeded()
         }, completion: { _ in
-            self.audioRecordingInputBar.cancelRecordingIfNeeded()
-            self.audioRecordingInputBar.removeFromSuperview()
+            self.audioRecordingInputBar?.cancelRecordingIfNeeded()
+            self.audioRecordingInputBar?.removeFromSuperview()
             self.audioRecordingInputBar = nil
             
             if let handler = completionBlock {
@@ -285,9 +292,10 @@ class ChatInputBar: UIView {
     }
     
     private func textInputToVoiceInputBarSwitch() {
+        
         storedMessageInputBarHeight = messageInputBar.bounds.height
         
-        audioRecordingInputBar = AudioRecordingInputBar.instanceFromNib
+        let audioRecordingInputBar = AudioRecordingInputBar.instanceFromNib
         audioRecordingInputBar.delegate = self
         
         audioRecordingInputBar.alpha = 0.0
@@ -297,8 +305,10 @@ class ChatInputBar: UIView {
         
         messageInputBar.alpha = 0.5
         
+        self.audioRecordingInputBar = audioRecordingInputBar
+        
         UIView.animate(withDuration: 0.2, animations: {
-            self.audioRecordingInputBar.alpha = 1.0
+            self.audioRecordingInputBar?.alpha = 1.0
             self.messageInputBar.alpha = 0.0
         })
     }
@@ -312,7 +322,7 @@ class ChatInputBar: UIView {
     private func stopRecordingAndSwitchToTextInput() {
         delegate?.voiceRecordingEnded()
         do {
-            if let clipPath = try audioRecordingInputBar.stopRecording() {
+            if let clipPath = try audioRecordingInputBar?.stopRecording() {
                 self.delegate?.tappedSendAudio(atPath: clipPath)
                 UINotificationFeedbackGenerator().notificationOccurred(.success)
             }
@@ -330,7 +340,7 @@ class ChatInputBar: UIView {
     }
     
     private func cancelRecordingAndSwitchToTextInput() {
-        audioRecordingInputBar.cancelRecording()
+        audioRecordingInputBar?.cancelRecording()
         delegate?.voiceRecordingEnded()
         voiceInputBarToTextInputSwitch()
     }
@@ -364,7 +374,7 @@ class ChatInputBar: UIView {
     
     @objc func fingerLiftUpDetected(_ gesture: FingerLiftupGestureRecognizer) {
         guard gesture.state == .ended,
-            audioRecordingInputBar != nil,
+            let audioRecordingInputBar,
             audioRecordingInputBar.superview != nil,
             audioRecordingInputBar.locked == false else {
                 return
@@ -402,7 +412,7 @@ class ChatInputBar: UIView {
     
     @objc func pan(_ panGesture: UIPanGestureRecognizer) {
         guard let gestureView = panGesture.view,
-            audioRecordingInputBar != nil,
+            let audioRecordingInputBar,
             audioRecordingInputBar.superview != nil,
             audioRecordingInputBar.locked == false else {
             return

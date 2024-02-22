@@ -27,7 +27,7 @@ extension ChatViewController {
             chatInputBar?.delegate = self
         }
         return chatInputBar
-    }
+    }   
     
     override var canBecomeFirstResponder: Bool {
         return true
