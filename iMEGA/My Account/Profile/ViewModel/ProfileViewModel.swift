@@ -2,6 +2,7 @@ import Combine
 import Foundation
 import MEGADomain
 import MEGAPresentation
+import MEGASDKRepo
 
 enum TwoFactorAuthStatus: Int {
     case unknown
@@ -130,13 +131,13 @@ extension ProfileViewModel {
             
             twoFactorAuthStatusValueSubject.send(.querying)
 
-            sdk.multiFactorAuthCheck(withEmail: myEmail, delegate: MEGAGenericRequestDelegate(completion: { [weak self] (request, _) in
+            sdk.multiFactorAuthCheck(withEmail: myEmail, delegate: RequestDelegate { [weak self] result in
                 
-                guard let self else { return }
+                guard let self, case let .success(request) = result else { return }
                 
                 twoFactorAuthStatusValueSubject.send(request.flag ? .enabled : .disabled)
                 invokeCommand?(.changeProfile(requestedChangeType: requestedChangeType, isTwoFactorAuthenticationEnabled: request.flag))
-            }))
+            })
         case .resetPassword, .parkAccount, .passwordFromLogout:
             break
         @unknown default:
