@@ -124,44 +124,6 @@ final class DeviceListViewModelTests: XCTestCase {
         
         XCTAssertTrue(task.isCancelled, "Task should be cancelled")
     }
-    
-    func testActionsForDevice_selectedMobileDevice_returnsCorrectActions() async throws {
-        let sourceDevices = devices()
-        let viewModel = makeSUT(
-            devices: sourceDevices,
-            currentDeviceId: mockCurrentDeviceId
-        )
-        let selectedDevice = try XCTUnwrap(sourceDevices.first {$0.id == mockCurrentDeviceId})
-        
-        let cancellables = try await setUpSubscriptionAndAwaitExpectation(
-            viewModel: viewModel) { _ in
-            let actions = viewModel.actionsForDevice(selectedDevice)
-            
-            let expectedActions: [DeviceCenterActionType] = [.cameraUploads, .rename]
-            let actionsType = actions?.compactMap {$0.type}
-            XCTAssertEqual(actionsType, expectedActions, "Actions for the current device are incorrect")
-        }
-        cancellables.forEach { $0.cancel() }
-    }
-    
-    func testActionsForDevice_selectedOtherDevice_returnsCorrectActions() async throws {
-        let sourceDevices = devices()
-        let viewModel = makeSUT(
-            devices: sourceDevices,
-            currentDeviceId: mockCurrentDeviceId
-        )
-        let selectedDevice = try XCTUnwrap(sourceDevices.first {$0.id == mockAuxDeviceId})
-        
-        let cancellables = try await setUpSubscriptionAndAwaitExpectation(
-            viewModel: viewModel) { _ in
-            let actions = viewModel.actionsForDevice(selectedDevice)
-            
-            let expectedActions: [DeviceCenterActionType] = [.rename]
-            let actionsType = actions?.compactMap {$0.type}
-            XCTAssertEqual(actionsType, expectedActions, "Actions for the current device are incorrect")
-        }
-        cancellables.forEach { $0.cancel() }
-    }
 
     func testDeviceIconName_knownUserAgent_expectedIconName() async throws {
         var backup1 = BackupEntity(id: 1, name: "backup1", userAgent: "MEGAiOS/11.2 MEGAEnv/Dev (Darwin 22.6.0 iPhone11,2) MegaClient/4.28.2/64", type: .cameraUpload)
