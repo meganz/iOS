@@ -47,11 +47,23 @@ final class PhotosViewModelTests: XCTestCase {
         let givenSortOrder = SortOrderEntity.modificationAsc
         
         // Arrange
-        let sut = makePhotosViewModel(sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(sortOrderEntity: givenSortOrder))
+        let sut = makePhotosViewModel(
+            sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase(
+                sortOrderEntity: givenSortOrder))
+        
         // Act
-        let result = await sut.$cameraUploadExplorerSortOrderType
-            .values
-            .first { @Sendable sort in sort == .oldest }
+        var result: SortOrderType?
+        let exp = expectation(description: "Expected correct sortOrderType to be returned")
+        let cancellable = sut.$cameraUploadExplorerSortOrderType
+            .first(where: { $0 == .oldest })
+            .sink {
+                result = $0
+                exp.fulfill()
+            }
+
+        await fulfillment(of: [exp], timeout: 1)
+        cancellable.cancel()
+        
         // Assert
         XCTAssertEqual(result, .oldest)
     }
