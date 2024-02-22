@@ -6,21 +6,47 @@ import XCTest
 
 final class DeviceCenterItemViewModelTests: XCTestCase {
     let mockCurrentDeviceId = "1"
+    
+    func testActions_forCurrentNewDeviceWithoutCU_returnsCorrectActions() {
+        let deviceID = "deviceID"
+        let device = createDevice(id: deviceID, status: .noCameraUploads)
+        let expectedActions: [DeviceCenterActionType] = [.cameraUploads]
+        
+        executeAndVerifyDeviceActions(
+            device: device,
+            expectedActions: expectedActions,
+            currentDeviceUUID: deviceID,
+            errorMessage: "The actions for the current new device are incorrect"
+        )
+    }
 
-    func testActionsForDevices_returnsCorrectActions() {
-        let expectedActions: [DeviceCenterActionType] = [.info]
-        let device = DeviceEntity(
+    func testExecuteMainAction_forCurrentDeviceWithCU_returnsCorrectActions() {
+        let device = createDevice(
             id: mockCurrentDeviceId,
-            name: "device1",
-            backups: [],
             status: .upToDate
         )
-        let viewModel = makeSUT(itemType: .device(device))
+        let expectedActions: [DeviceCenterActionType] = [.info, .cameraUploads, .rename]
         
-        viewModel.executeMainAction()
+        executeAndVerifyDeviceActions(
+            device: device,
+            expectedActions: expectedActions,
+            isCUActionAvailable: true,
+            errorMessage: "The actions for the current device are incorrect"
+        )
+    }
+
+    func testExecuteMainAction_forOtherDevice_returnsCorrectActions() {
+        let device = createDevice(
+            id: mockCurrentDeviceId,
+            status: .upToDate
+        )
+        let expectedActions: [DeviceCenterActionType] = [.info, .rename]
         
-        let actions = viewModel.availableActions.compactMap { $0.type }
-        XCTAssertEqual(actions, expectedActions, "Actions for devices are incorrect")
+        executeAndVerifyDeviceActions(
+            device: device,
+            expectedActions: expectedActions,
+            errorMessage: "The actions for a device other than the current one are incorrect"
+        )
     }
 
     func testExecuteMainAction_forCUFolder_triggersInfoAction() {
@@ -74,6 +100,42 @@ final class DeviceCenterItemViewModelTests: XCTestCase {
         )
     }
     
+    private func createDevice(
+        id: String = "defaultID",
+        name: String = "device",
+        backups: [BackupEntity] = [],
+        status: BackupStatusEntity
+    ) -> DeviceEntity {
+        DeviceEntity(
+            id: id,
+            name: name,
+            backups: backups,
+            status: status
+        )
+    }
+    
+    private func executeAndVerifyDeviceActions(
+        device: DeviceEntity,
+        expectedActions: [DeviceCenterActionType],
+        isCUActionAvailable: Bool = false,
+        currentDeviceUUID: String = "",
+        errorMessage: String
+    ) {
+        let viewModel = makeSUT(
+            itemType: .device(device),
+            isCUActionAvailable: isCUActionAvailable,
+            currentDeviceUUID: currentDeviceUUID
+        )
+        
+        viewModel.executeMainAction()
+        let actions = viewModel.availableActions.compactMap { $0.type }
+        
+        XCTAssertEqual(
+            actions,
+            expectedActions, errorMessage
+        )
+    }
+    
     private func executeTestForItem(
         itemType: DeviceCenterItemType,
         expectedName: String,
@@ -101,6 +163,8 @@ final class DeviceCenterItemViewModelTests: XCTestCase {
     private func makeSUT(
         itemType: DeviceCenterItemType,
         deviceCenterBridge: DeviceCenterBridge = DeviceCenterBridge(),
+        isCUActionAvailable: Bool = false,
+        currentDeviceUUID: String = "device",
         file: StaticString = #file,
         line: UInt = #line
     ) -> DeviceCenterItemViewModel {
@@ -133,10 +197,27 @@ final class DeviceCenterItemViewModelTests: XCTestCase {
                         title: "Info",
                         icon: "info"
                     )
+                ],
+                .cameraUploads: [
+                    DeviceCenterAction(
+                        type: .cameraUploads,
+                        title: "Camera Uploads",
+                        icon: "cameraUploads"
+                    )
+                ],
+                .rename: [
+                    DeviceCenterAction(
+                        type: .rename,
+                        title: "Rename",
+                        icon: "rename"
+                    )
                 ]
             ],
-            isCUActionAvailable: false,
-            assets: assets
+            isCUActionAvailable: isCUActionAvailable,
+            assets: assets,
+            currentDeviceUUID: {
+                currentDeviceUUID
+            }
         )
         
         trackForMemoryLeaks(on: sut, file: file, line: line)

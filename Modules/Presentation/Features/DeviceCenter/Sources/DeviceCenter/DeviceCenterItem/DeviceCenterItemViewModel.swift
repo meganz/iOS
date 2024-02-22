@@ -11,6 +11,7 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
     private let nodeUseCase: any NodeUseCaseProtocol
     private let deviceCenterBridge: DeviceCenterBridge
     private let isCameraUploadsAvailable: Bool
+    private let currentDeviceUUID: String
     private var itemType: DeviceCenterItemType
     var assets: ItemAssets
     var availableActions: [DeviceCenterAction] = []
@@ -40,15 +41,20 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
     }
     
     /// `router` and `refreshDevicesPublisher` are declared as optional with a nil default value to accommodate the shared usage of `DeviceCenterItemViewModel` across different item types (devices, backups, sync, and camera upload (CU) folders). These properties are essential for navigating and refreshing the UI when interacting with device-related functionalities. However, for other item types like backups, sync, and CU folders, these functionalities are not required.
-    init(router: (any DeviceListRouting)? = nil,
-         refreshDevicesPublisher: PassthroughSubject<Void, Never>? = nil,
-         deviceCenterUseCase: DeviceCenterUseCaseProtocol,
-         nodeUseCase: any NodeUseCaseProtocol,
-         deviceCenterBridge: DeviceCenterBridge,
-         itemType: DeviceCenterItemType,
-         sortedAvailableActions: [DeviceCenterActionType: [DeviceCenterAction]],
-         isCUActionAvailable: Bool,
-         assets: ItemAssets) {
+    init(
+        router: (any DeviceListRouting)? = nil,
+        refreshDevicesPublisher: PassthroughSubject<Void, Never>? = nil,
+        deviceCenterUseCase: DeviceCenterUseCaseProtocol,
+        nodeUseCase: any NodeUseCaseProtocol,
+        deviceCenterBridge: DeviceCenterBridge,
+        itemType: DeviceCenterItemType,
+        sortedAvailableActions: [DeviceCenterActionType: [DeviceCenterAction]],
+        isCUActionAvailable: Bool,
+        assets: ItemAssets,
+        currentDeviceUUID: () -> String = {
+            UIDevice.current.identifierForVendor?.uuidString ?? ""
+        }
+    ) {
         self.router = router
         self.refreshDevicesPublisher = refreshDevicesPublisher
         self.deviceCenterUseCase = deviceCenterUseCase
@@ -58,8 +64,18 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
         self.sortedAvailableActions = sortedAvailableActions
         self.isCameraUploadsAvailable = isCUActionAvailable
         self.assets = assets
+        self.currentDeviceUUID = currentDeviceUUID()
         
         self.configure()
+    }
+    
+    static func sortedMapping(
+        actionTypes: [DeviceCenterActionType],
+        sortedAvailableActions: [DeviceCenterActionType: [DeviceCenterAction]]
+    ) -> [DeviceCenterAction] {
+        actionTypes.compactMap { type in
+            sortedAvailableActions[type]?.first
+        }
     }
     
     private func configure() {
@@ -94,28 +110,13 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
         }
     }
     
-    private func loadAvailableActionsForBackup(_ backup: BackupEntity) {
-        var actionTypes: [DeviceCenterActionType] = [.info]
-        
-        if isCameraUploadsAvailable {
-            actionTypes.append(.cameraUploads)
+    private func actionsFor(device: DeviceEntity) -> [DeviceCenterActionType] {
+        if device.isNewDeviceWithoutCU(currentUUID: currentDeviceUUID) {
+            return [.cameraUploads]
+        } else if isCameraUploadsAvailable {
+            return  [.info, .cameraUploads, .rename]
         }
-        
-        availableActions = actionTypes.compactMap { type in
-            sortedAvailableActions[type]?.first
-        }
-    }
-    
-    private func loadAvailableActionsForDevice(_ device: DeviceEntity) {
-        var actionTypes: [DeviceCenterActionType] = [.info]
-        
-        if isCameraUploadsAvailable {
-            actionTypes.append(.cameraUploads)
-        }
-        
-        availableActions = actionTypes.compactMap { type in
-            sortedAvailableActions[type]?.first
-        }
+        return [.info, .rename]
     }
     
     @MainActor
@@ -220,10 +221,12 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
         deviceCenterBridge.renameActionTapped(renameEntity)
     }
     
-    private func loadAvailableActions() {
-        if case .device(let deviceEntity) = itemType {
-            loadAvailableActionsForDevice(deviceEntity)
-        }
+    private func availableActionsFor(device: DeviceEntity) -> [DeviceCenterAction] {
+        DeviceCenterItemViewModel
+            .sortedMapping(
+                actionTypes: actionsFor(device: device),
+                sortedAvailableActions: sortedAvailableActions
+            )
     }
     
     func nodeForItemType() -> NodeEntity? {
@@ -250,8 +253,8 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
             Task { [weak self] in
                 await self?.handleBackupInfoAction()
             }
-        case .device:
-            loadAvailableActions()
+        case .device(let device):
+            availableActions = availableActionsFor(device: device)
         default: break
         }
     }
@@ -282,8 +285,7 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
             }
         case .device(let device):
             guard let router else { return }
-            let currentDeviceUUID = UIDevice.current.identifierForVendor?.uuidString ?? ""
-            if device.id == currentDeviceUUID && device.status == .noCameraUploads {
+            if device.isNewDeviceWithoutCU(currentUUID: currentDeviceUUID) {
                 router.showCurrentDeviceEmptyState(
                     currentDeviceUUID,
                     deviceName: UIDevice.current.modelName,

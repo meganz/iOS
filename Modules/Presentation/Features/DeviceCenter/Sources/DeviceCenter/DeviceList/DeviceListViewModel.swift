@@ -21,9 +21,11 @@ public final class DeviceListViewModel: ObservableObject {
     private var searchCancellable: AnyCancellable?
     private var currentDeviceId: String?
     private let deviceIconNames: [BackupDeviceTypeEntity: String]
+    /// Dictionary that allow us to organize the different backup statuses by type.
     private var sortedBackupStatuses: [BackupStatusEntity: BackupStatus] {
         Dictionary(uniqueKeysWithValues: backupStatuses.map { ($0.status, $0) })
     }
+    /// Dictionary that allow us to organise the different actions available within Device Center by type. It helps to initialise the arrays of available actions for each element (devices, backups, sync, or camera uploads folders) in a simple way, using the `DeviceCenterActionType`.
     private var sortedAvailableActions: [DeviceCenterActionType: [DeviceCenterAction]] {
         Dictionary(grouping: deviceCenterActions, by: \.type)
     }
@@ -252,22 +254,6 @@ public final class DeviceListViewModel: ObservableObject {
         
         if isLoadingPlaceholderVisible {
             updateLoadingPlaceholderVisibility(false)
-        }
-    }
-    
-    func actionsForDevice(_ device: DeviceEntity) -> [DeviceCenterAction]? {
-        var actionTypes = [DeviceCenterActionType]()
-
-        if device.id == currentDeviceUUID || (device.id == currentDeviceId && device.isMobileDevice()) {
-            actionTypes.append(.cameraUploads)
-        }
-        
-        if device.id != currentDeviceUUID {
-            actionTypes.append(.rename)
-        }
-        
-        return actionTypes.compactMap { type in
-            sortedAvailableActions[type]?.first
         }
     }
 }
