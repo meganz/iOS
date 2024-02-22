@@ -53,7 +53,7 @@
 @property (nonatomic) NSArray<MEGAChatListItem *> *chats;
 @property (nonatomic) NSArray<MEGAUser *> *users;
 @property (nonatomic) NSMutableSet<NSNumber *> *openedChatIds;
-@property (nonatomic, strong) MEGAGenericRequestDelegate *logoutDelegate;
+@property (nonatomic, strong) RequestDelegate *logoutDelegate;
 
 @property (strong, nonatomic) MEGANode *parentNode;
 @property (nonatomic) NSMutableArray<CancellableTransfer *> *transfers;
@@ -407,10 +407,10 @@
     return newestDate;
 }
 
-- (MEGAGenericRequestDelegate *)logoutDelegate {
+- (RequestDelegate *)logoutDelegate {
     if (_logoutDelegate == nil) {
         __weak __typeof__(self) weakSelf = self;
-        _logoutDelegate = [MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
+        _logoutDelegate = [RequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
             switch ([request type]) {
                     
                 case MEGARequestTypeLogout: {
