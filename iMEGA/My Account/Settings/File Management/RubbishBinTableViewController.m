@@ -18,15 +18,9 @@
 
 @interface RubbishBinTableViewController () <MEGARequestDelegate>
 
-@property (weak, nonatomic) IBOutlet UILabel *clearRubbishBinLabel;
-@property (weak, nonatomic) IBOutlet UILabel *clearRubbishBinDetailLabel;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *clearRubbishBinAI;
 
-@property (weak, nonatomic) IBOutlet UILabel *rubbishBinCleaningSchedulerLabel;
 @property (weak, nonatomic) IBOutlet UISwitch *rubbishBinCleaningSchedulerSwitch;
-
-@property (weak, nonatomic) IBOutlet UILabel *removeFilesOlderThanLabel;
-@property (weak, nonatomic) IBOutlet UILabel *removeFilesOlderThanDetailLabel;
 
 @property (weak, nonatomic) IBOutlet UIView *longerRetentionPeriodUpgradetoProView;
 @property (weak, nonatomic) IBOutlet UILabel *longerRetentionPeriodUpgradetoProLabel;
@@ -89,18 +83,6 @@
 }
 
 #pragma mark - Private
-
-- (void)updateAppearance {
-    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
-    self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
-    
-    self.clearRubbishBinLabel.textColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
-    self.clearRubbishBinDetailLabel.textColor = self.removeFilesOlderThanDetailLabel.textColor = UIColor.secondaryLabelColor;
-    
-    [self setupTableViewHeaderAndFooter];
-    
-    [self.tableView reloadData];
-}
 
 - (void)setLongerRetentionPeriodUpgradetoProLabel {
     NSString *longerRetentionUpgradeToProText = LocalizedString(@"settings.fileManagement.rubbishBin.longerRetentionUpgrade", @"This text is displayed in Settings, File Management in Rubbish Bien view. Upgrade to Pro will be bold and green. And if you tap it, the Upgrade Account view will appear.");
