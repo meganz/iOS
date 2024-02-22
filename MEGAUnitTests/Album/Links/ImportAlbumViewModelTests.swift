@@ -8,6 +8,7 @@ import MEGAPermissions
 import MEGAPermissionsMock
 import MEGAPresentation
 import MEGAPresentationMock
+import MEGASwift
 import MEGATest
 import XCTest
 
@@ -845,12 +846,12 @@ final class ImportAlbumViewModelTests: XCTestCase {
         return MockPublicAlbumUseCase(publicAlbumResult: .success(sharedAlbumEntity), nodes: nodes)
     }
     
-    private func makeConnectionMonitorStream(statuses: [Bool]) -> AsyncStream<Bool> {
+    private func makeConnectionMonitorStream(statuses: [Bool]) -> AnyAsyncSequence<Bool> {
         AsyncStream { continuation in
             statuses.forEach {
                 continuation.yield($0)
             }
             continuation.finish()
-        }
+        }.eraseToAnyAsyncSequence()
     }
 }

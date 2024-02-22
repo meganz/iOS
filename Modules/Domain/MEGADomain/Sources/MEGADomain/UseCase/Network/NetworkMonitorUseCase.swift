@@ -1,9 +1,11 @@
+import MEGASwift
+
 public protocol NetworkMonitorUseCaseProtocol {
-    /// Infinite `AsyncStream` returning results from network path monitoring
+    /// Infinite `AnyAsyncSequence` returning results from network path monitoring
     ///
     /// The stream will not finish and the task will need to be cancelled
-    /// - Returns: `AsyncStream` whether the connection is satisfied
-    var connectionChangedStream: AsyncStream<Bool> { get }
+    /// - Returns: `AnyAsyncSequence<Bool>` whether the connection is satisfied
+    var connectionChangedStream: AnyAsyncSequence<Bool> { get }
     func networkPathChanged(completion: @escaping (Bool) -> Void)
     func isConnected() -> Bool
     func isConnectedViaWiFi() -> Bool
@@ -11,11 +13,13 @@ public protocol NetworkMonitorUseCaseProtocol {
 
 public struct NetworkMonitorUseCase: NetworkMonitorUseCaseProtocol {
     private let repo: any NetworkMonitorRepositoryProtocol
-    public let connectionChangedStream: AsyncStream<Bool>
+    
+    public var connectionChangedStream: AnyAsyncSequence<Bool> {
+        repo.connectionChangedStream
+    }
     
     public init(repo: some NetworkMonitorRepositoryProtocol) {
         self.repo = repo
-        connectionChangedStream = repo.connectionChangedStream
     }
     
     public func networkPathChanged(completion: @escaping (Bool) -> Void) {

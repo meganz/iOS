@@ -1,5 +1,7 @@
+import Combine
 import Foundation
 import MEGADomain
+import MEGASwift
 import Network
 
 public final class NetworkMonitorRepository: NetworkMonitorRepositoryProtocol {
@@ -9,12 +11,13 @@ public final class NetworkMonitorRepository: NetworkMonitorRepositoryProtocol {
     
     private let monitor: NWPathMonitor
     private let queue: DispatchQueue
-    private let (connectionChangedSourceStream, connectionContinuation) = AsyncStream
-        .makeStream(of: Bool.self, bufferingPolicy: .bufferingNewest(1))
+    private let isConnectedPassThroughSubject = PassthroughSubject<Bool, Never>()
     private var networkPathChangedHandler: ((Bool) -> Void)?
     
-    public var connectionChangedStream: AsyncStream<Bool> {
-        connectionChangedSourceStream
+    public var connectionChangedStream: AnyAsyncSequence<Bool> {
+        isConnectedPassThroughSubject
+            .values
+            .eraseToAnyAsyncSequence()
     }
     
     public init(monitor: NWPathMonitor = NWPathMonitor(),
@@ -40,7 +43,7 @@ public final class NetworkMonitorRepository: NetworkMonitorRepositoryProtocol {
         monitor.pathUpdateHandler = { [weak self] in
             guard let self else { return }
             let isConnected = $0.status == .satisfied
-            connectionContinuation.yield(isConnected)
+            isConnectedPassThroughSubject.send(isConnected)
             networkPathChangedHandler?(isConnected)
         }
         monitor.start(queue: queue)

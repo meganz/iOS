@@ -99,7 +99,8 @@ final class ReportIssueViewModelTests: XCTestCase {
                 continuation.yield($0)
             }
             continuation.finish()
-        }
+        }.eraseToAnyAsyncSequence()
+        
         let networkMonitoring = MockNetworkMonitorUseCase(connectionChangedStream: stream)
         let sut = makeReportIssueViewModel(monitorUseCase: networkMonitoring)
         

@@ -1,17 +1,19 @@
 import MEGADomain
+import MEGASwift
 
 public struct MockNetworkMonitorRepository: NetworkMonitorRepositoryProtocol {
+    
     public static var newRepo: MockNetworkMonitorRepository {
         MockNetworkMonitorRepository()
     }
     
-    public let connectionChangedStream: AsyncStream<Bool>
+    public var connectionChangedStream: AnyAsyncSequence<Bool>
     public var connected: Bool
     public var connectedViaWiFi: Bool
     
     public init(connected: Bool = false,
                 connectedViaWiFi: Bool = false,
-                connectionChangedStream: AsyncStream<Bool> = AsyncStream<Bool> { $0.finish() }) {
+                connectionChangedStream: AnyAsyncSequence<Bool> = EmptyAsyncSequence().eraseToAnyAsyncSequence()) {
         self.connected = connected
         self.connectedViaWiFi = connectedViaWiFi
         self.connectionChangedStream = connectionChangedStream

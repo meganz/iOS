@@ -90,6 +90,37 @@ final class MonitorCameraUploadUseCaseTests: XCTestCase {
         XCTAssertEqual(reason, .noNetworkConnectivity)
     }
     
+    func testStatsEventSentOnBothNetworkAndStatsChangedEvents_shouldReturnTwoStatsResult() async {
+        // Arrange
+        let (networkStream, networkContinuation) = AsyncStream.makeStream(of: Bool.self, bufferingPolicy: .bufferingNewest(1))
+        let networkMonitorUseCase = MockNetworkMonitorUseCase(
+            connected: true,
+            connectedViaWiFi: true,
+            connectionChangedStream: networkStream.eraseToAnyAsyncSequence())
+        let cameraUploadRepository = MockCameraUploadsStatsRepository()
+        let sut = makeSUT(
+            cameraUploadRepository: cameraUploadRepository,
+            networkMonitorUseCase: networkMonitorUseCase)
+        
+        // Act
+        let exp = expectation(description: "For 2 results to be received")
+        let task = Task<[CameraUploadStatsEntity], Never> {
+            let result = await sut.monitorUploadStats()
+                .prefix(2)
+                .reduce(into: [CameraUploadStatsEntity]()) { $0.append($1) }
+            exp.fulfill()
+            return result
+        }
+        
+        networkContinuation.yield(false)
+        
+        // Assert
+        await fulfillment(of: [exp], timeout: 1)
+        
+        let results = await task.value
+        XCTAssertEqual(results.count, 2)
+    }
+    
     private func makeSUT(
         cameraUploadRepository: MockCameraUploadsStatsRepository = MockCameraUploadsStatsRepository(),
         networkMonitorUseCase: MockNetworkMonitorUseCase = MockNetworkMonitorUseCase(),
