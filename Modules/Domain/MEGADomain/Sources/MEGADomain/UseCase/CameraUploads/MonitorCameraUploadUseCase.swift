@@ -15,7 +15,6 @@ public protocol MonitorCameraUploadUseCaseProtocol {
     /// - Returns: AsyncSequence that emits CameraUploadStatsEntity, this sequence will continue to remain active and cancel only from cooperative cancellation. Use this sequence appropriately.
     func monitorUploadStats() -> AnyAsyncSequence<CameraUploadStatsEntity>
     
-    
     /// Provides a determination for the possible reason that the current CameraUpload operation may have paused for.
     /// This is determined by the device active Camera Upload Settings and Active Network access.
     /// - Returns: CameraUploadPausedReason contain possible cases that is triggered a pause in uploads.
@@ -37,7 +36,26 @@ public struct MonitorCameraUploadUseCase<S: CameraUploadsStatsRepositoryProtocol
     }
     
     public func monitorUploadStats() -> AnyAsyncSequence<CameraUploadStatsEntity> {
-        cameraUploadRepository.monitorChangedUploadStats()
+        AsyncStream<CameraUploadStatsEntity> { continuation in
+            let monitorUploadStatsTask = Task {
+                for await stats in cameraUploadRepository.monitorChangedUploadStats() {
+                    continuation.yield(stats)
+                }
+            }
+            
+            let monitorNetworkTask = Task {
+                for await stats in networkMonitorUseCase
+                    .connectionChangedStream
+                    .compactMap({ _ in try? await cameraUploadRepository.currentUploadStats() }) {
+                    continuation.yield(stats)
+                }
+            }
+            
+            continuation.onTermination = { _ in
+                [monitorUploadStatsTask, monitorNetworkTask]
+                    .forEach { $0.cancel() }
+            }
+        }.eraseToAnyAsyncSequence()
     }
     
     public func possibleCameraUploadPausedReason() -> CameraUploadPausedReason {

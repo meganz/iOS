@@ -48,12 +48,13 @@ final class NetworkMonitorUseCaseTests: XCTestCase {
     
     func testConnectionChangedStream_onNetworkChanges_shouldChange() async {
         var expectedResults = [true, false, true]
-        let connectionChanged = AsyncStream { continuation in
+        let connectionChanged =  AsyncStream { continuation in
             for expectedResult in expectedResults {
                 continuation.yield(expectedResult)
             }
             continuation.finish()
-        }
+        }.eraseToAnyAsyncSequence()
+        
         let networkMonitorRepository = MockNetworkMonitorRepository(connectionChangedStream: connectionChanged)
         let sut = NetworkMonitorUseCase(repo: networkMonitorRepository)
         
