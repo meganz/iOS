@@ -5,9 +5,9 @@
 #import "Helper.h"
 #import "UIApplication+MNZCategory.h"
 #import "TestPasswordViewController.h"
-#import "MEGAGenericRequestDelegate.h"
 
 @import MEGAL10nObjc;
+@import MEGASDKRepo;
 
 @interface PasswordReminderViewController ()
 
@@ -95,7 +95,7 @@
 }
 
 - (void)notifyUserSkippedOrBlockedPasswordReminder {
-    MEGAGenericRequestDelegate *delegate = [[MEGAGenericRequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
+    RequestDelegate *delegate = [[RequestDelegate alloc] initWithCompletion:^(MEGARequest *request, MEGAError *error) {
         if (self.isLoggingOut) {
             [MEGASdk.shared logout];
         }
