@@ -9,6 +9,7 @@
 
 @import MEGAL10nObjc;
 @import MEGAUIKit;
+@import MEGASDKRepo;
 
 @interface ProductDetailViewController () <MEGAPurchaseDelegate, UITableViewDataSource, UITableViewDelegate> {
     BOOL isPurchased;
@@ -162,8 +163,8 @@
     if (canCancelSubscription) {
         [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"no", @"") style:UIAlertActionStyleCancel handler:nil]];
         [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"yes", @"") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            [MEGASdk.shared creditCardCancelSubscriptions:nil delegate:[MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
-                if (error.type == MEGAErrorTypeApiOk) {
+            [MEGASdk.shared creditCardCancelSubscriptions:nil delegate:[RequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nullable request, MEGAError * _Nullable error) {
+                if (!error) {
                     [[MEGAPurchase sharedInstance] purchaseProduct:product];
                 }
             }]];
