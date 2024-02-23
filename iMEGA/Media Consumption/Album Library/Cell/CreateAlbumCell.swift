@@ -1,14 +1,24 @@
+import MEGADesignToken
 import MEGAL10n
+import MEGAPresentation
 import SwiftUI
 
 struct CreateAlbumCell: View {
     let onTapHandler: (() -> Void)
-
+    
     @Environment(\.colorScheme) private var colorScheme
     @State private var orientation = UIDevice.current.orientation
-
+    
     private var plusIconColor: Color {
-        colorScheme == .light ? MEGAAppColor.Gray._515151.color : MEGAAppColor.White._FCFCFC.color
+        if isDesignTokenEnabled {
+            TokenColors.Icon.primary.swiftUI
+        } else {
+            colorScheme == .light ? MEGAAppColor.Gray._515151.color : MEGAAppColor.White._FCFCFC.color
+        }
+    }
+    
+    private var backgroundColor: Color {
+        isDesignTokenEnabled ? TokenColors.Background.surface2.swiftUI : MEGAAppColor.Gray._EBEBEB.color
     }
     
     var body: some View {
@@ -19,7 +29,7 @@ struct CreateAlbumCell: View {
     func content() -> some View {
         VStack(alignment: .leading, spacing: 10) {
             ZStack(alignment: .center) {
-                MEGAAppColor.Gray._EBEBEB.color
+                backgroundColor
                     .aspectRatio(contentMode: .fill)
                     .cornerRadius(6)
                 
@@ -33,11 +43,14 @@ struct CreateAlbumCell: View {
                     .lineLimit(1)
                     .truncationMode(.middle)
                     .font(.caption)
+                    .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : Color.primary)
                 Text(" ")
                     .font(.footnote)
+                    .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI : Color.secondary)
             }
         }
         .onOrientationChanged { orientation = $0 }
+        .foregroundStyle(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : Color.clear)
     }
     
     private var iconSize: CGFloat {
@@ -48,4 +61,13 @@ struct CreateAlbumCell: View {
             UIDevice.current.iPad ? 25 : 20
         }
     }
+}
+
+#Preview {
+    CreateAlbumCell(onTapHandler: { })
+}
+
+#Preview {
+    CreateAlbumCell(onTapHandler: { })
+        .preferredColorScheme(.dark)
 }

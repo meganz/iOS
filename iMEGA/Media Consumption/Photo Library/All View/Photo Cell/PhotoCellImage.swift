@@ -25,3 +25,12 @@ struct PhotoCellImage: View {
             .aspectRatio(aspectRatio, contentMode: .fill)
     }
 }
+
+#Preview {
+    PhotoCellImage(
+        container: ImageContainer(
+            image: Image(systemName: "square"),
+            type: .thumbnail
+        )
+    )
+}
