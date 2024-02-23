@@ -131,11 +131,20 @@
     self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     
     self.profileView.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
-    self.viewAndEditProfileLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
-    self.qrCodeImageView.image = [UIImage imageNamed:@"qrCodeIcon"].imageFlippedForRightToLeftLayoutDirection;
     self.profileBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     
     self.addPhoneNumberView.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
+    
+    if (UIColor.isDesignTokenEnabled) {
+        UIImage *editIcon = [[UIImage imageNamed:@"viewAndEditProfile"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate].imageFlippedForRightToLeftLayoutDirection;
+        self.viewAndEditProfileImageView.image = editIcon;
+        self.viewAndEditProfileImageView.tintColor = [UIColor mnz_navigationBarTintFor:self.traitCollection];
+        self.viewAndEditProfileLabel.textColor = [UIColor cellTitleColorFor:self.traitCollection];
+        self.nameLabel.textColor = [UIColor cellTitleColorFor:self.traitCollection];
+    } else {
+        self.viewAndEditProfileLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+        self.qrCodeImageView.image = [UIImage imageNamed:@"qrCodeIcon"].imageFlippedForRightToLeftLayoutDirection;
+    }
     
     if ([MEGASdk.shared isAccountType:MEGAAccountTypeBusiness] ||
         [MEGASdk.shared isAccountType:MEGAAccountTypeProFlexi]) {
