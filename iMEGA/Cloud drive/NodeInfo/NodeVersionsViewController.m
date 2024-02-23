@@ -305,8 +305,8 @@ MEGADelegate
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:LocalizedString(@"permissionTitle", @"Error title shown when you are trying to do an action with a file or folder and you don’t have the necessary permissions") message:LocalizedString(@"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?", @"Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share.") preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"cancel", @"") style:UIAlertActionStyleCancel handler:nil]];
         [alertController addAction:[UIAlertAction actionWithTitle:LocalizedString(@"Create new file", @"Text shown for the action create new file") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            [MEGASdk.shared restoreVersionNode:node delegate:[MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
-                if (error.type == MEGAErrorTypeApiOk) {
+            [MEGASdk.shared restoreVersionNode:node delegate:[RequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
+                if (!error) {
                     [SVProgressHUD showSuccessWithStatus:LocalizedString(@"Version created as a new file successfully.", @"Text shown when the creation of a version as a new file was successful")];
                 }
             }]];
