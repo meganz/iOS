@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import UIKit
 
@@ -56,9 +57,17 @@ final class BadgeButton: UIButton {
         let badgeLabel = PaddingLabel()
         layoutBadgeLabel(badgeLabel)
 
-        let labelStyler = trait.theme.labelStyleFactory.styler(of: .badge)
-        labelStyler(badgeLabel)
-
+        if UIColor.isDesignTokenEnabled() {
+            badgeLabel.backgroundColor = TokenColors.Components.interactive
+            badgeLabel.textColor = TokenColors.Text.onColor
+            badgeLabel.textAlignment = .center
+            badgeLabel.layer.cornerRadius = 10
+            badgeLabel.clipsToBounds = true
+        } else {
+            let labelStyler = trait.theme.labelStyleFactory.styler(of: .badge)
+            labelStyler(badgeLabel)
+        }
+        
         self.badgeLabel = badgeLabel
         return badgeLabel
     }
