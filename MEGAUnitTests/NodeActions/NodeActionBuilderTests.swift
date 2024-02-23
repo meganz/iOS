@@ -172,6 +172,17 @@ class NodeActionBuilderTests: XCTestCase {
         XCTAssertTrue(isEqual(nodeActionTypes: [.editTextFile, .info, .viewVersions, .favourite, .label, .download, .shareLink, .exportFile, .sendToChat, .rename, .move, .copy, .moveToRubbishBin]))
     }
     
+    func testBuild_cloudDriveHiddenFalse_shouldReturnCorrectActions() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.cloudDrive)
+            .setAccessLevel(.accessOwner)
+            .setIsHidden(false)
+            .build()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.info, .favourite, .label, .download, .shareLink,
+                                                .shareFolder, .rename, .hide, .move, .copy, .moveToRubbishBin]))
+    }
+    
     func testFileFolderNodeDoNotShowInfoAction() {
         actions = NodeActionBuilder()
             .setDisplayMode(.nodeInfo)
@@ -516,6 +527,15 @@ class NodeActionBuilderTests: XCTestCase {
             .build()
         
         XCTAssertTrue(isEqual(nodeActionTypes: [.verifyContact, .info, .favourite, .label, .download, .manageLink, .removeLink, .manageShare, .rename, .copy, .removeSharing]))
+    }
+    
+    func testOutgoingSharedFolder_hidden_shouldNotContainHideAction() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.sharedItem)
+            .setIsHidden(true)
+            .build()
+        
+        XCTAssertTrue(actions.map(\.type).notContains(.hide))
     }
     
     // MARK: - Links tests

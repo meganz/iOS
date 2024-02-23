@@ -277,4 +277,9 @@ extension NodeAction {
         NodeAction(title: Strings.Localizable.CloudDrive.Menu.MediaDiscovery.title, detail: nil,
                    image: UIImage.mediaDiscovery, type: .mediaDiscovery)
     }
+    
+    class func hideAction() -> NodeAction {
+        NodeAction(title: Strings.Localizable.General.MenuAction.Hide.title, detail: nil,
+                   image: UIImage.eyeOff, type: .hide)
+    }
 }
