@@ -9,6 +9,8 @@ struct MyAccountHallPlanView: View {
     var body: some View {
         HStack {
             Image(uiImage: .plan)
+                .renderingMode(isDesignTokenEnabled ? .template : .original)
+                .foregroundStyle(isDesignTokenEnabled ? TokenColors.Icon.primary.swiftUI : Color.primary)
                 .frame(width: 24, height: 24)
                 .padding(.horizontal, 14)
             

@@ -8,7 +8,8 @@ extension MyAccountHallTableViewCell {
         }
         
         if let icon = data.icon, iconImageView != nil {
-            iconImageView.image = icon
+            let image = UIColor.isDesignTokenEnabled() ? icon.withRenderingMode(.alwaysTemplate) : icon
+            iconImageView.image = image
         }
         
         if data.isPendingViewVisible, let pendingText = data.pendingText, pendingLabel != nil, pendingView != nil {
@@ -76,6 +77,10 @@ extension MyAccountHallTableViewCell {
     @objc func setupCell() {
         backgroundColor = UIColor.mnz_backgroundElevated(traitCollection)
 
+        if UIColor.isDesignTokenEnabled() && iconImageView != nil {
+            iconImageView.tintColor = TokenColors.Icon.primary
+        }
+        
         if sectionLabel != nil {
             sectionLabel.textColor = UIColor.mnz_defaultLabelTextColor()
         }
@@ -86,8 +91,8 @@ extension MyAccountHallTableViewCell {
         }
         
         if pendingView != nil {
-            pendingView.backgroundColor = UIColor.mnz_red(for: traitCollection)
-            pendingLabel.textColor = UIColor.mnz_badgeTextColor()
+            pendingView.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Components.interactive : UIColor.mnz_red(for: traitCollection)
+            pendingLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.onColor : UIColor.mnz_badgeTextColor()
             layoutPendingView()
         }
         
