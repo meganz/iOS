@@ -6,10 +6,10 @@
 #import "MEGAReachabilityManager.h"
 #import "UIApplication+MNZCategory.h"
 #import "NSFileManager+MNZCategory.h"
-#import "MEGAGenericRequestDelegate.h"
 #import "MEGA-Swift.h"
 
 @import MEGAL10nObjc;
+@import MEGASDKRepo;
 
 @implementation NSURL (MNZCategory)
 
@@ -34,8 +34,8 @@
         if ([self.absoluteString containsString:RequireTransferSession]) {
             NSUInteger location = [self.absoluteString rangeOfString:RequireTransferSession].location + RequireTransferSession.length;
             NSString *path = [self.absoluteString substringFromIndex:location];
-            MEGAGenericRequestDelegate *delegate = [MEGAGenericRequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
-                if (error.type == MEGAErrorTypeApiOk) {
+            RequestDelegate *delegate = [RequestDelegate.alloc initWithCompletion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
+                if (request) {
                     [self presentSafariViewControllerWithLURL:[NSURL URLWithString:request.link]];
                 } else {
                     [self presentSafariViewControllerWithLURL:self];
