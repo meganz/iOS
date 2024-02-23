@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGASwiftUI
 import SwiftUI
 
@@ -13,18 +14,31 @@ struct PhotoCellContent: View {
         ZStack(alignment: .bottomTrailing) {
             image()
             
-            CheckMarkView(
-                markedSelected: viewModel.isSelected,
-                foregroundColor: viewModel.isSelected ? MEGAAppColor.Green._34C759.color : MEGAAppColor.Photos.photoSelectionBorder.color
-            )
-            .offset(x: -5, y: -5)
-            .opacity(viewModel.shouldShowEditState ? 1 : 0)
+            checkMarkView
+                .offset(x: -5, y: -5)
+                .opacity(viewModel.shouldShowEditState ? 1 : 0)
         }
         .favorite(viewModel.shouldShowFavorite)
         .videoDuration(PhotoCellVideoDurationViewModel(isVideo: viewModel.isVideo, duration: viewModel.duration, scaleFactor: viewModel.currentZoomScaleFactor))
         .opacity(viewModel.shouldApplyContentOpacity ? 0.4 : 1)
         .gesture(viewModel.editMode.isEditing ? tap : nil)
         .task { await viewModel.startLoadingThumbnail() }
+    }
+    
+    private var checkMarkView: some View {
+        if isDesignTokenEnabled {
+            CheckMarkView(
+                markedSelected: viewModel.isSelected,
+                iconForegroundColor: TokenColors.Icon.inverseAccent.swiftUI,
+                foregroundColor: viewModel.isSelected ? TokenColors.Components.selectionControl.swiftUI : Color.clear,
+                borderColor: viewModel.isSelected ? Color.clear : TokenColors.Border.strong.swiftUI
+            )
+        } else {
+            CheckMarkView(
+                markedSelected: viewModel.isSelected,
+                foregroundColor: viewModel.isSelected ? MEGAAppColor.Green._34C759.color : MEGAAppColor.Photos.photoSelectionBorder.color
+            )
+        }
     }
     
     @ViewBuilder

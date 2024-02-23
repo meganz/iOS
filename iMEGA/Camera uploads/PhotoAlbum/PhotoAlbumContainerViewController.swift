@@ -1,4 +1,5 @@
 import Combine
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
@@ -45,7 +46,9 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnvironmen
                                                style: .plain,
                                                target: self,
                                                action: #selector(deleteAlbumButtonPressed))
-    lazy var selectBarButton = UIBarButtonItem(image: UIImage(resource: .selectAllItems),
+    lazy var selectBarButton = UIBarButtonItem(image: UIColor.isDesignTokenEnabled()
+                                               ? UIImage(resource: .selectAllItems).withRenderingMode(.alwaysTemplate).withTintColor(TokenColors.Icon.primary)
+                                               : UIImage(resource: .selectAllItems),
                                                style: .plain,
                                                target: self,
                                                action: #selector(toggleEditing))
@@ -63,6 +66,9 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnvironmen
         navigationItem.backBarButtonItem = BackBarButtonItem(menuTitle: Strings.Localizable.Photo.Navigation.title)
         setUpPagerTabView()
         setUpPageViewController()
+        
+        let backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_backgroundElevated(traitCollection)
+        view.backgroundColor = backgroundColor
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {

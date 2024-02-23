@@ -1,3 +1,5 @@
+import MEGADesignToken
+import MEGAPresentation
 import SwiftUI
 
 struct SharedLinkView: View {
@@ -6,6 +8,19 @@ struct SharedLinkView: View {
             .resizable()
             .aspectRatio(contentMode: .fill)
             .frame(width: 15, height: 15)
-            .foregroundColor(MEGAAppColor.White._FFFFFF.color)
+            .foregroundStyle(
+                isDesignTokenEnabled
+                ? TokenColors.Icon.onColor.swiftUI
+                : MEGAAppColor.White._FFFFFF.color
+            )
     }
+}
+
+#Preview {
+    SharedLinkView()
+}
+
+#Preview {
+    SharedLinkView()
+        .preferredColorScheme(.dark)
 }

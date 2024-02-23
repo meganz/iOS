@@ -1,3 +1,5 @@
+import MEGADesignToken
+import MEGAPresentation
 import UIKit
 
 final class PhotosPageViewController: UIPageViewController {
@@ -11,6 +13,9 @@ final class PhotosPageViewController: UIPageViewController {
         
         let scrollView = view.subviews.first(where: { $0 is UIScrollView }) as? UIScrollView
         scrollView?.delegate = self
+        
+        let backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_backgroundElevated(traitCollection)
+        view.backgroundColor = backgroundColor
     }
 }
 

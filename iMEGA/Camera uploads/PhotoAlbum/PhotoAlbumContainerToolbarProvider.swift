@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGADomain
 import UIKit
 
@@ -18,7 +19,9 @@ extension PhotoAlbumContainerViewController: PhotoAlbumContainerToolbarProvider 
         toolbar.alpha = 0.0
         tabBarController.view.addSubview(toolbar)
         
-        toolbar.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
+        toolbar.backgroundColor = UIColor.isDesignTokenEnabled()
+        ? TokenColors.Background.surface1
+        : UIColor.mnz_mainBars(for: traitCollection)
         
         toolbar.translatesAutoresizingMaskIntoConstraints = false
         
@@ -52,6 +55,11 @@ extension PhotoAlbumContainerViewController: PhotoAlbumContainerToolbarProvider 
     func updateToolbarButtonEnabledState(isSelected: Bool) {
         deleteBarButton.isEnabled = isSelected
         shareLinkBarButton.isEnabled = isSelected
+        
+        if isSelected && UIColor.isDesignTokenEnabled() {
+            deleteBarButton.tintColor = TokenColors.Icon.primary
+            shareLinkBarButton.tintColor = TokenColors.Icon.primary
+        }
     }
     
     func updateRemoveLinksToolbarButtons(canRemoveLinks: Bool) {
