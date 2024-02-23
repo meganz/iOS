@@ -37,5 +37,6 @@ typedef NS_ENUM (NSInteger, MegaNodeActionType) {
     MegaNodeActionTypeDisputeTakedown,
     MegaNodeActionTypeVerifyContact,
     MegaNodeActionTypeRestoreBackup,
-    MegaNodeActionTypeMediaDiscovery
+    MegaNodeActionTypeMediaDiscovery,
+    MegaNodeActionTypeHide
 };

@@ -3976,3 +3976,5 @@
 "meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Your current plan can only support 60 minutes per meeting. Need more time? [A]Upgrade now[/A]";
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
 "notifications.tag.promo.title"="Promo";
+/* Title for action that allows user to hide files or folders */
+"general.menuAction.hide.title"="Hide";

@@ -29,6 +29,7 @@ final class NodeActionBuilder {
     private var sharedFolderContact: MEGAUser = MEGAUser()
     private var sharedFolderReceiverDetail = ""
     private var containsMediaFiles = false
+    private var isHidden: Bool?
 
     func setDisplayMode(_ displayMode: DisplayMode) -> NodeActionBuilder {
         self.displayMode = displayMode
@@ -157,6 +158,11 @@ final class NodeActionBuilder {
     
     func setContainsMediaFiles(_ containsMediaFiles: Bool) -> NodeActionBuilder {
         self.containsMediaFiles = containsMediaFiles
+        return self
+    }
+    
+    func setIsHidden(_ isHidden: Bool?) -> NodeActionBuilder {
+        self.isHidden = isHidden
         return self
     }
     
@@ -546,6 +552,10 @@ final class NodeActionBuilder {
         
         if !isBackupNode {
             nodeActions.append(.renameAction())
+        }
+        
+        if displayMode == .cloudDrive && isHidden == false {
+            nodeActions.append(.hideAction())
         }
         
         if displayMode != .sharedItem && !isBackupNode {
