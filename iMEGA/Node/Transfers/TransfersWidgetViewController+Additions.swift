@@ -1,4 +1,5 @@
 import Foundation
+import MEGADesignToken
 import MEGAL10n
 import UIKit
 
@@ -97,6 +98,19 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
         progressViewBottomConstraint.constant = bottomConstant
     }
     
+    @objc
+    func updateViewAppearance() {
+        let isDesignTokenEnabled = UIColor.isDesignTokenEnabled()
+        let backgroundColor = isDesignTokenEnabled ? TokenColors.Background.page : UIColor.mnz_backgroundElevated(traitCollection)
+        view.backgroundColor = backgroundColor
+        tableView?.backgroundColor = backgroundColor
+        
+        if isDesignTokenEnabled {
+            tableView?.separatorStyle = .singleLine
+            tableView?.separatorColor = TokenColors.Border.strong
+        }
+    }
+    
     // MARK: - Private
     
     @objc
@@ -163,13 +177,8 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
     @objc func updateNavBarButtonAppearance() {
         CrashlyticsLogger.log(category: .tranfersWidget, "Updating Navigation bar button appearance. Navigation bar info: \(String(describing: navigationController?.navigationBar))")
         
-        let barButtons = [navigationItem.rightBarButtonItems,
-                          navigationItem.leftBarButtonItems].compactMap { $0 }.flatMap { $0 }
-        barButtons.forEach { barButton in
-            let attribute = [NSAttributedString.Key.font: UIFont.preferredFont(style: .body, weight: .regular),
-                             NSAttributedString.Key.foregroundColor: UIColor.mnz_primaryGray(for: self.traitCollection)]
-            barButton.setTitleTextAttributes(attribute, for: .normal)
-        }
+        guard let nav = navigationController else { return }
+        AppearanceManager.forceNavigationBarUpdate(nav.navigationBar, traitCollection: traitCollection)
     }
     
     // MARK: - Register TableViewCell Nibs
