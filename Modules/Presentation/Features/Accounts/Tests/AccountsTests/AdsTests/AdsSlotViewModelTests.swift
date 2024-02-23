@@ -24,10 +24,17 @@ final class AdsSlotViewModelTests: XCTestCase {
         let sut = makeSUT()
         sut.setupSubscriptions()
         
-        NotificationCenter.default.post(name: .accountDidPurchasedPlan, object: nil)
+        let exp = expectation(description: "displayAds should emit the correct value")
+        sut.$displayAds
+            .dropFirst()
+            .sink { displayAds in
+                XCTAssertFalse(displayAds)
+                exp.fulfill()
+            }
+            .store(in: &subscriptions)
         
-        await sut.hideAdsForUpgradedAccountTask?.value
-        XCTAssertFalse(sut.displayAds)
+        NotificationCenter.default.post(name: .accountDidPurchasedPlan, object: nil)
+        await fulfillment(of: [exp], timeout: 1.0)
     }
     
     // MARK: - Ads slot
