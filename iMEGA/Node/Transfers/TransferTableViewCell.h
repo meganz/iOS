@@ -14,6 +14,8 @@
 @property (weak, nonatomic) id<TransferTableViewCellDelegate> delegate;
 @property (nonatomic, assign) BOOL overquota;
 
+@property (weak, nonatomic) IBOutlet UIImageView *arrowImageView;
+
 - (void)configureCellForTransfer:(MEGATransfer *)transfer overquota:(BOOL)overquota delegate:(id<TransferTableViewCellDelegate>)delegate;
 - (void)configureCellForTransfer:(MEGATransfer *)transfer delegate:(id<TransferTableViewCellDelegate>)delegate;
 - (void)reconfigureCellWithTransfer:(MEGATransfer *)transfer;

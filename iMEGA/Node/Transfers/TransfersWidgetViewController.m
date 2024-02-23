@@ -162,13 +162,16 @@ static TransfersWidgetViewController* instance = nil;
 - (void)updateSelector {
     self.inProgressButton.backgroundColor = self.completedButton.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
     
-    [self.inProgressButton setTitleColor:[UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)] forState:UIControlStateNormal];
-    [self.inProgressButton setTitleColor:[UIColor mnz_redForTraitCollection:self.traitCollection] forState:UIControlStateSelected];
-    self.allLineView.backgroundColor = self.inProgressButton.selected ? [UIColor mnz_redForTraitCollection:self.traitCollection] : nil;
+    UIColor *unselectedColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+    UIColor *selectedColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
     
-    [self.completedButton setTitleColor:[UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)] forState:UIControlStateNormal];
-    [self.completedButton setTitleColor:[UIColor mnz_redForTraitCollection:self.traitCollection] forState:UIControlStateSelected];
-    self.completedLineView.backgroundColor = self.completedButton.selected ? [UIColor mnz_redForTraitCollection:self.traitCollection] : nil;
+    [self.inProgressButton setTitleColor:unselectedColor forState:UIControlStateNormal];
+    [self.inProgressButton setTitleColor:selectedColor forState:UIControlStateSelected];
+    self.allLineView.backgroundColor = self.inProgressButton.selected ? selectedColor : nil;
+    
+    [self.completedButton setTitleColor:unselectedColor forState:UIControlStateNormal];
+    [self.completedButton setTitleColor:selectedColor forState:UIControlStateSelected];
+    self.completedLineView.backgroundColor = self.completedButton.selected ? selectedColor: nil;
     
     switch (self.transfersSelected) {
         case TransfersWidgetSelectedAll:
@@ -479,11 +482,11 @@ static TransfersWidgetViewController* instance = nil;
 #pragma mark - Private
 
 - (void)reloadView {
-    
     [self getAllTransfers];
     [self updateSelector];
     [self updateViewState];
     [self updateNavBarButtonAppearance];
+    [self updateViewAppearance];
     [self.tableView reloadData];
 }
 

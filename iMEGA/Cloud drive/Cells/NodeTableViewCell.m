@@ -65,6 +65,8 @@
         [self updateWithTrait:self.traitCollection];
     }
     
+    self.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
+    
     self.downloadingArrowImageView.hidden = self.downloadProgressView.hidden = YES;
     
     self.moreButton.hidden = self.isNodeInRubbishBin;
