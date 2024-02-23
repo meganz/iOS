@@ -9940,10 +9940,10 @@
 				94B09E4E2B84CC86007D6B84 /* QuickActionsMenuDelegateHandler.swift */,
 				94B09E502B84CC86007D6B84 /* RefreshMenuTriggering.swift */,
 				94B09E522B84CC86007D6B84 /* RubbishBinMenuDelegateHandler.swift */,
+				BF825F522B872696007B0B53 /* ScanDocumentViewRouter.swift */,
 				94B09E452B84CC86007D6B84 /* SearchResultSelection+NonEmptySiblings.swift */,
 				94B09E3E2B84CC86007D6B84 /* ToolbarActionFactory.swift */,
 				94B09E482B84CC86007D6B84 /* UploadAddMenuDelegateHandler.swift */,
-				BF825F522B872696007B0B53 /* ScanDocumentViewRouter.swift */,
 			);
 			path = NewNodeBrowser;
 			sourceTree = "<group>";
@@ -13808,7 +13808,6 @@
 				B611E175286165ED00F360CF /* AppDelegate+SDK.swift in Sources */,
 				137361931A6664C300B740E8 /* AppDelegate.m in Sources */,
 				255FE6902ACBB5D40077A85C /* AppearanceListFooterView.swift in Sources */,
-				BF825F532B872696007B0B53 /* ScanDocumentViewRouter.swift in Sources */,
 				5B1FEE28231FE4FA001271AF /* AppearanceManager.swift in Sources */,
 				5BE689A42419122C00462134 /* AppearancePreference+CoreDataClass.swift in Sources */,
 				5BE689A52419122C00462134 /* AppearancePreference+CoreDataProperties.swift in Sources */,
@@ -15042,6 +15041,7 @@
 				94BEC88629DC154A00075AE9 /* SaveMediaToPhotosErrorEntity+Additions.swift in Sources */,
 				83C7C84827EDCF2D00CFB5E6 /* SaveMediaUseCaseOCWrapper.swift in Sources */,
 				833DF2762804880E00B25B64 /* SaveNodeUseCaseOCWrapper.swift in Sources */,
+				BF825F532B872696007B0B53 /* ScanDocumentViewRouter.swift in Sources */,
 				5D79B51D2498471E0070FECD /* Scanner+Compatible.swift in Sources */,
 				838CCF6C298C006200C83502 /* ScheduledMeetingDateBuilder.swift in Sources */,
 				83669E972987F9BC003E8F74 /* ScheduledMeetingOccurrencesRouter.swift in Sources */,

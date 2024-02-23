@@ -294,16 +294,45 @@ final class MeetingContainerViewModelTests: XCTestCase {
         XCTAssert(router.showMutedMessage_calledTimes == 1)
     }
     
-    func testAction_sfuProtocolErrorReceived_shouldShowUpdateAppAlert() {
-        let chatRoom = ChatRoomEntity(chatType: .meeting)
+    func testSfuProtocolErrorReceived_shouldShowUpdateAppAlert() {
         let router = MockMeetingContainerRouter()
-        viewModel = MeetingContainerViewModel(router: router, chatRoom: chatRoom)
+        let callUseCase = MockCallUseCase(call: CallEntity(status: .connecting, changeType: .status, numberOfParticipants: 1, participants: [100]))
+        viewModel = MeetingContainerViewModel(router: router, callUseCase: callUseCase)
 
-        test(viewModel: viewModel, action: .sfuProtocolVersionError, expectedCommands: [])
-        XCTAssert(router.showProtocolErrorAlert_calledTimes == 1)
+        callUseCase.callUpdateSubject.send(CallEntity(status: .terminatingUserParticipation, changeType: .status, termCodeType: .protocolVersion, numberOfParticipants: 1, participants: [100]))
+        evaluate {
+            router.showProtocolErrorAlert_calledTimes == 1
+        }
+    }
+    
+    func testUsersLimitErrorReceived_shouldShowFreeAccountLimitAlert() {
+        let router = MockMeetingContainerRouter()
+        let callUseCase = MockCallUseCase(call: CallEntity(status: .connecting, changeType: .status, numberOfParticipants: 1, participants: [100]))
+        viewModel = MeetingContainerViewModel(router: router, callUseCase: callUseCase)
+
+        callUseCase.callUpdateSubject.send(CallEntity(status: .terminatingUserParticipation, changeType: .status, termCodeType: .callUsersLimit, numberOfParticipants: 1, participants: [100]))
+        evaluate {
+            router.showUsersLimitErrorAlert_calledTimes == 1
+        }
+    }
+    
+    func testTooManyParticipantsErrorReceived_shouldDismissCall() {
+        let router = MockMeetingContainerRouter()
+        let callUseCase = MockCallUseCase(call: CallEntity(status: .connecting, changeType: .status, numberOfParticipants: 1, participants: [100]))
+        viewModel = MeetingContainerViewModel(router: router, callUseCase: callUseCase)
+
+        callUseCase.callUpdateSubject.send(CallEntity(status: .terminatingUserParticipation, changeType: .status, termCodeType: .tooManyParticipants, numberOfParticipants: 1, participants: [100]))
+        evaluate {
+            router.dismiss_calledTimes == 1
+        }
     }
     
     // MARK: - Private methods
+    private func evaluate(expression: @escaping () -> Bool) {
+        let predicate = NSPredicate { _, _ in expression() }
+        let expectation = expectation(for: predicate, evaluatedWith: nil)
+        wait(for: [expectation], timeout: 5)
+    }
     
     private func assertWhenMuteUnmuteOperationFailed(
         withMutedValue muted: Bool,
@@ -350,7 +379,8 @@ final class MockMeetingContainerRouter: MeetingContainerRouting {
     var showScreenShareWarning_calledTimes = 0
     var showMutedMessage_calledTimes = 0
     var showProtocolErrorAlert_calledTimes = 0
-
+    var showUsersLimitErrorAlert_calledTimes = 0
+    
     func showMeetingUI(containerViewModel: MeetingContainerViewModel) {
         showMeetingUI_calledTimes += 1
     }
@@ -430,5 +460,9 @@ final class MockMeetingContainerRouter: MeetingContainerRouting {
     
     func showProtocolErrorAlert() {
         showProtocolErrorAlert_calledTimes += 1
+    }
+    
+    func showUsersLimitErrorAlert() {
+        showUsersLimitErrorAlert_calledTimes += 1
     }
 }

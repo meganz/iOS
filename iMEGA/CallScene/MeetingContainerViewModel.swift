@@ -29,7 +29,6 @@ enum MeetingContainerAction: ActionType {
     case showScreenShareWarning
     case leaveCallFromRecordingAlert
     case showMutedBy(String)
-    case sfuProtocolVersionError
 }
 
 final class MeetingContainerViewModel: ViewModelType {
@@ -56,6 +55,7 @@ final class MeetingContainerViewModel: ViewModelType {
     private var muteMicSubscription: AnyCancellable?
     private var muteUnmuteFailedNotificationsSubscription: AnyCancellable?
     private var seeWaitingRoomListEventSubscription: AnyCancellable?
+    private var callUpdateSubscription: AnyCancellable?
 
     private var call: CallEntity? {
         callUseCase.call(for: chatRoom.chatId)
@@ -99,6 +99,7 @@ final class MeetingContainerViewModel: ViewModelType {
         
         listenToMuteUnmuteFailedNotifications()
         subscribeToSeeWaitingRoomListNotification()
+        subscribeToOnCallUpdate()
     }
     
     var invokeCommand: ((Command) -> Void)?
@@ -187,9 +188,6 @@ final class MeetingContainerViewModel: ViewModelType {
             endCall()
         case .showMutedBy(let name):
             router.showMutedMessage(by: name)
-        case .sfuProtocolVersionError:
-            hangCall()
-            router.showProtocolErrorAlert()
         }
     }
     
@@ -374,6 +372,39 @@ final class MeetingContainerViewModel: ViewModelType {
             case .failure:
                 router.showShareMeetingError()
             }
+        }
+    }
+    
+    private func subscribeToOnCallUpdate() {
+        callUpdateSubscription = callUseCase.onCallUpdate()
+            .sink { [weak self] call in
+                self?.onChatCallUpdate(for: call)
+            }
+    }
+    
+    private func onChatCallUpdate(for call: CallEntity) {
+        switch call.status {
+        case .terminatingUserParticipation, .destroyed:
+            manageCallTerminatedErrorIfNeeded(call)
+        default:
+            break
+        }
+    }
+    
+    private func manageCallTerminatedErrorIfNeeded(_ call: CallEntity) {
+        switch call.termCodeType {
+        case .tooManyParticipants:
+            dismissCall {
+                SVProgressHUD.showError(withStatus: Strings.Localizable.Error.noMoreParticipantsAreAllowedInThisGroupCall)
+            }
+        case .protocolVersion:
+            hangCall()
+            router.showProtocolErrorAlert()
+        case .callUsersLimit:
+            hangCall()
+            router.showUsersLimitErrorAlert()
+        default:
+            break
         }
     }
     
