@@ -29,6 +29,7 @@ protocol MeetingContainerRouting: AnyObject, Routing {
     func showScreenShareWarning()
     func showMutedMessage(by name: String)
     func showProtocolErrorAlert()
+    func showUsersLimitErrorAlert()
 }
 
 final class MeetingContainerRouter: MeetingContainerRouting {
@@ -311,6 +312,21 @@ final class MeetingContainerRouter: MeetingContainerRouting {
             }
         alert.addAction(preferredAction)
         alert.preferredAction = preferredAction
+        presenter.dismiss(animated: true) {
+            presenter.present(alert, animated: true)
+        }
+    }
+    
+    func showUsersLimitErrorAlert() {
+        guard let presenter else { return }
+        let alert = UIAlertController(
+            title: Strings.Localizable.Calls.FreePlanLimitWarning.UsersLimitAlert.title,
+            message: Strings.Localizable.Calls.FreePlanLimitWarning.UsersLimitAlert.message,
+            preferredStyle: .alert)
+        let defaultAction =  UIAlertAction(
+                title: Strings.Localizable.Calls.FreePlanLimitWarning.UsersLimitAlert.button, style: .default)
+        alert.addAction(defaultAction)
+        alert.preferredAction = defaultAction
         presenter.dismiss(animated: true) {
             presenter.present(alert, animated: true)
         }

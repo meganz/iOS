@@ -3978,3 +3978,9 @@
 "notifications.tag.promo.title"="Promo";
 /* Title for action that allows user to hide files or folders */
 "general.menuAction.hide.title"="Hide";
+/* Calls: Free plan limit warning alert title for max users reached in free plan call */
+"calls.freePlanLimitWarning.usersLimitAlert.title"="Cannot join";
+/* Calls: Free plan limit warning alert message for max users reached in free plan call */
+"calls.freePlanLimitWarning.usersLimitAlert.message"="This call can only support 100 participants. Ask the organiser to upgrade to Pro to remove these restrictions.";
+/* Calls: Free plan limit warning alert button for max users reached in free plan call */
+"calls.freePlanLimitWarning.usersLimitAlert.button"="OK. Got it";

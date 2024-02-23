@@ -1239,13 +1239,7 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
     func callTerminated(_ call: CallEntity) {
         callUseCase.stopListeningForCall()
         timer?.invalidate()
-        if call.termCodeType == .tooManyParticipants {
-            containerViewModel?.dispatch(.dismissCall(completion: {
-                SVProgressHUD.showError(withStatus: Strings.Localizable.Error.noMoreParticipantsAreAllowedInThisGroupCall)
-            }))
-        } else if call.termCodeType == .protocolVersion {
-            containerViewModel?.dispatch(.sfuProtocolVersionError)
-        } else if reconnecting {
+        if reconnecting {
             tonePlayer.play(tone: .callEnded)
             containerViewModel?.dispatch(.dismissCall(completion: {
                 SVProgressHUD.showError(withStatus: Strings.Localizable.Meetings.Reconnecting.failed)
