@@ -232,9 +232,7 @@
     self.infoLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     self.infoStringRightLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     
-    if (UIColor.isDesignTokenEnabled) {
-        [self setCellBackgroundColorWith:self.traitCollection];
-    }
+    [self setCellBackgroundColorWith:self.traitCollection];
     
     if (self.cellFlavor != NodeTableViewCellFlavorRecentAction) {
         return;
