@@ -38,4 +38,11 @@ public struct NotificationsRepository: NotificationsRepositoryProtocol {
             })
         }
     }
+    
+    public func fetchEnabledNotifications() -> [NotificationIDEntity] {
+        guard let enabledNotificationList = sdk.getEnabledNotifications() else { return []}
+    
+        return (0..<enabledNotificationList.size)
+            .compactMap(NotificationIDEntity.init)
+    }
 }
