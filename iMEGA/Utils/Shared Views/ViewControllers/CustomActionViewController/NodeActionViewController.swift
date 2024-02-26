@@ -15,7 +15,7 @@ import MEGASwift
 class NodeActionViewController: ActionSheetViewController {
     private var nodes: [MEGANode]
     private var displayMode: DisplayMode
-    private let viewModel = NodeActionViewModel(nodeUseCase: NodeUseCase(nodeDataRepository: NodeDataRepository.newRepo, nodeValidationRepository: NodeValidationRepository.newRepo, nodeRepository: NodeRepository.newRepo))
+    private let viewModel = NodeActionViewModel()
     
     var sender: Any
     var delegate: any NodeActionViewControllerDelegate
@@ -386,6 +386,7 @@ class NodeActionViewController: ActionSheetViewController {
             .setIsVerifyContact(isVerifyContact,
                                 sharedFolderReceiverEmail: sharedFolder.user ?? "",
                                 sharedFolderContact: sharedFolderContact)
+            .setIsHidden(viewModel.isNodeHidden(node.toNodeEntity()))
             .build()
     }
 }

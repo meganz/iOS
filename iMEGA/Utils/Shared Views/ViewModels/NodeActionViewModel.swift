@@ -1,10 +1,18 @@
 import Foundation
 import MEGADomain
+import MEGAPresentation
 
 struct NodeActionViewModel {
-    private var nodeUseCase: any NodeUseCaseProtocol
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
     
-    init(nodeUseCase: any NodeUseCaseProtocol) {
-        self.nodeUseCase = nodeUseCase
+    init(featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
+        self.featureFlagProvider = featureFlagProvider
+    }
+    
+    func isNodeHidden(_ node: NodeEntity) -> Bool? {
+        guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) else {
+            return nil
+        }
+        return node.isMarkedSensitive
     }
 }
