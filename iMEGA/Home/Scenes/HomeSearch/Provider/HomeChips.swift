@@ -3,7 +3,7 @@ import MEGAL10n
 import Search
 
 extension SearchChipEntity {
-    // MARK: - Node format chipses
+    // MARK: - Node format chips
     public static let images = SearchChipEntity(
         type: .nodeFormat(MEGANodeFormatType.photo.rawValue),
         title: Strings.Localizable.Home.Search.Filter.images
@@ -41,7 +41,7 @@ extension SearchChipEntity {
         title: Strings.Localizable.Home.Search.Filter.spreadsheets
     )
 
-    // MARK: - Time filter by last modified time chipses
+    // MARK: - Time filter by last modified time chips
     private static func allTimeFilterChips(
         currentDate date: Date,
         calendar: Calendar
@@ -140,7 +140,7 @@ extension SearchChipEntity {
         )
     }
 
-    // MARK: - Grouped chipses which have subchipses which are displayed in the chips picker
+    // MARK: - Grouped chips which have subchips which are displayed in the chips picker
     public static let nodeFormatsGroupedChip = SearchChipEntity(
         type: .Grouped,
         title: Strings.Localizable.Home.Search.ChipsGroup.NodeType.pillTitle,

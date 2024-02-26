@@ -98,9 +98,9 @@ extension SearchConfig {
                 itemUnselected: UIImage.checkBoxUnselected,
                 playImage: UIImage.videoList,
                 downloadedImage: UIImage.downloaded,
-                moreList: UIImage.moreList,
-                moreGrid: UIImage.moreGrid
-            ), 
+                moreList: UIImage.moreList.withRenderingMode(.alwaysOriginal),
+                moreGrid: UIImage.moreGrid.withRenderingMode(.alwaysOriginal)
+            ),
             colorAssets: .init(
                 F7F7F7: MEGAAppColor.White._F7F7F7.color,
                 _161616: MEGAAppColor.Black._161616.color,
