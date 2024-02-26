@@ -251,7 +251,7 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .setIsBackupsChild(true)
                                                 .build())
 
-        let excludedQuickActions: [QuickActionEntity] = [.manageLink, .removeLink, .manageFolder, .rename, .removeSharing, .leaveSharing, .sendToChat, .saveToPhotos]
+        let excludedQuickActions: [QuickActionEntity] = [.manageLink, .removeLink, .manageFolder, .rename, .removeSharing, .leaveSharing, .sendToChat, .saveToPhotos, .hide]
         let excludedDisplayActions: [DisplayActionEntity] = [.mediaDiscovery, .clearRubbishBin, .filter, .sort, .filterActive]
         
         XCTAssertTrue(filterQuickActions(from: decomposeMenuIntoActions(menu: menuEntity)) == QuickActionEntity
@@ -287,7 +287,7 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .setIsAFolder(true)
                                                 .build())
 
-        let excludedQuickActions: [QuickActionEntity] = [.shareLink, .manageLink, .removeLink, .manageFolder, .removeSharing, .shareFolder, .rename, .leaveSharing, .sendToChat, .saveToPhotos]
+        let excludedQuickActions: [QuickActionEntity] = [.shareLink, .manageLink, .removeLink, .manageFolder, .removeSharing, .shareFolder, .rename, .leaveSharing, .sendToChat, .saveToPhotos, .hide]
         let excludedDisplayActions: [DisplayActionEntity] = [.clearRubbishBin, .filter, .sort, .filterActive]
         
         XCTAssertTrue(filterQuickActions(from: decomposeMenuIntoActions(menu: menuEntity)) == QuickActionEntity
@@ -310,7 +310,7 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .setIsAFolder(true)
                                                 .build())
 
-        let excludedQuickActions: [QuickActionEntity] = [.shareLink, .manageLink, .removeLink, .manageFolder, .removeSharing, .shareFolder, .rename, .sendToChat, .saveToPhotos]
+        let excludedQuickActions: [QuickActionEntity] = [.shareLink, .manageLink, .removeLink, .manageFolder, .removeSharing, .shareFolder, .rename, .sendToChat, .saveToPhotos, .hide]
         let excludedDisplayActions: [DisplayActionEntity] = [.clearRubbishBin, .filter, .sort, .filterActive]
         
         XCTAssertTrue(filterQuickActions(from: decomposeMenuIntoActions(menu: menuEntity)) == QuickActionEntity
@@ -335,7 +335,7 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .setIsAFolder(true)
                                                 .build())
 
-        let excludedQuickActions: [QuickActionEntity] = [.manageLink, .removeLink, .leaveSharing, .shareFolder, .sendToChat, .saveToPhotos]
+        let excludedQuickActions: [QuickActionEntity] = [.manageLink, .removeLink, .leaveSharing, .shareFolder, .sendToChat, .saveToPhotos, .hide]
         let excludedDisplayActions: [DisplayActionEntity] = [.clearRubbishBin, .filter, .sort, .filterActive]
 
         XCTAssertTrue(filterQuickActions(from: decomposeMenuIntoActions(menu: menuEntity)) == QuickActionEntity
@@ -361,7 +361,7 @@ final class ContextMenuActionsTests: XCTestCase {
                                                 .setIsAFolder(true)
                                                 .build())
 
-        let excludedQuickActions: [QuickActionEntity] = [.shareLink, .leaveSharing, .shareFolder, .sendToChat, .saveToPhotos]
+        let excludedQuickActions: [QuickActionEntity] = [.shareLink, .leaveSharing, .shareFolder, .sendToChat, .saveToPhotos, .hide]
         let excludedDisplayActions: [DisplayActionEntity] = [.clearRubbishBin, .filter, .sort, .filterActive]
         
         XCTAssertTrue(filterQuickActions(from: decomposeMenuIntoActions(menu: menuEntity)) == QuickActionEntity

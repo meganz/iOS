@@ -18,6 +18,7 @@ public final class MockNode: MEGANode {
     private let _hasPreview: Bool
     let nodePath: String?
     private let _isTakenDown: Bool
+    private let _isMarkedSensitive: Bool
     
     public init(handle: MEGAHandle,
                 name: String = "",
@@ -34,7 +35,8 @@ public final class MockNode: MEGANode {
                 isFavourite: Bool = false,
                 fingerprint: String? = nil,
                 hasPreview: Bool = false,
-                isTakenDown: Bool = false
+                isTakenDown: Bool = false,
+                isMarkedSensitive: Bool = false
     ) {
         nodeHandle = handle
         nodeName = name
@@ -52,6 +54,7 @@ public final class MockNode: MEGANode {
         self._fingerprint = fingerprint
         _hasPreview = hasPreview
         _isTakenDown = isTakenDown
+        _isMarkedSensitive = isMarkedSensitive
         super.init()
     }
     
@@ -92,4 +95,6 @@ public final class MockNode: MEGANode {
     public override var base64Handle: String? { String(handle) }
     
     public override func isTakenDown() -> Bool { _isTakenDown }
+    
+    public override var isMarkedSensitive: Bool { _isMarkedSensitive }
 }

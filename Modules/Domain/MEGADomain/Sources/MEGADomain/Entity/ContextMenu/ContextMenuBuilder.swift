@@ -39,6 +39,7 @@ public final class ContextMenuBuilder {
     private var isArchivedChatsVisible: Bool = false
     private var isMediaFile: Bool = false
     private var isFilterActive: Bool = false
+    private var isHidden: Bool?
 
     public init() {}
     
@@ -242,6 +243,11 @@ public final class ContextMenuBuilder {
         return self
     }
     
+    public func setIsHidden(_ isHidden: Bool?) -> ContextMenuBuilder {
+        self.isHidden = isHidden
+        return self
+    }
+    
     public func build() -> CMEntity? {
         /// It is only allowed to build menu type elements. The other elements refer to the actions that a menu contains, and that cannot be constructed if not inside a menu.
         if case let .menu(type) = menuType {
@@ -431,6 +437,10 @@ public final class ContextMenuBuilder {
             if !isBackupsChild {
                 quickActions.append(rename)
             }
+        }
+        
+        if isHidden == false {
+            quickActions.append(hide)
         }
         
         quickActions.append(copy)
