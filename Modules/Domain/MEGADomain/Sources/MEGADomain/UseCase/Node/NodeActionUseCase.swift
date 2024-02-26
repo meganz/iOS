@@ -42,6 +42,14 @@ public protocol NodeActionUseCaseProtocol {
     /// - Parameters:
     ///   - nodes: nodes to remove its links
     func removeLink(nodes: [NodeEntity]) async throws
+    
+    /// Set sensitive attribute on the node
+    /// - Parameter node: node to set attribute
+    func hide(node: NodeEntity) async throws -> NodeEntity
+    
+    /// Remove sensitive attribute on the node
+    /// - Parameter node: node to set attribute
+    func unhide(node: NodeEntity) async throws -> NodeEntity
 }
 
 public struct NodeActionUseCase<T: NodeActionRepositoryProtocol>: NodeActionUseCaseProtocol {
@@ -81,5 +89,13 @@ public struct NodeActionUseCase<T: NodeActionRepositoryProtocol>: NodeActionUseC
     
     public func removeLink(nodes: [NodeEntity]) async throws {
         try await repo.removeLink(nodes: nodes)
+    }
+    
+    public func hide(node: NodeEntity) async throws -> NodeEntity {
+        try await repo.setSensitive(node: node, sensitive: true)
+    }
+    
+    public func unhide(node: NodeEntity) async throws -> NodeEntity {
+        try await repo.setSensitive(node: node, sensitive: false)
     }
 }

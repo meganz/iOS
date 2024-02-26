@@ -53,6 +53,7 @@ public final class MockSdk: MEGASdk {
     public private(set) var messages = [Message]()
     public private(set) var searchQueryParameters: SearchQueryParameters?
     public private(set) var nodeListSearchCallCount = 0
+    public private(set) var isNodeSensitive: Bool?
     
     public enum Message: Equatable {
         case publicNodeForMegaFileLink(String)
@@ -556,6 +557,14 @@ public final class MockSdk: MEGASdk {
     
     public override func queryAds(_ adFlags: AdsFlag, publicHandle: MEGAHandle, delegate: any MEGARequestDelegate) {
         processRequestResult(delegate: delegate)
+    }
+    
+    // MARK: - Hidden Nodes
+    
+    public override func setNodeSensitive(_ node: MEGANode, sensitive: Bool, delegate: MEGARequestDelegate) {
+        isNodeSensitive = sensitive
+        let mockRequest = MockRequest(handle: node.handle)
+        delegate.onRequestFinish?(self, request: mockRequest, error: MockError(errorType: megaSetError))
     }
     
     // MARK: - Helper
