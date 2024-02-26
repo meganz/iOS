@@ -31,6 +31,7 @@
 @import MEGADomain;
 @import MEGAL10nObjc;
 @import MEGAUIKit;
+@import MEGASDKRepo;
 
 @interface FolderLinkViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, MEGARequestDelegate, UISearchControllerDelegate, AudioPlayerPresenterProtocol>
 
@@ -54,7 +55,7 @@
 
 @property (nonatomic, assign) ViewModePreferenceEntity viewModePreference;
 
-@property (nonatomic, strong) MEGAGenericRequestDelegate* requestDelegate;
+@property (nonatomic, strong) RequestDelegate* requestDelegate;
 @property (nonatomic, strong) GlobalDelegate* globalDelegate;
 
 @end
@@ -431,11 +432,11 @@
     return _globalDelegate;
 }
 
-- (MEGAGenericRequestDelegate *)requestDelegate {
+- (RequestDelegate *)requestDelegate {
     if (_requestDelegate == nil) {
         __weak __typeof__(self) weakSelf = self;
         MEGASdk *sdkFolder = MEGASdk.sharedFolderLink;
-        _requestDelegate = [MEGAGenericRequestDelegate.alloc initWithStart:^(MEGARequest * _Nonnull request) {
+        _requestDelegate = [RequestDelegate.alloc initOnRequestStartHandler:^(MEGARequest * _Nonnull request) {
             [weakSelf onRequestStart:sdkFolder request:request];
         } completion:^(MEGARequest * _Nonnull request, MEGAError * _Nonnull error) {
             [weakSelf onRequestFinish:sdkFolder request:request error:error];
