@@ -2,9 +2,10 @@ import MEGADomain
 import MEGASwift
 
 public actor MockPhotosRepository: PhotosRepositoryProtocol {
+    
     public static var sharedRepo: MockPhotosRepository = MockPhotosRepository()
     
-    public let photosUpdated: AnyAsyncSequence<[NodeEntity]>
+    private let photosUpdated: AnyAsyncSequence<[NodeEntity]>
     private let photos: [NodeEntity]
     
     public init(photosUpdated: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence<[NodeEntity]>().eraseToAnyAsyncSequence(),
@@ -15,6 +16,10 @@ public actor MockPhotosRepository: PhotosRepositoryProtocol {
     
     public func allPhotos() async throws -> [NodeEntity] {
         photos
+    }
+ 
+    public func photosUpdated() async -> AnyAsyncSequence<[NodeEntity]> {
+        photosUpdated
     }
     
     public func photo(forHandle handle: HandleEntity) async -> NodeEntity? {

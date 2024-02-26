@@ -107,7 +107,7 @@ final class PhotosRepositoryTests: XCTestCase {
         let iterated = expectation(description: "iterated")
         let finished = expectation(description: "finished")
         let task = Task {
-            for await updatedPhotos in await sut.photosUpdated {
+            for await updatedPhotos in await sut.photosUpdated() {
                 XCTAssertEqual(Set(updatedPhotos), Set(expectedPhotos))
                 let photoSourcePhotos = await photoLocalSource.photos
                 XCTAssertEqual(Set(photoSourcePhotos), Set(expectedPhotos))
@@ -135,7 +135,7 @@ final class PhotosRepositoryTests: XCTestCase {
         shouldNotIterate.isInverted = true
         let finished = expectation(description: "finished")
         let task = Task {
-            for await _ in await sut.photosUpdated {
+            for await _ in await sut.photosUpdated() {
                 shouldNotIterate.fulfill()
             }
             finished.fulfill()
@@ -157,7 +157,7 @@ final class PhotosRepositoryTests: XCTestCase {
         
         let firstSequenceFinished = expectation(description: "first task finished")
         let firstTask = Task {
-            for await _ in await sut.photosUpdated {}
+            for await _ in await sut.photosUpdated() {}
             firstSequenceFinished.fulfill()
         }
         firstTask.cancel()
@@ -166,7 +166,7 @@ final class PhotosRepositoryTests: XCTestCase {
         let iterated = expectation(description: "iterated")
         let finished = expectation(description: "finished")
         let secondTask = Task {
-            for await updatedPhotos in await sut.photosUpdated {
+            for await updatedPhotos in await sut.photosUpdated() {
                 XCTAssertEqual(Set(updatedPhotos),
                                Set(expectedPhotos.toNodeEntities()))
                 iterated.fulfill()
@@ -196,7 +196,7 @@ final class PhotosRepositoryTests: XCTestCase {
         let exp = expectation(description: "should not emit value")
         exp.isInverted = true
         let task = Task {
-            for await _ in await sut.photosUpdated {
+            for await _ in await sut.photosUpdated() {
                 exp.fulfill()
             }
         }
@@ -223,7 +223,7 @@ final class PhotosRepositoryTests: XCTestCase {
         let exp = expectation(description: "should not emit value")
         exp.isInverted = true
         let task = Task {
-            for await _ in await sut.photosUpdated {
+            for await _ in await sut.photosUpdated() {
                 exp.fulfill()
             }
         }

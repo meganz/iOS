@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 import MEGADomain
+import MEGASwift
 
 final public class UserAlbumCacheRepository: UserAlbumRepositoryProtocol {
     public static let newRepo: UserAlbumCacheRepository = UserAlbumCacheRepository(
@@ -21,6 +22,7 @@ final public class UserAlbumCacheRepository: UserAlbumRepositoryProtocol {
     private let setAndElementsUpdatesProvider: any SetAndElementUpdatesProviderProtocol
     private let setElementsUpdatedSourcePublisher = PassthroughSubject<[SetElementEntity], Never>()
     private var monitorSDKUpdatesTask: Task<Void, Error>?
+    private let setUpdateSequences = MulticastAsyncSequence<[SetEntity]>()
     
     init(userAlbumRepository: some UserAlbumRepositoryProtocol,
          userAlbumCache: some UserAlbumCacheProtocol,
@@ -50,6 +52,10 @@ final public class UserAlbumCacheRepository: UserAlbumRepositoryProtocol {
         let userAlbums = await userAlbumRepository.albums()
         await userAlbumCache.setAlbums(userAlbums)
         return userAlbums
+    }
+        
+    public func albumsUpdated() async -> AnyAsyncSequence<[SetEntity]> {
+        await setUpdateSequences.make()
     }
     
     public func albumContent(by id: HandleEntity, includeElementsInRubbishBin: Bool) async -> [SetElementEntity] {
@@ -106,6 +112,7 @@ final public class UserAlbumCacheRepository: UserAlbumRepositoryProtocol {
     private func monitorSetUpdates() async {
         for await setUpdates in setAndElementsUpdatesProvider.setUpdates(filteredBy: [.album]) {
             guard !Task.isCancelled else {
+                await setUpdateSequences.terminateContinuations()
                 break
             }
             
@@ -120,7 +127,11 @@ final public class UserAlbumCacheRepository: UserAlbumRepositoryProtocol {
             await userAlbumCache.remove(albums: deletions)
             await userAlbumCache.setAlbums(insertions)
             
-            setsUpdatedSourcePublisher.send(await albums())
+            let updatedAlbums = await albums()
+            
+            setsUpdatedSourcePublisher.send(updatedAlbums)
+            
+            await setUpdateSequences.yield(element: updatedAlbums)
         }
     }
     

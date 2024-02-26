@@ -36,7 +36,8 @@ public struct MonitorPhotosUseCase: MonitorPhotosUseCaseProtocol {
     private func monitorPhotos(nodeEntityFilter predicate: NodeEntityFilter? = nil) async throws -> AnyAsyncSequence<[NodeEntity]> {
         let allPhotos = try await photosRepository.allPhotos()
         
-        let monitorAll = await photosRepository.photosUpdated
+        let monitorAll = await photosRepository
+            .photosUpdated()
             .prepend(allPhotos)
         
         guard let predicate else {
