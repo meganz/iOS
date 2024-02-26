@@ -16,18 +16,10 @@ public actor PhotosRepository: PhotosRepositoryProtocol {
     
     private var searchAllPhotosTask: Task<[NodeEntity], Error>?
     private var monitorNodeUpdatesTask: Task<Void, Error>?
-    private var photosUpdatedContinuations: [UUID: AsyncStream<[NodeEntity]>.Continuation] = [:]
+    private let photosUpdateSequences = MulticastAsyncSequence<[NodeEntity]>()
     
-    public var photosUpdated: AnyAsyncSequence<[NodeEntity]> {
-        let (stream, continuation) = AsyncStream
-            .makeStream(of: [NodeEntity].self, bufferingPolicy: .bufferingNewest(1))
-        let id = UUID()
-        photosUpdatedContinuations[id] = continuation
-        continuation.onTermination = { [weak self] _ in
-            guard let self else { return }
-            Task { await self.photoContinuationTerminated(id: id) }
-        }
-        return stream.eraseToAnyAsyncSequence()
+    public func photosUpdated() async -> AnyAsyncSequence<[NodeEntity]> {
+        await photosUpdateSequences.make()
     }
     
     public init(sdk: MEGASdk,
@@ -123,7 +115,7 @@ public actor PhotosRepository: PhotosRepositoryProtocol {
         monitorNodeUpdatesTask = Task {
             for await nodeUpdates in nodeUpdatesProvider.nodeUpdates {
                 guard !Task.isCancelled else {
-                    terminatePhotoContinuations()
+                    await photosUpdateSequences.terminateContinuations()
                     break
                 }
                 let updatedPhotos = nodeUpdates.filter(\.fileExtensionGroup.isVisualMedia)
@@ -134,7 +126,7 @@ public actor PhotosRepository: PhotosRepositoryProtocol {
                       allPhotos.isNotEmpty else {
                     continue
                 }
-                yieldPhotosToContinuations(allPhotos)
+                await photosUpdateSequences.yield(element: allPhotos)
             }
         }
     }
@@ -163,21 +155,5 @@ public actor PhotosRepository: PhotosRepositoryProtocol {
         
         guard photosToStore.isNotEmpty else { return }
         await photoLocalSource.setPhotos(photosToStore)
-    }
-    
-    private func yieldPhotosToContinuations(_ photos: [NodeEntity]) {
-        for continuation in photosUpdatedContinuations.values {
-            continuation.yield(photos)
-        }
-    }
-    
-    private func photoContinuationTerminated(id: UUID) {
-        photosUpdatedContinuations[id] = nil
-    }
-    
-    private func terminatePhotoContinuations() {
-        for continuation in photosUpdatedContinuations.values {
-            continuation.finish()
-        }
     }
 }
