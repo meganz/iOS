@@ -31,6 +31,7 @@ let package = Package(
             exclude: ["examples",
                       "tests",
                       "doc",
+                      "tools",
                       "contrib",
                       "bindings",
                       "src/win32",
