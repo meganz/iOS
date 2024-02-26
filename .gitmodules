@@ -10,3 +10,6 @@
 [submodule "Modules/DataSource/MEGAChatSDK/Sources/MEGAChatSDK"]
 	path = Modules/DataSource/MEGAChatSDK/Sources/MEGAChatSDK
 	url = https://code.developers.mega.co.nz/megachat/MEGAchat.git
+[submodule "iosTransifex"]
+	path = iosTransifex
+	url = https://code.developers.mega.co.nz/mobile/ios/iosTransifex.git
