@@ -116,6 +116,8 @@ extension ContextMenuModel {
             return ContextMenuDataModel(identifier: "sendToChat", title: Strings.Localizable.General.sendToChat, image: UIImage.sendToChat)
         case .saveToPhotos:
             return ContextMenuDataModel(identifier: "saveToPhotos", title: Strings.Localizable.saveToPhotos, image: UIImage.saveToPhotos)
+        case .hide:
+            return ContextMenuDataModel(identifier: "hide", title: Strings.Localizable.General.MenuAction.Hide.title, image: UIImage.eyeOff)
         }
     }
 

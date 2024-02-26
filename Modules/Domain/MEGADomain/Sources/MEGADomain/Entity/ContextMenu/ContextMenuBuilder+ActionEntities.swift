@@ -172,6 +172,10 @@ extension ContextMenuBuilder {
         CMActionEntity(type: .quickActions(actionType: .saveToPhotos))
     }
     
+    var hide: CMActionEntity {
+        CMActionEntity(type: .quickActions(actionType: .hide))
+    }
+    
     // MARK: - Rubbish Bin Actions
     
     var restore: CMActionEntity {

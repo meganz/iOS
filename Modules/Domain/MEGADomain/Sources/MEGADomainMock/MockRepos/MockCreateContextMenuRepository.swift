@@ -42,6 +42,7 @@ public final class MockCreateContextMenuRepository: CreateContextMenuRepositoryP
                         .setIsEmptyState(config.isEmptyState)
                         .setIsArchivedChatsVisible(config.isArchivedChatsVisible)
                         .setIsMediaFile(config.isMediaFile)
+                        .setIsHidden(config.isHidden)
                         .build()
     }
 }

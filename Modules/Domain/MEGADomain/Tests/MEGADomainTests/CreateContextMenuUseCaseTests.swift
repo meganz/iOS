@@ -165,6 +165,37 @@ final class CreateContextMenuUseCaseTests: XCTestCase {
         XCTAssertTrue(menuActions == menuActionsArray)
     }
     
+    func testCreateContextMenu_displayHidden_returnsCorrectMenuActions() throws {
+        let cmEntity = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .display),
+                                                                        accessLevel: .owner,
+                                                                        isAFolder: true,
+                                                                        isHidden: false))
+        
+        let menuActions = decomposeMenuIntoActions(menu: cmEntity)
+        
+        menuActionsArray = [.quickActions(actionType: .info),
+                            .quickActions(actionType: .download),
+                            .quickActions(actionType: .shareLink),
+                            .quickActions(actionType: .shareFolder),
+                            .quickActions(actionType: .rename),
+                            .quickActions(actionType: .hide),
+                            .quickActions(actionType: .copy),
+                            .display(actionType: .select),
+                            .display(actionType: .thumbnailView),
+                            .display(actionType: .listView),
+                            .sort(actionType: .defaultAsc),
+                            .sort(actionType: .defaultDesc),
+                            .sort(actionType: .sizeDesc),
+                            .sort(actionType: .sizeAsc),
+                            .sort(actionType: .modificationDesc),
+                            .sort(actionType: .modificationAsc),
+                            .sort(actionType: .labelAsc),
+                            .sort(actionType: .favouriteAsc)
+        ]
+        
+        XCTAssertEqual(menuActions, menuActionsArray)
+    }
+    
     func testCreateContextMenu_withAlbumConfigurationFilterEnabledAndNotInEmptyState_shouldShowCorrecMenuActions() throws {
         let cmEntity = try contextMenuActionEntity(with: CMConfigEntity(menuType: .menu(type: .album),
                                                                         sortType: SortOrderEntity.modificationDesc,
