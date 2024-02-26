@@ -4,11 +4,15 @@ public final class MockNodeActionRepository: NodeActionRepositoryProtocol {
     
     public static let newRepo = MockNodeActionRepository()
     private let createFolderResult: Result<NodeEntity, Error>
+    private let setSensitiveResult: Result<NodeEntity, Error>
     
     public var createFolderName: String?
+    public var sensitive: Bool?
     
-    public init(createFolderResult: Result<NodeEntity, Error> = .failure(GenericErrorEntity())) {
+    public init(createFolderResult: Result<NodeEntity, Error> = .failure(GenericErrorEntity()),
+                setSensitiveResult: Result<NodeEntity, Error> = .failure(GenericErrorEntity())) {
         self.createFolderResult = createFolderResult
+        self.setSensitiveResult = setSensitiveResult
     }
     
     public func fetchNodes() async throws {}
@@ -39,4 +43,11 @@ public final class MockNodeActionRepository: NodeActionRepositoryProtocol {
     }
     
     public func removeLink(nodes: [NodeEntity]) async throws {}
+    
+    public func setSensitive(node: NodeEntity, sensitive: Bool) async throws -> NodeEntity {
+        self.sensitive = sensitive
+        return try await withCheckedThrowingContinuation {
+            $0.resume(with: setSensitiveResult)
+        }
+    }
 }

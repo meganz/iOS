@@ -210,7 +210,33 @@ public struct NodeActionRepository: NodeActionRepositoryProtocol {
             try await taskGroup.waitForAll()
         }
     }
+    
+    public func setSensitive(node: NodeEntity, sensitive: Bool) async throws -> NodeEntity {
+        try await withAsyncThrowingValue { completion in
+            guard
+                let node = sdk.node(forHandle: node.handle)
+            else {
+                completion(.failure(NodeErrorEntity.nodeNotFound))
+                return
+            }
+            
+            sdk.setNodeSensitive(node, sensitive: sensitive, delegate: RequestDelegate { result in
+                switch result {
+                case .success(let request):
+                    guard let node = sdk.node(forHandle: request.nodeHandle) else {
+                        completion(.failure(NodeErrorEntity.nodeNotFound))
+                        return
+                    }
+                    completion(.success(node.toNodeEntity()))
+                case .failure:
+                    completion(.failure(GenericErrorEntity()))
+                }
+            })
+        }
+    }
 
+    // MARK: - Private
+    
     private func removeLink(for node: NodeEntity) async throws {
         try await withAsyncThrowingValue { (completion: @escaping (Result<Void, Error>) -> Void) in
             guard let megaNode = node.toMEGANode(in: sdk) else {
