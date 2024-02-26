@@ -104,8 +104,8 @@ final class SlideShowViewController: UIViewController, ViewType {
     private func setNavigationAndToolbarColor() {
         AppearanceManager.forceNavigationBarUpdate(navigationBar, traitCollection: traitCollection)
         AppearanceManager.forceToolbarUpdate(bottomToolbar, traitCollection: traitCollection)
-        bottomBarBackground.backgroundColor = bottomToolbar.backgroundColor
-        statusBarBackground.backgroundColor = bottomToolbar.backgroundColor
+        bottomBarBackground.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
+        statusBarBackground.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
     }
     
     private func adjustHeightOfTopAndBottomView() {
@@ -153,7 +153,7 @@ final class SlideShowViewController: UIViewController, ViewType {
         CrashlyticsLogger.log("[SlideShow] play button tapped.")
         
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut) {
-            self.collectionView.backgroundColor = MEGAAppColor.Black._000000.uiColor
+            self.collectionView.backgroundColor = .black000000
             self.view.backgroundColor = MEGAAppColor.Black._000000.uiColor
             cell?.resetZoomScale()
             if viewModel.currentSlideIndex >= viewModel.photos.count - 1 {
