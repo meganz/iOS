@@ -22,4 +22,13 @@ final class NotificationsUseCaseTests: XCTestCase {
         
         XCTAssertEqual(lastReadNotification, newReadNotificationID)
     }
+    
+    func testFetchEnabledNotifications_shouldReturnCorrectNotifications() {
+        let expectedEnabledNotifications: [NotificationIDEntity] = [1, 2, 3]
+        let sut = NotificationsUseCase(repository: MockNotificationsRepository(enabledNotifications: expectedEnabledNotifications))
+        
+        let enabledNotifications = sut.fetchEnabledNotifications()
+        
+        XCTAssertEqual(expectedEnabledNotifications, enabledNotifications)
+    }
 }
