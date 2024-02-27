@@ -19,6 +19,7 @@ final public class AdsSlotViewModel: ObservableObject {
     
     private(set) var monitorAdsSlotChangesTask: Task<Void, Never>?
     private(set) var hideAdsForUpgradedAccountTask: Task<Void, Never>?
+    private(set) var loadNewAdsTask: Task<Void, Never>?
     
     private var subscriptions = Set<AnyCancellable>()
     
@@ -41,6 +42,8 @@ final public class AdsSlotViewModel: ObservableObject {
         monitorAdsSlotChangesTask = nil
         hideAdsForUpgradedAccountTask?.cancel()
         hideAdsForUpgradedAccountTask = nil
+        loadNewAdsTask?.cancel()
+        loadNewAdsTask = nil
     }
     
     // MARK: Setup
@@ -75,7 +78,8 @@ final public class AdsSlotViewModel: ObservableObject {
     func monitorAdsSlotChanges() {
         guard monitorAdsSlotChangesTask == nil else { return }
         
-        monitorAdsSlotChangesTask = Task {
+        monitorAdsSlotChangesTask = Task { [weak self] in
+            guard let self else { return }
             for await newAdsSlotConfig in adsSlotChangeStream.adsSlotStream {
                 await updateAdsSlot(newAdsSlotConfig)
             }
@@ -106,31 +110,36 @@ final public class AdsSlotViewModel: ObservableObject {
             await displayAds(newAdsSlotConfig.displayAds && adsUrl != nil)
         } else {
             adsSlotConfig = newAdsSlotConfig
-            await loadNewAds()
+            loadNewAds()
         }
     }
     
-    func loadNewAds() async {
-        guard isInAppAdvertisementEnabled, let adsSlotConfig, isAdsEnabled else {
-            await configureAds(url: nil)
-            return
-        }
+    private func loadNewAds() {
+        loadNewAdsTask?.cancel()
         
-        do {
-            let adsSlot = adsSlotConfig.adsSlot
-            let adsResult = try await adsUseCase.fetchAds(adsFlag: .defaultAds,
-                                                          adUnits: [adsSlot],
-                                                          publicHandle: .invalidHandle)
-            guard let adsValue = adsResult[adsSlot.rawValue] else {
+        loadNewAdsTask = Task { [weak self] in
+            guard let self = self else { return }
+            guard isInAppAdvertisementEnabled, let adsSlotConfig, isAdsEnabled else {
                 await configureAds(url: nil)
                 return
             }
             
-            let adsURLString = await appendAdCookieStatusToURL(url: adsValue)
-            
-            await configureAds(url: URL(string: adsURLString), shouldDisplayAds: adsSlotConfig.displayAds)
-        } catch {
-            await configureAds(url: nil)
+            do {
+                let adsSlot = adsSlotConfig.adsSlot
+                let adsResult = try await adsUseCase.fetchAds(adsFlag: .defaultAds,
+                                                              adUnits: [adsSlot],
+                                                              publicHandle: .invalidHandle)
+                guard let adsValue = adsResult[adsSlot.rawValue] else {
+                    await configureAds(url: nil)
+                    return
+                }
+                
+                let adsURLString = await appendAdCookieStatusToURL(url: adsValue)
+                
+                await configureAds(url: URL(string: adsURLString), shouldDisplayAds: adsSlotConfig.displayAds)
+            } catch {
+                await configureAds(url: nil)
+            }
         }
     }
     
@@ -145,7 +154,7 @@ final public class AdsSlotViewModel: ObservableObject {
     func didTapAdsContent() async {
         guard accountUseCase.isNewAccount else {
             // For existing users, new ads will be loaded for the current ads slot
-            await loadNewAds()
+            loadNewAds()
             return
         }
     
@@ -159,12 +168,14 @@ final public class AdsSlotViewModel: ObservableObject {
     
     @MainActor
     private func configureAds(url: URL?, shouldDisplayAds: Bool = false) {
+        guard !Task.isCancelled else { return }
         adsUrl = url
         displayAds(shouldDisplayAds)
     }
     
     @MainActor
     private func displayAds(_ shouldDisplayAds: Bool) {
+        guard !Task.isCancelled else { return }
         displayAds = shouldDisplayAds
     }
 }

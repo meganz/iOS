@@ -50,6 +50,7 @@ final class AdsSlotViewModelTests: XCTestCase {
         await sut.setupABTestVariant()
         sut.monitorAdsSlotChanges()
         await sut.monitorAdsSlotChangesTask?.value
+        await sut.loadNewAdsTask?.value
         
         XCTAssertNotNil(sut.adsUrl)
         let (baseURL, _) = self.separateURLAndParameters(from: sut.adsUrl?.absoluteString ?? "")
@@ -84,48 +85,28 @@ final class AdsSlotViewModelTests: XCTestCase {
         XCTAssertFalse(sut.displayAds)
     }
     
-    func testLoadAdsForAdsSlotList_shouldMatchDisplayAdsValue() async {
-        var adsSlotConfigs = [AdsSlotConfig(adsSlot: .files, displayAds: true, isAdsCookieEnabled: isAdsCookieEnabled),  // show ads on cloud drive
+    func testLoadAdsForAdsSlotList_shouldMatchDisplayAdsValue_shouldMatchAdsUrl() async {
+        let adsSlotConfigs = [AdsSlotConfig(adsSlot: .files, displayAds: true, isAdsCookieEnabled: isAdsCookieEnabled),  // show ads on cloud drive
                               AdsSlotConfig(adsSlot: .home, displayAds: true, isAdsCookieEnabled: isAdsCookieEnabled),   // show ads on home
                               AdsSlotConfig(adsSlot: .home, displayAds: false, isAdsCookieEnabled: isAdsCookieEnabled),  // hide ads on home
                               AdsSlotConfig(adsSlot: .photos, displayAds: true, isAdsCookieEnabled: isAdsCookieEnabled), // show ads on photos
-                              AdsSlotConfig(adsSlot: .files, displayAds: false, isAdsCookieEnabled: isAdsCookieEnabled)] // hide ads on cloud drive
-        let stream = makeMockAdsSlotChangeStream(adsSlotConfigs: adsSlotConfigs)
-        let sut = makeSUT(adsSlotChangeStream: stream, adsList: adsList)
-        
-        sut.$displayAds
-            .dropFirst()
-            .sink { displayAds in
-                let adsSlotConfig = adsSlotConfigs.removeFirst()
-                XCTAssertEqual(displayAds, adsSlotConfig.displayAds)
-            }
-            .store(in: &subscriptions)
-
-        await sut.setupABTestVariant()
-        sut.monitorAdsSlotChanges()
-        await sut.monitorAdsSlotChangesTask?.value
-    }
-    
-    func testLoadAdsForAdsSlotList_shouldMatchAdsUrl() async {
-        var adsSlotConfigs = [AdsSlotConfig(adsSlot: .files, displayAds: true, isAdsCookieEnabled: isAdsCookieEnabled),  // show ads on cloud drive
-                              AdsSlotConfig(adsSlot: .photos, displayAds: true, isAdsCookieEnabled: isAdsCookieEnabled), // show ads on photos
-                              AdsSlotConfig(adsSlot: .home, displayAds: true, isAdsCookieEnabled: isAdsCookieEnabled)]   // show ads on home
+                              AdsSlotConfig(adsSlot: .files, displayAds: false, isAdsCookieEnabled: isAdsCookieEnabled)] // LAST: hide ads on cloud drive
         let stream = makeMockAdsSlotChangeStream(adsSlotConfigs: adsSlotConfigs)
         let ads = adsList
         let sut = makeSUT(adsSlotChangeStream: stream, adsList: ads)
         
-        sut.$adsUrl
-            .dropFirst()
-            .sink { url in
-                let adsSlotConfig = adsSlotConfigs.removeFirst()
-                let (baseURL, _) = self.separateURLAndParameters(from: url?.absoluteString ?? "")
-                XCTAssertEqual(baseURL, ads[adsSlotConfig.adsSlot.rawValue])
-            }
-            .store(in: &subscriptions)
-        
+        let exp = expectation(description: "Ads slots should be setup correctly")
         await sut.setupABTestVariant()
         sut.monitorAdsSlotChanges()
         await sut.monitorAdsSlotChangesTask?.value
+        await sut.loadNewAdsTask?.value
+        exp.fulfill()
+        await fulfillment(of: [exp], timeout: 1.0)
+        
+        // Only the latest adsConfig value should be rendered because any ongoing fetching of Ads(loadNewAdsTask) will be cancelled when a new AdsSlotEntity is received on the stream
+        let (baseURL, _) = self.separateURLAndParameters(from: sut.adsUrl?.absoluteString ?? "")
+        XCTAssertEqual(baseURL, ads[AdsSlotEntity.files.rawValue])
+        XCTAssertFalse(sut.displayAds)
     }
     
     func testUpdateAdsSlot_sameAdsSlotConfig_adsUrlIsNil_shouldNotDisplayAds() async {
@@ -151,6 +132,7 @@ final class AdsSlotViewModelTests: XCTestCase {
         await sut.setupABTestVariant()
         sut.monitorAdsSlotChanges()
         await sut.monitorAdsSlotChangesTask?.value
+        await sut.loadNewAdsTask?.value
         
         let currentAdsUrl = sut.adsUrl
         let currentDisplayAds = sut.displayAds
@@ -170,6 +152,7 @@ final class AdsSlotViewModelTests: XCTestCase {
         await sut.setupABTestVariant()
         sut.monitorAdsSlotChanges()
         await sut.monitorAdsSlotChangesTask?.value
+        await sut.loadNewAdsTask?.value
         
         let currentAdsUrl = sut.adsUrl
         await sut.updateAdsSlot(expectedAdsSlotConfig)
@@ -187,9 +170,11 @@ final class AdsSlotViewModelTests: XCTestCase {
         await sut.setupABTestVariant()
         sut.monitorAdsSlotChanges()
         await sut.monitorAdsSlotChangesTask?.value
+        await sut.loadNewAdsTask?.value
         
         let currentAdsUrl = sut.adsUrl
         await sut.updateAdsSlot(expectedAdsSlotConfig)
+        await sut.loadNewAdsTask?.value
         
         XCTAssertNotEqual(currentAdsUrl, sut.adsUrl)
         XCTAssertEqual(expectedAdsSlotConfig.displayAds, sut.displayAds)
@@ -204,6 +189,7 @@ final class AdsSlotViewModelTests: XCTestCase {
         await sut.setupABTestVariant()
         sut.monitorAdsSlotChanges()
         await sut.monitorAdsSlotChangesTask?.value
+        await sut.loadNewAdsTask?.value
         
         XCTAssertTrue(sut.closedAds.isEmpty)
         
@@ -212,6 +198,7 @@ final class AdsSlotViewModelTests: XCTestCase {
         XCTAssertFalse(sut.displayAds)
         
         await sut.updateAdsSlot(adsSlotConfigTabTwo)
+        await sut.loadNewAdsTask?.value
         XCTAssertTrue(sut.closedAds.contains(adsSlotConfigTabOne.adsSlot))
         XCTAssertFalse(sut.closedAds.contains(adsSlotConfigTabTwo.adsSlot))
         XCTAssertTrue(sut.displayAds)
@@ -229,10 +216,12 @@ final class AdsSlotViewModelTests: XCTestCase {
         await sut.setupABTestVariant()
         sut.monitorAdsSlotChanges()
         await sut.monitorAdsSlotChangesTask?.value
+        await sut.loadNewAdsTask?.value
         
         XCTAssertTrue(sut.closedAds.isEmpty)
         
         await sut.didTapAdsContent()
+        await sut.loadNewAdsTask?.value
         XCTAssertTrue(sut.closedAds.isEmpty)
         XCTAssertTrue(sut.displayAds)
         XCTAssertNotNil(sut.adsUrl)
