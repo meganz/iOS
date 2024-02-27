@@ -4,7 +4,6 @@
 #import "UIImage+MNZCategory.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
 #import "MEGAGetPreviewRequestDelegate.h"
-#import "MEGAGenericRequestDelegate.h"
 #import <objc/runtime.h>
 #import "MEGASdk+MNZCategory.h"
 
