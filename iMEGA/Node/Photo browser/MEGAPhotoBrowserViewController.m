@@ -627,16 +627,16 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
                           duration:0.2
                            options:UIViewAnimationOptionTransitionCrossDissolve
                         animations:^{
+            
+            imageView.image = [UIImage imageWithContentsOfFile:transfer.path];
+            [self resizeImageView:imageView];
+
             if (self.dataProvider.currentIndex == index) {
                 self.pieChartView.alpha = 0.0f;
                 [self activateSlideShowButtonWithBarButtonItem:[self slideshowButton]];
             }
         }
                         completion:nil];
-        
-        self.imageViewsCache = [[NSCache<NSNumber *, UIScrollView *> alloc] init];
-        self.imageViewsCache.countLimit = 1000;
-        [self loadNearbyImagesFromIndex:self.dataProvider.currentIndex];
         
         [self removeActivityIndicatorsFromView:imageView];
         [self startLiveTextAnalysisFor:imageView in:index];
