@@ -246,7 +246,7 @@ extension UIColor {
             return MEGAAppColor.White._F7F7F7_pageBackground.uiColor
             
         case .dark:
-            return MEGAAppColor.Black._000000_pageBackground.uiColor
+            return MEGAAppColor.Black._1C1C1E_pageBackground.uiColor
             
         @unknown default:
             return MEGAAppColor.White._F7F7F7_pageBackground.uiColor
