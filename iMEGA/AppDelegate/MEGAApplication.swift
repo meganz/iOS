@@ -8,7 +8,9 @@ import FLEX
     
     override func sendEvent(_ event: UIEvent) {
         if event.type == .touches && event.allTouches?.randomElement()?.phase == .ended {
-            MEGAChatSdk.shared.signalPresenceActivity()
+            Task.detached {
+                MEGAChatSdk.shared.signalPresenceActivity()
+            }
         }
 #if DEBUG
         if event.allTouches?.count == 4 {
