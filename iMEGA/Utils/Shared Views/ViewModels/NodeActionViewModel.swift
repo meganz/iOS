@@ -9,10 +9,10 @@ struct NodeActionViewModel {
         self.featureFlagProvider = featureFlagProvider
     }
     
-    func isNodeHidden(_ node: NodeEntity) -> Bool? {
+    func containsOnlySensitiveNodes(_ nodes: [NodeEntity]) -> Bool? {
         guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes) else {
             return nil
         }
-        return node.isMarkedSensitive
+        return nodes.notContains { !$0.isMarkedSensitive }
     }
 }

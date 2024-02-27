@@ -303,6 +303,9 @@ final class NodeActionBuilder {
                 nodeActions.append(.pdfPageViewAction())
             }
         }
+        if isHidden == false {
+            nodeActions.append(.hideAction())
+        }
 
         return nodeActions
     }
@@ -554,7 +557,7 @@ final class NodeActionBuilder {
             nodeActions.append(.renameAction())
         }
         
-        if displayMode == .cloudDrive && isHidden == false {
+        if shouldAddHiddenActionForCloudDrive() {
             nodeActions.append(.hideAction())
         }
         
@@ -692,6 +695,9 @@ final class NodeActionBuilder {
         if isBackupNode {
             actions.append(.copyAction())
         } else {
+            if shouldAddHiddenActionForCloudDrive() {
+                actions.append(.hideAction())
+            }
             actions.append(contentsOf: [.moveAction(), .copyAction(), .moveToRubbishBinAction()])
         }
         
@@ -714,6 +720,9 @@ final class NodeActionBuilder {
         if isBackupNode {
             actions.append(.copyAction())
         } else {
+            if shouldAddHiddenActionForCloudDrive() {
+                actions.append(.hideAction())
+            }
             actions.append(contentsOf: [.moveAction(), .copyAction(), .moveToRubbishBinAction()])
         }
         
@@ -730,6 +739,9 @@ final class NodeActionBuilder {
         if isBackupNode {
             actions.append(.copyAction())
         } else {
+            if shouldAddHiddenActionForCloudDrive() {
+                actions.append(.hideAction())
+            }
             actions.append(contentsOf: [.moveAction(), .copyAction(), .moveToRubbishBinAction()])
         }
         
@@ -774,5 +786,9 @@ final class NodeActionBuilder {
         } else {
             return [.shareLinkAction()]
         }
+    }
+    
+    private func shouldAddHiddenActionForCloudDrive() -> Bool {
+        displayMode == .cloudDrive && isHidden == false
     }
 }

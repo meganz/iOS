@@ -6,28 +6,44 @@ import XCTest
 
 final class NodeActionViewModelTests: XCTestCase {
 
-    func testIsNodeHidden_hiddenNodeFeatureOff_shouldReturnFalse() {
+    func testContainsOnlySensitiveNodes_hiddenNodeFeatureOff_shouldReturnNil() {
         let node = NodeEntity(handle: 65, isMarkedSensitive: true)
         let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: false])
         let sut = makeSUT(featureFlagProvider: featureFlagProvider)
         
-        XCTAssertNil(sut.isNodeHidden(node))
+        XCTAssertNil(sut.containsOnlySensitiveNodes([node]))
     }
     
-    func testIsNodeHidden_nodeMarkedAsSensitive_resultShouldMatchSensitiveState() throws {
-        try [true, false].forEach {
-            let node = NodeEntity(handle: 65, isMarkedSensitive: $0)
-            let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
-            let sut = makeSUT(featureFlagProvider: featureFlagProvider)
-            
-            let isHidden = try XCTUnwrap(sut.isNodeHidden(node))
-            XCTAssertEqual(isHidden, $0)
-        }
+    func testContainsOnlySensitiveNodes_nodesContainsOnlySensitiveNodes_shouldReturnTrue() throws {
+        let nodes = makeSensitiveNodes()
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
+        let sut = makeSUT(featureFlagProvider: featureFlagProvider)
+        
+        let containsOnlySensitiveNodes = try XCTUnwrap(sut.containsOnlySensitiveNodes(nodes))
+        
+        XCTAssertTrue(containsOnlySensitiveNodes)
+    }
+    
+    func testContainsOnlySensitiveNodes_nodesContainsOnlySensitiveNodes_shouldReturnFalse() throws {
+        var nodes = makeSensitiveNodes()
+        nodes.append(NodeEntity(handle: HandleEntity(nodes.count + 1), isMarkedSensitive: false))
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
+        let sut = makeSUT(featureFlagProvider: featureFlagProvider)
+        
+        let containsOnlySensitiveNodes = try XCTUnwrap(sut.containsOnlySensitiveNodes(nodes))
+        
+        XCTAssertFalse(containsOnlySensitiveNodes)
     }
 
     private func makeSUT(
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> NodeActionViewModel {
         NodeActionViewModel(featureFlagProvider: featureFlagProvider)
+    }
+    
+    private func makeSensitiveNodes() -> [NodeEntity] {
+        (0..<5).map {
+            NodeEntity(handle: $0, isMarkedSensitive: true)
+        }
     }
 }

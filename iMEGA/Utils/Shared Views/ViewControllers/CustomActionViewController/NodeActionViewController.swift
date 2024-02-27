@@ -125,6 +125,7 @@ class NodeActionViewController: ActionSheetViewController {
             .setIsFavourite(displayMode == .photosFavouriteAlbum)
             .setIsBackupNode(containsABackupNode)
             .setAreMediaFiles(areMediaFiles)
+            .setIsHidden(viewModel.containsOnlySensitiveNodes(nodes.toNodeEntities()))
             .multiselectBuild()
     }
 
@@ -218,6 +219,7 @@ class NodeActionViewController: ActionSheetViewController {
             .setIsInVersionsView(isInVersionsView)
             .setIsBackupNode(isBackupNode)
             .setIsExported(node.isExported())
+            .setIsHidden(viewModel.containsOnlySensitiveNodes([node.toNodeEntity()]))
             .build()
     }
     
@@ -386,7 +388,7 @@ class NodeActionViewController: ActionSheetViewController {
             .setIsVerifyContact(isVerifyContact,
                                 sharedFolderReceiverEmail: sharedFolder.user ?? "",
                                 sharedFolderContact: sharedFolderContact)
-            .setIsHidden(viewModel.isNodeHidden(node.toNodeEntity()))
+            .setIsHidden(viewModel.containsOnlySensitiveNodes([node.toNodeEntity()]))
             .build()
     }
 }

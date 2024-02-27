@@ -1272,4 +1272,49 @@ class NodeActionBuilderTests: XCTestCase {
         
         XCTAssertTrue(isEqual(nodeActionTypes: [.saveToPhotos]))
     }
+    
+    func testMultiselectBuild_cloudDriveContainsHiddenFolderForFolderDisplayMode_shouldReturnCorrectActions() {
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.folders, selectedNodeCount: 4)
+            .setDisplayMode(.cloudDrive)
+            .setIsHidden(false)
+            .multiselectBuild()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .shareFolder,
+                                                .hide, .move, .copy, .moveToRubbishBin]))
+    }
+    
+    func testMultiselectBuild_cloudDriveContainsHiddenFileForFileDisplayMode_shouldReturnCorrectActions() {
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.files, selectedNodeCount: 4)
+            .setDisplayMode(.cloudDrive)
+            .setIsHidden(false)
+            .multiselectBuild()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat,
+                                                .hide, .move, .copy, .moveToRubbishBin]))
+    }
+    
+    func testMultiselectBuild_cloudDriveContainsHiddenFileOrFolderForFileAndFolderDisplayMode_shouldReturnCorrectActions() {
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.filesAndFolders, selectedNodeCount: 4)
+            .setDisplayMode(.cloudDrive)
+            .setIsHidden(false)
+            .multiselectBuild()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .hide,
+                                                .move, .copy, .moveToRubbishBin]))
+    }
+    
+    func testMultiselectBuild_cloudDriveForDisplayModesHiddenValueNil_shouldNotContainHideAction() {
+        [NodeSelectionType.folders, .files, .filesAndFolders].forEach {
+            actions = NodeActionBuilder()
+                .setNodeSelectionType($0, selectedNodeCount: 4)
+                .setDisplayMode(.cloudDrive)
+                .setIsHidden(nil)
+                .multiselectBuild()
+            
+            XCTAssertTrue(actions.notContains(where: { $0.type == .hide }))
+        }
+    }
 }
