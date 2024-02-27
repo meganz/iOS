@@ -23,6 +23,7 @@ final public class UserAlbumCacheRepository: UserAlbumRepositoryProtocol {
     private let setElementsUpdatedSourcePublisher = PassthroughSubject<[SetElementEntity], Never>()
     private var monitorSDKUpdatesTask: Task<Void, Error>?
     private let setUpdateSequences = MulticastAsyncSequence<[SetEntity]>()
+    private let setElementUpdateOnSetsSequences = MulticastAsyncSequence<[SetEntity]>()
     
     init(userAlbumRepository: some UserAlbumRepositoryProtocol,
          userAlbumCache: some UserAlbumCacheProtocol,
@@ -53,9 +54,54 @@ final public class UserAlbumCacheRepository: UserAlbumRepositoryProtocol {
         await userAlbumCache.setAlbums(userAlbums)
         return userAlbums
     }
-        
+    
+    /// AnyAsyncSequence that produces a new list of SetEntity when a change has occurred on any given UserAlbum SetEntity for this users account
+    /// - Returns: AnyAsyncSequence<[SetEntity]> of all the available Albums, only yields when a new update has occurred.
     public func albumsUpdated() async -> AnyAsyncSequence<[SetEntity]> {
         await setUpdateSequences.make()
+            .compactMap { [weak self] _ in await self?.albums() }
+            .eraseToAnyAsyncSequence()
+    }
+    
+    /// AsyncSequence that will yield a new SetEntity, iff the provided id matches an updated SetEntity handle. If the provided id does not match then it will not yield any value even on changes to other Sets.
+    /// - Parameter id: HandleEntity for a given set. This will be used to filter results from Set Changes
+    /// - Returns: AnyAsyncSequence<SetEntity> of all the available Albums, only yields when a new update has occurred for the provided SetEntity Id. If the yielded results is nil, this means that the Set has been removed and no longer available.
+    public func albumUpdated(by id: HandleEntity) async -> AnyAsyncSequence<SetEntity?> {
+        await setUpdateSequences
+            .make()
+            .compactMap { $0.first { setEntity in setEntity.handle == id }}
+            .map({ [weak self] updatedSet -> SetEntity? in
+                guard let self else {
+                    return nil
+                }
+                
+                return if updatedSet.changeTypes.contains(.removed) {
+                    nil
+                } else {
+                    await userAlbumCache.album(forHandle: id)
+                }
+            })
+            .eraseToAnyAsyncSequence()
+    }
+    
+    /// AsyncSequence that will yield a new list of SetElementEntities when the provided Set Id has had an update to its elements. The id will used to filter the results from all SetElement updates to only yeild on this specific sets changes. This yields only when changes to Sets elements occur.
+    /// It will yield the latest list of SetElementEntities, after a change has occurred.
+    /// - Parameters:
+    /// - Parameter id: HandleEntity for a given set. This will be used to filter results from SetElement Changes.
+    ///   - includeElementsInRubbishBin:  Boolean indicating if elements in the rubbish bin should be included in the yielded value.
+    /// - Returns: AnyAsyncSequence<[SetElementEntity]> of all the Album Elements, it only yields when a new update has occurred in  the provided SetEntity Id.
+    public func albumContentUpdated(by id: HandleEntity, includeElementsInRubbishBin: Bool) async -> AnyAsyncSequence<[SetElementEntity]> {
+        await setElementUpdateOnSetsSequences
+            .make()
+            .compactMap({ [weak self] updatedSets -> [SetElementEntity]? in
+                guard
+                    let self,
+                    updatedSets.contains(where: { $0.handle == id }) else {
+                    return nil
+                }
+                return await albumContent(by: id, includeElementsInRubbishBin: includeElementsInRubbishBin)
+            })
+            .eraseToAnyAsyncSequence()
     }
     
     public func albumContent(by id: HandleEntity, includeElementsInRubbishBin: Bool) async -> [SetElementEntity] {
@@ -127,11 +173,8 @@ final public class UserAlbumCacheRepository: UserAlbumRepositoryProtocol {
             await userAlbumCache.remove(albums: deletions)
             await userAlbumCache.setAlbums(insertions)
             
-            let updatedAlbums = await albums()
-            
-            setsUpdatedSourcePublisher.send(updatedAlbums)
-            
-            await setUpdateSequences.yield(element: updatedAlbums)
+            setsUpdatedSourcePublisher.send(setUpdates)
+            await setUpdateSequences.yield(element: setUpdates)
         }
     }
     
@@ -146,6 +189,17 @@ final public class UserAlbumCacheRepository: UserAlbumRepositoryProtocol {
             await userAlbumCache.removeElements(of: invalidateAlbumSets)
             
             setElementsUpdatedSourcePublisher.send(setElementUpdate)
+            
+            let updatedAlbums = await withTaskGroup(of: SetEntity?.self, returning: [SetEntity].self) { taskGroup in
+                invalidateAlbumSets
+                    .forEach { albumHandle in
+                        taskGroup.addTask { await self.userAlbumCache.album(forHandle: albumHandle) }
+                    }
+                
+                return await taskGroup.reduce(into: [SetEntity](), { if let set = $1 { $0.append(set) } })
+            }
+            
+            await setElementUpdateOnSetsSequences.yield(element: updatedAlbums)
         }
     }
 }

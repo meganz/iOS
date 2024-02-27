@@ -215,9 +215,9 @@ final class UserAlbumCacheRepositoryTests: XCTestCase {
         // Assert
         let exp = expectation(description: "An empty result from publisher")
         let cancellable = sut.setsUpdatedPublisher
-            .first { $0.isEmpty }
+            .first { $0.isNotEmpty }
             .sink { result in
-                XCTAssertEqual(Set(result), [])
+                XCTAssertTrue(result.allSatisfy { $0.changeTypes == .removed })
                 exp.fulfill()
             }
         
@@ -432,7 +432,7 @@ final class UserAlbumCacheRepositoryTests: XCTestCase {
         expectedTasksStarted.assertForOverFulfill = false
         
         let tasks = (0..<numberOfSequences)
-            .map { index in
+            .map { _ in
                 Task {
                     expectedTasksStarted.fulfill()
                     for await updatedSets in await sut.albumsUpdated() {
@@ -445,6 +445,218 @@ final class UserAlbumCacheRepositoryTests: XCTestCase {
           
         await fulfillment(of: [expectedTasksStarted], timeout: 1)
         setAndElementsUpdatesProvider.mockSendSetUpdate(setUpdate: expectedResult)
+        await fulfillment(of: [updatedExp], timeout: 0.5)
+        tasks.forEach { $0.cancel() }
+        await fulfillment(of: [taskFinishedExp], timeout: 0.5)
+    }
+    
+    func testAlbumUpdatedForId_onSetUpdate_shouldYieldUpdatedSetsToMultipleListenersForGivenSetOnly() async {
+        
+        let expectedResult = SetEntity(handle: 3)
+        let setAndElementsUpdatesProvider = MockSetAndElementUpdatesProvider()
+        let userAlbumCache = MockUserAlbumCache()
+        let sut = makeSUT(
+            userAlbumCache: userAlbumCache,
+            setAndElementsUpdatesProvider: setAndElementsUpdatesProvider)
+        
+        let numberOfSequences = 20
+        let updatedExp = expectation(description: "update was emitted")
+        updatedExp.expectedFulfillmentCount = numberOfSequences
+        updatedExp.assertForOverFulfill = false
+        let taskFinishedExp = expectation(description: "Task successfully finished on cancellation")
+        taskFinishedExp.expectedFulfillmentCount = numberOfSequences
+        taskFinishedExp.assertForOverFulfill = false
+        
+        let expectedTasksStarted = expectation(description: "Expected number of tasks started")
+        expectedTasksStarted.expectedFulfillmentCount = numberOfSequences
+        expectedTasksStarted.assertForOverFulfill = false
+        
+        let tasks = (0..<numberOfSequences)
+            .map { _ in
+                Task {
+                    expectedTasksStarted.fulfill()
+                    for await updatedSet in await sut.albumUpdated(by: 3) {
+                        XCTAssertEqual(updatedSet, expectedResult)
+                        updatedExp.fulfill()
+                    }
+                    taskFinishedExp.fulfill()
+                }
+            }
+          
+        await fulfillment(of: [expectedTasksStarted], timeout: 1)
+        setAndElementsUpdatesProvider.mockSendSetUpdate(setUpdate: [
+            SetEntity(handle: 1),
+            expectedResult,
+            SetEntity(handle: 6)
+        ])
+        await fulfillment(of: [updatedExp], timeout: 0.5)
+        tasks.forEach { $0.cancel() }
+        await fulfillment(of: [taskFinishedExp], timeout: 0.5)
+    }
+    
+    func testAlbumUpdatedForId_onSetUpdateForSetNotBeingMonitored_shouldNotYieldUpdatedSetsToMultipleListeners() async {
+        
+        let expectedResult = [
+            SetEntity(handle: 1),
+            SetEntity(handle: 3),
+            SetEntity(handle: 6)
+        ]
+        
+        let setAndElementsUpdatesProvider = MockSetAndElementUpdatesProvider()
+        let userAlbumCache = MockUserAlbumCache()
+        let sut = makeSUT(
+            userAlbumCache: userAlbumCache,
+            setAndElementsUpdatesProvider: setAndElementsUpdatesProvider)
+        
+        let numberOfSequences = 20
+        let updatedExp = expectation(description: "expecting no update for set that is not being monitored for a change")
+        updatedExp.isInverted = true
+        let taskFinishedExp = expectation(description: "Task successfully finished on cancellation")
+        taskFinishedExp.expectedFulfillmentCount = numberOfSequences
+        taskFinishedExp.assertForOverFulfill = false
+        
+        let expectedTasksStarted = expectation(description: "Expected number of tasks started")
+        expectedTasksStarted.expectedFulfillmentCount = numberOfSequences
+        expectedTasksStarted.assertForOverFulfill = false
+        
+        let tasks = (0..<numberOfSequences)
+            .map { _ in
+                Task {
+                    expectedTasksStarted.fulfill()
+                    for await _ in await sut.albumUpdated(by: 4) {
+                        updatedExp.fulfill()
+                    }
+                    taskFinishedExp.fulfill()
+                }
+            }
+          
+        await fulfillment(of: [expectedTasksStarted], timeout: 1)
+        setAndElementsUpdatesProvider.mockSendSetUpdate(setUpdate: expectedResult)
+        await fulfillment(of: [updatedExp], timeout: 0.5)
+        tasks.forEach { $0.cancel() }
+        await fulfillment(of: [taskFinishedExp], timeout: 0.5)
+    }
+    
+    func testAlbumUpdatedForId_onSetUpdateAndUpdateContainsRemoveChange_shouldYieldNilUpdateToMultipleListeners() async {
+        
+        let expectedResult = [
+            SetEntity(handle: 1),
+            SetEntity(handle: 3, changeTypes: .removed),
+            SetEntity(handle: 6)
+        ]
+        
+        let setAndElementsUpdatesProvider = MockSetAndElementUpdatesProvider()
+        let userAlbumCache = MockUserAlbumCache(albums: [SetEntity(handle: 3)])
+        let sut = makeSUT(
+            userAlbumCache: userAlbumCache,
+            setAndElementsUpdatesProvider: setAndElementsUpdatesProvider)
+        
+        let numberOfSequences = 20
+        let updatedExp = expectation(description: "expecting no update for set that is not being monitored for a change")
+        updatedExp.expectedFulfillmentCount = numberOfSequences
+        updatedExp.assertForOverFulfill = false
+        let taskFinishedExp = expectation(description: "Task successfully finished on cancellation")
+        taskFinishedExp.expectedFulfillmentCount = numberOfSequences
+        taskFinishedExp.assertForOverFulfill = false
+        
+        let expectedTasksStarted = expectation(description: "Expected number of tasks started")
+        expectedTasksStarted.expectedFulfillmentCount = numberOfSequences
+        expectedTasksStarted.assertForOverFulfill = false
+        
+        let tasks = (0..<numberOfSequences)
+            .map { _ in
+                Task {
+                    expectedTasksStarted.fulfill()
+                    for await setUpdate in await sut.albumUpdated(by: 3) {
+                        XCTAssertNil(setUpdate)
+                        updatedExp.fulfill()
+                    }
+                    taskFinishedExp.fulfill()
+                }
+            }
+          
+        await fulfillment(of: [expectedTasksStarted], timeout: 1)
+        setAndElementsUpdatesProvider.mockSendSetUpdate(setUpdate: expectedResult)
+        await fulfillment(of: [updatedExp], timeout: 0.5)
+        tasks.forEach { $0.cancel() }
+        await fulfillment(of: [taskFinishedExp], timeout: 0.5)
+    }
+    
+    func testAlbumContentUpdatedForId_onSetElementUpdate_shouldYieldUpdateToMultipleListeners() async {
+        let albumId: HandleEntity = 3
+        let setAndElementsUpdatesProvider = MockSetAndElementUpdatesProvider()
+        let userAlbumCache = MockUserAlbumCache(albums: [SetEntity(handle: 3)])
+        let sut = makeSUT(
+            userAlbumCache: userAlbumCache,
+            setAndElementsUpdatesProvider: setAndElementsUpdatesProvider)
+        
+        let numberOfSequences = 20
+        let updatedExp = expectation(description: "expecting update for set elements for the monitored change")
+        updatedExp.expectedFulfillmentCount = numberOfSequences
+        updatedExp.assertForOverFulfill = false
+        let taskFinishedExp = expectation(description: "Task successfully finished on cancellation")
+        taskFinishedExp.expectedFulfillmentCount = numberOfSequences
+        taskFinishedExp.assertForOverFulfill = false
+        
+        let expectedTasksStarted = expectation(description: "Expected number of tasks started")
+        expectedTasksStarted.expectedFulfillmentCount = numberOfSequences
+        expectedTasksStarted.assertForOverFulfill = false
+        
+        let tasks = (0..<numberOfSequences)
+            .map { _ in
+                Task {
+                    expectedTasksStarted.fulfill()
+                    for await _ in await sut.albumContentUpdated(by: albumId, includeElementsInRubbishBin: false) {
+                        updatedExp.fulfill()
+                    }
+                    taskFinishedExp.fulfill()
+                }
+            }
+          
+        await fulfillment(of: [expectedTasksStarted], timeout: 1)
+        setAndElementsUpdatesProvider
+            .mockSendSetElementUpdate(setElementUpdate: [
+                .init(handle: 1, ownerId: albumId)
+            ])
+        await fulfillment(of: [updatedExp], timeout: 0.5)
+        tasks.forEach { $0.cancel() }
+        await fulfillment(of: [taskFinishedExp], timeout: 0.5)
+    }
+    
+    func testAlbumContentUpdatedForId_onSetElementUpdateAndChangeOccuredForUnmonitoredSet_shouldNotYieldUpdateToMultipleListeners() async {
+        let setAndElementsUpdatesProvider = MockSetAndElementUpdatesProvider()
+        let userAlbumCache = MockUserAlbumCache(albums: [SetEntity(handle: 3)])
+        let sut = makeSUT(
+            userAlbumCache: userAlbumCache,
+            setAndElementsUpdatesProvider: setAndElementsUpdatesProvider)
+        
+        let numberOfSequences = 20
+        let updatedExp = expectation(description: "expecting no update for set elements for the monitored change")
+        updatedExp.isInverted = true
+        let taskFinishedExp = expectation(description: "Task successfully finished on cancellation")
+        taskFinishedExp.expectedFulfillmentCount = numberOfSequences
+        taskFinishedExp.assertForOverFulfill = false
+        
+        let expectedTasksStarted = expectation(description: "Expected number of tasks started")
+        expectedTasksStarted.expectedFulfillmentCount = numberOfSequences
+        expectedTasksStarted.assertForOverFulfill = false
+        
+        let tasks = (0..<numberOfSequences)
+            .map { _ in
+                Task {
+                    expectedTasksStarted.fulfill()
+                    for await _ in await sut.albumContentUpdated(by: 2, includeElementsInRubbishBin: false) {
+                        updatedExp.fulfill()
+                    }
+                    taskFinishedExp.fulfill()
+                }
+            }
+          
+        await fulfillment(of: [expectedTasksStarted], timeout: 1)
+        setAndElementsUpdatesProvider
+            .mockSendSetElementUpdate(setElementUpdate: [
+                .init(handle: 1, ownerId: 1)
+            ])
         await fulfillment(of: [updatedExp], timeout: 0.5)
         tasks.forEach { $0.cancel() }
         await fulfillment(of: [taskFinishedExp], timeout: 0.5)
