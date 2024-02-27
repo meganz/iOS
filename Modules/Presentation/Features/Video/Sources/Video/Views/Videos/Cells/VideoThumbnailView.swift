@@ -20,6 +20,8 @@ struct VideoThumbnailView: View {
                 .frame(width: 150, height: 150)
         } else {
             previewEntity.imageContainer.image
+                .resizable()
+                .aspectRatio(contentMode: .fill)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .cornerRadius(4)
         }
@@ -54,5 +56,5 @@ struct VideoThumbnailView: View {
 // MARK: - Preview
 
 #Preview {
-    VideoThumbnailView(previewEntity: .all, videoConfig: .preview)
+    VideoThumbnailView(previewEntity: .all(title: .short), videoConfig: .preview)
 }

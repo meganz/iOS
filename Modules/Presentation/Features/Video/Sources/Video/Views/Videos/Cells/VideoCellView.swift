@@ -37,8 +37,7 @@ struct VideoCellViewContent: View {
             trailingContent
                 .frame(width: 24, height: 24)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-        .padding([.top, .bottom], 8)
+        .frame(maxWidth: .infinity, idealHeight: 80, alignment: .leading)
     }
     
     private var leadingContent: some View {
@@ -46,21 +45,13 @@ struct VideoCellViewContent: View {
     }
     
     private var centerContent: some View {
-        
         VStack(alignment: .leading, spacing: 4) {
             
-            HStack {
-                Text(previewEntity.title)
-                    .font(.subheadline)
-                    .foregroundColor(videoConfig.colorAssets.primaryTextColor)
-                    .frame(maxWidth: .infinity, minHeight: 40, maxHeight: 40, alignment: .topLeading)
-                
-                if let labelImage = previewEntity.labelImage(source: videoConfig.rowAssets.labelAssets) {
-                    Image(uiImage: labelImage)
-                        .font(.system(size: 12))
-                        .clipShape(RoundedRectangle(cornerRadius: 6))
-                }
-            }
+            VideoCellTitleText(
+                videoConfig: videoConfig,
+                title: previewEntity.title,
+                labelImage: previewEntity.labelImage(source: videoConfig.rowAssets.labelAssets)
+            )
             
             HStack(alignment: .center, spacing: 8) {
                 
@@ -76,11 +67,14 @@ struct VideoCellViewContent: View {
                 Image(uiImage: videoConfig.rowAssets.publicLinkImage)
                     .font(.system(size: 12))
                     .foregroundColor(videoConfig.colorAssets.secondaryTextColor)
-                    .opacity(previewEntity.isPublicLink ? 1 : 0)
+                    .opacity(previewEntity.isExported ? 1 : 0)
                 
             }
             .padding(0)
             .frame(maxWidth: .infinity, alignment: .leading)
+            
+            Spacer()
+                .frame(maxHeight: .infinity)
         }
     }
     
@@ -103,7 +97,11 @@ struct VideoCellViewContent: View {
             .frame(height: 80)
         VideoCellViewContent(previewEntity: .hasLabel, videoConfig: .preview, onTappedMoreOptions: {})
             .frame(height: 80)
-        VideoCellViewContent(previewEntity: .all, videoConfig: .preview, onTappedMoreOptions: {})
+        VideoCellViewContent(previewEntity: .all(title: .short), videoConfig: .preview, onTappedMoreOptions: {})
+            .frame(height: 80)
+        VideoCellViewContent(previewEntity: .all(title: .medium), videoConfig: .preview, onTappedMoreOptions: {})
+            .frame(height: 80)
+        VideoCellViewContent(previewEntity: .all(title: .long), videoConfig: .preview, onTappedMoreOptions: {})
             .frame(height: 80)
         VideoCellViewContent(previewEntity: .placeholder, videoConfig: .preview, onTappedMoreOptions: {})
             .frame(height: 80)

@@ -17,20 +17,20 @@ class VideoCellPreviewEntityTests: XCTestCase {
     
     // MARK: - shouldShowCircleImage
     
-    func testShouldShowCircleImage_whenTitleAndSizeNotEmpty_returnsTrue() {
-        let sut = makeSUT(title: "some title", size: "some size")
+    func testShouldShowCircleImage_whenNodeIsExported_returnsTrue() {
+        let sut = makeSUT(isExported: true)
         
         let shouldShowCircleImage = sut.shouldShowCircleImage
         
-        XCTAssertTrue(shouldShowCircleImage, "Should show circle image when title and size are not empty")
+        XCTAssertTrue(shouldShowCircleImage, "Should show circle image when video is exported")
     }
     
-    func testShouldShowCircleImage_whenTitleOrSizeIsEmpty_returnsFalse() {
-        let sut = makeSUT(title: "")
+    func testShouldShowCircleImage_whenNodeNotIsExported_returnsFalse() {
+        let sut = makeSUT(isExported: false)
         
         let shouldShowCircleImage = sut.shouldShowCircleImage
         
-        XCTAssertFalse(shouldShowCircleImage, "Should not show circle image when title or size is empty")
+        XCTAssertFalse(shouldShowCircleImage, "Should not show circle image when video is not exported")
     }
     
     // MARK: - labelImage
@@ -64,14 +64,14 @@ class VideoCellPreviewEntityTests: XCTestCase {
     
     // MARK: - Helpers
     
-    private func makeSUT(title: String = "", size: String = "", label: NodeLabelTypeEntity? = nil) -> VideoCellPreviewEntity {
+    private func makeSUT(isExported: Bool = false, label: NodeLabelTypeEntity? = nil) -> VideoCellPreviewEntity {
         VideoCellPreviewEntity(
             isFavorite: false,
             imageContainer: PreviewImageContainerFactory.withColor(.black, size: CGSize(width: 1000, height: 1000)),
             duration: "",
-            title: title,
-            size: size,
-            isPublicLink: false,
+            title: "title",
+            size: "size",
+            isExported: isExported,
             label: label
         )
     }
