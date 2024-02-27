@@ -952,7 +952,7 @@
 		8359E4B325F0E1DF0023FE18 /* QuickAccessWidgetAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359E4B225F0E1DF0023FE18 /* QuickAccessWidgetAction.swift */; };
 		8359E4BD25F0E20C0023FE18 /* WidgetStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359E4BC25F0E20C0023FE18 /* WidgetStatus.swift */; };
 		835A60FD2B74EBC200BBB9A1 /* ChatContentRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835A60FC2B74EBC100BBB9A1 /* ChatContentRouter.swift */; };
-		835A610E2B76344B00BBB9A1 /* ScheduleMeetingFreePlanTimeLimitationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835A610D2B76344B00BBB9A1 /* ScheduleMeetingFreePlanTimeLimitationView.swift */; };
+		835A610E2B76344B00BBB9A1 /* TappableInfoLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835A610D2B76344B00BBB9A1 /* TappableInfoLinkView.swift */; };
 		835AD88B24AA46B700BB934C /* PhoneNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835AD88A24AA46B700BB934C /* PhoneNumberViewController.swift */; };
 		835B1B90245AD23C00E41FBE /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 415226881A692ECC00EC7BB6 /* Helper.m */; };
 		835CE8492AA886B200861544 /* waitingRoomEvent.wav in Resources */ = {isa = PBXBuildFile; fileRef = 835CE8482AA886B200861544 /* waitingRoomEvent.wav */; };
@@ -1248,6 +1248,7 @@
 		94282D4828A3B3F000F794BA /* ContactsViewController+Backups.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94282D4728A3B3F000F794BA /* ContactsViewController+Backups.swift */; };
 		9428430D2AA7CFDD00278048 /* AudioSessionRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9428430C2AA7CFDD00278048 /* AudioSessionRepository.swift */; };
 		9428B9A02819499A00DB7250 /* ContextMenuManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9428B99F2819499A00DB7250 /* ContextMenuManager.swift */; };
+		9428F1772B8DD4B100DD79A7 /* TaggableTexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9428F1762B8DD4B100DD79A7 /* TaggableTexView.swift */; };
 		942A64F729C390410017F439 /* BrowserViewController+TargetAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942A64F629C390410017F439 /* BrowserViewController+TargetAction.swift */; };
 		942A64F829C395ED0017F439 /* BrowserViewController+TargetAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942A64F629C390410017F439 /* BrowserViewController+TargetAction.swift */; };
 		942F4FD81F500A8F001FC4AC /* MEGASdk+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 942F4FD71F500A8F001FC4AC /* MEGASdk+MNZCategory.m */; };
@@ -3661,7 +3662,7 @@
 		8359E4B225F0E1DF0023FE18 /* QuickAccessWidgetAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAccessWidgetAction.swift; sourceTree = "<group>"; };
 		8359E4BC25F0E20C0023FE18 /* WidgetStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetStatus.swift; sourceTree = "<group>"; };
 		835A60FC2B74EBC100BBB9A1 /* ChatContentRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatContentRouter.swift; sourceTree = "<group>"; };
-		835A610D2B76344B00BBB9A1 /* ScheduleMeetingFreePlanTimeLimitationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingFreePlanTimeLimitationView.swift; sourceTree = "<group>"; };
+		835A610D2B76344B00BBB9A1 /* TappableInfoLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TappableInfoLinkView.swift; sourceTree = "<group>"; };
 		835AD88A24AA46B700BB934C /* PhoneNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberViewController.swift; sourceTree = "<group>"; };
 		835CE8482AA886B200861544 /* waitingRoomEvent.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = waitingRoomEvent.wav; sourceTree = "<group>"; };
 		835CE84D2AA88E9300861544 /* MainTabBarCallsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarCallsViewModelTests.swift; sourceTree = "<group>"; };
@@ -3923,6 +3924,7 @@
 		94282D4728A3B3F000F794BA /* ContactsViewController+Backups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactsViewController+Backups.swift"; sourceTree = "<group>"; };
 		9428430C2AA7CFDD00278048 /* AudioSessionRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioSessionRepository.swift; sourceTree = "<group>"; };
 		9428B99F2819499A00DB7250 /* ContextMenuManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenuManager.swift; sourceTree = "<group>"; };
+		9428F1762B8DD4B100DD79A7 /* TaggableTexView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaggableTexView.swift; sourceTree = "<group>"; };
 		942A64F629C390410017F439 /* BrowserViewController+TargetAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BrowserViewController+TargetAction.swift"; sourceTree = "<group>"; };
 		942F4FD61F500A8F001FC4AC /* MEGASdk+MNZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MEGASdk+MNZCategory.h"; sourceTree = "<group>"; };
 		942F4FD71F500A8F001FC4AC /* MEGASdk+MNZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MEGASdk+MNZCategory.m"; sourceTree = "<group>"; };
@@ -9526,8 +9528,9 @@
 				BF085C9829E669FB001E6AB7 /* ScheduleMeetingCreationPropertiesView.swift */,
 				996F74272A794270007209F0 /* ScheduleMeetingCreationWaitingRoomView.swift */,
 				BFAD0FA32A299216003F5F83 /* ScheduleMeetingCreationWeeklyCustomOptionsView.swift */,
-				835A610D2B76344B00BBB9A1 /* ScheduleMeetingFreePlanTimeLimitationView.swift */,
 				BFB889962A15D9F500FC456A /* ScheduleMeetingMonthlyRecurrenceFootnoteView.swift */,
+				9428F1762B8DD4B100DD79A7 /* TaggableTexView.swift */,
+				835A610D2B76344B00BBB9A1 /* TappableInfoLinkView.swift */,
 				83DBDDE429D730DA00CF433B /* TextDescriptionView.swift */,
 			);
 			path = Views;
@@ -15075,7 +15078,6 @@
 				83C9CE812A278FE20009549B /* ScheduleMeetingEndRecurrenceOptionsRouter.swift in Sources */,
 				83C9CE772A2758D00009549B /* ScheduleMeetingEndRecurrenceOptionsView.swift in Sources */,
 				83C9CE7F2A278FC90009549B /* ScheduleMeetingEndRecurrenceOptionsViewModel.swift in Sources */,
-				835A610E2B76344B00BBB9A1 /* ScheduleMeetingFreePlanTimeLimitationView.swift in Sources */,
 				BFB889972A15D9F500FC456A /* ScheduleMeetingMonthlyRecurrenceFootnoteView.swift in Sources */,
 				BFA1EEEA2A4CF69700435A0F /* ScheduleMeetingNewViewConfiguration.swift in Sources */,
 				83DE6D1F2989410E000503CC /* ScheduleMeetingOccurrence.swift in Sources */,
@@ -15220,7 +15222,9 @@
 				5D4ACA082533259600935FC9 /* TableDataSourceConfigurationFactory.swift in Sources */,
 				5D3AD473252C3771006986AF /* TableViewEmptyStateConfiguration.swift in Sources */,
 				5D3AD471252C3723006986AF /* TableViewProxy.swift in Sources */,
+				9428F1772B8DD4B100DD79A7 /* TaggableTexView.swift in Sources */,
 				BF33EF7424451A4700CD35AC /* TapAndHoldMessageView.swift in Sources */,
+				835A610E2B76344B00BBB9A1 /* TappableInfoLinkView.swift in Sources */,
 				836AEDE020188F3C00868FC7 /* TestPasswordViewController.m in Sources */,
 				83DBDDE529D730DA00CF433B /* TextDescriptionView.swift in Sources */,
 				12466831275DBE0500C94335 /* TextEditorModel.swift in Sources */,
