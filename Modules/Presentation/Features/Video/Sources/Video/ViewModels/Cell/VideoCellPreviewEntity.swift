@@ -8,11 +8,11 @@ struct VideoCellPreviewEntity: Equatable {
     let duration: String
     let title: String
     let size: String
-    let isPublicLink: Bool
+    let isExported: Bool
     let label: NodeLabelTypeEntity?
     
     var shouldShowCircleImage: Bool {
-        return !title.isEmpty && !size.isEmpty
+        isExported
     }
     
     static func == (lhs: VideoCellPreviewEntity, rhs: VideoCellPreviewEntity) -> Bool {
@@ -24,7 +24,7 @@ struct VideoCellPreviewEntity: Equatable {
         && lhs.duration == rhs.duration
         && lhs.title == rhs.title
         && lhs.size == rhs.size
-        && lhs.isPublicLink == rhs.isPublicLink
+        && lhs.isExported == rhs.isExported
         && lhs.label == rhs.label
     }
 }
@@ -37,7 +37,7 @@ extension VideoCellPreviewEntity {
         duration: "",
         title: "",
         size: "",
-        isPublicLink: false,
+        isExported: false,
         label: nil
     )
 }

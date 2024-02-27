@@ -11,7 +11,7 @@ extension NodeEntity {
             duration: VideoDurationFormatter.formatDuration(seconds: UInt(max(duration, 0))),
             title: name,
             size: FileSizeFormatter.memoryStyleString(fromByteCount: Int64(size)),
-            isPublicLink: isPublic,
+            isExported: isExported,
             label: label
         )
     }

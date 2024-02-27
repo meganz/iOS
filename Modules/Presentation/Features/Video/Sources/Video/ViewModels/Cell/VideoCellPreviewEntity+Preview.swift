@@ -9,7 +9,7 @@ extension VideoCellPreviewEntity {
         duration: "00:36:00",
         title: "The Office Season 8 Episode 23 | Turf War",
         size: "2.00 GB",
-        isPublicLink: false,
+        isExported: false,
         label: nil
     )
     
@@ -19,7 +19,7 @@ extension VideoCellPreviewEntity {
         duration: "00:36:00",
         title: "Item that has favorite",
         size: "2.00 GB",
-        isPublicLink: false,
+        isExported: false,
         label: nil
     )
     
@@ -29,7 +29,7 @@ extension VideoCellPreviewEntity {
         duration: "00:36:00",
         title: "Item that has public link",
         size: "2.00 GB",
-        isPublicLink: true,
+        isExported: true,
         label: nil
     )
     
@@ -39,17 +39,23 @@ extension VideoCellPreviewEntity {
         duration: "00:36:00",
         title: "Item that has label",
         size: "2.00 GB",
-        isPublicLink: false,
+        isExported: false,
         label: .purple
     )
     
-    static let all = VideoCellPreviewEntity(
+    static func all(title: TitleType) -> VideoCellPreviewEntity { VideoCellPreviewEntity(
         isFavorite: true,
         imageContainer: PreviewImageContainerFactory.withColor(.blue, size: CGSize(width: 1000, height: 1000)),
         duration: "00:36:00",
-        title: "The Office Season 8 Episode 23 | Turf War | all complete | long title long title long title long title long title long title long title long title",
+        title: title.rawValue,
         size: "2.00 GB",
-        isPublicLink: true,
+        isExported: true,
         label: .blue
-    )
+    ) }
+    
+    enum TitleType: String {
+        case short = "A title"
+        case medium = "A Medium Title 8 Episode 23 | Turf War"
+        case long = "A long title - The Office Season 8 Episode 23 | Turf War | all complete | long title long title long title long title long title long title long title long title"
+    }
 }
