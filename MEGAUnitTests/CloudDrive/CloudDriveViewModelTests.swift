@@ -178,20 +178,62 @@ class CloudDriveViewModelTests: XCTestCase {
         
         XCTAssertEqual(outputs, expected)
     }
-
+    
+    func testIsParentMarkedAsSensitiveForDisplayMode_hiddenNodesFeatureOff_shouldReturnNil() {
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: false])
+        let sut = makeSUT(featureFlagProvider: featureFlagProvider)
+        
+        let isHidden = sut.isParentMarkedAsSensitive(forDisplayMode: .cloudDrive)
+        XCTAssertNil(isHidden)
+    }
+    
+    func tesIsParentMarkedAsSensitiveForDisplayMode_displayModeNotCloudDrive_shouldReturnNil() {
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
+        let parentNode = MockNode(handle: 1)
+        let sut = makeSUT(parentNode: parentNode,
+                          featureFlagProvider: featureFlagProvider)
+        
+        let isHidden = sut.isParentMarkedAsSensitive(forDisplayMode: .rubbishBin)
+        XCTAssertNil(isHidden)
+    }
+    
+    func testIsParentMarkedAsSensitiveForDisplayMode_displayModeCloudDriveIsFile_shouldReturnNil() {
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
+        let parentNode = MockNode(handle: 1, nodeType: .file)
+        let sut = makeSUT(parentNode: parentNode,
+                          featureFlagProvider: featureFlagProvider)
+        
+        let isHidden = sut.isParentMarkedAsSensitive(forDisplayMode: .cloudDrive)
+        XCTAssertNil(isHidden)
+    }
+    
+    func testIsParentMarkedAsSensitiveForDisplayMode_displayModeCloudDriveIsFolder_shouldMatchSensitiveState() throws {
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
+        try [true, false].forEach {
+            let parentNode = MockNode(handle: 1, nodeType: .folder, isMarkedSensitive: $0)
+            let sut = makeSUT(parentNode: parentNode,
+                              featureFlagProvider: featureFlagProvider)
+            
+            let isHidden = try XCTUnwrap(sut.isParentMarkedAsSensitive(forDisplayMode: .cloudDrive))
+            XCTAssertEqual(isHidden, $0)
+        }
+    }
+    
     func makeSUT(
         parentNode: MEGANode = MockNode(handle: 1),
         shareUseCase: some ShareUseCaseProtocol = MockShareUseCase(),
         preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(dict: [:]),
         sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol = MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc),
+        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         file: StaticString = #file,
         line: UInt = #line
     ) -> CloudDriveViewModel {
         let sut = CloudDriveViewModel(
             parentNode: parentNode,
-            shareUseCase: shareUseCase, 
+            shareUseCase: shareUseCase,
             sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
-            preferenceUseCase: preferenceUseCase)
+            preferenceUseCase: preferenceUseCase,
+            featureFlagProvider: featureFlagProvider)
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return sut
     }

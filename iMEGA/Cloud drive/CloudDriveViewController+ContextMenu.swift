@@ -30,7 +30,8 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
                                   isSelectHidden: viewModel.isSelectionHidden,
                                   isOutShare: parentNode.isOutShare(),
                                   isExported: parentNode.isExported(),
-                                  showMediaDiscovery: shouldShowMediaDiscoveryContextMenuOption())
+                                  showMediaDiscovery: shouldShowMediaDiscoveryContextMenuOption(),
+                                  isHidden: viewModel.isParentMarkedAsSensitive(forDisplayMode: displayMode))
         }
     }
     

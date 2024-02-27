@@ -29,16 +29,19 @@ enum CloudDriveAction: ActionType {
     private let router = SharedItemsViewRouter()
     private let shareUseCase: any ShareUseCaseProtocol
     private let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let parentNode: MEGANode?
     private let shouldDisplayMediaDiscoveryWhenMediaOnly: Bool
     
     init(parentNode: MEGANode?,
          shareUseCase: some ShareUseCaseProtocol,
          sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
-         preferenceUseCase: some PreferenceUseCaseProtocol) {
+         preferenceUseCase: some PreferenceUseCaseProtocol,
+         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
         self.parentNode = parentNode
         self.shareUseCase = shareUseCase
         self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
+        self.featureFlagProvider = featureFlagProvider
         shouldDisplayMediaDiscoveryWhenMediaOnly = preferenceUseCase[.shouldDisplayMediaDiscoveryWhenMediaOnly] ?? true
     }
     
@@ -79,6 +82,15 @@ enum CloudDriveAction: ActionType {
     
     @objc func hasMediaFiles(nodes: MEGANodeList?) -> Bool {
         nodes?.containsVisualMedia() ?? false
+    }
+    
+    func isParentMarkedAsSensitive(forDisplayMode displayMode: DisplayMode) -> Bool? {
+        guard featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
+              displayMode == .cloudDrive,
+              parentNode?.isFolder() == true else {
+            return nil
+        }
+        return parentNode?.isMarkedSensitive
     }
     
     func dispatch(_ action: CloudDriveAction) {
