@@ -41,7 +41,6 @@
 #import "MEGAStartDownloadTransferDelegate.h"
 #import "MEGAConstants.h"
 #import "MEGAExportRequestDelegate.h"
-#import "MEGAGenericRequestDelegate.h"
 #import "MEGAGetThumbnailRequestDelegate.h"
 #import "MEGAInviteContactRequestDelegate.h"
 #import "MEGANavigationController.h"
