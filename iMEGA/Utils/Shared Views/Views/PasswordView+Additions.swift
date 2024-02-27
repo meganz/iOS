@@ -40,6 +40,8 @@ extension PasswordView {
     @objc func setToggleSecureButtonTintColor(isActive: Bool) {
         if UIColor.isDesignTokenEnabled() {
             toggleSecureButton.tintColor = isActive ? TokenColors.Icon.primary : TokenColors.Icon.disabled
+        } else {
+            toggleSecureButton.tintColor = .systemGray
         }
     }
     
