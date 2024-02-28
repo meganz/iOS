@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGAL10n
+import MEGASDKRepo
 
 extension PreviewDocumentViewController {
     @objc func createNodeInfoViewModel(withNode node: MEGANode) -> NodeInfoViewModel {
@@ -68,5 +69,20 @@ extension PreviewDocumentViewController {
         ])
         
         return openZipButton
+    }
+    
+    @objc func hideNode(_ node: MEGANode) {
+        let nodeActionUseCase = NodeActionUseCase(repo: NodeActionRepository.newRepo)
+        Task {
+            _ = await nodeActionUseCase.hide(nodes: [node.toNodeEntity()])
+        }
+    }
+}
+
+extension PreviewDocumentViewController: MEGAGlobalDelegate {
+    public func onNodesUpdate(_ api: MEGASdk, nodeList: MEGANodeList?) {
+        guard let updatedNode = nodeList?.toNodeArray()
+            .first(where: { $0.handle == node?.handle }) else { return }
+        node = updatedNode
     }
 }

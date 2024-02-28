@@ -38,6 +38,9 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
                 router.start()
         case .saveToPhotos:
             saveToPhotos(nodes: nodes.toNodeEntities())
+        case .hide:
+            hide(nodes: nodes.toNodeEntities())
+            toggle(editModeActive: false)
         default:
             break
         }
@@ -110,6 +113,8 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
             node.mnz_editTextFile(in: self)
         case .disputeTakedown:
             NSURL(string: MEGADisputeURL)?.mnz_presentSafariViewController()
+        case .hide:
+            hide(nodes: [node.toNodeEntity()])
         default: break
         }
         
@@ -126,6 +131,13 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
         contactsVC.node = node
         contactsVC.contactsMode = .folderSharedWith
         navigationController?.pushViewController(contactsVC, animated: true)
+    }
+    
+    func hide(nodes: [NodeEntity]) {
+        let nodeActionUseCase = NodeActionUseCase(repo: NodeActionRepository.newRepo)
+        Task {
+            _ = await nodeActionUseCase.hide(nodes: nodes)
+        }
     }
     
     private func saveToPhotos(nodes: [NodeEntity]) {

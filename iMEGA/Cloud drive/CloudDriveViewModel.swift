@@ -6,6 +6,7 @@ import MEGASDKRepo
 enum CloudDriveAction: ActionType {
     case updateEditModeActive(Bool)
     case updateSortType(SortOrderType)
+    case updateParentNode(MEGANode)
 }
 
 @objc final class CloudDriveViewModel: NSObject, ViewModelType {
@@ -30,8 +31,8 @@ enum CloudDriveAction: ActionType {
     private let shareUseCase: any ShareUseCaseProtocol
     private let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
-    private let parentNode: MEGANode?
     private let shouldDisplayMediaDiscoveryWhenMediaOnly: Bool
+    private var parentNode: MEGANode?
     
     init(parentNode: MEGANode?,
          shareUseCase: some ShareUseCaseProtocol,
@@ -99,6 +100,9 @@ enum CloudDriveAction: ActionType {
             update(editModeActive: isActive)
         case .updateSortType(let sortType):
             update(sortType: sortType)
+        case .updateParentNode(let newParentNode):
+            parentNode = newParentNode
+            invokeCommand?(.reloadNavigationBarItems)
         }
     }
     

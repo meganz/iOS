@@ -189,6 +189,8 @@ extension CloudDriveViewController: CloudDriveContextMenuDelegate {
                 }
             })
             router.start()
+        case .hide:
+            hide(nodes: [parentNode.toNodeEntity()])
         default:
             break
         }

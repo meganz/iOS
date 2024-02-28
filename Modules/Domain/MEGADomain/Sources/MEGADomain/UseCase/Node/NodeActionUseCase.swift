@@ -43,13 +43,13 @@ public protocol NodeActionUseCaseProtocol {
     ///   - nodes: nodes to remove its links
     func removeLink(nodes: [NodeEntity]) async throws
     
-    /// Set sensitive attribute on the node
-    /// - Parameter node: node to set attribute
-    func hide(node: NodeEntity) async throws -> NodeEntity
+    /// Set sensitive attribute on the nodes
+    /// - Parameter nodes: nodes to set attribute
+    func hide(nodes: [NodeEntity]) async -> [HandleEntity: Result<NodeEntity, any Error>]
     
-    /// Remove sensitive attribute on the node
-    /// - Parameter node: node to set attribute
-    func unhide(node: NodeEntity) async throws -> NodeEntity
+    /// Remove sensitive attribute on the nodes
+    /// - Parameter nodes: nodes to set attribute
+    func unhide(nodes: [NodeEntity]) async -> [HandleEntity: Result<NodeEntity, any Error>]
 }
 
 public struct NodeActionUseCase<T: NodeActionRepositoryProtocol>: NodeActionUseCaseProtocol {
@@ -91,11 +91,31 @@ public struct NodeActionUseCase<T: NodeActionRepositoryProtocol>: NodeActionUseC
         try await repo.removeLink(nodes: nodes)
     }
     
-    public func hide(node: NodeEntity) async throws -> NodeEntity {
-        try await repo.setSensitive(node: node, sensitive: true)
+    public func hide(nodes: [NodeEntity]) async -> [HandleEntity: Result<NodeEntity, any Error>] {
+        await setSensitive(nodes: nodes, sensitive: true)
     }
     
-    public func unhide(node: NodeEntity) async throws -> NodeEntity {
-        try await repo.setSensitive(node: node, sensitive: false)
+    public func unhide(nodes: [NodeEntity]) async -> [HandleEntity: Result<NodeEntity, any Error>] {
+        await setSensitive(nodes: nodes, sensitive: false)
+    }
+    
+    // MARK: Private
+    
+    private func setSensitive(nodes: [NodeEntity], sensitive: Bool) async -> [HandleEntity: Result<NodeEntity, any Error>] {
+        await withTaskGroup(of: (handle: HandleEntity, resultType: Result<NodeEntity, any Error>).self) { group in
+            nodes.forEach { node in
+                group.addTask {
+                    do {
+                        let updatedNode = try await repo.setSensitive(node: node, sensitive: sensitive)
+                        return (node.handle, .success(updatedNode))
+                    } catch {
+                        return (node.handle, .failure(error))
+                    }
+                }
+            }
+            return await group.reduce(into: [HandleEntity: Result<NodeEntity, any Error>](), { result, resultTypeTuple in
+                result[resultTypeTuple.handle] = resultTypeTuple.resultType
+            })
+        }
     }
 }
