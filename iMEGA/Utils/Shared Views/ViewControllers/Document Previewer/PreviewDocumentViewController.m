@@ -24,6 +24,7 @@
 #import "UIView+MNZCategory.h"
 
 @import MEGAL10nObjc;
+@import MEGASDKRepo;
 
 @interface PreviewDocumentViewController () <QLPreviewControllerDataSource, QLPreviewControllerDelegate, MEGATransferDelegate, UICollectionViewDelegate, UICollectionViewDataSource, NodeActionViewControllerDelegate, NodeInfoViewControllerDelegate, SearchInPdfViewControllerProtocol, UIGestureRecognizerDelegate, PDFViewDelegate> {
     MEGATransfer *previewDocumentTransfer;
@@ -96,9 +97,12 @@
             MEGALogError(@"Create directory at path failed with error: %@", error);
         }
     }
+    [MEGASdk.shared addMEGAGlobalDelegate:self];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
     if (previewDocumentTransfer) {
         [MEGASdk.shared cancelTransfer:previewDocumentTransfer];
     }
@@ -115,8 +119,8 @@
             }
         }
     }
-
-    [super viewWillDisappear:animated];
+    
+    [MEGASdk.shared removeMEGAGlobalDelegateAsync:self];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
@@ -480,7 +484,9 @@
 
         case MegaNodeActionTypeViewVersions:
             [node mnz_showNodeVersionsInViewController:self];
-            
+        
+        case MegaNodeActionTypeHide:
+            [self hideNode:node];
         default:
             break;
     }

@@ -219,6 +219,19 @@ class CloudDriveViewModelTests: XCTestCase {
         }
     }
     
+    func testAction_updateParentNode_updatesParentNodeAndReloadsNavigationBarItems() throws {
+        let updatedParentNode = MockNode(handle: 1, nodeType: .folder, isMarkedSensitive: true)
+        let featureFlagProvider = MockFeatureFlagProvider(list: [.hiddenNodes: true])
+        let sut = makeSUT(parentNode: MockNode(handle: 1, nodeType: .folder, isMarkedSensitive: false),
+                          featureFlagProvider: featureFlagProvider)
+        
+        test(viewModel: sut, action: .updateParentNode(updatedParentNode),
+             expectedCommands: [.reloadNavigationBarItems])
+        
+        let isHidden = try XCTUnwrap(sut.isParentMarkedAsSensitive(forDisplayMode: .cloudDrive))
+        XCTAssertTrue(isHidden)
+    }
+    
     func makeSUT(
         parentNode: MEGANode = MockNode(handle: 1),
         shareUseCase: some ShareUseCaseProtocol = MockShareUseCase(),

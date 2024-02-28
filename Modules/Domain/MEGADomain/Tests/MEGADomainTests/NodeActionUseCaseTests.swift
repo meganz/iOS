@@ -45,56 +45,64 @@ final class NodeActionUseCaseTests: XCTestCase {
         XCTAssertEqual(nodeEntity.parentHandle, parent.handle)
     }
     
-    func testHide_onNodeHiddenSetSuccessfully_shouldReturnNodeWithAttribute() async throws {
-        let expectedNode = NodeEntity(handle: 5, isMarkedSensitive: true)
-        let repository = MockNodeActionRepository(setSensitiveResult: .success(expectedNode))
+    func testHide_onNodeSuccessAndFailed_shouldReturnBothResultTypesCorrectly() async throws {
+        let firstNode = NodeEntity(handle: 5, isMarkedSensitive: true)
+        let secondNode = NodeEntity(handle: 9, isMarkedSensitive: true)
+        let repository = MockNodeActionRepository(
+            setSensitiveResults: [firstNode.handle: .success(firstNode),
+                                  secondNode.handle: .failure(GenericErrorEntity())])
         
         let sut = NodeActionUseCase(repo: repository)
         
-        let result = try await sut.hide(node: NodeEntity(handle: 5))
-        XCTAssertEqual(result, expectedNode)
+        let results = await sut.hide(nodes: [firstNode, secondNode])
+        
+        XCTAssertEqual(results.count, 2)
+        
+        switch try XCTUnwrap(results[firstNode.handle]) {
+        case .success(let node):
+            XCTAssertEqual(node, firstNode)
+        case .failure:
+            XCTFail("Should have been successful")
+        }
+        
+        switch try XCTUnwrap(results[secondNode.handle]) {
+        case .success:
+            XCTFail("Should have been failure")
+        case .failure(let error):
+            XCTAssertTrue(error is GenericErrorEntity)
+        }
+        
         XCTAssertTrue(repository.sensitive == true)
     }
     
-    func testHide_onFailed_shouldThrowCorrectError() async {
-        let repository = MockNodeActionRepository(setSensitiveResult: .failure(GenericErrorEntity()))
+    func testUnhide_onNodeSuccessAndFailed_shouldReturnBothResultTypesCorrectly() async throws {
+        let firstNode = NodeEntity(handle: 8, isMarkedSensitive: false)
+        let secondNode = NodeEntity(handle: 9, isMarkedSensitive: false)
+        let expectedError = NodeErrorEntity.nodeNotFound
+        let repository = MockNodeActionRepository(
+            setSensitiveResults: [firstNode.handle: .success(firstNode),
+                                  secondNode.handle: .failure(expectedError)])
         
         let sut = NodeActionUseCase(repo: repository)
         
-        do {
-            _ = try await sut.hide(node: NodeEntity(handle: 5))
-            XCTFail("Should have thrown exception")
-        } catch let error as GenericErrorEntity {
-            XCTAssertNotNil(error)
-        } catch {
-            XCTFail("Incorrect exception")
+        let results = await sut.unhide(nodes: [firstNode, secondNode])
+        
+        XCTAssertEqual(results.count, 2)
+        
+        switch try XCTUnwrap(results[firstNode.handle]) {
+        case .success(let node):
+            XCTAssertEqual(node, firstNode)
+        case .failure:
+            XCTFail("Should have been successful")
         }
-    }
-    
-    func testUnhide_onNodeUnhiddenSetSuccessfully_shouldReturnNodeWithAttribute() async throws {
-        let expectedNode = NodeEntity(handle: 8, isMarkedSensitive: false)
-        let repository = MockNodeActionRepository(setSensitiveResult: .success(expectedNode))
         
-        let sut = NodeActionUseCase(repo: repository)
+        switch try XCTUnwrap(results[secondNode.handle]) {
+        case .success:
+            XCTFail("Should have been failure")
+        case .failure(let error):
+            XCTAssertEqual(error as? NodeErrorEntity, expectedError)
+        }
         
-        let result = try await sut.unhide(node: NodeEntity(handle: 8))
-        
-        XCTAssertEqual(result, expectedNode)
         XCTAssertTrue(repository.sensitive == false)
-    }
-    
-    func testUnhide_onFailed_shouldThrowCorrectError() async {
-        let repository = MockNodeActionRepository(setSensitiveResult: .failure(NodeErrorEntity.nodeNotFound))
-        
-        let sut = NodeActionUseCase(repo: repository)
-        
-        do {
-            _ = try await sut.unhide(node: NodeEntity(handle: 8))
-            XCTFail("Should have thrown exception")
-        } catch let error as NodeErrorEntity {
-            XCTAssertEqual(error, .nodeNotFound)
-        } catch {
-            XCTFail("Incorrect exception")
-        }
     }
 }

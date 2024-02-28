@@ -117,6 +117,9 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
             
         case .import:
             node.openBrowserToImport(in: viewController)
+        
+        case .hide:
+            hide(nodes: [node.toNodeEntity()])
             
         default:
             break
@@ -263,6 +266,13 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
     private func exportFile(node: MEGANode, sender: Any) {
         guard let viewController = viewController else { return }
         ExportFileRouter(presenter: viewController, sender: sender).export(node: node.toNodeEntity())
+    }
+    
+    private func hide(nodes: [NodeEntity]) {
+        let nodeActionUseCase = NodeActionUseCase(repo: NodeActionRepository.newRepo)
+        Task {
+            _ = await nodeActionUseCase.hide(nodes: nodes)
+        }
     }
 }
 

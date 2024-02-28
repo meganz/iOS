@@ -164,7 +164,7 @@ extension CloudDriveViewController {
         guard let updatedParentNode = updatedParentNodeIfBelongs(updatedNodeList) else { return }
         
         self.parentNode = updatedParentNode
-        setNavigationBarButtons()
+        viewModel.dispatch(.updateParentNode(updatedParentNode))
     }
     
     @objc func sortNodes(_ nodes: [MEGANode], sortBy order: MEGASortOrderType) -> [MEGANode] {
