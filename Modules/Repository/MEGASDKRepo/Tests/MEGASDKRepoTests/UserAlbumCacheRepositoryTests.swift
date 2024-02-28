@@ -387,19 +387,22 @@ final class UserAlbumCacheRepositoryTests: XCTestCase {
             userAlbumCache: userAlbumCache,
             setAndElementsUpdatesProvider: setAndElementsUpdatesProvider)
         
+        let expectedTasksStarted = expectation(description: "Expected number of tasks started")
         let updatedExp = expectation(description: "update was emitted")
         let taskFinishedExp = expectation(description: "Task successfully finished on cancellation")
         
         let task = Task {
-            for await updatedSets in await sut.albumsUpdated() {
+            let sequence = await sut.albumsUpdated()
+            expectedTasksStarted.fulfill()
+            for await updatedSets in sequence {
                 XCTAssertEqual(Set(updatedSets), Set(expectedResult))
                 updatedExp.fulfill()
             }
             taskFinishedExp.fulfill()
         }
         
+        await fulfillment(of: [expectedTasksStarted], timeout: 1)
         setAndElementsUpdatesProvider.mockSendSetUpdate(setUpdate: expectedResult)
-        
         await fulfillment(of: [updatedExp], timeout: 0.5)
         task.cancel()
         await fulfillment(of: [taskFinishedExp], timeout: 0.5)
@@ -434,8 +437,9 @@ final class UserAlbumCacheRepositoryTests: XCTestCase {
         let tasks = (0..<numberOfSequences)
             .map { _ in
                 Task {
+                    let sequence = await sut.albumsUpdated()
                     expectedTasksStarted.fulfill()
-                    for await updatedSets in await sut.albumsUpdated() {
+                    for await updatedSets in sequence {
                         XCTAssertEqual(Set(updatedSets), Set(expectedResult))
                         updatedExp.fulfill()
                     }
@@ -474,8 +478,9 @@ final class UserAlbumCacheRepositoryTests: XCTestCase {
         let tasks = (0..<numberOfSequences)
             .map { _ in
                 Task {
+                    let sequence = await sut.albumUpdated(by: 3)
                     expectedTasksStarted.fulfill()
-                    for await updatedSet in await sut.albumUpdated(by: 3) {
+                    for await updatedSet in sequence {
                         XCTAssertEqual(updatedSet, expectedResult)
                         updatedExp.fulfill()
                     }
@@ -522,8 +527,9 @@ final class UserAlbumCacheRepositoryTests: XCTestCase {
         let tasks = (0..<numberOfSequences)
             .map { _ in
                 Task {
+                    let sequence = await sut.albumUpdated(by: 4)
                     expectedTasksStarted.fulfill()
-                    for await _ in await sut.albumUpdated(by: 4) {
+                    for await _ in sequence {
                         updatedExp.fulfill()
                     }
                     taskFinishedExp.fulfill()
@@ -566,9 +572,10 @@ final class UserAlbumCacheRepositoryTests: XCTestCase {
         let tasks = (0..<numberOfSequences)
             .map { _ in
                 Task {
+                    let sequence = await sut.albumUpdated(by: 3)
                     expectedTasksStarted.fulfill()
-                    for await setUpdate in await sut.albumUpdated(by: 3) {
-                        XCTAssertNil(setUpdate)
+                    for await updatedSet in sequence {
+                        XCTAssertNil(updatedSet)
                         updatedExp.fulfill()
                     }
                     taskFinishedExp.fulfill()
@@ -605,8 +612,9 @@ final class UserAlbumCacheRepositoryTests: XCTestCase {
         let tasks = (0..<numberOfSequences)
             .map { _ in
                 Task {
+                    let sequence = await sut.albumContentUpdated(by: albumId, includeElementsInRubbishBin: false)
                     expectedTasksStarted.fulfill()
-                    for await _ in await sut.albumContentUpdated(by: albumId, includeElementsInRubbishBin: false) {
+                    for await _ in sequence {
                         updatedExp.fulfill()
                     }
                     taskFinishedExp.fulfill()
@@ -644,8 +652,9 @@ final class UserAlbumCacheRepositoryTests: XCTestCase {
         let tasks = (0..<numberOfSequences)
             .map { _ in
                 Task {
+                    let sequence = await sut.albumContentUpdated(by: 2, includeElementsInRubbishBin: false)
                     expectedTasksStarted.fulfill()
-                    for await _ in await sut.albumContentUpdated(by: 2, includeElementsInRubbishBin: false) {
+                    for await _ in sequence {
                         updatedExp.fulfill()
                     }
                     taskFinishedExp.fulfill()
