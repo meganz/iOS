@@ -1,3 +1,6 @@
+import MEGADesignToken
+import MEGAPresentation
+
 final class AlbumToolbarConfigurator: ExplorerToolbarConfigurator {
     let favouriteAction: ButtonAction
     let removeToRubbishBinAction: ButtonAction
@@ -100,6 +103,12 @@ final class AlbumToolbarConfigurator: ExplorerToolbarConfigurator {
                 flexibleItem,
                 removeToRubbishBinItem
             ])
+        }
+        
+        if DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) {
+            for barButtonItem in barButtonItems {
+                barButtonItem.tintColor = TokenColors.Icon.primary
+            }
         }
 
         return enable(

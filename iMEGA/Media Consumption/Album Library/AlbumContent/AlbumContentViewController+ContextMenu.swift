@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGASDKRepo
@@ -18,7 +19,11 @@ extension AlbumContentViewController {
         guard let contextMenuConfig = viewModel.contextMenuConfiguration,
               let menu = contextMenuManager?.contextMenu(with: contextMenuConfig) else { return nil }
         
-        return UIBarButtonItem(image: UIImage.moreNavigationBar, menu: menu)
+        let button = UIBarButtonItem(image: UIImage.moreNavigationBar, menu: menu)
+        if UIColor.isDesignTokenEnabled() {
+            button.tintColor = TokenColors.Text.primary
+        }
+        return button
     }
     
     func configureRightBarButtons() {
@@ -28,8 +33,8 @@ extension AlbumContentViewController {
                 target: self,
                 action: #selector(cancelButtonPressed(_:))
             )
-            let normalForegroundColor = traitCollection.userInterfaceStyle == .dark ? MEGAAppColor.White._FFFFFF.uiColor : MEGAAppColor.Black._000000.uiColor
-            cancelBarButtonItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: normalForegroundColor], for: .normal)
+            
+            cancelBarButtonItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: getBarButtonNormalForegroundColor()], for: .normal)
             navigationItem.rightBarButtonItems = [cancelBarButtonItem]
         } else {
             var rightBarButtonItems = [UIBarButtonItem]()
@@ -42,8 +47,22 @@ extension AlbumContentViewController {
             guard navigationItem.rightBarButtonItems !~ rightBarButtonItems else {
                 return
             }
+            
+            if UIColor.isDesignTokenEnabled() {
+                for button in rightBarButtonItems {
+                    button.tintColor = TokenColors.Text.primary
+                }
+            }
+            
             navigationItem.rightBarButtonItems = rightBarButtonItems
         }
+    }
+    
+    func getBarButtonNormalForegroundColor() -> UIColor {
+        guard UIColor.isDesignTokenEnabled() else {
+            return traitCollection.userInterfaceStyle == .dark ? MEGAAppColor.White._FFFFFF.uiColor : MEGAAppColor.Black._000000.uiColor
+        }
+        return TokenColors.Text.primary
     }
 }
 
