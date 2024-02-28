@@ -16,6 +16,7 @@ lane :submit_review do |options|
 
   deliver(
     api_key: app_store_api_key,
+    app_version: get_version_number(target: "MEGA"),
     build_number: build_number,
     phased_release: phased_release,
     automatic_release: true,
