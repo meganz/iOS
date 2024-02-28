@@ -20,33 +20,23 @@ public final class BackupListViewModel: ObservableObject {
     private let deviceCenterBridge: DeviceCenterBridge
     private let backupListAssets: BackupListAssets
     private let backupStatuses: [BackupStatus]
-    private let deviceCenterActions: [DeviceCenterAction]
+    private let deviceCenterActions: [ContextAction]
     private let devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>
     private let updateInterval: UInt64
-    private let isCurrentDevice: Bool
     private let notificationCenter: NotificationCenter
-    private var selectedDeviceId: String
-    private var selectedDeviceName: String
-    private var selectedDeviceIcon: String
-    private(set) var backups: [BackupEntity]?
+    private(set) var selectedDevice: SelectedDevice
     private var sortedBackupStatuses: [BackupStatusEntity: BackupStatus] {
         Dictionary(uniqueKeysWithValues: backupStatuses.map { ($0.status, $0) })
     }
     private var sortedBackupTypes: [BackupTypeEntity: BackupType] {
         Dictionary(uniqueKeysWithValues: backupListAssets.backupTypes.map { ($0.type, $0) })
     }
-    private var sortedAvailableActions: [DeviceCenterActionType: [DeviceCenterAction]] {
+    private var sortedAvailableActions: [ContextAction.Category: [ContextAction]] {
         Dictionary(grouping: deviceCenterActions, by: \.type)
     }
     private var backupsPreloaded = false
     private var searchCancellable: AnyCancellable?
     private var backupNameChangeObserver: Any?
-    
-    private var isMobileDevice: Bool {
-        backups?.contains {
-            $0.type == .cameraUpload || $0.type == .mediaUpload
-        } ?? false
-    }
     
     private var sortTypeSelected: SortType = .ascending
     
@@ -74,10 +64,7 @@ public final class BackupListViewModel: ObservableObject {
     }
     
     init(
-        isCurrentDevice: Bool,
-        selectedDeviceId: String,
-        selectedDeviceName: String,
-        selectedDeviceIcon: String,
+        selectedDevice: SelectedDevice,
         devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>,
         updateInterval: UInt64,
         deviceCenterUseCase: some DeviceCenterUseCaseProtocol,
@@ -85,18 +72,14 @@ public final class BackupListViewModel: ObservableObject {
         networkMonitorUseCase: some NetworkMonitorUseCaseProtocol,
         router: some BackupListRouting,
         deviceCenterBridge: DeviceCenterBridge,
-        backups: [BackupEntity]?,
         notificationCenter: NotificationCenter,
         backupListAssets: BackupListAssets,
         emptyStateAssets: EmptyStateAssets,
         searchAssets: SearchAssets,
         backupStatuses: [BackupStatus],
-        deviceCenterActions: [DeviceCenterAction]
+        deviceCenterActions: [ContextAction]
     ) {
-        self.isCurrentDevice = isCurrentDevice
-        self.selectedDeviceId = selectedDeviceId
-        self.selectedDeviceName = selectedDeviceName
-        self.selectedDeviceIcon = selectedDeviceIcon
+        self.selectedDevice = selectedDevice
         self.devicesUpdatePublisher = devicesUpdatePublisher
         self.updateInterval = updateInterval
         self.deviceCenterUseCase = deviceCenterUseCase
@@ -104,7 +87,6 @@ public final class BackupListViewModel: ObservableObject {
         self.networkMonitorUseCase = networkMonitorUseCase
         self.router = router
         self.deviceCenterBridge = deviceCenterBridge
-        self.backups = backups
         self.notificationCenter = notificationCenter
         self.backupListAssets = backupListAssets
         self.emptyStateAssets = emptyStateAssets
@@ -117,7 +99,7 @@ public final class BackupListViewModel: ObservableObject {
         setupSearchCancellable()
         addObservers()
         
-        if backups == nil {
+        if selectedDevice.backups.isEmpty {
             showEmptyStateView = true
         } else {
             loadBackupsInitialStatus()
@@ -133,7 +115,7 @@ public final class BackupListViewModel: ObservableObject {
     }
     
     private func addObservers() {
-        if isCurrentDevice && isMobileDevice {
+        if selectedDevice.isCurrent && selectedDevice.isMobile {
             backupNameChangeObserver = notificationCenter.addObserver(
                 forName: Notification.Name.shouldChangeCameraUploadsBackupName,
                 object: nil,
@@ -148,7 +130,7 @@ public final class BackupListViewModel: ObservableObject {
         Task {
             if self.showEmptyStateView,
                let currentDeviceId = self.deviceCenterUseCase.loadCurrentDeviceId() {
-                self.selectedDeviceId = currentDeviceId
+                self.selectedDevice.id = currentDeviceId
             }
             await syncDevicesAndLoadBackups()
         }
@@ -210,26 +192,23 @@ public final class BackupListViewModel: ObservableObject {
     
     func syncDevicesAndLoadBackups() async {
         let devices = await deviceCenterUseCase.fetchUserDevices()
-        await filterAndLoadCurrentDeviceBackups(devices)
         await updateCurrentDevice(devices)
         devicesUpdatePublisher.send(devices)
     }
     
     @MainActor
-    func filterAndLoadCurrentDeviceBackups(_ devices: [DeviceEntity]) {
-        backups = devices.first {$0.id == selectedDeviceId}?.backups ?? []
-        loadBackupsModels()
-    }
-    
-    @MainActor
     func updateCurrentDevice(_ devices: [DeviceEntity]) {
-        guard let currentDevice = devices.first(where: {$0.id == selectedDeviceId}) else { return }
-        selectedDeviceName = currentDevice.name
+        guard let currentDevice = devices.first(where: {$0.id == selectedDevice.id}) else { return }
+        
+        selectedDevice.backups = currentDevice.backups ?? []
+        loadBackupsModels()
+        
+        selectedDevice.name = currentDevice.name
         router.updateTitle(currentDevice.name)
     }
     
     func loadBackupsModels() {
-        backupModels = backups?
+        backupModels = selectedDevice.backups
             .compactMap { backup in
                 if let assets = loadAssets(for: backup) {
                     return DeviceCenterItemViewModel(
@@ -238,12 +217,12 @@ public final class BackupListViewModel: ObservableObject {
                         deviceCenterBridge: deviceCenterBridge,
                         itemType: .backup(backup),
                         sortedAvailableActions: sortedAvailableActions,
-                        isCUActionAvailable: isCurrentDevice && isMobileDevice,
+                        isCUActionAvailable: selectedDevice.isCurrent && selectedDevice.isMobile,
                         assets: assets
                     )
                 }
                 return nil
-            } ?? []
+            }
         
         handleSortAction(sortTypeSelected)
     }
@@ -261,30 +240,18 @@ public final class BackupListViewModel: ObservableObject {
         )
     }
     
-    func actionsForBackup(_ backup: BackupEntity) -> [DeviceCenterAction]? {
-        var actionTypes: [DeviceCenterActionType] = [.info]
-        
-        if isCurrentDevice && isMobileDevice {
-            actionTypes.append(.cameraUploads)
+    func actionTypesForDevice() -> [ContextAction.Category] {
+        if selectedDevice.isNewDeviceWithoutCU {
+           return [.cameraUploads]
+        } else if selectedDevice.isCurrent && selectedDevice.isMobile {
+            return [.rename, .info, .cameraUploads, .sort]
         }
-        
-        return actionTypes.compactMap { type in
-            sortedAvailableActions[type]?.first
-        }
+        return [.rename, .info, .sort]
     }
     
-    func actionsForDevice() -> [DeviceCenterAction] {
-        var actionTypes: [DeviceCenterActionType] = [.rename, .info]
-        
-        if isCurrentDevice && isMobileDevice {
-            actionTypes.append(.cameraUploads)
-        }
-        
-        actionTypes.append(.sort)
-        
-        return actionTypes.compactMap { type in
-            sortedAvailableActions[type]?.first
-        }
+    func availableActionsForCurrentDevice() -> [ContextAction] {
+        actionTypesForDevice()
+            .sortedMapping(sortedActions: sortedAvailableActions)
     }
     
     func showCameraUploadsSettingsFlow() {
@@ -302,7 +269,7 @@ public final class BackupListViewModel: ObservableObject {
     }
     
     @MainActor
-    func executeDeviceAction(type: DeviceCenterActionType) async {
+    func executeDeviceAction(type: ContextAction.Category) async {
         switch type {
         case .cameraUploads:
             deviceCenterBridge.cameraUploadActionTapped { [weak self] in
@@ -310,7 +277,7 @@ public final class BackupListViewModel: ObservableObject {
                     guard let self else { return }
                     if self.showEmptyStateView,
                        let currentDeviceId = self.deviceCenterUseCase.loadCurrentDeviceId() {
-                        self.selectedDeviceId = currentDeviceId
+                        self.selectedDevice.id = currentDeviceId
                     }
                     self.showEmptyStateView.toggle()
                     await self.syncDevicesAndLoadBackups()
@@ -330,10 +297,10 @@ public final class BackupListViewModel: ObservableObject {
         let deviceNames = await deviceCenterUseCase.fetchDeviceNames()
         
         return RenameActionEntity(
-            oldName: selectedDeviceName,
+            oldName: selectedDevice.name,
             otherNamesInContext: deviceNames,
             actionType: .device(
-                deviceId: selectedDeviceId,
+                deviceId: selectedDevice.id,
                 maxCharacters: 32
             ),
             alertTitles: [
@@ -354,19 +321,19 @@ public final class BackupListViewModel: ObservableObject {
     }
 
     private func makeDeviceInfoModel() async -> ResourceInfoModel {
-        guard let backups else {
+        guard selectedDevice.backups.isNotEmpty else {
             return ResourceInfoModel(
-                icon: selectedDeviceIcon,
-                name: selectedDeviceName,
+                icon: selectedDevice.icon,
+                name: selectedDevice.name,
                 counter: ResourceCounter.emptyCounter
             )
         }
         
-        let folderInfo = await FolderInfoFactory(nodeUseCase: nodeUseCase).info(from: backups)
+        let folderInfo = await FolderInfoFactory(nodeUseCase: nodeUseCase).info(from: selectedDevice.backups)
 
         return ResourceInfoModel(
-            icon: selectedDeviceIcon,
-            name: selectedDeviceName,
+            icon: selectedDevice.icon,
+            name: selectedDevice.name,
             counter: ResourceCounter(
                 files: folderInfo.files,
                 folders: folderInfo.folders

@@ -1,25 +1,25 @@
 import MEGADomain
 import MEGAL10n
 
-extension DeviceCenterAction {
-    static func infoAction() -> DeviceCenterAction {
-        DeviceCenterAction(
+extension ContextAction {
+    static func infoAction() -> ContextAction {
+        ContextAction(
             type: .info,
             title: Strings.Localizable.info,
             icon: "info"
         )
     }
     
-    static func renameAction() -> DeviceCenterAction {
-        DeviceCenterAction(
+    static func renameAction() -> ContextAction {
+        ContextAction(
             type: .rename,
             title: Strings.Localizable.rename,
             icon: "rename"
         )
     }
     
-    static func cameraUploadsAction(isEnabled: Bool) -> DeviceCenterAction {
-        DeviceCenterAction(
+    static func cameraUploadsAction(isEnabled: Bool) -> ContextAction {
+        ContextAction(
             type: .cameraUploads,
             title: Strings.Localizable.cameraUploadsLabel,
             subtitle: isEnabled ?

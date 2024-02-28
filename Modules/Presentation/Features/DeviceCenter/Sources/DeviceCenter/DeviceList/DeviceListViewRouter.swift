@@ -87,13 +87,17 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
         guard let backups = device.backups else { return }
         
         BackupListViewRouter(
-            isCurrentDevice: isCurrentDevice,
-            selectedDeviceId: device.id,
-            selectedDeviceName: device.name.isEmpty ? deviceCenterAssets.deviceListAssets.deviceDefaultName : device.name,
-            selectedDeviceIcon: deviceIcon,
+            selectedDevice:
+                SelectedDevice(
+                    id: device.id,
+                    name: device.name.isEmpty ? deviceCenterAssets.deviceListAssets.deviceDefaultName : device.name,
+                    icon: deviceIcon,
+                    isCurrent: isCurrentDevice,
+                    isNewDeviceWithoutCU: false,
+                    backups: backups
+                ),
             devicesUpdatePublisher: devicesUpdatePublisher,
             updateInterval: updateInterval,
-            backups: backups,
             notificationCenter: NotificationCenter.default,
             deviceCenterUseCase: deviceCenterUseCase,
             nodeUseCase: nodeUseCase,
@@ -114,13 +118,16 @@ public final class DeviceListViewRouter: NSObject, DeviceListRouting {
         deviceIcon: String
     ) {
         BackupListViewRouter(
-            isCurrentDevice: true,
-            selectedDeviceId: deviceId,
-            selectedDeviceName: deviceName,
-            selectedDeviceIcon: deviceIcon,
+            selectedDevice:
+                SelectedDevice(
+                    id: deviceId,
+                    name: deviceName,
+                    icon: deviceIcon,
+                    isCurrent: true,
+                    isNewDeviceWithoutCU: true
+                ),
             devicesUpdatePublisher: devicesUpdatePublisher,
             updateInterval: updateInterval,
-            backups: nil,
             notificationCenter: notificationCenter,
             deviceCenterUseCase: deviceCenterUseCase,
             nodeUseCase: nodeUseCase,

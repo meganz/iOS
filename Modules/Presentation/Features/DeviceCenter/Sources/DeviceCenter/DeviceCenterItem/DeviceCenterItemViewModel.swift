@@ -14,11 +14,11 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
     private let currentDeviceUUID: String
     private var itemType: DeviceCenterItemType
     var assets: ItemAssets
-    var availableActions: [DeviceCenterAction] = []
+    var availableActions: [ContextAction] = []
     var statusSubtitle: String?
     var isBackup: Bool = false
     var hasErrorStatus: Bool = false
-    var sortedAvailableActions: [DeviceCenterActionType: [DeviceCenterAction]]
+    var sortedAvailableActions: [ContextAction.Category: [ContextAction]]
     var updateSelectedViewModel: ((DeviceCenterItemViewModel?) -> Void)?
     
     @Published var shouldShowBackupPercentage: Bool = false
@@ -48,7 +48,7 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
         nodeUseCase: any NodeUseCaseProtocol,
         deviceCenterBridge: DeviceCenterBridge,
         itemType: DeviceCenterItemType,
-        sortedAvailableActions: [DeviceCenterActionType: [DeviceCenterAction]],
+        sortedAvailableActions: [ContextAction.Category: [ContextAction]],
         isCUActionAvailable: Bool,
         assets: ItemAssets,
         currentDeviceUUID: () -> String = {
@@ -67,15 +67,6 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
         self.currentDeviceUUID = currentDeviceUUID()
         
         self.configure()
-    }
-    
-    static func sortedMapping(
-        actionTypes: [DeviceCenterActionType],
-        sortedAvailableActions: [DeviceCenterActionType: [DeviceCenterAction]]
-    ) -> [DeviceCenterAction] {
-        actionTypes.compactMap { type in
-            sortedAvailableActions[type]?.first
-        }
     }
     
     private func configure() {
@@ -110,7 +101,7 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
         }
     }
     
-    private func actionsFor(device: DeviceEntity) -> [DeviceCenterActionType] {
+    private func actionsFor(device: DeviceEntity) -> [ContextAction.Category] {
         if device.isNewDeviceWithoutCU(currentUUID: currentDeviceUUID) {
             return [.cameraUploads]
         } else if isCameraUploadsAvailable {
@@ -193,7 +184,7 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
         deviceCenterBridge.infoActionTapped(infoEntity)
     }
     
-    private func handleDeviceAction(_ type: DeviceCenterActionType, device: DeviceEntity) async {
+    private func handleDeviceAction(_ type: ContextAction.Category, device: DeviceEntity) async {
         switch type {
         case .cameraUploads:
             await handleCameraUploadAction()
@@ -221,12 +212,9 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
         deviceCenterBridge.renameActionTapped(renameEntity)
     }
     
-    private func availableActionsFor(device: DeviceEntity) -> [DeviceCenterAction] {
-        DeviceCenterItemViewModel
-            .sortedMapping(
-                actionTypes: actionsFor(device: device),
-                sortedAvailableActions: sortedAvailableActions
-            )
+    private func availableActionsFor(device: DeviceEntity) -> [ContextAction] {
+        actionsFor(device: device)
+            .sortedMapping(sortedActions: sortedAvailableActions)
     }
     
     func nodeForItemType() -> NodeEntity? {
@@ -304,7 +292,7 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
     }
     
     @MainActor
-    func executeAction(_ type: DeviceCenterActionType) async {
+    func executeAction(_ type: ContextAction.Category) async {
         if case .device(let device) = itemType {
             await handleDeviceAction(type, device: device)
         }

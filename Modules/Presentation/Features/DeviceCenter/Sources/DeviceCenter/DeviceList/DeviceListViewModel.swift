@@ -12,7 +12,7 @@ public final class DeviceListViewModel: ObservableObject {
     private let nodeUseCase: any NodeUseCaseProtocol
     private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
     private let backupStatuses: [BackupStatus]
-    private let deviceCenterActions: [DeviceCenterAction]
+    private let deviceCenterActions: [ContextAction]
     private let devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>
     private let updateInterval: UInt64
     private let currentDeviceUUID: String
@@ -25,8 +25,8 @@ public final class DeviceListViewModel: ObservableObject {
     private var sortedBackupStatuses: [BackupStatusEntity: BackupStatus] {
         Dictionary(uniqueKeysWithValues: backupStatuses.map { ($0.status, $0) })
     }
-    /// Dictionary that allow us to organise the different actions available within Device Center by type. It helps to initialise the arrays of available actions for each element (devices, backups, sync, or camera uploads folders) in a simple way, using the `DeviceCenterActionType`.
-    private var sortedAvailableActions: [DeviceCenterActionType: [DeviceCenterAction]] {
+    /// Dictionary that allow us to organise the different actions available within Device Center by type. It helps to initialise the arrays of available actions for each element (devices, backups, sync, or camera uploads folders) in a simple way, using the `ContextAction.Category`.
+    private var sortedAvailableActions: [ContextAction.Category: [ContextAction]] {
         Dictionary(grouping: deviceCenterActions, by: \.type)
     }
     var isFilteredDevicesEmpty: Bool {
@@ -61,7 +61,7 @@ public final class DeviceListViewModel: ObservableObject {
         emptyStateAssets: EmptyStateAssets,
         searchAssets: SearchAssets,
         backupStatuses: [BackupStatus],
-        deviceCenterActions: [DeviceCenterAction],
+        deviceCenterActions: [ContextAction],
         deviceIconNames: [BackupDeviceTypeEntity: String]
     ) {
         self.devicesUpdatePublisher = devicesUpdatePublisher

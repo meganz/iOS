@@ -6,7 +6,7 @@ public struct DeviceCenterAssets {
     public let emptyStateAssets: EmptyStateAssets
     public let searchAssets: SearchAssets
     public let backupStatuses: [BackupStatus]
-    public let deviceCenterActions: [DeviceCenterAction]
+    public let deviceCenterActions: [ContextAction]
     public let deviceIconNames: [BackupDeviceTypeEntity: String]
     
     public init(
@@ -15,7 +15,7 @@ public struct DeviceCenterAssets {
         emptyStateAssets: EmptyStateAssets,
         searchAssets: SearchAssets,
         backupStatuses: [BackupStatus],
-        deviceCenterActions: [DeviceCenterAction],
+        deviceCenterActions: [ContextAction],
         deviceIconNames: [BackupDeviceTypeEntity: String]
     ) {
         self.deviceListAssets = deviceListAssets

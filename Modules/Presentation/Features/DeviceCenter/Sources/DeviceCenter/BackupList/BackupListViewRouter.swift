@@ -12,13 +12,9 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
     private weak var baseViewController: UIViewController?
     private weak var navigationController: UINavigationController?
     private let deviceCenterBridge: DeviceCenterBridge
-    private let isCurrentDevice: Bool
-    private let selectedDeviceId: String
-    private let selectedDeviceName: String
-    private let selectedDeviceIcon: String
+    private let selectedDevice: SelectedDevice
     private let devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>
     private let updateInterval: UInt64
-    private let backups: [BackupEntity]?
     private let notificationCenter: NotificationCenter
     private let deviceCenterUseCase: any DeviceCenterUseCaseProtocol
     private let nodeUseCase: any NodeUseCaseProtocol
@@ -27,16 +23,12 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
     private let emptyStateAssets: EmptyStateAssets
     private let searchAssets: SearchAssets
     private let backupStatuses: [BackupStatus]
-    private let deviceCenterActions: [DeviceCenterAction]
+    private let deviceCenterActions: [ContextAction]
     
     public init(
-        isCurrentDevice: Bool,
-        selectedDeviceId: String,
-        selectedDeviceName: String,
-        selectedDeviceIcon: String,
+        selectedDevice: SelectedDevice,
         devicesUpdatePublisher: PassthroughSubject<[DeviceEntity], Never>,
         updateInterval: UInt64,
-        backups: [BackupEntity]?,
         notificationCenter: NotificationCenter,
         deviceCenterUseCase: some DeviceCenterUseCaseProtocol,
         nodeUseCase: some NodeUseCaseProtocol,
@@ -47,15 +39,11 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
         emptyStateAssets: EmptyStateAssets,
         searchAssets: SearchAssets,
         backupStatuses: [BackupStatus],
-        deviceCenterActions: [DeviceCenterAction]
+        deviceCenterActions: [ContextAction]
     ) {
-        self.isCurrentDevice = isCurrentDevice
-        self.selectedDeviceId = selectedDeviceId
-        self.selectedDeviceName = selectedDeviceName
-        self.selectedDeviceIcon = selectedDeviceIcon
+        self.selectedDevice = selectedDevice
         self.devicesUpdatePublisher = devicesUpdatePublisher
         self.updateInterval = updateInterval
-        self.backups = backups
         self.notificationCenter = notificationCenter
         self.deviceCenterUseCase = deviceCenterUseCase
         self.nodeUseCase = nodeUseCase
@@ -71,10 +59,7 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
     
     public func build() -> UIViewController {
         let backupListViewModel = BackupListViewModel(
-            isCurrentDevice: isCurrentDevice,
-            selectedDeviceId: selectedDeviceId,
-            selectedDeviceName: selectedDeviceName, 
-            selectedDeviceIcon: selectedDeviceIcon,
+            selectedDevice: selectedDevice,
             devicesUpdatePublisher: devicesUpdatePublisher,
             updateInterval: updateInterval,
             deviceCenterUseCase: deviceCenterUseCase,
@@ -82,7 +67,6 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
             networkMonitorUseCase: networkMonitorUseCase,
             router: self,
             deviceCenterBridge: deviceCenterBridge,
-            backups: backups,
             notificationCenter: notificationCenter,
             backupListAssets: backupListAssets,
             emptyStateAssets: emptyStateAssets,
@@ -93,7 +77,7 @@ public final class BackupListViewRouter: NSObject, BackupListRouting {
         let backupListView = BackupListView(viewModel: backupListViewModel)
         let hostingController = UIHostingController(rootView: backupListView)
         baseViewController = hostingController
-        updateTitle(selectedDeviceName)
+        updateTitle(selectedDevice.name)
 
         return hostingController
     }
