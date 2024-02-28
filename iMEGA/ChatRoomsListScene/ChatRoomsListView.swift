@@ -111,7 +111,7 @@ struct ChatRoomsListView: View {
                     }
                 }
                 .listStyle(.plain)
-                .background(
+                .overlay(
                     VStack {
                         if viewModel.isChatRoomEmpty {
                             ChatRoomsEmptyView(emptyViewState: viewModel.isSearchActive ? viewModel.searchEmptyViewState() : viewModel.emptyChatRoomsViewState())
@@ -168,7 +168,7 @@ struct ChatRoomsListView: View {
                     }
                 }
                 .listStyle(.plain)
-                .background(
+                .overlay(
                     VStack {
                         if viewModel.isChatRoomEmpty {
                             ChatRoomsEmptyView(emptyViewState: viewModel.isSearchActive ? viewModel.searchEmptyViewState() : viewModel.emptyChatRoomsViewState())
