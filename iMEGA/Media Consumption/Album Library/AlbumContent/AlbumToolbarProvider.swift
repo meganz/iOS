@@ -1,4 +1,5 @@
 import ChatRepo
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPermissions
@@ -40,7 +41,7 @@ extension AlbumContentViewController: AlbumToolbarProvider {
         let trailingAnchor: NSLayoutXAxisAnchor = view.safeAreaLayoutGuide.trailingAnchor
         
         toolbar.translatesAutoresizingMaskIntoConstraints = false
-        toolbar.backgroundColor = UIColor.mnz_mainBars(for: traitCollection)
+        toolbar.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.surface1 : UIColor.mnz_mainBars(for: traitCollection)
         toolbar.heightAnchor.constraint(equalToConstant: 64.0).isActive = true
         toolbar.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
         toolbar.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true

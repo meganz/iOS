@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGASwiftUI
 import SwiftUI
 
@@ -10,6 +11,7 @@ struct PhotoLibraryContentView: View {
     
     var body: some View {
         content()
+            .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : nil)
             .overlay(placeholder)
             .environment(\.editMode, $editMode)
             .onReceive(viewModel.selection.$editMode) {

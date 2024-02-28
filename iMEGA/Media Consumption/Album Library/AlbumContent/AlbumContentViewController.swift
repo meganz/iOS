@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
@@ -63,6 +64,10 @@ final class AlbumContentViewController: UIViewController, ViewType, TraitEnviron
         }
         
         viewModel.dispatch(.onViewReady)
+        
+        if UIColor.isDesignTokenEnabled() {
+            view.backgroundColor = TokenColors.Background.page
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -158,15 +163,20 @@ final class AlbumContentViewController: UIViewController, ViewType, TraitEnviron
     
     private func configureLeftBarButton() {
         if isEditing {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(
+            let selectAllItemsBarButtonItem = UIBarButtonItem(
                 image: UIImage.selectAllItems,
                 style: .plain,
                 target: self,
                 action: #selector(selectAllButtonPressed(_:))
             )
+            
+            if UIColor.isDesignTokenEnabled() {
+                selectAllItemsBarButtonItem.tintColor = TokenColors.Text.primary
+            }
+            
+            navigationItem.leftBarButtonItem = selectAllItemsBarButtonItem
         } else {
-            let normalForegroundColor = traitCollection.userInterfaceStyle == .dark ? MEGAAppColor.White._FFFFFF.uiColor : MEGAAppColor.Black._000000.uiColor
-            leftBarButtonItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: normalForegroundColor], for: .normal)
+            leftBarButtonItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: getBarButtonNormalForegroundColor()], for: .normal)
             navigationItem.leftBarButtonItem = leftBarButtonItem
         }
     }
