@@ -100,47 +100,49 @@ public extension MEGAChatCallChangeType {
     func toChangeTypeEntity() -> CallEntity.ChangeType {
         switch self {
         case .noChanges:
-            return .noChanges
+            .noChanges
         case .status:
-            return .status
+            .status
         case .localAVFlags:
-            return .localAVFlags
+            .localAVFlags
         case .ringingStatus:
-            return .ringingStatus
+            .ringingStatus
         case .callComposition:
-            return .callComposition
+            .callComposition
         case .callOnHold:
-            return .onHold
+            .onHold
         case .callSpeak:
-            return .callSpeak
+            .callSpeak
         case .audioLevel:
-            return .audioLevel
+            .audioLevel
         case .networkQuality:
-            return .networkQuality
+            .networkQuality
         case .outgoingRingingStop:
-            return .outgoingRingingStop
+            .outgoingRingingStop
         case .ownPermissions:
-            return .ownPermission
+            .ownPermission
         case .genericNotification:
-            return .genericNotification
+            .genericNotification
         case .waitingRoomAllow:
-            return .waitingRoomAllow
+            .waitingRoomAllow
         case .waitingRoomDeny:
-            return .waitingRoomDeny
+            .waitingRoomDeny
         case .waitingRoomComposition:
-            return .waitingRoomComposition
+            .waitingRoomComposition
         case .waitingRoomUsersEntered:
-            return .waitingRoomUsersEntered
+            .waitingRoomUsersEntered
         case .waitingRoomUsersLeave:
-            return .waitingRoomUsersLeave
+            .waitingRoomUsersLeave
         case .waitingRoomUsersAllow:
-            return .waitingRoomUsersAllow
+            .waitingRoomUsersAllow
         case .waitingRoomUsersDeny:
-            return .waitingRoomUsersDeny
+            .waitingRoomUsersDeny
         case .waitingRoomPushedFromCall:
-            return .waitingRoomPushedFromCall
+            .waitingRoomPushedFromCall
+        case .speakRequested:
+            .speakRequested
         @unknown default:
-            return .noChanges
+            .noChanges
         }
     }
 }

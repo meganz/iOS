@@ -49,6 +49,7 @@ public struct CallEntity: Sendable {
         case waitingRoomUsersAllow
         case waitingRoomUsersDeny
         case waitingRoomPushedFromCall
+        case speakRequested
     }
     
     public enum ConfigurationType: Sendable {
