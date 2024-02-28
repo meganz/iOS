@@ -10,7 +10,7 @@ final class DeviceCenterItemViewModelTests: XCTestCase {
     func testActions_forCurrentNewDeviceWithoutCU_returnsCorrectActions() {
         let deviceID = "deviceID"
         let device = createDevice(id: deviceID, status: .noCameraUploads)
-        let expectedActions: [DeviceCenterActionType] = [.cameraUploads]
+        let expectedActions: [ContextAction.Category] = [.cameraUploads]
         
         executeAndVerifyDeviceActions(
             device: device,
@@ -25,7 +25,7 @@ final class DeviceCenterItemViewModelTests: XCTestCase {
             id: mockCurrentDeviceId,
             status: .upToDate
         )
-        let expectedActions: [DeviceCenterActionType] = [.info, .cameraUploads, .rename]
+        let expectedActions: [ContextAction.Category] = [.info, .cameraUploads, .rename]
         
         executeAndVerifyDeviceActions(
             device: device,
@@ -40,7 +40,7 @@ final class DeviceCenterItemViewModelTests: XCTestCase {
             id: mockCurrentDeviceId,
             status: .upToDate
         )
-        let expectedActions: [DeviceCenterActionType] = [.info, .rename]
+        let expectedActions: [ContextAction.Category] = [.info, .rename]
         
         executeAndVerifyDeviceActions(
             device: device,
@@ -116,7 +116,7 @@ final class DeviceCenterItemViewModelTests: XCTestCase {
     
     private func executeAndVerifyDeviceActions(
         device: DeviceEntity,
-        expectedActions: [DeviceCenterActionType],
+        expectedActions: [ContextAction.Category],
         isCUActionAvailable: Bool = false,
         currentDeviceUUID: String = "",
         errorMessage: String
@@ -192,21 +192,21 @@ final class DeviceCenterItemViewModelTests: XCTestCase {
             itemType: itemType,
             sortedAvailableActions: [
                 .info: [
-                    DeviceCenterAction(
+                    ContextAction(
                         type: .info,
                         title: "Info",
                         icon: "info"
                     )
                 ],
                 .cameraUploads: [
-                    DeviceCenterAction(
+                    ContextAction(
                         type: .cameraUploads,
                         title: "Camera Uploads",
                         icon: "cameraUploads"
                     )
                 ],
                 .rename: [
-                    DeviceCenterAction(
+                    ContextAction(
                         type: .rename,
                         title: "Rename",
                         icon: "rename"

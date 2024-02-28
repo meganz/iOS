@@ -1,12 +1,12 @@
 import MEGADomain
 
 public struct NavigateToContentActionEntity {
-    public let type: DeviceCenterActionType
+    public let type: ContextAction.Category
     public let node: NodeEntity
     public let error: String?
     
     public init(
-        type: DeviceCenterActionType,
+        type: ContextAction.Category,
         node: NodeEntity,
         error: String?
     ) {

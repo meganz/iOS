@@ -155,9 +155,9 @@ extension MyAccountHallViewModel {
         ]
     }
     
-    private func deviceCenterActionList() -> [DeviceCenterAction] {
+    private func deviceCenterActionList() -> [ContextAction] {
         return [
-            DeviceCenterAction(
+            ContextAction(
                 type: .cameraUploads,
                 title: Strings.Localizable.cameraUploadsLabel,
                 dynamicSubtitle: {
@@ -166,57 +166,57 @@ extension MyAccountHallViewModel {
                 },
                 icon: DeviceCenterActionIconAssets.cameraUploadsSettings
             ),
-            DeviceCenterAction(
+            ContextAction(
                 type: .info,
                 title: Strings.Localizable.info,
                 icon: DeviceCenterActionIconAssets.info
             ),
-            DeviceCenterAction(
+            ContextAction(
                 type: .rename,
                 title: Strings.Localizable.rename,
                 icon: DeviceCenterActionIconAssets.rename
             ),
-            DeviceCenterAction(
+            ContextAction(
                 type: .sort,
                 title: Strings.Localizable.sortTitle,
                 icon: DeviceCenterActionIconAssets.sort,
                 subActions: [
-                    DeviceCenterAction(
+                    ContextAction(
                         type: .sortAscending,
                         title: Strings.Localizable.nameAscending,
                         icon: DeviceCenterActionIconAssets.ascending
                     ),
-                    DeviceCenterAction(
+                    ContextAction(
                         type: .sortDescending,
                         title: Strings.Localizable.nameDescending,
                         icon: DeviceCenterActionIconAssets.descending
                     ),
-                    DeviceCenterAction(
+                    ContextAction(
                         type: .sortLargest,
                         title: Strings.Localizable.largest,
                         icon: DeviceCenterActionIconAssets.largest
                     ),
-                    DeviceCenterAction(
+                    ContextAction(
                         type: .sortSmallest,
                         title: Strings.Localizable.smallest,
                         icon: DeviceCenterActionIconAssets.smallest
                     ),
-                    DeviceCenterAction(
+                    ContextAction(
                         type: .sortNewest,
                         title: Strings.Localizable.newest,
                         icon: DeviceCenterActionIconAssets.newest
                     ),
-                    DeviceCenterAction(
+                    ContextAction(
                         type: .sortOldest,
                         title: Strings.Localizable.oldest,
                         icon: DeviceCenterActionIconAssets.oldest
                     ),
-                    DeviceCenterAction(
+                    ContextAction(
                         type: .sortLabel,
                         title: Strings.Localizable.CloudDrive.Sort.label,
                         icon: DeviceCenterActionIconAssets.label
                     ),
-                    DeviceCenterAction(
+                    ContextAction(
                         type: .sortFavourite,
                         title: Strings.Localizable.favourite,
                         icon: DeviceCenterActionIconAssets.favourite

@@ -1,4 +1,4 @@
-extension DeviceCenterActionType {
+extension ContextAction.Category {
     func sortType() -> SortType {
         switch self {
         case .sortAscending: .ascending
@@ -15,7 +15,7 @@ extension DeviceCenterActionType {
 }
 
 extension SortType {
-    func actionType() -> DeviceCenterActionType {
+    func actionType() -> ContextAction.Category {
         switch self {
         case .ascending: .sortAscending
         case .descending: .sortDescending
@@ -25,6 +25,14 @@ extension SortType {
         case .oldest: .sortOldest
         case .label: .sortLabel
         case .favourite: .sortFavourite
+        }
+    }
+}
+
+extension Array where Element == ContextAction.Category {
+    func sortedMapping(sortedActions: [ContextAction.Category: [ContextAction]]) -> [ContextAction] {
+        compactMap { type in
+            sortedActions[type]?.first
         }
     }
 }

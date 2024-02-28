@@ -46,7 +46,11 @@ struct BackupListContentView: View {
                 .listStyle(.plain)
             }.toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    DeviceCenterMenu(viewModel: viewModel, menuIconName: "moreList", menuOptions: viewModel.actionsForDevice())
+                    DeviceCenterMenu(
+                        viewModel: viewModel,
+                        menuIconName: "moreList",
+                        menuOptions: viewModel.availableActionsForCurrentDevice()
+                    )
                 }
             }
             .throwingTask {
@@ -80,7 +84,7 @@ struct DeviceCenterMenu: View {
     @ObservedObject var viewModel: BackupListViewModel
     var title: String = ""
     let menuIconName: String
-    let menuOptions: [DeviceCenterAction]
+    let menuOptions: [ContextAction]
 
     var body: some View {
         Menu {

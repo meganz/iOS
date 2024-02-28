@@ -379,16 +379,16 @@ final class DeviceListViewModelTests: XCTestCase {
             ),
             backupStatuses: backupStatusEntities.compactMap { BackupStatus(status: $0) },
             deviceCenterActions: [
-                DeviceCenterAction(
+                ContextAction(
                     type: .cameraUploads
                 ),
-                DeviceCenterAction(
+                ContextAction(
                     type: .info
                 ),
-                DeviceCenterAction(
+                ContextAction(
                     type: .rename
                 ),
-                DeviceCenterAction(
+                ContextAction(
                     type: .sort
                 )
             ],

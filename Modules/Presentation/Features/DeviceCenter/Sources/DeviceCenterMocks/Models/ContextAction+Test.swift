@@ -1,8 +1,8 @@
 import DeviceCenter
 
-public extension DeviceCenterAction {
+public extension ContextAction {
     init(
-        type: DeviceCenterActionType,
+        type: ContextAction.Category,
         isTesting: Bool = true
     ) {
         self.init(type: type, title: "", icon: "")
