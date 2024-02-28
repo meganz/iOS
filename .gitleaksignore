@@ -1,5 +1,7 @@
 MEGAUnitTests/Album/Links/ImportAlbumViewModelTests.swift:generic-api-key:155
+MEGAUnitTests/Album/Links/ImportAlbumViewModelTests.swift:generic-api-key:156
 MEGAUnitTests/Album/Links/ImportAlbumViewModelTests.swift:generic-api-key:245
+MEGAUnitTests/Album/Links/ImportAlbumViewModelTests.swift:generic-api-key:246
 Modules/Presentation/MEGAL10n/Sources/MEGAL10n/Resources/Base.lproj/Localizable.strings:hashicorp-tf-password:110
 Modules/Presentation/MEGAL10n/Sources/MEGAL10n/Resources/de.lproj/Localizable.strings:hashicorp-tf-password:110
 Modules/Presentation/MEGAL10n/Sources/MEGAL10n/Resources/de.lproj/Localizable.strings:hashicorp-tf-password:914
@@ -14,4 +16,12 @@ Modules/Repository/MEGASDKRepo/Sources/MEGASDKRepo/Repository/Authentication/Cre
 Modules/Presentation/MEGAL10n/Sources/MEGAL10n/Resources/nl.lproj/Localizable.strings:hashicorp-tf-password:110
 Modules/Presentation/MEGAL10n/Sources/MEGAL10n/Resources/nl.lproj/Localizable.strings:hashicorp-tf-password:122
 Modules/Presentation/MEGAL10n/Sources/MEGAL10n/Resources/it.lproj/Localizable.strings:hashicorp-tf-password:110
+Modules/Presentation/MEGAL10n/Sources/MEGAL10n/Resources/it.lproj/Localizable.strings:hashicorp-tf-password:918
+Modules/Presentation/MEGAL10n/Sources/MEGAL10n/Resources/it.lproj/Localizable.strings:hashicorp-tf-password:1944
+Modules/Presentation/MEGAL10n/Sources/MEGAL10n/Resources/it.lproj/Localizable.strings:hashicorp-tf-password:2344
+Modules/Presentation/MEGAL10n/Sources/MEGAL10n/Resources/it.lproj/Localizable.strings:hashicorp-tf-password:2450
+Modules/Presentation/MEGAL10n/Sources/MEGAL10n/Resources/it.lproj/Localizable.strings:hashicorp-tf-password:918
+Modules/Presentation/MEGAL10n/Sources/MEGAL10n/Resources/it.lproj/Localizable.strings:hashicorp-tf-password:1944
+Modules/Presentation/MEGAL10n/Sources/MEGAL10n/Resources/it.lproj/Localizable.strings:hashicorp-tf-password:2344
+Modules/Presentation/MEGAL10n/Sources/MEGAL10n/Resources/it.lproj/Localizable.strings:hashicorp-tf-password:2450
 fastlane/.env.default:generic-api-key:4

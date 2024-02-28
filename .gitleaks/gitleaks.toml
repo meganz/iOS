@@ -18,6 +18,8 @@ paths = [
     '''pnpm-lock.yaml''',
     '''Database.refactorlog''',
     '''vendor''',
+    '''Modules/Presentation/MEGAL10n/Sources/MEGAL10n/Resources/*/Localizable.strings''',
+    '''MEGAUnitTests/Album/Links/ImportAlbumViewModelTests.swift'''
 ]
 
 [[rules]]
