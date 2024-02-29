@@ -7920,6 +7920,7 @@
 			children = (
 				5D33D66A250D9BC900D74666 /* Client */,
 				5D52C748250C4F2800286A43 /* Functions */,
+				C4B803E22B8EE97B00511566 /* Managers */,
 				949704B52AB427A700B2CA3A /* Router */,
 				B6FD6510268D7EA500988A17 /* UseCase */,
 				32A9DECC28D198E300ABC3F6 /* ViewModel */,
@@ -12627,6 +12628,13 @@
 				C4AF4A982582839A00594716 /* MiniPlayerViewRouter.swift */,
 			);
 			path = MiniPlayerScene;
+			sourceTree = "<group>";
+		};
+		C4B803E22B8EE97B00511566 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 		C4B97D732B6781F900EBA9E5 /* RandomNumberGenerator */ = {

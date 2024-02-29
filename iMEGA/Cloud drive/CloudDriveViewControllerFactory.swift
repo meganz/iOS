@@ -175,6 +175,8 @@ struct CloudDriveViewControllerFactory {
             nodeRepository: NodeRepository.newRepo
         )
         
+        let nodeAssetsManager = NodeAssetsManager.shared
+        
         return CloudDriveViewControllerFactory(
             featureFlagProvider: DIContainer.featureFlagProvider,
             abTestProvider: DIContainer.abTestProvider,
@@ -194,10 +196,10 @@ struct CloudDriveViewControllerFactory {
                 filesSearchRepository: FilesSearchRepository(sdk: sdk),
                 nodeUpdateRepository: NodeUpdateRepository(sdk: sdk)
             ),
-            
             homeScreenFactory: homeFactory,
             resultsMapper: SearchResultMapper(
                 sdk: sdk,
+                nodeIconUsecase: NodeIconUseCase(nodeIconRepo: nodeAssetsManager),
                 nodeDetailUseCase: homeFactory.makeNodeDetailUseCase(),
                 nodeUseCase: nodeUseCase,
                 mediaUseCase: homeFactory.makeMediaUseCase()

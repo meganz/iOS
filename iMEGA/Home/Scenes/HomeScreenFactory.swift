@@ -144,6 +144,10 @@ final class HomeScreenFactory: NSObject {
     private func makeNodeRepo() -> some NodeRepositoryProtocol {
         NodeRepository.newRepo
     }
+    
+    private func makeNodeIconUsecase() -> some NodeIconUsecaseProtocol {
+        NodeIconUseCase(nodeIconRepo: NodeAssetsManager.shared)
+    }
 
     private func makeFeatureFlagProvider() -> some FeatureFlagProviderProtocol {
         DIContainer.featureFlagProvider
@@ -330,7 +334,8 @@ final class HomeScreenFactory: NSObject {
             mediaUseCase: makeMediaUseCase(),
             nodeRepository: makeNodeRepo(),
             nodesUpdateListenerRepo: makeNodesUpdateListenerRepo(),
-            transferListenerRepo: makeTransferListenerRepo(),
+            transferListenerRepo: makeTransferListenerRepo(), 
+            nodeIconUsecase: makeNodeIconUsecase(),
             allChips: Self.allChips(areChipsGroupEnabled: featureFlagProvider.isFeatureFlagEnabled(for: .chipsGroups)),
             sdk: sdk,
             onSearchResultUpdated: { [weak searchBridge] searchResult in

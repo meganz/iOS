@@ -117,7 +117,8 @@ class HomeSearchProviderTests: XCTestCase {
                 mediaUseCase: mediaUseCase,
                 nodeRepository: nodeRepo,
                 nodesUpdateListenerRepo: nodesUpdateListenerRepo,
-                transferListenerRepo: SDKTransferListenerRepository(sdk: MockSdk()),
+                transferListenerRepo: SDKTransferListenerRepository(sdk: MockSdk()), 
+                nodeIconUsecase: MockNodeIconUsecase(stubbedIconData: Data()),
                 allChips: SearchChipEntity.allChips(
                     areChipsGroupEnabled: true,
                     currentDate: { .testDate },
