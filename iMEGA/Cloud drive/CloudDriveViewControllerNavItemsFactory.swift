@@ -19,11 +19,9 @@ struct CloudDriveViewControllerNavItemsFactory {
     ///   - label: A view describing the content of the menu.
     /// - Returns: SwiftUI context menu.
     func contextMenu<Label: View>(@ViewBuilder label: @escaping () -> Label) -> ContextMenuWithButtonView<Label>? {
-        guard case let .node(nodeProvider) = nodeSource else { return nil }
-
-        let parentNode = nodeProvider()
-
-        let accessType = nodeUseCase.nodeAccessLevel(nodeHandle: parentNode?.handle ?? .invalid)
+        guard let (parentNode, accessType) = parentNodeAndAccessType() else {
+            return nil
+        }
 
         let hasMedia = CloudDriveViewControllerMediaCheckerMode
             .containsSomeMedia
@@ -59,11 +57,23 @@ struct CloudDriveViewControllerNavItemsFactory {
     func addMenu<Label: View>(@ViewBuilder label: @escaping () -> Label) -> ContextMenuWithButtonView<Label>? {
         guard config.isFromViewInFolder != true,
               config.displayMode != .rubbishBin,
-              config.displayMode != .backup else {
+              config.displayMode != .backup,
+              let (_, accessType) = parentNodeAndAccessType(),
+              accessType != .unknown,
+              accessType != .read else {
             return nil
         }
 
         let addBarMenuConfig = CMConfigEntity(menuType: .menu(type: .uploadAdd), viewMode: currentViewMode)
         return contextMenuManager.menu(with: addBarMenuConfig, label: label)
+    }
+
+    private func parentNodeAndAccessType() -> (NodeEntity, NodeAccessTypeEntity)? {
+        guard case let .node(nodeProvider) = nodeSource, let parentNode = nodeProvider() else {
+            return nil
+        }
+
+        let accessType = nodeUseCase.nodeAccessLevel(nodeHandle: parentNode.handle)
+        return (parentNode, accessType)
     }
 }
