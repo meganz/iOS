@@ -41,8 +41,19 @@ public struct NotificationsRepository: NotificationsRepositoryProtocol {
     
     public func fetchEnabledNotifications() -> [NotificationIDEntity] {
         guard let enabledNotificationList = sdk.getEnabledNotifications() else { return []}
+        return enabledNotificationList.toNotificationIDEntities()
+    }
     
-        return (0..<enabledNotificationList.size)
-            .compactMap(NotificationIDEntity.init)
+    public func fetchNotifications() async throws -> [NotificationEntity] {
+        try await withAsyncThrowingValue { completion in
+            sdk.getNotificationsWith(RequestDelegate { result in
+                switch result {
+                case .success(let request):
+                    completion(.success(request.megaNotifications?.toNotificationEntities() ?? []))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            })
+        }
     }
 }

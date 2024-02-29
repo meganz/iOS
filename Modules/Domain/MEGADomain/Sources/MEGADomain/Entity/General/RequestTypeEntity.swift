@@ -168,5 +168,6 @@ public enum RequestTypeEntity: Sendable {
     case exportSet
     case exportedSetElement
     case getRecommendedProPlan
+    case getNotifications
     case totalOfRequestTypes
 }

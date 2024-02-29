@@ -340,6 +340,8 @@ extension MEGARequestType {
             return .useHttpsOnly
         case .MEGARequestTypeSetProxy:
             return .setProxy
+        case .MEGARequestTypeGetNotifications:
+            return .getNotifications
         case .TotalOfRequestTypes:
             return .totalOfRequestTypes
         default:
