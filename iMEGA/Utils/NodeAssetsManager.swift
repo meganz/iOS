@@ -78,3 +78,12 @@ import MEGASDKRepo
 enum FileExtensionType: String {
     case jpg = "jpg|jpeg"
 }
+
+extension NodeAssetsManager: NodeIconRepositoryProtocol {
+    func iconData(for node: MEGADomain.NodeEntity) -> Data {
+        let sdk = MEGASdk.shared
+        guard let megaNode = node.toMEGANode(in: sdk) else { return Data() }
+        
+        return icon(for: megaNode).pngData() ?? Data()
+    }
+}

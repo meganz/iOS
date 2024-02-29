@@ -11,6 +11,7 @@ import Search
 /// to display in the SearchResultsView
 struct SearchResultMapper {
     var sdk: MEGASdk
+    var nodeIconUsecase: any NodeIconUsecaseProtocol
     var nodeDetailUseCase: any NodeDetailUseCaseProtocol
     var nodeUseCase: any NodeUseCaseProtocol
     var mediaUseCase: any MediaUseCaseProtocol
@@ -24,7 +25,7 @@ struct SearchResultMapper {
             description: info(for: node),
             type: .node,
             properties: properties(for: node),
-            thumbnailImageData: { await self.loadThumbnail(for: node.handle) }
+            thumbnailImageData: { await self.loadThumbnail(for: node) }
         )
     }
     
@@ -132,14 +133,18 @@ struct SearchResultMapper {
         node.isExported && !nodeUseCase.isInRubbishBin(nodeHandle: node.handle)
     }
     
-    private func loadThumbnail(for handle: HandleEntity) async -> Data {
-        return await withAsyncValue(in: { completion in
-            nodeDetailUseCase.loadThumbnail(
-                of: handle,
-                completion: { image in
-                    completion(.success(image?.pngData() ?? Data()))
-                }
-            )
-        })
+    private func loadThumbnail(for node: NodeEntity) async -> Data {
+        if node.hasThumbnail {
+            return await withAsyncValue(in: { completion in
+                nodeDetailUseCase.loadThumbnail(
+                    of: node.handle,
+                    completion: { image in
+                        completion(.success(image?.pngData() ?? Data()))
+                    }
+                )
+            })
+        }
+        
+        return nodeIconUsecase.iconData(for: node)
     }
 }

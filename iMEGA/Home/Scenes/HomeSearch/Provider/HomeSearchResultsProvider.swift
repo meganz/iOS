@@ -43,6 +43,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         nodeRepository: some NodeRepositoryProtocol,
         nodesUpdateListenerRepo: any NodesUpdateListenerProtocol,
         transferListenerRepo: SDKTransferListenerRepository,
+        nodeIconUsecase: some NodeIconUsecaseProtocol,
         allChips: [SearchChipEntity],
         sdk: MEGASdk,
         onSearchResultUpdated: @escaping (SearchResult) -> Void
@@ -59,6 +60,7 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         
         mapper = SearchResultMapper(
             sdk: sdk,
+            nodeIconUsecase: nodeIconUsecase,
             nodeDetailUseCase: nodeDetailUseCase,
             nodeUseCase: nodeUseCase,
             mediaUseCase: mediaUseCase

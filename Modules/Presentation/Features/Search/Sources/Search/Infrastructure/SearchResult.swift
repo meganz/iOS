@@ -13,7 +13,7 @@ public struct SearchResult: Identifiable, Sendable {
         title: String,
         description: @escaping @Sendable (ResultCellLayout) -> String,
         type: ResultType,
-        /// represents various properties such as labek color, offline status, versioning etc;
+        /// represents various properties such as label color, offline status, versioning etc;
         /// elements in the array define how they should be rendered (icon, text ..) and where
         /// they should be placed. Placement is encoded in a semantic way 
         properties: [ResultProperty],
