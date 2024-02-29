@@ -324,9 +324,12 @@ final class MeetingContainerRouter: MeetingContainerRouting {
             message: Strings.Localizable.Calls.FreePlanLimitWarning.UsersLimitAlert.message,
             preferredStyle: .alert)
         let defaultAction =  UIAlertAction(
-                title: Strings.Localizable.Calls.FreePlanLimitWarning.UsersLimitAlert.button, style: .default)
+            title: Strings.Localizable.Calls.FreePlanLimitWarning.UsersLimitAlert.button, style: .default) { _ in
+                UserDefaults.standard.set(false, forKey: "isAnswerCallErrorPresented")
+            }
         alert.addAction(defaultAction)
         alert.preferredAction = defaultAction
+        UserDefaults.standard.set(true, forKey: "isAnswerCallErrorPresented")
         presenter.dismiss(animated: true) {
             presenter.present(alert, animated: true)
         }

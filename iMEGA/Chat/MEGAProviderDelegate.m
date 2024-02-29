@@ -486,6 +486,7 @@
             break;
             
         case MEGAChatCallStatusInProgress: {
+            [NSUserDefaults.standardUserDefaults setBool:NO forKey:@"isAnswerCallErrorPresented"];
             if ([call hasChangedForType:MEGAChatCallChangeTypeLocalAVFlags]) {
                 [self callUpdateVideoForCall:call];
             }
@@ -550,7 +551,9 @@
 }
 
 - (void)answerCallForChatRoom:(MEGAChatRoom *)chatRoom call:(MEGAChatCall *)call action:(CXAnswerCallAction *)action {
-    if (call.status != MEGAChatCallStatusUserNoPresent) {
+    /// Under some scenarios not defined in documentation, looks like CallKit provider triggers performAnswerCallAction more than once in a row.
+    /// It is needed to discard those attempts to answer the call again if the user is already in the call or an error to join the call is presented.
+    if (call.status != MEGAChatCallStatusUserNoPresent || [NSUserDefaults.standardUserDefaults boolForKey:@"isAnswerCallErrorPresented"] == YES) {
         [action fulfill];
         return;
     }
