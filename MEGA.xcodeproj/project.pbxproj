@@ -2192,6 +2192,7 @@
 		BF7EBD4F2452AF460015255F /* AddToChatMenus.plist in Resources */ = {isa = PBXBuildFile; fileRef = BF7EBD4E2452AF460015255F /* AddToChatMenus.plist */; };
 		BF7EBD512452B0A00015255F /* AddToChatMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7EBD502452B0A00015255F /* AddToChatMenu.swift */; };
 		BF825F532B872696007B0B53 /* ScanDocumentViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF825F522B872696007B0B53 /* ScanDocumentViewRouter.swift */; };
+		BF875B472B90309F00FE629A /* NodeBrowserContextMenuViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF875B462B90309F00FE629A /* NodeBrowserContextMenuViewFactory.swift */; };
 		BF8895B62630F3A4002A18CA /* MockChatRoomUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8895B52630F3A4002A18CA /* MockChatRoomUseCase.swift */; };
 		BF8895CA2630F4B3002A18CA /* MockUserImageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8895C92630F4B3002A18CA /* MockUserImageUseCase.swift */; };
 		BF8895D42630F810002A18CA /* MeetingParticipantInfoViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8895D32630F810002A18CA /* MeetingParticipantInfoViewModelTests.swift */; };
@@ -2288,6 +2289,7 @@
 		BFAFB154252AC715003ADFE3 /* FilesExplorerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAFB153252AC715003ADFE3 /* FilesExplorerViewModel.swift */; };
 		BFAFB17F252AD1D9003ADFE3 /* DocAndAudioListSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFAFB17E252AD1D9003ADFE3 /* DocAndAudioListSource.swift */; };
 		BFAFB1A0252C0A66003ADFE3 /* NodeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFAFB19F252C0A66003ADFE3 /* NodeTableViewCell.xib */; };
+		BFB076572B8EE91D00FE6962 /* ContextMenuWithButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB076562B8EE91D00FE6962 /* ContextMenuWithButtonView.swift */; };
 		BFB33D8E263B922F006E203D /* EndMeetingOptionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB33D8A263B922F006E203D /* EndMeetingOptionsViewModel.swift */; };
 		BFB33D8F263B922F006E203D /* EndMeetingOptionsViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB33D8B263B922F006E203D /* EndMeetingOptionsViewViewController.swift */; };
 		BFB33D90263B922F006E203D /* EndMeetingOptionsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB33D8C263B922F006E203D /* EndMeetingOptionsRouter.swift */; };
@@ -4905,6 +4907,7 @@
 		BF7EBD4E2452AF460015255F /* AddToChatMenus.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = AddToChatMenus.plist; sourceTree = "<group>"; };
 		BF7EBD502452B0A00015255F /* AddToChatMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatMenu.swift; sourceTree = "<group>"; };
 		BF825F522B872696007B0B53 /* ScanDocumentViewRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScanDocumentViewRouter.swift; sourceTree = "<group>"; };
+		BF875B462B90309F00FE629A /* NodeBrowserContextMenuViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeBrowserContextMenuViewFactory.swift; sourceTree = "<group>"; };
 		BF8895B52630F3A4002A18CA /* MockChatRoomUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockChatRoomUseCase.swift; sourceTree = "<group>"; };
 		BF8895C92630F4B3002A18CA /* MockUserImageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockUserImageUseCase.swift; sourceTree = "<group>"; };
 		BF8895D32630F810002A18CA /* MeetingParticipantInfoViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingParticipantInfoViewModelTests.swift; sourceTree = "<group>"; };
@@ -4995,6 +4998,7 @@
 		BFAFB153252AC715003ADFE3 /* FilesExplorerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesExplorerViewModel.swift; sourceTree = "<group>"; };
 		BFAFB17E252AD1D9003ADFE3 /* DocAndAudioListSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocAndAudioListSource.swift; sourceTree = "<group>"; };
 		BFAFB19F252C0A66003ADFE3 /* NodeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NodeTableViewCell.xib; sourceTree = "<group>"; };
+		BFB076562B8EE91D00FE6962 /* ContextMenuWithButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenuWithButtonView.swift; sourceTree = "<group>"; };
 		BFB33D8A263B922F006E203D /* EndMeetingOptionsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndMeetingOptionsViewModel.swift; sourceTree = "<group>"; };
 		BFB33D8B263B922F006E203D /* EndMeetingOptionsViewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndMeetingOptionsViewViewController.swift; sourceTree = "<group>"; };
 		BFB33D8C263B922F006E203D /* EndMeetingOptionsRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndMeetingOptionsRouter.swift; sourceTree = "<group>"; };
@@ -8412,6 +8416,7 @@
 				9428B99F2819499A00DB7250 /* ContextMenuManager.swift */,
 				9479F02A28BFAB26008578BE /* ContextMenuModel+Mapper.swift */,
 				9479F02628BFA4C3008578BE /* ContextMenuModel.swift */,
+				BFB076562B8EE91D00FE6962 /* ContextMenuWithButtonView.swift */,
 			);
 			path = ContextMenus;
 			sourceTree = "<group>";
@@ -9937,6 +9942,7 @@
 				94B09E532B84CC86007D6B84 /* NodeActions+NodeActionsDelegateHandler.swift */,
 				94B09E3F2B84CC86007D6B84 /* NodeActions.swift */,
 				94B09E3D2B84CC86007D6B84 /* NodeActionsDelegateHandler.swift */,
+				BF875B462B90309F00FE629A /* NodeBrowserContextMenuViewFactory.swift */,
 				94B09E412B84CC86007D6B84 /* NodeBrowserView.swift */,
 				94B09E542B84CC86007D6B84 /* NodeBrowserViewModel.swift */,
 				94B09E512B84CC86007D6B84 /* NodeSource.swift */,
@@ -14124,6 +14130,7 @@
 				9428B9A02819499A00DB7250 /* ContextMenuManager.swift in Sources */,
 				9479F02B28BFAB26008578BE /* ContextMenuModel+Mapper.swift in Sources */,
 				9479F02728BFA4C3008578BE /* ContextMenuModel.swift in Sources */,
+				BFB076572B8EE91D00FE6962 /* ContextMenuWithButtonView.swift in Sources */,
 				5B366C4B2576846500FD3806 /* CookieSettingsRouter.swift in Sources */,
 				B5C640822B5E1EA0005F8AEB /* CookieSettingsTableViewController+SnackBar.swift in Sources */,
 				5B366C5925769BC800FD3806 /* CookieSettingsTableViewController.swift in Sources */,
@@ -14703,6 +14710,7 @@
 				5D166B82252197ED004F4F4A /* NodeActionViewControllerGenericDelegate.swift in Sources */,
 				12E23289286D49000099775D /* NodeActionViewModel.swift in Sources */,
 				94C85E6C28B93CEF00007A38 /* NodeAssetsManager.swift in Sources */,
+				BF875B472B90309F00FE629A /* NodeBrowserContextMenuViewFactory.swift in Sources */,
 				94B09E592B84CC87007D6B84 /* NodeBrowserView.swift in Sources */,
 				94B09E6B2B84CC87007D6B84 /* NodeBrowserViewModel.swift in Sources */,
 				5B947A9A267A20CD00715B0C /* NodeCellViewModel.swift in Sources */,

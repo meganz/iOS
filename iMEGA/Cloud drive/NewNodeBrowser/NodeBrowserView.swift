@@ -49,6 +49,10 @@ struct NodeBrowserView: View {
             )
         }
 
+        ToolbarItem(placement: .topBarTrailing) {
+            Button(Strings.Localizable.cancel) { viewModel.stopEditing() }
+        }
+
         ToolbarItem(placement: .principal) {
             Text(viewModel.title).font(.headline)
         }
@@ -57,12 +61,14 @@ struct NodeBrowserView: View {
     @ToolbarContentBuilder
     private var toolbarContent: some ToolbarContent {
         toolbarNavigationTitle
+        toolbarTrailingNonEditingContent
     }
 
     @ToolbarContentBuilder
     private var toolbarContentWithLeadingAvatar: some ToolbarContent {
         toolbarLeadingAvatarImage
         toolbarNavigationTitle
+        toolbarTrailingNonEditingContent
     }
 
     @ToolbarContentBuilder
@@ -93,6 +99,14 @@ struct NodeBrowserView: View {
             Text(viewModel.title)
                 .font(.headline)
                 .lineLimit(1)
+        }
+    }
+
+    @ToolbarContentBuilder
+    private var toolbarTrailingNonEditingContent: some ToolbarContent {
+        ToolbarItemGroup(placement: .topBarTrailing) {
+            viewModel.contextMenuViewFactory?.makeAddMenuWithButtonView()
+            viewModel.contextMenuViewFactory?.makeContextMenuWithButtonView()
         }
     }
 }

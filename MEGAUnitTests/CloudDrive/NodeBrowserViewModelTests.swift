@@ -174,6 +174,16 @@ class NodeBrowserViewModelTests: XCTestCase {
         harness.sut.viewMode = .mediaDiscovery
         XCTAssertNotNil(harness.sut.viewModeAwareMediaDiscoveryViewModel)
     }
+
+    func testViewState_whenEditing_shouldChangeToEditMode() {
+        let harness = Harness(node: .init())
+        harness.sut.toggleSelection()
+        XCTAssertTrue(harness.sut.editing)
+        guard case .editing = harness.sut.viewState else {
+            XCTFail("view state should be editing")
+            return
+        }
+    }
 }
 
 extension NodeEntity {

@@ -1,46 +1,51 @@
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
+import SwiftUI
 import XCTest
 
 final class CloudDriveViewControllerNavItemsFactoryTests: XCTestCase {
 
-    func testMakeNavItems_whenNodeSourceIsRecentBucketAction_shouldReturnEmpty() async {
+    func testContextMenu_whenNodeSourceIsRecentBucketAction_shouldReturnNil() {
         let sut = makeSUT(nodeSource: .recentActionBucket(.init()))
-        await assert(sut: sut)
+        assertContextMenu(sut: sut)
     }
 
-    func testMakeNavItems_whenNodeIsNil_shouldReturnEmpty() async {
+    func testContextMenu_whenNodeIsNil_shouldReturnNil() {
         let sut = makeSUT()
-        await assert(sut: sut)
+        assertContextMenu(sut: sut)
     }
 
-    func testMakeNavItems_whenIsViewFromFolderIsTrue_shouldReturnOnlyMoreButton() async {
-        await assert(config: .init(isFromViewInFolder: true), rightNavBarImage: UIImage.moreNavigationBar)
+    func testContextMenu_whenAccessTypeIsNil_shouldReturnNil() {
+        let sut = makeSUT()
+        assertContextMenu(sut: sut, accessType: nil)
     }
 
-    func testMakeNavItems_whenDisplayModeRubbishBin_shouldReturnEmptyRightBurButtons() async {
-        await assert(config: .init(displayMode: .rubbishBin), rightNavBarImage: nil)
+    func testContextMenu_whenTheCaseIsValid_shouldNotBeNil() {
+        let sut = makeSUT(nodeSource: .node { .init() })
+        let contextMenu = sut.contextMenu { EmptyView() }
+        XCTAssertNotNil(contextMenu)
     }
 
-    func testMakeNavItems_whenDisplayModeBackup_shouldReturnOnlyMoreButton() async {
-        await assert(config: .init(displayMode: .backup), rightNavBarImage: UIImage.moreNavigationBar)
+    func testAddMenu_whenIsViewFromFolderIsTrue_shouldReturnNil() {
+        let sut = makeSUT(config: .init(isFromViewInFolder: true))
+        assertAddMenu(sut: sut)
     }
 
-    func testMakeNavItems_whenInCloudDrive_shouldReturnAddAndMoreButtons() async {
-        let sut = makeSUT(
-            nodeSource: .node { NodeEntity() }, config: .init(displayMode: .cloudDrive, isFromViewInFolder: false)
-        )
-        await assert(
-            sut: sut,
-            expectedNavItems: .init(
-                leftBarButtonItem: nil,
-                rightNavBarItems: [
-                    .init(image: UIImage.navigationbarAdd),
-                    .init(image: UIImage.moreNavigationBar)
-                ]
-            )
-        )
+    func testAddMenu_whenDisplayModeRubbishBin_shouldReturnNil() {
+        let sut = makeSUT(config: .init(displayMode: .rubbishBin))
+        assertAddMenu(sut: sut)
+    }
+
+    func testAddMenu_whenDisplayModeBackup_shouldReturnNil() {
+        let sut = makeSUT(config: .init(displayMode: .backup))
+        assertAddMenu(sut: sut)
+    }
+
+    func testAddMenu_whenTheCaseIsValid_shouldNotBeNil() {
+        let sut = makeSUT(config: .init(displayMode: .cloudDrive, isFromViewInFolder: false))
+        let addMenu = sut.addMenu { EmptyView() }
+        XCTAssertNotNil(addMenu)
     }
 
     // MARK: - Private methods
@@ -72,42 +77,17 @@ final class CloudDriveViewControllerNavItemsFactoryTests: XCTestCase {
         )
     }
 
-    private func assert(
-        config: NodeBrowserConfig,
-        rightNavBarImage: UIImage?,
-        file: StaticString = #filePath,
-        line: UInt = #line
-    ) async {
-        let sut = makeSUT(nodeSource: .node { NodeEntity() }, config: config)
-
-        let rightNavBarItems: [UIBarButtonItem]
-        if let rightNavBarImage {
-            rightNavBarItems = await [.init(image: rightNavBarImage)]
-        } else {
-            rightNavBarItems = []
-        }
-
-        await assert(
-            sut: sut,
-            expectedNavItems: .init(
-                leftBarButtonItem: nil,
-                rightNavBarItems: rightNavBarItems
-            )
-        )
+    private func assertContextMenu(
+        sut: SUT, accessType: NodeAccessTypeEntity? = .unknown, file: StaticString = #filePath, line: UInt = #line
+    ) {
+        let contextMenu = sut.contextMenu { EmptyView() }
+        XCTAssertNil(contextMenu)
     }
 
-    private func assert(
-        sut: SUT,
-        expectedNavItems: SUT.NavItems = .empty,
-        file: StaticString = #filePath,
-        line: UInt = #line
-    ) async {
-        let navItems = await sut.makeNavItems()
-        XCTAssertEqual(navItems.leftBarButtonItem, expectedNavItems.leftBarButtonItem, file: file, line: line)
-        for index in (0..<expectedNavItems.rightNavBarItems.count) {
-            let expectedImage = await expectedNavItems.rightNavBarItems[index].image
-            let actualImage = await navItems.rightNavBarItems[index].image
-            XCTAssertEqual(expectedImage, actualImage, file: file, line: line)
-        }
+    private func assertAddMenu(
+        sut: SUT, file: StaticString = #filePath, line: UInt = #line
+    ) {
+        let addMenu = sut.addMenu { EmptyView() }
+        XCTAssertNil(addMenu)
     }
 }

@@ -30,6 +30,7 @@ class NodeBrowserViewModel: ObservableObject {
     var mediaContentDelegate: MediaContentDelegateHandler?
     private let upgradeEncouragementViewModel: UpgradeEncouragementViewModel?
     let config: NodeBrowserConfig
+    @Published var contextMenuViewFactory: NodeBrowserContextMenuViewFactory?
 
     @Published var shouldShowMediaDiscoveryAutomatically: Bool?
     @Published var viewMode: ViewModePreferenceEntity
@@ -47,7 +48,7 @@ class NodeBrowserViewModel: ObservableObject {
     private let onUpdateSearchBarVisibility: (Bool) -> Void
     private let onBack: () -> Void
     private let onEditingChanged: (Bool) -> Void
-    
+
     init(
         viewMode: ViewModePreferenceEntity,
         searchResultsViewModel: SearchResultsViewModel,
@@ -213,6 +214,7 @@ class NodeBrowserViewModel: ObservableObject {
     
     func toggleSelection() {
         editing.toggle()
+        refresh()
     }
     
     func changeViewMode(_ viewMode: ViewModePreferenceEntity) {

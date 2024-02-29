@@ -583,33 +583,36 @@ struct CloudDriveViewControllerFactory {
             ),
             searchBarVisible: initialViewMode != .mediaDiscovery
         )
-        
-        let setContextMenuButton = { [weak nodeBrowserViewModel] in
+
+        let setNavItemsFactory = { [weak nodeBrowserViewModel] in
             let viewMode: ViewModePreferenceEntity = nodeBrowserViewModel?.viewMode ?? .list
             let isSelectionHidden = nodeBrowserViewModel?.isSelectionHidden ?? false
-            Task { @MainActor in
-                let navItemsFactory = CloudDriveViewControllerNavItemsFactory(
-                    nodeSource: nodeSource,
-                    config: config,
-                    currentViewMode: viewMode,
-                    contextMenuManager: contextMenuManager,
-                    contextMenuConfigFactory: contextMenuConfigFactory,
-                    nodeUseCase: nodeUseCase,
-                    isSelectionHidden: isSelectionHidden
-                )
-
-                let navItems = await navItemsFactory.makeNavItems()
-                vc.navigationItem.rightBarButtonItems = navItems.rightNavBarItems
-            }
+            return CloudDriveViewControllerNavItemsFactory(
+                nodeSource: nodeSource,
+                config: config,
+                currentViewMode: viewMode,
+                contextMenuManager: contextMenuManager,
+                contextMenuConfigFactory: contextMenuConfigFactory,
+                nodeUseCase: nodeUseCase,
+                isSelectionHidden: isSelectionHidden
+            )
         }
-        
+
+        let onContextMenuRefresh: () -> Void = { [weak nodeBrowserViewModel] in
+            nodeBrowserViewModel?.contextMenuViewFactory = NodeBrowserContextMenuViewFactory(
+                makeNavItemsFactory: setNavItemsFactory
+            )
+        }
+
         assert(actionHandlers.isNotEmpty, "sanity check as they should not be deallocated")
         // setting the refreshMenu handler so that context menu handlers can trigger it
         actionHandlers
             .compactMap { $0 as? (any RefreshMenuTriggering) }
-            .forEach { $0.refreshMenu = setContextMenuButton }
-        
-        setContextMenuButton()
+            .forEach { $0.refreshMenu = onContextMenuRefresh }
+
+        nodeBrowserViewModel.contextMenuViewFactory = NodeBrowserContextMenuViewFactory(
+            makeNavItemsFactory: setNavItemsFactory
+        )
         return vc
     }
     
