@@ -42,8 +42,28 @@ final class CloudDriveViewControllerNavItemsFactoryTests: XCTestCase {
         assertAddMenu(sut: sut)
     }
 
+    func testAddMenu_whenAccessTypeIsUnknown_shouldReturnNil() {
+        let sut = makeSUT(
+            config: .init(displayMode: .cloudDrive, isFromViewInFolder: false),
+            nodeUseCase: MockNodeDataUseCase(nodeAccessLevelVariable: .unknown)
+        )
+        assertAddMenu(sut: sut)
+    }
+
+    func testAddMenu_whenAccessTypeIsRead_shouldReturnNil() {
+        let sut = makeSUT(
+            config: .init(displayMode: .cloudDrive, isFromViewInFolder: false),
+            nodeUseCase: MockNodeDataUseCase(nodeAccessLevelVariable: .read)
+        )
+        assertAddMenu(sut: sut)
+    }
+
     func testAddMenu_whenTheCaseIsValid_shouldNotBeNil() {
-        let sut = makeSUT(config: .init(displayMode: .cloudDrive, isFromViewInFolder: false))
+        let sut = makeSUT(
+            nodeSource: .node { .init() },
+            config: .init(displayMode: .cloudDrive, isFromViewInFolder: false),
+            nodeUseCase: MockNodeDataUseCase(nodeAccessLevelVariable: .readWrite)
+        )
         let addMenu = sut.addMenu { EmptyView() }
         XCTAssertNotNil(addMenu)
     }
