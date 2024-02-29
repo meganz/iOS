@@ -1,4 +1,5 @@
 import MEGADomain
+import SwiftUI
 import UIKit
 
 typealias CloudDriveContextMenuDelegate = DisplayMenuDelegate & QuickActionsMenuDelegate & RubbishBinMenuDelegate & UploadAddMenuDelegate
@@ -265,5 +266,15 @@ final class ContextMenuManager: NSObject {
     func actionSheetActions(with configuration: CMConfigEntity) -> [ContextActionSheetAction]? {
         guard let menuEntity = createContextMenuUC.createContextMenu(config: configuration) else { return nil }
         return convertMenuToActions(menu: menuEntity)
+    }
+
+    func menu<Label: View>(with configuration: CMConfigEntity, @ViewBuilder label: @escaping () -> Label) -> ContextMenuWithButtonView<Label>? {
+        guard let menuEntity = createContextMenuUC.createContextMenu(config: configuration) else { return nil }
+        return ContextMenuWithButtonView(
+            menu: menuEntity, label: label
+        ) { [weak self] identifier, contextType in
+            guard let self else { return }
+            actionHandler(identifier, contextType: contextType)
+        }
     }
 }

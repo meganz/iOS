@@ -1,19 +1,8 @@
 import MEGADomain
+import SwiftUI
 import UIKit
 
 struct CloudDriveViewControllerNavItemsFactory {
-    // Private structure that carries actual button items
-    // to enable pure function and testing
-    struct NavItems {
-        let leftBarButtonItem: UIBarButtonItem?
-        let rightNavBarItems: [UIBarButtonItem]
-
-        static let empty = NavItems(
-            leftBarButtonItem: nil,
-            rightNavBarItems: []
-        )
-    }
-
     let nodeSource: NodeSource
     let config: NodeBrowserConfig
     let currentViewMode: ViewModePreferenceEntity
@@ -21,20 +10,24 @@ struct CloudDriveViewControllerNavItemsFactory {
     let contextMenuConfigFactory: CloudDriveContextMenuConfigFactory
     let nodeUseCase: any NodeUseCaseProtocol
     let isSelectionHidden: Bool
-
-    @MainActor
-    func makeNavItems() async -> NavItems {
-        guard case let .node(nodeProvider) = nodeSource else {
-            return .empty
-        }
+    
+    /// Creates a SwiftUI context menu for a Node.
+    ///
+    /// This menu currently appears on the top trailing part navigation bar in the cloud drive.
+    /// - Parameters:
+    ///   - accessType: Access type for the node. Options are read, readwrite, full and owner.
+    ///   - label: A view describing the content of the menu.
+    /// - Returns: SwiftUI context menu.
+    func contextMenu<Label: View>(@ViewBuilder label: @escaping () -> Label) -> ContextMenuWithButtonView<Label>? {
+        guard case let .node(nodeProvider) = nodeSource else { return nil }
 
         let parentNode = nodeProvider()
+
+        let accessType = nodeUseCase.nodeAccessLevel(nodeHandle: parentNode?.handle ?? .invalid)
 
         let hasMedia = CloudDriveViewControllerMediaCheckerMode
             .containsSomeMedia
             .makeVisualMediaPresenceChecker(nodeSource: nodeSource, nodeUseCase: nodeUseCase)()
-        
-        let accessType = await nodeUseCase.nodeAccessLevelAsync(nodeHandle: parentNode?.handle ?? .invalid)
 
         let menuConfig = contextMenuConfigFactory.contextMenuConfiguration(
             parentNode: parentNode,
@@ -52,37 +45,18 @@ struct CloudDriveViewControllerNavItemsFactory {
             displayMode: config.displayMode?.carriedOverDisplayMode ?? .cloudDrive,
             isFromViewInFolder: config.isFromViewInFolder == true
         )
-        guard let menuConfig else {
-            return .empty
-        }
 
-        guard let menu = contextMenuManager.contextMenu(with: menuConfig) else {
-            fatalError("menu should be available")
-        }
+        guard let menuConfig else { return nil }
 
-        let rightNavBarItems = [
-            makeAddBarButtonItem(),
-            UIBarButtonItem(
-                image: UIImage.moreNavigationBar,
-                menu: menu
-            )
-        ]
-
-        let makeLeftBarButtonItem: () -> UIBarButtonItem? = {
-            // cancel button needs to be produced here when VC is presented modally
-            // to enable dismissal
-            nil
-        }
-
-        return .init(
-            leftBarButtonItem: makeLeftBarButtonItem(),
-            rightNavBarItems: rightNavBarItems.compactMap { $0 }
-        )
+        return contextMenuManager.menu(with: menuConfig, label: label)
     }
-
-    // MARK: - Private methods.
-
-    private func makeAddBarButtonItem() -> UIBarButtonItem? {
+    
+    /// Creates a SwiftUI menu with options that can be used to add a new node to a particular node.
+    ///
+    /// This menu currently appears on the top trailing part navigation bar in the cloud drive (button with + image).
+    /// - Parameter label: A view describing the content of the menu.
+    /// - Returns: SwiftUI menu displaying options on tap to add a new node.
+    func addMenu<Label: View>(@ViewBuilder label: @escaping () -> Label) -> ContextMenuWithButtonView<Label>? {
         guard config.isFromViewInFolder != true,
               config.displayMode != .rubbishBin,
               config.displayMode != .backup else {
@@ -90,7 +64,6 @@ struct CloudDriveViewControllerNavItemsFactory {
         }
 
         let addBarMenuConfig = CMConfigEntity(menuType: .menu(type: .uploadAdd), viewMode: currentViewMode)
-        let addBarMenu = contextMenuManager.contextMenu(with: addBarMenuConfig)
-        return UIBarButtonItem(image: UIImage.navigationbarAdd, menu: addBarMenu)
+        return contextMenuManager.menu(with: addBarMenuConfig, label: label)
     }
 }
