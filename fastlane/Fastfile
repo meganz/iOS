@@ -285,8 +285,6 @@ platform :ios do
       derived_data_path: "derivedData",
       code_coverage: true,
       xcodebuild_formatter: "xcbeautify",
-      parallel_testing: true,
-      concurrent_workers: 2,
       xcargs: '-skipPackagePluginValidation'
     )
   end

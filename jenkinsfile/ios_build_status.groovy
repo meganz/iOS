@@ -26,12 +26,31 @@ def postWarningAboutFilesChanged(int maxNumberOfFilesAllowed) {
     }
 }
 
+def postBuildWarningsAndError() {
+    if (RUN_UNIT_TESTS_STEP_REACHED == 'false') {
+        return
+    }
+
+    withCredentials([usernamePassword(credentialsId: 'Gitlab-Access-Token', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
+        injectEnvironments({
+            if (env.BRANCH_NAME.startsWith('MR-')) {
+                def mr_number = env.BRANCH_NAME.replace('MR-', '')
+                sh 'bundle exec fastlane parse_and_upload_build_warnings_and_errors mr:' + mr_number + ' token:' + TOKEN
+            }
+        })
+    }
+}
+
 pipeline {
     agent { label 'mac-jenkins-slave-ios' }
     options {
         timeout(time: 1, unit: 'HOURS') 
         gitLabConnection('GitLabConnection')
         gitlabCommitStatus(name: 'Jenkins')
+    }
+    environment {
+        // This environment variable is required to check if the unit test step was reached or not. This is required to avoid running the parse_and_upload_build_warnings_and_errors lane if the unit test step was not reached.
+        RUN_UNIT_TESTS_STEP_REACHED = 'false'
     }
     post { 
         failure {
@@ -61,6 +80,7 @@ pipeline {
                         slackUploadFile filePath:"console.txt", initialComment:"iOS Build Log"
                     }
                 }
+                postBuildWarningsAndError()
             }
             
             updateGitlabCommitStatus name: 'Jenkins', state: 'failed'
@@ -77,6 +97,7 @@ pipeline {
                             sh 'curl --request POST --header PRIVATE-TOKEN:$TOKEN --form body=\"${MARKDOWN_LINK}\" ${MERGE_REQUEST_URL}'
                         }
                     }
+                    postBuildWarningsAndError()
                 })
             }
 
@@ -89,18 +110,10 @@ pipeline {
                         postWarningAboutFilesChanged(10)
                     })
                 }
-                withCredentials([usernamePassword(credentialsId: 'Gitlab-Access-Token', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
-                    injectEnvironments({
-                        if (env.BRANCH_NAME.startsWith('MR-')) {
-                            def mr_number = env.BRANCH_NAME.replace('MR-', '')
-                            sh 'bundle exec fastlane parse_and_upload_build_warnings_and_errors mr:' + mr_number + ' token:' + TOKEN
-                        }
-                    })
-                }
             }
         }
         cleanup {
-            cleanWs()
+            deleteDir() /* clean up our workspace */
         }
     }
     stages {
@@ -142,16 +155,6 @@ pipeline {
                         }
                     }
                 }
-
-                stage('Boot Simulators') {
-                    steps {
-                        gitlabCommitStatus(name: 'Bundle install') { 
-                            injectEnvironments({
-                                sh "./scripts/boot-simulators.sh"
-                            })
-                        }
-                    }
-                }
             }
         }
 
@@ -160,6 +163,9 @@ pipeline {
                 gitlabCommitStatus(name: 'main app - Run unit tes and generate code coveraget') {
                     withCredentials([gitUsernamePassword(credentialsId: 'Gitlab-Access-Token', gitToolName: 'Default')]) {
                         injectEnvironments({
+                            script {
+                                RUN_UNIT_TESTS_STEP_REACHED = 'true'
+                            }
                             sh "bundle exec fastlane run_tests_app"
                         })
                     }
