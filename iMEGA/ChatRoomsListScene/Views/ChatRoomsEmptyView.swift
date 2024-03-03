@@ -47,7 +47,7 @@ struct ChatRoomsEmptyView: View {
                 }
             }
         }
-        .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : .clear)
+        .background(.clear)
     }
 }
 
