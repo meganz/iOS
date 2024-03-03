@@ -11,7 +11,6 @@ public final class VideoListViewModel: ObservableObject {
     private(set) var reloadVideosTask: Task<Void, Never>?
     
     @Published private(set) var videos = [NodeEntity]()
-    @Published var searchedText = ""
     @Published private(set) var shouldShowError = false
     
     public init(
@@ -31,6 +30,8 @@ public final class VideoListViewModel: ObservableObject {
             
             fileSearchUseCase.startNodesUpdateListener()
             listenNodesUpdate()
+        } catch is CancellationError {
+            // Better to log the cancellation in future MR. Currently MEGALogger is from main module.
         } catch {
             shouldShowError = true
         }
@@ -43,7 +44,26 @@ public final class VideoListViewModel: ObservableObject {
             .values
         
         for await sortOrderType in sortOrderAsyncSequence {
-            try? await loadVideos(sortOrderType: sortOrderType)
+            try? await loadVideos(searchText: syncModel.searchText, sortOrderType: sortOrderType)
+        }
+    }
+    
+    func listenSearchTextChange() async {
+        let sequence = syncModel
+            .$searchText
+            .debounce(for: .seconds(0.3), scheduler: DispatchQueue.main)
+            .compactMap { $0 }
+            .values
+        
+        for await value in sequence {
+            do {
+                try Task.checkCancellation()
+                try await loadVideos(searchText: value, sortOrderType: syncModel.videoRevampSortOrderType)
+            } catch is CancellationError {
+                break
+            } catch {
+                shouldShowError = true
+            }
         }
     }
     
@@ -55,12 +75,9 @@ public final class VideoListViewModel: ObservableObject {
     }
     
     @MainActor
-    private func loadVideos(sortOrderType: SortOrderEntity? = .defaultAsc) async throws {
-        do {
-            videos = try await search(by: searchedText, sortOrderType: sortOrderType)
-        } catch {
-            throw error
-        }
+    private func loadVideos(searchText: String = "", sortOrderType: SortOrderEntity? = .defaultAsc) async throws {
+        try Task.checkCancellation()
+        videos = try await search(by: searchText, sortOrderType: sortOrderType)
     }
     
     private func search(by text: String, sortOrderType: SortOrderEntity?) async throws -> [NodeEntity] {

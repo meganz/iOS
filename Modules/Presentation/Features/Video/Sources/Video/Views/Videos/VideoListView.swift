@@ -22,6 +22,9 @@ struct VideoListView: View {
             await viewModel.onViewAppeared()
             await viewModel.monitorSortOrderChanged()
         }
+        .task {
+            await viewModel.listenSearchTextChange()
+        }
     }
     
     private func listView() -> some View {

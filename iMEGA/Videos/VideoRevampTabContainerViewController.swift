@@ -1,6 +1,7 @@
 import MEGADomain
 import MEGAL10n
 import MEGASDKRepo
+import MEGAUIKit
 import SwiftUI
 import UIKit
 import Video
@@ -23,6 +24,15 @@ final class VideoRevampTabContainerViewController: UIViewController {
         displayMenuDelegate: self,
         createContextMenuUseCase: CreateContextMenuUseCase(repo: CreateContextMenuRepository.newRepo)
     )
+    
+    private lazy var searchController: UISearchController = {
+        let controller = UISearchController(searchResultsController: nil)
+        controller.searchResultsUpdater = self
+        controller.searchBar.delegate = self
+        controller.obscuresBackgroundDuringPresentation = false
+        controller.hidesNavigationBarDuringPresentation = false
+        return controller
+    }()
     
     private let viewModel: VideoRevampTabContainerViewModel
     private let fileSearchUseCase: any FilesSearchUseCaseProtocol
@@ -51,6 +61,9 @@ final class VideoRevampTabContainerViewController: UIViewController {
         setupNavigationBar()
         
         toolbar = VideoRevampFactory.makeToolbarView(isDisabled: true, videoConfig: videoConfig)
+        
+        configureSearchBar()
+        navigationItem.hidesSearchBarWhenScrolling = false
     }
     
     private func setupNavigationBar() {
@@ -175,6 +188,13 @@ final class VideoRevampTabContainerViewController: UIViewController {
         viewModel.dispatch(.navigationBarAction(.didTapSelectAll))
 
     }
+    
+    private func configureSearchBar() {
+        if navigationItem.searchController == nil {
+            navigationItem.searchController = searchController
+        }
+        AppearanceManager.forceSearchBarUpdate(searchController.searchBar, traitCollection: traitCollection)
+    }
 }
 
 // MARK: - TabContainerViewController+ContextMenu
@@ -209,5 +229,39 @@ extension VideoRevampTabContainerViewController: DisplayMenuDelegate {
     
     func sortMenu(didSelect sortType: SortOrderType) {
         viewModel.dispatch(.navigationBarAction(.didSelectSortMenuAction(sortType: sortType)))
+    }
+}
+
+// MARK: - UISearchResultsUpdating
+
+extension VideoRevampTabContainerViewController: UISearchResultsUpdating {
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        let searchText = searchController.searchBar.text?.trim ?? ""
+        viewModel.dispatch(.searchBarAction(.updateSearchResults(searchText: searchText)))
+    }
+}
+
+// MARK: - UISearchBarDelegate
+
+extension VideoRevampTabContainerViewController: UISearchBarDelegate {
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        viewModel.dispatch(.searchBarAction(.cancel))
+    }
+}
+
+// MARK: - TraitEnvironmentAware
+
+extension VideoRevampTabContainerViewController: TraitEnvironmentAware {
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        traitCollectionChanged(to: traitCollection, from: previousTraitCollection)
+    }
+    
+    func colorAppearanceDidChange(to currentTrait: UITraitCollection, from previousTrait: UITraitCollection?) {
+        AppearanceManager.forceSearchBarUpdate(searchController.searchBar, traitCollection: traitCollection)
     }
 }

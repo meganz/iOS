@@ -8,12 +8,18 @@ final class VideoRevampTabContainerViewModel: ViewModelType {
     enum Action: ActionType {
         case onViewDidLoad
         case navigationBarAction(NavigationBarAction)
+        case searchBarAction(SearchBarAction)
         
         enum NavigationBarAction {
             case didReceivedDisplayMenuAction(action: DisplayActionEntity)
             case didSelectSortMenuAction(sortType: SortOrderType)
             case didTapSelectAll
             case didTapCancel
+        }
+        
+        enum SearchBarAction {
+            case updateSearchResults(searchText: String)
+            case cancel
         }
     }
     
@@ -62,6 +68,10 @@ final class VideoRevampTabContainerViewModel: ViewModelType {
             break
         case .navigationBarAction(.didTapCancel):
             self.isEditing = false
+        case .searchBarAction(.updateSearchResults(let searchText)):
+            syncModel.searchText = searchText
+        case .searchBarAction(.cancel):
+            syncModel.searchText = ""
         }
     }
     

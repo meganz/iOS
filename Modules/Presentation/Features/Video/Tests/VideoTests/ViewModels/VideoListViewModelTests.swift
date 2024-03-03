@@ -12,7 +12,7 @@ final class VideoListViewModelTests: XCTestCase {
     
     func testInit_whenInit_doesNotExecuteSearchOnUseCase() {
         let (_, fileSearchUseCase) = makeSUT()
-         
+        
         XCTAssertTrue(fileSearchUseCase.messages.isEmpty, "Expect to not search on creation")
     }
     
@@ -32,7 +32,6 @@ final class VideoListViewModelTests: XCTestCase {
     
     func testOnViewAppeared_whenCalled_executeSearchUseCase() async {
         let (sut, fileSearchUseCase) = makeSUT()
-        sut.searchedText = ""
         
         await sut.onViewAppeared()
         
@@ -41,7 +40,6 @@ final class VideoListViewModelTests: XCTestCase {
     
     func testOnViewAppeared_whenCalledOnFailedLoadVideos_executesSearchUseCaseInOrder() async {
         let (sut, fileSearchUseCase) = makeSUT()
-        sut.searchedText = ""
         
         await sut.onViewAppeared()
         
@@ -50,7 +48,6 @@ final class VideoListViewModelTests: XCTestCase {
     
     func testOnViewAppeared_whenCalledOnSuccessfullyLoadVideos_executesSearchUseCaseInOrder() async {
         let (sut, fileSearchUseCase) = makeSUT(fileSearchUseCase: MockFilesSearchUseCase(searchResult: .success(nil)))
-        sut.searchedText = ""
         
         await sut.onViewAppeared()
         
@@ -63,7 +60,6 @@ final class VideoListViewModelTests: XCTestCase {
     
     func testOnViewAppeared_whenError_showsErrorView() async {
         let (sut, _) = makeSUT(fileSearchUseCase: MockFilesSearchUseCase(searchResult: .failure(FileSearchResultErrorEntity.generic)))
-        sut.searchedText = ""
         
         await sut.onViewAppeared()
         
@@ -72,7 +68,6 @@ final class VideoListViewModelTests: XCTestCase {
     
     func testOnViewAppeared_whenNoErrors_showsEmptyItemView() async {
         let (sut, _) = makeSUT(fileSearchUseCase: MockFilesSearchUseCase(searchResult: .success(nil)))
-        sut.searchedText = ""
         
         await sut.onViewAppeared()
         
@@ -82,7 +77,6 @@ final class VideoListViewModelTests: XCTestCase {
     func testOnViewAppeared_whenNoErrors_showsVideoItems() async {
         let foundVideos = [ anyNode(id: 1, mediaType: .video), anyNode(id: 2, mediaType: .video) ]
         let (sut, _) = makeSUT(fileSearchUseCase: MockFilesSearchUseCase(searchResult: .success(foundVideos)))
-        sut.searchedText = ""
         
         await sut.onViewAppeared()
         
@@ -104,7 +98,6 @@ final class VideoListViewModelTests: XCTestCase {
                 onNodesUpdateResult: nonVideosUpdateNodes
             )
         )
-        sut.searchedText = ""
         
         await sut.onViewAppeared()
         
@@ -128,7 +121,6 @@ final class VideoListViewModelTests: XCTestCase {
                 onNodesUpdateResult: updatedVideoNodes
             )
         )
-        sut.searchedText = ""
         
         await sut.onViewAppeared()
         
@@ -155,7 +147,6 @@ final class VideoListViewModelTests: XCTestCase {
                 onNodesUpdateResult: updatedVideoNodes
             )
         )
-        sut.searchedText = ""
         
         await sut.onViewAppeared()
         
@@ -208,6 +199,109 @@ final class VideoListViewModelTests: XCTestCase {
         
         XCTAssertEqual(fileSearchUseCase.messages.last, .stopNodesUpdateListener)
         XCTAssertTrue(fileSearchUseCase.messages.notContains(.startNodesUpdateListener))
+    }
+    
+    // MARK: - listenSearchTextChange
+    
+    func testListenSearchTextChange_whenEmitsNewValue_performSearch() async {
+        let syncModel = VideoRevampSyncModel()
+        let anySearchResult: Result<[NodeEntity]?, FileSearchResultErrorEntity> = .failure(.generic)
+        let fileSearchUseCase = MockFilesSearchUseCase(searchResult: anySearchResult)
+        let sut = VideoListViewModel(
+            fileSearchUseCase: fileSearchUseCase,
+            thumbnailUseCase: MockThumbnailUseCase(),
+            syncModel: syncModel
+        )
+        
+        let task = Task {
+            await sut.listenSearchTextChange()
+        }
+        syncModel.searchText = "any search text"
+        
+        let exp = expectation(description: "search message found")
+        let cancellation = fileSearchUseCase.$messages
+            .first { $0 == [ .search ] }
+            .sink { messages in
+                XCTAssertEqual(messages, [ .search ])
+                exp.fulfill()
+            }
+        await fulfillment(of: [exp], timeout: 1.0)
+        cancellation.cancel()
+        task.cancel()
+    }
+    
+    func testListenSearchTextChange_whenEmitsNewValueOnSuccess_showsVideos() async {
+        let videoNodes = [
+            anyNode(id: 1, mediaType: .video),
+            anyNode(id: 2, mediaType: .video)
+        ]
+        let syncModel = VideoRevampSyncModel()
+        let fileSearchUseCase = MockFilesSearchUseCase(searchResult: .success(videoNodes))
+        let sut = VideoListViewModel(
+            fileSearchUseCase: fileSearchUseCase,
+            thumbnailUseCase: MockThumbnailUseCase(),
+            syncModel: syncModel
+        )
+        
+        let task = Task {
+            await sut.listenSearchTextChange()
+        }
+        syncModel.searchText = "any search text"
+        let exp = expectation(description: "search message found")
+        let cancellation = fileSearchUseCase.$messages
+            .first { $0 == [ .search ] }
+            .sink { _ in exp.fulfill() }
+        
+        await fulfillment(of: [exp], timeout: 1.0)
+        cancellation.cancel()
+        task.cancel()
+        
+        let videosExp = expectation(description: "wait for videos")
+        var capturedValues = [NodeEntity]()
+        sut.$videos
+            .sink {
+                capturedValues = $0
+                videosExp.fulfill()
+            }
+            .store(in: &cancellables)
+        await fulfillment(of: [videosExp], timeout: 1.0)
+        XCTAssertFalse(sut.shouldShowError, "Should not show error when success search")
+        XCTAssertTrue(capturedValues.isNotEmpty)
+    }
+    
+    func testListenSearchTextChange_whenEmitsNewValueOnFailure_showsError() async {
+        let syncModel = VideoRevampSyncModel()
+        let fileSearchUseCase = MockFilesSearchUseCase(searchResult: .failure(.generic))
+        let sut = VideoListViewModel(
+            fileSearchUseCase: fileSearchUseCase,
+            thumbnailUseCase: MockThumbnailUseCase(),
+            syncModel: syncModel
+        )
+        
+        let task = Task {
+            await sut.listenSearchTextChange()
+        }
+        syncModel.searchText = "any search text"
+        let exp = expectation(description: "search message found")
+        let cancellation = fileSearchUseCase.$messages
+            .first { $0 == [ .search ] }
+            .sink { _ in exp.fulfill() }
+        
+        await fulfillment(of: [exp], timeout: 1.0)
+        cancellation.cancel()
+        task.cancel()
+        
+        let showErrorExp = expectation(description: "wait for show error")
+        var capturedValue = false
+        sut.$shouldShowError
+            .sink {
+                capturedValue = $0
+                showErrorExp.fulfill()
+            }
+            .store(in: &cancellables)
+        await fulfillment(of: [showErrorExp], timeout: 1.0)
+        XCTAssertTrue(capturedValue, "Should show error when failed search")
+        XCTAssertTrue(sut.videos.isEmpty)
     }
     
     // MARK: - Helpers
