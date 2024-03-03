@@ -52,15 +52,15 @@ extension SlideShowOptionRouter {
         SlideShowOptionDetailCellViewModel(
             name: .speedSlow,
             title: Strings.Localizable.Slideshow.PreferenceSetting.Speed.slow,
-            isSelcted: config.timeIntervalForSlideInSeconds == .slow)
+            isSelected: config.timeIntervalForSlideInSeconds == .slow)
         SlideShowOptionDetailCellViewModel(
             name: .speedNormal,
             title: Strings.Localizable.Slideshow.PreferenceSetting.Speed.normal,
-            isSelcted: config.timeIntervalForSlideInSeconds == .normal)
+            isSelected: config.timeIntervalForSlideInSeconds == .normal)
         SlideShowOptionDetailCellViewModel(
             name: .speedFast,
             title: Strings.Localizable.Slideshow.PreferenceSetting.Speed.fast,
-            isSelcted: config.timeIntervalForSlideInSeconds == .fast)
+            isSelected: config.timeIntervalForSlideInSeconds == .fast)
     }
     
     @SlideShowOptionChildrenBuilder
@@ -68,14 +68,14 @@ extension SlideShowOptionRouter {
         SlideShowOptionDetailCellViewModel(name: .orderShuffle,
                                            image: UIImage.shuffleAudio,
                                            title: Strings.Localizable.Slideshow.PreferenceSetting.Order.shuffle,
-                                           isSelcted: config.playingOrder == .shuffled)
+                                           isSelected: config.playingOrder == .shuffled)
         SlideShowOptionDetailCellViewModel(name: .orderNewest,
                                            image: UIImage.newest,
                                            title: Strings.Localizable.newest,
-                                           isSelcted: config.playingOrder == .newest)
+                                           isSelected: config.playingOrder == .newest)
         SlideShowOptionDetailCellViewModel(name: .orderOldest,
                                            image: UIImage.oldest,
                                            title: Strings.Localizable.oldest,
-                                           isSelcted: config.playingOrder == .oldest)
+                                           isSelected: config.playingOrder == .oldest)
     }
 }

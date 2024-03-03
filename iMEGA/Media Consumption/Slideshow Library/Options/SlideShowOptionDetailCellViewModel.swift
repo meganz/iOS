@@ -6,13 +6,13 @@ final class SlideShowOptionDetailCellViewModel: Identifiable, ObservableObject {
     let image: UIImage?
     let title: String
     
-    @Published var isSelcted: Bool
+    @Published var isSelected: Bool
     
-    init(id: String = UUID().uuidString, name: SlideShowOptionName, image: UIImage? = nil, title: String, isSelcted: Bool) {
+    init(id: String = UUID().uuidString, name: SlideShowOptionName, image: UIImage? = nil, title: String, isSelected: Bool) {
         self.id = id
         self.name = name
         self.image = image
         self.title = title
-        self.isSelcted = isSelcted
+        self.isSelected = isSelected
     }
 }

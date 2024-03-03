@@ -38,7 +38,7 @@ final class SlideShowOptionCellViewModel: Identifiable, ObservableObject {
         self.children = children
         self.isOn = isOn
         self.tracker = tracker
-        detail = type == .detail ? (children.first(where: { $0.isSelcted })?.title ?? "") : ""
+        detail = type == .detail ? (children.first(where: { $0.isSelected })?.title ?? "") : ""
         
         subscribeToRepeatIsOnChangedAnalyticEventSender()
     }
@@ -49,7 +49,7 @@ final class SlideShowOptionCellViewModel: Identifiable, ObservableObject {
         guard type == .detail else {
             return
         }
-        children.forEach({ $0 .isSelcted = $0.id == child.id })
+        children.forEach({ $0 .isSelected = $0.id == child.id })
         detail = child.title
     }
     
