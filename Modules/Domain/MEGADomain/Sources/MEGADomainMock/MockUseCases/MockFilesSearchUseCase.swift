@@ -1,6 +1,7 @@
+import Combine
 import MEGADomain
 
-public final class MockFilesSearchUseCase: FilesSearchUseCaseProtocol {
+public final class MockFilesSearchUseCase: FilesSearchUseCaseProtocol, ObservableObject {
     public enum Message: Equatable {
         case search
         case onNodesUpdate
@@ -8,7 +9,7 @@ public final class MockFilesSearchUseCase: FilesSearchUseCaseProtocol {
         case startNodesUpdateListener
     }
     
-    public private(set) var messages = [Message]()
+    @Published public private(set) var messages = [Message]()
     
     private let searchResult: Result<[NodeEntity]?, FileSearchResultErrorEntity>
     private var onNodesUpdateResult: [NodeEntity]?

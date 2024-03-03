@@ -61,6 +61,36 @@ final class VideoRevampTabContainerViewModelTests: XCTestCase {
         XCTAssertEqual(sut.isEditing, false)
     }
     
+    // MARK: - Dispatch.searchBarAction.updateSearchResults
+    
+    func testDispatch_searchBarActionUpdateSearchResultsWithText_sendsSearchTextToSyncModel() {
+        let searchText = "any-search-keyword"
+        let (sut, _) = makeSUT()
+        
+        sut.dispatch(.searchBarAction(.updateSearchResults(searchText: searchText)))
+        
+        XCTAssertEqual(sut.syncModel.searchText, searchText)
+    }
+    
+    func testDispatch_searchBarActionUpdateSearchResultsWithEmpty_sendsSearchTextToSyncModel() {
+        let searchText = ""
+        let (sut, _) = makeSUT()
+        
+        sut.dispatch(.searchBarAction(.updateSearchResults(searchText: searchText)))
+        
+        XCTAssertEqual(sut.syncModel.searchText, searchText)
+    }
+    
+    // MARK: - Dispatch.searchBarAction.cancel
+    
+    func testDispatch_searchBarActionCancel_sendsSearchTextToSyncModel() {
+        let (sut, _) = makeSUT()
+        
+        sut.dispatch(.searchBarAction(.cancel))
+        
+        XCTAssertEqual(sut.syncModel.searchText, "")
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(
