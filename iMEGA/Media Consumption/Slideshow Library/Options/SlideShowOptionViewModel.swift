@@ -46,9 +46,9 @@ final class SlideShowOptionViewModel: ObservableObject {
         var speed = SlideShowTimeIntervalOptionEntity.normal
         
         cellViewModels.forEach { cell in
-            if cell.name == .speedFast && cell.isSelcted {
+            if cell.name == .speedFast && cell.isSelected {
                 speed = .fast
-            } else if cell.name == .speedSlow && cell.isSelcted {
+            } else if cell.name == .speedSlow && cell.isSelected {
                 speed = .slow
             }
         }
@@ -59,9 +59,9 @@ final class SlideShowOptionViewModel: ObservableObject {
         var order = SlideShowPlayingOrderEntity.shuffled
         
         cellViewModels.forEach { cell in
-            if cell.name == .orderNewest && cell.isSelcted {
+            if cell.name == .orderNewest && cell.isSelected {
                 order = .newest
-            } else if cell.name == .orderOldest && cell.isSelcted {
+            } else if cell.name == .orderOldest && cell.isSelected {
                 order = .oldest
             }
         }

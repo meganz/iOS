@@ -13,7 +13,7 @@ final class SlideShowOptionViewModelTests: XCTestCase {
                 name: .speed,
                 title: Strings.Localizable.Slideshow.PreferenceSetting.speed,
                 type: .detail, children: [
-                    SlideShowOptionDetailCellViewModel(name: .speedNormal, title: Strings.Localizable.Slideshow.PreferenceSetting.Speed.slow, isSelcted: false)
+                    SlideShowOptionDetailCellViewModel(name: .speedNormal, title: Strings.Localizable.Slideshow.PreferenceSetting.Speed.slow, isSelected: false)
                 ], tracker: MockTracker())
         ]
     }
@@ -59,9 +59,9 @@ final class SlideShowOptionViewModelTests: XCTestCase {
     func testGetNewConfiguration_whenSpeedChangeToFast_shouldReturnFast() throws {
         let cellViewModels = [
             SlideShowOptionCellViewModel(name: .speed, title: "Speed", type: .detail, children: [
-                SlideShowOptionDetailCellViewModel(name: .speedSlow, title: "Slow", isSelcted: false),
-                SlideShowOptionDetailCellViewModel(name: .speedNormal, title: "Normal", isSelcted: false),
-                SlideShowOptionDetailCellViewModel(name: .speedFast, title: "Fast", isSelcted: true)
+                SlideShowOptionDetailCellViewModel(name: .speedSlow, title: "Slow", isSelected: false),
+                SlideShowOptionDetailCellViewModel(name: .speedNormal, title: "Normal", isSelected: false),
+                SlideShowOptionDetailCellViewModel(name: .speedFast, title: "Fast", isSelected: true)
             ], tracker: MockTracker())
         ]
         
@@ -86,7 +86,7 @@ final class SlideShowOptionViewModelTests: XCTestCase {
         for (index, (name, event)) in expectations.enumerated() {
             let tracker = MockTracker()
             let sut = makeSUT(name: name, tracker: tracker)
-            sut.didSelectChild(SlideShowOptionDetailCellViewModel(name: name, title: "", isSelcted: false))
+            sut.didSelectChild(SlideShowOptionDetailCellViewModel(name: name, title: "", isSelected: false))
             assertTrackAnalyticsEventCalled(
                 trackedEventIdentifiers: tracker.trackedEventIdentifiers,
                 with: [event],

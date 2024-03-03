@@ -1,3 +1,4 @@
+import MEGADesignToken
 import SwiftUI
 
 struct SlideShowOptionView: View {
@@ -7,11 +8,20 @@ struct SlideShowOptionView: View {
     let router: any SlideShowOptionContentRouting
     var dismissal: () -> Void
     
+    private var navBarButtonTintColor: Color {
+        if isDesignTokenEnabled {
+            TokenColors.Text.primary.swiftUI
+        } else {
+            colorScheme == .dark ? .grayD1D1D1 : .gray515151
+        }
+    }
+    
     var body: some View {
         ZStack {
             backgroundColor
             VStack(spacing: 0) {
                 navigationBar
+                    .background(isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : backgroundColor)
                 listView()
             }
         }
@@ -29,7 +39,7 @@ struct SlideShowOptionView: View {
         } label: {
             Text(viewModel.doneButtonTitle)
                 .font(.body.bold())
-                .foregroundColor(colorScheme == .dark ? MEGAAppColor.Gray._D1D1D1.color : MEGAAppColor.Gray._515151.color)
+                .foregroundStyle(navBarButtonTintColor)
                 .padding()
                 .contentShape(Rectangle())
         }
@@ -37,15 +47,15 @@ struct SlideShowOptionView: View {
     
     var navigationBar: some View {
         Text(viewModel.navigationTitle)
+            .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : .primary)
             .font(.body.bold())
-            .frame(maxWidth: .infinity)
+            .frame(maxWidth: .infinity, minHeight: 60.0)
             .overlay(
                 HStack {
                     Spacer()
                     navBarButton
                 }
             )
-            .padding(.top, 28)
     }
     
     @ViewBuilder func listView() -> some View {
@@ -57,11 +67,11 @@ struct SlideShowOptionView: View {
                         .onTapGesture {
                             viewModel.didSelectCell(cellViewModel)
                         }
+                    Divider().padding(.leading, cellViewModel.id == viewModel.cellViewModels.last?.id ? 0 : 16)
                 }
-                Divider()
             }
         }
-        .padding(.top, 36)
+        .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : backgroundColor)
     }
     
     @ViewBuilder func detailView() -> some View {
