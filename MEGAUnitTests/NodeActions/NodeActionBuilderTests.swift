@@ -1317,4 +1317,38 @@ class NodeActionBuilderTests: XCTestCase {
             XCTAssertTrue(actions.notContains(where: { $0.type == .hide }))
         }
     }
+    
+    func testMultiselectBuild_photosTimelineContainsHiddenFileForFileDisplayMode_shouldReturnCorrectActions() {
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.files, selectedNodeCount: 4)
+            .setDisplayMode(.photosTimeline)
+            .setIsHidden(false)
+            .multiselectBuild()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat,
+                                                .hide, .move, .copy, .moveToRubbishBin]))
+    }
+    
+    func testMultiselectBuild_photosTimelineContainsHiddenFileOrFolderForFileAndFolderDisplayMode_shouldReturnCorrectActions() {
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.filesAndFolders, selectedNodeCount: 4)
+            .setDisplayMode(.photosTimeline)
+            .setIsHidden(false)
+            .multiselectBuild()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .hide,
+                                                .move, .copy, .moveToRubbishBin]))
+    }
+    
+    func testMultiselectBuild_photosTimelineForDisplayModesHiddenValueNil_shouldNotContainHideAction() {
+        [NodeSelectionType.folders, .files, .filesAndFolders].forEach {
+            actions = NodeActionBuilder()
+                .setNodeSelectionType($0, selectedNodeCount: 4)
+                .setDisplayMode(.photosTimeline)
+                .setIsHidden(nil)
+                .multiselectBuild()
+            
+            XCTAssertTrue(actions.notContains(where: { $0.type == .hide }))
+        }
+    }
 }

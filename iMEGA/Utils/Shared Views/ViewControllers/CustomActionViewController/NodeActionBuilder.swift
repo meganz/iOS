@@ -557,7 +557,7 @@ final class NodeActionBuilder {
             nodeActions.append(.renameAction())
         }
         
-        if shouldAddHiddenActionForCloudDrive() {
+        if shouldAddHiddenAction() {
             nodeActions.append(.hideAction())
         }
         
@@ -695,7 +695,7 @@ final class NodeActionBuilder {
         if isBackupNode {
             actions.append(.copyAction())
         } else {
-            if shouldAddHiddenActionForCloudDrive() {
+            if shouldAddHiddenAction() {
                 actions.append(.hideAction())
             }
             actions.append(contentsOf: [.moveAction(), .copyAction(), .moveToRubbishBinAction()])
@@ -720,7 +720,7 @@ final class NodeActionBuilder {
         if isBackupNode {
             actions.append(.copyAction())
         } else {
-            if shouldAddHiddenActionForCloudDrive() {
+            if shouldAddHiddenAction() {
                 actions.append(.hideAction())
             }
             actions.append(contentsOf: [.moveAction(), .copyAction(), .moveToRubbishBinAction()])
@@ -739,7 +739,7 @@ final class NodeActionBuilder {
         if isBackupNode {
             actions.append(.copyAction())
         } else {
-            if shouldAddHiddenActionForCloudDrive() {
+            if shouldAddHiddenAction() {
                 actions.append(.hideAction())
             }
             actions.append(contentsOf: [.moveAction(), .copyAction(), .moveToRubbishBinAction()])
@@ -788,7 +788,12 @@ final class NodeActionBuilder {
         }
     }
     
-    private func shouldAddHiddenActionForCloudDrive() -> Bool {
-        displayMode == .cloudDrive && isHidden == false
+    private func shouldAddHiddenAction() -> Bool {
+        guard isHidden == false else {
+            return false
+        }
+        
+        return [.cloudDrive, .photosTimeline]
+            .contains(displayMode)
     }
 }
