@@ -41,10 +41,37 @@ def postBuildWarningsAndError() {
     }
 }
 
+def postConsoleLog(message) {
+    if (env.BRANCH_NAME.startsWith('MR-')) {
+        def mrNumber = env.BRANCH_NAME.replace('MR-', '')
+        withCredentials([usernameColonPassword(credentialsId: 'Jenkins-Login', variable: 'CREDENTIALS')]) {
+            sh 'curl -u $CREDENTIALS ${BUILD_URL}/consoleText -o console.txt'
+        }
+
+        withCredentials([usernamePassword(credentialsId: 'Gitlab-Access-Token', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
+            final String logsResponse = sh(script: 'curl -s --request POST --header PRIVATE-TOKEN:$TOKEN --form file=@console.txt https://code.developers.mega.co.nz/api/v4/projects/193/uploads', returnStdout: true).trim()
+            def logsJSON = new groovy.json.JsonSlurperClassic().parseText(logsResponse)
+            env.MARKDOWN_LINK = "${message} <br />Build Log: ${logsJSON.markdown}"
+            env.MERGE_REQUEST_URL = "https://code.developers.mega.co.nz/api/v4/projects/193/merge_requests/${mrNumber}/notes"
+            sh 'curl --request POST --header PRIVATE-TOKEN:$TOKEN --form body=\"${MARKDOWN_LINK}\" ${MERGE_REQUEST_URL}'
+        }
+    } else {
+        withCredentials([usernameColonPassword(credentialsId: 'Jenkins-Login', variable: 'CREDENTIALS')]) {
+            def comment = "${message} for branch: ${env.GIT_BRANCH}"
+            if (env.CHANGE_URL) {
+                comment = "${message} for branch: ${env.GIT_BRANCH} \nMR Link:${env.CHANGE_URL}"
+            }
+            slackSend color: "danger", message: comment
+            sh 'curl -u $CREDENTIALS ${BUILD_URL}/consoleText -o console.txt'
+            slackUploadFile filePath:"console.txt", initialComment:"iOS Build Log"
+        }
+    }
+}
+
 pipeline {
     agent { label 'mac-jenkins-slave-ios' }
     options {
-        timeout(time: 1, unit: 'HOURS') 
+        timeout(time: 45, unit: 'MINUTES') 
         gitLabConnection('GitLabConnection')
         gitlabCommitStatus(name: 'Jenkins')
     }
@@ -55,31 +82,7 @@ pipeline {
     post { 
         failure {
             script {
-                if (env.BRANCH_NAME.startsWith('MR-')) {
-                    def mrNumber = env.BRANCH_NAME.replace('MR-', '')
-
-                    withCredentials([usernameColonPassword(credentialsId: 'Jenkins-Login', variable: 'CREDENTIALS')]) {
-                        sh 'curl -u $CREDENTIALS ${BUILD_URL}/consoleText -o console.txt'
-                    }
-
-                    withCredentials([usernamePassword(credentialsId: 'Gitlab-Access-Token', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN')]) {
-                        final String logsResponse = sh(script: 'curl -s --request POST --header PRIVATE-TOKEN:$TOKEN --form file=@console.txt https://code.developers.mega.co.nz/api/v4/projects/193/uploads', returnStdout: true).trim()
-                        def logsJSON = new groovy.json.JsonSlurperClassic().parseText(logsResponse)
-                        env.MARKDOWN_LINK = ":x: Build status check Failed <br />Build Log: ${logsJSON.markdown}"
-                        env.MERGE_REQUEST_URL = "https://code.developers.mega.co.nz/api/v4/projects/193/merge_requests/${mrNumber}/notes"
-                        sh 'curl --request POST --header PRIVATE-TOKEN:$TOKEN --form body=\"${MARKDOWN_LINK}\" ${MERGE_REQUEST_URL}'
-                    }
-                } else {
-                    withCredentials([usernameColonPassword(credentialsId: 'Jenkins-Login', variable: 'CREDENTIALS')]) {
-                        def comment = ":x: Build failed for branch: ${env.GIT_BRANCH}"
-                        if (env.CHANGE_URL) {
-                            comment = ":x: Build failed for branch: ${env.GIT_BRANCH} \nMR Link:${env.CHANGE_URL}"
-                        }
-                        slackSend color: "danger", message: comment
-                        sh 'curl -u $CREDENTIALS ${BUILD_URL}/consoleText -o console.txt'
-                        slackUploadFile filePath:"console.txt", initialComment:"iOS Build Log"
-                    }
-                }
+                postConsoleLog(":x: Build failed")
                 postBuildWarningsAndError()
             }
             
@@ -102,6 +105,11 @@ pipeline {
             }
 
             updateGitlabCommitStatus name: 'Jenkins', state: 'success'
+        }
+        aborted {
+            script {
+                postConsoleLog(":x: Build aborted")
+            }
         }
         always {
             script {
