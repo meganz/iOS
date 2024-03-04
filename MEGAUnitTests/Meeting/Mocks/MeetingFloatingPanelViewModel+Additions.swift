@@ -10,7 +10,7 @@ extension MeetingFloatingPanelViewModel {
         containerViewModel: MeetingContainerViewModel = MeetingContainerViewModel(),
         chatRoom: ChatRoomEntity = ChatRoomEntity(),
         isSpeakerEnabled: Bool = false,
-        callCoordinatorUseCase: some CallCoordinatorUseCaseProtocol = MockCallCoordinatorUseCase(),
+        callKitManager: some CallKitManagerProtocol = MockCallKitManager(),
         callUseCase: some CallUseCaseProtocol = MockCallUseCase(),
         audioSessionUseCase: some AudioSessionUseCaseProtocol = MockAudioSessionUseCase(),
         permissionHandler: some DevicePermissionsHandling = MockDevicePermissionHandler(
@@ -32,7 +32,7 @@ extension MeetingFloatingPanelViewModel {
             containerViewModel: containerViewModel,
             chatRoom: chatRoom,
             isSpeakerEnabled: isSpeakerEnabled,
-            callCoordinatorUseCase: callCoordinatorUseCase,
+            callKitManager: callKitManager,
             callUseCase: callUseCase,
             audioSessionUseCase: audioSessionUseCase,
             permissionHandler: permissionHandler,

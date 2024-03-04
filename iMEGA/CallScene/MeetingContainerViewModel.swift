@@ -42,7 +42,7 @@ final class MeetingContainerViewModel: ViewModelType {
     private let router: any MeetingContainerRouting
     private let chatRoom: ChatRoomEntity
     private let callUseCase: any CallUseCaseProtocol
-    private let callCoordinatorUseCase: any CallCoordinatorUseCaseProtocol
+    private let callKitManager: any CallKitManagerProtocol
     private let accountUseCase: any AccountUseCaseProtocol
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let chatUseCase: any ChatUseCaseProtocol
@@ -71,7 +71,7 @@ final class MeetingContainerViewModel: ViewModelType {
          chatRoomUseCase: some ChatRoomUseCaseProtocol,
          chatUseCase: some ChatUseCaseProtocol,
          scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol,
-         callCoordinatorUseCase: some CallCoordinatorUseCaseProtocol,
+         callKitManager: some CallKitManagerProtocol,
          accountUseCase: some AccountUseCaseProtocol,
          authUseCase: some AuthUseCaseProtocol,
          noUserJoinedUseCase: some MeetingNoUserJoinedUseCaseProtocol,
@@ -83,7 +83,7 @@ final class MeetingContainerViewModel: ViewModelType {
         self.chatRoomUseCase = chatRoomUseCase
         self.chatUseCase = chatUseCase
         self.scheduledMeetingUseCase = scheduledMeetingUseCase
-        self.callCoordinatorUseCase = callCoordinatorUseCase
+        self.callKitManager = callKitManager
         self.accountUseCase = accountUseCase
         self.authUseCase = authUseCase
         self.noUserJoinedUseCase = noUserJoinedUseCase
@@ -91,9 +91,9 @@ final class MeetingContainerViewModel: ViewModelType {
         self.megaHandleUseCase = megaHandleUseCase
         
         let callUUID = callUseCase.call(for: chatRoom.chatId)?.uuid
-        self.callCoordinatorUseCase.addCallRemoved { [weak self] uuid in
+        self.callKitManager.addCallRemoved { [weak self] uuid in
             guard let uuid = uuid, let self = self, callUUID == uuid else { return }
-            self.callCoordinatorUseCase.removeCallRemovedHandler()
+            self.callKitManager.removeCallRemovedHandler()
             router.dismiss(animated: false, completion: nil)
         }
         
@@ -214,9 +214,9 @@ final class MeetingContainerViewModel: ViewModelType {
                 MEGALogDebug("Meeting: Container view model - End call for all - cannot get the call id and chat id string")
             }
             
-            callCoordinatorUseCase.removeCallRemovedHandler()
+            callKitManager.removeCallRemovedHandler()
             callUseCase.endCall(for: call.callId)
-            callCoordinatorUseCase.endCall(call)
+            callKitManager.endCall(call)
         }
         
         router.dismiss(animated: true, completion: nil)
@@ -230,10 +230,10 @@ final class MeetingContainerViewModel: ViewModelType {
             } else {
                 MEGALogDebug("Meeting: Container view model -Hang call - cannot get the call id and chat id string")
             }
-            callCoordinatorUseCase.muteUnmuteCall(call, muted: false)
-            callCoordinatorUseCase.removeCallRemovedHandler()
+            callKitManager.muteUnmuteCall(call, muted: false)
+            callKitManager.removeCallRemovedHandler()
             callUseCase.hangCall(for: call.callId)
-            callCoordinatorUseCase.endCall(call)
+            callKitManager.endCall(call)
         }
     }
     
@@ -247,7 +247,7 @@ final class MeetingContainerViewModel: ViewModelType {
            call.hasLocalAudio,
            isOneToOneChat == false,
            isOnlyMyselfInTheMeeting() {
-            callCoordinatorUseCase.muteUnmuteCall(call, muted: true)
+            callKitManager.muteUnmuteCall(call, muted: true)
         }
     }
     
@@ -314,7 +314,7 @@ final class MeetingContainerViewModel: ViewModelType {
                 }
                 
                 MEGALogError("mute unmute callkit action failure\n failure to set it as muted: \(muted)\n retrying it again with muted: \(!call.hasLocalAudio)")
-                callCoordinatorUseCase.muteUnmuteCall(call, muted: !call.hasLocalAudio)
+                callKitManager.muteUnmuteCall(call, muted: !call.hasLocalAudio)
             }
     }
     
@@ -411,6 +411,6 @@ final class MeetingContainerViewModel: ViewModelType {
     deinit {
         cancelMuteMicrophoneSubscription()
         cancelNoUserJoinedSubscription()
-        self.callCoordinatorUseCase.removeCallRemovedHandler()
+        self.callKitManager.removeCallRemovedHandler()
     }
 }

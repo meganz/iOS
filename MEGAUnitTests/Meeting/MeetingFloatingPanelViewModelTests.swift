@@ -24,7 +24,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       containerViewModel: containerViewModel,
                                                       chatRoom: chatRoom,
                                                       isSpeakerEnabled: false,
-                                                      callCoordinatorUseCase: MockCallCoordinatorUseCase(),
+                                                      callKitManager: MockCallKitManager(),
                                                       callUseCase: callUseCase,
                                                       audioSessionUseCase: audioSessionUseCase,
                                                       permissionHandler: makeDevicePermissionHandler(),
@@ -159,7 +159,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       containerViewModel: containerViewModel,
                                                       chatRoom: chatRoom,
                                                       isSpeakerEnabled: false,
-                                                      callCoordinatorUseCase: MockCallCoordinatorUseCase(),
+                                                      callKitManager: MockCallKitManager(),
                                                       callUseCase: callUseCase,
                                                       audioSessionUseCase: audioSessionUseCase,
                                                       permissionHandler: makeDevicePermissionHandler(),
@@ -189,7 +189,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       containerViewModel: containerViewModel,
                                                       chatRoom: chatRoom,
                                                       isSpeakerEnabled: false,
-                                                      callCoordinatorUseCase: MockCallCoordinatorUseCase(),
+                                                      callKitManager: MockCallKitManager(),
                                                       callUseCase: callUseCase,
                                                       audioSessionUseCase: audioSessionUseCase,
                                                       permissionHandler: makeDevicePermissionHandler(),
@@ -221,7 +221,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       containerViewModel: containerViewModel,
                                                       chatRoom: chatRoom,
                                                       isSpeakerEnabled: false,
-                                                      callCoordinatorUseCase: MockCallCoordinatorUseCase(),
+                                                      callKitManager: MockCallKitManager(),
                                                       callUseCase: callUseCase,
                                                       audioSessionUseCase: audioSessionUseCase,
                                                       permissionHandler: makeDevicePermissionHandler(),
@@ -248,7 +248,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       containerViewModel: containerViewModel,
                                                       chatRoom: chatRoom,
                                                       isSpeakerEnabled: false,
-                                                      callCoordinatorUseCase: MockCallCoordinatorUseCase(),
+                                                      callKitManager: MockCallKitManager(),
                                                       callUseCase: callUseCase,
                                                       audioSessionUseCase: audioSessionUseCase,
                                                       permissionHandler: makeDevicePermissionHandler(),
@@ -275,7 +275,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       containerViewModel: containerViewModel,
                                                       chatRoom: chatRoom,
                                                       isSpeakerEnabled: false,
-                                                      callCoordinatorUseCase: MockCallCoordinatorUseCase(),
+                                                      callKitManager: MockCallKitManager(),
                                                       callUseCase: callUseCase,
                                                       audioSessionUseCase: audioSessionUseCase,
                                                       permissionHandler: makeDevicePermissionHandler(),
@@ -302,7 +302,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       containerViewModel: containerViewModel,
                                                       chatRoom: chatRoom,
                                                       isSpeakerEnabled: false,
-                                                      callCoordinatorUseCase: MockCallCoordinatorUseCase(),
+                                                      callKitManager: MockCallKitManager(),
                                                       callUseCase: callUseCase,
                                                       audioSessionUseCase: audioSessionUseCase,
                                                       permissionHandler: makeDevicePermissionHandler(),
@@ -325,13 +325,13 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         let call = CallEntity()
         let containerRouter = MockMeetingContainerRouter()
         let callUseCase = MockCallUseCase(call: call)
-        let callManagerUserCase = MockCallCoordinatorUseCase()
-        let containerViewModel = MeetingContainerViewModel(router: containerRouter, chatRoom: chatRoom, callUseCase: callUseCase, callCoordinatorUseCase: callManagerUserCase)
+        let callManagerUserCase = MockCallKitManager()
+        let containerViewModel = MeetingContainerViewModel(router: containerRouter, chatRoom: chatRoom, callUseCase: callUseCase, callKitManager: callManagerUserCase)
         let viewModel = MeetingFloatingPanelViewModel(router: MockMeetingFloatingPanelRouter(),
                                                       containerViewModel: containerViewModel,
                                                       chatRoom: chatRoom,
                                                       isSpeakerEnabled: false,
-                                                      callCoordinatorUseCase: MockCallCoordinatorUseCase(),
+                                                      callKitManager: MockCallKitManager(),
                                                       callUseCase: callUseCase,
                                                       audioSessionUseCase: MockAudioSessionUseCase(),
                                                       permissionHandler: makeDevicePermissionHandler(),
@@ -350,13 +350,13 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         let call = CallEntity()
         let containerRouter = MockMeetingContainerRouter()
         let callUseCase = MockCallUseCase(call: call)
-        let callManagerUserCase = MockCallCoordinatorUseCase()
-        let containerViewModel = MeetingContainerViewModel(router: containerRouter, chatRoom: chatRoom, callUseCase: callUseCase, callCoordinatorUseCase: callManagerUserCase)
+        let callManagerUserCase = MockCallKitManager()
+        let containerViewModel = MeetingContainerViewModel(router: containerRouter, chatRoom: chatRoom, callUseCase: callUseCase, callKitManager: callManagerUserCase)
         let viewModel = MeetingFloatingPanelViewModel(router: MockMeetingFloatingPanelRouter(),
                                                       containerViewModel: containerViewModel,
                                                       chatRoom: chatRoom,
                                                       isSpeakerEnabled: false,
-                                                      callCoordinatorUseCase: MockCallCoordinatorUseCase(),
+                                                      callKitManager: MockCallKitManager(),
                                                       callUseCase: callUseCase,
                                                       audioSessionUseCase: MockAudioSessionUseCase(),
                                                       permissionHandler: makeDevicePermissionHandler(),
@@ -375,13 +375,13 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         let call = CallEntity()
         let containerRouter = MockMeetingContainerRouter()
         let callUseCase = MockCallUseCase(call: call)
-        let callManagerUserCase = MockCallCoordinatorUseCase()
-        let containerViewModel = MeetingContainerViewModel(router: containerRouter, chatRoom: chatRoom, callUseCase: callUseCase, callCoordinatorUseCase: callManagerUserCase)
+        let callManagerUserCase = MockCallKitManager()
+        let containerViewModel = MeetingContainerViewModel(router: containerRouter, chatRoom: chatRoom, callUseCase: callUseCase, callKitManager: callManagerUserCase)
         let viewModel = MeetingFloatingPanelViewModel(router: MockMeetingFloatingPanelRouter(),
                                                       containerViewModel: containerViewModel,
                                                       chatRoom: chatRoom,
                                                       isSpeakerEnabled: false,
-                                                      callCoordinatorUseCase: MockCallCoordinatorUseCase(),
+                                                      callKitManager: MockCallKitManager(),
                                                       callUseCase: callUseCase,
                                                       audioSessionUseCase: MockAudioSessionUseCase(),
                                                       permissionHandler: makeDevicePermissionHandler(),
@@ -389,7 +389,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       localVideoUseCase: MockCallLocalVideoUseCase(),
                                                       accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true))
         viewModel.participantJoined(participant: CallParticipantEntity())
-
+        
         test(viewModel: viewModel, action: .hangCall(presenter: UIViewController(), sender: UIButton()), expectedCommands: [])
         XCTAssert(containerRouter.dismiss_calledTimes == 1)
         XCTAssert(callManagerUserCase.endCall_calledTimes == 1)
@@ -401,13 +401,13 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         let call = CallEntity()
         let containerRouter = MockMeetingContainerRouter()
         let callUseCase = MockCallUseCase(call: call)
-        let callManagerUserCase = MockCallCoordinatorUseCase()
-        let containerViewModel = MeetingContainerViewModel(router: containerRouter, chatRoom: chatRoom, callUseCase: callUseCase, callCoordinatorUseCase: callManagerUserCase)
+        let callManagerUserCase = MockCallKitManager()
+        let containerViewModel = MeetingContainerViewModel(router: containerRouter, chatRoom: chatRoom, callUseCase: callUseCase, callKitManager: callManagerUserCase)
         let viewModel = MeetingFloatingPanelViewModel(router: MockMeetingFloatingPanelRouter(),
                                                       containerViewModel: containerViewModel,
                                                       chatRoom: chatRoom,
                                                       isSpeakerEnabled: false,
-                                                      callCoordinatorUseCase: MockCallCoordinatorUseCase(),
+                                                      callKitManager: MockCallKitManager(),
                                                       callUseCase: callUseCase,
                                                       audioSessionUseCase: MockAudioSessionUseCase(),
                                                       permissionHandler: makeDevicePermissionHandler(),
@@ -433,7 +433,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       containerViewModel: containerViewModel,
                                                       chatRoom: chatRoom,
                                                       isSpeakerEnabled: false,
-                                                      callCoordinatorUseCase: MockCallCoordinatorUseCase(),
+                                                      callKitManager: MockCallKitManager(),
                                                       callUseCase: callUseCase,
                                                       audioSessionUseCase: MockAudioSessionUseCase(),
                                                       permissionHandler: makeDevicePermissionHandler(),
@@ -454,7 +454,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       containerViewModel: containerViewModel,
                                                       chatRoom: chatRoom,
                                                       isSpeakerEnabled: false,
-                                                      callCoordinatorUseCase: MockCallCoordinatorUseCase(),
+                                                      callKitManager: MockCallKitManager(),
                                                       callUseCase: callUseCase,
                                                       audioSessionUseCase: MockAudioSessionUseCase(),
                                                       permissionHandler: makeDevicePermissionHandler(),
@@ -555,7 +555,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       containerViewModel: containerViewModel,
                                                       chatRoom: chatRoom,
                                                       isSpeakerEnabled: false,
-                                                      callCoordinatorUseCase: MockCallCoordinatorUseCase(),
+                                                      callKitManager: MockCallKitManager(),
                                                       callUseCase: callUseCase,
                                                       audioSessionUseCase: MockAudioSessionUseCase(),
                                                       permissionHandler: makeDevicePermissionHandler(),
@@ -570,14 +570,14 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
     func testAction_muteCall() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
         let callUseCase = MockCallUseCase(call: CallEntity())
-        let callManagerUserCase = MockCallCoordinatorUseCase()
-        let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, callCoordinatorUseCase: callManagerUserCase)
+        let callManagerUserCase = MockCallKitManager()
+        let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, callKitManager: callManagerUserCase)
         let router = MockMeetingFloatingPanelRouter()
         let viewModel = MeetingFloatingPanelViewModel(router: router,
                                                       containerViewModel: containerViewModel,
                                                       chatRoom: chatRoom,
                                                       isSpeakerEnabled: false,
-                                                      callCoordinatorUseCase: callManagerUserCase,
+                                                      callKitManager: callManagerUserCase,
                                                       callUseCase: callUseCase,
                                                       audioSessionUseCase: MockAudioSessionUseCase(),
                                                       permissionHandler: makeDevicePermissionHandler(),
@@ -591,14 +591,14 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
     func testAction_unmuteCall() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .standard, chatType: .meeting)
         let callUseCase = MockCallUseCase(call: CallEntity())
-        let callManagerUserCase = MockCallCoordinatorUseCase()
-        let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, callCoordinatorUseCase: callManagerUserCase)
+        let callManagerUserCase = MockCallKitManager()
+        let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, callKitManager: callManagerUserCase)
         let router = MockMeetingFloatingPanelRouter()
         let viewModel = MeetingFloatingPanelViewModel(router: router,
                                                       containerViewModel: containerViewModel,
                                                       chatRoom: chatRoom,
                                                       isSpeakerEnabled: false,
-                                                      callCoordinatorUseCase: callManagerUserCase,
+                                                      callKitManager: callManagerUserCase,
                                                       callUseCase: callUseCase,
                                                       audioSessionUseCase: MockAudioSessionUseCase(),
                                                       permissionHandler: makeDevicePermissionHandler(authorized: true),
@@ -622,7 +622,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       containerViewModel: containerViewModel,
                                                       chatRoom: chatRoom,
                                                       isSpeakerEnabled: false,
-                                                      callCoordinatorUseCase: MockCallCoordinatorUseCase(),
+                                                      callKitManager: MockCallKitManager(),
                                                       callUseCase: callUseCase,
                                                       audioSessionUseCase: MockAudioSessionUseCase(),
                                                       permissionHandler: makeDevicePermissionHandler(authorized: true),
@@ -651,7 +651,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       containerViewModel: containerViewModel,
                                                       chatRoom: chatRoom,
                                                       isSpeakerEnabled: false,
-                                                      callCoordinatorUseCase: MockCallCoordinatorUseCase(),
+                                                      callKitManager: MockCallKitManager(),
                                                       callUseCase: callUseCase,
                                                       audioSessionUseCase: MockAudioSessionUseCase(),
                                                       permissionHandler: makeDevicePermissionHandler(authorized: true),
@@ -679,7 +679,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       containerViewModel: containerViewModel,
                                                       chatRoom: chatRoom,
                                                       isSpeakerEnabled: false,
-                                                      callCoordinatorUseCase: MockCallCoordinatorUseCase(),
+                                                      callKitManager: MockCallKitManager(),
                                                       callUseCase: callUseCase,
                                                       audioSessionUseCase: MockAudioSessionUseCase(),
                                                       permissionHandler: makeDevicePermissionHandler(authorized: true),
@@ -700,15 +700,15 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         let localVideoUseCase = MockCallLocalVideoUseCase()
         localVideoUseCase.enableDisableVideoCompletion = .success(())
         localVideoUseCase.videoDeviceSelectedString = "Back"
-        let callManagerUserCase = MockCallCoordinatorUseCase()
+        let callManagerUserCase = MockCallKitManager()
         let captureDeviceUseCase =  MockCaptureDeviceUseCase(cameraPositionName: "Front")
-        let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, callCoordinatorUseCase: callManagerUserCase)
+        let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, callKitManager: callManagerUserCase)
         let router = MockMeetingFloatingPanelRouter()
         let viewModel = MeetingFloatingPanelViewModel(router: router,
                                                       containerViewModel: containerViewModel,
                                                       chatRoom: chatRoom,
                                                       isSpeakerEnabled: false,
-                                                      callCoordinatorUseCase: callManagerUserCase,
+                                                      callKitManager: callManagerUserCase,
                                                       callUseCase: callUseCase,
                                                       audioSessionUseCase: MockAudioSessionUseCase(),
                                                       permissionHandler: makeDevicePermissionHandler(authorized: true),
@@ -731,15 +731,15 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         let localVideoUseCase = MockCallLocalVideoUseCase()
         localVideoUseCase.enableDisableVideoCompletion = .success(())
         localVideoUseCase.videoDeviceSelectedString = "Back"
-        let callManagerUserCase = MockCallCoordinatorUseCase()
+        let callManagerUserCase = MockCallKitManager()
         let captureDeviceUseCase =  MockCaptureDeviceUseCase(cameraPositionName: "Front")
-        let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, callCoordinatorUseCase: callManagerUserCase)
+        let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase, callKitManager: callManagerUserCase)
         let router = MockMeetingFloatingPanelRouter()
         let viewModel = MeetingFloatingPanelViewModel(router: router,
                                                       containerViewModel: containerViewModel,
                                                       chatRoom: chatRoom,
                                                       isSpeakerEnabled: false,
-                                                      callCoordinatorUseCase: callManagerUserCase,
+                                                      callKitManager: callManagerUserCase,
                                                       callUseCase: callUseCase,
                                                       audioSessionUseCase: MockAudioSessionUseCase(),
                                                       permissionHandler: makeDevicePermissionHandler(authorized: true),
@@ -769,7 +769,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       containerViewModel: containerViewModel,
                                                       chatRoom: chatRoom,
                                                       isSpeakerEnabled: false,
-                                                      callCoordinatorUseCase: MockCallCoordinatorUseCase(),
+                                                      callKitManager: MockCallKitManager(),
                                                       callUseCase: callUseCase,
                                                       audioSessionUseCase: MockAudioSessionUseCase(),
                                                       permissionHandler: makeDevicePermissionHandler(authorized: true),
@@ -799,7 +799,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       containerViewModel: containerViewModel,
                                                       chatRoom: chatRoom,
                                                       isSpeakerEnabled: false,
-                                                      callCoordinatorUseCase: MockCallCoordinatorUseCase(),
+                                                      callKitManager: MockCallKitManager(),
                                                       callUseCase: callUseCase,
                                                       audioSessionUseCase: audioSessionUseCase,
                                                       permissionHandler: makeDevicePermissionHandler(authorized: true),
@@ -827,7 +827,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       containerViewModel: containerViewModel,
                                                       chatRoom: chatRoom,
                                                       isSpeakerEnabled: false,
-                                                      callCoordinatorUseCase: MockCallCoordinatorUseCase(),
+                                                      callKitManager: MockCallKitManager(),
                                                       callUseCase: callUseCase,
                                                       audioSessionUseCase: audioSessionUseCase,
                                                       permissionHandler: makeDevicePermissionHandler(authorized: true),
@@ -856,7 +856,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       containerViewModel: containerViewModel,
                                                       chatRoom: chatRoom,
                                                       isSpeakerEnabled: false,
-                                                      callCoordinatorUseCase: MockCallCoordinatorUseCase(),
+                                                      callKitManager: MockCallKitManager(),
                                                       callUseCase: callUseCase,
                                                       audioSessionUseCase: audioSessionUseCase,
                                                       permissionHandler: makeDevicePermissionHandler(authorized: true),
@@ -977,13 +977,13 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         let call = CallEntity()
         let router = MockMeetingFloatingPanelRouter()
         let callUseCase = MockCallUseCase(call: call)
-        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase, callCoordinatorUseCase: MockCallCoordinatorUseCase())
+        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase, callKitManager: MockCallKitManager())
         let viewModel = MeetingFloatingPanelViewModel(
             router: router,
             containerViewModel: containerViewModel,
             chatRoom: chatRoom,
             isSpeakerEnabled: false,
-            callCoordinatorUseCase: MockCallCoordinatorUseCase(),
+            callKitManager: MockCallKitManager(),
             callUseCase: callUseCase,
             audioSessionUseCase: MockAudioSessionUseCase(),
             permissionHandler: makeDevicePermissionHandler(),
@@ -1001,12 +1001,12 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         let call = CallEntity()
         let router = MockMeetingFloatingPanelRouter()
         let callUseCase = MockCallUseCase(call: call)
-        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase, callCoordinatorUseCase: MockCallCoordinatorUseCase())
+        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase, callKitManager: MockCallKitManager())
         let viewModel = MeetingFloatingPanelViewModel(router: router,
                                                       containerViewModel: containerViewModel,
                                                       chatRoom: chatRoom,
                                                       isSpeakerEnabled: false,
-                                                      callCoordinatorUseCase: MockCallCoordinatorUseCase(),
+                                                      callKitManager: MockCallKitManager(),
                                                       callUseCase: callUseCase,
                                                       audioSessionUseCase: MockAudioSessionUseCase(),
                                                       permissionHandler: makeDevicePermissionHandler(),
@@ -1014,7 +1014,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
                                                       localVideoUseCase: MockCallLocalVideoUseCase(),
                                                       accountUseCase: MockAccountUseCase())
         let participant = CallParticipantEntity(chatId: chatRoom.chatId, participantId: 1, absentParticipantState: .notInCall)
-        test(viewModel: viewModel, 
+        test(viewModel: viewModel,
              action: .callAbsentParticipant(participant),
              expectedCommands: [.hideCallAllIcon(true),
                                 .reloadViewData(participantsListView: ParticipantsListView(sections: [.hostControls, .invite, .participants], hostControlsRows: [], inviteSectionRow: [], tabs: [.inCall, .notInCall], selectedTab: .inCall, participants: [], existsWaitingRoom: false))]
@@ -1028,12 +1028,12 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         let call = CallEntity()
         let router = MockMeetingFloatingPanelRouter()
         let callUseCase = MockCallUseCase(call: call)
-        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase, callCoordinatorUseCase: MockCallCoordinatorUseCase())
+        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase, callKitManager: MockCallKitManager())
         let viewModel = MeetingFloatingPanelViewModel(router: router,
                                                       containerViewModel: containerViewModel,
                                                       chatRoom: chatRoom,
                                                       isSpeakerEnabled: false,
-                                                      callCoordinatorUseCase: MockCallCoordinatorUseCase(),
+                                                      callKitManager: MockCallKitManager(),
                                                       callUseCase: callUseCase,
                                                       audioSessionUseCase: MockAudioSessionUseCase(),
                                                       permissionHandler: makeDevicePermissionHandler(),
@@ -1059,7 +1059,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         let call = CallEntity()
         let router = MockMeetingFloatingPanelRouter()
         let callUseCase = MockCallUseCase(call: call)
-        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase, callCoordinatorUseCase: MockCallCoordinatorUseCase())
+        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase, callKitManager: MockCallKitManager())
         let viewModel = MeetingFloatingPanelViewModel(
             router: router,
             containerViewModel: containerViewModel,
@@ -1081,7 +1081,7 @@ class MeetingFloatingPanelViewModelTests: XCTestCase {
         let call = CallEntity()
         let router = MockMeetingFloatingPanelRouter()
         let callUseCase = MockCallUseCase(call: call, muteParticipantCompletion: .failure(GenericErrorEntity()))
-        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase, callCoordinatorUseCase: MockCallCoordinatorUseCase())
+        let containerViewModel = MeetingContainerViewModel(router: MockMeetingContainerRouter(), chatRoom: chatRoom, callUseCase: callUseCase, callKitManager: MockCallKitManager())
         let viewModel = MeetingFloatingPanelViewModel(
             router: router,
             containerViewModel: containerViewModel,

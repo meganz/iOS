@@ -23,7 +23,7 @@ final class WaitingRoomViewModel: ObservableObject {
     private let chatUseCase: any ChatUseCaseProtocol
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let callUseCase: any CallUseCaseProtocol
-    private let callCoordinatorUseCase: any CallCoordinatorUseCaseProtocol
+    private let callKitManager: any CallKitManagerProtocol
     private let meetingUseCase: any MeetingCreatingUseCaseProtocol
     private let authUseCase: any AuthUseCaseProtocol
     private let waitingRoomUseCase: any WaitingRoomUseCaseProtocol
@@ -94,7 +94,7 @@ final class WaitingRoomViewModel: ObservableObject {
          chatUseCase: some ChatUseCaseProtocol,
          chatRoomUseCase: some ChatRoomUseCaseProtocol,
          callUseCase: some CallUseCaseProtocol,
-         callCoordinatorUseCase: some CallCoordinatorUseCaseProtocol,
+         callKitManager: some CallKitManagerProtocol,
          meetingUseCase: some MeetingCreatingUseCaseProtocol,
          authUseCase: some AuthUseCaseProtocol,
          waitingRoomUseCase: some WaitingRoomUseCaseProtocol,
@@ -113,7 +113,7 @@ final class WaitingRoomViewModel: ObservableObject {
         self.chatUseCase = chatUseCase
         self.chatRoomUseCase = chatRoomUseCase
         self.callUseCase = callUseCase
-        self.callCoordinatorUseCase = callCoordinatorUseCase
+        self.callKitManager = callKitManager
         self.meetingUseCase = meetingUseCase
         self.authUseCase = authUseCase
         self.waitingRoomUseCase = waitingRoomUseCase
@@ -194,7 +194,7 @@ final class WaitingRoomViewModel: ObservableObject {
     func muteLocalMicrophone(mute: Bool) {
         checkForAudioPermission {
             guard let call = self.call else { return }
-            self.callCoordinatorUseCase.muteUnmuteCall(call, muted: mute)
+            self.callKitManager.muteUnmuteCall(call, muted: mute)
         }
     }
     
@@ -451,9 +451,9 @@ final class WaitingRoomViewModel: ObservableObject {
     
     private func dismissCall() {
         guard let call else { return }
-        callCoordinatorUseCase.removeCallRemovedHandler()
+        callKitManager.removeCallRemovedHandler()
         callUseCase.hangCall(for: call.callId)
-        callCoordinatorUseCase.endCall(call)
+        callKitManager.endCall(call)
     }
     
     private func createEphemeralAccountAndJoinChat(firstName: String, lastName: String) {
