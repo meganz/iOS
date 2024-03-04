@@ -282,4 +282,8 @@ extension NodeAction {
         NodeAction(title: Strings.Localizable.General.MenuAction.Hide.title, detail: nil,
                    image: UIImage.eyeOff, type: .hide)
     }
+    class func unHideAction() -> NodeAction {
+        NodeAction(title: Strings.Localizable.General.MenuAction.Unhide.title, detail: nil,
+                   image: UIImage.eyeOn, type: .unhide)
+    }
 }
