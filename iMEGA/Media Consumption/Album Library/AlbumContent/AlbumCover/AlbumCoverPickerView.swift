@@ -1,4 +1,6 @@
+import MEGADesignToken
 import MEGAL10n
+import MEGAPresentation
 import MEGASwiftUI
 import SwiftUI
 
@@ -35,40 +37,55 @@ struct AlbumCoverPickerView: View {
             }
         })
         .edgesIgnoringSafeArea(.vertical)
+        .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : nil)
     }
     
+    @ViewBuilder
     var navigationBar: some View {
-        VStack(spacing: 0) {
-            HStack {
-                Button {
-                    viewModel.onCancel()
-                } label: {
-                    Text(Strings.Localizable.cancel)
-                        .font(.body)
-                        .foregroundColor(textColor)
-                }.padding(10)
-                
-                Text(Strings.Localizable.CameraUploads.Albums.selectAlbumCover)
-                    .font(.headline)
-                    .foregroundColor(.primary)
-                    .frame(maxWidth: .infinity)
-                
-                Button {
-                    viewModel.onSave()
-                } label: {
-                    Text(Strings.Localizable.save)
-                        .font(.body.bold())
-                        .foregroundColor(textColor.opacity(viewModel.isSaveButtonDisabled ? 0.5 : 1))
-                }.padding(10)
-                .disabled(viewModel.isSaveButtonDisabled)
+        ZStack(alignment: .top) {
+            Group {
+                isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : Color.clear
             }
-            .padding(.bottom, 10)
-            .padding(.top, 18)
+            .ignoresSafeArea()
+            
+            NavigationBarView(
+                leading: {
+                    Button {
+                        viewModel.onCancel()
+                    } label: {
+                        Text(Strings.Localizable.cancel)
+                            .font(.body)
+                            .foregroundColor(textColor)
+                    }
+                },
+                trailing: {
+                    Button {
+                        viewModel.onSave()
+                    } label: {
+                        Text(Strings.Localizable.save)
+                            .font(.body.bold())
+                            .foregroundColor(textColor.opacity(viewModel.isSaveButtonDisabled ? 0.5 : 1))
+                    }
+                    .disabled(viewModel.isSaveButtonDisabled)
+                },
+                center: {
+                    NavigationTitleView(title: Strings.Localizable.CameraUploads.Albums.selectAlbumCover)
+                },
+                leadingWidth: 75,
+                trailingWidth: 75,
+                backgroundColor: isDesignTokenEnabled ? TokenColors.Background.surface1.swiftUI : Color.clear
+            )
+            .padding(.top, 16)
         }
+        .frame(height: 60)
     }
     
     private var textColor: Color {
-        colorScheme == .dark ? MEGAAppColor.Gray._D1D1D1.color : MEGAAppColor.Gray._515151.color
+        if isDesignTokenEnabled {
+            TokenColors.Text.primary.swiftUI
+        } else {
+            colorScheme == .dark ? UIColor.grayD1D1D1.swiftUI : UIColor.gray515151.swiftUI
+        }
     }
     
     private func dismiss() {

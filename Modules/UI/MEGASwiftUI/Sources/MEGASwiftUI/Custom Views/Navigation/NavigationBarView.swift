@@ -1,4 +1,3 @@
-
 import SwiftUI
 
 /**
@@ -53,14 +52,23 @@ public struct NavigationBarView <Leading: View, Trailing: View, Center: View>: V
 }
 
 #Preview {
-    NavigationBarView(leading: {
-        Button(action: {}, label: { Text("Button 1") })
-    }, trailing: {
-        Button(action: {}, label: { Text("Button 2") })
-    }, center: {
-        NavigationTitleView(title: "Title")
-    }, backgroundColor: Color.white
-    )
+    Group {
+        NavigationBarView(
+            leading: { Button(action: {}, label: { Text("Button 1") }) },
+            trailing: { Button(action: {}, label: { Text("Button 2") }) },
+            center: { NavigationTitleView(title: "Title") },
+            backgroundColor: Color.white
+        )
+        
+        NavigationBarView(
+            leading: { Button(action: {}, label: { Text("Button 1") }) },
+            trailing: { Button(action: {}, label: { Text("Button 2") }) },
+            center: { NavigationTitleView(title: "A long navigation title") },
+            leadingWidth: 75,
+            trailingWidth: 75,
+            backgroundColor: Color.white
+        )
+    }
     .preferredColorScheme(.light)
 }
 
