@@ -1,7 +1,7 @@
+import MEGADesignToken
 import SwiftUI
 
 struct ChipsPickerView: View {
-    @Environment(\.colorScheme) private var colorScheme
     var viewModel: ChipsPickerViewModel
 
     var body: some View {
@@ -9,6 +9,7 @@ struct ChipsPickerView: View {
             header
             chips
         }
+        .background(TokenColors.Background.surface1.swiftUI)
     }
 
     private var header: some View {
@@ -17,6 +18,7 @@ struct ChipsPickerView: View {
             Text(viewModel.title)
                 .font(.subheadline)
                 .fontWeight(.bold)
+                .foregroundStyle(TokenColors.Text.primary.swiftUI)
             Spacer()
         }
         .padding(.top, 32)
@@ -50,12 +52,13 @@ struct ChipsPickerView: View {
                 HStack {
                     Text(chip.pill.title)
                         .font(.subheadline)
-                        .foregroundColor(Color.primary)
-
+                        .foregroundColor(TokenColors.Text.primary.swiftUI)
                     Spacer()
 
                     if let image = chip.selectionIndicatorImage {
                         Image(uiImage: image)
+                            .tint(TokenColors.Support.success.swiftUI)
+                            .padding(.horizontal)
                     }
                 }
                 .padding(.vertical, 19)
@@ -64,7 +67,7 @@ struct ChipsPickerView: View {
     }
 
     private var separator: some View {
-        viewModel.separatorColor(for: colorScheme).frame(height: 1)
+        TokenColors.Border.strong.swiftUI.frame(height: 1)
     }
 
     private var closeButton: some View {

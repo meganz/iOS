@@ -13,10 +13,10 @@ extension SearchConfig {
             chipAssets: .init(
                 selectionIndicatorImage: UIImage.turquoiseCheckmark,
                 closeIcon: UIImage.miniplayerClose,
-                selectedForeground: MEGAAppColor.White._FFFFFF.color,
-                selectedBackground: Color.photosFilterTypeSelectionBackground,
-                normalForeground: Color.photosFilterNormalTextForeground,
-                normalBackground: Color.photosFilterTypeNormalBackground
+                selectedForeground: TokenColors.Text.colorInverse.swiftUI,
+                selectedBackground: TokenColors.Components.selectionControl.swiftUI,
+                normalForeground: TokenColors.Text.primary.swiftUI,
+                normalBackground: TokenColors.Button.secondary.swiftUI
             ),
             emptyViewAssetFactory: { chip, query in
                 let titleTextColor: (ColorScheme) -> Color = { colorScheme in
