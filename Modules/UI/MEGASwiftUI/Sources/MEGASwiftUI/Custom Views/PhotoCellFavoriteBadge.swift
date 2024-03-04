@@ -1,3 +1,5 @@
+import MEGADesignToken
+import MEGAPresentation
 import SwiftUI
 
 struct PhotoCellFavoriteBadge: ViewModifier {
@@ -16,12 +18,16 @@ struct PhotoCellFavoriteBadge: ViewModifier {
             
             Image(systemName: "heart.fill")
                 .resizable()
-                .foregroundColor(Color.white)
+                .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.onColor.swiftUI : Color.white)
                 .offset(x: -5, y: 5)
                 .frame(width: 12, height: 11)
         }
         .frame(height: 40, alignment: .top)
         .opacity(isFavorite ? 1 : 0)
+    }
+    
+    private var isDesignTokenEnabled: Bool {
+        DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken)
     }
 }
 

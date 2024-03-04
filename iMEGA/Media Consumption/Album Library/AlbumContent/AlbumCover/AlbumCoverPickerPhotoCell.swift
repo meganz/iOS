@@ -1,3 +1,6 @@
+import MEGADesignToken
+import MEGAPresentation
+import MEGASwiftUI
 import SwiftUI
 
 struct AlbumCoverPickerPhotoCell: View {
@@ -7,8 +10,7 @@ struct AlbumCoverPickerPhotoCell: View {
         ZStack(alignment: .bottomTrailing) {
             image()
             
-            SingleSelectionCheckmarkView(markedSelected: viewModel.isSelected)
-                .offset(x: -5, y: -5)
+            singleSelectionCheckmarkView()
         }
         .favorite(viewModel.shouldShowFavorite)
         .videoDuration(PhotoCellVideoDurationViewModel(isVideo: viewModel.isVideo, duration: viewModel.duration))
@@ -16,11 +18,28 @@ struct AlbumCoverPickerPhotoCell: View {
             viewModel.onPhotoSelect()
         }
         .task { await viewModel.startLoadingThumbnail() }
+        .background(isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : nil)
     }
     
     @ViewBuilder
     private func image() -> some View {
         PhotoCellImage(container: viewModel.thumbnailContainer)
+    }
+    
+    private func singleSelectionCheckmarkView() -> some View {
+        Group {
+            if isDesignTokenEnabled {
+                CheckMarkView(
+                    markedSelected: viewModel.isSelected,
+                    iconForegroundColor: TokenColors.Icon.inverseAccent.swiftUI,
+                    foregroundColor: viewModel.isSelected ? TokenColors.Components.selectionControl.swiftUI : Color.clear,
+                    borderColor: Color.clear
+                )
+            } else {
+                SingleSelectionCheckmarkView(markedSelected: viewModel.isSelected)
+            }
+        }
+        .offset(x: -5, y: -5)
     }
 }
 
