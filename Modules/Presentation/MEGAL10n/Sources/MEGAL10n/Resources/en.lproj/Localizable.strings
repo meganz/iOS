@@ -3978,6 +3978,8 @@
 "notifications.tag.promo.title"="Promo";
 /* Title for action that allows user to hide files or folders */
 "general.menuAction.hide.title"="Hide";
+/* Title for action that allows user to unhide files or folders */
+"general.menuAction.unhide.title"="Unhide";
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="Cannot join";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
