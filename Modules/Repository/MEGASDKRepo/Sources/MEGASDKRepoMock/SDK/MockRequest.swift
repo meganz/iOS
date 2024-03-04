@@ -16,6 +16,7 @@ public final class MockRequest: MEGARequest {
     private let _file: String?
     private let _accountDetails: MEGAAccountDetails?
     private let _numDetails: Int
+    private let _notifications: MEGANotificationList?
     
     public init(handle: MEGAHandle,
                 set: MEGASet? = nil,
@@ -30,7 +31,9 @@ public final class MockRequest: MEGARequest {
                 stringDict: [String: String] = [:],
                 file: String? = nil,
                 accountDetails: MEGAAccountDetails? = nil,
-                numDetails: Int = 0) {
+                numDetails: Int = 0,
+                notifications: MEGANotificationList? = nil
+    ) {
         self.handle = handle
         _set = set
         _text = text
@@ -45,6 +48,7 @@ public final class MockRequest: MEGARequest {
         _file = file
         _accountDetails = accountDetails
         _numDetails = numDetails
+        _notifications = notifications
         super.init()
     }
     
@@ -62,4 +66,5 @@ public final class MockRequest: MEGARequest {
     public override var file: String? { _file }
     public override var megaAccountDetails: MEGAAccountDetails? { _accountDetails }
     public override var numDetails: Int { _numDetails }
+    public override var megaNotifications: MEGANotificationList? { _notifications }
 }

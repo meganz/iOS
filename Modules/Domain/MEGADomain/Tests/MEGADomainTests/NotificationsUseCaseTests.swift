@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGADomainMock
+import MEGATest
 import XCTest
 
 final class NotificationsUseCaseTests: XCTestCase {
@@ -30,5 +31,24 @@ final class NotificationsUseCaseTests: XCTestCase {
         let enabledNotifications = sut.fetchEnabledNotifications()
         
         XCTAssertEqual(expectedEnabledNotifications, enabledNotifications)
+    }
+    
+    func testFetchNotifications_whenSuccess_shouldReturnCorrectNotifications() async throws {
+        let expectedNotifications = [NotificationEntity(id: 1),
+                                     NotificationEntity(id: 2),
+                                     NotificationEntity(id: 3)]
+        let mockRepo = MockNotificationsRepository(notificationsResult: .success(expectedNotifications))
+        let sut = NotificationsUseCase(repository: mockRepo)
+        
+        let notifications = try await sut.fetchNotifications()
+        
+        XCTAssertEqual(notifications, expectedNotifications)
+    }
+    
+    func testFetchNotifications_whenFailed_shouldReturnError() async {
+        let mockRepo = MockNotificationsRepository(notificationsResult: .failure(GenericErrorEntity()))
+        let sut = NotificationsUseCase(repository: mockRepo)
+        
+        await XCTAsyncAssertThrowsError(try await sut.fetchNotifications())
     }
 }

@@ -41,6 +41,8 @@ public final class MockSdk: MEGASdk {
     private let abTestValues: [String: Int]
     private let requestResult: Result<MEGARequest, MEGAError>
     private let _accountCreationDate: Date?
+    private let _enabledNotificationIdList: MEGAIntegerList?
+    private var _lastReadNotificationId: Int32
     
     public private(set) var sendEvent_Calls = [(
         eventType: Int,
@@ -109,7 +111,9 @@ public final class MockSdk: MEGASdk {
                 copiedNodeHandles: [MEGAHandle: MEGAHandle] = [:],
                 abTestValues: [String: Int] = [:],
                 requestResult: Result<MEGARequest, MEGAError> = .failure(MockError.failingError),
-                accountCreationDate: Date? = nil
+                accountCreationDate: Date? = nil,
+                enabledNotificationIdList: MEGAIntegerList? = nil,
+                lastReadNotificationId: Int32 = 0
     ) {
         self.nodes = nodes
         self.rubbishNodes = rubbishNodes
@@ -150,6 +154,8 @@ public final class MockSdk: MEGASdk {
         self.abTestValues = abTestValues
         self.requestResult = requestResult
         self._accountCreationDate = accountCreationDate
+        _enabledNotificationIdList = enabledNotificationIdList
+        _lastReadNotificationId = lastReadNotificationId
         super.init()
     }
     
@@ -565,6 +571,25 @@ public final class MockSdk: MEGASdk {
         isNodeSensitive = sensitive
         let mockRequest = MockRequest(handle: node.handle)
         delegate.onRequestFinish?(self, request: mockRequest, error: MockError(errorType: megaSetError))
+    }
+    
+    // MARK: - Notifications
+    
+    public override func getNotificationsWith(_ delegate: MEGARequestDelegate) {
+        processRequestResult(delegate: delegate)
+    }
+    
+    public override func getEnabledNotifications() -> MEGAIntegerList? {
+        _enabledNotificationIdList
+    }
+    
+    public override func getLastReadNotification(with delegate: MEGARequestDelegate) {
+        processRequestResult(delegate: delegate)
+    }
+    
+    public override func setLastReadNotificationWithNotificationId(_ notificationId: UInt32, delegate: MEGARequestDelegate) {
+        _lastReadNotificationId = Int32(notificationId)
+        processRequestResult(delegate: delegate)
     }
     
     // MARK: - Helper
