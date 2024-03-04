@@ -1,15 +1,13 @@
 import MEGADomain
 
-// MARK: - Use case protocol -
-protocol CallCoordinatorUseCaseProtocol {
+protocol CallKitManagerProtocol {
     func endCall(_ call: CallEntity)
     func muteUnmuteCall(_ call: CallEntity, muted: Bool)
     func addCallRemoved(handler: @escaping (UUID?) -> Void)
     func removeCallRemovedHandler()
 }
 
-// MARK: - Use case implementation -
-struct CallCoordinatorUseCase: CallCoordinatorUseCaseProtocol {
+struct CallKitManager: CallKitManagerProtocol {
     
     private var megaCallManager: MEGACallManager? {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,

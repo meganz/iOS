@@ -88,7 +88,7 @@ final class MeetingContainerRouter: MeetingContainerRouting {
                                                   chatRoomUseCase: chatRoomUseCase,
                                                   chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
                                                   scheduledMeetingUseCase: ScheduledMeetingUseCase(repository: ScheduledMeetingRepository.newRepo),
-                                                  callCoordinatorUseCase: CallCoordinatorUseCase(),
+                                                  callKitManager: CallKitManager(),
                                                   accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
                                                   authUseCase: DIContainer.authUseCase,
                                                   noUserJoinedUseCase: meetingNoUserJoinedUseCase,

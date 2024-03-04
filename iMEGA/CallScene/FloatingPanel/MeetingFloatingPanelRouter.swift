@@ -78,7 +78,7 @@ final class MeetingFloatingPanelRouter: MeetingFloatingPanelRouting {
             containerViewModel: containerViewModel,
             chatRoom: chatRoom,
             isSpeakerEnabled: isSpeakerEnabled,
-            callCoordinatorUseCase: CallCoordinatorUseCase(),
+            callKitManager: CallKitManager(),
             callUseCase: CallUseCase(repository: CallRepository.newRepo),
             audioSessionUseCase: AudioSessionUseCase(audioSessionRepository: audioSessionRepository),
             permissionHandler: DevicePermissionsHandler.makeHandler(),

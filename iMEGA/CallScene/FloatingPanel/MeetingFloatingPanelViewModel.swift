@@ -65,7 +65,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
     private var call: CallEntity? {
         return callUseCase.call(for: chatRoom.chatId)
     }
-    private let callCoordinatorUseCase: any CallCoordinatorUseCaseProtocol
+    private let callKitManager: any CallKitManagerProtocol
     private let callUseCase: any CallUseCaseProtocol
     private let audioSessionUseCase: any AudioSessionUseCaseProtocol
     private let permissionHandler: any DevicePermissionsHandling
@@ -122,7 +122,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
          containerViewModel: MeetingContainerViewModel,
          chatRoom: ChatRoomEntity,
          isSpeakerEnabled: Bool,
-         callCoordinatorUseCase: some CallCoordinatorUseCaseProtocol,
+         callKitManager: some CallKitManagerProtocol,
          callUseCase: some CallUseCaseProtocol,
          audioSessionUseCase: some AudioSessionUseCaseProtocol,
          permissionHandler: some DevicePermissionsHandling,
@@ -137,7 +137,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         self.router = router
         self.containerViewModel = containerViewModel
         self.chatRoom = chatRoom
-        self.callCoordinatorUseCase = callCoordinatorUseCase
+        self.callKitManager = callKitManager
         self.callUseCase = callUseCase
         self.audioSessionUseCase = audioSessionUseCase
         self.permissionHandler = permissionHandler
@@ -215,7 +215,7 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             guard let call = self.call else { return }
             checkForAudioPermission { granted in
                 let microphoneMuted = granted ? muted : true
-                self.callCoordinatorUseCase.muteUnmuteCall(call, muted: microphoneMuted)
+                self.callKitManager.muteUnmuteCall(call, muted: microphoneMuted)
                 self.invokeCommand?(.microphoneMuted(muted: microphoneMuted))
             }
         case .turnCamera(let on):
