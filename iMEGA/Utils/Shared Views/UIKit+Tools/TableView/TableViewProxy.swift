@@ -1,4 +1,5 @@
 import Foundation
+import MEGADesignToken
 
 final class TableViewProxy<CellItem>:
     NSObject,
@@ -81,6 +82,11 @@ final class TableViewProxy<CellItem>:
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         dataSourceConfiguration?.headerTitle(section)
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        guard let headerView = view as? UITableViewHeaderFooterView, UIColor.isDesignTokenEnabled() else { return }
+        headerView.textLabel?.textColor = TokenColors.Text.secondary
     }
 
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {

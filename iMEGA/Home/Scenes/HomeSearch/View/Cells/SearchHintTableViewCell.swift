@@ -1,3 +1,4 @@
+import MEGADesignToken
 import UIKit
 
 final class SearchHintTableViewCell: UITableViewCell {
@@ -6,6 +7,10 @@ final class SearchHintTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        if UIColor.isDesignTokenEnabled() {
+            titleLabel.textColor = TokenColors.Text.primary
+            contentView.backgroundColor = TokenColors.Background.page
+        }
     }
 
     func configure(with hintModel: HomeSearchHintViewModel) {
