@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGADomain
 import UIKit
 
@@ -15,7 +16,17 @@ class SearchResultFileTableViewCell: UITableViewCell {
     private var uuid: UUID = UUID()
     private var handle: HandleEntity?
     private var moreAction: ((HandleEntity, UIButton) -> Void)?
-
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        if UIColor.isDesignTokenEnabled() {
+            fileNameLabel.textColor = TokenColors.Text.primary
+            folderLabel.textColor = TokenColors.Text.secondary
+            moreActionButton.tintColor = TokenColors.Icon.secondary
+            contentView.backgroundColor = TokenColors.Background.page
+        }
+    }
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         thumbnailImageView.image = nil
