@@ -439,7 +439,9 @@ public final class ContextMenuBuilder {
             }
         }
         
-        if isHidden == false {
+        if isHidden == true {
+            quickActions.append(unhide)
+        } else if isHidden == false {
             quickActions.append(hide)
         }
         
