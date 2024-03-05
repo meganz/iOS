@@ -10,55 +10,39 @@ struct NotificationItemContentView: View {
     }
     
     var body: some View {
-        Group {
-            HStack(alignment: .top) {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text(viewModel.notification.title)
-                        .font(.subheadline)
-                        .bold()
-                        .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : Color(UIColor.label))
-                    
-                    Text(viewModel.notification.description)
-                        .font(.footnote)
-                        .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : Color(UIColor.label))
-                    
-                    if let bottomImageURL = viewModel.notification.bottomImageURL {
-                        AsyncImage(
-                            url: bottomImageURL,
-                            content: { image in
-                                image
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(maxWidth: .infinity)
-                            },
-                            placeholder: {
-                                ProgressView()
-                            }
-                        )
-                    }
-                    
-                    Text(viewModel.footerText())
-                        .font(.caption)
-                        .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI : secondaryTextColor)
-                }
+        HStack(alignment: .top, spacing: 16) {
+            VStack(alignment: .leading, spacing: 8) {
+                Text(viewModel.notification.title)
+                    .font(.subheadline)
+                    .bold()
+                    .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : Color(UIColor.label))
                 
-                if let rightThumbnailURL = viewModel.notification.rightThumbnailURL {
-                    Spacer()
-                    
+                Text(viewModel.notification.description)
+                    .font(.footnote)
+                    .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : Color(UIColor.label))
+                
+                if let bannerImageURL = viewModel.notification.bannerImageURL {
                     AsyncImage(
-                        url: rightThumbnailURL,
+                        url: bannerImageURL,
                         content: { image in
                             image
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 80)
+                                .frame(maxWidth: .infinity)
                         },
                         placeholder: {
                             ProgressView()
                         }
                     )
                 }
+                
+                if let footerText = viewModel.footerText() {
+                    Text(footerText)
+                        .font(.caption)
+                        .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI : secondaryTextColor)
+                }
             }
+            .frame(maxWidth: .infinity)
         }
         .fixedSize(horizontal: false, vertical: true)
     }

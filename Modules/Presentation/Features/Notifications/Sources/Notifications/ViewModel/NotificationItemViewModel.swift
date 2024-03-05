@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAL10n
 import MEGAPresentation
 import UIKit
 
@@ -9,13 +10,18 @@ public struct NotificationItemViewModel {
         self.notification = notification
     }
 
-    // This is a placeholder for now
-    func footerText() -> String {
+    func footerText() -> String? {
         switch notification.tag {
         case .promo:
-            "Offer expires in 5 days"
+            guard notification.formattedExpirationDate.isNotEmpty else {
+                return nil
+            }
+            return Strings.Localizable.Notifications.Expiration.message(
+                notification.formattedExpirationDate,
+                notification.formattedExpirationTime
+            )
         default:
-            "\(notification.date ?? Date())"
+            return notification.formattedExpirationDate
         }
     }
 }

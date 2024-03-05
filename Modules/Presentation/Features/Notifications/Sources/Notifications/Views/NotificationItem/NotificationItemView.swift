@@ -27,16 +27,14 @@ public struct NotificationItemView: View {
         VStack(alignment: .leading, spacing: 0) {
             VStack {
                 NotificationItemHeaderView(
-                    typeName: viewModel.notification.type,
-                    typeColor: Color(viewModel.notification.typeColor),
+                    type: viewModel.notification.type,
                     tag: viewModel.notification.tag
                 )
-                
                 NotificationItemContentView(
                     viewModel: viewModel
                 )
             }
-            .padding()
+            .padding(12)
             .background(backgroundColor)
             
             separatorColor

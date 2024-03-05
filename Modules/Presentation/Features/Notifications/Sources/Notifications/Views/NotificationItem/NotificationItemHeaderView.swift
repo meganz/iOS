@@ -3,19 +3,20 @@ import MEGASwiftUI
 import SwiftUI
 
 struct NotificationItemHeaderView: View {
-    let typeName: String
-    let typeColor: Color
+    let type: NotificationType
     let tag: NotificationTag
     
     @Environment(\.colorScheme) var colorScheme
-    private var tagColor: Color {
-        colorScheme == .dark ? Color(red: 0, green: 0.761, blue: 0.604) : Color(red: 0, green: 0.659, blue: 0.525)
-    }
 
     var body: some View {
         HStack {
-            Text(typeName)
-                .foregroundStyle(typeColor)
+            Text(type.displayName)
+                .foregroundStyle(
+                    type.textColor(
+                        isDesignTokenEnabled: isDesignTokenEnabled,
+                        isDarkMode: colorScheme == .dark
+                    )
+                )
                 .font(.caption2.bold())
                 .frame(maxWidth: .infinity, alignment: .leading)
             
@@ -24,11 +25,18 @@ struct NotificationItemHeaderView: View {
                 
                 TagView(
                     tagName: tag.displayName,
-                    tagColor: isDesignTokenEnabled ? TokenColors.Support.success.swiftUI : tagColor,
-                    tagTextColor: isDesignTokenEnabled ? TokenColors.Text.onColor.swiftUI : .white,
+                    tagColor: tag.bgColor(
+                        isDesignTokenEnabled: isDesignTokenEnabled,
+                        isDarkMode: colorScheme == .dark
+                    ),
+                    tagTextColor: tag.textColor(
+                        isDesignTokenEnabled: isDesignTokenEnabled,
+                        isDarkMode: colorScheme == .dark
+                    ),
                     cornerRadius: 4
                 )
             }
         }
+        .padding(.bottom, 8)
     }
 }
