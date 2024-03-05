@@ -135,12 +135,14 @@
     
     self.addPhoneNumberView.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
     
+    UIColor *primaryTextColor = [UIColor cellTitleColorFor:self.traitCollection];
+    
     if (UIColor.isDesignTokenEnabled) {
         UIImage *editIcon = [[UIImage imageNamed:@"viewAndEditProfile"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate].imageFlippedForRightToLeftLayoutDirection;
         self.viewAndEditProfileImageView.image = editIcon;
         self.viewAndEditProfileImageView.tintColor = [UIColor mnz_navigationBarTintFor:self.traitCollection];
-        self.viewAndEditProfileLabel.textColor = [UIColor cellTitleColorFor:self.traitCollection];
-        self.nameLabel.textColor = [UIColor cellTitleColorFor:self.traitCollection];
+        self.viewAndEditProfileLabel.textColor = primaryTextColor;
+        self.nameLabel.textColor = primaryTextColor;
         self.qrCodeImageView.image = [UIImage imageNamed:@"qrCode"].imageFlippedForRightToLeftLayoutDirection;
     } else {
         self.viewAndEditProfileLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
@@ -152,8 +154,8 @@
         [MEGASdk.shared isAccountType:MEGAAccountTypeProFlexi]) {
         self.accountTypeLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
         
-        self.tableFooterContainerView.backgroundColor = [UIColor mnz_secondaryBackgroundElevated:self.traitCollection];
-        self.tableFooterLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+        self.tableFooterContainerView.backgroundColor = [UIColor mnz_Elevated:self.traitCollection];
+        self.tableFooterLabel.textColor = primaryTextColor;
     }
     
     [self setMenuCapableBackButtonWithMenuTitle:LocalizedString(@"My Account", @"")];

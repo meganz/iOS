@@ -34,22 +34,22 @@ extension MyAccountHallTableViewCell {
         
         if let storageText = data.storageText, storageLabel != nil {
             storageLabel.text = storageText
-            storageLabel.textColor = UIColor.mnz_blue(for: traitCollection)
+            storageLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.info : UIColor.mnz_blue(for: traitCollection)
         }
         
         if let storageUsedText = data.storageUsedText, storageUsedLabel != nil {
             storageUsedLabel.text = storageUsedText
-            storageUsedLabel.textColor = UIColor.mnz_blue(for: traitCollection)
+            storageUsedLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.info : UIColor.mnz_blue(for: traitCollection)
         }
         
         if let transferText = data.transferText, transferLabel != nil {
             transferLabel.text = transferText
-            transferLabel.textColor = .systemGreen
+            transferLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.success : .systemGreen
         }
         
         if let transferUsedText = data.transferUsedText, transferUsedLabel != nil {
             transferUsedLabel.text = transferUsedText
-            transferUsedLabel.textColor = .systemGreen
+            transferUsedLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.success : .systemGreen
         }
     }
     
