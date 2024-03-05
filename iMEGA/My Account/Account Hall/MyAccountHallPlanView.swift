@@ -1,10 +1,19 @@
 import MEGADesignToken
 import MEGAL10n
 import MEGAPresentation
+import MEGASwiftUI
 import SwiftUI
 
 struct MyAccountHallPlanView: View {
     @ObservedObject var viewModel: MyAccountHallViewModel
+    
+    @Environment(\.colorScheme) var colorScheme
+    private var separatorColor: Color {
+        guard isDesignTokenEnabled else {
+            return colorScheme == .dark ? Color(red: 38/255, green: 38/255, blue: 38/255, opacity: 1.0) : Color(red: 240/255, green: 240/255, blue: 240/255, opacity: 1.0)
+        }
+        return TokenColors.Border.strong.swiftUI
+    }
     
     var body: some View {
         HStack {
@@ -17,8 +26,8 @@ struct MyAccountHallPlanView: View {
             VStack(alignment: .leading, spacing: 0) {
                 Text(Strings.Localizable.InAppPurchase.ProductDetail.Navigation.currentPlan)
                     .font(.footnote)
-                    .foregroundColor(
-                        isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : MEGAAppColor.Account.upgradeAccountPrimaryGrayText.color
+                    .foregroundStyle(
+                        isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI : MEGAAppColor.Account.upgradeAccountPrimaryGrayText.color
                     )
                 
                 ZStack {
@@ -27,7 +36,7 @@ struct MyAccountHallPlanView: View {
                     
                     Text(viewModel.currentPlanName)
                         .font(.body)
-                        .foregroundColor(
+                        .foregroundStyle(
                             isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : MEGAAppColor.Account.upgradeAccountPrimaryGrayText.color
                         )
                         .opacity(viewModel.isUpdatingAccountDetails ? 0 : 1)
@@ -40,19 +49,21 @@ struct MyAccountHallPlanView: View {
                 viewModel.dispatch(.didTapUpgradeButton)
             } label: {
                 Text(Strings.Localizable.upgrade)
-                    .foregroundColor(
-                        isDesignTokenEnabled ? TokenColors.Support.success.swiftUI : MEGAAppColor.View.turquoise.color
+                    .foregroundStyle(
+                        isDesignTokenEnabled ? TokenColors.Text.inverseAccent.swiftUI : MEGAAppColor.View.turquoise.color
                     )
                     .font(.subheadline.bold())
                     .frame(height: 50)
                     .frame(maxWidth: 300)
-                    .background(Color.clear)
+                    .background(
+                        isDesignTokenEnabled ? TokenColors.Button.primary.swiftUI : Color.clear
+                    )
                     .cornerRadius(10)
                     .contentShape(Rectangle())
-                    .overlay(
+                    .overlay( // Overlay should be removed when design token is permanently applied as it won't be needed.
                         RoundedRectangle(cornerRadius: 10)
                             .stroke(
-                                isDesignTokenEnabled ? TokenColors.Support.success.swiftUI : MEGAAppColor.View.turquoise.color,
+                                isDesignTokenEnabled ? Color.clear : MEGAAppColor.View.turquoise.color,
                                 lineWidth: 2
                             )
                     )
@@ -62,5 +73,6 @@ struct MyAccountHallPlanView: View {
         .background(
             isDesignTokenEnabled ? TokenColors.Background.page.swiftUI : MEGAAppColor.Background.backgroundCell.color
         )
+        .separatorView(offset: 55, color: separatorColor)
     }
 }
