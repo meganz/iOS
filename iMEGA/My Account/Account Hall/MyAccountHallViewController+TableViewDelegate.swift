@@ -1,3 +1,6 @@
+import MEGADomain
+import MEGASDKRepo
+
 extension MyAccountHallViewController: UITableViewDelegate {
     
     public var showPlanRow: Bool {
@@ -51,7 +54,12 @@ extension MyAccountHallViewController: UITableViewDelegate {
             }
             
         case MyAccountMegaSection.notifications.rawValue:
-            NotificationsViewRouter(navigationController: navigationController).start()
+            let notificationsUseCase = NotificationsUseCase(repository: NotificationsRepository.newRepo)
+            
+            NotificationsViewRouter(
+                navigationController: navigationController,
+                notificationsUseCase: notificationsUseCase
+            ).start()
             
         case MyAccountMegaSection.contacts.rawValue:
             let contactsVC = UIStoryboard(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "ContactsViewControllerID")

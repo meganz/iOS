@@ -85,4 +85,19 @@ extension NotificationsTableViewController {
     @objc func notificationCellBackground(_ isNotificationSeen: Bool) -> UIColor {
         return isNotificationSeen ? TokenColors.Background.surface1 : TokenColors.Background.page
     }
+    
+    @objc func setupViewModelForCommandHandling() {
+        viewModel.invokeCommand = { [weak self] command in
+            DispatchQueue.main.async { self?.executeCommand(command) }
+        }
+        
+        viewModel.dispatch(.onViewDidLoad)
+    }
+    
+    private func executeCommand(_ command: NotificationsViewModel.Command) {
+        switch command {
+        case .reloadData:
+            tableView.reloadData()
+        }
+    }
 }
