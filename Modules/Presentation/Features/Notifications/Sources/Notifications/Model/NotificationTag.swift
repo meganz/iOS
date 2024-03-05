@@ -1,16 +1,36 @@
+import MEGADesignToken
 import MEGAL10n
+import SwiftUI
 
 public enum NotificationTag {
     case none, new, promo
     
-    public var displayName: String {
+    var displayName: String {
         switch self {
         case .none:
-            return ""
+            ""
         case .new:
-            return Strings.Localizable.new
+            Strings.Localizable.new
         case .promo:
-            return Strings.Localizable.Notifications.Tag.Promo.title
+            Strings.Localizable.Notifications.Tag.Promo.title
+        }
+    }
+    
+    func bgColor(isDesignTokenEnabled: Bool, isDarkMode: Bool) -> Color {
+        switch self {
+        case .new, .promo:
+            isDesignTokenEnabled ? TokenColors.Support.success.swiftUI : isDarkMode ? Color(red: 0, green: 0.761, blue: 0.604) : Color(red: 0, green: 0.659, blue: 0.525)
+        case .none:
+            Color.clear
+        }
+    }
+    
+    func textColor(isDesignTokenEnabled: Bool, isDarkMode: Bool) -> Color {
+        switch self {
+        case .new, .promo:
+            isDesignTokenEnabled ? TokenColors.Text.onColor.swiftUI : .white
+        case .none:
+            Color.white
         }
     }
 }
