@@ -141,8 +141,10 @@
         self.viewAndEditProfileImageView.tintColor = [UIColor mnz_navigationBarTintFor:self.traitCollection];
         self.viewAndEditProfileLabel.textColor = [UIColor cellTitleColorFor:self.traitCollection];
         self.nameLabel.textColor = [UIColor cellTitleColorFor:self.traitCollection];
+        self.qrCodeImageView.image = [UIImage imageNamed:@"qrCode"].imageFlippedForRightToLeftLayoutDirection;
     } else {
         self.viewAndEditProfileLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+        // qrCodeIcon should be deleted on assets when design token is permanently applied. It is only used here.
         self.qrCodeImageView.image = [UIImage imageNamed:@"qrCodeIcon"].imageFlippedForRightToLeftLayoutDirection;
     }
     
