@@ -69,8 +69,6 @@
     [self updateAppearance];
     
     [self setUpInvokeCommands];
-    
-    self.isBackupSectionVisible = false;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -81,8 +79,6 @@
     [self loadContent];
     
     [self configAddPhoneNumberView];
-    
-    [self checkIfBackupRootNodeExistsAndIsNotEmpty];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
