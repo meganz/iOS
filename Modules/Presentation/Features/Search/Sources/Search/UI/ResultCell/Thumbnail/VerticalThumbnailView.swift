@@ -111,7 +111,7 @@ struct VerticalThumbnailView: View {
             ForEach(viewModel.result.properties.propertiesFor(mode: layout, placement: .secondary(.leading))) { property in
                 switch property.content {
                 case .icon(image: let image, scalable: let scalable):
-                    resultPropertyImage(image: image, scalable: scalable)
+                    resultPropertyImage(image: image, scalable: scalable, vibrant: property.vibrancyEnabled)
                         .frame(width: 16, height: 16)
                         .padding(2)
                 case .text(let text):
@@ -173,7 +173,6 @@ struct VerticalThumbnailView: View {
         HStack(spacing: 4) {
             Text(viewModel.result.title)
                 .titleTextColor(
-                    colorAssets: viewModel.colorAssets,
                     hasVibrantTitle: viewModel.hasVibrantTitle
                 )
                 .font(.system(size: 12, weight: .medium))

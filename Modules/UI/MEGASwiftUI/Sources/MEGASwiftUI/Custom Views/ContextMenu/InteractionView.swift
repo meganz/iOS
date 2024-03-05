@@ -15,6 +15,7 @@ struct InteractionView<Content: View>: UIViewRepresentable {
         
         let hostView = UIHostingController(rootView: sourcePreview())
         hostView.view.translatesAutoresizingMaskIntoConstraints = false
+        hostView.view.backgroundColor = .clear
         
         let constraints = [
             hostView.view.topAnchor.constraint(equalTo: view.topAnchor),

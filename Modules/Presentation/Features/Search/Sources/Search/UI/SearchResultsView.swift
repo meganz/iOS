@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGASwift
 import MEGASwiftUI
 import SwiftUI
@@ -119,6 +120,7 @@ public struct SearchResultsView: View {
                     selected: $viewModel.selectedResultIds,
                     selectionEnabled: $viewModel.editing
                 )
+                .listRowBackground(TokenColors.Background.page.swiftUI)
                 .task {
                     await viewModel.loadMoreIfNeeded(at: index)
                 }

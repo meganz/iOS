@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGASwiftUI
@@ -35,6 +36,7 @@ struct NodeBrowserView: View {
                 SearchResultsView(viewModel: viewModel.searchResultsViewModel)
             }
         }
+        .designTokenBackground(true)
         .navigationBarTitleDisplayMode(.inline)
         .onAppear { viewModel.onViewAppear() }
         .onLoad { viewModel.onLoadTask() }
