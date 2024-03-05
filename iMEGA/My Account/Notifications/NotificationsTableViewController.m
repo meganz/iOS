@@ -46,6 +46,8 @@
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    
+    [self setupViewModelForCommandHandling];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

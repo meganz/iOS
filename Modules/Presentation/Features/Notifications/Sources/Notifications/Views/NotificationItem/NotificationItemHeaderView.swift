@@ -33,7 +33,9 @@ struct NotificationItemHeaderView: View {
                         isDesignTokenEnabled: isDesignTokenEnabled,
                         isDarkMode: colorScheme == .dark
                     ),
-                    cornerRadius: 4
+                    cornerRadius: 4,
+                    paddingInsets: EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8),
+                    font: .caption2
                 )
             }
         }

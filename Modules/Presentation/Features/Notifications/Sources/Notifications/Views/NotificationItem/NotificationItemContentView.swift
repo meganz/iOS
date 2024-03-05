@@ -42,7 +42,7 @@ struct NotificationItemContentView: View {
                         .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI : secondaryTextColor)
                 }
             }
-            .frame(maxWidth: .infinity)
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
         .fixedSize(horizontal: false, vertical: true)
     }

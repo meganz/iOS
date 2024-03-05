@@ -1,11 +1,17 @@
+import MEGADomain
 import MEGAPresentation
 import Notifications
 
 struct NotificationsViewRouter: Routing {
     private weak var navigationController: UINavigationController?
+    private let notificationsUseCase: any NotificationsUseCaseProtocol
     
-    init(navigationController: UINavigationController?) {
+    init(
+        navigationController: UINavigationController?,
+        notificationsUseCase: some NotificationsUseCaseProtocol
+    ) {
         self.navigationController = navigationController
+        self.notificationsUseCase = notificationsUseCase
     }
     
     func build() -> UIViewController {
@@ -13,7 +19,10 @@ struct NotificationsViewRouter: Routing {
             fatalError("Failed to load NotificationsTableViewController")
         }
         
-        let viewModel = NotificationsViewModel(featureFlagProvider: DIContainer.featureFlagProvider)
+        let viewModel = NotificationsViewModel(
+            featureFlagProvider: DIContainer.featureFlagProvider,
+            notificationsUseCase: notificationsUseCase
+        )
         notificationsVC.viewModel = viewModel
         return notificationsVC
     }

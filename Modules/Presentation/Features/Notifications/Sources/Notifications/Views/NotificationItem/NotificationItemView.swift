@@ -25,21 +25,17 @@ public struct NotificationItemView: View {
     
     public var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            VStack {
-                NotificationItemHeaderView(
-                    type: viewModel.notification.type,
-                    tag: viewModel.notification.tag
-                )
-                NotificationItemContentView(
-                    viewModel: viewModel
-                )
-            }
-            .padding(12)
-            .background(backgroundColor)
-            
-            separatorColor
-                .frame(maxWidth: .infinity, maxHeight: 0.4)
+            NotificationItemHeaderView(
+                type: viewModel.notification.type,
+                tag: viewModel.notification.tag
+            )
+            NotificationItemContentView(
+                viewModel: viewModel
+            )
         }
+        .padding(12)
+        .background(backgroundColor)
         .frame(maxWidth: .infinity)
+        .separatorView(offset: 0, color: separatorColor)
     }
 }

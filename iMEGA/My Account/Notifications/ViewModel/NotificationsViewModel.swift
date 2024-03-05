@@ -1,5 +1,6 @@
 import Foundation
 import MEGADesignToken
+import MEGADomain
 import MEGAPresentation
 import Notifications
 
@@ -7,15 +8,28 @@ import Notifications
     case promos = 0, userAlerts
 }
 
-@objc final class NotificationsViewModel: NSObject {
+enum NotificationAction: ActionType {
+    case onViewDidLoad
+}
+
+@objc final class NotificationsViewModel: NSObject, ViewModelType {
+    enum Command: CommandType, Equatable {
+        case reloadData
+    }
+    
     private let featureFlagProvider: any FeatureFlagProviderProtocol
+    private let notificationsUseCase: any NotificationsUseCaseProtocol
     private(set) var promoList: [NotificationItem] = []
     
-    init(featureFlagProvider: some FeatureFlagProviderProtocol) {
+    var invokeCommand: ((Command) -> Void)?
+    
+    init(
+        featureFlagProvider: some FeatureFlagProviderProtocol,
+        notificationsUseCase: some NotificationsUseCaseProtocol
+    ) {
         self.featureFlagProvider = featureFlagProvider
+        self.notificationsUseCase = notificationsUseCase
         super.init()
-        
-        fetchPromoList()
     }
     
     // MARK: - Feature flag
@@ -35,6 +49,30 @@ import Notifications
     }
     
     func fetchPromoList() {
-        // Promo list fetching logic
+        Task {
+            do {
+                let userNotifications = try await notificationsUseCase.fetchNotifications()
+                let filteredNotifications = filterEnabledNotifications(from: userNotifications)
+                
+                if filteredNotifications.isNotEmpty {
+                    promoList = filteredNotifications.compactMap {$0.toNotificationItem()}
+                    invokeCommand?(.reloadData)
+                }
+            } catch {
+                debugPrint(error.localizedDescription)
+            }
+        }
+    }
+    
+    private func filterEnabledNotifications(from notificationList: [NotificationEntity]) -> [NotificationEntity] {
+        let enabledNotifications = notificationsUseCase.fetchEnabledNotifications()
+        return notificationList.filter { enabledNotifications.contains($0.id) }
+    }
+    
+    func dispatch(_ action: NotificationAction) {
+        switch action {
+        case .onViewDidLoad:
+            fetchPromoList()
+        }
     }
 }
