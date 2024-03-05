@@ -6,7 +6,7 @@ import MEGASwiftUI
 }
 
 @objc enum MyAccountMegaSection: Int, CaseIterable {
-    case plan = 0, storage, contacts, backups, notifications, achievements, transfers, deviceCenter, offline, rubbishBin
+    case plan = 0, storage, contacts, notifications, achievements, transfers, deviceCenter, offline, rubbishBin
 }
 
 @objc enum MyAccountOtherSection: Int, CaseIterable {
@@ -83,13 +83,6 @@ extension MyAccountHallViewController: UITableViewDataSource {
             pendingText: pendingText,
             promoText: promoText
         )
-    }
-    
-    // MARK: - Backups row setup data
-    private func makeBackupsCellData() -> MyAccountHallCellData {
-        MyAccountHallCellData(sectionText: Strings.Localizable.Backups.title,
-                              icon: UIImage.backups.imageFlippedForRightToLeftLayoutDirection(),
-                              isPendingViewVisible: true)
     }
     
     // MARK: - Achievements row setup data
@@ -178,7 +171,6 @@ extension MyAccountHallViewController: UITableViewDataSource {
         switch MyAccountMegaSection(rawValue: indexPath.row) {
         case .storage: cell.setup(data: isShowStorageUsageCell ? storageBusinessAccountSetupData() : storageSetupData())
         case .contacts: cell.setup(data: contactsSetupData(existsPendingView: cell.pendingView != nil))
-        case .backups: cell.setup(data: makeBackupsCellData())
         case .notifications: cell.setup(data: notificationsSetupData(existsPendingView: cell.pendingView != nil, existsPromoView: cell.promoView != nil))
         case .achievements: cell.setup(data: achievementsSetupData())
         case .transfers: cell.setup(data: transfersSetupData())

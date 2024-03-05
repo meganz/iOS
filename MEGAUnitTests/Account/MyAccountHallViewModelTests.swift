@@ -97,16 +97,6 @@ final class MyAccountHallViewModelTests: XCTestCase {
         test(viewModel: sut, actions: [MyAccountHallAction.didTapUpgradeButton], expectedCommands: [])
     }
     
-    func testIsFeatureFlagEnabled_onDeviceCenterUIEnabled_shouldBeEnabled() {
-        let (sut, _) = makeSUT(featureFlagProvider: MockFeatureFlagProvider(list: [.deviceCenter: true]))
-        XCTAssertTrue(sut.isDeviceCenterEnabled())
-    }
-
-    func testIsFeatureFlagEnabled_onDeviceCenterUIDisabled_shouldBeTurnedOff() {
-        let (sut, _) = makeSUT(featureFlagProvider: MockFeatureFlagProvider(list: [.deviceCenter: false]))
-        XCTAssertFalse(sut.isDeviceCenterEnabled())
-    }
-    
     func testIsFeatureFlagEnabled_onNotificationCenterUIEnabled_shouldBeEnabled() {
         let (sut, _) = makeSUT(featureFlagProvider: MockFeatureFlagProvider(list: [.notificationCenter: true]))
         XCTAssertTrue(sut.isNotificationCenterEnabled())

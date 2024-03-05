@@ -18,10 +18,6 @@ extension MyAccountHallViewController: UITableViewDelegate {
             shouldShowCell = showPlanRow
         case .achievements:
             shouldShowCell = MEGASdk.shared.isAchievementsEnabled
-        case .backups:
-            shouldShowCell = isBackupSectionVisible && !viewModel.isDeviceCenterEnabled()
-        case .deviceCenter:
-            shouldShowCell = viewModel.isDeviceCenterEnabled()
         default: break
         }
         
@@ -64,9 +60,6 @@ extension MyAccountHallViewController: UITableViewDelegate {
         case MyAccountMegaSection.contacts.rawValue:
             let contactsVC = UIStoryboard(name: "Contacts", bundle: nil).instantiateViewController(withIdentifier: "ContactsViewControllerID")
             navigationController?.pushViewController(contactsVC, animated: true)
-            
-        case MyAccountMegaSection.backups.rawValue:
-            navigateToBackups()
             
         case MyAccountMegaSection.achievements.rawValue:
             let achievementsVC = UIStoryboard(name: "Achievements", bundle: nil).instantiateViewController(withIdentifier: "AchievementsViewControllerID")

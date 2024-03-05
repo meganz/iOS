@@ -10,8 +10,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIView *tableFooterView;
 @property (weak, nonatomic) IBOutlet UILabel *tableFooterLabel;
 @property (weak, nonatomic) IBOutlet MEGALabel *nameLabel;
-@property (nonatomic, strong, nullable) MEGANode *backupsRootNode;
-@property (nonatomic, assign) BOOL isBackupSectionVisible;
 @property (nonatomic, strong) MyAccountHallViewModel *viewModel;
 
 @end

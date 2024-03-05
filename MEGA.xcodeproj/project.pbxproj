@@ -1242,7 +1242,6 @@
 		9425DF662931329200AD3156 /* FolderLinkViewController+SnackBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9425DF652931329200AD3156 /* FolderLinkViewController+SnackBar.swift */; };
 		9426B67D283FE0C9003B89B1 /* ContactLinkQRViewController+ContextMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9426B67C283FE0C9003B89B1 /* ContactLinkQRViewController+ContextMenu.swift */; };
 		94282D3928A3B06D00F794BA /* SharedItemsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94282D3828A3B06D00F794BA /* SharedItemsViewController+Additions.swift */; };
-		94282D3E28A3B29200F794BA /* MyAccountHallViewController+Backups.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94282D3B28A3B29100F794BA /* MyAccountHallViewController+Backups.swift */; };
 		94282D4028A3B29200F794BA /* MyAccountHallTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94282D3C28A3B29100F794BA /* MyAccountHallTableViewCell+Additions.swift */; };
 		94282D4228A3B29200F794BA /* MyAccountHallViewController+TableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94282D3D28A3B29200F794BA /* MyAccountHallViewController+TableViewDataSource.swift */; };
 		94282D4828A3B3F000F794BA /* ContactsViewController+Backups.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94282D4728A3B3F000F794BA /* ContactsViewController+Backups.swift */; };
@@ -3920,7 +3919,6 @@
 		9425DF652931329200AD3156 /* FolderLinkViewController+SnackBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FolderLinkViewController+SnackBar.swift"; sourceTree = "<group>"; };
 		9426B67C283FE0C9003B89B1 /* ContactLinkQRViewController+ContextMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactLinkQRViewController+ContextMenu.swift"; sourceTree = "<group>"; };
 		94282D3828A3B06D00F794BA /* SharedItemsViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SharedItemsViewController+Additions.swift"; sourceTree = "<group>"; };
-		94282D3B28A3B29100F794BA /* MyAccountHallViewController+Backups.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MyAccountHallViewController+Backups.swift"; sourceTree = "<group>"; };
 		94282D3C28A3B29100F794BA /* MyAccountHallTableViewCell+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MyAccountHallTableViewCell+Additions.swift"; sourceTree = "<group>"; };
 		94282D3D28A3B29200F794BA /* MyAccountHallViewController+TableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MyAccountHallViewController+TableViewDataSource.swift"; sourceTree = "<group>"; };
 		94282D4728A3B3F000F794BA /* ContactsViewController+Backups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactsViewController+Backups.swift"; sourceTree = "<group>"; };
@@ -10612,7 +10610,6 @@
 				5B0062C41F3DBA16008B7A91 /* MyAccountHallTableViewCell.h */,
 				5B0062C51F3DBA16008B7A91 /* MyAccountHallTableViewCell.m */,
 				9D68BBB128B55E22006FCBC5 /* MyAccountHallViewController+Addition.swift */,
-				94282D3B28A3B29100F794BA /* MyAccountHallViewController+Backups.swift */,
 				94282D3D28A3B29200F794BA /* MyAccountHallViewController+TableViewDataSource.swift */,
 				9472202B2A29E16600890CFB /* MyAccountHallViewController+TableViewDelegate.swift */,
 				5B78F0B01F3C5362007ED721 /* MyAccountHallViewController.h */,
@@ -14688,7 +14685,6 @@
 				94282D4028A3B29200F794BA /* MyAccountHallTableViewCell+Additions.swift in Sources */,
 				5B0062C61F3DBA16008B7A91 /* MyAccountHallTableViewCell.m in Sources */,
 				9D68BBB228B55E23006FCBC5 /* MyAccountHallViewController+Addition.swift in Sources */,
-				94282D3E28A3B29200F794BA /* MyAccountHallViewController+Backups.swift in Sources */,
 				94282D4228A3B29200F794BA /* MyAccountHallViewController+TableViewDataSource.swift in Sources */,
 				9472202C2A29E16600890CFB /* MyAccountHallViewController+TableViewDelegate.swift in Sources */,
 				5B78F0B21F3C5362007ED721 /* MyAccountHallViewController.m in Sources */,
