@@ -303,8 +303,8 @@ final class NodeActionBuilder {
                 nodeActions.append(.pdfPageViewAction())
             }
         }
-        if isHidden == false {
-            nodeActions.append(.hideAction())
+        if let hiddenStateAction = hiddenStateAction() {
+            nodeActions.append(hiddenStateAction)
         }
 
         return nodeActions
@@ -557,8 +557,8 @@ final class NodeActionBuilder {
             nodeActions.append(.renameAction())
         }
         
-        if shouldAddHiddenAction() {
-            nodeActions.append(.hideAction())
+        if let hiddenStateAction = hiddenStateAction() {
+            nodeActions.append(hiddenStateAction)
         }
         
         if displayMode != .sharedItem && !isBackupNode {
@@ -695,8 +695,8 @@ final class NodeActionBuilder {
         if isBackupNode {
             actions.append(.copyAction())
         } else {
-            if shouldAddHiddenAction() {
-                actions.append(.hideAction())
+            if let hiddenStateAction = hiddenStateAction() {
+                actions.append(hiddenStateAction)
             }
             actions.append(contentsOf: [.moveAction(), .copyAction(), .moveToRubbishBinAction()])
         }
@@ -720,8 +720,8 @@ final class NodeActionBuilder {
         if isBackupNode {
             actions.append(.copyAction())
         } else {
-            if shouldAddHiddenAction() {
-                actions.append(.hideAction())
+            if let hiddenStateAction = hiddenStateAction() {
+                actions.append(hiddenStateAction)
             }
             actions.append(contentsOf: [.moveAction(), .copyAction(), .moveToRubbishBinAction()])
         }
@@ -739,8 +739,8 @@ final class NodeActionBuilder {
         if isBackupNode {
             actions.append(.copyAction())
         } else {
-            if shouldAddHiddenAction() {
-                actions.append(.hideAction())
+            if let hiddenStateAction = hiddenStateAction() {
+                actions.append(hiddenStateAction)
             }
             actions.append(contentsOf: [.moveAction(), .copyAction(), .moveToRubbishBinAction()])
         }
@@ -788,12 +788,30 @@ final class NodeActionBuilder {
         }
     }
     
+    private func hiddenStateAction() -> NodeAction? {
+        return if shouldAddHiddenAction() {
+            .hideAction()
+        } else if shouldAddUnhideAction() {
+            .unHideAction()
+        } else {
+            nil
+        }
+    }
+    
     private func shouldAddHiddenAction() -> Bool {
         guard isHidden == false else {
             return false
         }
         
-        return [.cloudDrive, .photosTimeline]
+        return [.cloudDrive, .photosTimeline, .previewDocument, .previewPdfPage]
+            .contains(displayMode)
+    }
+    
+    private func shouldAddUnhideAction() -> Bool {
+        guard isHidden == true else {
+            return false
+        }
+        return [.cloudDrive, .previewDocument, .previewPdfPage]
             .contains(displayMode)
     }
 }

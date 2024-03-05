@@ -183,6 +183,17 @@ class NodeActionBuilderTests: XCTestCase {
                                                 .shareFolder, .rename, .hide, .move, .copy, .moveToRubbishBin]))
     }
     
+    func testBuild_cloudDriveHiddenTrue_shouldReturnCorrectActions() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.cloudDrive)
+            .setAccessLevel(.accessOwner)
+            .setIsHidden(true)
+            .build()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.info, .favourite, .label, .download, .shareLink,
+                                                .shareFolder, .rename, .unhide, .move, .copy, .moveToRubbishBin]))
+    }
+    
     func testFileFolderNodeDoNotShowInfoAction() {
         actions = NodeActionBuilder()
             .setDisplayMode(.nodeInfo)
@@ -898,6 +909,39 @@ class NodeActionBuilderTests: XCTestCase {
         XCTAssertTrue(isEqual(nodeActionTypes: [.download, .manageLink, .removeLink, .exportFile, .sendToChat, .search, .pdfPageView]))
     }
     
+    func testPreviewPdf_isHiddenFalse_hiddenAction() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.previewDocument)
+            .setIsPdf(true)
+            .setIsHidden(false)
+            .build()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .sendToChat, .search, .pdfPageView, .hide]))
+    }
+    
+    func testPreviewPdf_isHiddenTrue_hiddenAction() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.previewDocument)
+            .setIsPdf(true)
+            .setIsHidden(true)
+            .build()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .sendToChat, .search, .pdfPageView, .unhide]))
+    }
+    
+    func testPreviewPdf_isHiddenNil_notContainHideOrUnhide() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.previewDocument)
+            .setIsPdf(true)
+            .setIsHidden(nil)
+            .build()
+        
+        XCTAssertTrue(actions.notContains(where: { $0.type == .hide }),
+                      "Actions should not contain hide action")
+        XCTAssertTrue(actions.notContains(where: { $0.type == .unhide }),
+                      "Actions should not contain unhide action")
+    }
+    
     // MARK: - Chat tests
     
     func testChatSharedMediaFile() {
@@ -1348,7 +1392,40 @@ class NodeActionBuilderTests: XCTestCase {
                 .setIsHidden(nil)
                 .multiselectBuild()
             
-            XCTAssertTrue(actions.notContains(where: { $0.type == .hide }))
+            XCTAssertTrue(actions.notContains(where: { $0.type == .hide || $0.type == .unhide }))
         }
+    }
+    
+    func testMultiselectBuild_cloudDriveFolderDisplayModeHiddenTrue_shouldReturnCorrectActions() {
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.folders, selectedNodeCount: 4)
+            .setDisplayMode(.cloudDrive)
+            .setIsHidden(true)
+            .multiselectBuild()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .shareFolder,
+                                                .unhide, .move, .copy, .moveToRubbishBin]))
+    }
+    
+    func testMultiselectBuild_cloudDriveFileDisplayModeHideTrue_shouldReturnCorrectActions() {
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.files, selectedNodeCount: 4)
+            .setDisplayMode(.cloudDrive)
+            .setIsHidden(true)
+            .multiselectBuild()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat,
+                                                .unhide, .move, .copy, .moveToRubbishBin]))
+    }
+    
+    func testMultiselectBuild_cloudDriveFileAndFolderDisplayModeHiddenTrue_shouldReturnCorrectActions() {
+        actions = NodeActionBuilder()
+            .setNodeSelectionType(.filesAndFolders, selectedNodeCount: 4)
+            .setDisplayMode(.cloudDrive)
+            .setIsHidden(true)
+            .multiselectBuild()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .unhide,
+                                                .move, .copy, .moveToRubbishBin]))
     }
 }
