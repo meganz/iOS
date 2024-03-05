@@ -176,6 +176,10 @@ extension ContextMenuBuilder {
         CMActionEntity(type: .quickActions(actionType: .hide))
     }
     
+    var unhide: CMActionEntity {
+        CMActionEntity(type: .quickActions(actionType: .unhide))
+    }
+    
     // MARK: - Rubbish Bin Actions
     
     var restore: CMActionEntity {

@@ -118,6 +118,8 @@ extension ContextMenuModel {
             return ContextMenuDataModel(identifier: "saveToPhotos", title: Strings.Localizable.saveToPhotos, image: UIImage.saveToPhotos)
         case .hide:
             return ContextMenuDataModel(identifier: "hide", title: Strings.Localizable.General.MenuAction.Hide.title, image: UIImage.eyeOff)
+        case .unhide:
+            return ContextMenuDataModel(identifier: "unhide", title: Strings.Localizable.General.MenuAction.Unhide.title, image: UIImage.eyeOn)
         }
     }
 
