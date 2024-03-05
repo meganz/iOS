@@ -378,6 +378,29 @@ class NodeActionBuilderTests: XCTestCase {
         XCTAssertTrue(isEqual(nodeActionTypes: [.info, .viewVersions, .favourite, .label, .download, .shareLink, .exportFile, .sendToChat, .rename, .move, .copy, .moveToRubbishBin]))
     }
     
+    func testRecentNode_withHiddenNodesFalse_shouldReturnNoHiddenActions() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.recents)
+            .setIsFile(true)
+            .setVersionCount(2)
+            .setIsHidden(false)
+            .build()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.import, .download]))
+    }
+    
+    func testRecentNode_withHiddenNodeTrue_shouldReturnHiddenActions() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.recents)
+            .setAccessLevel(.accessOwner)
+            .setIsFile(true)
+            .setVersionCount(2)
+            .setIsHidden(false)
+            .build()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.info, .viewVersions, .favourite, .label, .download, .shareLink, .exportFile, .sendToChat, .rename, .hide, .move, .copy, .moveToRubbishBin]))
+    }
+    
     // MARK: - Shared Items tests
     
     func testIncomingFullSharedFolder() {
