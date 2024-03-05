@@ -44,6 +44,15 @@ public extension UIImage {
         UIGraphicsEndImageContext()
         return newImage
     }
+    
+    /// Set the tint color for an UIImage and returns it as .alwaysOriginal mode.
+    /// Only applicable if the UIImage is alreayd in `.template` rendering mode
+    /// This is useful for when we want to custom tint color for icon/button in Design Token system
+    /// - Parameter color: The tint color
+    /// - Returns: The color with new tint color applied, with `.alwaysOriginal` as its rendering mode
+    func withTintColorAsOriginal(_ color: UIColor) -> UIImage {
+        withTintColor(color, renderingMode: .alwaysOriginal)
+    }
 }
 
 extension UIImage: Matchable {

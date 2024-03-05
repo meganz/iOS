@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGASwiftUI
 import SwiftUI
 
@@ -113,10 +114,8 @@ struct SearchResultRowView: View {
                 .fontWeight(.medium)
                 .lineLimit(1)
                 .titleTextColor(
-                    colorAssets: viewModel.colorAssets,
                     hasVibrantTitle: viewModel.hasVibrantTitle
                 )
-            
             propertyViewsFor(placement: .prominent)
         }
     }
@@ -128,7 +127,7 @@ struct SearchResultRowView: View {
         }
         .font(.subheadline)
         .lineLimit(1)
-        .foregroundColor(.primary)
+        .foregroundStyle(TokenColors.Text.primary.swiftUI)
     }
     
     @ViewBuilder func propertyViewsFor(placement: PropertyPlacement) -> some View {
@@ -141,7 +140,7 @@ struct SearchResultRowView: View {
             Text(viewModel.result.description(layout))
                 .font(.caption)
                 .lineLimit(1)
-                .foregroundColor(.primary)
+                .foregroundColor(TokenColors.Text.secondary.swiftUI)
             propertyViewsFor(placement: .secondary(.trailing))
             Spacer()
             propertyViewsFor(placement: .secondary(.trailingEdge))

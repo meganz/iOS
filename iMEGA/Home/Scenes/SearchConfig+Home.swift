@@ -1,6 +1,7 @@
 import MEGADesignToken
 import MEGAL10n
 import MEGAPresentation
+import MEGAUIKit
 import Search
 import SwiftUI
 
@@ -93,13 +94,13 @@ extension SearchConfig {
                 }
             },
             rowAssets: .init(
-                contextImage: UIImage.moreList,
+                contextImage: UIImage.moreList.withTintColorAsOriginal(TokenColors.Icon.secondary),
                 itemSelected: UIImage.checkBoxSelected,
                 itemUnselected: UIImage.checkBoxUnselected,
                 playImage: UIImage.videoList,
                 downloadedImage: UIImage.downloaded,
-                moreList: UIImage.moreList.withRenderingMode(.alwaysOriginal),
-                moreGrid: UIImage.moreGrid.withRenderingMode(.alwaysOriginal)
+                moreList: UIImage.moreList.withTintColorAsOriginal(TokenColors.Icon.secondary),
+                moreGrid: UIImage.moreGrid.withTintColorAsOriginal(TokenColors.Icon.secondary)
             ),
             colorAssets: .init(
                 F7F7F7: MEGAAppColor.White._F7F7F7.color,

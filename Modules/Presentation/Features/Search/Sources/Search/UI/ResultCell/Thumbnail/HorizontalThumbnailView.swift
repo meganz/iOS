@@ -62,7 +62,6 @@ struct HorizontalThumbnailView: View {
             Text(viewModel.result.title)
                 .font(.system(size: 12, weight: .medium))
                 .titleTextColor(
-                    colorAssets: viewModel.colorAssets,
                     hasVibrantTitle: viewModel.hasVibrantTitle
                 )
             
