@@ -731,6 +731,8 @@ extension HomeViewController: RecentNodeActionDelegate, TextFileEditable {
 
             case .label:
                 self.router.didTap(on: .setLabel(node))
+            case .hide:
+                self.router.didTap(on: .hide(node))
             default:
                 break
             }

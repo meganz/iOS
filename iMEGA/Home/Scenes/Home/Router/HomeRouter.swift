@@ -45,6 +45,7 @@ enum HomeRoutingSource {
     case setLabel(MEGANode)
     case editTextFile(MEGANode)
     case viewTextFileVersions(MEGANode)
+    case hide(MEGANode)
 }
 
 final class HomeRouter: HomeRouterProtocol {
@@ -150,6 +151,11 @@ final class HomeRouter: HomeRouterProtocol {
             nodeShareRouter.showSharingFolder(for: node)
         case .manageShare(let node):
             nodeShareRouter.showManageSharing(for: node)
+        case .hide(let node):
+            let nodeActionUseCase = NodeActionUseCase(repo: NodeActionRepository.newRepo)
+            Task {
+                _ = await nodeActionUseCase.hide(nodes: [node].toNodeEntities())
+            }
         }
     }
     

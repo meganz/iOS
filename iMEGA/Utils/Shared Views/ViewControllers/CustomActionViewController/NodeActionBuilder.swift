@@ -803,7 +803,7 @@ final class NodeActionBuilder {
             return false
         }
         
-        return [.cloudDrive, .photosTimeline, .previewDocument, .previewPdfPage]
+        return [.cloudDrive, .photosTimeline, .previewDocument, .previewPdfPage, .recents]
             .contains(displayMode)
     }
     
