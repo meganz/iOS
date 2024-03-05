@@ -77,9 +77,6 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
         if isAutomaticallyShown {
             showAutoMediaDiscoveryBanner = !autoMediaDiscoveryBannerDismissed
         }
-        
-        subscribeToSelectionChanges()
-        subscribeToNodeChanges()
     }
     
     @MainActor
@@ -114,11 +111,15 @@ final class MediaDiscoveryContentViewModel: ObservableObject {
     }
     
     func onViewAppear() {
+        subscribeToSelectionChanges()
+        subscribeToNodeChanges()
         startTracking()
         analyticsUseCase.sendPageVisitedStats()
     }
     
     func onViewDisappear() {
+        // AnyCancellable are cancelled on dealloc so need to do it here
+        subscriptions.removeAll()
         endTracking()
         sendPageStayStats()
     }

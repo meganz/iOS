@@ -39,6 +39,9 @@ class MediaDiscoveryContentViewModelTests: XCTestCase {
         let mediaDiscoveryUseCase = MockMediaDiscoveryUseCase(nodeUpdates: AnyPublisher(nodeUpdatesPublisher), nodes: expectedNodes, shouldReload: true)
         let sut = makeSUT(mediaDiscoveryUseCase: mediaDiscoveryUseCase)
         
+        // Precondition
+        sut.onViewAppear()
+        
         // Act
         nodeUpdatesPublisher.send([NodeEntity(name: "test2.png", handle: 2)])
         
@@ -90,6 +93,9 @@ class MediaDiscoveryContentViewModelTests: XCTestCase {
         let delegate = MockMediaDiscoveryContentDelegate()
         let mediaDiscoveryUseCase = MockMediaDiscoveryUseCase(nodes: expectedNodes)
         let sut = makeSUT(delegate: delegate, mediaDiscoveryUseCase: mediaDiscoveryUseCase)
+        
+        // Precondition
+        sut.onViewAppear()
         
         await sut.loadPhotos()
         
@@ -175,6 +181,9 @@ class MediaDiscoveryContentViewModelTests: XCTestCase {
         let mediaDiscoveryUseCase = MockMediaDiscoveryUseCase(nodes: expectedNodes)
         let sut = makeSUT(delegate: delegate, mediaDiscoveryUseCase: mediaDiscoveryUseCase)
     
+        // Precondition
+        sut.onViewAppear()
+
         // Act
         sut.photoLibraryContentViewModel.selection.isHidden = true
         
@@ -194,6 +203,9 @@ class MediaDiscoveryContentViewModelTests: XCTestCase {
         let mediaDiscoveryUseCase = MockMediaDiscoveryUseCase(nodes: expectedNodes)
         let sut = makeSUT(delegate: delegate, mediaDiscoveryUseCase: mediaDiscoveryUseCase)
     
+        // Precondition
+        sut.onViewAppear()
+
         // Act
         sut.photoLibraryContentViewModel.selection.isHidden = false
         
@@ -213,6 +225,9 @@ class MediaDiscoveryContentViewModelTests: XCTestCase {
         let mediaDiscoveryUseCase = MockMediaDiscoveryUseCase(nodes: expectedNodes)
         let sut = makeSUT(delegate: delegate, mediaDiscoveryUseCase: mediaDiscoveryUseCase)
     
+        // Precondition
+        sut.onViewAppear()
+
         // Act
         for mode in [PhotoLibraryViewMode.day, .month, .year] {
             sut.photoLibraryContentViewModel.selection.isHidden = false
