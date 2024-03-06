@@ -53,6 +53,7 @@ final class AllVideosCollectionViewCoordinator: NSObject {
             let cellViewModel = VideoCellViewModel(
                 thumbnailUseCase: representer.viewModel.thumbnailUseCase,
                 nodeEntity: rowItem.node,
+                selection: representer.selection,
                 onTapMoreOptions: { [weak self] in self?.onTapMoreOptions($0, sender: cell) }
             )
             configureCell(cell, cellViewModel: cellViewModel)

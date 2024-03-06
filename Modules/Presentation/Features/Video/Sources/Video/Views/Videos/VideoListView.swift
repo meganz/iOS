@@ -4,9 +4,20 @@ import MEGAL10n
 import SwiftUI
 
 struct VideoListView: View {
-    @ObservedObject var viewModel: VideoListViewModel
-    let videoConfig: VideoConfig
-    let router: any VideoRevampRouting
+    @StateObject private var viewModel: VideoListViewModel
+    
+    private let videoConfig: VideoConfig
+    private let router: any VideoRevampRouting
+    
+    init(
+        viewModel: @autoclosure @escaping () -> VideoListViewModel,
+        videoConfig: VideoConfig,
+        router: any VideoRevampRouting
+    ) {
+        _viewModel = StateObject(wrappedValue: viewModel())
+        self.videoConfig = videoConfig
+        self.router = router
+    }
     
     var body: some View {
         VStack(spacing: 0) {
@@ -32,6 +43,7 @@ struct VideoListView: View {
             thumbnailUseCase: viewModel.thumbnailUseCase,
             videos: viewModel.videos,
             videoConfig: videoConfig,
+            selection: viewModel.selection,
             router: router
         )
         .background(videoConfig.colorAssets.pageBackgroundColor)

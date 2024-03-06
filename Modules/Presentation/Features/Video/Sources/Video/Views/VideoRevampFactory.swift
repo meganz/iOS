@@ -3,6 +3,8 @@ import SwiftUI
 
 public final class VideoRevampSyncModel {
     @Published public var videoRevampSortOrderType: SortOrderEntity?
+    @Published public var editMode: EditMode = .inactive
+    @Published public var isAllSelected = false
     @Published public var searchText = ""
     
     public init() {}

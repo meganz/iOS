@@ -304,6 +304,30 @@ final class VideoListViewModelTests: XCTestCase {
         XCTAssertTrue(sut.videos.isEmpty)
     }
     
+    // MARK: - Cell Selection
+    
+    func testToggleSelectAllVideos_onCalledAgain_shouldToggleBetweenSelectAllAndUnselectAll() async {
+        let videoNodes = [
+            anyNode(id: 1, mediaType: .video),
+            anyNode(id: 2, mediaType: .video)
+        ]
+        let (sut, _) = makeSUT(
+            fileSearchUseCase: MockFilesSearchUseCase(searchResult: .success(videoNodes))
+        )
+        await sut.onViewAppeared()
+        
+        sut.toggleSelectAllVideos()
+        
+        XCTAssertTrue(sut.selection.allSelected)
+        XCTAssertEqual(Set(sut.videos), Set(videoNodes))
+        
+        sut.toggleSelectAllVideos()
+        
+        XCTAssertFalse(sut.selection.allSelected)
+        XCTAssertTrue(sut.selection.videos.isEmpty)
+        XCTAssertTrue(sut.videos.isNotEmpty)
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(
