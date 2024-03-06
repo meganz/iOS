@@ -1811,9 +1811,9 @@
 /* Error shown when trying to start a call in a group with more peers than allowed */
 "Unable to start a call because the participants limit was exceeded."="Impossibile avviare la chiamata perché il limite di partecipanti è stato superato.";
 /* Label shown while joining a public chat */
-"Joining..."="Unione in corso…";
+"Joining..."="Unione alla chat…";
 /* Label shown while leaving a public chat */
-"Leaving..."="Abbandono in corso…";
+"Leaving..."="Abbandono della chat…";
 /* Text shown for switching from thumbnail view to list view. */
 "List View"="Vedi come lista";
 /* Text shown for switching from list view to thumbnail view. */
@@ -2483,7 +2483,7 @@
 /* Text shown for the action create new file */
 "Create new file"="Crea un nuovo file";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
-"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="Non hai i permessi requisiti per recuperare questo file. Per continuare. Possiamo creare un nuovo file con i dati recuperati. Vuoi procedere?";
+"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="Non disponi delle autorizzazioni necessarie per ripristinare questo file. Puoi, tuttavia, creare un nuovo file con la versione precedente. Vuoi procedere?";
 /* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
 "Pro Lite"="Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
@@ -2961,7 +2961,7 @@
 /* Error title shown when the user try to send more than one report in less than 10 minutes */
 "help.reportIssue.fail.too.many.request.title"="Devi attendere 10 minuti prima di inviare un altro report";
 /* Error message shown when the user try to send more than one report in less than 10 minutes */
-"help.reportIssue.fail.too.many.request.message"="Per favore, riprova più tardi o contatta il nostro team di supporto su support@mega.nz se il problema persiste";
+"help.reportIssue.fail.too.many.request.message"="Attendi e riprova più tardi oppure contatta il nostro team di supporto tramite support@mega.nz se il problema persiste";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.title"="Sei sicuro di voler annullare il caricamento della tua segnalazione?";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
@@ -3897,7 +3897,7 @@
 /* Camera uploads status banner - uploads complete description */
 "cameraUploads.banner.status.uploadsComplete.subHeading"="È stato effettuato il backup di tutti gli oggetti";
 /* Camera uploads status banner - uploads partially completed due to limited access to photo library */
-"cameraUploads.banner.status.uploadsPartialComplete.limitedPhotoLibraryAccess.subHeading"="MEGA has limited access to your photo library and cannot back up all photos.";
+"cameraUploads.banner.status.uploadsPartialComplete.limitedPhotoLibraryAccess.subHeading"="MEGA ha accesso limitato alla tua Galleria di foto e non può eseguire il backup di tutte le foto.";
 /* Camera uploads status banner - uploads partially completed due to limited access to photo library action */
 "cameraUploads.banner.status.uploadsPartialComplete.limitedPhotoLibraryAccess.subHeadingAction"="Tocca per cambiare i permessi.";
 /* Title of Terms of Violation alert */
@@ -3976,3 +3976,15 @@
 "meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Your current plan can only support 60 minutes per meeting. Need more time? [A]Upgrade now[/A]";
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
 "notifications.tag.promo.title"="Promo";
+/* Notifications: message showing the date and time at which a certain offer expires. %1$s will be replaced by date. %2$s will be replaced by time. */
+"notifications.expiration.message"="Expires on %1$s at %2$s";
+/* Title for action that allows user to hide files or folders */
+"general.menuAction.hide.title"="Nascondi";
+/* Title for action that allows user to unhide files or folders */
+"general.menuAction.unhide.title"="Unhide";
+/* Calls: Free plan limit warning alert title for max users reached in free plan call */
+"calls.freePlanLimitWarning.usersLimitAlert.title"="Impossibile unirsi";
+/* Calls: Free plan limit warning alert message for max users reached in free plan call */
+"calls.freePlanLimitWarning.usersLimitAlert.message"="Questa chiamata può supportare solo 100 partecipanti. Chiedi all'organizzatore di effettuare l'upgrade a Pro per rimuovere questa restrizione.";
+/* Calls: Free plan limit warning alert button for max users reached in free plan call */
+"calls.freePlanLimitWarning.usersLimitAlert.button"="OK, capito";

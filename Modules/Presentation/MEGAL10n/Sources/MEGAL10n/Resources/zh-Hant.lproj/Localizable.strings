@@ -809,7 +809,7 @@
 /* Title of the label where the SDK version is shown */
 "sdkVersion"="MEGA SDK軟體開發包版本";
 /* Title of the label where the MEGAchat SDK version is shown */
-"megachatSdkVersion"="MEGA chat SDK版本";
+"megachatSdkVersion"="MEGA Chat SDK版本";
 /* Link to the public code of the app */
 "View Source Code"="檢視原始碼";
 /* Title for the section "Acknowledgements" of the app */
@@ -1811,9 +1811,9 @@
 /* Error shown when trying to start a call in a group with more peers than allowed */
 "Unable to start a call because the participants limit was exceeded."="由於與會者人數超過上限，無法發起通話。";
 /* Label shown while joining a public chat */
-"Joining..."="正在加入⋯";
+"Joining..."="正在加入對話⋯";
 /* Label shown while leaving a public chat */
-"Leaving..."="離開中⋯";
+"Leaving..."="正在離開對話⋯";
 /* Text shown for switching from thumbnail view to list view. */
 "List View"="列表檢視";
 /* Text shown for switching from list view to thumbnail view. */
@@ -2483,7 +2483,7 @@
 /* Text shown for the action create new file */
 "Create new file"="建立新檔案";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
-"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="您沒有還原此檔案的權限。為了繼續，我們能夠以還原的資料建立一個新檔案。您想要這麼做嗎？";
+"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="您沒有恢復檔案所需的權限。然而，您可以使用之前的版本建立一個新檔案。你想繼續嗎？";
 /* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
 "Pro Lite"="Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
@@ -2961,7 +2961,7 @@
 /* Error title shown when the user try to send more than one report in less than 10 minutes */
 "help.reportIssue.fail.too.many.request.title"="您必須等待10分鐘才能提交另一個問題";
 /* Error message shown when the user try to send more than one report in less than 10 minutes */
-"help.reportIssue.fail.too.many.request.message"="如果問題仍然存在，請稍後再試，或聯繫我們的客服團隊support@mega.nz";
+"help.reportIssue.fail.too.many.request.message"="請稍後重試，如果問題仍然存在，請透過support@mega.nz聯繫我們的客服團隊";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.title"="您確定要取消正在上傳的問題回報嗎？";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
@@ -3459,7 +3459,7 @@
 /* Device Center backup error: Contact support for sync issues */
 "device.center.backup.error.problemSyncingContactSupport"="同步或備份此資料夾時出現問題。稍後再試。如果問題仍然存在，請聯繫客服。";
 /* Device Center backup error: Account reloaded */
-"device.center.backup.error.accountReloaded"="帳戶已重新載入。您的備份或同步的任何錯過的更新都沒有套用。";
+"device.center.backup.error.accountReloaded"="帳戶已重新載入。您備份或同步的任何遺失的更新尚未套用。";
 /* Device Center backup error: Logged out of Desktop app */
 "device.center.backup.error.loggedOut"="由於您似乎已登出桌面應用程式，因此同步或備份已停止。透過桌面應用程式重新登入，然後恢復同步或備份。";
 /* Device Center backup error: Changes to MEGA folder */
@@ -3976,3 +3976,15 @@
 "meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Your current plan can only support 60 minutes per meeting. Need more time? [A]Upgrade now[/A]";
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
 "notifications.tag.promo.title"="促銷";
+/* Notifications: message showing the date and time at which a certain offer expires. %1$s will be replaced by date. %2$s will be replaced by time. */
+"notifications.expiration.message"="Expires on %1$s at %2$s";
+/* Title for action that allows user to hide files or folders */
+"general.menuAction.hide.title"="隱藏";
+/* Title for action that allows user to unhide files or folders */
+"general.menuAction.unhide.title"="Unhide";
+/* Calls: Free plan limit warning alert title for max users reached in free plan call */
+"calls.freePlanLimitWarning.usersLimitAlert.title"="無法登入";
+/* Calls: Free plan limit warning alert message for max users reached in free plan call */
+"calls.freePlanLimitWarning.usersLimitAlert.message"="此通話僅支援100個與會者。請求發起人升級到Pro方案以取消此限制。";
+/* Calls: Free plan limit warning alert button for max users reached in free plan call */
+"calls.freePlanLimitWarning.usersLimitAlert.button"="好的，明白了";

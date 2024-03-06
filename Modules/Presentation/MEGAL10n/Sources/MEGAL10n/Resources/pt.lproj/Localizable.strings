@@ -1811,9 +1811,9 @@
 /* Error shown when trying to start a call in a group with more peers than allowed */
 "Unable to start a call because the participants limit was exceeded."="Não foi possível iniciar a chamada porque o limite de participantes foi excedido.";
 /* Label shown while joining a public chat */
-"Joining..."="Entrando…";
+"Joining..."="Entrando no chat…";
 /* Label shown while leaving a public chat */
-"Leaving..."="Saindo…";
+"Leaving..."="Saindo do chat…";
 /* Text shown for switching from thumbnail view to list view. */
 "List View"="Visualização em lista";
 /* Text shown for switching from list view to thumbnail view. */
@@ -2483,7 +2483,7 @@
 /* Text shown for the action create new file */
 "Create new file"="Criar um novo arquivo";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
-"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="Você não tem a permissão necessária para reverter este arquivo. Caso decida continuar, estará criando um novo arquivo com os dados revertidos. Você quer continuar?";
+"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="Você não tem as permissões necessárias para reverter esse arquivo. No entanto, você pode criar um novo arquivo com a versão anterior. Você quer continuar?";
 /* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
 "Pro Lite"="Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
@@ -3976,3 +3976,15 @@
 "meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Your current plan can only support 60 minutes per meeting. Need more time? [A]Upgrade now[/A]";
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
 "notifications.tag.promo.title"="Oferta";
+/* Notifications: message showing the date and time at which a certain offer expires. %1$s will be replaced by date. %2$s will be replaced by time. */
+"notifications.expiration.message"="Expires on %1$s at %2$s";
+/* Title for action that allows user to hide files or folders */
+"general.menuAction.hide.title"="Ocultar";
+/* Title for action that allows user to unhide files or folders */
+"general.menuAction.unhide.title"="Unhide";
+/* Calls: Free plan limit warning alert title for max users reached in free plan call */
+"calls.freePlanLimitWarning.usersLimitAlert.title"="Não foi possível entrar";
+/* Calls: Free plan limit warning alert message for max users reached in free plan call */
+"calls.freePlanLimitWarning.usersLimitAlert.message"="Esta chamada permite um máximo de 100 participantes. O organizador deve fazer o upgrade a um plano Pro para remover essa restrição.";
+/* Calls: Free plan limit warning alert button for max users reached in free plan call */
+"calls.freePlanLimitWarning.usersLimitAlert.button"="Entendi";
