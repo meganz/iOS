@@ -1,5 +1,6 @@
 import Combine
 import MEGADomain
+import MEGAL10n
 import MEGAPermissions
 import MEGAPresentation
 
@@ -690,17 +691,18 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         if (isMyselfAModerator || chatRoom.isOpenInviteEnabled) && chatRoom.chatType != .oneToOne && !accountUseCase.isGuest {
             invite.append(.invite)
         }
-        
+        let tab = ParticipantsListTab.inCall
         let participantsListView = ParticipantsListView(
             sections: sections,
             hostControlsRows: hostControls,
             inviteSectionRow: invite,
             tabs: tabsForParticipantList(),
-            selectedTab: .inCall,
+            selectedTab: tab,
             participants: callParticipants,
             existsWaitingRoom: chatRoom.isWaitingRoomEnabled && isMyselfAModerator,
             currentUserHandle: accountUseCase.currentUserHandle,
-            isMyselfModerator: isMyselfAModerator
+            isMyselfModerator: isMyselfAModerator,
+            infoHeaderData: infoHeaderData(tab)
         )
         
         invokeCommand?(.reloadViewData(participantsListView: participantsListView))
@@ -713,16 +715,17 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
         if chatRoom.chatType != .oneToOne {
             hostControls.append(.listSelector)
         }
-        
+        let tab = ParticipantsListTab.waitingRoom
         let participantsListView = ParticipantsListView(
             sections: sections,
             hostControlsRows: hostControls,
             inviteSectionRow: [],
             tabs: tabsForParticipantList(),
-            selectedTab: .waitingRoom,
+            selectedTab: tab,
             participants: callParticipantsInWaitingRoom,
             existsWaitingRoom: chatRoom.isWaitingRoomEnabled && isMyselfAModerator,
-            currentUserHandle: accountUseCase.currentUserHandle
+            currentUserHandle: accountUseCase.currentUserHandle,
+            infoHeaderData: infoHeaderData(tab)
         )
         
         invokeCommand?(.reloadViewData(participantsListView: participantsListView))
@@ -736,18 +739,26 @@ final class MeetingFloatingPanelViewModel: ViewModelType {
             hostControls.append(.listSelector)
         }
         
+        let tab = ParticipantsListTab.notInCall
         let participantsListView = ParticipantsListView(
             sections: sections,
             hostControlsRows: hostControls,
             inviteSectionRow: [],
             tabs: tabsForParticipantList(),
-            selectedTab: .notInCall,
+            selectedTab: tab,
             participants: callParticipantsNotInCall,
             existsWaitingRoom: chatRoom.isWaitingRoomEnabled && isMyselfAModerator,
-            currentUserHandle: accountUseCase.currentUserHandle
+            currentUserHandle: accountUseCase.currentUserHandle,
+            infoHeaderData: infoHeaderData(tab)
         )
         
         invokeCommand?(.reloadViewData(participantsListView: participantsListView))
+    }
+    
+    private func infoHeaderData(_ tab: ParticipantsListTab) -> MeetingInfoHeaderData? {
+        // logic when to present it to be implemented in next MR for [MEET-3421]
+        nil
+//        .init(copy: Strings.Localizable.Meetings.WaitingRoom.Warning.limit100Participants)
     }
     
     private func tabsForParticipantList() -> [ParticipantsListTab] {
