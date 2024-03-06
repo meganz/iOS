@@ -487,6 +487,12 @@
         
         case MegaNodeActionTypeHide:
             [self hideNode:node];
+            break;
+            
+        case MegaNodeActionTypeUnhide:
+            [self unhideNode:node];
+            break;
+            
         default:
             break;
     }
