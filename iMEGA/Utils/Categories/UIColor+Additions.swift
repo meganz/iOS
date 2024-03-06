@@ -246,7 +246,7 @@ extension UIColor {
             return MEGAAppColor.White._F7F7F7_pageBackground.uiColor
             
         case .dark:
-            return MEGAAppColor.Black._1C1C1E_pageBackground.uiColor
+            return MEGAAppColor.Black._000000_pageBackground.uiColor
             
         @unknown default:
             return MEGAAppColor.White._F7F7F7_pageBackground.uiColor
@@ -263,18 +263,10 @@ extension UIColor {
     ) -> UIColor {
         switch traitCollection.userInterfaceStyle {
         case .unspecified, .light:
-            if traitCollection.accessibilityContrast == .high {
-                return MEGAAppColor.Gray._E6E6E6_pageBackground.uiColor
-            } else {
-                return MEGAAppColor.White._F7F7F7_pageBackground.uiColor
-            }
+            return MEGAAppColor.White._F7F7F7_pageBackground.uiColor
             
         case .dark:
-            if traitCollection.accessibilityContrast == .high {
-                return MEGAAppColor.Black._2C2C2E_pageBackground.uiColor
-            } else {
-                return MEGAAppColor.Black._1C1C1E_pageBackground.uiColor
-            }
+            return MEGAAppColor.Black._1C1C1E_pageBackground.uiColor
             
         @unknown default:
             return MEGAAppColor.White._F7F7F7_pageBackground.uiColor
