@@ -4,16 +4,19 @@ import SwiftUI
 struct AllVideosCollectionViewRepresenter: UIViewRepresentable {
     @ObservedObject var viewModel: AllVideosCollectionViewModel
     let videoConfig: VideoConfig
+    let selection: VideoSelection
     let router: any VideoRevampRouting
     
     init(
         thumbnailUseCase: some ThumbnailUseCaseProtocol,
         videos: [NodeEntity],
         videoConfig: VideoConfig,
+        selection: VideoSelection,
         router: some VideoRevampRouting
     ) {
         self.viewModel = AllVideosCollectionViewModel(thumbnailUseCase: thumbnailUseCase, videos: videos)
         self.videoConfig = videoConfig
+        self.selection = selection
         self.router = router
     }
     

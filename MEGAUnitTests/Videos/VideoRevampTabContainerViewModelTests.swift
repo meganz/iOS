@@ -48,7 +48,7 @@ final class VideoRevampTabContainerViewModelTests: XCTestCase {
         sut.dispatch(.navigationBarAction(.didReceivedDisplayMenuAction(action: .select)))
         
         XCTAssertEqual(receivedCommands, [ .navigationBarCommand(.toggleEditing) ])
-        XCTAssertEqual(sut.isEditing, true)
+        XCTAssertEqual(sut.syncModel.editMode, .active)
     }
     
     // MARK: - Dispatch.navigationBarAction.didTapCancel
@@ -58,7 +58,27 @@ final class VideoRevampTabContainerViewModelTests: XCTestCase {
         
         sut.dispatch(.navigationBarAction(.didTapCancel))
         
-        XCTAssertEqual(sut.isEditing, false)
+        XCTAssertEqual(sut.syncModel.editMode, .inactive)
+    }
+    
+    // MARK: - Dispatch.navigationBarAction.didTapSelectAll
+    
+    func testDispatch_navigationBarActionDidTapSelectAll_initialStateShouldFalse() {
+        let (sut, _) = makeSUT()
+        
+        XCTAssertFalse(sut.syncModel.isAllSelected)
+    }
+    
+    func testDispatch_navigationBarActionDidTapSelectAll_selectAllAndUnselectAll() {
+        let (sut, _) = makeSUT()
+        
+        sut.dispatch(.navigationBarAction(.didTapSelectAll))
+        
+        XCTAssertTrue(sut.syncModel.isAllSelected)
+        
+        sut.dispatch(.navigationBarAction(.didTapSelectAll))
+        
+        XCTAssertFalse(sut.syncModel.isAllSelected)
     }
     
     // MARK: - Dispatch.searchBarAction.updateSearchResults

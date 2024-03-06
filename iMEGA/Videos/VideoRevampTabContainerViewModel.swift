@@ -35,7 +35,6 @@ final class VideoRevampTabContainerViewModel: ViewModelType {
     var invokeCommand: ((Command) -> Void)?
     
     var isSelectHidden = false
-    var isEditing = false
     
     private(set) var syncModel = VideoRevampSyncModel()
     
@@ -57,7 +56,7 @@ final class VideoRevampTabContainerViewModel: ViewModelType {
         case .navigationBarAction(.didReceivedDisplayMenuAction(let action)):
             switch action {
             case .select:
-                isEditing = true
+                syncModel.editMode = .active
                 invokeCommand?(.navigationBarCommand(.toggleEditing))
             default:
                 break
@@ -65,9 +64,9 @@ final class VideoRevampTabContainerViewModel: ViewModelType {
         case .navigationBarAction(.didSelectSortMenuAction(let sortOrderType)):
             sortOrderPreferenceUseCase.save(sortOrder: sortOrderType.toSortOrderEntity(), for: .homeVideos)
         case .navigationBarAction(.didTapSelectAll):
-            break
+            syncModel.isAllSelected = !syncModel.isAllSelected
         case .navigationBarAction(.didTapCancel):
-            self.isEditing = false
+            syncModel.editMode = .inactive
         case .searchBarAction(.updateSearchResults(let searchText)):
             syncModel.searchText = searchText
         case .searchBarAction(.cancel):
