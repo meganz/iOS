@@ -2168,6 +2168,7 @@
 		BF6DF366245797CC00D612D0 /* AddToChatViewAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6DF365245797CC00D612D0 /* AddToChatViewAnimator.swift */; };
 		BF6DF36B2457A06300D612D0 /* AddToChatImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6DF3692457A06300D612D0 /* AddToChatImageCell.swift */; };
 		BF6DF36C2457A06300D612D0 /* AddToChatImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF6DF36A2457A06300D612D0 /* AddToChatImageCell.xib */; };
+		BF6DF8582B9191160043A589 /* DocumentPickerViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6DF8572B9191160043A589 /* DocumentPickerViewRouter.swift */; };
 		BF6E8D2D25B636FB003A125A /* PSAViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6E8D2C25B636FB003A125A /* PSAViewModelTests.swift */; };
 		BF6E8F6D25C0C76A003A125A /* MEGANode+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790E05256B81C600154F6D /* MEGANode+Additions.swift */; };
 		BF74E1E3253668E1001F663C /* HomeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF74E1E2253668E1001F663C /* HomeRouter.swift */; };
@@ -4882,6 +4883,7 @@
 		BF6DF365245797CC00D612D0 /* AddToChatViewAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatViewAnimator.swift; sourceTree = "<group>"; };
 		BF6DF3692457A06300D612D0 /* AddToChatImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToChatImageCell.swift; sourceTree = "<group>"; };
 		BF6DF36A2457A06300D612D0 /* AddToChatImageCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddToChatImageCell.xib; sourceTree = "<group>"; };
+		BF6DF8572B9191160043A589 /* DocumentPickerViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPickerViewRouter.swift; sourceTree = "<group>"; };
 		BF6E8D2C25B636FB003A125A /* PSAViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PSAViewModelTests.swift; sourceTree = "<group>"; };
 		BF74E1E2253668E1001F663C /* HomeRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeRouter.swift; sourceTree = "<group>"; };
 		BF7D43B3253CFF6F003DF1DA /* SDKNodesUpdateListenerRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKNodesUpdateListenerRepository.swift; sourceTree = "<group>"; };
@@ -6651,6 +6653,7 @@
 				BFCF843A246A5BFA004FA3B1 /* DocScannerDetailTableCell.swift */,
 				BFCF8438246A53E2004FA3B1 /* DocScannerFileNameTableCell.swift */,
 				2F0CB56F23DFD209009F09A2 /* DocScannerSaveSettingTableViewController.swift */,
+				BF6DF8572B9191160043A589 /* DocumentPickerViewRouter.swift */,
 				9439F10C2B7FA01A00B3633D /* LegacyCloudDriveViewControllerFactory.swift */,
 				94FB1EAC2B302C030045276C /* RecentActionBucketProvider.swift */,
 				94BEAFA42B0CB0EF008E7352 /* ViewModeStore.swift */,
@@ -14203,6 +14206,7 @@
 				BFCF8439246A53E2004FA3B1 /* DocScannerFileNameTableCell.swift in Sources */,
 				2F0CB57123DFD209009F09A2 /* DocScannerSaveSettingTableViewController.swift in Sources */,
 				BFE6906F25350E2D00CD21F9 /* DocumentExplorerViewConfiguration.swift in Sources */,
+				BF6DF8582B9191160043A589 /* DocumentPickerViewRouter.swift in Sources */,
 				837B179C2881848400A4D01B /* DownloadLinkRouter.swift in Sources */,
 				837B179E288184A100A4D01B /* DownloadLinkViewModel.swift in Sources */,
 				838F63CE2836778A009B41D6 /* DuplicatedItem.swift in Sources */,
