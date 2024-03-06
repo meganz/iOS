@@ -41,6 +41,9 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
         case .hide:
             hide(nodes: nodes.toNodeEntities())
             toggle(editModeActive: false)
+        case .unhide:
+            unhide(nodes: nodes.toNodeEntities())
+            toggle(editModeActive: false)
         default:
             break
         }
@@ -115,6 +118,8 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
             NSURL(string: MEGADisputeURL)?.mnz_presentSafariViewController()
         case .hide:
             hide(nodes: [node.toNodeEntity()])
+        case .unhide:
+            unhide(nodes: [node.toNodeEntity()])
         default: break
         }
         
@@ -137,6 +142,13 @@ extension CloudDriveViewController: NodeActionViewControllerDelegate {
         let nodeActionUseCase = NodeActionUseCase(repo: NodeActionRepository.newRepo)
         Task {
             _ = await nodeActionUseCase.hide(nodes: nodes)
+        }
+    }
+    
+    func unhide(nodes: [NodeEntity]) {
+        let nodeActionUseCase = NodeActionUseCase(repo: NodeActionRepository.newRepo)
+        Task {
+            _ = await nodeActionUseCase.unhide(nodes: nodes)
         }
     }
     
