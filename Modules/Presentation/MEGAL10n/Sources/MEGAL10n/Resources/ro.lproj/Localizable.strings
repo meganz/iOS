@@ -35,9 +35,9 @@
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
 "photoLibraryPermissions"="Te rugăm să-i dai aplicației MEGA permisiunea de a accesa fotografiile în Configurări";
 /* Message shown when the user clicks on a confirm account link that has already been used */
-"accountAlreadyConfirmed"="Contul tău a fost activat. Te rugăm să te autentifici.";
+"accountAlreadyConfirmed"="Contul dvs. a fost activat. Vă rugăm să vă autentificați.";
 /*  */
-"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="Linkul tău de confirmare nu mai este valid. Este posibil ca contul tău să fie deja activat sau s-ar putea să fi anulat înregistrarea.";
+"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="Confirmarea link-ului dvs. nu mai este valabil. Este posibil ca contul dvs. să fie deja activat sau este posibil să vă fi anulat înregistrarea.";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="Link nevalid";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
@@ -97,7 +97,7 @@
 /* Text shown just after creating an account to remenber the user what to do to complete the account creation proccess */
 "accountNotConfirmed"="Vă rugăm să verificați adresa de e-mail și să urmați linkul pentru a vă confirma contul.";
 /* Error message when trying to login and the account is blocked */
-"accountBlocked"="Contul tău a fost desființat din cauza unei încălcări a Termenilor de utilizare a serviciului MEGA, inclusiv, dar fără a se limita la, clauza 15.";
+"accountBlocked"="Contul dvs. a fost desființat din cauza încălcării Termenii de utilizare a serviciului MEGA, inclusiv, dar fără a se limita la, clauza 15.";
 /* Message shown when the user writes an invalid format in the email field */
 "emailInvalidFormat"="Introdu un e-mail valid";
 /* Add contacts and share dialog error message when user try to add wrong email address */
@@ -257,7 +257,7 @@
 /* Text shown when the user tries to make a call and the receiver is not a contact */
 "inviteContact"="Invită pe MEGA";
 /* Detail message shown when you try to call someone that is not you contact in MEGA. The [X] placeholder will be replaced on runtime for the email of the user */
-"dialog.callAttempt.contactNotInMEGA"="Contactul tău [X] nu este pe MEGA. Pentru a apela prin intermediul chatului criptat MEGA, trebuie să-ți inviți contactul.";
+"dialog.callAttempt.contactNotInMEGA"="Persoana de contact [X] Nu este pe MEGA. Pentru a apela prin chat-ul criptat MEGA, trebuie să vă invitați contactul";
 /* Text shown when the user sends a contact invitation */
 "inviteSent"="Invitația a fost trimisă";
 /* Button title to allow the user postpone an action */
@@ -503,9 +503,9 @@
 /* Button title that triggers the importing link action */
 "Import to Cloud Drive"="Adaugă în Unitatea cloud";
 /* Message shown when a file has been imported */
-"fileImported"="File saved to Cloud drive";
+"fileImported"="Fișier a fost salvat în Unitatea cloud";
 /* Message shown when some files have been imported */
-"filesImported"="Files saved to Cloud drive";
+"filesImported"="Fișierele au fost salvate în Unitatea cloud";
 /* Title shown on the Camera Uploads section when the edit mode is enabled. On this mode you can select photos */
 "selectTitle"="Selectează elementele";
 /* Button title that skips the current action */
@@ -721,9 +721,9 @@
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Trimite feedback";
 /* Message body of the email that appears when the users tap on "Send feedback" */
-"pleaseWriteYourFeedback"="Te rugăm să scrii feedbackul tău aici:";
+"pleaseWriteYourFeedback"="Vă rugăm să scrieți feedback-ul dvs. aici:";
 /* Text shown when you want to send feedback of the app and you don't have an email account set up on your device */
-"noEmailAccountConfigured"="Niciun cont de e-mail configurat pe dispozitivul tău";
+"noEmailAccountConfigured"="Niciun cont de e-mail configurat pe dispozitiv";
 /* Title of one of the Settings sections where you can see the MEGA's 'Privacy Policy' */
 "privacyPolicyLabel"="Politica de confidențialitate";
 /* Title of one of the Settings sections where you can see the MEGA's 'Cookie Policy' */
@@ -859,7 +859,7 @@
 /* Text shown in the last alert dialog to confirm the cancellation of an account */
 "enterYourPasswordToConfirmThatYouWanToClose"="Acesta este ultimul pas pentru a vă șterge contul. Veți pierde definitiv toate datele stocate în cloud. Vă rugăm să introduceți parola mai jos.";
 /* During account cancellation (deletion) */
-"accountCanceledSuccessfully"="Contul tău a fost șters";
+"accountCanceledSuccessfully"="Contul dvs. a fost șters";
 /* Account closure, password check dialog when user click on closure email. */
 "closeAccount"="Închide contul";
 /* Title for the action that allows to remove a file or folder */
@@ -931,7 +931,7 @@
 /* Caption of the button to proceed */
 "startNewAccount"="Începe un cont nou";
 /*  */
-"yourAccounHasBeenParked"="Contul tău vechi a fost parcat cu succes. Poți acum să te autentifici în contul nou.";
+"yourAccounHasBeenParked"="Vechiul dvs. cont a fost parcat. Acum vă puteți conecta la noul cont.";
 /* Hint text to suggest that the user have to write the new email on it */
 "newEmail"="Adresă de e-mail nouă";
 /* Button text for the user to confirm their change of email address. */
@@ -1009,9 +1009,9 @@
 /*  */
 "howItWorks"="Cum funcționează";
 /*  */
-"howItWorksMain"="Prietenul tău trebuie să se înregistreze pentru un cont gratuit pe MEGA și să [S]instaleze cel puțin o aplicație client MEGA [/S] (fie Aplicația Desktop MEGA, fie una dintre Aplicațiile Mobile MEGA noastre)";
+"howItWorksMain"="Prietenul dvs. trebuie să creeze un cont gratuit pe MEGA și [S]să instaleze cel puțin o aplicație client MEGA[/S] (fie Aplicația Desktop MEGA, fie una dintre Aplicațiile mobile MEGA noastre)";
 /*  */
-"howItWorksSecondary"="Poți să îți informezi prietenul prin orice metodă. Vei câștiga cota dacă ai introdus e-mailul prietenului tău aici înainte de a se înregistra cu acea adresă.";
+"howItWorksSecondary"="Puteți să vă anunțați prietenul prin orice metodă. Veți câștiga cota dacă ați introdus adresa de e-mail a prietenului dvs. aici înainte de a se înregistra cu acea adresă.";
 /* A message which is shown once someone has invited a friend as part of the achievements program. */
 "howItWorksTertiary"="Nu vei primi credit pentru invitarea cuiva care a folosit MEGA anterior și nu vei fi notificat despre o astfel de respingere.";
 /* Header of block with achievements bonuses. */
@@ -1059,7 +1059,7 @@
 /* Description to encourage users to add phone number to their accounts when there are not achievements */
 "Add your phone number to MEGA. This makes it easier for your contacts to find you on MEGA."="Adaugă-ți numărul de telefon pe MEGA. Acest lucru face mai ușor pentru contactele tale să te găsească pe MEGA.";
 /* Description to unblock account by verifying phone number */
-"Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="Contul tău a fost blocat temporar din cauza unor posibile abuzuri. Te rugăm să verifici numărul de telefon pentru a-ți debloca contul.";
+"Your account has been suspended temporarily due to potential abuse. Please verify your phone number to unlock your account."="Contul dvs. a fost blocat temporar din cauza unui potențial abuz. Vă rugăm să vă confirmați numărul de telefon pentru a vă debloca contul.";
 /* Verify your account title */
 "Verify Your Account"="Verifică-ți contul";
 /* Add your phone number title */
@@ -1103,7 +1103,7 @@
 /* account management button title in business account’s landing page */
 "Manage Account"="Gestionează contul";
 /*  */
-"chooseYourAccountType"="Alege tipul contului tău";
+"chooseYourAccountType"="Alegeți tipul de cont";
 /* Label for any ‘Storage’ button, link, text, title, etc. - (String as short as possible). */
 "Storage"="Spațiu de stocare";
 /* A message shown at registration time when users have to select their plan. The FREE 50 GB plan is subject to the achievements program. */
@@ -1111,23 +1111,23 @@
 /* Price asociated with the MEGA PRO account level you can subscribe */
 "productPricePerMonth"="%@ pe lună";
 /* Header that help you with the upgrading process explaining that you have to choose one of the plans below  to continue */
-"choosePlan"="Alege unul dintre planurile de mai jos:";
+"choosePlan"="Alege unul dintre abonamentele de mai jos:";
 /* Text that explains that you have to select the plan you want and/or need after creating an account */
 "selectOneAccountType"="Selectează un tip de cont:";
 /* Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments */
 "twoMonthsFree"="Un abonament anual este cu 16 % mai ieftin decât 12 plăți lunare";
 /* When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan. */
-"To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="Pentru a upgrada abonamentul actual, vă rugăm să contactați asistența pentru un [A]plan personalizat [/A].";
+"To upgrade your current subscription, please contact support for a [A]custom plan[/A]."="Pentru a upgrada abonamentul actual, vă rugăm să contactați asistența pentru un [A]abonament personalizat [/A].";
 /* Text shown on the upgrade account page above the current PRO plan subscription */
-"inAppPurchase.upgrade.label.currentPlan"="Plan actual:";
+"inAppPurchase.upgrade.label.currentPlan"="Abonament actual:";
 /* A label which shows the user's current PRO plan. */
-"inAppPurchase.productDetail.navigation.currentPlan"="Planul actual";
+"inAppPurchase.productDetail.navigation.currentPlan"="abonamentul actual";
 /* Mail title to upgrade to a custom plan */
-"Upgrade to a custom plan"="Upgradează la un plan personalizat";
+"Upgrade to a custom plan"="Upgradează la un abonament personalizat";
 /* Mail subject to upgrade to a custom plan */
-"Ask us how you can upgrade to a custom plan:"="Întreabă-ne cum poți face upgrade la un plan personalizat:";
+"Ask us how you can upgrade to a custom plan:"="Întreabă-ne cum poți face upgrade la un abonament personalizat:";
 /* Button on the Pro page to request a custom Pro plan because their storage usage is more than the regular plans. */
-"requestAPlan"="Solicită un plan";
+"requestAPlan"="Solicită un abonament";
 /* Header shown to help on the purchasin process */
 "selectMembership"="Selectează contul de membru:";
 /* Footer shown to remenber that if you select a yearly plan yo will save up to 17% */
@@ -1175,7 +1175,7 @@
 /* Alert title shown when the DEBUG mode is enabled */
 "enableDebugMode_title"="Activează modul depanare";
 /* Alert message shown when the DEBUG mode is enabled */
-"enableDebugMode_message"="Un log va fi creat în secțiunea Offline (MEGAiOS.log). Fișierele log pot conține informații referitoare la contul tău.";
+"enableDebugMode_message"="Un jurnal va fi creat în secțiunea Offline (MEGAiOS.log). Jurnalele pot conține informații legate de contul dvs.";
 /* Alert title shown when the DEBUG mode is disabled */
 "disableDebugMode_title"="Dezactivează modul depanare";
 /* Alert message shown when the DEBUG mode is disabled */
@@ -1361,9 +1361,9 @@
 /* Title shown when you almost had used your available transfer quota. */
 "depletedTransferQuota_title"="Cotă de transfer insuficientă";
 /* Description shown when you almost had used your available transfer quota. */
-"depletedTransferQuota_message"="Descărcarea din coadă depășește cota de transfer actuală disponibilă pentru contul tău și, prin urmare, poate fi întreruptă.";
+"depletedTransferQuota_message"="În coada de așteptare, descărcarea dvs. depășește cota curentă de transfer disponibilă pentru contul dvs. și, prin urmare, poate fi întreruptă.";
 /* Button title to see the available pro plans in MEGA */
-"seePlans"="Vezi planurile";
+"seePlans"="Vezi abonamentele";
 /* Label for any 'Dismiss' button, link, text, title, etc. - (String as short as possible). */
 "dismiss"="Înlătură";
 /* Content of the notification when there is unknown activity on the Chat */
@@ -1393,7 +1393,7 @@
 /* Label in a button that allows to jump to the latest message */
 "newMessages"="Mesaje noi";
 /* Describe how works auto-renewable subscriptions on the Apple Store */
-"autorenewableDescription"="Abonamentele sunt reînnoite automat pentru perioade de abonare succesive de aceeași durată și la același preț ca și perioada inițială aleasă. Poți dezactiva reînnoirea automată a abonamentului tău MEGA PRO nu mai târziu de 24 de ore înainte ca următoarea ta plată pentru abonament să se realizeze prin pagina de setări a contului iTunes. Pentru a gestiona abonamentele, clic pe pictograma App Store de pe telefon, autentifică-te cu ID-ul Apple în partea de jos a paginii (dacă nu ai făcut deja acest lucru), iar apoi clic pe Afișați ID. Vei ajunge pe pagina contului tău unde poți să derulezi în jos pentru a gestiona abonamentele aplicațiilor. De acolo poți să selectezi abonamentul MEGA Pro și să vezi data de reînnoire programată, să alegi un alt pachet de abonament sau să setezi comutatorul on-off la off pentru a dezactiva reînnoirea automată a abonamentului tău.";
+"autorenewableDescription"="Abonamentele sunt reînnoite automat pentru perioade succesive de abonament cu aceeași durată și la același preț ca perioada inițială aleasă. Puteți dezactiva reînnoirea automată a abonamentului MEGA Pro cu cel mult 24 de ore înainte de scadența următoarei plăți a abonamentului prin pagina de setări a contului dvs. Apple. Pentru a vă gestiona abonamentele, pur și simplu atingeți pictograma App Store de pe dispozitivul mobil, conectați-vă cu ID-ul Apple în partea de jos a paginii (dacă nu ați făcut-o deja) și apoi atingeți Vizualizare ID. Veți fi direcționat la pagina contului dvs., unde puteți derula în jos la Gestionați abonamentele la aplicații. De acolo, puteți selecta abonamentul MEGA Pro și puteți vizualiza data de reînnoire programată, puteți alege un alt pachet de abonament sau puteți comuta comutatorul de pornire/oprire la dezactivat pentru a dezactiva reînnoirea automată a abonamentului.";
 /* Text shown when you try to use a MEGA extension in iOS and you aren't logged */
 "openMEGAAndSignInToContinue"="Deschide MEGA și autentifică-te pentru a continua";
 /* Label in login screen to inform about the chat initialization proccess */
@@ -1639,9 +1639,9 @@
 /* Title of the dialog displayed to start setup the Two-Factor Authentication */
 "whyYouDoNeedTwoFactorAuthentication"="De ce ai nevoie de autentificarea cu doi factori?";
 /* Description for the ‘Two-Factor Authentication’ in the security settings section. */
-"whatIsTwoFactorAuthentication"="Autentificarea cu doi factori reprezintă un al doilea strat de securitate pentru contul tău.";
+"whatIsTwoFactorAuthentication"="Autentificarea cu doi factori este un al doilea nivel de securitate pentru contul dvs.";
 /* Description text of the dialog displayed to start setup the Two-Factor Authentication */
-"whyYouDoNeedTwoFactorAuthenticationDescription"="Autentificarea cu doi factori reprezintă un al doilea strat de securitate pentru contul tău. Ceea ce înseamnă că, chiar dacă cineva îți cunoaște parola, nu îți poate accesa contul fără să aibă acces la codul din șase cifre la care doar tu ai acces.";
+"whyYouDoNeedTwoFactorAuthenticationDescription"="Autentificarea cu doi factori este un al doilea nivel de securitate pentru contul dvs. Ceea ce înseamnă că, chiar dacă cineva îți cunoaște parola, nu o poate accesa, fără a avea acces și la codul din șase cifre la care ai acces doar tu.";
 /* Alert title shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
 "Authenticator app required"="Aplicație de autentificare necesară";
 /* Alert text shown when enabling Two-Factor Authentication when you don't have a two factor authentication app installed on the device */
@@ -1655,7 +1655,7 @@
 /* A warning message on the Backup Recovery Key dialog to tell the user to backup their Recovery Key to their local computer. */
 "pleaseSaveYourRecoveryKey"="Te rugăm să salvezi cheia de recuperare într-o locație sigură";
 /* An informational message on the Backup Recovery Key dialog. */
-"twoFactorAuthenticationEnabledWarning"="Dacă pierzi accesul la contul tău după ce ai activat A2F și nu ai făcut un backup al cheii de recuperare, MEGA nu te poate ajuta să obții din nou accesul la acesta.";
+"twoFactorAuthenticationEnabledWarning"="Dacă pierdeți accesul la contul dvs. după activarea A2F și nu ați făcut backup pentru cheia de recuperare, MEGA nu vă poate ajuta să obțineți din nou acces la acesta.";
 /* A message on a dialog to say that 2FA has been successfully disabled. */
 "twoFactorAuthenticationDisabled"="Autentificarea cu doi factori dezactivată";
 /* A message on the setup two-factor authentication page on the mobile web client. */
@@ -1751,7 +1751,7 @@
 /* New server-side rubbish-bin cleaning scheduler description (for PRO users) */
 "The Rubbish Bin can be cleaned for you automatically. The minimum period is 7 days."="Coșul de gunoi poate fi golit automat pentru dvs. Perioada minimă este de 7 zile.";
 /* Description shown when you try to disable the feature Rubbish-Bin Cleaning Scheduler and you are a free user */
-"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Pentru a dezactiva planificatorul de golire a coșului de gunoi sau pentru a seta o perioadă de păstrare mai lungă, trebuie să te abonezi la un plan PRO.";
+"To disable the Rubbish-Bin Cleaning Scheduler or set a longer retention period, you need to subscribe to a PRO plan."="Pentru a dezactiva planificatorul de golire a coșului de gunoi sau pentru a seta o perioadă de păstrare mai lungă, trebuie să te abonezi la un abonament PRO.";
 /* Confirmation dialog for the button that logs the user out of all sessions except the current one. */
 "Do you want to close all other sessions? This will log you out on all other active sessions except the current one."="Vrei să închizi toate celelalte sesiuni? Acest lucru te va deconecta din toate celelalte sesiuni active, cu excepția celei actuale.";
 /* Message to inform the local user that someone has joined the current group call */
@@ -1811,9 +1811,9 @@
 /* Error shown when trying to start a call in a group with more peers than allowed */
 "Unable to start a call because the participants limit was exceeded."="Nu se poate iniția apelul din cauza depășirii limitei de participanți.";
 /* Label shown while joining a public chat */
-"Joining..."="Se alătură…";
+"Joining..."="Se alătură chatului…";
 /* Label shown while leaving a public chat */
-"Leaving..."="Se părăsește…";
+"Leaving..."="Părăsiți chatul…";
 /* Text shown for switching from thumbnail view to list view. */
 "List View"="Modul listă";
 /* Text shown for switching from list view to thumbnail view. */
@@ -1825,7 +1825,7 @@
 /* The header of a notification related to payments */
 "Payment info"="Informații de plată";
 /* A title for a notification saying the user’s pricing plan will expire soon. */
-"PRO membership plan expiring soon"="Planul pentru calitatea de membru Pro expiră în curând";
+"PRO membership plan expiring soon"="abonamentul pentru calitatea de membru Pro expiră în curând";
 /* The header of a notification indicating that a file or folder has been taken down due to infringement or other reason. */
 "Takedown notice"="Notificare de eliminare";
 /* The header of a notification indicating that a file or folder that was taken down has now been restored due to a successful counter-notice. */
@@ -1879,17 +1879,17 @@
 /* Notification popup. Notification for multiple removed items from a share. Please keep [X] as it will be replaced at runtime with the number of removed items. */
 "Removed [X] items from a share"="[X] elemente eliminate dintr-o partajare";
 /* A notification telling the user that their Pro plan payment was successfully received. The %1 indicates the name of the Pro plan they paid for e.g. Lite, PRO III. */
-"Your payment for the %1 plan was received."="Plata pentru planul %1 a fost primită.";
+"Your payment for the %1 plan was received."="Plata pentru abonamentul %1 a fost primită.";
 /* A notification telling the user that their Pro plan payment was unsuccessful. The %1 indicates the name of the Pro plan they were trying to pay for e.g. Lite, PRO II. */
-"Your payment for the %1 plan was unsuccessful."="Nu am primit plata pentru planul %1.";
+"Your payment for the %1 plan was unsuccessful."="Nu am primit plata pentru abonamentul %1.";
 /* The professional pricing plan which the user is currently on will expire in one day. */
-"Your PRO membership plan will expire in 1 day."="Planul pentru calitatea de membru Pro va expira mâine.";
+"Your PRO membership plan will expire in 1 day."="abonamentul pentru calitatea de membru Pro va expira mâine.";
 /* The professional pricing plan which the user is currently on will expire in 5 days. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan will expire in %1 days."="Planul pentru calitatea de membru Pro va expira în %1 zile.";
+"Your PRO membership plan will expire in %1 days."="abonamentul pentru calitatea de membru Pro va expira în %1 zile.";
 /* The professional pricing plan which the user was on expired one day ago. */
-"Your PRO membership plan expired 1 day ago"="Planul tău Pro a expirat acum 1 zi";
+"Your PRO membership plan expired 1 day ago"="Abonamentul Pro a expirat acum 1 zi";
 /* The professional pricing plan which the user was on expired %1 days ago. The %1 is a placeholder for the number of days and should not be removed. */
-"Your PRO membership plan expired %1 days ago"="Planul tău Pro a expirat acum %1 zile";
+"Your PRO membership plan expired %1 days ago"="Abonamentul dvs. Pro a expirat %1 zile în urmă";
 /* Text shown when a notification or the last message of a chat corresponds to a voice clip */
 "Voice message"="Mesaj vocal";
 /* Error message shown to user when a copy/import operation would take them over their storage limit. */
@@ -1987,7 +1987,7 @@
 /* title of the alert dialog when the user is changing the API URL to staging */
 "Change to a test server?"="Schimbi pe un server de test?";
 /* text of the alert dialog when the user is changing the API URL to staging */
-"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Sigur vrei să schimbi pe un server de test? Contul tău poate suferi probleme irecuperabile.";
+"Are you sure you want to change to a test server? Your account may suffer irrecoverable problems"="Sunteți sigur că doriți să treceți la un server de testare? Contul dvs. poate suferi probleme ireversibile.";
 /* Title label that explains that the user is going to be asked for the contacts permission */
 "Enable Access to Your Address Book"="Acordă accesul la agenda de adrese";
 /* Text indicating the user to open the device settings for MEGA */
@@ -2003,7 +2003,7 @@
 /* Destination folder name of chat files */
 "My chat files"="Fișierele mele de chat";
 /* Title of the section about the plan in the storage tab in My Account Section */
-"Plan"="Plan";
+"Plan"="Abonament";
 /*  */
 "If you lose this Recovery key and forget your password, [B]all your files, folders and messages will be inaccessible, even by MEGA[/B]."="Dacă pierzi această cheie de recuperare și uiți parola, [B]toate fișierele, folderele și mesajele vor fi inaccesibile, chiar și de către MEGA[/B].";
 /*  */
@@ -2013,7 +2013,7 @@
 /* Label to indicate the amount of transfer quota in several places. It is a ‘noun‘ and there is an screenshot with an use example - (String as short as possible). */
 "Transfer"="Transferuri";
 /* Error shown when a Business account user (sub-user or admin) tries to remove a contact which is part of the same Business account. Please, keep the placeholder, it will be replaced with the name or email of the account, for example: Jane Appleseed or ja@mega.nz */
-"You cannot remove %1$s as a contact because they are part of your Business account."="Nu poți elimina pe %1$s de la contacte, deoarece face parte din contul tău business.";
+"You cannot remove %1$s as a contact because they are part of your Business account."="Nu puteți elimina %1$s ca contact, deoarece fac parte din contul dvs. de afaceri.";
 /* Label indicating that the passcode (pin) view will be displayed if the application goes back to foreground after being x time in background. Examples: require passcode immediately, require passcode after 5 minutes. */
 "Require Passcode"="Necesită cod de acces";
 /* Label indicating that the enter passcode (pin) view will be displayed immediately if the application goes back to foreground after being in background. */
@@ -2031,11 +2031,11 @@
 /* A dialog title shown to users when their business account is expired. */
 "Your business account is expired"="Cont dezactivat";
 /* Details shown when a Business account is expired. Details for the administrator of the Business account */
-"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Contul tău Business a fost dezactivat din cauza unei plăți nereușite. Nu vei putea accesa datele stocate în contul tău. Pentru a efectua o plată și a-ți reactiva abonamentul, autentifică-te pe MEGA printr-un browser.";
+"There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."="Contul dvs. Business a fost dezactivat din cauza eșecului plății. Nu veți putea accesa datele stocate în contul dvs. Pentru a efectua o plată și a reactiva abonamentul, conectați-vă la MEGA printr-un browser.";
 /* A dialog message which is shown to sub-users of expired business accounts. */
-"Your account is currently [B]suspended[/B]. You can only browse your data."="În prezent, contul tău este [B]suspendat[/B]. Poți răsfoi numai prin datele tale.";
+"Your account is currently [B]suspended[/B]. You can only browse your data."="Contul dvs. este în prezent [B]suspendat[/B]. Puteți răsfoi doar datele dvs.";
 /* Message shown when users with a business account (no administrators of a business account) try to enable the Camera Uploads, to advise them that the administrator do have the ability to view their data. */
-"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA nu îți poate accesa datele. Cu toate acestea, administratorul contului tău business îți poate accesa Încărcări cameră.";
+"While MEGA does not have access to your data, your organization administrators do have the ability to control and view the Camera Uploads in your user account"="MEGA nu vă poate accesa datele. Cu toate acestea, administratorul contului dvs. de afaceri poate accesa Încărcările camerei.";
 /*  */
 "Something went wrong"="Ceva a mers prost";
 /* Title of the "Links" Shared Items. */
@@ -2125,9 +2125,9 @@
 /* Country label for a button, title, etc. */
 "Country"="Țară";
 /* Error message that will show to user its account is already verified */
-"Your account is already verified"="Contul tău este deja verificat";
+"Your account is already verified"="Contul dvs. este deja confirmat";
 /* Place holder for enter mobile number field */
-"Your phone number"="Numărul tău de telefon";
+"Your phone number"="Numărul dvs. de telefon";
 /* Text related to verified phone number. Used as title or cell description. */
 "Phone Number"="Număr de telefon";
 /* Label tell user to enter received txt to below input boxes */
@@ -2135,9 +2135,9 @@
 /* Text message to remind user to resend verification code */
 "You didn't receive a code?"="Nu ai primit codul?";
 /* Message shown when verify phone number successfully */
-"Your phone number has been verified successfully"="Numărul tău de telefon a fost verificat";
+"Your phone number has been verified successfully"="Numărul dvs. de telefon a fost confirmat";
 /* Text describing account suspended state to the user */
-"Your account has been temporarily suspended for your safety."="Contul tău a fost blocat temporar pentru siguranța ta.";
+"Your account has been temporarily suspended for your safety."="Contul dvs. a fost blocat temporar pentru siguranța dvs.";
 /* Text indicating the user next step to unlock suspended account. Please leave [S], [/S] as it is which is used to bolden the text. */
 "[S]Please verify your email[/S] and follow its steps to unlock your account."="Vă rugăm să urmați pașii din [S]e-mailul de confirmare [/S] pentru a vă debloca contul.";
 /* Text for button to open an helping view */
@@ -2147,9 +2147,9 @@
 /* Title of a helping view about locked accounts */
 "Locked Accounts"="Conturi blocate";
 /* Locked accounts description text by an external data breach. This text is 1 of 2 paragraph of a description. */
-"It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="Este posibil să folosești aceeași parolă pentru contul tău MEGA ca și pentru alte servicii și că cel puțin unul dintre aceste alte servicii a suferit o încălcare a securității datelor.";
+"It is possible that you are using the same password for your MEGA account as for other services, and that at least one of these other services has suffered a data breach."="Este posibil să utilizați aceeași parolă pentru contul dvs. MEGA ca și pentru alte servicii și că cel puțin unul dintre aceste alte servicii a suferit o încălcare a datelor.";
 /* Locked accounts description text by bad use of user password. This text is 2 of 2 paragraph of a description. */
-"Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Parola ta s-a scurs și acum este folosită de persoane rău-intenționate pentru a se autentifica în conturile tale, inclusiv, dar nu numai, în contul tău MEGA.";
+"Your password leaked and is now being used by bad actors to log into your accounts, including, but not limited to, your MEGA account."="Parola dvs. s-a scurs și este acum folosită de actori răi pentru a vă conecta la conturile dvs., inclusiv, dar fără a se limita la, contul dvs. MEGA.";
 /* Label indicating transfer over quota. */
 "Transfer over quota"="Cotă de transfer depășită";
 /* tool bar title used in transfer widget, allow user to clear the selected items in the list */
@@ -2177,9 +2177,9 @@
 /* file type title, used in changing the export format of scaned doc */
 "File Type"="Tipul fișierului";
 /* Error message appears to sub-users of a business account when they try to login and they are disabled. */
-"Your account has been disabled by your administrator. Please contact your business account administrator for further details."="Contul tău a fost dezactivat de către administrator. Te rugăm să contactezi administratorul contului tău business pentru detalii suplimentare.";
+"Your account has been disabled by your administrator. Please contact your business account administrator for further details."="Contul dvs. a fost dezactivat de administrator. Vă rugăm să contactați administratorul contului dvs. de afaceri pentru mai multe detalii.";
 /* An error message which appears to sub-users of a business account when they try to login and they are deleted. */
-"Your account has been removed by your administrator. Please contact your business account administrator for further details."="Contul tău a fost eliminat de către administrator. Te rugăm să contactezi administratorul contului tău business pentru detalii suplimentare.";
+"Your account has been removed by your administrator. Please contact your business account administrator for further details."="Contul dvs. a fost șters de către administrator. Vă rugăm să contactați administratorul contului dvs. de afaceri pentru mai multe detalii.";
 /* Title of the dialog shown when the user it is creating a chat link and the chat has not title */
 "Enter group name"="Introdu numele grupului";
 /* Chat: This is the placeholder text for text view when keyboard is shown */
@@ -2261,7 +2261,7 @@
 /* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and subject to deletion deadline and warning dates. */
 "<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to upgrade to <b>%@</b>.</paragraph>"="<paragraph>Te-am contactat prin e-mail la adresa <b>%@</b> în data de <b>%@</b>, însă ai în continuare %@ fișiere, ocupând <b>%@</b> în contul MEGA, ceea ce necesită să faci upgrade la <b>%@</b>.</paragraph>";
 /* Over Disk Quota warning message to give customer subscription plan upgrade advice according to cloud space used and subject to deletion deadline and warning dates. */
-"<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to contact support for a custom plan.</paragraph>"="<paragraph>Te-am contactat prin e-mail la adresa <b>%@</b> în data de <b>%@</b>, însă ai în continuare %@ fișiere, ocupând <b>%@</b> în contul MEGA, ceea ce necesită să contactezi asistența pentru un plan personalizat.</paragraph>";
+"<paragraph>We have contacted you by email to <b>%@</b> on <b>%@</b> but you still have %@ files taking up <b>%@</b> in your MEGA account, which requires you to contact support for a custom plan.</paragraph>"="<paragraph>Te-am contactat prin e-mail la adresa <b>%@</b> în data de <b>%@</b>, însă ai în continuare %@ fișiere, ocupând <b>%@</b> în contul MEGA, ceea ce necesită să contactezi asistența pentru un abonament personalizat.</paragraph>";
 /* Over Disk Quota of number of days */
 "%d days"="%d zile";
 /* Over Disk Quota of must act immediately to save your data */
@@ -2277,9 +2277,9 @@
 /* Message for action to remove the registered phone number. */
 "This will remove your associated phone number from your account. If you later choose to add a phone number you will be required to verify it."="Acest lucru va elimina numărul de telefon asociat din cont. Dacă ulterior alegi să adaugi un număr de telefon, ți se va cere să îl verifici.";
 /* Message for action to modify the registered phone number. */
-"This operation will remove your current phone number and start the process of associating a new phone number with your account."="Această operație îți va elimina numărul de telefon actual și va începe procesul de asociere a unui nou număr de telefon cu contul tău.";
+"This operation will remove your current phone number and start the process of associating a new phone number with your account."="Această operație va elimina numărul dvs. de telefon curent și va începe procesul de asociere a unui nou număr de telefon cu contul dvs.";
 /* Information message shown to users when the operation of removing phone number succeed. */
-"Your phone number has been removed successfully."="Numărul tău de telefon a fost eliminat";
+"Your phone number has been removed successfully."="Numărul dvs. de telefon a fost eliminat";
 /* A message shown to users when phone number removal fails. */
 "Failed to remove your phone number, please try again later."="Eșec la eliminarea numărului de telefon, te rugăm să încerci din nou mai târziu.";
 /* Text used to notify the user that some action would discard a non ended action */
@@ -2483,7 +2483,7 @@
 /* Text shown for the action create new file */
 "Create new file"="Creează un fișier nou";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
-"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="Nu ai permisiunile necesare pentru a reveni la versiunea anterioară pentru acest fișier. Pentru a continua, putem crea un nou fișier cu datele readuse la versiunea anterioară. Dorești să continui?";
+"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="Nu aveți permisiunile necesare pentru a reveni la acest fișier. Cu toate acestea, puteți crea un fișier nou cu versiunea anterioară. Doriți să continuați?";
 /* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
 "Pro Lite"="Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
@@ -2549,7 +2549,7 @@
 /* Informs the user that they’ve almost reached the full capacity of their Cloud Drive for a Free account. @% is placeholder. */
 "dialog.storage.almostFull.detail"="Unitatea ta cloud este aproape plină. Upgradează acum la un cont Pro și obține până la %@ TB (%@ GB) spațiu de stocare în cloud.";
 /* Over Disk Quota detail message informing the user that they've reached the full capacity of their accounts. */
-"dialog.storage.odq.detail"="Spațiul de stocare în cloud este plin. Vă rugăm să upgradati la un plan MEGA Pro pentru a vă mări spațiul de stocare și pentru a vă bucura de beneficii suplimentare. Dacă rămâneți peste limita de stocare și nu upgradați sau ștergeți unele date, contul dvs. poate fi blocat. Vă rugăm să consultați e-mailurile pe care vi le-am trimis pentru mai multe informații.";
+"dialog.storage.odq.detail"="Spațiul de stocare în cloud este plin. Vă rugăm să upgradati la un abonament MEGA Pro pentru a vă mări spațiul de stocare și pentru a vă bucura de beneficii suplimentare. Dacă rămâneți peste limita de stocare și nu upgradați sau ștergeți unele date, contul dvs. poate fi blocat. Vă rugăm să consultați e-mailurile pe care vi le-am trimis pentru mai multe informații.";
 /* Over Disk Quota paywall not final title. */
 "dialog.storage.paywall.notFinal.title"="Cont blocat";
 /* Over Disk Quota paywall final title. */
@@ -2689,11 +2689,11 @@
 /* Dialog title shown when a user tries to purchase a subscription while having a subscription activated from another platform. */
 "account.upgrade.alreadyHaveASubscription.title"="Aveți deja un abonament activ";
 /* Dialog message shown when a user tries to purchase a subscriptions while having a subscription activated from another platform. */
-"account.upgrade.alreadyHaveASubscription.message"="V-ați abonat anterior la un plan Pro cu Google Play sau AppGallery. Vă rugăm să anulați manual abonamentul cu acestea în Google Play sau Huawei AppGallery de pe dispozitiv și apoi încercați din nou.";
+"account.upgrade.alreadyHaveASubscription.message"="V-ați abonat anterior la un abonament Pro cu Google Play sau AppGallery. Vă rugăm să anulați manual abonamentul cu acestea în Google Play sau Huawei AppGallery de pe dispozitiv și apoi încercați din nou.";
 /* Dialog message shown to allow the user to cancel their current subscription activated from another platform and continue with the purchase. */
 "account.upgrade.alreadyHaveACancellableSubscription.message"="Doriți să anulați abonamentul curent și să continuați cu achiziția?";
 /* This message will be shown if the user is not allowed to purchase a plan because of their current plan.  For example, the user have a Business or Pro Flexi account, they should not be able to purchase a Pro plan. We will show this to the user when they try to purchase one. */
-"account.upgrade.notAvailableWithCurrentPlan.message"="Nu este disponibil cu planul dvs. actual";
+"account.upgrade.notAvailableWithCurrentPlan.message"="Nu este disponibil cu abonamentul dvs. actual";
 /* Dialog title shown before deleting an account with active subscription */
 "account.delete.subscription.title"="Abonament activ";
 /* Dialog message shown before deleting an account with active iTunes subscription */
@@ -2961,7 +2961,7 @@
 /* Error title shown when the user try to send more than one report in less than 10 minutes */
 "help.reportIssue.fail.too.many.request.title"="Trebuie să așteptați 10 minute înainte de a trimite o altă problemă";
 /* Error message shown when the user try to send more than one report in less than 10 minutes */
-"help.reportIssue.fail.too.many.request.message"="Încercați din nou mai târziu sau contactați echipa noastră de asistență prin support@mega.nz dacă problema persistă";
+"help.reportIssue.fail.too.many.request.message"="Așteptați și încercați din nou mai târziu sau contactați echipa noastră de asistență prin support@mega.nz dacă problema persistă";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.title"="Sigur vrei să anulezi încărcarea problemei raportate?";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
@@ -3151,7 +3151,7 @@
 /* Content title of expired Pro Flexi account view */
 "account.expired.proFlexi.title"="Cont dezactivat";
 /* Content message of expired Pro Flexi account view */
-"account.expired.proFlexi.message"="Contul tău Pro Flexi a fost dezactivat din cauza unei plăți nereușite sau ai anulat abonamentul. Nu vei putea accesa datele stocate în contul tău. Pentru a efectua o plată și a-ți reactiva abonamentul, autentifică-te în MEGA printr-un browser.";
+"account.expired.proFlexi.message"="Contul dvs. Pro Flexi a fost dezactivat din cauza neplății sau v-ați anulat abonamentul. Nu veți mai putea accesa datele stocate în contul dvs. Pentru a efectua o plată și a vă reactiva abonamentul, conectați-vă la MEGA printr-un browser.";
 /* Label to indicate the user about the activation of a meeting link */
 "meetings.info.meetingLink"="Link pentru întâlnire";
 /* Label to inform user about privacy of sharing a chat link */
@@ -3261,7 +3261,7 @@
 /* Upgrade security alert screen title. For cryptographic security upgrade which will be shown only once per account. */
 "account.upgradeSecurity.title"="Actualizare de securitate pentru cont";
 /* Upgrade security alert screen message. For cryptographic security upgrade which will be shown only once per account. */
-"account.upgradeSecurity.message.upgrade"="Actualizăm securitatea contului tău. Ar trebui să vezi acest mesaj doar o singură dată. Dacă l-ai mai văzut înainte, asigură-te mai întâi că a fost pentru acest cont și nu pentru un alt cont MEGA pe care îl ai.\n\nDacă ești sigur(ă) și este a doua oară când vezi acest mesaj pentru acest cont, nu mai folosi acest cont.";
+"account.upgradeSecurity.message.upgrade"="Îți actualizăm securitatea contului. Ar trebui să vedeți acest mesaj o singură dată. Dacă l-ați mai văzut înainte, asigurați-vă mai întâi că a fost pentru acest cont și nu pentru un alt cont MEGA pe care îl aveți.\n\nDacă sunteți sigur și este a doua oară când vedeți acest mesaj pentru acest cont, nu mai utilizați acest cont.";
 /* Upgrade security alert screen button title. For cryptographic security upgrade which will be shown only once per account. */
 "account.upgradeSecurity.button.title"="OK, am înțeles";
 /* Label to introduce meeting info description field */
@@ -3433,13 +3433,13 @@
 /* Device Center backup error: Device folder not located */
 "device.center.backup.error.folderDeviceUnlocatedNow"="Folderul din dispozitiv nu poate fi localizat acum, încercați din nou mai târziu.";
 /* Device Center backup error: Device folder can't be located */
-"device.center.backup.error.folderDeviceUnlocated"="Folderul din dispozitiv nu poate fi localizat.";
+"device.center.backup.error.folderDeviceUnlocated"="Folderul din dispozitiv dvs. nu poate fi localizat.";
 /* Device Center backup error: MEGA folder moved or deleted */
 "device.center.backup.error.folderMegaMovedOrDeleted"="Folderul din MEGA nu poate fi localizat deoarece a fost mutat sau șters sau este posibil să nu aveți acces.";
 /* Device Center backup error: Storage quota limit */
 "device.center.backup.error.storageQuotaReached"="Limita cotei de spațiu de stocare a fost atinsă.";
 /* Device Center backup error: Plan expired */
-"device.center.backup.error.planExpired"="Nu se poate sincroniza sau face backup pentru acest folder, deoarece planul dvs. a expirat.";
+"device.center.backup.error.planExpired"="Nu se poate sincroniza sau face backup pentru acest folder, deoarece abonamentul dvs. a expirat.";
 /* Device Center backup error: Shared folder quota reached */
 "device.center.backup.error.userSharedQuotaReached"="Folderul nu poate fi sincronizat deoarece utilizatorul care a partajat acest folder a atins limita de cotă de stocare.";
 /* Device Center backup error: Shared folder without full access */
@@ -3463,7 +3463,7 @@
 /* Device Center backup error: Logged out of Desktop app */
 "device.center.backup.error.loggedOut"="Sincronizarea sau backupul au fost oprite pe măsură ce parcă v-ați deconectat de la aplicația Desktop. Conectați-vă din nou prin aplicația Desktop și reluați sincronizarea sau backup-ul.";
 /* Device Center backup error: Changes to MEGA folder */
-"device.center.backup.error.changesToMegaFolder"="Problemă la sincronizarea sau copierea de rezervă a acestui folder din cauza modificărilor aduse folderului MEGA. Opriți sincronizarea sau backup-ul și încercați să o configurați din nou în aplicația Desktop sau contactați Asistența.";
+"device.center.backup.error.changesToMegaFolder"="Problemă la sincronizarea sau backup a acestui folder din cauza modificărilor aduse folderului MEGA. Opriți sincronizarea sau backup-ul și încercați să o configurați din nou în aplicația Desktop sau contactați Asistența.";
 /* Device Center backup error: External drive folder not located */
 "device.center.backup.error.externalDriveUnlocated"="Folderul din unitatea externă nu poate fi localizat.";
 /* Device Center backup error: Synced folder at same path */
@@ -3479,7 +3479,7 @@
 /* Device Center backup error: Invalid scan interval */
 "device.center.backup.error.invalidScanInterval"="Interval de analiză invalid. Verificați configurarea intervalului de analiză și încercați din nou.";
 /* Device Center backup error: Sync or backup issue, setup again */
-"device.center.backup.error.syncOrBackupSetupAgain"="Problemă la sincronizarea sau copierea de rezervă a acestui folder. Opriți sincronizarea sau backup-ul și încercați să o configurați din nou în aplicația Desktop sau contactați Asistența.";
+"device.center.backup.error.syncOrBackupSetupAgain"="Problemă la sincronizarea sau backup a acestui folder. Opriți sincronizarea sau backup-ul și încercați să o configurați din nou în aplicația Desktop sau contactați Asistența.";
 /* Device Center backup error: Can't read sync location */
 "device.center.backup.error.cantReadSyncLocation"="Nu am putut citi locația de sincronizare. Verificați dacă locația este accesibilă și permisiunile pentru locația folderului sunt acordate.";
 /* Device Center backup error: Insufficient space for download */
@@ -3505,7 +3505,7 @@
 /* Device Center camera upload status disabled */
 "device.center.camera.uploads.action.status.disabled"="Dezactivat";
 /* Device center current device empty state message */
-"device.center.current.device.empty.state.message"="Nimic nu este configurat";
+"device.center.current.device.empty.state.message"="Nimic nu este încă configurat";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="Încheiați recurența";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3573,9 +3573,9 @@
 /* On Upgrade Account Plan screen. Button title to buy account plan. %@ will be the name of the selected plan */
 "upgradeAccountPlan.button.buyAccountPlan.title"="Cumpără %@";
 /* On Upgrade Account Plan screen. Displayed header title text message */
-"upgradeAccountPlan.header.title.choosePlan"="Alegeți planul potrivit pentru dvs.";
+"upgradeAccountPlan.header.title.choosePlan"="Alegeți abonamentul potrivit pentru dvs.";
 /* On Upgrade Account Plan screen. Displayed header title text with current plan. %@ will be the name of the current plan */
-"upgradeAccountPlan.header.title.currentPlan"="Planul curent: %@";
+"upgradeAccountPlan.header.title.currentPlan"="abonamentul curent: %@";
 /* On Upgrade Account Plan screen. Account Plan picker option for monthly term. */
 "upgradeAccountPlan.header.planTermPicker.monthly"="Lunar";
 /* On Upgrade Account Plan screen. Account Plan picker option for yearly term. */
@@ -3583,17 +3583,17 @@
 /* On Upgrade Account Plan screen. Displayed header title text with percent of savings with yearly billing. */
 "upgradeAccountPlan.header.title.saveYearlyBilling"="Economisiți până la 16 %% cu facturare anuală";
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
-"upgradeAccountPlan.header.title.featuresOfProPlan"="Caracteristicile planurilor Pro";
+"upgradeAccountPlan.header.title.featuresOfProPlan"="Caracteristicile abonamentelor Pro";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• Link-uri protejate prin parolă\n\n• Link-uri cu date de expirare\n\n• Împărțirea cotelor de transfer\n\n• Copii de rezervă automate\n\n• Derulați înapoi până la 90 de zile pe Pro Lite și până la 180 de zile pe Pro I, II și III (în curând)\n\n• Programați curățarea coșului de gunoi între 7 zile și 10 ani";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• Link-uri protejate prin parolă\n\n• Link-uri cu date de expirare\n\n• Împărțirea cotelor de transfer\n\n• Backup-uri automate\n\n• Derulați înapoi până la 90 de zile pe Pro Lite și până la 180 de zile pe Pro I, II și III (în curând)\n\n• Programați curățarea coșului de gunoi între 7 zile și 10 ani";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Link-uri protejate prin parolă\n\n• Link-uri cu date de expirare\n\n• Împărțirea cotelor de transfer\n\n• Copii de rezervă automate\n\n• Derulează înapoi până la 90 de zile pe Pro Lite și până la 180 de zile pe Pro I, II și III\n\n• Programați curățarea coșului de gunoi între 7 zile și 10 ani\n\n• Fără reclame";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Link-uri protejate prin parolă\n\n• Link-uri cu date de expirare\n\n• Împărțirea cotelor de transfer\n\n• Backup-uri automate\n\n• Derulează înapoi până la 90 de zile pe Pro Lite și până la 180 de zile pe Pro I, II și III\n\n• Programați curățarea coșului de gunoi între 7 zile și 10 ani\n\n• Fără reclame";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Detaliile abonamentului";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
 "upgradeAccountPlan.message.text.subscriptionDetails"="Abonamentele sunt reînnoite automat pentru perioade succesive de abonament de aceeași durată și la același preț ca perioada inițială aleasă. \nPuteți dezactiva reînnoirea automată a abonamentului MEGA Pro cu cel puțin 24 de ore înainte de scadență următoarea plată a abonamentului prin pagina de setări a contului iTunes.";
 /* On Upgrade Account Plan screen. Displayed tag text for current plan on account plan options */
-"upgradeAccountPlan.plan.tag.currentPlan"="Planul actual";
+"upgradeAccountPlan.plan.tag.currentPlan"="abonamentul actual";
 /* On Upgrade Account Plan screen. Displayed tag text for recommended plan on account plan options */
 "upgradeAccountPlan.plan.tag.recommended"="Recomandat";
 /* On Upgrade Account Plan screen. Displayed conversion for local currency per month on account plan options */
@@ -3607,7 +3607,7 @@
 /* On Upgrade Account Plan screen. Footer message with pricing page link. */
 "upgradeAccountPlan.footer.message.pricingPage"="Vă puteți upgrada abonamentul actual pe [A]pagina noastră de prețuri[/A].";
 /* On Upgrade Account Plan screen. Snackbar message when selecting current recurring plan on account plan options */
-"upgradeAccountPlan.selection.message.alreadyHaveRecurringSubscriptionOfPlan"="Aveți deja un abonament recurent pentru acest plan";
+"upgradeAccountPlan.selection.message.alreadyHaveRecurringSubscriptionOfPlan"="Aveți deja un abonament recurent pentru acest abonament";
 /* Button title to cancel an scheduled meeting from context menu */
 "meetings.scheduled.contextMenu.cancel"="Anulează";
 /* Title for alert cancelling an scheduled meeting */
@@ -3717,25 +3717,25 @@
 /* Button title of the dialog for transfer quota error that will dismiss dialog */
 "transferQuotaError.button.wait"="Voi aștepta";
 /* Button title of the dialog for transfer quota error to buy new plan */
-"transferQuotaError.button.buyNewPlan"="Cumpără un plan nou";
+"transferQuotaError.button.buyNewPlan"="Cumpără un abonament nou";
 /* Footer message of the dialog for transfer quota error. [A] will be replaced by the usage quota percent. [B] will be replaced by the max transfer quota in TB. For example: 100% of 16 TB used */
 "transferQuotaError.footerMessage.quotaUsage"="[A] %% din [B] TB folosiți";
 /* Title of the dialog for transfer quota error with limited available trasfer quota */
 "transferQuotaError.downloadLimitedQuota.title"="Cotă de transfer disponibilă limitată";
 /* Message text of the dialog for transfer quota error with limited available trasfer quota for free accounts */
-"transferQuotaError.downloadLimitedQuota.freeAccount.message"="Descărcarea poate fi întreruptă deoarece ați utilizat cea mai mare parte a cotei de transfer pentru această adresă IP. Pentru a obține o cotă mai mare, upgradați la un plan Pro sau așteptați %@ până când mai multe cote gratuite devin disponibile pe adresa dvs. IP. [A]Află mai multe[/A] despre cota de transfer.";
+"transferQuotaError.downloadLimitedQuota.freeAccount.message"="Descărcarea poate fi întreruptă deoarece ați utilizat cea mai mare parte a cotei de transfer pentru această adresă IP. Pentru a obține o cotă mai mare, upgradați la un abonament Pro sau așteptați %@ până când mai multe cote gratuite devin disponibile pe adresa dvs. IP. [A]Află mai multe[/A] despre cota de transfer.";
 /* Message text of the dialog for transfer quota error with limited available trasfer quota for pro accounts */
-"transferQuotaError.downloadLimitedQuota.proAccount.message"="Descărcarea poate fi întreruptă deoarece ați utilizat cea mai mare parte a cotei de transfer în acest cont. Pentru a obține mai multă cotă, achiziționați un plan nou sau dacă aveți un abonament recurent la MEGA, puteți aștepta reînnoirea planului.";
+"transferQuotaError.downloadLimitedQuota.proAccount.message"="Descărcarea poate fi întreruptă deoarece ați utilizat cea mai mare parte a cotei de transfer în acest cont. Pentru a obține mai multă cotă, achiziționați un abonament nou sau dacă aveți un abonament recurent la MEGA, puteți aștepta reînnoirea abonamentului.";
 /* Title of the dialog for transfer quota error with exceeded quota */
 "transferQuotaError.downloadExceededQuota.title"="Cotă de transfer depășită";
 /* Message text of the dialog for transfer quota error with exceeded download trasfer quota for free accounts */
-"transferQuotaError.downloadExceededQuota.freeAccount.message"="Nu puteți continua descărcarea, deoarece nu aveți nicio cotă de transfer rămasă pentru această adresă IP. Pentru a obține o cotă mai mare, upgradați la un plan Pro sau așteptați %@ până când mai multe cote gratuite devin disponibile pe adresa dvs. IP. [A]Află mai multe[/A] despre cota de transfer.";
+"transferQuotaError.downloadExceededQuota.freeAccount.message"="Nu puteți continua descărcarea, deoarece nu aveți nicio cotă de transfer rămasă pentru această adresă IP. Pentru a obține o cotă mai mare, upgradați la un abonament Pro sau așteptați %@ până când mai multe cote gratuite devin disponibile pe adresa dvs. IP. [A]Află mai multe[/A] despre cota de transfer.";
 /* Message text of the dialog for transfer quota error with exceeded download trasfer quota for pro accounts */
-"transferQuotaError.downloadExceededQuota.proAccount.message"="Nu poți continua descărcarea deoarece nu mai ai suficientă cotă de transfer pe acest cont. Pentru a continua descărcarea, achiziționează un nou plan sau, dacă ai un abonament recurent cu MEGA, poți aștepta reînnoirea planului.";
+"transferQuotaError.downloadExceededQuota.proAccount.message"="Nu poți continua descărcarea deoarece nu mai ai suficientă cotă de transfer pe acest cont. Pentru a continua descărcarea, achiziționează un nou abonament sau, dacă ai un abonament recurent cu MEGA, poți aștepta reînnoirea abonamentului.";
 /* Message text of the dialog for transfer quota error with exceeded streaming trasfer quota for free accounts */
-"transferQuotaError.streamingExceededQuota.freeAccount.message"="Media dvs. a încetat redarea, deoarece nu mai aveți nicio cotă de transfer pentru această adresă IP. Pentru a obține o cotă mai mare, upgradați la un plan Pro sau așteptați %@ până când mai multe cote gratuite devin disponibile pe adresa dvs. IP. [A]Află mai multe [/A] despre cota de transfer.";
+"transferQuotaError.streamingExceededQuota.freeAccount.message"="Media dvs. a încetat redarea, deoarece nu mai aveți nicio cotă de transfer pentru această adresă IP. Pentru a obține o cotă mai mare, upgradați la un abonament Pro sau așteptați %@ până când mai multe cote gratuite devin disponibile pe adresa dvs. IP. [A]Află mai multe [/A] despre cota de transfer.";
 /* Message text of the dialog for transfer quota error with exceeded download trasfer quota for pro accounts */
-"transferQuotaError.streamingExceededQuota.proAccount.message"="Media dvs. a încetat să se redea, deoarece nu mai aveți nicio cotă de transfer rămasă în acest cont. Pentru a obține mai multă cotă, achiziționați un plan nou sau dacă aveți un abonament recurent la MEGA, puteți aștepta reînnoirea planului.";
+"transferQuotaError.streamingExceededQuota.proAccount.message"="Media dvs. a încetat să se redea, deoarece nu mai aveți nicio cotă de transfer rămasă în acest cont. Pentru a obține mai multă cotă, achiziționați un abonament nou sau dacă aveți un abonament recurent la MEGA, puteți aștepta reînnoirea abonamentului.";
 /* Meeting waiting room leave button */
 "meetings.waitingRoom.leave"="Părăsește";
 /* Meeting waiting room leave alert message */
@@ -3845,9 +3845,9 @@
 /* Auto media discovery banner title */
 "photos.mediaDiscovery.autoMediaDiscoveryBanner.title"="Deoarece acest folder conține doar imagini și videoclipuri, l-am deschis automat în vizualizarea de descoperire media. Vă puteți bucura de conținutul dvs. vizual cu un aspect mai captivant. Puteți dezactiva acest lucru în Setări.";
 /* Upgrade account screen header title after user onboarding */
-"onboarding.upgradeAccount.header.title"="Obțineți mai mult cu un plan Pro";
+"onboarding.upgradeAccount.header.title"="Obțineți mai mult cu un abonament Pro";
 /* Upgrade account screen header subTitle after user onboarding. %@ will be replaced by the price of the lowest plan per month. */
-"onboarding.upgradeAccount.header.subTitle"="Treceți la un plan Pro pentru mai mult spațiu de stocare și o mulțime de funcții suplimentare. Planurile noastre încep de la %@ o lună.";
+"onboarding.upgradeAccount.header.subTitle"="Treceți la un abonament Pro pentru mai mult spațiu de stocare și o mulțime de funcții suplimentare. Abonamentele noastre încep de la %@ o lună.";
 /* Upgrade account screen content header for pro plan feature list */
 "onboarding.upgradeAccount.content.proPlanFeatureHeader"="Lată ce obțineți:";
 /* Upgrade account screen content title about pro plan featuring as Generous Storage */
@@ -3863,7 +3863,7 @@
 /* Upgrade account screen content message about pro plan featuring the Additional security when sharing */
 "onboarding.upgradeAccount.content.additionalSecurity.message"="Setați parolele și datele de expirare pentru linkurile de fișiere și folder.";
 /* Upgrade account screen button title that will direct to Upgrade plan page */
-"onboarding.upgradeAccount.button.viewProPlans"="Vezi planurile Pro";
+"onboarding.upgradeAccount.button.viewProPlans"="Vezi abonamentele Pro";
 /* Camera uploads banner enable state title */
 "cameraUploads.banner.enableState.title"="Activează Încărcări cameră";
 /* Camera uploads banner enable state description */
@@ -3897,7 +3897,7 @@
 /* Camera uploads status banner - uploads complete description */
 "cameraUploads.banner.status.uploadsComplete.subHeading"="Toate elementele au fost backup-te";
 /* Camera uploads status banner - uploads partially completed due to limited access to photo library */
-"cameraUploads.banner.status.uploadsPartialComplete.limitedPhotoLibraryAccess.subHeading"="MEGA has limited access to your photo library and cannot back up all photos.";
+"cameraUploads.banner.status.uploadsPartialComplete.limitedPhotoLibraryAccess.subHeading"="MEGA are acces limitat la biblioteca dvs. foto și nu poate backup-ui toate fotografiile.";
 /* Camera uploads status banner - uploads partially completed due to limited access to photo library action */
 "cameraUploads.banner.status.uploadsPartialComplete.limitedPhotoLibraryAccess.subHeadingAction"="Atinge pentru a modifica permisiunile.";
 /* Title of Terms of Violation alert */
@@ -3975,4 +3975,16 @@
 /* Meetings: free plan limitation text for scheduled meetings calls longer than 60 minutes. Text between tags is colour formatted, keep tags order in the string: [A] should appear before [/A] always. */
 "meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Your current plan can only support 60 minutes per meeting. Need more time? [A]Upgrade now[/A]";
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
-"notifications.tag.promo.title"="Promo";
+"notifications.tag.promo.title"="Promoție";
+/* Notifications: message showing the date and time at which a certain offer expires. %1$s will be replaced by date. %2$s will be replaced by time. */
+"notifications.expiration.message"="Expires on %1$s at %2$s";
+/* Title for action that allows user to hide files or folders */
+"general.menuAction.hide.title"="Ascunde";
+/* Title for action that allows user to unhide files or folders */
+"general.menuAction.unhide.title"="Unhide";
+/* Calls: Free plan limit warning alert title for max users reached in free plan call */
+"calls.freePlanLimitWarning.usersLimitAlert.title"="Imposibil de a participa";
+/* Calls: Free plan limit warning alert message for max users reached in free plan call */
+"calls.freePlanLimitWarning.usersLimitAlert.message"="Maximum 100 de persoane pot participa la acest apel. Cereți organizatorului să se înregistreze pentru un cont Pro pentru a ridica această limită.";
+/* Calls: Free plan limit warning alert button for max users reached in free plan call */
+"calls.freePlanLimitWarning.usersLimitAlert.button"="OK, am înțeles";

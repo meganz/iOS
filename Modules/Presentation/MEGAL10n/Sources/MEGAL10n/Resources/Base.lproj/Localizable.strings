@@ -1811,9 +1811,9 @@
 /* Error shown when trying to start a call in a group with more peers than allowed */
 "Unable to start a call because the participants limit was exceeded."="Unable to start the call due to the participant limit having been exceeded.";
 /* Label shown while joining a public chat */
-"Joining..."="Joining…";
+"Joining..."="Joining chat…";
 /* Label shown while leaving a public chat */
-"Leaving..."="Leaving…";
+"Leaving..."="Leaving chat…";
 /* Text shown for switching from thumbnail view to list view. */
 "List View"="List view";
 /* Text shown for switching from list view to thumbnail view. */
@@ -2483,7 +2483,7 @@
 /* Text shown for the action create new file */
 "Create new file"="Create new file";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
-"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?";
+"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="You do not have the permissions required to revert this file. You can, however, create a new file with the previous version. Would you like to proceed?";
 /* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
 "Pro Lite"="Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
@@ -2961,7 +2961,7 @@
 /* Error title shown when the user try to send more than one report in less than 10 minutes */
 "help.reportIssue.fail.too.many.request.title"="You must wait 10 minutes before submitting another issue";
 /* Error message shown when the user try to send more than one report in less than 10 minutes */
-"help.reportIssue.fail.too.many.request.message"="Please try again later or contact our support team via support@mega.nz if the problem persists";
+"help.reportIssue.fail.too.many.request.message"="Wait and try again later, or contact our support team via support@mega.nz if the problem persists";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.title"="Are you sure you want to cancel uploading your reported issue?";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
@@ -3985,6 +3985,6 @@
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="Cannot join";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.message"="This call can only support 100 participants. Ask the organiser to upgrade to Pro to remove these restrictions.";
+"calls.freePlanLimitWarning.usersLimitAlert.message"="This call can only support 100 participants. Ask the organiser to upgrade to Pro to remove this restriction.";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.button"="OK. Got it";
+"calls.freePlanLimitWarning.usersLimitAlert.button"="OK, got it";

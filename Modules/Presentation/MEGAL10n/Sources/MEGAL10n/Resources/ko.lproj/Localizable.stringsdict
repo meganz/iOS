@@ -2578,10 +2578,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Folder shared</string>
         <key>other</key>
-        <string>%d folders shared</string>
+        <string>%d개의 폴더가 공유됨</string>
       </dict>
     </dict>
   </dict>

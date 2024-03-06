@@ -2490,10 +2490,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>File sent to chat</string>
         <key>other</key>
-        <string>Files sent to chat</string>
+        <string>Các tệp tin đã được gửi tới cuộc chat</string>
       </dict>
     </dict>
     <key>chat.message.fileSentToMultipleChats</key>
@@ -2506,10 +2504,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>File sent to %d chat</string>
         <key>other</key>
-        <string>File sent to %d chats</string>
+        <string>Tệp tin đã được gửi tới %d cuộc chat</string>
       </dict>
     </dict>
     <key>chat.message.filesSent</key>
@@ -2536,10 +2532,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Files sent to %d chat</string>
         <key>other</key>
-        <string>Files sent to %d chats</string>
+        <string>Các tệp tin đã được gửi tới %d cuộc chat</string>
       </dict>
     </dict>
     <key>contacts.invite.emailAddress.inviteNumberOfContacts</key>
@@ -2552,10 +2546,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Invite %d contact</string>
         <key>other</key>
-        <string>Invite %d contacts</string>
+        <string>Mời %d tên liên lạc</string>
       </dict>
     </dict>
     <key>chat.info.numberOfParticipants</key>
@@ -2582,10 +2574,8 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
-        <key>one</key>
-        <string>Folder shared</string>
         <key>other</key>
-        <string>%d folders shared</string>
+        <string>%d thư mục đã được chia sẻ</string>
       </dict>
     </dict>
   </dict>

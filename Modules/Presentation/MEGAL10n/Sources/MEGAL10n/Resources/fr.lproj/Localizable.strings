@@ -1813,7 +1813,7 @@
 /* Label shown while joining a public chat */
 "Joining..."="Connexion à la conversation…";
 /* Label shown while leaving a public chat */
-"Leaving..."="Retrait de la conversation…";
+"Leaving..."="Vous quittez la conversation…";
 /* Text shown for switching from thumbnail view to list view. */
 "List View"="Mode liste";
 /* Text shown for switching from list view to thumbnail view. */
@@ -2483,7 +2483,7 @@
 /* Text shown for the action create new file */
 "Create new file"="Créer un nouveau fichier";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
-"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="Vous n’avez pas les droits exigés pour rétablir ce fichier. Afin de poursuivre, nous pouvons créer un nouveau fichier avec les données rétablies. Voulez-vous poursuivre ?";
+"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="Vous n’avez pas les droits exigés pour rétablir ce fichier. Vous pouvez toutefois créer un nouveau fichier d’après la version précédente. Voulez-vous poursuivre ?";
 /* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
 "Pro Lite"="Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
@@ -3505,7 +3505,7 @@
 /* Device Center camera upload status disabled */
 "device.center.camera.uploads.action.status.disabled"="Désactivé";
 /* Device center current device empty state message */
-"device.center.current.device.empty.state.message"="Rien de configuré";
+"device.center.current.device.empty.state.message"="Rien n’est encore configuré";
 /* End Recurrence option title in creating schedule meeting screen. */
 "meetings.scheduleMeeting.create.endRecurrence.title"="Fin de la récurrence";
 /* End Recurrence on date option title in creating schedule meeting screen. */
@@ -3976,3 +3976,15 @@
 "meetings.scheduleMeeting.create.freePlanLimitWarning.longerThan60Minutes"="Your current plan can only support 60 minutes per meeting. Need more time? [A]Upgrade now[/A]";
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
 "notifications.tag.promo.title"="Solde";
+/* Notifications: message showing the date and time at which a certain offer expires. %1$s will be replaced by date. %2$s will be replaced by time. */
+"notifications.expiration.message"="Expires on %1$s at %2$s";
+/* Title for action that allows user to hide files or folders */
+"general.menuAction.hide.title"="Cacher";
+/* Title for action that allows user to unhide files or folders */
+"general.menuAction.unhide.title"="Unhide";
+/* Calls: Free plan limit warning alert title for max users reached in free plan call */
+"calls.freePlanLimitWarning.usersLimitAlert.title"="Impossible de vous joindre";
+/* Calls: Free plan limit warning alert message for max users reached in free plan call */
+"calls.freePlanLimitWarning.usersLimitAlert.message"="Un maximum de 100 personnes peut participer à cet appel. Demandez à la personne qui l’a organisé de souscrire un compte Pro afin de lever cette limite.";
+/* Calls: Free plan limit warning alert button for max users reached in free plan call */
+"calls.freePlanLimitWarning.usersLimitAlert.button"="D’accord, j’ai compris";
