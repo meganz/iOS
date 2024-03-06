@@ -13,12 +13,12 @@ struct UserInput {
 
 func userInput() throws -> UserInput {
     let version = try majorMinorInput("Enter the version number you're releasing (format: '[major].[minor]'):")
-    let nextVersion = try majorMinorInput("Enter the next release version number (format: '[major].[minor]'):")
     let sdkVersion = try majorMinorPatchInput(submoduleMessage(.sdk))
     let chatVersion = try majorMinorPatchInput(submoduleMessage(.chatSDK))
     let releaseNotes = try releaseNotesInput(defaultReleaseNotes: "Bug fixes and performance improvements.")
     let jiraReleasePackageLink = urlInput("Enter the Jira release package link for \(version) - (The one you created on 'Monday - Prepare Code Freeze'):")
     let testFlightLink = urlInput("Enter the TestFlight link for this build")
+    let nextVersion = try majorMinorInput("Enter the next release version number (format: '[major].[minor]'):")
     return .init(
         version: version,
         nextVersion: nextVersion,
