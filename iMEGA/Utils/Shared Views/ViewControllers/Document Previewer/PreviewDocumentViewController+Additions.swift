@@ -77,6 +77,13 @@ extension PreviewDocumentViewController {
             _ = await nodeActionUseCase.hide(nodes: [node.toNodeEntity()])
         }
     }
+    
+    @objc func unhideNode(_ node: MEGANode) {
+        let nodeActionUseCase = NodeActionUseCase(repo: NodeActionRepository.newRepo)
+        Task {
+            _ = await nodeActionUseCase.unhide(nodes: [node.toNodeEntity()])
+        }
+    }
 }
 
 extension PreviewDocumentViewController: MEGAGlobalDelegate {
