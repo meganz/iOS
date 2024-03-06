@@ -13,10 +13,14 @@ struct ScheduleMeetingView: View {
     var body: some View {
         VStack(spacing: 0) {
             if viewModel.showWaitingRoomWarningBanner {
-                WaitingRoomWarningBannerView(showBanner: $viewModel.showWaitingRoomWarningBanner) {
-                    viewModel.waitingRoomWarningBannerDismissed = true
-                }
-
+                BannerView(
+                    config: .init(
+                        copy: Strings.Localizable.Meetings.ScheduleMeeting.WaitingRoomWarningBanner.title,
+                        theme: .dark,
+                        closeAction: viewModel.scheduleMeetingBannerDismissed
+                    )
+                )
+                .font(.footnote.bold())
             }
             ScrollViewReader { proxy in
                 ScrollView {

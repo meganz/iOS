@@ -499,4 +499,9 @@ final class ScheduleMeetingViewModel: ObservableObject {
     private func showMeetingInfo(for scheduledMeeting: ScheduledMeetingEntity) {
         router.showMeetingInfo(for: scheduledMeeting)
     }
+    
+    func scheduleMeetingBannerDismissed() {
+        showWaitingRoomWarningBanner = false
+        waitingRoomWarningBannerDismissed = true
+    }
 }

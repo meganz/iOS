@@ -13,9 +13,13 @@ struct MeetingInfoView: View {
     var body: some View {
         VStack(spacing: 0) {
             if viewModel.showWaitingRoomWarningBanner {
-                WaitingRoomWarningBannerView(showBanner: $viewModel.showWaitingRoomWarningBanner) {
-                    viewModel.waitingRoomWarningBannerDismissed = true
-                }
+                BannerView(
+                    config: .init(
+                        copy: Strings.Localizable.Meetings.ScheduleMeeting.WaitingRoomWarningBanner.title,
+                        theme: .dark,
+                        closeAction: viewModel.dismissedWaitingRoomBanner
+                    )
+                )
             }
             ScrollView {
                 VStack(spacing: Constants.spacing) {

@@ -352,15 +352,24 @@ extension MeetingFloatingPanelViewController: UITableViewDataSource, UITableView
                     callParticipants.filter({ $0.absentParticipantState != .calling }).isNotEmpty
                 )
             }
-            header.configure(for: callParticipantsListView.selectedTab, participantsCount: callParticipants.count, isMyselfModerator: callParticipantsListView.isMyselfModerator)
+            
+            header.configureWith(
+                config: .init(
+                    tab: callParticipantsListView.selectedTab,
+                    participantsCount: callParticipants.count,
+                    isMyselfModerator: callParticipantsListView.isMyselfModerator,
+                    actionButtonTappedHandler: { [weak self] in
+                        self?.viewModel.dispatch(.onHeaderActionTap)
+                    },
+                    infoViewModel: callParticipantsListView.infoHeaderData
+                )
+            )
+            
             if callParticipantsListView.selectedTab == .inCall {
                 let unmutedUsers = callParticipants.filter({ $0.audio == .on })
                 header.disableMuteAllButton(
                     unmutedUsers.isEmpty || unmutedUsers.count == 1 && unmutedUsers.first?.participantId == accountUseCase.currentUserHandle
                 )
-            }
-            header.actionButtonTappedHandler = { [weak self] in
-                self?.viewModel.dispatch(.onHeaderActionTap)
             }
             return header
         default:
@@ -372,7 +381,7 @@ extension MeetingFloatingPanelViewController: UITableViewDataSource, UITableView
         guard let callParticipantsListView else { return 0 }
         switch callParticipantsListView.sections[section] {
         case .invite:
-            return 24
+            return UITableView.automaticDimension
         default:
             return 0
         }
@@ -386,7 +395,7 @@ extension MeetingFloatingPanelViewController: UITableViewDataSource, UITableView
         participantsTableView.register(ParticipantNotInCallTableViewCell.nib, forCellReuseIdentifier: ParticipantNotInCallTableViewCell.reuseIdentifier)
         participantsTableView.register(ParticipantInWaitingRoomTableViewCell.nib, forCellReuseIdentifier: ParticipantInWaitingRoomTableViewCell.reuseIdentifier)
         participantsTableView.register(SeeAllParticipantsInWaitingRoomTableViewCell.nib, forCellReuseIdentifier: SeeAllParticipantsInWaitingRoomTableViewCell.reuseIdentifier)
-        participantsTableView.register(MeetingParticipantTableViewHeader.nib, forHeaderFooterViewReuseIdentifier: MeetingParticipantTableViewHeader.reuseIdentifier)
+        participantsTableView.register(MeetingParticipantTableViewHeader.self, forHeaderFooterViewReuseIdentifier: MeetingParticipantTableViewHeader.reuseIdentifier)
         participantsTableView.register(EmptyParticipantsListTableViewCell.nib, forCellReuseIdentifier: EmptyParticipantsListTableViewCell.reuseIdentifier)
     }
     

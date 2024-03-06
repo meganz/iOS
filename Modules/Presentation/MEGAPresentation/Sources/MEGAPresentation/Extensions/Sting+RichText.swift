@@ -2,7 +2,8 @@ import UIKit
 
 extension String {
     public func createAttributedStringForAccentTags(
-        linkColor: () -> UIColor
+        linkColor: () -> UIColor,
+        underline: Bool
     ) -> AttributedString {
         var attributedString = AttributedString(self)
         
@@ -15,6 +16,10 @@ extension String {
         let endIndex = attributedString.index(rangeEnd.lowerBound, offsetByCharacters: 0)
         let substringRange = startIndex..<endIndex
         attributedString[substringRange].foregroundColor = linkColor()
+        
+        if underline {
+            attributedString[substringRange].underlineStyle = .single
+        }
         
         attributedString.removeSubrange(rangeEnd)
         attributedString.removeSubrange(rangeStart)

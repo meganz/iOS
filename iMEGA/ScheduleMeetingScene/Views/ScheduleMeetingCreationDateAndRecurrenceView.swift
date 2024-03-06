@@ -26,27 +26,16 @@ struct ScheduleMeetingCreationDateAndRecurrenceView: View {
                     viewModel.endsDidTap()
                 }
                 
-                if viewModel.showLimitDurationView {
-                    TappableInfoLinkView(
-                        copy: Strings.Localizable.Meetings.ScheduleMeeting.Create.FreePlanLimitWarning.longerThan60Minutes,
-                        foregroundColor: {
-                            isDesignTokenEnabled
-                            ? TokenColors.Text.primary.swiftUI
-                            : $0 == .dark ? MEGAAppColor.White._FFFFFF.color : MEGAAppColor.Black._000000.color
-                        },
-                        backgroundColor: {
-                            isDesignTokenEnabled
-                            ? TokenColors.Background.page.swiftUI
-                            : $0 == .dark ? MEGAAppColor.Black._000000.color : MEGAAppColor.White._F7F7F7.color
-                        },
-                        linkColor: { _ in
-                            isDesignTokenEnabled
-                            ? TokenColors.Support.success
-                            : MEGAAppColor.Green._00A886.uiColor
-                        },
-                        action: viewModel.upgradePlansViewTapped
+               if viewModel.showLimitDurationView {
+                    BannerView(
+                        config: .init(
+                            copy: Strings.Localizable.Meetings.ScheduleMeeting.Create.FreePlanLimitWarning.longerThan60Minutes,
+                            theme: .light,
+                            tapAction: viewModel.upgradePlansViewTapped
+                        )
                     )
-                }
+                    .font(.footnote)
+               }
 
                 if viewModel.endDatePickerVisible || viewModel.showLimitDurationView {
                     Divider()

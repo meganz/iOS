@@ -343,4 +343,9 @@ extension MeetingInfoViewModel {
     func isChatPreview() -> Bool {
         chatRoom?.isPreview ?? false
     }
+    
+    func dismissedWaitingRoomBanner() {
+        showWaitingRoomWarningBanner = false
+        waitingRoomWarningBannerDismissed = true
+    }
 }

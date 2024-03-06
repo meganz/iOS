@@ -952,7 +952,6 @@
 		8359E4B325F0E1DF0023FE18 /* QuickAccessWidgetAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359E4B225F0E1DF0023FE18 /* QuickAccessWidgetAction.swift */; };
 		8359E4BD25F0E20C0023FE18 /* WidgetStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8359E4BC25F0E20C0023FE18 /* WidgetStatus.swift */; };
 		835A60FD2B74EBC200BBB9A1 /* ChatContentRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835A60FC2B74EBC100BBB9A1 /* ChatContentRouter.swift */; };
-		835A610E2B76344B00BBB9A1 /* TappableInfoLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835A610D2B76344B00BBB9A1 /* TappableInfoLinkView.swift */; };
 		835AD88B24AA46B700BB934C /* PhoneNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835AD88A24AA46B700BB934C /* PhoneNumberViewController.swift */; };
 		835B1B90245AD23C00E41FBE /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 415226881A692ECC00EC7BB6 /* Helper.m */; };
 		835CE8492AA886B200861544 /* waitingRoomEvent.wav in Resources */ = {isa = PBXBuildFile; fileRef = 835CE8482AA886B200861544 /* waitingRoomEvent.wav */; };
@@ -1086,7 +1085,6 @@
 		839A1CA127CCF694004A387B /* ExportFileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839A1C9E27CCF694004A387B /* ExportFileViewModel.swift */; };
 		839B9FCF283D2DCA001A49DF /* reconnecting.wav in Resources */ = {isa = PBXBuildFile; fileRef = 839B9FCE283D2DCA001A49DF /* reconnecting.wav */; };
 		839BA9DF2AB32B87001F852C /* MeetingParticipantTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839BA9DE2AB32B87001F852C /* MeetingParticipantTableViewHeader.swift */; };
-		839BA9E12AB32BAE001F852C /* MeetingParticipantTableViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 839BA9E02AB32BAE001F852C /* MeetingParticipantTableViewHeader.xib */; };
 		839BA9E72AB355DE001F852C /* MeetingInviteParticipantTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 839BA9E52AB355DE001F852C /* MeetingInviteParticipantTableViewCell.swift */; };
 		839BA9E82AB355DE001F852C /* MeetingInviteParticipantTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 839BA9E62AB355DE001F852C /* MeetingInviteParticipantTableViewCell.xib */; };
 		83A2894F27F5BC070063CA8C /* CancellableTransfer+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A4E47827F4A0FA00A429F4 /* CancellableTransfer+Shared.swift */; };
@@ -1457,7 +1455,7 @@
 		99DB1D5A2AC64B34004A9CC3 /* ChatRepoMock in Frameworks */ = {isa = PBXBuildFile; productRef = 99DB1D592AC64B34004A9CC3 /* ChatRepoMock */; };
 		99E1A9292A383EC000974FC9 /* BadgeButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E1A9282A383EC000974FC9 /* BadgeButtonTests.swift */; };
 		99F7043D2AD3A7E600A774DB /* MeetingCreatingViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F7043C2AD3A7E600A774DB /* MeetingCreatingViewModel+Additions.swift */; };
-		99F9ABC02A7B428A0050B5E4 /* WaitingRoomWarningBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F9ABBF2A7B428A0050B5E4 /* WaitingRoomWarningBannerView.swift */; };
+		99F9ABC02A7B428A0050B5E4 /* BannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F9ABBF2A7B428A0050B5E4 /* BannerView.swift */; };
 		99FF30E42A8F3241006CE3DB /* ScheduleMeetingViewModel+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FF30E32A8F3241006CE3DB /* ScheduleMeetingViewModel+Init.swift */; };
 		9D26F234294BADCA00FAD016 /* TextFieldAlertRepresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D26F233294BADCA00FAD016 /* TextFieldAlertRepresenter.swift */; };
 		9D3563C428B54AF100CB3365 /* DeleteAccountRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3563C328B54AF100CB3365 /* DeleteAccountRouter.swift */; };
@@ -3663,7 +3661,6 @@
 		8359E4B225F0E1DF0023FE18 /* QuickAccessWidgetAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAccessWidgetAction.swift; sourceTree = "<group>"; };
 		8359E4BC25F0E20C0023FE18 /* WidgetStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetStatus.swift; sourceTree = "<group>"; };
 		835A60FC2B74EBC100BBB9A1 /* ChatContentRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatContentRouter.swift; sourceTree = "<group>"; };
-		835A610D2B76344B00BBB9A1 /* TappableInfoLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TappableInfoLinkView.swift; sourceTree = "<group>"; };
 		835AD88A24AA46B700BB934C /* PhoneNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneNumberViewController.swift; sourceTree = "<group>"; };
 		835CE8482AA886B200861544 /* waitingRoomEvent.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = waitingRoomEvent.wav; sourceTree = "<group>"; };
 		835CE84D2AA88E9300861544 /* MainTabBarCallsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarCallsViewModelTests.swift; sourceTree = "<group>"; };
@@ -3791,7 +3788,6 @@
 		839A1C9E27CCF694004A387B /* ExportFileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportFileViewModel.swift; sourceTree = "<group>"; };
 		839B9FCE283D2DCA001A49DF /* reconnecting.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = reconnecting.wav; sourceTree = "<group>"; };
 		839BA9DE2AB32B87001F852C /* MeetingParticipantTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingParticipantTableViewHeader.swift; sourceTree = "<group>"; };
-		839BA9E02AB32BAE001F852C /* MeetingParticipantTableViewHeader.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingParticipantTableViewHeader.xib; sourceTree = "<group>"; };
 		839BA9E52AB355DE001F852C /* MeetingInviteParticipantTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingInviteParticipantTableViewCell.swift; sourceTree = "<group>"; };
 		839BA9E62AB355DE001F852C /* MeetingInviteParticipantTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingInviteParticipantTableViewCell.xib; sourceTree = "<group>"; };
 		83A4E46D27F49ACA00A429F4 /* ShareExtensionCancellableTransferViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionCancellableTransferViewModel.swift; sourceTree = "<group>"; };
@@ -4137,7 +4133,7 @@
 		99D65D762A8C699A005D5877 /* WaitingRoomUserAvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomUserAvatarView.swift; sourceTree = "<group>"; };
 		99E1A9282A383EC000974FC9 /* BadgeButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeButtonTests.swift; sourceTree = "<group>"; };
 		99F7043C2AD3A7E600A774DB /* MeetingCreatingViewModel+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MeetingCreatingViewModel+Additions.swift"; sourceTree = "<group>"; };
-		99F9ABBF2A7B428A0050B5E4 /* WaitingRoomWarningBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomWarningBannerView.swift; sourceTree = "<group>"; };
+		99F9ABBF2A7B428A0050B5E4 /* BannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerView.swift; sourceTree = "<group>"; };
 		99FF30D12A8F16E6006CE3DB /* WaitingRoomViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomViewModelTests.swift; sourceTree = "<group>"; };
 		99FF30E32A8F3241006CE3DB /* ScheduleMeetingViewModel+Init.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ScheduleMeetingViewModel+Init.swift"; sourceTree = "<group>"; };
 		9D26F233294BADCA00FAD016 /* TextFieldAlertRepresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldAlertRepresenter.swift; sourceTree = "<group>"; };
@@ -9268,7 +9264,6 @@
 			isa = PBXGroup;
 			children = (
 				839BA9DE2AB32B87001F852C /* MeetingParticipantTableViewHeader.swift */,
-				839BA9E02AB32BAE001F852C /* MeetingParticipantTableViewHeader.xib */,
 			);
 			path = Header;
 			sourceTree = "<group>";
@@ -9318,6 +9313,7 @@
 		83B4FC602924014100364F04 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				99F9ABBF2A7B428A0050B5E4 /* BannerView.swift */,
 				8358A6E92925461C00EE197C /* DisclosureView.swift */,
 				83B4FC6A292407A300364F04 /* KeyRotationView.swift */,
 				834D7D9F2926699500634B66 /* LeaveChatButtonView.swift */,
@@ -9325,7 +9321,6 @@
 				83B4FC66292401A000364F04 /* MeetingInfoHeaderView.swift */,
 				996F74242A794219007209F0 /* MeetingInfoWaitingRoomSettingView.swift */,
 				8358A6E72925460800EE197C /* ToggleView.swift */,
-				99F9ABBF2A7B428A0050B5E4 /* WaitingRoomWarningBannerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -9542,7 +9537,6 @@
 				BFAD0FA32A299216003F5F83 /* ScheduleMeetingCreationWeeklyCustomOptionsView.swift */,
 				BFB889962A15D9F500FC456A /* ScheduleMeetingMonthlyRecurrenceFootnoteView.swift */,
 				9428F1762B8DD4B100DD79A7 /* TaggableTexView.swift */,
-				835A610D2B76344B00BBB9A1 /* TappableInfoLinkView.swift */,
 				83DBDDE429D730DA00CF433B /* TextDescriptionView.swift */,
 			);
 			path = Views;
@@ -13433,7 +13427,6 @@
 				839BA9E82AB355DE001F852C /* MeetingInviteParticipantTableViewCell.xib in Resources */,
 				83C49BA3265261B900A7764B /* MeetingParticipantsLayoutViewController.xib in Resources */,
 				BF66DFE32613E7BE00066F35 /* MeetingParticipantTableViewCell.xib in Resources */,
-				839BA9E12AB32BAE001F852C /* MeetingParticipantTableViewHeader.xib in Resources */,
 				7764AAB1246EE0B200134C88 /* MegaAvatarView.xib in Resources */,
 				5DAC09DF24CFE832001B6476 /* MEGABannerView.xib in Resources */,
 				A81C659D254B2EE700105BF4 /* MEGAGiphyCollectionViewCell.xib in Resources */,
@@ -13911,6 +13904,7 @@
 				C46527F126526C2300371270 /* BannerContainerViewModel.swift in Sources */,
 				C46527FB26526C3100371270 /* BannerContainerViewRouter.swift in Sources */,
 				C44947762652A466004B4C8E /* BannerType.swift in Sources */,
+				99F9ABC02A7B428A0050B5E4 /* BannerView.swift in Sources */,
 				5D6092BD256219E1005FA3E4 /* BannerViewModel.swift in Sources */,
 				2F528CBA2474C0CE006DE5C2 /* BasicAudioController.swift in Sources */,
 				5D8DC6AF248CB0AE0067A4F9 /* BorderStyle.swift in Sources */,
@@ -15244,7 +15238,6 @@
 				5D3AD471252C3723006986AF /* TableViewProxy.swift in Sources */,
 				9428F1772B8DD4B100DD79A7 /* TaggableTexView.swift in Sources */,
 				BF33EF7424451A4700CD35AC /* TapAndHoldMessageView.swift in Sources */,
-				835A610E2B76344B00BBB9A1 /* TappableInfoLinkView.swift in Sources */,
 				836AEDE020188F3C00868FC7 /* TestPasswordViewController.m in Sources */,
 				83DBDDE529D730DA00CF433B /* TextDescriptionView.swift in Sources */,
 				12466831275DBE0500C94335 /* TextEditorModel.swift in Sources */,
@@ -15382,7 +15375,6 @@
 				9911BA8E2A8B20CD00B88F28 /* WaitingRoomViewController.swift in Sources */,
 				9911BA922A8B216900B88F28 /* WaitingRoomViewModel.swift in Sources */,
 				9911BA8B2A8B20C300B88F28 /* WaitingRoomViewRouter.swift in Sources */,
-				99F9ABC02A7B428A0050B5E4 /* WaitingRoomWarningBannerView.swift in Sources */,
 				B63995362898CBEB00EA88F1 /* WarningView.swift in Sources */,
 				B63995382898CBEB00EA88F1 /* WarningViewModel.swift in Sources */,
 				B63995372898CBEB00EA88F1 /* WarningViewRouter.swift in Sources */,

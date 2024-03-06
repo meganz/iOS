@@ -15,6 +15,19 @@ enum InviteSectionRow {
     case invite
 }
 
+// Contains model data to show warning header
+// currently used in upsell BannerView for waiting room limit [MEET-3421]
+struct MeetingInfoHeaderData: Equatable {
+    static func == (lhs: MeetingInfoHeaderData, rhs: MeetingInfoHeaderData) -> Bool {
+        lhs.copy == rhs.copy
+    }
+    
+    // can have bolds with [A] tags
+    var copy: String
+    // action when user taps Banner view that will present upgrade modal screen
+    var linkTapped: (() -> Void)?
+}
+
 struct ParticipantsListView: Equatable {
     let sections: [FloatingPanelTableViewSection]
     let hostControlsRows: [HostControlsSectionRow]
@@ -25,6 +38,8 @@ struct ParticipantsListView: Equatable {
     let existsWaitingRoom: Bool
     let currentUserHandle: HandleEntity?
     let isMyselfModerator: Bool
+    // if this is not nil, we show a header on top of table of participants
+    let infoHeaderData: MeetingInfoHeaderData?
     
     init(
         sections: [FloatingPanelTableViewSection],
@@ -35,7 +50,8 @@ struct ParticipantsListView: Equatable {
         participants: [CallParticipantEntity],
         existsWaitingRoom: Bool,
         currentUserHandle: HandleEntity? = .invalidHandle,
-        isMyselfModerator: Bool = false
+        isMyselfModerator: Bool = false,
+        infoHeaderData: MeetingInfoHeaderData?
     ) {
         self.sections = sections
         self.hostControlsRows = hostControlsRows
@@ -46,5 +62,6 @@ struct ParticipantsListView: Equatable {
         self.existsWaitingRoom = existsWaitingRoom
         self.currentUserHandle = currentUserHandle
         self.isMyselfModerator = isMyselfModerator
+        self.infoHeaderData = infoHeaderData
     }
 }
