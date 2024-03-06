@@ -121,6 +121,8 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
         case .hide:
             hide(nodes: [node.toNodeEntity()])
             
+        case .unhide:
+            unhide(nodes: [node.toNodeEntity()])
         default:
             break
         }
@@ -272,6 +274,13 @@ class NodeActionViewControllerGenericDelegate: NodeActionViewControllerDelegate 
         let nodeActionUseCase = NodeActionUseCase(repo: NodeActionRepository.newRepo)
         Task {
             _ = await nodeActionUseCase.hide(nodes: nodes)
+        }
+    }
+    
+    private func unhide(nodes: [NodeEntity]) {
+        let nodeActionUseCase = NodeActionUseCase(repo: NodeActionRepository.newRepo)
+        Task {
+            _ = await nodeActionUseCase.unhide(nodes: nodes)
         }
     }
 }
