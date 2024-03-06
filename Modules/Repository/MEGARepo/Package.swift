@@ -27,6 +27,8 @@ let package = Package(
         ),
         .testTarget(
             name: "MEGARepoTests",
-            dependencies: ["MEGARepo"])
+            dependencies: ["MEGARepo"],
+            resources: [.process("Resources")]
+        )
     ]
 )

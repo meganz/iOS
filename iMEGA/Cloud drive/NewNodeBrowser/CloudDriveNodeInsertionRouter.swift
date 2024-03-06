@@ -33,7 +33,7 @@ struct CloudDriveNodeInsertionRouter: NodeInsertionRouting {
     }
 
     func importFromFiles(for nodeEntity: NodeEntity) {
-        // import files
+        DocumentPickerViewRouter(presenter: navigationController, parent: nodeEntity).start()
     }
 
     func capturePhotoVideo(for nodeEntity: NodeEntity) {

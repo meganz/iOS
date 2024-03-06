@@ -87,6 +87,8 @@ private struct ContextMenuListView: View {
 private struct ContextMenuActionsPicker: View {
     private let items: [CMActionEntity]
     private let actionHandler: (String, CMElementTypeEntity) -> Void
+    /// Returns true if the items contain at least one selected item. This is required to show the picker or the plain view based on the result.
+    private var containsSelectedItem: Bool {  items.contains { $0.state == .on } }
     @State private var selectionIndex: Int
 
     init(items: [CMActionEntity], actionHandler: @escaping (String, CMElementTypeEntity) -> Void) {
@@ -97,17 +99,33 @@ private struct ContextMenuActionsPicker: View {
 
     var body: some View {
         Section {
-            Picker("", selection: $selectionIndex) {
-                ForEach(0..<items.count, id: \.self) { index in
-                    ContextMenuActionItemView(item: items[index], actionHandler: actionHandler)
-                }
+            if containsSelectedItem {
+                pickerView
+            } else {
+                content
             }
         }
-        .onChange(of: selectionIndex) { newValue in
-            let item = items[newValue]
-            var actionModel = item.toContextMenuModel()
-            actionHandler(actionModel.data?.identifier ?? "", actionModel.type)
+    }
+
+    private var pickerView: some View {
+        Picker("", selection: $selectionIndex) {
+            content
         }
+        .onChange(of: selectionIndex) { newValue in
+            handleSelection(at: newValue)
+        }
+    }
+
+    private var content: some View {
+        ForEach(0..<items.count, id: \.self) { index in
+            ContextMenuActionItemView(item: items[index], actionHandler: actionHandler)
+        }
+    }
+
+    private func handleSelection(at index: Int) {
+        let item = items[index]
+        var actionModel = item.toContextMenuModel()
+        actionHandler(actionModel.data?.identifier ?? "", actionModel.type)
     }
 }
 
