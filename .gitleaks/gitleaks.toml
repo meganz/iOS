@@ -10,16 +10,8 @@ description = "global allow lists"
 paths = [
     '''gitleaks.toml''',
     '''(.*?)(jpg|gif|doc|docx|zip|xls|pdf|bin|svg|socket|vsidx|v2|suo|wsuo|.dll|pdb|exe)$''',
-    '''(go.mod|go.sum)$''',
-    '''gradle.lockfile''',
-    '''node_modules''',
-    '''package-lock.json''',
-    '''yarn.lock''',
-    '''pnpm-lock.yaml''',
-    '''Database.refactorlog''',
-    '''vendor''',
-    '''Modules/Presentation/MEGAL10n/Sources/MEGAL10n/Resources/de.lproj/Localizable.strings''',
-    '''MEGAUnitTests/Album/Links/ImportAlbumViewModelTests.swift'''
+    '''Modules/Presentation/MEGAL10n/Sources/MEGAL10n/Resources/(.*?)''',
+    '''MEGAUnitTests/(.*?)'''
 ]
 
 [[rules]]
