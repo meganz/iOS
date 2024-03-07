@@ -31,11 +31,9 @@ let package = Package(
             exclude: ["bindings",
                       "contrib",
                       "examples",
-                      "src/dummyCrypto.cpp",
                       "tests",
                       "webrtc-build",
-                      "src/videoRenderer_Qt.cpp",
-                      "src/base/promise-test.cpp"],
+                      "src/videoRenderer_Qt.cpp"],
             publicHeadersPath: "src",
             cxxSettings: [
                 .headerSearchPath("bindings/Objective-C/3rdparty/include"),
