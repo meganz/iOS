@@ -39,4 +39,8 @@ extension CreateAccountViewController {
     @objc func termLinkTextColor() -> UIColor {
         UIColor.isDesignTokenEnabled() ? TokenColors.Link.primary : UIColor.mnz_turquoise(for: self.traitCollection)
     }
+    
+    @objc func passwordStrengthBackgroundColor() -> UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_tertiaryBackground(traitCollection)
+    }
 }
