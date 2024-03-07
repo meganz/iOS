@@ -148,9 +148,12 @@ public actor PhotosRepository: PhotosRepositoryProtocol {
                     return photo.toNodeEntity()
                 }
             }
-            return await group.reduce(into: [NodeEntity](), {
-                if let updatedPhoto = $1 { $0.append(updatedPhoto) }
-            })
+
+            var photos = [NodeEntity]()
+            for await photo in group {
+                if let photo { photos.append(photo) }
+            }
+            return photos
         }
         
         guard photosToStore.isNotEmpty else { return }

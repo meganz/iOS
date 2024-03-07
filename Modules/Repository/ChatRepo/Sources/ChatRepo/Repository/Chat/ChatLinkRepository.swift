@@ -21,7 +21,7 @@ public struct ChatLinkRepository: ChatLinkRepositoryProtocol {
         try await performChatLinkOperation(sdk.createChatLink, for: chatRoom.chatId)
     }
     
-    func removeChatLink(for chatRoom: ChatRoomEntity) async throws {
+    public func removeChatLink(for chatRoom: ChatRoomEntity) async throws {
         try await withAsyncThrowingValue { completion in
             sdk.removeChatLink(chatRoom.chatId, delegate: ChatRequestDelegate { result in
                 switch result {
