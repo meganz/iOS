@@ -13,7 +13,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
             chatRoomUseCase: MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .moderator, isWaitingRoomEnabled: true), peerPrivilege: .standard)
         )
         
-        callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress))
+        callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress, changeType: .status))
 
         evaluate {
             viewModel.callWaitingRoomUsersUpdateSubscription != nil
@@ -22,14 +22,20 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
     
     func testCallUpdate_onCallUpdateJoining_callSessionListenerExists() {
         let callUseCase = MockCallUseCase()
+        let callKitManager = MockCallKitManager()
+        
         let viewModel = makeMainTabBarCallsViewModel(
             callUseCase: callUseCase,
-            chatRoomUseCase: MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity())
+            chatRoomUseCase: MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity()),
+            callKitManager: callKitManager
         )
         
-        callUseCase.callUpdateSubject.send(CallEntity(status: .joining))
+        callUseCase.callUpdateSubject.send(CallEntity(status: .joining, changeType: .status))
 
-        evaluate { viewModel.callSessionUpdateSubscription != nil }
+        evaluate {
+            viewModel.callSessionUpdateSubscription != nil  &&
+            callKitManager.notifyStartCallToCallKit_CalledTimes == 1
+        }
     }
     
     func testCallUpdate_onSessionUpdateRecordingStart_alertShouldBeShown() {
@@ -37,17 +43,22 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("User name"))
         let callUseCase = MockCallUseCase()
         let callSessionUseCase = MockCallSessionUseCase()
+        let callKitManager = MockCallKitManager()
         
         let viewModel = makeMainTabBarCallsViewModel(
             callUseCase: callUseCase,
             chatRoomUseCase: chatRoomUseCase,
             chatRoomUserUseCase: userUseCase,
-            callSessionUseCase: callSessionUseCase
+            callSessionUseCase: callSessionUseCase,
+            callKitManager: callKitManager
         )
         
-        callUseCase.callUpdateSubject.send(CallEntity(status: .joining))
+        callUseCase.callUpdateSubject.send(CallEntity(status: .joining, changeType: .status))
         
-        evaluate { viewModel.callSessionUpdateSubscription != nil }
+        evaluate {
+            viewModel.callSessionUpdateSubscription != nil &&
+            callKitManager.notifyStartCallToCallKit_CalledTimes == 1
+        }
         
         callSessionUseCase.callSessionUpdateSubject.send(ChatSessionEntity(changeType: .onRecording, onRecording: true))
         
@@ -59,17 +70,22 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("User name"))
         let callUseCase = MockCallUseCase()
         let callSessionUseCase = MockCallSessionUseCase()
-        
+        let callKitManager = MockCallKitManager()
+
         let viewModel = makeMainTabBarCallsViewModel(
             callUseCase: callUseCase,
             chatRoomUseCase: chatRoomUseCase,
             chatRoomUserUseCase: userUseCase,
-            callSessionUseCase: callSessionUseCase
+            callSessionUseCase: callSessionUseCase,
+            callKitManager: callKitManager
         )
         
-        callUseCase.callUpdateSubject.send(CallEntity(status: .joining))
+        callUseCase.callUpdateSubject.send(CallEntity(status: .joining, changeType: .status))
         
-        evaluate { viewModel.callSessionUpdateSubscription != nil }
+        evaluate {
+            viewModel.callSessionUpdateSubscription != nil &&
+            callKitManager.notifyStartCallToCallKit_CalledTimes == 1
+        }
         
         callSessionUseCase.callSessionUpdateSubject.send(ChatSessionEntity(statusType: .inProgress, changeType: .status, onRecording: true))
         
@@ -81,17 +97,22 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("User name"))
         let callUseCase = MockCallUseCase()
         let callSessionUseCase = MockCallSessionUseCase()
-        
+        let callKitManager = MockCallKitManager()
+
         let viewModel = makeMainTabBarCallsViewModel(
             callUseCase: callUseCase,
             chatRoomUseCase: chatRoomUseCase,
             chatRoomUserUseCase: userUseCase,
-            callSessionUseCase: callSessionUseCase
+            callSessionUseCase: callSessionUseCase,
+            callKitManager: callKitManager
         )
         
-        callUseCase.callUpdateSubject.send(CallEntity(status: .joining))
+        callUseCase.callUpdateSubject.send(CallEntity(status: .joining, changeType: .status))
         
-        evaluate { viewModel.callSessionUpdateSubscription != nil }
+        evaluate {
+            viewModel.callSessionUpdateSubscription != nil  &&
+            callKitManager.notifyStartCallToCallKit_CalledTimes == 1
+        }
         
         callSessionUseCase.callSessionUpdateSubject.send(ChatSessionEntity(statusType: .inProgress, changeType: .status, onRecording: false))
         
@@ -103,17 +124,22 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("User name"))
         let callUseCase = MockCallUseCase()
         let callSessionUseCase = MockCallSessionUseCase()
-        
+        let callKitManager = MockCallKitManager()
+
         let viewModel = makeMainTabBarCallsViewModel(
             callUseCase: callUseCase,
             chatRoomUseCase: chatRoomUseCase,
             chatRoomUserUseCase: userUseCase,
-            callSessionUseCase: callSessionUseCase
+            callSessionUseCase: callSessionUseCase,
+            callKitManager: callKitManager
         )
         
-        callUseCase.callUpdateSubject.send(CallEntity(status: .joining))
+        callUseCase.callUpdateSubject.send(CallEntity(status: .joining, changeType: .status))
         
-        evaluate { viewModel.callSessionUpdateSubscription != nil }
+        evaluate {
+            viewModel.callSessionUpdateSubscription != nil  &&
+            callKitManager.notifyStartCallToCallKit_CalledTimes == 1
+        }
         
         callSessionUseCase.callSessionUpdateSubject.send(ChatSessionEntity(changeType: .onRecording, onRecording: false))
         
@@ -129,7 +155,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
             chatRoomUseCase: chatRoomUseCase
         )
         
-        callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress))
+        callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress, changeType: .status))
 
         evaluate {
             viewModel.callWaitingRoomUsersUpdateSubscription == nil
@@ -145,7 +171,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
             chatRoomUseCase: chatRoomUseCase
         )
         
-        callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress))
+        callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress, changeType: .status))
 
         evaluate {
             viewModel.callWaitingRoomUsersUpdateSubscription == nil
@@ -163,7 +189,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
             chatRoomUserUseCase: userUseCase
         )
         
-        callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress))
+        callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress, changeType: .status))
         
         evaluate {
             viewModel.callWaitingRoomUsersUpdateSubscription != nil
@@ -185,7 +211,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
             chatRoomUseCase: chatRoomUseCase
         )
         
-        callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress))
+        callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress, changeType: .status))
         
         evaluate {
             viewModel.callWaitingRoomUsersUpdateSubscription != nil
@@ -207,7 +233,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
             chatRoomUseCase: chatRoomUseCase
         )
         
-        callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress))
+        callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress, changeType: .status))
         
         evaluate {
             viewModel.callWaitingRoomUsersUpdateSubscription != nil
@@ -229,7 +255,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
             chatRoomUseCase: chatRoomUseCase
         )
         
-        callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress))
+        callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress, changeType: .status))
         
         evaluate {
             viewModel.callWaitingRoomUsersUpdateSubscription != nil
@@ -253,7 +279,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
             chatRoomUserUseCase: userUseCase
         )
         
-        callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress))
+        callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress, changeType: .status))
         
         evaluate {
             viewModel.callWaitingRoomUsersUpdateSubscription != nil
@@ -279,7 +305,8 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         callUseCase: some CallUseCaseProtocol =  MockCallUseCase(),
         chatRoomUseCase: some ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
         chatRoomUserUseCase: some ChatRoomUserUseCaseProtocol = MockChatRoomUserUseCase(),
-        callSessionUseCase: some CallSessionUseCaseProtocol = MockCallSessionUseCase()
+        callSessionUseCase: some CallSessionUseCaseProtocol = MockCallSessionUseCase(),
+        callKitManager: some CallKitManagerProtocol = MockCallKitManager()
     ) -> MainTabBarCallsViewModel {
         MainTabBarCallsViewModel(
             router: router,
@@ -287,7 +314,8 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
             callUseCase: callUseCase,
             chatRoomUseCase: chatRoomUseCase,
             chatRoomUserUseCase: chatRoomUserUseCase,
-            callSessionUseCase: callSessionUseCase
+            callSessionUseCase: callSessionUseCase,
+            callKitManager: callKitManager
         )
     }
 }

@@ -8,6 +8,7 @@ final class MockCallKitManager: CallKitManagerProtocol {
     var answerCall_CalledTimes = 0
     var addCallRemoved_CalledTimes = 0
     var removeCallRemoved_CalledTimes = 0
+    var notifyStartCallToCallKit_CalledTimes = 0
     var muteUnmute_Calls: [Bool] = []
 
     func endCall(_ call: CallEntity) {
@@ -36,5 +37,9 @@ final class MockCallKitManager: CallKitManagerProtocol {
     
     func removeCallRemovedHandler() {
         removeCallRemoved_CalledTimes += 1
+    }
+    
+    func notifyStartCallToCallKit(_ call: CallEntity) {
+        notifyStartCallToCallKit_CalledTimes += 1
     }
 }

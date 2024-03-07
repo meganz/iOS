@@ -34,6 +34,7 @@ enum MainTabBarCallsAction: ActionType { }
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol
     private var callSessionUseCase: any CallSessionUseCaseProtocol
+    private let callKitManager: any CallKitManagerProtocol
 
     private var callUpdateSubscription: AnyCancellable?
     private(set) var callWaitingRoomUsersUpdateSubscription: AnyCancellable?
@@ -54,7 +55,8 @@ enum MainTabBarCallsAction: ActionType { }
         callUseCase: some CallUseCaseProtocol,
         chatRoomUseCase: some ChatRoomUseCaseProtocol,
         chatRoomUserUseCase: some ChatRoomUserUseCaseProtocol,
-        callSessionUseCase: some CallSessionUseCaseProtocol
+        callSessionUseCase: some CallSessionUseCaseProtocol,
+        callKitManager: some CallKitManagerProtocol
     ) {
         self.router = router
         self.chatUseCase = chatUseCase
@@ -62,7 +64,8 @@ enum MainTabBarCallsAction: ActionType { }
         self.chatRoomUseCase = chatRoomUseCase
         self.chatRoomUserUseCase = chatRoomUserUseCase
         self.callSessionUseCase = callSessionUseCase
-        
+        self.callKitManager = callKitManager
+
         super.init()
         
         onCallUpdateListener()
@@ -157,9 +160,11 @@ enum MainTabBarCallsAction: ActionType { }
     }
     
     private func onCallUpdate(_ call: CallEntity) {
+        guard call.changeType == .status else { return }
         switch call.status {
         case .joining:
             configureCallSessionsListener(forCall: call)
+            callKitManager.notifyStartCallToCallKit(call)
         case .inProgress:
             invokeCommand?(.showActiveCallIcon)
             guard callWaitingRoomUsersUpdateSubscription == nil, let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId) else { return }

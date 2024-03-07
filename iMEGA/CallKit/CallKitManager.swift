@@ -5,6 +5,7 @@ protocol CallKitManagerProtocol {
     func muteUnmuteCall(_ call: CallEntity, muted: Bool)
     func addCallRemoved(handler: @escaping (UUID?) -> Void)
     func removeCallRemovedHandler()
+    func notifyStartCallToCallKit(_ call: CallEntity)
 }
 
 struct CallKitManager: CallKitManagerProtocol {
@@ -36,5 +37,22 @@ struct CallKitManager: CallKitManagerProtocol {
     
     func removeCallRemovedHandler() {
         megaCallManager?.removeCallRemovedHandler()
+    }
+    
+    func notifyStartCallToCallKit(_ call: CallEntity) {
+        guard !isCallAlreadyAdded(call), let megaChatCall = call.toMEGAChatCall() else { return }
+        
+        megaCallManager?.start(megaChatCall)
+        megaCallManager?.add(megaChatCall)
+    }
+    
+    // MARK: - Private
+    private func isCallAlreadyAdded(_ call: CallEntity) -> Bool {
+        guard let megaCallManager = megaCallManager,
+              let uuid = megaCallManager.uuid(forChatId: call.chatId, callId: call.callId) else {
+            return false
+        }
+        
+        return megaCallManager.callId(for: uuid) != 0
     }
 }
