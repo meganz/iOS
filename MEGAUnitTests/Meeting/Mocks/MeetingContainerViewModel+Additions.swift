@@ -1,6 +1,9 @@
 @testable import MEGA
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGADomainMock
+import MEGAPresentation
+import MEGAPresentationMock
 
 extension MeetingContainerViewModel {
     
@@ -17,6 +20,7 @@ extension MeetingContainerViewModel {
         noUserJoinedUseCase: some MeetingNoUserJoinedUseCaseProtocol = MockMeetingNoUserJoinedUseCase(),
         analyticsEventUseCase: some AnalyticsEventUseCaseProtocol =  MockAnalyticsEventUseCase(),
         megaHandleUseCase: some MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
+        tracker: some AnalyticsTracking = MockTracker(),
         isTesting: Bool = true
     ) {
         self.init(
@@ -31,7 +35,8 @@ extension MeetingContainerViewModel {
             authUseCase: authUseCase,
             noUserJoinedUseCase: noUserJoinedUseCase,
             analyticsEventUseCase: analyticsEventUseCase,
-            megaHandleUseCase: megaHandleUseCase
+            megaHandleUseCase: megaHandleUseCase,
+            tracker: tracker
         )
     }
 }
