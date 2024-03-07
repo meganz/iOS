@@ -4,9 +4,9 @@ import MEGAPresentationMock
 import MEGATest
 import XCTest
 
-@MainActor
 final class MEGAAVViewControllerTests: XCTestCase {
     
+    @MainActor
     func testViewDidDissapear_whenDismissingView_shouldCancelPlayerProcessForSmoothStopPlayerExperience() async throws {
         let videoURL = try XCTUnwrap(URL(string: "file://videos/abc.mp4"))
         let mockPlayer = MockAVPlayer(url: videoURL)
@@ -19,6 +19,7 @@ final class MEGAAVViewControllerTests: XCTestCase {
         XCTAssertEqual(mockPlayer.currentItemAssetCancelLoading, 1)
     }
     
+    @MainActor
     func testViewDidDissapear_whenDismissingView_shouldResetsPlayer() async throws {
         let sut = try makeSUT()
         

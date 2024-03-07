@@ -5,7 +5,6 @@ import MEGATest
 @testable import Video
 import XCTest
 
-@MainActor
 final class VideoListViewModelTests: XCTestCase {
     
     private var cancellables = Set<AnyCancellable>()

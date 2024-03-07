@@ -6,10 +6,10 @@ import MEGAPresentation
 import MEGAPresentationMock
 import XCTest
 
-@MainActor
 final class PhotosViewModelTests: XCTestCase {
     var sut: PhotosViewModel!
     
+    @MainActor
     override func setUp() {
         let publisher = PhotoUpdatePublisher(photosViewController: PhotosViewController())
         let allPhotos = sampleNodesForAllLocations()
@@ -30,6 +30,7 @@ final class PhotosViewModelTests: XCTestCase {
             cameraUploadsSettingsViewRouter: MockCameraUploadsSettingsViewRouter())
     }
     
+    @MainActor
     func testCameraUploadExplorerSortOrderType_whenGivenValueEqualsModificationDesc_shouldReturnNewest() async throws {
                 
         let givenSortOrder = SortOrderEntity.modificationDesc
@@ -42,6 +43,7 @@ final class PhotosViewModelTests: XCTestCase {
         XCTAssertEqual(result, .newest)
     }
     
+    @MainActor
     func testCameraUploadExplorerSortOrderType_whenGivenValueEqualsModificationAsc_shouldReturnOldest() async throws {
         
         let givenSortOrder = SortOrderEntity.modificationAsc
@@ -68,6 +70,7 @@ final class PhotosViewModelTests: XCTestCase {
         XCTAssertEqual(result, .oldest)
     }
     
+    @MainActor
     func testCameraUploadExplorerSortOrderType_whenGivenValueEqualsNonModificationType_shouldReturnNewest() async throws {
                 
         let givenSortOrder = SortOrderEntity.favouriteAsc
@@ -81,7 +84,7 @@ final class PhotosViewModelTests: XCTestCase {
     }
     
     // MARK: - All locations test cases
-    
+    @MainActor
     func testLoadingPhotos_withAllMediaAllLocations_shouldReturnTrue() async throws {
         let expectedPhotos = sampleNodesForAllLocations()
         sut.filterType = .allMedia
@@ -90,6 +93,7 @@ final class PhotosViewModelTests: XCTestCase {
         XCTAssertEqual(sut.mediaNodes, expectedPhotos)
     }
     
+    @MainActor
     func testLoadingPhotos_withAllMediaAllLocations_shouldExcludeThumbnailLessPhotos() async throws {
         let photos = [
             NodeEntity(nodeType: .file, name: "TestImage1.png", handle: 1, parentHandle: 0, hasThumbnail: true),
@@ -118,6 +122,7 @@ final class PhotosViewModelTests: XCTestCase {
         XCTAssertEqual(sut.mediaNodes, photos.filter { $0.hasThumbnail })
     }
     
+    @MainActor
     func testLoadingPhotos_withImagesAllLocations_shouldReturnTrue() async throws {
         let expectedImages = sampleNodesForAllLocations().filter(\.fileExtensionGroup.isImage)
         sut.filterType = .images
@@ -126,6 +131,7 @@ final class PhotosViewModelTests: XCTestCase {
         XCTAssertEqual(sut.mediaNodes, expectedImages)
     }
     
+    @MainActor
     func testLoadingVideos_withImagesAllLocations_shouldReturnTrue() async throws {
         let expectedVideos = sampleNodesForAllLocations().filter(\.fileExtensionGroup.isVideo)
         sut.filterType = .videos
@@ -135,7 +141,7 @@ final class PhotosViewModelTests: XCTestCase {
     }
     
     // MARK: - Cloud Drive only test cases
-    
+    @MainActor
     func testLoadingPhotos_withAllMediaFromCloudDrive_shouldReturnTrue() async throws {
         let expectedPhotos = sampleNodesForCloudDriveOnly()
         sut.filterType = .allMedia
@@ -144,6 +150,7 @@ final class PhotosViewModelTests: XCTestCase {
         XCTAssertEqual(sut.mediaNodes, expectedPhotos)
     }
     
+    @MainActor
     func testLoadingPhotos_withImagesFromCloudDrive_shouldReturnTrue() async throws {
         let expectedImages = sampleNodesForCloudDriveOnly().filter(\.fileExtensionGroup.isImage)
         sut.filterType = .images
@@ -152,6 +159,7 @@ final class PhotosViewModelTests: XCTestCase {
         XCTAssertEqual(sut.mediaNodes, expectedImages)
     }
     
+    @MainActor
     func testLoadingPhotos_withVideosFromCloudDrive_shouldReturnTrue() async throws {
         let expectedVideos = sampleNodesForCloudDriveOnly().filter(\.fileExtensionGroup.isVideo)
         sut.filterType = .videos
@@ -161,7 +169,7 @@ final class PhotosViewModelTests: XCTestCase {
     }
     
     // MARK: - Camera Uploads test cases
-    
+    @MainActor
     func testLoadingPhotos_withAllMediaFromCameraUploads_shouldReturnTrue() async throws {
         let expectedPhotos = sampleNodesForCameraUploads()
         sut.filterType = .allMedia
@@ -170,6 +178,7 @@ final class PhotosViewModelTests: XCTestCase {
         XCTAssertEqual(sut.mediaNodes, expectedPhotos)
     }
     
+    @MainActor
     func testLoadingPhotos_withImagesFromCameraUploads_shouldReturnTrue() async throws {
         let expectedImages = sampleNodesForCameraUploads().filter(\.fileExtensionGroup.isImage)
         sut.filterType = .images
@@ -178,6 +187,7 @@ final class PhotosViewModelTests: XCTestCase {
         XCTAssertEqual(sut.mediaNodes, expectedImages)
     }
     
+    @MainActor
     func testLoadingPhotos_withVideosFromCameraUploads_shouldReturnTrue() async throws {
         let expectedVideos = sampleNodesForCameraUploads().filter(\.fileExtensionGroup.isVideo)
         sut.filterType = .videos
@@ -186,24 +196,28 @@ final class PhotosViewModelTests: XCTestCase {
         XCTAssertEqual(sut.mediaNodes, expectedVideos)
     }
     
+    @MainActor
     func testIsSelectHidden_onToggle_changesInitialFalseValueToTrue() {
         XCTAssertFalse(sut.isSelectHidden)
         sut.isSelectHidden.toggle()
         XCTAssertTrue(sut.isSelectHidden)
     }
     
+    @MainActor
     func testFilterType_whenCheckingSavedFilter_shouldReturnRightValues() {
         XCTAssertEqual(PhotosFilterOptions.images, sut.filterType(from: .images))
         XCTAssertEqual(PhotosFilterOptions.videos, sut.filterType(from: .videos))
         XCTAssertEqual(PhotosFilterOptions.allMedia, sut.filterType(from: .allMedia))
     }
     
+    @MainActor
     func testFilterLocation_whenCheckingSavedFilter_shouldReturnRightValues() {
         XCTAssertEqual(PhotosFilterOptions.cloudDrive, sut.filterLocation(from: .cloudDrive))
         XCTAssertEqual(PhotosFilterOptions.cameraUploads, sut.filterLocation(from: .cameraUploads))
         XCTAssertEqual(PhotosFilterOptions.allLocations, sut.filterLocation(from: .allLocations))
     }
     
+    @MainActor
     func testLoadAllPhotosWithSavedFilters_whenTheScreenAppear_shouldLoadTheExistingFilters() async {
         let useCase = MockUserAttributeUseCase(contentConsumption: ContentConsumptionEntity(ios: ContentConsumptionIos(timeline: ContentConsumptionTimeline(mediaType: .videos, location: .cloudDrive, usePreference: true))))
         let sut = makePhotosViewModel(userAttributeUseCase: useCase)
@@ -215,6 +229,7 @@ final class PhotosViewModelTests: XCTestCase {
         XCTAssertEqual(sut.filterLocation, .cloudDrive)
     }
     
+    @MainActor
     func testTimelineCameraUploadStatusFeatureEnabled_featureToggleOn_shouldReturnTrue() {
         let featureFlagProvider = MockFeatureFlagProvider(list: [.timelineCameraUploadStatus: true])
         let sut = makePhotosViewModel(featureFlagProvider: featureFlagProvider)
@@ -222,6 +237,7 @@ final class PhotosViewModelTests: XCTestCase {
         XCTAssertTrue(sut.timelineCameraUploadStatusFeatureEnabled)
     }
     
+    @MainActor
     func testTimelineCameraUploadStatusFeatureEnabled_featureToggleOff_shouldReturnFalse() {
         let featureFlagProvider = MockFeatureFlagProvider(list: [.timelineCameraUploadStatus: false])
         let sut = makePhotosViewModel(featureFlagProvider: featureFlagProvider)
@@ -229,12 +245,14 @@ final class PhotosViewModelTests: XCTestCase {
         XCTAssertFalse(sut.timelineCameraUploadStatusFeatureEnabled)
     }
     
+    @MainActor
     func testEmptyScreenTypeToShow_cameraUploadsOn_shouldReturnNoMedia() {
         let sut = makePhotosViewModel(preferenceUseCase: MockPreferenceUseCase(dict: [.isCameraUploadsEnabled: true]))
         
         XCTAssertEqual(sut.emptyScreenTypeToShow(), .noMediaFound)
     }
     
+    @MainActor
     func testEmptyScreenTypeToShow_forFilterTypeAndLocationCameraUploadsOff_shouldReturnCorrectEmptyScreenTypeToDisplay() {
         let expectations = [(filterType: PhotosFilterOptions.allMedia,
                              filterLocation: PhotosFilterOptions.allLocations, expectedViewType: PhotosEmptyScreenViewType.enableCameraUploads),
@@ -257,12 +275,14 @@ final class PhotosViewModelTests: XCTestCase {
         }
     }
     
+    @MainActor
     func testEnableCameraUploadsBannerAction_cameraUploadsOn_shouldReturnNil() {
         let sut = makePhotosViewModel(preferenceUseCase: MockPreferenceUseCase(dict: [.isCameraUploadsEnabled: true]))
         
         XCTAssertNil(sut.enableCameraUploadsBannerAction())
     }
     
+    @MainActor
     func testEnableCameraUploadsBannerAction_cameraUploadsOffForFilterLocation_shouldReturnCorrectly() throws {
         let cameraUploadsSettingsViewRouter = MockCameraUploadsSettingsViewRouter()
         let sut = makePhotosViewModel(preferenceUseCase: MockPreferenceUseCase(dict: [.isCameraUploadsEnabled: false]),
@@ -281,6 +301,7 @@ final class PhotosViewModelTests: XCTestCase {
         XCTAssertEqual(cameraUploadsSettingsViewRouter.startCalled, 1)
     }
     
+    @MainActor
     func testNavigateToCameraUploadSettings_called_shouldStartNavigation() {
         let cameraUploadsSettingsViewRouter = MockCameraUploadsSettingsViewRouter()
         let sut = makePhotosViewModel(preferenceUseCase: MockPreferenceUseCase(dict: [.isCameraUploadsEnabled: false]),
@@ -291,6 +312,7 @@ final class PhotosViewModelTests: XCTestCase {
         XCTAssertEqual(cameraUploadsSettingsViewRouter.startCalled, 1)
     }
     
+    @MainActor
     func testCameraUploadStatusButtonTapped_whenCameraUploadesIsDisabled_shouldNavigateToCUSetting() {
         let cameraUploadsSettingsViewRouter = MockCameraUploadsSettingsViewRouter()
         let sut = makePhotosViewModel(
@@ -303,6 +325,7 @@ final class PhotosViewModelTests: XCTestCase {
         XCTAssertFalse(sut.timelineViewModel.cameraUploadStatusShown)
     }
     
+    @MainActor
     func testCameraUploadStatusButtonTapped_whenCameraUploadesEnabled_shouldShowCUStatusBanner() {
         let cameraUploadsSettingsViewRouter = MockCameraUploadsSettingsViewRouter()
         let sut = makePhotosViewModel(
@@ -346,6 +369,7 @@ final class PhotosViewModelTests: XCTestCase {
         return [node1, node2, node3, node4]
     }
     
+    @MainActor
     private func makePhotosViewModel(
         userAttributeUseCase: some UserAttributeUseCaseProtocol = MockUserAttributeUseCase(),
         sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol = MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc),
