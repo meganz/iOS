@@ -5,7 +5,6 @@ import SwiftUI
 @testable import Video
 import XCTest
 
-@MainActor
 final class VideoCellViewModelTests: XCTestCase {
     
     override func setUp() {
