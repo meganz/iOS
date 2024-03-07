@@ -32,10 +32,9 @@ final class DocumentActionViewController: FPUIActionExtensionViewController {
             extensionContext.cancelRequest(withError: error)
             return
         }
-
-        Task {
-            await extensionContext.open(url)
-            extensionContext.completeRequest()
+        
+        extensionContext.open(url) { [weak self] _ in
+            self?.extensionContext.completeRequest()
         }
     }
     

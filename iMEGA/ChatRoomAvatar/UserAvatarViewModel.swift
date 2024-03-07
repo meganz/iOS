@@ -46,7 +46,7 @@ final class UserAvatarViewModel: ObservableObject {
     // MARK: - Private methods
     
     private func createLoadingChatRoomAvatarTask(isRightToLeftLanguage: Bool) -> Task<Void, Never> {
-        Task { [weak self] in
+        Task { [weak self, userId] in
             do {
                 try await self?.fetchAvatar(isRightToLeftLanguage: isRightToLeftLanguage)
             } catch {
