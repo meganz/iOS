@@ -11,6 +11,8 @@ struct QASettingsView: View {
         static let fingerprintVerificationHeaderText = "SDK secure flag"
         static let fingerprintVerificationFooterText = "To toggle secure flag: logout user > on onboarding screen > tap 5 times"
         static let fingerprintVerificationText = "Share secure flag: "
+        static let userDataHeaderText = "User Data"
+        static let clearStandardUserDefaultsText = "Clear Standard UserDefaults"
     }
     
     let viewModel: QASettingsViewModel
@@ -27,6 +29,19 @@ struct QASettingsView: View {
                             viewModel.checkForUpdate()
                         } label: {
                             Text(Constants.checkForUpdateText)
+                        }
+                    }
+                    .listRowSeparatorTint(TokenColors.Border.strong.swiftUI)
+            
+            Section(
+                header:
+                    Text(Constants.userDataHeaderText)
+                    .textCase(nil)
+                    .foregroundStyle(TokenColors.Text.secondary.swiftUI)) {
+                        Button {
+                            viewModel.clearStandardUserDefaults()
+                        } label: {
+                            Text(Constants.clearStandardUserDefaultsText)
                         }
                     }
                     .listRowSeparatorTint(TokenColors.Border.strong.swiftUI)

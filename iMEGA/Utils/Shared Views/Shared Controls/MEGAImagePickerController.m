@@ -219,12 +219,11 @@
         [imageData writeToFile:imagePath atomically:YES];
         
         //If the app has 'Read and Write' access to Photos and the user didn't configure the setting to save the media captured from the MEGA app in Photos, enable it by default.
-        if (![[NSUserDefaults standardUserDefaults] objectForKey:@"isSaveMediaCapturedToGalleryEnabled"]) {
-            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isSaveMediaCapturedToGalleryEnabled"];
+        if (![self hasSetIsSaveMediaCapturedToGalleryEnabled]) {
+            [self setIsSaveMediaCapturedToGalleryEnabled:YES];
         }
         
-        BOOL isSaveMediaCapturedToGalleryEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"isSaveMediaCapturedToGalleryEnabled"];
-        if (isSaveMediaCapturedToGalleryEnabled) {
+        if ([self getIsSaveMediaCapturedToGalleryEnabled]) {
             [self createAssetType:PHAssetResourceTypePhoto filePath:imagePath];
         } else {
             [self actionForImagePath:imagePath];
@@ -240,12 +239,11 @@
         self.filePath = localFilePath.mnz_relativeLocalPath;
         if ([[NSFileManager defaultManager] moveItemAtPath:videoUrl.path toPath:localFilePath error:&error]) {
             //If the app has 'Read and Write' access to Photos and the user didn't configure the setting to save the media captured from the MEGA app in Photos, enable it by default.
-            if (![[NSUserDefaults standardUserDefaults] objectForKey:@"isSaveMediaCapturedToGalleryEnabled"]) {
-                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isSaveMediaCapturedToGalleryEnabled"];
+            if (![self hasSetIsSaveMediaCapturedToGalleryEnabled]) {
+                [self setIsSaveMediaCapturedToGalleryEnabled:YES];
             }
             
-            BOOL isSaveMediaCapturedToGalleryEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"isSaveMediaCapturedToGalleryEnabled"];
-            if (isSaveMediaCapturedToGalleryEnabled) {
+            if ([self getIsSaveMediaCapturedToGalleryEnabled]) {
                 [self createAssetType:PHAssetResourceTypeVideo filePath:localFilePath];
             } else {
                 [self actionForVideo];

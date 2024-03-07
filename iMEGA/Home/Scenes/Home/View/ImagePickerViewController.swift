@@ -1,4 +1,5 @@
 import CoreServices
+import MEGADomain
 import Photos
 import UIKit
 import UniformTypeIdentifiers
@@ -7,7 +8,10 @@ final class UploadImagePickerViewController: UIImagePickerController {
 
     private var assetCreationRequestLocationManager: AssetCreationRequestLocationManager?
     var completion: ((Result<String, ImagePickingError>) -> Void)?
-
+    
+    @PreferenceWrapper(key: .isSaveMediaCapturedToGalleryEnabled, defaultValue: false, useCase: PreferenceUseCase.default)
+    private var isSaveMediaCapturedToGalleryEnabled: Bool
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.modalPresentationStyle = .currentContext
@@ -102,12 +106,12 @@ extension UploadImagePickerViewController: UIImagePickerControllerDelegate, UINa
         imageAsData.write(toFile: imagePath, atomically: true)
 
         // MARK: - Write some defaults
-
-        if !UserDefaults.standard.bool(forKey: "isSaveMediaCapturedToGalleryEnabled") {
-            UserDefaults.standard.set(true, forKey: "isSaveMediaCapturedToGalleryEnabled")
+        
+        if !$isSaveMediaCapturedToGalleryEnabled.existed {
+            isSaveMediaCapturedToGalleryEnabled = true
         }
 
-        if UserDefaults.standard.bool(forKey: "isSaveMediaCapturedToGalleryEnabled") {
+        if isSaveMediaCapturedToGalleryEnabled {
             createAsset(fromFilePath: imagePath, forAssetType: .photo)
         } else {
             completion?(.success(relativeLocalPath(imagePath)))
@@ -134,9 +138,7 @@ extension UploadImagePickerViewController: UIImagePickerControllerDelegate, UINa
 
             try FileManager.default.moveItem(atPath: videoURL.path, toPath: localFilePath)
 
-            var isSaveMediaCapturedToGalleryEnabled = false
-            if !UserDefaults.standard.bool(forKey: "isSaveMediaCapturedToGalleryEnabled") {
-                UserDefaults.standard.set(true, forKey: "isSaveMediaCapturedToGalleryEnabled")
+            if !$isSaveMediaCapturedToGalleryEnabled.existed {
                 isSaveMediaCapturedToGalleryEnabled = true
             }
 

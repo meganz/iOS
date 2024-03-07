@@ -7,6 +7,11 @@ public final class PreferenceWrapper<T> {
     
     public var useCase: any PreferenceUseCaseProtocol
     
+    public var existed: Bool {
+        let value: T? = useCase[key]
+        return value != nil
+    }
+    
     public init(key: PreferenceKeyEntity, defaultValue: T, useCase: any PreferenceUseCaseProtocol = PreferenceUseCase.empty) {
         self.key = key
         self.defaultValue = defaultValue

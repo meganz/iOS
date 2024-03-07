@@ -37,4 +37,5 @@ public enum PreferenceKeyEntity: String {
     case isCameraUploadsEnabled = "IsCameraUploadsEnabled"
     case cameraUploadsCellularDataUsageAllowed = "IsUseCellularConnectionEnabled"
     case lastEncourageUpgradeDate = "lastEncourageUpgradeDate"
+    case isSaveMediaCapturedToGalleryEnabled
 }

@@ -21,6 +21,8 @@ import UIKit
     
     @PreferenceWrapper(key: .offlineLogOutWarningDismissed, defaultValue: false)
     private var offlineLogOutWarningDismissed: Bool
+    @PreferenceWrapper(key: .isSaveMediaCapturedToGalleryEnabled, defaultValue: false, useCase: PreferenceUseCase.default)
+    private var isSaveMediaCapturedToGalleryEnabled: Bool
     
     private let permissionHandler: some DevicePermissionsHandling = DevicePermissionsHandler.makeHandler()
     private var dataSource: ProfileTableViewDataSource?
@@ -267,13 +269,10 @@ import UIKit
                         // if we do not have photos access we will not be able
                         // to save the photo we make or browse existing images
                         // from within camera capture screen?
-                        if photoPermisisonGranted {
-                            self.showImagePicker(sourceType: .camera)
-                        } else {
-                            UserDefaults.standard.set(true, forKey: "isSaveMediaCapturedToGalleryEnabled")
-                            UserDefaults.standard.synchronize()
-                            self.showImagePicker(sourceType: .camera)
+                        if !photoPermisisonGranted {
+                            isSaveMediaCapturedToGalleryEnabled = false
                         }
+                        self.showImagePicker(sourceType: .camera)
                     }
                 } else {
                     permissionRouter.alertVideoPermission()
