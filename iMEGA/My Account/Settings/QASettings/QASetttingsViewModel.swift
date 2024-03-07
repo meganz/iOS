@@ -45,6 +45,24 @@ final class QASettingsViewModel {
         return checkForUpdateTask
     }
     
+    // MARK: - Clear Standard UserDefaults
+    func clearStandardUserDefaults() {
+        guard let bundleIdentifier = Bundle.main.bundleIdentifier else {
+            router.showAlert(
+                withTitle: "Failed to clear Standard UserDefaults",
+                message: "The app bundle identifier is nil",
+                actions: [UIAlertAction(title: "OK", style: .default)]
+            )
+            return
+        }
+        UserDefaults.standard.removePersistentDomain(forName: bundleIdentifier)
+        router.showAlert(
+            withTitle: "Success",
+            message: "Standard UserDefaults is now cleared!",
+            actions: [UIAlertAction(title: "OK", style: .default)]
+        )
+    }
+    
     private func show(release: AppDistributionReleaseEntity) {
         let message = Constants
             .newVersionAvailableMessage

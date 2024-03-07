@@ -5,6 +5,9 @@ import MEGASDKRepo
 import SwiftUI
 
 extension CloudDriveViewController {
+    @PreferenceWrapper(key: .isSaveMediaCapturedToGalleryEnabled, defaultValue: false, useCase: PreferenceUseCase.default)
+    static var isSaveMediaCapturedToGalleryEnabled: Bool
+    
     var viewModeLocation: ViewModeLocation_ObjWrapper {
         // For scenarios such as showing CDVC from Recents, there's
         // no parent node, nodes are shown from recentActionBucket.
@@ -260,7 +263,7 @@ extension CloudDriveViewController {
                 permissionHandler.photosPermissionWithCompletionHandler {[weak self] photosPermissionGranted in
                     guard let self else { return }
                     if !photosPermissionGranted {
-                        UserDefaults.standard.set(false, forKey: "isSaveMediaCapturedToGalleryEnabled")
+                        Self.isSaveMediaCapturedToGalleryEnabled = false
                     }
                     showImagePickerFor(sourceType: .camera)
                 }

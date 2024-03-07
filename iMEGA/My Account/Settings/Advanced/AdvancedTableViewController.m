@@ -43,9 +43,8 @@
     BOOL isSaveVideoToGalleryEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"IsSaveVideoToGalleryEnabled"];
     [self.saveVideosSwitch setOn:isSaveVideoToGalleryEnabled];
 
-    BOOL isSaveMediaCapturedToGalleryEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:@"isSaveMediaCapturedToGalleryEnabled"];
-    [self.saveMediaInGallerySwitch setOn:isSaveMediaCapturedToGalleryEnabled];
-
+    [self.saveMediaInGallerySwitch setOn:[self getIsSaveMediaCapturedToGalleryEnabled]];
+    
     [self configureLabelAppearance];
 
     [self.tableView reloadData];
@@ -76,16 +75,16 @@
             //If the app doesn't have access to Photos (Or the permission has been revoked), update the settings associated with Photos accordingly.
             [NSUserDefaults.standardUserDefaults setBool:NO forKey:@"IsSavePhotoToGalleryEnabled"];
             [NSUserDefaults.standardUserDefaults setBool:NO forKey:@"IsSaveVideoToGalleryEnabled"];
-            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"isSaveMediaCapturedToGalleryEnabled"]) {
-                [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"isSaveMediaCapturedToGalleryEnabled"];
+            if ([self getIsSaveMediaCapturedToGalleryEnabled]) {
+                [self setIsSaveMediaCapturedToGalleryEnabled:NO];
             }
             break;
         }
 
         case PHAuthorizationStatusAuthorized: {
             //If the app has 'Read and Write' access to Photos and the user didn't configure the setting to save the media captured from the MEGA app in Photos, enable it by default.
-            if (![[NSUserDefaults standardUserDefaults] objectForKey:@"isSaveMediaCapturedToGalleryEnabled"]) {
-                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"isSaveMediaCapturedToGalleryEnabled"];
+            if (![self hasSetIsSaveMediaCapturedToGalleryEnabled]) {
+                [self setIsSaveMediaCapturedToGalleryEnabled:YES];
             }
             break;
         }
@@ -106,6 +105,20 @@
         }
 
         [NSUserDefaults.standardUserDefaults setBool:settingSwitch.isOn forKey:userDefaultSetting];
+    }];
+}
+
+- (void)checkPhotosPermissionForSettingSwitch:(UISwitch *)settingSwitch completion:(void (^)(void))completionHandler {
+    DevicePermissionsHandlerObjC *handler = [[DevicePermissionsHandlerObjC alloc] init];
+    [handler requstPhotoAlbumAccessPermissionsWithHandler:^(BOOL granted) {
+        if (granted) {
+            [settingSwitch setOn:!settingSwitch.isOn animated:YES];
+        } else {
+            [settingSwitch setOn:NO animated:YES];
+            [handler alertPhotosPermission];
+        }
+
+        completionHandler();
     }];
 }
 
@@ -132,7 +145,9 @@
 }
 
 - (IBAction)saveInLibrarySwitchTouchUpInside:(UIButton *)sender {
-    [self checkPhotosPermissionForUserDefaultSetting:@"isSaveMediaCapturedToGalleryEnabled" settingSwitch:self.saveMediaInGallerySwitch];
+    [self checkPhotosPermissionForSettingSwitch:self.saveMediaInGallerySwitch completion:^{
+        [self setIsSaveMediaCapturedToGalleryEnabled:self.saveMediaInGallerySwitch.isOn];
+    }];
 }
 
 @end

@@ -1,10 +1,13 @@
 import MEGADesignToken
+import MEGADomain
 import MEGAL10n
 import MEGAPresentation
 import UIKit
 
 extension AdvancedTableViewController {
-
+    @PreferenceWrapper(key: .isSaveMediaCapturedToGalleryEnabled, defaultValue: false, useCase: PreferenceUseCase.default)
+    private static var isSaveMediaCapturedToGalleryEnabled: Bool
+    
     // MARK: - UITableViewDataSource
 
     open override func numberOfSections(in tableView: UITableView) -> Int {
@@ -77,5 +80,17 @@ extension AdvancedTableViewController {
             saveMediaInGalleryLabel.textColor = TokenColors.Text.primary
             dontUseHttpLabel.textColor = TokenColors.Text.primary
         }
+    }
+    
+    @objc func hasSetIsSaveMediaCapturedToGalleryEnabled() -> Bool {
+        return Self.$isSaveMediaCapturedToGalleryEnabled.existed
+    }
+    
+    @objc func setIsSaveMediaCapturedToGalleryEnabled(_ enabled: Bool) {
+        Self.isSaveMediaCapturedToGalleryEnabled = enabled
+    }
+    
+    @objc func getIsSaveMediaCapturedToGalleryEnabled() -> Bool {
+        Self.isSaveMediaCapturedToGalleryEnabled
     }
 }
