@@ -179,12 +179,15 @@ extension MainTabBarController {
     
     @objc func createMainTabBarViewModel() -> MainTabBarCallsViewModel {
         let router = MainTabBarCallsRouter(baseViewController: self)
-        let mainTabBarCallsViewModel = MainTabBarCallsViewModel(router: router,
-                                                                chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
-                                                                callUseCase: CallUseCase(repository: CallRepository(chatSdk: .shared, callActionManager: CallActionManager.shared)),
-                                                                chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo),
-                                                                chatRoomUserUseCase: ChatRoomUserUseCase(chatRoomRepo: ChatRoomUserRepository.newRepo, userStoreRepo: UserStoreRepository.newRepo), 
-                                                                callSessionUseCase: CallSessionUseCase(repository: CallSessionRepository.newRepo))
+        let mainTabBarCallsViewModel = MainTabBarCallsViewModel(
+            router: router,
+            chatUseCase: ChatUseCase(chatRepo: ChatRepository.newRepo),
+            callUseCase: CallUseCase(repository: CallRepository(chatSdk: .shared, callActionManager: CallActionManager.shared)),
+            chatRoomUseCase: ChatRoomUseCase(chatRoomRepo: ChatRoomRepository.newRepo),
+            chatRoomUserUseCase: ChatRoomUserUseCase(chatRoomRepo: ChatRoomUserRepository.newRepo, userStoreRepo: UserStoreRepository.newRepo),
+            callSessionUseCase: CallSessionUseCase(repository: CallSessionRepository.newRepo),
+            callKitManager: CallKitManager()
+        )
         
         mainTabBarCallsViewModel.invokeCommand = { [weak self] command in
             guard let self else { return }

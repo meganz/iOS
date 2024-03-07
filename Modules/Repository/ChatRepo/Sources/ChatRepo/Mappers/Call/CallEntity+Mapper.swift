@@ -176,3 +176,9 @@ extension MEGAChatCallNotificationType {
         }
     }
 }
+
+public extension CallEntity {
+    func toMEGAChatCall() -> MEGAChatCall? {
+        MEGAChatSdk.sharedChatSdk.chatCall(forCallId: callId)
+    }
+}

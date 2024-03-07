@@ -13,15 +13,6 @@ import MEGADomain
     private var answerCallRequestDelegate: MEGAChatAnswerCallRequestDelegate?
     private var answerCallChatRequestDelegate: ChatRequestDelegate?
     
-    private var megaCallManager: MEGACallManager? {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
-              let callManager = appDelegate.megaCallManager else {
-            return nil
-        }
-        
-        return callManager
-    }
-    
     private var providerDelegate: MEGAProviderDelegate? {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
               let megaProviderDelegate = appDelegate.megaProviderDelegate else {
@@ -45,7 +36,6 @@ import MEGADomain
             self.configureAudioSessionForStartCall(chatId: chatId)
             self.startCallRequestDelegate = MEGAChatStartCallRequestDelegate { error in
                 if error.type == .MEGAChatErrorTypeOk {
-                    self.notifyStartCallToCallKit(chatId: chatId)
                     MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.sharedRepo).start(chatId: chatId)
                 }
                 delegate.completion(error)
@@ -74,7 +64,6 @@ import MEGADomain
                             continuation.resume(with: .failure(CallErrorEntity.generic))
                             return
                         }
-                        notifyStartCallToCallKit(chatId: chatId)
                         MeetingNoUserJoinedUseCase(repository: MeetingNoUserJoinedRepository.sharedRepo).start(chatId: chatId)
                         continuation.resume(with: .success(call.toCallEntity()))
                     case .failure(let error):
@@ -127,10 +116,7 @@ import MEGADomain
                     self.enableRTCAudioIfRequiredWhenCallInProgress(chatId: chatId)
                 }
             }
-            self.answerCallRequestDelegate = MEGAChatAnswerCallRequestDelegate { [weak self] error in
-                if error.type == .MEGAChatErrorTypeOk {
-                    self?.notifyStartCallToCallKit(chatId: chatId)
-                }
+            self.answerCallRequestDelegate = MEGAChatAnswerCallRequestDelegate { error in
                 delegate.completion(error)
             }
             guard let answerCallRequestDelegate = self.answerCallRequestDelegate else { return }
@@ -173,10 +159,9 @@ import MEGADomain
                     enableRTCAudioIfRequiredWhenCallInProgress(chatId: chatId)
                 }
             }
-            answerCallChatRequestDelegate = ChatRequestDelegate { [weak self] requestCompletion in
+            answerCallChatRequestDelegate = ChatRequestDelegate { requestCompletion in
                 switch requestCompletion {
                 case .success(let request):
-                    self?.notifyStartCallToCallKit(chatId: chatId)
                     completion(.success(request))
                 case .failure(let error):
                     completion(.failure(error))
@@ -204,14 +189,6 @@ import MEGADomain
         if disableRTCAudio() {
             RTCAudioSession.sharedInstance().audioSessionDidDeactivate(AVAudioSession.sharedInstance())
         }
-    }
-    
-    private func notifyStartCallToCallKit(chatId: UInt64) {
-        guard let call = chatSdk.chatCall(forChatId: chatId), !isCallAlreadyAdded(call.toCallEntity()) else { return }
-        
-        MEGALogDebug("CallActionManager: Notifiying call to callkit")
-        megaCallManager?.start(call)
-        megaCallManager?.add(call)
     }
         
     private func configureAudioSessionForStartCall(chatId: UInt64) {
@@ -242,15 +219,6 @@ import MEGADomain
         RTCAudioSession.sharedInstance().audioSessionDidActivate(AVAudioSession.sharedInstance())
         RTCAudioSession.sharedInstance().isAudioEnabled = true
         self.didEnableWebrtcAudioNow = true
-    }
-    
-    private func isCallAlreadyAdded(_ call: CallEntity) -> Bool {
-        guard let megaCallManager = megaCallManager,
-              let uuid = megaCallManager.uuid(forChatId: call.chatId, callId: call.callId) else {
-            return false
-        }
-        
-        return megaCallManager.callId(for: uuid) != 0
     }
     
     private func isOneToOneChatRoom(forChatId chatId: UInt64) -> Bool {

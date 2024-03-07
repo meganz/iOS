@@ -9170,13 +9170,6 @@
 			path = EnterMeetingLinkScene;
 			sourceTree = "<group>";
 		};
-		838A7B5225D55EE200767DB0 /* Calls */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Calls;
-			sourceTree = "<group>";
-		};
 		838A7B6725D5677500767DB0 /* Calls */ = {
 			isa = PBXGroup;
 			children = (
@@ -10950,7 +10943,6 @@
 		B662B84D24EC6F810089376A /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
-				838A7B5225D55EE200767DB0 /* Calls */,
 				BF90C789260406AF006061F8 /* User */,
 			);
 			path = UseCase;
