@@ -1,4 +1,5 @@
 import Combine
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
@@ -51,6 +52,8 @@ final class MeetingContainerViewModel: ViewModelType {
     private let noUserJoinedUseCase: any MeetingNoUserJoinedUseCaseProtocol
     private let analyticsEventUseCase: any AnalyticsEventUseCaseProtocol
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
+    private let tracker: any AnalyticsTracking
+
     private var noUserJoinedSubscription: AnyCancellable?
     private var muteMicSubscription: AnyCancellable?
     private var muteUnmuteFailedNotificationsSubscription: AnyCancellable?
@@ -76,7 +79,9 @@ final class MeetingContainerViewModel: ViewModelType {
          authUseCase: some AuthUseCaseProtocol,
          noUserJoinedUseCase: some MeetingNoUserJoinedUseCaseProtocol,
          analyticsEventUseCase: some AnalyticsEventUseCaseProtocol,
-         megaHandleUseCase: some MEGAHandleUseCaseProtocol) {
+         megaHandleUseCase: some MEGAHandleUseCaseProtocol,
+         tracker: some AnalyticsTracking = DIContainer.tracker
+    ) {
         self.router = router
         self.chatRoom = chatRoom
         self.callUseCase = callUseCase
@@ -89,7 +94,8 @@ final class MeetingContainerViewModel: ViewModelType {
         self.noUserJoinedUseCase = noUserJoinedUseCase
         self.analyticsEventUseCase = analyticsEventUseCase
         self.megaHandleUseCase = megaHandleUseCase
-        
+        self.tracker = tracker
+
         let callUUID = callUseCase.call(for: chatRoom.chatId)?.uuid
         self.callKitManager.addCallRemoved { [weak self] uuid in
             guard let uuid = uuid, let self = self, callUUID == uuid else { return }
@@ -402,6 +408,9 @@ final class MeetingContainerViewModel: ViewModelType {
             router.showProtocolErrorAlert()
         case .callUsersLimit:
             hangCall()
+            if accountUseCase.isGuest {
+                tracker.trackAnalyticsEvent(with: IOSGuestEndCallFreePlanUsersLimitDialogEvent())
+            }
             router.showUsersLimitErrorAlert()
         default:
             break

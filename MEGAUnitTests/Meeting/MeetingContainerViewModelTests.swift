@@ -1,7 +1,10 @@
 import Combine
 @testable import MEGA
+import MEGAAnalyticsiOS
 import MEGADomain
 import MEGADomainMock
+import MEGAPresentation
+import MEGAPresentationMock
 import XCTest
 
 final class MeetingContainerViewModelTests: XCTestCase {
@@ -305,12 +308,30 @@ final class MeetingContainerViewModelTests: XCTestCase {
         }
     }
     
-    func testUsersLimitErrorReceived_shouldShowFreeAccountLimitAlert() {
+    func testUsersLimitErrorReceived_loggedUser_shouldShowFreeAccountLimitAlert() {
         let router = MockMeetingContainerRouter()
         let callUseCase = MockCallUseCase(call: CallEntity(status: .connecting, changeType: .status, numberOfParticipants: 1, participants: [100]))
         viewModel = MeetingContainerViewModel(router: router, callUseCase: callUseCase)
 
         callUseCase.callUpdateSubject.send(CallEntity(status: .terminatingUserParticipation, changeType: .status, termCodeType: .callUsersLimit, numberOfParticipants: 1, participants: [100]))
+        evaluate {
+            router.showUsersLimitErrorAlert_calledTimes == 1
+        }
+    }
+    
+    func testUsersLimitErrorReceived_isGuestUser_shouldShowFreeAccountLimitAlertAndTackEvent() {
+        let router = MockMeetingContainerRouter()
+        let tracker = MockTracker()
+        let callUseCase = MockCallUseCase(call: CallEntity(status: .connecting, changeType: .status, numberOfParticipants: 1, participants: [100]))
+        viewModel = MeetingContainerViewModel(router: router, callUseCase: callUseCase, accountUseCase: MockAccountUseCase(isGuest: true), tracker: tracker)
+
+        callUseCase.callUpdateSubject.send(CallEntity(status: .terminatingUserParticipation, changeType: .status, termCodeType: .callUsersLimit, numberOfParticipants: 1, participants: [100]))
+        
+        assertTrackAnalyticsEventCalled(
+            trackedEventIdentifiers: tracker.trackedEventIdentifiers,
+            with: [IOSGuestEndCallFreePlanUsersLimitDialogEvent()]
+        )
+        
         evaluate {
             router.showUsersLimitErrorAlert_calledTimes == 1
         }
