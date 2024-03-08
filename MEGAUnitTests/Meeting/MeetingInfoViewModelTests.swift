@@ -208,9 +208,7 @@ final class MeetingInfoViewModelTests: XCTestCase {
             userDisplayNamesForPeersResult: .success([(101, "Peer1")])
         )
         let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: "base64Handle")
-        let userImageUseCase = MockUserImageUseCase(
-            result: .success(UIImage(systemName: "folder") ?? UIImage())
-        )
+        let userImageUseCase = MockUserImageUseCase()
         let sut = MeetingInfoViewModel(
             chatRoomUseCase: chatRoomUseCase,
             chatRoomUserUseCase: chatRoomUserUseCase,

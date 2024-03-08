@@ -21,7 +21,6 @@ protocol CommonParticipantViewModel: AnyObject {
     func createRefetchAvatarTask() -> Task<Void, Never>
     func updateAvatarUsingName() async throws
     func downloadAndUpdateAvatar() async throws
-    func createAvatarUsingName() async throws -> UIImage?
     func updateAvatar(image: UIImage)
 }
 
@@ -45,20 +44,14 @@ extension CommonParticipantViewModel {
             MEGALogDebug("ChatRoom: base64 handle not found for handle \(participant.participantId)")
             return nil
         }
-
-        return await withAsyncValue { completion in
-            userImageUseCase.fetchUserAvatar(withUserHandle: participant.participantId,
-                                             base64Handle: base64Handle,
-                                             avatarBackgroundHexColor: avatarBackgroundHexColor,
-                                             name: name) { result in
-                switch result {
-                case .success(let image):
-                    completion(.success(image))
-                case .failure:
-                    completion(.success(nil))
-                }
-            }
-        }
+        
+        let avatarHandler = UserAvatarHandler(
+            userImageUseCase: userImageUseCase,
+            initials: name.initialForAvatar(),
+            avatarBackgroundColor: UIColor.colorFromHexString(avatarBackgroundHexColor) ?? MEGAAppColor.Black._000000.uiColor
+        )
+        
+        return await avatarHandler.avatar(for: base64Handle)
     }
     
     func requestAvatarChange() {
@@ -90,14 +83,24 @@ extension CommonParticipantViewModel {
         }
     }
     
+    @MainActor
     func updateAvatarUsingName() async throws {
-        let nameAvatar = try await createAvatarUsingName()
+        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: participant.chatId),
+              let name = try await chatRoomUserUseCase.userDisplayNames(
+                forPeerIds: [participant.participantId],
+                in: chatRoom
+              ).first else {
+            MEGALogDebug("Unable to find the name for handle \(participant.participantId)")
+            return
+        }
+        let avatarImage = await fetchUserAvatar(name: name)
         try Task.checkCancellation()
-        if let nameAvatar {
-            updateAvatar(image: nameAvatar)
+        if let avatarImage {
+            updateAvatar(image: avatarImage)
         }
     }
     
+    @MainActor
     func downloadAndUpdateAvatar() async throws {
         guard let base64Handle = megaHandleUseCase.base64Handle(forUserHandle: participant.participantId) else {
             throw UserImageLoadErrorEntity.base64EncodingError
@@ -109,28 +112,5 @@ extension CommonParticipantViewModel {
             throw UserImageLoadErrorEntity.unableToFetch
         }
         updateAvatar(image: image)
-    }
-    
-    func createAvatarUsingName() async throws -> UIImage? {
-        guard let chatRoom = chatRoomUseCase.chatRoom(forChatId: participant.chatId),
-              let name = try await chatRoomUserUseCase.userDisplayNames(
-                forPeerIds: [participant.participantId],
-                in: chatRoom
-              ).first else {
-            MEGALogDebug("Unable to find the name for handle \(participant.participantId)")
-            return nil
-        }
-        try Task.checkCancellation()
-        
-        guard let base64Handle = megaHandleUseCase.base64Handle(forUserHandle: participant.participantId),
-              let avatarBackgroundHexColor = userImageUseCase.avatarColorHex(forBase64UserHandle: base64Handle) else {
-            return nil
-        }
-        let image = try await userImageUseCase.createAvatar(withUserHandle: participant.participantId,
-                                                            base64Handle: base64Handle,
-                                                            avatarBackgroundHexColor: avatarBackgroundHexColor,
-                                                            backgroundGradientHexColor: nil,
-                                                            name: name)
-        return image
     }
 }

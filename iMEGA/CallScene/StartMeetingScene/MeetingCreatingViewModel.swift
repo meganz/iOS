@@ -210,18 +210,16 @@ final class MeetingCreatingViewModel: ViewModelType {
                   let avatarBackgroundHexColor = MEGASdk.avatarColor(forBase64UserHandle: base64Handle) else {
                 return
             }
-
-            userImageUseCase.fetchUserAvatar(withUserHandle: myHandle,
-                                             base64Handle: base64Handle,
-                                             avatarBackgroundHexColor: avatarBackgroundHexColor,
-                                             name: meetingUseCase.username()) { [weak self] result in
-                guard let self else { return }
-                switch result {
-                case .success(let image):
-                    self.invokeCommand?(.updateAvatarImage(image))
-                default:
-                    break
-                }
+            
+            let avatarHandler = UserAvatarHandler(
+                userImageUseCase: userImageUseCase,
+                initials: meetingUseCase.username().initialForAvatar(),
+                avatarBackgroundColor: UIColor.colorFromHexString(avatarBackgroundHexColor) ?? MEGAAppColor.Black._000000.uiColor
+            )
+            
+            Task { @MainActor in
+                let image = await avatarHandler.avatar(for: base64Handle)
+                invokeCommand?(.updateAvatarImage(image))
             }
         }
     }

@@ -38,7 +38,7 @@ final class ParticipantNotInCallViewModelTests: XCTestCase {
         let accountUseCase = MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(chatType: .group))
         let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
-        let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
+        let userImageUseCase = MockUserImageUseCase()
         let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity(101))
         let viewModel = makeParticipantNotInCallViewModel(
             participant: participant,
@@ -56,7 +56,7 @@ final class ParticipantNotInCallViewModelTests: XCTestCase {
                     chatRoomUseCase.userStatusEntity
                 ),
                 .updateName(name: "Test"),
-                .updateAvatarImage(image: UIImage())
+                .updateAvatarImage(image: UIImage.iconContacts)
              ])
     }
     

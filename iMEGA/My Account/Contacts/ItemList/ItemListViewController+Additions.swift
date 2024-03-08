@@ -18,12 +18,9 @@ extension ItemListViewController {
             guard let chatRoom = MEGAChatSdk.shared.chatRoom(forChatId: item.handle) else { return }
             cell.avatarView.setup(for: chatRoom)
         } else {
-            fetchUserAvatar(
-                for: item,
-                completion: { image in
-                    cell.avatarView.avatarImageView.image = image
-                }
-            )
+            Task {
+                cell.avatarView.avatarImageView.image = await fetchUserAvatar(for: item)
+            }
             
             cell.avatarView.configure(mode: .single)
         }
@@ -37,13 +34,13 @@ extension ItemListViewController {
         cell.contactVerifiedImageView.isHidden = !MEGASdk.shared.areCredentialsVerified(of: user)
     }
     
-    private func fetchUserAvatar(for item: ItemListModel, completion: @escaping (UIImage) -> Void) {
+    private func fetchUserAvatar(for item: ItemListModel) async -> UIImage? {
         let megaHandleUseCase = MEGAHandleUseCase(repo: MEGAHandleRepository.newRepo)
         
         guard let base64Handle = megaHandleUseCase.base64Handle(forUserHandle: item.handle),
               let avatarBackgroundHexColor = MEGASdk.avatarColor(forBase64UserHandle: base64Handle) else {
             MEGALogDebug("Contacts list: base64 handle not found for handle \(item.handle)")
-            return
+            return nil
         }
         
         let userImageUseCase = UserImageUseCase(
@@ -53,16 +50,12 @@ extension ItemListViewController {
             fileSystemRepo: FileSystemRepository.newRepo
         )
         
-        userImageUseCase.fetchUserAvatar(withUserHandle: item.handle,
-                                         base64Handle: base64Handle,
-                                         avatarBackgroundHexColor: avatarBackgroundHexColor,
-                                         name: item.name) { result in
-            switch result {
-            case .success(let image):
-                completion(image)
-            case .failure(let error):
-                MEGALogDebug("Contacts list: failed to fetch avatar for \(base64Handle) - \(error)")
-            }
-        }
+        let avatarHandler = UserAvatarHandler(
+            userImageUseCase: userImageUseCase,
+            initials: item.name.initialForAvatar(),
+            avatarBackgroundColor: UIColor.colorFromHexString(avatarBackgroundHexColor) ?? MEGAAppColor.Black._000000.uiColor
+        )
+        
+        return await avatarHandler.avatar(for: base64Handle)
     }
 }

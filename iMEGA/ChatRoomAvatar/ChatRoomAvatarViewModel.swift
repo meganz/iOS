@@ -160,7 +160,7 @@ final class ChatRoomAvatarViewModel: ObservableObject {
         }
     }
         
-    private func createAvatar(withHandle handle: HandleEntity) async throws -> UIImage? {
+    func createAvatar(withHandle handle: HandleEntity, size: CGSize = CGSize(width: 100, height: 100)) async throws -> UIImage? {
         let chatTitle = try await username(forUserHandle: handle, shouldUseMeText: false) ?? title
         
         guard let base64Handle = megaHandleUseCase.base64Handle(forUserHandle: handle),
@@ -168,16 +168,16 @@ final class ChatRoomAvatarViewModel: ObservableObject {
             return nil
         }
         
-        return try await userImageUseCase.createAvatar(
-            withUserHandle: peerHandle,
-            base64Handle: base64Handle,
-            avatarBackgroundHexColor: avatarBackgroundHexColor,
-            backgroundGradientHexColor: nil,
-            name: chatTitle,
-            isRightToLeftLanguage: isRightToLeftLanguage,
-            shouldCache: false,
-            useCache: false
-        )
+        let initials = chatTitle.initialForAvatar()
+        let avatarBackgroundColor = UIColor.colorFromHexString(avatarBackgroundHexColor) ?? MEGAAppColor.Black._000000.uiColor
+        
+        return UIImage.drawImage(
+            forInitials: initials,
+            size: size,
+            backgroundColor: avatarBackgroundColor,
+            textColor: MEGAAppColor.White._FFFFFF.uiColor,
+            font: UIFont.systemFont(ofSize: min(size.width, size.height)/2.0),
+            isRightToLeftLanguage: isRightToLeftLanguage)
     }
     
     private func createAvatar(usingName name: String, size: CGSize = CGSize(width: 100, height: 100)) -> UIImage? {

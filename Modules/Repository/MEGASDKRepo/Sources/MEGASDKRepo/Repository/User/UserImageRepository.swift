@@ -14,24 +14,6 @@ public struct UserImageRepository: UserImageRepositoryProtocol {
         self.sdk = sdk
     }
 
-    public func loadUserImage(withUserHandle handle: String?,
-                              destinationPath: String,
-                              completion: @escaping (Result<ImageFilePathEntity, UserImageLoadErrorEntity>) -> Void) {
-
-        let thumbnailRequestDelegate = RequestDelegate { result in
-            guard case .success(let request) = result, let file = request.file else {
-                completion(.failure(.unableToFetch))
-                return
-            }
-
-            completion(.success(file))
-        }
-
-        sdk.getAvatarUser(withEmailOrHandle: handle,
-                          destinationFilePath: destinationPath,
-                          delegate: thumbnailRequestDelegate)
-    }
-
     public func avatar(forUserHandle handle: String?, destinationPath: String) async throws -> ImageFilePathEntity {
         try await withCheckedThrowingContinuation { continuation in
             let thumbnailRequestDelegate = AvatarRequestDelegate { request in

@@ -10,7 +10,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
         let accountUseCase = MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(chatType: .group))
         let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
-        let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
+        let userImageUseCase = MockUserImageUseCase()
         let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity(100))
         let viewModel = MeetingParticipantViewModel(participant: particpant,
                                                     userImageUseCase: userImageUseCase,
@@ -23,7 +23,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
              expectedCommands: [
                 .configView(isModerator: true, isMicMuted: false, isVideoOn: false, shouldHideContextMenu: true),
                 .updateName(name: "Test (Me)"),
-                .updateAvatarImage(image: UIImage())
+                .updateAvatarImage(image: UIImage.iconContacts)
              ])
     }
     
@@ -32,7 +32,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
         let accountUseCase = MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(chatType: .group))
         let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
-        let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
+        let userImageUseCase = MockUserImageUseCase()
         let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity(101))
         let viewModel = MeetingParticipantViewModel(participant: particpant,
                                                     userImageUseCase: userImageUseCase,
@@ -45,7 +45,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
              expectedCommands: [
                 .configView(isModerator: true, isMicMuted: false, isVideoOn: false, shouldHideContextMenu: false),
                 .updateName(name: "Test"),
-                .updateAvatarImage(image: UIImage())
+                .updateAvatarImage(image: UIImage.iconContacts)
              ])
     }
     
@@ -54,7 +54,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
         let accountUseCase = MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(chatType: .group))
         let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
-        let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
+        let userImageUseCase = MockUserImageUseCase()
         let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity(101))
         let viewModel = MeetingParticipantViewModel(participant: particpant,
                                                     userImageUseCase: userImageUseCase,
@@ -67,7 +67,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
              expectedCommands: [
                 .configView(isModerator: false, isMicMuted: false, isVideoOn: false, shouldHideContextMenu: false),
                 .updateName(name: "Test"),
-                .updateAvatarImage(image: UIImage())
+                .updateAvatarImage(image: UIImage.iconContacts)
              ])
     }
     
@@ -76,7 +76,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
         let accountUseCase = MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(chatType: .group))
         let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
-        let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
+        let userImageUseCase = MockUserImageUseCase()
         let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity(101))
         let viewModel = MeetingParticipantViewModel(participant: particpant,
                                                     userImageUseCase: userImageUseCase,
@@ -89,7 +89,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
              expectedCommands: [
                 .configView(isModerator: false, isMicMuted: false, isVideoOn: false, shouldHideContextMenu: false),
                 .updateName(name: "Test"),
-                .updateAvatarImage(image: UIImage())
+                .updateAvatarImage(image: UIImage.iconContacts)
              ])
     }
     
@@ -98,7 +98,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
         let accountUseCase = MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(chatType: .group))
         let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
-        let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
+        let userImageUseCase = MockUserImageUseCase()
         let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity(101))
         let viewModel = MeetingParticipantViewModel(participant: particpant,
                                                     userImageUseCase: userImageUseCase,
@@ -111,7 +111,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
              expectedCommands: [
                 .configView(isModerator: true, isMicMuted: true, isVideoOn: false, shouldHideContextMenu: false),
                 .updateName(name: "Test"),
-                .updateAvatarImage(image: UIImage())
+                .updateAvatarImage(image: UIImage.iconContacts)
              ])
     }
     
@@ -120,7 +120,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
         let accountUseCase = MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(chatType: .group))
         let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
-        let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
+        let userImageUseCase = MockUserImageUseCase()
         let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity(101))
         let viewModel = MeetingParticipantViewModel(participant: particpant,
                                                     userImageUseCase: userImageUseCase,
@@ -133,7 +133,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
              expectedCommands: [
                 .configView(isModerator: true, isMicMuted: false, isVideoOn: true, shouldHideContextMenu: false),
                 .updateName(name: "Test"),
-                .updateAvatarImage(image: UIImage())
+                .updateAvatarImage(image: UIImage.iconContacts)
              ])
     }
     
@@ -142,7 +142,7 @@ final class MeetingParticipantViewModelTests: XCTestCase {
         let accountUseCase = MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity())
         let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
-        let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
+        let userImageUseCase = MockUserImageUseCase()
         var completionBlockCalled = false
         let viewModel = MeetingParticipantViewModel(participant: particpant,
                                                     userImageUseCase: userImageUseCase,

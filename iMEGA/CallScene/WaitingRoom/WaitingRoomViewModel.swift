@@ -372,16 +372,16 @@ final class WaitingRoomViewModel: ObservableObject {
               let avatarBackgroundHexColor = userImageUseCase.avatarColorHex(forBase64UserHandle: base64Handle) else {
             return
         }
-        userImageUseCase.fetchUserAvatar(
-            withUserHandle: myHandle,
-            base64Handle: base64Handle,
-            avatarBackgroundHexColor: avatarBackgroundHexColor,
-            name: waitingRoomUseCase.userName()
-        ) { [weak self] result in
-            guard let self else { return }
-            if case let .success(image) = result {
-                userAvatar = image
-            }
+        
+        let avatarHandler = UserAvatarHandler(
+            userImageUseCase: userImageUseCase,
+            initials: waitingRoomUseCase.userName().initialForAvatar(),
+            avatarBackgroundColor: UIColor.colorFromHexString(avatarBackgroundHexColor) ?? MEGAAppColor.Black._000000.uiColor
+        )
+        
+        Task { @MainActor in
+            let image = await avatarHandler.avatar(for: base64Handle)
+            userAvatar = image
         }
     }
     
