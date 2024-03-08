@@ -37,7 +37,7 @@ struct CloudDriveNodeInsertionRouter: NodeInsertionRouting {
     }
 
     func capturePhotoVideo(for nodeEntity: NodeEntity) {
-        // capture photos
+        CloudDriveMediaCaptureRouter(parentNode: nodeEntity, presenter: navigationController).start()
     }
 
     func choosePhotoVideo(for nodeEntity: NodeEntity) {

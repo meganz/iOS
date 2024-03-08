@@ -2119,6 +2119,7 @@
 		BF53B77C274351F700B47CA0 /* MeetingAlreadyExistsAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF53B77B274351F700B47CA0 /* MeetingAlreadyExistsAlert.swift */; };
 		BF5455E92844377600544A53 /* EndCallDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5455E82844377600544A53 /* EndCallDialog.swift */; };
 		BF5C36792491C917004DDA2F /* MEGAUser+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463F624342F7F00FB90B9 /* MEGAUser+Additions.swift */; };
+		BF5D8E152B9AB0FF008F0DDF /* CloudDriveMediaCaptureRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5D8E142B9AB0FF008F0DDF /* CloudDriveMediaCaptureRouter.swift */; };
 		BF5E336C2558BE2A0055395E /* ExplorerBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5E336B2558BE2A0055395E /* ExplorerBaseViewController.swift */; };
 		BF5E33762558BE620055395E /* ExplorerToolbarConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5E33752558BE620055395E /* ExplorerToolbarConfigurator.swift */; };
 		BF5E33912558D2890055395E /* FileExplorerGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5E338F2558D2890055395E /* FileExplorerGridCell.swift */; };
@@ -4846,6 +4847,7 @@
 		BF49DFBE282C633A00DE3742 /* MeetingParticipantStatusPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingParticipantStatusPipeline.swift; sourceTree = "<group>"; };
 		BF53B77B274351F700B47CA0 /* MeetingAlreadyExistsAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingAlreadyExistsAlert.swift; sourceTree = "<group>"; };
 		BF5455E82844377600544A53 /* EndCallDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndCallDialog.swift; sourceTree = "<group>"; };
+		BF5D8E142B9AB0FF008F0DDF /* CloudDriveMediaCaptureRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveMediaCaptureRouter.swift; sourceTree = "<group>"; };
 		BF5E336B2558BE2A0055395E /* ExplorerBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorerBaseViewController.swift; sourceTree = "<group>"; };
 		BF5E33752558BE620055395E /* ExplorerToolbarConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorerToolbarConfigurator.swift; sourceTree = "<group>"; };
 		BF5E338F2558D2890055395E /* FileExplorerGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileExplorerGridCell.swift; sourceTree = "<group>"; };
@@ -6626,6 +6628,7 @@
 				83369CE22179D0A0002B09C3 /* CloudDriveCollectionViewController.h */,
 				83369CE32179D0A0002B09C3 /* CloudDriveCollectionViewController.m */,
 				BF11FEE32B6AF70400398A2D /* CloudDriveEmptyViewAssetFactory.swift */,
+				BF5D8E142B9AB0FF008F0DDF /* CloudDriveMediaCaptureRouter.swift */,
 				944034B729394F5E0073FE6F /* CloudDriveTableViewController+Additions.swift */,
 				830B54882178845300BE1E1F /* CloudDriveTableViewController.h */,
 				830B54892178845300BE1E1F /* CloudDriveTableViewController.m */,
@@ -14038,6 +14041,7 @@
 				83369CE42179D0A0002B09C3 /* CloudDriveCollectionViewController.m in Sources */,
 				94B09E612B84CC87007D6B84 /* CloudDriveContextMenuConfigFactory.swift in Sources */,
 				BF11FEE42B6AF70400398A2D /* CloudDriveEmptyViewAssetFactory.swift in Sources */,
+				BF5D8E152B9AB0FF008F0DDF /* CloudDriveMediaCaptureRouter.swift in Sources */,
 				94B09E632B84CC87007D6B84 /* CloudDriveNavigationTitleBuilder.swift in Sources */,
 				94B09E5E2B84CC87007D6B84 /* CloudDriveNodeInsertionRouter.swift in Sources */,
 				944034B829394F5E0073FE6F /* CloudDriveTableViewController+Additions.swift in Sources */,
