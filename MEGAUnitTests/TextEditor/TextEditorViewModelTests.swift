@@ -258,9 +258,7 @@ final class TextEditorViewModelTests: XCTestCase {
             encode: String.Encoding.utf8.rawValue
         )
         let mockRouter = MockTextEditorViewRouter()
-        let mockUploadFileUC = MockUploadFileUseCase()
-        mockUploadFileUC.uploadFileResult = .success
-        mockUploadFileUC.filename = textFile.fileName
+        let mockUploadFileUC = MockUploadFileUseCase(uploadFileResult: .success, filename: textFile.fileName)
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockBackupsUC = MockBackupsUseCase()
         let nodeAccessLevel: NodeAccessTypeEntity = .owner
@@ -314,9 +312,7 @@ final class TextEditorViewModelTests: XCTestCase {
             encode: String.Encoding.utf8.rawValue
         )
         let mockRouter = MockTextEditorViewRouter()
-        let mockUploadFileUC = MockUploadFileUseCase()
-        mockUploadFileUC.uploadFileResult = .failure(TransferErrorEntity.upload)
-        mockUploadFileUC.filename = textFile.fileName
+        let mockUploadFileUC = MockUploadFileUseCase(uploadFileResult: .failure(.upload), filename: textFile.fileName)
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeDataUC = MockNodeDataUseCase()
         let mockBackupsUC = MockBackupsUseCase()
@@ -349,7 +345,6 @@ final class TextEditorViewModelTests: XCTestCase {
         let textFile = TextFile(fileName: "testAction_saveText_create_hasParent_duplicateName")
         let mockRouter = MockTextEditorViewRouter()
         let mockUploadFileUC = MockUploadFileUseCase()
-        mockUploadFileUC.duplicate = true
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeDataUC = MockNodeDataUseCase()
         let mockBackupsUC = MockBackupsUseCase()
@@ -387,10 +382,7 @@ final class TextEditorViewModelTests: XCTestCase {
     func testAction_saveText_create_hasParent_uniqueName_success() {
         let textFile = TextFile(fileName: "testAction_saveText_create_hasParent_uniqueName_success")
         let mockRouter = MockTextEditorViewRouter()
-        let mockUploadFileUC = MockUploadFileUseCase()
-        mockUploadFileUC.duplicate = false
-        mockUploadFileUC.uploadFileResult = .success
-        mockUploadFileUC.filename = textFile.fileName
+        let mockUploadFileUC = MockUploadFileUseCase(duplicate: false, uploadFileResult: .success, filename: textFile.fileName)
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeDataUC = MockNodeDataUseCase()
         let mockBackupsUC = MockBackupsUseCase()
@@ -422,10 +414,7 @@ final class TextEditorViewModelTests: XCTestCase {
     func testAction_saveText_create_hasParent_uniqueName_failed() {
         let textFile = TextFile(fileName: "testAction_saveText_create_hasParent_uniqueName_failed")
         let mockRouter = MockTextEditorViewRouter()
-        let mockUploadFileUC = MockUploadFileUseCase()
-        mockUploadFileUC.duplicate = false
-        mockUploadFileUC.uploadFileResult = .failure(TransferErrorEntity.upload)
-        mockUploadFileUC.filename = textFile.fileName
+        let mockUploadFileUC = MockUploadFileUseCase(duplicate: false, uploadFileResult: .failure(.upload), filename: textFile.fileName)
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeDataUC = MockNodeDataUseCase()
         let mockBackupsUC = MockBackupsUseCase()
@@ -458,7 +447,6 @@ final class TextEditorViewModelTests: XCTestCase {
         let textFile = TextFile(fileName: "testAction_saveText_create_noParent_duplicateName")
         let mockRouter = MockTextEditorViewRouter()
         let mockUploadFileUC = MockUploadFileUseCase()
-        mockUploadFileUC.duplicate = true
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeDataUC = MockNodeDataUseCase()
         let mockBackupsUC = MockBackupsUseCase()
@@ -494,10 +482,7 @@ final class TextEditorViewModelTests: XCTestCase {
     func testAction_saveText_create_noParent_uniqueName_success() {
         let textFile = TextFile(fileName: "testAction_saveText_create_noParent_uniqueName_success")
         let mockRouter = MockTextEditorViewRouter()
-        let mockUploadFileUC = MockUploadFileUseCase()
-        mockUploadFileUC.duplicate = false
-        mockUploadFileUC.uploadFileResult = .success
-        mockUploadFileUC.filename = textFile.fileName
+        let mockUploadFileUC = MockUploadFileUseCase(duplicate: false, uploadFileResult: .success, filename: textFile.fileName)
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeDataUC = MockNodeDataUseCase()
         let mockBackupsUC = MockBackupsUseCase()
@@ -527,10 +512,7 @@ final class TextEditorViewModelTests: XCTestCase {
     func testAction_saveText_create_noParent_uniqueName_failed() {
         let textFile = TextFile(fileName: "testAction_saveText_create_noParent_uniqueName_failed")
         let mockRouter = MockTextEditorViewRouter()
-        let mockUploadFileUC = MockUploadFileUseCase()
-        mockUploadFileUC.duplicate = false
-        mockUploadFileUC.uploadFileResult = .failure(TransferErrorEntity.upload)
-        mockUploadFileUC.filename = textFile.fileName
+        let mockUploadFileUC = MockUploadFileUseCase(duplicate: false, uploadFileResult: .failure(.upload), filename: textFile.fileName)
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeDataUC = MockNodeDataUseCase()
         let mockBackupsUC = MockBackupsUseCase()
@@ -561,7 +543,6 @@ final class TextEditorViewModelTests: XCTestCase {
         let textFile = TextFile(fileName: "testAction_renameFile_create")
         let mockRouter = MockTextEditorViewRouter()
         let mockUploadFileUC = MockUploadFileUseCase()
-        mockUploadFileUC.duplicate = true
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeDataUC = MockNodeDataUseCase()
         let mockBackupsUC = MockBackupsUseCase()
@@ -594,8 +575,7 @@ final class TextEditorViewModelTests: XCTestCase {
     func testAction_renameFileTo_create() {
         let textFile = TextFile(fileName: "testAction_renameFileTo_create")
         let mockRouter = MockTextEditorViewRouter()
-        let mockUploadFileUC = MockUploadFileUseCase()
-        mockUploadFileUC.duplicate = false
+        let mockUploadFileUC = MockUploadFileUseCase(duplicate: false)
         let mockDownloadNodeUC = MockDownloadNodeUseCase()
         let mockNodeDataUC = MockNodeDataUseCase()
         let mockBackupsUC = MockBackupsUseCase()
