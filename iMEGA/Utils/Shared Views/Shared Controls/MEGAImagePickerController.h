@@ -3,6 +3,8 @@
 - (id)init NS_UNAVAILABLE;
 
 - (instancetype)initToUploadWithParentNode:(MEGANode *)parentNode sourceType:(UIImagePickerControllerSourceType)sourceType;
+- (instancetype)initToUploadWithParentNodeHandle:(MEGAHandle)parentNodeHandle
+                                      sourceType:(UIImagePickerControllerSourceType)sourceType;
 
 - (instancetype)initToChangeAvatarWithSourceType:(UIImagePickerControllerSourceType)sourceType;
 

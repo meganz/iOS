@@ -46,6 +46,10 @@
     return self;
 }
 
+- (instancetype)initToUploadWithParentNodeHandle:(MEGAHandle)parentNodeHandle
+                                      sourceType:(UIImagePickerControllerSourceType)sourceType {
+    return [self initToUploadWithParentNode:[MEGASdk.shared nodeForHandle:parentNodeHandle] sourceType:sourceType];
+}
 - (instancetype)initToChangeAvatarWithSourceType:(UIImagePickerControllerSourceType)sourceType {
     self = [super init];
     
