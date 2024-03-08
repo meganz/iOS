@@ -236,7 +236,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
     
     func testUserAvatar_onLoadWaitingRoomAndIsNotGuest_shouldShowAvatar() {
         let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity())
-        let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
+        let userImageUseCase = MockUserImageUseCase(fetchAvatarResult: .success("image"))
         let sut = WaitingRoomViewModel(megaHandleUseCase: megaHandleUseCase, userImageUseCase: userImageUseCase)
         
         evaluate {
@@ -247,7 +247,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
     func testUserAvatar_onLoadWaitingRoomAndIsGuest_shouldNotShowAvatar() {
         let accountUseCase = MockAccountUseCase(isGuest: true)
         let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity())
-        let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
+        let userImageUseCase = MockUserImageUseCase()
         let sut = WaitingRoomViewModel(accountUseCase: accountUseCase,
                                        megaHandleUseCase: megaHandleUseCase,
                                        userImageUseCase: userImageUseCase)
@@ -262,7 +262,7 @@ final class WaitingRoomViewModelTests: XCTestCase {
         let meetingUseCase = MockMeetingCreatingUseCase(createEphemeralAccountCompletion: .success)
         let accountUseCase = MockAccountUseCase(isGuest: true)
         let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity())
-        let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
+        let userImageUseCase = MockUserImageUseCase(fetchAvatarResult: .success("image"))
         let sut = WaitingRoomViewModel(callUseCase: callUseCase,
                                        meetingUseCase: meetingUseCase,
                                        accountUseCase: accountUseCase,

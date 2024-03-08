@@ -127,17 +127,17 @@ final class MeetingParticipantInfoViewModel: ViewModelType {
               let avatarBackgroundHexColor = MEGASdk.avatarColor(forBase64UserHandle: base64Handle) else {
             return
         }
+                
+        let avatarHandler = UserAvatarHandler(
+            userImageUseCase: userImageUseCase,
+            initials: name.initialForAvatar(),
+            avatarBackgroundColor: UIColor.colorFromHexString(avatarBackgroundHexColor) ?? MEGAAppColor.Black._000000.uiColor
+        )
         
-        userImageUseCase.fetchUserAvatar(withUserHandle: participant.participantId,
-                                         base64Handle: base64Handle,
-                                         avatarBackgroundHexColor: avatarBackgroundHexColor,
-                                         name: name) { [weak self] result in
-            switch result {
-            case .success(let image):
-                self?.invokeCommand?(.updateAvatarImage(image: image))
-            case .failure:
-                break
-            }
+        Task { @MainActor in
+            let image = await avatarHandler.avatar(for: base64Handle)
+            invokeCommand?(.updateAvatarImage(image: image))
+            
         }
     }
     

@@ -729,40 +729,6 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         XCTAssert(callUseCase.hangCall_CalledTimes == 0)
     }
     
-    func testAction_participantAdded_createAvatar() {
-        let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
-        let call = CallEntity()
-        let callUseCase = MockCallUseCase(call: call)
-        callUseCase.chatRoom = chatRoom
-        let remoteVideoUseCase = MockCallRemoteVideoUseCase()
-        let containerViewModel = MeetingContainerViewModel(chatRoom: chatRoom, callUseCase: callUseCase)
-        let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoom)
-        let chatRoomUserUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("test"), userDisplayNamesForPeersResult: .success([(handle: 100, name: "test")]))
-        let expectation = expectation(description: "Awaiting publisher")
-        let userUseCase = MockUserImageUseCase(result: .success(UIImage()), createAvatarCompletion: { handle in
-            XCTAssert(handle == 100, "handle should match")
-            expectation.fulfill()
-        })
-        
-        let viewModel = makeMeetingParticipantsLayoutViewModel(
-            containerViewModel: containerViewModel,
-            callUseCase: callUseCase,
-            captureDeviceUseCase: MockCaptureDeviceUseCase(),
-            localVideoUseCase: MockCallLocalVideoUseCase(),
-            remoteVideoUseCase: remoteVideoUseCase,
-            chatRoomUseCase: chatRoomUseCase,
-            chatRoomUserUseCase: chatRoomUserUseCase,
-            accountUseCase: MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
-            userImageUseCase: userUseCase,
-            megaHandleUseCase: MockMEGAHandleUseCase(base64Handle: "base64Handle"),
-            chatRoom: chatRoom,
-            call: call
-        )
-        viewModel.participantJoined(participant: CallParticipantEntity(participantId: 100))
-        userUseCase.avatarChangePublisher.send([100])
-        waitForExpectations(timeout: 20)
-    }
-    
     func testAction_participantAdded_downloadAvatar() {
         let chatRoom = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let call = CallEntity()
@@ -773,7 +739,7 @@ class MeetingParticipantsLayoutViewModelTests: XCTestCase {
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoom)
         let chatRoomuserUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("test"), userDisplayNamesForPeersResult: .success([(handle: 100, name: "test")]))
         let expectation = expectation(description: "Awaiting publisher")
-        let userUseCase = MockUserImageUseCase(result: .success(UIImage()), downloadAvatarCompletion: { handle in
+        let userUseCase = MockUserImageUseCase(downloadAvatarCompletion: { handle in
             XCTAssert(handle == "base64Handle", "handle should match")
             expectation.fulfill()
         })

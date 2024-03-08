@@ -88,37 +88,22 @@ final class UserAvatarViewModel: ObservableObject {
         await updatePrimaryAvatar(image)
     }
     
-    private func createAvatar(withHandle handle: HandleEntity, isRightToLeftLanguage: Bool) async throws -> UIImage? {
+    private func createAvatar(withHandle handle: HandleEntity, isRightToLeftLanguage: Bool, size: CGSize = CGSize(width: 100, height: 100)) async throws -> UIImage? {
         let name = try await username(forUserHandle: handle, shouldUseMeText: false)
         
         guard let base64Handle = MEGASdk.base64Handle(forUserHandle: handle),
               let avatarBackgroundHexColor = MEGASdk.avatarColor(forBase64UserHandle: base64Handle),
-              let chatTitle = name   else {
+              let chatTitle = name else {
             return nil
         }
         
-        return try await userImageUseCase.createAvatar(withUserHandle: userId,
-                                                       base64Handle: base64Handle,
-                                                       avatarBackgroundHexColor: avatarBackgroundHexColor,
-                                                       backgroundGradientHexColor: nil,
-                                                       name: chatTitle,
-                                                       isRightToLeftLanguage: isRightToLeftLanguage,
-                                                       shouldCache: false,
-                                                       useCache: false)
-    }
-    
-    private func createAvatar(usingName name: String, isRightToLeftLanguage: Bool, size: CGSize = CGSize(width: 100, height: 100)) -> UIImage? {
-        let initials = name
-            .components(separatedBy: " ")
-            .prefix(2)
-            .compactMap({ $0.count > 1 ? String($0.prefix(1)).uppercased() : nil })
-            .joined(separator: "")
-                
+        let initials = chatTitle.initialForAvatar()
+        let avatarBackgroundColor = UIColor.colorFromHexString(avatarBackgroundHexColor) ?? MEGAAppColor.Black._000000.uiColor
+        
         return UIImage.drawImage(
             forInitials: initials,
             size: size,
-            backgroundColor: MEGAAppColor.Chat.chatAvatarBackground.uiColor,
-            backgroundGradientColor: MEGAAppColor.Gray._DBDBDB.uiColor,
+            backgroundColor: avatarBackgroundColor,
             textColor: MEGAAppColor.White._FFFFFF.uiColor,
             font: UIFont.systemFont(ofSize: min(size.width, size.height)/2.0),
             isRightToLeftLanguage: isRightToLeftLanguage)

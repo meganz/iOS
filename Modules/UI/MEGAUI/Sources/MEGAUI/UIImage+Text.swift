@@ -6,7 +6,7 @@ public extension UIImage {
         forInitials initials: String,
         size imageSize: CGSize,
         backgroundColor: UIColor,
-        backgroundGradientColor: UIColor?,
+        backgroundGradientColor: UIColor? = nil,
         textColor: UIColor,
         font: UIFont,
         isRightToLeftLanguage: Bool

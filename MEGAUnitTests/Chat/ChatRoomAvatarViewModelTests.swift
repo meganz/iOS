@@ -9,9 +9,8 @@ final class ChatRoomAvatarViewModelTests: XCTestCase {
     func testLoadAvatar_forOneToOneChat_shouldUpdateOneAvatarAndMatch() async {
         let chatRoom = ChatRoomEntity(chatType: .oneToOne)
         let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: "base64Handle")
-        let userImage = UIImage(systemName: "folder") ?? UIImage()
         let mockAccountUseCase = MockAccountUseCase(currentUser: UserEntity(handle: 1))
-        let userImageUseCase = MockUserImageUseCase(result: .success(userImage))
+        let userImageUseCase = MockUserImageUseCase()
         let sut = makeChatRoomAvatarViewModel(
             chatRoom: chatRoom,
             userImageUseCase: userImageUseCase,
@@ -19,10 +18,11 @@ final class ChatRoomAvatarViewModelTests: XCTestCase {
             megaHandleUseCase: megaHandleUseCase
         )
         
+        let userImage = try? await sut.createAvatar(withHandle: 1)
         await sut.loadAvatar(isRightToLeftLanguage: false)
         
         let expected = ChatListItemAvatarEntity(
-            primaryAvatarData: userImage.pngData(),
+            primaryAvatarData: userImage?.pngData(),
             secondaryAvatarData: nil
         )
         let result = sut.chatListItemAvatar
@@ -34,8 +34,7 @@ final class ChatRoomAvatarViewModelTests: XCTestCase {
         let peer = ChatRoomEntity.Peer(handle: 200, privilege: .standard)
         let chatRoom = ChatRoomEntity(peerCount: 1, chatType: .group, peers: [peer])
         let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: "base64Handle")
-        let userImage = UIImage(systemName: "folder") ?? UIImage()
-        let userImageUseCase = MockUserImageUseCase(result: .success(userImage))
+        let userImageUseCase = MockUserImageUseCase()
         let chatRoomUserUseCase = MockChatRoomUserUseCase(
             userDisplayNamesForPeersResult: .success([(200, "Peer1")])
         )
@@ -46,10 +45,11 @@ final class ChatRoomAvatarViewModelTests: XCTestCase {
             megaHandleUseCase: megaHandleUseCase
         )
         
+        let userImage = try? await sut.createAvatar(withHandle: 200)
         await sut.loadAvatar(isRightToLeftLanguage: false)
         
         let expected = ChatListItemAvatarEntity(
-            primaryAvatarData: userImage.pngData(),
+            primaryAvatarData: userImage?.pngData(),
             secondaryAvatarData: nil
         )
         let result = sut.chatListItemAvatar
@@ -61,8 +61,7 @@ final class ChatRoomAvatarViewModelTests: XCTestCase {
         let peer2 = ChatRoomEntity.Peer(handle: 202, privilege: .standard)
         let chatRoom = ChatRoomEntity(peerCount: 2, chatType: .group, peers: [peer1, peer2])
         let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: "base64Handle")
-        let userImage = UIImage(systemName: "folder") ?? UIImage()
-        let userImageUseCase = MockUserImageUseCase(result: .success(userImage))
+        let userImageUseCase = MockUserImageUseCase()
         let chatRoomUserUseCase = MockChatRoomUserUseCase(
             userDisplayNamesForPeersResult: .success([(201, "Peer2"), (202, "Peer2")])
         )
@@ -73,11 +72,12 @@ final class ChatRoomAvatarViewModelTests: XCTestCase {
             megaHandleUseCase: megaHandleUseCase
         )
         
+        let userImage = try? await sut.createAvatar(withHandle: 201)
         await sut.loadAvatar(isRightToLeftLanguage: false)
         
         let expected = ChatListItemAvatarEntity(
-            primaryAvatarData: userImage.pngData(),
-            secondaryAvatarData: userImage.pngData()
+            primaryAvatarData: userImage?.pngData(),
+            secondaryAvatarData: userImage?.pngData()
         )
         let result = sut.chatListItemAvatar
         XCTAssertEqual(result, expected)

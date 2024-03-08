@@ -389,16 +389,15 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             return
         }
         
-        userImageUseCase.fetchUserAvatar(withUserHandle: participant.participantId,
-                                         base64Handle: base64Handle,
-                                         avatarBackgroundHexColor: avatarBackgroundHexColor,
-                                         name: name) { [weak self] result in
-            switch result {
-            case .success(let image):
-                completion(image)
-            case .failure:
-                MEGALogError("Error fetching avatar for participant \(self?.megaHandleUseCase.base64Handle(forUserHandle: participant.participantId) ?? "No name")")
-            }
+        let avatarHandler = UserAvatarHandler(
+            userImageUseCase: userImageUseCase,
+            initials: name.initialForAvatar(),
+            avatarBackgroundColor: UIColor.colorFromHexString(avatarBackgroundHexColor) ?? MEGAAppColor.Black._000000.uiColor
+        )
+        
+        Task { @MainActor in
+            let image = await avatarHandler.avatar(for: base64Handle)
+            completion(image)
         }
     }
     
@@ -940,23 +939,17 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
                 
                 guard let base64Handle = self.megaHandleUseCase.base64Handle(forUserHandle: handle) else { return }
                 
+                userImageUseCase.clearAvatarCache(base64Handle: base64Handle)
+                
                 if let avatarBackgroundHexColor = MEGASdk.avatarColor(forBase64UserHandle: base64Handle) {
-                    let image = try await self.userImageUseCase.createAvatar(
-                        withUserHandle: handle,
-                        base64Handle: base64Handle,
-                        avatarBackgroundHexColor: avatarBackgroundHexColor,
-                        backgroundGradientHexColor: nil,
-                        name: name
+                    let avatarHandler = UserAvatarHandler(
+                        userImageUseCase: userImageUseCase,
+                        initials: name.initialForAvatar(),
+                        avatarBackgroundColor: UIColor.colorFromHexString(avatarBackgroundHexColor) ?? MEGAAppColor.Black._000000.uiColor
                     )
-                    await self.updateAvatar(handle: handle, image: image)
+                    let image = await avatarHandler.avatar(for: base64Handle)
+                    await updateAvatar(handle: handle, image: image)
                 }
-
-                let avatar = try await self.userImageUseCase.fetchAvatar(base64Handle: base64Handle, forceDownload: true)
-                guard let image = UIImage(contentsOfFile: avatar) else {
-                    throw UserImageLoadErrorEntity.unableToFetch
-                }
-
-                await self.updateAvatar(handle: handle, image: image)
             } catch {
                 MEGALogDebug("Failed to fetch avatar for \(handle) with \(error)")
             }

@@ -10,7 +10,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
         let participant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, isModerator: true, canReceiveVideoHiRes: true)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(), contactEmail: "test@email.com")
         let chatRoomUserUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
-        let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
+        let userImageUseCase = MockUserImageUseCase()
         let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity(100))
         let contactsUseCase = MockContactsUseCase(contact: UserEntity(handle: 200))
         let router = MockMeetingParticipantInfoViewRouter()
@@ -31,7 +31,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
                 ]),
                 .updateEmail(email: "test@email.com"),
                 .updateName(name: "Test"),
-                .updateAvatarImage(image: UIImage())
+                .updateAvatarImage(image: UIImage.iconContacts)
              ])
     }
     
@@ -39,7 +39,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
         let participant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, isModerator: true, canReceiveVideoHiRes: true)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(), contactEmail: "test@email.com")
         let chatRoomUserUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
-        let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
+        let userImageUseCase = MockUserImageUseCase()
         let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity(100))
         let contactsUseCase = MockContactsUseCase()
         let router = MockMeetingParticipantInfoViewRouter()
@@ -60,7 +60,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
                 ]),
                 .updateEmail(email: "test@email.com"),
                 .updateName(name: "Test"),
-                .updateAvatarImage(image: UIImage())
+                .updateAvatarImage(image: UIImage.iconContacts)
              ])
     }
     
@@ -68,7 +68,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
         let participant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, isModerator: false, canReceiveVideoHiRes: true)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(), contactEmail: "test@email.com")
         let chatRoomUserUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
-        let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
+        let userImageUseCase = MockUserImageUseCase()
         let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity(100))
         let contactsUseCase = MockContactsUseCase(contact: UserEntity(handle: 200))
         let router = MockMeetingParticipantInfoViewRouter()
@@ -90,7 +90,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
                 ]),
                 .updateEmail(email: "test@email.com"),
                 .updateName(name: "Test"),
-                .updateAvatarImage(image: UIImage())
+                .updateAvatarImage(image: UIImage.iconContacts)
              ])
     }
     
@@ -98,7 +98,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
         let participant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, isModerator: false, canReceiveVideoHiRes: true)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity())
         let chatRoomUserUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
-        let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
+        let userImageUseCase = MockUserImageUseCase()
         let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity(100))
         let contactsUseCase = MockContactsUseCase()
         let router = MockMeetingParticipantInfoViewRouter()
@@ -120,7 +120,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
                 ]),
                 .updateEmail(email: nil),
                 .updateName(name: "Test"),
-                .updateAvatarImage(image: UIImage())
+                .updateAvatarImage(image: UIImage.iconContacts)
              ])
     }
     
@@ -128,7 +128,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
         let participant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, isModerator: false, canReceiveVideoHiRes: true)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(), contactEmail: "test@email.com")
         let chatRoomUserUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
-        let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
+        let userImageUseCase = MockUserImageUseCase()
         let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity(100))
         let contactsUseCase = MockContactsUseCase(contact: UserEntity(handle: 200))
         let router = MockMeetingParticipantInfoViewRouter()
@@ -150,7 +150,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
                 ]),
                 .updateEmail(email: "test@email.com"),
                 .updateName(name: "Test"),
-                .updateAvatarImage(image: UIImage())
+                .updateAvatarImage(image: UIImage.iconContacts)
              ])
     }
     
@@ -158,7 +158,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
         let participant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, isModerator: false, canReceiveVideoHiRes: true)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(), contactEmail: "test@email.com")
         let chatRoomUserUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"), contactEmail: "test@email.com")
-        let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
+        let userImageUseCase = MockUserImageUseCase()
         let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity(100))
         let contactsUseCase = MockContactsUseCase()
         let router = MockMeetingParticipantInfoViewRouter()
@@ -179,7 +179,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
                 ]),
                 .updateEmail(email: "test@email.com"),
                 .updateName(name: "Test"),
-                .updateAvatarImage(image: UIImage())
+                .updateAvatarImage(image: UIImage.iconContacts)
              ])
     }
     
@@ -187,7 +187,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
         let participant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, isModerator: false, canReceiveVideoHiRes: true)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(), contactEmail: nil)
         let chatRoomUserUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
-        let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
+        let userImageUseCase = MockUserImageUseCase()
         let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity(100))
         let contactsUseCase = MockContactsUseCase()
         let router = MockMeetingParticipantInfoViewRouter()
@@ -209,7 +209,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
                 ]),
                 .updateEmail(email: nil),
                 .updateName(name: "Test"),
-                .updateAvatarImage(image: UIImage())
+                .updateAvatarImage(image: UIImage.iconContacts)
              ])
     }
     
@@ -217,7 +217,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
         let participant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, isModerator: false, canReceiveVideoHiRes: true)
         let chatRoomUseCase = MockChatRoomUseCase()
         let chatRoomUserUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
-        let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
+        let userImageUseCase = MockUserImageUseCase()
         let router = MockMeetingParticipantInfoViewRouter()
         
         let viewModel = MeetingParticipantInfoViewModel(participant: participant,
@@ -237,7 +237,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
         let participant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, isModerator: false, canReceiveVideoHiRes: true)
         let chatRoomEntity = ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: chatRoomEntity)
-        let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
+        let userImageUseCase = MockUserImageUseCase()
         let router = MockMeetingParticipantInfoViewRouter()
         
         let viewModel = MeetingParticipantInfoViewModel(participant: participant,
@@ -257,7 +257,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
         let participant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, isModerator: false, canReceiveVideoHiRes: true)
         let chatRoomUseCase = MockChatRoomUseCase()
         let chatRoomUserUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
-        let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
+        let userImageUseCase = MockUserImageUseCase()
         let router = MockMeetingParticipantInfoViewRouter()
         
         let viewModel = MeetingParticipantInfoViewModel(participant: participant,
@@ -277,7 +277,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
         let participant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, isModerator: false, canReceiveVideoHiRes: true)
         let chatRoomUseCase = MockChatRoomUseCase()
         let chatRoomUserUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
-        let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
+        let userImageUseCase = MockUserImageUseCase()
         let router = MockMeetingParticipantInfoViewRouter()
         
         let viewModel = MeetingParticipantInfoViewModel(participant: participant,
@@ -297,7 +297,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
         let participant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, isModerator: false, canReceiveVideoHiRes: true)
         let chatRoomUseCase = MockChatRoomUseCase()
         let chatRoomUserUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
-        let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
+        let userImageUseCase = MockUserImageUseCase()
         let router = MockMeetingParticipantInfoViewRouter()
         
         let viewModel = MeetingParticipantInfoViewModel(participant: participant,
@@ -317,7 +317,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
         let participant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, isModerator: false, canReceiveVideoHiRes: true)
         let chatRoomUseCase = MockChatRoomUseCase()
         let chatRoomUserUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
-        let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
+        let userImageUseCase = MockUserImageUseCase()
         let router = MockMeetingParticipantInfoViewRouter()
         
         let viewModel = MeetingParticipantInfoViewModel(
@@ -339,7 +339,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
         let participant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, isModerator: true, audio: .on, canReceiveVideoHiRes: true)
         let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity())
         let chatRoomUserUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
-        let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
+        let userImageUseCase = MockUserImageUseCase()
         let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity(100))
         let router = MockMeetingParticipantInfoViewRouter()
         
@@ -362,7 +362,7 @@ final class MeetingParticipantInfoViewModelTests: XCTestCase {
                 ]),
                 .updateEmail(email: nil),
                 .updateName(name: "Test"),
-                .updateAvatarImage(image: UIImage())
+                .updateAvatarImage(image: UIImage.iconContacts)
              ])
     }
     

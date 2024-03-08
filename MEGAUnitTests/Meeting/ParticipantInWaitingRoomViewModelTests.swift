@@ -8,7 +8,7 @@ final class ParticipantInWaitingRoomViewModelTests: XCTestCase {
     var denyParticipantHandler_calledTimes = 0
     
     let participant = CallParticipantEntity(chatId: 100, participantId: 100, clientId: 100, isModerator: true)
-    let userImageUseCase = MockUserImageUseCase(result: .success(UIImage()))
+    let userImageUseCase = MockUserImageUseCase()
     let chatRoomUseCase = MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(chatType: .group))
     let megaHandleUseCase = MockMEGAHandleUseCase(base64Handle: Base64HandleEntity(100))
     let userUseCase = MockChatRoomUserUseCase(userDisplayNameForPeerResult: .success("Test"))
@@ -19,7 +19,7 @@ final class ParticipantInWaitingRoomViewModelTests: XCTestCase {
              actions: [.onViewReady],
              expectedCommands: [
                 .updateName(name: "Test"),
-                .updateAvatarImage(image: UIImage())
+                .updateAvatarImage(image: UIImage.iconContacts)
              ])
     }
     
