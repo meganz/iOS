@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="RUe-vS-5fH">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="RUe-vS-5fH">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -69,16 +69,16 @@
                                                                                 </constraints>
                                                                             </imageView>
                                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="ii9-ck-CF1">
-                                                                                <rect key="frame" x="41" y="8.5" width="275" height="33.5"/>
+                                                                                <rect key="frame" x="41" y="6" width="275" height="38"/>
                                                                                 <subviews>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Country" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Ps-VK-4fb">
-                                                                                        <rect key="frame" x="0.0" y="0.0" width="275" height="13.5"/>
+                                                                                        <rect key="frame" x="0.0" y="0.0" width="275" height="14.5"/>
                                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                                                         <nil key="textColor"/>
                                                                                         <nil key="highlightedColor"/>
                                                                                     </label>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="New Zealand (+64)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zar-d5-eaQ">
-                                                                                        <rect key="frame" x="0.0" y="16.5" width="275" height="17"/>
+                                                                                        <rect key="frame" x="0.0" y="17.5" width="275" height="20.5"/>
                                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                                         <nil key="textColor"/>
                                                                                         <nil key="highlightedColor"/>
@@ -136,25 +136,25 @@
                                                                                 </constraints>
                                                                             </imageView>
                                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="xCE-6Q-bRi">
-                                                                                <rect key="frame" x="41" y="7.5" width="300" height="35"/>
+                                                                                <rect key="frame" x="41" y="5.5" width="300" height="39.5"/>
                                                                                 <subviews>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Phone Number" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WJa-I9-2TH">
-                                                                                        <rect key="frame" x="0.0" y="0.0" width="300" height="13.5"/>
+                                                                                        <rect key="frame" x="0.0" y="0.0" width="300" height="14.5"/>
                                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                                                         <nil key="textColor"/>
                                                                                         <nil key="highlightedColor"/>
                                                                                     </label>
                                                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="1ZJ-k7-wc7">
-                                                                                        <rect key="frame" x="0.0" y="16.5" width="300" height="18.5"/>
+                                                                                        <rect key="frame" x="0.0" y="17.5" width="300" height="22"/>
                                                                                         <subviews>
                                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="+64" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l67-zd-SyV">
-                                                                                                <rect key="frame" x="0.0" y="0.0" width="26.5" height="18.5"/>
+                                                                                                <rect key="frame" x="0.0" y="0.0" width="31.5" height="22"/>
                                                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                                                 <nil key="textColor"/>
                                                                                                 <nil key="highlightedColor"/>
                                                                                             </label>
                                                                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ya6-zD-9Hn">
-                                                                                                <rect key="frame" x="34.5" y="0.0" width="265.5" height="18.5"/>
+                                                                                                <rect key="frame" x="39.5" y="0.0" width="260.5" height="22"/>
                                                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                                                 <textInputTraits key="textInputTraits" keyboardType="numberPad" textContentType="tel"/>
                                                                                                 <connections>
@@ -199,7 +199,7 @@
                                                                 </constraints>
                                                             </imageView>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error message" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1l8-2a-ffA">
-                                                                <rect key="frame" x="42" y="11.5" width="316" height="13.5"/>
+                                                                <rect key="frame" x="42" y="11" width="316" height="14.5"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
@@ -258,13 +258,13 @@
                                 </connections>
                             </scrollView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9bf-wA-VUE">
-                                <rect key="frame" x="169" y="55" width="37" height="17"/>
+                                <rect key="frame" x="166" y="55" width="43.5" height="20.5"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hWm-FL-Au7" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
-                                <rect key="frame" x="315" y="49" width="45" height="29"/>
+                                <rect key="frame" x="307" y="49" width="53" height="33"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <state key="normal" title="Cancel"/>
                                 <userDefinedRuntimeAttributes>
@@ -292,15 +292,18 @@
                         <outlet property="countryBottomSeparatorView" destination="X8d-zZ-FvG" id="rej-hv-cmd"/>
                         <outlet property="countryCodeLabel" destination="l67-zd-SyV" id="gsb-ER-0NF"/>
                         <outlet property="countryContainerView" destination="ubW-Mb-xKj" id="ZaA-ql-h7e"/>
+                        <outlet property="countryFieldImageView" destination="R6O-eq-hFA" id="bad-zc-Erf"/>
                         <outlet property="countryLabel" destination="3Ps-VK-4fb" id="Unz-4e-4Xp"/>
                         <outlet property="countryNameLabel" destination="zar-d5-eaQ" id="ETJ-oj-H3p"/>
                         <outlet property="countryTopSeparatorView" destination="zyq-Nx-ly7" id="zhP-MG-2nf"/>
                         <outlet property="descriptionTextView" destination="8PA-Vj-YcB" id="acG-4m-wP7"/>
+                        <outlet property="disclosureIndicatorImageView" destination="zz8-T4-R75" id="Hal-wx-VyU"/>
                         <outlet property="errorImageView" destination="QCs-So-eiO" id="x1p-ux-Pd6"/>
                         <outlet property="errorMessageLabel" destination="1l8-2a-ffA" id="Ojm-TJ-vwM"/>
                         <outlet property="errorView" destination="pYS-uh-Ndw" id="WVC-ik-n41"/>
                         <outlet property="headerImageView" destination="ztT-na-Kbt" id="zu4-VM-HYV"/>
                         <outlet property="nextButton" destination="I1e-G7-G4T" id="EPH-1V-DNh"/>
+                        <outlet property="phoneFieldImageView" destination="pdY-ap-gBU" id="6cZ-eh-RVj"/>
                         <outlet property="phoneNumberBottomSeparatorView" destination="0ee-zz-bhS" id="njV-9Z-J1S"/>
                         <outlet property="phoneNumberContainerView" destination="c17-Yd-FEL" id="ER5-Ep-lBJ"/>
                         <outlet property="phoneNumberLabel" destination="WJa-I9-2TH" id="5ho-H5-rup"/>
@@ -336,22 +339,22 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MfW-xf-nXg">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="413"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="426.5"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="12r-LI-o9D">
-                                                <rect key="frame" x="17" y="35" width="341" height="343"/>
+                                                <rect key="frame" x="17" y="35" width="341" height="356.5"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="os7-tX-hsx">
-                                                        <rect key="frame" x="0.0" y="0.0" width="341" height="39.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="341" height="46.5"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please type the verification code sent to" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TGe-BU-WXm">
-                                                                <rect key="frame" x="57" y="0.0" width="227.5" height="14.5"/>
+                                                                <rect key="frame" x="33" y="0.0" width="275" height="18"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(+64) 21212121" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4TR-5D-fsL">
-                                                                <rect key="frame" x="118.5" y="22.5" width="104" height="17"/>
+                                                                <rect key="frame" x="109" y="26" width="123" height="20.5"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
@@ -359,7 +362,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="7Ob-ZD-OKc">
-                                                        <rect key="frame" x="0.0" y="69.5" width="341" height="120"/>
+                                                        <rect key="frame" x="0.0" y="76.5" width="341" height="120"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Erd-4t-pw3">
                                                                 <rect key="frame" x="31.5" y="0.0" width="278" height="60"/>
@@ -478,16 +481,16 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="Apk-4B-w7a">
-                                                        <rect key="frame" x="0.0" y="219.5" width="341" height="43.5"/>
+                                                        <rect key="frame" x="0.0" y="226.5" width="341" height="50"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You didn't receive a code?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oeh-s4-4Mp">
-                                                                <rect key="frame" x="96" y="0.0" width="149" height="14.5"/>
+                                                                <rect key="frame" x="80.5" y="0.0" width="180" height="18"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sXL-Qy-9X6" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
-                                                                <rect key="frame" x="149" y="16.5" width="43" height="27"/>
+                                                                <rect key="frame" x="144.5" y="20" width="52" height="30"/>
                                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                                 <state key="normal" title="Resend"/>
                                                                 <userDefinedRuntimeAttributes>
@@ -501,7 +504,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lzc-aO-y1c" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="293" width="341" height="50"/>
+                                                        <rect key="frame" x="0.0" y="306.5" width="341" height="50"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="50" id="fcV-8K-mso"/>
                                                         </constraints>
@@ -569,16 +572,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="74a-cv-ZO1">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="w46-uN-maF" userLabel="Content Stack View">
-                                        <rect key="frame" x="20" y="20" width="335" height="627"/>
+                                        <rect key="frame" x="20" y="20" width="335" height="607"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="addPhoneNumberMedium" translatesAutoresizingMaskIntoConstraints="NO" id="Abt-Sp-hru">
                                                 <rect key="frame" x="0.0" y="0.0" width="335" height="128"/>
                                             </imageView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="aBt-va-wFv" userLabel="Label Stack View">
-                                                <rect key="frame" x="0.0" y="281.5" width="335" height="80"/>
+                                                <rect key="frame" x="0.0" y="271.5" width="335" height="80"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="249" text="Add Phone Number" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aCv-KP-OSs">
                                                         <rect key="frame" x="0.0" y="0.0" width="335" height="40"/>
@@ -601,7 +604,7 @@
                                                 </constraints>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Hqv-tM-DGx" userLabel="Button Stack View">
-                                                <rect key="frame" x="0.0" y="515" width="335" height="112"/>
+                                                <rect key="frame" x="0.0" y="495" width="335" height="112"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cQA-jD-WtR" customClass="MEGAButton" customModule="MEGA" customModuleProvider="target">
                                                         <rect key="frame" x="40" y="0.0" width="255" height="50"/>
@@ -705,10 +708,10 @@
             <size key="intrinsicContentSize" width="155" height="33"/>
         </designable>
         <designable name="hWm-FL-Au7">
-            <size key="intrinsicContentSize" width="45" height="29"/>
+            <size key="intrinsicContentSize" width="53" height="33"/>
         </designable>
         <designable name="sXL-Qy-9X6">
-            <size key="intrinsicContentSize" width="43" height="27"/>
+            <size key="intrinsicContentSize" width="52" height="30"/>
         </designable>
     </designables>
     <resources>

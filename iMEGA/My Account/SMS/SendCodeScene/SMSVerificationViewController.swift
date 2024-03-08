@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import MEGAPresentation
 import UIKit
@@ -16,12 +17,15 @@ final class SMSVerificationViewController: UIViewController, ViewType {
     @IBOutlet private weak var phoneNumberLabel: UILabel!
     @IBOutlet private weak var phoneNumberTextField: UITextField!
     @IBOutlet private weak var phoneNumberBottomSeparatorView: UIView!
+    @IBOutlet weak var phoneFieldImageView: UIImageView!
     
     @IBOutlet private weak var countryTopSeparatorView: UIView!
     @IBOutlet private weak var countryContainerView: UIView!
     @IBOutlet private weak var countryNameLabel: UILabel!
     @IBOutlet private weak var countryCodeLabel: UILabel!
     @IBOutlet private weak var countryBottomSeparatorView: UIView!
+    @IBOutlet private weak var disclosureIndicatorImageView: UIImageView!
+    @IBOutlet weak var countryFieldImageView: UIImageView!
     
     @IBOutlet private weak var errorImageView: UIImageView!
     @IBOutlet private weak var errorMessageLabel: UILabel!
@@ -101,8 +105,8 @@ final class SMSVerificationViewController: UIViewController, ViewType {
 
     @IBAction private func didEditingChangedInPhoneNumberField() {
         nextButton.isEnabled = !(phoneNumberTextField.text?.isEmpty ?? true)
-        phoneNumberLabel.textColor = UIColor.mnz_secondaryGray(for: self.traitCollection)
-        phoneNumberTextField.textColor = UIColor.label
+        phoneNumberLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : .mnz_secondaryGray(for: traitCollection)
+        phoneNumberTextField.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.label
         errorView.isHidden = true
     }
 
@@ -160,28 +164,47 @@ final class SMSVerificationViewController: UIViewController, ViewType {
     private func updateAppearance() {
         view.backgroundColor = .mnz_backgroundGrouped(for: traitCollection)
         
-        titleLabel.textColor = MEGAAppColor.White._FFFFFF.uiColor
-        cancelButton.setTitleColor(MEGAAppColor.White._FFFFFF.uiColor, for: .normal)
+        let primaryTextColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : MEGAAppColor.White._FFFFFF.uiColor
+        let secondaryTextColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : .mnz_secondaryGray(for: traitCollection)
+        let separatorColor = UIColor.mnz_separator(for: traitCollection)
+        let fieldBackgroundColor = UIColor.mnz_backgroundElevated(traitCollection)
+        let labelColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.label
         
-        countryTopSeparatorView.backgroundColor = .mnz_separator(for: traitCollection)
-        countryContainerView.backgroundColor = .mnz_backgroundElevated(traitCollection)
-        countryLabel.textColor = .mnz_secondaryGray(for: traitCollection)
-        countryBottomSeparatorView.backgroundColor = .mnz_separator(for: traitCollection)
+        titleLabel.textColor = primaryTextColor
+        cancelButton.setTitleColor(primaryTextColor, for: .normal)
+        descriptionTextView.textColor = labelColor
         
-        phoneNumberTopSeparatorView.backgroundColor = .mnz_separator(for: traitCollection)
-        phoneNumberContainerView.backgroundColor = .mnz_backgroundElevated(traitCollection)
-        phoneNumberLabel.textColor = .mnz_secondaryGray(for: traitCollection)
-        phoneNumberBottomSeparatorView.backgroundColor = .mnz_separator(for: traitCollection)
+        countryTopSeparatorView.backgroundColor = separatorColor
+        countryContainerView.backgroundColor = fieldBackgroundColor
+        countryLabel.textColor = secondaryTextColor
+        countryBottomSeparatorView.backgroundColor = separatorColor
+        countryNameLabel.textColor = labelColor
         
-        errorImageView.tintColor = UIColor.systemRed
-        errorMessageLabel.textColor = UIColor.systemRed
+        phoneNumberTopSeparatorView.backgroundColor = separatorColor
+        phoneNumberContainerView.backgroundColor = fieldBackgroundColor
+        phoneNumberLabel.textColor = secondaryTextColor
+        phoneNumberBottomSeparatorView.backgroundColor = separatorColor
+        
+        errorImageView.tintColor = UIColor.isDesignTokenEnabled() ? TokenColors.Support.error : UIColor.systemRed
+        errorMessageLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.error : UIColor.systemRed
+        
+        if UIColor.isDesignTokenEnabled() {
+            disclosureIndicatorImageView.image = UIImage.standardDisclosureIndicatorDesignToken
+            countryFieldImageView.image = UIImage.verificationCountry.withRenderingMode(.alwaysTemplate)
+            phoneFieldImageView.image = UIImage.phoneNumber.withRenderingMode(.alwaysTemplate)
+            
+            let iconTintColor = TokenColors.Icon.secondary
+            countryFieldImageView.tintColor = iconTintColor
+            phoneFieldImageView.tintColor = iconTintColor
+        }
         
         nextButton.mnz_setupPrimary(traitCollection)
     }
 
     private func showSendCodeErrorMessage(_ message: String?) {
-        phoneNumberLabel.textColor = UIColor.systemRed
-        phoneNumberTextField.textColor = UIColor.systemRed
+        let errorColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.error : UIColor.systemRed
+        phoneNumberLabel.textColor = errorColor
+        phoneNumberTextField.textColor = errorColor
         errorMessageLabel.text = message
         errorView.isHidden = false
     }

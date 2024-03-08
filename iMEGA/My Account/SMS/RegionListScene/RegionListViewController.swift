@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import MEGAPresentation
 import UIKit
@@ -87,8 +88,15 @@ final class RegionListViewController: UIViewController, ViewType {
     }
     
     private func updateAppearance() {
-        tableView.sectionIndexColor = UIColor.mnz_turquoise(for: traitCollection)
-        tableView.separatorColor = UIColor.mnz_separator(for: traitCollection)
+        guard UIColor.isDesignTokenEnabled() else {
+            tableView.sectionIndexColor = UIColor.mnz_turquoise(for: traitCollection)
+            tableView.separatorColor = UIColor.mnz_separator(for: traitCollection)
+            return
+        }
+        
+        tableView.backgroundColor = TokenColors.Background.surface1
+        tableView.sectionIndexColor = TokenColors.Text.primary
+        tableView.separatorColor = TokenColors.Border.strong
     }
     
     // MARK: - Execute command

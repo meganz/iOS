@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import MEGASDKRepo
 import PhoneNumberKit
@@ -22,6 +23,7 @@ class PhoneNumberViewController: UITableViewController {
     @IBOutlet private weak var phoneNumberTextLabel: UILabel!
     @IBOutlet private weak var countrycodeLabel: UILabel!
     @IBOutlet private weak var phoneNumberLabel: UILabel!
+    @IBOutlet private weak var phoneNumberImageView: UIImageView!
     @IBOutlet private weak var modifyNumberLabel: UILabel!
     @IBOutlet private weak var removeNumberLabel: UILabel!
     
@@ -54,6 +56,9 @@ class PhoneNumberViewController: UITableViewController {
         super.traitCollectionDidChange(previousTraitCollection)
         
         if traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            if let navigationController {
+                AppearanceManager.forceNavigationBarUpdate(navigationController.navigationBar, traitCollection: traitCollection)
+            }
             updateAppearance()
         }
     }
@@ -61,8 +66,22 @@ class PhoneNumberViewController: UITableViewController {
     // MARK: - Private
     
     private func updateAppearance() {
-        tableView.backgroundColor = .mnz_secondaryBackgroundElevated(traitCollection)
-        tableView.separatorColor = .mnz_separator(for: traitCollection)
+        
+        if UIColor.isDesignTokenEnabled() {
+            tableView.backgroundColor = TokenColors.Background.page
+            tableView.separatorColor = TokenColors.Border.strong
+            phoneNumberTextLabel.textColor = TokenColors.Text.secondary
+            countrycodeLabel.textColor = TokenColors.Text.secondary
+            phoneNumberLabel.textColor = TokenColors.Text.primary
+            modifyNumberLabel.textColor = TokenColors.Text.primary
+            removeNumberLabel.textColor = TokenColors.Text.error
+            phoneNumberImageView.image = UIImage.phoneNumber.withRenderingMode(.alwaysTemplate)
+            phoneNumberImageView.tintColor = TokenColors.Icon.secondary
+        } else {
+            tableView.backgroundColor = .mnz_secondaryBackgroundElevated(traitCollection)
+            tableView.separatorColor = .mnz_separator(for: traitCollection)
+        }
+        
         tableView.reloadData()
     }
     

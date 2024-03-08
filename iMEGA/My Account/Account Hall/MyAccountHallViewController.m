@@ -139,6 +139,8 @@
         self.viewAndEditProfileImageView.tintColor = [UIColor mnz_navigationBarTintFor:self.traitCollection];
         self.viewAndEditProfileLabel.textColor = primaryTextColor;
         self.nameLabel.textColor = primaryTextColor;
+        self.addPhoneNumberTitle.textColor = primaryTextColor;
+        self.addPhoneNumberDescription.textColor = primaryTextColor;
         self.qrCodeImageView.image = [UIImage imageNamed:@"qrCode"].imageFlippedForRightToLeftLayoutDirection;
     } else {
         self.viewAndEditProfileLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
