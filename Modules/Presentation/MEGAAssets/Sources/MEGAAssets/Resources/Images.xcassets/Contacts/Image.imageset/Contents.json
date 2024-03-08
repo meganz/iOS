@@ -1,17 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "contactGroupsLight.pdf",
-      "idiom" : "universal"
-    },
-    {
       "appearances" : [
         {
           "appearance" : "luminosity",
           "value" : "dark"
         }
       ],
-      "filename" : "contactGroupsDark.pdf",
       "idiom" : "universal"
     }
   ],
