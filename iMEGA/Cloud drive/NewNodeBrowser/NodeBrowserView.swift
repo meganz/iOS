@@ -14,13 +14,16 @@ struct NodeBrowserView: View {
         case .editing:
             content
                 .toolbar { toolbarContentEditing }
+                .navigationBarBackButtonHidden(true)
         case .regular(let isBackButtonShown):
             if isBackButtonShown {
                 content
                     .toolbar { toolbarContent }
+                    .navigationBarBackButtonHidden(false)
             } else {
                 content
                    .toolbar { toolbarContentWithLeadingAvatar }
+                   .navigationBarBackButtonHidden(true)
             }
         }
     }
