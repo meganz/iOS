@@ -416,6 +416,7 @@
                     <connections>
                         <outlet property="countrycodeLabel" destination="doA-Ua-Jzg" id="WPB-3a-4Q9"/>
                         <outlet property="modifyNumberLabel" destination="egt-wL-RPM" id="ODd-GA-DKv"/>
+                        <outlet property="phoneNumberImageView" destination="lSE-LV-SIM" id="NVW-S8-2IU"/>
                         <outlet property="phoneNumberLabel" destination="JAs-fy-sEa" id="1GB-SE-feg"/>
                         <outlet property="phoneNumberTextLabel" destination="x6i-dO-iVo" id="SS8-vo-BNk"/>
                         <outlet property="removeNumberLabel" destination="fWu-UZ-RoT" id="eKu-tl-JYM"/>

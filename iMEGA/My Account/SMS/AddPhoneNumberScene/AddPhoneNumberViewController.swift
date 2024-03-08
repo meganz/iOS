@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import MEGAPresentation
 import UIKit
@@ -49,7 +50,8 @@ final class AddPhoneNumberViewController: UIViewController, ViewType {
     
     private func updateAppearance() {
         view.backgroundColor = .mnz_backgroundElevated(traitCollection)
-        
+        addPhoneNumberTitle.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.label
+        descriptionLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.label
         addPhoneNumberButton.mnz_setupPrimary(traitCollection)
         notNowButton.mnz_setupCancel(traitCollection)
         dontShowAgainButton.mnz_setupCancel(traitCollection)
