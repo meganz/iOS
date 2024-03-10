@@ -338,16 +338,18 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [self reloadData];
 }
 
-- (void)reloadUI:(MEGANodeList *)nodeList {
+- (void)reloadUI:(MEGANodeList *)updatedNodes {
     [self prepareForReloadUI];
     
-    if (nodeList) {
-        if (self.displayMode == DisplayModeCloudDrive && nodeList.size == 1 && self.viewModePreference_ObjC == ViewModePreferenceEntityThumbnail && self.wasSelectingFavoriteUnfavoriteNodeActionOption) {
-            MEGANode *updatedNode = [nodeList nodeAtIndex:0];
+    if (updatedNodes) {
+        if (self.displayMode == DisplayModeCloudDrive && updatedNodes.size == 1 && self.viewModePreference_ObjC == ViewModePreferenceEntityThumbnail && self.wasSelectingFavoriteUnfavoriteNodeActionOption) {
+            MEGANode *updatedNode = [updatedNodes nodeAtIndex:0];
             NSIndexPath *indexPath = [self findIndexPathFor:updatedNode source:_nodesArray];
             [self reloadDataAtIndexPaths:@[indexPath]];
             
             self.wasSelectingFavoriteUnfavoriteNodeActionOption = false;
+        } else if (self.displayMode == DisplayModeRecents) {
+            [self reloadRecentActionBucketAfterNodeUpdatesUsing:MEGASdk.shared];
         } else {
             [self reloadData];
         }

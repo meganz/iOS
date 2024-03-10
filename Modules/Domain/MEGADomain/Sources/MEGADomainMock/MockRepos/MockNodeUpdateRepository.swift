@@ -1,8 +1,9 @@
 import MEGADomain
 
-public struct MockNodeUpdateRepository: NodeUpdateRepositoryProtocol {
-    public static let newRepo = MockNodeUpdateRepository()
+public final class MockNodeUpdateRepository: NodeUpdateRepositoryProtocol {
+    public static var newRepo: MockNodeUpdateRepository { MockNodeUpdateRepository() }
     
+    public var shouldProcessOnNodesUpdateCalled = false
     private let shouldProcessOnNodesUpdate: Bool
     
     public init(shouldProcessOnNodesUpdate: Bool = true) {
@@ -10,6 +11,7 @@ public struct MockNodeUpdateRepository: NodeUpdateRepositoryProtocol {
     }
     
     public func shouldProcessOnNodesUpdate(parentNode: NodeEntity, childNodes: [NodeEntity], updatedNodes: [NodeEntity]) -> Bool {
-        shouldProcessOnNodesUpdate
+        shouldProcessOnNodesUpdateCalled = true
+        return shouldProcessOnNodesUpdate
     }
 }

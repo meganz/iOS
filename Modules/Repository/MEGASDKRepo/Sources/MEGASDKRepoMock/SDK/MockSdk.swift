@@ -71,6 +71,7 @@ public final class MockSdk: MEGASdk {
     public var shareAccessLevel: MEGAShareType = .accessUnknown
     public var stopPublicSetPreviewCalled = 0
     public var authorizeNodeCalled = 0
+    public var getRecentActionsAsyncCalled = false
     public var delegateQueueType: ListenerQueueType?
     
     public init(nodes: [MEGANode] = [],
@@ -589,6 +590,11 @@ public final class MockSdk: MEGASdk {
     
     public override func setLastReadNotificationWithNotificationId(_ notificationId: UInt32, delegate: MEGARequestDelegate) {
         _lastReadNotificationId = Int32(notificationId)
+        processRequestResult(delegate: delegate)
+    }
+    // MARK: - Recent Actions
+    public override func getRecentActionsAsync(sinceDays days: Int, maxNodes: Int, delegate: MEGARequestDelegate) {
+        getRecentActionsAsyncCalled = true
         processRequestResult(delegate: delegate)
     }
     
