@@ -21,7 +21,7 @@ public struct PrependAsyncSequence<Base: AsyncSequence>: AsyncSequence {
         self.item = item
       }
     
-    public struct PrependAsyncIterator: AsyncIteratorProtocol {
+    public struct Iterator: AsyncIteratorProtocol {
         var iterator: Base.AsyncIterator
         var item: Element?
         
@@ -39,8 +39,13 @@ public struct PrependAsyncSequence<Base: AsyncSequence>: AsyncSequence {
         }
     }
     
-    public func makeAsyncIterator() -> PrependAsyncIterator {
-        PrependAsyncIterator(iterator: base.makeAsyncIterator(),
+    public func makeAsyncIterator() -> Iterator {
+        Iterator(iterator: base.makeAsyncIterator(),
                              itemToPrepend: item)
     }
 }
+
+extension PrependAsyncSequence: Sendable where Base: Sendable, Base.Element: Sendable { }
+
+@available(*, unavailable)
+extension PrependAsyncSequence.Iterator: Sendable { }

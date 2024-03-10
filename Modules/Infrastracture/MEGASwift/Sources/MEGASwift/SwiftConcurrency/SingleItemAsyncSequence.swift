@@ -8,7 +8,7 @@ public struct SingleItemAsyncSequence<Element>: AsyncSequence {
         self.item = item
     }
     
-    public struct SingleItemAsyncIterator: AsyncIteratorProtocol {
+    public struct Iterator: AsyncIteratorProtocol {
         private var item: Element?
         
         init(item: Element) {
@@ -24,7 +24,10 @@ public struct SingleItemAsyncSequence<Element>: AsyncSequence {
         }
     }
     
-    public func makeAsyncIterator() -> SingleItemAsyncIterator {
-        SingleItemAsyncIterator(item: item)
+    public func makeAsyncIterator() -> Iterator {
+        Iterator(item: item)
     }
 }
+
+extension SingleItemAsyncSequence: Sendable where Element: Sendable { }
+extension SingleItemAsyncSequence.Iterator: Sendable where Element: Sendable { }
