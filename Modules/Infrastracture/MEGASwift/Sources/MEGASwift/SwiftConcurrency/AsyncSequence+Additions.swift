@@ -1,6 +1,6 @@
 import Foundation
 
-public extension AsyncSequence {
+public extension AsyncSequence where Self: Sendable, Element: Sendable {
     
     /// Wraps this async sequence with a type eraser.
     ///
