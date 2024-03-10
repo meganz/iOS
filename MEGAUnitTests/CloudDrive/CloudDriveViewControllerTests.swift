@@ -1,5 +1,6 @@
 @testable import MEGA
 import MEGADomain
+import MEGADomainMock
 @testable import MEGASDKRepoMock
 import XCTest
 
@@ -321,7 +322,6 @@ final class CloudDriveViewControllerTests: XCTestCase {
     }
     
     func testChangeViewModePreference_toMediaDiscovery_shouldSetViewModeMediaDiscovery() {
-        
         let sut = makeSUT(nodes: [], displayMode: .cloudDrive, parentNode: MockNode(handle: 0))
         sut.change(.mediaDiscovery)
         
@@ -329,6 +329,121 @@ final class CloudDriveViewControllerTests: XCTestCase {
         XCTAssertTrue(sut.children.allSatisfy { $0 == sut.mdViewController })
         XCTAssertEqual(sut.viewModePreference, .mediaDiscovery)
         XCTAssertEqual(sut.viewModePreference_ObjC, 3)
+    }
+    
+    func testShouldProcessOnNodesUpdate_withDisplayModeCloudDriveAndNilParentNode_shouldReturnFalse() {
+        let sut = makeSUT(nodes: [], displayMode: .cloudDrive, parentNode: MockNode(handle: 0))
+        let sdk = MockSdk()
+        let result = sut.shouldProcessOnNodesUpdate(with: .init(), childNodes: [], parentNode: nil, sdk: sdk, nodeUpdateRepository: MockNodeUpdateRepository())
+        
+        XCTAssertFalse(result)
+        XCTAssertEqual(sdk.nodeForHandleCallCount, 0)
+    }
+    
+    func testShouldProcessOnNodesUpdate_withDisplayModeCloudDriveAndParentNodeAndNoNewUpdates_shouldReturnFalse() {
+        let parentNode = MockNode(handle: 0)
+        let sdk = MockSdk()
+        let nodeUpdateRepository = MockNodeUpdateRepository(shouldProcessOnNodesUpdate: false)
+        let sut = makeSUT(nodes: [anyNode(handle: .min, nodeType: .file)], displayMode: .cloudDrive, parentNode: parentNode)
+        let result = sut.shouldProcessOnNodesUpdate(with: .init(), childNodes: [], parentNode: parentNode, sdk: sdk, nodeUpdateRepository: nodeUpdateRepository)
+        XCTAssertFalse(result)
+        XCTAssertEqual(sdk.nodeForHandleCallCount, 0)
+    }
+    
+    func testShouldProcessOnNodesUpdate_withDisplayModeCloudDriveAndParentNodeAndNewUpdates_shouldReturnTrue() {
+        let parentNode = MockNode(handle: 0)
+        let sdk = MockSdk()
+        let nodeUpdateRepository = MockNodeUpdateRepository(shouldProcessOnNodesUpdate: true)
+        let sut = makeSUT(nodes: [anyNode(handle: .min, nodeType: .file)], displayMode: .cloudDrive, parentNode: parentNode)
+        let result = sut.shouldProcessOnNodesUpdate(with: .init(), childNodes: [], parentNode: parentNode, sdk: sdk, nodeUpdateRepository: nodeUpdateRepository)
+        XCTAssertTrue(result)
+        XCTAssertEqual(sdk.nodeForHandleCallCount, 0)
+    }
+    
+    func testShouldProcessOnNodesUpdate_withDisplayModeRecentsAndNilRecentActionBucket_shouldReturnTrue() {
+        let sdk = MockSdk()
+        let nodeUpdateRepository = MockNodeUpdateRepository(shouldProcessOnNodesUpdate: true)
+        let sut = makeSUT(nodes: [anyNode(handle: .min, nodeType: .file)], displayMode: .recents, recentActionsBucket: nil)
+        let result = sut.shouldProcessOnNodesUpdate(with: .init(), childNodes: [], parentNode: nil, sdk: sdk, nodeUpdateRepository: nodeUpdateRepository)
+        XCTAssertFalse(result)
+        XCTAssertEqual(sdk.nodeForHandleCallCount, 0)
+    }
+    
+    func testShouldProcessOnNodesUpdate_withDisplayModeRecentsAndNilSdkNodeForHandle_shouldReturnTrue() {
+        let recentActionsBucket = MockRecentActionBucket(parentHandle: 0)
+        let sdk = MockSdk(nodes: [])
+        let nodeUpdateRepository = MockNodeUpdateRepository(shouldProcessOnNodesUpdate: false)
+        let sut = makeSUT(nodes: [anyNode(handle: .min, nodeType: .file)], displayMode: .recents, recentActionsBucket: recentActionsBucket)
+        let result = sut.shouldProcessOnNodesUpdate(with: .init(), childNodes: [], parentNode: nil, sdk: sdk, nodeUpdateRepository: nodeUpdateRepository)
+        XCTAssertFalse(result)
+        XCTAssertEqual(sdk.nodeForHandleCallCount, 1)
+        XCTAssertFalse(nodeUpdateRepository.shouldProcessOnNodesUpdateCalled)
+    }
+    
+    func testShouldProcessOnNodesUpdate_withDisplayModeRecentsAndValidSdkNodeForHandleAndNoNewUpdate_shouldReturnFalse() {
+        let recentActionsBucket = MockRecentActionBucket(parentHandle: 1)
+        let sdk = MockSdk(nodes: [MockNode(handle: 1)])
+        let nodeUpdateRepository = MockNodeUpdateRepository(shouldProcessOnNodesUpdate: false)
+        let sut = makeSUT(nodes: [anyNode(handle: .min, nodeType: .file)], displayMode: .recents, recentActionsBucket: recentActionsBucket)
+        let result = sut.shouldProcessOnNodesUpdate(with: .init(), childNodes: [], parentNode: nil, sdk: sdk, nodeUpdateRepository: nodeUpdateRepository)
+        XCTAssertFalse(result)
+        XCTAssertEqual(sdk.nodeForHandleCallCount, 1)
+        XCTAssertTrue(nodeUpdateRepository.shouldProcessOnNodesUpdateCalled)
+    }
+    
+    func testShouldProcessOnNodesUpdate_withDisplayModeRecentsAndValidSdkNodeForHandleAndNewUpdate_shouldReturnTrue() {
+        let recentActionsBucket = MockRecentActionBucket(parentHandle: 1)
+        let sdk = MockSdk(nodes: [MockNode(handle: 1)])
+        let nodeUpdateRepository = MockNodeUpdateRepository(shouldProcessOnNodesUpdate: true)
+        let sut = makeSUT(nodes: [anyNode(handle: .min, nodeType: .file)], displayMode: .recents, recentActionsBucket: recentActionsBucket)
+        let result = sut.shouldProcessOnNodesUpdate(with: .init(), childNodes: [], parentNode: nil, sdk: sdk, nodeUpdateRepository: nodeUpdateRepository)
+        XCTAssertTrue(result)
+        XCTAssertEqual(sdk.nodeForHandleCallCount, 1)
+        XCTAssertTrue(nodeUpdateRepository.shouldProcessOnNodesUpdateCalled)
+    }
+    
+    func testReloadRecentActionBucketAfterNodeUpdates_withDisplayModeCloudDrive_shouldNotCallSdk() {
+        let sut = makeSUT(nodes: [], displayMode: .cloudDrive)
+        let sdk = MockSdk()
+        sut.reloadRecentActionBucketAfterNodeUpdates(using: sdk)
+        
+        XCTAssertFalse(sdk.getRecentActionsAsyncCalled)
+    }
+    
+    func testReloadRecentActionBucketAfterNodeUpdates_withDisplayModeRecentsAndNilRecentsActionBucketAndSdkCallFails_shouldNotUpdateUI() {
+        let sdk = MockSdk(requestResult: .failure(MockError()))
+        let sut = makeSUT(nodes: [], displayMode: .recents, recentActionsBucket: MockRecentActionBucket())
+        sut.viewModePreference_ObjC = ViewModePreferenceEntity.thumbnail.rawValue
+        sut.reloadRecentActionBucketAfterNodeUpdates(using: sdk)
+        
+        XCTAssertTrue(sdk.getRecentActionsAsyncCalled)
+        XCTAssertEqual(sut.collectionView().messages, [])
+    }
+    
+    func testReloadRecentActionBucketAfterNodeUpdates_withDisplayModeRecentsAndNilRecentsActionBucketAndSdkCallSucceedsWithNoNewUpdates_shouldNotUpdateUI() {
+        let sdk = MockSdk(requestResult: .success(MockRequest(handle: 0, recentActionsBuckets: [])))
+        
+        let sut = makeSUT(nodes: [], displayMode: .recents, recentActionsBucket: MockRecentActionBucket())
+        sut.viewModePreference_ObjC = ViewModePreferenceEntity.thumbnail.rawValue
+        sut.reloadRecentActionBucketAfterNodeUpdates(using: sdk)
+        
+        XCTAssertTrue(sdk.getRecentActionsAsyncCalled)
+        XCTAssertEqual(sut.collectionView().messages, [])
+    }
+    
+    func testReloadRecentActionBucketAfterNodeUpdates_withDisplayModeRecentsAndNilRecentsActionBucketAndSdkCallSucceedsWithNoNewUpdates_shouldUpdateUI() {
+        
+        let originalBucket = MockRecentActionBucket.init(parentHandle: 1, nodeList: MockNodeList(nodes: [MockNode(handle: 100), MockNode(handle: 200)]))
+        let responseBucket = MockRecentActionBucket.init(parentHandle: 1, nodeList: MockNodeList(nodes: [MockNode(handle: 200)]))
+                                                         
+        let sdk = MockSdk(requestResult: .success(MockRequest(handle: 0, recentActionsBuckets: [responseBucket])))
+        
+        let sut = makeSUT(nodes: [], displayMode: .recents, recentActionsBucket: originalBucket)
+        sut.viewModePreference_ObjC = ViewModePreferenceEntity.thumbnail.rawValue
+        sut.reloadRecentActionBucketAfterNodeUpdates(using: sdk)
+        
+        XCTAssertTrue(sdk.getRecentActionsAsyncCalled)
+        XCTAssertEqual(sut.collectionView().messages, [.reloadData])
     }
     
     // MARK: - Helpers
@@ -356,6 +471,7 @@ final class CloudDriveViewControllerTests: XCTestCase {
         nodes: [MEGANode],
         displayMode: DisplayMode = .cloudDrive,
         parentNode: MEGANode? = nil,
+        recentActionsBucket: MEGARecentActionBucket? = nil,
         viewModeStore: some ViewModeStoringObjC = MockViewModeStoreObjC()
     ) -> CloudDriveViewController {
         let storyboard = UIStoryboard(name: "Cloud", bundle: .main)
@@ -364,6 +480,7 @@ final class CloudDriveViewControllerTests: XCTestCase {
 
         sut.nodes = MockNodeList(nodes: nodes)
         sut.parentNode = parentNode
+        sut.recentActionBucket = recentActionsBucket
         sut.displayMode = displayMode
         sut.viewModeStoreCreator = {
             sut.viewModeStore = viewModeStore
