@@ -1,4 +1,4 @@
-public protocol VideoMediaRepositoryProtocol: RepositoryProtocol {
+public protocol VideoMediaRepositoryProtocol: RepositoryProtocol, Sendable {
     func isSupportedFormat(_ shortFormat: ShortFormatEntity) -> Bool
     func isSupportedCodec(_ codecId: CodecIdEntity) -> Bool
 }
