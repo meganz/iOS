@@ -1,3 +1,4 @@
+import MEGADesignToken
 import UIKit
 
 final class MEGASelectedButton: UIButton {
@@ -16,12 +17,17 @@ final class MEGASelectedButton: UIButton {
     
     func setRightTintColor() {
         imageView?.image?.withRenderingMode(.alwaysTemplate)
-        switch traitCollection.userInterfaceStyle {
-        case .dark:
-            tintColor = isSelected ?  MEGAAppColor.Green._00A382.uiColor : MEGAAppColor.White._FFFFFF.uiColor
-        case .light:
-            tintColor = isSelected ? MEGAAppColor.Green._00A382.uiColor : MEGAAppColor.Black._000000.uiColor
-        default: break
+        
+        if UIColor.isDesignTokenEnabled() {
+            tintColor = isSelected ? TokenColors.Components.interactive : TokenColors.Icon.primary
+        } else {
+            switch traitCollection.userInterfaceStyle {
+            case .dark:
+                tintColor = isSelected ? UIColor.green00A382 : UIColor.whiteFFFFFF
+            case .light:
+                tintColor = isSelected ? UIColor.green00A382 : UIColor.black000000
+            default: break
+            }
         }
     }
 }
@@ -32,16 +38,23 @@ class MEGAPlayerButton: UIButton {
             UIView.transition(with: self,
                               duration: 0.3,
                               options: .curveEaseInOut,
-                              animations: {
-                                switch self.traitCollection.userInterfaceStyle {
-                                case .dark:
-                                    self.backgroundColor = self.isHighlighted ? MEGAAppColor.Gray._333333.uiColor : UIColor.clear
-                                case .light:
-                                    self.backgroundColor = self.isHighlighted ? MEGAAppColor.White._EFEFEF.uiColor : UIColor.clear
-                                default: break
-                                }
-                              },
+                              animations: { [weak self] in self?.setHighlightedBackgroundColor() },
                               completion: nil)
+        }
+    }
+    
+    private func setHighlightedBackgroundColor() {
+        if UIColor.isDesignTokenEnabled() {
+            backgroundColor = isHighlighted ? TokenColors.Background.surface1 : UIColor.clear
+        } else {
+            switch traitCollection.userInterfaceStyle {
+            case .dark:
+                backgroundColor = isHighlighted ? UIColor.gray333333 : UIColor.clear
+            case .light:
+                backgroundColor = isHighlighted ? UIColor.whiteEFEFEF : UIColor.clear
+            default:
+                break
+            }
         }
     }
     
