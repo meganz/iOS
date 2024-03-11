@@ -1,5 +1,6 @@
 import Accounts
 import Combine
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGASDKRepo
@@ -98,7 +99,13 @@ final class AudioPlayerViewController: UIViewController {
         currentTimeLabel.text = currentTime
         remainingTimeLabel.text = remainingTime
         timeSliderView.setValue(percentage, animated: false)
-        playPauseButton.setImage(UIImage(resource: isPlaying ? .pause : .play), for: .normal)
+        
+        if UIColor.isDesignTokenEnabled() {
+            playPauseButton.tintColor = TokenColors.Icon.primary
+            playPauseButton.setImage(UIImage(resource: isPlaying ? .pause : .play).withTintColor(TokenColors.Icon.primary, renderingMode: .alwaysTemplate), for: .normal)
+        } else {
+            playPauseButton.setImage(UIImage(resource: isPlaying ? .pause : .play), for: .normal)
+        }
         
         if timeSliderView.value == 1.0 {
             timeSliderView.cancelTracking(with: nil)
@@ -135,16 +142,23 @@ final class AudioPlayerViewController: UIViewController {
     }
     
     private func updateSpeed(_ mode: SpeedMode) {
+        var image: UIImage?
         switch mode {
         case .normal:
-            playbackSpeedButton.setImage(UIImage(resource: .normal), for: .normal)
+            image = UIImage(resource: .normal)
         case .oneAndAHalf:
-            playbackSpeedButton.setImage(UIImage(resource: .oneAndAHalf), for: .normal)
+            image = UIImage(resource: .oneAndAHalf)
         case .double:
-            playbackSpeedButton.setImage(UIImage(resource: .double), for: .normal)
+            image = UIImage(resource: .double)
         case .half:
-            playbackSpeedButton.setImage(UIImage(resource: .half), for: .normal)
+            image = UIImage(resource: .half)
         }
+        
+        if UIColor.isDesignTokenEnabled() {
+            image?.withTintColor(TokenColors.Icon.primary, renderingMode: .alwaysTemplate)
+        }
+        
+        playbackSpeedButton.setImage(image, for: .normal)
     }
     
     private func updateShuffle(_ status: Bool) {
@@ -155,14 +169,22 @@ final class AudioPlayerViewController: UIViewController {
     private func updateRepeatButtonAppearance(status: RepeatMode) {
         switch status {
         case .none:
-            repeatButton.tintColor = traitCollection.userInterfaceStyle == .dark ? MEGAAppColor.White._FFFFFF.uiColor : MEGAAppColor.Black._000000.uiColor
+            repeatButton.tintColor = UIColor.isDesignTokenEnabled()
+            ? TokenColors.Icon.primary
+            : traitCollection.userInterfaceStyle == .dark ? UIColor.whiteFFFFFF : UIColor.black000000
         case .loop, .repeatOne:
-            repeatButton.tintColor = MEGAAppColor.Green._00A382.uiColor
+            repeatButton.tintColor = UIColor.isDesignTokenEnabled()
+            ? TokenColors.Components.interactive
+            : UIColor.green00A382
         }
     }
     
     private func updateShuffleButtonAppearance(status: Bool) {
-        shuffleButton.tintColor = status ? MEGAAppColor.Green._00A382.uiColor : traitCollection.userInterfaceStyle == .dark ? MEGAAppColor.White._FFFFFF.uiColor : MEGAAppColor.Black._000000.uiColor
+        if UIColor.isDesignTokenEnabled() {
+            shuffleButton.tintColor = status ? TokenColors.Components.interactive : TokenColors.Icon.primary
+        } else {
+            shuffleButton.tintColor = status ? UIColor.green00A382 : traitCollection.userInterfaceStyle == .dark ? UIColor.whiteFFFFFF : UIColor.black000000
+        }
         shuffleButton.setImage(UIImage(resource: .shuffleAudio), for: .normal)
     }
     
@@ -189,7 +211,17 @@ final class AudioPlayerViewController: UIViewController {
     
     private func configureNavigationBar(title: String, subtitle: String) {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: Strings.Localizable.close, style: .done, target: self, action: #selector(closeButtonAction))
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(resource: .moreNavigationBar), style: .plain, target: self, action: #selector(moreButtonAction(_:)))
+        
+        let rightBarButtonItem = UIBarButtonItem(
+            image: UIImage(resource: .moreNavigationBar),
+            style: .plain,
+            target: self,
+            action: #selector(moreButtonAction(_:))
+        )
+        if UIColor.isDesignTokenEnabled() {
+            rightBarButtonItem.tintColor = TokenColors.Icon.primary
+        }
+        navigationItem.rightBarButtonItem = rightBarButtonItem
         
         let titleView = CustomTitleView.instanceFromNib
         titleView.titleLabel.text = title
@@ -263,7 +295,8 @@ final class AudioPlayerViewController: UIViewController {
         
         if !closeButton.isHidden {
             closeButton.setTitle(Strings.Localizable.close, for: .normal)
-            closeButton.setTitleColor(UIColor.mnz_primaryGray(for: traitCollection), for: .normal)
+            let titleColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.mnz_primaryGray(for: traitCollection)
+            closeButton.setTitleColor(titleColor, for: .normal)
         }
     }
     
@@ -277,32 +310,50 @@ final class AudioPlayerViewController: UIViewController {
         updateMoreButtonState()
         style(with: traitCollection)
         imageView.applyShadow(in: imageViewContainerView, alpha: 0.24, x: 0, y: 1.5, blur: 16, spread: 0)
+        
+        if UIColor.isDesignTokenEnabled() {
+            let playbackControlButtons = [ goBackwardButton, previousButton, playPauseButton, nextButton, goForwardButton ]
+            let bottomViewButtons = [ shuffleButton, repeatButton, playbackSpeedButton, gotoplaylistButton ]
+            
+            playbackControlButtons
+                .compactMap { $0 }
+                .forEach { [weak self] in self?.setForegroundColor(for: $0, color: TokenColors.Icon.primary) }
+            
+            bottomViewButtons
+                .compactMap { $0 }
+                .forEach { [weak self] in self?.setForegroundColor(for: $0, color: TokenColors.Icon.primary) }
+        }
     }
     
     private func fileLinkPlayerAppearance() {
-        bottomView.backgroundColor = .mnz_Elevated(traitCollection)
-        view.backgroundColor = .mnz_backgroundElevated(traitCollection)
+        bottomView.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_Elevated(traitCollection)
+        view.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_backgroundElevated(traitCollection)
         separatorView.isHidden = false
-        separatorView.backgroundColor = UIColor.mnz_separator(for: traitCollection)
+        separatorView.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Border.strong : UIColor.mnz_separator(for: traitCollection)
     }
     
     private func defaultPlayerAppearance() {
-        view.backgroundColor = .mnz_backgroundElevated(traitCollection)
-        bottomView.backgroundColor = .clear
+        bottomView.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.clear
+        view.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_backgroundElevated(traitCollection)
         viewModel.dispatch(.refreshRepeatStatus)
         viewModel.dispatch(.refreshShuffleStatus)
         separatorView.isHidden = true
     }
     
     private func style(with trait: UITraitCollection) {
-        titleLabel.textColor = UIColor.label
-        subtitleLabel.textColor = UIColor.label
-        detailLabel.textColor = UIColor.label
-        currentTimeLabel.textColor = UIColor.mnz_secondaryGray(for: trait)
-        remainingTimeLabel.textColor = UIColor.mnz_secondaryGray(for: trait)
-        timeSliderView.tintColor = UIColor.mnz_gray848484()
+        titleLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.label
+        subtitleLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : UIColor.label
+        detailLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : UIColor.label
+        currentTimeLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : UIColor.mnz_secondaryGray(for: trait)
+        remainingTimeLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : UIColor.mnz_secondaryGray(for: trait)
+        timeSliderView.tintColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.surface2 : UIColor.mnz_gray848484()
         
         closeButton.titleLabel?.adjustsFontForContentSizeCategory = true
+        
+        if UIColor.isDesignTokenEnabled() {
+            titleLabel.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+            subtitleLabel.font = UIFont.systemFont(ofSize: 17, weight: .regular)
+        }
     }
     
     // MARK: - UI actions
@@ -442,18 +493,43 @@ final class AudioPlayerViewController: UIViewController {
         case .enableUserInteraction(let enabled):
             userInteraction(enabled: enabled)
         case .didPausePlayback:
-            playPauseButton.setImage(UIImage(resource: .pause), for: .normal)
+            if UIColor.isDesignTokenEnabled() {
+                setForegroundColor(for: playPauseButton, color: TokenColors.Icon.primary)
+            } else {
+                playPauseButton.setImage(UIImage(resource: .pause), for: .normal)
+            }
         case .didResumePlayback:
-            playPauseButton.setImage(UIImage(resource: .play), for: .normal)
+            if UIColor.isDesignTokenEnabled() {
+                setForegroundColor(for: playPauseButton, color: TokenColors.Icon.primary)
+            } else {
+                playPauseButton.setImage(UIImage(resource: .play), for: .normal)
+            }
         case .shuffleAction(let enabled):
             shuffleButton.isEnabled = enabled
-            shuffleButton.tintColor = enabled ? MEGAAppColor.Black._000000.uiColor : MEGAAppColor.Black._00000025.uiColor
+            
+            if UIColor.isDesignTokenEnabled() {
+                setForegroundColor(for: shuffleButton, color: enabled ? TokenColors.Icon.primary : TokenColors.Icon.disabled)
+            } else {
+                shuffleButton.tintColor = enabled ? UIColor.black000000 : UIColor.black00000025
+            }
+            
         case .goToPlaylistAction(let enabled):
             gotoplaylistButton.isEnabled = enabled
-            gotoplaylistButton.tintColor = enabled ? MEGAAppColor.Black._000000.uiColor : MEGAAppColor.Black._00000025.uiColor
+            
+            if UIColor.isDesignTokenEnabled() {
+                setForegroundColor(for: gotoplaylistButton, color: enabled ? TokenColors.Icon.primary : TokenColors.Icon.disabled)
+            } else {
+                gotoplaylistButton.tintColor = enabled ? UIColor.black000000 : UIColor.black00000025
+            }
+            
         case .nextTrackAction(let enabled):
             nextButton.isEnabled = enabled
-            nextButton.tintColor = enabled ? MEGAAppColor.Black._000000.uiColor : MEGAAppColor.Black._00000025.uiColor
+            
+            if UIColor.isDesignTokenEnabled() {
+                setForegroundColor(for: nextButton, color: enabled ? TokenColors.Icon.primary : TokenColors.Icon.disabled)
+            } else {
+                nextButton.tintColor = enabled ? UIColor.black000000 : UIColor.black00000025
+            }
         case .displayPlaybackContinuationDialog(let fileName, let playbackTime):
             presentAudioPlaybackContinuation(fileName: fileName, playbackTime: playbackTime)
         case .showTermsOfServiceViolationAlert:
@@ -471,6 +547,11 @@ final class AudioPlayerViewController: UIViewController {
             viewModel?.dispatch(.onTermsOfServiceViolationAlertDismissAction)
         }))
         present(alertController, animated: true)
+    }
+    
+    private func setForegroundColor(for button: UIButton, color: UIColor) {
+        button.tintColor = color
+        button.setImage(button.currentImage?.withTintColor(color, renderingMode: .alwaysTemplate), for: .normal)
     }
 }
 

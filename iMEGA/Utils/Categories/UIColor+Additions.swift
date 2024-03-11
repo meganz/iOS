@@ -137,10 +137,14 @@ extension UIColor {
     @objc class func mnz_navigationBarTitle(
         for traitCollection: UITraitCollection
     ) -> UIColor {
-        switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light: MEGAAppColor.Black._000000.uiColor
-        case .dark: MEGAAppColor.White._FFFFFF_navigationBarTitle.uiColor
-        @unknown default: MEGAAppColor.Black._000000.uiColor
+        if UIColor.isDesignTokenEnabled() {
+            TokenColors.Text.primary
+        } else {
+            switch traitCollection.userInterfaceStyle {
+            case .unspecified, .light: UIColor.black000000
+            case .dark: UIColor.whiteFFFFFF
+            @unknown default: UIColor.black000000
+            }
         }
     }
     
@@ -632,10 +636,14 @@ extension UIColor {
     class func mnz_subtitles(
         for traitCollection: UITraitCollection
     ) -> UIColor {
-        switch traitCollection.userInterfaceStyle {
-        case .unspecified, .light: MEGAAppColor.Black._00000080.uiColor
-        case .dark: MEGAAppColor.White._FFFFFF80.uiColor
-        @unknown default: MEGAAppColor.Black._00000080.uiColor
+        if UIColor.isDesignTokenEnabled() {
+            TokenColors.Text.secondary
+        } else {
+            switch traitCollection.userInterfaceStyle {
+            case .unspecified, .light: UIColor.black00000080
+            case .dark: UIColor.whiteFFFFFF80
+            @unknown default: UIColor.black00000080
+            }
         }
     }
     

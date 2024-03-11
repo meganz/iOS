@@ -1,17 +1,57 @@
+import MEGADesignToken
+import SwiftUI
 import UIKit
 
 final class MEGASlider: UISlider {
     @IBInspectable var thumbRadius: CGFloat = 10
     @IBInspectable var hightlitedThumbRadius: CGFloat = 25
     
+    private var isDesignTokenEnabled: Bool {
+        UIColor.isDesignTokenEnabled()
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
+        configure()
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        configure()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
+    private func configure() {
+        configureMinimumTrackTintColor()
+        maximumTrackTintColor = isDesignTokenEnabled ? TokenColors.Background.surface2 : UIColor.gray848484.withAlphaComponent(0.3)
         
-        minimumTrackTintColor = .mnz_green00A886()
-        maximumTrackTintColor = UIColor.mnz_gray848484().withAlphaComponent(0.3)
-
-        setThumbImage(thumbImage(bgColor: .mnz_green00A886(), radius: thumbRadius), for: .normal)
-        setThumbImage(thumbImage(bgColor: .mnz_green00A886(), radius: hightlitedThumbRadius), for: .highlighted)
+        setThumbImage(thumbImage(bgColor: customTintColor(), radius: thumbRadius), for: .normal)
+        setThumbImage(thumbImage(bgColor: customTintColor(), radius: hightlitedThumbRadius), for: .highlighted)
+    }
+    
+    private func configureMinimumTrackTintColor() {
+        if isDesignTokenEnabled {
+            setMinimumTrackImage(customMinimumTrackImage(bgColor: customTintColor()), for: .normal)
+        } else {
+            minimumTrackTintColor = customTintColor()
+        }
+    }
+    
+    /// Custom minimum track image slider background. We need this to render exactly same color as the `thumbImage(UIColor: CGFloat) -> UIImage`.  Setting the color of `minimumTrackTintColor` directly won't render the exactly same color as the `thumbImage(UIColor: CGFloat) -> UIImage`
+    /// - Parameter bgColor: Desired tint color replacing the `minimumTrackTintColor`
+    /// - Returns: desired color as image type.
+    private func customMinimumTrackImage(bgColor: UIColor) -> UIImage {
+        let track = UIView()
+        track.backgroundColor = bgColor
+        track.frame = CGRect(x: 0, y: 0, width: 1, height: 1)
+        
+        let renderer = UIGraphicsImageRenderer(bounds: track.bounds)
+        return renderer.image { rendererContext in
+            track.layer.render(in: rendererContext.cgContext)
+        }
     }
     
     private func thumbImage(bgColor: UIColor, radius: CGFloat) -> UIImage {
@@ -20,10 +60,35 @@ final class MEGASlider: UISlider {
         
         thumb.frame = CGRect(x: 0, y: radius/2, width: radius, height: radius)
         thumb.layer.cornerRadius = radius/2
-
+        
         let renderer = UIGraphicsImageRenderer(bounds: thumb.bounds)
         return renderer.image { rendererContext in
             thumb.layer.render(in: rendererContext.cgContext)
         }
     }
+    
+    private func customTintColor() -> UIColor {
+        isDesignTokenEnabled ? TokenColors.Components.interactive : UIColor.green00A886
+    }
+}
+
+private struct MEGASliderView: UIViewRepresentable {
+    func makeUIView(context: Context) -> MEGASlider {
+        return MEGASlider(frame: .zero)
+    }
+    
+    func updateUIView(_ uiView: MEGASlider, context: Context) {
+        
+    }
+}
+
+#Preview {
+    MEGASliderView()
+        .previewLayout(.fixed(width: 300, height: 50))
+}
+
+#Preview {
+    MEGASliderView()
+        .previewLayout(.fixed(width: 300, height: 50))
+        .preferredColorScheme(.dark)
 }
