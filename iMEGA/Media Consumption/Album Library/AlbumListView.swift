@@ -1,4 +1,5 @@
 import MEGADomain
+import MEGAL10n
 import MEGASDKRepo
 import SwiftUI
 
@@ -70,7 +71,13 @@ struct AlbumListView: View {
     private func albumContentAdditionView(_ album: AlbumEntity) -> some View {
         AlbumContentPickerView(viewModel: AlbumContentPickerViewModel(
             album: album,
-            photoLibraryUseCase: PhotoLibraryUseCase(photosRepository: PhotoLibraryRepository.newRepo, searchRepository: FilesSearchRepository.newRepo),
+            photoLibraryUseCase: PhotoLibraryUseCase(
+                photosRepository: PhotoLibraryRepository(
+                    sdk: MEGASdk.shared,
+                    cameraUploadNodeAccess: CameraUploadNodeAccess.shared
+                ),
+                searchRepository: FilesSearchRepository.newRepo
+            ),
             completion: { album, selectedPhotos in
                 viewModel.onNewAlbumContentAdded(album, photos: selectedPhotos)
             },

@@ -1,17 +1,16 @@
 import MEGADomain
+import MEGASdk
 
-struct PhotoLibraryRepository: PhotoLibraryRepositoryProtocol, Sendable {
-    static var newRepo: PhotoLibraryRepository {
-        PhotoLibraryRepository(sdk: MEGASdk.shared)
-    }
-    
+public struct PhotoLibraryRepository: PhotoLibraryRepositoryProtocol, Sendable {    
     private let sdk: MEGASdk
+    private let cameraUploadNodeAccess: CameraUploadNodeAccess
     
-    init(sdk: MEGASdk) {
+    public init(sdk: MEGASdk, cameraUploadNodeAccess: CameraUploadNodeAccess) {
         self.sdk = sdk
+        self.cameraUploadNodeAccess = cameraUploadNodeAccess
     }
     
-    func visualMediaNodes(inParent parentNode: NodeEntity?) -> [NodeEntity] {
+    public func visualMediaNodes(inParent parentNode: NodeEntity?) -> [NodeEntity] {
         guard let parentNode = parentNode?.toMEGANode(in: sdk) else {
             return []
         }
@@ -26,7 +25,7 @@ struct PhotoLibraryRepository: PhotoLibraryRepositoryProtocol, Sendable {
         }.toNodeEntities()
     }
     
-    func videoNodes(inParent parentNode: NodeEntity?) -> [NodeEntity] {
+    public func videoNodes(inParent parentNode: NodeEntity?) -> [NodeEntity] {
         guard let parentNode = parentNode?.toMEGANode(in: sdk) else {
             return []
         }
@@ -41,7 +40,7 @@ struct PhotoLibraryRepository: PhotoLibraryRepositoryProtocol, Sendable {
         }.toNodeEntities()
     }
     
-    func photoSourceNode(for source: PhotoSourceEntity) async throws -> NodeEntity? {
+    public func photoSourceNode(for source: PhotoSourceEntity) async throws -> NodeEntity? {
         switch source {
         case .camera:
             return try await cameraUploadNode()
@@ -52,7 +51,7 @@ struct PhotoLibraryRepository: PhotoLibraryRepositoryProtocol, Sendable {
 
     private func cameraUploadNode() async throws -> NodeEntity? {
         try await withCheckedThrowingContinuation { continuation in
-            CameraUploadNodeAccess.shared.loadNode { node, error in
+            cameraUploadNodeAccess.loadNode { node, error in
                 guard Task.isCancelled == false
                 else {
                     continuation.resume(throwing: CancellationError())
@@ -62,7 +61,8 @@ struct PhotoLibraryRepository: PhotoLibraryRepositoryProtocol, Sendable {
                 if let node {
                     continuation.resume(returning: node.toNodeEntity())
                 } else if let error = error {
-                    MEGALogWarning("Couldn't load CU: \(error)")
+                    let message = "Couldn't load CU: \(error)"
+                    MEGASdk.log(with: .warning, message: "[iOS] \(message)", filename: #file, line: #line)
                     continuation.resume(throwing: PhotoLibraryErrorEntity.cameraUploadNodeDoesNotExist)
                 } else {
                     continuation.resume(throwing: PhotoLibraryErrorEntity.cameraUploadNodeDoesNotExist)
@@ -83,7 +83,8 @@ struct PhotoLibraryRepository: PhotoLibraryRepositoryProtocol, Sendable {
                 if let node {
                     continuation.resume(returning: node.toNodeEntity())
                 } else if let error {
-                    MEGALogWarning("Couldn't load MU: \(error)")
+                    let message = "Couldn't load MU: \(error)"
+                    MEGASdk.log(with: .warning, message: "[iOS] \(message)", filename: #file, line: #line)
                     continuation.resume(throwing: PhotoLibraryErrorEntity.mediaUploadNodeDoesNotExist)
                 } else {
                     continuation.resume(throwing: PhotoLibraryErrorEntity.mediaUploadNodeDoesNotExist)

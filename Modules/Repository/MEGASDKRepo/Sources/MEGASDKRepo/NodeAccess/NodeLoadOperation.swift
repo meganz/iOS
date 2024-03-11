@@ -1,6 +1,7 @@
 import Foundation
 import MEGADomain
-import MEGASDKRepo
+import MEGAFoundation
+import MEGASdk
 
 enum NodeLoadError: Error {
     case noRootNode
@@ -9,7 +10,7 @@ enum NodeLoadError: Error {
     case autoCreateIsNotEnabled
 }
 
-final class NodeLoadOperation: MEGAOperation, NodeLoadOperationProtocol {
+final class NodeLoadOperation: AsyncOperation, NodeLoadOperationProtocol {
     // MARK: - Private properties
     private let loadNodeRequest: (any MEGARequestDelegate) -> Void
     private let newNodeName: String?
@@ -21,7 +22,7 @@ final class NodeLoadOperation: MEGAOperation, NodeLoadOperationProtocol {
     
     // MARK: - Init
     init(autoCreate: (() -> Bool)?,
-         sdk: MEGASdk = .shared,
+         sdk: MEGASdk = .sharedSdk,
          loadNodeRequest: @escaping (any MEGARequestDelegate) -> Void,
          newNodeName: String? = nil,
          createNodeRequest: ((String, MEGANode, any MEGARequestDelegate) -> Void)? = nil,
@@ -50,7 +51,7 @@ final class NodeLoadOperation: MEGAOperation, NodeLoadOperationProtocol {
     
     func finishOperation(node: MEGANode?, error: (any Error)?) {
         completion(node, error)
-        finish()
+        finishOperation()
     }
     
     // MARK: - Load from remote

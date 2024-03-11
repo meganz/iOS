@@ -36,7 +36,11 @@ struct AlbumContentRouter: AlbumContentRouting {
             fileSearchRepo: filesSearchRepo,
             userAlbumRepo: userAlbumRepo
         )
-        let photoLibraryUseCase = PhotoLibraryUseCase(photosRepository: PhotoLibraryRepository.newRepo,
+        let photoLibraryRepository = PhotoLibraryRepository(
+            sdk: MEGASdk.shared,
+            cameraUploadNodeAccess: CameraUploadNodeAccess.shared
+        )
+        let photoLibraryUseCase = PhotoLibraryUseCase(photosRepository: photoLibraryRepository,
                                                       searchRepository: FilesSearchRepository.newRepo)
         
         let alertViewModel = TextFieldAlertViewModel(textString: album.name,
@@ -62,7 +66,11 @@ struct AlbumContentRouter: AlbumContentRouting {
     
     @MainActor
     func showAlbumContentPicker(album: AlbumEntity, completion: @escaping (AlbumEntity, [NodeEntity]) -> Void) {
-        let photoLibraryRepository = PhotoLibraryRepository.newRepo
+        
+        let photoLibraryRepository = PhotoLibraryRepository(
+            sdk: MEGASdk.shared,
+            cameraUploadNodeAccess: CameraUploadNodeAccess.shared
+        )
         let fileSearchRepository = FilesSearchRepository.newRepo
         let photoLibraryUseCase = PhotoLibraryUseCase(photosRepository: photoLibraryRepository,
                                                       searchRepository: fileSearchRepository)

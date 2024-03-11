@@ -1,4 +1,5 @@
 import MEGAL10n
+import MEGASDKRepo
 
 extension CloudDriveViewController {
     @IBAction func deleteAction(sender: UIBarButtonItem) {
