@@ -100,15 +100,13 @@ extension TransfersWidgetViewController: TransferWidgetResponderProtocol {
     
     @objc
     func updateViewAppearance() {
-        let isDesignTokenEnabled = UIColor.isDesignTokenEnabled()
-        let backgroundColor = isDesignTokenEnabled ? TokenColors.Background.page : UIColor.mnz_backgroundElevated(traitCollection)
+        guard UIColor.isDesignTokenEnabled() else { return }
+        
+        let backgroundColor = TokenColors.Background.page
         view.backgroundColor = backgroundColor
         tableView?.backgroundColor = backgroundColor
-        
-        if isDesignTokenEnabled {
-            tableView?.separatorStyle = .singleLine
-            tableView?.separatorColor = TokenColors.Border.strong
-        }
+        tableView?.separatorStyle = .singleLine
+        tableView?.separatorColor = TokenColors.Border.strong
     }
     
     // MARK: - Private
