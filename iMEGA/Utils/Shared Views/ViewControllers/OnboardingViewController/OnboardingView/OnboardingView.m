@@ -46,6 +46,8 @@
     if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
         self.descriptionLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
         self.titleLabel.textColor = [UIColor cellTitleColorFor:self.traitCollection];
+        
+        self.backgroundColor = [UIColor pageBackgroundForTraitCollection:self.traitCollection];
     }
 }
 
