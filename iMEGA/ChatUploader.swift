@@ -1,4 +1,5 @@
 import ChatRepo
+import MEGASDKRepo
 
 final class ChatUploader: NSObject {
     static let sharedInstance = ChatUploader()

@@ -163,7 +163,10 @@ final class PhotoAlbumContainerViewController: UIViewController, TraitEnvironmen
         
         if let photoViewController = photoViewController {
             let photoUpdatePublisher = PhotoUpdatePublisher(photosViewController: photoViewController)
-            let photoLibraryRepository = PhotoLibraryRepository.newRepo
+            let photoLibraryRepository = PhotoLibraryRepository(
+                sdk: MEGASdk.shared,
+                cameraUploadNodeAccess: CameraUploadNodeAccess.shared
+            )
             let fileSearchRepository = FilesSearchRepository.newRepo
             let photoLibraryUseCase = PhotoLibraryUseCase(photosRepository: photoLibraryRepository, searchRepository: fileSearchRepository)
             let viewModel = PhotosViewModel(

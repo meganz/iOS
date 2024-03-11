@@ -1,8 +1,8 @@
 import Foundation
 import MEGADomain
-import MEGASDKRepo
+import MEGASdk
 
-typealias NodeLoadCompletion = (_ node: MEGANode?, _ error: (any Error)?) -> Void
+public typealias NodeLoadCompletion = (_ node: MEGANode?, _ error: (any Error)?) -> Void
 
 struct NodeAccessConfiguration {
     var autoCreate: (() -> Bool)?
@@ -14,13 +14,13 @@ struct NodeAccessConfiguration {
     var createNodeRequest: ((String, MEGANode, any MEGARequestDelegate) -> Void)?
 }
 
-public class NodeAccess: NSObject {
-    private let sdk = MEGASdk.shared
+public class NodeAccess: NSObject, @unchecked Sendable {
+    private let sdk = MEGASdk.sharedSdk
     private let nodeAccessSemaphore = DispatchSemaphore(value: 1)
     private var nodeLoadOperation: NodeLoadOperation?
     
     var nodeAccessConfiguration: NodeAccessConfiguration
-    var nodePath: String?
+    public var nodePath: String?
     
     /// All changes in the SDK and in memory are notified so that the handle value is always up to date. This handle is the single source of truth on target node handle check.
     private var handle: HandleEntity? {
@@ -52,7 +52,7 @@ public class NodeAccess: NSObject {
     ///
     /// - Parameter node: The given node to be checked
     /// - Returns: if the node is the target folder return true, otherwise return false
-    @objc func isTargetNode(for node: MEGANode) -> Bool { handle != nil && node.handle == handle }
+    @objc public func isTargetNode(for node: MEGANode) -> Bool { handle != nil && node.handle == handle }
     
     /// Load the current type node, it follows the below steps to load the node:
     /// 1. If the handle in memory is valid, we return it
@@ -65,7 +65,7 @@ public class NodeAccess: NSObject {
     /// is not a concern here, as handle is a primitive type and it is safe to enter the synchronisation point.
     ///
     /// - Parameter completion: A block that the node loader calls after the node load completes. It will be called on an arbitrary dispatch queue. Please dispatch to Main queue if need to update UI.
-    @objc func loadNode(completion: NodeLoadCompletion? = nil) {
+    @objc public func loadNode(completion: NodeLoadCompletion? = nil) {
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             guard let sdk = self?.sdk, let node = self?.handle?.validNode(in: sdk) else {
                 self?.loadNodeWithSynchronisation(completion: completion)
@@ -111,7 +111,8 @@ public class NodeAccess: NSObject {
     
     private func loadNodeToMemory() {
         loadNode { _, error in
-            MEGALogWarning("NodeAccess. could not load node to memory \(String(describing: error))")
+            let message = "NodeAccess. could not load node to memory \(String(describing: error))"
+            MEGASdk.log(with: .warning, message: "[iOS] \(message)", filename: #file, line: #line)
         }
     }
     
@@ -121,7 +122,7 @@ public class NodeAccess: NSObject {
     /// - Parameters:
     ///   - node: The given node to be set to be Camera Uploads target folder node
     ///   - completion: A callback closure when set node completes. It will be called on an arbitrary dispatch queue. Please dispatch to Main queue if need to update UI.
-    @objc func setNode(_ node: MEGANode, completion: NodeLoadCompletion? = nil) {
+    @objc public func setNode(_ node: MEGANode, completion: NodeLoadCompletion? = nil) {
         guard node.handle != handle, let setNodeRequest = nodeAccessConfiguration.setNodeRequest else {
             completion?(node, nil)
             return

@@ -1,7 +1,8 @@
 import Foundation
+import MEGASdk
 
-final class BackupRootNodeAccess: NodeAccess {
-    @objc static let shared = BackupRootNodeAccess(
+final public class BackupRootNodeAccess: NodeAccess {
+    @objc public static let shared = BackupRootNodeAccess(
         configuration:
             NodeAccessConfiguration(
                 updateInMemoryNotificationName: .MEGABackupRootFolderUpdatedInMemory,
@@ -21,6 +22,6 @@ final class BackupRootNodeAccess: NodeAccess {
     }
     
     private static func loadRootNode(delegate: any MEGARequestDelegate) {
-        MEGASdk.shared.getUserAttributeType(.backupsFolder, delegate: delegate)
+        MEGASdk.sharedSdk.getUserAttributeType(.backupsFolder, delegate: delegate)
     }
 }
