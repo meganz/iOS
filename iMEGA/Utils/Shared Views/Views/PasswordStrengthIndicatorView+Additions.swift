@@ -16,7 +16,7 @@ extension PasswordStrengthIndicatorView {
         case .medium:
             labelColor = UIColor.isDesignTokenEnabled() ? TokenColors.Indicator.green : UIColor.systemGreen
         case .good:
-            labelColor = UIColor.isDesignTokenEnabled() ? TokenColors.Indicator.green : UIColor(red: 18.0/255/0, green: 210.0/255.0, blue: 56.0/255.0, alpha: 1.0)
+            labelColor = UIColor.isDesignTokenEnabled() ? TokenColors.Indicator.green : UIColor.systemGreen
         case .strong:
             labelColor = UIColor.isDesignTokenEnabled() ? TokenColors.Indicator.blue : UIColor.mnz_blue(for: traitCollection)
         @unknown default:
