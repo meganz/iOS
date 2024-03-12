@@ -154,6 +154,31 @@ public struct NodeRepository: NodeRepositoryProtocol {
         return sdk.isNode(inRubbish: node)
     }
 
+    public func createFolder(with name: String, in parent: NodeEntity) async throws -> NodeEntity {
+        guard let node = parent.toMEGANode(in: sdk) else {
+            throw NodeCreationErrorEntity.nodeNotFound
+        }
+
+        guard sdk.childNode(forParent: node, name: name, type: MEGANodeType.folder.rawValue) == nil else {
+            throw NodeCreationErrorEntity.nodeAlreadyExists
+        }
+
+        return try await withCheckedThrowingContinuation { continuation in
+            sdk.createFolder(withName: name, parent: node, delegate: RequestDelegate { result in
+                switch result {
+                case .success(let request):
+                    if let newFolderNode = sdk.node(forHandle: request.nodeHandle) {
+                        continuation.resume(returning: newFolderNode.toNodeEntity())
+                    } else {
+                        continuation.resume(throwing: NodeCreationErrorEntity.nodeCreatedButCannotBeSearched)
+                    }
+                case .failure:
+                    continuation.resume(throwing: NodeCreationErrorEntity.nodeCreationFailed)
+                }
+            })
+        }
+    }
+    
     // MARK: - Private
     private func images(forParentNode node: MEGANode) -> [NodeEntity] {
         let nodeList = sdk.children(forParent: node)

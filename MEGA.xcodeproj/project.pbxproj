@@ -2154,6 +2154,9 @@
 		BF66E01B26140BF700066F35 /* MeetingContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF66E01A26140BF700066F35 /* MeetingContainerViewModel.swift */; };
 		BF67C50B264B9A68003CE3C6 /* ArchivedChatRoomsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF67C50A264B9A67003CE3C6 /* ArchivedChatRoomsViewController.swift */; };
 		BF67C527264CB0A7003CE3C6 /* ContactDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF67C526264CB0A7003CE3C6 /* ContactDetailsViewController.swift */; };
+		BF67D7752B9EAC6000978846 /* CreateNewFolderAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF67D7742B9EAC6000978846 /* CreateNewFolderAlertViewModel.swift */; };
+		BF67D7772B9EAC8300978846 /* CreateNewFolderAlertViewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF67D7762B9EAC8300978846 /* CreateNewFolderAlertViewRouter.swift */; };
+		BF67D77F2B9EE21800978846 /* CreateNewFolderAlertViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF67D77E2B9EE21800978846 /* CreateNewFolderAlertViewModelTests.swift */; };
 		BF67F7F82AB4171A00AC127E /* LogRepo in Frameworks */ = {isa = PBXBuildFile; productRef = BF67F7F72AB4171A00AC127E /* LogRepo */; };
 		BF67F7FA2AB4172100AC127E /* LogRepo in Frameworks */ = {isa = PBXBuildFile; productRef = BF67F7F92AB4172100AC127E /* LogRepo */; };
 		BF68244725E84D9F00A7740C /* MeetingFloatingPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF68244525E84D9F00A7740C /* MeetingFloatingPanelViewController.swift */; };
@@ -4856,6 +4859,9 @@
 		BF66E01A26140BF700066F35 /* MeetingContainerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingContainerViewModel.swift; sourceTree = "<group>"; };
 		BF67C50A264B9A67003CE3C6 /* ArchivedChatRoomsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivedChatRoomsViewController.swift; sourceTree = "<group>"; };
 		BF67C526264CB0A7003CE3C6 /* ContactDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDetailsViewController.swift; sourceTree = "<group>"; };
+		BF67D7742B9EAC6000978846 /* CreateNewFolderAlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewFolderAlertViewModel.swift; sourceTree = "<group>"; };
+		BF67D7762B9EAC8300978846 /* CreateNewFolderAlertViewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewFolderAlertViewRouter.swift; sourceTree = "<group>"; };
+		BF67D77E2B9EE21800978846 /* CreateNewFolderAlertViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewFolderAlertViewModelTests.swift; sourceTree = "<group>"; };
 		BF67F7EC2AB3EF0E00AC127E /* LogRepo */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LogRepo; sourceTree = "<group>"; };
 		BF68244525E84D9F00A7740C /* MeetingFloatingPanelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingFloatingPanelViewController.swift; sourceTree = "<group>"; };
 		BF68244625E84D9F00A7740C /* MeetingFloatingPanelViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingFloatingPanelViewController.xib; sourceTree = "<group>"; };
@@ -5651,6 +5657,7 @@
 				BFDAC17D2B836BD30003BE4F /* CloudDriveViewControllerNavItemsFactoryTests.swift */,
 				24575FEE2A499A62003EAE79 /* CloudDriveViewControllerTests.swift */,
 				25BE0B082AC3ADCC00ED44DF /* CloudDriveViewModelTests.swift */,
+				BF67D77E2B9EE21800978846 /* CreateNewFolderAlertViewModelTests.swift */,
 				9422636D2B445FF60010B667 /* DisplayModeTests.swift */,
 				2435921D2A4ABBC100B0C57E /* DocScannerSaveSettingTableViewControllerTests.swift */,
 				9439F1242B838F6F00B3633D /* InitialViewModeFactoryTests.swift */,
@@ -6619,6 +6626,8 @@
 				94F4157B2B2086A300F1BBFD /* CloudDriveViewControllerFactory.swift */,
 				BFDAC1712B8356DA0003BE4F /* CloudDriveViewControllerNavItemsFactory.swift */,
 				B596D15B2979280A002C5094 /* CloudDriveViewModel.swift */,
+				BF67D7742B9EAC6000978846 /* CreateNewFolderAlertViewModel.swift */,
+				BF67D7762B9EAC8300978846 /* CreateNewFolderAlertViewRouter.swift */,
 				BFCF843C246A6471004FA3B1 /* DocScannerActionTableViewCell.swift */,
 				BFCF843A246A5BFA004FA3B1 /* DocScannerDetailTableCell.swift */,
 				BFCF8438246A53E2004FA3B1 /* DocScannerFileNameTableCell.swift */,
@@ -14038,6 +14047,8 @@
 				B582966A27C5EADF004DD7A5 /* CreateAccountViewController+Additions.swift in Sources */,
 				E8D4B8921A69429200A3B2E2 /* CreateAccountViewController.m in Sources */,
 				32D167C029497394008C5ED6 /* CreateAlbumCell.swift in Sources */,
+				BF67D7752B9EAC6000978846 /* CreateNewFolderAlertViewModel.swift in Sources */,
+				BF67D7772B9EAC8300978846 /* CreateNewFolderAlertViewRouter.swift in Sources */,
 				1246682F275DBE0500C94335 /* CreateTextFileAlertViewController.swift in Sources */,
 				12466834275DBE0600C94335 /* CreateTextFileAlertViewModel.swift in Sources */,
 				1246682D275DBE0500C94335 /* CreateTextFileAlertViewRouter.swift in Sources */,
@@ -15690,6 +15701,7 @@
 				94CBB2C42A8A578400C62F32 /* ContactsViewModelTests.swift in Sources */,
 				A81F9BB427EA023A00D47C0D /* CookieSettingsViewModelTests.swift in Sources */,
 				B5488B7A2A8DBFAD00A069DF /* CountdownTimerTests.swift in Sources */,
+				BF67D77F2B9EE21800978846 /* CreateNewFolderAlertViewModelTests.swift in Sources */,
 				0EE5AC162B1E932F00BCDD88 /* CustomModalAlertViewModelTests.swift in Sources */,
 				943649DF2A4D83DE006CE8B8 /* CustomModalModel+Equatable.swift in Sources */,
 				2FF3FA6B260C39A300015050 /* DeepLinkingTests.m in Sources */,

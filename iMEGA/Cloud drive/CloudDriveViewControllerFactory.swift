@@ -81,7 +81,6 @@ struct CloudDriveViewControllerFactory {
     private let rubbishBinUseCase: any RubbishBinUseCaseProtocol
     private let createContextMenuUseCase: any CreateContextMenuUseCaseProtocol
     private let nodeActions: NodeActions
-    private let emptyViewAssetFactory: CloudDriveEmptyViewAssetFactory
     private let viewModeFactory: InitialViewModeFactory
     
     init(
@@ -144,15 +143,6 @@ struct CloudDriveViewControllerFactory {
         )
         
         self.avatarViewModel.inputs.viewIsReady()
-        
-        self.emptyViewAssetFactory = CloudDriveEmptyViewAssetFactory(
-            nodeInsertionRouter: CloudDriveNodeInsertionRouter(navigationController: navigationController),
-            nodeUseCase: NodeUseCase(
-                nodeDataRepository: NodeDataRepository.newRepo,
-                nodeValidationRepository: NodeValidationRepository.newRepo,
-                nodeRepository: NodeRepository.newRepo
-            )
-        )
         
         viewModeFactory = InitialViewModeFactory(viewModeStore: viewModeStore)
     }
@@ -420,7 +410,7 @@ struct CloudDriveViewControllerFactory {
         )
 
         let uploadAddMenuDelegate = UploadAddMenuDelegateHandler(
-            nodeInsertionRouter: CloudDriveNodeInsertionRouter(navigationController: navigationController),
+            nodeInsertionRouter: makeCloudDriveNodeInsertionRouter(),
             nodeSource: nodeSource
         )
 
@@ -434,7 +424,13 @@ struct CloudDriveViewControllerFactory {
         
         return (contextMenuManager, contextMenuManager.allNonNilActionHandlers())
     }
-    
+
+    private func open(node: NodeEntity) {
+        Task { @MainActor in
+            router.didTapNode(nodeHandle: node.handle)
+        }
+    }
+
     // this method is ripe for extracting to separate file
     // not doing this now as 2 develops are actively working with this file
     // This factory should be split into 2 , one that just creates new , one that just creates old CDVC
@@ -734,7 +730,7 @@ struct CloudDriveViewControllerFactory {
         bridge.updateBottomInsetTrampoline = { [weak searchBridge] inset in
             searchBridge?.updateBottomInset(inset)
         }
-        
+
         return SearchResultsViewModel(
             resultsProvider: resultProvider(
                 for: nodeSource,
@@ -745,13 +741,32 @@ struct CloudDriveViewControllerFactory {
                 contextPreviewFactory: homeScreenFactory.contextPreviewFactory(
                     enableItemMultiSelection: true
                 ),
-                defaultEmptyViewAsset: emptyViewAssetFactory.defaultAsset(for: nodeSource, config: config)
+                defaultEmptyViewAsset: { makeDefaultEmptyViewAsset(for: nodeSource, config: config) }
             ),
             layout: layout,
             keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: .default)
         )
     }
-    
+
+    private func makeDefaultEmptyViewAsset(
+        for nodeSource: NodeSource,
+        config: NodeBrowserConfig
+    ) -> SearchConfig.EmptyViewAssets {
+        CloudDriveEmptyViewAssetFactory(
+            nodeInsertionRouter: makeCloudDriveNodeInsertionRouter(),
+            nodeUseCase: NodeUseCase(
+                nodeDataRepository: NodeDataRepository.newRepo,
+                nodeValidationRepository: NodeValidationRepository.newRepo,
+                nodeRepository: NodeRepository.newRepo
+            )
+        )
+        .defaultAsset(for: nodeSource, config: config)
+    }
+
+    private func makeCloudDriveNodeInsertionRouter() -> CloudDriveNodeInsertionRouter {
+        CloudDriveNodeInsertionRouter(navigationController: navigationController, openNodeHandler: open(node:))
+    }
+
     private func makeWarningViewModel(warningType: WarningType) -> WarningViewModel {
         WarningViewModel(warningType: warningType)
     }

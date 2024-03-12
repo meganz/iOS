@@ -23,4 +23,5 @@ public protocol NodeRepositoryProtocol: RepositoryProtocol {
     func children(of node: NodeEntity) -> NodeListEntity?
     func childrenNames(of node: NodeEntity) -> [String]?
     func isInRubbishBin(node: NodeEntity) -> Bool
+    func createFolder(with name: String, in parent: NodeEntity) async throws -> NodeEntity
 }

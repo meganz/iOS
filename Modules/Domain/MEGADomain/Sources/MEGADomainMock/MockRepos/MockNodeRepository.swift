@@ -114,4 +114,8 @@ public struct MockNodeRepository: NodeRepositoryProtocol {
     public func isInRubbishBin(node: NodeEntity) -> Bool {
         rubbishBinNode == node
     }
+
+    public func createFolder(with name: String, in parent: NodeEntity) async throws -> NodeEntity {
+        parent
+    }
 }

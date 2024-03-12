@@ -14,6 +14,7 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
     private var nodes: [NodeEntity]
     private var nodeEntity: NodeEntity?
     private let nodeListEntity: NodeListEntity?
+    private let createFolderResult: Result<NodeEntity, NodeCreationErrorEntity>
 
     public var isMultimediaFileNode_CalledTimes = 0
     
@@ -28,7 +29,9 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
                 inRubbishBin: Bool = false,
                 nodes: [NodeEntity] = [],
                 node: NodeEntity? = nil,
-                nodeListEntity: NodeListEntity? = nil) {
+                nodeListEntity: NodeListEntity? = nil,
+                createFolderResult: Result<NodeEntity, NodeCreationErrorEntity> = .success(.init())
+    ) {
         self.nodeAccessLevelVariable = nodeAccessLevelVariable
         self.labelStringToReturn = labelString
         self.filesAndFolders = filesAndFolders
@@ -41,6 +44,7 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
         self.nodes = nodes
         self.nodeEntity = node
         self.nodeListEntity = nodeListEntity
+        self.createFolderResult = createFolderResult
     }
     
     public func nodeAccessLevel(nodeHandle: HandleEntity) -> NodeAccessTypeEntity {
@@ -117,5 +121,9 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
 
     public func childrenOf(node: NodeEntity) -> NodeListEntity? {
         nodeListEntity
+    }
+
+    public func createFolder(with name: String, in parent: NodeEntity) async throws -> NodeEntity {
+        try createFolderResult.get()
     }
 }

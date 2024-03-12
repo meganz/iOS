@@ -302,17 +302,19 @@ final class HomeScreenFactory: NSObject {
                 contextPreviewFactory: contextPreviewFactory(
                     enableItemMultiSelection: enableItemMultiSelection
                 ),
-                defaultEmptyViewAsset: .init(
-                    image: Image(.searchEmptyState),
-                    title: Strings.Localizable.Home.Search.Empty.noChipSelected,
-                    titleTextColor: { colorScheme in
-                        guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) else {
-                            return colorScheme == .light ? UIColor.gray515151.swiftUI : UIColor.grayD1D1D1.swiftUI
-                        }
+                defaultEmptyViewAsset: {
+                    .init(
+                        image: Image(.searchEmptyState),
+                        title: Strings.Localizable.Home.Search.Empty.noChipSelected,
+                        titleTextColor: { colorScheme in
+                            guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .designToken) else {
+                                return colorScheme == .light ? UIColor.gray515151.swiftUI : UIColor.grayD1D1D1.swiftUI
+                            }
 
-                        return TokenColors.Icon.secondary.swiftUI
-                    }
-                )
+                            return TokenColors.Icon.secondary.swiftUI
+                        }
+                    )
+                }
             ),
             layout: viewModeStore.viewMode(for: .init(customLocation: CustomViewModeLocation.HomeSearch)).pageLayout ?? .list,
             keyboardVisibilityHandler: KeyboardVisibilityHandler(notificationCenter: notificationCenter)

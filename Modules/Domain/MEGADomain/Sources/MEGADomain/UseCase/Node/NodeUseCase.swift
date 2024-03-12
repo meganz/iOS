@@ -18,6 +18,7 @@ public protocol NodeUseCaseProtocol {
     func childrenNamesOf(node: NodeEntity) -> [String]?
     func isRubbishBinRoot(node: NodeEntity) -> Bool
     func isRestorable(node: NodeEntity) -> Bool
+    func createFolder(with name: String, in parent: NodeEntity) async throws -> NodeEntity
 }
 
 // MARK: - Use case implementation -
@@ -109,5 +110,9 @@ public struct NodeUseCase<T: NodeDataRepositoryProtocol, U: NodeValidationReposi
     
     public func childrenOf(node: NodeEntity) -> NodeListEntity? {
         nodeRepository.children(of: node)
+    }
+
+    public func createFolder(with name: String, in parent: NodeEntity) async throws -> NodeEntity {
+        try await nodeRepository.createFolder(with: name, in: parent)
     }
 }

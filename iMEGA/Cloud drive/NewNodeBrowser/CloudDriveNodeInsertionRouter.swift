@@ -12,17 +12,27 @@ protocol NodeInsertionRouting {
 
 struct CloudDriveNodeInsertionRouter: NodeInsertionRouting {
     private let navigationController: UINavigationController
+    private let openNodeHandler: (NodeEntity) -> Void
 
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController, openNodeHandler: @escaping (NodeEntity) -> Void) {
         self.navigationController = navigationController
+        self.openNodeHandler = openNodeHandler
     }
 
     func createTextFileAlert(for nodeEntity: NodeEntity) {
-        // Create a text file
+        CreateTextFileAlertViewRouter(presenter: navigationController, parentHandle: nodeEntity.handle).start()
     }
 
     func createNewFolder(for nodeEntity: NodeEntity) {
-        // create a folder
+        Task { @MainActor in
+            let router = CreateNewFolderAlertViewRouter(
+                navigationController: navigationController,
+                parentNode: nodeEntity
+            )
+            if let node = await router.start() {
+                openNodeHandler(node)
+            }
+        }
     }
 
     func scanDocument(for nodeEntity: NodeEntity) {
