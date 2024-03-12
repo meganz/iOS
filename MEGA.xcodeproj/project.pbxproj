@@ -2307,7 +2307,6 @@
 		BFB8897B2A13600400FC456A /* ScheduledMeetingRulesEntityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB8897A2A13600400FC456A /* ScheduledMeetingRulesEntityTests.swift */; };
 		BFB889932A1598DB00FC456A /* WaitingRoomViewModel+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB889922A1598DB00FC456A /* WaitingRoomViewModel+Additions.swift */; };
 		BFB889972A15D9F500FC456A /* ScheduleMeetingMonthlyRecurrenceFootnoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB889962A15D9F500FC456A /* ScheduleMeetingMonthlyRecurrenceFootnoteView.swift */; };
-		BFBB888B28B8421B00E8B482 /* MockAnalyticsEventUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBB888A28B8421B00E8B482 /* MockAnalyticsEventUseCase.swift */; };
 		BFBFFD672A046E9200E4EB23 /* ChatStateListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBFFD662A046E9200E4EB23 /* ChatStateListener.swift */; };
 		BFBFFD682A046ED600E4EB23 /* ChatStateListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBFFD662A046E9200E4EB23 /* ChatStateListener.swift */; };
 		BFC060F328A0C09900BA2AD7 /* ParticipantsAddingViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC060F228A0C09900BA2AD7 /* ParticipantsAddingViewFactory.swift */; };
@@ -5004,7 +5003,6 @@
 		BFB8897A2A13600400FC456A /* ScheduledMeetingRulesEntityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduledMeetingRulesEntityTests.swift; sourceTree = "<group>"; };
 		BFB889922A1598DB00FC456A /* WaitingRoomViewModel+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WaitingRoomViewModel+Additions.swift"; sourceTree = "<group>"; };
 		BFB889962A15D9F500FC456A /* ScheduleMeetingMonthlyRecurrenceFootnoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingMonthlyRecurrenceFootnoteView.swift; sourceTree = "<group>"; };
-		BFBB888A28B8421B00E8B482 /* MockAnalyticsEventUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAnalyticsEventUseCase.swift; sourceTree = "<group>"; };
 		BFBFFD662A046E9200E4EB23 /* ChatStateListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatStateListener.swift; sourceTree = "<group>"; };
 		BFC060F228A0C09900BA2AD7 /* ParticipantsAddingViewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticipantsAddingViewFactory.swift; sourceTree = "<group>"; };
 		BFC060F528A0C2FE00BA2AD7 /* participantsAddingViewFactoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = participantsAddingViewFactoryTests.swift; sourceTree = "<group>"; };
@@ -11900,7 +11898,6 @@
 				99F7043C2AD3A7E600A774DB /* MeetingCreatingViewModel+Additions.swift */,
 				BF30471E2892048700A6988F /* MeetingFloatingPanelViewModel+Additions.swift */,
 				996A49012A8CBDAE00264298 /* MeetingInfoViewModel+Additions.swift */,
-				BFBB888A28B8421B00E8B482 /* MockAnalyticsEventUseCase.swift */,
 				BF8895E72631213C002A18CA /* MockCallKitManager.swift */,
 				834D7E3A2B0CA607005D7FCB /* MockCallSessionUseCase.swift */,
 				BF8895F126312EA1002A18CA /* MockCallUseCase.swift */,
@@ -15763,7 +15760,6 @@
 				24189DCE2AA705C70071F160 /* MiniPlayerViewModel+AudioPlayerObserversProtocolTests.swift in Sources */,
 				C45A2E2325D2E05100915A83 /* MiniPlayerViewModelTests.swift in Sources */,
 				5D52C74A250C4F4100286A43 /* mock-function.swift in Sources */,
-				BFBB888B28B8421B00E8B482 /* MockAnalyticsEventUseCase.swift in Sources */,
 				C47E7C4025D1AC3400DB6FF5 /* MockAudioPlayerHandler.swift in Sources */,
 				24C577F62AC1872F00302849 /* MockAudioPlayerRepository.swift in Sources */,
 				24C577FF2AC18A9F00302849 /* MockAudioPlayerUseCase.swift in Sources */,
