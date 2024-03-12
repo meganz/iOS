@@ -59,6 +59,7 @@ import MEGASDKRepo
             purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
             shareUseCase: ShareUseCase(repo: ShareRepository.newRepo),
             networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
+            notificationsUseCase: NotificationsUseCase(repository: NotificationsRepository.newRepo),
             navigationController: navigationController
         ).start()
     }

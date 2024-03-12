@@ -40,6 +40,7 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
     private var featureFlagProvider: any FeatureFlagProviderProtocol
     private let myAccountHallUseCase: any MyAccountHallUseCaseProtocol
     private let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
+    private let notificationsUseCase: any NotificationsUseCaseProtocol
     let shareUseCase: any ShareUseCaseProtocol
     let deviceCenterBridge: DeviceCenterBridge
     let router: any MyAccountHallRouting
@@ -56,12 +57,14 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
     init(myAccountHallUseCase: some MyAccountHallUseCaseProtocol,
          purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
          shareUseCase: some ShareUseCaseProtocol,
+         notificationsUseCase: some NotificationsUseCaseProtocol,
          featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider,
          deviceCenterBridge: DeviceCenterBridge,
          router: some MyAccountHallRouting) {
         self.myAccountHallUseCase = myAccountHallUseCase
         self.purchaseUseCase = purchaseUseCase
         self.shareUseCase = shareUseCase
+        self.notificationsUseCase = notificationsUseCase
         self.featureFlagProvider = featureFlagProvider
         self.deviceCenterBridge = deviceCenterBridge
         self.router = router
@@ -181,8 +184,10 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
     }
     
     private func fetchAvailablePromos() async {
-        $arePromosAvailable.mutate { currentValue in
-            currentValue = self.isNotificationCenterEnabled()
+        $arePromosAvailable.mutate { [weak self] currentValue in
+            guard let self else { return }
+            let hasEnabledNotifications = notificationsUseCase.fetchEnabledNotifications().isNotEmpty
+            currentValue = isNotificationCenterEnabled() && hasEnabledNotifications
         }
     }
     
