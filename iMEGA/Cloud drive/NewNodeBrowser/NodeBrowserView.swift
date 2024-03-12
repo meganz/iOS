@@ -1,8 +1,6 @@
-import MEGADesignToken
-import MEGADomain
 import MEGAL10n
-import MEGASwiftUI
 import Search
+import MEGASwiftUI
 import SwiftUI
 
 struct NodeBrowserView: View {
@@ -10,24 +8,20 @@ struct NodeBrowserView: View {
     @StateObject var viewModel: NodeBrowserViewModel
 
     var body: some View {
-        switch viewModel.viewState {
-        case .editing:
-            content
-                .toolbar { toolbarContentEditing }
-                .navigationBarBackButtonHidden(true)
-        case .regular(let isBackButtonShown):
-            if isBackButtonShown {
-                content
-                    .toolbar { toolbarContent }
-                    .navigationBarBackButtonHidden(false)
-            } else {
-                content
-                   .toolbar { toolbarContentWithLeadingAvatar }
-                   .navigationBarBackButtonHidden(true)
-            }
-        }
+        content
+            .toolbar {
+                ToolbarItemGroup(placement: .topBarLeading) {
+                    leftToolbarContent
+                }
+                
+                toolbarNavigationTitle
+                
+                ToolbarItemGroup(placement: .topBarTrailing) {
+                    rightToolbarContent
+                }
+            }.navigationBarBackButtonHidden(viewModel.hidesBackButton)
     }
-
+    
     private var content: some View {
         VStack {
             if let warningViewModel = viewModel.warningViewModel {
@@ -63,55 +57,78 @@ struct NodeBrowserView: View {
         }
     }
 
-    @ToolbarContentBuilder
-    private var toolbarContent: some ToolbarContent {
-        toolbarNavigationTitle
-        toolbarTrailingNonEditingContent
-    }
-
-    @ToolbarContentBuilder
-    private var toolbarContentWithLeadingAvatar: some ToolbarContent {
-        toolbarLeadingAvatarImage
-        toolbarNavigationTitle
-        toolbarTrailingNonEditingContent
-    }
-
-    @ToolbarContentBuilder
-    private var toolbarLeadingBackButton: some ToolbarContent {
-        ToolbarItem(placement: .topBarLeading) {
+    // Note: Here we temporarily disabled this block of code because we cannot use them due to iOS15 API shortcomings for using if-else inside `.toolbar { }`.
+    // When we finall drop iOS15, we can uncomment these code and use them again
+//    @ToolbarContentBuilder
+//    private var toolbarContent: some ToolbarContent {
+//        toolbarNavigationTitle
+//        toolbarTrailingNonEditingContent
+//    }
+//
+//    @ToolbarContentBuilder
+//    private var toolbarContentWithLeadingAvatar: some ToolbarContent {
+//        toolbarLeadingAvatarImage
+//        toolbarNavigationTitle
+//        toolbarTrailingNonEditingContent
+//    }
+//    @ToolbarContentBuilder
+//    private var toolbarLeadingAvatarImage: some ToolbarContent {
+//        ToolbarItem(placement: .topBarLeading) {
+//            MyAvatarIconView(
+//                viewModel: .init(
+//                    avatarObserver: viewModel.avatarViewModel,
+//                    onAvatarTapped: { viewModel.openUserProfile() }
+//                )
+//            )
+//        }
+//    }
+//    @ToolbarContentBuilder
+//    private var toolbarTrailingNonEditingContent: some ToolbarContent {
+//        ToolbarItemGroup(placement: .topBarTrailing) {
+//            viewModel.contextMenuViewFactory?.makeAddMenuWithButtonView()
+//            viewModel.contextMenuViewFactory?.makeContextMenuWithButtonView()
+//        }
+//    }
+    
+    @ViewBuilder
+    private var leftToolbarContent: some View {
+        switch viewModel.viewState {
+        case .editing:
             Button(
-                action: { viewModel.back() },
-                label: { Image(.backArrow) }
+                action: { viewModel.selectAll() },
+                label: { Image(.selectAllItems) }
             )
-        }
-    }
-
-    @ToolbarContentBuilder
-    private var toolbarLeadingAvatarImage: some ToolbarContent {
-        ToolbarItem(placement: .topBarLeading) {
-            MyAvatarIconView(
-                viewModel: .init(
-                    avatarObserver: viewModel.avatarViewModel,
-                    onAvatarTapped: { viewModel.openUserProfile() }
+        case .regular(let isBackButtonShown):
+            if isBackButtonShown {
+                EmptyView()
+            } else {
+                MyAvatarIconView(
+                    viewModel: .init(
+                        avatarObserver: viewModel.avatarViewModel,
+                        onAvatarTapped: { viewModel.openUserProfile() }
+                    )
                 )
-            )
+            }
         }
     }
-
+    
+    @ViewBuilder
+    private var rightToolbarContent: some View {
+        switch viewModel.viewState {
+        case .editing:
+            Button(Strings.Localizable.cancel) { viewModel.stopEditing() }
+        case .regular:
+            viewModel.contextMenuViewFactory?.makeAddMenuWithButtonView()
+            viewModel.contextMenuViewFactory?.makeContextMenuWithButtonView()
+        }
+    }
+    
     @ToolbarContentBuilder
     private var toolbarNavigationTitle: some ToolbarContent {
         ToolbarItem(placement: .principal) {
             Text(viewModel.title)
                 .font(.headline)
                 .lineLimit(1)
-        }
-    }
-
-    @ToolbarContentBuilder
-    private var toolbarTrailingNonEditingContent: some ToolbarContent {
-        ToolbarItemGroup(placement: .topBarTrailing) {
-            viewModel.contextMenuViewFactory?.makeAddMenuWithButtonView()
-            viewModel.contextMenuViewFactory?.makeContextMenuWithButtonView()
         }
     }
 }
