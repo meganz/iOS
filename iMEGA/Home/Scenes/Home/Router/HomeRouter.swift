@@ -215,6 +215,7 @@ final class HomeRouter: HomeRouterProtocol {
             purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
             shareUseCase: ShareUseCase(repo: ShareRepository.newRepo),
             networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
+            notificationsUseCase: NotificationsUseCase(repository: NotificationsRepository.newRepo),
             navigationController: navigationController
         ).start()
     }
@@ -244,6 +245,7 @@ final class HomeRouter: HomeRouterProtocol {
             purchaseUseCase: AccountPlanPurchaseUseCase(repository: AccountPlanPurchaseRepository.newRepo),
             shareUseCase: ShareUseCase(repo: ShareRepository.newRepo),
             networkMonitorUseCase: NetworkMonitorUseCase(repo: NetworkMonitorRepository.newRepo),
+            notificationsUseCase: NotificationsUseCase(repository: NotificationsRepository.newRepo),
             shouldOpenAchievements: true,
             navigationController: navigationController
         ).start()

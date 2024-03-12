@@ -17,6 +17,7 @@ final class MyAccountHallRouter: MyAccountHallRouting {
     private let purchaseUseCase: any AccountPlanPurchaseUseCaseProtocol
     private let shareUseCase: any ShareUseCaseProtocol
     private let networkMonitorUseCase: any NetworkMonitorUseCaseProtocol
+    private let notificationsUseCase: any NotificationsUseCaseProtocol
     private let shouldOpenAchievements: Bool
     private weak var navigationController: UINavigationController?
     private weak var viewController: UIViewController?
@@ -30,6 +31,7 @@ final class MyAccountHallRouter: MyAccountHallRouting {
         purchaseUseCase: some AccountPlanPurchaseUseCaseProtocol,
         shareUseCase: some ShareUseCaseProtocol,
         networkMonitorUseCase: some NetworkMonitorUseCaseProtocol,
+        notificationsUseCase: some NotificationsUseCaseProtocol,
         shouldOpenAchievements: Bool = false,
         navigationController: UINavigationController,
         loadingPresenter: @escaping () -> Void = { SVProgressHUD.show() },
@@ -41,6 +43,7 @@ final class MyAccountHallRouter: MyAccountHallRouting {
         self.purchaseUseCase = purchaseUseCase
         self.shareUseCase = shareUseCase
         self.networkMonitorUseCase = networkMonitorUseCase
+        self.notificationsUseCase = notificationsUseCase
         self.shouldOpenAchievements = shouldOpenAchievements
         self.navigationController = navigationController
         self.loadingPresenter = loadingPresenter
@@ -148,7 +151,8 @@ final class MyAccountHallRouter: MyAccountHallRouting {
         let viewModel = MyAccountHallViewModel(
             myAccountHallUseCase: myAccountHallUseCase,
             purchaseUseCase: purchaseUseCase, 
-            shareUseCase: shareUseCase,
+            shareUseCase: shareUseCase, 
+            notificationsUseCase: notificationsUseCase,
             deviceCenterBridge: DeviceCenterBridge(),
             router: self
         )

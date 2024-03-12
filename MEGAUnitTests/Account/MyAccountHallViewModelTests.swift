@@ -80,6 +80,25 @@ final class MyAccountHallViewModelTests: XCTestCase {
     
         XCTAssertEqual(sut.accountDetails, expectedAccountDetails)
     }
+    
+    func testArePromosAvailable_whenNotificationsEnabled_shouldReturnTrue() async throws {
+        let (sut, _) = makeSUT(
+            enabledNotifications: [NotificationIDEntity(1), NotificationIDEntity(2), NotificationIDEntity(3)],
+            featureFlagProvider: MockFeatureFlagProvider(list: [.notificationCenter: true])
+        )
+        
+        let result = await loadPromosAndGetAvailability(for: sut)
+        XCTAssertTrue(result, "Promos should be available when notifications are enabled and the notification center feature flag is true.")
+    }
+    
+    func testArePromosAvailable_whenNotificationsNotEnabled_shouldReturnFalse() async throws {
+        let (sut, _) = makeSUT(
+            featureFlagProvider: MockFeatureFlagProvider(list: [.notificationCenter: true])
+        )
+        
+        let result = await loadPromosAndGetAvailability(for: sut)
+        XCTAssertFalse(result, "Promos should not be available when notifications are not enabled, even if the notification center feature flag is true.")
+    }
 
     func testIsMasterBusinessAccount_shouldBeTrue() {
         let (sut, _) = makeSUT(isMasterBusinessAccount: true)
@@ -199,8 +218,17 @@ final class MyAccountHallViewModelTests: XCTestCase {
         )
     }
     
+    private func loadPromosAndGetAvailability(for sut: MyAccountHallViewModel) async -> Bool {
+        sut.dispatch(.load(.promos))
+        
+        try? await Task.sleep(nanoseconds: 1_000_000_000)
+        
+        return sut.arePromosAvailable
+    }
+    
     private func makeSUT(
         isMasterBusinessAccount: Bool = false,
+        enabledNotifications: [NotificationIDEntity] = [],
         currentAccountDetails: AccountDetailsEntity? = nil,
         featureFlagProvider: MockFeatureFlagProvider = MockFeatureFlagProvider(list: [:]),
         deviceCenterBridge: DeviceCenterBridge = DeviceCenterBridge()
@@ -212,6 +240,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
         
         let purchaseUseCase = MockAccountPlanPurchaseUseCase()
         let shareUseCase = MockShareUseCase()
+        let notificationUseCase = MockNotificationUseCase(enabledNotifications: enabledNotifications)
         let router = MockMyAccountHallRouter()
         
         return (
@@ -219,6 +248,7 @@ final class MyAccountHallViewModelTests: XCTestCase {
                 myAccountHallUseCase: myAccountHallUseCase,
                 purchaseUseCase: purchaseUseCase, 
                 shareUseCase: shareUseCase,
+                notificationsUseCase: notificationUseCase,
                 featureFlagProvider: featureFlagProvider,
                 deviceCenterBridge: deviceCenterBridge,
                 router: router
