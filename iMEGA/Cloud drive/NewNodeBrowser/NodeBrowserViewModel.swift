@@ -200,8 +200,8 @@ class NodeBrowserViewModel: ObservableObject {
     }
     
     private var isBackButtonShown: Bool {
-       guard let parentNode = nodeSource.parentNode else { return false }
-       return parentNode.nodeType != .root
+        guard let parentNode = nodeSource.parentNode else { return false }
+        return parentNode.nodeType != .root
     }
 
     func openUserProfile() {
@@ -229,5 +229,17 @@ class NodeBrowserViewModel: ObservableObject {
         editing = false
         refresh()
         searchResultsViewModel.bridge.editingCancelled()
+    }
+}
+
+extension NodeBrowserViewModel {
+    /// Decides whether the observing View needs to show its navigation bar back button or not.
+    var hidesBackButton: Bool {
+        switch viewState {
+        case .editing:
+            true
+        case .regular(let showBackButton):
+            !showBackButton
+        }
     }
 }

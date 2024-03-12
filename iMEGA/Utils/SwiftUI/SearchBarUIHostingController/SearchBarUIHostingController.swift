@@ -78,6 +78,11 @@ final class SearchBarUIHostingController<Content>: UIHostingController<Content> 
         super.traitCollectionDidChange(previousTraitCollection)
         
         if self.traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) {
+            
+            if let navigationBar = self.wrapper?.searchController.navigationController?.navigationBar {
+                AppearanceManager.forceNavigationBarUpdate(navigationBar, traitCollection: self.traitCollection)
+            }
+            
             if let toolbar {
                 AppearanceManager.forceToolbarUpdate(toolbar, traitCollection: self.traitCollection)
             }
