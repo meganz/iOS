@@ -1,5 +1,6 @@
 import MEGADomain
 import MEGAL10n
+import MEGASDKRepo
 
 final class FileVersioningViewRouter: NSObject, FileVersioningViewRouting {
     private weak var baseViewController: UIViewController?
@@ -13,7 +14,7 @@ final class FileVersioningViewRouter: NSObject, FileVersioningViewRouting {
         let sdk = MEGASdk.shared
         let repo = FileVersionsRepository(sdk: sdk)
         let useCase = FileVersionsUseCase(repo: repo)
-        let accountRepo = AccountRepository(sdk: sdk)
+        let accountRepo = AccountRepository(sdk: sdk, myChatFilesFolderNodeAccess: .shared)
         let accounUseCase = AccountUseCase(repository: accountRepo)
         let vm = FileVersioningViewModel(router: self, fileVersionsUseCase: useCase, accountUseCase: accounUseCase)
         let vc = UIStoryboard(name: "FileVersioning", bundle: nil).instantiateViewController(withIdentifier: "FileVersioningTableViewControllerID") as! FileVersioningTableViewController

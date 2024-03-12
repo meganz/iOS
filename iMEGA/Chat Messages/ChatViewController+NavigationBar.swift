@@ -1,6 +1,7 @@
 import ChatRepo
 import Foundation
 import MEGADomain
+import MEGASDKRepo
 
 extension ChatViewController {
     func configureNavigationBar() {

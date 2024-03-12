@@ -1,99 +1,101 @@
 import Combine
 import Foundation
 import MEGADomain
-import MEGASDKRepo
+import MEGASdk
 import MEGASwift
 
-final class AccountRepository: NSObject, AccountRepositoryProtocol {
-    static var newRepo: AccountRepository {
-        AccountRepository(sdk: MEGASdk.shared)
-    }
-    
+public final class AccountRepository: NSObject, AccountRepositoryProtocol {    
     private let sdk: MEGASdk
     private let currentUserSource: CurrentUserSource
+    private let myChatFilesFolderNodeAccess: MyChatFilesFolderNodeAccess
     
     private let requestResultSourcePublisher = PassthroughSubject<Result<AccountRequestEntity, any Error>, Never>()
-    var requestResultPublisher: AnyPublisher<Result<AccountRequestEntity, any Error>, Never> {
+    public var requestResultPublisher: AnyPublisher<Result<AccountRequestEntity, any Error>, Never> {
         requestResultSourcePublisher.eraseToAnyPublisher()
     }
     
     private let contactRequestSourcePublisher = PassthroughSubject<[ContactRequestEntity], Never>()
-    var contactRequestPublisher: AnyPublisher<[ContactRequestEntity], Never> {
+    public var contactRequestPublisher: AnyPublisher<[ContactRequestEntity], Never> {
         contactRequestSourcePublisher.eraseToAnyPublisher()
     }
     
     private let userAlertUpdateSourcePublisher = PassthroughSubject<[UserAlertEntity], Never>()
-    var userAlertUpdatePublisher: AnyPublisher<[UserAlertEntity], Never> {
+    public var userAlertUpdatePublisher: AnyPublisher<[UserAlertEntity], Never> {
         userAlertUpdateSourcePublisher.eraseToAnyPublisher()
     }
     
-    init(sdk: MEGASdk, currentUserSource: CurrentUserSource = .shared) {
+    public init(
+        sdk: MEGASdk = MEGASdk.sharedSdk,
+        currentUserSource: CurrentUserSource = .shared,
+        myChatFilesFolderNodeAccess: MyChatFilesFolderNodeAccess
+    ) {
         self.sdk = sdk
         self.currentUserSource = currentUserSource
+        self.myChatFilesFolderNodeAccess = myChatFilesFolderNodeAccess
     }
 
-    func registerMEGARequestDelegate() async {
+    public func registerMEGARequestDelegate() async {
         sdk.add(self as (any MEGARequestDelegate))
     }
     
-    func deRegisterMEGARequestDelegate() async {
+    public func deRegisterMEGARequestDelegate() async {
         sdk.remove(self as (any MEGARequestDelegate))
     }
     
-    func registerMEGAGlobalDelegate() async {
+    public func registerMEGAGlobalDelegate() async {
         sdk.add(self as (any MEGAGlobalDelegate))
     }
     
-    func deRegisterMEGAGlobalDelegate() async {
+    public func deRegisterMEGAGlobalDelegate() async {
         sdk.remove(self as (any MEGAGlobalDelegate))
     }
 
-    var currentUserHandle: HandleEntity? {
+    public var currentUserHandle: HandleEntity? {
         currentUserSource.currentUserHandle
     }
     
-    func currentUser() async -> UserEntity? {
+    public func currentUser() async -> UserEntity? {
         await currentUserSource.currentUser()
     }
     
-    var isGuest: Bool {
+    public var isGuest: Bool {
         currentUserSource.isGuest
     }
     
-    var isMasterBusinessAccount: Bool {
+    public var isMasterBusinessAccount: Bool {
         sdk.isMasterBusinessAccount
     }
     
-    var isNewAccount: Bool {
+    public var isNewAccount: Bool {
         sdk.isNewAccount
     }
     
-    var accountCreationDate: Date? {
+    public var accountCreationDate: Date? {
         sdk.accountCreationDate
     }
     
-    var bandwidthOverquotaDelay: Int64 {
+    public var bandwidthOverquotaDelay: Int64 {
         sdk.bandwidthOverquotaDelay
     }
     
-    func isLoggedIn() -> Bool {
+    public func isLoggedIn() -> Bool {
         currentUserSource.isLoggedIn
     }
     
-    func contacts() -> [UserEntity] {
+    public func contacts() -> [UserEntity] {
         sdk.contacts().toUserEntities()
     }
     
-    func incomingContactsRequestsCount() -> Int {
+    public func incomingContactsRequestsCount() -> Int {
         sdk.incomingContactRequests().size
     }
     
-    func relevantUnseenUserAlertsCount() -> UInt {
+    public func relevantUnseenUserAlertsCount() -> UInt {
         sdk.userAlertList().relevantUnseenCount
     }
     
-    func getMyChatFilesFolder(completion: @escaping (Result<NodeEntity, AccountErrorEntity>) -> Void) {
-        MyChatFilesFolderNodeAccess.shared.loadNode { myChatFilesFolderNode, _ in
+    public func getMyChatFilesFolder(completion: @escaping (Result<NodeEntity, AccountErrorEntity>) -> Void) {
+        myChatFilesFolderNodeAccess.loadNode { myChatFilesFolderNode, _ in
             guard let myChatFilesFolderNode = myChatFilesFolderNode else {
                 completion(.failure(AccountErrorEntity.nodeNotFound))
                 return
@@ -103,15 +105,15 @@ final class AccountRepository: NSObject, AccountRepositoryProtocol {
         }
     }
     
-    func totalNodesCount() -> UInt64 {
+    public func totalNodesCount() -> UInt64 {
         sdk.totalNodes
     }
     
-    var currentAccountDetails: AccountDetailsEntity? {
+    public var currentAccountDetails: AccountDetailsEntity? {
         currentUserSource.accountDetails
     }
     
-    func refreshCurrentAccountDetails() async throws -> AccountDetailsEntity {
+    public func refreshCurrentAccountDetails() async throws -> AccountDetailsEntity {
         try await withAsyncThrowingValue(in: { completion in
             sdk.getAccountDetails(with: RequestDelegate { [weak self] result in
                 guard let self else { return }
@@ -130,7 +132,7 @@ final class AccountRepository: NSObject, AccountRepositoryProtocol {
         })
     }
     
-    func upgradeSecurity() async throws -> Bool {
+    public func upgradeSecurity() async throws -> Bool {
         try await withCheckedThrowingContinuation { continuation in
             guard Task.isCancelled == false else {
                 continuation.resume(throwing: CancellationError())
@@ -152,7 +154,7 @@ final class AccountRepository: NSObject, AccountRepositoryProtocol {
         }
     }
     
-    func getMiscFlags() async throws {
+    public func getMiscFlags() async throws {
         try await withAsyncThrowingValue(in: { completion in
             sdk.getMiscFlags(with: RequestDelegate { result in
                 switch result {
@@ -165,7 +167,7 @@ final class AccountRepository: NSObject, AccountRepositoryProtocol {
         })
     }
     
-    func sessionTransferURL(path: String) async throws -> URL {
+    public func sessionTransferURL(path: String) async throws -> URL {
         try await withAsyncThrowingValue(in: { completion in
             sdk.getSessionTransferURL(path, delegate: RequestDelegate { result in
                 switch result {
@@ -186,7 +188,7 @@ final class AccountRepository: NSObject, AccountRepositoryProtocol {
 
 // MARK: - MEGARequestDelegate
 extension AccountRepository: MEGARequestDelegate {
-    func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
+    public func onRequestFinish(_ api: MEGASdk, request: MEGARequest, error: MEGAError) {
         guard error.type == .apiOk else {
             requestResultSourcePublisher.send(.failure(error))
             return
@@ -197,11 +199,11 @@ extension AccountRepository: MEGARequestDelegate {
 
 // MARK: - MEGAGlobalDelegate
 extension AccountRepository: MEGAGlobalDelegate {
-    func onUserAlertsUpdate(_ api: MEGASdk, userAlertList: MEGAUserAlertList) {
+    public func onUserAlertsUpdate(_ api: MEGASdk, userAlertList: MEGAUserAlertList) {
         userAlertUpdateSourcePublisher.send(userAlertList.toUserAlertEntities())
     }
     
-    func onContactRequestsUpdate(_ api: MEGASdk, contactRequestList: MEGAContactRequestList) {
+    public func onContactRequestsUpdate(_ api: MEGASdk, contactRequestList: MEGAContactRequestList) {
         contactRequestSourcePublisher.send(contactRequestList.toContactRequestEntities())
     }
 }

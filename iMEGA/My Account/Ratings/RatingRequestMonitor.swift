@@ -11,7 +11,7 @@ import StoreKit
     private lazy var currentAppVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
     private lazy var baseConditionUseCase: any RatingRequestBaseConditionsUseCaseProtocol
         = RatingRequestBaseConditionsUseCase(preferenceUserCase: PreferenceUseCase.default,
-                                             accountRepo: AccountRepository(sdk: sdk),
+                                             accountRepo: AccountRepository(sdk: sdk, myChatFilesFolderNodeAccess: .shared),
                                              currentAppVersion: currentAppVersion)
     private lazy var shareUseCase: any ShareUseCaseProtocol = ShareUseCase(repo: ShareRepository(sdk: sdk))
     

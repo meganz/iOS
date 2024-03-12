@@ -105,7 +105,7 @@ extension FavouritesViewController: UITableViewDataSource {
         
         let nodeOpener = NodeOpener(navigationController: navigationController)
         let nodeUseCase = NodeUseCase(nodeDataRepository: NodeDataRepository.newRepo, nodeValidationRepository: NodeValidationRepository.newRepo, nodeRepository: NodeRepository.newRepo)
-        let accountUseCase = AccountUseCase(repository: AccountRepository(sdk: MEGASdk.shared))
+        let accountUseCase = AccountUseCase(repository: AccountRepository.newRepo)
         
         let cellViewModel = NodeCellViewModel(
             nodeOpener: nodeOpener,
