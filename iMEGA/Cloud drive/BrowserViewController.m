@@ -898,7 +898,11 @@
             }
         } else {
             if (self.incomingButton.selected && self.isParentBrowser) {
-                image = [UIImage imageNamed:@"incomingEmptyState"];
+                if ([UIColor isDesignTokenEnabled]) {
+                    image = [UIImage imageNamed:@"incomingEmptyState"];
+                } else {
+                    image = [[UIImage imageNamed:@"incomingEmptyState"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+                }
             } else {
                 image = [UIImage imageNamed:@"folderEmptyState"];
             }
