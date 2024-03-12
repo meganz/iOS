@@ -1005,7 +1005,6 @@
 		8373A16729DB3236005B5951 /* ContactsViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8373A16629DB3236005B5951 /* ContactsViewController+Additions.swift */; };
 		83747B1F20ADD16D00BC1AED /* MEGAQLPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83747B1D20ADD16C00BC1AED /* MEGAQLPreviewController.m */; };
 		83751C5429E572DC0030310B /* ScheduleMeetingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83751C5329E572DC0030310B /* ScheduleMeetingViewModelTests.swift */; };
-		83751C5629E5734D0030310B /* MockChatLinkUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83751C5529E5734D0030310B /* MockChatLinkUseCase.swift */; };
 		83751C6729E5AE4E0030310B /* NSString+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83751C6629E5AE4D0030310B /* NSString+Additions.swift */; };
 		83751C6829E5B2040030310B /* NSString+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83751C6629E5AE4D0030310B /* NSString+Additions.swift */; };
 		8375B74325EFC77500B70F6B /* RecentsQuickAccessWidgetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8375B73025EFC68000B70F6B /* RecentsQuickAccessWidgetViewModel.swift */; };
@@ -3698,7 +3697,6 @@
 		83747B1D20ADD16C00BC1AED /* MEGAQLPreviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MEGAQLPreviewController.m; sourceTree = "<group>"; };
 		83747B1E20ADD16C00BC1AED /* MEGAQLPreviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MEGAQLPreviewController.h; sourceTree = "<group>"; };
 		83751C5329E572DC0030310B /* ScheduleMeetingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingViewModelTests.swift; sourceTree = "<group>"; };
-		83751C5529E5734D0030310B /* MockChatLinkUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockChatLinkUseCase.swift; sourceTree = "<group>"; };
 		83751C6629E5AE4D0030310B /* NSString+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSString+Additions.swift"; sourceTree = "<group>"; };
 		8375B72325EFC65200B70F6B /* FavouritesQuickAccessWidget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavouritesQuickAccessWidget.swift; sourceTree = "<group>"; };
 		8375B72425EFC65200B70F6B /* FavouritesQuickAccessWidgetViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavouritesQuickAccessWidgetViewModel.swift; sourceTree = "<group>"; };
@@ -8712,7 +8710,6 @@
 				99778D972AE74EC700537EA9 /* ChatRoomAvatarViewModelTests.swift */,
 				8336E3F82906B449000F1E9F /* ChatRoomsListViewModelTests.swift */,
 				94A518EE2A6ED0E700728730 /* ChatViewControllerTests.swift */,
-				83751C5529E5734D0030310B /* MockChatLinkUseCase.swift */,
 				A894E7A22B8F6396006AC2C5 /* UserAvatarHandlerTests.swift */,
 			);
 			path = Chat;
@@ -15753,7 +15750,6 @@
 				BF8895E82631213C002A18CA /* MockCallKitManager.swift in Sources */,
 				834D7E3B2B0CA607005D7FCB /* MockCallSessionUseCase.swift in Sources */,
 				BF8895F226312EA1002A18CA /* MockCallUseCase.swift in Sources */,
-				83751C5629E5734D0030310B /* MockChatLinkUseCase.swift in Sources */,
 				BF8895B62630F3A4002A18CA /* MockChatRoomUseCase.swift in Sources */,
 				C4575F31265FA3D500D527DC /* MockDispatchQueue.swift in Sources */,
 				5BBC13E226CE635B0010115B /* MockFavouritesRouter.swift in Sources */,
