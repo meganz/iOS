@@ -1,4 +1,5 @@
 @testable import MEGA
+import MEGADomainMock
 import XCTest
 
 class HangOrEndCallViewModelTests: XCTestCase {
