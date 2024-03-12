@@ -1,7 +1,7 @@
 import Combine
 import Foundation
 
-public protocol AccountRepositoryProtocol: RepositoryProtocol {
+public protocol AccountRepositoryProtocol {
     var currentUserHandle: HandleEntity? { get }
     func currentUser() async -> UserEntity?
     var isGuest: Bool { get }

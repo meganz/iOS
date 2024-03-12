@@ -2,6 +2,7 @@ import MEGAAnalyticsiOS
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
+import MEGASDKRepo
 import MEGASwift
 
 extension CustomModalAlertViewController {

@@ -1,5 +1,6 @@
 import Combine
 import MEGADomain
+import MEGASDKRepo
 
 final class ChatRoomParticipantsListViewModel: ObservableObject {
     

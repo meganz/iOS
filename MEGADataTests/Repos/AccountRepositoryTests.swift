@@ -172,7 +172,7 @@ final class AccountRepositoryTests: XCTestCase {
     func testCurrentAccountDetails_shouldReturnCurrentAccountDetails() async {
         let expectedAccountDetails = randomAccountDetails().toAccountDetailsEntity()
         let userSource = CurrentUserSource(sdk: MockSdk())
-        let sut = AccountRepository(sdk: MockSdk(), currentUserSource: userSource)
+        let sut = AccountRepository(sdk: MockSdk(), currentUserSource: userSource, myChatFilesFolderNodeAccess: .shared)
         
         userSource.setAccountDetails(expectedAccountDetails)
         XCTAssertEqual(sut.currentAccountDetails, expectedAccountDetails)
@@ -312,7 +312,7 @@ final class AccountRepositoryTests: XCTestCase {
     
     func testOnRequestResultFinish_addDelegate_delegateShouldExist() async {
         let sdk = MockSdk()
-        let repo = AccountRepository(sdk: sdk)
+        let repo = AccountRepository(sdk: sdk, myChatFilesFolderNodeAccess: .shared)
         await repo.registerMEGARequestDelegate()
         
         XCTAssertTrue(sdk.hasRequestDelegate)
@@ -322,7 +322,7 @@ final class AccountRepositoryTests: XCTestCase {
         let sdk = MockSdk()
         sdk.hasRequestDelegate = true
         
-        let repo = AccountRepository(sdk: sdk)
+        let repo = AccountRepository(sdk: sdk, myChatFilesFolderNodeAccess: .shared)
         await repo.deRegisterMEGARequestDelegate()
         
         XCTAssertFalse(sdk.hasRequestDelegate)
@@ -380,7 +380,7 @@ final class AccountRepositoryTests: XCTestCase {
     private func makeSUT(sdk: MEGASdk) -> AccountRepository {
         AccountRepository(
             sdk: sdk,
-            currentUserSource: CurrentUserSource(sdk: sdk)
+            currentUserSource: CurrentUserSource(sdk: sdk), myChatFilesFolderNodeAccess: .shared
         )
     }
     
