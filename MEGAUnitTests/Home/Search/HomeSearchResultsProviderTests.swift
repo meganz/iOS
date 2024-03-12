@@ -400,7 +400,7 @@ class HomeSearchProviderTests: XCTestCase {
             contextPreviewFactory: HomeScreenFactory().contextPreviewFactory(
                 enableItemMultiSelection: false
             ),
-            defaultEmptyViewAsset: defaultEmptyAsset
+            defaultEmptyViewAsset: { defaultEmptyAsset }
         )
 
         let resultEmptyAsset = config.emptyViewAssetFactory(

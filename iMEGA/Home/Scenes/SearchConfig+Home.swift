@@ -8,7 +8,7 @@ import SwiftUI
 extension SearchConfig {
     static func searchConfig(
         contextPreviewFactory: ContextPreviewFactory,
-        defaultEmptyViewAsset: EmptyViewAssets
+        defaultEmptyViewAsset: @escaping () -> EmptyViewAssets
     ) -> SearchConfig {
         .init(
             chipAssets: .init(
@@ -37,7 +37,7 @@ extension SearchConfig {
                         )
                     }
 
-                    return defaultEmptyViewAsset
+                    return defaultEmptyViewAsset()
                 }
 
                 switch chip.id {
@@ -90,7 +90,7 @@ extension SearchConfig {
                         titleTextColor: titleTextColor
                     )
                 default:
-                    return defaultEmptyViewAsset
+                    return defaultEmptyViewAsset()
                 }
             },
             rowAssets: .init(
