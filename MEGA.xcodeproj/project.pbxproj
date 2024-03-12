@@ -1625,6 +1625,7 @@
 		A8CF574924AF53B400DC0E28 /* EnterGroupNameTextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8CF574824AF53B400DC0E28 /* EnterGroupNameTextFieldDelegate.swift */; };
 		A8DE32CB22FC14CC006BAC7A /* AccountExpiredViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8DE32C922FC14CC006BAC7A /* AccountExpiredViewController.swift */; };
 		A8DE32CC22FC14CC006BAC7A /* AccountExpiredViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A8DE32CA22FC14CC006BAC7A /* AccountExpiredViewController.xib */; };
+		A8DEA5082B9F157000E8806C /* MEGADomainMock in Frameworks */ = {isa = PBXBuildFile; productRef = A8DEA5072B9F157000E8806C /* MEGADomainMock */; };
 		A8DEF2BA298BB40F00137E38 /* MEGASdk+SharedInstanceWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A84F4A8E298903600017ACB4 /* MEGASdk+SharedInstanceWrapper.swift */; };
 		A8DF55662A5F0F5800CA33E5 /* MEGASDKRepo in Frameworks */ = {isa = PBXBuildFile; productRef = A8DF55652A5F0F5800CA33E5 /* MEGASDKRepo */; };
 		A8DF55682A5F0F6900CA33E5 /* MEGASDKRepo in Frameworks */ = {isa = PBXBuildFile; productRef = A8DF55672A5F0F6900CA33E5 /* MEGASDKRepo */; };
@@ -1838,7 +1839,6 @@
 		B662B89124FC40090089376A /* RegionListIndexedSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = B662B89024FC40090089376A /* RegionListIndexedSource.swift */; };
 		B66709902228BCE90015E050 /* PHFetchOptions+CameraUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = B667098F2228BCE90015E050 /* PHFetchOptions+CameraUpload.m */; };
 		B66BA24E25155B3A009787BD /* SMSVerificationViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66BA24D25155B3A009787BD /* SMSVerificationViewModelTests.swift */; };
-		B66BC70828A0F9CB00D4CB04 /* MEGADomainMock in Frameworks */ = {isa = PBXBuildFile; productRef = B66BC70728A0F9CB00D4CB04 /* MEGADomainMock */; };
 		B66E8074275A0C3000502601 /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66E8073275A0C3000502601 /* PhotoCell.swift */; };
 		B66E8076275A0C4200502601 /* PhotoCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66E8075275A0C4200502601 /* PhotoCellViewModel.swift */; };
 		B672EDB3221CD96000DE6684 /* CameraUploadOperation+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = B672EDB2221CD96000DE6684 /* CameraUploadOperation+Utils.m */; };
@@ -5280,7 +5280,6 @@
 				A812CB392A4B0FAD00F99382 /* MEGAChatSdk in Frameworks */,
 				9418A7A22ACF84210014C01C /* MEGADesignToken in Frameworks */,
 				B6061FEC2897928D0094087E /* MEGADomain in Frameworks */,
-				B66BC70828A0F9CB00D4CB04 /* MEGADomainMock in Frameworks */,
 				B6A01BAC289A61CA00B503FD /* MEGAFoundation in Frameworks */,
 				BF6149522A9FF33300AB051A /* MEGAL10n in Frameworks */,
 				BF6149542A9FF33300AB051A /* MEGAL10nObjc in Frameworks */,
@@ -5425,6 +5424,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A8DEA5082B9F157000E8806C /* MEGADomainMock in Frameworks */,
 				1678D7F22A45487E00336C52 /* MEGATest in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -12787,7 +12787,6 @@
 				A8F5155727F6F24F00AEE4D6 /* ISEmojiView */,
 				BF1164BA27F692DB00E5C5A4 /* KeyboardLayoutGuide */,
 				B6061FEB2897928D0094087E /* MEGADomain */,
-				B66BC70728A0F9CB00D4CB04 /* MEGADomainMock */,
 				B6A01BAB289A61CA00B503FD /* MEGAFoundation */,
 				946ACCC4299C0B0000E6C0F5 /* MEGAPresentation */,
 				A891E8A429C1E09D0020072A /* MEGASdk */,
@@ -13042,6 +13041,7 @@
 			name = MEGAUnitTests;
 			packageProductDependencies = (
 				1678D7F12A45487E00336C52 /* MEGATest */,
+				A8DEA5072B9F157000E8806C /* MEGADomainMock */,
 			);
 			productName = MEGAUnitTests;
 			productReference = B6CED48B22B8AC70009C4861 /* MEGAUnitTests.xctest */;
@@ -17993,6 +17993,10 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGASDKRepoMock;
 		};
+		A8DEA5072B9F157000E8806C /* MEGADomainMock */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGADomainMock;
+		};
 		A8DF55652A5F0F5800CA33E5 /* MEGASDKRepo */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGASDKRepo;
@@ -18100,10 +18104,6 @@
 		B65D17D02899E19600D5AD33 /* MEGAUIKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAUIKit;
-		};
-		B66BC70728A0F9CB00D4CB04 /* MEGADomainMock */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MEGADomainMock;
 		};
 		B67D44DD2B605EF500738E04 /* MEGAPermissionsMock */ = {
 			isa = XCSwiftPackageProductDependency;
