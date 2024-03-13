@@ -57,6 +57,12 @@
     
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(inviteYourFriendsTapped)];
     self.inviteYourFriendsView.gestureRecognizers = @[tapGestureRecognizer];
+    
+    
+    if ([UIColor isDesignTokenEnabled]) {
+        self.disclosureIndicatorImageView.image = [UIImage imageNamed:@"standardDisclosureIndicator_designToken"];
+    }
+    
     self.disclosureIndicatorImageView.image = self.disclosureIndicatorImageView.image.imageFlippedForRightToLeftLayoutDirection;
     
     self.unlockedBonusesLabel.text = LocalizedString(@"unlockedBonuses", @"Header of block with achievements bonuses.");
@@ -88,13 +94,20 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.view.backgroundColor = UIColor.systemBackgroundColor;
+    if (UIColor.isDesignTokenEnabled) {
+        self.view.backgroundColor = self.tableView.backgroundColor = [UIColor pageBackgroundForTraitCollection: self.traitCollection];
+        self.unlockedBonusesView.backgroundColor = [UIColor surfaceBackground:self.traitCollection];
+        self.inviteYourFriendsTitleLabel.textColor = [UIColor mnz_primaryTextColor];
+        self.unlockedBonusesLabel.textColor = [UIColor primaryTextColor];
+        self.storageQuotaLabel.textColor = [UIColor secondaryTextColor];
+    } else {
+        self.view.backgroundColor = UIColor.systemBackgroundColor;
+        self.unlockedBonusesView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
+        self.inviteYourFriendsTitleLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+    }
+    
     self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
-    
     self.inviteYourFriendsView.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
-    self.inviteYourFriendsTitleLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
-    
-    self.unlockedBonusesView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
     
     self.unlockedBonusesTopSeparatorView.backgroundColor = self.unlockedBonusesBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     self.unlockedStorageQuotaLabel.textColor = [UIColor mnz_blueForTraitCollection:self.traitCollection];
@@ -143,7 +156,15 @@
         classStorageReward = [self.achievementsDetails rewardStorageByAwardId:awardId];
     }
     
-    cell.storageQuotaRewardView.backgroundColor = cell.storageQuotaRewardLabel.backgroundColor = ((classStorageReward == 0) ? [UIColor mnz_tertiaryGrayForTraitCollection:self.traitCollection] : [UIColor mnz_blueForTraitCollection:self.traitCollection]);
+    if ([UIColor isDesignTokenEnabled]) {
+        cell.storageQuotaRewardView.backgroundColor = [UIColor supportInfoColor];
+        cell.storageQuotaRewardLabel.backgroundColor = [UIColor supportInfoColor];
+        cell.storageQuotaRewardLabel.textColor = [UIColor mnz_badgeTextColor];
+    } else {
+        cell.storageQuotaRewardView.backgroundColor = cell.storageQuotaRewardLabel.backgroundColor = ((classStorageReward == 0) ? [UIColor mnz_tertiaryGrayForTraitCollection:self.traitCollection] : [UIColor mnz_blueForTraitCollection:self.traitCollection]);
+        cell.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
+    }
+    
     cell.storageQuotaRewardLabel.text = (classStorageReward == 0) ? LocalizedString(@"— GB", @"") : [NSString memoryStyleStringFromByteCount:classStorageReward];
 }
 
@@ -259,12 +280,20 @@
             [self setStorageQuotaRewardsForCell:cell forIndex:index.integerValue];
             NSDate *awardExpirationdDate = [self.achievementsDetails awardExpirationAtIndex:index.unsignedIntegerValue];
             cell.subtitleLabel.text = [self achievementSubtitleWithRemainingDays:awardExpirationdDate.daysUntil];
-            cell.subtitleLabel.textColor = (awardExpirationdDate.daysUntil <= 15) ? [UIColor mnz_redForTraitCollection:(self.traitCollection)] : [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+            cell.subtitleLabel.textColor = (awardExpirationdDate.daysUntil <= 15) ? [UIColor mnz_errorRedForTraitCollection:(self.traitCollection)] : [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
         } else {
             NSString *storageString = [NSString memoryStyleStringFromByteCount:[self.achievementsDetails classStorageForClassId:achievementClass]];
             
             cell.storageQuotaRewardLabel.text = storageString;
-            cell.storageQuotaRewardView.backgroundColor = cell.storageQuotaRewardLabel.backgroundColor = [UIColor mnz_blueForTraitCollection:self.traitCollection];
+            
+            if ([UIColor isDesignTokenEnabled]) {
+                cell.storageQuotaRewardView.backgroundColor = [UIColor supportInfoColor];
+                cell.storageQuotaRewardLabel.backgroundColor = [UIColor supportInfoColor];
+                cell.storageQuotaRewardLabel.textColor = [UIColor mnz_badgeTextColor];
+            } else {
+                cell.storageQuotaRewardView.backgroundColor = cell.storageQuotaRewardLabel.backgroundColor = [UIColor mnz_blueForTraitCollection:self.traitCollection];
+                cell.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
+            }
             
             cell.subtitleLabel.text = [NSString stringWithFormat:LocalizedString(@"account.achievement.incomplete.subtitle", @""), storageString];
             cell.subtitleLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
