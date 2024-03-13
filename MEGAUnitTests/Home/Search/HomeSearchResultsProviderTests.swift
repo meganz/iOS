@@ -279,7 +279,7 @@ class HomeSearchProviderTests: XCTestCase {
             .init(name: "node 0", handle: 0, duration: 123)
         ])
         
-        harness.mediaUseCase.isStringVideoToReturn = true
+        harness.mediaUseCase.$isStringVideoToReturn.mutate { $0 = true}
         let propertyIds = try await harness.propertyIdsForFoundNode()
         XCTAssertEqual(propertyIds, [.videoDuration, .playIcon])
     }

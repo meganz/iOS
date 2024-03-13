@@ -1,10 +1,11 @@
 import Foundation
 import MEGADomain
+import MEGASwift
 
-public class MockMediaUseCase: MediaUseCaseProtocol {
+public final class MockMediaUseCase: MediaUseCaseProtocol, @unchecked Sendable {
     private let isURLVideo: Bool
     private let isURLImage: Bool
-    public var isStringVideoToReturn: Bool
+    @Atomic public var isStringVideoToReturn = false
     private let isStringImage: Bool
     private let isRawImage: Bool
     private let isGifImage: Bool
@@ -12,12 +13,12 @@ public class MockMediaUseCase: MediaUseCaseProtocol {
     private let videoFileNames: [String]?
     private let rawImageFiles: [FileNameEntity]?
     private let gifImageFiles: [FileNameEntity]?
-    private var multimediaNodeNames: [String]
+    private let multimediaNodeNames: [String]
     private let isPlayable: Bool
     private let isMediaFile: Bool
     private let isPlayableMediaFile: Bool
-    private var allPhotos: [NodeEntity]
-    private var allVideos: [NodeEntity]
+    private let allPhotos: [NodeEntity]
+    private let allVideos: [NodeEntity]
     
     public init(isURLVideo: Bool = false,
                 isURLImage: Bool = false,
@@ -37,7 +38,6 @@ public class MockMediaUseCase: MediaUseCaseProtocol {
                 allVideos: [NodeEntity] = []) {
         self.isURLVideo = isURLVideo
         self.isURLImage = isURLImage
-        self.isStringVideoToReturn = isStringVideo
         self.isStringImage = isStringImage
         self.isRawImage = isRawImage
         self.isGifImage = isGifImage
@@ -51,6 +51,7 @@ public class MockMediaUseCase: MediaUseCaseProtocol {
         self.isPlayableMediaFile = isPlayableMediaFile
         self.allPhotos = allPhotos
         self.allVideos = allVideos
+        $isStringVideoToReturn.mutate { $0 = isStringVideo }
     }
     
     public func isVideo(for url: URL) -> Bool {

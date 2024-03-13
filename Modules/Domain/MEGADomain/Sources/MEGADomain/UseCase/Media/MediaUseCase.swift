@@ -3,7 +3,7 @@ import MEGASwift
 
 public typealias FileNameEntity = String
 
-public protocol MediaUseCaseProtocol {
+public protocol MediaUseCaseProtocol: Sendable {
     func isVideo(_ name: FileNameEntity) -> Bool
     func isImage(_ name: FileNameEntity) -> Bool
     func isRawImage(_ name: FileNameEntity) -> Bool
