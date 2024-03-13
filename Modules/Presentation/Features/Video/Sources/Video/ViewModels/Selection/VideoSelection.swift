@@ -3,9 +3,9 @@ import Foundation
 import MEGADomain
 import SwiftUI
 
-final class VideoSelection: ObservableObject {
+public final class VideoSelection: ObservableObject {
     
-    @Published var editMode: EditMode = .inactive {
+    @Published public var editMode: EditMode = .inactive {
         willSet {
             if !newValue.isEditing {
                 allSelected = false
@@ -13,7 +13,7 @@ final class VideoSelection: ObservableObject {
         }
     }
     
-    @Published var videos = [HandleEntity: NodeEntity]()
+    @Published public var videos = [HandleEntity: NodeEntity]()
     
     @Published var allSelected = false {
         willSet {
@@ -26,6 +26,8 @@ final class VideoSelection: ObservableObject {
     @Published var isHidden = false
     
     @Published var isSelectionDisabled = false
+    
+    public init() { }
     
     func setSelectedVideos(_ videos: [NodeEntity]) {
         self.videos = Dictionary(uniqueKeysWithValues: videos.map { ($0.handle, $0) })

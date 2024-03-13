@@ -16,7 +16,7 @@ struct VideoRevampRouter: VideoRevampRouting {
             nodeFormat: explorerType.toNodeFormatEntity(),
             nodesUpdateListenerRepo: nodesUpdateListenerRepo
         )
-        let viewModel = VideoRevampTabContainerViewModel()
+        let viewModel = VideoRevampTabContainerViewModel(videoSelection: VideoSelection())
         let thumbnailUseCase = ThumbnailUseCase(repository: ThumbnailRepository.newRepo)
         let viewController = VideoRevampTabContainerViewController(
             viewModel: viewModel,
