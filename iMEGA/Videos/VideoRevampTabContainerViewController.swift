@@ -152,6 +152,10 @@ final class VideoRevampTabContainerViewController: UIViewController {
             toggleEditing()
         case .navigationBarCommand(.refreshContextMenu):
             refreshContextMenuBarButton()
+        case .searchBarCommand(.hideSearchBar):
+            hideSearchBar()
+        case .searchBarCommand(.reshowSearchBar):
+            configureSearchBar()
         }
     }
     
@@ -194,6 +198,11 @@ final class VideoRevampTabContainerViewController: UIViewController {
             navigationItem.searchController = searchController
         }
         AppearanceManager.forceSearchBarUpdate(searchController.searchBar, traitCollection: traitCollection)
+    }
+    
+    private func hideSearchBar() {
+        searchController.searchBar.setShowsCancelButton(false, animated: true)
+        navigationItem.searchController = nil
     }
 }
 

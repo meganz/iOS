@@ -1,13 +1,29 @@
+import Combine
 import MEGADomain
 import SwiftUI
 
-public final class VideoRevampSyncModel {
+public final class VideoRevampSyncModel: ObservableObject {
     @Published public var videoRevampSortOrderType: SortOrderEntity?
-    @Published public var editMode: EditMode = .inactive
+    @Published public var editMode: EditMode = .inactive {
+        didSet {
+            showsTabView = editMode.isEditing ? false : true
+        }
+    }
     @Published public var isAllSelected = false
     @Published public var searchText = ""
+    @Published public private(set) var showsTabView = false
     
-    public init() {}
+    private var subscriptions = Set<AnyCancellable>()
+    
+    public init() {
+        _editMode.projectedValue
+            .map(\.isEditing)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isEditing in
+                self?.showsTabView = isEditing ? false : true
+            }
+            .store(in: &subscriptions)
+    }
 }
 
 public class VideoRevampFactory {

@@ -20,14 +20,20 @@ enum VideosTab: CaseIterable {
 struct TabContainerView: View {
     @State var currentTab: VideosTab = .all
     
-    let videoListViewModel: VideoListViewModel
+    @StateObject var videoListViewModel: VideoListViewModel
     let videoConfig: VideoConfig
     let router: any VideoRevampRouting
+    
+    private var showTabView: Bool {
+        videoListViewModel.syncModel.showsTabView
+    }
     
     var body: some View {
         VStack {
             TabBarView(currentTab: self.$currentTab, videoConfig: videoConfig)
-                .frame(height: 44)
+                .frame(height: showTabView ? 44 : 0)
+                .opacity(showTabView ? 1 : 0)
+                .animation(.easeInOut(duration: 0.1), value: showTabView)
             
             TabView(selection: self.$currentTab) {
                 VideoListView(
@@ -36,7 +42,13 @@ struct TabContainerView: View {
                     router: router
                 )
                 .tag(VideosTab.all)
-                PlaylistView(videoConfig: videoConfig).tag(VideosTab.playlist)
+                .gesture(showTabView ? nil : DragGesture())
+                
+                PlaylistView(
+                    videoConfig: videoConfig
+                )
+                .tag(VideosTab.playlist)
+                .gesture(showTabView ? nil : DragGesture())
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
             .edgesIgnoringSafeArea(.all)
