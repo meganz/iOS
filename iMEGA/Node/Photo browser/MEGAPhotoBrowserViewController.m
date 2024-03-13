@@ -1167,7 +1167,12 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             [self clearNodeOnTransfers:node];
             [self dismissViewControllerAnimated:true completion:nil];
             break;
-
+        case MegaNodeActionTypeHide:
+            [self hideWithNode:node];
+            break;
+        case MegaNodeActionTypeUnhide:
+            [self unhideWithNode:node];
+            break;
         default:
             break;
     }
