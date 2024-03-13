@@ -2,11 +2,12 @@ import MEGADomain
 import SwiftUI
 
 extension NotificationEntity {
-    public func toNotificationItem() -> NotificationItem {
+    public func toNotificationItem(isSeen: Bool) -> NotificationItem {
         NotificationItem(
             id: NotificationID(id),
             title: title,
-            description: description,
+            description: description, 
+            isSeen: isSeen,
             imageName: imageName,
             imagePath: imagePath,
             startDate: startDate,
@@ -16,7 +17,9 @@ extension NotificationEntity {
 }
 
 extension Array where Element == NotificationEntity {
-    public func toNotificationItems() -> [NotificationItem] {
-        compactMap {$0.toNotificationItem()}
+    public func toNotificationItems(
+        withUnreadIDs unreadIDs: [NotificationIDEntity] = [1]
+    ) -> [NotificationItem] {
+        compactMap {$0.toNotificationItem(isSeen: !unreadIDs.contains($0.id))}
     }
 }

@@ -16,6 +16,8 @@ public struct NotificationItem {
     /// `description`: Detailed information about the notification, providing the user with context or further details
     /// regarding the notification content.
     public let description: String
+    /// `isSeen`: Boolean that indicates whether the notification is read or unread
+    public let isSeen: Bool
     /// `imageName`: An optional string representing the name of the image to be displayed within the notification. This property
     /// can be used in conjunction with `imagePath` to construct URLs for loading images from a remote source.
     public let imageName: String?
@@ -67,6 +69,7 @@ public struct NotificationItem {
         id: NotificationID,
         title: String,
         description: String,
+        isSeen: Bool,
         imageName: String?,
         imagePath: String?,
         startDate: Date?,
@@ -78,6 +81,7 @@ public struct NotificationItem {
         self.id = id
         self.title = title
         self.description = description
+        self.isSeen = isSeen
         self.imageName = imageName
         self.imagePath = imagePath
         self.startDate = startDate

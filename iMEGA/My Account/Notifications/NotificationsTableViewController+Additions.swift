@@ -22,7 +22,6 @@ extension NotificationsTableViewController {
     
         cell.host(promoView, parent: self)
         cell.selectionStyle = .none
-        cell.backgroundColor = UIColor.isDesignTokenEnabled() ? notificationCellBackground(true) : UIColor.mnz_notificationSeenBackground(for: self.traitCollection)
         return cell
     }
     
