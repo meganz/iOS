@@ -1,9 +1,10 @@
 import Combine
 import MEGADomain
+import MEGASdk
 
-final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtocol, @unchecked Sendable {
-    static var newRepo: FilesSearchRepository {
-        FilesSearchRepository(sdk: MEGASdk.shared)
+public final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtocol, @unchecked Sendable {
+    public static var newRepo: FilesSearchRepository {
+        FilesSearchRepository(sdk: MEGASdk.sharedSdk)
     }
     
     public let nodeUpdatesPublisher: AnyPublisher<[NodeEntity], Never>
@@ -19,7 +20,7 @@ final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtocol, @unc
         return operationQueue
     }()
     
-    init(sdk: MEGASdk) {
+    public init(sdk: MEGASdk) {
         self.sdk = sdk
         
         updater = PassthroughSubject<[NodeEntity], Never>()
@@ -28,16 +29,16 @@ final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtocol, @unc
     
     // MARK: - FilesSearchRepositoryProtocol
     
-    func startMonitoringNodesUpdate(callback: (([NodeEntity]) -> Void)?) {
+    public func startMonitoringNodesUpdate(callback: (([NodeEntity]) -> Void)?) {
         self.callback = callback
         sdk.add(self)
     }
     
-    func stopMonitoringNodesUpdate() {
+    public func stopMonitoringNodesUpdate() {
         sdk.remove(self)
     }
     
-    func search(string: String?,
+    public func search(string: String?,
                 parent node: NodeEntity?,
                 recursive: Bool,
                 supportCancel: Bool,
@@ -59,7 +60,7 @@ final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtocol, @unc
         }
     }
     
-    func search(string: String?,
+    public func search(string: String?,
                 parent node: NodeEntity?,
                 recursive: Bool,
                 supportCancel: Bool,
@@ -79,11 +80,11 @@ final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtocol, @unc
         })
     }
     
-    func node(by handle: HandleEntity) async -> NodeEntity? {
+    public func node(by handle: HandleEntity) async -> NodeEntity? {
         sdk.node(forHandle: handle)?.toNodeEntity()
     }
     
-    func cancelSearch() {
+    public func cancelSearch() {
         guard searchOperationQueue.operationCount > 0 else { return }
         
         cancelToken.cancel()
@@ -140,7 +141,7 @@ final class FilesSearchRepository: NSObject, FilesSearchRepositoryProtocol, @unc
 }
 
 extension FilesSearchRepository: MEGAGlobalDelegate {
-    func onNodesUpdate(_ api: MEGASdk, nodeList: MEGANodeList?) {
+    public func onNodesUpdate(_ api: MEGASdk, nodeList: MEGANodeList?) {
         guard let callback else {
             updater.send(nodeList?.toNodeEntities() ?? [])
             return
