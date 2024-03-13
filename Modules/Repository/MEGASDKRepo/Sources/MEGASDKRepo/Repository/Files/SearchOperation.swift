@@ -1,5 +1,8 @@
 // We should move completely to using SearchOperationWithFilter globally in the app as a part of https://jira.developers.mega.co.nz/browse/FM-1488
-class SearchOperation: MEGAOperation {
+import MEGAFoundation
+import MEGASdk
+
+public final class SearchOperation: AsyncOperation {
     let sdk: MEGASdk
     let parentNode: MEGANode
     let text: String
@@ -10,7 +13,7 @@ class SearchOperation: MEGAOperation {
 
     let completion: (_ results: MEGANodeList?, _ isCanceled: Bool) -> Void
 
-    @objc init(
+    @objc public init(
         sdk: MEGASdk,
         parentNode: MEGANode,
         text: String,
@@ -30,7 +33,7 @@ class SearchOperation: MEGAOperation {
         self.completion = completion
     }
 
-    override func start() {
+    override public func start() {
         startExecuting()
         let nodeList = sdk.nodeListSearch(
             for: parentNode,
@@ -48,6 +51,6 @@ class SearchOperation: MEGAOperation {
         }
 
         completion(nodeList, false)
-        finish()
+        finishOperation()
     }
 }

@@ -5,9 +5,9 @@ public extension DateFormatter {
     // MARK: - Formatter Custom Template Style
     
     /// Monday Jun 1, 2020
-    @objc static func dateMediumWithWeekday(calendar: Calendar? = nil,
-                                            timeZone: TimeZone? = nil,
-                                            locale: Locale? = nil) -> some DateFormatting {
+    static func dateMediumWithWeekday(calendar: Calendar? = nil,
+                                      timeZone: TimeZone? = nil,
+                                      locale: Locale? = nil) -> some DateFormatting {
         return fromTemplate("EEEEMMMddyyyy",
                             calendar: calendar,
                             timeZone: timeZone,
@@ -53,10 +53,10 @@ public extension DateFormatter {
     ///   - timeZone: `TimeZone` instance for the formatter, `nil` for using formatter that use system defined `TimeZone`.
     ///   - locale: `Locale` instance that for the formatter, `nil` for using formatter that use system defined `Locale`.
     /// - Returns: A instance conforms `DateFormatting` who can format a date into an human-readable string text.
-    @objc static func fromTemplate(_ template: String,
-                                   calendar: Calendar? = nil,
-                                   timeZone: TimeZone? = nil,
-                                   locale: Locale? = nil) -> some DateFormatting {
+    static func fromTemplate(_ template: String,
+                             calendar: Calendar? = nil,
+                             timeZone: TimeZone? = nil,
+                             locale: Locale? = nil) -> some DateFormatting {
         let factory = DateStyle.dateStyleFactory
         let style = factory.templateStyle(fromTemplate: template,
                                           calendar: calendar,
