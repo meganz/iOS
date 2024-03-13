@@ -18,5 +18,5 @@ public struct ChangeTypeEntity: OptionSet, Sendable {
     public static let new              = ChangeTypeEntity(rawValue: 1 << 10)
     public static let name             = ChangeTypeEntity(rawValue: 1 << 11)
     public static let favourite        = ChangeTypeEntity(rawValue: 1 << 12)
-    
+    public static let sensitive        = ChangeTypeEntity(rawValue: 1 << 14)
 }
