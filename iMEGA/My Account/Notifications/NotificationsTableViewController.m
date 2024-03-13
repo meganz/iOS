@@ -59,6 +59,12 @@
     [[MEGAReachabilityManager sharedManager] retryPendingConnections];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [self dispatchActionsOnAppear];
+}
+
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     

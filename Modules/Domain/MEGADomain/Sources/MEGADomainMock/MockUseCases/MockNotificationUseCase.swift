@@ -2,8 +2,8 @@ import MEGADomain
 
 public class MockNotificationUseCase: NotificationsUseCaseProtocol {
     private var lastReadNotification: NotificationIDEntity
-    private let enabledNotifications: [NotificationIDEntity]
     private let notifications: [NotificationEntity]
+    public var enabledNotifications: [NotificationIDEntity]
     
     public init(
         lastReadNotification: NotificationIDEntity = 1,
