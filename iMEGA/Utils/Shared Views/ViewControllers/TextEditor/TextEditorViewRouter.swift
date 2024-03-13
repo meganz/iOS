@@ -245,4 +245,18 @@ extension TextEditorViewRouter: TextEditorViewRouting {
         })
         router.start()
     }
+    
+    func hide(node: NodeEntity) {
+        Task {
+            let nodeActionUseCase = NodeActionUseCase(repo: NodeActionRepository.newRepo)
+            _ = await nodeActionUseCase.hide(nodes: [node])
+        }
+    }
+    
+    func unhide(node: NodeEntity) {
+        Task {
+            let nodeActionUseCase = NodeActionUseCase(repo: NodeActionRepository.newRepo)
+            _ = await nodeActionUseCase.unhide(nodes: [node])
+        }
+    }
 }

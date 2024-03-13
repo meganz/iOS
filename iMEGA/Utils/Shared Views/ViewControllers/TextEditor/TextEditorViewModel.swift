@@ -42,6 +42,8 @@ protocol TextEditorViewRouting: Routing {
     func removeTextFile(node: MEGANode)
     func shareLink(from nodeHandle: HandleEntity)
     func removeLink(from nodeHandle: HandleEntity)
+    func hide(node: NodeEntity)
+    func unhide(node: NodeEntity)
 }
 
 final class TextEditorViewModel: ViewModelType {
@@ -391,6 +393,10 @@ extension TextEditorViewModel: NodeActionViewControllerDelegate {
             router.shareLink(from: node.handle)
         case .removeLink:
             router.removeLink(from: node.handle)
+        case .hide:
+            router.hide(node: node.toNodeEntity())
+        case .unhide:
+            router.unhide(node: node.toNodeEntity())
         default:
             break
         }

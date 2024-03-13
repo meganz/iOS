@@ -740,6 +740,26 @@ class NodeActionBuilderTests: XCTestCase {
         XCTAssertTrue(isEqual(nodeActionTypes: [.editTextFile, .download, .shareLink, .exportFile, .sendToChat]))
     }
     
+    func testTextEditor_hasAccessOwnerAndIsHiddenTrue_returnsNodeActions() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.textEditor)
+            .setAccessLevel(.accessOwner)
+            .setIsHidden(true)
+            .build()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.editTextFile, .download, .shareLink, .exportFile, .sendToChat, .unhide]))
+    }
+    
+    func testTextEditor_hasAccessOwnerAndIsHiddenFalse_returnsNodeActions() {
+        actions = NodeActionBuilder()
+            .setDisplayMode(.textEditor)
+            .setAccessLevel(.accessOwner)
+            .setIsHidden(false)
+            .build()
+        
+        XCTAssertTrue(isEqual(nodeActionTypes: [.editTextFile, .download, .shareLink, .exportFile, .sendToChat, .hide]))
+    }
+
     // MARK: - Preview Documents
     
     func testDocumentPreviewFileLink() {
@@ -934,22 +954,24 @@ class NodeActionBuilderTests: XCTestCase {
     
     func testPreviewPdf_isHiddenFalse_hiddenAction() {
         actions = NodeActionBuilder()
+            .setAccessLevel(.accessOwner)
             .setDisplayMode(.previewDocument)
             .setIsPdf(true)
             .setIsHidden(false)
             .build()
         
-        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .sendToChat, .search, .pdfPageView, .hide]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .search, .pdfPageView, .hide]))
     }
     
     func testPreviewPdf_isHiddenTrue_hiddenAction() {
         actions = NodeActionBuilder()
+            .setAccessLevel(.accessOwner)
             .setDisplayMode(.previewDocument)
             .setIsPdf(true)
             .setIsHidden(true)
             .build()
         
-        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .sendToChat, .search, .pdfPageView, .unhide]))
+        XCTAssertTrue(isEqual(nodeActionTypes: [.download, .shareLink, .exportFile, .sendToChat, .search, .pdfPageView, .unhide]))
     }
     
     func testPreviewPdf_isHiddenNil_notContainHideOrUnhide() {
@@ -1342,6 +1364,7 @@ class NodeActionBuilderTests: XCTestCase {
     
     func testMultiselectBuild_cloudDriveContainsHiddenFolderForFolderDisplayMode_shouldReturnCorrectActions() {
         actions = NodeActionBuilder()
+            .setAccessLevel(.accessOwner)
             .setNodeSelectionType(.folders, selectedNodeCount: 4)
             .setDisplayMode(.cloudDrive)
             .setIsHidden(false)
@@ -1353,6 +1376,7 @@ class NodeActionBuilderTests: XCTestCase {
     
     func testMultiselectBuild_cloudDriveContainsHiddenFileForFileDisplayMode_shouldReturnCorrectActions() {
         actions = NodeActionBuilder()
+            .setAccessLevel(.accessOwner)
             .setNodeSelectionType(.files, selectedNodeCount: 4)
             .setDisplayMode(.cloudDrive)
             .setIsHidden(false)
@@ -1364,6 +1388,7 @@ class NodeActionBuilderTests: XCTestCase {
     
     func testMultiselectBuild_cloudDriveContainsHiddenFileOrFolderForFileAndFolderDisplayMode_shouldReturnCorrectActions() {
         actions = NodeActionBuilder()
+            .setAccessLevel(.accessOwner)
             .setNodeSelectionType(.filesAndFolders, selectedNodeCount: 4)
             .setDisplayMode(.cloudDrive)
             .setIsHidden(false)
@@ -1387,6 +1412,7 @@ class NodeActionBuilderTests: XCTestCase {
     
     func testMultiselectBuild_photosTimelineContainsHiddenFileForFileDisplayMode_shouldReturnCorrectActions() {
         actions = NodeActionBuilder()
+            .setAccessLevel(.accessOwner)
             .setNodeSelectionType(.files, selectedNodeCount: 4)
             .setDisplayMode(.photosTimeline)
             .setIsHidden(false)
@@ -1398,6 +1424,7 @@ class NodeActionBuilderTests: XCTestCase {
     
     func testMultiselectBuild_photosTimelineContainsHiddenFileOrFolderForFileAndFolderDisplayMode_shouldReturnCorrectActions() {
         actions = NodeActionBuilder()
+            .setAccessLevel(.accessOwner)
             .setNodeSelectionType(.filesAndFolders, selectedNodeCount: 4)
             .setDisplayMode(.photosTimeline)
             .setIsHidden(false)
@@ -1421,6 +1448,7 @@ class NodeActionBuilderTests: XCTestCase {
     
     func testMultiselectBuild_cloudDriveFolderDisplayModeHiddenTrue_shouldReturnCorrectActions() {
         actions = NodeActionBuilder()
+            .setAccessLevel(.accessOwner)
             .setNodeSelectionType(.folders, selectedNodeCount: 4)
             .setDisplayMode(.cloudDrive)
             .setIsHidden(true)
@@ -1432,6 +1460,7 @@ class NodeActionBuilderTests: XCTestCase {
     
     func testMultiselectBuild_cloudDriveFileDisplayModeHideTrue_shouldReturnCorrectActions() {
         actions = NodeActionBuilder()
+            .setAccessLevel(.accessOwner)
             .setNodeSelectionType(.files, selectedNodeCount: 4)
             .setDisplayMode(.cloudDrive)
             .setIsHidden(true)
@@ -1443,6 +1472,7 @@ class NodeActionBuilderTests: XCTestCase {
     
     func testMultiselectBuild_cloudDriveFileAndFolderDisplayModeHiddenTrue_shouldReturnCorrectActions() {
         actions = NodeActionBuilder()
+            .setAccessLevel(.accessOwner)
             .setNodeSelectionType(.filesAndFolders, selectedNodeCount: 4)
             .setDisplayMode(.cloudDrive)
             .setIsHidden(true)

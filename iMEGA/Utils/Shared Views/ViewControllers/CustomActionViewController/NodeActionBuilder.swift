@@ -271,8 +271,13 @@ final class NodeActionBuilder {
         if accessLevel == .accessOwner {
             nodeActions.append(contentsOf: exportedNodeActions())
         }
+        
         nodeActions.append(.exportFileAction())
         nodeActions.append(.sendToChatAction())
+        
+        if let hiddenStateAction = hiddenStateAction() {
+            nodeActions.append(hiddenStateAction)
+        }
 
         return nodeActions
     }
@@ -789,6 +794,11 @@ final class NodeActionBuilder {
     }
     
     private func hiddenStateAction() -> NodeAction? {
+        
+        guard accessLevel == .accessOwner else {
+            return nil
+        }
+                
         return if shouldAddHiddenAction() {
             .hideAction()
         } else if shouldAddUnhideAction() {
@@ -803,7 +813,7 @@ final class NodeActionBuilder {
             return false
         }
         
-        return [.cloudDrive, .photosTimeline, .previewDocument, .previewPdfPage, .recents]
+        return [.cloudDrive, .photosTimeline, .previewDocument, .previewPdfPage, .recents, .textEditor]
             .contains(displayMode)
     }
     
@@ -811,7 +821,7 @@ final class NodeActionBuilder {
         guard isHidden == true else {
             return false
         }
-        return [.cloudDrive, .previewDocument, .previewPdfPage]
+        return [.cloudDrive, .previewDocument, .previewPdfPage, .textEditor]
             .contains(displayMode)
     }
 }
