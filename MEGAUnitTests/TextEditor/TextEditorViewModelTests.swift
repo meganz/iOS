@@ -2,6 +2,7 @@
 import MEGADomain
 import MEGADomainMock
 import MEGAL10n
+import MEGASDKRepoMock
 import XCTest
 
 final class TextEditorViewModelTests: XCTestCase {
@@ -1009,6 +1010,76 @@ final class TextEditorViewModelTests: XCTestCase {
         XCTAssertEqual(mockRouter.exportFile_calledTimes, 1)
     }
     
+    func testAction_HideNode() {
+        let textFile = TextFile(fileName: "testAction_hideNode")
+        let mockRouter = MockTextEditorViewRouter()
+        let mockUploadFileUC = MockUploadFileUseCase()
+        let mockDownloadNodeUC = MockDownloadNodeUseCase()
+        let mockNodeDataUC = MockNodeDataUseCase()
+        let mockBackupsUC = MockBackupsUseCase()
+        let mockNode = NodeEntity(handle: 123, isFile: true)
+
+        let viewModel = TextEditorViewModel(
+            router: mockRouter,
+            textFile: textFile,
+            textEditorMode: .view,
+            uploadFileUseCase: mockUploadFileUC,
+            downloadNodeUseCase: mockDownloadNodeUC,
+            nodeUseCase: mockNodeDataUC,
+            backupsUseCase: mockBackupsUC,
+            nodeEntity: mockNode
+        )
+
+        viewModel.nodeAction(
+            mockNodeActionViewController(),
+            didSelect: .hide,
+            for: MockNode(handle: 1),
+            from: "any-sender")
+        
+        XCTAssertEqual(mockRouter.hideNode_calledTimes, 1)
+    }
+    
+    func testAction_UnhideNode() {
+        let textFile = TextFile(fileName: "testAction_hideNode")
+        let mockRouter = MockTextEditorViewRouter()
+        let mockUploadFileUC = MockUploadFileUseCase()
+        let mockDownloadNodeUC = MockDownloadNodeUseCase()
+        let mockNodeDataUC = MockNodeDataUseCase()
+        let mockBackupsUC = MockBackupsUseCase()
+        let mockNode = NodeEntity(handle: 123, isFile: true)
+
+        let viewModel = TextEditorViewModel(
+            router: mockRouter,
+            textFile: textFile,
+            textEditorMode: .view,
+            uploadFileUseCase: mockUploadFileUC,
+            downloadNodeUseCase: mockDownloadNodeUC,
+            nodeUseCase: mockNodeDataUC,
+            backupsUseCase: mockBackupsUC,
+            nodeEntity: mockNode
+        )
+
+        viewModel.nodeAction(
+            mockNodeActionViewController(),
+            didSelect: .unhide,
+            for: MockNode(handle: 1),
+            from: "any-sender")
+        
+        XCTAssertEqual(mockRouter.unhideNode_calledTimes, 1)
+    }
+    
+    private func mockNodeActionViewController() -> NodeActionViewController {
+        NodeActionViewController(
+            node: MockNode(handle: 1),
+            delegate: MockNodeActionViewControllerGenericDelegate(
+                viewController: UIViewController()),
+            displayMode: .albumLink,
+            isInVersionsView: false,
+            isBackupNode: false,
+            sender: "any-sender"
+        )
+    }
+    
     private func mockTransferEntity(transferTypeEntity: TransferTypeEntity, path: String? = nil) -> TransferEntity {
         return TransferEntity(
             type: transferTypeEntity,
@@ -1043,6 +1114,15 @@ final class TextEditorViewModelTests: XCTestCase {
     }
 }
 
+private final class MockNodeActionViewControllerGenericDelegate: NodeActionViewControllerGenericDelegate {
+    
+    private(set) var didSelectNodeActionCallCount = 0
+    
+    override func nodeAction(_ nodeAction: NodeActionViewController, didSelect action: MegaNodeActionType, for node: MEGANode, from sender: Any) {
+        didSelectNodeActionCallCount += 1
+    }
+}
+
 final class MockTextEditorViewRouter: TextEditorViewRouting {
     
     var dismissTextEditorVC_calledTimes = 0
@@ -1061,7 +1141,9 @@ final class MockTextEditorViewRouter: TextEditorViewRouting {
     var removeTextFile_calledTimes = 0
     var shareLink_calledTimes = 0
     var removeLink_calledTimes = 0
-
+    var hideNode_calledTimes = 0
+    var unhideNode_calledTimes = 0
+    
     func chooseParentNode(completion: @escaping (HandleEntity) -> Void) {
         chooseDestination_calledTimes += 1
         completion(123)
@@ -1121,5 +1203,13 @@ final class MockTextEditorViewRouter: TextEditorViewRouting {
     
     func removeLink(from nodeHandle: HandleEntity) {
         removeLink_calledTimes += 1
+    }
+    
+    func hide(node: NodeEntity) {
+        hideNode_calledTimes += 1
+    }
+    
+    func unhide(node: NodeEntity) {
+        unhideNode_calledTimes += 1
     }
 }
