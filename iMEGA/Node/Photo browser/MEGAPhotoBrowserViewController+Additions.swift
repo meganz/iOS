@@ -267,6 +267,20 @@ extension MEGAPhotoBrowserViewController {
         GetLinkRouter(presenter: self,
                       nodes: nodes).start()
     }
+    
+    @objc func hide(node: MEGANode) {
+        Task {
+            let nodeActionUseCase = NodeActionUseCase(repo: NodeActionRepository.newRepo)
+            _ = await nodeActionUseCase.hide(nodes: [node].toNodeEntities())
+        }
+    }
+        
+    @objc func unhide(node: MEGANode) {
+        Task {
+            let nodeActionUseCase = NodeActionUseCase(repo: NodeActionRepository.newRepo)
+            _ = await nodeActionUseCase.unhide(nodes: [node].toNodeEntities())
+        }
+    }
 }
 
 extension MEGAPhotoBrowserViewController: MEGAPhotoBrowserPickerDelegate {
