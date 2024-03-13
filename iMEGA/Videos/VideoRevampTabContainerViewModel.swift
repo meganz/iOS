@@ -27,9 +27,16 @@ final class VideoRevampTabContainerViewModel: ViewModelType {
         case navigationBarCommand(NavigationBarCommand)
         case searchBarCommand(SearchBarCommand)
         
-        enum NavigationBarCommand {
+        enum NavigationBarCommand: Equatable {
             case toggleEditing
             case refreshContextMenu
+            case renderNavigationTitle(NavigationTitleType)
+            
+            enum NavigationTitleType: Equatable {
+                case videos
+                case selectItems
+                case selectItemsWithCount(Int)
+            }
         }
         
         enum SearchBarCommand: Equatable {
@@ -47,16 +54,23 @@ final class VideoRevampTabContainerViewModel: ViewModelType {
     private var subscriptions = Set<AnyCancellable>()
     
     private let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
+    private(set) var videoSelection: VideoSelection
     
     init(
-        sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol = SortOrderPreferenceUseCase(preferenceUseCase: PreferenceUseCase.default, sortOrderPreferenceRepository: SortOrderPreferenceRepository.newRepo)
+        sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol = SortOrderPreferenceUseCase(preferenceUseCase: PreferenceUseCase.default, sortOrderPreferenceRepository: SortOrderPreferenceRepository.newRepo),
+        videoSelection: VideoSelection
     ) {
         self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
+        self.videoSelection = videoSelection
+        
+        listenToEditingMode()
+        listenToVideoSelection()
     }
     
     func dispatch(_ action: Action) {
         switch action {
         case .onViewDidLoad:
+            invokeCommand?(.navigationBarCommand(.renderNavigationTitle(.videos)))
             loadSortOrderType()
             monitorSortOrderSubscription()
         case .navigationBarAction(.didReceivedDisplayMenuAction(let action)):
@@ -104,4 +118,34 @@ final class VideoRevampTabContainerViewModel: ViewModelType {
     private func reloadContextMenu() {
         invokeCommand?(.navigationBarCommand(.refreshContextMenu))
     }
+    
+    private func listenToEditingMode() {
+        syncModel.$editMode
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] editMode in
+                self?.videoSelection.editMode = editMode
+            }
+            .store(in: &subscriptions)
+    }
+    
+    private func listenToVideoSelection() {
+         let editModePublisher = videoSelection.$editMode.map { $0.isEditing }
+         let videosPublisher = videoSelection.$videos
+         
+         Publishers.CombineLatest(editModePublisher, videosPublisher)
+             .receive(on: DispatchQueue.main)
+             .removeDuplicates(by: { $0 == $1 })
+             .sink { [weak self] isEditing, videos in
+                 if isEditing {
+                     if videos.isEmpty {
+                         self?.invokeCommand?(.navigationBarCommand(.renderNavigationTitle(.selectItems)))
+                     } else {
+                         self?.invokeCommand?(.navigationBarCommand(.renderNavigationTitle(.selectItemsWithCount(videos.count))))
+                     }
+                 } else {
+                     self?.invokeCommand?(.navigationBarCommand(.renderNavigationTitle(.videos)))
+                 }
+             }
+             .store(in: &subscriptions)
+     }
 }

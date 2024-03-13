@@ -1,6 +1,8 @@
 @testable import MEGA
+import MEGADomain
 import MEGADomainMock
 import MEGATest
+import Video
 import XCTest
 
 final class VideoRevampTabContainerViewModelTests: XCTestCase {
@@ -8,7 +10,7 @@ final class VideoRevampTabContainerViewModelTests: XCTestCase {
     // MARK: - Init
 
     func testInit_whenCalled_doesNotExecuteUseCases() {
-        let (_, sortOrderPreferenceUseCase) = makeSUT()
+        let (_, sortOrderPreferenceUseCase, _) = makeSUT()
         
         XCTAssertEqual(sortOrderPreferenceUseCase.getSortOrderCallCount, 0)
     }
@@ -16,7 +18,7 @@ final class VideoRevampTabContainerViewModelTests: XCTestCase {
     // MARK: - Dispatch.onViewDidLoad
     
     func testDispatch_onViewDidLoad_executeUseCases() {
-        let (sut, sortOrderPreferenceUseCase) = makeSUT()
+        let (sut, sortOrderPreferenceUseCase, _) = makeSUT()
         
         sut.dispatch(.onViewDidLoad)
         
@@ -28,7 +30,7 @@ final class VideoRevampTabContainerViewModelTests: XCTestCase {
     
     func testDispatch_navigationBarActionDidSelectSortMenuAction_saveSortOrderPreference() {
         let selectedSortType = anySortOrderType()
-        let (sut, sortOrderPreferenceUseCase) = makeSUT()
+        let (sut, sortOrderPreferenceUseCase, _) = makeSUT()
         
         sut.dispatch(.navigationBarAction(.didSelectSortMenuAction(sortType: selectedSortType)))
         
@@ -38,7 +40,7 @@ final class VideoRevampTabContainerViewModelTests: XCTestCase {
     // MARK: - Dispatch.navigationBarAction.didReceivedDisplayMenuAction
     
     func testDispatch_navigationBarActionDidReceivedDisplayMenuActionSelect_toggleEditing() {
-        let (sut, _) = makeSUT()
+        let (sut, _, _) = makeSUT()
         
         var receivedCommands = [VideoRevampTabContainerViewModel.Command]()
         sut.invokeCommand = { command in
@@ -54,7 +56,7 @@ final class VideoRevampTabContainerViewModelTests: XCTestCase {
     // MARK: - Dispatch.navigationBarAction.didTapCancel
     
     func testDispatch_navigationBarActionDidTapCancel_setsIsEditing() {
-        let (sut, _) = makeSUT()
+        let (sut, _, _) = makeSUT()
         
         sut.dispatch(.navigationBarAction(.didTapCancel))
         
@@ -64,13 +66,13 @@ final class VideoRevampTabContainerViewModelTests: XCTestCase {
     // MARK: - Dispatch.navigationBarAction.didTapSelectAll
     
     func testDispatch_navigationBarActionDidTapSelectAll_initialStateShouldFalse() {
-        let (sut, _) = makeSUT()
+        let (sut, _, _) = makeSUT()
         
         XCTAssertFalse(sut.syncModel.isAllSelected)
     }
     
     func testDispatch_navigationBarActionDidTapSelectAll_selectAllAndUnselectAll() {
-        let (sut, _) = makeSUT()
+        let (sut, _, _) = makeSUT()
         
         sut.dispatch(.navigationBarAction(.didTapSelectAll))
         
@@ -85,7 +87,7 @@ final class VideoRevampTabContainerViewModelTests: XCTestCase {
     
     func testDispatch_searchBarActionUpdateSearchResultsWithText_sendsSearchTextToSyncModel() {
         let searchText = "any-search-keyword"
-        let (sut, _) = makeSUT()
+        let (sut, _, _) = makeSUT()
         
         sut.dispatch(.searchBarAction(.updateSearchResults(searchText: searchText)))
         
@@ -94,7 +96,7 @@ final class VideoRevampTabContainerViewModelTests: XCTestCase {
     
     func testDispatch_searchBarActionUpdateSearchResultsWithEmpty_sendsSearchTextToSyncModel() {
         let searchText = ""
-        let (sut, _) = makeSUT()
+        let (sut, _, _) = makeSUT()
         
         sut.dispatch(.searchBarAction(.updateSearchResults(searchText: searchText)))
         
@@ -104,17 +106,87 @@ final class VideoRevampTabContainerViewModelTests: XCTestCase {
     // MARK: - Dispatch.searchBarAction.cancel
     
     func testDispatch_searchBarActionCancel_sendsSearchTextToSyncModel() {
-        let (sut, _) = makeSUT()
+        let (sut, _, _) = makeSUT()
         
         sut.dispatch(.searchBarAction(.cancel))
         
         XCTAssertEqual(sut.syncModel.searchText, "")
     }
     
+    // MARK: - renderNavigationTitle
+    
+    func testDispatch_onViewDidLoad_navigationTitleBeDefault() {
+        let (sut, _, _) = makeSUT()
+        var receivedCommands = [VideoRevampTabContainerViewModel.Command]()
+        sut.invokeCommand = { command in
+            receivedCommands.append(command)
+        }
+        
+        sut.dispatch(.onViewDidLoad)
+        
+        XCTAssertEqual(receivedCommands, [ .navigationBarCommand(.renderNavigationTitle(.videos)) ])
+    }
+    
+    @MainActor
+    func testInit_whenIsNotInEditingMode_renderDefaultVideosTitle() {
+        let (sut, _, videoSelection) = makeSUT()
+        let exp = expectation(description: "Wait for invokeCommand")
+        var receivedCommands = [VideoRevampTabContainerViewModel.Command]()
+        sut.invokeCommand = { command in
+            if command == .navigationBarCommand(.renderNavigationTitle(.videos)) {
+                receivedCommands.append(command)
+                exp.fulfill()
+            }
+        }
+        
+        videoSelection.editMode = .inactive
+        wait(for: [exp], timeout: 0.5)
+        
+        XCTAssertTrue(receivedCommands.contains(.navigationBarCommand(.renderNavigationTitle(.videos))))
+    }
+    
+    @MainActor
+    func testInit_whenIsInEditingMode_renderSelectItemsTitle() {
+        let (sut, _, videoSelection) = makeSUT()
+        let exp = expectation(description: "Wait for invokeCommand")
+        var receivedCommands = [VideoRevampTabContainerViewModel.Command]()
+        sut.invokeCommand = { command in
+            if command == .navigationBarCommand(.renderNavigationTitle(.selectItems)) {
+                receivedCommands.append(command)
+                exp.fulfill()
+            }
+        }
+        
+        videoSelection.editMode = .active
+        wait(for: [exp], timeout: 0.5)
+        
+        XCTAssertTrue(receivedCommands.contains(.navigationBarCommand(.renderNavigationTitle(.selectItems))))
+    }
+    
+    @MainActor
+    func testInit_whenIsInEditingModeAndSelectingAVideo_renderSelectItemsWithCountTitle() {
+        let (sut, _, videoSelection) = makeSUT()
+        let exp = expectation(description: "Wait for invokeCommand")
+        var receivedCommands = [VideoRevampTabContainerViewModel.Command]()
+        sut.invokeCommand = { command in
+            if command != .navigationBarCommand(.renderNavigationTitle(.selectItems))
+                && command != .navigationBarCommand(.renderNavigationTitle(.videos)) {
+                receivedCommands.append(command)
+                exp.fulfill()
+            }
+        }
+        
+        videoSelection.editMode = .active
+        videoSelection.videos = [1: anyNode(id: 1, mediaType: .video)]
+        wait(for: [exp], timeout: 0.5)
+        
+        XCTAssertTrue(receivedCommands.contains(.navigationBarCommand(.renderNavigationTitle(.selectItemsWithCount(1)))))
+    }
+    
     // MARK: - Searching state behavior
      
      func testDispatch_navigationBarActionSelect_hidesSearchBar() {
-         let (sut, _) = makeSUT()
+         let (sut, _, _) = makeSUT()
          let exp = expectation(description: "Wait for invokeCommand")
          var receivedCommands = [VideoRevampTabContainerViewModel.Command]()
          sut.invokeCommand = { command in
@@ -131,7 +203,7 @@ final class VideoRevampTabContainerViewModelTests: XCTestCase {
      }
      
      func testDispatch_navigationBarActionSelect_resetsSearchState() {
-         let (sut, _) = makeSUT()
+         let (sut, _, _) = makeSUT()
          let exp = expectation(description: "Wait for invokeCommand")
          var receivedCommands = [VideoRevampTabContainerViewModel.Command]()
          sut.invokeCommand = { command in
@@ -150,7 +222,7 @@ final class VideoRevampTabContainerViewModelTests: XCTestCase {
      
      @MainActor
      func testDispatch_navigationBarActionSelect_hidesTabView() {
-         let (sut, _) = makeSUT()
+         let (sut, _, _) = makeSUT()
          let exp = expectation(description: "Wait for invokeCommand")
          var receivedCommands = [VideoRevampTabContainerViewModel.Command]()
          sut.invokeCommand = { command in
@@ -167,7 +239,7 @@ final class VideoRevampTabContainerViewModelTests: XCTestCase {
      }
      
      func testDispatch_navigationBarActionDidTapCancel_reshowSearchBar() {
-         let (sut, _) = makeSUT()
+         let (sut, _, _) = makeSUT()
          let exp = expectation(description: "Wait for invokeCommand")
          var receivedCommands = [VideoRevampTabContainerViewModel.Command]()
          sut.invokeCommand = { command in
@@ -184,7 +256,7 @@ final class VideoRevampTabContainerViewModelTests: XCTestCase {
      }
      
      func testDispatch_navigationBarActionDidTapCancel_resetsSearchState() {
-         let (sut, _) = makeSUT()
+         let (sut, _, _) = makeSUT()
          sut.syncModel.searchText = "searching something"
          let exp = expectation(description: "Wait for invokeCommand")
          var receivedCommands = [VideoRevampTabContainerViewModel.Command]()
@@ -203,7 +275,7 @@ final class VideoRevampTabContainerViewModelTests: XCTestCase {
      
      @MainActor
      func testDispatch_navigationBarActionDidTapCancel_showsTabView() {
-         let (sut, _) = makeSUT()
+         let (sut, _, _) = makeSUT()
          let exp = expectation(description: "Wait for invokeCommand")
          var receivedCommands = [VideoRevampTabContainerViewModel.Command]()
          sut.invokeCommand = { command in
@@ -226,17 +298,38 @@ final class VideoRevampTabContainerViewModelTests: XCTestCase {
         line: UInt = #line
     ) -> (
         sut: VideoRevampTabContainerViewModel,
-        sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase
+        sortOrderPreferenceUseCase: MockSortOrderPreferenceUseCase,
+        videoSelection: VideoSelection
     ) {
+        let videoSelection = VideoSelection()
         let sortOrderPreferenceUseCase = MockSortOrderPreferenceUseCase(sortOrderEntity: .creationAsc)
         let sut = VideoRevampTabContainerViewModel(
-            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase
+            sortOrderPreferenceUseCase: sortOrderPreferenceUseCase,
+            videoSelection: videoSelection
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
-        return (sut, sortOrderPreferenceUseCase)
+        return (sut, sortOrderPreferenceUseCase, videoSelection)
     }
     
     private func anySortOrderType() -> SortOrderType {
         .favourite
     }
+    
+    private func anyNode(id: HandleEntity, mediaType: MediaTypeEntity, name: String = "any", changeTypes: ChangeTypeEntity = .fileAttributes) -> NodeEntity {
+        NodeEntity(
+            changeTypes: changeTypes,
+            nodeType: .file,
+            name: name,
+            handle: id,
+            isFile: true,
+            hasThumbnail: true,
+            hasPreview: true,
+            label: .unknown,
+            publicHandle: id,
+            size: 2,
+            duration: 2,
+            mediaType: mediaType
+        )
+    }
+
 }

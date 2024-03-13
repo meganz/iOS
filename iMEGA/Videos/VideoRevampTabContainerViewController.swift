@@ -152,6 +152,8 @@ final class VideoRevampTabContainerViewController: UIViewController {
             toggleEditing()
         case .navigationBarCommand(.refreshContextMenu):
             refreshContextMenuBarButton()
+        case .navigationBarCommand(.renderNavigationTitle):
+            break
         case .searchBarCommand(.hideSearchBar):
             hideSearchBar()
         case .searchBarCommand(.reshowSearchBar):
