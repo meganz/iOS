@@ -25,10 +25,16 @@ final class VideoRevampTabContainerViewModel: ViewModelType {
     
     enum Command: CommandType, Equatable { 
         case navigationBarCommand(NavigationBarCommand)
+        case searchBarCommand(SearchBarCommand)
         
         enum NavigationBarCommand {
             case toggleEditing
             case refreshContextMenu
+        }
+        
+        enum SearchBarCommand: Equatable {
+            case hideSearchBar
+            case reshowSearchBar
         }
     }
     
@@ -58,6 +64,8 @@ final class VideoRevampTabContainerViewModel: ViewModelType {
             case .select:
                 syncModel.editMode = .active
                 invokeCommand?(.navigationBarCommand(.toggleEditing))
+                invokeCommand?(.searchBarCommand(.hideSearchBar))
+                syncModel.searchText.removeAll()
             default:
                 break
             }
@@ -67,6 +75,8 @@ final class VideoRevampTabContainerViewModel: ViewModelType {
             syncModel.isAllSelected = !syncModel.isAllSelected
         case .navigationBarAction(.didTapCancel):
             syncModel.editMode = .inactive
+            syncModel.searchText.removeAll()
+            invokeCommand?(.searchBarCommand(.reshowSearchBar))
         case .searchBarAction(.updateSearchResults(let searchText)):
             syncModel.searchText = searchText
         case .searchBarAction(.cancel):
