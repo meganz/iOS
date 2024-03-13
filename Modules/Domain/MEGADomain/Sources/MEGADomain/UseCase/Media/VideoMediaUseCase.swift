@@ -1,4 +1,4 @@
-public protocol VideoMediaUseCaseProtocol {
+public protocol VideoMediaUseCaseProtocol: Sendable {
     func isPlayable(_ node: NodeEntity) -> Bool
 }
 
