@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22130"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,7 +19,7 @@
                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="notificationCell" rowHeight="112" id="OEV-17-TF5" customClass="NotificationTableViewCell">
-                                <rect key="frame" x="0.0" y="24.5" width="375" height="112"/>
+                                <rect key="frame" x="0.0" y="50" width="375" height="112"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="OEV-17-TF5" id="ITp-r2-etY">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="112"/>
@@ -29,10 +29,10 @@
                                             <rect key="frame" x="12" y="12" width="351" height="88"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="top" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="YmC-iU-YvT">
-                                                    <rect key="frame" x="0.0" y="0.0" width="351" height="18"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="351" height="15.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="TYPE" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gck-7K-Q0b" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="169.5" height="12"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="27.5" height="12"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -42,22 +42,22 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </label>
                                                         <view contentMode="scaleToFill" horizontalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="nWc-Oi-wgT">
-                                                            <rect key="frame" x="312.5" y="0.0" width="38.5" height="18"/>
+                                                            <rect key="frame" x="311" y="0.0" width="40" height="15.5"/>
                                                             <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NEW" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4PP-1S-fDF" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
-                                                                    <rect key="frame" x="7" y="2" width="24.5" height="14"/>
-                                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NEW" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4PP-1S-fDF" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
+                                                                    <rect key="frame" x="7" y="0.5" width="26" height="14.5"/>
+                                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
                                                                     <userDefinedRuntimeAttributes>
                                                                         <userDefinedRuntimeAttribute type="string" keyPath="textStyle" value="caption2"/>
-                                                                        <userDefinedRuntimeAttribute type="string" keyPath="weight" value="bold"/>
+                                                                        <userDefinedRuntimeAttribute type="string" keyPath="weight" value="regular"/>
                                                                     </userDefinedRuntimeAttributes>
                                                                 </label>
                                                             </subviews>
                                                             <constraints>
-                                                                <constraint firstAttribute="bottom" secondItem="4PP-1S-fDF" secondAttribute="bottom" constant="2" id="k3s-a8-ScY"/>
-                                                                <constraint firstItem="4PP-1S-fDF" firstAttribute="top" secondItem="nWc-Oi-wgT" secondAttribute="top" constant="2" id="lbU-Rr-mre"/>
+                                                                <constraint firstAttribute="bottom" secondItem="4PP-1S-fDF" secondAttribute="bottom" constant="0.5" id="k3s-a8-ScY"/>
+                                                                <constraint firstItem="4PP-1S-fDF" firstAttribute="top" secondItem="nWc-Oi-wgT" secondAttribute="top" constant="0.5" id="lbU-Rr-mre"/>
                                                                 <constraint firstAttribute="trailing" secondItem="4PP-1S-fDF" secondAttribute="trailing" constant="7" id="pud-Od-DFW"/>
                                                                 <constraint firstItem="4PP-1S-fDF" firstAttribute="leading" secondItem="nWc-Oi-wgT" secondAttribute="leading" constant="7" id="v5w-OU-ggJ"/>
                                                             </constraints>
@@ -70,7 +70,7 @@
                                                     </subviews>
                                                 </stackView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Heading" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mVB-KH-Bzc" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="26" width="60" height="18"/>
+                                                    <rect key="frame" x="0.0" y="23.5" width="60" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -80,13 +80,13 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Content" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dk8-YI-Qfa">
-                                                    <rect key="frame" x="0.0" y="52" width="45.5" height="14.5"/>
+                                                    <rect key="frame" x="0.0" y="49.5" width="48.5" height="16"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mHf-gl-i0U">
-                                                    <rect key="frame" x="0.0" y="74.5" width="25" height="13.5"/>
+                                                    <rect key="frame" x="0.0" y="73.5" width="26.5" height="14.5"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -126,6 +126,17 @@
             <point key="canvasLocation" x="-1335.2" y="-218.1409295352324"/>
         </scene>
     </scenes>
+    <designables>
+        <designable name="4PP-1S-fDF">
+            <size key="intrinsicContentSize" width="26" height="13.5"/>
+        </designable>
+        <designable name="gck-7K-Q0b">
+            <size key="intrinsicContentSize" width="27.5" height="12"/>
+        </designable>
+        <designable name="mVB-KH-Bzc">
+            <size key="intrinsicContentSize" width="60" height="18"/>
+        </designable>
+    </designables>
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
