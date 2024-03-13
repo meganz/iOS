@@ -3,40 +3,41 @@ import MEGADomain
 import XCTest
 
 final class ChangeTypeEntityMapperTests: XCTestCase {
-    let sut: [MEGAUserChangeType] = [
-        .auth,
-        .lstint,
-        .avatar,
-        .firstname,
-        .lastname,
-        .email,
-        .keyring,
-        .country,
-        .birthday,
-        .pubKeyCu255,
-        .pubKeyEd255,
-        .sigPubKeyRsa,
-        .sigPubKeyCu255,
-        .language,
-        .pwdReminder,
-        .disableVersions,
-        .contactLinkVerification,
-        .richPreviews,
-        .rubbishTime,
-        .storageState,
-        .geolocation,
-        .cameraUploadsFolder,
-        .myChatFilesFolder,
-        .pushSettings,
-        .userAlias,
-        .unshareableKey,
-        .deviceNames,
-        .backupFolder,
-        .cookieSetting,
-        .noCallKit
-    ]
     
     func testChangeTypeMapper() {
+        let sut: [MEGAUserChangeType] = [
+            .auth,
+            .lstint,
+            .avatar,
+            .firstname,
+            .lastname,
+            .email,
+            .keyring,
+            .country,
+            .birthday,
+            .pubKeyCu255,
+            .pubKeyEd255,
+            .sigPubKeyRsa,
+            .sigPubKeyCu255,
+            .language,
+            .pwdReminder,
+            .disableVersions,
+            .contactLinkVerification,
+            .richPreviews,
+            .rubbishTime,
+            .storageState,
+            .geolocation,
+            .cameraUploadsFolder,
+            .myChatFilesFolder,
+            .pushSettings,
+            .userAlias,
+            .unshareableKey,
+            .deviceNames,
+            .backupFolder,
+            .cookieSetting,
+            .noCallKit
+        ]
+        
         for type in sut {
             let entity = type.toChangeTypeEntity()
             switch type {
@@ -103,6 +104,34 @@ final class ChangeTypeEntityMapperTests: XCTestCase {
             @unknown default:
                 XCTFail("Please map the new MEGAUserChangeType to UserEntity.ChangeTypeEntity")
             }
+        }
+    }
+    
+    func testMEGANodeChangeTypeMapping_forAllChangeTypes_shouldReturnCorrectChangeTypeEntity() {
+        let megaNodeChangeTypes: [(MEGANodeChangeType, ChangeTypeEntity)] = [
+            (.removed, .removed),
+            (.attributes, .attributes),
+            (.owner, .owner),
+            (.timestamp, .timestamp),
+            (.fileAttributes, .fileAttributes),
+            (.inShare, .inShare),
+            (.outShare, .outShare),
+            (.parent, .parent),
+            (.pendingShare, .pendingShare),
+            (.publicLink, .publicLink),
+            (.new, .new),
+            (.name, .name),
+            (.favourite, .favourite),
+            (.sensitive, .sensitive)
+        ]
+        
+        for (index, sut) in megaNodeChangeTypes.enumerated() {
+            let (megaNodeChangeType, expectedResult) = sut
+            
+            XCTAssertEqual(
+                ChangeTypeEntity(rawValue: megaNodeChangeType.rawValue),
+                expectedResult,
+                "Failed to testcase at index: \(index)")
         }
     }
 }
