@@ -94,6 +94,10 @@ extension NotificationsTableViewController {
         viewModel.dispatch(.onViewDidLoad)
     }
     
+    @objc func dispatchActionsOnAppear() {
+        viewModel.dispatch(.onViewDidAppear)
+    }
+    
     private func executeCommand(_ command: NotificationsViewModel.Command) {
         switch command {
         case .reloadData:

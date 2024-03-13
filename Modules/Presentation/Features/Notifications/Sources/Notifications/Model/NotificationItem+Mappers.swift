@@ -14,3 +14,9 @@ extension NotificationEntity {
         )
     }
 }
+
+extension Array where Element == NotificationEntity {
+    public func toNotificationItems() -> [NotificationItem] {
+        compactMap {$0.toNotificationItem()}
+    }
+}
