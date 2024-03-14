@@ -25,7 +25,7 @@ struct AlbumNameValidator {
         }
         
         if name.mnz_containsInvalidChars() {
-            return TextFieldAlertError(title: Strings.Localizable.General.Error.charactersNotAllowed(String.Constants.invalidFileFolderNameCharacters), description: Strings.Localizable.CameraUploads.Albums.Create.Alert.enterNewName)
+            return TextFieldAlertError(title: Strings.Localizable.General.Error.charactersNotAllowed(String.Constants.invalidFileFolderNameCharactersToDisplay), description: Strings.Localizable.CameraUploads.Albums.Create.Alert.enterNewName)
         }
         if isReservedAlbumName(name: name) {
             return TextFieldAlertError(title: Strings.Localizable.CameraUploads.Albums.Create.Alert.albumNameNotAllowed, description: Strings.Localizable.CameraUploads.Albums.Create.Alert.enterDifferentName)

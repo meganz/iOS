@@ -20,7 +20,7 @@ extension MEGANode {
         guard containsInvalidChars else {
             return Strings.Localizable.rename
         }
-        return Strings.Localizable.General.Error.charactersNotAllowed(String.Constants.invalidFileFolderNameCharacters)
+        return Strings.Localizable.General.Error.charactersNotAllowed(String.Constants.invalidFileFolderNameCharactersToDisplay)
     }
     
     @objc func alertMessage(forRemoved nodeType: MEGANodeType) -> String {

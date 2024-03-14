@@ -61,4 +61,48 @@ final class MEGASwiftTests: XCTestCase {
         let testString = sampleString.subString(from: "[A]", to: "[/A]")
         XCTAssertNil(testString)
     }
+
+    func testContainsInvalidFileFolderNameCharacters_forValidFolderNameWithoutSpaces_shouldBeFalse() {
+        XCTAssertFalse("NewFolder".containsInvalidFileFolderNameCharacters)
+    }
+
+    func testContainsInvalidFileFolderNameCharacters_forValidFolderNameWithSpaces_shouldBeFalse() {
+        XCTAssertFalse("New Folder".containsInvalidFileFolderNameCharacters)
+    }
+
+    func testContainsInvalidFileFolderNameCharacters_forInvalidFolderNameWithPipeSymbol_shouldBeTrue() {
+        XCTAssertTrue("New Folder|".containsInvalidFileFolderNameCharacters)
+    }
+
+    func testContainsInvalidFileFolderNameCharacters_forInvalidFolderNameWithStar_shouldBeTrue() {
+        XCTAssertTrue("New Folder*".containsInvalidFileFolderNameCharacters)
+    }
+
+    func testContainsInvalidFileFolderNameCharacters_forInvalidFolderNameWithForwardSlash_shouldBeTrue() {
+        XCTAssertTrue("New Folder/".containsInvalidFileFolderNameCharacters)
+    }
+
+    func testContainsInvalidFileFolderNameCharacters_forInvalidFolderNameWithColon_shouldBeTrue() {
+        XCTAssertTrue("New Folder:".containsInvalidFileFolderNameCharacters)
+    }
+
+    func testContainsInvalidFileFolderNameCharacters_forInvalidFolderNameWithLesserThan_shouldBeTrue() {
+        XCTAssertTrue("New Folder<".containsInvalidFileFolderNameCharacters)
+    }
+
+    func testContainsInvalidFileFolderNameCharacters_forInvalidFolderNameWithGreaterThan_shouldBeTrue() {
+        XCTAssertTrue("New Folder>".containsInvalidFileFolderNameCharacters)
+    }
+
+    func testContainsInvalidFileFolderNameCharacters_forInvalidFolderNameWithQuestionMark_shouldBeTrue() {
+        XCTAssertTrue("New Folder?".containsInvalidFileFolderNameCharacters)
+    }
+
+    func testContainsInvalidFileFolderNameCharacters_forInvalidFolderNameWithQuotation_shouldBeTrue() {
+        XCTAssertTrue("New Folder\"".containsInvalidFileFolderNameCharacters)
+    }
+
+    func testContainsInvalidFileFolderNameCharacters_forInvalidFolderNameWithBackwardSlash_shouldBeTrue() {
+        XCTAssertTrue("New Folder\\".containsInvalidFileFolderNameCharacters)
+    }
 }

@@ -31,7 +31,7 @@ final class AlbumNameValidatorTests: XCTestCase {
     func testValidate_whenNameHasInvalidChars_shouldReturnRightErrorObject() {
         let sut = AlbumNameValidator(existingAlbumNames: {[]})
         let testName = "* adkd"
-        let targetError = TextFieldAlertError(title: Strings.Localizable.General.Error.charactersNotAllowed(String.Constants.invalidFileFolderNameCharacters), description: Strings.Localizable.CameraUploads.Albums.Create.Alert.enterNewName)
+        let targetError = TextFieldAlertError(title: Strings.Localizable.General.Error.charactersNotAllowed(String.Constants.invalidFileFolderNameCharactersToDisplay), description: Strings.Localizable.CameraUploads.Albums.Create.Alert.enterNewName)
         
         XCTAssertEqual(sut.create(testName), targetError)
     }
