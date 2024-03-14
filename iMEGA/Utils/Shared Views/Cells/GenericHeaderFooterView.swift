@@ -10,6 +10,7 @@ final class GenericHeaderFooterView: UITableViewHeaderFooterView {
     @IBOutlet weak var marginViewHeightConstraint: NSLayoutConstraint!
     
     private var usingDefaultBackgroundColor: Bool = false
+    private var preferredBackgroundColor: UIColor?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -32,6 +33,11 @@ final class GenericHeaderFooterView: UITableViewHeaderFooterView {
         }
     }
     
+    func setPreferredBackgroundColor(_ color: UIColor?) {
+        preferredBackgroundColor = color
+        updateAppearance()
+    }
+
     @objc func configureHeaderForAlphabeticSection(title: String?, font: UIFont) {
         titleLabel.font = font
         titleLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : UIColor.label
@@ -85,11 +91,15 @@ final class GenericHeaderFooterView: UITableViewHeaderFooterView {
         if UIColor.isDesignTokenEnabled() {
             self.contentView.backgroundColor = TokenColors.Background.surface1
         } else {
-            if self.contentView.backgroundColor != nil && !usingDefaultBackgroundColor {
-                self.contentView.backgroundColor = .mnz_secondaryBackground(for: traitCollection)
+            if let preferredBackgroundColor {
+                self.contentView.backgroundColor = preferredBackgroundColor
             } else {
-                self.contentView.backgroundColor = .mnz_backgroundGrouped(for: traitCollection)
-                usingDefaultBackgroundColor = true
+                if self.contentView.backgroundColor != nil && !usingDefaultBackgroundColor {
+                    self.contentView.backgroundColor = .mnz_secondaryBackground(for: traitCollection)
+                } else {
+                    self.contentView.backgroundColor = .mnz_backgroundGrouped(for: traitCollection)
+                    usingDefaultBackgroundColor = true
+                }
             }
         }
         
