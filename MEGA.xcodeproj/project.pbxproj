@@ -1315,6 +1315,8 @@
 		9474F23F2B0F8F4700C5F63B /* ViewModeStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9474F23E2B0F8F4700C5F63B /* ViewModeStoreTests.swift */; };
 		947755BB2A4C714800DAAEE5 /* ToolbarButtonsDisabler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947755BA2A4C714800DAAEE5 /* ToolbarButtonsDisabler.swift */; };
 		947755BE2A4C74ED00DAAEE5 /* ToolbarButtonsDisablerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947755BD2A4C74ED00DAAEE5 /* ToolbarButtonsDisablerTests.swift */; };
+		9478CB052B8E6C5E00401B2E /* ContactTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9478CB042B8E6C5E00401B2E /* ContactTableViewCell+Additions.swift */; };
+		9478CB072B8E70EA00401B2E /* ContactTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9478CB042B8E6C5E00401B2E /* ContactTableViewCell+Additions.swift */; };
 		9479F02528BF93CA008578BE /* DNDTurnOnOptionEntity+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9479F02428BF93C9008578BE /* DNDTurnOnOptionEntity+Mapper.swift */; };
 		9479F02728BFA4C3008578BE /* ContextMenuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9479F02628BFA4C3008578BE /* ContextMenuModel.swift */; };
 		9479F02B28BFAB26008578BE /* ContextMenuModel+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9479F02A28BFAB26008578BE /* ContextMenuModel+Mapper.swift */; };
@@ -3994,6 +3996,7 @@
 		9474F23E2B0F8F4700C5F63B /* ViewModeStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModeStoreTests.swift; sourceTree = "<group>"; };
 		947755BA2A4C714800DAAEE5 /* ToolbarButtonsDisabler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarButtonsDisabler.swift; sourceTree = "<group>"; };
 		947755BD2A4C74ED00DAAEE5 /* ToolbarButtonsDisablerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarButtonsDisablerTests.swift; sourceTree = "<group>"; };
+		9478CB042B8E6C5E00401B2E /* ContactTableViewCell+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactTableViewCell+Additions.swift"; sourceTree = "<group>"; };
 		9479F02428BF93C9008578BE /* DNDTurnOnOptionEntity+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DNDTurnOnOptionEntity+Mapper.swift"; sourceTree = "<group>"; };
 		9479F02628BFA4C3008578BE /* ContextMenuModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContextMenuModel.swift; sourceTree = "<group>"; };
 		9479F02A28BFAB26008578BE /* ContextMenuModel+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContextMenuModel+Mapper.swift"; sourceTree = "<group>"; };
@@ -8854,6 +8857,7 @@
 				4182B4EE1BF4ADD400E6FFB8 /* ContactRequestsTableViewCell.m */,
 				415226761A692ECC00EC7BB6 /* ContactTableViewCell.h */,
 				415226771A692ECC00EC7BB6 /* ContactTableViewCell.m */,
+				9478CB042B8E6C5E00401B2E /* ContactTableViewCell+Additions.swift */,
 				835223AF205957DD00A47438 /* ItemCollectionViewCell.h */,
 				835223B0205957DD00A47438 /* ItemCollectionViewCell.m */,
 			);
@@ -14831,6 +14835,7 @@
 				B6F853442794C97300028D51 /* PhotoSelectionAdapter.swift in Sources */,
 				122B956E287CC7AA00860FE1 /* PhotosFilterOptions.swift in Sources */,
 				12397E2C2820C75900A30CCC /* PhotosPageViewController.swift in Sources */,
+				9478CB052B8E6C5E00401B2E /* ContactTableViewCell+Additions.swift in Sources */,
 				B5CD176427F58236000CF282 /* PhotosViewController+Additions.swift in Sources */,
 				B567EF8A27EAF7640014B26C /* PhotosViewController+Banner.swift in Sources */,
 				32303CF428657BA1005DF060 /* PhotosViewController+ContextMenu.swift in Sources */,
@@ -15519,6 +15524,7 @@
 				8335C641282E7ABB00509479 /* NameCollisionView.swift in Sources */,
 				8335C63E282E7A8400509479 /* NameCollisionViewModel.swift in Sources */,
 				943092F52914376A0092B99A /* NodeActionsRepository.swift in Sources */,
+				9478CB072B8E70EA00401B2E /* ContactTableViewCell+Additions.swift in Sources */,
 				94C85E6F28B9405F00007A38 /* NodeAssetsManager.swift in Sources */,
 				B55C1A8A298260DB006A0205 /* NodeTableViewCell+Additions.swift in Sources */,
 				5BAC7CAC2677BF9800F8C305 /* NodeTableViewCell.m in Sources */,

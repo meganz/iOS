@@ -4,6 +4,7 @@ import MEGAL10n
 
 class ContactsTableViewHeader: UIView {
     @objc var navigationController: UINavigationController!
+    
     @IBOutlet weak var disclosureIndicatorRequestImageView: UIImageView!
     @IBOutlet weak var disclosureIndicatorGroupsImageView: UIImageView!
     @IBOutlet weak var requestsImageView: UIImageView!

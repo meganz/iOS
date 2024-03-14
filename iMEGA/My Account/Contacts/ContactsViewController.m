@@ -34,8 +34,6 @@
 
 @interface ContactsViewController () <UISearchBarDelegate, UISearchResultsUpdating, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate, MEGAGlobalDelegate, ItemListViewControllerDelegate, UISearchControllerDelegate, UIGestureRecognizerDelegate, MEGAChatDelegate, ContactLinkQRViewControllerDelegate, CNContactPickerDelegate, UIAdaptivePresentationControllerDelegate>
 
-@property (weak, nonatomic) IBOutlet UIView *itemListView;
-
 @property (strong, nonatomic) ContactsTableViewHeader *contactsTableViewHeader;
 
 @property (nonatomic, strong) NSMutableArray<NSMutableArray *> *visibleUsersIndexedMutableArray;
@@ -74,30 +72,20 @@
 
 @property (nonatomic) UIPanGestureRecognizer *panOnTable;
 
-@property (weak, nonatomic) IBOutlet UIView *chatNamingGroupTableViewHeader;
-
-@property (weak, nonatomic) IBOutlet UIView *enterGroupNameView;
 @property (weak, nonatomic) IBOutlet UITextField *enterGroupNameTextField;
-@property (weak, nonatomic) IBOutlet UIView *enterGroupNameBottomSeparatorView;
 
-@property (weak, nonatomic) IBOutlet UIView *encryptedKeyRotationView;
-@property (weak, nonatomic) IBOutlet UIView *encryptedKeyRotationTopSeparatorView;
 @property (weak, nonatomic) IBOutlet UILabel *encryptedKeyRotationLabel;
-@property (weak, nonatomic) IBOutlet UIView *encryptedKeyRotationBottomSeparatorView;
+
 @property (weak, nonatomic) IBOutlet UILabel *getChatLinkLabel;
 @property (weak, nonatomic) IBOutlet UILabel *keyRotationFooterLabel;
 
 @property (weak, nonatomic) IBOutlet UISwitch *allowNonHostToAddParticipantsSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *allowNonHostToAddParticipantsLabel;
-@property (weak, nonatomic) IBOutlet UIView *allowNonHostToAddParticipantsView;
-@property (weak, nonatomic) IBOutlet UIView *allowNonHostToAddParticipantsTopSeparatorView;
-@property (weak, nonatomic) IBOutlet UIView *allowNonHostToAddParticipantsBottomSeparatorView;
 
 @property (weak, nonatomic) IBOutlet UISwitch *chatLinkSwitch;
-@property (weak, nonatomic) IBOutlet UIView *getChatLinkTopSeparatorView;
-@property (weak, nonatomic) IBOutlet UIView *getChatLinkView;
+
 @property (weak, nonatomic) IBOutlet UIStackView *getChatLinkStackView;
-@property (weak, nonatomic) IBOutlet UIView *getChatLinkBottomSeparatorView;
+
 
 @property (weak, nonatomic) IBOutlet UIStackView *optionsStackView;
 
@@ -232,41 +220,6 @@
 }
 
 #pragma mark - Private
-
-- (void)updateAppearance {
-    self.view.backgroundColor = self.tableView.backgroundColor = (self.contactsMode == ContactsModeDefault) ? [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection] : [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
-    
-    switch (self.contactsMode) {
-        case ContactsModeChatAddParticipant:
-        case ContactsModeInviteParticipants:
-        case ContactsModeScheduleMeeting:
-            self.itemListView.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
-            break;
-            
-        case ContactsModeChatNamingGroup: {
-            self.chatNamingGroupTableViewHeader.backgroundColor = [UIColor mnz_secondaryBackgroundForTraitCollection:self.traitCollection];
-            
-            self.enterGroupNameView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
-            self.enterGroupNameBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
-            
-            self.encryptedKeyRotationView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
-            self.encryptedKeyRotationTopSeparatorView.backgroundColor = self.encryptedKeyRotationBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
-            
-            self.getChatLinkView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
-            self.getChatLinkTopSeparatorView.backgroundColor = self.getChatLinkBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
-            
-            self.allowNonHostToAddParticipantsView.backgroundColor = [UIColor mnz_tertiaryBackground:self.traitCollection];
-            self.allowNonHostToAddParticipantsTopSeparatorView.backgroundColor = self.allowNonHostToAddParticipantsBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
-            break;
-        }
-            
-        default:
-            break;
-    }
-    
-    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
-    self.tableView.sectionIndexColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
-}
 
 - (void)setupContacts {
     self.indexPathsMutableDictionary = [[NSMutableDictionary alloc] init];
@@ -1562,10 +1515,7 @@
             }
         } else {
             if (self.visibleUsersIndexedMutableArray[[self currentIndexedSection:section]].count > 0) {
-                headerView.titleLabel.font = [UIFont mnz_preferredFontWithStyle:UIFontTextStyleBody weight:UIFontWeightSemibold];
-                headerView.titleLabel.textColor = UIColor.labelColor;
-                [headerView configureWithTitle:[UILocalizedIndexedCollation.currentCollation.sectionTitles objectAtIndex:[self currentIndexedSection:section]] topDistance:10.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:YES];
-                
+                [headerView configureHeaderForAlphabeticSectionWithTitle:[UILocalizedIndexedCollation.currentCollation.sectionTitles objectAtIndex:[self currentIndexedSection:section]] font:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleBody weight:UIFontWeightSemibold]];
                 return headerView;
             }
         }

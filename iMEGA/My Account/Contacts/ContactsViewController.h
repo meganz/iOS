@@ -34,6 +34,20 @@ typedef NS_ENUM(NSUInteger, ChatOptionType) {
 
 @property (weak, nonatomic) IBOutlet UIView *contactsNotVerifiedView;
 
+@property (weak, nonatomic) IBOutlet UIView *itemListView;
+@property (weak, nonatomic) IBOutlet UIView *chatNamingGroupTableViewHeader;
+@property (weak, nonatomic) IBOutlet UIView *enterGroupNameView;
+@property (weak, nonatomic) IBOutlet UIView *enterGroupNameBottomSeparatorView;
+@property (weak, nonatomic) IBOutlet UIView *encryptedKeyRotationView;
+@property (weak, nonatomic) IBOutlet UIView *encryptedKeyRotationTopSeparatorView;
+@property (weak, nonatomic) IBOutlet UIView *encryptedKeyRotationBottomSeparatorView;
+@property (weak, nonatomic) IBOutlet UIView *getChatLinkView;
+@property (weak, nonatomic) IBOutlet UIView *getChatLinkTopSeparatorView;
+@property (weak, nonatomic) IBOutlet UIView *getChatLinkBottomSeparatorView;
+@property (weak, nonatomic) IBOutlet UIView *allowNonHostToAddParticipantsView;
+@property (weak, nonatomic) IBOutlet UIView *allowNonHostToAddParticipantsTopSeparatorView;
+@property (weak, nonatomic) IBOutlet UIView *allowNonHostToAddParticipantsBottomSeparatorView;
+
 @property (nonatomic) ContactsMode contactsMode;
 @property (nonatomic) ChatOptionType chatOptionType;
 @property (strong, nonatomic) ContactsViewModel*viewModel;
