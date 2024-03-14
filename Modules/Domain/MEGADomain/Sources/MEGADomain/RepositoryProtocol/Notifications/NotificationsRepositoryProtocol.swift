@@ -18,4 +18,8 @@ public protocol NotificationsRepositoryProtocol: RepositoryProtocol {
     /// Fetch list of available notifications for Notification Center
     /// - Returns: List of NotificationEntity
     func fetchNotifications() async throws -> [NotificationEntity]
+    
+    /// Fetch list of unread notification IDs
+    /// - Returns: List of NotificationIDEntity
+    func unreadNotificationIDs() async -> [NotificationIDEntity]
 }
