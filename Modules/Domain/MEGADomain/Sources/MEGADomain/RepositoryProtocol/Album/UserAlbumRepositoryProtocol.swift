@@ -1,5 +1,5 @@
 import Combine
-import Foundation
+import MEGASwift
 
 public protocol UserAlbumRepositoryProtocol: RepositoryProtocol {
     // MARK: - Album Updates
@@ -11,6 +11,10 @@ public protocol UserAlbumRepositoryProtocol: RepositoryProtocol {
     /// Returns a publisher that emits album content updates.
     /// - Returns: A publisher that emits album content updates.
     var setElementsUpdatedPublisher: AnyPublisher<[SetElementEntity], Never> { get }
+    
+    /// AnyAsyncSequence that produces a new list of SetEntity when a change has occurred on any given UserAlbum SetEntity for this users account
+    /// - Returns: AnyAsyncSequence<[SetEntity]> of all the available Albums, only yields when a new update has occurred.
+    func albumsUpdated() async -> AnyAsyncSequence<[SetEntity]>
     
     // MARK: - Album
     
@@ -38,6 +42,13 @@ public protocol UserAlbumRepositoryProtocol: RepositoryProtocol {
     ///   - includeElementsInRubbishBin: Filter out Elements in Rubbish Bin
     /// - Returns: Associations between album, album element and photo.
     func albumElementIds(by id: HandleEntity, includeElementsInRubbishBin: Bool) async -> [AlbumPhotoIdEntity]
+    
+    /// Fetch association for album and photo node for an album
+    /// - Parameters:
+    ///   - id: User album id
+    ///   - elementId: The album element id
+    /// - Returns: Association between album, album element and photo or nil if not found
+    func albumElementId(by id: HandleEntity, elementId: HandleEntity) async -> AlbumPhotoIdEntity?
     
     /// Create a user album
     /// - Parameter name: The user album name, can be nil

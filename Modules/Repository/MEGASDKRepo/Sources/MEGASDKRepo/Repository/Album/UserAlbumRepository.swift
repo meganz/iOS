@@ -1,6 +1,7 @@
 import Combine
 import MEGADomain
 import MEGASdk
+import MEGASwift
 
 final public class UserAlbumRepository: NSObject, UserAlbumRepositoryProtocol {
     
@@ -29,6 +30,12 @@ final public class UserAlbumRepository: NSObject, UserAlbumRepositoryProtocol {
         sdk.remove(self)
     }
     
+    public func albumsUpdated() async -> AnyAsyncSequence<[SetEntity]> {
+        setsUpdatedSourcePublisher.values
+            .compactMap { [weak self] _ in await self?.albums() }
+            .eraseToAnyAsyncSequence()
+    }
+    
     // MARK: - Albums
     public func albums() async -> [SetEntity] {
         sdk.megaSets().toSetEntities().filter { $0.setType == .album }
@@ -41,13 +48,17 @@ final public class UserAlbumRepository: NSObject, UserAlbumRepositoryProtocol {
     }
     
     public func albumElement(by id: HandleEntity, elementId: HandleEntity) async -> SetElementEntity? {
-        return sdk.megaSetElement(bySid: id, eid: elementId)?.toSetElementEntity()
+        sdk.megaSetElement(bySid: id, eid: elementId)?.toSetElementEntity()
     }
     
     public func albumElementIds(by id: HandleEntity, includeElementsInRubbishBin: Bool) async -> [AlbumPhotoIdEntity] {
         let megaSetElements = sdk.megaSetElements(bySid: id,
                                                   includeElementsInRubbishBin: includeElementsInRubbishBin)
         return megaSetElements.toAlbumPhotoIdEntities()
+    }
+    
+    public func albumElementId(by id: HandleEntity, elementId: HandleEntity) async -> AlbumPhotoIdEntity? {
+        sdk.megaSetElement(bySid: id, eid: elementId)?.toAlbumPhotoIdEntity()
     }
     
     public func createAlbum(_ name: String?) async throws -> SetEntity {
