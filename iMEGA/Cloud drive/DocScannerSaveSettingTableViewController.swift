@@ -251,7 +251,7 @@ class DocScannerSaveSettingTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         switch TableViewConfiguration.Section(rawValue: section) {
         case .scannedDocumentPreview:
-            return charactersNotAllowed ? Strings.Localizable.General.Error.charactersNotAllowed(String.Constants.invalidFileFolderNameCharacters) : Strings.Localizable.tapFileToRename
+            return charactersNotAllowed ? Strings.Localizable.General.Error.charactersNotAllowed(String.Constants.invalidFileFolderNameCharactersToDisplay) : Strings.Localizable.tapFileToRename
             
         default:
             return nil

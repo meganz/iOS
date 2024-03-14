@@ -126,7 +126,7 @@ public class DeviceCenterItemViewModel: ObservableObject, Identifiable {
                 maxCharacters: 32
             ),
             alertTitles: [
-                .invalidCharacters: Strings.Localizable.General.Error.charactersNotAllowed(String.Constants.invalidFileFolderNameCharacters),
+                .invalidCharacters: Strings.Localizable.General.Error.charactersNotAllowed(String.Constants.invalidFileFolderNameCharactersToDisplay),
                 .duplicatedName: Strings.Localizable.Device.Center.Rename.Device.Duplicated.name,
                 .nameTooLong: Strings.Localizable.Device.Center.Rename.Device.Invalid.Long.name,
                 .none: Strings.Localizable.rename

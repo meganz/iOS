@@ -181,7 +181,7 @@ extension CloudDriveViewController {
         guard containsInvalidChars else {
             return Strings.Localizable.newFolder
         }
-        return Strings.Localizable.General.Error.charactersNotAllowed(String.Constants.invalidFileFolderNameCharacters)
+        return Strings.Localizable.General.Error.charactersNotAllowed(String.Constants.invalidFileFolderNameCharactersToDisplay)
     }
     
     @objc func showNodeActionsForNode(_ node: MEGANode, isIncoming: Bool, isBackupNode: Bool, sender: Any) {

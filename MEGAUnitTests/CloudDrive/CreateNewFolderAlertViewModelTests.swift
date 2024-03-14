@@ -72,7 +72,7 @@ final class CreateNewFolderAlertViewModelTests: XCTestCase {
             withText: "NewFolder/",
             expectedResult: .init(
                 title: Strings.Localizable.General.Error.charactersNotAllowed(
-                    String.Constants.invalidFileFolderNameCharacters
+                    String.Constants.invalidFileFolderNameCharactersToDisplay
                 ),
                 textFieldTextColor: TokenColors.Text.error,
                 isActionEnabled: false

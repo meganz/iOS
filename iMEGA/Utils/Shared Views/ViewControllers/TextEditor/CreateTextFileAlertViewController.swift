@@ -46,6 +46,6 @@ final class CreateTextFileAlertViewController: UIAlertController {
         guard containsInvalidChars else {
             return Strings.Localizable.newTextFile
         }
-        return Strings.Localizable.General.Error.charactersNotAllowed(String.Constants.invalidFileFolderNameCharacters)
+        return Strings.Localizable.General.Error.charactersNotAllowed(String.Constants.invalidFileFolderNameCharactersToDisplay)
     }
 }

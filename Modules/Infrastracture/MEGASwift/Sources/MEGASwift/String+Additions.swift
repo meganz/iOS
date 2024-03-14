@@ -3,7 +3,11 @@ import Foundation
 public extension String {
     
     enum Constants {
-       public static let invalidFileFolderNameCharacters = "” * / : < > ? \\ |"
+        /// Inform the user about invalid characters used in file or folder names in the UI.
+        public static let invalidFileFolderNameCharactersToDisplay = "” * / : < > ? \\ |"
+
+        /// Pattern for checking the validity of entered file or folder names.
+        public static let invalidFileFolderNameCharactersToMatch = "|*/:<>?\"\\"
     }
     
     var base64Encoded: String? {
@@ -40,7 +44,7 @@ public extension String {
     }
 
     var containsInvalidFileFolderNameCharacters: Bool {
-        rangeOfCharacter(from: CharacterSet(charactersIn: String.Constants.invalidFileFolderNameCharacters)) != nil
+        rangeOfCharacter(from: CharacterSet(charactersIn: String.Constants.invalidFileFolderNameCharactersToMatch)) != nil
     }
 
     func append(pathComponent: String) -> String {
