@@ -1,6 +1,8 @@
 import MEGASdk
 import MEGASDKRepo
 
+public typealias MockSdkRequestResult = Result<MEGARequest, MEGAError>
+
 public final class MockSdk: MEGASdk {
     private var nodes: [MEGANode]
     private let rubbishNodes: [MEGANode]
@@ -39,7 +41,7 @@ public final class MockSdk: MEGASdk {
     private let file: String?
     private let copiedNodeHandles: [MEGAHandle: MEGAHandle]
     private let abTestValues: [String: Int]
-    private let requestResult: Result<MEGARequest, MEGAError>
+    private let requestResult: MockSdkRequestResult
     private let _accountCreationDate: Date?
     private let _enabledNotificationIdList: MEGAIntegerList?
     private var _lastReadNotificationId: Int32
@@ -111,7 +113,7 @@ public final class MockSdk: MEGASdk {
                 file: String? = nil,
                 copiedNodeHandles: [MEGAHandle: MEGAHandle] = [:],
                 abTestValues: [String: Int] = [:],
-                requestResult: Result<MEGARequest, MEGAError> = .failure(MockError.failingError),
+                requestResult: MockSdkRequestResult = .failure(MockError.failingError),
                 accountCreationDate: Date? = nil,
                 enabledNotificationIdList: MEGAIntegerList? = nil,
                 lastReadNotificationId: Int32 = 0

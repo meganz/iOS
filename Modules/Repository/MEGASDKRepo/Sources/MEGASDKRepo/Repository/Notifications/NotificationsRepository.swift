@@ -20,7 +20,8 @@ public struct NotificationsRepository: NotificationsRepositoryProtocol {
                 case .success(let request):
                     completion(.success(NotificationIDEntity(request.number)))
                 case .failure(let error):
-                    completion(.failure(error))
+                    let notifError: NotificationErrorEntity = error.type == .apiENoent ? .noLastReadNotification : .generic
+                    completion(.failure(notifError))
                 }
             })
         }
@@ -54,6 +55,26 @@ public struct NotificationsRepository: NotificationsRepositoryProtocol {
                     completion(.failure(error))
                 }
             })
+        }
+    }
+    
+    public func unreadNotificationIDs() async -> [NotificationIDEntity] {
+        let enabledNotificationIDs = fetchEnabledNotifications()
+        do {
+            let lastReadNotificationID = try await fetchLastReadNotification()
+            
+            guard lastReadNotificationID != 0 else {
+                // Value `0` is an invalid ID. Receiving `0` means that the previously set last read value was cleared.
+                return enabledNotificationIDs
+            }
+            
+            return enabledNotificationIDs.filter {$0 > lastReadNotificationID}
+        } catch {
+            guard let error = error as? NotificationErrorEntity, error == .noLastReadNotification else {
+                return []
+            }
+            // No last read notification yet. Return all enabled notif IDs.
+            return enabledNotificationIDs
         }
     }
 }

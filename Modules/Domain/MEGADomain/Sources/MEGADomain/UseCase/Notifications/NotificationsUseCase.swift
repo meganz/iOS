@@ -3,6 +3,7 @@ public protocol NotificationsUseCaseProtocol {
     func updateLastReadNotification(notificationId: NotificationIDEntity) async throws
     func fetchEnabledNotifications() -> [NotificationIDEntity]
     func fetchNotifications() async throws -> [NotificationEntity]
+    func unreadNotificationIDs() async -> [NotificationIDEntity]
 }
 
 public struct NotificationsUseCase<T: NotificationsRepositoryProtocol>: NotificationsUseCaseProtocol {
@@ -26,5 +27,9 @@ public struct NotificationsUseCase<T: NotificationsRepositoryProtocol>: Notifica
     
     public func fetchNotifications() async throws -> [NotificationEntity] {
         try await repository.fetchNotifications()
+    }
+    
+    public func unreadNotificationIDs() async -> [NotificationIDEntity] {
+        await repository.unreadNotificationIDs()
     }
 }

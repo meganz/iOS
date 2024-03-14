@@ -3,16 +3,19 @@ import MEGADomain
 public class MockNotificationUseCase: NotificationsUseCaseProtocol {
     private var lastReadNotification: NotificationIDEntity
     private let notifications: [NotificationEntity]
+    private let unreadNotificationIDs: [NotificationIDEntity]
     public var enabledNotifications: [NotificationIDEntity]
     
     public init(
         lastReadNotification: NotificationIDEntity = 1,
         enabledNotifications: [NotificationIDEntity] = [],
-        notifications: [NotificationEntity] = []
+        notifications: [NotificationEntity] = [],
+        unreadNotificationIDs: [NotificationIDEntity] = []
     ) {
         self.lastReadNotification = lastReadNotification
         self.enabledNotifications = enabledNotifications
         self.notifications = notifications
+        self.unreadNotificationIDs = unreadNotificationIDs
     }
 
     public func fetchLastReadNotification() async throws -> NotificationIDEntity {
@@ -29,5 +32,9 @@ public class MockNotificationUseCase: NotificationsUseCaseProtocol {
     
     public func fetchNotifications() async throws -> [NotificationEntity] {
         notifications
+    }
+    
+    public func unreadNotificationIDs() async -> [NotificationIDEntity] {
+        unreadNotificationIDs
     }
 }

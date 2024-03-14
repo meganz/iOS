@@ -51,4 +51,14 @@ final class NotificationsUseCaseTests: XCTestCase {
         
         await XCTAsyncAssertThrowsError(try await sut.fetchNotifications())
     }
+    
+    func testUnreadNotificationIDs_shouldReturnCorrectUnreadIDs() async {
+        let expectedUnreadIDs: [NotificationIDEntity] = [1, 2, 3]
+        let mockRepo = MockNotificationsRepository(unreadNotificationIDs: expectedUnreadIDs)
+        let sut = NotificationsUseCase(repository: mockRepo)
+        
+        let unreadIDs = await sut.unreadNotificationIDs()
+        
+        XCTAssertEqual(unreadIDs, expectedUnreadIDs)
+    }
 }
