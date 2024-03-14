@@ -85,12 +85,6 @@
 
 #pragma mark - Private
 
-- (void)updateAppearance {
-    self.shareLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
-    
-    self.permissionsLabel.textColor = [UIColor mnz_tertiaryGrayForTraitCollection:self.traitCollection];
-}
-
 - (NSString *)userNameForUser:(MEGAUser *)user {
     NSString *userName;
     if (user.handle == MEGASdk.currentUserHandle.unsignedLongLongValue) {
@@ -119,8 +113,7 @@
     if (newUser) {
         self.contactNewView.hidden = NO;
         self.contactNewLabel.text = LocalizedString(@"New", @"Label shown inside an unseen notification");
-        self.contactNewLabel.textColor = UIColor.mnz_whiteFFFFFF;
-        self.contactNewLabelView.backgroundColor = [UIColor mnz_turquoiseForTraitCollection:self.traitCollection];
+        [self updateNewViewAppearance];
     } else {
         self.contactNewView.hidden = YES;
     }

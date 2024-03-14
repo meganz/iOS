@@ -1,4 +1,5 @@
 import Contacts
+import MEGADesignToken
 import MEGADomain
 import MEGAFoundation
 import MEGAL10n
@@ -93,6 +94,42 @@ extension ContactsViewController {
     func extractEmails(_ contacts: [CNContact]) -> [NSString] {
         let emails = contacts.extractEmails()
         return emails.map { NSString(string: $0) }
+    }
+    
+    @objc
+    func updateAppearance() {
+        if UIColor.isDesignTokenEnabled() {
+            let bgColor = TokenColors.Background.surface1
+            
+            view.backgroundColor = bgColor
+            tableView.backgroundColor = bgColor
+            
+            tableView.separatorColor = TokenColors.Border.strong
+            tableView.sectionIndexColor = TokenColors.Text.primary
+        } else {
+            let bgColor = contactsMode == .default ? UIColor.mnz_backgroundGrouped(for: traitCollection) : UIColor.mnz_secondaryBackground(for: traitCollection)
+            
+            view.backgroundColor = bgColor
+            tableView.backgroundColor = bgColor
+            
+            tableView.separatorColor = UIColor.mnz_separator(for: traitCollection)
+            tableView.sectionIndexColor = UIColor.mnz_turquoise(for: traitCollection)
+        }
+        
+        switch contactsMode {
+        case .chatAddParticipant, .inviteParticipants, .scheduleMeeting:
+            itemListView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
+        case .chatNamingGroup:
+            [chatNamingGroupTableViewHeader, enterGroupNameView, encryptedKeyRotationView, getChatLinkView, allowNonHostToAddParticipantsView].forEach {
+                $0.backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
+            }
+            
+            [enterGroupNameBottomSeparatorView, encryptedKeyRotationTopSeparatorView, encryptedKeyRotationBottomSeparatorView, getChatLinkTopSeparatorView, getChatLinkBottomSeparatorView, allowNonHostToAddParticipantsTopSeparatorView, allowNonHostToAddParticipantsBottomSeparatorView].forEach {
+                $0.backgroundColor = UIColor.mnz_separator(for: traitCollection)
+            }
+        default:
+            break
+        }
     }
 }
 

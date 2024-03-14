@@ -36,5 +36,6 @@
 #import "ItemListViewController.h"
 #import "ItemCollectionViewCell.h"
 #import "ItemListModel.h"
+#import "ContactTableViewCell.h"
 
 #endif /* MEGAShare_Bridging_Header_h */
