@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGAL10n
 import MEGAPresentation
 import SwiftUI
@@ -89,11 +90,18 @@ class AppearanceTableViewController: UITableViewController {
 
         minimalIconLabel.text = Strings.Localizable.minimal
         
-        defaultIconLabel.textColor = MEGAAppColor.White._FFFFFF.uiColor
-        dayIconLabel.textColor = MEGAAppColor.White._FFFFFF.uiColor
-        nightIconLabel.textColor = MEGAAppColor.White._FFFFFF.uiColor
-        minimalIconLabel.textColor = MEGAAppColor.White._FFFFFF.uiColor
-        
+        if UIColor.isDesignTokenEnabled() {
+            defaultIconLabel.textColor = TokenColors.Text.onColor
+            dayIconLabel.textColor = TokenColors.Text.onColor
+            nightIconLabel.textColor = TokenColors.Text.onColor
+            minimalIconLabel.textColor = TokenColors.Text.onColor
+        } else {
+            defaultIconLabel.textColor = UIColor.whiteFFFFFF
+            dayIconLabel.textColor = UIColor.whiteFFFFFF
+            nightIconLabel.textColor = UIColor.whiteFFFFFF
+            minimalIconLabel.textColor = UIColor.whiteFFFFFF
+        }
+
         mediaDiscoveryViewSwitch.isOn = viewModel.autoMediaDiscoverySetting
         mediaDiscoverySubfolderSwitch.isOn = viewModel.mediaDiscoveryShouldIncludeSubfolderSetting
         
@@ -155,12 +163,20 @@ class AppearanceTableViewController: UITableViewController {
     }
     
     private func markIcon(in view: UIView) {
-        view.layer.borderColor = MEGAAppColor.White._FFFFFF.uiColor.cgColor
+        if UIColor.isDesignTokenEnabled() {
+            view.layer.borderColor = TokenColors.Border.strongSelected.cgColor
+        } else {
+            view.layer.borderColor = UIColor.whiteFFFFFF.cgColor
+        }
     }
     
     private func changeLabelWeight(to label: UILabel) {
         label.font = UIFont.preferredFont(style: .caption1, weight: .bold)
-        label.textColor = MEGAAppColor.White._FFFFFF.uiColor
+        if UIColor.isDesignTokenEnabled() {
+            label.textColor = TokenColors.Text.onColor
+        } else {
+            label.textColor = UIColor.whiteFFFFFF
+        }
     }
     
     private func resetPreviousIcon(with name: String?) {
