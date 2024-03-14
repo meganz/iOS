@@ -5,8 +5,31 @@ class NodeInfoDetailTableViewCell: UITableViewCell {
     @IBOutlet weak var keyLabel: MEGALabel!
     @IBOutlet weak var valueLabel: MEGALabel!
     
-    func configure(forNode node: MEGANode, rowType: DetailsSectionRow, folderInfo: MEGAFolderInfo?) {
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        updateAppearance()
+        registerForTraitChanges()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        guard #unavailable(iOS 17.0), traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) else { return }
+        updateAppearance()
+    }
+    
+    private func registerForTraitChanges() {
+        guard #available(iOS 17.0, *) else { return }
+        registerForTraitChanges([UITraitUserInterfaceStyle.self]) { (self: Self, _) in
+            self.updateAppearance()
+        }
+    }
+    
+    private func updateAppearance() {
         backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
+    }
+    
+    func configure(forNode node: MEGANode, rowType: DetailsSectionRow, folderInfo: MEGAFolderInfo?) {
         valueLabel.textColor = UIColor.label
         
         switch rowType {

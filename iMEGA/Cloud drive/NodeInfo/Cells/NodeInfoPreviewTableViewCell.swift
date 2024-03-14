@@ -13,8 +13,31 @@ class NodeInfoPreviewTableViewCell: UITableViewCell {
     @IBOutlet weak var playIconImage: UIImageView!
     @IBOutlet weak var linkedView: UIView!
 
-    func configure(forNode node: MEGANode, isNodeInRubbish: Bool, folderInfo: MEGAFolderInfo?, isUndecryptedFolder: Bool) {
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        updateAppearance()
+        registerForTraitChanges()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        guard #unavailable(iOS 17.0), traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) else { return }
+        updateAppearance()
+    }
+    
+    private func registerForTraitChanges() {
+        guard #available(iOS 17.0, *) else { return }
+        registerForTraitChanges([UITraitUserInterfaceStyle.self]) { (self: Self, _) in
+            self.updateAppearance()
+        }
+    }
+    
+    private func updateAppearance() {
         backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
+    }
+    
+    func configure(forNode node: MEGANode, isNodeInRubbish: Bool, folderInfo: MEGAFolderInfo?, isUndecryptedFolder: Bool) {
         nameLabel.text = isUndecryptedFolder ? Strings.Localizable.SharedItems.Tab.Incoming.undecryptedFolderName : node.name
         linkedView.isHidden = !node.isExported()
         if node.type == .file {

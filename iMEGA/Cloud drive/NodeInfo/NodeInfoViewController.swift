@@ -436,6 +436,7 @@ class NodeInfoViewController: UIViewController {
         )
         cell.host(upgradeCellView, parent: self)
         cell.selectionStyle = .none
+        cell.backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
         return cell
     }
     
@@ -603,7 +604,7 @@ extension NodeInfoViewController: UITableViewDelegate {
             return UIView(frame: .zero)
         }
         
-        header.contentView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
+        header.setPreferredBackgroundColor(.mnz_secondaryBackground(for: traitCollection))
         
         switch cachedSections[section] {
         case .details:
@@ -629,9 +630,8 @@ extension NodeInfoViewController: UITableViewDelegate {
         guard let footer = tableView.dequeueReusableHeaderFooterView(withIdentifier: "GenericHeaderFooterViewID") as? GenericHeaderFooterView else {
             return UIView(frame: .zero)
         }
-        footer.contentView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
+        footer.setPreferredBackgroundColor(.mnz_secondaryBackground(for: traitCollection))
         footer.configure(title: nil, topDistance: 5.0, isTopSeparatorVisible: true, isBottomSeparatorVisible: false)
-        
         return footer
     }
     

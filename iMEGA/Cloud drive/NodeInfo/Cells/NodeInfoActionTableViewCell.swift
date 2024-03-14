@@ -7,9 +7,31 @@ class NodeInfoActionTableViewCell: UITableViewCell {
     @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var separatorView: UIView!
     
-    func configureLinkCell(forNode node: MEGANode) {
-        backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        updateAppearance()
+        registerForTraitChanges()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        guard #unavailable(iOS 17.0), traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) else { return }
+        updateAppearance()
+    }
+    
+    private func registerForTraitChanges() {
+        guard #available(iOS 17.0, *) else { return }
+        registerForTraitChanges([UITraitUserInterfaceStyle.self]) { (self: Self, _) in
+            self.updateAppearance()
+        }
+    }
 
+    private func updateAppearance() {
+        backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
+    }
+    
+    func configureLinkCell(forNode node: MEGANode) {
         iconImageView.image = UIImage.link
         iconImageView.tintColor = UIColor.mnz_primaryGray(for: self.traitCollection)
         if node.isExported() {
@@ -23,8 +45,6 @@ class NodeInfoActionTableViewCell: UITableViewCell {
     }
     
     func configureVersionsCell(forNode node: MEGANode) {
-        backgroundColor = UIColor.mnz_tertiaryBackground(traitCollection)
-
         iconImageView.image = UIImage.versions
         iconImageView.tintColor = UIColor.mnz_primaryGray(for: self.traitCollection)
         titleLabel.text = Strings.Localizable.versions
