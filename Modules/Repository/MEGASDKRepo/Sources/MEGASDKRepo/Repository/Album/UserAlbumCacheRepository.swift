@@ -123,6 +123,18 @@ final public class UserAlbumCacheRepository: UserAlbumRepositoryProtocol {
         return albumElementIds
     }
     
+    public func albumElementId(by id: HandleEntity, elementId: HandleEntity) async -> AlbumPhotoIdEntity? {
+        if let cachedAlbumElementIds = await userAlbumCache.albumElementIds(forAlbumId: id),
+           let cachedAlbumElementId = cachedAlbumElementIds.first(where: { $0.id == elementId }) {
+            return cachedAlbumElementId
+        }
+        guard let albumElementId = await userAlbumRepository.albumElementId(by: id, elementId: elementId) else {
+            return nil
+        }
+        await userAlbumCache.setAlbumElementIds(forAlbumId: id, elementIds: [albumElementId])
+        return albumElementId
+    }
+    
     public func createAlbum(_ name: String?) async throws -> SetEntity {
         try await userAlbumRepository.createAlbum(name)
     }

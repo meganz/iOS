@@ -671,6 +671,44 @@ final class UserAlbumCacheRepositoryTests: XCTestCase {
         await fulfillment(of: [taskFinishedExp], timeout: 0.5)
     }
     
+    func testAlbumElementId_photoIdNotCached_shouldRetrieveAndCacheValue() async {
+        let albumId = HandleEntity(67)
+        let elementId = HandleEntity(877)
+        let expected = AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: elementId, nodeId: 77)
+        
+        let userAlbumRepository = MockUserAlbumRepository(albumElementIds: [albumId: [expected]])
+        let userAlbumCache = MockUserAlbumCache()
+        let sut = makeSUT(userAlbumRepository: userAlbumRepository, userAlbumCache: userAlbumCache)
+        
+        let result = await sut.albumElementId(by: albumId, elementId: elementId)
+        
+        XCTAssertEqual(result, expected)
+        
+        let cachedAlbumElementIds = await userAlbumCache.albumElementIds(forAlbumId: albumId)
+        XCTAssertEqual(cachedAlbumElementIds, [expected])
+    }
+    
+    func testAlbumElementId_photoIdNotCachedAndItemNotFound_shouldReturnNil() async {
+        let sut = makeSUT()
+        
+        let result = await sut.albumElementId(by: 7, elementId: 4)
+        
+        XCTAssertNil(result)
+    }
+    
+    func testAlbumElementId_photoIdCached_shouldReturnCachedValue() async {
+        let albumId = HandleEntity(67)
+        let elementId = HandleEntity(877)
+        let expected = AlbumPhotoIdEntity(albumId: albumId, albumPhotoId: elementId, nodeId: 77)
+        
+        let userAlbumCache = MockUserAlbumCache(albumsElementIds: [albumId: [expected]])
+        let sut = makeSUT(userAlbumCache: userAlbumCache)
+        
+        let result = await sut.albumElementId(by: albumId, elementId: elementId)
+        
+        XCTAssertEqual(result, expected)
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(

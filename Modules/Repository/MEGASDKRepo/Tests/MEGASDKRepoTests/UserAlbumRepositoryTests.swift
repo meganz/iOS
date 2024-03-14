@@ -164,6 +164,34 @@ final class UserAlbumRepositoryTests: XCTestCase {
         XCTAssertEqual(albumPhotoIds, setElements.toAlbumPhotoIdEntities())
     }
     
+    func testAlbumsUpdated_onSetElementsUpdates_shouldReturnAllAlbumSets() async {
+        let expectedResult = makeAlbumSets()
+        let sdk = MockSdk(megaSets: expectedResult)
+        
+        let sut = UserAlbumRepository(sdk: sdk)
+        
+        let taskStartedExp = expectation(description: "Tasks started")
+        let albumsYieldedExp = expectation(description: "Albums was emitted")
+        let taskFinishedExp = expectation(description: "Task successfully finished on cancellation")
+        
+        let task = Task {
+            let sequence = await sut.albumsUpdated()
+            taskStartedExp.fulfill()
+            for await updatedSets in sequence {
+                XCTAssertEqual(updatedSets, expectedResult.toSetEntities())
+                albumsYieldedExp.fulfill()
+            }
+            taskFinishedExp.fulfill()
+        }
+        
+        await fulfillment(of: [taskStartedExp], timeout: 1)
+        let albumSetUpdate = [MockMEGASet(handle: 1, userId: 0, coverId: 1, type: .album)]
+        sut.onSetsUpdate(sdk, sets: albumSetUpdate)
+        await fulfillment(of: [albumsYieldedExp], timeout: 0.5)
+        task.cancel()
+        await fulfillment(of: [taskFinishedExp], timeout: 0.5)
+    }
+    
     // MARK: Private
     
     private func makeAlbumSets() -> [MockMEGASet] {
