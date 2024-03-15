@@ -14,6 +14,7 @@ protocol MainTabBarCallsRouting: AnyObject {
     func showScreenRecordingNotification(started: Bool, username: String)
     func navigateToPrivacyPolice()
     func dismissCallUI()
+    func showCallWillEndAlert(remainingSeconds: Int, isCallUIVisible: Bool, completion: ((Int) -> Void)?)
 }
 
 enum MainTabBarCallsAction: ActionType { }
@@ -35,6 +36,7 @@ enum MainTabBarCallsAction: ActionType { }
     private let chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol
     private var callSessionUseCase: any CallSessionUseCaseProtocol
     private let callKitManager: any CallKitManagerProtocol
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
 
     private var callUpdateSubscription: AnyCancellable?
     private(set) var callWaitingRoomUsersUpdateSubscription: AnyCancellable?
@@ -49,6 +51,9 @@ enum MainTabBarCallsAction: ActionType { }
     
     private(set) var screenRecordingAlertShownForCall: Bool = false
 
+    private var callWillEndTimer: Timer?
+    private var callWillEndCountdown: Int = 10
+    
     init(
         router: some MainTabBarCallsRouting,
         chatUseCase: some ChatUseCaseProtocol,
@@ -56,7 +61,8 @@ enum MainTabBarCallsAction: ActionType { }
         chatRoomUseCase: some ChatRoomUseCaseProtocol,
         chatRoomUserUseCase: some ChatRoomUserUseCaseProtocol,
         callSessionUseCase: some CallSessionUseCaseProtocol,
-        callKitManager: some CallKitManagerProtocol
+        callKitManager: some CallKitManagerProtocol,
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
         self.router = router
         self.chatUseCase = chatUseCase
@@ -65,7 +71,7 @@ enum MainTabBarCallsAction: ActionType { }
         self.chatRoomUserUseCase = chatRoomUserUseCase
         self.callSessionUseCase = callSessionUseCase
         self.callKitManager = callKitManager
-
+        self.featureFlagProvider = featureFlagProvider
         super.init()
         
         onCallUpdateListener()
@@ -160,7 +166,28 @@ enum MainTabBarCallsAction: ActionType { }
     }
     
     private func onCallUpdate(_ call: CallEntity) {
-        guard call.changeType == .status else { return }
+        switch call.changeType {
+        case .status:
+            manageCallStatusChange(for: call)
+        case .callWillEnd:
+            showCallWillEndAlertIfNeeded(call)
+        default:
+            break
+        }
+    }
+    
+    /// If call UI is visible, then this event would be handled there. See MeetingParticipantsLayoutViewModel:manageCallWillEnd().
+    /// If call UI is not visible, the call will end dialog will be presented just for moderators in the visible view.
+    private func showCallWillEndAlertIfNeeded(_ call: CallEntity) {
+        guard featureFlagProvider.isFeatureFlagEnabled(for: .chatMonetization), !isCallUIVisible, let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId), chatRoom.ownPrivilege == .moderator else { return }
+        
+        router.showCallWillEndAlert(
+            remainingSeconds: call.numberValue,
+            isCallUIVisible: isCallUIVisible,
+            completion: nil)
+    }
+    
+    private func manageCallStatusChange(for call: CallEntity) {
         switch call.status {
         case .joining:
             configureCallSessionsListener(forCall: call)

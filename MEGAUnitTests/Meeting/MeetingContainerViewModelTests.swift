@@ -377,6 +377,53 @@ final class MeetingContainerViewModelTests: XCTestCase {
         XCTAssertEqual(callKitManager.muteUnmute_Calls, expectedCalls, line: line)
     }
 
+    func testCallUpdate_callWillEndReceivedUserIsModerator_shouldshowCallWillEndAlert() {
+        
+        let (sut, router) = makeSUT(
+            chatRoom: ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting),
+            callUseCase: MockCallUseCase(call: CallEntity(numberValue: 10))
+        )
+        test(viewModel: sut,
+             action: .showCallWillEndAlert(remainingSeconds: 10, completion: { _ in }),
+             expectedCommands: [])
+        XCTAssertEqual(router.showCallWillEndAlert_calledTimes, 1)
+    }
+    
+    private func makeSUT(
+        chatRoom: ChatRoomEntity = ChatRoomEntity(),
+        callUseCase: some CallUseCaseProtocol = MockCallUseCase(call: CallEntity()),
+        chatRoomUseCase: some ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
+        chatUseCase: some ChatUseCaseProtocol = MockChatUseCase(),
+        scheduledMeetingUseCase: some ScheduledMeetingUseCaseProtocol = MockScheduledMeetingUseCase(),
+        callKitManager: some CallKitManagerProtocol = MockCallKitManager(),
+        accountUseCase: any AccountUseCaseProtocol = MockAccountUseCase(currentUser: UserEntity(handle: 100), isGuest: false, isLoggedIn: true),
+        authUseCase: some AuthUseCaseProtocol = MockAuthUseCase(),
+        noUserJoinedUseCase: some MeetingNoUserJoinedUseCaseProtocol = MockMeetingNoUserJoinedUseCase(),
+        analyticsEventUseCase: some AnalyticsEventUseCaseProtocol =  MockAnalyticsEventUseCase(),
+        megaHandleUseCase: some MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
+        tracker: some AnalyticsTracking = MockTracker()
+    ) -> (MeetingContainerViewModel, MockMeetingContainerRouter) {
+        
+        let router = MockMeetingContainerRouter()
+        return (
+            MeetingContainerViewModel(
+                router: router,
+                chatRoom: chatRoom,
+                callUseCase: callUseCase,
+                chatRoomUseCase: chatRoomUseCase,
+                chatUseCase: chatUseCase,
+                scheduledMeetingUseCase: scheduledMeetingUseCase,
+                callKitManager: callKitManager,
+                accountUseCase: accountUseCase,
+                authUseCase: authUseCase,
+                noUserJoinedUseCase: noUserJoinedUseCase,
+                analyticsEventUseCase: analyticsEventUseCase,
+                megaHandleUseCase: megaHandleUseCase,
+                tracker: tracker
+            ), 
+            router
+        )
+    }
 }
 
 final class MockMeetingContainerRouter: MeetingContainerRouting {
@@ -401,7 +448,8 @@ final class MockMeetingContainerRouter: MeetingContainerRouting {
     var showMutedMessage_calledTimes = 0
     var showProtocolErrorAlert_calledTimes = 0
     var showUsersLimitErrorAlert_calledTimes = 0
-    
+    var showCallWillEndAlert_calledTimes = 0
+
     func showMeetingUI(containerViewModel: MeetingContainerViewModel) {
         showMeetingUI_calledTimes += 1
     }
@@ -485,5 +533,9 @@ final class MockMeetingContainerRouter: MeetingContainerRouting {
     
     func showUsersLimitErrorAlert() {
         showUsersLimitErrorAlert_calledTimes += 1
+    }
+    
+    func showCallWillEndAlert(remainingSeconds: Int, completion: ((Int) -> Void)?) {
+        showCallWillEndAlert_calledTimes += 1
     }
 }
