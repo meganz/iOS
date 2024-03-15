@@ -469,6 +469,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
     
+    if (indexPath.section == NotificationSectionPromos) { return; }
+    
     MEGAUserAlert *userAlert = [self.userAlertsArray objectAtIndex:indexPath.row];
     UINavigationController *navigationController = self.navigationController;
     

@@ -21,7 +21,7 @@ enum NotificationAction: ActionType {
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let notificationsUseCase: any NotificationsUseCaseProtocol
     private(set) var promoList: [NotificationItem] = []
-    
+    private var unreadNotificationIds: [NotificationIDEntity] = []
     var invokeCommand: ((Command) -> Void)?
     
     init(
@@ -49,19 +49,56 @@ enum NotificationAction: ActionType {
         promoList.count
     }
     
-    func fetchPromoList() {
-        Task {
-            do {
-                let userNotifications = try await notificationsUseCase.fetchNotifications()
-                let filteredNotifications = filterEnabledNotifications(from: userNotifications)
-                
-                if filteredNotifications.isNotEmpty {
-                    promoList = filteredNotifications.toNotificationItems()
-                    invokeCommand?(.reloadData)
-                }
-            } catch {
-                debugPrint(error.localizedDescription)
+    // MARK: - Setup
+    private func setupNotifications() {
+        Task { [weak self] in
+            guard let self else { return }
+            
+            unreadNotificationIds = await notificationsUseCase.unreadNotificationIDs()
+            await fetchPromoList()
+        }
+    }
+    
+    private func updateNotificationStates() {
+        Task { [weak self] in
+            guard let self else { return }
+            
+            if doCurrentAndEnabledNotificationsDiffer() {
+                await fetchPromoList()
             }
+            
+            await updateLastReadNotificationId()
+        }
+    }
+    
+    private func fetchPromoList() async {
+        guard isPromoEnabled else {
+            promoList = []
+            invokeCommand?(.reloadData)
+            return
+        }
+        
+        do {
+            let userNotifications = try await notificationsUseCase.fetchNotifications()
+            let filteredNotifications = filterEnabledNotifications(from: userNotifications)
+            guard filteredNotifications.isNotEmpty else { return }
+            
+            promoList = filteredNotifications.toNotificationItems(withUnreadIDs: unreadNotificationIds)
+            
+            invokeCommand?(.reloadData)
+        } catch {
+            MEGALogError("[Notifications] Fetching notifications with error \(error.localizedDescription)")
+        }
+    }
+    
+    private func updateLastReadNotificationId() async {
+        do {
+            let unreadIds = await notificationsUseCase.unreadNotificationIDs()
+            guard unreadIds.isNotEmpty, let highestId = unreadIds.max() else { return }
+            
+            try await notificationsUseCase.updateLastReadNotification(notificationId: highestId)
+        } catch {
+            MEGALogError("[Notifications] Updating last read notification with error \(error.localizedDescription)")
         }
     }
     
@@ -88,11 +125,9 @@ enum NotificationAction: ActionType {
     func dispatch(_ action: NotificationAction) {
         switch action {
         case .onViewDidLoad:
-            fetchPromoList()
+            setupNotifications()
         case .onViewDidAppear:
-            if doCurrentAndEnabledNotificationsDiffer() {
-                fetchPromoList()
-            }
+            updateNotificationStates()
         }
     }
 }

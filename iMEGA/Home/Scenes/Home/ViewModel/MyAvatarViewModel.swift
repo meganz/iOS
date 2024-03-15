@@ -1,4 +1,5 @@
 import Foundation
+import MEGAPresentation
 
 protocol MyAvatarViewModelInputs {
 
@@ -37,8 +38,12 @@ final class MyAvatarViewModel: NSObject {
     var avatarImage: Result<UIImage, any Error>?
 
     var userAlertCount: Int = 0
+    
+    var unreadNotificationCount: Int = 0
 
     var incomingContactRequestCount: Int = 0
+    
+    var refreshUnreadNotificationCountTask: Task<Void, Never>?
 
     // MARK: - Dependencies
 
@@ -47,15 +52,24 @@ final class MyAvatarViewModel: NSObject {
     private let megaAvatarUseCase: any MEGAAvatarUseCaseProtocol
 
     private let megaAvatarGeneratingUseCase: any MEGAAvatarGeneratingUseCaseProtocol
-
+    
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
+         
     init(
         megaNotificationUseCase: some MEGANotificationUseCaseProtocol,
         megaAvatarUseCase: some MEGAAvatarUseCaseProtocol,
-        megaAvatarGeneratingUseCase: some MEGAAvatarGeneratingUseCaseProtocol
+        megaAvatarGeneratingUseCase: some MEGAAvatarGeneratingUseCaseProtocol,
+        featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
         self.megaNotificationUseCase = megaNotificationUseCase
         self.megaAvatarUseCase = megaAvatarUseCase
         self.megaAvatarGeneratingUseCase = megaAvatarGeneratingUseCase
+        self.featureFlagProvider = featureFlagProvider
+    }
+    
+    deinit {
+        refreshUnreadNotificationCountTask?.cancel()
+        refreshUnreadNotificationCountTask = nil
     }
 }
 
@@ -66,11 +80,15 @@ extension MyAvatarViewModel: MyAvatarViewModelInputs {
     func viewIsReady() {
         observeUserAlertsAndContactRequests()
         
+        refreshUnreadNotificationCount()
+        
         refreshAvatarWhenCached()
     }
 
     func viewIsAppearing() {
         loadAvatarImage()
+        
+        refreshUnreadNotificationCount()
     }
 }
 
@@ -161,6 +179,24 @@ extension MyAvatarViewModel {
         userAlertCount = megaNotificationUseCase.relevantAndNotSeenAlerts()?.count ?? 0
         notifyUpdate?(outputs)
     }
+    
+    private func refreshUnreadNotificationCount() {
+        guard isNotificationCenterEnabled() else { return }
+        
+        refreshUnreadNotificationCountTask = Task {
+            let newUnreadCount = await megaNotificationUseCase.unreadNotificationIDs().count
+            
+            guard newUnreadCount != unreadNotificationCount else { return }
+            unreadNotificationCount = newUnreadCount
+            
+            await MainActor.run { notifyUpdate?(outputs) }
+        }
+    }
+    
+    // MARK: Feature flags
+    func isNotificationCenterEnabled() -> Bool {
+        featureFlagProvider.isFeatureFlagEnabled(for: .notificationCenter)
+    }
 }
 
 // MARK: - MyAvatarViewModelType
@@ -188,7 +224,7 @@ extension MyAvatarViewModel: MyAvatarViewModelType {
     }
 
     private var notificationNumber: String {
-        let totalNumber = userAlertCount + incomingContactRequestCount
+        let totalNumber = userAlertCount + incomingContactRequestCount + unreadNotificationCount
         if totalNumber > 99 {
             return "99+"
         }

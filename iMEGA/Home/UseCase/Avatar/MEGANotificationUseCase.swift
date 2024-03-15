@@ -10,14 +10,22 @@ protocol MEGANotificationUseCaseProtocol {
     func observeUserAlerts(with callback: @escaping () -> Void)
 
     func observeUserContactRequests(with callback: @escaping () -> Void)
+    
+    func unreadNotificationIDs() async -> [NotificationIDEntity]
 }
 
 final class MEGANotificationUseCase: MEGANotificationUseCaseProtocol {
 
     private let userAlertsClient: SDKUserAlertsClient
     
-    init(userAlertsClient: SDKUserAlertsClient) {
+    private let notificationsUseCase: any NotificationsUseCaseProtocol
+    
+    init(
+        userAlertsClient: SDKUserAlertsClient,
+        notificationsUseCase: some NotificationsUseCaseProtocol
+    ) {
         self.userAlertsClient = userAlertsClient
+        self.notificationsUseCase = notificationsUseCase
     }
     
     func relevantAndNotSeenAlerts() -> [UserAlertEntity]? {
@@ -36,6 +44,10 @@ final class MEGANotificationUseCase: MEGANotificationUseCaseProtocol {
 
     func observeUserContactRequests(with callback: @escaping () -> Void) {
         userAlertsClient.incomingContactRequestUpdate(callback)
+    }
+    
+    func unreadNotificationIDs() async -> [NotificationIDEntity] {
+        await notificationsUseCase.unreadNotificationIDs()
     }
 
     deinit {

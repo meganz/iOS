@@ -17,7 +17,7 @@ final class NotificationsViewModelTests: XCTestCase {
         XCTAssertEqual(sut.numberOfSections, 1)
     }
     
-    func testNotificationsSectionNumberOfRows_notificationsEnabled_matchNotificationsCount() {
+    func testNotificationsSectionNumberOfRows_notificationsEnabled_matchNotificationsCount() async {
         let (sut, _) = makeSUT(
             featureFlagList: [.notificationCenter: true],
             notifications: [
@@ -28,13 +28,13 @@ final class NotificationsViewModelTests: XCTestCase {
             enabledNotifications: [1, 2]
         )
         
-        testFetchNotificationList(
+        await testFetchNotificationList(
             sut: sut,
             expectedPromoListCount: 2
         )
     }
     
-    func testFetchNotificationList_whenEnabledNotificationsChange_notificationsShouldBeUpdated() {
+    func testFetchNotificationList_whenEnabledNotificationsChange_notificationsShouldBeUpdated() async {
         let (sut, notificationsUseCase) = makeSUT(
             featureFlagList: [.notificationCenter: true],
             notifications: [
@@ -45,20 +45,20 @@ final class NotificationsViewModelTests: XCTestCase {
             enabledNotifications: [1, 2]
         )
 
-        testFetchNotificationList(
+        await testFetchNotificationList(
             sut: sut,
             expectedPromoListCount: 2
         )
         
         notificationsUseCase.enabledNotifications = [1, 2, 3]
         
-        testFetchNotificationList(
+        await testFetchNotificationList(
             sut: sut,
             expectedPromoListCount: 3
         )
     }
     
-    func testDoCurrentAndEnabledNotificationsDiffer_currentAndEnabledMatch_shouldReturnFalse() {
+    func testDoCurrentAndEnabledNotificationsDiffer_currentAndEnabledMatch_shouldReturnFalse() async {
         let (sut, _) = makeSUT(
             featureFlagList: [.notificationCenter: true],
             notifications: [
@@ -68,7 +68,7 @@ final class NotificationsViewModelTests: XCTestCase {
             enabledNotifications: [1, 2]
         )
         
-        testFetchNotificationList(
+        await testFetchNotificationList(
             sut: sut,
             expectedPromoListCount: 2
         )
@@ -76,7 +76,7 @@ final class NotificationsViewModelTests: XCTestCase {
         XCTAssertFalse(sut.doCurrentAndEnabledNotificationsDiffer())
     }
 
-    func testDoCurrentAndEnabledNotificationsDiffer_whenBothHaveDifferentNotifications_shouldReturnTrue() {
+    func testDoCurrentAndEnabledNotificationsDiffer_whenBothHaveDifferentNotifications_shouldReturnTrue() async {
         let (sut, notificationsUseCase) = makeSUT(
             featureFlagList: [.notificationCenter: true],
             notifications: [
@@ -86,7 +86,7 @@ final class NotificationsViewModelTests: XCTestCase {
             enabledNotifications: [1, 2]
         )
 
-        testFetchNotificationList(
+        await testFetchNotificationList(
             sut: sut,
             expectedPromoListCount: 2
         )
@@ -96,19 +96,44 @@ final class NotificationsViewModelTests: XCTestCase {
         XCTAssertTrue(sut.doCurrentAndEnabledNotificationsDiffer())
     }
     
+    func testUpdateLastReadNotificationId_shouldUpdateLastReadId() async throws {
+        let expectedLastReadId = NotificationIDEntity(3)
+        let (sut, notificationsUseCase) = makeSUT(
+            featureFlagList: [.notificationCenter: true],
+            notifications: [
+                NotificationEntity(id: NotificationIDEntity(1)),
+                NotificationEntity(id: NotificationIDEntity(2)),
+                NotificationEntity(id: expectedLastReadId)
+            ],
+            enabledNotifications: [1, 2, expectedLastReadId],
+            unreadNotificationIds: [1, 2, expectedLastReadId]
+        )
+        
+        let exp = expectation(description: "Notifications are updated when feature is enabled and notifications are available.")
+        sut.invokeCommand = { _ in
+            exp.fulfill()
+        }
+        sut.dispatch(.onViewDidAppear)
+        await fulfillment(of: [exp], timeout: 1.0)
+        let lastReadNotifId = try await notificationsUseCase.fetchLastReadNotification()
+        
+        XCTAssertEqual(lastReadNotifId, expectedLastReadId)
+    }
+    
     private func testFetchNotificationList(
         sut: NotificationsViewModel,
         expectedPromoListCount: Int,
         file: StaticString = #filePath,
         line: UInt = #line
-    ) {
-        sut.fetchPromoList()
+    ) async {
+        let exp = expectation(description: "Notifications are updated when feature is enabled and notifications are available.")
+        sut.invokeCommand = { commandReceived in
+            exp.fulfill()
+            XCTAssertEqual(commandReceived, .reloadData, file: file, line: line)
+        }
         
-        waitForCommand(
-            on: sut,
-            expectedCommand: .reloadData,
-            description: "Notifications are updated when feature is enabled and notifications are available."
-        )
+        sut.dispatch(.onViewDidLoad)
+        await fulfillment(of: [exp], timeout: 1.0)
         
         XCTAssertEqual(sut.promoList.count, expectedPromoListCount, file: file, line: line)
     }
@@ -135,6 +160,7 @@ final class NotificationsViewModelTests: XCTestCase {
         lastReadNotification: NotificationIDEntity = NotificationIDEntity(0),
         notifications: [NotificationEntity] = [],
         enabledNotifications: [NotificationIDEntity] = [],
+        unreadNotificationIds: [NotificationIDEntity] = [],
         file: StaticString = #filePath,
         line: UInt = #line
     ) -> (NotificationsViewModel, MockNotificationUseCase) {
@@ -142,7 +168,8 @@ final class NotificationsViewModelTests: XCTestCase {
         let mockNotificationsUseCase = MockNotificationUseCase(
             lastReadNotification: lastReadNotification,
             enabledNotifications: enabledNotifications,
-            notifications: notifications
+            notifications: notifications,
+            unreadNotificationIDs: unreadNotificationIds
         )
         
         let sut = NotificationsViewModel(

@@ -31,7 +31,8 @@ import MEGASDKRepo
     func setup() {
         myAvatarViewModel = MyAvatarViewModel(
             megaNotificationUseCase: MEGANotificationUseCase(
-                userAlertsClient: .live
+                userAlertsClient: .live,
+                notificationsUseCase: NotificationsUseCase(repository: NotificationsRepository.newRepo)
             ),
             megaAvatarUseCase: MEGAavatarUseCase(
                 megaAvatarClient: .live,

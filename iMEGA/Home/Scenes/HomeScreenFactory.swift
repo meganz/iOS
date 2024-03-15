@@ -46,7 +46,8 @@ final class HomeScreenFactory: NSObject {
         
         let myAvatarViewModel = MyAvatarViewModel(
             megaNotificationUseCase: MEGANotificationUseCase(
-                userAlertsClient: .live
+                userAlertsClient: .live,
+                notificationsUseCase: NotificationsUseCase(repository: NotificationsRepository.newRepo)
             ),
             megaAvatarUseCase: MEGAavatarUseCase(
                 megaAvatarClient: .live,
