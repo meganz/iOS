@@ -2074,6 +2074,7 @@
 		BF15894C2436EB8D007AF9EC /* MessageTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF15894B2436EB8D007AF9EC /* MessageTextView.swift */; };
 		BF1CEA3427FA737200C1A2E5 /* GKContactImage in Frameworks */ = {isa = PBXBuildFile; productRef = BF1CEA3327FA737200C1A2E5 /* GKContactImage */; };
 		BF1CEA3E27FA757800C1A2E5 /* GKContactImage in Frameworks */ = {isa = PBXBuildFile; productRef = BF1CEA3D27FA757800C1A2E5 /* GKContactImage */; };
+		BF20F2412B9873370020C390 /* CloudDriveViewController+SemanticColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF20F2402B9873370020C390 /* CloudDriveViewController+SemanticColors.swift */; };
 		BF22BFAD268AC39100460DB3 /* TransferRecordDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF22BFAC268AC39100460DB3 /* TransferRecordDTO.swift */; };
 		BF22BFB1268AC51400460DB3 /* MOUploadTransfer+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF22BFB0268AC51400460DB3 /* MOUploadTransfer+Mapper.swift */; };
 		BF22BFB7268ACFAE00460DB3 /* TransferRecordDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF22BFAC268AC39100460DB3 /* TransferRecordDTO.swift */; };
@@ -2120,6 +2121,7 @@
 		BF5455E92844377600544A53 /* EndCallDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5455E82844377600544A53 /* EndCallDialog.swift */; };
 		BF5C36792491C917004DDA2F /* MEGAUser+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463F624342F7F00FB90B9 /* MEGAUser+Additions.swift */; };
 		BF5D8E152B9AB0FF008F0DDF /* CloudDriveMediaCaptureRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5D8E142B9AB0FF008F0DDF /* CloudDriveMediaCaptureRouter.swift */; };
+		BF5D8E1A2B9B0E9D008F0DDF /* CloudDriveTableViewController+SemanticColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5D8E192B9B0E9D008F0DDF /* CloudDriveTableViewController+SemanticColors.swift */; };
 		BF5E336C2558BE2A0055395E /* ExplorerBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5E336B2558BE2A0055395E /* ExplorerBaseViewController.swift */; };
 		BF5E33762558BE620055395E /* ExplorerToolbarConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5E33752558BE620055395E /* ExplorerToolbarConfigurator.swift */; };
 		BF5E33912558D2890055395E /* FileExplorerGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5E338F2558D2890055395E /* FileExplorerGridCell.swift */; };
@@ -4801,6 +4803,7 @@
 		BF1589232436A27A007AF9EC /* MessageInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInputBar.swift; sourceTree = "<group>"; };
 		BF1589252436A296007AF9EC /* MessageInputBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageInputBar.xib; sourceTree = "<group>"; };
 		BF15894B2436EB8D007AF9EC /* MessageTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTextView.swift; sourceTree = "<group>"; };
+		BF20F2402B9873370020C390 /* CloudDriveViewController+SemanticColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+SemanticColors.swift"; sourceTree = "<group>"; };
 		BF22BFAC268AC39100460DB3 /* TransferRecordDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferRecordDTO.swift; sourceTree = "<group>"; };
 		BF22BFB0268AC51400460DB3 /* MOUploadTransfer+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MOUploadTransfer+Mapper.swift"; sourceTree = "<group>"; };
 		BF22BFC8268D366D00460DB3 /* CallActionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallActionManager.swift; sourceTree = "<group>"; };
@@ -4839,6 +4842,7 @@
 		BF53B77B274351F700B47CA0 /* MeetingAlreadyExistsAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingAlreadyExistsAlert.swift; sourceTree = "<group>"; };
 		BF5455E82844377600544A53 /* EndCallDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndCallDialog.swift; sourceTree = "<group>"; };
 		BF5D8E142B9AB0FF008F0DDF /* CloudDriveMediaCaptureRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveMediaCaptureRouter.swift; sourceTree = "<group>"; };
+		BF5D8E192B9B0E9D008F0DDF /* CloudDriveTableViewController+SemanticColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveTableViewController+SemanticColors.swift"; sourceTree = "<group>"; };
 		BF5E336B2558BE2A0055395E /* ExplorerBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorerBaseViewController.swift; sourceTree = "<group>"; };
 		BF5E33752558BE620055395E /* ExplorerToolbarConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorerToolbarConfigurator.swift; sourceTree = "<group>"; };
 		BF5E338F2558D2890055395E /* FileExplorerGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileExplorerGridCell.swift; sourceTree = "<group>"; };
@@ -6611,6 +6615,7 @@
 				BF11FEE32B6AF70400398A2D /* CloudDriveEmptyViewAssetFactory.swift */,
 				BF5D8E142B9AB0FF008F0DDF /* CloudDriveMediaCaptureRouter.swift */,
 				944034B729394F5E0073FE6F /* CloudDriveTableViewController+Additions.swift */,
+				BF5D8E192B9B0E9D008F0DDF /* CloudDriveTableViewController+SemanticColors.swift */,
 				830B54882178845300BE1E1F /* CloudDriveTableViewController.h */,
 				830B54892178845300BE1E1F /* CloudDriveTableViewController.m */,
 				83BFA3A527CFBCA000BDF997 /* CloudDriveViewController+Additions.swift */,
@@ -6623,6 +6628,7 @@
 				C45F97F2264A79AA0004DCA5 /* CloudDriveViewController+MyAvatar.swift */,
 				83BFA3A927CFBCEC00BDF997 /* CloudDriveViewController+NodeActionViewControllerDelegate.swift */,
 				6D60256528F8999A00FF9767 /* CloudDriveViewController+NodesUpdate.swift */,
+				BF20F2402B9873370020C390 /* CloudDriveViewController+SemanticColors.swift */,
 				251863122AA69108005C77F0 /* CloudDriveViewController+ViewMode.swift */,
 				837A88BD20B42290007B55D1 /* CloudDriveViewController.h */,
 				837A88BE20B42290007B55D1 /* CloudDriveViewController.m */,
@@ -8862,9 +8868,9 @@
 			children = (
 				4182B4ED1BF4ADD400E6FFB8 /* ContactRequestsTableViewCell.h */,
 				4182B4EE1BF4ADD400E6FFB8 /* ContactRequestsTableViewCell.m */,
+				9478CB042B8E6C5E00401B2E /* ContactTableViewCell+Additions.swift */,
 				415226761A692ECC00EC7BB6 /* ContactTableViewCell.h */,
 				415226771A692ECC00EC7BB6 /* ContactTableViewCell.m */,
-				9478CB042B8E6C5E00401B2E /* ContactTableViewCell+Additions.swift */,
 				835223AF205957DD00A47438 /* ItemCollectionViewCell.h */,
 				835223B0205957DD00A47438 /* ItemCollectionViewCell.m */,
 			);
@@ -13998,6 +14004,7 @@
 				94B09E632B84CC87007D6B84 /* CloudDriveNavigationTitleBuilder.swift in Sources */,
 				94B09E5E2B84CC87007D6B84 /* CloudDriveNodeInsertionRouter.swift in Sources */,
 				944034B829394F5E0073FE6F /* CloudDriveTableViewController+Additions.swift in Sources */,
+				BF5D8E1A2B9B0E9D008F0DDF /* CloudDriveTableViewController+SemanticColors.swift in Sources */,
 				830B548A2178845300BE1E1F /* CloudDriveTableViewController.m in Sources */,
 				83BFA3A627CFBCA000BDF997 /* CloudDriveViewController+Additions.swift in Sources */,
 				259603D12AAAC08D00823F81 /* CloudDriveViewController+AudioPlayerPresenterProtocol.swift in Sources */,
@@ -14009,6 +14016,7 @@
 				C45F97F3264A79AA0004DCA5 /* CloudDriveViewController+MyAvatar.swift in Sources */,
 				83BFA3AA27CFBCEC00BDF997 /* CloudDriveViewController+NodeActionViewControllerDelegate.swift in Sources */,
 				6D60256628F8999A00FF9767 /* CloudDriveViewController+NodesUpdate.swift in Sources */,
+				BF20F2412B9873370020C390 /* CloudDriveViewController+SemanticColors.swift in Sources */,
 				251863132AA69108005C77F0 /* CloudDriveViewController+ViewMode.swift in Sources */,
 				837A88BF20B42290007B55D1 /* CloudDriveViewController.m in Sources */,
 				94F4157C2B2086A300F1BBFD /* CloudDriveViewControllerFactory.swift in Sources */,
@@ -14041,6 +14049,7 @@
 				94282D4828A3B3F000F794BA /* ContactsViewController+Backups.swift in Sources */,
 				415226911A692ECC00EC7BB6 /* ContactsViewController.m in Sources */,
 				94CBB2C12A8A4DBA00C62F32 /* ContactsViewModel.swift in Sources */,
+				9478CB052B8E6C5E00401B2E /* ContactTableViewCell+Additions.swift in Sources */,
 				415226921A692ECC00EC7BB6 /* ContactTableViewCell.m in Sources */,
 				943E4AFF28D1C09800903A78 /* ContextMenuDataModel.swift in Sources */,
 				94B09E5C2B84CC87007D6B84 /* ContextMenuManager+ActionHandlersArray.swift in Sources */,
@@ -14854,7 +14863,6 @@
 				B6F853442794C97300028D51 /* PhotoSelectionAdapter.swift in Sources */,
 				122B956E287CC7AA00860FE1 /* PhotosFilterOptions.swift in Sources */,
 				12397E2C2820C75900A30CCC /* PhotosPageViewController.swift in Sources */,
-				9478CB052B8E6C5E00401B2E /* ContactTableViewCell+Additions.swift in Sources */,
 				B5CD176427F58236000CF282 /* PhotosViewController+Additions.swift in Sources */,
 				B567EF8A27EAF7640014B26C /* PhotosViewController+Banner.swift in Sources */,
 				32303CF428657BA1005DF060 /* PhotosViewController+ContextMenu.swift in Sources */,
@@ -15444,6 +15452,7 @@
 				77892E9D20E5012C0020A533 /* ChatRoomCell.m in Sources */,
 				5BE689B82419189000462134 /* CloudAppearancePreference+CoreDataClass.swift in Sources */,
 				5BE689B62419188D00462134 /* CloudAppearancePreference+CoreDataProperties.swift in Sources */,
+				9478CB072B8E70EA00401B2E /* ContactTableViewCell+Additions.swift in Sources */,
 				77892E9E20E501DC0020A533 /* ContactTableViewCell.m in Sources */,
 				B6F8CE17262823240074CBBF /* CoreDataErrorHandler.m in Sources */,
 				B53A57CE2B5E8B4E00B18519 /* CustomModalAlertViewController+Additions.swift in Sources */,
@@ -15543,7 +15552,6 @@
 				8335C641282E7ABB00509479 /* NameCollisionView.swift in Sources */,
 				8335C63E282E7A8400509479 /* NameCollisionViewModel.swift in Sources */,
 				943092F52914376A0092B99A /* NodeActionsRepository.swift in Sources */,
-				9478CB072B8E70EA00401B2E /* ContactTableViewCell+Additions.swift in Sources */,
 				94C85E6F28B9405F00007A38 /* NodeAssetsManager.swift in Sources */,
 				B55C1A8A298260DB006A0205 /* NodeTableViewCell+Additions.swift in Sources */,
 				5BAC7CAC2677BF9800F8C305 /* NodeTableViewCell.m in Sources */,

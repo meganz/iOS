@@ -2,7 +2,10 @@ import MEGADesignToken
 import MEGAL10n
 
 extension NodeTableViewCell {
-    
+    @objc var takenDownTextColor: UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Text.error : .mnz_red(for: traitCollection)
+    }
+
     @objc func setTitleAndFolderName(for recentActionBucket: MEGARecentActionBucket,
                                      withNodes nodes: [MEGANode]) {
   
@@ -38,7 +41,22 @@ extension NodeTableViewCell {
         favouriteImageView?.accessibilityLabel = Strings.Localizable.favourite
         linkImageView?.accessibilityLabel = Strings.Localizable.shared
     }
-    
+
+    @objc func configureIconsImageColor() {
+        guard UIColor.isDesignTokenEnabled() else { return }
+        
+        configureIconImageColor(for: favouriteImageView)
+        configureIconImageColor(for: linkImageView)
+        configureIconImageColor(for: versionedImageView)
+        configureIconImageColor(for: downloadedImageView)
+    }
+
+    private func configureIconImageColor(for imageView: UIImageView?) {
+        guard let imageView else { return }
+        imageView.image = imageView.image?.withRenderingMode(.alwaysTemplate)
+        imageView.tintColor = TokenColors.Icon.secondary
+    }
+
     @objc func setCellBackgroundColor(with traitCollection: UITraitCollection) {
         var bgColor: UIColor = .black
         

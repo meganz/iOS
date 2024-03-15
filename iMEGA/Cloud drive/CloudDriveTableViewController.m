@@ -59,7 +59,7 @@
 #pragma mark - Private
 
 - (void)updateAppearance {
-    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    self.tableView.separatorColor = self.tableViewSeparatorColor;
 }
 
 - (void)registerNibWithName:(NSString *)nibName andReuseIdentifier:(NSString *)reuseIdentifier {
@@ -84,9 +84,11 @@
     bucketHeaderView.uploadOrVersionImageView.image = self.cloudDrive.recentActionBucket.isUpdate ? [UIImage imageNamed:@"versioned"] : [UIImage imageNamed:@"recentUpload"];
     bucketHeaderView.dateLabel.text = dateString.uppercaseString;
     
-    bucketHeaderView.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
-    bucketHeaderView.parentFolderNameLabel.textColor = bucketHeaderView.dateLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
-    
+    bucketHeaderView.backgroundColor = [self bucketHeaderViewBackgroundColor];
+    bucketHeaderView.parentFolderNameLabel.textColor
+    = bucketHeaderView.dateLabel.textColor
+    = self.bucketHeaderViewTextColor;
+
     return bucketHeaderView;
 }
 
