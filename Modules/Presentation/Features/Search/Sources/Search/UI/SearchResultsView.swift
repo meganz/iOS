@@ -20,13 +20,12 @@ public struct SearchResultsView: View {
                     placeholderRow: placeholderRowView
                 )
             )
-            Spacer()
+            .frame(
+                maxWidth: .infinity,
+                maxHeight: .infinity,
+                alignment: .top
+            )
         }
-        .frame(
-            maxWidth: .infinity,
-            maxHeight: .infinity,
-            alignment: .top
-        )
         .task {
             await viewModel.task()
         }
