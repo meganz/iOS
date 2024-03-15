@@ -86,7 +86,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
     [self setUpInvokeCommands];
     [self assignViewModeStore];
     
-    self.view.backgroundColor = UIColor.systemBackgroundColor;
+    self.view.backgroundColor = self.pageBackgroundColor;
 
     self.definesPresentationContext = YES;
 
@@ -548,7 +548,7 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
         UIAlertAction *rightButtonAction = newFolderAlertController.actions.lastObject;
         BOOL containsInvalidChars = textField.text.mnz_containsInvalidChars;
         newFolderAlertController.title = [self newFolderNameAlertTitleWithInvalidChars:containsInvalidChars];
-        textField.textColor = containsInvalidChars ? UIColor.systemRedColor : UIColor.labelColor;
+        textField.textColor = containsInvalidChars ? self.invalidTextFieldColor : self.validTextFieldColor;
         rightButtonAction.enabled = (!textField.text.mnz_isEmpty && !containsInvalidChars);
     }
 }
@@ -821,8 +821,8 @@ static const NSUInteger kMinDaysToEncourageToUpgrade = 3;
             [self.toolbar setAlpha:0.0];
             [self.tabBarController.view addSubview:self.toolbar];
             self.toolbar.translatesAutoresizingMaskIntoConstraints = NO;
-            [self.toolbar setBackgroundColor:[UIColor mnz_mainBarsForTraitCollection:self.traitCollection]];
-            
+            [self.toolbar setBackgroundColor:self.toolBarBackgroundColor];
+
             NSLayoutAnchor *bottomAnchor = tabBar.safeAreaLayoutGuide.bottomAnchor;
             
             [NSLayoutConstraint activateConstraints:@[[self.toolbar.topAnchor constraintEqualToAnchor:tabBar.topAnchor constant:0],

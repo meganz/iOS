@@ -32,6 +32,7 @@
     
     self.cancelButtonTrailingConstraint.constant =  ([[UIDevice currentDevice] iPadDevice] || [[UIDevice currentDevice] iPhonePlus]) ? 10 : 6;
     [self configureMoreButtonUI];
+    [self configureIconsImageColor];
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
@@ -114,7 +115,7 @@
     
     if (node.isTakenDown) {
         self.nameLabel.attributedText = [node attributedTakenDownName];
-        self.nameLabel.textColor = [UIColor mnz_redForTraitCollection:(self.traitCollection)];
+        self.nameLabel.textColor = self.takenDownTextColor;
     } else {
         self.nameLabel.text = node.name;
         self.nameLabel.textColor = [UIColor isDesignTokenEnabled] ? [UIColor cellTitleColorFor: self.traitCollection] :
@@ -238,6 +239,8 @@
     
     self.timeLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
     self.subtitleLabel.textColor = [UIColor mnz_subtitlesForTraitCollection:self.traitCollection];
+
+    [self configureIconsImageColor];
 }
 
 - (void)updateInfo {
