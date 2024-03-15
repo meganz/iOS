@@ -7,12 +7,23 @@ class MEGANotificationUseCaseTests: XCTestCase {
 
     func testLoadNotification() throws {
 
-        let notificationUseCase = MEGANotificationUseCase(userAlertsClient: .foundAlerts)
+        let notificationUseCase = MEGANotificationUseCase(userAlertsClient: .foundAlerts, notificationsUseCase: MockNotificationUseCase())
         let userAlerts = try XCTUnwrap(notificationUseCase.relevantAndNotSeenAlerts())
         XCTAssertEqual(userAlerts.count, 3)
 
         let contactRequests = notificationUseCase.incomingContactRequest()
         XCTAssertEqual(contactRequests.count, 2)
+    }
+    
+    func testUnreadNotificationIDs_shouldReturnUnreadIDs() async {
+        let expectedUnreadIDs = [NotificationIDEntity(1), NotificationIDEntity(2), NotificationIDEntity(3)]
+        let sut = MEGANotificationUseCase(
+            userAlertsClient: .foundAlerts,
+            notificationsUseCase: MockNotificationUseCase(unreadNotificationIDs: expectedUnreadIDs)
+        )
+        
+        let unreadIDs = await sut.unreadNotificationIDs()
+        XCTAssertEqual(unreadIDs, expectedUnreadIDs)
     }
 }
 

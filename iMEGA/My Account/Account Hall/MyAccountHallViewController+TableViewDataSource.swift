@@ -65,11 +65,11 @@ extension MyAccountHallViewController: UITableViewDataSource {
         var pendingText = ""
         var promoText: String?
         
-        let unseenUserAlerts = viewModel.relevantUnseenUserAlertsCount
+        let unreadCount = Int(viewModel.relevantUnseenUserAlertsCount) + viewModel.unreadNotificationsCount
         
-        if existsPendingView && unseenUserAlerts != 0 {
+        if existsPendingView && unreadCount != 0 {
             isPendingViewVisible = true
-            pendingText = String(describing: unseenUserAlerts)
+            pendingText = String(describing: unreadCount)
         }
         
         if existsPromoView && viewModel.arePromosAvailable {

@@ -35,6 +35,7 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
 
     var invokeCommand: ((Command) -> Void)?
     var incomingContactRequestsCount = 0
+    var unreadNotificationsCount = 0
 
     private(set) var planList: [AccountPlanEntity] = []
     private var featureFlagProvider: any FeatureFlagProviderProtocol
@@ -180,6 +181,10 @@ final class MyAccountHallViewModel: ViewModelType, ObservableObject {
             currentValue = relevantUnseenUserAlertsCount
         }
         
+        if isNotificationCenterEnabled() {
+            unreadNotificationsCount = await notificationsUseCase.unreadNotificationIDs().count
+        }
+
         await reloadNotificationCounts()
     }
     

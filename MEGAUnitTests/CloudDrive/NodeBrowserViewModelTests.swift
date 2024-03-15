@@ -15,6 +15,8 @@ struct MockMEGANotificationUseCaseProtocol: MEGANotificationUseCaseProtocol {
     func observeUserAlerts(with callback: @escaping () -> Void) { }
     
     func observeUserContactRequests(with callback: @escaping () -> Void) { }
+    
+    func unreadNotificationIDs() async -> [NotificationIDEntity] { [] }
 }
 
 struct MockMEGAAvatarUseCaseProtocol: MEGAAvatarUseCaseProtocol {
