@@ -32,6 +32,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     private var poorConnectionNotificationView: CallNotificationView?
     private var waitingForOthersNotificationView: CallNotificationView?
     private var callEndTimerNotificationView: CallNotificationView?
+    private var callWillEndTimerNotificationView: CallNotificationView?
 
     // MARK: - Internal properties
     private let viewModel: MeetingParticipantsLayoutViewModel
@@ -256,6 +257,12 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
         case .hideRecording(let hidden):
             titleView.hideRecordingIndicator(hidden)
             recordingImageView.isHidden = statusBarHidden ? hidden : true
+        case .showCallWillEnd(let remainingTime):
+            showCallWillEndNotification(remainingTime: remainingTime)
+        case .updateCallWillEnd(let remainingTime):
+            updateCallWillEndNotification(remainingTime: remainingTime)
+        case .hideCallWillEnd:
+            removeCallWillEndNotificationView()
         }
     }
     
@@ -320,9 +327,13 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     }
     
     private func showNotification(message: String, backgroundColor: UIColor, textColor: UIColor, completion: (() -> Void)? = nil) {
+        callWillEndTimerNotificationView?.isHidden = true
         let notification = CallNotificationView.instanceFromNib
         view.addSubview(notification)
-        notification.show(message: message, backgroundColor: backgroundColor, textColor: textColor, autoFadeOut: true, completion: completion)
+        notification.show(message: message, backgroundColor: backgroundColor, textColor: textColor, autoFadeOut: true) { [weak self] in
+            completion?()
+            self?.callWillEndTimerNotificationView?.isHidden = false
+        }
     }
     
     private func updateNumberOfPageControl(for participantsCount: Int) {
@@ -428,6 +439,25 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
                           textColor: Constants.notificationMessageWhiteTextColor,
                           autoFadeOut: false)
         poorConnectionNotificationView = notification
+    }
+    
+    private func showCallWillEndNotification(remainingTime: String) {
+        let notification = CallNotificationView.instanceFromNib
+        view.addSubview(notification)
+        notification.show(message: Strings.Localizable.Calls.FreePlanLimitWarning.DurationLimitCountdown.title(remainingTime),
+                          backgroundColor: Constants.notificationMessageWhiteBackgroundColor,
+                          textColor: Constants.notificationMessageBlackTextColor,
+                          autoFadeOut: false)
+        callWillEndTimerNotificationView = notification
+    }
+    
+    private func updateCallWillEndNotification(remainingTime: String) {
+        callWillEndTimerNotificationView?.updateMessage(string: Strings.Localizable.Calls.FreePlanLimitWarning.DurationLimitCountdown.title(remainingTime))
+    }
+    
+    private func removeCallWillEndNotificationView() {
+        callWillEndTimerNotificationView?.removeFromSuperview()
+        callWillEndTimerNotificationView = nil
     }
     
     private func removePoorConnectionNotification() {

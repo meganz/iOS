@@ -150,4 +150,8 @@ final class MainTabBarCallsRouter: MainTabBarCallsRouting {
         guard let meetingContainerViewController = baseViewController.presentedViewController as? MeetingContainerViewController else { return }
         meetingContainerViewController.leaveCallFromScreenRecordingAlert()
     }
+    
+    func showCallWillEndAlert(remainingSeconds: Int, isCallUIVisible: Bool, completion: ((Int) -> Void)?) {
+        CallWillEndAlertRouter(baseViewController: baseViewController, remainingSeconds: remainingSeconds, isCallUIVisible: isCallUIVisible, dismissCompletion: completion).start()
+    }
 }

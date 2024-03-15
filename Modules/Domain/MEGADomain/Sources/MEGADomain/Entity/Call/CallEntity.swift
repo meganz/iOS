@@ -50,6 +50,7 @@ public struct CallEntity: Sendable {
         case waitingRoomUsersDeny
         case waitingRoomPushedFromCall
         case speakRequested
+        case callWillEnd
     }
     
     public enum ConfigurationType: Sendable {
@@ -80,6 +81,8 @@ public struct CallEntity: Sendable {
     public let hasLocalAudio: Bool
     public let hasLocalVideo: Bool
     public let termCodeType: TermCodeType?
+    public let numberValue: Int
+    public let callDurationLimit: Int
     public let isRinging: Bool
     public let callCompositionChange: CompositionChangeType?
     public let numberOfParticipants: Int
@@ -92,7 +95,7 @@ public struct CallEntity: Sendable {
     public let waitingRoomHandleList: [HandleEntity]
     public let uuid: UUID
     
-    public init(status: CallStatusType?, chatId: HandleEntity, callId: HandleEntity, changeType: ChangeType?, duration: Int64, initialTimestamp: Int64, finalTimestamp: Int64, hasLocalAudio: Bool, hasLocalVideo: Bool, termCodeType: TermCodeType?, isRinging: Bool, callCompositionChange: CompositionChangeType?, numberOfParticipants: Int, isOnHold: Bool, sessionClientIds: [HandleEntity], clientSessions: [ChatSessionEntity], participants: [HandleEntity], waitingRoomStatus: WaitingRoomStatus, waitingRoom: WaitingRoomEntity?, waitingRoomHandleList: [HandleEntity], uuid: UUID) {
+    public init(status: CallStatusType?, chatId: HandleEntity, callId: HandleEntity, changeType: ChangeType?, duration: Int64, initialTimestamp: Int64, finalTimestamp: Int64, hasLocalAudio: Bool, hasLocalVideo: Bool, termCodeType: TermCodeType?, numberValue: Int, callDurationLimit: Int, isRinging: Bool, callCompositionChange: CompositionChangeType?, numberOfParticipants: Int, isOnHold: Bool, sessionClientIds: [HandleEntity], clientSessions: [ChatSessionEntity], participants: [HandleEntity], waitingRoomStatus: WaitingRoomStatus, waitingRoom: WaitingRoomEntity?, waitingRoomHandleList: [HandleEntity], uuid: UUID) {
         self.status = status
         self.chatId = chatId
         self.callId = callId
@@ -103,6 +106,8 @@ public struct CallEntity: Sendable {
         self.hasLocalAudio = hasLocalAudio
         self.hasLocalVideo = hasLocalVideo
         self.termCodeType = termCodeType
+        self.numberValue = numberValue
+        self.callDurationLimit = callDurationLimit
         self.isRinging = isRinging
         self.callCompositionChange = callCompositionChange
         self.numberOfParticipants = numberOfParticipants

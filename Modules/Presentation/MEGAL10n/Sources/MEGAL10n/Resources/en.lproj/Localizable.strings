@@ -3990,4 +3990,11 @@
 "calls.freePlanLimitWarning.usersLimitAlert.button"="OK, got it";
 * Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
 "meetings.waitingRoom.warning.limit100Participants"="As a free user, you can only add up to 100 participants to this call. Need more? [A]Upgrade now[/A]";
-
+/* Calls: Free plan limit warning alert message for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitAlert.message"="Need more time? Pro plans offer unlimited calls.";
+/* Calls: Free plan limit warning alert upgrade button for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitAlert.upgrade"="Upgrade";
+/* Calls: Free plan limit warning alert not now button for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitAlert.notNow"="Not now";
+/* Calls: Text for countdown in call UI for free plan limit warning for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitCountdown.title"="This free call will end in %@";

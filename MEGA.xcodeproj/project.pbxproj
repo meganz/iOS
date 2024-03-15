@@ -883,6 +883,7 @@
 		8330A99728882E4A003E80DB /* CallsSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8330A99628882E4A003E80DB /* CallsSettingsView.swift */; };
 		8330A99A28882E78003E80DB /* CallsSettingsSoundNotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8330A99928882E78003E80DB /* CallsSettingsSoundNotificationsView.swift */; };
 		8330A99F2888479B003E80DB /* CallsSettingsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8330A99E2888479B003E80DB /* CallsSettingsViewModelTests.swift */; };
+		8331D8672BA32E5D0071BAD0 /* CallWillEndAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838116262BA32631001A2937 /* CallWillEndAlertViewModel.swift */; };
 		83337CAB21009494000F40A7 /* ItemListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 83337CAA21009494000F40A7 /* ItemListModel.m */; };
 		83337CAC2100B33D000F40A7 /* ItemListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 83337CAA21009494000F40A7 /* ItemListModel.m */; };
 		8333E51D24DC13FA00BB5A9D /* NodeInfoHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8333E51C24DC13FA00BB5A9D /* NodeInfoHeaderTableViewCell.swift */; };
@@ -1045,6 +1046,7 @@
 		837EE20F253DBABD0083D927 /* DecryptionKeysViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837EE20C253DBABD0083D927 /* DecryptionKeysViewController.swift */; };
 		837EE210253DBABD0083D927 /* SetLinkPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837EE20D253DBABD0083D927 /* SetLinkPasswordViewController.swift */; };
 		837EE211253DBABD0083D927 /* GetLinkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837EE20E253DBABD0083D927 /* GetLinkViewController.swift */; };
+		838116242BA32565001A2937 /* CallWillEndAlertViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838116232BA32565001A2937 /* CallWillEndAlertViewModelTests.swift */; };
 		8383CEF926736B2B00E6A0FF /* EmptyMeetingMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8383CEF826736B2B00E6A0FF /* EmptyMeetingMessageView.swift */; };
 		8383CEFB26736B3600E6A0FF /* EmptyMeetingMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8383CEFA26736B3600E6A0FF /* EmptyMeetingMessageView.xib */; };
 		83850A3F26B2AACD00C62304 /* EnterMeetingLinkControllerWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83850A3C26B2AACC00C62304 /* EnterMeetingLinkControllerWrapper.swift */; };
@@ -1057,6 +1059,7 @@
 		838CCF6C298C006200C83502 /* ScheduledMeetingDateBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838CCF6B298C006200C83502 /* ScheduledMeetingDateBuilder.swift */; };
 		838D90A02B57FE550031CD62 /* SVProgressHUD+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838D909F2B57FE550031CD62 /* SVProgressHUD+Additions.swift */; };
 		838E55412A2E00DF00C3C2F8 /* ScheduleMeetingEndRecurrenceOptionsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838E55402A2E00DF00C3C2F8 /* ScheduleMeetingEndRecurrenceOptionsViewModelTests.swift */; };
+		838F27C72BA1E68700F267BC /* CallWillEndAlertRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838F27C62BA1E68700F267BC /* CallWillEndAlertRouter.swift */; };
 		838F63CE2836778A009B41D6 /* DuplicatedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838F63CD2836778A009B41D6 /* DuplicatedItem.swift */; };
 		838F63CF2836778A009B41D6 /* DuplicatedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838F63CD2836778A009B41D6 /* DuplicatedItem.swift */; };
 		838F7C10243B7300004DEC84 /* MEGAChatRoom+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1574AD2373AB8C0095B283 /* MEGAChatRoom+Additions.swift */; };
@@ -3741,6 +3744,8 @@
 		837EE20C253DBABD0083D927 /* DecryptionKeysViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecryptionKeysViewController.swift; sourceTree = "<group>"; };
 		837EE20D253DBABD0083D927 /* SetLinkPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetLinkPasswordViewController.swift; sourceTree = "<group>"; };
 		837EE20E253DBABD0083D927 /* GetLinkViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetLinkViewController.swift; sourceTree = "<group>"; };
+		838116232BA32565001A2937 /* CallWillEndAlertViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallWillEndAlertViewModelTests.swift; sourceTree = "<group>"; };
+		838116262BA32631001A2937 /* CallWillEndAlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallWillEndAlertViewModel.swift; sourceTree = "<group>"; };
 		8383CEF826736B2B00E6A0FF /* EmptyMeetingMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyMeetingMessageView.swift; sourceTree = "<group>"; };
 		8383CEFA26736B3600E6A0FF /* EmptyMeetingMessageView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyMeetingMessageView.xib; sourceTree = "<group>"; };
 		83850A3C26B2AACC00C62304 /* EnterMeetingLinkControllerWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterMeetingLinkControllerWrapper.swift; sourceTree = "<group>"; };
@@ -3753,6 +3758,7 @@
 		838CCF6B298C006200C83502 /* ScheduledMeetingDateBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduledMeetingDateBuilder.swift; sourceTree = "<group>"; };
 		838D909F2B57FE550031CD62 /* SVProgressHUD+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SVProgressHUD+Additions.swift"; sourceTree = "<group>"; };
 		838E55402A2E00DF00C3C2F8 /* ScheduleMeetingEndRecurrenceOptionsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingEndRecurrenceOptionsViewModelTests.swift; sourceTree = "<group>"; };
+		838F27C62BA1E68700F267BC /* CallWillEndAlertRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallWillEndAlertRouter.swift; sourceTree = "<group>"; };
 		838F63CD2836778A009B41D6 /* DuplicatedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuplicatedItem.swift; sourceTree = "<group>"; };
 		8394CFA4211AE5B700A1634A /* CallType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CallType.h; sourceTree = "<group>"; };
 		8394EB802643DBD10064F741 /* MeetingParticipantsLayoutViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingParticipantsLayoutViewModelTests.swift; sourceTree = "<group>"; };
@@ -7140,6 +7146,7 @@
 				A8BB54191FB9ABBD004FD03B /* Audios */,
 				830A758B2B8CC38300F33B05 /* CallKit */,
 				83E1B16125CBF4BF00C18548 /* CallScene */,
+				838F27C52BA1E66900F267BC /* CallWillEndAllert */,
 				8394CFB2211B1ADF00A1634A /* Cells */,
 				BF06E3E0243191B800B30FB7 /* Chat Messages */,
 				834D867D29197E5800CECEC0 /* ChatRoomAvatar */,
@@ -9161,6 +9168,15 @@
 				838D909F2B57FE550031CD62 /* SVProgressHUD+Additions.swift */,
 			);
 			path = SVProgressHUD;
+			sourceTree = "<group>";
+		};
+		838F27C52BA1E66900F267BC /* CallWillEndAllert */ = {
+			isa = PBXGroup;
+			children = (
+				838F27C62BA1E68700F267BC /* CallWillEndAlertRouter.swift */,
+				838116262BA32631001A2937 /* CallWillEndAlertViewModel.swift */,
+			);
+			path = CallWillEndAllert;
 			sourceTree = "<group>";
 		};
 		838F63CC28367763009B41D6 /* ViewEntity */ = {
@@ -12232,6 +12248,7 @@
 				BF8895AA2630F1AB002A18CA /* Mocks */,
 				BFC060F428A0C2DB00BA2AD7 /* Utils */,
 				992003572B0C09620058FF5F /* CallParticipantCellTests.swift */,
+				838116232BA32565001A2937 /* CallWillEndAlertViewModelTests.swift */,
 				990AC4EC2A4A77EC008E298F /* ChatRoomLinkViewModelTests.swift */,
 				998299052ADCA02E001F9BED /* ChatRoomParticipantsListViewModelTests.swift */,
 				998379302ACA408800A9A439 /* ChatRoomParticipantViewModelTests.swift */,
@@ -13830,6 +13847,8 @@
 				8330A99328882E12003E80DB /* CallsSettingsViewRouter.swift in Sources */,
 				83C49BB02652627500A7764B /* CallTitleView.swift in Sources */,
 				831807B92AA222CB00C91119 /* CallWaitingRoomUsersDialog.swift in Sources */,
+				838F27C72BA1E68700F267BC /* CallWillEndAlertRouter.swift in Sources */,
+				8331D8672BA32E5D0071BAD0 /* CallWillEndAlertViewModel.swift in Sources */,
 				B6D9D7E9216AB0C700D7B08A /* CameraScanner.m in Sources */,
 				B63F3198223BA47400B0C6A6 /* CameraUpload.xcdatamodeld in Sources */,
 				6D90A68F2B61FED200EA7DC2 /* CameraUploadAdvancedOptionsViewController+Additions.swift in Sources */,
@@ -15665,6 +15684,7 @@
 				C46D4A8126557B1200748BD3 /* BannerContainerViewModelTests.swift in Sources */,
 				992003582B0C09620058FF5F /* CallParticipantCellTests.swift in Sources */,
 				8330A99F2888479B003E80DB /* CallsSettingsViewModelTests.swift in Sources */,
+				838116242BA32565001A2937 /* CallWillEndAlertViewModelTests.swift in Sources */,
 				25A58F902B0C635400050882 /* CameraUploadBannerStatusViewStatesToPreviewEntityTests.swift in Sources */,
 				B6CED49622B8AFC3009C4861 /* CameraUploadConcurrentCountCalculatorTests.m in Sources */,
 				25B774C42B141737001F623A /* CameraUploadStatusBannerViewModelTests.swift in Sources */,
@@ -15814,6 +15834,7 @@
 				245385FA2A13C05B00208B31 /* NodeInfoViewControllerTests.swift in Sources */,
 				94E37E5229D1A9B0009E396D /* NodeRepositoryTests.swift in Sources */,
 				9449938F28BD312D001AE14B /* NodeValidationRepositoryTests.swift in Sources */,
+				9471F6AA2BA069C700BA873B /* NotificationsViewModelTests.swift in Sources */,
 				2F01A4332612E46800C1D752 /* NSURL+Deeplinking.swift in Sources */,
 				C45A2E4A25D2F81800915A83 /* OfflineFileInfoUseCaseTests.swift in Sources */,
 				160711542A558DED00970A19 /* PagerTabViewModelTests.swift in Sources */,
@@ -15907,7 +15928,6 @@
 				94B09E6F2B84D0B6007D6B84 /* UploadAddMenuDelegateHandlerTests.swift in Sources */,
 				B5C3ABAF2A71232B008C3708 /* UsageViewControllerTests.swift in Sources */,
 				9467F576299F9E6600A24D4A /* UserAttributeEntityMappingTests.swift in Sources */,
-				9471F6AA2BA069C700BA873B /* NotificationsViewModelTests.swift in Sources */,
 				3289848A2A288FF20049CD40 /* UserAttributeUseCase+AdditionsTests.swift in Sources */,
 				A894E7A32B8F6396006AC2C5 /* UserAvatarHandlerTests.swift in Sources */,
 				B6AADE8E25183626009A874C /* VerificationCodeViewModelTests.swift in Sources */,

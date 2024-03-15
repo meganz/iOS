@@ -21,6 +21,8 @@ fileprivate extension CallEntity {
             hasLocalAudio: call.hasLocalAudio,
             hasLocalVideo: call.hasLocalVideo,
             termCodeType: call.termCode.toTermCodeTypeEntity(),
+            numberValue: call.numberValue,
+            callDurationLimit: call.callDurationLimit,
             isRinging: call.isRinging,
             callCompositionChange: call.callCompositionChange.toCompositionChangeTypeEntity(),
             numberOfParticipants: call.numParticipants,
@@ -141,6 +143,8 @@ public extension MEGAChatCallChangeType {
             .waitingRoomPushedFromCall
         case .speakRequested:
             .speakRequested
+        case .callWillEnd:
+            .callWillEnd
         @unknown default:
             .noChanges
         }

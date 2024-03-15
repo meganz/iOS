@@ -92,11 +92,17 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             bottomConstraint: CGFloat
         )
         case hideRecording(Bool)
+        case showCallWillEnd(String)
+        case updateCallWillEnd(String)
+        case hideCallWillEnd
     }
     
     private var chatRoom: ChatRoomEntity
     private var call: CallEntity
+    
     private var timer: Timer?
+    private var callWillEndTimer: Timer?
+    private var callWillEndCountDown: Int = 0
     
     private(set) var callParticipants = [CallParticipantEntity]() {
         didSet {
@@ -180,6 +186,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     private var reconnecting1on1Subscription: AnyCancellable?
     
     private(set) var callSessionUpdateSubscription: AnyCancellable?
+    private var callUpdateSubscription: AnyCancellable?
 
     // MARK: - Internal properties
     var invokeCommand: ((Command) -> Void)?
@@ -222,12 +229,22 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
 
         super.init()
         self.$callsSoundNotificationPreference.useCase = preferenceUseCase
+        onCallUpdateListener()
     }
     
     deinit {
         cancelReconnecting1on1Subscription()
         callUseCase.stopListeningForCall()
         avatarRefetchTasks?.forEach { $0.cancel() }
+        callWillEndTimer?.invalidate()
+    }
+    
+    private func onCallUpdateListener() {
+        callUpdateSubscription = callUseCase.onCallUpdate()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] call in
+                self?.onCallUpdate(call)
+            }
     }
     
     private func initTimerIfNeeded(with duration: Int) {
@@ -1040,6 +1057,47 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             invokeCommand?(.updateSpeakerViewFor(participant))
         }
         updateParticipant(participant)
+    }
+    
+    private func onCallUpdate(_ call: CallEntity) {
+        switch call.changeType {
+        case .callWillEnd:
+            if featureFlagProvider.isFeatureFlagEnabled(for: .chatMonetization) {
+                manageCallWillEnd(for: call)
+            }
+        default:
+            break
+        }
+    }
+    
+    /// Call will end alert is shown for moderators and countdown for all participants.
+    /// Both can not be shown at same time, so countdown is presented for moderators when they choose one action in the alert. 
+    /// For non moderators, countdown is showed directly.
+    private func manageCallWillEnd(for call: CallEntity) {
+        if chatRoom.ownPrivilege == .moderator {
+            containerViewModel?.dispatch(.showCallWillEndAlert(remainingSeconds: call.numberValue, completion: { [weak self] remainingSeconds in
+                self?.showCallWillEndNotification(remainingSeconds: remainingSeconds)
+            }))
+        } else {
+            showCallWillEndNotification(remainingSeconds: call.numberValue)
+        }
+    }
+    
+    private func showCallWillEndNotification(remainingSeconds: Int) {
+        callWillEndCountDown = remainingSeconds
+
+        invokeCommand?(.showCallWillEnd(TimeInterval(callWillEndCountDown).timeString))
+        startCallWillEndTimer()
+    }
+    
+    private func startCallWillEndTimer() {
+        callWillEndTimer?.invalidate()
+        callWillEndTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { [weak self] _ in
+            guard let self else { return }
+            callWillEndCountDown -= 1
+            guard callWillEndCountDown >= 0 else { return }
+            invokeCommand?(.updateCallWillEnd(TimeInterval(callWillEndCountDown).timeString))
+        })
     }
 }
 

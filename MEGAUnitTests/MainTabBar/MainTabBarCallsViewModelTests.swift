@@ -1,6 +1,8 @@
 @testable import MEGA
 import MEGADomain
 import MEGADomainMock
+import MEGAPresentation
+import MEGAPresentationMock
 import XCTest
 
 final class MainTabBarCallsViewModelTests: XCTestCase {
@@ -292,6 +294,40 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         }
     }
     
+    func testCallUpdate_callWillEndReceivedUserIsModeratorAndCallUIHidden_shouldshowCallWillEndAlert() {
+        let callUseCase = MockCallUseCase()
+
+        let viewModel = makeMainTabBarCallsViewModel(
+            callUseCase: callUseCase,
+            chatRoomUseCase: MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .moderator)),
+            featureFlag: MockFeatureFlagProvider(list: [.chatMonetization: true])
+        )
+        viewModel.isCallUIVisible = false
+        
+        callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress, changeType: .callWillEnd))
+
+        evaluate {
+            self.router.showCallWillEndAlert_calledTimes == 1
+        }
+    }
+    
+    func testCallUpdate_callWillEndReceivedUserIsNotModeratorAndCallUIHidden_shouldshowCallWillEndAlert() {
+        let callUseCase = MockCallUseCase()
+
+        let viewModel = makeMainTabBarCallsViewModel(
+            callUseCase: callUseCase,
+            chatRoomUseCase: MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .standard)),
+            featureFlag: MockFeatureFlagProvider(list: [.chatMonetization: true])
+        )
+        viewModel.isCallUIVisible = false
+        
+        callUseCase.callUpdateSubject.send(CallEntity(status: .inProgress, changeType: .callWillEnd))
+
+        evaluate {
+            self.router.showCallWillEndAlert_calledTimes == 0
+        }
+    }
+    
     // MARK: - Private methods
     
     private func evaluate(expression: @escaping () -> Bool) {
@@ -306,7 +342,8 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         chatRoomUseCase: some ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
         chatRoomUserUseCase: some ChatRoomUserUseCaseProtocol = MockChatRoomUserUseCase(),
         callSessionUseCase: some CallSessionUseCaseProtocol = MockCallSessionUseCase(),
-        callKitManager: some CallKitManagerProtocol = MockCallKitManager()
+        callKitManager: some CallKitManagerProtocol = MockCallKitManager(),
+        featureFlag: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> MainTabBarCallsViewModel {
         MainTabBarCallsViewModel(
             router: router,
@@ -314,14 +351,14 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
             callUseCase: callUseCase,
             chatRoomUseCase: chatRoomUseCase,
             chatRoomUserUseCase: chatRoomUserUseCase,
-            callSessionUseCase: callSessionUseCase,
-            callKitManager: callKitManager
+            callSessionUseCase: callSessionUseCase, 
+            callKitManager: callKitManager,
+            featureFlagProvider: featureFlag
         )
     }
 }
 
 final class MockMainTabBarCallsRouter: MainTabBarCallsRouting {
-    
     var showOneUserWaitingRoomDialog_calledTimes = 0
     var showSeveralUsersWaitingRoomDialog_calledTimes = 0
     var dismissWaitingRoomDialog_calledTimes = 0
@@ -332,6 +369,7 @@ final class MockMainTabBarCallsRouter: MainTabBarCallsRouting {
     var showScreenRecordingNotification_calledTimes = 0
     var navigateToPrivacyPolice_calledTimes = 0
     var dismissCallUI_calledTimes = 0
+    var showCallWillEndAlert_calledTimes = 0
     
     func showOneUserWaitingRoomDialog(for username: String, chatName: String, isCallUIVisible: Bool, shouldUpdateDialog: Bool, admitAction: @escaping () -> Void, denyAction: @escaping () -> Void) {
         showOneUserWaitingRoomDialog_calledTimes += 1
@@ -371,5 +409,9 @@ final class MockMainTabBarCallsRouter: MainTabBarCallsRouting {
     
     func dismissCallUI() {
         dismissCallUI_calledTimes += 1
+    }
+    
+    func showCallWillEndAlert(remainingSeconds: Int, isCallUIVisible: Bool, completion: ((Int) -> Void)?) {
+        showCallWillEndAlert_calledTimes += 1
     }
 }
