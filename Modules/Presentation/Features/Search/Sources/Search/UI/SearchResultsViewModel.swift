@@ -340,7 +340,6 @@ public class SearchResultsViewModel: ObservableObject {
     }
 
     private func toggleSelected(_ result: SearchResult) {
-        
         if selectedResultIds.contains(result.id) {
             selectedResultIds.remove(result.id)
         } else {
@@ -628,5 +627,18 @@ fileprivate extension SearchConfig.EmptyViewAssets.Action {
 fileprivate extension SearchConfig.EmptyViewAssets.MenuOption {
     var buttonAction: ContentUnavailableViewModel.ButtonAction {
         .init(title: title, image: image, handler: handler)
+    }
+}
+
+public extension SearchResultsViewModel {
+    func toggleSelectAll() {
+        let currentResultsIds = resultsProvider.currentResultIds()
+        if Set(currentResultsIds) == selectedResultIds {
+            selectedResultIds.removeAll()
+        } else {
+            selectedResultIds = Set(currentResultsIds)
+        }
+        
+        bridge.selectionChanged(selectedResultIds)
     }
 }
