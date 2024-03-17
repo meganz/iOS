@@ -20,9 +20,9 @@ final class MonitorPhotosUseCaseTests: XCTestCase {
     func testMonitorPhotos_onPhotoUpdateWithNoFilters_shouldReturnAllPhotosWithThumbnails() async throws {
         let photos = [NodeEntity(name: "test1.jpg", handle: 4, hasThumbnail: true),
                       NodeEntity(name: "test4.mp4", handle: 5, hasThumbnail: false)]
-        let photosUpdatedSequence = SingleItemAsyncSequence(item: photos)
-            .eraseToAnyAsyncSequence()
-        let photosRepository = MockPhotosRepository(photosUpdated: photosUpdatedSequence)
+        let photosRepository = MockPhotosRepository(photosUpdated: makePhotosUpdatedSequenceWithItems(),
+                                                    allPhotosCallOrderResult: [.success([]),
+                                                                               .success(photos)])
         let sut = makeSUT(photosRepository: photosRepository)
         
         var iterator = try await sut.monitorPhotos(filterOptions: []).makeAsyncIterator()
@@ -49,9 +49,10 @@ final class MonitorPhotosUseCaseTests: XCTestCase {
     
     func testMonitorPhotos_onPhotoUpdateWithAllLocations_shouldReturnAllPhotosWithThumbnails() async throws {
         let thumbnailPhoto = NodeEntity(name: "test.jpg", handle: 1, hasThumbnail: true)
-        let photosUpdatedSequence = SingleItemAsyncSequence(item: [thumbnailPhoto])
-            .eraseToAnyAsyncSequence()
-        let photosRepository = MockPhotosRepository(photosUpdated: photosUpdatedSequence)
+        let photosRepository = MockPhotosRepository(photosUpdated: makePhotosUpdatedSequenceWithItems(),
+                                                    allPhotosCallOrderResult: [.success([]),
+                                                                               .success([thumbnailPhoto])])
+                                                          
         let sut = makeSUT(photosRepository: photosRepository)
         
         var iterator = try await sut.monitorPhotos(filterOptions: [.allLocations,
@@ -88,9 +89,9 @@ final class MonitorPhotosUseCaseTests: XCTestCase {
     func testMonitorPhotos_onPhotoUpdateWithCloudDriveAndVideos_shouldReturnOnlyVideosFromCloudDrive() async throws {
         let cameraUploadNode = NodeEntity(handle: 5)
         let thumbnailVideo = NodeEntity(name: "test.mp4", handle: 1, parentHandle: 34, hasThumbnail: true)
-        let photosUpdatedSequence = SingleItemAsyncSequence(item: [thumbnailVideo])
-            .eraseToAnyAsyncSequence()
-        let photosRepository = MockPhotosRepository(photosUpdated: photosUpdatedSequence)
+        let photosRepository = MockPhotosRepository(photosUpdated: makePhotosUpdatedSequenceWithItems(),
+                                                    allPhotosCallOrderResult: [.success([]),
+                                                                               .success([thumbnailVideo])])
         let photoLibraryContainer = PhotoLibraryContainerEntity(
             cameraUploadNode: cameraUploadNode, mediaUploadNode: nil)
         let photoLibraryUseCase = MockPhotoLibraryUseCase(photoLibraryContainer: photoLibraryContainer)
@@ -141,10 +142,9 @@ final class MonitorPhotosUseCaseTests: XCTestCase {
                                            parentHandle: cameraUploadNode.handle, hasThumbnail: true)
         let mediaUploadImage = NodeEntity(name: "test2.png", handle: 87,
                                           parentHandle: mediaUploadNode.handle, hasThumbnail: true)
-        
-        let photosUpdatedSequence = SingleItemAsyncSequence(item: [cameraUploadImage, mediaUploadImage])
-            .eraseToAnyAsyncSequence()
-        let photosRepository = MockPhotosRepository(photosUpdated: photosUpdatedSequence)
+        let photosRepository = MockPhotosRepository(photosUpdated: makePhotosUpdatedSequenceWithItems(),
+                                                    allPhotosCallOrderResult: [.success([]),
+                                                                               .success([cameraUploadImage, mediaUploadImage])])
         let photoLibraryContainer = PhotoLibraryContainerEntity(
             cameraUploadNode: cameraUploadNode, mediaUploadNode: mediaUploadNode)
         let photoLibraryUseCase = MockPhotoLibraryUseCase(photoLibraryContainer: photoLibraryContainer)
@@ -170,5 +170,10 @@ final class MonitorPhotosUseCaseTests: XCTestCase {
     ) -> MonitorPhotosUseCase {
         MonitorPhotosUseCase(photosRepository: photosRepository,
                              photoLibraryUseCase: photoLibraryUseCase)
+    }
+    
+    private func makePhotosUpdatedSequenceWithItems() -> AnyAsyncSequence<[NodeEntity]> {
+        SingleItemAsyncSequence(item: [NodeEntity(name: "test99.jpg", handle: 999, hasThumbnail: true)])
+            .eraseToAnyAsyncSequence()
     }
 }

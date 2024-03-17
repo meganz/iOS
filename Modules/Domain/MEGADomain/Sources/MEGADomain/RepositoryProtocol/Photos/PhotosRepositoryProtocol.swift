@@ -1,8 +1,8 @@
 import MEGASwift
 
 public protocol PhotosRepositoryProtocol: SharedRepositoryProtocol, Sendable {
-    /// Photo nodes that will yield when updates are loaded
-    /// - Returns: AnyAsyncSequence with updated photo nodes
+    /// The async sequence will yield the updated photos once cache is updated.
+    /// - Returns: AnyAsyncSequence with the updated photo nodes including change types
     func photosUpdated() async -> AnyAsyncSequence<[NodeEntity]>
     /// Load photos if local source does not contain it otherwise return local source data
     /// - Returns: Photo Nodes

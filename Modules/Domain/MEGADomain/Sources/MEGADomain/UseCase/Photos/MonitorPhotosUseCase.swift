@@ -38,6 +38,9 @@ public struct MonitorPhotosUseCase: MonitorPhotosUseCaseProtocol {
         
         let monitorAll = await photosRepository
             .photosUpdated()
+            .map { _ in
+                try await photosRepository.allPhotos()
+            }
             .prepend(allPhotos)
         
         guard let predicate else {

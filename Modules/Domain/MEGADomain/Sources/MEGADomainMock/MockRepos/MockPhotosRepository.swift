@@ -7,17 +7,27 @@ public actor MockPhotosRepository: PhotosRepositoryProtocol {
     
     private let photosUpdated: AnyAsyncSequence<[NodeEntity]>
     private let photos: [NodeEntity]
+    private var allPhotosCallOrderResult: [Result<[NodeEntity], Error>]
     
     public init(photosUpdated: AnyAsyncSequence<[NodeEntity]> = EmptyAsyncSequence<[NodeEntity]>().eraseToAnyAsyncSequence(),
-                photos: [NodeEntity] = []) {
+                photos: [NodeEntity] = [],
+                allPhotosCallOrderResult: [Result<[NodeEntity], Error>] = []
+    ) {
+        
         self.photosUpdated = photosUpdated
         self.photos = photos
+        self.allPhotosCallOrderResult = allPhotosCallOrderResult
     }
     
     public func allPhotos() async throws -> [NodeEntity] {
-        photos
+        guard allPhotosCallOrderResult.isNotEmpty else {
+            return photos
+        }
+        return try await withCheckedThrowingContinuation {
+            $0.resume(with: allPhotosCallOrderResult.removeFirst())
+        }
     }
- 
+    
     public func photosUpdated() async -> AnyAsyncSequence<[NodeEntity]> {
         photosUpdated
     }

@@ -77,7 +77,8 @@ final class PhotosRepositoryTests: XCTestCase {
     func testPhotoForHandle_photoSourceContainPhoto_shouldReturnPhoto() async {
         let handle = HandleEntity(5)
         let expectedNode = NodeEntity(handle: handle)
-        let photoLocalSource = MockPhotoLocalSource(photos: [expectedNode])
+        let photoLocalSource = MockPhotoLocalSource(photos: [expectedNode,
+                                                             NodeEntity(handle: 7)])
         let sut = makeSUT(photoLocalSource: photoLocalSource)
         
         let photo = await sut.photo(forHandle: handle)
@@ -91,7 +92,6 @@ final class PhotosRepositoryTests: XCTestCase {
         let fileNode = MockNode(handle: 54, name: "3.pdf")
         let photoNode = MockNode(handle: 76, name: "1.jpg")
         let cachedPhoto = NodeEntity(handle: 4)
-        let expectedPhotos = [photoNode.toNodeEntity(), cachedPhoto]
         let sdk = MockSdk(nodes: [fileNode, photoNode],
                           megaRootNode: MockNode(handle: 1))
         let photoLocalSource = MockPhotoLocalSource(photos: [cachedPhoto])
@@ -99,48 +99,27 @@ final class PhotosRepositoryTests: XCTestCase {
         let sut = makeSUT(sdk: sdk,
                           photoLocalSource: photoLocalSource,
                           nodeUpdatesProvider: nodeUpdatesProvider)
-        [[fileNode.toNodeEntity()], [], [photoNode.toNodeEntity()]].forEach {
-            continuation.yield($0)
-        }
-        continuation.finish()
         
+        let started = expectation(description: "started")
         let iterated = expectation(description: "iterated")
         let finished = expectation(description: "finished")
+        let nodeUpdates = [[fileNode.toNodeEntity()], [], [photoNode.toNodeEntity()]]
         let task = Task {
+            started.fulfill()
             for await updatedPhotos in await sut.photosUpdated() {
-                XCTAssertEqual(Set(updatedPhotos), Set(expectedPhotos))
+                XCTAssertEqual(Set(updatedPhotos), Set([photoNode.toNodeEntity()]))
                 let photoSourcePhotos = await photoLocalSource.photos
-                XCTAssertEqual(Set(photoSourcePhotos), Set(expectedPhotos))
+                XCTAssertEqual(Set(photoSourcePhotos), Set([photoNode.toNodeEntity(), cachedPhoto]))
                 iterated.fulfill()
             }
             finished.fulfill()
         }
-        await fulfillment(of: [iterated], timeout: 0.5)
-        task.cancel()
-        await fulfillment(of: [finished], timeout: 0.5)
-    }
-    
-    func testPhotosUpdate_onUpdatePhotoRetrievalEmpty_shouldNotEmitAnything() async {
-        let (stream, continuation) = AsyncStream
-            .makeStream(of: [NodeEntity].self)
-        let sdk = MockSdk(megaRootNode: MockNode(handle: 1))
-        let nodeUpdatesProvider = MockNodeUpdatesProvider(nodeUpdates: stream.eraseToAnyAsyncSequence())
-        let sut = makeSUT(sdk: sdk,
-                          nodeUpdatesProvider: nodeUpdatesProvider)
-        
-        continuation.yield([NodeEntity(name: "1.jpg", handle: 76)])
-        continuation.finish()
-        
-        let shouldNotIterate = expectation(description: "should not iterate")
-        shouldNotIterate.isInverted = true
-        let finished = expectation(description: "finished")
-        let task = Task {
-            for await _ in await sut.photosUpdated() {
-                shouldNotIterate.fulfill()
-            }
-            finished.fulfill()
+        await fulfillment(of: [started], timeout: 0.5)
+        nodeUpdates.forEach {
+            continuation.yield($0)
         }
-        await fulfillment(of: [shouldNotIterate], timeout: 0.5)
+        continuation.finish()
+        await fulfillment(of: [iterated], timeout: 0.5)
         task.cancel()
         await fulfillment(of: [finished], timeout: 0.5)
     }
@@ -148,24 +127,29 @@ final class PhotosRepositoryTests: XCTestCase {
     func testPhotosUpdate_onMonitorSequenceAgain_shouldReceiveUpdates() async {
         let (stream, continuation) = AsyncStream
             .makeStream(of: [NodeEntity].self)
-        let expectedPhotos = [MockNode(handle: 7)]
+        let expectedPhotos = [MockNode(handle: 7, name: "7.jpg")]
         let sdk = MockSdk(nodes: expectedPhotos,
                           megaRootNode: MockNode(handle: 1))
         let nodeUpdatesProvider = MockNodeUpdatesProvider(nodeUpdates: stream.eraseToAnyAsyncSequence())
         let sut = makeSUT(sdk: sdk,
                           nodeUpdatesProvider: nodeUpdatesProvider)
         
+        let firstStarted = expectation(description: "first task started")
         let firstSequenceFinished = expectation(description: "first task finished")
         let firstTask = Task {
+            firstStarted.fulfill()
             for await _ in await sut.photosUpdated() {}
             firstSequenceFinished.fulfill()
         }
+        await fulfillment(of: [firstStarted], timeout: 0.5)
         firstTask.cancel()
         await fulfillment(of: [firstSequenceFinished], timeout: 0.5)
         
+        let started = expectation(description: "first task started")
         let iterated = expectation(description: "iterated")
         let finished = expectation(description: "finished")
         let secondTask = Task {
+            started.fulfill()
             for await updatedPhotos in await sut.photosUpdated() {
                 XCTAssertEqual(Set(updatedPhotos),
                                Set(expectedPhotos.toNodeEntities()))
@@ -173,7 +157,8 @@ final class PhotosRepositoryTests: XCTestCase {
             }
             finished.fulfill()
         }
-        continuation.yield([NodeEntity(name: "6.jpg", handle: 76)])
+        await fulfillment(of: [started], timeout: 0.5)
+        continuation.yield(expectedPhotos.toNodeEntities())
         continuation.finish()
         
         await fulfillment(of: [iterated], timeout: 0.5)
@@ -181,7 +166,7 @@ final class PhotosRepositoryTests: XCTestCase {
         await fulfillment(of: [finished], timeout: 0.5)
     }
     
-    func testPhotosUpdate_onPhotoMovedToRubbish_shouldNotEmitUpdate() async {
+    func testPhotosUpdate_onPhotoMovedToRubbish_shouldRemoveValueFromCache() async {
         let (stream, continuation) = AsyncStream
             .makeStream(of: [NodeEntity].self)
         let nodeUpdatesProvider = MockNodeUpdatesProvider(nodeUpdates: stream.eraseToAnyAsyncSequence())
@@ -193,18 +178,21 @@ final class PhotosRepositoryTests: XCTestCase {
                           photoLocalSource: photoLocalSource,
                           nodeUpdatesProvider: nodeUpdatesProvider)
         
-        let exp = expectation(description: "should not emit value")
-        exp.isInverted = true
+        let started = expectation(description: "first task started")
+        let iterated = expectation(description: "iterated")
         let task = Task {
-            for await _ in await sut.photosUpdated() {
-                exp.fulfill()
+            started.fulfill()
+            for await updatedPhotos in await sut.photosUpdated() {
+                XCTAssertEqual(Set(updatedPhotos),
+                               Set([photoInRubbish.toNodeEntity()]))
+                iterated.fulfill()
             }
         }
-        
+        await fulfillment(of: [started], timeout: 0.5)
         continuation.yield([photoInRubbish.toNodeEntity()])
         continuation.finish()
         
-        await fulfillment(of: [exp], timeout: 1.0)
+        await fulfillment(of: [iterated], timeout: 1.0)
         task.cancel()
         
         let cachedPhotos = await photoLocalSource.photos
