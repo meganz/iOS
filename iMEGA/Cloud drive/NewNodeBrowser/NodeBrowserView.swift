@@ -1,6 +1,6 @@
 import MEGAL10n
-import Search
 import MEGASwiftUI
+import Search
 import SwiftUI
 
 struct NodeBrowserView: View {
@@ -57,39 +57,6 @@ struct NodeBrowserView: View {
         }
     }
 
-    // Note: Here we temporarily disabled this block of code because we cannot use them due to iOS15 API shortcomings for using if-else inside `.toolbar { }`.
-    // When we finall drop iOS15, we can uncomment these code and use them again
-//    @ToolbarContentBuilder
-//    private var toolbarContent: some ToolbarContent {
-//        toolbarNavigationTitle
-//        toolbarTrailingNonEditingContent
-//    }
-//
-//    @ToolbarContentBuilder
-//    private var toolbarContentWithLeadingAvatar: some ToolbarContent {
-//        toolbarLeadingAvatarImage
-//        toolbarNavigationTitle
-//        toolbarTrailingNonEditingContent
-//    }
-//    @ToolbarContentBuilder
-//    private var toolbarLeadingAvatarImage: some ToolbarContent {
-//        ToolbarItem(placement: .topBarLeading) {
-//            MyAvatarIconView(
-//                viewModel: .init(
-//                    avatarObserver: viewModel.avatarViewModel,
-//                    onAvatarTapped: { viewModel.openUserProfile() }
-//                )
-//            )
-//        }
-//    }
-//    @ToolbarContentBuilder
-//    private var toolbarTrailingNonEditingContent: some ToolbarContent {
-//        ToolbarItemGroup(placement: .topBarTrailing) {
-//            viewModel.contextMenuViewFactory?.makeAddMenuWithButtonView()
-//            viewModel.contextMenuViewFactory?.makeContextMenuWithButtonView()
-//        }
-//    }
-    
     @ViewBuilder
     private var leftToolbarContent: some View {
         switch viewModel.viewState {

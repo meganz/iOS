@@ -156,6 +156,13 @@ final class SearchResultsViewModelTests: XCTestCase {
             return self
         }
         
+        @discardableResult
+        func withSelectedNodes(_ selectedResults: [ResultId], currentResults: [ResultId]) -> Self {
+            sut.selectedResultIds = Set(selectedResults)
+            resultsProvider.currentResultIdsToReturn = currentResults
+            return self
+        }
+        
         var hasResults: Bool {
             !sut.listItems.isEmpty
         }
@@ -394,6 +401,48 @@ final class SearchResultsViewModelTests: XCTestCase {
         let harness = Harness(self)
         harness.sut.scrolled()
         XCTAssertEqual(harness.keyboardResignedCount, 1)
+    }
+    
+    func testSelectAll_whenNoNodesAreSelected_shouldSelectAllNodes() {
+        let currentNodes: [ResultId] = [1, 2, 3, 4]
+        let harness = Harness(self).withSelectedNodes([], currentResults: currentNodes)
+        var selectionChangeResult: Set<ResultId>?
+        harness.bridge.selectionChanged = {
+            selectionChangeResult = $0
+        }
+        harness.sut.toggleSelectAll()
+        
+        XCTAssertEqual(harness.sut.selectedResultIds.sorted(), [1, 2, 3, 4])
+        XCTAssertEqual(selectionChangeResult?.sorted(), [1, 2, 3, 4])
+    }
+    
+    func testSelectAll_whenSomeNodesAreSelected_shouldSelectAllNodes() {
+        let currentNodes: [ResultId] = [1, 2, 3, 4]
+        let harness = Harness(self).withSelectedNodes([1, 2], currentResults: currentNodes)
+        var selectionChangeResult: Set<ResultId>?
+        harness.bridge.selectionChanged = {
+            selectionChangeResult = $0
+        }
+        harness.sut.toggleSelectAll()
+        
+        XCTAssertEqual(harness.sut.selectedResultIds.sorted(), [1, 2, 3, 4])
+        XCTAssertEqual(selectionChangeResult?.sorted(), [1, 2, 3, 4])
+    }
+    
+    func testSelectAll_whenAllNodesAreSelected_shouldDeselectAllNodes() {
+        let currentNodes: [ResultId] = [1, 2, 3, 4]
+        let harness = Harness(self).withSelectedNodes(currentNodes, currentResults: currentNodes)
+        harness.resultsProvider.currentResultIdsToReturn = [1, 2, 3, 4]
+        harness.sut.selectedResultIds = [1, 2, 3, 4]
+        var selectionChangeResult: Set<ResultId>?
+        harness.bridge.selectionChanged = {
+            selectionChangeResult = $0
+        }
+        
+        harness.sut.toggleSelectAll()
+        
+        XCTAssertTrue(harness.sut.selectedResultIds.isEmpty)
+        XCTAssertTrue(selectionChangeResult?.isEmpty == true)
     }
 }
 

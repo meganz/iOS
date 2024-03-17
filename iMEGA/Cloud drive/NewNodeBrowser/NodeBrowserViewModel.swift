@@ -222,7 +222,14 @@ class NodeBrowserViewModel: ObservableObject {
     }
     
     func selectAll() {
-        // Connect select all action as a part of [FM-1464]
+        guard case .editing = viewState else { return }
+        
+        if let mediaDiscoveryViewModel = viewModeAwareMediaDiscoveryViewModel {
+            mediaDiscoveryViewModel.toggleAllSelected()
+        } else {
+            searchResultsViewModel.toggleSelectAll()
+        }
+        refreshTitle()
     }
 
     func stopEditing() {
