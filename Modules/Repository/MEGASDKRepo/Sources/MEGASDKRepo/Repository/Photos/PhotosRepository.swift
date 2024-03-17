@@ -18,10 +18,6 @@ public actor PhotosRepository: PhotosRepositoryProtocol {
     private var monitorNodeUpdatesTask: Task<Void, Error>?
     private let photosUpdateSequences = MulticastAsyncSequence<[NodeEntity]>()
     
-    public func photosUpdated() async -> AnyAsyncSequence<[NodeEntity]> {
-        await photosUpdateSequences.make()
-    }
-    
     public init(sdk: MEGASdk,
                 photoLocalSource: some PhotoLocalSourceProtocol,
                 nodeUpdatesProvider: some NodeUpdatesProviderProtocol) {
@@ -34,6 +30,10 @@ public actor PhotosRepository: PhotosRepositoryProtocol {
     deinit {
         searchAllPhotosTask?.cancel()
         monitorNodeUpdatesTask?.cancel()
+    }
+    
+    public func photosUpdated() async -> AnyAsyncSequence<[NodeEntity]> {
+        await photosUpdateSequences.make()
     }
     
     public func allPhotos() async throws -> [NodeEntity] {
@@ -121,12 +121,8 @@ public actor PhotosRepository: PhotosRepositoryProtocol {
                 let updatedPhotos = nodeUpdates.filter(\.fileExtensionGroup.isVisualMedia)
                 guard updatedPhotos.isNotEmpty else { continue }
                 await updatePhotos(updatedPhotos)
-                
-                guard let allPhotos = try? await allPhotos(),
-                      allPhotos.isNotEmpty else {
-                    continue
-                }
-                await photosUpdateSequences.yield(element: allPhotos)
+    
+                await photosUpdateSequences.yield(element: updatedPhotos)
             }
         }
     }
