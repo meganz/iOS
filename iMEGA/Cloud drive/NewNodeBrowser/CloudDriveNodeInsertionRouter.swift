@@ -51,6 +51,10 @@ struct CloudDriveNodeInsertionRouter: NodeInsertionRouting {
     }
 
     func choosePhotoVideo(for nodeEntity: NodeEntity) {
-        // choose photo or video
+        CloudDrivePhotosPickerRouter(
+            parentNode: nodeEntity,
+            presenter: navigationController,
+            assetUploader: CloudDriveAssetUploader()
+        ).start()
     }
 }
