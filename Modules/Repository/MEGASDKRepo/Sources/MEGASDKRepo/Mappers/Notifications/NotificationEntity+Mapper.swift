@@ -34,10 +34,10 @@ fileprivate extension NotificationEntity {
 fileprivate extension NotificationEntity.CallToAction {
     init?(_ callToAction: [String: String]?) {
         guard let callToAction else { return nil }
-        
+
         self.init(
             text: callToAction["text"] ?? "",
-            link: callToAction["link"] ?? ""
+            link: URL(string: callToAction["link"] ?? "")
         )
     }
 }

@@ -3,6 +3,7 @@ import MEGADomain
 import MEGADomainMock
 import MEGAPresentation
 import MEGAPresentationMock
+import Notifications
 import XCTest
 
 final class NotificationsViewModelTests: XCTestCase {
@@ -119,6 +120,21 @@ final class NotificationsViewModelTests: XCTestCase {
         
         XCTAssertEqual(lastReadNotifId, expectedLastReadId)
     }
+
+    func testDidTapNotification_whenNotificationTapped_presentRedirectionURLLink() {
+        let (sut, _) = makeSUT()
+        let expectedURL = URL(string: "http://test")!
+        let testNotification = NotificationEntity(
+            id: NotificationIDEntity(1),
+            firstCallToAction: NotificationEntity.CallToAction(text: "Test", link: expectedURL)
+        ).toNotificationItem(isSeen: true)
+        
+        test(
+            viewModel: sut,
+            action: NotificationAction.didTapNotification(testNotification),
+            expectedCommands: [.presentURLLink(expectedURL)]
+        )
+    }
     
     private func testFetchNotificationList(
         sut: NotificationsViewModel,
@@ -136,23 +152,6 @@ final class NotificationsViewModelTests: XCTestCase {
         await fulfillment(of: [exp], timeout: 1.0)
         
         XCTAssertEqual(sut.promoList.count, expectedPromoListCount, file: file, line: line)
-    }
-    
-    private func waitForCommand(
-        on sut: NotificationsViewModel,
-        expectedCommand: NotificationsViewModel.Command,
-        description: String,
-        file: StaticString = #filePath,
-        line: UInt = #line
-    ) {
-        let expectation = XCTestExpectation(description: description)
-        
-        sut.invokeCommand = { commandReceived in
-            expectation.fulfill()
-            XCTAssertEqual(commandReceived, expectedCommand, file: file, line: line)
-        }
-        
-        wait(for: [expectation], timeout: 1.0)
     }
     
     private func makeSUT(
