@@ -10,13 +10,10 @@ final class CameraUploadStatusBannerViewModel: ObservableObject {
     @Published private(set) var cameraUploadBannerStatusViewState: CameraUploadBannerStatusViewStates = .uploadCompleted
     @Published var showPhotoPermissionAlert = false
     
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
     private var monitorCameraUploadStatusProvider: MonitorCameraUploadStatusProvider
     
     init(monitorCameraUploadUseCase: some MonitorCameraUploadUseCaseProtocol,
-         devicePermissionHandler: some DevicePermissionsHandling,
-         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
-        self.featureFlagProvider = featureFlagProvider
+         devicePermissionHandler: some DevicePermissionsHandling) {
         self.monitorCameraUploadStatusProvider = MonitorCameraUploadStatusProvider(
             monitorCameraUploadUseCase: monitorCameraUploadUseCase,
             devicePermissionHandler: devicePermissionHandler)
@@ -26,11 +23,6 @@ final class CameraUploadStatusBannerViewModel: ObservableObject {
         
     @MainActor
     func monitorCameraUploadStatus() async throws {
-        
-        guard featureFlagProvider.isFeatureFlagEnabled(for: .timelineCameraUploadStatus) else {
-            return
-        }
-        
         for await status in monitorCameraUploadStatusProvider.monitorCameraUploadBannerStatusSequence() {
             try Task.checkCancellation()
             cameraUploadBannerStatusViewState = status
@@ -39,10 +31,6 @@ final class CameraUploadStatusBannerViewModel: ObservableObject {
     
     @MainActor
     func handleCameraUploadAutoDismissal() async throws {
-        guard featureFlagProvider.isFeatureFlagEnabled(for: .timelineCameraUploadStatus) else {
-            return
-        }
-        
         let asyncPublisher = $cameraUploadStatusShown
             .map { [weak self] isBannerShown -> AnyPublisher<Void, Never> in
                 guard let self, isBannerShown else {

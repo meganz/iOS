@@ -79,9 +79,7 @@
     self.editBarButtonItem = [self makeEditBarButton];
     self.cancelBarButtonItem = [self makeCancelBarButton];
     self.filterBarButtonItem = [self makeFilterActiveBarButton];
-    if (self.viewModel.timelineCameraUploadStatusFeatureEnabled) {
-        self.cameraUploadStatusBarButtonItem = [self makeCameraUploadStatusBarButton];
-    }
+    self.cameraUploadStatusBarButtonItem = [self makeCameraUploadStatusBarButton];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -99,10 +97,6 @@
     
     [self.viewModel loadAllPhotosWithSavedFilters];
     [self refreshMyAvatar];
-    
-    if(!self.viewModel.timelineCameraUploadStatusFeatureEnabled) {
-        [self updateLimitedAccessBannerVisibility];
-    }
     
     [self setupNavigationBarButtons];
 }
@@ -139,11 +133,7 @@
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        if (self.viewModel.timelineCameraUploadStatusFeatureEnabled) {
-            [self handleEmptyStateReload];
-        } else if (self.photosByMonthYearArray.count == 0) {
-            [self.photosCollectionView reloadEmptyDataSet];
-        }
+        [self handleEmptyStateReload];
     } completion:nil];
 }
 
@@ -335,7 +325,7 @@
             break;
     }
     
-    self.stateView.hidden = self.viewModel.timelineCameraUploadStatusFeatureEnabled;
+    self.stateView.hidden = YES;
 
     _currentState = currentState;
 }
@@ -356,11 +346,7 @@
     [self setupNavigationBarButtons];
     dispatch_async(dispatch_get_main_queue(), ^{
         [self objcWrapper_updatePhotoLibrary];
-        if (self.viewModel.timelineCameraUploadStatusFeatureEnabled) {
-            [self handleEmptyStateReload];
-        } else if ([self.viewModel hasNoPhotos]) {
-            [self.photosCollectionView reloadEmptyDataSet];
-        }
+        [self handleEmptyStateReload];
         [self setupNavigationBarButtons];
     });
 }
@@ -394,11 +380,7 @@
     }
     
     [self reloadHeader];
-    if (self.viewModel.timelineCameraUploadStatusFeatureEnabled) {
-        [self handleEmptyStateReload];
-    } else {
-        [self.photosCollectionView reloadEmptyDataSet];
-    }
+    [self handleEmptyStateReload];
 }
 
 #pragma mark - IBAction

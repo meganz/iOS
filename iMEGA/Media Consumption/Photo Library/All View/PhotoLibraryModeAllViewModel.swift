@@ -9,15 +9,11 @@ class PhotoLibraryModeAllViewModel: PhotoLibraryModeViewModel<PhotoDateSection> 
 
     @PreferenceWrapper(key: .isCameraUploadsEnabled, defaultValue: false)
     private var isCameraUploadsEnabled: Bool
-    private let featureFlagProvider: any FeatureFlagProviderProtocol
     private let invalidateCameraUploadEnabledSettingPassthroughSubject = PassthroughSubject<Void, Never>()
     
     init(libraryViewModel: PhotoLibraryContentViewModel,
-         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
-         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
+         preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default) {
         
-        self.featureFlagProvider = featureFlagProvider
-
         super.init(libraryViewModel: libraryViewModel)
         $isCameraUploadsEnabled.useCase = preferenceUseCase
         photoCategoryList = libraryViewModel.library.photoMonthSections
@@ -37,10 +33,7 @@ class PhotoLibraryModeAllViewModel: PhotoLibraryModeViewModel<PhotoDateSection> 
                 invalidateCameraUploadEnabledSettingPassthroughSubject
             )
             .map { [weak self] _ in
-                guard let self else {
-                    return false
-                }
-                return featureFlagProvider.isFeatureFlagEnabled(for: .timelineCameraUploadStatus) && !isCameraUploadsEnabled
+                !(self?.isCameraUploadsEnabled ?? true)
             }
             .removeDuplicates()
             .receive(on: DispatchQueue.main)
