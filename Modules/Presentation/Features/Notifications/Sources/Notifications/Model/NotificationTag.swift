@@ -19,7 +19,7 @@ public enum NotificationTag {
     func bgColor(isDesignTokenEnabled: Bool, isDarkMode: Bool) -> Color {
         switch self {
         case .new, .promo:
-            isDesignTokenEnabled ? TokenColors.Support.success.swiftUI : isDarkMode ? Color(red: 0, green: 0.761, blue: 0.604) : Color(red: 0, green: 0.659, blue: 0.525)
+            isDesignTokenEnabled ? TokenColors.Notifications.notificationSuccess.swiftUI : isDarkMode ? Color(red: 0, green: 0.761, blue: 0.604) : Color(red: 0, green: 0.659, blue: 0.525)
         case .none:
             Color.clear
         }
@@ -28,7 +28,7 @@ public enum NotificationTag {
     func textColor(isDesignTokenEnabled: Bool, isDarkMode: Bool) -> Color {
         switch self {
         case .new, .promo:
-            isDesignTokenEnabled ? TokenColors.Text.onColor.swiftUI : .white
+            isDesignTokenEnabled ? TokenColors.Text.success.swiftUI : .white
         case .none:
             Color.white
         }

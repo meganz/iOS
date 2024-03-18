@@ -97,8 +97,8 @@ extension MyAccountHallTableViewCell {
         }
         
         if promoView != nil {
-            promoView.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Support.success : UIColor.mnz_turquoise(for: traitCollection)
-            promoLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.onColor : UIColor.mnz_whiteFFFFFF()
+            promoView.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Notifications.notificationSuccess : UIColor.mnz_turquoise(for: traitCollection)
+            promoLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.success : UIColor.mnz_whiteFFFFFF()
             promoView.layer.cornerRadius = 4.0
         }
     }
