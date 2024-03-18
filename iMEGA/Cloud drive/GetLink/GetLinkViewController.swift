@@ -1015,7 +1015,7 @@ extension GetLinkViewController: UITableViewDelegate {
             return UIView(frame: .zero)
         }
         
-        header.contentView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
+        header.setPreferredBackgroundColor(.mnz_secondaryBackground(for: traitCollection))
         
         if getLinkViewModel != nil {
             updateHeaderViewForAlbum(forHeader: &header, forSection: section)
@@ -1041,8 +1041,8 @@ extension GetLinkViewController: UITableViewDelegate {
         guard var footer = tableView.dequeueReusableHeaderFooterView(withIdentifier: "GenericHeaderFooterViewID") as? GenericHeaderFooterView else {
             return UIView(frame: .zero)
         }
-        
-        footer.contentView.backgroundColor = UIColor.mnz_secondaryBackground(for: traitCollection)
+
+        footer.setPreferredBackgroundColor(.mnz_secondaryBackground(for: traitCollection))
         
         if getLinkViewModel != nil {
             updateFooterViewForAlbum(forFooter: &footer, forSection: section)
