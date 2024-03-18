@@ -1,7 +1,7 @@
 import Foundation
 import MEGADomain
 
-public struct MockFileSystemRepository: FileSystemRepositoryProtocol {
+public final class MockFileSystemRepository: FileSystemRepositoryProtocol {
     public static let newRepo = MockFileSystemRepository()
     
     private let sizeAvailability: Int64
@@ -11,6 +11,8 @@ public struct MockFileSystemRepository: FileSystemRepositoryProtocol {
     private let containsOriginalsDirectory: Bool
     private let fileSize: UInt64
     private let creationDate: Date
+    
+    public var removeFileURLs = [URL]()
 
     public init(sizeAvailability: Int64 = 0,
                 fileExists: Bool = false,
@@ -48,7 +50,9 @@ public struct MockFileSystemRepository: FileSystemRepositoryProtocol {
         copiedNode
     }
     
-    public func removeFile(at url: URL) { }
+    public func removeFile(at url: URL) {
+        removeFileURLs.append(url)
+    }
     
     public func fileSize(at url: URL) -> UInt64? {
         fileSize
