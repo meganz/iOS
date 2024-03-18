@@ -155,21 +155,23 @@ final class PhotoLibraryModeAllViewModelTests: XCTestCase {
         let libraryViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary())
         let sut = PhotoLibraryModeAllViewModel(
             libraryViewModel: libraryViewModel,
-            preferenceUseCase: mockPreferences,
-            featureFlagProvider: MockFeatureFlagProvider(list: [.timelineCameraUploadStatus: true]))
+            preferenceUseCase: mockPreferences)
         
         // Act
         mockPreferences.dict[.isCameraUploadsEnabled] = true
         sut.invalidateCameraUploadEnabledSetting()
-
-        let results: Bool? = await sut.$showEnableCameraUpload
-            .timeout(.seconds(1), scheduler: DispatchQueue.main)
-            .last()
-            .values
-            .first(where: { _ in true })
+        
+        let resultExpectation = expectation(description: "Expect showEnableCameraUpload to emit correct value")
+        let subscription = sut.$showEnableCameraUpload
+            .first { !$0 }
+            .sink { result in
+                XCTAssertFalse(result)
+                resultExpectation.fulfill()
+            }
         
         // Assert
-        XCTAssertEqual(results, false)
+        await fulfillment(of: [resultExpectation], timeout: 1)
+        subscription.cancel()
     }
     
     func testInvalidateCameraUploadEnabledSetting_whenIsCameraUploadsEnabledHasNotChanged_shouldTriggerShowEnableCameraUploadToEqualTrue() async {
@@ -179,8 +181,7 @@ final class PhotoLibraryModeAllViewModelTests: XCTestCase {
         let libraryViewModel = PhotoLibraryContentViewModel(library: PhotoLibrary())
         let sut = PhotoLibraryModeAllViewModel(
             libraryViewModel: libraryViewModel,
-            preferenceUseCase: mockPreferences,
-            featureFlagProvider: MockFeatureFlagProvider(list: [.timelineCameraUploadStatus: true]))
+            preferenceUseCase: mockPreferences)
         
         // Act
         sut.invalidateCameraUploadEnabledSetting()

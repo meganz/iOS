@@ -230,22 +230,6 @@ final class PhotosViewModelTests: XCTestCase {
     }
     
     @MainActor
-    func testTimelineCameraUploadStatusFeatureEnabled_featureToggleOn_shouldReturnTrue() {
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.timelineCameraUploadStatus: true])
-        let sut = makePhotosViewModel(featureFlagProvider: featureFlagProvider)
-        
-        XCTAssertTrue(sut.timelineCameraUploadStatusFeatureEnabled)
-    }
-    
-    @MainActor
-    func testTimelineCameraUploadStatusFeatureEnabled_featureToggleOff_shouldReturnFalse() {
-        let featureFlagProvider = MockFeatureFlagProvider(list: [.timelineCameraUploadStatus: false])
-        let sut = makePhotosViewModel(featureFlagProvider: featureFlagProvider)
-        
-        XCTAssertFalse(sut.timelineCameraUploadStatusFeatureEnabled)
-    }
-    
-    @MainActor
     func testEmptyScreenTypeToShow_cameraUploadsOn_shouldReturnNoMedia() {
         let sut = makePhotosViewModel(preferenceUseCase: MockPreferenceUseCase(dict: [.isCameraUploadsEnabled: true]))
         
@@ -375,8 +359,7 @@ final class PhotosViewModelTests: XCTestCase {
         sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol = MockSortOrderPreferenceUseCase(sortOrderEntity: .defaultAsc),
         preferenceUseCase: some PreferenceUseCaseProtocol = MockPreferenceUseCase(),
         cameraUploadsSettingsViewRouter: some Routing = MockCameraUploadsSettingsViewRouter(),
-        monitorCameraUploadUseCase: MockMonitorCameraUploadUseCase = MockMonitorCameraUploadUseCase(),
-        featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
+        monitorCameraUploadUseCase: MockMonitorCameraUploadUseCase = MockMonitorCameraUploadUseCase()
     ) -> PhotosViewModel {
         let publisher = PhotoUpdatePublisher(photosViewController: PhotosViewController())
         let usecase = MockPhotoLibraryUseCase(allPhotos: [],
@@ -389,8 +372,7 @@ final class PhotosViewModelTests: XCTestCase {
                                preferenceUseCase: preferenceUseCase,
                                monitorCameraUploadUseCase: monitorCameraUploadUseCase,
                                devicePermissionHandler: MockDevicePermissionHandler(),
-                               cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter,
-                               featureFlagProvider: featureFlagProvider)
+                               cameraUploadsSettingsViewRouter: cameraUploadsSettingsViewRouter)
     }
 }
 

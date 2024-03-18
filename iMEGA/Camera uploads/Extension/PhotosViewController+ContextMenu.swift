@@ -15,7 +15,7 @@ extension PhotosViewController {
             isFilterEnabled: true,
             isSelectHidden: viewModel.isSelectHidden,
             isEmptyState: viewModel.mediaNodes.isEmpty,
-            isFilterActive: viewModel.timelineCameraUploadStatusFeatureEnabled ? viewModel.isFilterActive : false
+            isFilterActive: viewModel.isFilterActive
         )
     }
     
@@ -33,26 +33,9 @@ extension PhotosViewController {
     @objc func makeContextMenuBarButton() -> UIBarButtonItem? {
         guard let config = contextMenuConfiguration(), let menu = contextMenuManager?.contextMenu(with: config) else { return nil }
         
-        var image = UIImage(resource: .moreNavigationBar)
-        
-        if UIColor.isDesignTokenEnabled() {
-            image = image.withRenderingMode(.alwaysTemplate)
-        }
-        
-        if viewModel.timelineCameraUploadStatusFeatureEnabled {
-            image = UIImage(resource: viewModel.isFilterActive ? .moreActionActiveNavigationBar : .moreNavigationBar)
-            
-            let button = UIBarButtonItem(image: image,
-                                        menu: makeTestingMenuItems(from: menu))
-            
-            if UIColor.isDesignTokenEnabled() {
-                button.tintColor = TokenColors.Icon.primary
-            }
-            
-            return button
-        }
-        
-        let button = UIBarButtonItem(image: image, menu: menu)
+        let button = UIBarButtonItem(
+            image: UIImage(resource: viewModel.isFilterActive ? .moreActionActiveNavigationBar : .moreNavigationBar),
+            menu: menu)
         
         if UIColor.isDesignTokenEnabled() {
             button.tintColor = TokenColors.Icon.primary
@@ -81,9 +64,6 @@ extension PhotosViewController {
             var rightButtons = [UIBarButtonItem]()
             if let barButton = makeContextMenuBarButton() {
                 rightButtons.append(barButton)
-            }
-            if viewModel.isFilterActive && !viewModel.timelineCameraUploadStatusFeatureEnabled {
-                rightButtons.append(filterBarButtonItem)
             }
             if let cameraUploadStatusBarButtonItem {
                 rightButtons.append(cameraUploadStatusBarButtonItem)
@@ -116,17 +96,6 @@ extension PhotosViewController {
     
     @objc private func onFilter() {
         photoLibraryContentViewModel.showFilter.toggle()
-    }
-    
-    // MARK: - Camera Upload QA Testing options
-    
-    // Add Camera Status testing option to UIMenu
-    private func makeTestingMenuItems(from original: UIMenu) -> UIMenu {
-        UIMenu(title: original.title,
-               subtitle: original.subtitle,
-               image: original.image,
-               options: original.options,
-               children: original.children)
     }
 }
 

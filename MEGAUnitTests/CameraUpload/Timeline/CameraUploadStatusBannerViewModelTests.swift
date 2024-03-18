@@ -148,8 +148,7 @@ extension CameraUploadStatusBannerViewModelTests {
     ) -> CameraUploadStatusBannerViewModel {
         CameraUploadStatusBannerViewModel(
             monitorCameraUploadUseCase: monitorCameraUploadUseCase,
-            devicePermissionHandler: devicePermissionHandler,
-            featureFlagProvider: MockFeatureFlagProvider(list: [.timelineCameraUploadStatus: true]))
+            devicePermissionHandler: devicePermissionHandler)
     }
     
     private func makeCameraUploadSequence(entity: CameraUploadStatsEntity) -> AnyAsyncSequence<CameraUploadStatsEntity> {

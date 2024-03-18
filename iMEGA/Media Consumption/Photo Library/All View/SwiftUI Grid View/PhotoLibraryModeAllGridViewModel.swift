@@ -27,10 +27,9 @@ final class PhotoLibraryModeAllGridViewModel: PhotoLibraryModeAllViewModel {
     }
     
     override init(libraryViewModel: PhotoLibraryContentViewModel,
-                  preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
-                  featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
+                  preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default) {
         
-        super.init(libraryViewModel: libraryViewModel, preferenceUseCase: preferenceUseCase, featureFlagProvider: featureFlagProvider)
+        super.init(libraryViewModel: libraryViewModel, preferenceUseCase: preferenceUseCase)
         
         zoomState.scaleFactor = libraryViewModel.configuration?.scaleFactor ?? zoomState.scaleFactor
         

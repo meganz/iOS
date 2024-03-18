@@ -21,7 +21,6 @@ final class PhotosViewModel: NSObject {
     
     let cameraUploadStatusButtonViewModel: CameraUploadStatusButtonViewModel
     
-    @objc let timelineCameraUploadStatusFeatureEnabled: Bool
     var contentConsumptionAttributeLoadingTask: Task<Void, Never>?
     
     @Published private(set) var cameraUploadExplorerSortOrderType: SortOrderType = .newest
@@ -55,19 +54,16 @@ final class PhotosViewModel: NSObject {
          preferenceUseCase: some PreferenceUseCaseProtocol = PreferenceUseCase.default,
          monitorCameraUploadUseCase: some MonitorCameraUploadUseCaseProtocol,
          devicePermissionHandler: some DevicePermissionsHandling,
-         cameraUploadsSettingsViewRouter: some Routing,
-         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
+         cameraUploadsSettingsViewRouter: some Routing) {
         
         self.photoUpdatePublisher = photoUpdatePublisher
         self.photoLibraryUseCase = photoLibraryUseCase
         self.userAttributeUseCase = userAttributeUseCase
         self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
         self.cameraUploadsSettingsViewRouter = cameraUploadsSettingsViewRouter
-        self.timelineCameraUploadStatusFeatureEnabled = featureFlagProvider.isFeatureFlagEnabled(for: .timelineCameraUploadStatus)
         self.timelineViewModel = CameraUploadStatusBannerViewModel(
             monitorCameraUploadUseCase: monitorCameraUploadUseCase,
-            devicePermissionHandler: devicePermissionHandler,
-            featureFlagProvider: featureFlagProvider)
+            devicePermissionHandler: devicePermissionHandler)
         self.cameraUploadStatusButtonViewModel = CameraUploadStatusButtonViewModel(
             monitorCameraUploadUseCase: monitorCameraUploadUseCase,
             devicePermissionHandler: devicePermissionHandler,
