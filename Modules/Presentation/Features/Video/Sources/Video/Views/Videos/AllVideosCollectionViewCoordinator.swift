@@ -68,7 +68,7 @@ final class AllVideosCollectionViewCoordinator: NSObject {
         var snapshot = DiffableDataSourceSnapshot()
         snapshot.appendSections([.allVideos])
         snapshot.appendItems(videos.map(RowItem.init(node:)), toSection: .allVideos)
-        dataSource?.apply(snapshot, animatingDifferences: false)
+        dataSource?.apply(snapshot, animatingDifferences: true)
     }
     
     // MARK: - Cell setup
