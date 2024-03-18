@@ -64,6 +64,8 @@ public struct NotificationItem {
         guard let imagePath, let imageName else { return nil }
         return URL(string: imagePath + imageName)
     }
+    /// `redirectionURL`: Contains the url to present when the notification is tapped.
+    public var redirectionURL: URL?
     
     public init(
         id: NotificationID,
@@ -74,6 +76,7 @@ public struct NotificationItem {
         imagePath: String?,
         startDate: Date?,
         endDate: Date?,
+        redirectionURL: URL?,
         formatDateClosure: @escaping DateFormatterClosure = { DateFormatter.dateLong().localisedString(from: $0) },
         formatTimeClosure: @escaping DateFormatterClosure = {
             DateFormatter.timeShort().localisedString(from: $0) }
@@ -86,6 +89,7 @@ public struct NotificationItem {
         self.imagePath = imagePath
         self.startDate = startDate
         self.endDate = endDate
+        self.redirectionURL = redirectionURL
         self.formatDateClosure = formatDateClosure
         self.formatTimeClosure = formatTimeClosure
     }

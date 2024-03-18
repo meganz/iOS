@@ -11,11 +11,13 @@ import Notifications
 enum NotificationAction: ActionType {
     case onViewDidLoad
     case onViewDidAppear
+    case didTapNotification(NotificationItem)
 }
 
 @objc final class NotificationsViewModel: NSObject, ViewModelType {
     enum Command: CommandType, Equatable {
         case reloadData
+        case presentURLLink(URL)
     }
     
     private let featureFlagProvider: any FeatureFlagProviderProtocol
@@ -128,6 +130,9 @@ enum NotificationAction: ActionType {
             setupNotifications()
         case .onViewDidAppear:
             updateNotificationStates()
+        case .didTapNotification(let notification):
+            guard let urlLink = notification.redirectionURL else { return }
+            invokeCommand?(.presentURLLink(urlLink))
         }
     }
 }

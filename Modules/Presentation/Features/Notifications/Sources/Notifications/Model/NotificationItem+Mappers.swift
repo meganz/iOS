@@ -11,7 +11,8 @@ extension NotificationEntity {
             imageName: imageName,
             imagePath: imagePath,
             startDate: startDate,
-            endDate: endDate
+            endDate: endDate,
+            redirectionURL: firstCallToAction?.link
         )
     }
 }

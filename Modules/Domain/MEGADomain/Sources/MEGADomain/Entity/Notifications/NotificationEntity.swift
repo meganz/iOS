@@ -14,9 +14,9 @@ public struct NotificationEntity: Sendable {
     
     public struct CallToAction: Sendable {
         public let text: String
-        public let link: String
+        public let link: URL?
         
-        public init(text: String, link: String) {
+        public init(text: String, link: URL?) {
             self.text = text
             self.link = link
         }

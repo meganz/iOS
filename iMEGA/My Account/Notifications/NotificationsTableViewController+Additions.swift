@@ -97,10 +97,20 @@ extension NotificationsTableViewController {
         viewModel.dispatch(.onViewDidAppear)
     }
     
+    @objc func didTapNotification(at indexPath: IndexPath) {
+        guard indexPath.section == NotificationSection.promos.rawValue else { return }
+        
+        let notification = viewModel.promoList[indexPath.row]
+        viewModel.dispatch(.didTapNotification(notification))
+    }
+    
     private func executeCommand(_ command: NotificationsViewModel.Command) {
         switch command {
         case .reloadData:
             tableView.reloadData()
+        case .presentURLLink(let url):
+            guard UIApplication.shared.canOpenURL(url) else { return }
+            UIApplication.shared.open(url)
         }
     }
 }
