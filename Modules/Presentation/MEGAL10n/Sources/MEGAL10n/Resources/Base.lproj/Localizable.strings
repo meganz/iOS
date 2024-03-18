@@ -3585,9 +3585,9 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Features of Pro plans";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Automatic backups\n\n• Rewind up to 90 days on Pro Lite and up to 180 days on Pro I, II, and III (coming soon)\n\n• Schedule rubbish bin clearing between 7 days and 10 years";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Stay private online with our high-speed VPN\n\n• Schedule rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Automatic backups\n\n• Rewind up to 90 days on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Schedule rubbish bin clearing between 7 days and 10 years\n\n• Ad free";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Stay private online with our high-speed VPN\n\n• Schedule rubbish bin clearing between 7 days and 10 years\n\n• Priority support\n\n• Ad free";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Subscription details";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
