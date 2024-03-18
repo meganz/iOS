@@ -1278,6 +1278,7 @@
         [self.quickAccessWidgetManager updateFavouritesWidgetFor:nodeList];
 
         [self postNodeUpdatesNotificationsFor:nodeList];
+        [self removeCachedFilesIfNeededFor:nodeList];
     } else {
         [Helper startPendingUploadTransferIfNeeded];
     }
