@@ -2084,6 +2084,7 @@
 		BF22BFBC268AF67700460DB3 /* MOUploadTransfer+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF22BFB0268AC51400460DB3 /* MOUploadTransfer+Mapper.swift */; };
 		BF22BFBD268AF67800460DB3 /* MOUploadTransfer+Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF22BFB0268AC51400460DB3 /* MOUploadTransfer+Mapper.swift */; };
 		BF22BFC9268D366E00460DB3 /* CallActionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF22BFC8268D366D00460DB3 /* CallActionManager.swift */; };
+		BF2406A92BA7E880004CD513 /* CloudDrivePhotosPickerRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2406A82BA7E880004CD513 /* CloudDrivePhotosPickerRouter.swift */; };
 		BF2675D32A3169A900736759 /* ScheduleMeetingCreationMonthlyDatePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2675D22A3169A900736759 /* ScheduleMeetingCreationMonthlyDatePickerView.swift */; };
 		BF2675D52A328F3B00736759 /* ScheduleMeetingCreationIntervalFooterNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2675D42A328F3B00736759 /* ScheduleMeetingCreationIntervalFooterNote.swift */; };
 		BF2675D72A32973100736759 /* ScheduleMeetingCreationMonthlyCustomOptionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF2675D62A32973100736759 /* ScheduleMeetingCreationMonthlyCustomOptionsViewModel.swift */; };
@@ -2120,6 +2121,7 @@
 		BF53B77C274351F700B47CA0 /* MeetingAlreadyExistsAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF53B77B274351F700B47CA0 /* MeetingAlreadyExistsAlert.swift */; };
 		BF5455E92844377600544A53 /* EndCallDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5455E82844377600544A53 /* EndCallDialog.swift */; };
 		BF5C36792491C917004DDA2F /* MEGAUser+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFB463F624342F7F00FB90B9 /* MEGAUser+Additions.swift */; };
+		BF5C96612BA92C9B00B71CB2 /* CloudDriveAssetUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5C96602BA92C9B00B71CB2 /* CloudDriveAssetUploader.swift */; };
 		BF5D8E152B9AB0FF008F0DDF /* CloudDriveMediaCaptureRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5D8E142B9AB0FF008F0DDF /* CloudDriveMediaCaptureRouter.swift */; };
 		BF5D8E1A2B9B0E9D008F0DDF /* CloudDriveTableViewController+SemanticColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5D8E192B9B0E9D008F0DDF /* CloudDriveTableViewController+SemanticColors.swift */; };
 		BF5E336C2558BE2A0055395E /* ExplorerBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5E336B2558BE2A0055395E /* ExplorerBaseViewController.swift */; };
@@ -4807,6 +4809,7 @@
 		BF22BFAC268AC39100460DB3 /* TransferRecordDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferRecordDTO.swift; sourceTree = "<group>"; };
 		BF22BFB0268AC51400460DB3 /* MOUploadTransfer+Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MOUploadTransfer+Mapper.swift"; sourceTree = "<group>"; };
 		BF22BFC8268D366D00460DB3 /* CallActionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallActionManager.swift; sourceTree = "<group>"; };
+		BF2406A82BA7E880004CD513 /* CloudDrivePhotosPickerRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDrivePhotosPickerRouter.swift; sourceTree = "<group>"; };
 		BF2675D22A3169A900736759 /* ScheduleMeetingCreationMonthlyDatePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationMonthlyDatePickerView.swift; sourceTree = "<group>"; };
 		BF2675D42A328F3B00736759 /* ScheduleMeetingCreationIntervalFooterNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationIntervalFooterNote.swift; sourceTree = "<group>"; };
 		BF2675D62A32973100736759 /* ScheduleMeetingCreationMonthlyCustomOptionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingCreationMonthlyCustomOptionsViewModel.swift; sourceTree = "<group>"; };
@@ -4841,6 +4844,7 @@
 		BF49DFBE282C633A00DE3742 /* MeetingParticipantStatusPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingParticipantStatusPipeline.swift; sourceTree = "<group>"; };
 		BF53B77B274351F700B47CA0 /* MeetingAlreadyExistsAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingAlreadyExistsAlert.swift; sourceTree = "<group>"; };
 		BF5455E82844377600544A53 /* EndCallDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndCallDialog.swift; sourceTree = "<group>"; };
+		BF5C96602BA92C9B00B71CB2 /* CloudDriveAssetUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveAssetUploader.swift; sourceTree = "<group>"; };
 		BF5D8E142B9AB0FF008F0DDF /* CloudDriveMediaCaptureRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveMediaCaptureRouter.swift; sourceTree = "<group>"; };
 		BF5D8E192B9B0E9D008F0DDF /* CloudDriveTableViewController+SemanticColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveTableViewController+SemanticColors.swift"; sourceTree = "<group>"; };
 		BF5E336B2558BE2A0055395E /* ExplorerBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExplorerBaseViewController.swift; sourceTree = "<group>"; };
@@ -6609,11 +6613,13 @@
 				41AB8EBF1A7103B300E40A39 /* BrowserViewController.h */,
 				41AB8EC01A7103B300E40A39 /* BrowserViewController.m */,
 				415226691A692ECC00EC7BB6 /* Cloud.storyboard */,
+				BF5C96602BA92C9B00B71CB2 /* CloudDriveAssetUploader.swift */,
 				C45093FD270C48AC006DC81F /* CloudDriveCollectionViewController+DynamicType.swift */,
 				83369CE22179D0A0002B09C3 /* CloudDriveCollectionViewController.h */,
 				83369CE32179D0A0002B09C3 /* CloudDriveCollectionViewController.m */,
 				BF11FEE32B6AF70400398A2D /* CloudDriveEmptyViewAssetFactory.swift */,
 				BF5D8E142B9AB0FF008F0DDF /* CloudDriveMediaCaptureRouter.swift */,
+				BF2406A82BA7E880004CD513 /* CloudDrivePhotosPickerRouter.swift */,
 				944034B729394F5E0073FE6F /* CloudDriveTableViewController+Additions.swift */,
 				BF5D8E192B9B0E9D008F0DDF /* CloudDriveTableViewController+SemanticColors.swift */,
 				830B54882178845300BE1E1F /* CloudDriveTableViewController.h */,
@@ -13995,6 +14001,7 @@
 				BFD6557525F59EC600052DE8 /* CircularView.swift in Sources */,
 				5BE689AC2419135400462134 /* CloudAppearancePreference+CoreDataClass.swift in Sources */,
 				5BE689AA2419135400462134 /* CloudAppearancePreference+CoreDataProperties.swift in Sources */,
+				BF5C96612BA92C9B00B71CB2 /* CloudDriveAssetUploader.swift in Sources */,
 				94B09E5B2B84CC87007D6B84 /* CloudDriveBottomToolbarFactory.swift in Sources */,
 				C45093FE270C48AC006DC81F /* CloudDriveCollectionViewController+DynamicType.swift in Sources */,
 				83369CE42179D0A0002B09C3 /* CloudDriveCollectionViewController.m in Sources */,
@@ -14003,6 +14010,7 @@
 				BF5D8E152B9AB0FF008F0DDF /* CloudDriveMediaCaptureRouter.swift in Sources */,
 				94B09E632B84CC87007D6B84 /* CloudDriveNavigationTitleBuilder.swift in Sources */,
 				94B09E5E2B84CC87007D6B84 /* CloudDriveNodeInsertionRouter.swift in Sources */,
+				BF2406A92BA7E880004CD513 /* CloudDrivePhotosPickerRouter.swift in Sources */,
 				944034B829394F5E0073FE6F /* CloudDriveTableViewController+Additions.swift in Sources */,
 				BF5D8E1A2B9B0E9D008F0DDF /* CloudDriveTableViewController+SemanticColors.swift in Sources */,
 				830B548A2178845300BE1E1F /* CloudDriveTableViewController.m in Sources */,
