@@ -24,7 +24,7 @@ let package = Package(
         .package(path: "../../Infrastracture/MEGATest"),
         .package(path: "../../Infrastracture/MEGAMacro"),
         .package(url: "https://github.com/meganz/SAMKeychain.git", from: "2.0.0"),
-        .package(url: "https://github.com/firebase/firebase-ios-sdk.git", from: "9.0.0"),
+        .package(url: "https://github.com/firebase/firebase-ios-sdk.git", from: "10.0.0"),
         .package(path: "../../Repository/MEGARepo")
     ],
     targets: [
