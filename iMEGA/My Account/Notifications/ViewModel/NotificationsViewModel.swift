@@ -131,7 +131,7 @@ enum NotificationAction: ActionType {
         case .onViewDidAppear:
             updateNotificationStates()
         case .didTapNotification(let notification):
-            guard let urlLink = notification.redirectionURL else { return }
+            guard isPromoEnabled, let urlLink = notification.redirectionURL else { return }
             invokeCommand?(.presentURLLink(urlLink))
         }
     }
