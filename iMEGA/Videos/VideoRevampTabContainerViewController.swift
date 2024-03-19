@@ -1,5 +1,4 @@
 import MEGADomain
-import MEGAL10n
 import MEGASDKRepo
 import MEGAUIKit
 import SwiftUI
@@ -68,7 +67,6 @@ final class VideoRevampTabContainerViewController: UIViewController {
     
     private func setupNavigationBar() {
         navigationItem.rightBarButtonItems = [moreBarButtonItem]
-        setupNavigationItemTitle()
         setupContextMenuBarButton()
         
         if let navigationBar = navigationController?.navigationBar {
@@ -152,8 +150,8 @@ final class VideoRevampTabContainerViewController: UIViewController {
             toggleEditing()
         case .navigationBarCommand(.refreshContextMenu):
             refreshContextMenuBarButton()
-        case .navigationBarCommand(.renderNavigationTitle):
-            break
+        case .navigationBarCommand(.renderNavigationTitle(let title)):
+            navigationItem.title = title
         case .searchBarCommand(.hideSearchBar):
             hideSearchBar()
         case .searchBarCommand(.reshowSearchBar):
@@ -177,11 +175,6 @@ final class VideoRevampTabContainerViewController: UIViewController {
     
     private func setupRightNavigationBarButtons() {
         navigationItem.setRightBarButtonItems(isEditing ? [cancelBarButtonItem] : [moreBarButtonItem], animated: true)
-        setupNavigationItemTitle()
-    }
-    
-    private func setupNavigationItemTitle() {
-        navigationItem.title = isEditing ? Strings.Localizable.selectTitle : Strings.Localizable.Videos.Navigationbar.title
     }
     
     @objc private func cancelBarButtonItemTapped() {
@@ -192,7 +185,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
     
     @objc private func selectAllBarButtonItemTapped() {
         viewModel.dispatch(.navigationBarAction(.didTapSelectAll))
-
+        
     }
     
     private func configureSearchBar() {
