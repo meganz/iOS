@@ -104,5 +104,5 @@ let package = Package(
             checksum: "f3759e829d921875c4d9ec55354b225e8c5354488ca492d777bf10b0e9d38ebb"
         )
     ],
-    cxxLanguageStandard: .cxx14
+    cxxLanguageStandard: .cxx17
 )
