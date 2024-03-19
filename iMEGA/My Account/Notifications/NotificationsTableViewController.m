@@ -469,7 +469,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:NO];
     
-    if (indexPath.section == NotificationSectionPromos) {
+    if (self.viewModel.isPromoEnabled && indexPath.section == NotificationSectionPromos) {
         [self didTapNotificationAt:indexPath];
         return;
     }

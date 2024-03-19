@@ -122,7 +122,7 @@ final class NotificationsViewModelTests: XCTestCase {
     }
 
     func testDidTapNotification_whenNotificationTapped_presentRedirectionURLLink() {
-        let (sut, _) = makeSUT()
+        let (sut, _) = makeSUT(featureFlagList: [.notificationCenter: true])
         let expectedURL = URL(string: "http://test")!
         let testNotification = NotificationEntity(
             id: NotificationIDEntity(1),
