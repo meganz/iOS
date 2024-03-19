@@ -16,6 +16,11 @@ public protocol UserAlbumRepositoryProtocol: RepositoryProtocol {
     /// - Returns: AnyAsyncSequence<[SetEntity]> of all the available Albums, only yields when a new update has occurred.
     func albumsUpdated() async -> AnyAsyncSequence<[SetEntity]>
     
+    /// AnyAsyncSequence that produces the SetElementEntity list when a change has occurred on the specific user album.
+    /// - Parameter id: The user album id
+    /// - Returns: AnyAsyncSequence<[SetElementEntity]> of all the changed elements. Only yields when a new update has occurred.
+    func albumContentUpdated(by id: HandleEntity) async -> AnyAsyncSequence<[SetElementEntity]>
+    
     // MARK: - Album
     
     /// Fetch all user albums

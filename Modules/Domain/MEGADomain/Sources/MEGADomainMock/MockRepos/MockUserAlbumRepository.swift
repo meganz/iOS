@@ -21,6 +21,7 @@ public struct MockUserAlbumRepository: UserAlbumRepositoryProtocol {
     private let deleteAlbumElementsResult: Result<AlbumElementsResultEntity, Error>
     private let updateAlbumCoverResult: Result<HandleEntity, Error>
     private let albumsUpdated: AnyAsyncSequence<[SetEntity]>
+    private let albumContentUpdated: AnyAsyncSequence<[SetElementEntity]>
     
     public init(node: NodeEntity? = nil,
                 albums: [SetEntity] = [],
@@ -37,7 +38,8 @@ public struct MockUserAlbumRepository: UserAlbumRepositoryProtocol {
                 updateAlbumElementOrderResult: Result<Int64, Error> = .failure(GenericErrorEntity()),
                 deleteAlbumElementsResult: Result<AlbumElementsResultEntity, Error> = .failure(GenericErrorEntity()),
                 updateAlbumCoverResult: Result<HandleEntity, Error> = .failure(GenericErrorEntity()),
-                albumsUpdated: AnyAsyncSequence<[SetEntity]> = EmptyAsyncSequence<[SetEntity]>().eraseToAnyAsyncSequence()
+                albumsUpdated: AnyAsyncSequence<[SetEntity]> = EmptyAsyncSequence<[SetEntity]>().eraseToAnyAsyncSequence(),
+                albumContentUpdated: AnyAsyncSequence<[SetElementEntity]> = EmptyAsyncSequence<[SetElementEntity]>().eraseToAnyAsyncSequence()
     ) {
         self.node = node
         self.albums = albums
@@ -55,6 +57,7 @@ public struct MockUserAlbumRepository: UserAlbumRepositoryProtocol {
         self.deleteAlbumElementsResult = deleteAlbumElementsResult
         self.updateAlbumCoverResult = updateAlbumCoverResult
         self.albumsUpdated = albumsUpdated
+        self.albumContentUpdated = albumContentUpdated
     }
     
     public func albums() async -> [SetEntity] {
@@ -131,5 +134,9 @@ public struct MockUserAlbumRepository: UserAlbumRepositoryProtocol {
     
     public func albumsUpdated() async -> AnyAsyncSequence<[SetEntity]> {
         albumsUpdated
+    }
+    
+    public func albumContentUpdated(by id: HandleEntity) async -> AnyAsyncSequence<[SetElementEntity]> {
+        albumContentUpdated
     }
 }

@@ -20,12 +20,16 @@ let package = Package(
     dependencies: [
         .package(path: "../../Infrastracture/MEGASwift"),
         .package(path: "../../Infrastracture/MEGAFoundation"),
-        .package(path: "../../Infrastracture/MEGATest")
+        .package(path: "../../Infrastracture/MEGATest"),
+        .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0")
     ],
     targets: [
         .target(
             name: "MEGADomain",
-            dependencies: ["MEGASwift", "MEGAFoundation"],
+            dependencies: ["MEGASwift",
+                           "MEGAFoundation",
+                           .product(name: "AsyncAlgorithms", package: "swift-async-algorithms")
+            ],
             swiftSettings: settings),
         .target(
             name: "MEGADomainMock",

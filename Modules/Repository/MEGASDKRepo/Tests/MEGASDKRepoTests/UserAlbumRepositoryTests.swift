@@ -192,6 +192,35 @@ final class UserAlbumRepositoryTests: XCTestCase {
         await fulfillment(of: [taskFinishedExp], timeout: 0.5)
     }
     
+    func testAlbumContentUpdated_onSetElementsUpdates_shouldReturnAllChangedElementsForTheSet() async {
+        let albumId = HandleEntity(37)
+        let expectedResult = sampleSetElements(ownerId: albumId)
+        
+        let sdk = MockSdk()
+        let sut = UserAlbumRepository(sdk: sdk)
+        
+        let taskStartedExp = expectation(description: "Tasks started")
+        let albumContentUpdatesYieldedExp = expectation(description: "Album content update was emitted")
+        let taskFinishedExp = expectation(description: "Task successfully finished on cancellation")
+        
+        let task = Task {
+            let sequence = await sut.albumContentUpdated(by: albumId)
+            taskStartedExp.fulfill()
+            for await updatedSetElements in sequence {
+                XCTAssertEqual(updatedSetElements, expectedResult.toSetElementsEntities())
+                albumContentUpdatesYieldedExp.fulfill()
+            }
+            taskFinishedExp.fulfill()
+        }
+        
+        await fulfillment(of: [taskStartedExp], timeout: 0.5)
+        let otherSetElementUpdates = [MockMEGASetElement(handle: 4, ownerId: 5)]
+        sut.onSetElementsUpdate(sdk, setElements: expectedResult + otherSetElementUpdates)
+        await fulfillment(of: [albumContentUpdatesYieldedExp], timeout: 1.0)
+        task.cancel()
+        await fulfillment(of: [taskFinishedExp], timeout: 0.5)
+    }
+    
     // MARK: Private
     
     private func makeAlbumSets() -> [MockMEGASet] {
@@ -202,11 +231,9 @@ final class UserAlbumRepositoryTests: XCTestCase {
         return [set1, set2, set3]
     }
     
-    private func sampleSetElements() -> [MockMEGASetElement] {
-        let setElement1 = MockMEGASetElement(handle: 1, ownerId: 3, order: 0, nodeId: 1)
-        let setElement2 = MockMEGASetElement(handle: 2, ownerId: 3, order: 0, nodeId: 2)
-        
-        return [setElement1, setElement2]
+    private func sampleSetElements(ownerId: HandleEntity = 3) -> [MockMEGASetElement] {
+        [MockMEGASetElement(handle: 1, ownerId: ownerId, order: 0, nodeId: 1),
+         MockMEGASetElement(handle: 2, ownerId: ownerId, order: 0, nodeId: 2)]
     }
     
     private func sampleNodes() -> [MockNode] {
