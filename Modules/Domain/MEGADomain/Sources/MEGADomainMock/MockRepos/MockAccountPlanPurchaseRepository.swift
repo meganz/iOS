@@ -47,7 +47,7 @@ public final class MockAccountPlanPurchaseRepository: AccountPlanPurchaseReposit
         deRegisterRestoreDelegateCalled += 1
     }
     
-    public func restorePurchase() async {
+    public func restorePurchase() {
         restorePurchaseCalled += 1
     }
     

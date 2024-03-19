@@ -51,7 +51,6 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     private(set) var registerDelegateTask: Task<Void, Never>?
     private(set) var setUpPlanTask: Task<Void, Never>?
     private(set) var buyPlanTask: Task<Void, Never>?
-    private(set) var restorePlanTask: Task<Void, Never>?
     private(set) var cancelActivePlanAndBuyNewPlanTask: Task<Void, Never>?
     
     init(
@@ -75,12 +74,10 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
         registerDelegateTask?.cancel()
         setUpPlanTask?.cancel()
         buyPlanTask?.cancel()
-        restorePlanTask?.cancel()
         cancelActivePlanAndBuyNewPlanTask?.cancel()
         registerDelegateTask = nil
         setUpPlanTask = nil
         buyPlanTask = nil
-        restorePlanTask = nil
         cancelActivePlanAndBuyNewPlanTask = nil
     }
     
@@ -354,10 +351,7 @@ final class UpgradeAccountPlanViewModel: ObservableObject {
     
     // MARK: Restore
     private func restorePurchase() {
-        restorePlanTask = Task { [weak self] in
-            guard let self else { return }
-            await purchaseUseCase.restorePurchase()
-        }
+        purchaseUseCase.restorePurchase()
     }
     
     // MARK: Buy plan

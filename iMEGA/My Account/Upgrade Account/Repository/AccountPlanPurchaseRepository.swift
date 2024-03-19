@@ -54,7 +54,7 @@ final class AccountPlanPurchaseRepository: NSObject, AccountPlanPurchaseReposito
         purchase.purchaseDelegateMutableArray.remove(self)
     }
 
-    func restorePurchase() async {
+    func restorePurchase() {
         purchase.restore()
     }
     

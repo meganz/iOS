@@ -2,7 +2,7 @@ import Combine
 
 public protocol AccountPlanPurchaseRepositoryProtocol: RepositoryProtocol {
     func accountPlanProducts() async -> [AccountPlanEntity]
-    func restorePurchase() async
+    func restorePurchase()
     func purchasePlan(_ plan: AccountPlanEntity) async
     func cancelCreditCardSubscriptions(reason: String?) async throws
     
