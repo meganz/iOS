@@ -115,7 +115,7 @@
     
     if (node.isTakenDown) {
         self.nameLabel.attributedText = [node attributedTakenDownName];
-        self.nameLabel.textColor = self.takenDownTextColor;
+        self.nameLabel.textColor = [UIColor mnz_takenDownNodeTextColorFor: self.traitCollection];
     } else {
         self.nameLabel.text = node.name;
         self.nameLabel.textColor = [UIColor isDesignTokenEnabled] ? [UIColor cellTitleColorFor: self.traitCollection] :
