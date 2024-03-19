@@ -1,5 +1,6 @@
 import Combine
 import MEGADomain
+import MEGAL10n
 import MEGAPresentation
 import Video
 
@@ -24,19 +25,13 @@ final class VideoRevampTabContainerViewModel: ViewModelType {
     }
     
     enum Command: CommandType, Equatable { 
-        case navigationBarCommand(NavigationBarCommand)
+        case navigationBarCommand(NavigationBarActionCommand)
         case searchBarCommand(SearchBarCommand)
         
-        enum NavigationBarCommand: Equatable {
+        enum NavigationBarActionCommand: Equatable {
             case toggleEditing
             case refreshContextMenu
-            case renderNavigationTitle(NavigationTitleType)
-            
-            enum NavigationTitleType: Equatable {
-                case videos
-                case selectItems
-                case selectItemsWithCount(Int)
-            }
+            case renderNavigationTitle(String)
         }
         
         enum SearchBarCommand: Equatable {
@@ -70,7 +65,7 @@ final class VideoRevampTabContainerViewModel: ViewModelType {
     func dispatch(_ action: Action) {
         switch action {
         case .onViewDidLoad:
-            invokeCommand?(.navigationBarCommand(.renderNavigationTitle(.videos)))
+            invokeCommand?(.navigationBarCommand(.renderNavigationTitle(Strings.Localizable.Videos.Navigationbar.title)))
             loadSortOrderType()
             monitorSortOrderSubscription()
         case .navigationBarAction(.didReceivedDisplayMenuAction(let action)):
@@ -129,23 +124,25 @@ final class VideoRevampTabContainerViewModel: ViewModelType {
     }
     
     private func listenToVideoSelection() {
-         let editModePublisher = videoSelection.$editMode.map { $0.isEditing }
-         let videosPublisher = videoSelection.$videos
-         
-         Publishers.CombineLatest(editModePublisher, videosPublisher)
-             .receive(on: DispatchQueue.main)
-             .removeDuplicates(by: { $0 == $1 })
-             .sink { [weak self] isEditing, videos in
-                 if isEditing {
-                     if videos.isEmpty {
-                         self?.invokeCommand?(.navigationBarCommand(.renderNavigationTitle(.selectItems)))
-                     } else {
-                         self?.invokeCommand?(.navigationBarCommand(.renderNavigationTitle(.selectItemsWithCount(videos.count))))
-                     }
-                 } else {
-                     self?.invokeCommand?(.navigationBarCommand(.renderNavigationTitle(.videos)))
-                 }
-             }
-             .store(in: &subscriptions)
-     }
+        let editModePublisher = videoSelection.$editMode.map { $0.isEditing }
+        let videosPublisher = videoSelection.$videos
+        
+        Publishers.CombineLatest(editModePublisher, videosPublisher)
+            .receive(on: DispatchQueue.main)
+            .removeDuplicates(by: { $0 == $1 })
+            .sink { [weak self] isEditing, videos in
+                var title = ""
+                if isEditing {
+                    if videos.isEmpty {
+                        title = Strings.Localizable.selectTitle
+                    } else {
+                        title = Strings.Localizable.General.Format.itemsSelected(videos.count)
+                    }
+                } else {
+                    title = Strings.Localizable.Videos.Navigationbar.title
+                }
+                self?.invokeCommand?(.navigationBarCommand(.renderNavigationTitle(title)))
+            }
+            .store(in: &subscriptions)
+    }
 }
