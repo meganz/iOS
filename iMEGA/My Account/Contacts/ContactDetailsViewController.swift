@@ -1,4 +1,6 @@
 import ChatRepo
+import MEGAAssets
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 
@@ -15,7 +17,7 @@ extension ContactDetailsViewController {
         guard let vc else { return }
         navigationController.pushViewController(vc, animated: true)
     }
-
+    
     @objc func joinMeeting(withChatRoom chatRoom: MEGAChatRoom) {
         guard let call = MEGAChatSdk.shared.chatCall(forChatId: chatRoom.chatId) else { return }
         let isSpeakerEnabled = AVAudioSession.sharedInstance().isOutputEqualToPortType(.builtInSpeaker)
@@ -27,7 +29,7 @@ extension ContactDetailsViewController {
     
     @objc func openChatRoom(chatId: HandleEntity, delegate: any MEGAChatRoomDelegate) {
         let chatRoomRepository = ChatRoomRepository.newRepo
-
+        
         guard let chatRoom = chatRoomRepository.chatRoom(forChatId: chatId) else { return }
         if chatRoomRepository.isChatRoomOpen(chatRoom) {
             chatRoomRepository.closeChatRoom(chatId: chatId, delegate: delegate)
@@ -63,12 +65,45 @@ extension ContactDetailsViewController: PushNotificationControlProtocol {
     
     @objc
     func assignBackButton() {
-        // This button is not visible , using a custom back button
-        // but this needs to be assigned, so that it's visible
+        // This button is not actually visible, in this screen we are using a custom back button
+        // not a real one managed by UINavigationBar.
+        // But this needs to be assigned nevertheless, so that it's visible
         // to the screens that originate from contact details and
         // need to navigate back to it. We need this to generate
         // correct menu items on long press on back button
         setMenuCapableBackButtonWith(menuTitle: Strings.Localizable.ContactInfo.BackButton.menu)
+    }
+    
+    @objc
+    func updateAppearance() {
+        actionsView.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_backgroundElevated(traitCollection)
+        actionsBottomSeparatorView.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Border.strong : UIColor.mnz_separator(for: traitCollection)
+        tableView.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_backgroundGrouped(for: traitCollection)
+        tableView.separatorColor = UIColor.isDesignTokenEnabled() ? TokenColors.Border.strong : UIColor.mnz_separator(for: traitCollection)
+        let buttonTextColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.mnz_secondaryGray(for: traitCollection)
+        messageLabel.textColor = buttonTextColor
+        callLabel.textColor = buttonTextColor
+        videoLabel.textColor = buttonTextColor
+        
+        messageButton.contentMode = .scaleAspectFit
+        callButton.contentMode = .scaleAspectFit
+        videoCallButton.contentMode = .scaleAspectFit
+        
+        if UIColor.isDesignTokenEnabled() {
+            let message = MEGAAssetsPreviewImageProvider.image(named: "sendMessageRound_token")
+            messageButton.setImage(message, for: .normal)
+            let call = MEGAAssetsPreviewImageProvider.image(named: "makeCallRound_token")
+            callButton.setImage(call, for: .normal)
+            let videoCall = MEGAAssetsPreviewImageProvider.image(named: "callVideoRound_token")
+            videoCallButton.setImage(videoCall, for: .normal)
+        }
+    }
+    
+    @objc
+    func updateHeaderBackgroundColor(headerView: GenericHeaderFooterView) {
+        if UIColor.isDesignTokenEnabled() {
+            headerView.tokenBackgroundColor = TokenColors.Background.page
+        }
     }
 }
 

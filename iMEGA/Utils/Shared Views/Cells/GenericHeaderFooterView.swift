@@ -1,6 +1,7 @@
 import MEGADesignToken
 import UIKit
 
+@objc
 final class GenericHeaderFooterView: UITableViewHeaderFooterView {
     @IBOutlet weak var topSeparatorView: UIView!
     @IBOutlet weak var marginView: UIView!
@@ -11,6 +12,11 @@ final class GenericHeaderFooterView: UITableViewHeaderFooterView {
     
     private var usingDefaultBackgroundColor: Bool = false
     private var preferredBackgroundColor: UIColor?
+    var tokenBackgroundColor: UIColor = TokenColors.Background.surface1 {
+        didSet {
+            updateAppearance()
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -89,7 +95,7 @@ final class GenericHeaderFooterView: UITableViewHeaderFooterView {
     
     private func updateAppearance() {
         if UIColor.isDesignTokenEnabled() {
-            self.contentView.backgroundColor = TokenColors.Background.surface1
+            self.contentView.backgroundColor = tokenBackgroundColor
         } else {
             if let preferredBackgroundColor {
                 self.contentView.backgroundColor = preferredBackgroundColor
