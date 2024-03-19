@@ -1,3 +1,4 @@
+import AsyncAlgorithms
 import MEGASwift
 
 public protocol MonitorAlbumsUseCaseProtocol {
@@ -16,6 +17,15 @@ public protocol MonitorAlbumsUseCaseProtocol {
     ///
     /// - Throws: `CancellationError`
     func monitorUserAlbums() async throws -> AnyAsyncSequence<[AlbumEntity]>
+    
+    /// Infinite `AnyAsyncSequence` returning user album photos.
+    ///
+    /// The async sequence will immediately return album photos
+    /// The async sequence is infinite and will require cancellation.
+    ///
+    /// - Returns: AnyAsyncSequence<[AlbumPhotoEntity]> that will yield photos for a user album
+    /// (contains `NodeEntity` and optional link to the `SetEntityElement` handle).
+    func monitorUserAlbumPhotos(for album: AlbumEntity) async -> AnyAsyncSequence<[AlbumPhotoEntity]>
 }
 
 public struct MonitorAlbumsUseCase: MonitorAlbumsUseCaseProtocol {
@@ -51,6 +61,22 @@ public struct MonitorAlbumsUseCase: MonitorAlbumsUseCaseProtocol {
                 await makeUserAlbums($0)
             }
             .eraseToAnyAsyncSequence()
+    }
+    
+    public func monitorUserAlbumPhotos(for album: AlbumEntity) async -> AnyAsyncSequence<[AlbumPhotoEntity]> {
+        guard album.type == .user else {
+            return EmptyAsyncSequence<[AlbumPhotoEntity]>().eraseToAnyAsyncSequence()
+        }
+        let albumElementIds = await userAlbumRepository.albumElementIds(by: album.id,
+                                                                    includeElementsInRubbishBin: false)
+                
+        return await merge(userAlbumContentUpdated(album: album),
+                           userAlbumPhotoUpdated(album: album))
+        .prepend(albumElementIds)
+        .map {
+            await userAlbumPhotos(forAlbumPhotoIds: $0)
+        }
+        .eraseToAnyAsyncSequence()
     }
     
     // MARK: Private
@@ -145,5 +171,50 @@ public struct MonitorAlbumsUseCase: MonitorAlbumsUseCaseProtocol {
             return nil
         }
         return await photosRepository.photo(forHandle: albumCover.nodeId)
+    }
+    
+    private func userAlbumPhotos(forAlbumPhotoIds albumPhotoIds: [AlbumPhotoIdEntity]) async -> [AlbumPhotoEntity] {
+        await withTaskGroup(of: AlbumPhotoEntity?.self) { group in
+            albumPhotoIds.forEach { albumElementId in
+                group.addTask {
+                    guard let photo = await photosRepository.photo(forHandle: albumElementId.nodeId) else {
+                        return nil
+                    }
+                    return AlbumPhotoEntity(photo: photo,
+                                            albumPhotoId: albumElementId.id)
+                }
+            }
+            
+            return await group.reduce(into: [AlbumPhotoEntity](), {
+                if let photo = $1 { $0.append(photo) }
+            })
+        }
+    }
+    
+    private func userAlbumContentUpdated(album: AlbumEntity) async -> AnyAsyncSequence<[AlbumPhotoIdEntity]> {
+        await userAlbumRepository.albumContentUpdated(by: album.id)
+            .filter { $0.isNotEmpty }
+            .map { _ in
+                await userAlbumRepository.albumElementIds(by: album.id,
+                                                          includeElementsInRubbishBin: false)
+            }
+            .eraseToAnyAsyncSequence()
+    }
+    
+    private func userAlbumPhotoUpdated(album: AlbumEntity) async -> AnyAsyncSequence<[AlbumPhotoIdEntity]> {
+        guard album.type == .user else {
+            return EmptyAsyncSequence<[AlbumPhotoIdEntity]>().eraseToAnyAsyncSequence()
+        }
+        return await photosRepository.photosUpdated()
+            .compactMap { updatedPhotos -> [AlbumPhotoIdEntity]? in
+                let albumPhotoIds = await userAlbumRepository.albumElementIds(by: album.id,
+                                                                              includeElementsInRubbishBin: false)
+                guard albumPhotoIds.isNotEmpty,
+                      updatedPhotos.contains(where: { photoNode in
+                          albumPhotoIds.contains(where: { albumPhotoId in albumPhotoId.nodeId == photoNode.handle })
+                      }) else { return nil }
+                return albumPhotoIds
+            }
+            .eraseToAnyAsyncSequence()
     }
 }

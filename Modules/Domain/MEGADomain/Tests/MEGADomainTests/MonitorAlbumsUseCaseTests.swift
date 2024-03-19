@@ -87,9 +87,9 @@ final class MonitorAlbumsUseCaseTests: XCTestCase {
     
     func testMonitorSystemAlbums_photosContainsFavouriteGifRawPhotos_shouldReturnCorrectAlbums() async throws {
         let favouriteCover = NodeEntity(name: "file.jpg", handle: 1, hasThumbnail: true, isFavourite: true,
-                                         modificationTime: try "2024-03-11T20:01:04Z".date)
+                                        modificationTime: try "2024-03-11T20:01:04Z".date)
         let gifCover = NodeEntity(name: "gif.gif", handle: 5, hasThumbnail: true,
-                             modificationTime: try "2024-03-10T22:05:04Z".date)
+                                  modificationTime: try "2024-03-10T22:05:04Z".date)
         let rawCover = NodeEntity(name: "raw.raw", handle: 2, hasThumbnail: true,
                                   modificationTime: try "2024-03-11T20:01:04Z".date)
         let photos = [
@@ -198,15 +198,154 @@ final class MonitorAlbumsUseCaseTests: XCTestCase {
         let albums = await albumsSequence.next()
         
         let expectedAlbum = AlbumEntity(id: albumSet.handle,
-                        name: albumSet.name,
-                        coverNode: expectedCover,
-                        count: 0,
-                        type: .user,
-                        creationTime: albumSet.creationTime,
-                        modificationTime: albumSet.modificationTime,
-                        sharedLinkStatus: .exported(albumSet.isExported))
+                                        name: albumSet.name,
+                                        coverNode: expectedCover,
+                                        count: 0,
+                                        type: .user,
+                                        creationTime: albumSet.creationTime,
+                                        modificationTime: albumSet.modificationTime,
+                                        sharedLinkStatus: .exported(albumSet.isExported))
         
         XCTAssertEqual(Set(try XCTUnwrap(albums)), Set([expectedAlbum]))
+    }
+    
+    func testMonitorUseAlbums_onSystemAlbum_shouldYieldNothing() async {
+        let sut = makeSUT()
+        
+        var albumPhotosSequence = await sut.monitorUserAlbumPhotos(for: AlbumEntity(id: AlbumIdEntity.favourite.value, type: .favourite))
+            .makeAsyncIterator()
+        
+        let albumPhotos = await albumPhotosSequence.next()
+        
+        XCTAssertNil(albumPhotos)
+    }
+    
+    func testMonitorUserAlbumPhotos_userAlbumStartedMonitoring_shouldImmediatelyReturnCorrectAlbumPhotos() async throws {
+        let albumId = HandleEntity(65)
+        let handles = (1...4).map { HandleEntity($0) }
+        let albumElementIds = handles.map { AlbumPhotoIdEntity(albumId: albumId,
+                                                               albumPhotoId: $0,
+                                                               nodeId: $0)
+        }
+        let userRepository = MockUserAlbumRepository(albumElementIds: [albumId: albumElementIds])
+        let photos = handles.map { NodeEntity(handle: $0) }
+        let photosRepository = MockPhotosRepository(photos: photos)
+        
+        let sut = makeSUT(userAlbumRepository: userRepository,
+                          photosRepository: photosRepository)
+        
+        var albumPhotosSequence = await sut.monitorUserAlbumPhotos(for: AlbumEntity(id: albumId, type: .user))
+            .makeAsyncIterator()
+        
+        let albumPhotos = await albumPhotosSequence.next()
+        
+        let expectedPhotos = try handles.map { id in
+            AlbumPhotoEntity(photo: try XCTUnwrap(photos.first(where: { $0.handle == id })),
+                             albumPhotoId: HandleEntity(id)
+            )
+        }
+        
+        XCTAssertEqual(Set(try XCTUnwrap(albumPhotos)),
+                       Set(expectedPhotos))
+    }
+    
+    func testMonitorUserAlbumPhotos_userAlbumUpdated_shouldReturnCorrectAlbumPhotos() async throws {
+        let albumId = HandleEntity(65)
+        let handles = (1...4).map { HandleEntity($0) }
+        let albumElementIds = handles.map { AlbumPhotoIdEntity(albumId: albumId,
+                                                               albumPhotoId: $0,
+                                                               nodeId: $0)
+        }
+        let (setElementUpdateStream, setElementUpdateContinuation) = AsyncStream
+            .makeStream(of: [SetElementEntity].self)
+        let userRepository = MockUserAlbumRepository(albumElementIds: [albumId: albumElementIds],
+                                                     albumContentUpdated: setElementUpdateStream.eraseToAnyAsyncSequence())
+        let photos = handles.map { NodeEntity(handle: $0) }
+        let photosRepository = MockPhotosRepository(photos: photos)
+        
+        let sut = makeSUT(userAlbumRepository: userRepository,
+                          photosRepository: photosRepository)
+        
+        var albumPhotosSequence = await sut.monitorUserAlbumPhotos(for: AlbumEntity(id: albumId, type: .user))
+            .makeAsyncIterator()
+        
+        let initialPhotos = await albumPhotosSequence.next()
+        
+        setElementUpdateContinuation.yield([])
+        setElementUpdateContinuation.yield([SetElementEntity(handle: 98, ownerId: albumId)])
+        setElementUpdateContinuation.finish()
+        
+        let firstSetUpdateResult = await albumPhotosSequence.next()
+        let secondSetUpdateResult = await albumPhotosSequence.next()
+        
+        let expectedPhotos = try handles.map { id in
+            AlbumPhotoEntity(photo: try XCTUnwrap(photos.first(where: { $0.handle == id })),
+                             albumPhotoId: HandleEntity(id)
+            )
+        }
+        
+        XCTAssertEqual(Set(try XCTUnwrap(initialPhotos)),
+                       Set(expectedPhotos))
+        XCTAssertEqual(Set(try XCTUnwrap(firstSetUpdateResult)),
+                       Set(expectedPhotos))
+        XCTAssertNil(secondSetUpdateResult, "Should have only updated for album set element")
+    }
+    
+    func testMonitorUserAlbumPhotos_photosUpdated_shouldYieldIfPhotoIsInAlbum() async throws {
+        let albumId = HandleEntity(98)
+        let albumElementId = HandleEntity(87)
+        let albumPhotoNodeId = HandleEntity(97)
+        let albumPhoto = NodeEntity(handle: albumPhotoNodeId)
+        let albumPhotoId = AlbumPhotoIdEntity(albumId: albumId,
+                                              albumPhotoId: albumElementId,
+                                              nodeId: albumPhotoNodeId)
+        let expected = AlbumPhotoEntity(photo: albumPhoto, albumPhotoId: albumElementId)
+        let userAlbumRepository = MockUserAlbumRepository(albumElementIds: [albumId: [albumPhotoId]])
+        let (photosUpdatedStream, photosUpdatedContinuation) = AsyncStream
+            .makeStream(of: [NodeEntity].self)
+        let photosRepository = MockPhotosRepository(photosUpdated: photosUpdatedStream.eraseToAnyAsyncSequence(),
+                                                    photos: [albumPhoto])
+        
+        let sut = makeSUT(userAlbumRepository: userAlbumRepository,
+                          photosRepository: photosRepository)
+        
+        var albumPhotosSequence = await sut.monitorUserAlbumPhotos(for: AlbumEntity(id: albumId, type: .user)).makeAsyncIterator()
+        
+        let initialUserAlbumPhotos = await albumPhotosSequence.next()
+        
+        photosUpdatedContinuation.yield([NodeEntity(handle: 6)])
+        photosUpdatedContinuation.yield([albumPhoto])
+        photosUpdatedContinuation.finish()
+        
+        let updateUserAlbumPhotos = await albumPhotosSequence.next()
+        let secondUpdateAlbumPhotos = await albumPhotosSequence.next()
+        
+        XCTAssertEqual(initialUserAlbumPhotos, [expected])
+        XCTAssertEqual(updateUserAlbumPhotos, [expected])
+        XCTAssertNil(secondUpdateAlbumPhotos, "Should have only updated once for the album photo")
+    }
+    
+    func testMonitorUserAlbumPhotos_onAllContentRemoved_shouldYieldEmptyAlbumPhotos() async {
+        let albumId = HandleEntity(98)
+        let (setElementUpdateStream, setElementUpdateContinuation) = AsyncStream
+            .makeStream(of: [SetElementEntity].self)
+        let userRepository = MockUserAlbumRepository(albumContentUpdated: setElementUpdateStream.eraseToAnyAsyncSequence())
+        
+        let sut = makeSUT(userAlbumRepository: userRepository)
+        
+        var albumPhotosSequence = await sut.monitorUserAlbumPhotos(for: AlbumEntity(id: albumId, type: .user))
+            .makeAsyncIterator()
+        
+        let initialPhotos = await albumPhotosSequence.next()
+        
+        setElementUpdateContinuation.yield([])
+        setElementUpdateContinuation.yield([SetElementEntity(handle: 98, ownerId: albumId, changeTypes: .removed)])
+        setElementUpdateContinuation.finish()
+        
+        let firstSetUpdateResult = await albumPhotosSequence.next()
+        
+        XCTAssertTrue(initialPhotos?.isEmpty == true)
+        XCTAssertTrue(firstSetUpdateResult?.isEmpty == true)
     }
     
     private func makeSUT(

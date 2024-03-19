@@ -23,6 +23,7 @@ final public class UserAlbumCacheRepository: UserAlbumRepositoryProtocol {
     private let setElementsUpdatedSourcePublisher = PassthroughSubject<[SetElementEntity], Never>()
     private var monitorSDKUpdatesTask: Task<Void, Error>?
     private let setUpdateSequences = MulticastAsyncSequence<[SetEntity]>()
+    private let setElementUpdateSequences = MulticastAsyncSequence<[SetElementEntity]>()
     private let setElementUpdateOnSetsSequences = MulticastAsyncSequence<[SetEntity]>()
     
     init(userAlbumRepository: some UserAlbumRepositoryProtocol,
@@ -81,6 +82,15 @@ final public class UserAlbumCacheRepository: UserAlbumRepositoryProtocol {
                     await userAlbumCache.album(forHandle: id)
                 }
             })
+            .eraseToAnyAsyncSequence()
+    }
+    
+    public func albumContentUpdated(by id: HandleEntity) async -> AnyAsyncSequence<[SetElementEntity]> {
+        await setElementUpdateSequences.make()
+            .map {
+                $0.filter { $0.ownerId == id }
+            }
+            .filter { $0.isNotEmpty }
             .eraseToAnyAsyncSequence()
     }
     
@@ -211,6 +221,7 @@ final public class UserAlbumCacheRepository: UserAlbumRepositoryProtocol {
                 return await taskGroup.reduce(into: [SetEntity](), { if let set = $1 { $0.append(set) } })
             }
             
+            await setElementUpdateSequences.yield(element: setElementUpdate)
             await setElementUpdateOnSetsSequences.yield(element: updatedAlbums)
         }
     }

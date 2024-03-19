@@ -36,6 +36,15 @@ final public class UserAlbumRepository: NSObject, UserAlbumRepositoryProtocol {
             .eraseToAnyAsyncSequence()
     }
     
+    public func albumContentUpdated(by id: HandleEntity) async -> AnyAsyncSequence<[SetElementEntity]> {
+        setElementsUpdatedSourcePublisher.values
+            .map {
+                $0.filter { $0.ownerId == id }
+            }
+            .filter { $0.isNotEmpty }
+            .eraseToAnyAsyncSequence()
+    }
+    
     // MARK: - Albums
     public func albums() async -> [SetEntity] {
         sdk.megaSets().toSetEntities().filter { $0.setType == .album }

@@ -709,6 +709,45 @@ final class UserAlbumCacheRepositoryTests: XCTestCase {
         XCTAssertEqual(result, expected)
     }
     
+    func testAlbumContentUpdated_onSetElementsUpdates_shouldReturnAllChangedElementsForTheSet() async {
+        let numberOfSequences = 3
+        let albumId = HandleEntity(37)
+        let expectedResult = [SetElementEntity(handle: 4, ownerId: albumId),
+                              SetElementEntity(handle: 7, ownerId: albumId),
+                              SetElementEntity(handle: 8, ownerId: albumId)]
+        
+        let setAndElementsUpdatesProvider = MockSetAndElementUpdatesProvider()
+        let sut = makeSUT(setAndElementsUpdatesProvider: setAndElementsUpdatesProvider)
+        
+        let taskStartedExp = expectation(description: "Tasks started")
+        taskStartedExp.expectedFulfillmentCount = numberOfSequences
+        let albumContentUpdatesYieldedExp = expectation(description: "Album content update was emitted")
+        albumContentUpdatesYieldedExp.expectedFulfillmentCount = numberOfSequences
+        let taskFinishedExp = expectation(description: "Task successfully finished on cancellation")
+        taskFinishedExp.expectedFulfillmentCount = numberOfSequences
+        
+        let tasks = (0..<numberOfSequences)
+            .map { _ in
+                Task {
+                    let sequence = await sut.albumContentUpdated(by: albumId)
+                    taskStartedExp.fulfill()
+                    for await updatedSetElements in sequence {
+                        XCTAssertEqual(updatedSetElements, expectedResult)
+                        albumContentUpdatesYieldedExp.fulfill()
+                    }
+                    taskFinishedExp.fulfill()
+                }
+        }
+        
+        await fulfillment(of: [taskStartedExp], timeout: 0.5)
+        let otherSetElementUpdates = [SetElementEntity(handle: 65, ownerId: 8),
+                                      SetElementEntity(handle: 78, ownerId: 90)]
+        setAndElementsUpdatesProvider.mockSendSetElementUpdate(setElementUpdate: expectedResult + otherSetElementUpdates)
+        await fulfillment(of: [albumContentUpdatesYieldedExp], timeout: 1.0)
+        tasks.forEach {$0.cancel() }
+        await fulfillment(of: [taskFinishedExp], timeout: 0.5)
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(
