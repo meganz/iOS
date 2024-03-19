@@ -1188,6 +1188,14 @@ extension UIColor {
         MEGAAppColor.Text.secondary.uiColor
     }
     
+    @objc class func mnz_takenDownNodeIconColor() -> UIColor {
+        TokenColors.Support.error
+    }
+    
+    @objc class func mnz_takenDownNodeTextColor(for traitCollection: UITraitCollection) -> UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Text.error : .mnz_red(for: traitCollection)
+    }
+    
     // MARK: - Feature Flag
     
     @objc class func isDesignTokenEnabled() -> Bool {

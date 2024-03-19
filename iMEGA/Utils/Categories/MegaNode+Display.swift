@@ -1,4 +1,5 @@
 import MEGAL10n
+import MEGAUIKit
 
 extension MEGANode {
 
@@ -8,7 +9,9 @@ extension MEGANode {
         let name = NSMutableAttributedString(string: self.name?.appending(" ") ?? "")
 
         let takedownImageAttachment = NSTextAttachment()
-        takedownImageAttachment.image = UIImage(named: "isTakedown")
+        let takeDownImage = UIImage(named: "isTakedown")
+        
+        takedownImageAttachment.image = UIColor.isDesignTokenEnabled() ? takeDownImage?.withTintColorAsOriginal(.mnz_takenDownNodeIconColor()) : takeDownImage
         let takedownImageString = NSAttributedString(attachment: takedownImageAttachment)
         
         name.append(takedownImageString)

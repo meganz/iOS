@@ -2,10 +2,6 @@ import MEGADesignToken
 import MEGAL10n
 
 extension NodeTableViewCell {
-    @objc var takenDownTextColor: UIColor {
-        UIColor.isDesignTokenEnabled() ? TokenColors.Text.error : .mnz_red(for: traitCollection)
-    }
-
     @objc func setTitleAndFolderName(for recentActionBucket: MEGARecentActionBucket,
                                      withNodes nodes: [MEGANode]) {
   
