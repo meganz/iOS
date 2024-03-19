@@ -12,6 +12,14 @@ typedef NS_ENUM (NSInteger, ContactDetailsMode) {
 
 @property (nonatomic) ContactDetailsMode contactDetailsMode;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIButton *callButton;
+@property (weak, nonatomic) IBOutlet UIButton *videoCallButton;
+@property (weak, nonatomic) IBOutlet UIButton *messageButton;
+@property (weak, nonatomic) IBOutlet UILabel *messageLabel;
+@property (weak, nonatomic) IBOutlet UILabel *callLabel;
+@property (weak, nonatomic) IBOutlet UILabel *videoLabel;
+@property (weak, nonatomic) IBOutlet UIView *actionsView;
+@property (weak, nonatomic) IBOutlet UIView *actionsBottomSeparatorView;
 @property (strong, nonatomic) MEGANodeList *incomingNodeListForUser;
 @property (nonatomic, strong) NSString *userEmail;
 @property (nonatomic, strong) NSString *userName;

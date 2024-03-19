@@ -60,15 +60,6 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *avatarViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet UIView *avatarBottomSeparatorView;
 
-@property (weak, nonatomic) IBOutlet UIView *actionsView;
-@property (weak, nonatomic) IBOutlet UIButton *callButton;
-@property (weak, nonatomic) IBOutlet UIButton *videoCallButton;
-@property (weak, nonatomic) IBOutlet UIButton *messageButton;
-@property (weak, nonatomic) IBOutlet UILabel *messageLabel;
-@property (weak, nonatomic) IBOutlet UILabel *callLabel;
-@property (weak, nonatomic) IBOutlet UILabel *videoLabel;
-@property (weak, nonatomic) IBOutlet UIView *actionsBottomSeparatorView;
-
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *backButtonWidthConstraint;
@@ -395,18 +386,6 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
 }
 
 #pragma mark - Private - Others
-
-- (void)updateAppearance {
-    self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
-    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
-    
-    self.messageLabel.textColor = self.callLabel.textColor = self.videoLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
-    self.avatarBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
-    
-    self.actionsView.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
-    self.nameOrNicknameLabel.textColor = self.optionalNameLabel.textColor = self.statusLabel.textColor = self.emailLabel.textColor = UIColor.mnz_whiteFFFFFF;
-    self.actionsBottomSeparatorView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
-}
 
 - (void)showArchiveChatAlertAtIndexPath {
     NSString *title = self.chatRoom.isArchived ? LocalizedString(@"unarchiveChatMessage", @"Confirmation message for user to confirm it will unarchive an archived chat.") : LocalizedString(@"archiveChatMessage", @"Confirmation message on archive chat dialog for user to confirm.");
@@ -971,6 +950,8 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     } else {
         [headerView configureWithTitle:nil topDistance:0.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
     }
+   
+    [self updateHeaderBackgroundColorWithHeaderView:headerView];
     
     return headerView;
 }
@@ -983,6 +964,8 @@ typedef NS_ENUM(NSUInteger, ContactDetailsRow) {
     } else {
         [footerView configureWithTitle:nil topDistance:24.0 isTopSeparatorVisible:NO isBottomSeparatorVisible:NO];
     }
+    
+    [self updateHeaderBackgroundColorWithHeaderView:footerView];
     
     return footerView;
 }
