@@ -489,7 +489,6 @@ final class UpgradeAccountPlanViewModelTests: XCTestCase {
                                               purchaseUseCase: mockUseCase)
         
         sut.didTap(.restorePlan)
-        await sut.restorePlanTask?.value
         XCTAssertTrue(mockUseCase.restorePurchaseCalled == 1)
     }
     

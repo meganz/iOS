@@ -56,7 +56,7 @@ final public class MockAccountPlanPurchaseUseCase: AccountPlanPurchaseUseCasePro
         cancelCreditCardSubscriptions += 1
     }
     
-    public func restorePurchase() async {
+    public func restorePurchase() {
         restorePurchaseCalled += 1
     }
     

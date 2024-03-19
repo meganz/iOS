@@ -60,7 +60,7 @@ final class AccountPlanPurchaseRepositoryTests: XCTestCase {
     func testRestorePurchaseCalled_shouldReturnTrue() async {
         let mockPurchase = MockMEGAPurchase()
         let sut = AccountPlanPurchaseRepository(purchase: mockPurchase, sdk: MockSdk())
-        await sut.restorePurchase()
+        sut.restorePurchase()
         XCTAssertTrue(mockPurchase.restorePurchaseCalled == 1)
     }
     
