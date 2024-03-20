@@ -70,23 +70,24 @@ class ActionSheetSwitchAction: ActionSheetAction {
 }
 
 class NodeAction: BaseAction {
-    var type: MegaNodeActionType
+    let type: MegaNodeActionType
+    let showProTag: Bool
 
-    private init(title: String?, detail: String?, image: UIImage?, type: MegaNodeActionType) {
+    private init(title: String?,
+                 detail: String? = nil,
+                 accessoryView: UIView? = nil,
+                 image: UIImage? = nil,
+                 style: UIAlertAction.Style = .default,
+                 type: MegaNodeActionType,
+                 showProTag: Bool = false) {
         self.type = type
-        super.init()
-        self.title = title
-        self.detail = detail
-        self.image = image
-    }
-    
-    private init(title: String?, detail: String?, accessoryView: UIView?, image: UIImage?, type: MegaNodeActionType) {
-        self.type = type
+        self.showProTag = showProTag
         super.init()
         self.title = title
         self.detail = detail
         self.accessoryView = accessoryView
         self.image = image
+        self.style = style
     }
 }
 
@@ -110,85 +111,85 @@ final class ContextActionSheetAction: BaseAction {
 
 extension NodeAction {
     class func exportFileAction(nodeCount: Int = 1) -> NodeAction {
-        NodeAction(title: Strings.Localizable.General.MenuAction.ExportFile.title(nodeCount), detail: nil, image: UIImage.export, type: .exportFile)
+        NodeAction(title: Strings.Localizable.General.MenuAction.ExportFile.title(nodeCount), image: UIImage.export, type: .exportFile)
     }
     
     class func shareFolderAction(nodeCount: Int = 1) -> NodeAction {
-        NodeAction(title: Strings.Localizable.General.MenuAction.ShareFolder.title(nodeCount), detail: nil, image: UIImage.shareFolder, type: .shareFolder)
+        NodeAction(title: Strings.Localizable.General.MenuAction.ShareFolder.title(nodeCount), image: UIImage.shareFolder, type: .shareFolder)
     }
     
     class func verifyContactAction(receiverDetail: String) -> NodeAction {
-        NodeAction(title: Strings.Localizable.General.MenuAction.VerifyContact.title(receiverDetail), detail: nil, image: UIImage.verifyContact, type: .verifyContact)
+        NodeAction(title: Strings.Localizable.General.MenuAction.VerifyContact.title(receiverDetail), image: UIImage.verifyContact, type: .verifyContact)
     }
     
     class func manageFolderAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.manageShare, detail: nil, image: UIImage.shareFolder, type: .manageShare)
+        NodeAction(title: Strings.Localizable.manageShare, image: UIImage.shareFolder, type: .manageShare)
     }
     
     class func downloadAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.General.downloadToOffline, detail: nil, image: UIImage.offline, type: .download)
+        NodeAction(title: Strings.Localizable.General.downloadToOffline, image: UIImage.offline, type: .download)
     }
     
     class func infoAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.info, detail: nil, image: UIImage.info, type: .info)
+        NodeAction(title: Strings.Localizable.info, image: UIImage.info, type: .info)
     }
     
     class func renameAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.rename, detail: nil, image: UIImage.rename, type: .rename)
+        NodeAction(title: Strings.Localizable.rename, image: UIImage.rename, type: .rename)
     }
     
     class func copyAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.copy, detail: nil, image: UIImage.copy, type: .copy)
+        NodeAction(title: Strings.Localizable.copy, image: UIImage.copy, type: .copy)
     }
     
     class func moveAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.move, detail: nil, image: UIImage.move, type: .move)
+        NodeAction(title: Strings.Localizable.move, image: UIImage.move, type: .move)
     }
     
     class func moveToRubbishBinAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.General.MenuAction.moveToRubbishBin, detail: nil, image: UIImage.rubbishBin, type: .moveToRubbishBin)
+        NodeAction(title: Strings.Localizable.General.MenuAction.moveToRubbishBin, image: UIImage.rubbishBin, type: .moveToRubbishBin)
     }
     
     class func removeAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.General.MenuAction.deletePermanently, detail: nil, image: UIImage.rubbishBin, type: .remove)
+        NodeAction(title: Strings.Localizable.General.MenuAction.deletePermanently, image: UIImage.rubbishBin, type: .remove)
     }
     
     class func leaveSharingAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.leaveFolder, detail: nil, image: UIImage.leaveShare, type: .leaveSharing)
+        NodeAction(title: Strings.Localizable.leaveFolder, image: UIImage.leaveShare, type: .leaveSharing)
     }
     
     class func shareLinkAction(nodeCount: Int = 1) -> NodeAction {
-        NodeAction(title: Strings.Localizable.General.MenuAction.ShareLink.title(nodeCount), detail: nil, image: UIImage.link, type: .shareLink)
+        NodeAction(title: Strings.Localizable.General.MenuAction.ShareLink.title(nodeCount), image: UIImage.link, type: .shareLink)
     }
     
     class func retryAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.retry, detail: nil, image: UIImage.link, type: .retry)
+        NodeAction(title: Strings.Localizable.retry, image: UIImage.link, type: .retry)
     }
     
     class func manageLinkAction(nodeCount: Int = 1) -> NodeAction {
-        NodeAction(title: Strings.Localizable.General.MenuAction.ManageLink.title(nodeCount), detail: nil, image: UIImage.link, type: .manageLink)
+        NodeAction(title: Strings.Localizable.General.MenuAction.ManageLink.title(nodeCount), image: UIImage.link, type: .manageLink)
     }
     
     class func removeLinkAction(nodeCount: Int = 1) -> NodeAction {
-        NodeAction(title: Strings.Localizable.General.MenuAction.RemoveLink.title(nodeCount), detail: nil, image: UIImage.removeLink, type: .removeLink)
+        NodeAction(title: Strings.Localizable.General.MenuAction.RemoveLink.title(nodeCount), image: UIImage.removeLink, type: .removeLink)
     }
     
     class func removeSharingAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.removeSharing, detail: nil, image: UIImage.removeShare, type: .removeSharing)
+        NodeAction(title: Strings.Localizable.removeSharing, image: UIImage.removeShare, type: .removeSharing)
     }
     
     class func viewInFolderAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.viewInFolder, detail: nil, image: UIImage.search, type: .viewInFolder)
+        NodeAction(title: Strings.Localizable.viewInFolder, image: UIImage.search, type: .viewInFolder)
     }
     
     class func clearAction() -> NodeAction {
-        let action = NodeAction(title: Strings.Localizable.clear, detail: nil, image: UIImage.cancelTransfers, type: .clear)
+        let action = NodeAction(title: Strings.Localizable.clear, image: UIImage.cancelTransfers, type: .clear)
         action.style = .destructive
         return action
     }
     
     class func importAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.importToCloudDrive, detail: nil, image: UIImage.import, type: .import)
+        NodeAction(title: Strings.Localizable.importToCloudDrive, image: UIImage.import, type: .import)
     }
     
     class func viewVersionsAction(versionCount: Int) -> NodeAction {
@@ -196,53 +197,53 @@ extension NodeAction {
     }
     
     class func revertVersionAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.revert, detail: nil, image: UIImage.history, type: .revertVersion)
+        NodeAction(title: Strings.Localizable.revert, image: UIImage.history, type: .revertVersion)
     }
     
     class func removeVersionAction() -> NodeAction {
-        let nodeAction = NodeAction(title: Strings.Localizable.delete, detail: nil, image: UIImage.delete, type: .remove)
+        let nodeAction = NodeAction(title: Strings.Localizable.delete, image: UIImage.delete, type: .remove)
         nodeAction.style = .destructive
         return nodeAction
     }
     
     class func selectAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.select, detail: nil, image: UIImage(named: "select"), type: .select)
+        NodeAction(title: Strings.Localizable.select, image: UIImage(named: "select"), type: .select)
     }
     
     class func restoreAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.restore, detail: nil, image: UIImage.restore, type: .restore)
+        NodeAction(title: Strings.Localizable.restore, image: UIImage.restore, type: .restore)
     }
     
     class func saveToPhotosAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.saveToPhotos, detail: nil, image: UIImage.saveToPhotos, type: .saveToPhotos)
+        NodeAction(title: Strings.Localizable.saveToPhotos, image: UIImage.saveToPhotos, type: .saveToPhotos)
     }
     
     class func sendToChatAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.General.sendToChat, detail: nil, image: UIImage.sendToChat, type: .sendToChat)
+        NodeAction(title: Strings.Localizable.General.sendToChat, image: UIImage.sendToChat, type: .sendToChat)
     }
     
     class func pdfPageViewAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.pageView, detail: nil, image: UIImage.pageView, type: .pdfPageView)
+        NodeAction(title: Strings.Localizable.pageView, image: UIImage.pageView, type: .pdfPageView)
     }
     
     class func pdfThumbnailViewAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.thumbnailView, detail: nil, image: UIImage(named: "thumbnailsThin"), type: .pdfThumbnailView)
+        NodeAction(title: Strings.Localizable.thumbnailView, image: UIImage(named: "thumbnailsThin"), type: .pdfThumbnailView)
     }
     
     class func textEditorAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.edit, detail: nil, image: UIImage.edittext, type: .editTextFile)
+        NodeAction(title: Strings.Localizable.edit, image: UIImage.edittext, type: .editTextFile)
     }
     
     class func forwardAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.forward, detail: nil, image: UIImage.forwardToolbar, type: .forward)
+        NodeAction(title: Strings.Localizable.forward, image: UIImage.forwardToolbar, type: .forward)
     }
     
     class func searchAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.search, detail: nil, image: UIImage.search, type: .search)
+        NodeAction(title: Strings.Localizable.search, image: UIImage.search, type: .search)
     }
     
     class func favouriteAction(isFavourite: Bool) -> NodeAction {
-        NodeAction(title: isFavourite ? Strings.Localizable.removeFavourite : Strings.Localizable.favourite, detail: nil, image: isFavourite ? UIImage.removeFavourite : UIImage.favourite, type: .favourite)
+        NodeAction(title: isFavourite ? Strings.Localizable.removeFavourite : Strings.Localizable.favourite, image: isFavourite ? UIImage.removeFavourite : UIImage.favourite, type: .favourite)
     }
     
     class func labelAction(label: MEGANodeLabel) -> NodeAction {
@@ -254,36 +255,39 @@ extension NodeAction {
     }
     
     class func listAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.listView, detail: nil, image: UIImage(named: "gridThin"), type: .list)
+        NodeAction(title: Strings.Localizable.listView, image: UIImage(named: "gridThin"), type: .list)
     }
     
     class func thumbnailAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.thumbnailView, detail: nil, image: UIImage(named: "thumbnailsThin"), type: .thumbnail)
+        NodeAction(title: Strings.Localizable.thumbnailView, image: UIImage(named: "thumbnailsThin"), type: .thumbnail)
     }
     
     class func sortAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.sortTitle, detail: nil, image: UIImage(named: "sort"), type: .sort)
+        NodeAction(title: Strings.Localizable.sortTitle, image: UIImage(named: "sort"), type: .sort)
     }
     
     class func disputeTakedownAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.disputeTakedown, detail: nil, image: UIImage.disputeTakedown, type: .disputeTakedown)
+        NodeAction(title: Strings.Localizable.disputeTakedown, image: UIImage.disputeTakedown, type: .disputeTakedown)
     }
     
     class func restoreBackupAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.restore, detail: nil, image: UIImage.restore, type: .restoreBackup)
+        NodeAction(title: Strings.Localizable.restore, image: UIImage.restore, type: .restoreBackup)
     }
     
     class func mediaDiscoveryAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.CloudDrive.Menu.MediaDiscovery.title, detail: nil,
+        NodeAction(title: Strings.Localizable.CloudDrive.Menu.MediaDiscovery.title,
                    image: UIImage.mediaDiscovery, type: .mediaDiscovery)
     }
     
-    class func hideAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.General.MenuAction.Hide.title, detail: nil,
-                   image: UIImage.eyeOff, type: .hide)
+    class func hideAction(showProTag: Bool = false) -> NodeAction {
+        NodeAction(title: Strings.Localizable.General.MenuAction.Hide.title,
+                   image: UIImage.eyeOff,
+                   type: .hide,
+                   showProTag: showProTag)
     }
+    
     class func unHideAction() -> NodeAction {
-        NodeAction(title: Strings.Localizable.General.MenuAction.Unhide.title, detail: nil,
+        NodeAction(title: Strings.Localizable.General.MenuAction.Unhide.title,
                    image: UIImage.eyeOn, type: .unhide)
     }
 }

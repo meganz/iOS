@@ -3,9 +3,16 @@ import MEGADomain
 import MEGAPresentation
 
 struct NodeActionViewModel {
+    private let accountUseCase: any AccountUseCaseProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
     
-    init(featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
+    var accountType: AccountTypeEntity? {
+        accountUseCase.currentAccountDetails?.proLevel
+    }
+    
+    init(accountUseCase: some AccountUseCaseProtocol,
+         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider) {
+        self.accountUseCase = accountUseCase
         self.featureFlagProvider = featureFlagProvider
     }
     

@@ -1,6 +1,6 @@
 import MEGADesignToken
 
-final class ActionSheetCell: UITableViewCell {
+class ActionSheetCell: UITableViewCell {
 
     func configureCell(action: BaseAction) {
         NSLayoutConstraint.activate([heightAnchor.constraint(greaterThanOrEqualToConstant: 60.0)])    

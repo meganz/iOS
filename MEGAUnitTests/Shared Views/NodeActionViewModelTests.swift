@@ -1,5 +1,6 @@
 @testable import MEGA
 import MEGADomain
+import MEGADomainMock
 import MEGAPresentation
 import MEGAPresentationMock
 import XCTest
@@ -35,10 +36,22 @@ final class NodeActionViewModelTests: XCTestCase {
         XCTAssertFalse(containsOnlySensitiveNodes)
     }
 
+    func testAccountType_shouldReturnCurrentAccountProLevel() {
+        let expectedAccountType = AccountTypeEntity.proI
+        let accountUseCase = MockAccountUseCase(
+            currentAccountDetails: AccountDetailsEntity(proLevel: expectedAccountType))
+        
+        let sut = makeSUT(accountUseCase: accountUseCase)
+        
+        XCTAssertEqual(sut.accountType, expectedAccountType)
+    }
+    
     private func makeSUT(
+        accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
         featureFlagProvider: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> NodeActionViewModel {
-        NodeActionViewModel(featureFlagProvider: featureFlagProvider)
+        NodeActionViewModel(accountUseCase: accountUseCase,
+                            featureFlagProvider: featureFlagProvider)
     }
     
     private func makeSensitiveNodes() -> [NodeEntity] {

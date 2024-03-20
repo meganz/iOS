@@ -1,6 +1,7 @@
 import MEGADesignToken
 import MEGADomain
 import MEGAL10n
+import MEGAPresentation
 import MEGASDKRepo
 import MEGASwift
 
@@ -15,7 +16,7 @@ import MEGASwift
 class NodeActionViewController: ActionSheetViewController {
     private var nodes: [MEGANode]
     private var displayMode: DisplayMode
-    private let viewModel = NodeActionViewModel()
+    private let viewModel = NodeActionViewModel(accountUseCase: AccountUseCase(repository: AccountRepository.newRepo))
     
     var sender: Any
     var delegate: any NodeActionViewControllerDelegate
@@ -126,6 +127,7 @@ class NodeActionViewController: ActionSheetViewController {
             .setIsBackupNode(containsABackupNode)
             .setAreMediaFiles(areMediaFiles)
             .setIsHidden(viewModel.containsOnlySensitiveNodes(nodes.toNodeEntities()))
+            .setAccountType(viewModel.accountType)
             .multiselectBuild()
     }
 
@@ -220,6 +222,7 @@ class NodeActionViewController: ActionSheetViewController {
             .setIsBackupNode(isBackupNode)
             .setIsExported(node.isExported())
             .setIsHidden(viewModel.containsOnlySensitiveNodes([node.toNodeEntity()]))
+            .setAccountType(viewModel.accountType)
             .build()
     }
     
@@ -236,6 +239,8 @@ class NodeActionViewController: ActionSheetViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureNodeHeaderView()
+        tableView.register(NodeActionTableViewCell.self,
+                           forCellReuseIdentifier: String(describing: NodeActionTableViewCell.self))
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -261,6 +266,18 @@ class NodeActionViewController: ActionSheetViewController {
     }
     
     // MARK: - UITableViewDelegate
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard DIContainer.featureFlagProvider.isFeatureFlagEnabled(for: .hiddenNodes),
+              let action = actions[safe: indexPath.row] as? NodeAction,
+              let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: NodeActionTableViewCell.self),
+                                                       for: indexPath) as? NodeActionTableViewCell else {
+            return super.tableView(tableView, cellForRowAt: indexPath)
+        }
+        cell.configureCell(action: action)
+        return cell
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let action = actions[indexPath.row] as? NodeAction else {
             return
@@ -389,6 +406,7 @@ class NodeActionViewController: ActionSheetViewController {
                                 sharedFolderReceiverEmail: sharedFolder.user ?? "",
                                 sharedFolderContact: sharedFolderContact)
             .setIsHidden(viewModel.containsOnlySensitiveNodes([node.toNodeEntity()]))
+            .setAccountType(viewModel.accountType)
             .build()
     }
 }
