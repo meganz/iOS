@@ -32,8 +32,7 @@ let package = Package(
                       "contrib",
                       "examples",
                       "tests",
-                      "webrtc-build",
-                      "src/videoRenderer_Qt.cpp"],
+                      "webrtc-build"],
             publicHeadersPath: "src",
             cxxSettings: [
                 .headerSearchPath("bindings/Objective-C/3rdparty/include"),
