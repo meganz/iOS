@@ -2336,6 +2336,7 @@
 		BFCB32B62A0239A60013409C /* ScheduleMeetingPushNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCB32B52A0239A60013409C /* ScheduleMeetingPushNotifications.swift */; };
 		BFCB32B72A023A7F0013409C /* ScheduleMeetingPushNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCB32B52A0239A60013409C /* ScheduleMeetingPushNotifications.swift */; };
 		BFCB81112505A8D90096BD57 /* FilesExplorerListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCB810F2505A8D90096BD57 /* FilesExplorerListViewController.swift */; };
+		BFCD7D872BAAC07B00D61DD1 /* ConcurrencyExtras in Frameworks */ = {isa = PBXBuildFile; productRef = BFCD7D862BAAC07B00D61DD1 /* ConcurrencyExtras */; };
 		BFCEA856246E074B00FA2451 /* ChatViewController+ChatDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCEA855246E074B00FA2451 /* ChatViewController+ChatDelegate.swift */; };
 		BFCF841F246A1310004FA3B1 /* JoinInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCF841E246A1310004FA3B1 /* JoinInputBar.swift */; };
 		BFCF8423246A1326004FA3B1 /* JoinInputBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFCF8422246A1326004FA3B1 /* JoinInputBar.xib */; };
@@ -5439,6 +5440,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFCD7D872BAAC07B00D61DD1 /* ConcurrencyExtras in Frameworks */,
 				A8DEA5082B9F157000E8806C /* MEGADomainMock in Frameworks */,
 				1678D7F22A45487E00336C52 /* MEGATest in Frameworks */,
 			);
@@ -13080,6 +13082,7 @@
 			packageProductDependencies = (
 				1678D7F12A45487E00336C52 /* MEGATest */,
 				A8DEA5072B9F157000E8806C /* MEGADomainMock */,
+				BFCD7D862BAAC07B00D61DD1 /* ConcurrencyExtras */,
 			);
 			productName = MEGAUnitTests;
 			productReference = B6CED48B22B8AC70009C4861 /* MEGAUnitTests.xctest */;
@@ -13225,6 +13228,7 @@
 				A828E67F286B3112004CED9E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				943E6BBC2A60056100A92F94 /* XCRemoteSwiftPackageReference "mobile-analytics-ios" */,
 				9418A7A02ACF84210014C01C /* XCRemoteSwiftPackageReference "MEGADesignToken" */,
+				BFCD7D852BAAC07B00D61DD1 /* XCRemoteSwiftPackageReference "swift-concurrency-extras" */,
 			);
 			productRefGroup = 1373618B1A6664C300B740E8 /* Products */;
 			projectDirPath = "";
@@ -17836,6 +17840,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		BFCD7D852BAAC07B00D61DD1 /* XCRemoteSwiftPackageReference "swift-concurrency-extras" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-concurrency-extras.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.0;
+			};
+		};
 		BFD2ED4B281228B30018C05A /* XCRemoteSwiftPackageReference "PieChart" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/meganz/PieChart.git";
@@ -18317,6 +18329,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BFA275E127ED313500E15B92 /* XCRemoteSwiftPackageReference "SDAVAssetExportSession" */;
 			productName = SDAVAssetExportSession;
+		};
+		BFCD7D862BAAC07B00D61DD1 /* ConcurrencyExtras */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BFCD7D852BAAC07B00D61DD1 /* XCRemoteSwiftPackageReference "swift-concurrency-extras" */;
+			productName = ConcurrencyExtras;
 		};
 		BFD2ED4C281228B30018C05A /* PieChart */ = {
 			isa = XCSwiftPackageProductDependency;
