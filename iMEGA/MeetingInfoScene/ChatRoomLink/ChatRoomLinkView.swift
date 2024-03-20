@@ -1,4 +1,5 @@
 import MEGAL10n
+import MEGASwiftUI
 import SwiftUI
 
 struct ChatRoomLinkView: View {
@@ -34,7 +35,11 @@ struct ChatRoomLinkView: View {
         .actionSheet(isPresented: $viewModel.showShareMeetingLinkOptions) {
             ActionSheet(title: Text(Strings.Localizable.Meetings.Info.ShareOptions.title), buttons: shareOptionsSheetButtons())
         }
-        .background(colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._FFFFFF.color)
+        .designTokenBackground(isDesignTokenEnabled, legacyColor: legacyMeetingBackgroundColor)
+    }
+    
+    var legacyMeetingBackgroundColor: Color {
+        colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._FFFFFF.color
     }
     
     private func shareOptionsSheetButtons() -> [ActionSheet.Button] {

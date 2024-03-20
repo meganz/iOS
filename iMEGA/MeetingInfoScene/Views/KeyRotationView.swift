@@ -1,3 +1,5 @@
+import MEGADesignToken
+import MEGASwiftUI
 import SwiftUI
 
 struct KeyRotationView: View {
@@ -37,11 +39,11 @@ struct KeyRotationView: View {
                 .padding(.horizontal)
                 Divider()
             }
-            .background(colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._FFFFFF.color)
+            .designTokenBackground(isDesignTokenEnabled, legacyColor: legacyMeetingBackgroundColor)
             if isPublicChat {
                 Text(footer)
                     .font(.footnote)
-                    .foregroundColor(colorScheme == .dark ? Color(UIColor.mnz_grayB5B5B5().withAlphaComponent(Constants.textOpacity)) : Color(UIColor.mnz_gray3C3C43().withAlphaComponent(Constants.textOpacity)))
+                    .foregroundColor(footerFontColor)
                     .padding(.horizontal)
             }
         }
@@ -49,5 +51,17 @@ struct KeyRotationView: View {
         .onTapGesture {
             action()
         }
+    }
+    
+    private var footerFontColor: Color {
+        if isDesignTokenEnabled {
+            TokenColors.Text.secondary.swiftUI
+        } else {
+            colorScheme == .dark ? Color(UIColor.mnz_grayB5B5B5().withAlphaComponent(Constants.textOpacity)) : Color(UIColor.mnz_gray3C3C43().withAlphaComponent(Constants.textOpacity))
+        }
+    }
+    
+    private var legacyMeetingBackgroundColor: Color {
+        colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._FFFFFF.color
     }
 }

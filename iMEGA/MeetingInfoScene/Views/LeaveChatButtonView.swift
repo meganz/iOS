@@ -1,3 +1,5 @@
+import MEGADesignToken
+import MEGASwiftUI
 import SwiftUI
 
 struct LeaveChatButtonView: View {
@@ -18,11 +20,23 @@ struct LeaveChatButtonView: View {
             } label: {
                 Text(text)
                     .padding(.horizontal)
-                    .foregroundColor(MEGAAppColor.Red._F30C14.color)
+                    .foregroundColor(buttonTextColor)
             }
             Divider()
         }
         .frame(minHeight: Constants.viewHeight)
-        .background(colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._FFFFFF.color)
+        .designTokenBackground(isDesignTokenEnabled, legacyColor: legacyBackground)   
+    }
+    
+    private var buttonTextColor: Color {
+        if isDesignTokenEnabled {
+            TokenColors.Text.error.swiftUI
+        } else {
+            MEGAAppColor.Red._F30C14.color
+        }
+    }
+    
+    private var legacyBackground: Color {
+        colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._FFFFFF.color
     }
 }

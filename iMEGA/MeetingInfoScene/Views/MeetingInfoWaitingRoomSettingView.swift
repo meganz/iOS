@@ -1,4 +1,6 @@
+import MEGADesignToken
 import MEGAL10n
+import MEGASwiftUI
 import SwiftUI
 
 struct MeetingInfoWaitingRoomSettingView: View {
@@ -13,15 +15,29 @@ struct MeetingInfoWaitingRoomSettingView: View {
                 text: Strings.Localizable.Meetings.ScheduleMeeting.waitingRoom,
                 enabled: shouldAllowEditingWaitingRoom,
                 isOn: $isWaitingRoomOn)
-            .background(colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._FFFFFF.color)
+            .designTokenBackground(isDesignTokenEnabled, legacyColor: legacyMeetingBackgroundColor)
             
             Text(Strings.Localizable.Meetings.ScheduleMeeting.WaitingRoom.description)
                 .font(.footnote)
-                .foregroundColor(colorScheme == .dark ? MEGAAppColor.White._FFFFFF.color.opacity(0.6) : Color(MEGAAppColor.Gray._3C3C43.uiColor).opacity(0.6))
+                .foregroundColor(warningTextColor)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal)
                 .padding(.bottom, 5)
         }
+    }
+    
+    var warningTextColor: Color {
+        if isDesignTokenEnabled {
+            TokenColors.Text.secondary.swiftUI
+        } else {
+            colorScheme == .dark ? 
+            MEGAAppColor.White._FFFFFF.color.opacity(0.6) :
+            Color(MEGAAppColor.Gray._3C3C43.uiColor).opacity(0.6)
+        }
+    }
+    
+    var legacyMeetingBackgroundColor: Color {
+        colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._FFFFFF.color
     }
 }
 
