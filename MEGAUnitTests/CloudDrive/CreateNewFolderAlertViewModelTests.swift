@@ -1,3 +1,4 @@
+import ConcurrencyExtras
 @testable import MEGA
 import MEGADesignToken
 import MEGADomain
@@ -111,32 +112,25 @@ final class CreateNewFolderAlertViewModelTests: XCTestCase {
         file: StaticString = #filePath,
         line: UInt = #line
     ) async {
-        let sut = makeSUT(router: router, nodeUseCase: nodeUseCase)
+        await withMainSerialExecutor {
+            let sut = makeSUT(router: router, nodeUseCase: nodeUseCase)
 
-        let waitUntilFinishedExpectation = expectation(description: "Wait until finished")
-        let cancelActionExpectation = expectation(description: "Cancel action")
-
-        let waitUntilFinishedTask = Task {
-            let result = await sut.waitUntilFinished()
-            waitUntilFinishedExpectation.fulfill()
-            return result
-        }
-
-        let cancelActionTask = Task {
-            try await Task.sleep(nanoseconds: UInt64(0.3) * NSEC_PER_SEC)
-            if let folderName {
-                sut.createButtonTapped(withFolderName: folderName)
-            } else {
-                sut.cancelAction()
+            let waitUntilFinishedTask = Task {
+                await sut.waitUntilFinished()
             }
-            cancelActionExpectation.fulfill()
-        }
 
-        await fulfillment(of: [cancelActionExpectation, waitUntilFinishedExpectation], timeout: 1.0)
-        let result = await waitUntilFinishedTask.value
-        XCTAssertEqual(result, expectedResult, file: file, line: line)
-        waitUntilFinishedTask.cancel()
-        cancelActionTask.cancel()
+            let cancelActionTask = Task {
+                await Task.yield()
+                if let folderName {
+                    sut.createButtonTapped(withFolderName: folderName)
+                } else {
+                    sut.cancelAction()
+                }
+            }
+
+            let(result, _) = await (waitUntilFinishedTask.value, cancelActionTask.value)
+            XCTAssertEqual(result, expectedResult, file: file, line: line)
+        }
     }
 
     private func assertShouldReturnCompletion(
