@@ -53,7 +53,6 @@ final class AllVideosCollectionViewCoordinator: NSObject {
             let cellViewModel = VideoCellViewModel(
                 thumbnailUseCase: representer.viewModel.thumbnailUseCase,
                 nodeEntity: rowItem.node,
-                selection: representer.selection,
                 onTapMoreOptions: { [weak self] in self?.onTapMoreOptions($0, sender: cell) }
             )
             configureCell(cell, cellViewModel: cellViewModel)
@@ -76,7 +75,11 @@ final class AllVideosCollectionViewCoordinator: NSObject {
     private func configureCell(_ cell: UICollectionViewCell, cellViewModel: VideoCellViewModel) {
         if #available(iOS 16.0, *) {
             cell.contentConfiguration = UIHostingConfiguration {
-                VideoCellView(viewModel: cellViewModel, videoConfig: videoConfig)
+                VideoCellView(
+                    viewModel: cellViewModel,
+                    selection: self.representer.selection,
+                    videoConfig: videoConfig
+                )
                     .background(videoConfig.colorAssets.pageBackgroundColor)
             }
             .margins(.all, 0)
@@ -87,7 +90,11 @@ final class AllVideosCollectionViewCoordinator: NSObject {
     }
     
     private func configureCellBelowiOS16(cellViewModel: VideoCellViewModel, cell: UICollectionViewCell) {
-        let cellView = VideoCellView(viewModel: cellViewModel, videoConfig: videoConfig)
+        let cellView = VideoCellView(
+            viewModel: cellViewModel,
+            selection: self.representer.selection,
+            videoConfig: videoConfig
+        )
         
         cell.contentView.subviews.forEach { $0.removeFromSuperview() }
         

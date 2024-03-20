@@ -23,6 +23,8 @@ public final class VideoSelection: ObservableObject {
         }
     }
     
+    @Published var isSelected = false
+    
     @Published var isHidden = false
     
     @Published var isSelectionDisabled = false
@@ -63,5 +65,16 @@ public final class VideoSelection: ObservableObject {
             .switchToLatest()
             .removeDuplicates()
             .eraseToAnyPublisher()
+    }
+    
+    func onTappedCheckMark(for nodeEntity: NodeEntity) {
+        guard
+            editMode.isEditing,
+            !isSelectionDisabled
+        else {
+            return
+        }
+        
+        toggleSelection(for: nodeEntity)
     }
 }
