@@ -53,10 +53,6 @@
 @property (nonatomic) NSMutableArray *searchNodesArray;
 @property (nonatomic) UISearchController *searchController;
 
-@property (weak, nonatomic) IBOutlet UIView *selectorView;
-@property (weak, nonatomic) IBOutlet UIView *cloudDriveLineView;
-@property (weak, nonatomic) IBOutlet UIView *incomingLineView;
-
 @end
 
 @implementation BrowserViewController
@@ -93,7 +89,7 @@
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
     [self updateAppearance];
-    
+
     [self reloadUI];
 }
 
@@ -132,18 +128,12 @@
         [AppearanceManager forceSearchBarUpdate:self.searchController.searchBar traitCollection:self.traitCollection];
         
         [self updateAppearance];
-        
+
         [self.tableView reloadData];
     }
 }
 
 #pragma mark - Private
-
-- (void)updateAppearance {
-    self.view.backgroundColor = [UIColor mnz_secondaryBackgroundElevated:self.traitCollection];
-    
-    [self updateSelector];
-}
 
 - (void)setupBrowser {
     self.parentBrowser = !self.isChildBrowser;
@@ -449,20 +439,6 @@
     }
 }
 
-- (void)updateSelector {
-    self.selectorView.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
-    
-    self.cloudDriveButton.titleLabel.font = self.cloudDriveButton.selected ? [[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote] fontWithWeight:UIFontWeightSemibold] : [[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote] fontWithWeight:UIFontWeightMedium];
-    [self.cloudDriveButton setTitleColor:[UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)] forState:UIControlStateNormal];
-    [self.cloudDriveButton setTitleColor:[UIColor mnz_redForTraitCollection:(self.traitCollection)] forState:UIControlStateSelected];
-    self.cloudDriveLineView.backgroundColor = self.cloudDriveButton.selected ? [UIColor mnz_redForTraitCollection:self.traitCollection] : nil;
-    
-    self.incomingButton.titleLabel.font = self.incomingButton.selected ? [[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote] fontWithWeight:UIFontWeightSemibold] : [[UIFont preferredFontForTextStyle:UIFontTextStyleFootnote] fontWithWeight:UIFontWeightMedium];
-    [self.incomingButton setTitleColor:[UIColor mnz_primaryGrayForTraitCollection:(self.traitCollection)] forState:UIControlStateNormal];
-    [self.incomingButton setTitleColor:[UIColor mnz_redForTraitCollection:(self.traitCollection)] forState:UIControlStateSelected];
-    self.incomingLineView.backgroundColor = self.incomingButton.selected ? [UIColor mnz_redForTraitCollection:self.traitCollection] : nil;
-}
-
 - (CancellableTransfer *)transferToUpload {
     if (self.localpath) {
         NSString *appData = [[NSString new] mnz_appDataToSaveCoordinates:self.localpath.mnz_coordinatesOfPhotoOrVideo];
@@ -656,7 +632,9 @@
     if (cell == nil) {
         cell = [[NodeTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     }
-    
+
+    [self setCellBackgroundColor: cell];
+
     MEGANode *node = [self nodeAtIndexPath:indexPath];
     MEGAShareType shareType = [MEGASdk.shared accessLevelForNode:node];
     
