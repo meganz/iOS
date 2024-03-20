@@ -1,7 +1,7 @@
 /* Button title to cancel something */
 "cancel"="取消";
 /* Button title to accept something */
-"ok"="OK";
+"ok"="確認";
 /* Button title to clear something */
 "clear"="清除";
 /*  */
@@ -29,19 +29,19 @@
 /* Alert title to attract attention */
 "attention"="請注意";
 /* Alert message to remember that MEGA app needs permission to use the Camera to take a photo or video and it doesn't have it */
-"cameraPermissions"="請在設定中允許MEGA存取您的相機的權限";
+"cameraPermissions"="請在設定中允許MEGA存取您相機的權限";
 /* Alert message to remember that MEGA app needs permission to use the Microphone to make calls and record videos and it doesn't have it */
 "microphonePermissions"="請在設定允許MEGA存取您麥克風的權限";
 /* Alert message to explain that the MEGA app needs permission to access your device photos */
 "photoLibraryPermissions"="請在設定中允許MEGA存取您照片的權限";
 /* Message shown when the user clicks on a confirm account link that has already been used */
-"accountAlreadyConfirmed"="您的帳戶已通過認證。請登入帳戶以開始使用。";
+"accountAlreadyConfirmed"="您的帳戶已通過認證。請登入。";
 /*  */
-"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="您的確認連結已無效。您的帳戶可能已啟用，或您可能已取消註冊。";
+"Your confirmation link is no longer valid. Your account may already be activated or you may have cancelled your registration."="您的確認連結已失效。您的帳戶可能已啟用，或您可能已取消註冊。";
 /* Message shown when the user clicks on an link that is not valid */
 "linkNotValid"="無效的連結";
 /* An error message which is shown when you open a file/folder link (or other shared resource) and it’s no longer available because the user account that created the link has been terminated due to multiple violations of our Terms of Service */
-"The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="由於多次違反我們的[A]服務條款[/A]，因此建立此連結的帳戶已被停權。";
+"The account that created this link has been terminated due to multiple violations of our [A]Terms of Service[/A]."="由於多次違反我們的[A]服務條款[/A]，因此建立此連結的帳戶已被停用。";
 /* Alert title shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
 "decryptionKeyAlertTitle"="請輸入解密金鑰";
 /* Alert message shown when you tap on a encrypted file/folder link that can't be opened because it doesn't include the key to see its contents */
@@ -925,13 +925,13 @@
 /* Label for any 'Send' button, link, text, title, etc. - (String as short as possible). */
 "send"="送出";
 /* Headline for parking an account (basically restarting from scratch) */
-"parkAccount"="停用帳號";
+"parkAccount"="封存帳號";
 /* Label text of a checkbox to ensure that the user is aware that the data of his current account will be lost when proceeding unless they remember their password or have their master encryption key (now renamed "Recovery Key") */
 "startingFreshAccount"="我已瞭解我正在重新註冊一個全新且空白的帳戶。除非我能想起原本的密碼，或者找到之前匯出的還原金鑰，否則我將失去我現在帳戶中的所有資料。";
 /* Caption of the button to proceed */
 "startNewAccount"="開始建立新帳號";
 /*  */
-"yourAccounHasBeenParked"="您的舊帳戶已停用。您現在可以登入您的新帳戶。";
+"yourAccounHasBeenParked"="您的舊帳戶已封存。您現在可以登入您的新帳戶。";
 /* Hint text to suggest that the user have to write the new email on it */
 "newEmail"="新的電子郵件地址";
 /* Button text for the user to confirm their change of email address. */
@@ -3585,9 +3585,9 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Pro方案功能";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• 受密碼保護的連結\n\n• 連結可設定到期日期\n\n• 傳輸配額共享\n\n• 自動備份\n\n• Pro Lite最多可回溯90天，Pro I、II、III最多可回溯180天（即將推出）\n\n• 可安排7天到10年之間的垃圾筒自動清理排程";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• 受密碼保護的連結\n\n• 連結有到期日期\n\n• 傳輸配額共享\n\n• Pro Lite可回溯最多90天的刪除資料，Pro I、II、和III可回溯最多180天\n\n• 使用我們的高速VPN保持線上隱私\n\n• 可設定7天到10年之間垃圾筒清理排程\n\n• 優先客服";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• 受密碼保護的連結\n\n• 共享連結可設定到期日期\n\n• 傳輸配額共享\n\n• 自動備份\n\n• Pro Lite最多回溯90天，Pro I、II、III最多回溯180天\n\n• 可排定7天到10年的垃圾筒自動清理排程\n\n• 無廣告";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• 受密碼保護的連結\n\n• 連結有到期日期\n\n• 傳輸配額共享\n\n• Pro Lite可回溯最多90天的刪除資料，Pro I、II、和III可回溯最多180天\n\n• 使用我們的高速VPN保持線上隱私\n\n• 可設定7天到10年之間垃圾筒清理排程\n\n• 優先客服\n\n• 無廣告";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="訂閱詳情";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3977,14 +3977,24 @@
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
 "notifications.tag.promo.title"="促銷";
 /* Notifications: message showing the date and time at which a certain offer expires. %1$s will be replaced by date. %2$s will be replaced by time. */
-"notifications.expiration.message"="Expires on %1$s at %2$s";
+"notifications.expiration.message"="%1$s%2$s到期";
 /* Title for action that allows user to hide files or folders */
 "general.menuAction.hide.title"="隱藏";
 /* Title for action that allows user to unhide files or folders */
-"general.menuAction.unhide.title"="Unhide";
+"general.menuAction.unhide.title"="取消隱藏";
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="無法登入";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.message"="此通話僅支援100個與會者。請求發起人升級到Pro方案以取消此限制。";
+"calls.freePlanLimitWarning.usersLimitAlert.message"="此通話僅支援100個與會者。請召集人升級到Pro方案以取消此限制。";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="好的，明白了";
+/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
+"meetings.waitingRoom.warning.limit100Participants"="只有100個與會者可以加入通話。任何其他與會者將只能發送和讀取對話。需要新增更多與會者嗎？[A]立即升級[/A]";
+/* Calls: Free plan limit warning alert message for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitAlert.message"="需要更多時間嗎？Pro方案提供不受限制的通話。";
+/* Calls: Free plan limit warning alert upgrade button for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitAlert.upgrade"="升級";
+/* Calls: Free plan limit warning alert not now button for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitAlert.notNow"="稍後再說";
+/* Calls: Text for countdown in call UI for free plan limit warning for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitCountdown.title"="此免費通話將在%@結束";

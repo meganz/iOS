@@ -2946,5 +2946,21 @@
         <string>%d mappen gedeeld</string>
       </dict>
     </dict>
+    <key>calls.freePlanLimitWarning.durationLimitAlert.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Uw gratis gesprek eindigt oer%d minuut</string>
+        <key>other</key>
+        <string>Uw gratis gesprek eindigt over%d minuten</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

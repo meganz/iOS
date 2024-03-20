@@ -3682,5 +3682,25 @@
         <string>Открыт доступ к %d папки</string>
       </dict>
     </dict>
+    <key>calls.freePlanLimitWarning.durationLimitAlert.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Ваш бесплатный звонок завершится через %d минуту</string>
+        <key>few</key>
+        <string>Ваш бесплатный звонок завершится через %d минуты</string>
+        <key>many</key>
+        <string>Ваш бесплатный звонок завершится через %d минут</string>
+        <key>other</key>
+        <string>Ваш бесплатный звонок завершится через %d минуты</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

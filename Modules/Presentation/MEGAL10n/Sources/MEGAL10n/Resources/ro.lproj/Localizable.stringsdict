@@ -3314,5 +3314,23 @@
         <string>%d de foldere au fost partajate</string>
       </dict>
     </dict>
+    <key>calls.freePlanLimitWarning.durationLimitAlert.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Apelul dvs. gratuit se va încheia în %d minută</string>
+        <key>few</key>
+        <string>Apelul dvs. gratuit se va încheia în %d minute</string>
+        <key>other</key>
+        <string>Apelul dvs. gratuit se va încheia în %d de minute</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

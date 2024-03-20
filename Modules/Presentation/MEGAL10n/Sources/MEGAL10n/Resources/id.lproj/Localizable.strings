@@ -1811,9 +1811,9 @@
 /* Error shown when trying to start a call in a group with more peers than allowed */
 "Unable to start a call because the participants limit was exceeded."="Tidak dapat memulai panggilan karena batas peserta terlampaui.";
 /* Label shown while joining a public chat */
-"Joining..."="Joining chat…";
+"Joining..."="Bergabung dengan obrolan…";
 /* Label shown while leaving a public chat */
-"Leaving..."="Leaving chat…";
+"Leaving..."="Meninggalkan obrolan…";
 /* Text shown for switching from thumbnail view to list view. */
 "List View"="Tampilan Daftar";
 /* Text shown for switching from list view to thumbnail view. */
@@ -2483,7 +2483,7 @@
 /* Text shown for the action create new file */
 "Create new file"="Buat file baru";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
-"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="You do not have the permissions required to revert this file. You can, however, create a new file with the previous version. Would you like to proceed?";
+"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="Anda tidak memiliki izin yang diperlukan untuk mengembalikan file ini. Namun, anda dapat membuat file baru dengan versi sebelumnya. Apakah anda ingin melanjutkan?";
 /* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
 "Pro Lite"="Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
@@ -2961,7 +2961,7 @@
 /* Error title shown when the user try to send more than one report in less than 10 minutes */
 "help.reportIssue.fail.too.many.request.title"="Anda harus menunggu 10 menit sebelum mengirimkan masalah lain";
 /* Error message shown when the user try to send more than one report in less than 10 minutes */
-"help.reportIssue.fail.too.many.request.message"="Wait and try again later, or contact our support team via support@mega.nz if the problem persists";
+"help.reportIssue.fail.too.many.request.message"="Tunggu dan coba lagi nanti, atau hubungi tim dukungan kami melalui support@mega.nz jika masalah berlanjut";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.title"="Apakah anda yakin ingin membatalkan mengunggah masalah yang anda laporkan?";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
@@ -3585,9 +3585,9 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Fitur paket Pro";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• Tautan yang dilindungi kata sandi\n\n• Tautan dengan tanggal kedaluwarsa\n\n• Pembagian kuota transfer\n\n• Pencadangan otomatis\n\n• Putar balik hingga 90 hari di Pro Lite dan hingga 180 hari pada Pro I, II, and III (segera hadir)\n\n• Jadwalkan pembersihan tempat sampah antara 7 hari dan 10 tahun";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• Tautan yang dilindungi kata sandi\n\n• Tautan dengan tanggal kedaluwarsa\n\n• Pembagian kuota transfer\n\n• Putar ulang hingga 90 hari data yang dihapus di Pro Lite dan hingga 180 hari di Pro I, II, dan III\n\n• Tetap pribadi online dengan VPN berkecepatan tinggi kami\n\n• Jadwalkan pembersihan tempat sampah antara 7 hari dan 10 tahun\n\n• Dukungan prioritas";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Tautan yang dilindungi kata sandi\n\n• Tautan dengan tanggal kedaluwarsa\n\n• Pembagian kuota transfer\n\n• Pencadangan otomatis\n\n• Putar balik hingga 90 hari di Pro Lite dan hingga 180 hari pada Pro I, II, and III\n\n• Jadwalkan pembersihan sampah antara 7 hari dan 10 tahun\n\n• Bebas iklan";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Tautan yang dilindungi kata sandi\n\n• Tautan dengan tanggal kedaluwarsa\n\n• Pembagian kuota transfer\n\n• Putar ulang hingga 90 hari data yang dihapus di Pro Lite dan hingga 180 hari di Pro I, II, dan III\n\n• Tetap pribadi online dengan VPN berkecepatan tinggi kami\n\n• Jadwalkan pembersihan tempat sampah antara 7 hari dan 10 tahun\n\n• Dukungan prioritas\n\n• Bebas iklan";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Detail langganan";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3977,14 +3977,24 @@
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
 "notifications.tag.promo.title"="Promo";
 /* Notifications: message showing the date and time at which a certain offer expires. %1$s will be replaced by date. %2$s will be replaced by time. */
-"notifications.expiration.message"="Expires on %1$s at %2$s";
+"notifications.expiration.message"="Kedaluwarsa pada %1$s pukul %2$s";
 /* Title for action that allows user to hide files or folders */
 "general.menuAction.hide.title"="Menyembunyikan";
 /* Title for action that allows user to unhide files or folders */
-"general.menuAction.unhide.title"="Unhide";
+"general.menuAction.unhide.title"="Munculkan";
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.title"="Cannot join";
+"calls.freePlanLimitWarning.usersLimitAlert.title"="Tidak dapat bergabung";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.message"="This call can only support 100 participants. Ask the organiser to upgrade to Pro to remove this restriction.";
+"calls.freePlanLimitWarning.usersLimitAlert.message"="Panggilan ini hanya dapat mendukung 100 peserta. Minta penyelenggara untuk meningkatkan ke Pro untuk menghapus batasan ini.";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="OK, mengerti";
+/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
+"meetings.waitingRoom.warning.limit100Participants"="Hanya 100 peserta yang dapat bergabung dengan panggilan. Setiap peserta tambahan hanya akan dapat mengirim dan membaca obrolan. Perlu menambahkan lebih banyak peserta? [A]Tingkatkan sekarang[/A]";
+/* Calls: Free plan limit warning alert message for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitAlert.message"="Butuh lebih banyak waktu? Paket Pro menawarkan panggilan tak terbatas.";
+/* Calls: Free plan limit warning alert upgrade button for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitAlert.upgrade"="Tingkatkan";
+/* Calls: Free plan limit warning alert not now button for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitAlert.notNow"="Tidak Sekarang";
+/* Calls: Text for countdown in call UI for free plan limit warning for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitCountdown.title"="Panggilan gratis ini akan berakhir dalam %@";

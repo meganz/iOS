@@ -3585,9 +3585,9 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Caratteristiche dei piani Pro";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• Link protetti da password\n\n• Link con date di scadenza\n\n• Condivisione della banda di trasferimento\n\n• Backup automatici\n\n• Ripristino fino a 90 giorni su Pro Lite e fino a 180 giorni su Pro I, II, e III (in arrivo)\n\n• Programma la pulizia del cestino tra 7 giorni e 10 anni";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Link protetti da password\n\n• Link con date di scadenza\n\n• Condivisione della banda di trasferimento\n\n• Backup automatici\n\n• Ripristino fino a 90 giorni su Pro Lite e fino a 180 giorni su Pro I, II, e III\n\n• Programma la pulizia del cestino tra 7 giorni e 10 anni\n\n• Senza pubblicità";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10  years\n\n• Priority support\n\n• Ad free";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Dettagli dell'abbonamento";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3977,14 +3977,24 @@
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
 "notifications.tag.promo.title"="Promo";
 /* Notifications: message showing the date and time at which a certain offer expires. %1$s will be replaced by date. %2$s will be replaced by time. */
-"notifications.expiration.message"="Expires on %1$s at %2$s";
+"notifications.expiration.message"="Scade il giorno %1$s alle ore %2$s";
 /* Title for action that allows user to hide files or folders */
 "general.menuAction.hide.title"="Nascondi";
 /* Title for action that allows user to unhide files or folders */
-"general.menuAction.unhide.title"="Unhide";
+"general.menuAction.unhide.title"="Rivela";
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="Impossibile unirsi";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.message"="Questa chiamata può supportare solo 100 partecipanti. Chiedi all'organizzatore di effettuare l'upgrade a Pro per rimuovere questa restrizione.";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="OK, capito";
+/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
+"meetings.waitingRoom.warning.limit100Participants"="Only 100 participants can join the call. Any additional participants will only be able to send and read chats. Need to add more participants? [A]Upgrade now[/A]";
+/* Calls: Free plan limit warning alert message for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitAlert.message"="Hai bisogno di più tempo? I piani Pro offrono chiamate illimitate.";
+/* Calls: Free plan limit warning alert upgrade button for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitAlert.upgrade"="Fai l’upgrade";
+/* Calls: Free plan limit warning alert not now button for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitAlert.notNow"="Non adesso";
+/* Calls: Text for countdown in call UI for free plan limit warning for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitCountdown.title"="This free call will end in %@";

@@ -3585,9 +3585,9 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Szczegóły planów Pro";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="- Linki chronione hasłem\n\n- Linki z datami wygaśnięcia\n\n- Udostępnianie limitów transferu\n\n- Automatyczne kopie zapasowe\n\n- Przewijanie do 90 dni w Pro Lite i do 180 dni w Pro I, II i III (wkrótce)\n\n- Zaplanuj czyszczenie kosza na śmieci od 7 dni do 10 lat";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• Linki chronione hasłem\n\n• Linki z datami ważności\n\n• Podział kwot transferowych\n\n• Przewiń do 90 dni usuniętych danych w Pro Lite i do 180 dni w Pro I, II i III\n\n• Zachowaj prywatność online dzięki naszej szybkiej sieci VPN\n\n• Zaplanuj Kosz śmieci od 7 dni do 10 lat\n\n• Wsparcie priorytetowe";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="- Linki chronione hasłem\n\n- Linki z datą wygaśnięcia\n\n- Udostępnianie limitów transferu\n\n- Automatyczne kopie zapasowe\n\n- Przewijanie do 90 dni w Pro Lite i do 180 dni w Pro I, II i III\n\n- Planowanie czyszczenia kosza na śmieci od 7 dni do 10 lat\n\n- Bez reklam";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Linki chronione hasłem\n\n• Linki z datami ważności\n\n• Podział kwot transferowych\n\n• Przewiń do 90 dni usuniętych danych w Pro Lite i do 180 dni w Pro I, II i III\n\n• Zachowaj prywatność online dzięki naszej szybkiej sieci VPN\n\n• Zaplanuj Kosz śmieci od 7 dni do 10 lat\n\n• Wsparcie priorytetowe\n\n• Bez reklam";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Szczegóły subskrypcji";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3977,14 +3977,24 @@
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
 "notifications.tag.promo.title"="Promocja";
 /* Notifications: message showing the date and time at which a certain offer expires. %1$s will be replaced by date. %2$s will be replaced by time. */
-"notifications.expiration.message"="Expires on %1$s at %2$s";
+"notifications.expiration.message"="Wygasa dnia %1$s o %2$s";
 /* Title for action that allows user to hide files or folders */
 "general.menuAction.hide.title"="Ukryj";
 /* Title for action that allows user to unhide files or folders */
-"general.menuAction.unhide.title"="Unhide";
+"general.menuAction.unhide.title"="Odkryj";
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="Nie można dołączyć";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.message"="To wezwanie może wesprzeć tylko 100 uczestników. Poproś organizatora o zmień do wersji Pro, aby usunąć to ograniczenie.";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="OK, rozumiem";
+/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
+"meetings.waitingRoom.warning.limit100Participants"="Tylko 100 uczestników może dołączyć do połączenia. Dodatkowi uczestnicy będą mogli jedynie wysyłać i czytać czaty. Potrzebujesz dodać więcej uczestników? [A]Uaktualnij teraz[/A]";
+/* Calls: Free plan limit warning alert message for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitAlert.message"="Potrzebujesz więcej czasu? plan Pro oferują nieograniczoną liczbę połączeń.";
+/* Calls: Free plan limit warning alert upgrade button for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitAlert.upgrade"="Zmień";
+/* Calls: Free plan limit warning alert not now button for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitAlert.notNow"="Nie teraz";
+/* Calls: Text for countdown in call UI for free plan limit warning for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitCountdown.title"="To bezpłatne połączenie zakończy się za %@";

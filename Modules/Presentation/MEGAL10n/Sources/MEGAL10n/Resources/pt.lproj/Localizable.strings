@@ -743,7 +743,7 @@
 /* A hint to show one option is recommended by MEGA */
 "(Recommended)"="(Recomendado)";
 /* Header to introduce how to deal with HEIC format photos in Camera Uplaod */
-"SAVE HEIC PHOTOS AS"="Salvar fotos HEVC como";
+"SAVE HEIC PHOTOS AS"="Salvar fotos HEIC como";
 /* Footer for HEIC format section */
 "We recommend JPG, as its the most compatible format for photos."="Recomendamos o formato JPG por ser o mais compatível para fotos.";
 /* Header to introduce how to deal with HEVC format videos in Camera Uplaod */
@@ -767,7 +767,7 @@
 /* Title for new camera upload feature */
 "New Camera Upload!"="Novas opções para os Uploads da câmera";
 /* A messge for camera upload v2 migration */
-"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Agora você pode optar por converter fotos e vídeos HEIF/HEVC a formatos mais compatíveis, como JPEG e H.264.";
+"Now you can choose to convert the HEIF/HEVC photos and videos to the most compatible JPEG/H.264 formats."="Agora você pode optar por converter fotos e vídeos HEIC/HEVC a formatos mais compatíveis, como JPEG e H.264.";
 /* Title for an action to use most compatible formats */
 "Use Most Compatible Formats"="Use os formatos mais compatíveis";
 /* Title for custom settings */
@@ -939,7 +939,7 @@
 /* Hint text where the user have to re-write the new email to confirm it */
 "confirmNewEmail"="Confirmar novo email";
 /* The title of the alert dialog to change the email associated to an account. */
-"Change Email"="Alterar o email";
+"Change Email"="Alterar email";
 /* Error message shown when the users tryes to change his/her email and writes the current one as the new one. */
 "oldAndNewEmailMatch"="O email novo e o email antigo não podem ser iguais";
 /* Error message shown when you have not written the same email when confirming a new one */
@@ -1231,9 +1231,9 @@
 /* Section title of a button where you can enable mobile data for voice and video calls. */
 "voiceAndVideoCalls"="Chamadas de voz e vídeo";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for a feature. */
-"useMobileData"="Usar dados celulares";
+"useMobileData"="Usar dados móveis";
 /* Title next to a switch button (On-Off) to allow using mobile data (Roaming) for videos. */
-"Use Mobile Data for Videos"="Use dados celulares para vídeos";
+"Use Mobile Data for Videos"="Usar dados móveis para vídeos";
 /* A header in the Chat settings. This changes the user's status to Away after some time of inactivity. */
 "autoAway"="Ausente automático";
 /* Footer text to explain the meaning of the functionaly 'Auto-away' of your chat status. */
@@ -1979,11 +1979,11 @@
 /* Location Usage Description. In order to protect user's privacy, Apple requires a specific string explaining why location will be accessed. */
 "NSLocationWhenInUseUsageDescription"="O MEGA acessa sua localização quando você a compartilha com os seus contatos no chat.";
 /* Information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
-"Mobile Data is turned off"="Os dados celulares estão desativados";
+"Mobile Data is turned off"="Os dados móveis estão desativados";
 /* Button title to go to the iOS Settings to enable 'Mobile Data' for the MEGA app. */
-"Turn Mobile Data on"="Ativar os dados celulares";
+"Turn Mobile Data on"="Ativar os dados móveis";
 /* Extra information shown when the user has disabled the 'Mobile Data' setting for MEGA in the iOS Settings. */
-"You can turn on mobile data for this app in Settings."="Você pode ativar os dados celulares para este aplicativo nas configurações do dispositivo.";
+"You can turn on mobile data for this app in Settings."="Você pode ativar os dados móveis para este aplicativo nas configurações do dispositivo.";
 /* title of the alert dialog when the user is changing the API URL to staging */
 "Change to a test server?"="Alterar para um servidor de teste?";
 /* text of the alert dialog when the user is changing the API URL to staging */
@@ -3585,9 +3585,9 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Características dos planos Pro";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• Links protegidos por senha\n\n• Links com datas de validade\n\n• Compartilhamento da cota de transferência\n\n• Backups automáticos\n\n• Retroceso até 90 dias no plano Pro  Lite e até 180 dias nos planos Pro I, II e III (em breve)\n\n• Agendamento da limpeza da lixeira entre 7 dias e 10 anos";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• Links protegidos por senha\n\n• Links com datas de validade\n\n• Compartilhamento de cotas de transferência\n\n• Retroceder até 90 dias de dados excluídos no Pro Lite e até 180 dias no Pro I, II e III\n\n• Mantenha-se privado online com nossa VPN de alta velocidade \n\n• Programe a limpeza da Lixeira entre 7 dias e 10 anos\n\n• Suporte prioritário";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Links protegidos por senha\n\n• Links com datas de validade\n\n• Compartilhamento da cota de transferência\n\n• Backups automáticos\n\n• Retroceder até 90 dias no plano Pro Lite e até 180 dias nos planos Pro I, II e III\n\n• Agendamento da limpeza da lixeira entre 7 dias e 10 anos\n\n• Sem anúncios";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Links protegidos por senha\n\n• Links com datas de validade\n\n• Compartilhamento de cotas de transferência\n\n• Retroceder até 90 dias de dados excluídos no Pro Lite e até 180 dias no Pro I, II e III\n\n• Mantenha-se privado online com nossa VPN de alta velocidade \n\n• Programe a limpeza da Lixeira entre 7 dias e 10 anos\n\n• Suporte prioritário\n\n• Sem anúncios";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Informações da assinatura";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3977,14 +3977,24 @@
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
 "notifications.tag.promo.title"="Oferta";
 /* Notifications: message showing the date and time at which a certain offer expires. %1$s will be replaced by date. %2$s will be replaced by time. */
-"notifications.expiration.message"="Expires on %1$s at %2$s";
+"notifications.expiration.message"="Expira às %2$s do dia %1$s";
 /* Title for action that allows user to hide files or folders */
 "general.menuAction.hide.title"="Ocultar";
 /* Title for action that allows user to unhide files or folders */
-"general.menuAction.unhide.title"="Unhide";
+"general.menuAction.unhide.title"="Deixar de ocultar";
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="Não foi possível entrar";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.message"="Esta chamada permite um máximo de 100 participantes. O organizador deve fazer o upgrade a um plano Pro para remover essa restrição.";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="Entendi";
+/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
+"meetings.waitingRoom.warning.limit100Participants"="Somente 100 participantes podem entrar na chamada. Participantes adicionais só poderão enviar e ler mensagens. Precisa adicionar mais participantes? [A]Faça um upgrade[/A]";
+/* Calls: Free plan limit warning alert message for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitAlert.message"="Precisa de mais tempo? Os planos Pro incluem chamadas ilimitadas.";
+/* Calls: Free plan limit warning alert upgrade button for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitAlert.upgrade"="Upgrade";
+/* Calls: Free plan limit warning alert not now button for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitAlert.notNow"="Agora não";
+/* Calls: Text for countdown in call UI for free plan limit warning for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitCountdown.title"="Esta chamada gratuita vai terminar em %@";
