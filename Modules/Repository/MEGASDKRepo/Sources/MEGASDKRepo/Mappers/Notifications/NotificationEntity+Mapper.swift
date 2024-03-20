@@ -22,6 +22,7 @@ fileprivate extension NotificationEntity {
             description: notification.description ?? "",
             imageName: notification.imageName,
             imagePath: notification.imagePath,
+            iconName: notification.iconName,
             startDate: notification.startDate,
             endDate: notification.endDate,
             shouldShowBanner: notification.shouldShowBanner,

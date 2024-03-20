@@ -24,6 +24,8 @@ public struct NotificationItem {
     /// `imagePath`: An optional string representing the path or URL base where the notification's image is located. This is used
     /// together with `imageName` to construct the complete URL to the image resource.
     public let imagePath: String?
+    /// `iconName`:  An optional string representing the name of the image to be displayed within the notification.
+    public let iconName: String?
     /// `startDate`: An optional date indicating when the notification becomes relevant or should start being displayed to
     /// the user.
     public let startDate: Date?
@@ -61,8 +63,14 @@ public struct NotificationItem {
     /// `imageName` or `imagePath` is nil, this property will return nil, indicating that no banner image is available for the
     /// notification.
     public var bannerImageURL: URL? {
-        guard let imagePath, let imageName else { return nil }
-        return URL(string: imagePath + imageName)
+        constructImageURL(type: .banner)
+    }
+    /// `iconURL`: A computed property that dynamically constructs a URL for the notification's icon by combining
+    /// `imagePath` and `imageName`. This URL can be used to load and display the icon within the notification. If either
+    /// `iconName` or `iconPath` is nil, this property will return nil, indicating that no icon  is available for the
+    /// notification.
+    public var iconURL: URL? {
+        constructImageURL(type: .icon)
     }
     /// `redirectionURL`: Contains the url to present when the notification is tapped.
     public var redirectionURL: URL?
@@ -74,6 +82,7 @@ public struct NotificationItem {
         isSeen: Bool,
         imageName: String?,
         imagePath: String?,
+        iconName: String?,
         startDate: Date?,
         endDate: Date?,
         redirectionURL: URL?,
@@ -87,10 +96,20 @@ public struct NotificationItem {
         self.isSeen = isSeen
         self.imageName = imageName
         self.imagePath = imagePath
+        self.iconName = iconName
         self.startDate = startDate
         self.endDate = endDate
         self.redirectionURL = redirectionURL
         self.formatDateClosure = formatDateClosure
         self.formatTimeClosure = formatTimeClosure
+    }
+    
+    private enum ImageType {
+        case icon, banner
+    }
+    
+    private func constructImageURL(type: ImageType) -> URL? {
+        guard let imagePath, let name = type == .banner ? imageName : iconName, !name.isEmpty else { return nil }
+        return URL(string: imagePath + name + ".png")
     }
 }
