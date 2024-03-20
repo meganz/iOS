@@ -1,4 +1,5 @@
 import MEGAL10n
+import MEGASwiftUI
 import SwiftUI
 
 struct AddParticipantsView: View {
@@ -14,7 +15,7 @@ struct AddParticipantsView: View {
     
     var body: some View {
         HStack(spacing: Constants.spacing) {
-            Image(.inviteToChat)
+            Image(isDesignTokenEnabled ? .inviteToChatDesignToken : .inviteToChat)
                 .padding(Constants.padding)
                 .frame(width: Constants.imageSize.width, height: Constants.imageSize.height)
             VStack(alignment: .leading) {
@@ -28,6 +29,10 @@ struct AddParticipantsView: View {
         .padding(.trailing, Constants.viewPadding)
         .frame(height: Constants.viewHeight)
         .contentShape(Rectangle())
-        .background(colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._FFFFFF.color)
+        .designTokenBackground(isDesignTokenEnabled, legacyColor: legacyBackground)
+    }
+    
+    private var legacyBackground: Color {
+        colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._FFFFFF.color
     }
 }

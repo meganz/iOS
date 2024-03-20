@@ -1,15 +1,16 @@
 import MEGAL10n
+import MEGASwiftUI
 import SwiftUI
 
 struct MeetingInfoView: View {
     @Environment(\.colorScheme) private var colorScheme
-
+    
     private enum Constants {
         static let spacing: CGFloat = 20
     }
     
     @ObservedObject var viewModel: MeetingInfoViewModel
-
+    
     var body: some View {
         VStack(spacing: 0) {
             if viewModel.showWaitingRoomWarningBanner {
@@ -52,7 +53,7 @@ struct MeetingInfoView: View {
                                     await viewModel.allowNonHostToAddParticipantsValueChanged(to: enabled)
                                 }
                             })
-                        .background(colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._FFFFFF.color)
+                        .designTokenBackground(isDesignTokenEnabled, legacyColor: legacyMeetingBackgroundColor)
                     }
                     
                     DisclosureView(
@@ -60,7 +61,7 @@ struct MeetingInfoView: View {
                         text: Strings.Localizable.Meetings.Info.sharedFiles) {
                             viewModel.sharedFilesViewTapped()
                         }
-                        .background(colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._FFFFFF.color)
+                        .designTokenBackground(isDesignTokenEnabled, legacyColor: legacyMeetingBackgroundColor)
                     
                     if viewModel.isModerator {
                         DisclosureView(
@@ -68,7 +69,7 @@ struct MeetingInfoView: View {
                             text: Strings.Localizable.Meetings.Info.manageMeetingHistory) {
                                 viewModel.manageChatHistoryViewTapped()
                             }
-                            .background(colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._FFFFFF.color)
+                            .designTokenBackground(isDesignTokenEnabled, legacyColor: legacyMeetingBackgroundColor)
                         
                         KeyRotationView(
                             title: Strings.Localizable.Meetings.Info.KeyRotation.title,
@@ -98,6 +99,10 @@ struct MeetingInfoView: View {
             }
         }
         .padding(.vertical)
-        .background(colorScheme == .dark ? MEGAAppColor.Black._000000.color : MEGAAppColor.White._F7F7F7.color)
+        .designTokenBackground(isDesignTokenEnabled, legacyColor: legacyMeetingBackgroundColor)
+    }
+    
+    var legacyMeetingBackgroundColor: Color {
+        colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._FFFFFF.color
     }
 }

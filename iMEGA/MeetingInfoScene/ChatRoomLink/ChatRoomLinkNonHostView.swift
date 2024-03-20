@@ -1,4 +1,5 @@
 import MEGAL10n
+import MEGASwiftUI
 import SwiftUI
 
 struct ChatRoomLinkNonHostView: View {
@@ -13,7 +14,7 @@ struct ChatRoomLinkNonHostView: View {
                 text: Strings.Localizable.Meetings.Info.shareMeetingLink) {
                     viewModel.shareMeetingLinkTapped()
                 }
-                .background(colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._FFFFFF.color)
+                .designTokenBackground(isDesignTokenEnabled, legacyColor: legacyMeetingBackgroundColor)
         }
         .alert(isPresented: $viewModel.showChatLinksMustHaveCustomTitleAlert) {
             Alert(title: Text(Strings.Localizable.chatLink),
@@ -23,7 +24,11 @@ struct ChatRoomLinkNonHostView: View {
         .actionSheet(isPresented: $viewModel.showShareMeetingLinkOptions) {
             ActionSheet(title: Text(Strings.Localizable.Meetings.Info.ShareOptions.title), buttons: shareOptionsSheetButtons())
         }
-        .background(colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._FFFFFF.color)
+        .designTokenBackground(isDesignTokenEnabled, legacyColor: legacyMeetingBackgroundColor)
+    }
+    
+    private var legacyMeetingBackgroundColor: Color {
+        colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._FFFFFF.color
     }
     
     private func shareOptionsSheetButtons() -> [ActionSheet.Button] {

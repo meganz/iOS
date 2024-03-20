@@ -1,3 +1,5 @@
+import MEGADesignToken
+import MEGASwiftUI
 import SwiftUI
 
 struct MeetingInfoHeaderView: View {
@@ -25,12 +27,24 @@ struct MeetingInfoHeaderView: View {
                         .font(.subheadline)
                     Text(viewModel.subtitle)
                         .font(.caption)
-                        .foregroundColor(Color(UIColor.lightGray))
+                        .foregroundColor(subtitleColor)
                 }
                 Spacer()
             }
             Divider()
         }
-        .background(colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._FFFFFF.color)
+        .designTokenBackground(isDesignTokenEnabled, legacyColor: legacyBackgroundColor)
+    }
+    
+    private var legacyBackgroundColor: Color {
+        colorScheme == .dark ? MEGAAppColor.Black._1C1C1E.color : MEGAAppColor.White._FFFFFF.color
+    }
+    
+    private var subtitleColor: Color {
+        if isDesignTokenEnabled {
+            TokenColors.Text.secondary.swiftUI
+        } else {
+            Color(UIColor.lightGray)
+        }
     }
 }
