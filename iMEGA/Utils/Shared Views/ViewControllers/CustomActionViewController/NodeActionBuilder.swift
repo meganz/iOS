@@ -30,6 +30,7 @@ final class NodeActionBuilder {
     private var sharedFolderReceiverDetail = ""
     private var containsMediaFiles = false
     private var isHidden: Bool?
+    private var accountType: AccountTypeEntity?
 
     func setDisplayMode(_ displayMode: DisplayMode) -> NodeActionBuilder {
         self.displayMode = displayMode
@@ -163,6 +164,11 @@ final class NodeActionBuilder {
     
     func setIsHidden(_ isHidden: Bool?) -> NodeActionBuilder {
         self.isHidden = isHidden
+        return self
+    }
+    
+    func setAccountType(_ accountType: AccountTypeEntity?) -> NodeActionBuilder {
+        self.accountType = accountType
         return self
     }
     
@@ -797,7 +803,7 @@ final class NodeActionBuilder {
     
     private func hiddenStateAction() -> NodeAction? {
         if shouldAddHiddenAction() {
-            .hideAction()
+            .hideAction(showProTag: accountType == .free)
         } else if shouldAddUnhideAction() {
             .unHideAction()
         } else {
