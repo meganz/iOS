@@ -46,6 +46,10 @@ typedef NS_ENUM(NSUInteger, BrowserAction) {
 
 @property (nonatomic) MEGAShareType parentShareType;
 
+@property (weak, nonatomic) IBOutlet UIView *selectorView;
+@property (weak, nonatomic) IBOutlet UIView *cloudDriveLineView;
+@property (weak, nonatomic) IBOutlet UIView *incomingLineView;
+
 - (void)pushBrowserWithParentNode:(MEGANode *)parentNode;
 - (void)updatePromptTitle;
 
