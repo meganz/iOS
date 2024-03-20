@@ -1364,7 +1364,6 @@ class NodeActionBuilderTests: XCTestCase {
     
     func testMultiselectBuild_cloudDriveContainsHiddenFolderForFolderDisplayMode_shouldReturnCorrectActions() {
         actions = NodeActionBuilder()
-            .setAccessLevel(.accessOwner)
             .setNodeSelectionType(.folders, selectedNodeCount: 4)
             .setDisplayMode(.cloudDrive)
             .setIsHidden(false)
@@ -1376,7 +1375,6 @@ class NodeActionBuilderTests: XCTestCase {
     
     func testMultiselectBuild_cloudDriveContainsHiddenFileForFileDisplayMode_shouldReturnCorrectActions() {
         actions = NodeActionBuilder()
-            .setAccessLevel(.accessOwner)
             .setNodeSelectionType(.files, selectedNodeCount: 4)
             .setDisplayMode(.cloudDrive)
             .setIsHidden(false)
