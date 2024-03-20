@@ -717,7 +717,7 @@
 /* Title of one of the Settings sections where you can configure "Security Options" of your MEGA account */
 "securityOptions"="Sicherheitsoptionen";
 /* Title of one of the Settings sections where you can see things 'About' the app */
-"about"="Version";
+"about"="Info";
 /* Title of one of the Settings sections where you can 'Send Feedback' to MEGA */
 "sendFeedbackLabel"="Bewertung abgeben";
 /* Message body of the email that appears when the users tap on "Send feedback" */
@@ -1811,9 +1811,9 @@
 /* Error shown when trying to start a call in a group with more peers than allowed */
 "Unable to start a call because the participants limit was exceeded."="Die Konferenz kann nicht gestartet werden, da das Teilnehmerlimit überschritten wurde.";
 /* Label shown while joining a public chat */
-"Joining..."="Joining chat…";
+"Joining..."="Sie treten gerade dem Chat bei…";
 /* Label shown while leaving a public chat */
-"Leaving..."="Leaving chat…";
+"Leaving..."="Chat wird verlassen…";
 /* Text shown for switching from thumbnail view to list view. */
 "List View"="Listenansicht";
 /* Text shown for switching from list view to thumbnail view. */
@@ -2483,7 +2483,7 @@
 /* Text shown for the action create new file */
 "Create new file"="Neue Datei erstellen";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
-"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="You do not have the permissions required to revert this file. You can, however, create a new file with the previous version. Would you like to proceed?";
+"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="Sie haben nicht die erforderlichen Rechte, um diese Datei wiederherzustellen. Sie können jedoch eine neue Datei mit der vorherigen Version erstellen. Fortfahren?";
 /* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
 "Pro Lite"="Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
@@ -2961,7 +2961,7 @@
 /* Error title shown when the user try to send more than one report in less than 10 minutes */
 "help.reportIssue.fail.too.many.request.title"="Sie müssen 10 Minuten warten, bevor Sie eine weitere Problemmeldung einreichen können";
 /* Error message shown when the user try to send more than one report in less than 10 minutes */
-"help.reportIssue.fail.too.many.request.message"="Wait and try again later, or contact our support team via support@mega.nz if the problem persists";
+"help.reportIssue.fail.too.many.request.message"="Versuchen Sie es später noch einmal oder kontaktieren Sie unser Supportteam unter support@mega.nz, falls das Problem weiterhin besteht";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.title"="Möchten Sie den Upload Ihres Problemberichts wirklich abbrechen?";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
@@ -3585,9 +3585,9 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Leistungsmerkmale der Pro-Pakete";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• Passwortgeschützte Links\n\n• Links mit Ablaufdatum\n\n• Teilen des Transfervolumens\n\n• Automatische Backups\n\n• Rewind – bis zu 90 Tage für Pro Lite und bis zu 180 Tage für Pro I, II und III (demnächst)\n\n• Planmäßige Leerung des Papierkorbs alle 7 Tage bis 10 Jahre";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10 years\n\n• Priority support";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Passwortgeschützte Links\n\n• Links mit Ablaufdatum\n\n• Teilen des Transfervolumens\n\n• Automatische Backups\n\n• Rewind – bis zu 90 Tage für Pro Lite und bis zu 180 Tage für Pro I, II und III\n\n• Leerungsintervall des Papierkorbs zwischen 7 Tagen und 10 Jahren einstellbar\n\n• Werbefrei";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Password-protected links\n\n• Links with expiry dates\n\n• Transfer quota sharing\n\n• Rewind up to 90 days of deleted data on Pro Lite and up to 180 days on Pro I, II, and III\n\n• Stay private online with our high-speed VPN\n\n• Schedule Rubbish bin clearing between 7 days and 10  years\n\n• Priority support\n\n• Ad free";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Abonnementdetails";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3977,14 +3977,24 @@
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
 "notifications.tag.promo.title"="Aktion";
 /* Notifications: message showing the date and time at which a certain offer expires. %1$s will be replaced by date. %2$s will be replaced by time. */
-"notifications.expiration.message"="Expires on %1$s at %2$s";
+"notifications.expiration.message"="Gültig bis %1$s %2$s";
 /* Title for action that allows user to hide files or folders */
 "general.menuAction.hide.title"="Nicht anzeigen";
 /* Title for action that allows user to unhide files or folders */
-"general.menuAction.unhide.title"="Unhide";
+"general.menuAction.unhide.title"="Einblenden";
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.title"="Cannot join";
+"calls.freePlanLimitWarning.usersLimitAlert.title"="Beitritt nicht möglich";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.message"="This call can only support 100 participants. Ask the organiser to upgrade to Pro to remove this restriction.";
+"calls.freePlanLimitWarning.usersLimitAlert.message"="Dieser Konferenz können nur 100 Teilnehmer beitreten. Bitten Sie den Organisator, ein Upgrade auf Pro durchzuführen, um diese Einschränkung aufzuheben.";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="Alles klar";
+/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
+"meetings.waitingRoom.warning.limit100Participants"="Nur 100 Teilnehmer können der Konferenz beitreten. Alle weiteren Teilnehmer können nur Chatnachrichten senden und lesen. Sie möchten weitere Teilnehmer hinzufügen? [A]Jetzt upgraden[/A]";
+/* Calls: Free plan limit warning alert message for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitAlert.message"="Sie benötigen mehr Zeit? Pro-Pakete bietet zeitlich unbeschränkte Anrufe.";
+/* Calls: Free plan limit warning alert upgrade button for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitAlert.upgrade"="Upgrade";
+/* Calls: Free plan limit warning alert not now button for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitAlert.notNow"="Jetzt nicht";
+/* Calls: Text for countdown in call UI for free plan limit warning for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitCountdown.title"="This free call will end in %@";

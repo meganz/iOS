@@ -3585,9 +3585,9 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="ميزات باقات برو Pro";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• روابط محمية بكلمة مرور\n\n• روابط بتواريخ انتهاء الصلاحية\n\n• مشاركة حجم تراسل المعطيات المتاح\n\n• النسخ الاحتياطية التلقائية\n\n• الترجيع إلى ما يصل حتى 90 يومًا على برو لايت Pro Lite وما يصل حتى 180 يومًا على برو Pro I و II و III (قريبًا)\n\n• جدولة مسح سلة المحذوفات بين 7 أيام و 10 سنوات";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• روابط محمية بكلمة مرور\n\n• روابط بتواريخ انتهاء الصلاحية\n\n• تشارك حجم تراسل المعطيات المتاح\n\n• الترجيع حتى 90 يومًا من البيانات المحذوفة على برو لايت Pro Lite وحتى 180 يومًا على برو Pro I و IIو III\n\n• حافظ على خصوصيتك عبر الإنترنت من خلال في بي إن VPN عالي السرعة\n\n• جدولة إفراغ سلة المحذوفات بين 7 أيام و 10 سنوات\n\n• أولوية الدعم";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• روابط محمية بكلمة مرور\n\n• روابط بتواريخ انتهاء الصلاحية\n\n• تشارك حجم تراسل المعطيات المتاح\n\n• النسخ الاحتياطي التلقائي\n\n• الترجيع حتى 90 يومًا على برو  Pro Lite وما يصل إلى 180 يومًا على برو Pro I و II و III\n\n• جدولة إفراغ سلة المحذوفات بين 7 أيام و 10 سنوات\n\n• بدون إعلانات";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• روابط محمية بكلمة مرور\n\n• روابط بتواريخ انتهاء الصلاحية\n\n• تشارك حجم تراسل المعطيات المتاح\n\n• الترجيع حتى 90 يومًا من البيانات المحذوفة على برو لايت Pro Lite وحتى 180 يومًا على برو Pro I و IIو III\n\n• حافظ على خصوصيتك عبر الإنترنت من خلال في بي إن VPN عالي السرعة\n\n• جدولة إفراغ سلة المحذوفات بين 7 أيام و 10 سنوات\n\n• أولوية الدعم\n\n• خالية من الإعلانات";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="تفاصيل الاشتراك";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3977,14 +3977,24 @@
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
 "notifications.tag.promo.title"="ترويج";
 /* Notifications: message showing the date and time at which a certain offer expires. %1$s will be replaced by date. %2$s will be replaced by time. */
-"notifications.expiration.message"="Expires on %1$s at %2$s";
+"notifications.expiration.message"="تنتهي الصلاحية في %1$s الساعة %2$s";
 /* Title for action that allows user to hide files or folders */
 "general.menuAction.hide.title"="إخفاء";
 /* Title for action that allows user to unhide files or folders */
-"general.menuAction.unhide.title"="Unhide";
+"general.menuAction.unhide.title"="إلغاء الإخفاء";
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="لا يمكن الانضمام";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.message"="يمكن لهذه المكالمة دعم 100 مشارك فقط. اطلب من المنظم الترقية إلى برو Pro لإزالة هذا القيد.";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="حسنًا، فهمت ذلك";
+/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
+"meetings.waitingRoom.warning.limit100Participants"="يمكن لـ 100 مشارك الانضمام إلى المكالمة. لن يتمكن أي مشارك إضافي إلا من إرسال المحادثات وقراءتها. هل تحتاج إلى إضافة المزيد من المشاركين؟ [A]قم بالترقية الآن[/A]";
+/* Calls: Free plan limit warning alert message for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitAlert.message"="هل تحتاج إلى مزيد من الوقت؟ تحتوي باقات برو Pro على مكالمات غير محدودة المدة.";
+/* Calls: Free plan limit warning alert upgrade button for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitAlert.upgrade"="الترقية";
+/* Calls: Free plan limit warning alert not now button for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitAlert.notNow"="ليس الآن";
+/* Calls: Text for countdown in call UI for free plan limit warning for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitCountdown.title"="ستنتهي هذه المكالمة المجانية في %@";

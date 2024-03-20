@@ -1811,9 +1811,9 @@
 /* Error shown when trying to start a call in a group with more peers than allowed */
 "Unable to start a call because the participants limit was exceeded."="No se puede iniciar la llamada porque se ha superado el límite de participantes.";
 /* Label shown while joining a public chat */
-"Joining..."="Joining chat…";
+"Joining..."="Uniéndose al chat…";
 /* Label shown while leaving a public chat */
-"Leaving..."="Leaving chat…";
+"Leaving..."="Abandonando el chat…";
 /* Text shown for switching from thumbnail view to list view. */
 "List View"="Vista de lista";
 /* Text shown for switching from list view to thumbnail view. */
@@ -2483,7 +2483,7 @@
 /* Text shown for the action create new file */
 "Create new file"="Crear nuevo archivo";
 /* Confirmation dialog shown to user when they try to revert a node in an incoming ReadWrite share. */
-"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="You do not have the permissions required to revert this file. You can, however, create a new file with the previous version. Would you like to proceed?";
+"You do not have the permissions required to revert this file. In order to continue, we can create a new file with the reverted data. Would you like to proceed?"="No tienes los permisos necesarios para revertir este archivo. Sin embargo, puedes crear un nuevo archivo con la versión anterior. ¿Deseas continuar?";
 /* The new LITE payment plan. This means it is a light or lightweight payment plan compared to the full / heavyweight plans with lots of bandwidth and storage (PRO I, PRO II, PRO III). */
 "Pro Lite"="Pro Lite";
 /* The avatar picture button to go to my account page. Use for voice over. */
@@ -2961,7 +2961,7 @@
 /* Error title shown when the user try to send more than one report in less than 10 minutes */
 "help.reportIssue.fail.too.many.request.title"="Debes esperar 10 minutos antes de enviar otro problema";
 /* Error message shown when the user try to send more than one report in less than 10 minutes */
-"help.reportIssue.fail.too.many.request.message"="Wait and try again later, or contact our support team via support@mega.nz if the problem persists";
+"help.reportIssue.fail.too.many.request.message"="Espera y vuelve a intentarlo más tarde, o contacta con nuestro equipo de soporte a través de support@mega.nz si el problema persiste";
 /* Confirmation title shown when the user is trying to cancel the ongoing upload report. */
 "help.reportIssue.creating.cancel.title"="¿Confirma que quieres cancelar la subida del informe de error?";
 /* Confirmation message shown when the user is trying to cancel the ongoing upload report. */
@@ -3585,9 +3585,9 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Características de los planes Pro";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• Enlaces protegidos con contraseña\n\n• Enlaces con fechas de caducidad\n\n• Posibilidad de compartir cuota de transferencia\n\n• Copias de seguridad automáticas\n\n• Rebobinado hasta 90 días en Pro Lite y hasta 180 días en Pro I, II y III (próximamente)\n\n• Limpieza automática de la papelera entre 7 días y 10 años";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• Enlaces protegidos por contraseña\n\n• Enlaces con fechas de caducidad\n\n• Compartición de cuotas de transferencia\n\n• Rebobinado hasta 90 días de datos borrados en Pro Lite y hasta 180 días en Pro I, II y III\n\n• Protección en línea con nuestra VPN de alta velocidad\n\n• Limpieza de la papelera programable entre 7 días y 10 años\n\n• Soporte prioritario ";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Enlaces protegidos con contraseña\n\n• Enlaces con fechas de caducidad\n\n• Posibilidad de compartir cuota de transferencia\n\n• Copias de seguridad automáticas\n\n• Rebobinado hasta 90 días en Pro Lite y hasta 180 días en Pro I, II y III\n\n• Limpieza automática de la papelera entre 7 días y 10 años\n\n• Sin anuncios";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Enlaces protegidos por contraseña\n\n• Enlaces con fechas de caducidad\n\n• Compartición de cuotas de transferencia\n\n• Rebobinado hasta 90 días de datos borrados en Pro Lite y hasta 180 días en Pro I, II y III\n\n• Protección en línea con nuestra VPN de alta velocidad\n\n• Limpieza de la papelera programable entre 7 días y 10 años\n\n• Soporte prioritario \n\n• Sin anuncios";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Información sobre la suscripción";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3977,14 +3977,24 @@
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
 "notifications.tag.promo.title"="Oferta";
 /* Notifications: message showing the date and time at which a certain offer expires. %1$s will be replaced by date. %2$s will be replaced by time. */
-"notifications.expiration.message"="Expires on %1$s at %2$s";
+"notifications.expiration.message"="Caduca el %1$s a las %2$s";
 /* Title for action that allows user to hide files or folders */
 "general.menuAction.hide.title"="Ocultar";
 /* Title for action that allows user to unhide files or folders */
-"general.menuAction.unhide.title"="Unhide";
+"general.menuAction.unhide.title"="Mostrar";
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.title"="Cannot join";
+"calls.freePlanLimitWarning.usersLimitAlert.title"="No es posible unirse";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
-"calls.freePlanLimitWarning.usersLimitAlert.message"="This call can only support 100 participants. Ask the organiser to upgrade to Pro to remove this restriction.";
+"calls.freePlanLimitWarning.usersLimitAlert.message"="Esta llamada solo admite a 100 participantes. Pide al organizador que amplíe a Pro para eliminar esta restricción.";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="Entendido";
+/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
+"meetings.waitingRoom.warning.limit100Participants"="Solo 100 participantes pueden unirse a la llamada. Los participantes adicionales solamente podrán enviar y leer los chats. ¿Necesitas añadir a más participantes? [A]Amplía ahora[/A]";
+/* Calls: Free plan limit warning alert message for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitAlert.message"="¿Necesitas más tiempo? El plan Pro ofrece llamadas ilimitadas.";
+/* Calls: Free plan limit warning alert upgrade button for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitAlert.upgrade"="Ampliar";
+/* Calls: Free plan limit warning alert not now button for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitAlert.notNow"="Ahora no";
+/* Calls: Text for countdown in call UI for free plan limit warning for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitCountdown.title"="Esta llamada gratuita finalizará en %@";

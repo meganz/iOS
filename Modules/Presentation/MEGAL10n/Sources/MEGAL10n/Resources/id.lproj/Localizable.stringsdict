@@ -2578,5 +2578,19 @@
         <string>%d folder dibagikan</string>
       </dict>
     </dict>
+    <key>calls.freePlanLimitWarning.durationLimitAlert.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Panggilan gratis anda akan berakhir dalam %d menit</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

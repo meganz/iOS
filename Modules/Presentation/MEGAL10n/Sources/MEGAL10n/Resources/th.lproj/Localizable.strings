@@ -3585,9 +3585,9 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="ฟีเจอร์สำหรับแผน Pro";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• ป้องกันลิงก์ด้วยการกำหนดรหัสผ่านได้\n\n• ตั้งค่าวันหมดอายุลิงก์ได้\n\n• แชร์โควต้าการถ่ายโอนได้\n\n• ตั้งค่าการสำรองข้อมูลอัตโนมัติได้\n\n• ใช้ฟีเจอร์ย้อนกลับไฟล์ได้ โดย Pro Lite ย้อนกลับได้ถึง 90 วัน ส่วน Pro I, II และ III ย้อนกลับได้ถึง 180 วัน (จะมาในเร็ว ๆ นี้)\n\n• สร้างกำหนดการล้างถังขยะได้ตั้งแต่ 7 วันถึง 10 ปี";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• ตั้งค่าลิงก์แบบมีรหัสผ่านได้\n\n• กำหนดวันหมดอายุลิงก์ได้\n\n• แชร์โควต้าการถ่ายโอนได้\n\n• ย้อนกลับข้อมูลที่ลบไปแล้วได้สูงสุด 90 วัน (สำหรับ Pro Lite) หรือ 180 วัน (สำหรับ Pro I, II, III)\n\n• VPN ความเร็วสูง ปกป้องข้อมูลของคุณขณะใช้งานอินเทอร์เน็ต\n\n• ตั้งเวลาล้างถังขยะอัตโนมัติ ได้ตั้งแต่ 7 วัน ถึง 10 ปี\n\n• การสนับสนุนแบบพิเศษ";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• ป้องกันลิงก์ด้วยการกำหนดรหัสผ่านได้\n\n• ตั้งค่าวันหมดอายุลิงก์ได้\n\n• แชร์โควต้าการถ่ายโอนได้\n\n• ตั้งค่าการสำรองข้อมูลอัตโนมัติได้\n\n• ใช้ฟีเจอร์ย้อนกลับไฟล์ได้ โดย Pro Lite ย้อนกลับได้ถึง 90 วัน ส่วน Pro I, II และ III ย้อนกลับได้ถึง 180 วัน\n\n• สร้างกำหนดการล้างถังขยะได้ตั้งแต่ 7 วันถึง 10 ปี\n\n• ไม่มีโฆษณา";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• ตั้งค่าลิงก์แบบมีรหัสผ่านได้\n\n• กำหนดวันหมดอายุลิงก์ได้\n\n• แชร์โควต้าการถ่ายโอนได้\n\n• ย้อนกลับข้อมูลที่ลบไปแล้วได้สูงสุด 90 วัน (สำหรับ Pro Lite) หรือ 180 วัน (สำหรับ Pro I, II, III)\n\n• VPN ความเร็วสูง ปกป้องข้อมูลของคุณขณะใช้งานอินเทอร์เน็ต\n\n• ตั้งเวลาล้างถังขยะอัตโนมัติ ได้ตั้งแต่ 7 วัน ถึง 10 ปี\n\n• การสนับสนุนแบบพิเศษ\n\n• ไม่มีโฆษณา";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="รายละเอียดการสมัครใช้งาน";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3977,14 +3977,24 @@
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
 "notifications.tag.promo.title"="โปรโมชั่น";
 /* Notifications: message showing the date and time at which a certain offer expires. %1$s will be replaced by date. %2$s will be replaced by time. */
-"notifications.expiration.message"="Expires on %1$s at %2$s";
+"notifications.expiration.message"="หมดอายุในวันที่ %1$s เวลา %2$s";
 /* Title for action that allows user to hide files or folders */
 "general.menuAction.hide.title"="ซ่อน";
 /* Title for action that allows user to unhide files or folders */
-"general.menuAction.unhide.title"="Unhide";
+"general.menuAction.unhide.title"="เลิกซ่อน";
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="ไม่สามารถเข้าร่วมได้";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.message"="การโทรนี้รองรับผู้เข้าร่วมได้สูงสุด 100 คน หากต้องการเพิ่มจำนวนผู้เข้าร่วม กรุณาขอให้ผู้จัดการประชุมอัปเกรดเป็นแผน Pro";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="โอเค เข้าใจแล้ว";
+/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
+"meetings.waitingRoom.warning.limit100Participants"="ผู้เข้าร่วมสามารถเข้าร่วมการโทรได้สูงสุด 100 คนเท่านั้น หากมีผู้เข้าร่วมเพิ่มเติม จะสามารถส่งและอ่านข้อความในแชทได้เท่านั้น ต้องการเพิ่มผู้เข้าร่วมเพิ่มเติมหรือไม่ [A]อัปเกรดแผนของคุณตอนนี้[/A]";
+/* Calls: Free plan limit warning alert message for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitAlert.message"="ต้องการคุยต่อนานกว่านี้หรือไม่ สมัครใช้งานแผน Pro จะสามารถโทรได้ไม่อั้น";
+/* Calls: Free plan limit warning alert upgrade button for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitAlert.upgrade"="อัปเกรด";
+/* Calls: Free plan limit warning alert not now button for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitAlert.notNow"="ไม่ใช่ตอนนี้";
+/* Calls: Text for countdown in call UI for free plan limit warning for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitCountdown.title"="การโทรฟรีนี้จะสิ้นสุดลงใน %@";

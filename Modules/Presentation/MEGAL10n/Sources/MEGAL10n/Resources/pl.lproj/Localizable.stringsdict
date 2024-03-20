@@ -3682,5 +3682,25 @@
         <string>%d foldery udostępnione</string>
       </dict>
     </dict>
+    <key>calls.freePlanLimitWarning.durationLimitAlert.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Twoja bezpłatna rozmowa zakończy się %d minutę</string>
+        <key>few</key>
+        <string>Twoja bezpłatna rozmowa zakończy się %d minuty</string>
+        <key>many</key>
+        <string>Twoja bezpłatna rozmowa zakończy się %d minuty</string>
+        <key>other</key>
+        <string>Twoja bezpłatna rozmowa zakończy się %d minuty</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

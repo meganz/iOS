@@ -3585,9 +3585,9 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Proプランの各機能";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="・パスワードで保護されたリンク\n\n・有効期限のあるリンク\n\n・転送容量の共有\n\n・自動バックアップ\n\n・Pro Liteでは最大90日、Pro I、II、IIIでは最大180日の巻き戻し（近日公開予定）\n\n・7日から10年の間でごみ箱を空にするようにスケジュール";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• パスワードで保護されたリンク\n\n• 有効期限のあるリンク\n\n• 転送容量の共有\n\n• Pro Liteでは削除されたデータを最大90日間、Pro I、II、IIIでは最大180日間巻き戻し\n\n• 当社の高速VPNでオンラインのプライバシーを確​​保\n\n• ごみ箱の片付けを7日から10年間の間でスケジュール\n\n• 優先サポート";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="・パスワードで保護されたリンク\n\n・有効期限のあるリンク\n\n・転送容量の共有\n\n・自動バックアップ\n\n・Pro Liteでは最大90日、Pro I、II、III（近日公開）では最大180日の巻き戻し\n\n・7日から10年の間でごみ箱を空にするようにスケジュール\n\n・広告なし";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• パスワードで保護されたリンク\n\n• 有効期限のあるリンク\n\n• 転送容量の共有\n\n• Pro Liteでは削除されたデータを最大90日間、Pro I、II、IIIでは最大180日間巻き戻し\n\n• 当社の高速VPNでオンラインのプライバシーを確​​保\n\n• ごみ箱の片付けを7日から10年間の間でスケジュール\n\n• 優先サポート\n\n• 広告なし";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="サブスクリプションの詳細";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3977,14 +3977,24 @@
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
 "notifications.tag.promo.title"="プロモ";
 /* Notifications: message showing the date and time at which a certain offer expires. %1$s will be replaced by date. %2$s will be replaced by time. */
-"notifications.expiration.message"="Expires on %1$s at %2$s";
+"notifications.expiration.message"="%1$s %2$sに期限切れになります";
 /* Title for action that allows user to hide files or folders */
 "general.menuAction.hide.title"="隠す";
 /* Title for action that allows user to unhide files or folders */
-"general.menuAction.unhide.title"="Unhide";
+"general.menuAction.unhide.title"="非表示を解除";
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="参加できません";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.message"="この通話では100人の参加者のみをサポートできます。この制限を解除するには、Proにアップグレードしていただくように、主催者様にご依頼ください。";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="はい、わかりました。";
+/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
+"meetings.waitingRoom.warning.limit100Participants"="通話に参加できる参加者は100名のみです。追加の参加者は、チャットの送信と読み取りのみが可能になります。さらに参加者を追加する必要がありますか？[A]今すぐアップグレード[/A]";
+/* Calls: Free plan limit warning alert message for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitAlert.message"="もっと時間がご必要です？Proプランをご利用いただくと無制限の通話をお楽しみいただけます。";
+/* Calls: Free plan limit warning alert upgrade button for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitAlert.upgrade"="アップグレード";
+/* Calls: Free plan limit warning alert not now button for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitAlert.notNow"="今はやめます";
+/* Calls: Text for countdown in call UI for free plan limit warning for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitCountdown.title"="この無料通話は%@分後に終了します";

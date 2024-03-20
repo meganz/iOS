@@ -2578,5 +2578,19 @@
         <string>%d thư mục đã được chia sẻ</string>
       </dict>
     </dict>
+    <key>calls.freePlanLimitWarning.durationLimitAlert.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>other</key>
+        <string>Cuộc gọi miễn phí của bạn sẽ kết thúc sau %d phút</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

@@ -3585,9 +3585,9 @@
 /* On Upgrade Account Plan screen. Displayed header title text for pro plan features */
 "upgradeAccountPlan.header.title.featuresOfProPlan"="Kenmerken van Pro abonnementen";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features */
-"upgradeAccountPlan.message.text.featuresOfProPlan"="• Met wachtwoord beveiligde koppelingen\n\n • Koppelingen met vervaldata • \n\nHet delen van quota's •\n\n Automatische back-ups • \n\nTerugspoelen tot 90 dagen met ProLite en tot 180 dagen met Pro I, II en III (binnenkort beschikbaar) •\n\n Plan het opruimen van de prullenbak tussen 7 dagen en 10 jaar";
+"upgradeAccountPlan.message.text.featuresOfProPlan"="• Met een wachtwoord beveiligde links\n\n• Links met vervaldatums\n\n• Verdeling van overdrachtstegoed\n\n• Tot 90 dagen aan verwijderde gegevens terugspoelen op Pro Lite en tot 180 dagen op Pro I, II en III\n\n• Blijf privé online met onze supersnelle VPN\n\n• Plan het opruimen van de Prullenbak tussen 7 dagen en 10 jaar\n\n• Prioritaire ondersteuning";
 /* On Upgrade Account Plan screen. Displayed text body for pro plan features with ads */
-"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Met wachtwoord beveiligde koppelingen\n\n• Koppelingen met vervaldata\n\n• Het delen van overdrachtstegoed• \n\n Automatische back-ups\n\n• Terugspoelen tot 90 dagen op Pro Lite en tot 180 dagen op Pro I, II en III\n\n• Plan het opruimen van de prullenbak tussen 7 dagen en 10 jaar\n\n• Advertentie vrij";
+"upgradeAccountPlan.message.text.featuresOfProPlanWithAds"="• Met een wachtwoord beveiligde links\n\n• Links met vervaldatums\n\n• Verdeling van overdrachtstegoed\n\n• Tot 90 dagen aan verwijderde gegevens terugspoelen op Pro Licht en tot 180 dagen op Pro I, II en III\n\n• Blijf privé online met onze supersnelle VPN\n\n• Plan het opruimen van de Prullenbak tussen 7 dagen en 10 jaar\n\n• Prioritaire ondersteuning\n\n• Reclamevrij";
 /* On Upgrade Account Plan screen. Displayed header title text for subscription details */
 "upgradeAccountPlan.header.title.subscriptionDetails"="Abonnement details";
 /* On Upgrade Account Plan screen. Displayed text body for subscription details */
@@ -3977,14 +3977,24 @@
 /* Notifications: tag to show the user that there are promotions available in the notifications page and section. */
 "notifications.tag.promo.title"="Promo";
 /* Notifications: message showing the date and time at which a certain offer expires. %1$s will be replaced by date. %2$s will be replaced by time. */
-"notifications.expiration.message"="Expires on %1$s at %2$s";
+"notifications.expiration.message"="Vervalt op %1$s om %2$s";
 /* Title for action that allows user to hide files or folders */
 "general.menuAction.hide.title"="Verbergen";
 /* Title for action that allows user to unhide files or folders */
-"general.menuAction.unhide.title"="Unhide";
+"general.menuAction.unhide.title"="Onzichtbaar maken";
 /* Calls: Free plan limit warning alert title for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.title"="Kan niet aansluiten";
 /* Calls: Free plan limit warning alert message for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.message"="Deze oproep kan slechts 100 deelnemers ondersteunen. Vraag de organisator om te upgraden naar Pro om deze beperking op te heffen.";
 /* Calls: Free plan limit warning alert button for max users reached in free plan call */
 "calls.freePlanLimitWarning.usersLimitAlert.button"="OK, ik snap het";
+/* Meetings: A warning message shown in the call UI when free-plan user has more than 100 participants */
+"meetings.waitingRoom.warning.limit100Participants"="Slechts 100 deelnemers kunnen deelnemen aan de oproep. Eventuele extra deelnemers kunnen alleen gesprekken verzenden en lezen. Wil je meer deelnemers toevoegen? [A]Nu upgraden[/A]";
+/* Calls: Free plan limit warning alert message for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitAlert.message"="Meer tijd nodig? Pro-abonnementen bied onbeperkt bellen.";
+/* Calls: Free plan limit warning alert upgrade button for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitAlert.upgrade"="Upgraden";
+/* Calls: Free plan limit warning alert not now button for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitAlert.notNow"="Niet Nu";
+/* Calls: Text for countdown in call UI for free plan limit warning for duration limit reached in free plan call */
+"calls.freePlanLimitWarning.durationLimitCountdown.title"="Dit gratis gesprek eindigt over %@";

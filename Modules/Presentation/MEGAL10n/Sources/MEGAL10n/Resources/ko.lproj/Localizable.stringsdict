@@ -2522,8 +2522,10 @@
         <string>NSStringPluralRuleType</string>
         <key>NSStringFormatValueTypeKey</key>
         <string>d</string>
+        <key>one</key>
+        <string>%d file sent to chats</string>
         <key>other</key>
-        <string>대화에 %d개의 파일을 보냄</string>
+        <string>%d files sent to chats</string>
       </dict>
     </dict>
     <key>chat.message.multipleFilesSentToMultipleChats</key>
@@ -2580,6 +2582,22 @@
         <string>d</string>
         <key>other</key>
         <string>%d개의 폴더가 공유됨</string>
+      </dict>
+    </dict>
+    <key>calls.freePlanLimitWarning.durationLimitAlert.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Your free call will end in %d minute</string>
+        <key>other</key>
+        <string>Your free call will end in %d minutes</string>
       </dict>
     </dict>
   </dict>

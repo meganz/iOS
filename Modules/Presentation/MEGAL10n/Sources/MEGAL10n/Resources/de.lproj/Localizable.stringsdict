@@ -2946,5 +2946,21 @@
         <string>%d Ordner freigegeben</string>
       </dict>
     </dict>
+    <key>calls.freePlanLimitWarning.durationLimitAlert.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Your free call will end in %d minute</string>
+        <key>other</key>
+        <string>Your free call will end in %d minutes</string>
+      </dict>
+    </dict>
   </dict>
 </plist>

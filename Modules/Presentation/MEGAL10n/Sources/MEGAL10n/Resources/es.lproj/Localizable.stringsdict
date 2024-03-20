@@ -3314,5 +3314,23 @@
         <string>%d carpetas compartidas</string>
       </dict>
     </dict>
+    <key>calls.freePlanLimitWarning.durationLimitAlert.title</key>
+    <dict>
+      <key>NSStringLocalizedFormatKey</key>
+      <string>%#@count@</string>
+      <key>count</key>
+      <dict>
+        <key>NSStringFormatSpecTypeKey</key>
+        <string>NSStringPluralRuleType</string>
+        <key>NSStringFormatValueTypeKey</key>
+        <string>d</string>
+        <key>one</key>
+        <string>Esta llamada gratuita finalizará en %d minuto</string>
+        <key>many</key>
+        <string>Esta llamada gratuita finalizará en %d de minutos</string>
+        <key>other</key>
+        <string>Esta llamada gratuita finalizará en %d minutos</string>
+      </dict>
+    </dict>
   </dict>
 </plist>
