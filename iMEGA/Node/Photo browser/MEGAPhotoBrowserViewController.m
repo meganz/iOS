@@ -129,10 +129,15 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
             [self activateSlideShowButtonWithBarButtonItem:[self slideshowButton]];
             break;
         case DisplayModeRubbishBin:
-        case DisplayModeNodeInsideFolderLink:
             [self.toolbar setItems:@[self.leftToolbarItem]];
             break;
-            
+        case DisplayModeNodeInsideFolderLink:
+            {
+                UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+                [self.toolbar setItems:@[self.leftToolbarItem, flexibleItem, [self slideshowButton], flexibleItem]];
+                [self activateSlideShowButtonWithBarButtonItem: [self slideshowButton]];
+            }
+            break;
         case DisplayModeChatAttachment:
             {
                 UIBarButtonItem *flexibleItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
@@ -401,6 +406,7 @@ static const long long MinSizeToRequestThePreview = 1 * 1024 * 1024; // 1 MB. Do
         case DisplayModeCloudDrive:
             return self.centerToolbarItem;
         case DisplayModeAlbumLink:
+        case DisplayModeNodeInsideFolderLink:
             return self.rightToolbarItem;
         default:
             return NULL;

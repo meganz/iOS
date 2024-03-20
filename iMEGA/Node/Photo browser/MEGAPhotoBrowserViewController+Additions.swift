@@ -182,7 +182,7 @@ extension MEGAPhotoBrowserViewController {
     
     @objc func isSlideShowEnabled() async -> Bool {
         switch displayMode {
-        case .cloudDrive, .sharedItem, .albumLink:
+        case .cloudDrive, .sharedItem, .albumLink, .nodeInsideFolderLink:
             return await dataProvider.currentPhoto()?.name?.fileExtensionGroup.isImage == true
         default:
             return false
@@ -466,7 +466,7 @@ extension MEGAPhotoBrowserViewController {
         switch displayMode {
         case .fileLink:
             shareFileLink()
-        case .albumLink:
+        case .albumLink, .nodeInsideFolderLink:
             openSlideShow()
         default:
             exportFile(from: node, sender: sender)
