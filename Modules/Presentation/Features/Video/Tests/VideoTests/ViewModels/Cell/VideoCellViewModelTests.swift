@@ -88,98 +88,6 @@ final class VideoCellViewModelTests: XCTestCase {
         XCTAssertEqual(tappedNodes, [ node ])
     }
     
-    // MARK: - Cell selection
-    
-    func testToggleSelection_notSelectedAndSelect_selected() async {
-        let video = NodeEntity(name: "0.mov", handle: 0)
-        let (_, _, imageURL) = imagePathData()
-        let thumbnailEntity = ThumbnailEntity(url: imageURL!, type: .thumbnail)
-        let mockThumbnailUseCase = MockThumbnailUseCase(
-            cachedThumbnails: [thumbnailEntity],
-            loadThumbnailResult: .success(thumbnailEntity)
-        )
-        let (sut, videoListViewModel) = await makeSUT(thumbnailUseCase: mockThumbnailUseCase, nodeEntity: video)
-        
-        XCTAssertFalse(sut.isSelected)
-        XCTAssertFalse(videoListViewModel.selection.isVideoSelected(video))
-        
-        videoListViewModel.selection.toggleSelection(for: video)
-        
-        XCTAssertTrue(sut.isSelected)
-        XCTAssertTrue(videoListViewModel.selection.isVideoSelected(video))
-    }
-    
-    func testToggleSelection_selectedAndDeselect_deselected() async {
-        let video = NodeEntity(name: "0.mov", handle: 0)
-        let (_, _, imageURL) = imagePathData()
-        let thumbnailEntity = ThumbnailEntity(url: imageURL!, type: .thumbnail)
-        let mockThumbnailUseCase = MockThumbnailUseCase(
-            cachedThumbnails: [thumbnailEntity],
-            loadThumbnailResult: .success(thumbnailEntity)
-        )
-        let (sut, videoListViewModel) = await makeSUT(
-            thumbnailUseCase: mockThumbnailUseCase,
-            nodeEntity: video
-        )
-        
-        videoListViewModel.selection.toggleSelection(for: video)
-        
-        XCTAssertTrue(sut.isSelected)
-        XCTAssertTrue(videoListViewModel.selection.isVideoSelected(video))
-        
-        videoListViewModel.selection.toggleSelection(for: video)
-        
-        XCTAssertFalse(sut.isSelected)
-        XCTAssertFalse(videoListViewModel.selection.isVideoSelected(video))
-    }
-    
-    func testToggleSelection_noSelectedAndSelectAll_selected() async {
-        let video = NodeEntity(name: "0.mov", handle: 0)
-        let (_, _, imageURL) = imagePathData()
-        let thumbnailEntity = ThumbnailEntity(url: imageURL!, type: .thumbnail)
-        let mockThumbnailUseCase = MockThumbnailUseCase(
-            cachedThumbnails: [thumbnailEntity],
-            loadThumbnailResult: .success(thumbnailEntity)
-        )
-        let (sut, videoListViewModel) = await makeSUT(
-            thumbnailUseCase: mockThumbnailUseCase,
-            nodeEntity: video
-        )
-        XCTAssertFalse(sut.isSelected)
-        XCTAssertFalse(videoListViewModel.selection.isVideoSelected(video))
-        XCTAssertFalse(videoListViewModel.selection.allSelected)
-        
-        videoListViewModel.selection.allSelected = true
-        videoListViewModel.selection.setSelectedVideos([video])
-        
-        XCTAssertTrue(sut.isSelected)
-        XCTAssertTrue(videoListViewModel.selection.isVideoSelected(video))
-    }
-    
-    func testToggleSelection_selectedAndDeselectAll_notSelected() async {
-        let video = NodeEntity(name: "0.mov", handle: 0)
-        let (_, _, imageURL) = imagePathData()
-        let thumbnailEntity = ThumbnailEntity(url: imageURL!, type: .thumbnail)
-        let mockThumbnailUseCase = MockThumbnailUseCase(
-            cachedThumbnails: [thumbnailEntity],
-            loadThumbnailResult: .success(thumbnailEntity)
-        )
-        let (sut, videoListViewModel) = await makeSUT(
-            thumbnailUseCase: mockThumbnailUseCase,
-            nodeEntity: video
-        )
-        videoListViewModel.selection.editMode = .active
-        videoListViewModel.selection.allSelected = true
-        videoListViewModel.selection.setSelectedVideos([video])
-        XCTAssertTrue(videoListViewModel.selection.isVideoSelected(video))
-        XCTAssertTrue(videoListViewModel.selection.allSelected)
-        
-        videoListViewModel.selection.allSelected = false
-        
-        XCTAssertFalse(sut.isSelected)
-        XCTAssertFalse(videoListViewModel.selection.isVideoSelected(video))
-    }
-    
     // MARK: - Helpers
     
     private func makeSUT(
@@ -202,7 +110,6 @@ final class VideoCellViewModelTests: XCTestCase {
         let sut = VideoCellViewModel(
             thumbnailUseCase: thumbnailUseCase,
             nodeEntity: nodeEntity,
-            selection: videoListViewModel.selection,
             onTapMoreOptions: onTapMoreOptions
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)

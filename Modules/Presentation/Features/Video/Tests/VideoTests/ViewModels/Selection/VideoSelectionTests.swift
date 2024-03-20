@@ -306,6 +306,64 @@ final class VideoSelectionTests: XCTestCase {
         XCTAssertEqual(receivedNode2Values, [false])
     }
     
+    // MARK: - onTappedCheckMark
+    
+    func testOnTappedCheckMark_whenIsSelectionDisabled_shouldNotToggleSelection() {
+        let node1 = NodeEntity(handle: 1)
+        let sut = makeSUT()
+        sut.isSelectionDisabled = true
+        
+        sut.onTappedCheckMark(for: node1)
+        
+        XCTAssertTrue(sut.videos.isEmpty)
+    }
+    
+    func testOnTappedCheckMark_whenIsNotInEditingState_shouldNotToggleSelection() {
+        let node1 = NodeEntity(handle: 1)
+        let sut = makeSUT()
+        sut.editMode = .inactive
+        
+        sut.onTappedCheckMark(for: node1)
+        
+        XCTAssertTrue(sut.videos.isEmpty)
+    }
+    
+    func testOnTappedCheckMark_whenIsSelectionEnabledButNotInEditingMode_shouldNotToggleSelection() {
+        let node1 = NodeEntity(handle: 1)
+        let sut = makeSUT()
+        sut.isSelectionDisabled = false
+        sut.editMode = .inactive
+        
+        sut.onTappedCheckMark(for: node1)
+        
+        XCTAssertTrue(sut.videos.isEmpty)
+    }
+    
+    func testOnTappedCheckMark_whenEligibleForEditingMode_shouldToggleSelection() {
+        let node1 = NodeEntity(handle: 1)
+        let sut = makeSUT()
+        sut.isSelectionDisabled = false
+        sut.editMode = .active
+        
+        sut.onTappedCheckMark(for: node1)
+        
+        XCTAssertEqual(sut.videos.count, 1)
+        XCTAssertEqual(sut.videos.first?.key, node1.handle)
+        XCTAssertEqual(sut.videos.first?.value, node1)
+    }
+    
+    func testOnTappedCheckMark_whenEligibleForEditingModeAndTappedTwice_shouldToggleSelection() {
+        let node1 = NodeEntity(handle: 1)
+        let sut = makeSUT()
+        sut.isSelectionDisabled = false
+        sut.editMode = .active
+        
+        sut.onTappedCheckMark(for: node1)
+        sut.onTappedCheckMark(for: node1)
+        
+        XCTAssertTrue(sut.videos.isEmpty)
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(

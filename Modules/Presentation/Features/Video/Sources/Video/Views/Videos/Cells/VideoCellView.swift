@@ -1,14 +1,33 @@
+import MEGADesignToken
 import MEGADomain
+import MEGASwiftUI
 import SwiftUI
 
 struct VideoCellView: View {
-    @ObservedObject var viewModel: VideoCellViewModel
-    let videoConfig: VideoConfig
+    @StateObject private var viewModel: VideoCellViewModel
+    @StateObject private var selection: VideoSelection
+    private let videoConfig: VideoConfig
+    
+    init(
+        viewModel: @autoclosure @escaping () -> VideoCellViewModel,
+        selection: @autoclosure @escaping () -> VideoSelection,
+        videoConfig: VideoConfig
+    ) {
+        _viewModel = StateObject(wrappedValue: viewModel())
+        _selection = StateObject(wrappedValue: selection())
+        self.videoConfig = videoConfig
+    }
     
     var body: some View {
         VideoCellViewContent(
             previewEntity: viewModel.previewEntity,
             videoConfig: videoConfig,
+            editMode: $selection.editMode,
+            isSelected: $selection.isSelected,
+            onTappedCheckMark: {
+                // In a separate ticket
+                // selection.onTappedCheckMark(for: viewModel.nodeEntity)
+            },
             onTappedMoreOptions: viewModel.onTappedMoreOptions
         )
         .task {
@@ -21,10 +40,21 @@ struct VideoCellViewContent: View {
     @Environment(\.colorScheme) var colorScheme
     let previewEntity: VideoCellPreviewEntity
     let videoConfig: VideoConfig
+    let editMode: Binding<EditMode>
+    let isSelected: Binding<Bool>
+    let onTappedCheckMark: () -> Void
     let onTappedMoreOptions: () -> Void
     
     var body: some View {
         HStack(alignment: .center, spacing: 8) {
+            
+            if editMode.wrappedValue.isEditing {
+                Button(
+                    action: { onTappedCheckMark() },
+                    label: { checkMarkView }
+                )
+                .padding(.leading, 10)
+            }
             
             leadingContent
                 .frame(width: 142, height: 80)
@@ -34,10 +64,18 @@ struct VideoCellViewContent: View {
                 .padding(0)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
             
-            trailingContent
-                .frame(width: 24, height: 24)
+            if !editMode.wrappedValue.isEditing {
+                trailingContent
+                    .frame(width: 24, height: 24)
+            }
+            
         }
         .frame(maxWidth: .infinity, idealHeight: 80, alignment: .leading)
+        .onTapGesture {
+            if editMode.wrappedValue.isEditing {
+                onTappedCheckMark()
+            }
+        }
     }
     
     private var leadingContent: some View {
@@ -78,10 +116,27 @@ struct VideoCellViewContent: View {
         }
     }
     
+    @ViewBuilder
     private var trailingContent: some View {
         Image(uiImage: videoConfig.rowAssets.moreImage)
             .foregroundColor(videoConfig.colorAssets.secondaryIconColor)
             .onTapGesture { onTappedMoreOptions() }
+    }
+    
+    private var checkMarkView: some View {
+        if isDesignTokenEnabled {
+            CheckMarkView(
+                markedSelected: isSelected.wrappedValue,
+                iconForegroundColor: TokenColors.Icon.inverseAccent.swiftUI,
+                foregroundColor: isSelected.wrappedValue ? TokenColors.Components.selectionControl.swiftUI : Color.clear,
+                borderColor: isSelected.wrappedValue ? Color.clear : TokenColors.Border.strong.swiftUI
+            )
+        } else {
+            CheckMarkView(
+                markedSelected: isSelected.wrappedValue,
+                foregroundColor: isSelected.wrappedValue ? .green : .secondary
+            )
+        }
     }
 }
 
@@ -89,21 +144,77 @@ struct VideoCellViewContent: View {
 
 #Preview {
     Group {
-        VideoCellViewContent(previewEntity: .standard, videoConfig: .preview, onTappedMoreOptions: {})
-            .frame(height: 80)
-        VideoCellViewContent(previewEntity: .favorite, videoConfig: .preview, onTappedMoreOptions: {})
-            .frame(height: 80)
-        VideoCellViewContent(previewEntity: .hasPublicLink, videoConfig: .preview, onTappedMoreOptions: {})
-            .frame(height: 80)
-        VideoCellViewContent(previewEntity: .hasLabel, videoConfig: .preview, onTappedMoreOptions: {})
-            .frame(height: 80)
-        VideoCellViewContent(previewEntity: .all(title: .short), videoConfig: .preview, onTappedMoreOptions: {})
-            .frame(height: 80)
-        VideoCellViewContent(previewEntity: .all(title: .medium), videoConfig: .preview, onTappedMoreOptions: {})
-            .frame(height: 80)
-        VideoCellViewContent(previewEntity: .all(title: .long), videoConfig: .preview, onTappedMoreOptions: {})
-            .frame(height: 80)
-        VideoCellViewContent(previewEntity: .placeholder, videoConfig: .preview, onTappedMoreOptions: {})
-            .frame(height: 80)
+        VideoCellViewContent(
+            previewEntity: .standard,
+            videoConfig: .preview,
+            editMode: .constant(.inactive),
+            isSelected: .constant(false),
+            onTappedCheckMark: {},
+            onTappedMoreOptions: {}
+        )
+        
+        VideoCellViewContent(
+            previewEntity: .favorite,
+            videoConfig: .preview,
+            editMode: .constant(.active),
+            isSelected: .constant(false),
+            onTappedCheckMark: {},
+            onTappedMoreOptions: {}
+        )
+        
+        VideoCellViewContent(
+            previewEntity: .hasPublicLink,
+            videoConfig: .preview,
+            editMode: .constant(.active),
+            isSelected: .constant(true),
+            onTappedCheckMark: {},
+            onTappedMoreOptions: {}
+        )
+        
+        VideoCellViewContent(
+            previewEntity: .hasLabel,
+            videoConfig: .preview,
+            editMode: .constant(.inactive),
+            isSelected: .constant(false),
+            onTappedCheckMark: {},
+            onTappedMoreOptions: {}
+        )
+        
+        VideoCellViewContent(
+            previewEntity: .all(title: .short),
+            videoConfig: .preview,
+            editMode: .constant(.inactive),
+            isSelected: .constant(false),
+            onTappedCheckMark: {},
+            onTappedMoreOptions: {}
+        )
+        
+        VideoCellViewContent(
+            previewEntity: .all(title: .medium),
+            videoConfig: .preview,
+            editMode: .constant(.inactive),
+            isSelected: .constant(false),
+            onTappedCheckMark: {},
+            onTappedMoreOptions: {}
+        )
+        
+        VideoCellViewContent(
+            previewEntity: .all(title: .long),
+            videoConfig: .preview,
+            editMode: .constant(.inactive),
+            isSelected: .constant(false),
+            onTappedCheckMark: {},
+            onTappedMoreOptions: {}
+        )
+        
+        VideoCellViewContent(
+            previewEntity: .placeholder,
+            videoConfig: .preview,
+            editMode: .constant(.inactive),
+            isSelected: .constant(false),
+            onTappedCheckMark: {},
+            onTappedMoreOptions: {}
+        )
     }
+    .frame(height: 80)
 }
