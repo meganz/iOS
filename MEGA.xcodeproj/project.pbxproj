@@ -1427,7 +1427,6 @@
 		99487BCC2A8F328D00BE4685 /* WaitingRoomViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FF30D12A8F16E6006CE3DB /* WaitingRoomViewModelTests.swift */; };
 		9949C3622A72421F000C299B /* ChatRoomAvatarInitialsGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9949C3612A72421F000C299B /* ChatRoomAvatarInitialsGenerator.swift */; };
 		9949C3662A72424C000C299B /* ChatRoomAvatarInitialsGeneratorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9949C3652A72424C000C299B /* ChatRoomAvatarInitialsGeneratorTest.swift */; };
-		995284C12B50F37E00D2B4AD /* ScheduleMeetingOccurrenceNotificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995284C02B50F37E00D2B4AD /* ScheduleMeetingOccurrenceNotificationTests.swift */; };
 		9956B7672B4BA16500A3B8EB /* ChatStatusEntity+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9956B7662B4BA16500A3B8EB /* ChatStatusEntity+Additions.swift */; };
 		9959F75D2A93460B00225D71 /* WeekNumberInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9959F75C2A93460B00225D71 /* WeekNumberInformation.swift */; };
 		9961E7262A283030004FB05F /* VideoExplorerTableCellViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9961E7252A283030004FB05F /* VideoExplorerTableCellViewModelTests.swift */; };
@@ -4108,7 +4107,6 @@
 		992453EF2A8DF8FF00ADB76B /* WaitingRoomJoinPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaitingRoomJoinPanelView.swift; sourceTree = "<group>"; };
 		9949C3612A72421F000C299B /* ChatRoomAvatarInitialsGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoomAvatarInitialsGenerator.swift; sourceTree = "<group>"; };
 		9949C3652A72424C000C299B /* ChatRoomAvatarInitialsGeneratorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatRoomAvatarInitialsGeneratorTest.swift; sourceTree = "<group>"; };
-		995284C02B50F37E00D2B4AD /* ScheduleMeetingOccurrenceNotificationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingOccurrenceNotificationTests.swift; sourceTree = "<group>"; };
 		9956B7662B4BA16500A3B8EB /* ChatStatusEntity+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatStatusEntity+Additions.swift"; sourceTree = "<group>"; };
 		9959F75C2A93460B00225D71 /* WeekNumberInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekNumberInformation.swift; sourceTree = "<group>"; };
 		9961E7252A283030004FB05F /* VideoExplorerTableCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoExplorerTableCellViewModelTests.swift; sourceTree = "<group>"; };
@@ -12289,7 +12287,6 @@
 				BF121D7A2A0B5C5300DA3633 /* ScheduleMeetingCreationRecurrenceOptionTests.swift */,
 				BF695F902A3A7E9A00162E0D /* ScheduleMeetingCreationWeeklyCustomOptionsViewModelTests.swift */,
 				838E55402A2E00DF00C3C2F8 /* ScheduleMeetingEndRecurrenceOptionsViewModelTests.swift */,
-				995284C02B50F37E00D2B4AD /* ScheduleMeetingOccurrenceNotificationTests.swift */,
 				BF695F942A3A96B200162E0D /* ScheduleMeetingSelectedFrequencyDetailsTests.swift */,
 				83751C5329E572DC0030310B /* ScheduleMeetingViewModelTests.swift */,
 				8396E2A22ACB0C9700C83102 /* WaitingRoomParticipantsListViewModelTests.swift */,
@@ -15911,7 +15908,6 @@
 				BF121D7B2A0B5C5300DA3633 /* ScheduleMeetingCreationRecurrenceOptionTests.swift in Sources */,
 				BF695F912A3A7E9A00162E0D /* ScheduleMeetingCreationWeeklyCustomOptionsViewModelTests.swift in Sources */,
 				838E55412A2E00DF00C3C2F8 /* ScheduleMeetingEndRecurrenceOptionsViewModelTests.swift in Sources */,
-				995284C12B50F37E00D2B4AD /* ScheduleMeetingOccurrenceNotificationTests.swift in Sources */,
 				BF695F952A3A96B200162E0D /* ScheduleMeetingSelectedFrequencyDetailsTests.swift in Sources */,
 				99FF30E42A8F3241006CE3DB /* ScheduleMeetingViewModel+Init.swift in Sources */,
 				83751C5429E572DC0030310B /* ScheduleMeetingViewModelTests.swift in Sources */,
