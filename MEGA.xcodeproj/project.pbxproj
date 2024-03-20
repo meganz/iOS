@@ -1529,6 +1529,7 @@
 		A828E687286B318A004CED9E /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = A828E686286B318A004CED9E /* FirebaseCrashlytics */; };
 		A828E68D286B3204004CED9E /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = A828E68C286B3204004CED9E /* FirebaseCrashlytics */; };
 		A83428B32B7D2CF1002393FA /* SelectableTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83428B22B7D2CF1002393FA /* SelectableTableViewCell+Additions.swift */; };
+		A83465262BAAF4F3009A4E40 /* MEGAPermissionsMock in Frameworks */ = {isa = PBXBuildFile; productRef = A83465252BAAF4F3009A4E40 /* MEGAPermissionsMock */; };
 		A836581C2102101C005E616F /* Contacts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 415226731A692ECC00EC7BB6 /* Contacts.storyboard */; };
 		A83892431EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = A83892421EB9CD9B00C83874 /* MEGAChatMessage+MNZCategory.m */; };
 		A8399F47296C40070062B6BC /* FileProviderExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8399F46296C40070062B6BC /* FileProviderExtension.swift */; };
@@ -1865,7 +1866,6 @@
 		B6790E06256B81C600154F6D /* MEGANode+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6790E05256B81C600154F6D /* MEGANode+Additions.swift */; };
 		B67B189925CAAEBA0022D6C0 /* CGSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D33D671250DBA0B00D74666 /* CGSize.swift */; };
 		B67B18C625CAB7B60022D6C0 /* FileSystemImageCacheClient+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67B18C525CAB7B60022D6C0 /* FileSystemImageCacheClient+Additions.swift */; };
-		B67D44DE2B605EF500738E04 /* MEGAPermissionsMock in Frameworks */ = {isa = PBXBuildFile; productRef = B67D44DD2B605EF500738E04 /* MEGAPermissionsMock */; };
 		B67D44E12B605F7600738E04 /* SearchMock in Frameworks */ = {isa = PBXBuildFile; productRef = B67D44E02B605F7600738E04 /* SearchMock */; };
 		B67DA38A2330AF9900E62067 /* AddPhoneNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67DA3892330AF9900E62067 /* AddPhoneNumberViewController.swift */; };
 		B6826B682898F4E900B2B8D0 /* MEGAUI in Frameworks */ = {isa = PBXBuildFile; productRef = B6826B672898F4E900B2B8D0 /* MEGAUI */; };
@@ -5300,7 +5300,6 @@
 				BF6149522A9FF33300AB051A /* MEGAL10n in Frameworks */,
 				BF6149542A9FF33300AB051A /* MEGAL10nObjc in Frameworks */,
 				9418DB292A4EE5FB002B0077 /* MEGAPermissions in Frameworks */,
-				B67D44DE2B605EF500738E04 /* MEGAPermissionsMock in Frameworks */,
 				946ACCC5299C0B0000E6C0F5 /* MEGAPresentation in Frameworks */,
 				B5D8DD8F2AC54DE200F1D18B /* MEGAPresentationMock in Frameworks */,
 				A891E8A529C1E09D0020072A /* MEGASdk in Frameworks */,
@@ -5442,6 +5441,7 @@
 			files = (
 				BFCD7D872BAAC07B00D61DD1 /* ConcurrencyExtras in Frameworks */,
 				A8DEA5082B9F157000E8806C /* MEGADomainMock in Frameworks */,
+				A83465262BAAF4F3009A4E40 /* MEGAPermissionsMock in Frameworks */,
 				1678D7F22A45487E00336C52 /* MEGATest in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -12859,7 +12859,6 @@
 				B5D58D542AC67C89004ECD36 /* Accounts */,
 				9418A7A12ACF84210014C01C /* MEGADesignToken */,
 				2446DEE82B0F099D00FA3FB8 /* Video */,
-				B67D44DD2B605EF500738E04 /* MEGAPermissionsMock */,
 				B67D44E02B605F7600738E04 /* SearchMock */,
 				B51616482B83361900C6E842 /* Notifications */,
 			);
@@ -13083,6 +13082,7 @@
 				1678D7F12A45487E00336C52 /* MEGATest */,
 				A8DEA5072B9F157000E8806C /* MEGADomainMock */,
 				BFCD7D862BAAC07B00D61DD1 /* ConcurrencyExtras */,
+				A83465252BAAF4F3009A4E40 /* MEGAPermissionsMock */,
 			);
 			productName = MEGAUnitTests;
 			productReference = B6CED48B22B8AC70009C4861 /* MEGAUnitTests.xctest */;
@@ -18000,6 +18000,10 @@
 			package = A828E67F286B3112004CED9E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCrashlytics;
 		};
+		A83465252BAAF4F3009A4E40 /* MEGAPermissionsMock */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MEGAPermissionsMock;
+		};
 		A8399FB8296DD5A70062B6BC /* SAMKeychain */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = BF0CB9342803AEAE00C21F11 /* XCRemoteSwiftPackageReference "SAMKeychain" */;
@@ -18162,10 +18166,6 @@
 		B65D17D02899E19600D5AD33 /* MEGAUIKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MEGAUIKit;
-		};
-		B67D44DD2B605EF500738E04 /* MEGAPermissionsMock */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MEGAPermissionsMock;
 		};
 		B67D44E02B605F7600738E04 /* SearchMock */ = {
 			isa = XCSwiftPackageProductDependency;
