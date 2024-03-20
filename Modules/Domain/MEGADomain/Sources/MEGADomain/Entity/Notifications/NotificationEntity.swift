@@ -6,6 +6,7 @@ public struct NotificationEntity: Sendable {
     public let description: String
     public let imageName: String?
     public let imagePath: String?
+    public let iconName: String?
     public let startDate: Date?
     public let endDate: Date?
     public let shouldShowBanner: Bool
@@ -28,6 +29,7 @@ public struct NotificationEntity: Sendable {
         description: String,
         imageName: String?,
         imagePath: String?,
+        iconName: String?,
         startDate: Date?,
         endDate: Date?,
         shouldShowBanner: Bool,
@@ -39,6 +41,7 @@ public struct NotificationEntity: Sendable {
         self.description = description
         self.imageName = imageName
         self.imagePath = imagePath
+        self.iconName = iconName
         self.startDate = startDate
         self.endDate = endDate
         self.shouldShowBanner = shouldShowBanner

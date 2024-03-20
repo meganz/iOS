@@ -10,6 +10,7 @@ extension NotificationEntity {
             isSeen: isSeen,
             imageName: imageName,
             imagePath: imagePath,
+            iconName: iconName,
             startDate: startDate,
             endDate: endDate,
             redirectionURL: firstCallToAction?.link

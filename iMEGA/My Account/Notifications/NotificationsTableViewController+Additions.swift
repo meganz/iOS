@@ -18,7 +18,13 @@ extension NotificationsTableViewController {
         }
         
         let promo = viewModel.promoList[indexPath.row]
-        let promoView = NotificationItemView(viewModel: NotificationItemViewModel(notification: promo))
+        let promoView = NotificationItemView(
+            viewModel:
+                NotificationItemViewModel(
+                    notification: promo,
+                    imageLoader: ImageLoader()
+                )
+        )
     
         cell.host(promoView, parent: self)
         cell.selectionStyle = .none
