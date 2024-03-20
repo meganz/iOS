@@ -275,7 +275,8 @@ final class NodeActionBuilder {
         nodeActions.append(.exportFileAction())
         nodeActions.append(.sendToChatAction())
         
-        if let hiddenStateAction = hiddenStateAction() {
+        if accessLevel == .accessOwner,
+            let hiddenStateAction = hiddenStateAction() {
             nodeActions.append(hiddenStateAction)
         }
 
@@ -308,7 +309,8 @@ final class NodeActionBuilder {
                 nodeActions.append(.pdfPageViewAction())
             }
         }
-        if let hiddenStateAction = hiddenStateAction() {
+        if accessLevel == .accessOwner,
+           let hiddenStateAction = hiddenStateAction() {
             nodeActions.append(hiddenStateAction)
         }
 
@@ -794,12 +796,7 @@ final class NodeActionBuilder {
     }
     
     private func hiddenStateAction() -> NodeAction? {
-        
-        guard accessLevel == .accessOwner else {
-            return nil
-        }
-                
-        return if shouldAddHiddenAction() {
+        if shouldAddHiddenAction() {
             .hideAction()
         } else if shouldAddUnhideAction() {
             .unHideAction()

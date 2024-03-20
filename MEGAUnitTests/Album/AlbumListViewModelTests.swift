@@ -58,14 +58,24 @@ final class AlbumListViewModelTests: XCTestCase {
     @MainActor
     func testLoadAlbums_onAlbumsLoadedFinished_shouldLoadSetToFalse() async throws {
         let sut = albumListViewModel()
-        let expectation = expectation(description: "Monitoring task has started")
+        let taskStartExpectation = expectation(description: "Monitoring task has started")
         Task {
-            expectation.fulfill()
+            taskStartExpectation.fulfill()
             try await sut.monitorAlbums()
         }
-        await fulfillment(of: [expectation], timeout: 1)
+        await fulfillment(of: [taskStartExpectation], timeout: 1)
         _ = await albumResult(sut: sut, condition: \.isEmpty)
-        XCTAssertFalse(sut.shouldLoad)
+        
+        let assertionExpectation = expectation(description: "Result for assertion should pass")
+        let subscription = sut.$shouldLoad
+            .first(where: { !$0 })
+            .sink {
+                XCTAssertFalse($0)
+                assertionExpectation.fulfill()
+            }
+        
+        await fulfillment(of: [assertionExpectation], timeout: 0.5)
+        subscription.cancel()
     }
     
     @MainActor
