@@ -1,16 +1,18 @@
 import Combine
+import MEGAFoundation
 import SwiftUI
 
 public final class ImageLoader: ObservableObject {
-    private var cache = NSCache<NSURL, UIImage>()
-    private var cancellables: Set<AnyCancellable>
+    private var cache: NSCache<NSURL, UIImage>
+    private var session: any URLSessionProtocol
     
-    public init(
-        cache: NSCache<NSURL, UIImage> = NSCache<NSURL, UIImage>(),
-        cancellables: Set<AnyCancellable> = Set<AnyCancellable>()
-    ) {
+    public init(session: any URLSessionProtocol = URLSession.shared, cache: NSCache<NSURL, UIImage> = NSCache<NSURL, UIImage>()) {
+        self.session = session
         self.cache = cache
-        self.cancellables = cancellables
+    }
+    
+    deinit {
+        clearCache()
     }
     
     public func loadImage(from url: URL) async -> UIImage? {
@@ -18,24 +20,20 @@ public final class ImageLoader: ObservableObject {
             return cachedImage
         }
         
-        guard let downloadedImage = await downloadImage(url: url) else {
-            return nil
-        }
-        
-        cacheImage(downloadedImage, for: url)
-        return downloadedImage
-    }
-    
-    private func downloadImage(url: URL) async -> UIImage? {
         do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            return UIImage(data: data)
+            let (data, _) = try await session.fetchData(from: url)
+            if let image = UIImage(data: data) {
+                cache.setObject(image, forKey: url as NSURL)
+                return image
+            }
         } catch {
             return nil
         }
+        
+        return nil
     }
     
-    private func cacheImage(_ image: UIImage, for url: URL) {
-        cache.setObject(image, forKey: url as NSURL)
+    private func clearCache() {
+        cache.removeAllObjects()
     }
 }
