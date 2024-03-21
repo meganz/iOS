@@ -46,24 +46,24 @@
                                 <inset key="separatorInset" minX="110" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="trackCell" id="0HM-6I-7Wu" customClass="PlaylistItemTableViewCell" customModule="MEGA" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="414" height="215.5"/>
+                                        <rect key="frame" x="0.0" y="50" width="414" height="218.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="0HM-6I-7Wu" id="jJS-th-AcV">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="215.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="218.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9nH-Mm-CMX">
-                                                    <rect key="frame" x="18" y="88" width="40" height="40"/>
+                                                    <rect key="frame" x="18" y="89.5" width="40" height="40"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="9nH-Mm-CMX" secondAttribute="height" multiplier="1:1" id="BEe-G9-eKj"/>
                                                         <constraint firstAttribute="height" constant="40" id="TJK-Al-luf"/>
                                                     </constraints>
                                                 </imageView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="4Mf-jY-cec">
-                                                    <rect key="frame" x="68" y="12" width="336" height="191.5"/>
+                                                    <rect key="frame" x="68" y="12" width="336" height="194.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4sH-gw-fBp" customClass="MEGALabel" customModule="MEGA" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="50" height="96"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="50" height="97.5"/>
                                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -73,7 +73,7 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nu5-we-luX">
-                                                            <rect key="frame" x="0.0" y="96" width="50" height="95.5"/>
+                                                            <rect key="frame" x="0.0" y="97.5" width="50" height="97"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -340,6 +340,7 @@
                     <size key="freeformSize" width="414" height="896"/>
                     <connections>
                         <outlet property="activityIndicatorView" destination="5Jz-DY-uZS" id="n9x-Yo-thg"/>
+                        <outlet property="closeButtonImage" destination="SM9-cw-bAd" id="B0j-mB-lCy"/>
                         <outlet property="closeButtonImageView" destination="2VV-PW-aIl" id="5zf-kB-JkN"/>
                         <outlet property="collectionView" destination="hUQ-If-IWf" id="3tu-sf-Tgs"/>
                         <outlet property="containerViewLeadingConstraint" destination="wJP-8B-6sr" id="hf8-im-Bg7"/>

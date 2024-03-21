@@ -1,3 +1,4 @@
+import MEGADesignToken
 import UIKit
 
 final class MiniPlayerViewController: UIViewController {
@@ -5,6 +6,7 @@ final class MiniPlayerViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var playPauseButtonImageView: UIImageView!
     @IBOutlet weak var closeButtonImageView: UIButton!
+    @IBOutlet weak var closeButtonImage: UIImageView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var separatorView: UIView!
@@ -80,7 +82,10 @@ final class MiniPlayerViewController: UIViewController {
     // MARK: - Private functions
     private func updatePlayback(_ percentage: Float, _ isPlaying: Bool) {
         progressBarView.setProgress(progress: CGFloat(percentage), animated: false)
-        playPauseButtonImageView.image = UIImage(resource: isPlaying ? .miniplayerPause : .miniplayerPlay)
+        
+        playPauseButtonImageView.image = UIColor.isDesignTokenEnabled()
+        ? UIImage(resource: isPlaying ? .miniplayerPause : .miniplayerPlay).withTintColor(TokenColors.Icon.primary, renderingMode: .alwaysTemplate)
+        : UIImage(resource: isPlaying ? .miniplayerPause : .miniplayerPlay)
     }
     
     private func updatePlaybackTracks(_ currentItem: AudioPlayerItem, queue: [AudioPlayerItem]?, loopMode: Bool) {
@@ -108,7 +113,7 @@ final class MiniPlayerViewController: UIViewController {
             return
         }
 
-        if item != currentItem, (lastMovementIndexPath == nil || lastMovementIndexPath == indexPath) {
+        if item != currentItem, lastMovementIndexPath == nil || lastMovementIndexPath == indexPath {
             collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
         }
     }
@@ -142,16 +147,26 @@ final class MiniPlayerViewController: UIViewController {
     
     // MARK: - UI configurations
     private func updateAppearance() {
-        view.backgroundColor = .mnz_mainBars(for: traitCollection)
+        view.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.surface1 : UIColor.mnz_mainBars(for: traitCollection)
         collectionView.backgroundColor = .clear
-        progressBarView.backgroundColor = UIColor.mnz_gray848484().withAlphaComponent(0.35)
+        progressBarView.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Background.surface2 : UIColor.gray848484.withAlphaComponent(0.35)
         imageView.layer.cornerRadius = 8.0
         
-        separatorView.backgroundColor = UIColor.mnz_gray848484().withAlphaComponent(0.35)
+        separatorView.backgroundColor = UIColor.isDesignTokenEnabled() ? TokenColors.Border.strong : UIColor.gray848484.withAlphaComponent(0.35)
         separatorHeightConstraint.constant = 0.5
         
         containerViewLeadingConstraint.constant = UIDevice.current.orientation.isLandscape && UIDevice.current.iPhoneDevice ?
             containerViewDefaultMargin + (UIApplication.shared.keyWindow?.safeAreaInsets.left ?? 0.0) : containerViewDefaultMargin
+        
+        if UIColor.isDesignTokenEnabled() {
+            playPauseButtonImageView.tintColor = TokenColors.Icon.primary
+            
+            closeButtonImage.image = UIImage.miniplayerClose
+                .withTintColor(TokenColors.Icon.primary, renderingMode: .alwaysTemplate)
+            closeButtonImage.tintColor = TokenColors.Icon.primary
+            
+            activityIndicatorView.color = TokenColors.Icon.secondary
+        }         
     }
     
     // MARK: - UI actions

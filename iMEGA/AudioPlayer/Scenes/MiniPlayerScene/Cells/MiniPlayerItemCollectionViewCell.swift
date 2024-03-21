@@ -1,3 +1,4 @@
+import MEGADesignToken
 import UIKit
 
 final class MiniPlayerItemCollectionViewCell: UICollectionViewCell {
@@ -15,8 +16,8 @@ final class MiniPlayerItemCollectionViewCell: UICollectionViewCell {
     private func style(with trait: UITraitCollection) {
         contentView.backgroundColor = .clear
         
-        titleLabel.textColor = UIColor.label
-        subtitleLabel.textColor = UIColor.mnz_subtitles(for: trait)
+        titleLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.label
+        subtitleLabel.textColor = UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.mnz_subtitles(for: trait)
     }
     
     // MARK: - Internal functions
