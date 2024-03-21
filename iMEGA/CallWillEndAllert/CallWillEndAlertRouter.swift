@@ -7,16 +7,16 @@ class CallWillEndAlertRouter: CallWillEndAlertRouting {
     private var baseViewController: UIViewController
     private var callWillEndAlert: UIViewController?
     private var viewModel: CallWillEndAlertViewModel?
-    private let remainingSeconds: Int
+    private let timeToEndCall: Double
     private let isCallUIVisible: Bool
-    private var dismissCompletion: ((Int) -> Void)?
+    private var dismissCompletion: ((Double) -> Void)?
     
     init(baseViewController: UIViewController,
-         remainingSeconds: Int,
+         timeToEndCall: Double,
          isCallUIVisible: Bool,
-         dismissCompletion: ((Int) -> Void)?) {
+         dismissCompletion: ((Double) -> Void)?) {
         self.baseViewController = baseViewController
-        self.remainingSeconds = remainingSeconds
+        self.timeToEndCall = timeToEndCall
         self.isCallUIVisible = isCallUIVisible
         self.dismissCompletion = dismissCompletion
     }
@@ -25,7 +25,7 @@ class CallWillEndAlertRouter: CallWillEndAlertRouting {
         viewModel = CallWillEndAlertViewModel(
             router: self,
             accountUseCase: AccountUseCase(repository: AccountRepository.newRepo),
-            remainingSeconds: remainingSeconds,
+            timeToEndCall: timeToEndCall,
             dismissCompletion: dismissCompletion
         )
         
@@ -39,7 +39,7 @@ class CallWillEndAlertRouter: CallWillEndAlertRouting {
     
     private func createCallWillEndAlert() -> UIAlertController {
         let alert = UIAlertController(
-            title: Strings.Localizable.Calls.FreePlanLimitWarning.DurationLimitAlert.title(remainingSeconds),
+            title: Strings.Localizable.Calls.FreePlanLimitWarning.DurationLimitAlert.title(Int(timeToEndCall)),
             message: Strings.Localizable.Calls.FreePlanLimitWarning.DurationLimitAlert.message,
             preferredStyle: .alert
         )

@@ -11,19 +11,19 @@ protocol CallWillEndAlertRouting: Routing {
 class CallWillEndAlertViewModel {
     private let router: any CallWillEndAlertRouting
     private let accountUseCase: any AccountUseCaseProtocol
-    private var remainingSeconds: Int
+    private var timeToEndCall: Double
 
     private var callWillEndTimer: Timer?
     
-    private var dismissCompletion: ((Int) -> Void)?
+    private var dismissCompletion: ((Double) -> Void)?
 
     init(router: any CallWillEndAlertRouting,
          accountUseCase: any AccountUseCaseProtocol,
-         remainingSeconds: Int,
-         dismissCompletion: ((Int) -> Void)?) {
+         timeToEndCall: Double,
+         dismissCompletion: ((Double) -> Void)?) {
         self.router = router
         self.accountUseCase = accountUseCase
-        self.remainingSeconds = remainingSeconds
+        self.timeToEndCall = timeToEndCall
         self.dismissCompletion = dismissCompletion
     }
     
@@ -35,12 +35,12 @@ class CallWillEndAlertViewModel {
         router.showCallWillEndAlert { [weak self] in
             guard let self, let accountDetails = accountUseCase.currentAccountDetails else { return }
             callWillEndTimer?.invalidate()
-            dismissCompletion?(remainingSeconds)
+            dismissCompletion?(timeToEndCall)
             router.showUpgradeAccount(accountDetails)
         } notNowAction: { [weak self] in
             guard let self else { return }
             callWillEndTimer?.invalidate()
-            dismissCompletion?(remainingSeconds)
+            dismissCompletion?(timeToEndCall)
         }
         router.updateCallWillEndAlertTitle(remainingMinutes: remainingSecondsCountRoundedUp())
         startCallWillEndTimer()
@@ -50,13 +50,13 @@ class CallWillEndAlertViewModel {
         callWillEndTimer?.invalidate()
         callWillEndTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { [weak self] _ in
             guard let self else { return }
-            remainingSeconds -= 1
-            guard remainingSeconds > 0 else { return }
+            timeToEndCall -= 1
+            guard timeToEndCall > 0 else { return }
             router.updateCallWillEndAlertTitle(remainingMinutes: remainingSecondsCountRoundedUp())
         })
     }
     
     private func remainingSecondsCountRoundedUp() -> Int {
-        Int((Double(remainingSeconds)/60.0).rounded(.up))
+        Int((timeToEndCall/60.0).rounded(.up))
     }
 }

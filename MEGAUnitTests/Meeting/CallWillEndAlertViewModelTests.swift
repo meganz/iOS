@@ -9,7 +9,7 @@ final class CallWillEndAlertViewModelTests: XCTestCase {
         let viewModel = CallWillEndAlertViewModel(
             router: router,
             accountUseCase: MockAccountUseCase(),
-            remainingSeconds: 10,
+            timeToEndCall: 10,
             dismissCompletion: nil
         )
         

@@ -442,6 +442,7 @@ final class MeetingParticipantsLayoutViewController: UIViewController, ViewType 
     }
     
     private func showCallWillEndNotification(remainingTime: String) {
+        guard callWillEndTimerNotificationView == nil else { return }
         let notification = CallNotificationView.instanceFromNib
         view.addSubview(notification)
         notification.show(message: Strings.Localizable.Calls.FreePlanLimitWarning.DurationLimitCountdown.title(remainingTime),

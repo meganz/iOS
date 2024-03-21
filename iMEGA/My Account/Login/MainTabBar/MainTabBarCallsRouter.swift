@@ -151,7 +151,7 @@ final class MainTabBarCallsRouter: MainTabBarCallsRouting {
         meetingContainerViewController.leaveCallFromScreenRecordingAlert()
     }
     
-    func showCallWillEndAlert(remainingSeconds: Int, isCallUIVisible: Bool, completion: ((Int) -> Void)?) {
-        CallWillEndAlertRouter(baseViewController: baseViewController, remainingSeconds: remainingSeconds, isCallUIVisible: isCallUIVisible, dismissCompletion: completion).start()
+    func showCallWillEndAlert(timeToEndCall: Double, isCallUIVisible: Bool) {
+        CallWillEndAlertRouter(baseViewController: baseViewController, timeToEndCall: timeToEndCall, isCallUIVisible: isCallUIVisible, dismissCompletion: nil).start()
     }
 }

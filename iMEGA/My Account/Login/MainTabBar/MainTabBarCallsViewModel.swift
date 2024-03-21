@@ -14,7 +14,7 @@ protocol MainTabBarCallsRouting: AnyObject {
     func showScreenRecordingNotification(started: Bool, username: String)
     func navigateToPrivacyPolice()
     func dismissCallUI()
-    func showCallWillEndAlert(remainingSeconds: Int, isCallUIVisible: Bool, completion: ((Int) -> Void)?)
+    func showCallWillEndAlert(timeToEndCall: Double, isCallUIVisible: Bool)
 }
 
 enum MainTabBarCallsAction: ActionType { }
@@ -181,10 +181,10 @@ enum MainTabBarCallsAction: ActionType { }
     private func showCallWillEndAlertIfNeeded(_ call: CallEntity) {
         guard featureFlagProvider.isFeatureFlagEnabled(for: .chatMonetization), !isCallUIVisible, let chatRoom = chatRoomUseCase.chatRoom(forChatId: call.chatId), chatRoom.ownPrivilege == .moderator else { return }
         
+        let secondsToCallWillEnd = Date(timeIntervalSince1970: TimeInterval(call.callWillEndTimestamp)).timeIntervalSinceNow
         router.showCallWillEndAlert(
-            remainingSeconds: call.numberValue,
-            isCallUIVisible: isCallUIVisible,
-            completion: nil)
+            timeToEndCall: secondsToCallWillEnd,
+            isCallUIVisible: isCallUIVisible)
     }
     
     private func manageCallStatusChange(for call: CallEntity) {

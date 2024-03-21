@@ -18,11 +18,15 @@ fileprivate extension CallEntity {
             duration: call.duration,
             initialTimestamp: call.initialTimeStamp,
             finalTimestamp: call.finalTimeStamp,
+            callWillEndTimestamp: call.callWillEndTimeStamp,
             hasLocalAudio: call.hasLocalAudio,
             hasLocalVideo: call.hasLocalVideo,
             termCodeType: call.termCode.toTermCodeTypeEntity(),
-            numberValue: call.numberValue,
-            callDurationLimit: call.callDurationLimit,
+            callLimits: CallLimitsEntity(
+                durationLimit: call.durationLimit,
+                maxUsers: call.usersLimit,
+                maxClientsPerUser: call.clientsPerUserLimit,
+                maxClients: call.clientsLimit),
             isRinging: call.isRinging,
             callCompositionChange: call.callCompositionChange.toCompositionChangeTypeEntity(),
             numberOfParticipants: call.numParticipants,
@@ -145,6 +149,8 @@ public extension MEGAChatCallChangeType {
             .speakRequested
         case .callWillEnd:
             .callWillEnd
+        case .callLimitsUpdated:
+            .callLimitsUpdated
         @unknown default:
             .noChanges
         }
