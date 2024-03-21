@@ -1,3 +1,4 @@
+import MEGADesignToken
 import UIKit
 
 final class PhotoSelectedMarkerView: SingleTapView {
@@ -11,16 +12,21 @@ final class PhotoSelectedMarkerView: SingleTapView {
     private lazy var outerCircle: CAShapeLayer = {
         let layer = CAShapeLayer()
         createPath(circleLayer: layer, insetValue: outerCircleInsetValue)
-        
-        layer.fillColor = MEGAAppColor.Black._000000.uiColor.withAlphaComponent(0).cgColor
-        layer.strokeColor = MEGAAppColor.White._FFFFFF.uiColor.cgColor
-        layer.lineWidth = 1.65
-        
-        layer.shadowRadius = 1
-        layer.shadowOpacity = 0.3
-        layer.shadowColor = MEGAAppColor.Black._000000.uiColor.cgColor
-        layer.shadowOffset = CGSize(width: -2, height: 2)
-        
+
+        if UIColor.isDesignTokenEnabled() {
+            layer.strokeColor = designTokenStrokeColor
+            layer.fillColor = designTokenFillColor
+        } else {
+            layer.fillColor = UIColor.clear.cgColor
+            layer.strokeColor = UIColor.whiteFFFFFF.cgColor
+            // The design token version of the checkmark does not contain a shadow
+            layer.shadowColor = UIColor.black000000.cgColor
+            layer.lineWidth = 1.65
+            layer.shadowRadius = 1
+            layer.shadowOpacity = 0.3
+            layer.shadowOffset = CGSize(width: -2, height: 2)
+        }
+
         return layer
     }()
     
@@ -28,8 +34,12 @@ final class PhotoSelectedMarkerView: SingleTapView {
     private lazy var innerCircle: CAShapeLayer = {
         let layer = CAShapeLayer()
         createPath(circleLayer: layer, insetValue: innerCircleInsetValue)
-        
-        layer.fillColor = MEGAAppColor.Green._4AA588.uiColor.cgColor
+
+        if UIColor.isDesignTokenEnabled() {
+            layer.fillColor = TokenColors.Components.selectionControl.cgColor
+        } else {
+            layer.fillColor = UIColor.green4AA588.cgColor
+        }
 
         return layer
     }()
@@ -38,13 +48,27 @@ final class PhotoSelectedMarkerView: SingleTapView {
     private lazy var label: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.textColor = MEGAAppColor.White._FFFFFF.uiColor
+
+        if UIColor.isDesignTokenEnabled() {
+            label.textColor = TokenColors.Icon.inverseAccent
+        } else {
+            label.textColor = UIColor.whiteFFFFFF
+        }
+
         label.baselineAdjustment = .alignCenters
         label.font = UIFont.systemFont(ofSize: 17, weight: .medium)
         label.adjustsFontSizeToFitWidth = true
         return label
     }()
-    
+
+    private var designTokenStrokeColor: CGColor? {
+        selected ? nil : TokenColors.Border.strong.cgColor
+    }
+
+    private var designTokenFillColor: CGColor {
+        selected ? TokenColors.Components.selectionControl.cgColor : UIColor.clear.cgColor
+    }
+
     var text: String? {
         didSet {
             label.text = text
@@ -55,6 +79,10 @@ final class PhotoSelectedMarkerView: SingleTapView {
         didSet {
             innerCircle.isHidden = !selected
             label.isHidden = !selected
+            if UIColor.isDesignTokenEnabled() {
+                outerCircle.fillColor = designTokenFillColor
+                outerCircle.strokeColor = designTokenStrokeColor
+            }
         }
     }
     
