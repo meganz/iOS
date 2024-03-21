@@ -90,6 +90,7 @@ class NodeBrowserViewModelTests: XCTestCase {
                 ),
                 warningViewModel: nil, 
                 upgradeEncouragementViewModel: nil,
+                adsVisibilityViewModel: nil,
                 config: .default,
                 nodeSource: nodeSource,
                 avatarViewModel: MyAvatarViewModel(

@@ -84,11 +84,14 @@ extension MainTabBarController {
     }
     
     private func makeCloudDriveViewController() -> UIViewController? {
-        CloudDriveViewControllerFactory
+        let config = NodeBrowserConfig(displayMode: .cloudDrive, showsAvatar: true, adsConfiguratorProvider: {
+            UIApplication.mainTabBarRootViewController() as? MainTabBarController
+        })
+        return CloudDriveViewControllerFactory
             .make()
             .build(
                 nodeSource: .node({ MEGASdk.shared.rootNode?.toNodeEntity() }),
-                config: .init(displayMode: .cloudDrive, showsAvatar: true)
+                config: config
             )
     }
     
