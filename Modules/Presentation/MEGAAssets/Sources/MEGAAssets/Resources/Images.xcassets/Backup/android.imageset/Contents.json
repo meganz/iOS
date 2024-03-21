@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "android.pdf",
+      "filename" : "androidLight.pdf",
       "idiom" : "universal"
     },
     {
@@ -11,7 +11,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "android 1.pdf",
+      "filename" : "androidDark.pdf",
       "idiom" : "universal"
     }
   ],

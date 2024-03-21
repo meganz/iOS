@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "pc 1.pdf",
+      "filename" : "pcLight.pdf",
       "idiom" : "universal"
     },
     {
@@ -11,7 +11,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "pc.pdf",
+      "filename" : "pcDark.pdf",
       "idiom" : "universal"
     }
   ],
