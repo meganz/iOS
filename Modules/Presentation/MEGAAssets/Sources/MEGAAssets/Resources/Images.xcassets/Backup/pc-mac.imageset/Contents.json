@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "pc-mac.pdf",
+      "filename" : "pc-macLight.pdf",
       "idiom" : "universal"
     },
     {
@@ -11,7 +11,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "pc-mac 1.pdf",
+      "filename" : "pc-macDark.pdf",
       "idiom" : "universal"
     }
   ],
