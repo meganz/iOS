@@ -51,6 +51,7 @@ public struct CallEntity: Sendable {
         case waitingRoomPushedFromCall
         case speakRequested
         case callWillEnd
+        case callLimitsUpdated
     }
     
     public enum ConfigurationType: Sendable {
@@ -78,11 +79,11 @@ public struct CallEntity: Sendable {
     public let duration: Int64
     public let initialTimestamp: Int64
     public let finalTimestamp: Int64
+    public let callWillEndTimestamp: Int64
     public let hasLocalAudio: Bool
     public let hasLocalVideo: Bool
     public let termCodeType: TermCodeType?
-    public let numberValue: Int
-    public let callDurationLimit: Int
+    public let callLimits: CallLimitsEntity
     public let isRinging: Bool
     public let callCompositionChange: CompositionChangeType?
     public let numberOfParticipants: Int
@@ -95,7 +96,7 @@ public struct CallEntity: Sendable {
     public let waitingRoomHandleList: [HandleEntity]
     public let uuid: UUID
     
-    public init(status: CallStatusType?, chatId: HandleEntity, callId: HandleEntity, changeType: ChangeType?, duration: Int64, initialTimestamp: Int64, finalTimestamp: Int64, hasLocalAudio: Bool, hasLocalVideo: Bool, termCodeType: TermCodeType?, numberValue: Int, callDurationLimit: Int, isRinging: Bool, callCompositionChange: CompositionChangeType?, numberOfParticipants: Int, isOnHold: Bool, sessionClientIds: [HandleEntity], clientSessions: [ChatSessionEntity], participants: [HandleEntity], waitingRoomStatus: WaitingRoomStatus, waitingRoom: WaitingRoomEntity?, waitingRoomHandleList: [HandleEntity], uuid: UUID) {
+    public init(status: CallStatusType?, chatId: HandleEntity, callId: HandleEntity, changeType: ChangeType?, duration: Int64, initialTimestamp: Int64, finalTimestamp: Int64, callWillEndTimestamp: Int64, hasLocalAudio: Bool, hasLocalVideo: Bool, termCodeType: TermCodeType?, callLimits: CallLimitsEntity, isRinging: Bool, callCompositionChange: CompositionChangeType?, numberOfParticipants: Int, isOnHold: Bool, sessionClientIds: [HandleEntity], clientSessions: [ChatSessionEntity], participants: [HandleEntity], waitingRoomStatus: WaitingRoomStatus, waitingRoom: WaitingRoomEntity?, waitingRoomHandleList: [HandleEntity], uuid: UUID) {
         self.status = status
         self.chatId = chatId
         self.callId = callId
@@ -103,11 +104,11 @@ public struct CallEntity: Sendable {
         self.duration = duration
         self.initialTimestamp = initialTimestamp
         self.finalTimestamp = finalTimestamp
+        self.callWillEndTimestamp = callWillEndTimestamp
         self.hasLocalAudio = hasLocalAudio
         self.hasLocalVideo = hasLocalVideo
         self.termCodeType = termCodeType
-        self.numberValue = numberValue
-        self.callDurationLimit = callDurationLimit
+        self.callLimits = callLimits
         self.isRinging = isRinging
         self.callCompositionChange = callCompositionChange
         self.numberOfParticipants = numberOfParticipants
@@ -128,6 +129,20 @@ public struct CallEntity: Sendable {
         default:
             return false
         }
+    }
+}
+
+public struct CallLimitsEntity: Sendable {
+    public let durationLimit: Int
+    public let maxUsers: Int
+    public let maxClientsPerUser: Int
+    public let maxClients: Int
+    
+    public init(durationLimit: Int, maxUsers: Int, maxClientsPerUser: Int, maxClients: Int) {
+        self.durationLimit = durationLimit
+        self.maxUsers = maxUsers
+        self.maxClientsPerUser = maxClientsPerUser
+        self.maxClients = maxClients
     }
 }
 

@@ -30,7 +30,7 @@ protocol MeetingContainerRouting: AnyObject, Routing {
     func showMutedMessage(by name: String)
     func showProtocolErrorAlert()
     func showUsersLimitErrorAlert()
-    func showCallWillEndAlert(remainingSeconds: Int, completion: ((Int) -> Void)?)
+    func showCallWillEndAlert(timeToEndCall: Double, completion: ((Double) -> Void)?)
 }
 
 final class MeetingContainerRouter: MeetingContainerRouting {
@@ -336,9 +336,9 @@ final class MeetingContainerRouter: MeetingContainerRouting {
         }
     }
     
-    func showCallWillEndAlert(remainingSeconds: Int, completion: ((Int) -> Void)?) {
+    func showCallWillEndAlert(timeToEndCall: Double, completion: ((Double) -> Void)?) {
         guard let presenter = presenter else { return }
-        CallWillEndAlertRouter(baseViewController: presenter, remainingSeconds: remainingSeconds, isCallUIVisible: isCallUIVisible, dismissCompletion: completion).start()
+        CallWillEndAlertRouter(baseViewController: presenter, timeToEndCall: timeToEndCall, isCallUIVisible: isCallUIVisible, dismissCompletion: completion).start()
     }
     
     // MARK: - Private methods.

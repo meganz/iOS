@@ -411,7 +411,7 @@ final class MockMainTabBarCallsRouter: MainTabBarCallsRouting {
         dismissCallUI_calledTimes += 1
     }
     
-    func showCallWillEndAlert(remainingSeconds: Int, isCallUIVisible: Bool, completion: ((Int) -> Void)?) {
+    func showCallWillEndAlert(timeToEndCall: Double, isCallUIVisible: Bool) {
         showCallWillEndAlert_calledTimes += 1
     }
 }

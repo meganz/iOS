@@ -380,11 +380,10 @@ final class MeetingContainerViewModelTests: XCTestCase {
     func testCallUpdate_callWillEndReceivedUserIsModerator_shouldshowCallWillEndAlert() {
         
         let (sut, router) = makeSUT(
-            chatRoom: ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting),
-            callUseCase: MockCallUseCase(call: CallEntity(numberValue: 10))
+            chatRoom: ChatRoomEntity(ownPrivilege: .moderator, chatType: .meeting)
         )
         test(viewModel: sut,
-             action: .showCallWillEndAlert(remainingSeconds: 10, completion: { _ in }),
+             action: .showCallWillEndAlert(timeToEndCall: 10, completion: { _ in }),
              expectedCommands: [])
         XCTAssertEqual(router.showCallWillEndAlert_calledTimes, 1)
     }
@@ -535,7 +534,7 @@ final class MockMeetingContainerRouter: MeetingContainerRouting {
         showUsersLimitErrorAlert_calledTimes += 1
     }
     
-    func showCallWillEndAlert(remainingSeconds: Int, completion: ((Int) -> Void)?) {
+    func showCallWillEndAlert(timeToEndCall: Double, completion: ((Double) -> Void)?) {
         showCallWillEndAlert_calledTimes += 1
     }
 }

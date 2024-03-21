@@ -102,7 +102,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     
     private var timer: Timer?
     private var callWillEndTimer: Timer?
-    private var callWillEndCountDown: Int = 0
+    private var callWillEndCountDown: Double = 0
     
     private(set) var callParticipants = [CallParticipantEntity]() {
         didSet {
@@ -547,6 +547,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             
             requestAvatarChanges(forParticipants: callParticipants + [myself], chatId: call.chatId)
             invokeCommand?(.configLocalUserView(position: isBackCameraSelected() ? .back : .front))
+            showCallWillEndNotificationIfNeeded()
         case .tapOnView(let onParticipantsView):
             if onParticipantsView && layoutMode == .speaker && !callParticipants.isEmpty {
                 return
@@ -560,6 +561,7 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
         case .tapOnBackButton:
             callUseCase.stopListeningForCall()
             timer?.invalidate()
+            callWillEndTimer?.invalidate()
             remoteVideoUseCase.disableAllRemoteVideos()
             containerViewModel?.dispatch(.tapOnBackButton)
         case .showRenameChatAlert:
@@ -1074,19 +1076,20 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
     /// Both can not be shown at same time, so countdown is presented for moderators when they choose one action in the alert. 
     /// For non moderators, countdown is showed directly.
     private func manageCallWillEnd(for call: CallEntity) {
+        let timeToEndCall = Date(timeIntervalSince1970: TimeInterval(call.callWillEndTimestamp)).timeIntervalSinceNow
         if chatRoom.ownPrivilege == .moderator {
-            containerViewModel?.dispatch(.showCallWillEndAlert(remainingSeconds: call.numberValue, completion: { [weak self] remainingSeconds in
-                self?.showCallWillEndNotification(remainingSeconds: remainingSeconds)
+            containerViewModel?.dispatch(.showCallWillEndAlert(timeToEndCall: timeToEndCall, completion: { [weak self] timeToEndCall in
+                self?.showCallWillEndNotification(timeToEndCall: timeToEndCall)
             }))
         } else {
-            showCallWillEndNotification(remainingSeconds: call.numberValue)
+            showCallWillEndNotification(timeToEndCall: timeToEndCall)
         }
     }
     
-    private func showCallWillEndNotification(remainingSeconds: Int) {
-        callWillEndCountDown = remainingSeconds
+    private func showCallWillEndNotification(timeToEndCall: Double) {
+        callWillEndCountDown = timeToEndCall
 
-        invokeCommand?(.showCallWillEnd(TimeInterval(callWillEndCountDown).timeString))
+        invokeCommand?(.showCallWillEnd(timeToEndCall.timeString))
         startCallWillEndTimer()
     }
     
@@ -1098,6 +1101,13 @@ final class MeetingParticipantsLayoutViewModel: NSObject, ViewModelType {
             guard callWillEndCountDown >= 0 else { return }
             invokeCommand?(.updateCallWillEnd(TimeInterval(callWillEndCountDown).timeString))
         })
+    }
+    
+    private func showCallWillEndNotificationIfNeeded() {
+        if call.callWillEndTimestamp > 0 {
+            let timeToEndCall = Date(timeIntervalSince1970: TimeInterval(call.callWillEndTimestamp)).timeIntervalSinceNow
+            showCallWillEndNotification(timeToEndCall: timeToEndCall)
+        }
     }
 }
 
@@ -1290,6 +1300,7 @@ extension MeetingParticipantsLayoutViewModel: CallCallbacksUseCaseProtocol {
     func callTerminated(_ call: CallEntity) {
         callUseCase.stopListeningForCall()
         timer?.invalidate()
+        callWillEndTimer?.invalidate()
         if reconnecting {
             tonePlayer.play(tone: .callEnded)
             containerViewModel?.dispatch(.dismissCall(completion: {

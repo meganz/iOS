@@ -20,6 +20,8 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
     private var callWaitingRoomUsersUpdateListener: CallWaitingRoomUsersUpdateListener?
     private var onCallUpdateListener: OnCallUpdateListener?
 
+    private let callLimitNoPresent = 0xFFFFFFFF
+    
     init(chatSdk: MEGAChatSdk, callActionManager: CallActionManager) {
         self.chatSdk = chatSdk
         self.callActionManager = callActionManager
@@ -206,6 +208,27 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
                     completion(.failure(error))
                 }
             }))
+        }
+    }
+    
+    func setCallLimit(inChat chatRoom: ChatRoomEntity, duration: Int?, maxUsers: Int?, maxClientPerUser: Int?, maxClients: Int?, divider: Int?) async throws {
+        try await withAsyncThrowingValue { completion in
+            chatSdk.setLimitsInCall(
+                chatRoom.chatId,
+                duration: duration ?? callLimitNoPresent,
+                maxUsers: maxUsers ?? callLimitNoPresent,
+                maxClientsPerUser: maxClientPerUser ?? callLimitNoPresent,
+                maxClients: maxClients ?? callLimitNoPresent,
+                divider: divider ?? callLimitNoPresent,
+                delegate: ChatRequestDelegate(completion: { result in
+                    switch result {
+                    case .success:
+                        completion(.success(()))
+                    case .failure(let error):
+                        completion(.failure(error))
+                    }
+                })
+            )
         }
     }
     
