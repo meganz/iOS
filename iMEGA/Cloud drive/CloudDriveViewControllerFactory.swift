@@ -34,6 +34,11 @@ struct NodeBrowserConfig {
     var mediaDiscoveryAutomaticDetectionEnabled: () -> Bool = { false }
     // Determines whether the NodeBrowserView should handle upgrade encouragement flow or not, default value is true
     var supportsUpgradeEncouragement: Bool = true
+    
+    /// Provider closure to get the AdsVisibilityConfigurating for showing/hiding external ads.
+    /// The AdsVisibilityConfigurating can be access via `UIApplication.mainTabBarRootViewController())` which
+    /// might not be available at the time this config is created so we need to use closure to refer to it at a later time.
+    var adsConfiguratorProvider: () -> (any AdsVisibilityConfigurating)? = { nil }
     static var `default`: Self {
         .init()
     }
@@ -298,6 +303,7 @@ struct CloudDriveViewControllerFactory {
     ) -> NodeBrowserViewModel {
         
         let upgradeEncouragementViewModel: UpgradeEncouragementViewModel? = config.supportsUpgradeEncouragement ? .init() : nil
+        let adsVisibilityViewModel = AdsVisibilityViewModel(configuratorProvider: config.adsConfiguratorProvider)
         
         return .init(
             viewMode: initialViewMode,
@@ -312,6 +318,7 @@ struct CloudDriveViewControllerFactory {
                 config: config
             ),
             upgradeEncouragementViewModel: upgradeEncouragementViewModel,
+            adsVisibilityViewModel: adsVisibilityViewModel,
             config: config,
             nodeSource: nodeSource,
             avatarViewModel: avatarViewModel,

@@ -36,6 +36,7 @@ struct NodeBrowserView: View {
         .designTokenBackground(true)
         .navigationBarTitleDisplayMode(.inline)
         .onAppear { viewModel.onViewAppear() }
+        .onDisappear { viewModel.onViewDisappear() }
         .onLoad { viewModel.onLoadTask() }
     }
 

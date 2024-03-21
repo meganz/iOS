@@ -135,8 +135,6 @@ final class UpgradeEncouragementViewModelTests: XCTestCase {
         sut.encourageUpgradeIfNeeded()
         
         // then
-        print("==> router.presentUpgradeTVCRecorder.callCount: \(router.presentUpgradeTVCRecorder.callCount)")
-        print("==> showTimeTracker.alreadyPresented: \(showTimeTracker.alreadyPresented)")
         XCTAssertEqual(router.presentUpgradeTVCRecorder.callCount, 1)
         XCTAssertTrue(showTimeTracker.alreadyPresented)
         

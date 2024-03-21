@@ -446,6 +446,20 @@ final class CloudDriveViewControllerTests: XCTestCase {
         XCTAssertEqual(sut.collectionView().messages, [.reloadData])
     }
     
+    func testShouldDisplayAdsSlot_withDisplayModeCloudDrive_shouldReturnTrue() {
+        let sut = makeSUT(nodes: [], displayMode: .cloudDrive)
+        XCTAssertTrue(sut.shouldDisplayAdsSlot)
+    }
+    
+    func testShouldDisplayAdsSlot_withDisplayModesNonCloudDrive_shouldReturnFalse() {
+        let nonCloudDriveDisplayModes = (-1...25).compactMap { DisplayMode(rawValue: $0) }.filter { $0 != .cloudDrive }
+        
+        let results = nonCloudDriveDisplayModes.map { makeSUT(nodes: [], displayMode: $0).shouldDisplayAdsSlot }
+        let expectedResults = [Bool](repeating: false, count: nonCloudDriveDisplayModes.count)
+        
+        XCTAssertEqual(results, expectedResults)
+    }
+
     // MARK: - Helpers
     
     private func setNoEditingState(on sut: CloudDriveViewController) {

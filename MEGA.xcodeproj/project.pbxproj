@@ -2521,6 +2521,9 @@
 		C4F31EDC25C19ABE00E15146 /* AudioPlayerFileToolbarConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F31EDB25C19ABE00E15146 /* AudioPlayerFileToolbarConfigurator.swift */; };
 		C4F31EF925C1C50B00E15146 /* CustomTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F31EF825C1C50B00E15146 /* CustomTitleView.swift */; };
 		C4F31F0325C1C51A00E15146 /* CustomTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4F31F0225C1C51A00E15146 /* CustomTitleView.xib */; };
+		C4F638602BA97F7400D0B6B7 /* AdsDisplayViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F6385F2BA97F7400D0B6B7 /* AdsDisplayViewModelProtocol.swift */; };
+		C4F638722BAA81AE00D0B6B7 /* CloudDriveAdsSlotDisplayable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F638712BAA81AE00D0B6B7 /* CloudDriveAdsSlotDisplayable.swift */; };
+		C4F6387A2BAAA01A00D0B6B7 /* AdsVisibilityViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F638792BAAA01A00D0B6B7 /* AdsVisibilityViewModelTests.swift */; };
 		E79B628B2B71223100F0C918 /* NotificationTableViewCell+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79B628A2B71223100F0C918 /* NotificationTableViewCell+Additions.swift */; };
 		E79B62912B72671A00F0C918 /* OfflineTableViewViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E79B62902B72671A00F0C918 /* OfflineTableViewViewController+Additions.swift */; };
 		E7E114142B7BA130004BBB16 /* ContactLinkQRViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E114132B7BA130004BBB16 /* ContactLinkQRViewController+Additions.swift */; };
@@ -5205,6 +5208,9 @@
 		C4F31EDB25C19ABE00E15146 /* AudioPlayerFileToolbarConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerFileToolbarConfigurator.swift; sourceTree = "<group>"; };
 		C4F31EF825C1C50B00E15146 /* CustomTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTitleView.swift; sourceTree = "<group>"; };
 		C4F31F0225C1C51A00E15146 /* CustomTitleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomTitleView.xib; sourceTree = "<group>"; };
+		C4F6385F2BA97F7400D0B6B7 /* AdsDisplayViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsDisplayViewModelProtocol.swift; sourceTree = "<group>"; };
+		C4F638712BAA81AE00D0B6B7 /* CloudDriveAdsSlotDisplayable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudDriveAdsSlotDisplayable.swift; sourceTree = "<group>"; };
+		C4F638792BAAA01A00D0B6B7 /* AdsVisibilityViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsVisibilityViewModelTests.swift; sourceTree = "<group>"; };
 		E79B628A2B71223100F0C918 /* NotificationTableViewCell+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationTableViewCell+Additions.swift"; sourceTree = "<group>"; };
 		E79B62902B72671A00F0C918 /* OfflineTableViewViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OfflineTableViewViewController+Additions.swift"; sourceTree = "<group>"; };
 		E7E114132B7BA130004BBB16 /* ContactLinkQRViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContactLinkQRViewController+Additions.swift"; sourceTree = "<group>"; };
@@ -5656,6 +5662,7 @@
 		1240A49E27DD544B00627262 /* CloudDrive */ = {
 			isa = PBXGroup;
 			children = (
+				C4F638762BAA9FDF00D0B6B7 /* AdsSlot */,
 				0E72E1222A27ECED00C900F9 /* CopyrightWarning */,
 				0E3B1A362A1D917900EC5859 /* GetLink */,
 				1240A4A127DD545F00627262 /* MediaDiscovery */,
@@ -6602,6 +6609,7 @@
 			isa = PBXGroup;
 			children = (
 				E8F791731BC5754A00C58676 /* Activities */,
+				C4F638702BAA819000D0B6B7 /* AdsSlot */,
 				832E102C202CB21700BDD30F /* Cells */,
 				0E72E11F2A27EC8D00C900F9 /* CopyrightWarning */,
 				837EE1F3253DB7E50083D927 /* GetLink */,
@@ -9941,6 +9949,7 @@
 		94B09E3C2B84CC86007D6B84 /* NewNodeBrowser */ = {
 			isa = PBXGroup;
 			children = (
+				C4F6385E2BA97F6200D0B6B7 /* AdsDisplayViewModel */,
 				94B09E4C2B84CC86007D6B84 /* StorageFullAlertViewModel */,
 				94B09E472B84CC86007D6B84 /* BrowserViewControllerDelegateHandler.swift */,
 				94B09E432B84CC86007D6B84 /* CloudDriveBottomToolbarFactory.swift */,
@@ -12653,6 +12662,30 @@
 			path = UpgradeEncouragementShowTimeTracker;
 			sourceTree = "<group>";
 		};
+		C4F6385E2BA97F6200D0B6B7 /* AdsDisplayViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C4F6385F2BA97F7400D0B6B7 /* AdsDisplayViewModelProtocol.swift */,
+			);
+			path = AdsDisplayViewModel;
+			sourceTree = "<group>";
+		};
+		C4F638702BAA819000D0B6B7 /* AdsSlot */ = {
+			isa = PBXGroup;
+			children = (
+				C4F638712BAA81AE00D0B6B7 /* CloudDriveAdsSlotDisplayable.swift */,
+			);
+			path = AdsSlot;
+			sourceTree = "<group>";
+		};
+		C4F638762BAA9FDF00D0B6B7 /* AdsSlot */ = {
+			isa = PBXGroup;
+			children = (
+				C4F638792BAAA01A00D0B6B7 /* AdsVisibilityViewModelTests.swift */,
+			);
+			path = AdsSlot;
+			sourceTree = "<group>";
+		};
 		E7EE7CCD2AC6DC9E00DBABCD /* AppDelegate */ = {
 			isa = PBXGroup;
 			children = (
@@ -13703,6 +13736,7 @@
 				BF7EBD4A245293530015255F /* AddToChatMenuViewController.swift in Sources */,
 				BF6DF366245797CC00D612D0 /* AddToChatViewAnimator.swift in Sources */,
 				BF7EBD2E244E916F0015255F /* AddToChatViewController.swift in Sources */,
+				C4F638602BA97F7400D0B6B7 /* AdsDisplayViewModelProtocol.swift in Sources */,
 				246A311F2A45709200BF8DDB /* AdvancedTableViewController+Additions.swift in Sources */,
 				E87C98361CC4CC1000E2B9E6 /* AdvancedTableViewController.m in Sources */,
 				9D3563C628B54BB300CB3365 /* AdvancedViewRouter.swift in Sources */,
@@ -14006,6 +14040,7 @@
 				5BE689AC2419135400462134 /* CloudAppearancePreference+CoreDataClass.swift in Sources */,
 				5BE689AA2419135400462134 /* CloudAppearancePreference+CoreDataProperties.swift in Sources */,
 				BF5C96612BA92C9B00B71CB2 /* CloudDriveAssetUploader.swift in Sources */,
+				C4F638722BAA81AE00D0B6B7 /* CloudDriveAdsSlotDisplayable.swift in Sources */,
 				94B09E5B2B84CC87007D6B84 /* CloudDriveBottomToolbarFactory.swift in Sources */,
 				C45093FE270C48AC006DC81F /* CloudDriveCollectionViewController+DynamicType.swift in Sources */,
 				83369CE42179D0A0002B09C3 /* CloudDriveCollectionViewController.m in Sources */,
@@ -15663,6 +15698,7 @@
 				8340CB1E284F681E007C3B39 /* ActionViewModelTests.swift in Sources */,
 				BFFB134F2908EF3100A6B2CA /* ActiveCallViewModelTests.swift in Sources */,
 				B63AEB142511F73C000B8517 /* AddPhoneNumberViewModelTests.swift in Sources */,
+				C4F6387A2BAAA01A00D0B6B7 /* AdsVisibilityViewModelTests.swift in Sources */,
 				244F0A6E2A457ED0007DC61B /* AdvancedTableViewControllerTests.swift in Sources */,
 				246013122A459166007EF5ED /* AdvancedViewRouterTests.swift in Sources */,
 				3299F056291A20370071FB77 /* AlbumCellViewModelTests.swift in Sources */,

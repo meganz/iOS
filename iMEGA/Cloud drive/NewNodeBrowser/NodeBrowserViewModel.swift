@@ -29,6 +29,8 @@ class NodeBrowserViewModel: ObservableObject {
     let warningViewModel: WarningViewModel?
     var mediaContentDelegate: MediaContentDelegateHandler?
     private let upgradeEncouragementViewModel: UpgradeEncouragementViewModel?
+    private let adsVisibilityViewModel: (any AdsVisibilityViewModelProtocol)?
+    
     let config: NodeBrowserConfig
     @Published var contextMenuViewFactory: NodeBrowserContextMenuViewFactory?
 
@@ -55,6 +57,7 @@ class NodeBrowserViewModel: ObservableObject {
         mediaDiscoveryViewModel: MediaDiscoveryContentViewModel?,
         warningViewModel: WarningViewModel?,
         upgradeEncouragementViewModel: UpgradeEncouragementViewModel?,
+        adsVisibilityViewModel: (any AdsVisibilityViewModelProtocol)?,
         config: NodeBrowserConfig,
         nodeSource: NodeSource,
         avatarViewModel: MyAvatarViewModel,
@@ -74,6 +77,7 @@ class NodeBrowserViewModel: ObservableObject {
         self.mediaDiscoveryViewModel = mediaDiscoveryViewModel
         self.warningViewModel = warningViewModel
         self.upgradeEncouragementViewModel = upgradeEncouragementViewModel
+        self.adsVisibilityViewModel = adsVisibilityViewModel
         self.config = config
         self.nodeSource = nodeSource
         self.avatarViewModel = avatarViewModel
@@ -167,10 +171,19 @@ class NodeBrowserViewModel: ObservableObject {
     
     func onViewAppear() {
         encourageUpgradeIfNeeded()
+        configureAdsVisibility()
+    }
+    
+    func onViewDisappear() {
+        configureAdsVisibility()
     }
     
     private func encourageUpgradeIfNeeded() {
         upgradeEncouragementViewModel?.encourageUpgradeIfNeeded()
+    }
+    
+    private func configureAdsVisibility() {
+        adsVisibilityViewModel?.configureAdsVisibility()
     }
 
     private func refresh() {
