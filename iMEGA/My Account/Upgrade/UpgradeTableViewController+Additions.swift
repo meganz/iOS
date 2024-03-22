@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGASDKRepo
@@ -30,12 +31,12 @@ extension UpgradeTableViewController {
         let attributedQuota = NSMutableAttributedString(
             string: fullQuotaString,
             attributes: [.font: UIFont.preferredFont(style: .caption1, weight: .medium),
-                         .foregroundColor: UIColor.mnz_primaryGray(for: self.traitCollection)]
+                         .foregroundColor: secondaryTextColor]
         )
         
         if let maxQuotaRange = fullQuotaString.range(of: maxQuota) {
             attributedQuota.addAttributes(
-                [.foregroundColor: UIColor.label],
+                [.foregroundColor: primaryTextColor],
                 range: NSRange(maxQuotaRange, in: fullQuotaString)
             )
         }
@@ -79,5 +80,43 @@ extension UpgradeTableViewController {
         }.removeDuplicatesWhileKeepingTheOriginalOrder()
         
         return availablePlans
+    }
+    
+    // MARK: - Token colors
+    
+    @objc var whiteTextColor: UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Text.onColor : UIColor.mnz_whiteFFFFFF()
+    }
+    
+    @objc var primaryTextColor: UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.label
+    }
+    
+    @objc var secondaryTextColor: UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : UIColor.mnz_primaryGray(for: traitCollection)
+    }
+    
+    @objc var footerTextColor: UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Text.secondary : UIColor.mnz_secondaryGray(for: traitCollection)
+    }
+    
+    @objc var defaultBackgroundColor: UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_backgroundGrouped(for: traitCollection)
+    }
+    
+    @objc var headerBackgroundColor: UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_mainBars(for: traitCollection)
+    }
+    
+    @objc var currentPlanBackgroundColor: UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Background.page : UIColor.mnz_backgroundElevated(traitCollection)
+    }
+    
+    @objc var separatorColor: UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Border.strong : UIColor.mnz_separator(for: traitCollection)
+    }
+    
+    @objc var linkColor: UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Link.primary : UIColor.mnz_turquoise(for: traitCollection)
     }
 }

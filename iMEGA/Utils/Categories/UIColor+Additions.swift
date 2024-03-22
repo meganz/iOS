@@ -699,16 +699,16 @@ extension UIColor {
             proLevelColor = UIColor.systemGreen
             
         case MEGAAccountType.lite:
-            proLevelColor = UIColor.mnz_proLITE()
+            proLevelColor = .proAccountLITE
             
         case MEGAAccountType.proI:
-            proLevelColor = mnz_redProI()
+            proLevelColor = .proAccountRedProI
             
         case MEGAAccountType.proII:
-            proLevelColor = mnz_redProII()
+            proLevelColor = .proAccountRedProII
             
         case MEGAAccountType.proIII:
-            proLevelColor = mnz_redProIII()
+            proLevelColor = .proAccountRedProIII
             
         default:
             proLevelColor = nil
@@ -727,7 +727,7 @@ extension UIColor {
             proLevelColor = UIColor.systemGreen
             
         case MEGAAccountType.lite:
-            proLevelColor = UIColor.mnz_proLITE()
+            proLevelColor = .proAccountLITE
             
         case MEGAAccountType.proI, MEGAAccountType.proII, MEGAAccountType.proIII:
             proLevelColor = UIColor.mnz_red(

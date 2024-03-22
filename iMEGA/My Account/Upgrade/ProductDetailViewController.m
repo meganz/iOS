@@ -35,30 +35,29 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    UIColor *proLevelColor = [UIColor mnz_colorWithProLevel:_megaAccountType];
+    self.headerView.backgroundColor = proLevelColor;
+    
     NSString *title;
     switch (_megaAccountType) {
         case MEGAAccountTypeLite:
             [_crestImageView setImage:[UIImage imageNamed:@"white_crest_LITE"]];
-            self.headerView.backgroundColor = UIColor.mnz_proLITE;
             title = LocalizedString(@"Pro Lite", @"");
-            self.selectMembershiptLabel.textColor = UIColor.mnz_proLITE;
+            self.selectMembershiptLabel.textColor = proLevelColor;
             break;
             
         case MEGAAccountTypeProI:
             [_crestImageView setImage:[UIImage imageNamed:@"white_crest_PROI"]];
-            [_headerView setBackgroundColor:UIColor.mnz_redProI];
             title = LocalizedString(@"Pro I", @"");
             break;
             
         case MEGAAccountTypeProII:
             [_crestImageView setImage:[UIImage imageNamed:@"white_crest_PROII"]];
-            [_headerView setBackgroundColor:UIColor.mnz_redProII];
             title = LocalizedString(@"Pro II", @"");
             break;
             
         case MEGAAccountTypeProIII:
             [_crestImageView setImage:[UIImage imageNamed:@"white_crest_PROIII"]];
-            [_headerView setBackgroundColor:UIColor.mnz_redProIII];
             title = LocalizedString(@"Pro III", @"");
             break;
             
@@ -129,11 +128,15 @@
 - (void)updateAppearance {
     self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     
-    self.storageLabel.textColor = self.storageSizeLabel.textColor = self.bandwidthLabel.textColor = self.bandwidthSizeLabel.textColor = UIColor.mnz_whiteFFFFFF;
+    self.storageLabel.textColor = self.storageSizeLabel.textColor = self.bandwidthLabel.textColor = self.bandwidthSizeLabel.textColor = [self whiteTextColor];
     
-    self.selectMembershiptLabel.textColor = self.megaAccountType == MEGAAccountTypeLite ? UIColor.mnz_proLITE : [UIColor mnz_redForTraitCollection:self.traitCollection];
+    self.selectMembershiptLabel.textColor = self.megaAccountType == MEGAAccountTypeLite ? [UIColor mnz_colorWithProLevel:_megaAccountType] : [UIColor mnz_redForTraitCollection:self.traitCollection];
     
     self.save17Label.textColor = [UIColor mnz_redForTraitCollection:self.traitCollection];
+    
+    if (UIColor.isDesignTokenEnabled) {
+        self.view.backgroundColor = self.tableView.backgroundColor = [self defaultBackgroundColor];
+    }
 }
 
 - (void)presentProductUnavailableAlertController {
