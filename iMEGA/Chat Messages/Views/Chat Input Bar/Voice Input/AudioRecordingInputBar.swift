@@ -105,7 +105,7 @@ class AudioRecordingInputBar: UIView {
         voiceView.tapHandler = completionBlock
         
         // The height change animation for input accessory view will always start from center instead of bottom. So need to deactivate the top constraint and perform the animation.
-        let placeholderViewTopConstraint = self.placeholderViewTopConstraint
+        guard let placeholderViewTopConstraint = self.placeholderViewTopConstraint else { return }
         self.placeholderViewTopConstraint.isActive = false
         self.layoutIfNeeded()
         
@@ -117,7 +117,7 @@ class AudioRecordingInputBar: UIView {
             self.suggestionLabel.alpha = 0.0
         }, completion: { _ in
             self.placeholderViewTopConstraint = placeholderViewTopConstraint
-            placeholderViewTopConstraint?.isActive = true
+            placeholderViewTopConstraint.isActive = true
             self.layoutIfNeeded()
         })
     }
