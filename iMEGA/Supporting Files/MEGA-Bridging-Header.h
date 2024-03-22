@@ -149,6 +149,7 @@
 #import "MOUploadTransfer+CoreDataProperties.h"
 #import "UpgradeTableViewController.h"
 #import "ProductDetailViewController.h"
+#import "ProductDetailTableViewCell.h"
 #import "ContactsViewController.h"
 #import "AchievementsViewController.h"
 #import "CloudDriveCollectionViewController.h"

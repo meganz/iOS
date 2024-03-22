@@ -175,24 +175,30 @@
 
 - (void)updateAppearance {
     self.navigationController.toolbarHidden = YES;
-    self.view.backgroundColor = self.tableView.backgroundColor = [UIColor mnz_backgroundGroupedForTraitCollection:self.traitCollection];
-    self.tableView.separatorColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
     
-    self.chooseFromOneOfThePlansHeaderView.backgroundColor = self.chooseFromOneOfThePlansPROHeaderView.backgroundColor = [UIColor mnz_mainBarsForTraitCollection:self.traitCollection];
+    if (UIColor.isDesignTokenEnabled) {
+        [AppearanceManager forceNavigationBarUpdate:self.navigationController.navigationBar traitCollection:self.traitCollection];
+        self.termsAndPoliciesBarButtonItem.tintColor = [self primaryTextColor];
+    }
+    
+    self.view.backgroundColor = self.tableView.backgroundColor = [self defaultBackgroundColor];
+    self.tableView.separatorColor = [self separatorColor];
+    
+    self.chooseFromOneOfThePlansHeaderView.backgroundColor = self.chooseFromOneOfThePlansPROHeaderView.backgroundColor = [self headerBackgroundColor];
     
     [self setupCurrentPlanView];
     
-    self.chooseFromOneOfThePlansLabel.textColor = self.chooseFromOneOfThePlansProLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+    self.chooseFromOneOfThePlansLabel.textColor = self.chooseFromOneOfThePlansProLabel.textColor = [self secondaryTextColor];
     
     [self setupTableViewHeaderAndFooter];
     self.navigationController.toolbarHidden = NO;
 }
 
 - (void)setupCurrentPlanView {
-    self.currentPlanLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
-    self.currentPlanLabelLineView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    self.currentPlanLabel.textColor = [self secondaryTextColor];
+    self.currentPlanLabelLineView.backgroundColor = [self separatorColor];
     
-    self.currentPlanNameLabel.textColor = UIColor.mnz_whiteFFFFFF;
+    self.currentPlanNameLabel.textColor = [self whiteTextColor];
     NSNumber *userProLevelIndexNumber = [self.proLevelsIndexesMutableDictionary objectForKey:[NSNumber numberWithInteger:self.userProLevel]];
     [self.currentPlanDisclosureImageView setHidden:userProLevelIndexNumber == nil];
     
@@ -203,31 +209,33 @@
         [self setCurrentPlanMaxQuotaData];
     }
 
-    self.currentPlanCellView.backgroundColor = [UIColor mnz_backgroundElevated:self.traitCollection];
-    self.currentPlanBottomLineCellView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    self.currentPlanCellView.backgroundColor = [self currentPlanBackgroundColor];
+    self.currentPlanBottomLineCellView.backgroundColor = [self separatorColor];
 }
 
 - (void)setupTableViewHeaderAndFooter {
-    self.chooseFromOneOfThePlansBottomLineView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    UIColor *separatorColor = [self separatorColor];
+    self.chooseFromOneOfThePlansBottomLineView.backgroundColor = separatorColor;
     
-    self.chooseFromOneOfThePlansPROBottomLineView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    self.chooseFromOneOfThePlansPROBottomLineView.backgroundColor = separatorColor;
     
-    self.footerTopLineView.backgroundColor = [UIColor mnz_separatorForTraitCollection:self.traitCollection];
+    self.footerTopLineView.backgroundColor = separatorColor;
     
-    self.customPlanLabel.textColor = [UIColor mnz_primaryGrayForTraitCollection:self.traitCollection];
+    self.customPlanLabel.textColor = [self secondaryTextColor];
     NSString *toUpgradeYourCurrentSubscriptionString = LocalizedString(@"To upgrade your current subscription, please contact support for a [A]custom plan[/A].", @"When user is on PRO 3 plan, we will display an extra label to notify user that they can still contact support to have a customised plan.");
     NSString *customPlanString = [toUpgradeYourCurrentSubscriptionString mnz_stringBetweenString:@"[A]" andString:@"[/A]"];
     toUpgradeYourCurrentSubscriptionString = toUpgradeYourCurrentSubscriptionString.mnz_removeWebclientFormatters;
-    NSMutableAttributedString *customPlanMutableAttributedString = [NSMutableAttributedString.new initWithString:toUpgradeYourCurrentSubscriptionString attributes:@{NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
-    [customPlanMutableAttributedString setAttributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_turquoiseForTraitCollection:self.traitCollection]} range:[toUpgradeYourCurrentSubscriptionString rangeOfString:customPlanString]];
+    NSMutableAttributedString *customPlanMutableAttributedString = [NSMutableAttributedString.new initWithString:toUpgradeYourCurrentSubscriptionString attributes:@{NSForegroundColorAttributeName:[self secondaryTextColor]}];
+    [customPlanMutableAttributedString setAttributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[self linkColor]} range:[toUpgradeYourCurrentSubscriptionString rangeOfString:customPlanString]];
     self.customPlanLabel.attributedText = customPlanMutableAttributedString;
     
-    self.twoMonthsFreeLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
+    UIColor *footerTextColor = [self footerTextColor];
+    self.twoMonthsFreeLabel.textColor = footerTextColor;
     NSMutableAttributedString *asteriskMutableAttributedString = [NSMutableAttributedString.alloc initWithString:LocalizedString(@"* ", @"") attributes: @{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_redForTraitCollection:(self.traitCollection)]}];
-    NSAttributedString *twoMonthsFreeAttributedString = [NSAttributedString.alloc initWithString:LocalizedString(@"twoMonthsFree", @"Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments") attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection]}];
+    NSAttributedString *twoMonthsFreeAttributedString = [NSAttributedString.alloc initWithString:LocalizedString(@"twoMonthsFree", @"Text shown in the purchase plan view to explain that annual subscription is 17% cheaper than 12 monthly payments") attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:footerTextColor}];
     [asteriskMutableAttributedString appendAttributedString:twoMonthsFreeAttributedString];
     self.twoMonthsFreeLabel.attributedText = asteriskMutableAttributedString;
-    self.autorenewableDescriptionLabel.textColor = [UIColor mnz_secondaryGrayForTraitCollection:self.traitCollection];
+    self.autorenewableDescriptionLabel.textColor = footerTextColor;
     [self.tableView sizeFooterToFit];
 }
 
@@ -330,11 +338,11 @@
 
 - (NSAttributedString *)storageAttributedStringForProLevelAtIndex:(NSInteger)index {
     NSString *storageString = LocalizedString(@"account.storageQuota", @"Text listed that includes the amount of storage that a user gets with a certain package. For example: '2 TB Storage'.");
-    NSMutableAttributedString *storageMutableAttributedString = [NSMutableAttributedString.alloc initWithString:storageString attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
+    NSMutableAttributedString *storageMutableAttributedString = [NSMutableAttributedString.alloc initWithString:storageString attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[self secondaryTextColor]}];
     
     SKProduct *product = [[MEGAPurchase sharedInstance].products objectOrNilAtIndex:index];
     NSString *storageValueString = [self storageAndUnitsByProduct:product];
-    NSMutableAttributedString *storageValueMutableAttributedString = [NSMutableAttributedString.alloc initWithString:storageValueString attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:UIColor.labelColor}];
+    NSMutableAttributedString *storageValueMutableAttributedString = [NSMutableAttributedString.alloc initWithString:storageValueString attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[self primaryTextColor]}];
     NSRange storageValueRange = [storageString rangeOfString:@"%@"];
     [storageMutableAttributedString replaceCharactersInRange:storageValueRange withAttributedString:storageValueMutableAttributedString];
     
@@ -343,11 +351,11 @@
 
 - (NSAttributedString *)bandwidthAttributedStringForProLevelAtIndex:(NSInteger)index {
     NSString *transferQuotaString = LocalizedString(@"account.transferQuota.perMonth", @"Text listed that includes the amount of transfer quota a user gets per month with a certain package. For example: '8 TB Transfer'.");
-    NSMutableAttributedString *transferQuotaMutableAttributedString = [NSMutableAttributedString.alloc initWithString:transferQuotaString attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
+    NSMutableAttributedString *transferQuotaMutableAttributedString = [NSMutableAttributedString.alloc initWithString:transferQuotaString attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[self secondaryTextColor]}];
     
     SKProduct *product = [[MEGAPurchase sharedInstance].products objectOrNilAtIndex:index];
     NSString *transferQuotaValueString = [self transferAndUnitsByProduct:product];
-    NSMutableAttributedString *transferQuotaValueMutableAttributedString = [NSMutableAttributedString.alloc initWithString:transferQuotaValueString attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:UIColor.labelColor}];
+    NSMutableAttributedString *transferQuotaValueMutableAttributedString = [NSMutableAttributedString.alloc initWithString:transferQuotaValueString attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[self primaryTextColor]}];
     NSRange transferQuotaValueRange = [transferQuotaString rangeOfString:@"%@"];
     [transferQuotaMutableAttributedString replaceCharactersInRange:transferQuotaValueRange withAttributedString:transferQuotaValueMutableAttributedString];
     
@@ -358,9 +366,9 @@
     NSString *freeStorageString = LocalizedString(@"account.storage.freePlan", @"Text listed that includes the amount of storage that a free user gets");
     NSString *freeStorageValueString = [freeStorageString mnz_stringBetweenString:@"[B]" andString:@"[/B]"];
     freeStorageString = freeStorageString.mnz_removeWebclientFormatters;
-    NSMutableAttributedString *freeStorageMutableAttributedString = [NSMutableAttributedString.alloc initWithString:freeStorageString attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
+    NSMutableAttributedString *freeStorageMutableAttributedString = [NSMutableAttributedString.alloc initWithString:freeStorageString attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[self secondaryTextColor]}];
     
-    NSMutableAttributedString *storageMutableAttributedString = [NSMutableAttributedString.alloc initWithString:freeStorageValueString attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:UIColor.labelColor}];
+    NSMutableAttributedString *storageMutableAttributedString = [NSMutableAttributedString.alloc initWithString:freeStorageValueString attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[self primaryTextColor]}];
     NSRange freeStorageValueRange = [freeStorageString rangeOfString:freeStorageValueString];
     [freeStorageMutableAttributedString replaceCharactersInRange:freeStorageValueRange withAttributedString:storageMutableAttributedString];
     
@@ -374,9 +382,9 @@
     NSString *transferQuotaString = LocalizedString(@"account.transferQuota.freePlan", @"Text listed that explain that a free user gets a limited amount of transfer quota.");
     NSString *limitedString = [transferQuotaString mnz_stringBetweenString:@"[B]" andString:@"[/B]"];
     transferQuotaString = transferQuotaString.mnz_removeWebclientFormatters;
-    NSMutableAttributedString *transferQuotaMutableAttributedString = [NSMutableAttributedString.alloc initWithString:transferQuotaString attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[UIColor mnz_primaryGrayForTraitCollection:self.traitCollection]}];
+    NSMutableAttributedString *transferQuotaMutableAttributedString = [NSMutableAttributedString.alloc initWithString:transferQuotaString attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[self secondaryTextColor]}];
     
-    NSMutableAttributedString *limitedTransferQuotaMutableAttributedString = [NSMutableAttributedString.alloc initWithString:limitedString attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:UIColor.labelColor}];
+    NSMutableAttributedString *limitedTransferQuotaMutableAttributedString = [NSMutableAttributedString.alloc initWithString:limitedString attributes:@{NSFontAttributeName:[UIFont mnz_preferredFontWithStyle:UIFontTextStyleCaption1 weight:UIFontWeightMedium], NSForegroundColorAttributeName:[self primaryTextColor]}];
     NSRange limitedStringRange = [transferQuotaString rangeOfString:limitedString];
     [transferQuotaMutableAttributedString replaceCharactersInRange:limitedStringRange withAttributedString:limitedTransferQuotaMutableAttributedString];
     
@@ -489,6 +497,7 @@
     NSNumber *proLevelNumber = [self.proLevelsMutableArray objectOrNilAtIndex:indexPath.row];
     cell.productImageView.image = [self imageForProLevel:proLevelNumber.integerValue];
     cell.productNameLabel.text = LocalizedString([MEGAAccountDetails stringForAccountType:proLevelNumber.integerValue], @"");
+    cell.productNameLabel.textColor = [self whiteTextColor];
     cell.productNameView.backgroundColor = [UIColor mnz_colorWithProLevel:proLevelNumber.integerValue];
     cell.productPriceLabel.textColor = [UIColor mnz_colorForPriceLabelWithProLevel:proLevelNumber.integerValue traitCollection:self.traitCollection];
     

@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGADomain
 
 extension ProductDetailViewController {
@@ -16,5 +17,14 @@ extension ProductDetailViewController {
     
     @objc func postDismissOnboardingProPlanDialog() {
         NotificationCenter.default.post(name: .dismissOnboardingProPlanDialog, object: nil)
+    }
+    
+    // MARK: - Token colors
+    @objc var whiteTextColor: UIColor {
+        UIColor.isDesignTokenEnabled() ? TokenColors.Text.onColor : UIColor.mnz_whiteFFFFFF()
+    }
+
+    @objc var defaultBackgroundColor: UIColor {
+        TokenColors.Background.page
     }
 }
