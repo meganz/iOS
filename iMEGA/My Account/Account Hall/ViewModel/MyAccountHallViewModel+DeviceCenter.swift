@@ -33,7 +33,6 @@ extension MyAccountHallViewModel {
                 makeEmptyStateAssets(),
             searchAssets:
                 makeSearchAssets(),
-            backupStatuses: backupStatusesList(),
             deviceCenterActions: deviceCenterActionList(),
             deviceIconNames: deviceIconNamesList()
         )
@@ -76,83 +75,6 @@ extension MyAccountHallViewModel {
             lightBGColor: MEGAAppColor.White._F7F7F7.color,
             darkBGColor: MEGAAppColor.Black._161616.color
         )
-    }
-    
-    private func backupStatusesList() -> [BackupStatus] {
-        return [
-            BackupStatus(
-                status: .upToDate,
-                title: Strings.Localizable.Device.Center.Backup.UpToDate.Status.message,
-                color: MEGAAppColor.Green._34C759.uiColor,
-                iconName: BackUpStatusIconAssets.upToDate
-            ),
-            BackupStatus(
-                status: .scanning,
-                title: Strings.Localizable.Device.Center.Backup.Scanning.Status.message,
-                color: MEGAAppColor.Blue._007AFF.uiColor,
-                iconName: BackUpStatusIconAssets.updating
-            ),
-            BackupStatus(
-                status: .initialising,
-                title: Strings.Localizable.Device.Center.Backup.Initialising.Status.message,
-                color: MEGAAppColor.Blue._007AFF.uiColor,
-                iconName: BackUpStatusIconAssets.updating
-            ),
-            BackupStatus(
-                status: .updating,
-                title: Strings.Localizable.Device.Center.Backup.Updating.Status.message,
-                color: MEGAAppColor.Blue._007AFF.uiColor,
-                iconName: BackUpStatusIconAssets.updating
-            ),
-            BackupStatus(
-                status: .noCameraUploads,
-                title: Strings.Localizable.Device.Center.Backup.NoCameraUploads.Status.message,
-                color: MEGAAppColor.Orange._FF9500.uiColor,
-                iconName: BackUpStatusIconAssets.noCameraUploads
-            ),
-            BackupStatus(
-                status: .disabled,
-                title: Strings.Localizable.Device.Center.Backup.Disabled.Status.message,
-                color: MEGAAppColor.Orange._FF9500.uiColor,
-                iconName: BackUpStatusIconAssets.disabled
-            ),
-            BackupStatus(
-                status: .offline,
-                title: Strings.Localizable.Device.Center.Backup.Offline.Status.message,
-                color: MEGAAppColor.Gray._8E8E93.uiColor,
-                iconName: BackUpStatusIconAssets.offlineStatus
-            ),
-            BackupStatus(
-                status: .backupStopped,
-                title: Strings.Localizable.Device.Center.Backup.BackupStopped.Status.message,
-                color: MEGAAppColor.Gray._8E8E93.uiColor,
-                iconName: BackUpStatusIconAssets.error
-            ),
-            BackupStatus(
-                status: .paused,
-                title: Strings.Localizable.Device.Center.Backup.Paused.Status.message,
-                color: MEGAAppColor.Gray._8E8E93.uiColor,
-                iconName: BackUpStatusIconAssets.paused
-            ),
-            BackupStatus(
-                status: .outOfQuota,
-                title: Strings.Localizable.Device.Center.Backup.OutOfQuota.Status.message,
-                color: MEGAAppColor.Red._FF3B30.uiColor,
-                iconName: BackUpStatusIconAssets.outOfQuota
-            ),
-            BackupStatus(
-                status: .error,
-                title: Strings.Localizable.Device.Center.Backup.Error.Status.message,
-                color: MEGAAppColor.Red._FF3B30.uiColor,
-                iconName: BackUpStatusIconAssets.error
-            ),
-            BackupStatus(
-                status: .blocked,
-                title: Strings.Localizable.Device.Center.Backup.Blocked.Status.message,
-                color: MEGAAppColor.Red._FF3B30.uiColor,
-                iconName: BackUpStatusIconAssets.disabled
-            )
-        ]
     }
     
     private func deviceCenterActionList() -> [ContextAction] {

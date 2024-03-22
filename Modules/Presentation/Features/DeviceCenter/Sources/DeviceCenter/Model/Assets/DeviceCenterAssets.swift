@@ -5,7 +5,6 @@ public struct DeviceCenterAssets {
     public let backupListAssets: BackupListAssets
     public let emptyStateAssets: EmptyStateAssets
     public let searchAssets: SearchAssets
-    public let backupStatuses: [BackupStatus]
     public let deviceCenterActions: [ContextAction]
     public let deviceIconNames: [BackupDeviceTypeEntity: String]
     
@@ -14,7 +13,6 @@ public struct DeviceCenterAssets {
         backupListAssets: BackupListAssets,
         emptyStateAssets: EmptyStateAssets,
         searchAssets: SearchAssets,
-        backupStatuses: [BackupStatus],
         deviceCenterActions: [ContextAction],
         deviceIconNames: [BackupDeviceTypeEntity: String]
     ) {
@@ -22,7 +20,6 @@ public struct DeviceCenterAssets {
         self.backupListAssets = backupListAssets
         self.emptyStateAssets = emptyStateAssets
         self.searchAssets = searchAssets
-        self.backupStatuses = backupStatuses
         self.deviceCenterActions = deviceCenterActions
         self.deviceIconNames = deviceIconNames
     }
