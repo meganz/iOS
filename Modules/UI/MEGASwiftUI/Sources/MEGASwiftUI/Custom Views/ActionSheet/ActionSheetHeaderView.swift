@@ -1,3 +1,4 @@
+import MEGADesignToken
 import SwiftUI
 
 public struct ActionSheetHeaderView: View {
@@ -8,6 +9,14 @@ public struct ActionSheetHeaderView: View {
     let subtitle: String
     let subtitleColor: UIColor
     
+    private var titleColor: Color {
+        guard isDesignTokenEnabled else {
+            return colorScheme == .dark ? .white: .black
+        }
+        
+        return TokenColors.Text.primary.swiftUI
+    }
+
     public init(iconName: String? = nil, title: String, detailImageName: String? = nil, subtitle: String, subtitleColor: UIColor) {
         self.iconName = iconName
         self.title = title
@@ -29,17 +38,17 @@ public struct ActionSheetHeaderView: View {
                     .font(.subheadline)
                     .fontWeight(.medium)
                     .lineLimit(1)
-                    .foregroundColor(colorScheme == .dark ? .white : .black)
+                    .foregroundStyle(titleColor)
                 HStack {
                     if let detailImageName, !detailImageName.isEmpty {
                         Image(detailImageName)
                             .renderingMode(.template)
-                            .foregroundColor(Color(subtitleColor))
+                            .foregroundStyle(Color(subtitleColor))
                             .frame(width: 12, height: 12)
                     }
                     Text(subtitle)
                         .font(.caption)
-                        .foregroundColor(Color(subtitleColor))
+                        .foregroundStyle(Color(subtitleColor))
                 }
             }
             Spacer()

@@ -1,9 +1,26 @@
+import MEGADesignToken
 import SwiftUI
 
 public struct ActionSheetContentView<HeaderView: View>: View {
     @Environment(\.colorScheme) private var colorScheme
     var actionButtons: [ActionSheetButton]
     var headerView: HeaderView
+    
+    private var headerBackgroundColor: Color {
+        guard isDesignTokenEnabled else {
+            return colorScheme == .dark ? Color(red: 0.286, green: 0.290, blue: 0.302) : Color(red: 0.953, green: 0.957, blue: 0.957)
+        }
+        
+        return TokenColors.Background.surface2.swiftUI
+    }
+    
+    private var bodyBackgroundColor: Color {
+        guard isDesignTokenEnabled else {
+            return colorScheme == .dark ? Color(red: 0.188, green: 0.196, blue: 0.2) : Color(red: 0.980, green: 0.980, blue: 0.980)
+        }
+        
+        return TokenColors.Background.surface1.swiftUI
+    }
 
     public init(headerView: HeaderView, actionButtons: [ActionSheetButton]) {
         self.headerView = headerView
@@ -25,7 +42,7 @@ public struct ActionSheetContentView<HeaderView: View>: View {
                     
                     Divider()
                 }
-                .background(colorScheme == .dark ? Color(red: 0.17, green: 0.17, blue: 0.18) : Color(red: 0.97, green: 0.97, blue: 0.97))
+                .background(headerBackgroundColor)
                 
                 ForEach(actionButtons, id: \.self) { button in
                     button
@@ -33,15 +50,25 @@ public struct ActionSheetContentView<HeaderView: View>: View {
             }
             .padding([.bottom], 30)
         }
+        .background(bodyBackgroundColor)
     }
 }
 
 public struct ActionSheetButton: View, Hashable {
+    @Environment(\.colorScheme) private var colorScheme
     @Environment(\.presentationMode) var presentationMode
     var icon: String
     var title: String
     var subtitle: String?
     var action: () -> Void
+    
+    private var buttonBackgroundColor: Color {
+        guard isDesignTokenEnabled else {
+            return colorScheme == .dark ? Color(red: 0.188, green: 0.196, blue: 0.2) : Color(red: 0.980, green: 0.980, blue: 0.980)
+        }
+        
+        return TokenColors.Background.surface1.swiftUI
+    }
     
     public init(icon: String, title: String, subtitle: String? = nil, action: @escaping () -> Void) {
         self.icon = icon
@@ -69,12 +96,13 @@ public struct ActionSheetButton: View, Hashable {
                 
                 Text(title)
                     .font(.body)
+                    .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.primary.swiftUI : .primary)
                 
                 Spacer()
                 if let subtitle = subtitle {
                     Text(subtitle)
                         .font(.callout)
-                        .foregroundColor(Color(red: 0.52, green: 0.52, blue: 0.52))
+                        .foregroundStyle(isDesignTokenEnabled ? TokenColors.Text.secondary.swiftUI : .secondary)
                     
                     Image("standardDisclosureIndicator")
                         .padding([.trailing], 16)
@@ -90,5 +118,6 @@ public struct ActionSheetButton: View, Hashable {
             Divider()
                 .padding([.leading], 60)
         }
+        .background(buttonBackgroundColor)
     }
 }

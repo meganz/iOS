@@ -70,7 +70,8 @@ struct BackupListContentView: View {
                     actions: [
                         ContentUnavailableViewModel.ButtonAction(
                             title: Strings.Localizable.enableCameraUploadsButton,
-                            backgroundColor: { _ in TokenColors.Support.success.swiftUI },
+                            titleTextColor: { _ in isDesignTokenEnabled ? TokenColors.Text.inverseAccent.swiftUI : Color.white },
+                            backgroundColor: { _ in isDesignTokenEnabled ? TokenColors.Button.primary.swiftUI : colorScheme == .dark ? Color(red: 0, green: 0.761, blue: 0.604) : Color(red: 0, green: 0.659, blue: 0.525) },
                             image: nil,
                             handler: viewModel.showCameraUploadsSettingsFlow
                         )
@@ -120,6 +121,8 @@ struct DeviceCenterMenu: View {
         } label: {
             if title.isEmpty {
                 Image(menuIconName)
+                    .renderingMode(.template)
+                    .foregroundStyle(isDesignTokenEnabled ? TokenColors.Icon.secondary.swiftUI : Color(red: 0.733, green: 0.733, blue: 0.733))
                     .scaledToFit()
                     .frame(width: 28, height: 28)
             } else {
