@@ -1,17 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "folderSync.pdf",
-      "idiom" : "universal"
-    },
-    {
-      "appearances" : [
-        {
-          "appearance" : "luminosity",
-          "value" : "dark"
-        }
-      ],
-      "filename" : "syncFolder.pdf",
+      "filename" : "folderSyncLight.pdf",
       "idiom" : "universal"
     }
   ],
