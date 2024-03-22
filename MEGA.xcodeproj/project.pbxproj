@@ -752,12 +752,19 @@
 		6D9A731D2B4619D200894E97 /* MEGAAppColor+Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D9A731C2B4619D200894E97 /* MEGAAppColor+Account.swift */; };
 		6DB163F02880F953004EFBC7 /* PhotosViewModel+Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB163EF2880F953004EFBC7 /* PhotosViewModel+Filter.swift */; };
 		6DB772CE28836A8500B75A93 /* PhotosViewController+Empty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DB772CD28836A8500B75A93 /* PhotosViewController+Empty.swift */; };
+		6DC1FCA22BAD11B40013E9BD /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 6DC1FCA12BAD11B40013E9BD /* PrivacyInfo.xcprivacy */; };
 		6DD7B2362A776313007EBB20 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6DD7B2352A776313007EBB20 /* Images.xcassets */; };
 		6DD7B2372A776313007EBB20 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6DD7B2352A776313007EBB20 /* Images.xcassets */; };
 		6DD7B2382A776313007EBB20 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6DD7B2352A776313007EBB20 /* Images.xcassets */; };
 		6DD7B2392A776313007EBB20 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6DD7B2352A776313007EBB20 /* Images.xcassets */; };
 		6DD7B23A2A776313007EBB20 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6DD7B2352A776313007EBB20 /* Images.xcassets */; };
 		6DE5563629F61ED40015A950 /* ChatContentViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE5563529F61ED40015A950 /* ChatContentViewModelTests.swift */; };
+		6DF356B22BAD36320099FCF1 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 6DC1FCA12BAD11B40013E9BD /* PrivacyInfo.xcprivacy */; };
+		6DF356B32BAD36330099FCF1 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 6DC1FCA12BAD11B40013E9BD /* PrivacyInfo.xcprivacy */; };
+		6DF356B42BAD36340099FCF1 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 6DC1FCA12BAD11B40013E9BD /* PrivacyInfo.xcprivacy */; };
+		6DF356B52BAD36350099FCF1 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 6DC1FCA12BAD11B40013E9BD /* PrivacyInfo.xcprivacy */; };
+		6DF356B62BAD36350099FCF1 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 6DC1FCA12BAD11B40013E9BD /* PrivacyInfo.xcprivacy */; };
+		6DF356B82BAD36370099FCF1 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 6DC1FCA12BAD11B40013E9BD /* PrivacyInfo.xcprivacy */; };
 		6DF467A72B50ED5F0065CA76 /* MEGAAppColor+PSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DF467A62B50ED5F0065CA76 /* MEGAAppColor+PSA.swift */; };
 		6DFF9C0D29E4BC2D005C9C21 /* ChatRoomsListRouting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DFF9C0C29E4BC2D005C9C21 /* ChatRoomsListRouting.swift */; };
 		7271896027FF128B00B2DB08 /* MEGAReachabilityManager+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7271895F27FF128B00B2DB08 /* MEGAReachabilityManager+Additions.swift */; };
@@ -3444,6 +3451,7 @@
 		6D9A731C2B4619D200894E97 /* MEGAAppColor+Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MEGAAppColor+Account.swift"; sourceTree = "<group>"; };
 		6DB163EF2880F953004EFBC7 /* PhotosViewModel+Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewModel+Filter.swift"; sourceTree = "<group>"; };
 		6DB772CD28836A8500B75A93 /* PhotosViewController+Empty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosViewController+Empty.swift"; sourceTree = "<group>"; };
+		6DC1FCA12BAD11B40013E9BD /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		6DD7B2342A7761BD007EBB20 /* MEGAAssets */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MEGAAssets; sourceTree = "<group>"; };
 		6DD7B2352A776313007EBB20 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Modules/Presentation/MEGAAssets/Sources/MEGAAssets/Resources/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		6DE5563529F61ED40015A950 /* ChatContentViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatContentViewModelTests.swift; sourceTree = "<group>"; };
@@ -5893,6 +5901,7 @@
 				A87FF3BF22F8111C00EFD95C /* MEGA-Bridging-Header.h */,
 				4122C0E71B27539F001CE833 /* MEGA-PrefixHeader.pch */,
 				5BF5387F23741DB70023F2E4 /* MEGA.entitlements */,
+				6DC1FCA12BAD11B40013E9BD /* PrivacyInfo.xcprivacy */,
 				BFC9685A278CDA080098C523 /* TestingAppDelegate.swift */,
 			);
 			path = "Supporting Files";
@@ -13389,6 +13398,7 @@
 				41BADDAF1A8E28FD008408B3 /* Photos.storyboard in Resources */,
 				C450470B25794A7A00EE510E /* PlaylistHeaderFooterView.xib in Resources */,
 				2F85307324885FAB00064E83 /* PreviewersView.xib in Resources */,
+				6DF356B22BAD36320099FCF1 /* PrivacyInfo.xcprivacy in Resources */,
 				A8C93C1422D71C470030CE1B /* Profile.storyboard in Resources */,
 				2F6F0893253E387600C5B5D7 /* ProgressIndicatorView.xib in Resources */,
 				BFCA9A1D25ABA33900D1F4E0 /* PSAView.xib in Resources */,
@@ -13430,6 +13440,7 @@
 			files = (
 				6D6749422AF84C410023FAC0 /* Colors.xcassets in Resources */,
 				6DD7B2382A776313007EBB20 /* Images.xcassets in Resources */,
+				6DF356B32BAD36330099FCF1 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13440,6 +13451,7 @@
 				83422B28255984C300D46907 /* Assets.xcassets in Resources */,
 				6D6749442AF84C410023FAC0 /* Colors.xcassets in Resources */,
 				6DD7B23A2A776313007EBB20 /* Images.xcassets in Resources */,
+				6DF356B82BAD36370099FCF1 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13450,6 +13462,7 @@
 				A882981E29F1668E00DEDE98 /* AppIntentVocabulary.plist in Resources */,
 				6D6749412AF84C410023FAC0 /* Colors.xcassets in Resources */,
 				6DD7B2372A776313007EBB20 /* Images.xcassets in Resources */,
+				6DC1FCA22BAD11B40013E9BD /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13476,6 +13489,7 @@
 				943F8B3D1EF2888000AFD89F /* Launch.storyboard in Resources */,
 				9411355B1F01006E00D33428 /* LTHPasscodeViewController.bundle in Resources */,
 				77E70DB82475760F00E74806 /* MegaAvatarView.xib in Resources */,
+				6DF356B62BAD36350099FCF1 /* PrivacyInfo.xcprivacy in Resources */,
 				94598D751F0CD53A00B57144 /* Share.storyboard in Resources */,
 				B695B60D264B43160050DF09 /* SVProgressHUD.bundle in Resources */,
 			);
@@ -13485,6 +13499,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6DF356B52BAD36350099FCF1 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13493,6 +13508,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A8399F5F296C43F90062B6BC /* MainInterface.storyboard in Resources */,
+				6DF356B42BAD36340099FCF1 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
