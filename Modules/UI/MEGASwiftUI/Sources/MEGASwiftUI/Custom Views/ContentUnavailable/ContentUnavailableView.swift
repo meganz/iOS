@@ -1,3 +1,4 @@
+import MEGADesignToken
 import SwiftUI
 
 public struct ContentUnavailableView<Label, Description, Actions>: View where Label: View, Description: View, Actions: View {
@@ -61,17 +62,20 @@ public struct ContentUnavailableViewModel {
     public struct ButtonAction: Action {
         public let id = UUID()
         public let title: String
+        public let titleTextColor: (ColorScheme) -> Color?
         public let backgroundColor: (ColorScheme) -> Color?
         public let image: Image?
         public let handler: () -> Void
 
         public init(
             title: String,
+            titleTextColor: @escaping (ColorScheme) -> Color? = { _ in nil },
             backgroundColor: @escaping (ColorScheme) -> Color? = { _ in nil },
             image: Image?,
             handler: @escaping () -> Void
         ) {
             self.title = title
+            self.titleTextColor = titleTextColor
             self.backgroundColor = backgroundColor
             self.image = image
             self.handler = handler
@@ -191,8 +195,8 @@ struct ButtonActionView: View {
 
     private func text(for title: String) -> some View {
         Text(title)
-            .foregroundColor(.white)
             .fontWeight(.semibold)
+            .foregroundStyle(action.titleTextColor(colorScheme) ?? (isDesignTokenEnabled ? TokenColors.Text.onColor.swiftUI : .white))
     }
 }
 
