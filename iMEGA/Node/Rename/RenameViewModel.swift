@@ -1,4 +1,5 @@
 import DeviceCenter
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
@@ -89,7 +90,11 @@ struct RenameViewModel {
     }
     
     func alertTextsColor(text: String) -> UIColor {
-        containsInvalidChars(text) || isDuplicated(text) || !isNewNameWithinMaxLength(text) ? MEGAAppColor.Red._FF3B30.uiColor : UIColor.label
+        if containsInvalidChars(text) || isDuplicated(text) || !isNewNameWithinMaxLength(text) {
+            return UIColor.isDesignTokenEnabled() ? TokenColors.Text.error : UIColor.systemRed
+        }
+        
+        return UIColor.isDesignTokenEnabled() ? TokenColors.Text.primary : UIColor.label
     }
     
     func isActionButtonEnabled(text: String) -> Bool {

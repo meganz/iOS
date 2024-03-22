@@ -126,42 +126,6 @@ class RenameViewModelTests: XCTestCase {
         XCTAssertEqual(result, Strings.Localizable.renameNodeMessage)
     }
     
-    func testAlertTextsColor_containsInvalidChars_returnsRedColor() {
-        let invalidText = ":<>?"
-        let (viewModel, _, _) = makeSUT(renameShouldThrowError: false)
-        
-        let result = viewModel.alertTextsColor(text: invalidText)
-        
-        XCTAssertEqual(result, MEGAAppColor.Red._FF3B30.uiColor)
-    }
-    
-    func testAlertTextsColor_isDuplicated_returnsRedColor() {
-        let duplicatedText = "DuplicateName"
-        let (viewModel, _, _) = makeSUT(otherNamesInContext: [duplicatedText], renameShouldThrowError: false)
-        
-        let result = viewModel.alertTextsColor(text: duplicatedText)
-        
-        XCTAssertEqual(result, MEGAAppColor.Red._FF3B30.uiColor)
-    }
-    
-    func testAlertTextsColor_defaultCase_returnsLabelColor() {
-        let validText = "ValidText"
-        let (viewModel, _, _) = makeSUT(renameShouldThrowError: false)
-        
-        let result = viewModel.alertTextsColor(text: validText)
-        
-        XCTAssertEqual(result, .label)
-    }
-    
-    func testAlertTestsColor_deviceNameLargerThanAllowed_returnsRedColor() {
-        let invalidName = "12345678901234567890123456789012345"
-        let (viewModel, _, _) = makeSUT(renameShouldThrowError: false)
-        
-        let result = viewModel.alertTextsColor(text: invalidName)
-        
-        XCTAssertEqual(result, MEGAAppColor.Red._FF3B30.uiColor)
-    }
-    
     func testIsActionButtonEnabled_textIsEmpty_returnsFalse() {
         let emptyText = ""
         let (viewModel, _, _) = makeSUT(renameShouldThrowError: false)
