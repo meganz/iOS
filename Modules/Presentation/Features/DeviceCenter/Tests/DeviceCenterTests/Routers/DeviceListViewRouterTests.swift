@@ -63,9 +63,6 @@ final class DeviceListViewRouterTests: XCTestCase {
                 lightBGColor: .gray,
                 darkBGColor: .black
             ),
-            backupStatuses: [
-                BackupStatus(status: .upToDate, title: "", color: .blue, iconName: "circle.fill")
-            ],
             deviceCenterActions: [],
             deviceIconNames: [:]
         )
