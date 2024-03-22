@@ -99,7 +99,11 @@ struct MeetingInfoView: View {
             }
         }
         .padding(.vertical)
-        .designTokenBackground(isDesignTokenEnabled, legacyColor: legacyMeetingBackgroundColor)
+        .designTokenBackground(isDesignTokenEnabled, legacyColor: scrollLegacyBackground)
+    }
+    
+    var scrollLegacyBackground: Color {
+        colorScheme == .dark ? MEGAAppColor.Black._000000.color : MEGAAppColor.White._F7F7F7.color
     }
     
     var legacyMeetingBackgroundColor: Color {
