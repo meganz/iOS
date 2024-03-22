@@ -71,7 +71,8 @@ class NodeBrowserViewModelTests: XCTestCase {
                         selection: { _ in },
                         context: { _, _ in },
                         resignKeyboard: {},
-                        chipTapped: { _, _ in }
+                        chipTapped: { _, _ in },
+                        sortingOrder: { .nameAscending }
                     ),
                     config: .testConfig,
                     layout: defaultLayout,
@@ -92,7 +93,8 @@ class NodeBrowserViewModelTests: XCTestCase {
                 upgradeEncouragementViewModel: nil,
                 adsVisibilityViewModel: nil,
                 config: .default,
-                nodeSource: nodeSource,
+                nodeSource: nodeSource, 
+                sortOrder: .defaultAsc,
                 avatarViewModel: MyAvatarViewModel(
                     megaNotificationUseCase: MockMEGANotificationUseCaseProtocol(),
                     megaAvatarUseCase: MockMEGAAvatarUseCaseProtocol(),
@@ -184,6 +186,42 @@ class NodeBrowserViewModelTests: XCTestCase {
         XCTAssertTrue(harness.sut.editing)
         guard case .editing = harness.sut.viewState else {
             XCTFail("view state should be editing")
+            return
+        }
+    }
+
+    func testChangeSortOrder_forAllCases_shouldMatchExpectedResult() {
+        [
+            (.nameAscending, .defaultAsc),
+            (.nameDescending, .defaultDesc),
+            (.largest, .sizeDesc),
+            (.smallest, .sizeAsc),
+            (.newest, .modificationDesc),
+            (.oldest, .modificationAsc),
+            (.label, .labelAsc),
+            (.favourite, .favouriteAsc)
+        ].forEach { (sortOrderType, sortOrderEntity) in
+            assertChangeSortOrder(
+                with: sortOrderType,
+                expectedSortOrderEntity: sortOrderEntity
+            )
+        }
+    }
+
+    private func assertChangeSortOrder(
+        with sortOrderType: SortOrderType,
+        expectedSortOrderEntity: MEGADomain.SortOrderEntity,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        let harness = Harness(node: .init())
+        harness.sut.changeSortOrder(sortOrderType)
+        guard case expectedSortOrderEntity = harness.sut.sortOrder else {
+            XCTFail(
+                "Expected \(expectedSortOrderEntity) but returned \(harness.sut.sortOrder)",
+                file: file,
+                line: line
+            )
             return
         }
     }

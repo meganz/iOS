@@ -114,8 +114,8 @@ public final class MockNodeDataUseCase: NodeUseCaseProtocol {
     public func isRestorable(node: MEGADomain.NodeEntity) -> Bool {
         false
     }
-    
-    public func asyncChildrenOf(node: NodeEntity) async -> NodeListEntity? {
+
+    public func asyncChildrenOf(node: NodeEntity, sortOrder: SortOrderEntity) async -> NodeListEntity? {
         nil
     }
 

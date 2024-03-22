@@ -99,14 +99,14 @@ public struct MockNodeRepository: NodeRepositoryProtocol {
     public func children(of node: NodeEntity) -> NodeListEntity? {
         .init(nodesCount: 0, nodeAt: { _ in nil })
     }
-    
-    public func asyncChildren(of node: NodeEntity) async -> NodeListEntity? {
+
+    public func asyncChildren(of node: NodeEntity, sortOrder: SortOrderEntity) async -> NodeListEntity? {
         guard !childrenNodes.isEmpty else { return nil }
         return .init(nodesCount: childrenNodes.count, nodeAt: { index in
             return childrenNodes[index]
         })
     }
-    
+
     public func childrenNames(of node: NodeEntity) -> [String]? {
         childrenNodes.compactMap {$0.name}
     }

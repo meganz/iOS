@@ -93,13 +93,14 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         
         currentPage = 0
         isLastPageReached = false
-        
+        let sorting = queryRequest.sorting
+
         switch queryRequest {
         case .initial:
-            return await childrenOfRoot()
+            return await childrenOfRoot(with: sorting)
         case .userSupplied(let query):
             if shouldShowRoot(for: query) {
-                return await childrenOfRoot()
+                return await childrenOfRoot(with: sorting)
             } else {
                 self.nodeList = try await fullSearch(with: query)
                 return await fillResults(query: query)
@@ -125,11 +126,14 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
         parentNodeProvider()
     }
     
-    private func childrenOfRoot() async -> SearchResultsEntity {
+    private func childrenOfRoot(with sortOrder: Search.SortOrderEntity) async -> SearchResultsEntity {
         guard let parentNode else {
             return .empty
         }
-        self.nodeList = await nodeRepository.asyncChildren(of: parentNode)
+        self.nodeList = await nodeRepository.asyncChildren(
+            of: parentNode,
+            sortOrder: sortOrder.toDomainSortOrderEntity()
+        )
         return await fillResults()
     }
     
@@ -152,22 +156,13 @@ final class HomeSearchResultsProvider: SearchResultsProviding {
             searchFileUseCase.searchFiles(
                 withFilter: queryRequest.searchFilter,
                 recursive: true,
-                sortOrder: .defaultAsc,
+                sortOrder: queryRequest.sorting.toMEGASortOrderType(),
                 searchPath: searchPath,
                 completion: { nodeList in
                     completion(.success(nodeList))
                 }
             )
         })
-    }
-
-    private func childrenFolders() async throws -> NodeListEntity? {
-        guard let root = nodeRepository.rootNode() else { return nil }
-        guard let nodeList = await nodeRepository.asyncChildren(of: root) else { return nil }
-
-        let nodes = nodeList.toNodeEntities().filter { $0.isFolder }
-
-        return .init(nodesCount: nodes.count, nodeAt: { nodes[$0] })
     }
 
     private func shouldShowRoot(for queryRequest: SearchQueryEntity) -> Bool {

@@ -38,6 +38,8 @@ struct ContentView: View {
                 },
                 chipTapped: {
                     print("Chip tapped \($0), \($1)")
+                }, sortingOrder: {
+                    .nameAscending
                 }
             ),
             config: .testConfig,

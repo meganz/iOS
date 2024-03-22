@@ -34,6 +34,7 @@ class NodeBrowserViewModel: ObservableObject {
     let config: NodeBrowserConfig
     @Published var contextMenuViewFactory: NodeBrowserContextMenuViewFactory?
 
+    @Published var sortOrder: MEGADomain.SortOrderEntity
     @Published var shouldShowMediaDiscoveryAutomatically: Bool?
     @Published var viewMode: ViewModePreferenceEntity
     @Published var editing = false
@@ -60,6 +61,7 @@ class NodeBrowserViewModel: ObservableObject {
         adsVisibilityViewModel: (any AdsVisibilityViewModelProtocol)?,
         config: NodeBrowserConfig,
         nodeSource: NodeSource,
+        sortOrder: MEGADomain.SortOrderEntity,
         avatarViewModel: MyAvatarViewModel,
         // we call this whenever view sate is changed so that:
         // - preference is saved if it's required
@@ -80,6 +82,7 @@ class NodeBrowserViewModel: ObservableObject {
         self.adsVisibilityViewModel = adsVisibilityViewModel
         self.config = config
         self.nodeSource = nodeSource
+        self.sortOrder = sortOrder
         self.avatarViewModel = avatarViewModel
         self.storageFullAlertViewModel = storageFullAlertViewModel
         self.titleBuilder = titleBuilder
@@ -233,7 +236,12 @@ class NodeBrowserViewModel: ObservableObject {
     func changeViewMode(_ viewMode: ViewModePreferenceEntity) {
         self.viewMode = viewMode
     }
-    
+
+    func changeSortOrder(_ sortOrder: SortOrderType) {
+        self.sortOrder = sortOrder.toSortOrderEntity()
+        searchResultsViewModel.changeSortOrder(sortOrder.toSearchSortOrderEntity())
+    }
+
     func selectAll() {
         guard case .editing = viewState else { return }
         

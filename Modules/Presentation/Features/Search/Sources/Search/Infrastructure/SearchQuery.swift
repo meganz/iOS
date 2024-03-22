@@ -37,8 +37,13 @@ public enum SearchQuery: Equatable, Sendable {
         }
     }
 
-    var sorting: SortOrderEntity {
-        .automatic
+    public var sorting: SortOrderEntity {
+        switch self {
+        case .initial:
+            return .nameAscending
+        case .userSupplied(let query):
+            return query.sorting
+        }
     }
     
     var mode: SearchModeEntity {

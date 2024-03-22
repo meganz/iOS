@@ -26,7 +26,14 @@ public struct SearchQueryEntity: Equatable, Sendable {
 
 /// default value, iteration one of search project does not allow specifying sort order but that can come in next stages
 public enum SortOrderEntity: Sendable {
-    case automatic
+    case nameAscending
+    case nameDescending
+    case largest
+    case smallest
+    case newest
+    case oldest
+    case label
+    case favourite
 }
 
 /// Specifies the context in which the search is happening

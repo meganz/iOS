@@ -270,6 +270,8 @@ final class HomeScreenFactory: NSObject {
             },
             chipTapped: { chip, selected in
                 tracker.trackChip(tapped: chip, selected: selected)
+            }, sortingOrder: {
+                .nameAscending
             }
         )
         

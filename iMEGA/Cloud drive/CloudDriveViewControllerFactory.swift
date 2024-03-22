@@ -77,6 +77,7 @@ struct CloudDriveViewControllerFactory {
     private let homeScreenFactory: HomeScreenFactory
     private let nodeUseCase: any NodeUseCaseProtocol
     private let preferences: any PreferenceUseCaseProtocol
+    private let sortOrderPreferenceUseCase: any SortOrderPreferenceUseCaseProtocol
     private let resultsMapper: SearchResultMapper
     private let sdk: MEGASdk
     private let userDefaults: UserDefaults
@@ -101,6 +102,7 @@ struct CloudDriveViewControllerFactory {
         resultsMapper: SearchResultMapper,
         nodeUseCase: some NodeUseCaseProtocol,
         preferences: some PreferenceUseCaseProtocol,
+        sortOrderPreferenceUseCase: some SortOrderPreferenceUseCaseProtocol,
         sdk: MEGASdk,
         userDefaults: UserDefaults,
         contextMenuConfigFactory: CloudDriveContextMenuConfigFactory,
@@ -121,6 +123,7 @@ struct CloudDriveViewControllerFactory {
         self.resultsMapper = resultsMapper
         self.nodeUseCase = nodeUseCase
         self.preferences = preferences
+        self.sortOrderPreferenceUseCase = sortOrderPreferenceUseCase
         self.sdk = sdk
         self.userDefaults = userDefaults
         self.contextMenuConfigFactory = contextMenuConfigFactory
@@ -201,7 +204,11 @@ struct CloudDriveViewControllerFactory {
                 mediaUseCase: homeFactory.makeMediaUseCase()
             ),
             nodeUseCase: nodeUseCase,
-            preferences: PreferenceUseCase.default,
+            preferences: PreferenceUseCase.default, 
+            sortOrderPreferenceUseCase: SortOrderPreferenceUseCase(
+                preferenceUseCase: PreferenceUseCase.default,
+                sortOrderPreferenceRepository: SortOrderPreferenceRepository.newRepo
+            ),
             sdk: sdk,
             userDefaults: .standard,
             contextMenuConfigFactory: CloudDriveContextMenuConfigFactory(
@@ -292,6 +299,7 @@ struct CloudDriveViewControllerFactory {
     
     private func makeNodeBrowserViewModel(
         initialViewMode: ViewModePreferenceEntity,
+        sortOrder: MEGADomain.SortOrderEntity,
         nodeSource: NodeSource,
         searchResultsViewModel: SearchResultsViewModel,
         config: NodeBrowserConfig,
@@ -321,6 +329,7 @@ struct CloudDriveViewControllerFactory {
             adsVisibilityViewModel: adsVisibilityViewModel,
             config: config,
             nodeSource: nodeSource,
+            sortOrder: sortOrder,
             avatarViewModel: avatarViewModel,
             viewModeSaver: {
                 guard let node = nodeSource.parentNode else { return }
@@ -384,6 +393,12 @@ struct CloudDriveViewControllerFactory {
             },
             changeViewMode: { [weak nodeBrowserViewModel] in
                 nodeBrowserViewModel?.changeViewMode($0)
+            }, changeSortOrder: { [weak nodeBrowserViewModel] sortOrder in
+                if let parentNode = nodeSource.parentNode {
+                    sortOrderPreferenceUseCase.save(sortOrder: sortOrder.toSortOrderEntity(), for: parentNode)
+                }
+
+                nodeBrowserViewModel?.changeSortOrder(sortOrder)
             }
         )
         
@@ -531,10 +546,13 @@ struct CloudDriveViewControllerFactory {
                 )
             }
         }
-        
+
+        let initialSortOrder = sortOrderPreferenceUseCase.sortOrder(for: nodeSource.parentNode)
+
         let mediaContentDelegate = MediaContentDelegateHandler()
         let nodeBrowserViewModel = makeNodeBrowserViewModel(
-            initialViewMode: initialViewMode,
+            initialViewMode: initialViewMode, 
+            sortOrder: initialSortOrder,
             nodeSource: nodeSource,
             searchResultsViewModel: searchResultsVM,
             config: overriddenConfig,
@@ -591,6 +609,7 @@ struct CloudDriveViewControllerFactory {
         let setNavItemsFactory = { [weak nodeBrowserViewModel] in
             let viewMode: ViewModePreferenceEntity = nodeBrowserViewModel?.viewMode ?? .list
             let isSelectionHidden = nodeBrowserViewModel?.isSelectionHidden ?? false
+            let sortOrder = nodeBrowserViewModel?.sortOrder ?? initialSortOrder
             return CloudDriveViewControllerNavItemsFactory(
                 nodeSource: nodeSource,
                 config: config,
@@ -598,7 +617,8 @@ struct CloudDriveViewControllerFactory {
                 contextMenuManager: contextMenuManager,
                 contextMenuConfigFactory: contextMenuConfigFactory,
                 nodeUseCase: nodeUseCase,
-                isSelectionHidden: isSelectionHidden
+                isSelectionHidden: isSelectionHidden,
+                sortOrder: sortOrder
             )
         }
 
@@ -720,7 +740,10 @@ struct CloudDriveViewControllerFactory {
             resignKeyboard: { [weak bridge] in
                 bridge?.hideKeyboard()
             },
-            chipTapped: { _, _ in}
+            chipTapped: { _, _ in},
+            sortingOrder: { @MainActor in
+                sortOrderPreferenceUseCase.sortOrder(for: nodeSource.parentNode).toSearchSortOrderEntity()
+            }
         )
         
         bridge.didInputTextTrampoline = { [weak searchBridge] text in
