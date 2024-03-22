@@ -13,7 +13,7 @@ public protocol NodeUseCaseProtocol {
     func nodeForHandle(_ handle: HandleEntity) -> NodeEntity?
     func parentForHandle(_ handle: HandleEntity) -> NodeEntity?
     func parentsForHandle(_ handle: HandleEntity) async -> [NodeEntity]?
-    func asyncChildrenOf(node: NodeEntity) async -> NodeListEntity?
+    func asyncChildrenOf(node: NodeEntity, sortOrder: SortOrderEntity) async -> NodeListEntity?
     func childrenOf(node: NodeEntity) -> NodeListEntity?
     func childrenNamesOf(node: NodeEntity) -> [String]?
     func isRubbishBinRoot(node: NodeEntity) -> Bool
@@ -104,8 +104,8 @@ public struct NodeUseCase<T: NodeDataRepositoryProtocol, U: NodeValidationReposi
         return !isInRubbishBin(nodeHandle: restoreNode.handle) && isInRubbishBin(nodeHandle: node.handle)
     }
     
-    public func asyncChildrenOf(node: NodeEntity) async -> NodeListEntity? {
-       await nodeRepository.asyncChildren(of: node)
+    public func asyncChildrenOf(node: NodeEntity, sortOrder: SortOrderEntity) async -> NodeListEntity? {
+        await nodeRepository.asyncChildren(of: node, sortOrder: sortOrder)
     }
     
     public func childrenOf(node: NodeEntity) -> NodeListEntity? {

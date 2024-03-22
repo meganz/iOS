@@ -11,16 +11,19 @@ final class DisplayMenuDelegateHandler: DisplayMenuDelegate, RefreshMenuTriggeri
     
     let toggleSelection: () -> Void
     let changeViewMode: (ViewModePreferenceEntity) -> Void
+    let changeSortOrder: (SortOrderType) -> Void
     let rubbishBinUseCase: any RubbishBinUseCaseProtocol
     
     init(
         rubbishBinUseCase: some RubbishBinUseCaseProtocol,
         toggleSelection: @escaping () -> Void,
-        changeViewMode: @escaping (ViewModePreferenceEntity) -> Void
+        changeViewMode: @escaping (ViewModePreferenceEntity) -> Void,
+        changeSortOrder: @escaping (SortOrderType) -> Void
     ) {
         self.rubbishBinUseCase = rubbishBinUseCase
         self.toggleSelection = toggleSelection
         self.changeViewMode = changeViewMode
+        self.changeSortOrder = changeSortOrder
     }
     
     func confirmClearRubbishBin(presenter: UIViewController) {
@@ -61,6 +64,6 @@ final class DisplayMenuDelegateHandler: DisplayMenuDelegate, RefreshMenuTriggeri
     }
     
     func sortMenu(didSelect sortType: SortOrderType) {
-        assert(false, "not implemented yet, scheduled to be done in [FM-1776]")
+        changeSortOrder(sortType)
     }
 }

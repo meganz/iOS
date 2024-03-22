@@ -84,7 +84,8 @@ final class CloudDriveViewControllerNavItemsFactoryTests: XCTestCase {
             nodeUseCase: MockNodeDataUseCase()
         ),
         nodeUseCase: some NodeUseCaseProtocol = MockNodeDataUseCase(),
-        isSelectionHidden: Bool = false
+        isSelectionHidden: Bool = false,
+        sortOrderEntity: SortOrderEntity = .defaultAsc
     ) -> SUT {
         SUT(
             nodeSource: nodeSource,
@@ -93,7 +94,8 @@ final class CloudDriveViewControllerNavItemsFactoryTests: XCTestCase {
             contextMenuManager: contextMenuManager,
             contextMenuConfigFactory: contextMenuConfigFactory,
             nodeUseCase: nodeUseCase,
-            isSelectionHidden: isSelectionHidden
+            isSelectionHidden: isSelectionHidden, 
+            sortOrder: sortOrderEntity
         )
     }
 

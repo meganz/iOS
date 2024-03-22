@@ -10,7 +10,8 @@ struct CloudDriveViewControllerNavItemsFactory {
     let contextMenuConfigFactory: CloudDriveContextMenuConfigFactory
     let nodeUseCase: any NodeUseCaseProtocol
     let isSelectionHidden: Bool
-    
+    let sortOrder: SortOrderEntity
+
     /// Creates a SwiftUI context menu for a Node.
     ///
     /// This menu currently appears on the top trailing part navigation bar in the cloud drive.
@@ -39,7 +40,7 @@ struct CloudDriveViewControllerNavItemsFactory {
                 viewModePreference: currentViewMode
 
             ),
-            sortOrder: .defaultAsc,
+            sortOrder: sortOrder,
             displayMode: config.displayMode?.carriedOverDisplayMode ?? .cloudDrive,
             isFromViewInFolder: config.isFromViewInFolder == true
         )

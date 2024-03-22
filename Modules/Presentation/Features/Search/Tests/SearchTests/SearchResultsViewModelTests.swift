@@ -48,7 +48,8 @@ final class SearchResultsViewModelTests: XCTestCase {
                 selection: { selection($0) },
                 context: { context($0, $1) },
                 resignKeyboard: { keyboardResigned() },
-                chipTapped: { chipTapped($0, $1) }
+                chipTapped: { chipTapped($0, $1) },
+                sortingOrder: { .nameAscending }
             )
 
             var askedForEmptyContent: (SearchChipEntity?, SearchQuery) -> SearchConfig.EmptyViewAssets = {
@@ -443,6 +444,60 @@ final class SearchResultsViewModelTests: XCTestCase {
         
         XCTAssertTrue(harness.sut.selectedResultIds.isEmpty)
         XCTAssertTrue(selectionChangeResult?.isEmpty == true)
+    }
+
+    func testChangeSortOrder_forAllCases_shouldMatchTheExpectation() async {
+        let allCases: [(Search.SortOrderEntity, [SearchQuery]?)] = [
+            (.nameAscending, [.initial]),
+            (.nameDescending, nil),
+            (.largest, nil),
+            (.smallest, nil),
+            (.newest, nil),
+            (.oldest, nil),
+            (.label, nil),
+            (.favourite, nil)
+        ]
+
+        for (sortOrderEntity, expectedQueries) in allCases {
+            await assertChangeSortOrder(with: sortOrderEntity, expectedReceivedQueries: expectedQueries)
+        }
+    }
+
+    private func assertChangeSortOrder(
+        with sortOrder: Search.SortOrderEntity,
+        expectedReceivedQueries: [SearchQuery]? = nil,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) async {
+        let harness = Harness(self)
+        let changeSortOrderTask = harness.sut.changeSortOrder(sortOrder)
+        await changeSortOrderTask.value
+        let defaultExpectedReceivedQueries: [SearchQuery] = [
+            .userSupplied(
+                .init(
+                    query: "",
+                    sorting: sortOrder,
+                    mode: .home,
+                    isSearchActive: false,
+                    chips: []
+                )
+            )
+        ]
+
+        let expectedSearchQueries = (expectedReceivedQueries != nil
+        ? expectedReceivedQueries
+        : defaultExpectedReceivedQueries) ?? []
+
+        XCTAssertEqual(
+            harness.resultsProvider.passedInQueries,
+            expectedSearchQueries,
+            """
+                Expected search queries \(expectedSearchQueries)
+                but received \(harness.resultsProvider.passedInQueries)
+            """,
+            file: file,
+            line: line
+        )
     }
 }
 

@@ -136,9 +136,9 @@ public struct NodeRepository: NodeRepositoryProtocol {
         return sdk.children(forParent: node).toNodeListEntity()
     }
     
-    public func asyncChildren(of node: NodeEntity) async -> NodeListEntity? {
+    public func asyncChildren(of node: NodeEntity, sortOrder: SortOrderEntity) async -> NodeListEntity? {
         guard let node = node.toMEGANode(in: sdk) else { return nil }
-        return sdk.children(forParent: node).toNodeListEntity()
+        return sdk.children(forParent: node, order: sortOrder.toMEGASortOrderType().rawValue).toNodeListEntity()
     }
     
     public func childrenNames(of node: NodeEntity) -> [String]? {

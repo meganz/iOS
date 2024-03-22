@@ -2349,6 +2349,7 @@
 		BFCB32B72A023A7F0013409C /* ScheduleMeetingPushNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCB32B52A0239A60013409C /* ScheduleMeetingPushNotifications.swift */; };
 		BFCB81112505A8D90096BD57 /* FilesExplorerListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCB810F2505A8D90096BD57 /* FilesExplorerListViewController.swift */; };
 		BFCD7D872BAAC07B00D61DD1 /* ConcurrencyExtras in Frameworks */ = {isa = PBXBuildFile; productRef = BFCD7D862BAAC07B00D61DD1 /* ConcurrencyExtras */; };
+		BFCD7D8E2BABE84D00D61DD1 /* SortOrderType+SearchMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCD7D8D2BABE84D00D61DD1 /* SortOrderType+SearchMapper.swift */; };
 		BFCEA856246E074B00FA2451 /* ChatViewController+ChatDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCEA855246E074B00FA2451 /* ChatViewController+ChatDelegate.swift */; };
 		BFCF841F246A1310004FA3B1 /* JoinInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCF841E246A1310004FA3B1 /* JoinInputBar.swift */; };
 		BFCF8423246A1326004FA3B1 /* JoinInputBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFCF8422246A1326004FA3B1 /* JoinInputBar.xib */; };
@@ -5056,6 +5057,7 @@
 		BFCA9A1B25ABA33900D1F4E0 /* PSAView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PSAView.xib; sourceTree = "<group>"; };
 		BFCB32B52A0239A60013409C /* ScheduleMeetingPushNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMeetingPushNotifications.swift; sourceTree = "<group>"; };
 		BFCB810F2505A8D90096BD57 /* FilesExplorerListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesExplorerListViewController.swift; sourceTree = "<group>"; };
+		BFCD7D8D2BABE84D00D61DD1 /* SortOrderType+SearchMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SortOrderType+SearchMapper.swift"; sourceTree = "<group>"; };
 		BFCEA855246E074B00FA2451 /* ChatViewController+ChatDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ChatViewController+ChatDelegate.swift"; sourceTree = "<group>"; };
 		BFCF841E246A1310004FA3B1 /* JoinInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinInputBar.swift; sourceTree = "<group>"; };
 		BFCF8422246A1326004FA3B1 /* JoinInputBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = JoinInputBar.xib; sourceTree = "<group>"; };
@@ -9869,6 +9871,7 @@
 			isa = PBXGroup;
 			children = (
 				B547C0E529FB716C0008BEF2 /* SortOrderType+Mapper.swift */,
+				BFCD7D8D2BABE84D00D61DD1 /* SortOrderType+SearchMapper.swift */,
 			);
 			path = SortOrder;
 			sourceTree = "<group>";
@@ -15241,6 +15244,7 @@
 				5B40B3AA2422ABF200B5FF13 /* SortingPreference.swift in Sources */,
 				25F9329F2AF86C1A00A63E73 /* SortOrderPreferenceRepository.swift in Sources */,
 				B547C0E629FB716C0008BEF2 /* SortOrderType+Mapper.swift in Sources */,
+				BFCD7D8E2BABE84D00D61DD1 /* SortOrderType+SearchMapper.swift in Sources */,
 				BFE6E554255259FE00050DCA /* SortOrderType.swift in Sources */,
 				A870B31C27AC2FBB0052B6D0 /* SpotlightIndexer.swift in Sources */,
 				5D17CFA42541C46C0000194A /* StartConversationViewModel.swift in Sources */,

@@ -151,7 +151,7 @@ public class SearchResultsViewModel: ObservableObject {
         // This is using a different method in the SDK
         // hence an enum is needed to reliably tell the difference
         await showLoadingPlaceholderIfNeeded()
-        await queryChanged(to: .initial)
+        await queryChanged(to: updatedQuery(with: await bridge.sortingOrder()))
     }
     
     private func cancelSearchTask() {
@@ -561,6 +561,22 @@ public class SearchResultsViewModel: ObservableObject {
             .store(in: &subscriptions)
     }
 
+    private func updatedQuery(with sortOrder: SortOrderEntity) -> SearchQuery {
+        if currentQuery.sorting == sortOrder {
+            return currentQuery
+        } else {
+            return .userSupplied(
+                .init(
+                    query: currentQuery.query,
+                    sorting: sortOrder,
+                    mode: currentQuery.mode,
+                    isSearchActive: currentQuery.isSearchActive,
+                    chips: currentQuery.chips
+                )
+            )
+        }
+    }
+
     // create new query by deselecting previously selected chips
     // and selected new one
     static func makeQueryAfter(
@@ -598,8 +614,8 @@ public class SearchResultsViewModel: ObservableObject {
     static private func makeQueryUsing(string: String, isSearchActive: Bool, current: SearchQuery) -> SearchQueryEntity {
         .init(
             query: string,
-            sorting: .automatic,
-            mode: .home, 
+            sorting: current.sorting,
+            mode: .home,
             isSearchActive: isSearchActive,
             chips: current.chips
         )
@@ -640,5 +656,14 @@ public extension SearchResultsViewModel {
         }
         
         bridge.selectionChanged(selectedResultIds)
+    }
+
+    @discardableResult
+    func changeSortOrder(_ sortOrder: SortOrderEntity) -> Task<Void, Never> {
+        Task { @MainActor in
+            let query = updatedQuery(with: sortOrder)
+            await showLoadingPlaceholderIfNeeded()
+            await queryChanged(to: query)
+        }
     }
 }

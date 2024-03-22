@@ -198,7 +198,8 @@ struct SearchResultsViewPreviews: PreviewProvider {
                 selection: { _ in },
                 context: {_, _ in },
                 resignKeyboard: {},
-                chipTapped: { _, _ in }
+                chipTapped: { _, _ in }, 
+                sortingOrder: { .nameAscending }
             ),
             config: .example,
             layout: .list,
