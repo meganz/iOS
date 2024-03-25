@@ -22,6 +22,7 @@ public protocol CallUseCaseProtocol {
     func onCallUpdate() -> AnyPublisher<CallEntity, Never>
     func callAbsentParticipant(inChat chatId: ChatIdEntity, userId: HandleEntity, timeout: Int)
     func muteUser(inChat chatRoom: ChatRoomEntity, clientId: ChatIdEntity) async throws
+    func setCallLimit(inChat chatRoom: ChatRoomEntity, duration: Int?, maxUsers: Int?, maxClientPerUser: Int?, maxClients: Int?, divider: Int?) async throws
 }
 
 public protocol CallCallbacksUseCaseProtocol: AnyObject {
@@ -156,6 +157,10 @@ public final class CallUseCase<T: CallRepositoryProtocol>: CallUseCaseProtocol {
     
     public func muteUser(inChat chatRoom: ChatRoomEntity, clientId: ChatIdEntity) async throws {
         try await repository.muteUser(inChat: chatRoom, clientId: clientId)
+    }
+    
+    public func setCallLimit(inChat chatRoom: ChatRoomEntity, duration: Int? = nil, maxUsers: Int? = nil, maxClientPerUser: Int? = nil, maxClients: Int? = nil, divider: Int? = nil) async throws {
+        try await repository.setCallLimit(inChat: chatRoom, duration: duration, maxUsers: maxUsers, maxClientPerUser: maxClientPerUser, maxClients: maxClients, divider: divider)
     }
 }
 

@@ -211,7 +211,7 @@ final class CallRepository: NSObject, CallRepositoryProtocol {
         }
     }
     
-    func setCallLimit(inChat chatRoom: ChatRoomEntity, duration: Int?, maxUsers: Int?, maxClientPerUser: Int?, maxClients: Int?, divider: Int?) async throws {
+    func setCallLimit(inChat chatRoom: ChatRoomEntity, duration: Int? = nil, maxUsers: Int? = nil, maxClientPerUser: Int? = nil, maxClients: Int? = nil, divider: Int? = nil) async throws {
         try await withAsyncThrowingValue { completion in
             chatSdk.setLimitsInCall(
                 chatRoom.chatId,

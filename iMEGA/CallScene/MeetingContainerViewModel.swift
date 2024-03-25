@@ -392,6 +392,7 @@ final class MeetingContainerViewModel: ViewModelType {
     }
     
     private func onChatCallUpdate(for call: CallEntity) {
+        guard call.changeType == .status else { return }
         switch call.status {
         case .terminatingUserParticipation, .destroyed:
             manageCallTerminatedErrorIfNeeded(call)
@@ -415,6 +416,8 @@ final class MeetingContainerViewModel: ViewModelType {
                 tracker.trackAnalyticsEvent(with: IOSGuestEndCallFreePlanUsersLimitDialogEvent())
             }
             router.showUsersLimitErrorAlert()
+        case .callDurationLimit:
+            hangCall()
         default:
             break
         }

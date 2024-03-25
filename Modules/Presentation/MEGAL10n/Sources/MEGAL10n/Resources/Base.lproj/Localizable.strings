@@ -3998,3 +3998,9 @@
 "calls.freePlanLimitWarning.durationLimitAlert.notNow"="Not now";
 /* Calls: Text for countdown in call UI for free plan limit warning for duration limit reached in free plan call */
 "calls.freePlanLimitWarning.durationLimitCountdown.title"="This free call will end in %@";
+/* Calls: Text for dialog title presented when call is finished because of free account call duration limit */
+"calls.freePlanLimitWarning.upgradeToProDialog.title"="Upgrade to Pro to get unlimited calls";
+/* Calls: Text for dialog message presented when call is finished because of free account call duration limit */
+"calls.freePlanLimitWarning.upgradeToProDialog.message"="Your call reached the 60 minute limit and has ended. Pro users have unlimited calls and up to 1000 participants.";
+/* Calls: Text for dialog button presented when call is finished because of free account call duration limit */
+"calls.freePlanLimitWarning.upgradeToProDialog.button"="Upgrade now";

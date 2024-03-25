@@ -1093,6 +1093,7 @@
 		83A2894F27F5BC070063CA8C /* CancellableTransfer+Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A4E47827F4A0FA00A429F4 /* CancellableTransfer+Shared.swift */; };
 		83A2895027F5C04B0063CA8C /* CancellableTransferControllerWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CCBC3C2795954E00B90EF2 /* CancellableTransferControllerWrapper.swift */; };
 		83A3D5232594993D002AC6EB /* ShortcutIntents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 83345232258CA2E00052DB3C /* ShortcutIntents.intentdefinition */; };
+		83A4DF472BAC564C0012FE25 /* SimpleDialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A4DF462BAC564C0012FE25 /* SimpleDialogView.swift */; };
 		83A4E46F27F49ACA00A429F4 /* ShareExtensionCancellableTransferViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A4E46D27F49ACA00A429F4 /* ShareExtensionCancellableTransferViewModel.swift */; };
 		83A4E47327F49AE000A429F4 /* TransferStage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A4E47227F49AE000A429F4 /* TransferStage.swift */; };
 		83A4E47427F49AE000A429F4 /* TransferStage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83A4E47227F49AE000A429F4 /* TransferStage.swift */; };
@@ -1124,6 +1125,7 @@
 		83B906BF249A29EF0088F15C /* UIActivityIndicatorView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B906BA249A29CA0088F15C /* UIActivityIndicatorView+Additions.swift */; };
 		83BA006B2798709200498493 /* CancellableTransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BA00692798703600498493 /* CancellableTransfer.swift */; };
 		83BD329825DD3D4000F8B91D /* FavouriteItemsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BD329725DD3D4000F8B91D /* FavouriteItemsRepository.swift */; };
+		83BEB18B2BAC84EF003AA310 /* BottomSheetRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BEB18A2BAC84EF003AA310 /* BottomSheetRouter.swift */; };
 		83BFA3A627CFBCA000BDF997 /* CloudDriveViewController+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BFA3A527CFBCA000BDF997 /* CloudDriveViewController+Additions.swift */; };
 		83BFA3AA27CFBCEC00BDF997 /* CloudDriveViewController+NodeActionViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BFA3A927CFBCEC00BDF997 /* CloudDriveViewController+NodeActionViewControllerDelegate.swift */; };
 		83BFA3AC27CFC2FB00BDF997 /* NodeSelectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83BFA3AB27CFC2FB00BDF997 /* NodeSelectionType.swift */; };
@@ -3797,6 +3799,7 @@
 		839BA9DE2AB32B87001F852C /* MeetingParticipantTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingParticipantTableViewHeader.swift; sourceTree = "<group>"; };
 		839BA9E52AB355DE001F852C /* MeetingInviteParticipantTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingInviteParticipantTableViewCell.swift; sourceTree = "<group>"; };
 		839BA9E62AB355DE001F852C /* MeetingInviteParticipantTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeetingInviteParticipantTableViewCell.xib; sourceTree = "<group>"; };
+		83A4DF462BAC564C0012FE25 /* SimpleDialogView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleDialogView.swift; sourceTree = "<group>"; };
 		83A4E46D27F49ACA00A429F4 /* ShareExtensionCancellableTransferViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionCancellableTransferViewModel.swift; sourceTree = "<group>"; };
 		83A4E47227F49AE000A429F4 /* TransferStage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferStage.swift; sourceTree = "<group>"; };
 		83A4E47527F4A0A100A429F4 /* ShareExtensionCancellableTransferRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareExtensionCancellableTransferRouter.swift; sourceTree = "<group>"; };
@@ -3827,6 +3830,7 @@
 		83B906BA249A29CA0088F15C /* UIActivityIndicatorView+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIActivityIndicatorView+Additions.swift"; sourceTree = "<group>"; };
 		83BA00692798703600498493 /* CancellableTransfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancellableTransfer.swift; sourceTree = "<group>"; };
 		83BD329725DD3D4000F8B91D /* FavouriteItemsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteItemsRepository.swift; sourceTree = "<group>"; };
+		83BEB18A2BAC84EF003AA310 /* BottomSheetRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetRouter.swift; sourceTree = "<group>"; };
 		83BFA3A527CFBCA000BDF997 /* CloudDriveViewController+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+Additions.swift"; sourceTree = "<group>"; };
 		83BFA3A927CFBCEC00BDF997 /* CloudDriveViewController+NodeActionViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CloudDriveViewController+NodeActionViewControllerDelegate.swift"; sourceTree = "<group>"; };
 		83BFA3AB27CFC2FB00BDF997 /* NodeSelectionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeSelectionType.swift; sourceTree = "<group>"; };
@@ -6800,6 +6804,7 @@
 				C4EB6DB72B4BF5FD007A94E3 /* AppExitHandler */,
 				940DB9122924D77F004E7349 /* AudioSession */,
 				9405E70C28A3AC43005A16D1 /* BackupNodesValidator */,
+				83BEB1892BAC84D8003AA310 /* BottomSheet */,
 				41BADDA61A8E064E008408B3 /* Categories */,
 				72A2216927F1DCF500F49BCB /* ContextMenus */,
 				4147C2CE1B4EE8A400A37044 /* CoreData */,
@@ -9315,6 +9320,14 @@
 			path = CancellableTransfers;
 			sourceTree = "<group>";
 		};
+		83A4DF452BAC563C0012FE25 /* SimpleDialog */ = {
+			isa = PBXGroup;
+			children = (
+				83A4DF462BAC564C0012FE25 /* SimpleDialogView.swift */,
+			);
+			path = SimpleDialog;
+			sourceTree = "<group>";
+		};
 		83AE36BE2886CFCD002F1755 /* Calls */ = {
 			isa = PBXGroup;
 			children = (
@@ -9425,6 +9438,14 @@
 				83A4E47227F49AE000A429F4 /* TransferStage.swift */,
 			);
 			path = ViewEntity;
+			sourceTree = "<group>";
+		};
+		83BEB1892BAC84D8003AA310 /* BottomSheet */ = {
+			isa = PBXGroup;
+			children = (
+				83BEB18A2BAC84EF003AA310 /* BottomSheetRouter.swift */,
+			);
+			path = BottomSheet;
 			sourceTree = "<group>";
 		};
 		83BFDBD1291BE66000FFFEA0 /* MeetingInfoScene */ = {
@@ -10750,6 +10771,7 @@
 			children = (
 				25D840672A9EE0C30026D288 /* PermissionAlertViewModifier */,
 				94BD69942B4EB86200BF08D6 /* SearchBarUIHostingController */,
+				83A4DF452BAC563C0012FE25 /* SimpleDialog */,
 				B63995322898CBEB00EA88F1 /* WarningView */,
 			);
 			path = SwiftUI;
@@ -13893,6 +13915,7 @@
 				2F528CBA2474C0CE006DE5C2 /* BasicAudioController.swift in Sources */,
 				5D8DC6AF248CB0AE0067A4F9 /* BorderStyle.swift in Sources */,
 				5D1B23FF24AF5E3900ACE1C5 /* BorderStyyleFactory.swift in Sources */,
+				83BEB18B2BAC84EF003AA310 /* BottomSheetRouter.swift in Sources */,
 				0EAF73252A6786D9008F939D /* BrowserView.swift in Sources */,
 				947C6CB22A5D408C00CF929E /* BrowserViewController+Additions.swift in Sources */,
 				6D60255B28F8921800FF9767 /* BrowserViewController+NodesUpdate.swift in Sources */,
@@ -15166,6 +15189,7 @@
 				A8E10D8021A5677900ACD42F /* ShareLocationViewController.m in Sources */,
 				8334522E258CA2E00052DB3C /* ShortcutIntents.intentdefinition in Sources */,
 				BF7EBD26244E8B380015255F /* SIMD2+Additions.swift in Sources */,
+				83A4DF472BAC564C0012FE25 /* SimpleDialogView.swift in Sources */,
 				B6187808230FA42E006733D4 /* SingleCodeTextField.swift in Sources */,
 				32A4350829C155FE00DB8581 /* SingleSelectionCheckmarkView.swift in Sources */,
 				BFC933EF24A56F3B00BC2A75 /* SingleTapHandlerProtocol.swift in Sources */,
