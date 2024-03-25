@@ -1,3 +1,4 @@
+import MEGADesignToken
 import MEGADomain
 import MEGAL10n
 import MEGAPresentation
@@ -83,18 +84,29 @@ final class PSAView: UIView, ViewType {
     }
     
     private func setupView(with trait: UITraitCollection) {
+        let isDesignTokenEnabled = UIColor.isDesignTokenEnabled()
+        
         if psaEntity?.positiveText != nil,
            psaEntity?.positiveLink != nil {
-            leftButton.backgroundColor = .mnz_turquoise(for: trait)
-            rightButton.backgroundColor = .mnz_secondaryGray(for: trait)
+            leftButton.backgroundColor = isDesignTokenEnabled ? TokenColors.Button.primary : .mnz_turquoise(for: trait)
+            rightButton.backgroundColor = isDesignTokenEnabled ? TokenColors.Button.secondary : .mnz_secondaryGray(for: trait)
+            
+            if isDesignTokenEnabled {
+                leftButton.setTitleColor(TokenColors.Text.inverseAccent, for: .normal)
+                rightButton.setTitleColor(TokenColors.Text.accent, for: .normal)
+            }
         } else {
-            leftButton.backgroundColor = .mnz_secondaryGray(for: trait)
+            leftButton.backgroundColor = isDesignTokenEnabled ? TokenColors.Button.secondary : .mnz_secondaryGray(for: trait)
+            
+            if isDesignTokenEnabled {
+                leftButton.setTitleColor(TokenColors.Text.accent, for: .normal)
+            }
         }
         
-        backgroundColor = .mnz_notificationSeenBackground(for: trait)
-        topBorderView.backgroundColor = .mnz_separator(for: trait)
-        bottomBorderView.backgroundColor = .mnz_separator(for: trait)
-        imageView.backgroundColor = MEGAAppColor.PSA.psaImageBackground.uiColor
+        backgroundColor = isDesignTokenEnabled ? TokenColors.Background.surface1 : .mnz_notificationSeenBackground(for: trait)
+        topBorderView.backgroundColor = isDesignTokenEnabled ? TokenColors.Border.strong : .mnz_separator(for: trait)
+        bottomBorderView.backgroundColor = isDesignTokenEnabled ? TokenColors.Border.strong : .mnz_separator(for: trait)
+        imageView.backgroundColor = isDesignTokenEnabled ? TokenColors.Background.surface1 : UIColor.psaImageBackground
     }
     
     @IBAction func leftButtonTapped(_ sender: UIButton) {
