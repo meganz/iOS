@@ -85,7 +85,9 @@ enum NotificationAction: ActionType {
             let filteredNotifications = filterEnabledNotifications(from: userNotifications)
             guard filteredNotifications.isNotEmpty else { return }
             
-            promoList = filteredNotifications.toNotificationItems(withUnreadIDs: unreadNotificationIds)
+            promoList = filteredNotifications.toNotificationItems(
+                withUnreadIDs: unreadNotificationIds
+            ).sorted(by: { $0.id > $1.id })
             
             invokeCommand?(.reloadData)
         } catch {
@@ -106,15 +108,15 @@ enum NotificationAction: ActionType {
     
     /// Checks if the list of notifications currently shown and the enabled notifications differ.
     ///
-    /// It checks if there's any difference in the notifications themselves or the order they appear in. If they
-    /// don't match up exactly, it means something's different.
+    /// It checks if there's any difference in the notifications themselves. If they
+    /// don't match up, it means something's different.
     ///
-    /// - Returns: True or false. True means the lists don't match—they have different notifications or
-    ///   the notifications are in a different order. False means everything matches perfectly, and the
+    /// - Returns: True or false. True means the lists don't match—they have different notifications.
+    ///   False means everything matches, and the
     ///   notifications on the screen are exactly the ones that should be there.
     func doCurrentAndEnabledNotificationsDiffer() -> Bool {
-        let currentPromoIDs: [NotificationID] = promoList.map(\.id)
-        let enabledNotifications: [NotificationIDEntity] = notificationsUseCase.fetchEnabledNotifications()
+        let currentPromoIDs = Set(promoList.map(\.id))
+        let enabledNotifications = Set(notificationsUseCase.fetchEnabledNotifications())
         
         return currentPromoIDs != enabledNotifications
     }
