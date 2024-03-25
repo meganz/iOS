@@ -59,6 +59,25 @@ final class NotificationsViewModelTests: XCTestCase {
         )
     }
     
+    func testFetchNotificationList_shouldBeSortedByHighestToLowestID() async {
+        let (sut, _) = makeSUT(
+            featureFlagList: [.notificationCenter: true],
+            notifications: [
+                NotificationEntity(id: NotificationIDEntity(1)),
+                NotificationEntity(id: NotificationIDEntity(2)),
+                NotificationEntity(id: NotificationIDEntity(3))
+            ],
+            enabledNotifications: [1, 2, 3]
+        )
+        
+        await testFetchNotificationList(
+            sut: sut,
+            expectedPromoListCount: 3
+        )
+        
+        XCTAssertEqual(sut.promoList.map(\.id), [3, 2, 1])
+    }
+    
     func testDoCurrentAndEnabledNotificationsDiffer_currentAndEnabledMatch_shouldReturnFalse() async {
         let (sut, _) = makeSUT(
             featureFlagList: [.notificationCenter: true],
