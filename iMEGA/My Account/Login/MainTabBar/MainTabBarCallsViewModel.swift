@@ -15,6 +15,7 @@ protocol MainTabBarCallsRouting: AnyObject {
     func navigateToPrivacyPolice()
     func dismissCallUI()
     func showCallWillEndAlert(timeToEndCall: Double, isCallUIVisible: Bool)
+    func showUpgradeToProDialog(_ account: AccountDetailsEntity)
 }
 
 enum MainTabBarCallsAction: ActionType { }
@@ -35,6 +36,7 @@ enum MainTabBarCallsAction: ActionType { }
     private let chatRoomUseCase: any ChatRoomUseCaseProtocol
     private let chatRoomUserUseCase: any ChatRoomUserUseCaseProtocol
     private var callSessionUseCase: any CallSessionUseCaseProtocol
+    private let accountUseCase: any AccountUseCaseProtocol
     private let callKitManager: any CallKitManagerProtocol
     private let featureFlagProvider: any FeatureFlagProviderProtocol
 
@@ -61,6 +63,7 @@ enum MainTabBarCallsAction: ActionType { }
         chatRoomUseCase: some ChatRoomUseCaseProtocol,
         chatRoomUserUseCase: some ChatRoomUserUseCaseProtocol,
         callSessionUseCase: some CallSessionUseCaseProtocol,
+        accountUseCase: some AccountUseCaseProtocol,
         callKitManager: some CallKitManagerProtocol,
         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
@@ -70,6 +73,7 @@ enum MainTabBarCallsAction: ActionType { }
         self.chatRoomUseCase = chatRoomUseCase
         self.chatRoomUserUseCase = chatRoomUserUseCase
         self.callSessionUseCase = callSessionUseCase
+        self.accountUseCase = accountUseCase
         self.callKitManager = callKitManager
         self.featureFlagProvider = featureFlagProvider
         super.init()
@@ -207,10 +211,21 @@ enum MainTabBarCallsAction: ActionType { }
                 invokeCommand?(.hideActiveCallIcon)
             }
             screenRecordingAlertShownForCall = false
+            manageCallTerminatedErrorIfNeeded(call)
             removeCallListeners()
             
         default:
             break
+        }
+    }
+    
+    private func manageCallTerminatedErrorIfNeeded(_ call: CallEntity) {
+        guard featureFlagProvider.isFeatureFlagEnabled(for: .chatMonetization) else { return }
+        if call.termCodeType == .callDurationLimit {
+            if call.isOwnClientCaller { // or is chat room organiser - future implementation
+                guard let accountDetails = accountUseCase.currentAccountDetails else { return }
+                router.showUpgradeToProDialog(accountDetails)
+            }
         }
     }
     

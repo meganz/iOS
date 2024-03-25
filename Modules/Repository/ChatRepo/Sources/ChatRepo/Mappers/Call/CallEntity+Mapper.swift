@@ -31,6 +31,7 @@ fileprivate extension CallEntity {
             callCompositionChange: call.callCompositionChange.toCompositionChangeTypeEntity(),
             numberOfParticipants: call.numParticipants,
             isOnHold: call.isOnHold,
+            isOwnClientCaller: call.isOwnClientCaller,
             sessionClientIds: sessionClientIds,
             clientSessions: sessionClientIds.compactMap { call.session(forClientId: UInt64($0))?.toChatSessionEntity() },
             participants: (0..<call.participants.size).map { call.participants.megaHandle(at: $0) },

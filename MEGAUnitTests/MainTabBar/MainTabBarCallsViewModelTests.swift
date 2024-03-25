@@ -294,7 +294,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         }
     }
     
-    func testCallUpdate_callWillEndReceivedUserIsModeratorAndCallUIHidden_shouldshowCallWillEndAlert() {
+    func testCallUpdate_callWillEndReceivedUserIsModeratorAndCallUIHidden_shouldShowCallWillEndAlert() {
         let callUseCase = MockCallUseCase()
 
         let viewModel = makeMainTabBarCallsViewModel(
@@ -311,7 +311,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         }
     }
     
-    func testCallUpdate_callWillEndReceivedUserIsNotModeratorAndCallUIHidden_shouldshowCallWillEndAlert() {
+    func testCallUpdate_callWillEndReceivedUserIsNotModeratorAndCallUIHidden_shouldShowCallWillEndAlert() {
         let callUseCase = MockCallUseCase()
 
         let viewModel = makeMainTabBarCallsViewModel(
@@ -325,6 +325,42 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
 
         evaluate {
             self.router.showCallWillEndAlert_calledTimes == 0
+        }
+    }
+    
+    func testCallUpdate_callDestroyedUserIsCaller_shouldShowUpgradeToPro() {
+        let callUseCase = MockCallUseCase()
+
+        let viewModel = makeMainTabBarCallsViewModel(
+            callUseCase: callUseCase,
+            chatRoomUseCase: MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .standard)),
+            accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity()),
+            featureFlag: MockFeatureFlagProvider(list: [.chatMonetization: true])
+        )
+        viewModel.isCallUIVisible = false
+        
+        callUseCase.callUpdateSubject.send(CallEntity(status: .destroyed, changeType: .status, termCodeType: .callDurationLimit, isOwnClientCaller: true))
+
+        evaluate {
+            self.router.showUpgradeToProDialog_calledTimes == 1
+        }
+    }
+    
+    func testCallUpdate_callDestroyedUserIsNotCaller_shouldNotShowUpgradeToPro() {
+        let callUseCase = MockCallUseCase()
+
+        let viewModel = makeMainTabBarCallsViewModel(
+            callUseCase: callUseCase,
+            chatRoomUseCase: MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .standard)),
+            accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity()),
+            featureFlag: MockFeatureFlagProvider(list: [.chatMonetization: true])
+        )
+        viewModel.isCallUIVisible = false
+        
+        callUseCase.callUpdateSubject.send(CallEntity(status: .destroyed, changeType: .status, termCodeType: .callDurationLimit))
+
+        evaluate {
+            self.router.showUpgradeToProDialog_calledTimes == 0
         }
     }
     
@@ -342,6 +378,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         chatRoomUseCase: some ChatRoomUseCaseProtocol = MockChatRoomUseCase(),
         chatRoomUserUseCase: some ChatRoomUserUseCaseProtocol = MockChatRoomUserUseCase(),
         callSessionUseCase: some CallSessionUseCaseProtocol = MockCallSessionUseCase(),
+        accountUseCase: some AccountUseCaseProtocol = MockAccountUseCase(),
         callKitManager: some CallKitManagerProtocol = MockCallKitManager(),
         featureFlag: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> MainTabBarCallsViewModel {
@@ -352,6 +389,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
             chatRoomUseCase: chatRoomUseCase,
             chatRoomUserUseCase: chatRoomUserUseCase,
             callSessionUseCase: callSessionUseCase, 
+            accountUseCase: accountUseCase,
             callKitManager: callKitManager,
             featureFlagProvider: featureFlag
         )
@@ -370,7 +408,8 @@ final class MockMainTabBarCallsRouter: MainTabBarCallsRouting {
     var navigateToPrivacyPolice_calledTimes = 0
     var dismissCallUI_calledTimes = 0
     var showCallWillEndAlert_calledTimes = 0
-    
+    var showUpgradeToProDialog_calledTimes = 0
+
     func showOneUserWaitingRoomDialog(for username: String, chatName: String, isCallUIVisible: Bool, shouldUpdateDialog: Bool, admitAction: @escaping () -> Void, denyAction: @escaping () -> Void) {
         showOneUserWaitingRoomDialog_calledTimes += 1
     }
@@ -413,5 +452,9 @@ final class MockMainTabBarCallsRouter: MainTabBarCallsRouting {
     
     func showCallWillEndAlert(timeToEndCall: Double, isCallUIVisible: Bool) {
         showCallWillEndAlert_calledTimes += 1
+    }
+    
+    func showUpgradeToProDialog(_ account: AccountDetailsEntity) {
+        showUpgradeToProDialog_calledTimes += 1
     }
 }

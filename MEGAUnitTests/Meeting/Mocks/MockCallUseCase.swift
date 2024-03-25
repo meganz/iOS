@@ -146,6 +146,8 @@ final class MockCallUseCase: CallUseCaseProtocol {
             throw error
         }
     }
+    
+    func setCallLimit(inChat chatRoom: ChatRoomEntity, duration: Int?, maxUsers: Int?, maxClientPerUser: Int?, maxClients: Int?, divider: Int?) async throws { }
 }
 
 extension MockCallUseCase: CallCallbacksRepositoryProtocol {

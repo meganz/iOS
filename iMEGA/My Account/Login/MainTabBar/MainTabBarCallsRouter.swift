@@ -154,4 +154,32 @@ final class MainTabBarCallsRouter: MainTabBarCallsRouting {
     func showCallWillEndAlert(timeToEndCall: Double, isCallUIVisible: Bool) {
         CallWillEndAlertRouter(baseViewController: baseViewController, timeToEndCall: timeToEndCall, isCallUIVisible: isCallUIVisible, dismissCompletion: nil).start()
     }
+    
+    func showUpgradeToProDialog(_ account: AccountDetailsEntity) {
+        let dialogConfig = SimpleDialogConfig(
+            imageResource: .upgradeToProPlan,
+            title: Strings.Localizable.Calls.FreePlanLimitWarning.UpgradeToProDialog.title,
+            message: Strings.Localizable.Calls.FreePlanLimitWarning.UpgradeToProDialog.message,
+            buttonTitle: Strings.Localizable.Calls.FreePlanLimitWarning.UpgradeToProDialog.button
+        ) { [weak self] in
+            guard let self else { return }
+            baseViewController.dismiss(animated: true) { [weak self] in
+                guard let self else { return }
+                UpgradeAccountPlanRouter(presenter: baseViewController, accountDetails: account).start()
+            }
+        }
+        let dialogView = SimpleDialogView(dialogConfig: dialogConfig)
+        
+        dismissAlertController { [weak self] in
+            guard let baseViewController = self?.baseViewController else { return }
+            if let presenter = baseViewController.presentedViewController {
+                presenter.dismiss(animated: true, completion: { [weak self] in
+                    guard let baseViewController = self?.baseViewController else { return }
+                    BottomSheetRouter(presenter: baseViewController, content: dialogView).start()
+                })
+            } else {
+                BottomSheetRouter(presenter: baseViewController, content: dialogView).start()
+            }
+        }
+    }
 }

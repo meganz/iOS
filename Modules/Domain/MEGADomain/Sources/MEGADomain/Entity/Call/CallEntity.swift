@@ -88,6 +88,7 @@ public struct CallEntity: Sendable {
     public let callCompositionChange: CompositionChangeType?
     public let numberOfParticipants: Int
     public let isOnHold: Bool
+    public let isOwnClientCaller: Bool
     public let sessionClientIds: [HandleEntity]
     public let clientSessions: [ChatSessionEntity]
     public let participants: [HandleEntity]
@@ -96,7 +97,7 @@ public struct CallEntity: Sendable {
     public let waitingRoomHandleList: [HandleEntity]
     public let uuid: UUID
     
-    public init(status: CallStatusType?, chatId: HandleEntity, callId: HandleEntity, changeType: ChangeType?, duration: Int64, initialTimestamp: Int64, finalTimestamp: Int64, callWillEndTimestamp: Int64, hasLocalAudio: Bool, hasLocalVideo: Bool, termCodeType: TermCodeType?, callLimits: CallLimitsEntity, isRinging: Bool, callCompositionChange: CompositionChangeType?, numberOfParticipants: Int, isOnHold: Bool, sessionClientIds: [HandleEntity], clientSessions: [ChatSessionEntity], participants: [HandleEntity], waitingRoomStatus: WaitingRoomStatus, waitingRoom: WaitingRoomEntity?, waitingRoomHandleList: [HandleEntity], uuid: UUID) {
+    public init(status: CallStatusType?, chatId: HandleEntity, callId: HandleEntity, changeType: ChangeType?, duration: Int64, initialTimestamp: Int64, finalTimestamp: Int64, callWillEndTimestamp: Int64, hasLocalAudio: Bool, hasLocalVideo: Bool, termCodeType: TermCodeType?, callLimits: CallLimitsEntity, isRinging: Bool, callCompositionChange: CompositionChangeType?, numberOfParticipants: Int, isOnHold: Bool, isOwnClientCaller: Bool, sessionClientIds: [HandleEntity], clientSessions: [ChatSessionEntity], participants: [HandleEntity], waitingRoomStatus: WaitingRoomStatus, waitingRoom: WaitingRoomEntity?, waitingRoomHandleList: [HandleEntity], uuid: UUID) {
         self.status = status
         self.chatId = chatId
         self.callId = callId
@@ -113,6 +114,7 @@ public struct CallEntity: Sendable {
         self.callCompositionChange = callCompositionChange
         self.numberOfParticipants = numberOfParticipants
         self.isOnHold = isOnHold
+        self.isOwnClientCaller = isOwnClientCaller
         self.sessionClientIds = sessionClientIds
         self.clientSessions = clientSessions
         self.participants = participants
