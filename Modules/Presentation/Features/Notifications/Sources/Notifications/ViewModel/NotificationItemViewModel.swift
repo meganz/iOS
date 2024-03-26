@@ -24,10 +24,9 @@ public final class NotificationItemViewModel: ObservableObject {
             guard notification.formattedExpirationDate.isNotEmpty else {
                 return nil
             }
-            return Strings.Localizable.Notifications.Expiration.message(
-                notification.formattedExpirationDate,
-                notification.formattedExpirationTime
-            )
+            return Strings.Localizable.Notifications.Expiration.message
+                .replacingOccurrences(of: "[date]", with: notification.formattedExpirationDate)
+                .replacingOccurrences(of: "[time]", with: notification.formattedExpirationTime)
         default:
             return notification.formattedExpirationDate
         }
