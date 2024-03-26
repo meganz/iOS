@@ -8,7 +8,8 @@ public enum NotificationType {
     var displayName: String {
         switch self {
         case .limitedTypeOffer:
-            "Limited time offer" // Temporarily hardcore waiting for SDK changes
+            Strings.Localizable.Notifications.NotificationType.Promo.title
+            
         case .none:
             ""
         }
