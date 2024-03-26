@@ -204,7 +204,7 @@ enum MainTabBarCallsAction: ActionType { }
                 manageWaitingRoom(for: call)
             }
             
-        case .destroyed, .terminatingUserParticipation:
+        case .terminatingUserParticipation:
             currentWaitingRoomUserHandles.removeAll()
             router.dismissWaitingRoomDialog(animated: false)
             if !chatUseCase.existsActiveCall() {

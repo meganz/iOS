@@ -339,7 +339,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         )
         viewModel.isCallUIVisible = false
         
-        callUseCase.callUpdateSubject.send(CallEntity(status: .destroyed, changeType: .status, termCodeType: .callDurationLimit, isOwnClientCaller: true))
+        callUseCase.callUpdateSubject.send(CallEntity(status: .terminatingUserParticipation, changeType: .status, termCodeType: .callDurationLimit, isOwnClientCaller: true))
 
         evaluate {
             self.router.showUpgradeToProDialog_calledTimes == 1
@@ -357,7 +357,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         )
         viewModel.isCallUIVisible = false
         
-        callUseCase.callUpdateSubject.send(CallEntity(status: .destroyed, changeType: .status, termCodeType: .callDurationLimit))
+        callUseCase.callUpdateSubject.send(CallEntity(status: .terminatingUserParticipation, changeType: .status, termCodeType: .callDurationLimit))
 
         evaluate {
             self.router.showUpgradeToProDialog_calledTimes == 0
