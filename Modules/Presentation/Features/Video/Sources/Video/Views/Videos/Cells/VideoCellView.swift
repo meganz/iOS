@@ -6,15 +6,18 @@ import SwiftUI
 struct VideoCellView: View {
     @StateObject private var viewModel: VideoCellViewModel
     @StateObject private var selection: VideoSelection
+    private let onTappedCheckMark: () -> Void
     private let videoConfig: VideoConfig
     
     init(
         viewModel: @autoclosure @escaping () -> VideoCellViewModel,
         selection: @autoclosure @escaping () -> VideoSelection,
+        onTappedCheckMark: @escaping () -> Void,
         videoConfig: VideoConfig
     ) {
         _viewModel = StateObject(wrappedValue: viewModel())
         _selection = StateObject(wrappedValue: selection())
+        self.onTappedCheckMark = onTappedCheckMark
         self.videoConfig = videoConfig
     }
     
@@ -23,11 +26,8 @@ struct VideoCellView: View {
             previewEntity: viewModel.previewEntity,
             videoConfig: videoConfig,
             editMode: $selection.editMode,
-            isSelected: $selection.isSelected,
-            onTappedCheckMark: {
-                // In a separate ticket
-                // selection.onTappedCheckMark(for: viewModel.nodeEntity)
-            },
+            isSelected: $viewModel.isSelected,
+            onTappedCheckMark: onTappedCheckMark,
             onTappedMoreOptions: viewModel.onTappedMoreOptions
         )
         .task {

@@ -5,10 +5,11 @@ import SwiftUI
 final class VideoCellViewModel: ObservableObject {
     
     private let thumbnailUseCase: any ThumbnailUseCaseProtocol
-    private let nodeEntity: NodeEntity
+    private(set) var nodeEntity: NodeEntity
     private let onTapMoreOptions: (_ node: NodeEntity) -> Void
     
     @Published var previewEntity: VideoCellPreviewEntity
+    @Published var isSelected = false
     
     init(
         thumbnailUseCase: some ThumbnailUseCaseProtocol,

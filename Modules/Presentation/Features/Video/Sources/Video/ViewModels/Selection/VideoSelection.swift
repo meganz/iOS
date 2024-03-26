@@ -23,8 +23,6 @@ public final class VideoSelection: ObservableObject {
         }
     }
     
-    @Published var isSelected = false
-    
     @Published var isHidden = false
     
     @Published var isSelectionDisabled = false
@@ -48,21 +46,23 @@ public final class VideoSelection: ObservableObject {
     }
     
     func isVideoSelectedPublisher(for node: NodeEntity) -> AnyPublisher<Bool, Never> {
-        $allSelected
-            .map { [weak self] allSelected -> AnyPublisher<Bool, Never> in
-                guard let self else {
-                    return Empty().eraseToAnyPublisher()
+        let allSelectedPublisher = $allSelected
+        let videosPublisher = $videos.map { $0[node.handle] != nil }
+        
+        return Publishers.CombineLatest(allSelectedPublisher, videosPublisher)
+            .map { [weak self] allSelected, isVideoSelected in
+                guard self != nil else {
+                    return false
                 }
+
+                let shouldDeselectVideoDuringSelectAll = allSelected && !isVideoSelected
                 
-                guard !allSelected else {
-                    return Just(true).eraseToAnyPublisher()
+                if shouldDeselectVideoDuringSelectAll {
+                    return false
+                } else {
+                    return isVideoSelected
                 }
-                
-                return $videos
-                    .map { $0[node.handle] != nil }
-                    .eraseToAnyPublisher()
             }
-            .switchToLatest()
             .removeDuplicates()
             .eraseToAnyPublisher()
     }

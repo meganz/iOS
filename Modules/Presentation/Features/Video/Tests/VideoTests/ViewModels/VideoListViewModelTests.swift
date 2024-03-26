@@ -209,7 +209,8 @@ final class VideoListViewModelTests: XCTestCase {
         let sut = VideoListViewModel(
             fileSearchUseCase: fileSearchUseCase,
             thumbnailUseCase: MockThumbnailUseCase(),
-            syncModel: syncModel
+            syncModel: syncModel,
+            selection: VideoSelection()
         )
         
         let task = Task {
@@ -239,7 +240,8 @@ final class VideoListViewModelTests: XCTestCase {
         let sut = VideoListViewModel(
             fileSearchUseCase: fileSearchUseCase,
             thumbnailUseCase: MockThumbnailUseCase(),
-            syncModel: syncModel
+            syncModel: syncModel,
+            selection: VideoSelection()
         )
         
         let task = Task {
@@ -274,7 +276,8 @@ final class VideoListViewModelTests: XCTestCase {
         let sut = VideoListViewModel(
             fileSearchUseCase: fileSearchUseCase,
             thumbnailUseCase: MockThumbnailUseCase(),
-            syncModel: syncModel
+            syncModel: syncModel,
+            selection: VideoSelection()
         )
         
         let task = Task {
@@ -343,7 +346,8 @@ final class VideoListViewModelTests: XCTestCase {
         let sut = VideoListViewModel(
             fileSearchUseCase: fileSearchUseCase,
             thumbnailUseCase: MockThumbnailUseCase(),
-            syncModel: VideoRevampSyncModel()
+            syncModel: VideoRevampSyncModel(),
+            selection: VideoSelection()
         )
         trackForMemoryLeaks(on: sut, file: file, line: line)
         return (sut, fileSearchUseCase)

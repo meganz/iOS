@@ -79,6 +79,7 @@ final class VideoRevampTabContainerViewController: UIViewController {
             fileSearchUseCase: fileSearchUseCase,
             thumbnailUseCase: thumbnailUseCase,
             syncModel: viewModel.syncModel,
+            videoSelection: viewModel.videoSelection,
             videoConfig: videoConfig,
             router: router
         )

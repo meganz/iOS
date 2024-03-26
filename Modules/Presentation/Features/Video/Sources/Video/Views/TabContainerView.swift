@@ -167,7 +167,8 @@ struct ContentView_Previews: PreviewProvider {
         VideoListViewModel(
             fileSearchUseCase: Preview_FilesSearchUseCase(),
             thumbnailUseCase: Preview_ThumbnailUseCase(),
-            syncModel: VideoRevampSyncModel()
+            syncModel: VideoRevampSyncModel(),
+            selection: VideoSelection()
         )
     }
 }
