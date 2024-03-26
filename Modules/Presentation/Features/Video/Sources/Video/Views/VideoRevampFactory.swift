@@ -31,13 +31,15 @@ public class VideoRevampFactory {
         fileSearchUseCase: some FilesSearchUseCaseProtocol,
         thumbnailUseCase: some ThumbnailUseCaseProtocol,
         syncModel: VideoRevampSyncModel,
+        videoSelection: VideoSelection,
         videoConfig: VideoConfig,
         router: some VideoRevampRouting
     ) -> UIViewController {
         let videoListViewModel = VideoListViewModel(
             fileSearchUseCase: fileSearchUseCase,
             thumbnailUseCase: thumbnailUseCase,
-            syncModel: syncModel
+            syncModel: syncModel,
+            selection: videoSelection
         )
         let view = TabContainerView(videoListViewModel: videoListViewModel, videoConfig: videoConfig, router: router)
         return UIHostingController(rootView: view)

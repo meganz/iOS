@@ -72,7 +72,8 @@ struct VideoListView_Previews: PreviewProvider {
             viewModel: VideoListViewModel(
                 fileSearchUseCase: Preview_FilesSearchUseCase(),
                 thumbnailUseCase: Preview_ThumbnailUseCase(),
-                syncModel: VideoRevampSyncModel()
+                syncModel: VideoRevampSyncModel(),
+                selection: VideoSelection()
             ),
             videoConfig: .preview,
             router: Preview_VideoRevampRouter()

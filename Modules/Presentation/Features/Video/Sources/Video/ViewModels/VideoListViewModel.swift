@@ -11,7 +11,7 @@ public final class VideoListViewModel: ObservableObject {
     private(set) var syncModel: VideoRevampSyncModel
     private(set) var reloadVideosTask: Task<Void, Never>?
     
-    private(set) var selection = VideoSelection()
+    private(set) var selection: VideoSelection
     private var subscriptions = Set<AnyCancellable>()
     
     @Published private(set) var videos = [NodeEntity]()
@@ -20,11 +20,13 @@ public final class VideoListViewModel: ObservableObject {
     public init(
         fileSearchUseCase: some FilesSearchUseCaseProtocol,
         thumbnailUseCase: some ThumbnailUseCaseProtocol,
-        syncModel: VideoRevampSyncModel
+        syncModel: VideoRevampSyncModel,
+        selection: VideoSelection
     ) {
         self.fileSearchUseCase = fileSearchUseCase
         self.thumbnailUseCase = thumbnailUseCase
         self.syncModel = syncModel
+        self.selection = selection
         
         subscribeToEditingMode()
         subscribeToAllSelected()

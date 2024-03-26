@@ -55,7 +55,11 @@ final class AllVideosCollectionViewCoordinator: NSObject {
                 nodeEntity: rowItem.node,
                 onTapMoreOptions: { [weak self] in self?.onTapMoreOptions($0, sender: cell) }
             )
-            configureCell(cell, cellViewModel: cellViewModel)
+            let adapter = VideoSelectionCheckmarkUIUpdateAdapter(
+                selection: representer.selection,
+                viewModel: cellViewModel
+            )
+            configureCell(cell, cellViewModel: cellViewModel, adapter: adapter)
         }
         
         return DiffableDataSource(collectionView: collectionView) { collectionView, indexPath, item in
@@ -72,31 +76,33 @@ final class AllVideosCollectionViewCoordinator: NSObject {
     
     // MARK: - Cell setup
     
-    private func configureCell(_ cell: UICollectionViewCell, cellViewModel: VideoCellViewModel) {
+    private func configureCell(_ cell: UICollectionViewCell, cellViewModel: VideoCellViewModel, adapter: VideoSelectionCheckmarkUIUpdateAdapter) {
+        prepareCellForReuse(cell)
+        
         if #available(iOS 16.0, *) {
             cell.contentConfiguration = UIHostingConfiguration {
                 VideoCellView(
                     viewModel: cellViewModel,
                     selection: self.representer.selection,
+                    onTappedCheckMark: adapter.onTappedCheckMark,
                     videoConfig: videoConfig
                 )
-                    .background(videoConfig.colorAssets.pageBackgroundColor)
+                .background(videoConfig.colorAssets.pageBackgroundColor)
             }
             .margins(.all, 0)
             cell.clipsToBounds = true
         } else {
-            configureCellBelowiOS16(cellViewModel: cellViewModel, cell: cell)
+            configureCellBelowiOS16(cellViewModel: cellViewModel, cell: cell, adapter: adapter)
         }
     }
     
-    private func configureCellBelowiOS16(cellViewModel: VideoCellViewModel, cell: UICollectionViewCell) {
+    private func configureCellBelowiOS16(cellViewModel: VideoCellViewModel, cell: UICollectionViewCell, adapter: VideoSelectionCheckmarkUIUpdateAdapter) {
         let cellView = VideoCellView(
             viewModel: cellViewModel,
             selection: self.representer.selection,
+            onTappedCheckMark: adapter.onTappedCheckMark,
             videoConfig: videoConfig
         )
-        
-        cell.contentView.subviews.forEach { $0.removeFromSuperview() }
         
         let cellHostingController = UIHostingController(rootView: cellView)
         cellHostingController.view.backgroundColor = .clear
@@ -110,6 +116,14 @@ final class AllVideosCollectionViewCoordinator: NSObject {
             cellHostingController.view.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor),
             cellHostingController.view.bottomAnchor.constraint(equalTo: cell.contentView.bottomAnchor)
         ])
+    }
+    
+    private func prepareCellForReuse(_ cell: UICollectionViewCell) {
+        if #available(iOS 16.0, *) {
+            cell.contentConfiguration = nil
+        } else {
+            cell.contentView.subviews.forEach { $0.removeFromSuperview() }
+        }
     }
     
     private func onTapMoreOptions(_ video: NodeEntity, sender: Any) {
