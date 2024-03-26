@@ -32,20 +32,19 @@ public class MediaDiscoveryUseCase<T: FilesSearchRepositoryProtocol,
     }
 
     public func nodes(forParent parent: NodeEntity, recursive: Bool) async throws -> [NodeEntity] {
-        async let photos = filesSearchRepository.search(string: searchAllPhotosString,
-                                                        parent: parent,
-                                                        recursive: recursive,
-                                                        supportCancel: false,
-                                                        sortOrderType: .defaultDesc,
-                                                        formatType: .photo)
-        async let videos = filesSearchRepository.search(string: searchAllPhotosString,
-                                                        parent: parent,
-                                                        recursive: recursive,
-                                                        supportCancel: false,
-                                                        sortOrderType: .defaultDesc,
-                                                        formatType: .video)
-
-        return try await photos + videos
+        let photos = try await filesSearchRepository.search(string: searchAllPhotosString,
+                                                            parent: parent,
+                                                            recursive: recursive,
+                                                            supportCancel: false,
+                                                            sortOrderType: .defaultDesc,
+                                                            formatType: .photo)
+        let videos = try await filesSearchRepository.search(string: searchAllPhotosString,
+                                                            parent: parent,
+                                                            recursive: recursive,
+                                                            supportCancel: false,
+                                                            sortOrderType: .defaultDesc,
+                                                            formatType: .video)
+        return photos + videos
     }
     
     public func shouldReload(parentNode: NodeEntity, loadedNodes: [NodeEntity], updatedNodes: [NodeEntity]) -> Bool {
