@@ -31,6 +31,7 @@ protocol MeetingContainerRouting: AnyObject, Routing {
     func showProtocolErrorAlert()
     func showUsersLimitErrorAlert()
     func showCallWillEndAlert(timeToEndCall: Double, completion: ((Double) -> Void)?)
+    func showUpgradeToProDialog(_ account: AccountDetailsEntity)
 }
 
 final class MeetingContainerRouter: MeetingContainerRouting {
@@ -123,7 +124,6 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     }
     
     func dismiss(animated: Bool, completion: (() -> Void)?) {
-        isCallUIVisible = false
         if let callId = MEGASdk.base64Handle(forUserHandle: call.callId) {
             MEGALogDebug("Meeting ended for call \(callId) - dismiss called will animated \(animated)")
         }
@@ -137,7 +137,6 @@ final class MeetingContainerRouter: MeetingContainerRouting {
             hangOrEndCallRouter.dismiss(animated: true) {
                 self.dismissCallUI(animated: animated, completion: completion)
             }
-            UIApplication.shared.isIdleTimerDisabled = false
         }
     }
     
@@ -336,6 +335,20 @@ final class MeetingContainerRouter: MeetingContainerRouting {
         }
     }
     
+    func showUpgradeToProDialog(_ account: AccountDetailsEntity) {
+        guard let presenter else { return }
+
+        let dialogView = SimpleDialogView.upgradePlanDialog {
+            presenter.dismiss(animated: true) {
+                UpgradeAccountPlanRouter(presenter: presenter, accountDetails: account).start()
+            }
+        }
+
+        presenter.dismiss(animated: true) {
+            BottomSheetRouter(presenter: presenter, content: dialogView).start()
+        }
+    }
+    
     func showCallWillEndAlert(timeToEndCall: Double, completion: ((Double) -> Void)?) {
         guard let presenter = presenter else { return }
         CallWillEndAlertRouter(baseViewController: presenter, timeToEndCall: timeToEndCall, isCallUIVisible: isCallUIVisible, dismissCompletion: completion).start()
@@ -391,6 +404,9 @@ final class MeetingContainerRouter: MeetingContainerRouting {
     private func dismissCallUI(animated: Bool, completion: (() -> Void)?) {
         floatingPanelRouter?.dismiss(animated: animated)
         baseViewController?.dismiss(animated: animated, completion: completion)
+        
+        UIApplication.shared.isIdleTimerDisabled = false
+        isCallUIVisible = false
     }
     
     private func dismissWaitingRoomAlertPresentedIfNeeded(completion: @escaping () -> Void) {

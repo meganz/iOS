@@ -388,6 +388,40 @@ final class MeetingContainerViewModelTests: XCTestCase {
         XCTAssertEqual(router.showCallWillEndAlert_calledTimes, 1)
     }
     
+    func testCallUpdate_callDestroyedUserIsCaller_shouldShowUpgradeToPro() {
+        let callUseCase = MockCallUseCase()
+
+        let (sut, router) = makeSUT(
+            callUseCase: callUseCase,
+            accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity()),
+            featureFlag: MockFeatureFlagProvider(list: [.chatMonetization: true])
+        )
+        viewModel = sut
+
+        callUseCase.callUpdateSubject.send(CallEntity(status: .terminatingUserParticipation, changeType: .status, termCodeType: .callDurationLimit, isOwnClientCaller: true))
+
+        evaluate {
+            router.showUpgradeToProDialog_calledTimes == 1
+        }
+    }
+    
+    func testCallUpdate_callDestroyedUserIsNotCaller_shouldNotShowUpgradeToPro() {
+        let callUseCase = MockCallUseCase()
+
+        let (sut, router) = makeSUT(
+            callUseCase: callUseCase,
+            accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity()),
+            featureFlag: MockFeatureFlagProvider(list: [.chatMonetization: true])
+        )
+        viewModel = sut
+
+        callUseCase.callUpdateSubject.send(CallEntity(status: .terminatingUserParticipation, changeType: .status, termCodeType: .callDurationLimit))
+
+        evaluate {
+            router.showUpgradeToProDialog_calledTimes == 0
+        }
+    }
+    
     private func makeSUT(
         chatRoom: ChatRoomEntity = ChatRoomEntity(),
         callUseCase: some CallUseCaseProtocol = MockCallUseCase(call: CallEntity()),
@@ -400,7 +434,8 @@ final class MeetingContainerViewModelTests: XCTestCase {
         noUserJoinedUseCase: some MeetingNoUserJoinedUseCaseProtocol = MockMeetingNoUserJoinedUseCase(),
         analyticsEventUseCase: some AnalyticsEventUseCaseProtocol =  MockAnalyticsEventUseCase(),
         megaHandleUseCase: some MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
-        tracker: some AnalyticsTracking = MockTracker()
+        tracker: some AnalyticsTracking = MockTracker(),
+        featureFlag: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:])
     ) -> (MeetingContainerViewModel, MockMeetingContainerRouter) {
         
         let router = MockMeetingContainerRouter()
@@ -418,8 +453,9 @@ final class MeetingContainerViewModelTests: XCTestCase {
                 noUserJoinedUseCase: noUserJoinedUseCase,
                 analyticsEventUseCase: analyticsEventUseCase,
                 megaHandleUseCase: megaHandleUseCase,
-                tracker: tracker
-            ), 
+                tracker: tracker,
+                featureFlagProvider: featureFlag
+            ),
             router
         )
     }
@@ -448,6 +484,7 @@ final class MockMeetingContainerRouter: MeetingContainerRouting {
     var showProtocolErrorAlert_calledTimes = 0
     var showUsersLimitErrorAlert_calledTimes = 0
     var showCallWillEndAlert_calledTimes = 0
+    var showUpgradeToProDialog_calledTimes = 0
 
     func showMeetingUI(containerViewModel: MeetingContainerViewModel) {
         showMeetingUI_calledTimes += 1
@@ -536,5 +573,9 @@ final class MockMeetingContainerRouter: MeetingContainerRouting {
     
     func showCallWillEndAlert(timeToEndCall: Double, completion: ((Double) -> Void)?) {
         showCallWillEndAlert_calledTimes += 1
+    }
+    
+    func showUpgradeToProDialog(_ account: MEGADomain.AccountDetailsEntity) {
+        showUpgradeToProDialog_calledTimes += 1
     }
 }

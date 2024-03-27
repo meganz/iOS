@@ -328,7 +328,7 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
         }
     }
     
-    func testCallUpdate_callDestroyedUserIsCaller_shouldShowUpgradeToPro() {
+    func testCallUpdate_callDestroyedUserIsCallerAndCallUINotVisible_shouldShowUpgradeToPro() {
         let callUseCase = MockCallUseCase()
 
         let viewModel = makeMainTabBarCallsViewModel(
@@ -343,6 +343,24 @@ final class MainTabBarCallsViewModelTests: XCTestCase {
 
         evaluate {
             self.router.showUpgradeToProDialog_calledTimes == 1
+        }
+    }
+    
+    func testCallUpdate_callDestroyedUserIsCallerAndCallUIVisible_shouldNotShowUpgradeToPro() {
+        let callUseCase = MockCallUseCase()
+
+        let viewModel = makeMainTabBarCallsViewModel(
+            callUseCase: callUseCase,
+            chatRoomUseCase: MockChatRoomUseCase(chatRoomEntity: ChatRoomEntity(ownPrivilege: .standard)),
+            accountUseCase: MockAccountUseCase(currentAccountDetails: AccountDetailsEntity()),
+            featureFlag: MockFeatureFlagProvider(list: [.chatMonetization: true])
+        )
+        viewModel.isCallUIVisible = true
+        
+        callUseCase.callUpdateSubject.send(CallEntity(status: .terminatingUserParticipation, changeType: .status, termCodeType: .callDurationLimit, isOwnClientCaller: true))
+
+        evaluate {
+            self.router.showUpgradeToProDialog_calledTimes == 0
         }
     }
     

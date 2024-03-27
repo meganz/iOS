@@ -220,7 +220,7 @@ enum MainTabBarCallsAction: ActionType { }
     }
     
     private func manageCallTerminatedErrorIfNeeded(_ call: CallEntity) {
-        guard featureFlagProvider.isFeatureFlagEnabled(for: .chatMonetization) else { return }
+        guard !isCallUIVisible, featureFlagProvider.isFeatureFlagEnabled(for: .chatMonetization) else { return }
         if call.termCodeType == .callDurationLimit {
             if call.isOwnClientCaller { // or is chat room organiser - future implementation
                 guard let accountDetails = accountUseCase.currentAccountDetails else { return }

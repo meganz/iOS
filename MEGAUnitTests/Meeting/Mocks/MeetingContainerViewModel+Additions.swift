@@ -21,6 +21,7 @@ extension MeetingContainerViewModel {
         analyticsEventUseCase: some AnalyticsEventUseCaseProtocol =  MockAnalyticsEventUseCase(),
         megaHandleUseCase: some MEGAHandleUseCaseProtocol = MockMEGAHandleUseCase(),
         tracker: some AnalyticsTracking = MockTracker(),
+        featureFlag: some FeatureFlagProviderProtocol = MockFeatureFlagProvider(list: [:]),
         isTesting: Bool = true
     ) {
         self.init(
@@ -36,7 +37,8 @@ extension MeetingContainerViewModel {
             noUserJoinedUseCase: noUserJoinedUseCase,
             analyticsEventUseCase: analyticsEventUseCase,
             megaHandleUseCase: megaHandleUseCase,
-            tracker: tracker
+            tracker: tracker,
+            featureFlagProvider: featureFlag
         )
     }
 }

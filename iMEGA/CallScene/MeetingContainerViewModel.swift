@@ -54,6 +54,7 @@ final class MeetingContainerViewModel: ViewModelType {
     private let analyticsEventUseCase: any AnalyticsEventUseCaseProtocol
     private let megaHandleUseCase: any MEGAHandleUseCaseProtocol
     private let tracker: any AnalyticsTracking
+    private let featureFlagProvider: any FeatureFlagProviderProtocol
 
     private var noUserJoinedSubscription: AnyCancellable?
     private var muteMicSubscription: AnyCancellable?
@@ -81,7 +82,8 @@ final class MeetingContainerViewModel: ViewModelType {
          noUserJoinedUseCase: some MeetingNoUserJoinedUseCaseProtocol,
          analyticsEventUseCase: some AnalyticsEventUseCaseProtocol,
          megaHandleUseCase: some MEGAHandleUseCaseProtocol,
-         tracker: some AnalyticsTracking = DIContainer.tracker
+         tracker: some AnalyticsTracking = DIContainer.tracker,
+         featureFlagProvider: some FeatureFlagProviderProtocol = DIContainer.featureFlagProvider
     ) {
         self.router = router
         self.chatRoom = chatRoom
@@ -96,7 +98,8 @@ final class MeetingContainerViewModel: ViewModelType {
         self.analyticsEventUseCase = analyticsEventUseCase
         self.megaHandleUseCase = megaHandleUseCase
         self.tracker = tracker
-
+        self.featureFlagProvider = featureFlagProvider
+        
         let callUUID = callUseCase.call(for: chatRoom.chatId)?.uuid
         self.callKitManager.addCallRemoved { [weak self] uuid in
             guard let uuid = uuid, let self = self, callUUID == uuid else { return }
@@ -418,6 +421,12 @@ final class MeetingContainerViewModel: ViewModelType {
             router.showUsersLimitErrorAlert()
         case .callDurationLimit:
             hangCall()
+            if featureFlagProvider.isFeatureFlagEnabled(for: .chatMonetization) {
+                if call.isOwnClientCaller { // or is chat room organiser - future implementation
+                    guard let accountDetails = accountUseCase.currentAccountDetails else { return }
+                    router.showUpgradeToProDialog(accountDetails)
+                }
+            }
         default:
             break
         }
